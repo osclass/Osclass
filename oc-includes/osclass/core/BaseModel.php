@@ -22,14 +22,22 @@
 
     abstract class BaseModel
     {
-        //action to execute
         protected $action ;
+        protected $ajax ;
+        protected $time ;
 
         function  __construct()
         {
-            // Moved Session start to oc-load to be able to use it on index.php
-            // Session::newInstance()->session_start() ;
             $this->action = Params::getParam('action') ;
+            $this->ajax   = false ;
+            $this->time   = list($sm, $ss) = explode(' ', microtime()) ;
+        }
+
+        function __destruct()
+        {
+            if( !$this->ajax && OSC_DEBUG ) {
+                echo '<!-- ' . $this->getTime() . ' seg. -->' ;
+            }
         }
 
         //to export variables at the business layer
@@ -59,6 +67,12 @@
         {
             header('Location: ' . $url) ;
             exit ;
+        }
+
+        function getTime()
+        {
+            $timeEnd = list($em, $es) = explode(' ', microtime()) ;
+            return ($timeEnd[0] + $timeEnd[1]) - ($this->time[0] + $this->time[1]) ;
         }
     }
 

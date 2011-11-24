@@ -58,6 +58,13 @@
                                     <label for="allowedExt"><?php _e('Allowed format extensions (eg: png, jpg, gif)'); ?></label><br />
                                     <input type="text" name="allowedExt" id="allowedExt" value="<?php echo osc_allowed_extension() ; ?>" />
                                 </p>
+                                <?php if(extension_loaded('imagick')) { ?>
+                                <p>
+                                    <input id="use_imagick" type="checkbox" name="use_imagick" value="1" <?php echo ( osc_use_imagick() ) ? 'checked' : '' ; ?>/><label for="use_imagick"><?php _e('Use imagick instead of GD') ; ?></label>
+                                    <br />
+                                    <?php _e('It\'s faster and consume less resources than GD library'); ?>
+                                </p>
+                                <?php }; ?>
                             </fieldset>
 
                             <fieldset>

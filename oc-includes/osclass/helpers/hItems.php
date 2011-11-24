@@ -249,7 +249,7 @@
      * @return float
      */
     function osc_item_price() {
-        return (float) osc_item_field("f_price") ;
+        return (float) osc_item_field("i_price") ;
     }
 
     /**
@@ -258,7 +258,7 @@
      * @return string
      */
     function osc_item_formated_price() {
-        return (string) osc_format_price( osc_item_field("f_price") ) ;
+        return (string) osc_format_price( osc_item_field("i_price") ) ;
     }
 
     /**
@@ -576,7 +576,7 @@
      * @return int
      */
     function osc_item_total_comments() {
-        return ItemComment::newInstance()->total_comments(osc_item_id());
+        return ItemComment::newInstance()->totalComments( osc_item_id() );
     }
 
     /**
@@ -723,7 +723,7 @@
      * @return string
      */
     function osc_resource_path() {
-        return (string) osc_base_url().osc_resource_field("s_path");
+        return (string) osc_apply_filter('resource_path', osc_base_url().osc_resource_field("s_path"));
     }
 
     /**
@@ -868,7 +868,7 @@
         if ( !View::newInstance()->_exists('items') ) {
             $search = new Search();
             $search->limit(0, osc_max_latest_items());
-            View::newInstance()->_exportVariableToView('items', $search->doSearch(true));//Item::newInstance()->listLatest( osc_max_latest_items() ) ) ;
+            View::newInstance()->_exportVariableToView('items', $search->getLatestItems());
         }
         return osc_has_items() ;
     }
@@ -882,7 +882,7 @@
         if ( !View::newInstance()->_exists('items') ) {
             $search = new Search();
             $search->limit(0, osc_max_latest_items());
-            View::newInstance()->_exportVariableToView('items', $search->doSearch(true));//Item::newInstance()->listLatest( osc_max_latest_items() ) ) ;
+            View::newInstance()->_exportVariableToView('items', $search->getLatestItems());
         }
         return osc_priv_count_items() ;
     }
@@ -898,15 +898,15 @@
      * @return string
      */
     function osc_format_price($price) {
-        if ($price == 0) return __('Check with seller') ;
-        //if ($price == null) return __('Check with seller') ;
-        //if ($price == 0) return __('Free') ;
-        $currencyFormat =  osc_locale_currency_format();
+        if ($price == null) return osc_apply_filter ('item_price_null', __('Check with seller') ) ;
+        if ($price == 0) return osc_apply_filter ('item_price_zero', __('Free') ) ;
+        
+        $price = $price/1000000;
 
-        $currencyFormat = preg_replace('/%s/', 'CURRENCY', $currencyFormat) ;
-        $currencyFormat = sprintf($currencyFormat, $price);
-        $currencyFormat = preg_replace('/CURRENCY/', '%s', $currencyFormat) ;
-        return sprintf($currencyFormat , osc_item_currency() ) ;
+        $currencyFormat = osc_locale_currency_format();
+        $currencyFormat = str_replace('{NUMBER}', number_format($price, osc_locale_num_dec(), osc_locale_dec_point(), osc_locale_thousands_sep()), $currencyFormat);
+        $currencyFormat = str_replace('{CURRENCY}', osc_item_currency(), $currencyFormat);
+        return osc_apply_filter('item_price', $currencyFormat ) ;
     }
 
     /**
@@ -940,7 +940,7 @@
      */    
     function osc_count_item_meta() {
         if ( !View::newInstance()->_exists('metafields') ) {
-            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->meta_fields(osc_item_id()) ) ;
+            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->metaFields(osc_item_id()) ) ;
         }
         return View::newInstance()->_count('metafields') ;
     }
@@ -952,7 +952,7 @@
      */
     function osc_has_item_meta() {
         if ( !View::newInstance()->_exists('metafields') ) {
-            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->meta_fields(osc_item_id()) ) ;
+            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->metaFields(osc_item_id()) ) ;
         }
         return View::newInstance()->_next('metafields') ;
     }
@@ -964,7 +964,7 @@
      */
     function osc_get_item_meta() {
         if ( !View::newInstance()->_exists('metafields') ) {
-            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->meta_fields(osc_item_id()) ) ;
+            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->metaFields(osc_item_id()) ) ;
         }
         return View::newInstance()->_get('metafields') ;
     }
@@ -984,7 +984,7 @@
      * @return string
      */    
     function osc_item_meta_value() {
-        return htmlentities(osc_field(osc_item_meta(), 's_value', '')) ;
+        return htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8") ; 
     }
    
     /**
@@ -1011,7 +1011,49 @@
      * @return string
      */    
     function osc_item_meta_slug() {
-        return osc_field(osc_item_meta(), 'slug', '') ;
+        return osc_field(osc_item_meta(), 's_slug', '') ;
+    }
+   
+    /**
+     * Gets total number of active items
+     *
+     * @return string
+     */    
+    function osc_total_active_items() {
+        $search = new Search(false);
+        return $search->count();
+    }
+   
+    /**
+     * Gets total number of all items
+     *
+     * @return string
+     */    
+    function osc_total_items() {
+        $search = new Search(true);
+        return $search->count();
+    }
+   
+    /**
+     * Gets total number of active items today
+     *
+     * @return string
+     */    
+    function osc_total_active_items_today() {
+        $search = new Search(false);
+        $search->addConditions(sprintf('DATEDIFF(\'%s\', %st_item.dt_pub_date) < 1', date('Y-m-d H:i:s'), DB_TABLE_PREFIX));
+        return $search->count();
+    }
+   
+    /**
+     * Gets total number of all items today
+     *
+     * @return string
+     */    
+    function osc_total_items_today() {
+        $search = new Search(true);
+        $search->addConditions(sprintf('DATEDIFF(\'%s\', %st_item.dt_pub_date) < 1', date('Y-m-d H:i:s'), DB_TABLE_PREFIX));
+        return $search->count();
     }
    
  ?>

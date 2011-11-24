@@ -16,27 +16,27 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $user = __get("user");
-    $countries = __get("countries");
-    $regions = __get("regions");
-    $cities = __get("cities");
-    $locales = __get("locales");
+    $user      = __get('user') ;
+    $countries = __get('countries') ;
+    $regions   = __get('regions') ;
+    $cities    = __get('cities') ;
+    $locales   = __get('locales') ;
 
-    if(isset($user['pk_i_id'])) {
+    if( isset($user['pk_i_id']) ) {
         // editing...
-        $edit = true ;
-        $title = __("Edit") ;
-        $action_frm = "edit_post";
-        $btn_text = __("Update");
+        $edit       = true ;
+        $title      = __('Edit') ;
+        $action_frm = 'edit_post' ;
+        $btn_text   = __('Update') ;
     } else {
         // adding...
-        $edit = false ;
-        $title = __("Add");
-        $action_frm = "create_post";
-        $btn_text = __('Add');
+        $edit       = false ;
+        $title      = __('Add') ;
+        $action_frm = 'create_post' ;
+        $btn_text   = __('Add') ;
     }
-?>
 
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
@@ -51,7 +51,7 @@
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
         <script type="text/javascript">
-            document.write('<style type="text/css">.tabber{display:none;}<\/style>');
+            document.write('<style type="text/css">.tabber{display:none;}</style>');
             $(document).ready(function(){
                 if (typeof $.uniform != 'undefined') {
                     $('textarea, button,select, input:file').uniform();
@@ -78,8 +78,10 @@
                             <input type="hidden" name="page" value="users" />
                             <input type="hidden" name="action" value="<?php echo $action_frm;?>"/>
                             <?php UserForm::primary_input_hidden($user); ?>
-                            <input type="hidden" name="b_enabled" value="<?php echo $user['b_enabled'] ?>" />
-                            <input type="hidden" name="b_active" value="<?php echo $user['b_active'] ?>" />
+                            <?php if( $edit ) { ?>
+                                <input type="hidden" name="b_enabled" value="<?php echo $user['b_enabled'] ; ?>" />
+                                <input type="hidden" name="b_active" value="<?php echo $user['b_active'] ; ?>" />
+                            <?php } ?>
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('E-mail'); ?></legend>
@@ -105,7 +107,7 @@
 
                             <div style="float: left; width: 50%;">
                                 <fieldset>
-                                    <legend><?php _e('Real name'); ?> (<?php _e('required'); ?>)</legend>
+                                    <legend><?php _e('Real name'); ?></legend>
                                     <?php UserForm::name_text($user); ?>
                                 </fieldset>
                                 <fieldset>

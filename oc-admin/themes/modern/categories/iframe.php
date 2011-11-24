@@ -64,18 +64,17 @@
                     var ret = eval( "(" + data + ")");
                   
                     var message = "";
-                    if(ret.error) {
-                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/cross.png');?>"/>';
-                        message += ret.error; 
-
-                    }
-                    if(ret.ok){ 
+                    if(ret.error==0 || ret.error==4) {
                         $('#settings_form').fadeOut('fast', function(){
                             $('#settings_form').remove();
                         });
                         message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/tick.png');?>"/>';
-                        message += ret.ok;
+                        message += ret.msg;
                         $('div#settings_form').parent().parent().find('.quick_edit').html(ret.text);
+                    } else {
+                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/cross.png');?>"/>';
+                        message += ret.msg; 
+
                     }
 
                     $("#jsMessage").fadeIn("fast");

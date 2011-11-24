@@ -43,6 +43,8 @@
                                         $commentsPerPage  = Params::getParam('comments_per_page');
                                         $notifyNewComment = Params::getParam('notify_new_comment');
                                         $notifyNewComment = (($notifyNewComment != '') ? true : false);
+                                        $notifyNewCommentUser = Params::getParam('notify_new_comment_user');
+                                        $notifyNewCommentUser = (($notifyNewCommentUser != '') ? true : false);
                                         $regUserPostComments  = Params::getParam('reg_user_post_comments');
                                         $regUserPostComments  = (($regUserPostComments != '') ? true : false);
 
@@ -57,6 +59,8 @@
                                         }
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyNewComment)
                                                                                       ,array('s_name' => 'notify_new_comment'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyNewCommentUser)
+                                                                                      ,array('s_name' => 'notify_new_comment_user'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $commentsPerPage)
                                                                                       ,array('s_name' => 'comments_per_page'));
 
@@ -67,30 +71,6 @@
                                             osc_add_flash_ok_message( _m('Comments\' settings have been updated'), 'admin');
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=comments');
-                break;
-                case ('users'):         // calling the users settings view
-                                        $this->doView('settings/users.php');
-                break;
-                case ('users_post'):    // updating users
-                                        $iUpdated                = 0;
-                                        $enabledUserValidation   = Params::getParam('enabled_user_validation');
-                                        $enabledUserValidation   = (($enabledUserValidation != '') ? true : false);
-                                        $enabledUserRegistration = Params::getParam('enabled_user_registration');
-                                        $enabledUserRegistration = (($enabledUserRegistration != '') ? true : false);
-                                        $enabledUsers            = Params::getParam('enabled_users');
-                                        $enabledUsers            = (($enabledUsers != '') ? true : false);
-
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledUserValidation)
-                                                                                      ,array('s_name'  => 'enabled_user_validation'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledUserRegistration)
-                                                                                      ,array('s_name'  => 'enabled_user_registration'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledUsers)
-                                                                                      ,array('s_name'  => 'enabled_users'));
-
-                                        if($iUpdated > 0) {
-                                            osc_add_flash_ok_message( _m('Users\' settings have been updated'), 'admin');
-                                        }
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=users');
                 break;
                 case ('locations'):     // calling the locations settings view
                                         $location_action = Params::getParam('type');
@@ -141,7 +121,7 @@
                                                                                 $manager_city = new City();
                                                                                 if(count($countries) > 0) {
                                                                                     foreach($countries as $c) {
-                                                                                        $regions = $manager_region->listWhere('fk_c_country_code = \'' . $c->id . '\'') ;
+                                                                                        $regions = $manager_region->findByCountry( $c->id ) ;
                                                                                         if(!isset($regions->error)) {
                                                                                             if(count($regions) > 0) {
                                                                                                 foreach($regions as $region) {
@@ -176,19 +156,20 @@
                                             break;
                                             case('edit_country'):   // edit country
                                                                     $countryCode = Params::getParam('country_code');
-                                                                    $request = Params::getParam('e_country');
-                                                                    $ok = true;
+                                                                    $request     = Params::getParam('e_country');
+                                                                    $ok          = true;
+
                                                                     foreach($request as $k => $v) {
-                                                                        $result = $mCountries->updateLocale($countryCode, $k, $v);
-                                                                        if(!$result) {
-                                                                            $ok = false;
+                                                                        $result = $mCountries->updateLocale($countryCode, $k, $v) ;
+                                                                        if( $result === false ) {
+                                                                            $ok = false ;
                                                                         }
                                                                     }
 
-                                                                    if($ok) {
+                                                                    if( $ok ) {
                                                                         osc_add_flash_ok_message(_m('Country has been edited'), 'admin');
                                                                     } else {
-                                                                        osc_add_flash_ok_message(_m('There were some problems editing the country'), 'admin');
+                                                                        osc_add_flash_error_message(_m('There were some problems editing the country'), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
@@ -201,7 +182,7 @@
                                                                         $mCities = new City();
 
                                                                         $aCountries = $mCountries->findByCode($countryId);
-                                                                        $aRegions = $mRegions->listWhere('fk_c_country_code =  \'' . $aCountries['pk_c_code'] . '\'');
+                                                                        $aRegions = $mRegions->findByCountry($aCountries['pk_c_code']);
                                                                         foreach($aRegions as $region) {
                                                                             $mCities->delete(array('fk_i_region_id' => $region['pk_i_id']));
                                                                             $mRegions->delete(array('pk_i_id' => $region['pk_i_id']));
@@ -222,7 +203,7 @@
                                                                         $regionName  = Params::getParam('region');
                                                                         $countryCode = Params::getParam('country_c_parent');
 
-                                                                        $exists = $mRegions->findByNameAndCode($regionName, $countryCode);
+                                                                        $exists = $mRegions->findByName($regionName, $countryCode);
                                                                         if(!isset($exists['s_name'])) {
                                                                             $data = array('fk_c_country_code' => $countryCode
                                                                                          ,'s_name' => $regionName);
@@ -245,6 +226,10 @@
                                                                         if($regionId != '') {
                                                                             $mRegions->update(array('s_name' => $newRegion)
                                                                                              ,array('pk_i_id' => $regionId));
+                                                                            ItemLocation::newInstance()->update(
+                                                                                array('s_region'       => $newRegion),
+                                                                                array('fk_i_region_id' => $regionId)
+                                                                            );
                                                                             osc_add_flash_ok_message(sprintf(_m('%s has been edited'),
                                                                                                               $newRegion), 'admin');
                                                                         }
@@ -277,7 +262,7 @@
                                                                     $countryCode = Params::getParam('country_c_parent');
                                                                     $newCity     = Params::getParam('city');
 
-                                                                    $exists = $mCities->findByNameAndRegion($newCity, $regionId);
+                                                                    $exists = $mCities->findByName($newCity, $regionId);
                                                                     if(!isset($exists['s_name'])) {
                                                                         $mCities->insert(array('fk_i_region_id'    => $regionId
                                                                                               ,'s_name'            => $newCity
@@ -300,7 +285,10 @@
                                                                     if(!isset($exists['pk_i_id']) || $exists['pk_i_id']==$cityId) {
                                                                         $mCities->update(array('s_name' => $newCity)
                                                                                         ,array('pk_i_id' => $cityId));
-
+                                                                        ItemLocation::newInstance()->update(
+                                                                            array('s_city'       => $newCity),
+                                                                            array('fk_i_city_id' => $cityId)
+                                                                        );
                                                                         osc_add_flash_ok_message(sprintf(_m('%s has been edited'),
                                                                                                          $newCity), 'admin');
                                                                     } else {
@@ -456,7 +444,7 @@
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
                                                                 }
 
-                                                                $aCurrency = Currency::newInstance()->findByCode($currencyCode);
+                                                                $aCurrency = Currency::newInstance()->findByPrimaryKey($currencyCode);
 
                                                                 if(count($aCurrency) == 0) {
                                                                     osc_add_flash_error_message( _m('Error: the currency doesn\'t exist'), 'admin');
@@ -539,11 +527,16 @@
                 case('mailserver'):     // calling the mailserver view
                                         $this->doView('settings/mailserver.php');
                 break;
-                case('mailserver_post'):if( defined('DEMO') ) $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver');
+                case('mailserver_post'):if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver');
+                                        }
                                         // updating mailserver
                                         $iUpdated           = 0;
                                         $mailserverAuth     = Params::getParam('mailserver_auth');
                                         $mailserverAuth     = ($mailserverAuth != '' ? true : false);
+                                        $mailserverPop     = Params::getParam('mailserver_pop');
+                                        $mailserverPop     = ($mailserverPop != '' ? true : false);
                                         $mailserverType     = Params::getParam('mailserver_type');
                                         $mailserverHost     = Params::getParam('mailserver_host');
                                         $mailserverPort     = Params::getParam('mailserver_port');
@@ -558,6 +551,8 @@
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverAuth)
                                                                                        ,array('s_name' => 'mailserver_auth'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverPop)
+                                                                                       ,array('s_name' => 'mailserver_pop'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverType)
                                                                                        ,array('s_name' => 'mailserver_type'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverHost)
@@ -587,6 +582,7 @@
                                         $dimPreview        = Params::getParam('dimPreview');
                                         $dimNormal         = Params::getParam('dimNormal');
                                         $keepOriginalImage = Params::getParam('keep_original_image');
+                                        $use_imagick       = Params::getParam('use_imagick');
                                         $type_watermark    = Params::getParam('watermark_type');
                                         $watermark_color   = Params::getParam('watermark_text_color');
                                         $watermark_text    = Params::getParam('watermark_text');
@@ -643,7 +639,12 @@
                                         $dimPreview        = strip_tags($dimPreview);
                                         $dimNormal         = strip_tags($dimNormal);
                                         $keepOriginalImage = ($keepOriginalImage != '' ? true : false);
+                                        $use_imagick       = ($use_imagick != '' ? true : false);
+                                        if(!extension_loaded('imagick')) {
+                                            $use_imagick = false;
+                                        }
 
+                                        
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $maxSizeKb)
                                                                                       ,array('s_name'  => 'maxSizeKb'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $allowedExt)
@@ -656,6 +657,8 @@
                                                                                       ,array('s_name'  => 'dimNormal'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $keepOriginalImage)
                                                                                       ,array('s_name'  => 'keep_original_image'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $use_imagick)
+                                                                                      ,array('s_name'  => 'use_imagick'));
 
                                         if($iUpdated > 0) {
                                             osc_add_flash_ok_message( _m('Media config has been updated'), 'admin');
@@ -699,29 +702,34 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=cron');
                 break;
                 case('update'):         // update index view
-                                        $iUpdated      = 0;
-                                        $sPageTitle    = Params::getParam('pageTitle');
-                                        $sPageDesc     = Params::getParam('pageDesc');
-                                        $sContactEmail = Params::getParam('contactEmail');
-                                        $sLanguage     = Params::getParam('language');
-                                        $sDateFormat   = Params::getParam('dateFormat');
-                                        $sCurrency     = Params::getParam('currency');
-                                        $sWeekStart    = Params::getParam('weekStart');
-                                        $sTimeFormat   = Params::getParam('timeFormat');
-                                        $sNumRssItems  = Params::getParam('num_rss_items');
+                                        $iUpdated       = 0;
+                                        $sPageTitle     = Params::getParam('pageTitle');
+                                        $sPageDesc      = Params::getParam('pageDesc');
+                                        $sContactEmail  = Params::getParam('contactEmail');
+                                        $sLanguage      = Params::getParam('language');
+                                        $sDateFormat    = Params::getParam('dateFormat');
+                                        $sCurrency      = Params::getParam('currency');
+                                        $sWeekStart     = Params::getParam('weekStart');
+                                        $sTimeFormat    = Params::getParam('timeFormat');
+                                        $sTimezone      = Params::getParam('timezone');
+                                        $sNumRssItems   = Params::getParam('num_rss_items');
                                         $maxLatestItems = Params::getParam('max_latest_items_at_home');
+                                        $numItemsSearch = Params::getParam('default_results_per_page') ;
 
                                         // preparing parameters
-                                        $sPageTitle    = strip_tags($sPageTitle);
-                                        $sPageDesc     = strip_tags($sPageDesc);
-                                        $sContactEmail = strip_tags($sContactEmail);
-                                        $sLanguage     = strip_tags($sLanguage);
-                                        $sDateFormat   = strip_tags($sDateFormat);
-                                        $sCurrency     = strip_tags($sCurrency);
-                                        $sWeekStart    = strip_tags($sWeekStart);
-                                        $sTimeFormat   = strip_tags($sTimeFormat);
-                                        $sNumRssItems  = strip_tags($sNumRssItems);
-                                        $maxLatestItems = strip_tags($maxLatestItems);
+                                        $sPageTitle     = strip_tags($sPageTitle);
+                                        $sPageDesc      = strip_tags($sPageDesc);
+                                        $sContactEmail  = strip_tags($sContactEmail);
+                                        $sLanguage      = strip_tags($sLanguage);
+                                        $sDateFormat    = strip_tags($sDateFormat);
+                                        $sCurrency      = strip_tags($sCurrency);
+                                        $sWeekStart     = strip_tags($sWeekStart);
+                                        $sTimeFormat    = strip_tags($sTimeFormat);
+                                        $sNumRssItems   = (int) strip_tags($sNumRssItems);
+                                        $maxLatestItems = (int) strip_tags($maxLatestItems);
+                                        $numItemsSearch = (int) $numItemsSearch ;
+
+                                        $error = "";
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageTitle)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'pageTitle'));
@@ -741,13 +749,38 @@
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'weekStart'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimeFormat)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'timeFormat'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $sNumRssItems)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'num_rss_items'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $maxLatestItems)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'maxLatestItems@home'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimezone)
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'timezone'));
+                                        if(is_int($sNumRssItems)) {
+                                            $iUpdated += Preference::newInstance()->update(array('s_value'   => $sNumRssItems)
+                                                                                          ,array('s_section' => 'osclass', 's_name' => 'num_rss_items'));
+                                        } else {
+                                            if($error != '') $error .= "<br/>";
+                                            $error .= _m('Number of items in the RSS must be integer');
+                                        }
+
+                                        if(is_int($maxLatestItems)) {
+                                            $iUpdated += Preference::newInstance()->update(array('s_value'   => $maxLatestItems)
+                                                                                          ,array('s_section' => 'osclass', 's_name' => 'maxLatestItems@home'));
+                                        } else {
+                                            if($error != '') $error .= "<br/>";
+                                            $error .= _m('Number of recent items displayed at home must be integer');
+                                        }
+
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value'   => $numItemsSearch),
+                                                array('s_section' => 'osclass',
+                                                      's_name'    => 'defaultResultsPerPage@search')
+                                        );
 
                                         if($iUpdated > 0) {
-                                            osc_add_flash_ok_message( _m('General settings have been updated'), 'admin');
+                                            if($error != '') {
+                                                osc_add_flash_error_message( $error . "<br/>" . _m('General settings have been updated'), 'admin');
+                                            } else {
+                                                osc_add_flash_ok_message( _m('General settings have been updated'), 'admin');
+                                            }
+                                        } else if($error != '') {
+                                            osc_add_flash_error_message( $error , 'admin');
                                         }
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings');
@@ -828,7 +861,7 @@
 
             $manager_city = new City();
             foreach($countries as $c) {
-                $regions = $manager_region->listWhere('fk_c_country_code = \'' . $c->id . '\'') ;
+                $regions = $manager_region->finbByCountry( $c->id );
                 foreach($regions as $region) {
                     $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' .
                                                          urlencode($c->name) . '&region=' . urlencode($region['s_name']) . '&term=all') ;
@@ -880,7 +913,7 @@
             }
 
             foreach($regions as $r) {
-                $exists = $manager_region->findByNameAndCode($r->name, $r->country_code);
+                $exists = $manager_region->findByName($r->name, $r->country_code);
                 if(isset($exists['s_name'])) {
                     osc_add_flash_error_message(sprintf(_m('%s already was in the database'), $c_exists['s_name']), 'admin');
                     return false;
@@ -895,8 +928,7 @@
 
             $manager_city = new City();
             foreach($country as $c) {
-                $regions = $manager_region->findByConditions(array('fk_c_country_code' => $country['pk_c_code']
-                                                                  ,'s_name' => $region));
+                $regions = $manager_region->findByName($region, $country['pk_c_code']);
                 $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' .
                                                      urlencode($c) . '&region=' . urlencode($regions['s_name']) . '&term=all');
                 $cities = json_decode($cities_json);

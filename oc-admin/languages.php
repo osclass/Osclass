@@ -40,36 +40,40 @@
                                             $this->doView('languages/add.php') ;
                 break;
                 case 'add_post':            // adding a new language
-                                            $filePackage = Params::getFiles('package');
-                                            if(isset($filePackage['size']) && $filePackage['size']!=0) {
-                                                $path        = osc_translations_path();
-                                                (int) $status = osc_unzip_file($filePackage['tmp_name'], $path);
+                                            $filePackage = Params::getFiles('package') ;
+                                            if( isset($filePackage['size']) && $filePackage['size'] != 0 ) {
+                                                $path         = osc_translations_path();
+                                                (int) $status = osc_unzip_file($filePackage['tmp_name'], $path) ;
                                             } else {
-                                                $status = 3;
+                                                $status = 3 ;
                                             }
 
                                             switch ($status) {
-                                                case(0):   $msg = _m('The translation folder is not writable');
-                                                           osc_add_flash_error_message($msg, 'admin');
+                                                case(0):    $msg = _m('The translation folder is not writable') ;
+                                                            osc_add_flash_error_message($msg, 'admin') ;
                                                 break;
-                                                case(1):   $msg = _m('The language has been installed correctly');
-                                                           osc_checkLocales();
-                                                           osc_add_flash_ok_message($msg, 'admin');
+                                                case(1):    if( osc_checkLocales() ) {
+                                                                $msg = _m('The language has been installed correctly') ;
+                                                                osc_add_flash_ok_message($msg, 'admin') ;
+                                                            } else {
+                                                                $msg = _m('There was a problem adding the language') ;
+                                                                osc_add_flash_error_message($msg, 'admin') ;
+                                                            }
                                                 break;
-                                                case(2):   $msg = _m('The zip file is not valid');
-                                                           osc_add_flash_error_message($msg, 'admin');
+                                                case(2):    $msg = _m('The zip file is not valid') ;
+                                                            osc_add_flash_error_message($msg, 'admin') ;
                                                 break;
-                                                case(3):   $msg = _m('No file was uploaded');
-                                                           osc_add_flash_error_message($msg, 'admin');
-                                                           $this->redirectTo(osc_admin_base_url(true)."?page=languages&action=add");
+                                                case(3):    $msg = _m('No file was uploaded') ;
+                                                            osc_add_flash_warning_message($msg, 'admin') ;
+                                                            $this->redirectTo(osc_admin_base_url(true)."?page=languages&action=add") ;
                                                 break;
                                                 case(-1):
-                                                default:   $msg = _m('There was a problem adding the language');
-                                                           osc_add_flash_error_message($msg, 'admin');
+                                                default:    $msg = _m('There was a problem adding the language') ;
+                                                            osc_add_flash_error_message($msg, 'admin') ;
                                                 break;
                                             }
 
-                                            $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
+                                            $this->redirectTo( osc_admin_base_url(true) . '?page=languages' ) ;
                 break;
                 case 'edit':                // editing a language
                                             $sLocale = Params::getParam('id');
@@ -97,8 +101,12 @@
                                             $languageShortName      = Params::getParam('s_short_name');
                                             $languageDescription    = Params::getParam('s_description');
                                             $languageCurrencyFormat = Params::getParam('s_currency_format');
+                                            $languageDecPoint       = Params::getParam('s_dec_point');
+                                            $languageNumDec         = Params::getParam('i_num_dec');
+                                            $languageThousandsSep   = Params::getParam('s_thousands_sep');
                                             $languageDateFormat     = Params::getParam('s_date_format');
                                             $languageStopWords      = Params::getParam('s_stop_words');
+
 
                                             // formatting variables
                                             if( !preg_match('/.{2}_.{2}/', $languageCode) ) {
@@ -138,6 +146,9 @@
                                                           ,'s_short_name'      => $languageShortName
                                                           ,'s_description'     => $languageDescription
                                                           ,'s_currency_format' => $languageCurrencyFormat
+                                                          ,'s_dec_point'       => $languageDecPoint
+                                                          ,'i_num_dec'         => $languageNumDec
+                                                          ,'s_thousands_sep'   => $languageThousandsSep
                                                           ,'s_date_format'     => $languageDateFormat
                                                           ,'s_stop_words'      => $languageStopWords);
 

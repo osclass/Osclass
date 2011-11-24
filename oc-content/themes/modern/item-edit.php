@@ -31,6 +31,44 @@
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <?php ItemForm::location_javascript_new(); ?>
         <?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript(); ?>
+        <script type="text/javascript">
+            function uniform_input_file(){
+                photos_div = $('div.photos');
+                $('div',photos_div).each(
+                    function(){
+                        if( $(this).find('div.uploader').length == 0  ){
+                            divid = $(this).attr('id');
+                            if(divid != 'photos'){
+                                divclass = $(this).hasClass('box');
+                                if( !$(this).hasClass('box') & !$(this).hasClass('uploader') & !$(this).hasClass('row')){
+                                    $("div#"+$(this).attr('id')+" input:file").uniform({fileDefaultText: fileDefaultText,fileBtnText: fileBtnText});
+                                }
+                            }
+                        }
+                    }
+                );
+            }
+            
+            setInterval("uniform_plugins()", 250);
+            function uniform_plugins() {
+                
+                var content_plugin_hook = $('#plugin-hook').text();
+                content_plugin_hook = content_plugin_hook.replace(/(\r\n|\n|\r)/gm,"");
+                if( content_plugin_hook != '' ){
+                    
+                    var div_plugin_hook = $('#plugin-hook');
+                    var num_uniform = $("div[id*='uniform-']", div_plugin_hook ).size();
+                    if( num_uniform == 0 ){
+                        if( $('#plugin-hook input:text').size() > 0 ){
+                            $('#plugin-hook input:text').uniform();
+                        }
+                        if( $('#plugin-hook select').size() > 0 ){
+                            $('#plugin-hook select').uniform();
+                        }
+                    }
+                }
+            }
+        </script>
         <!-- end only item-edit.php -->
     </head>
     <body>
@@ -73,7 +111,7 @@
                                     </div>
                                     <?php }; ?>
                                 </div>
-                                <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo', 'modern'); ?></a>
+                                <a href="#" onclick="addNewPhoto(); uniform_input_file(); return false;"><?php _e('Add new photo', 'modern'); ?></a>
                             </div>
                             <?php } ?>
 

@@ -1,4 +1,4 @@
-<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
 
     /*
      *      OSCLass – software for creating and publishing online classified
@@ -20,149 +20,336 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    class User extends DAO {
-
+    /**
+     * User DAO
+     */
+    class User extends DAO
+    {
+        /**
+         *
+         * @var type 
+         */
         private static $instance ;
 
-        public static function newInstance() {
-            if(!self::$instance instanceof self) {
+        public static function newInstance()
+        {
+            if( !self::$instance instanceof self ) {
                 self::$instance = new self ;
             }
             return self::$instance ;
         }
 
-        public function getTableName()
+        /**
+         * 
+         */
+        function __construct()
         {
-            return DB_TABLE_PREFIX . 't_user';
+            parent::__construct();
+            $this->setTableName('t_user') ;
+            $this->setPrimaryKey('pk_i_id') ;
+            $array_fields = array(
+                'pk_i_id',
+                'dt_reg_date',
+                'dt_mod_date',
+                's_name',
+                's_password',
+                's_secret',
+                's_email',
+                's_website',
+                's_phone_land',
+                's_phone_mobile',
+                'b_enabled',
+                'b_active',
+                's_pass_code',
+                's_pass_date',
+                's_pass_question',
+                's_pass_answer',
+                's_pass_ip',
+                'fk_c_country_code',
+                's_country',
+                's_address',
+                's_zip',
+                'fk_i_region_id',
+                's_region',
+                'fk_i_city_id',
+                's_city',
+                'fk_i_city_area_id',
+                's_city_area',
+                'd_coord_lat',
+                'd_coord_long',
+                'i_permissions',
+                'b_company',
+                'i_items',
+                'i_comments'
+            );
+            $this->setFields($array_fields) ;
         }
-
-        public function getDescriptionTableName()
-        {
-            return DB_TABLE_PREFIX . 't_user_description';
-        }
-
+        
+        /**
+         * Find an user by its primary key
+         *
+         * @access public
+         * @since unknown
+         * @param int $id
+         * @param string $locale
+         * @return array
+         */
         public function findByPrimaryKey($id, $locale = null)
-        {
-            $sql = 'SELECT * FROM ' . $this->getTableName();
-            $sql .= ' WHERE ' . $this->getPrimaryKey() . ' = ' . $id;
-            $row = $this->conn->osc_dbFetchResult($sql);
+        {   
+            $this->dao->select() ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where($this->getPrimaryKey(), $id) ;
+            $result = $this->dao->get();
+            $row = $result->row() ;
 
             if(is_null($row)) {
                 return array();
             }
 
-            $sql_desc = 'SELECT * FROM ';
-            $sql_desc .= $this->getDescriptionTableName() . ' WHERE fk_i_user_id = ' . $id;
+            $this->dao->select() ;
+            $this->dao->from(DB_TABLE_PREFIX.'t_user_description') ;
+            $this->dao->where('fk_i_user_id', $id) ;
             if(!is_null($locale)) {
-                $sql_desc .= ' AND fk_c_locale_code  = \'' . $locale . '\' ';
+                $this->dao->where('fk_c_locale_code', $locale) ;
             }
-            $sub_rows = $this->conn->osc_dbFetchResults($sql_desc);
+            $result = $this->dao->get() ;
+            $descriptions = $result->result() ;
 
             $row['locale'] = array();
-            foreach($sub_rows as $sub_row) {
+            foreach($descriptions as $sub_row) {
                 $row['locale'][$sub_row['fk_c_locale_code']] = $sub_row;
             }
 
             return $row;
         }
-
+        
+        /**
+         * Find an user by its email
+         *
+         * @access public
+         * @since unknown
+         * @param string $email
+         * @return array
+         */
         public function findByEmail($email)
-            {
-                $results = $this->listWhere("s_email = '%s'", $email);
-                return count($results) == 1 ? $results[0] : null;
+        {
+            $this->dao->select() ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where('s_email', $email) ;
+            $result = $this->dao->get() ;
+            
+            if( $result == false ) {
+                return false;
+            } else if($result->numRows() == 1){
+                return $result->row() ;
+            } else {
+                return array();
+            }
         }
-
+        
+        /**
+         * Find an user by its id and password
+         *
+         * @access public
+         * @since unknown
+         * @param string $key
+         * @param string $password
+         * @return array
+         */
         public function findByCredentials($key, $password)
-            {
-                $results = $this->listWhere("s_email = '%s' AND s_password = '%s'", $key, sha1($password));
-                if( count($results) == 1 ) {
-                    return $results[0] ;
-                }
-                return null ;
+        {
+            $this->dao->select() ;
+            $this->dao->from($this->getTableName()) ;
+            $conditions = array(
+                's_email'   => $key,
+                's_password'=> sha1($password)
+            );
+            $this->dao->where($conditions) ;
+            $result = $this->dao->get() ;
+            
+            if( $result == false ) {
+                return false;
+            } else if($result->numRows() == 1){
+                return $result->row() ;
+            } else {
+                return array();
+            }
         }
-
+        
+        /**
+         * Find an user by its id and secret
+         *
+         * @access public
+         * @since unknown
+         * @param string $id
+         * @param string $secret 
+         */
         public function findByIdSecret($id, $secret)
-            {
-                return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE pk_i_id = %d AND s_secret = '%s'", $this->getTableName(), $id, $secret);
+        {
+            $this->dao->select() ;
+            $this->dao->from($this->getTableName()) ;
+            $conditions = array(
+                'pk_i_id'  => $id,
+                's_secret' => $secret
+            );
+            $this->dao->where($conditions) ;
+            $result = $this->dao->get() ;
+            
+            if( $result == false ) {
+                return false;
+            } else if($result->numRows() == 1){
+                return $result->row() ;
+            } else {
+                return array();
+            }
         }
-
+        
+        /**
+         * 
+         *
+         * @access public
+         * @since unknown
+         * @param string $id
+         * @param string $secret
+         * @return array
+         */
         public function findByIdPasswordSecret($id, $secret)
-            {
-                if($secret=='') { return null; }
-                $date = date("Y-m-d H:i:s", (time()-(24*3600)));
-                return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE pk_i_id = %d AND s_pass_code = '%s' AND s_pass_date >= '%s'", $this->getTableName(), $id, $secret, $date);
+        {
+            if($secret=='') { return null; }
+            $date = date("Y-m-d H:i:s", (time()-(24*3600)));
+            $this->dao->select() ;
+            $this->dao->from($this->getTableName()) ;
+            $conditions = array(
+                'pk_i_id'       => $id,
+                's_pass_code'   => $secret
+            );
+            $this->dao->where($conditions) ;
+            $this->dao->where("s_pass_date >= '$date'");
+            $result = $this->dao->get() ;
+            
+           if( $result == false ) {
+                return false;
+            } else if($result->numRows() == 1){
+                return $result->row() ;
+            } else {
+                return array();
+            }
         }
-
+        
+        /**
+         * Delete an user given its id
+         *
+         * @access public
+         * @since unknown
+         * @param int $id
+         * @return bool
+         */
         public function deleteUser($id = null)
-            {
+        {
             if($id!=null) {
                 osc_run_hook('delete_user', $id);
-                $items = $this->conn->osc_dbFetchResults("SELECT pk_i_id, fk_i_category_id FROM %st_item WHERE fk_i_user_id = %d", DB_TABLE_PREFIX, $id);
+                
+                $this->dao->select('pk_i_id, fk_i_category_id');
+                $this->dao->from(DB_TABLE_PREFIX."t_item") ;
+                $this->dao->where('fk_i_user_id', $id) ;
+                $result = $this->dao->get() ;
+                $items = $result->result() ;
+                
                 $itemManager = Item::newInstance();
                 foreach($items as $item) {
                     $itemManager->deleteByPrimaryKey($item['pk_i_id']);
-                    //CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                 }
-                $this->conn->osc_dbExec('DELETE FROM %st_user_email_tmp WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
-                $this->conn->osc_dbExec('DELETE FROM %st_user_description WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
-                $this->conn->osc_dbExec('DELETE FROM %st_alerts WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
-                $this->conn->osc_dbExec('DELETE FROM %st_user WHERE pk_i_id = %d', DB_TABLE_PREFIX, $id);
-                return true;
+                
+                ItemComment::newInstance()->delete(array('fk_i_user_id' => $id));
+                
+                $this->dao->delete(DB_TABLE_PREFIX.'t_user_email_tmp', array('fk_i_user_id' => $id)) ;
+                $this->dao->delete(DB_TABLE_PREFIX.'t_user_description', array('fk_i_user_id' => $id)) ;
+                $this->dao->delete(DB_TABLE_PREFIX.'t_alerts', array('fk_i_user_id' => $id)) ;
+                return $this->dao->delete($this->getTableName(), array('pk_i_id' => $id)) ;
             }
             return false;
         }
-
+        
+        /**
+         * Insert users' description
+         * 
+         * @access private
+         * @since unknown
+         * @param int $id
+         * @param string $locale
+         * @param string $info
+         * @return array
+         */
         private function insertDescription($id, $locale, $info)
         {
-            $sql = 'INSERT INTO ' . $this->getDescriptionTableName() . ' (fk_i_user_id, fk_c_locale_code, s_info)';
-            $sql .= ' VALUES (' . sprintf('%d, \'%s\', \'%s\')', $id, $locale, addslashes($info));
-
-            $this->conn->osc_dBExec($sql);
-
-            if($this->conn->get_affected_rows() == 0) {
+            $array_set = array(
+                'fk_i_user_id'      => $id,
+                'fk_c_locale_code'  => $locale,
+                's_info'            => $info
+            );
+            
+            $res = $this->dao->insert(DB_TABLE_PREFIX.'t_user_description', $array_set) ;
+            
+            if($res) {
+                return true;
+            } else {
                 return false;
             }
-
-            return true;
         }
-
+        
+        /**
+         * Update users' description
+         * 
+         * @access public
+         * @since unknown
+         * @param int $id
+         * @param string $locale
+         * @param string $info
+         * @return bool
+         */
         public function updateDescription($id, $locale, $info)
         {
             $conditions = array('fk_c_locale_code' => $locale, 'fk_i_user_id' => $id);
-            $exist= $this->existDescription($conditions);
+            $exist = $this->existDescription($conditions);
 
             if(!$exist) {
                 $result = $this->insertDescription($id, $locale, $info);
                 return $result;
             }
-
-            $sql = 'UPDATE ' . $this->getDescriptionTableName() . ' SET ';
-            $sql .= ' s_info = \'' . addslashes($info) . '\'';
-            $sql .= ' WHERE fk_c_locale_code = \'' . $locale . '\' AND fk_i_user_id = ' . $id;
-
-            $this->conn->osc_dbExec($sql);
-
-            $result = $this->conn->get_affected_rows();
-
+            
+            $array_where = array(
+                'fk_c_locale_code'  => $locale,
+                'fk_i_user_id'      => $id
+            );
+            $result = $this->dao->update(DB_TABLE_PREFIX.'t_user_description', array('s_info'    => $info), $array_where) ;
             return $result;
         }
-
-        public function existDescription($conditions)
+        
+        /**
+         * Check if a description exists
+         * 
+         * @access public
+         * @since unknown
+         * @param array $conditions
+         * @return bool
+         */
+        private function existDescription($conditions)
         {
-            $where = array();
-            foreach($conditions as $key => $value) {
-                if($key == DB_CUSTOM_COND)
-                    $where[] = $value;
-                else
-                    $where[] = $key . ' = ' . $this->formatValue($value);
+            $this->dao->select() ;
+            $this->dao->from(DB_TABLE_PREFIX.'t_user_description') ;
+            $this->dao->where($conditions) ;
+            
+            $result = $this->dao->get() ;
+            
+            if( $result == false || $result->numRows() == 0) {
+                return false;
+            } else {
+                return true;
             }
-            $where = implode(' AND ', $where);
-            $sql  = sprintf("SELECT COUNT(*) FROM %s WHERE " . $where, $this->getDescriptionTableName());
-
-            $result = $this->conn->osc_dbFetchValue($sql);
-
+            
             return (bool) $result;
-        }
+        } 
     }
 
+    /* file end: ./oc-includes/osclass/model/User.php */
 ?>

@@ -139,14 +139,18 @@ switch($action) {
 		break;
 
 	case 'execute-sql':
-        if(file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
-            $sql = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
-    		$conn = getConnection();
-            $queries = $conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql));
-			$message = __('Tables updated correctly') ;
-		} else {
-			$message = __('No tables update to execute') ;
-		}
+                if(file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
+                    $sql = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
+                    
+                    $conn = DBConnectionClass::newInstance();
+                    $c_db = $conn->getOsclassDb() ;
+                    $comm = new DBCommandClass( $c_db ) ;
+                    $comm->updateDB( str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ) ;
+                    
+                    $message = __('Tables updated correctly') ;
+                } else {
+                    $message = __('No tables update to execute') ;
+                }
 		break ;
 
 	case 'execute-actions':

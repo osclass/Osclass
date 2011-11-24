@@ -20,12 +20,6 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    /** Defines for DB error reporting */
-    define('LOG_NONE', 0) ;
-    define('LOG_WEB', 1) ;
-    define('LOG_COMMENT', 2) ;
-    define('DEBUG_LEVEL', LOG_NONE) ;
-
     class DB
     {
         private $db = null ;
@@ -35,16 +29,13 @@
         private $dbUser = null ;
         private $dbPassword = null ;
         private $dbName = null ;
-        private $dbLogLevel = null ;
         private $msg = "" ;
 
-
-        function __construct($dbHost, $dbUser, $dbPassword, $dbName, $dbLogLevel) {
+        function __construct($dbHost, $dbUser, $dbPassword, $dbName) {
             $this->dbHost = $dbHost ;
             $this->dbUser = $dbUser ;
             $this->dbPassword = $dbPassword ;
             $this->dbName = $dbName ;
-            $this->dbLogLevel = $dbLogLevel ;
             $this->db_errno = 0;
 
             $this->osc_dbConnect() ;
@@ -54,32 +45,27 @@
             $this->osc_dbClose() ;
         }
 
-        //logging
         function debug($msg, $ok = true)
         {
-            if($this->dbLogLevel != LOG_NONE) {
+            if( OSC_DEBUG_DB ) {
                 $this->msg .= date("d/m/Y - H:i:s") . " " ;
-                if($this->dbLogLevel == LOG_WEB) {
-                    if ($ok) $this->msg .= "<span style='background-color: #D0F5A9;' >[ OPERATION OK ] " ;
-                    else $this->msg .= "<span style='background-color: #F5A9A9;' >[ OPERATION FAILED ] " ;
+
+                if( $ok ) {
+                    $this->msg .= "<span style='background-color: #D0F5A9;' >[ OPERATION OK ] " ;
+                } else {
+                    $this->msg .= "<span style='background-color: #F5A9A9;' >[ OPERATION FAILED ] " ;
                 }
 
                 $this->msg .= str_replace("\n", " ", $msg) ;
-
-                if($this->dbLogLevel == LOG_WEB) { $this->msg .= '</span><br />' ; }
+                $this->msg .= '</span><br />' ;
                 $this->msg .= "\n" ;
             }
         }
 
-        function print_debug() {
-            switch($this->dbLogLevel) {
-                case(LOG_WEB):
-                    if(!defined('IS_AJAX')) {
-                        echo $this->msg ;
-                    }
-                break;
-                case(LOG_COMMENT):  echo '<!-- ' . $this->msg . ' -->' ;
-                break;
+        function print_debug()
+        {
+            if( OSC_DEBUG_DB && !defined('IS_AJAX') ) {
+                echo $this->msg ;
             }
         }
 
@@ -92,7 +78,6 @@
          * @param string datatabase name
          */
         function osc_dbConnect() {
-            //echo "#" , $this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName ;
             $this->db = @new mysqli($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName);
             if ($this->db->connect_error) {
                 if( !defined('OSC_INSTALLING') ) {
@@ -491,19 +476,17 @@
     {
         static $instance ;
 
-        //DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DEBUG_LEVEL
         if(defined('DB_HOST') && $dbHost == null)                 $dbHost     = osc_db_host() ;
         if(defined('DB_USER') && $dbUser == null)                 $dbUser     = osc_db_user() ;
         if(defined('DB_PASSWORD') && $dbPassword == null)         $dbPassword = osc_db_password() ;
         if(defined('DB_NAME') && $dbName == null)                 $dbName     = osc_db_name() ;
-        if(defined('DEBUG_LEVEL') && $dbLogLevel == null)         $dbLogLevel = DEBUG_LEVEL ;
 
         if(!isset($instance[$dbName . "_" . $dbHost])) {
             if(!isset($instance)) {
                 $instance = array();
             }
 
-            $instance[$dbName . "_" . $dbHost] = new DB($dbHost, $dbUser, $dbPassword, $dbName, $dbLogLevel);
+            $instance[$dbName . "_" . $dbHost] = new DB($dbHost, $dbUser, $dbPassword, $dbName);
         }
 
         return ($instance[$dbName . "_" . $dbHost]);

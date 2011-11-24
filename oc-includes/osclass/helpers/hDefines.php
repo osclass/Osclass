@@ -774,7 +774,7 @@
             if($country=='') {
                 return Region::newInstance()->listAll() ;
             } else {
-                return Region::newInstance()->getByCountry($country);
+                return Region::newInstance()->findByCountry($country);
             }
         }
     }
@@ -792,7 +792,7 @@
             if($region=='') {
                 return City::newInstance()->listAll() ;
             } else {
-                return City::newInstance()->listWhere("fk_i_region_id = %d", $region);
+                return City::newInstance()->findByRegion($region) ;
             }
         }
     }
@@ -832,6 +832,19 @@
         $location = Rewrite::newInstance()->get_location();
         $section = Rewrite::newInstance()->get_section();
         if($location=='item' && $section=='') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get if user is on search page
+     *
+     * @return boolean
+     */
+    function osc_is_search_page() {
+        $location = Rewrite::newInstance()->get_location();
+        if($location=='search') {
             return true;
         }
         return false;

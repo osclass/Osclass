@@ -1,8 +1,21 @@
+# MAC
 .DS_Store
+
 *.diff
 *.patch
+
 .htaccess
+
+# CONFIG OSClass
 config.php
+
 .gitignore
 dist
-oc-content/uploads/admin-blog_news.cache
+
+# oc-content
+oc-content/debug.log
+oc-content/queries.log
+oc-content/explain_queries.log
+oc-content/uploads/*
+
+oc-includes/osclass/t/config.php

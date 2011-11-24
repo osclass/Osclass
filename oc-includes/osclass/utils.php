@@ -35,6 +35,7 @@ function osc_deleteResource( $id ) {
         $resource_thum      = osc_base_path() . $resource['s_path'] .$resource['pk_i_id']."_*".".".$resource['s_extension'];
         array_map( "unlink" , glob($resource_thum));
         array_map( "unlink" , glob($resource_original));
+        osc_run_hook('delete_resource', $resource);
     }
 }
 
@@ -232,15 +233,36 @@ function osc_doRequest($url, $_data) {
 }
 
 function osc_sendMail($params) {
-    require_once osc_lib_path() . 'phpmailer/class.phpmailer.php';
+    if( key_exists('add_bcc', $params) ) {
+        if( !is_array($params['add_bcc']) ) {
+            $params['add_bcc'] = array($params['add_bcc']) ;
+        }
+    }
 
-    $mail = new PHPMailer(true);
+    require_once osc_lib_path() . 'phpmailer/class.phpmailer.php' ;
+
+    if( osc_mailserver_pop() ) {
+        require_once osc_lib_path() . 'phpmailer/class.pop3.php' ;
+        $pop = new POP3() ;
+        $pop->Authorise(
+                ( isset($params['host']) ) ? $params['host'] : osc_mailserver_host(),
+                ( isset($params['port']) ) ? $params['port'] : osc_mailserver_port(),
+                30,
+                ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username(),
+                ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username(),
+                0
+        );
+    }
+
+    $mail = new PHPMailer(true) ;
     try {
         $mail->CharSet = "utf-8";
 
         if (osc_mailserver_auth()) {
             $mail->IsSMTP() ;
             $mail->SMTPAuth = true ;
+        } else if(osc_mailserver_pop()) {
+            $mail->IsSMTP() ;
         }
 
         $mail->SMTPSecure = ( isset($params['ssl']) ) ? $params['ssl'] : osc_mailserver_ssl() ;
@@ -255,7 +277,13 @@ function osc_sendMail($params) {
         $mail->AltBody = ( isset($params['alt_body']) ) ? $params['alt_body'] : '' ;
         $to = ( isset($params['to']) ) ? $params['to'] : '' ;
         $to_name = ( isset($params['to_name']) ) ? $params['to_name'] : '' ;
-        if ( isset($params['add_bbc']) ) $mail->AddBCC($params['add_bbc']);
+
+        if ( key_exists('add_bcc', $params) ) {
+            foreach( $params['add_bcc'] as $bcc ) {
+                $mail->AddBCC($bcc) ;
+            }
+        }
+
         if ( isset($params['reply_to']) ) $mail->AddReplyTo($params['reply_to']);
 
         if( isset($params['attachment']) ) {
@@ -268,8 +296,10 @@ function osc_sendMail($params) {
         return true ;
 
     } catch (phpmailerException $e) {
+        error_log("osc_sendMail() cannot send email! ".$mail->ErrorInfo, 0);
         return false;
     } catch (Exception $e) {
+        error_log("osc_sendMail() cannot send email! ".$mail->ErrorInfo, 0);
         return false;
     }
     return false;
@@ -409,7 +439,7 @@ function osc_dbdump($path, $file) {
         $tables[$row[0]] = $row[0];
     }
 
-    $tables_order = array('t_locale', 't_country', 't_currency', 't_region', 't_city', 't_city_area', 't_widget', 't_admin', 't_user', 't_user_description', 't_category', 't_category_description', 't_category_stats', 't_item', 't_item_description', 't_item_location', 't_item_stats', 't_item_resource', 't_item_comment', 't_preference', 't_user_preferences', 't_pages', 't_pages_description', 't_plugin_category', 't_cron', 't_alerts', 't_keywords');
+    $tables_order = array('t_locale', 't_country', 't_currency', 't_region', 't_city', 't_city_area', 't_widget', 't_admin', 't_user', 't_user_description', 't_category', 't_category_description', 't_category_stats', 't_item', 't_item_description', 't_item_location', 't_item_stats', 't_item_resource', 't_item_comment', 't_preference', 't_user_preferences', 't_pages', 't_pages_description', 't_plugin_category', 't_cron', 't_alerts', 't_keywords', 't_meta_fields', 't_meta_categories', 't_item_meta');
     // Backup default OSClass tables in order, so no problem when importing them back
     foreach($tables_order as $table) {
         if(array_key_exists(DB_TABLE_PREFIX . $table, $tables)) {
@@ -1019,5 +1049,32 @@ function osc_save_permissions( $dir = ABS_PATH ) {
     }
     return $perms;
 }
+
+
+function osc_prepare_price($price) {
+    return $price/1000000;
+}
+
+/**
+ * Recursive glob function
+ *
+ * @param string $pattern
+ * @param string $flags
+ * @param string $path
+ * @return array of files
+ */
+function rglob($pattern, $flags = 0, $path = '') {
+    if (!$path && ($dir = dirname($pattern)) != '.') {
+        if ($dir == '\\' || $dir == '/') $dir = '';
+        return rglob(basename($pattern), $flags, $dir . '/');
+    }
+    $paths = glob($path . '*', GLOB_ONLYDIR | GLOB_NOSORT);
+    $files = glob($path . $pattern, $flags);
+    foreach ($paths as $p) $files = array_merge($files, rglob($pattern, $flags, $p . '/'));
+    return $files;
+}
+
+    
+
 
 ?>

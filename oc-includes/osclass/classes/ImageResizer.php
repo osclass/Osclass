@@ -1,5 +1,4 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
-
     /*
      *      OSCLass – software for creating and publishing online classified
      *                           advertising platforms
@@ -34,81 +33,83 @@
         private function __construct($imagePath) {
             if(!file_exists($imagePath)) throw new Exception("$imagePath does not exist!");
             if(!is_readable($imagePath)) throw new Exception("$imagePath is not readable!");
+            if(filesize($imagePath)==0) throw new Exception("$imagePath is corrupt or broken!");
 
-            $content = file_get_contents($imagePath);
-            $this->im = imagecreatefromstring($content);
+            if(osc_use_imagick()) {
+                $this->im = new Imagick($imagePath);                
+            } else {
+                $content = file_get_contents($imagePath);
+                $this->im = imagecreatefromstring($content);
+            }
 
             return $this;
         }
 
         public function __destruct() {
-            imagedestroy($this->im);
-        }
-
-        public function resizeToMax($size) {
-            $w = imagesx($this->im);
-            $h = imagesy($this->im);
-
-            if($w >= $h) {
-                //$newW = $size;
-                $newW = ($w > $size)? $size : $w;
-                $newH = $h * ($newW / $w);
+            if(osc_use_imagick()) {
+                $this->im->destroy();
             } else {
-                //$newH = $size;
-                $newH = ($h > $size)? $size : $h;
-                $newW = $w * ($newH / $h);
+                imagedestroy($this->im);
             }
-
-            $newIm = imagecreatetruecolor($newW, $newH);
-            imagealphablending($newIm, false);
-            $colorTransparent = imagecolorallocatealpha($newIm, 255, 255, 255, 127);
-            imagefill($newIm, 0, 0, $colorTransparent);
-            imagesavealpha($newIm, true);
-            imagecopyresized($newIm, $this->im, 0, 0, 0, 0, $newW, $newH, $w, $h);
-            imagedestroy($this->im);
-
-            $this->im = $newIm;
-
-            return $this;
         }
 
         public function resizeTo($width, $height) {
-            $w = imagesx($this->im);
-            $h = imagesy($this->im);
+            if(osc_use_imagick()) {
+                $bg = new Imagick();
+                $bg->newImage($width, $height, 'white');
+                
+                $this->im->thumbnailImage($width, $height, true);
+                $geometry = $this->im->getImageGeometry();
 
-            if(($w/$h)>=($width/$height)) {
-                //$newW = $width;
-                $newW = ($w > $width)? $width : $w;
-                $newH = $h * ($newW / $w);
+                $x = ( $width - $geometry['width'] ) / 2;
+                $y = ( $height - $geometry['height'] ) / 2;
+
+                $bg->compositeImage( $this->im, imagick::COMPOSITE_OVER, $x, $y );
+                $this->im = $bg;
             } else {
-                //$newH = $height;
-                $newH = ($h > $height)? $height : $h;
-                $newW = $w * ($newH / $h);
+                $w = imagesx($this->im);
+                $h = imagesy($this->im);
+
+                if(($w/$h)>=($width/$height)) {
+                    //$newW = $width;
+                    $newW = ($w > $width)? $width : $w;
+                    $newH = $h * ($newW / $w);
+                } else {
+                    //$newH = $height;
+                    $newH = ($h > $height)? $height : $h;
+                    $newW = $w * ($newH / $h);
+                }
+
+                $newIm = imagecreatetruecolor($width,$height);//$newW, $newH);
+                imagealphablending($newIm, false);
+                $colorTransparent = imagecolorallocatealpha($newIm, 255, 255, 255, 127);
+                imagefill($newIm, 0, 0, $colorTransparent);
+                imagesavealpha($newIm, true);
+                imagecopyresampled($newIm, $this->im, (($width-$newW)/2), (($height-$newH)/2), 0, 0, $newW, $newH, $w, $h);
+                imagedestroy($this->im);
+
+                $this->im = $newIm;
             }
-
-            $newIm = imagecreatetruecolor($width,$height);//$newW, $newH);
-            imagealphablending($newIm, false);
-            $colorTransparent = imagecolorallocatealpha($newIm, 255, 255, 255, 127);
-            imagefill($newIm, 0, 0, $colorTransparent);
-            imagesavealpha($newIm, true);
-            imagecopyresampled($newIm, $this->im, (($width-$newW)/2), (($height-$newH)/2), 0, 0, $newW, $newH, $w, $h);
-            imagedestroy($this->im);
-
-            $this->im = $newIm;
-
             return $this;
         }
 
         public function saveToFile($imagePath) {
             if(file_exists($imagePath) && !is_writable($imagePath)) throw new Exception("$imagePath is not writable!");
-
-            imagejpeg($this->im, $imagePath);
+            if(osc_use_imagick()) {
+                $this->im->setImageFileName($imagePath);
+                $this->im->writeImage();
+            } else {
+               imagejpeg($this->im, $imagePath);
+            }
         }
 
         public function show() {
-            header('Content-Disposition: Attachment;filename=image.png');
-            header('Content-type: image/png');
-            imagepng($this->im);
+            header('Content-Disposition: Attachment;filename=image.jpg');
+            header('Content-type: image/jpg');
+            if(osc_use_imagick()) {
+            } else {
+                imagepng($this->im);
+            }
         }
 
     }

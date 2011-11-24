@@ -157,6 +157,16 @@
     }
     
     /**
+     * Gets if a plugin is enabled or not
+     *
+     * @param string $plugin
+     * @return void
+     */
+    function osc_plugin_is_enabled($plugin) {
+        return Plugins::isEnabled($plugin);
+    }
+    
+    /**
      * Show the default configure view for plugins (attach them to categories)
      *
      * @param string $plugin

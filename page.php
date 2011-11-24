@@ -21,44 +21,50 @@
     {
         var $pageManager ;
 
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
 
-            //specific things for this class
             $this->pageManager = Page::newInstance() ;
         }
 
-        //Business Layer...
-        function doModel() {
-            $id = Params::getParam('id') ;
+        function doModel()
+        {
+            $id   = Params::getParam('id') ;
             $page = $this->pageManager->findByPrimaryKey($id) ;
             
-            if(empty($page) || $page['b_indelible'] == 1 ) {
+            if( $page == false) {
                 $this->do404() ;
-            } else {
-                if(file_exists(osc_themes_path() . osc_theme() . '/' . $page['s_internal_name'].".php")) {
-                    $this->doView($page['s_internal_name'].".php");
-                } else if(file_exists(osc_themes_path() . osc_theme() . '/pages/' . $page['s_internal_name'].".php")) {
-                    $this->doView("pages/".$page['s_internal_name'].".php");
-                } else {
-                    //calling the view...
-                    if( Params::getParam('lang') != '' ) {
-                        Session::newInstance()->_set('userLocale', Params::getParam('lang'));
-                    }
+                return ;
+            }
 
-                    $this->_exportVariableToView('page', $page) ;
-                    $this->doView('page.php') ;
+            if( $page['b_indelible'] == 1 ) {
+                $this->do404() ;
+                return ;
+            }
+
+            if(file_exists(osc_themes_path() . osc_theme() . '/' . $page['s_internal_name'].".php")) {
+                $this->doView($page['s_internal_name'].".php") ;
+            } else if( file_exists(osc_themes_path() . osc_theme() . '/pages/' . $page['s_internal_name'] . ".php") ) {
+                $this->doView("pages/".$page['s_internal_name'].".php") ;
+            } else {
+                if( Params::getParam('lang') != '' ) {
+                    Session::newInstance()->_set('userLocale', Params::getParam('lang')) ;
                 }
+
+                $this->_exportVariableToView('page', $page) ;
+                $this->doView('page.php') ;
             }
         }
 
-        //hopefully generic...
-        function doView($file) {
-            osc_run_hook("before_html");
+        function doView($file)
+        {
+            osc_run_hook("before_html") ;
             osc_current_web_theme_path($file) ;
-            Session::newInstance()->_clearVariables();
-            osc_run_hook("after_html");
+            Session::newInstance()->_clearVariables() ;
+            osc_run_hook("after_html") ;
         }
     }
 
+    /* file end: ./page.php */
 ?>

@@ -36,6 +36,24 @@
                     document.getElementById("mailserver_ssl").value = 'ssl';
                 }
             }
+            function sendEmail() {
+                var mail = $('#mail_delivery').val();
+                $.ajax({
+                    "url": "<?php echo osc_admin_base_url(true)?>?page=ajax&action=test_mail",
+                    "dataType": 'json',
+                    success: function( result ) {
+                        if(result.status == 1){
+                            $("fieldset.test_email div#flash_message").html(result.html);
+                            $("fieldset.test_email div#flash_message").css('background-color','green');
+                            $("fieldset.test_email div#flash_message").show();
+                        } else {
+                            $("fieldset.test_email div#flash_message").html(result.html);
+                            $("fieldset.test_email div#flash_message").css('background-color','pink');
+                            $("fieldset.test_email div#flash_message").show();
+                        }
+                    }
+                });
+            }
         </script>
         <div id="content">
             <div id="separator"></div>
@@ -94,6 +112,10 @@
                                         <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_mailserver_auth() ? 'checked="true"' : ''); ?> name="mailserver_auth" id="mailserver_auth" />
                                         <label for="mailserver_auth"><?php _e('Enable SMTP authentication'); ?></label>
                                     </p>
+                                    <p>
+                                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_mailserver_pop() ? 'checked="true"' : ''); ?> name="mailserver_pop" id="mailserver_pop" />
+                                        <label for="mailserver_pop"><?php _e('Use a POP before SMTP'); ?></label>
+                                    </p>
                                 </fieldset>
                             </div>
 
@@ -116,6 +138,19 @@
                                     </div>
                                     <?php }?>
                                     <?php }?>
+                                    
+                                </fieldset>
+                            </div>
+
+                            <div style="float: left; width: 50%;">
+                                <fieldset class="test_email">
+                                    <legend><?php _e('Test configuration'); ?></legend>
+                                    <p><?php _e('The email will be sent to contact email');?>: <?php echo osc_contact_email();?></p>
+                                    <p>
+                                        <button onclick="sendEmail();return false;"><?php _e('Send email');?></button>
+                                    </p>
+                                    <div id="flash_message" style="display: none;">
+                                    </div>
                                     
                                 </fieldset>
                             </div>

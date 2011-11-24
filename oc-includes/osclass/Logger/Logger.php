@@ -22,7 +22,6 @@
 
     abstract class Log
     {
-
         private function __construct() {}
 
         /**
@@ -54,7 +53,7 @@
          * @param <type> $message
          */
         abstract function fatal($message = '', $caller = null ) ;
-
     }
 
+    /* file end: ./oc-includes/osclass/Logger/Logger.php */
 ?>

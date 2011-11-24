@@ -45,6 +45,12 @@
                                                     case 'delete_all':      $this->itemCommentManager->delete(array(
                                                                                 DB_CUSTOM_COND => 'pk_i_id IN (' . implode(', ', $id) . ')'
                                                                             ));
+                                                                            foreach ($id as $_id) {
+                                                                                $iUpdated = $this->itemCommentManager->delete(array(
+                                                                                    'pk_i_id' => $_id
+                                                                                ));
+                                                                                osc_add_hook("delete_comment", $_id);
+                                                                            }
                                                                             osc_add_flash_ok_message( _m('The comments have been deleted'), 'admin') ;
                                                     break;
                                                     case 'activate_all':
@@ -56,6 +62,7 @@
                                                                                 if($iUpdated) {
                                                                                     $this->sendCommentActivated($_id);
                                                                                 }
+                                                                                osc_add_hook("activate_comment", $_id);
                                                                             }
                                                                             osc_add_flash_ok_message( _m('The comments have been approved'), 'admin') ;
                                                     break;
@@ -65,6 +72,7 @@
                                                                                     array('b_active' => 0),
                                                                                     array('pk_i_id' => $_id)
                                                                                 );
+                                                                                osc_add_hook("deactivate_comment", $_id);
                                                                             }
                                                                             osc_add_flash_ok_message( _m('The comments have been disapproved'), 'admin') ;
                                                     break;
@@ -77,6 +85,7 @@
                                                                                 if($iUpdated) {
                                                                                     $this->sendCommentActivated($_id);
                                                                                 }
+                                                                                osc_add_hook("enable_comment", $_id);
                                                                             }
                                                                             osc_add_flash_ok_message( _m('The comments have been approved'), 'admin') ;
                                                     break;
@@ -86,6 +95,7 @@
                                                                                     array('b_enabled' => 0),
                                                                                     array('pk_i_id' => $_id)
                                                                                 );
+                                                                                osc_add_hook("disable_comment", $_id);
                                                                             }
                                                                             osc_add_flash_ok_message( _m('The comments have been disapproved'), 'admin') ;
                                                     break;
@@ -109,24 +119,28 @@
                                                 if($iUpdated) {
                                                     $this->sendCommentActivated($id);
                                                 }
+                                                osc_add_hook("activate_comment", $id);
                                                 osc_add_flash_ok_message( _m('The comment has been approved'), 'admin');
                                             } else if($value=='INACTIVE') {
                                                 $iUpdated = $this->itemCommentManager->update(
                                                         array('b_active' => 1)
                                                         ,array('pk_i_id' => $id)
                                                 );
+                                                osc_add_hook("deactivate_comment", $id);
                                                 osc_add_flash_ok_message( _m('The comment has been disapproved'), 'admin');
                                             } else if($value=='ENABLE') {
                                                 $iUpdated = $this->itemCommentManager->update(
                                                         array('b_enabled' => 1)
                                                         ,array('pk_i_id' => $id)
                                                 );
+                                                osc_add_hook("enable_comment", $id);
                                                 osc_add_flash_ok_message( _m('The comment has been enabled'), 'admin');
                                             } else if($value=='DISABLE') {
                                                 $iUpdated = $this->itemCommentManager->update(
                                                         array('b_enabled' => 0)
                                                         ,array('pk_i_id' => $id)
                                                 );
+                                                osc_add_hook("disable_comment", $id);
                                                 osc_add_flash_ok_message( _m('The comment has been disabled'), 'admin');
                                             }
 
@@ -148,13 +162,14 @@
                                                     'pk_i_id' => Params::getParam('id')
                                                 ));
 
-                                            osc_run_hook('item_edit_post') ;
+                                            osc_run_hook('edit_comment', Params::getParam('id')) ;
 
                                             osc_add_flash_ok_message( _m('Great! We just updated your comment'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
                 break;
                 case 'delete':              $this->itemCommentManager->deleteByPrimaryKey( Params::getParam('id') );
                                             osc_add_flash_ok_message( _m('The comment have been deleted'), 'admin') ;
+                                            osc_run_hook('delete_comment', Params::getParam('id')) ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
                 break;
                 default:                    if( Params::getParam('id') != '' ){
@@ -182,40 +197,9 @@
             $aComment = $this->itemCommentManager->findByPrimaryKey($commentId);
             $aItem    = Item::newInstance()->findByPrimaryKey($aComment['fk_i_item_id']);
             View::newInstance()->_exportVariableToView('item', $aItem);
+            
+            osc_run_hook('hook_email_comment_validated', $aComment);
 
-            $mPages = new Page() ;
-            $locale = osc_current_user_locale() ;
-
-            $aPage = $mPages->findByInternalName('email_comment_validated') ;
-
-            $content = array() ;
-            if(isset($aPage['locale'][$locale]['s_title'])) {
-                $content = $aPage['locale'][$locale] ;
-            } else {
-                $content = current($aPage['locale']) ;
-            }
-
-            if (!is_null($content)) {
-                $words   = array();
-                $words[] = array('{COMMENT_AUTHOR}', '{COMMENT_EMAIL}',
-                                 '{COMMENT_TITLE}', '{COMMENT_BODY}',
-                                 '{WEB_URL}', '{ITEM_URL}',
-                                 '{ITEM_LINK}') ;
-                $words[] = array($aComment['s_author_name'], $aComment['s_author_email'],
-                                 $aComment['s_title'], $aComment['s_body'],
-                                 osc_base_url(), osc_item_url(),
-                                 '<a href="' . osc_item_url() . '">' . osc_item_url() . '</a>') ;
-                $title = osc_mailBeauty($content['s_title'], $words) ;
-                $body = osc_mailBeauty($content['s_text'], $words) ;
-
-                $emailParams = array('subject'  => $title
-                                     ,'to'       => $aComment['s_author_email']
-                                     ,'to_name'  => $aComment['s_author_name']
-                                     ,'body'     => $body
-                                     ,'alt_body' => $body
-                ) ;
-                osc_sendMail($emailParams) ;
-            }
         }
     }
 

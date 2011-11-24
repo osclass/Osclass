@@ -518,8 +518,9 @@ tr.even td{
     margin-top: 10px;
 }
 .pubMessages.ok { background-color:#9CDA9B; border: 0px;}
-.pubMessages.info { background-color:#FFF78D; border: 0px;}
+.pubMessages.info { background-color:#7EB3DF; border: 0px;}
 .pubMessages.error { background-color:#FFD2CF; border: 0px;}
+.pubMessages.warning { background-color:#FFF78D; border: 0px;}
 
 .dataTables_empty {
 	min-height: 300px;

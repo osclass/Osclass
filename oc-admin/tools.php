@@ -33,33 +33,44 @@
                 case 'import':          // calling import view
                                         $this->doView('tools/import.php');
                 break;
-                case 'import_post':     if( defined('DEMO') ) $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=import');
+                case 'import_post':     if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=import');
+                                        }
                                         // calling
                                         $sql = Params::getFiles('sql') ;
-                                        if(isset($sql['size']) && $sql['size']!=0) {
-                                            //dev.conquer: if the file es too big, we can have problems with the upload or with memory
+                                        if( isset($sql['size']) && $sql['size'] != 0 ) {
                                             $content_file = file_get_contents($sql['tmp_name']) ;
 
-                                            $conn = getConnection() ;
-                                            if ( $conn->osc_dbImportSQL($content_file) ) {
+                                            $conn = DBConnectionClass::newInstance() ;
+                                            $c_db = $conn->getOsclassDb() ;
+                                            $comm = new DBCommandClass($c_db) ;
+                                            if ( $comm->importSQL($content_file) ) {
                                                 osc_add_flash_ok_message( _m('Import complete'), 'admin') ;
                                             } else {
                                                 osc_add_flash_error_message( _m('There was a problem importing data to the database'), 'admin') ;
                                             }
                                         } else {
-                                                osc_add_flash_error_message( _m('No file was uploaded'), 'admin') ;
+                                            osc_add_flash_error_message( _m('No file was uploaded'), 'admin') ;
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=import') ;
                 break;
                 case 'images':          // calling images view
                                         $this->doView('tools/images.php') ;
                 break;
-                case 'images_post':     if( defined('DEMO') ) $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=images');
+                case 'images_post':     if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=images');
+                                        }
+                                        
                                         $preferences = Preference::newInstance()->toArray() ;
 
                                         $wat = new Watermark();
                                         $aResources = ItemResource::newInstance()->getAllResources();
                                         foreach($aResources as $resource) {
+                                            
+                                            osc_run_hook('regenerate_image', $resource);
+                                            
                                             $path = osc_content_path() . 'uploads/' ;
                                             // comprobar que no haya original
                                             $img_original = $path . $resource['pk_i_id']. "_original*";
@@ -68,9 +79,15 @@
                                             if( count($aImages) == 1 ) {
                                                 $image_tmp = $aImages[0] ;
                                             } else {
-                                                $img_thumbnail = $path . $resource['pk_i_id']. "_thumbnail*" ;
-                                                $aImages = glob( $img_thumbnail );
-                                                $image_tmp = $aImages[0] ;
+                                                $img_normal = $path . $resource['pk_i_id']. ".*" ;
+                                                $aImages = glob( $img_normal );
+                                                if( count($aImages) == 1 ) {
+                                                    $image_tmp = $aImages[0] ;
+                                                } else {
+                                                    $img_thumbnail = $path . $resource['pk_i_id']. "_thumbnail*" ;
+                                                    $aImages = glob( $img_thumbnail );
+                                                    $image_tmp = $aImages[0] ;
+                                                }
                                             }
                                             
                                             // extension
@@ -111,11 +128,14 @@
                                                                             'pk_i_id'       => $resource['pk_i_id']
                                                                         )
                                                 ) ;
-
+                                                osc_run_hook('regenerated_image', ItemResource::newInstance()->findByPrimaryKey($resource['pk_i_id']));
                                                 // si extension es direfente a jpg, eliminar las imagenes con $extension si hay
                                                 if( $extension != 'jpg' ) {
                                                     $files_to_remove = osc_content_path(). 'uploads/' . $resource['pk_i_id'] . "*" . $extension;
-                                                    array_map( "unlink", glob( $files_to_remove ) );
+                                                    $fs = glob( $files_to_remove );
+                                                    if(is_array($fs)) {
+                                                        array_map( "unlink", $fs );
+                                                    }
                                                 }
                                                 // ....
                                             } else {
@@ -133,7 +153,10 @@
                 case 'backup':
                                         $this->doView('tools/backup.php') ;
                 break;
-                case 'backup-sql':      if( defined('DEMO') ) $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
+                case 'backup-sql':      if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
+                                        }
                                         //databasse dump...
                                         if( Params::getParam('bck_dir') != '' ) {
                                             $path = trim( Params::getParam('bck_dir') ) ;
@@ -167,7 +190,10 @@
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
                 break;
-                case 'backup-zip':      if( defined('DEMO') ) $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
+                case 'backup-zip':      if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
+                                        }
                                         //zip of the code just to back it up
                                         if( Params::getParam('bck_dir') != '' ) {
                                             $archive_name = trim( Params::getParam('bck_dir') ) ;
@@ -193,6 +219,7 @@
                                         $this->doView('tools/backup.php');
                 break;
                 case 'maintenance':     if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
                                             $this->doView('tools/maintenance.php');
                                             break;
                                         }

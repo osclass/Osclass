@@ -36,6 +36,17 @@
         }
     }
 
+    if(!osc_users_enabled() && osc_is_web_user_logged_in()) {
+        Session::newInstance()->_drop('userId') ;
+        Session::newInstance()->_drop('userName') ;
+        Session::newInstance()->_drop('userEmail') ;
+        Session::newInstance()->_drop('userPhone') ;
+
+        Cookie::newInstance()->pop('oc_userId') ;
+        Cookie::newInstance()->pop('oc_userSecret') ;
+        Cookie::newInstance()->set() ;
+    }
+
     switch( Params::getParam('page') )
     {
         case ('cron'):      // cron system
@@ -44,7 +55,9 @@
         break;
         case ('user'):      // user pages (with security)
                             if(Params::getParam('action')=='change_email_confirm' || Params::getParam('action')=='activate_alert'
-                            || (Params::getParam('action')=='unsub_alert' && !osc_is_web_user_logged_in())) {
+                            || (Params::getParam('action')=='unsub_alert' && !osc_is_web_user_logged_in())
+                            || Params::getParam('action')=='contact_post'
+                            || Params::getParam('action')=='pub_profile') {
                                 require_once(osc_base_path() . 'user-non-secure.php') ;
                                 $do = new CWebUserNonSecure() ;
                                 $do->doModel() ;
