@@ -22,28 +22,28 @@
 
     class CAdminPlugins extends AdminSecBaseModel
     {
-        //specific for this class
-        private $pageManager ;
-
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
-
             //specific things for this class
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             parent::doModel() ;
 
             //specific things for this class
             switch ($this->action)
             {
-
                 case 'add':
                     $this->doView("plugins/add.php");
                     break;
                 case 'add_post':
-                    if( defined('DEMO') ) $this->redirectTo(osc_admin_base_url(true) . '?page=plugins');
+                    if( defined('DEMO') ) {
+                        osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                        $this->redirectTo(osc_admin_base_url(true) . '?page=plugins');
+                    }
                     $package = Params::getFiles("package");
                     if(isset($package['size']) && $package['size']!=0) {
                         $path = osc_plugins_path() ;
@@ -79,7 +79,7 @@
                     // CATCH FATAL ERRORS
                     $old_value = error_reporting(0);
                     register_shutdown_function(array($this, 'errorHandler'), $pn);
-                    $installed = Plugins::activate($pn);
+                    $installed = Plugins::install($pn);
                     
                     if($installed) {
                         //run this after installing the plugin
@@ -96,9 +96,36 @@
                     $pn = Params::getParam("plugin");
 
                     Plugins::runHook($pn.'_uninstall') ;
-                    Plugins::deactivate($pn);
+                    Plugins::uninstall($pn);
 
                     osc_add_flash_ok_message( _m('Plugin uninstalled'), 'admin');
+                    $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
+                    break;
+                case 'enable':
+                    $pn = Params::getParam("plugin");
+
+                    // CATCH FATAL ERRORS
+                    $old_value = error_reporting(0);
+                    register_shutdown_function(array($this, 'errorHandler'), $pn);
+                    $enabled = Plugins::activate($pn);
+                    
+                    if($enabled) {
+                        Plugins::runHook($pn.'_enable') ;
+                        osc_add_flash_ok_message( _m('Plugin enabled'), 'admin');
+                    } else {
+                        osc_add_flash_error_message( _m('Error: Plugin already enabled'), 'admin') ;
+                    }
+                    error_reporting($old_value);            
+
+                    $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
+                    break;
+                case 'disable':
+                    $pn = Params::getParam("plugin");
+
+                    Plugins::runHook($pn.'_disable') ;
+                    Plugins::deactivate($pn);
+
+                    osc_add_flash_ok_message( _m('Plugin disabled'), 'admin');
                     $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
                     break;
                 case 'admin':
@@ -187,12 +214,14 @@
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_current_admin_theme_path($file) ;
             Session::newInstance()->_clearVariables();
         }
 
-        function errorHandler($pn) {
+        function errorHandler($pn)
+        {
             if( false === is_null($aError = error_get_last()) ) {
                 Plugins::deactivate($pn);
                 osc_add_flash_error_message( sprintf(_m('There was a fatal error and the plugin was not installed.<br />Error: "%s" Line: %s<br/>File: %s'), $aError['message'], $aError['line'], $aError['file']), 'admin');

@@ -21,6 +21,6 @@
     <input type="hidden" name="option" value="stepone" />
     
     <div>
-        <?php _e('Please enter your Google Analytics', 'google_analytics'); ?> <label for="id" style="font-weight: bold;"><?php _e('Web property ID', 'google_analytics'); ?></label>: <input type="text" name="webid" id="webid" value="<?php echo $webid; ?>" /> <input type="submit" value="<?php _e('Save', 'google_analytics'); ?>" />
+        <?php _e('Please enter your Google Analytics', 'google_analytics'); ?> <label for="webid" style="font-weight: bold;"><?php _e('Web property ID', 'google_analytics'); ?></label>: <input type="text" name="webid" id="webid" value="<?php echo $webid; ?>" /> <input type="submit" value="<?php _e('Save', 'google_analytics'); ?>" />
     </div>
 </form>

@@ -150,6 +150,63 @@
     }
 
     /**
+     * Gets current locale's decimal point
+     *
+     * @return string
+     */
+    function osc_locale_dec_point() {
+        $aLocales = osc_get_locales();
+        $cLocale  = $aLocales[0];
+
+        foreach($aLocales as $locale) {
+            if($locale['pk_c_code'] == osc_current_user_locale()) {
+                $cLocale = $locale;
+                break;
+            }
+        }
+
+        return $cLocale['s_dec_point'] ;
+    }
+
+    /**
+     * Gets current locale's thousands separator
+     *
+     * @return string
+     */
+    function osc_locale_thousands_sep() {
+        $aLocales = osc_get_locales();
+        $cLocale  = $aLocales[0];
+
+        foreach($aLocales as $locale) {
+            if($locale['pk_c_code'] == osc_current_user_locale()) {
+                $cLocale = $locale;
+                break;
+            }
+        }
+
+        return $cLocale['s_thousands_sep'] ;
+    }
+
+    /**
+     * Gets current locale's number of decimals
+     *
+     * @return string
+     */
+    function osc_locale_num_dec() {
+        $aLocales = osc_get_locales();
+        $cLocale  = $aLocales[0];
+
+        foreach($aLocales as $locale) {
+            if($locale['pk_c_code'] == osc_current_user_locale()) {
+                $cLocale = $locale;
+                break;
+            }
+        }
+
+        return $cLocale['i_num_dec'] ;
+    }
+
+    /**
      * Gets list of enabled locales
      *
      * @return array

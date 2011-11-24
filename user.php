@@ -33,7 +33,7 @@
             switch( $this->action ) {
                 case('dashboard'):      //dashboard...
                                         $max_items = (Params::getParam('max_items')!='')?Params::getParam('max_items'):5;
-                                        $aItems = Item::newInstance()->findByUserIDEnabled(Session::newInstance()->_get('userId'), 0, $max_items);//Item::newInstance()->listWhere("fk_i_user_id = ".Session::newInstance()->_get('userId'));
+                                        $aItems = Item::newInstance()->findByUserIDEnabled(Session::newInstance()->_get('userId'), 0, $max_items);
                                         //calling the view...
                                         $this->_exportVariableToView('items', $aItems) ;
                                         $this->_exportVariableToView('max_items', $max_items) ;
@@ -44,15 +44,15 @@
                                         $aCountries = Country::newInstance()->listAll() ;
                                         $aRegions = array() ;
                                         if( $user['fk_c_country_code'] != '' ) {
-                                            $aRegions = Region::newInstance()->getByCountry( $user['fk_c_country_code'] ) ;
+                                            $aRegions = Region::newInstance()->findByCountry( $user['fk_c_country_code'] ) ;
                                         } elseif( count($aCountries) > 0 ) {
-                                            $aRegions = Region::newInstance()->getByCountry( $aCountries[0]['pk_c_code'] ) ;
+                                            $aRegions = Region::newInstance()->findByCountry( $aCountries[0]['pk_c_code'] ) ;
                                         }
                                         $aCities = array() ;
                                         if( $user['fk_i_region_id'] != '' ) {
-                                            $aCities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$user['fk_i_region_id']) ;
+                                            $aCities = City::newInstance()->findByRegion($user['fk_i_region_id']) ;
                                         } else if( count($aRegions) > 0 ) {
-                                            $aCities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$aRegions[0]['pk_i_id']) ;
+                                            $aCities = City::newInstance()->findByRegion($aRegions[0]['pk_i_id']) ;
                                         }
 
                                         //calling the view...
@@ -73,7 +73,7 @@
                                         $this->redirectTo( osc_user_profile_url() ) ;
                 break ;
                 case('alerts'):         //alerts
-                                        $aAlerts = Alerts::newInstance()->getAlertsFromUser( Session::newInstance()->_get('userId') ) ;
+                                        $aAlerts = Alerts::newInstance()->findByUser( Session::newInstance()->_get('userId') ) ;
                                         $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId'));
                                         foreach($aAlerts as $k => $a) {
                                             $search = osc_unserialize(base64_decode($a['s_search'])) ;
@@ -111,35 +111,8 @@
                                                             ,array( 'pk_i_id' => Session::newInstance()->_get('userId') )
                                                         );
 
-                                                        $locale = osc_current_user_locale() ;
-                                                        $aPage = Page::newInstance()->findByInternalName('email_new_email') ;
-                                                        if(isset($aPage['locale'][$locale]['s_title'])) {
-                                                            $content = $aPage['locale'][$locale] ;
-                                                        } else {
-                                                            $content = current($aPage['locale']) ;
-                                                        }
-
-                                                        if (!is_null($content)) {
-                                                            $validation_url = osc_change_user_email_confirm_url( Session::newInstance()->_get('userId'), $code ) ;
-
-                                                            $words = array() ;
-                                                            $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{WEB_TITLE}', '{VALIDATION_LINK}', '{VALIDATION_URL}') ;
-                                                            $words[] = array(Session::newInstance()->_get('userName'), Params::getParam('new_email'), '<a href="' . osc_base_url() . '" >' . osc_base_url() . '</a>', osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url ) ;
-                                                            $title = osc_mailBeauty($content['s_title'], $words) ;
-                                                            $body = osc_mailBeauty($content['s_text'], $words) ;
-
-                                                            $params = array(
-                                                                'subject' => $title
-                                                                ,'to' => Params::getParam('new_email')
-                                                                ,'to_name' => Session::newInstance()->_get('userName')
-                                                                ,'body' => $body
-                                                                ,'alt_body' => $body
-                                                            ) ;
-                                                            osc_sendMail($params) ;
-                                                            osc_add_flash_ok_message( _m('We have sent you an e-mail. Follow the instructions to validate the changes')) ;
-                                                        } else {
-                                                            osc_add_flash_error_message( _m('We tried to sent you an e-mail, but it failed. Please, contact the administrator')) ;
-                                                        }
+                                                        $validation_url = osc_change_user_email_confirm_url( Session::newInstance()->_get('userId'), $code ) ;
+                                                        osc_run_hook('hook_email_new_email', Params::getParam('new_email'), $validation_url);
                                                         $this->redirectTo( osc_user_profile_url() ) ;
                                                     } else {
                                                         osc_add_flash_error_message( _m('The specified e-mail is already in use')) ;
@@ -154,7 +127,7 @@
                                                 $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId') ) ;
 
                                                 if( (Params::getParam('password') == '') || (Params::getParam('new_password') == '') || (Params::getParam('new_password2') == '') ) {
-                                                    osc_add_flash_error_message( _m('Password cannot be blank')) ;
+                                                    osc_add_flash_warning_message( _m('Password cannot be blank')) ;
                                                     $this->redirectTo( osc_change_user_password_url() ) ;
                                                 }
 

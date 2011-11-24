@@ -82,7 +82,11 @@
                                 <fieldset>
                                     <legend><?php _e('Notifications') ; ?></legend>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_notify_new_comment() ? 'checked="true"' : ''); ?> name="notify_new_comment" id="notify_new_comment" value="1" />
-                                    <label for="notify_new_comment"><?php _e('Notify when there\'s a new comment'); ?></label>
+                                    <label for="notify_new_comment"><?php _e('Notify admin when there\'s a new comment'); ?></label>
+                                    <br/>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_notify_new_comment_user() ? 'checked="true"' : ''); ?> name="notify_new_comment_user" id="notify_new_comment_user" value="1" />
+                                    <label for="notify_new_comment_user"><?php _e('Notify user when there\'s a new comment'); ?></label>
+                                    <br/>
                                 </fieldset>
                             </div>
                             <div style="clear: both;"></div>

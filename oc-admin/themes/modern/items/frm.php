@@ -47,6 +47,25 @@
                 }
             });
         </script>
+        <script type="text/javascript">
+            setInterval("uniform_input_file()", 250);
+            function uniform_input_file(){
+                photos_div = $('div.photos');
+                $('div',photos_div).each(
+                    function(){
+                        if( $(this).find('div.uploader').length == 0  ){
+                            divid = $(this).attr('id');
+                            if(divid != 'photos'){
+                                divclass = $(this).hasClass('box');
+                                if( !$(this).hasClass('box') & !$(this).hasClass('uploader') & !$(this).hasClass('row')){
+                                    $("div#"+$(this).attr('id')+" input:file").uniform({fileDefaultText: fileDefaultText,fileBtnText: fileBtnText});
+                                }
+                            }
+                        }
+                    }
+                );
+            }
+        </script>
         <?php ItemForm::location_javascript_new('admin'); ?>
         <?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript(); ?>
         <div id="content">
@@ -107,7 +126,7 @@
                         <?php } ?>
 
                         <?php if(osc_images_enabled_at_items()) { ?>
-                            <div>
+                            <div class="photos">
                                 <h2><?php _e('Photos') ; ?></h2>
                                 <?php ItemForm::photos(); ?>
                                 <div id="photos">

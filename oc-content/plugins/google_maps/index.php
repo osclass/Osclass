@@ -3,7 +3,7 @@
 Plugin Name: Google Maps
 Plugin URI: http://www.osclass.org/
 Description: This plugin shows a Google Map on the location space of every item.
-Version: 2.1.3
+Version: 2.1.4
 Author: OSClass & kingsult
 Author URI: http://www.osclass.org/
 Plugin update URI: http://www.osclass.org/files/plugins/google_maps/update.php
@@ -23,9 +23,10 @@ Plugin update URI: http://www.osclass.org/files/plugins/google_maps/update.php
     function insert_geo_location($catId, $itemId) {
         $aItem = Item::newInstance()->findByPrimaryKey($itemId);
         $sAddress = (isset($aItem['s_address']) ? $aItem['s_address'] : '');
-        $sRegion = (isset($aItem['s_region']) ? $aItem['s_region'] : '');
         $sCity = (isset($aItem['s_city']) ? $aItem['s_city'] : '');
-        $address = sprintf('%s, %s %s', $sAddress, $sRegion, $sCity);
+        $sRegion = (isset($aItem['s_region']) ? $aItem['s_region'] : '');
+        $sCountry = (isset($aItem['s_country']) ? $aItem['s_country'] : '');
+        $address = sprintf('%s, %s, %s, %s', $sAddress, $sCity, $sRegion, $sCountry);
         $response = osc_file_get_contents(sprintf('http://maps.google.com/maps/geo?q=%s&output=json&sensor=false', urlencode($address)));
         $jsonResponse = json_decode($response);
         if (isset($jsonResponse->Placemark) && count($jsonResponse->Placemark[0]) > 0) {

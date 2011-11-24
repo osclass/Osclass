@@ -33,7 +33,11 @@
      * @return string sanitized
      */
     function osc_sanitize_url($value) {
-        return filter_var($value, FILTER_SANITIZE_URL);
+        if(!function_exists('filter_var')) { 
+            return preg_replace('|([^a-zA-Z0-9\$\-\_\.\+!\*\'\(\),{}\|\^~\[\]`"#%;\/\?:@=<>\\\&]*)|', '', $value);
+        } else {
+            return filter_var($value, FILTER_SANITIZE_URL);
+        }
     }
 
 

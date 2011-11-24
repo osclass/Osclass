@@ -17,11 +17,14 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    define('IS_AJAX', true) ;
+
     class CAdminAjax extends AdminSecBaseModel {
 
         function __construct()
         {
             parent::__construct();
+            $this->ajax = true ;
         }
 
         //Business Layer...
@@ -32,11 +35,11 @@
                 case 'bulk_actions':
                     break;
                 case 'regions': //Return regions given a countryId
-                    $regions = Region::newInstance()->getByCountry(Params::getParam("countryId"));
+                    $regions = Region::newInstance()->findByCountry(Params::getParam("countryId"));
                     echo json_encode($regions);
                     break;
                 case 'cities': //Returns cities given a regionId
-                    $cities = City::newInstance()->getByRegion(Params::getParam("regionId"));
+                    $cities = City::newInstance()->findByRegion(Params::getParam("regionId"));
                     echo json_encode($cities);
                     break;
                 case 'location': // This is the autocomplete AJAX
@@ -81,7 +84,11 @@
                     break;
                 case 'items': // Return items (use external file oc-admin/ajax/item_processing.php)
                     require_once osc_admin_base_path() . 'ajax/items_processing.php';
-                    $items_processing = new items_processing_ajax(Params::getParamsAsArray("get"));
+                    $items_processing = new ItemsProcessingAjax(Params::getParamsAsArray("get"));
+                    break;
+                case 'media': // Return items (use external file oc-admin/ajax/media_processing.php)
+                    require_once osc_admin_base_path() . 'ajax/media_processing.php';
+                    $media_processing = new MediaProcessingAjax(Params::getParamsAsArray("get"));
                     break;
                 case 'categories_order': // Save the order of the categories
                     $aIds = Params::getParam('list');
@@ -93,12 +100,12 @@
 
                     foreach ($aIds as $id => $parent) {
                         if ($parent == 'root') {
-                            if (!$catManager->update_order($id, $orderParent)) {
+                            if (!$catManager->updateOrder($id, $orderParent)) {
                                 $error = 1;
                             }
                             // set parent category 
                             $conditions = array('pk_i_id' => $id);
-                            $array['fk_i_parent_id'] = DB_CONST_NULL;
+                            $array['fk_i_parent_id'] = NULL;
                             if (!$catManager->update($array, $conditions) > 0) {
                                 $error = 1;
                             }
@@ -108,7 +115,7 @@
                                 $catParent = $parent;
                                 $orderSub = 0;
                             }
-                            if (!$catManager->update_order($id, $orderSub)) {
+                            if (!$catManager->updateOrder($id, $orderSub)) {
                                 $error = 1;
                             }
 
@@ -135,9 +142,9 @@
                     echo $result;
                     break;
                 case 'category_edit_iframe':
-                    $this->_exportVariableToView("category", Category::newInstance()->findByPrimaryKey(Params::getParam("id")));
-                    $this->_exportVariableToView("languages", OSCLocale::newInstance()->listAllEnabled());
-                    $this->doView("categories/iframe.php");
+                    $this->_exportVariableToView( 'category', Category::newInstance()->findByPrimaryKey( Params::getParam("id") ) ) ;
+                    $this->_exportVariableToView( 'languages', OSCLocale::newInstance()->listAllEnabled() ) ;
+                    $this->doView("categories/iframe.php") ;
                     break;
                 case 'field_categories_iframe':
                     $selected = Field::newInstance()->categories(Params::getParam("id"));
@@ -158,7 +165,7 @@
                                 Field::newInstance()->cleanCategoriesFromField(Params::getParam("id"));
                                 $slug = Params::getParam("field_slug") != '' ? Params::getParam("field_slug") : Params::getParam("id");
                                 $slug = preg_replace('|([-]+)|', '-', preg_replace('|[^a-z0-9_-]|', '-', strtolower($slug)));
-                                Field::newInstance()->update(array('s_name' => Params::getParam("s_name"), 'e_type' => Params::getParam("field_type"), 's_slug' => $slug, 'b_required' => Params::getParam("field_required") == "1" ? 1 : 0), array('pk_i_id' => Params::getParam("id")));
+                                Field::newInstance()->update(array('s_name' => Params::getParam("s_name"), 'e_type' => Params::getParam("field_type"), 's_slug' => $slug, 'b_required' => Params::getParam("field_required") == "1" ? 1 : 0, 's_options' => Params::getParam('s_options')), array('pk_i_id' => Params::getParam("id")));
                                 Field::newInstance()->insertCategories(Params::getParam("id"), Params::getParam("categories"));
                             } else {
                                 $error = 1;
@@ -209,59 +216,68 @@
                     echo $result;
                     break;
                 case 'enable_category':
-                    $id = Params::getParam("id");
-                    $enabled = (Params::getParam("enabled") != '') ? Params::getParam("enabled") : 0;
-                    $error = 0;
-                    $aUpdated = "";
-                    try {
-                        if ($id != '') {
-                            $categoryManager = Category::newInstance();
-                            $categoryManager->update(array('b_enabled' => $enabled), array('pk_i_id' => $id));
-                            if ($enabled == 1) {
-                                $msg = __('The category has been enabled');
-                            } else {
-                                $msg = __('The category has been disabled');
-                            }
+                    $id       = Params::getParam("id") ;
+                    $enabled  = (Params::getParam("enabled") != '') ? Params::getParam("enabled") : 0 ;
+                    $error    = 0 ;
+                    $result   = array() ;
+                    $aUpdated = array() ;
 
-                            $categoryManager->update(array('b_enabled' => $enabled), array('fk_i_parent_id' => $id));
-                            $aUpdated = $categoryManager->listWhere("fk_i_parent_id = $id");
-                            if ($enabled == 1) {
-                                $msg .= "<br>" . __('The subcategories has been enabled');
-                            } else {
-                                $msg .= "<br>" . __('The subcategories has been disabled');
-                            }
-                        } else {
-                            $error = 1;
-                            $msg = __('There was a problem with this page. The ID for the category hasn\'t been set');
-                        }
-                        $message = $msg;
-                    } catch (Exception $e) {
-                        $error = 1;
-                        $message = __('Error: %s') . " " . $e->getMessage();
+                    $mCategory = Category::newInstance() ;
+                    $aCategory = $mCategory->findByPrimaryKey( $id ) ;
+
+                    if( $aCategory == false ) {
+                        $result = array( 'error' => sprintf( __("It doesn't exist a category with this id: %d"), $id) ) ;
+                        echo json_encode($result) ;
+                        break ;
                     }
 
-                    $result = "{";
-                    $error = 0;
+                    // root category
+                    if( $aCategory['fk_i_parent_id'] == '' ) {
+                        $mCategory->update( array('b_enabled' => $enabled), array('pk_i_id'        => $id) ) ;
+                        $mCategory->update( array('b_enabled' => $enabled), array('fk_i_parent_id' => $id) ) ;
 
-                    if ($error) {
-                        $result .= '"error" : "' . $message . '"';
+                        $subCategories = $mCategory->findSubcategories( $id ) ;
+
+                        $aUpdated[] = array('id' => $id) ;
+                        foreach( $subCategories as $subcategory ) {
+                            $aUpdated[] = array( 'id' => $subcategory['pk_i_id'] ) ;
+                        }
+
+                        if( $enabled ) {
+                            $result = array(
+                                'ok' => __('The category and its subcategories have been enabled')
+                            ) ;
+                        } else {
+                            $result = array(
+                                'ok' => __('The category and its subcategories have been disabled')
+                            ) ;
+                        }
+                        $result['affectedIds'] = $aUpdated ;
+                        echo json_encode($result) ;
+                        break ;
+                    }
+
+                    // subcategory
+                    $parentCategory = $mCategory->findRootCategory( $id ) ;
+                    if( !$parentCategory['b_enabled'] ) {
+                        $result = array( 'error' => __('Parent category is disabled, you can not enable that category') ) ;
+                        echo json_encode( $result ) ;
+                        break ;
+                    }
+
+                    $mCategory->update( array('b_enabled' => $enabled), array('pk_i_id' => $id) ) ;
+                    if( $enabled ) {
+                        $result = array(
+                            'ok' => __('The subcategory has been enabled')
+                        ) ;
                     } else {
-                        $result .= '"ok" : "' . $message . '"';
-                        if (count($aUpdated) > 0) {
-                            $result .= ', "afectedIds": [';
-                            foreach ($aUpdated as $category) {
-                                $result .= '{ "id" : "' . $category['pk_i_id'] . '" },';
-                            }
-                            $result = substr($result, 0, -1);
-                            $result .= ']';
-                        } else {
-                            $result .= ', "afectedIds": []';
-                        }
+                        $result = array(
+                            'ok' => __('The subcategory has been disabled')
+                        ) ;
                     }
-                    $result .= "}";
-
-                    echo $result;
-                    break;
+                    $result['affectedIds'] = array( array('id' => $id) ) ;
+                    echo json_encode($result) ;
+                    break ;
                 case 'delete_category':
                     $id = Params::getParam("id");
                     $error = 0;
@@ -294,15 +310,18 @@
                     $fields['i_expiration_days'] = (Params::getParam("i_expiration_days") != '') ? Params::getParam("i_expiration_days") : 0;
 
                     $error = 0;
+                    $has_one_title = 0;
                     $postParams = Params::getParamsAsArray();
                     foreach ($postParams as $k => $v) {
                         if (preg_match('|(.+?)#(.+)|', $k, $m)) {
                             if ($m[2] == 's_name') {
                                 if ($v != "") {
+                                    $has_one_title = 1;
                                     $aFieldsDescription[$m[1]][$m[2]] = $v;
+                                    $s_text = $v;
                                 } else {
+                                    $aFieldsDescription[$m[1]][$m[2]] = ' ';
                                     $error = 1;
-                                    $message = __("All titles are required");
                                 }
                             } else {
                                 $aFieldsDescription[$m[1]][$m[2]] = $v;
@@ -311,27 +330,28 @@
                     }
 
                     $l = osc_language();
-                    if (!$error) {
+                    if ($error==0 || ($error==1 && $has_one_title==1)) {
                         try {
                             $categoryManager = Category::newInstance();
-                            $categoryManager->updateByPrimaryKey($fields, $aFieldsDescription, $id);
+                            $categoryManager->updateByPrimaryKey(array('fields' => $fields, 'aFieldsDescription' => $aFieldsDescription), $id);
                         } catch (Exception $e) {
-                            $error = 1;
-                            $message = __("Error while updating.");
+                            $error = 2;
                         }
                     }
-
-                    $result = "{";
-                    if ($error) {
-                        $result .= '"error" : "';
-                        $result .= $message;
-                        $result .= '"';
-                    } else {
-                        $result .= '"ok" : "' . __("Saved") . '", "text" : "' . $aFieldsDescription[$l]['s_name'] . '"';
+                    
+                    if($error==0) {
+                        $msg = __("Category updated correctly");
+                    } else if($error==1) {
+                        if($has_one_title==1) {
+                            $error = 4;
+                            $msg = __('Category updated correctly, but some titles were empty');
+                        } else {
+                            $msg = __('Sorry, at least a title is needed');
+                        }
+                    } else if($error==2) {
+                        $msg = __('Error while updating');
                     }
-                    $result .= "}";
-
-                    echo $result;
+                    echo json_encode(array('error' => $error, 'msg' => $msg, 'text' => $aFieldsDescription[$l]['s_name']));
                     break;
                 case 'custom': // Execute via AJAX custom file
                     $ajaxfile = Params::getParam("ajaxfile");
@@ -341,7 +361,100 @@
                         echo json_encode(array('error' => __('no action defined')));
                     }
                     break;
+                case 'test_mail':
+                    $title = __('Test email').", ".osc_page_title();
+                    $body  = __("Test email")."<br><br>".osc_page_title();
 
+                    $emailParams = array(
+                                'subject'  => $title
+                                ,'to'       => osc_contact_email()
+                                ,'to_name'  => 'admin'
+                                ,'body'     => $body
+                                ,'alt_body' => $body
+                    ) ;
+
+                    $array = array();
+                    if( osc_sendMail($emailParams) ) {
+                        $array = array('status' => '1', 'html' => __('Email sent successfully'));
+                    } else {
+                        $array = array('status' => '0', 'html' => __('An error has occurred while sending email'));
+                    }
+                    echo json_encode($array);
+                    break;
+                case 'order_pages':
+                    $order = Params::getParam("order");
+                    $id    = Params::getParam("id");
+                    $count = osc_count_static_pages();
+                    if($order != '' && $id != '') {
+                        $mPages = Page::newInstance();
+                        $actual_page  = $mPages->findByPrimaryKey($id);
+                        $actual_order = $actual_page['i_order'];
+
+                        $array     = array();
+                        $condition = array();
+                        $new_order = $actual_order;
+
+                        if($order == 'up') {
+                            if($actual_order > 0) {
+                                $new_order = $actual_order-1;
+                            }
+                        } else if($order == 'down') {
+                            if($actual_order != ($count-1)) {
+                                $new_order = $actual_order+1;
+                            }
+                        }
+                        if($new_order != $actual_order) {
+                            $auxpage = $mPages->findByOrder($new_order);
+
+                            $array      = array('i_order' => $actual_order );
+                            $conditions = array('pk_i_id' => $auxpage['pk_i_id']);
+                            $mPages->update($array, $conditions);
+
+                            $array      = array('i_order' => $new_order );
+                            $conditions = array('pk_i_id' => $id);
+                            $mPages->update($array, $conditions);
+
+                        } else {
+                            
+                        }
+                        
+                        // json for datatables
+                        $prefLocale = osc_current_admin_locale();
+                        $aPages = $mPages->listAll(0);
+                        $json = "[";
+                        foreach($aPages as $key => $page) {
+
+                            $body = array();
+                            
+                            if(isset($page['locale'][$prefLocale]) && !empty($page['locale'][$prefLocale]['s_title'])) {
+                                $body = $page['locale'][$prefLocale];
+                            } else {
+                                $body = current($page['locale']);
+                            }
+                            $p_body =  str_replace("'", "\'", trim(strip_tags($body['s_title']), "\x22\x27"));
+
+                            $json .= "[\"<input type='checkbox' name='id[]' value='". $page['pk_i_id'] ."' />\",";
+                            $json .= "\"".$page['s_internal_name']."<div id='datatables_quick_edit'>";
+                            $json .= "<a href='". osc_static_page_url() ."'>". __('View page') ."</a> | ";
+                            $json .= "<a href='". osc_admin_base_url(true) ."?page=pages&action=edit&id=". $page['pk_i_id'] ."'>";
+                            $json .= __('Edit') ."</a>";
+                            if(!$page['b_indelible']) {
+                                $json .= " | ";
+                                $json .= "<a onclick=\\\"javascript:return confirm('";
+                                $json .= __('This action can\\\\\'t be undone. Are you sure you want to continue?') ."')\\\" ";
+                                $json .= " href='". osc_admin_base_url(true) ."?page=pages&action=delete&id=". $page['pk_i_id'] ."'>";
+                                $json .= __('Delete') ."</a>";
+                            }
+                            $json .= "</div>\",";
+                            $json .= "\"".$p_body."\",";
+                            $json .= "\"<img id='up' onclick='order_up(". $page['pk_i_id'] .");' style='cursor:pointer;width:15;height:15px;' src='". osc_current_admin_theme_url('images/arrow_up.png') ."'/> <br/> <img id='down' onclick='order_down(". $page['pk_i_id'] .");' style='cursor:pointer;width:15;height:15px;' src='". osc_current_admin_theme_url('images/arrow_down.png')."'/>\"]";
+
+                            if( $key != count($aPages)-1 ){ $json .= ','; } else { $json .= ''; }
+                        }
+                        $json .= "]";
+                        echo $json;
+                    }
+                    break;
 
                 /******************************
                  ** COMPLETE UPGRADE PROCESS **
@@ -412,8 +525,12 @@
                                         $error_queries = array();
                                         if (file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
                                             $sql = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
-                                            $conn = getConnection();
-                                            $error_queries = $conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql));
+                                            
+                                            $conn = DBConnectionClass::newInstance();
+                                            $c_db = $conn->getOsclassDb() ;
+                                            $comm = new DBCommandClass( $c_db ) ;
+                                            $error_queries = $comm->updateDB( str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ) ;
+                                            
                                         }
                                         if ($error_queries[0]) { // Everything is OK, continue
                                             /**********************************

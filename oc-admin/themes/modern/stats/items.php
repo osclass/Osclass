@@ -91,7 +91,7 @@
                         <tr>
                             <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo $i['pk_i_id']; ?></a></td>
                             <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo $i['s_title']; ?></a></td>
-                            <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo $i['s_contact_name'] . " - " . $i['s_contact_email']; ?></a></td>
+                            <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo $i['s_contact_email']; ?></a></td>
                             <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo ($i['b_active']==1)?__('Active'):__('Inactive'); ?></a></td>
                         </tr>
                         <?php }; ?>

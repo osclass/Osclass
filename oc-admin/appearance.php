@@ -33,7 +33,10 @@
                     $this->doView("appearance/add.php");
                 break;
                 case 'add_post':
-                    if( defined('DEMO') ) $this->redirectTo(osc_admin_base_url(true) . '?page=appearance');
+                    if( defined('DEMO') ) {
+                        osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                        $this->redirectTo(osc_admin_base_url(true) . '?page=appearance');
+                    }
                     $filePackage = Params::getFiles('package');
                     if(isset($filePackage['size']) && $filePackage['size']!=0) {
                         $path = osc_themes_path() ;
@@ -123,6 +126,7 @@
                             ,array('s_section' => 'osclass', 's_name' => 'theme')
                     );
                     osc_add_flash_ok_message( _m('Theme activated correctly'), 'admin');
+                    osc_run_hook("theme_activate", Params::getParam('theme'));
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
                 break;
                 default:

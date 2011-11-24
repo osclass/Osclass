@@ -3,7 +3,7 @@
 Plugin Name: Google Analytics
 Plugin URI: http://www.osclass.org/
 Description: This plugin adds the Google Analytics script at the footer of every page.
-Version: 2.1.1
+Version: 2.1.4
 Author: OSClass
 Author URI: http://www.osclass.org/
 Plugin update URI: http://www.osclass.org/files/plugins/google_analytics/update.php
@@ -14,15 +14,10 @@ Plugin update URI: http://www.osclass.org/files/plugins/google_analytics/update.
         $fields["s_section"] = 'plugin-google_analytics' ;
         $fields["s_name"]    = 'google_analytics_id' ;
         $fields["e_type"]    = 'STRING' ;
-
-        $conn = getConnection(); 
-        $conn->autocommit(true);
         Preference::newInstance()->insert($fields) ;
     }
 
     function google_analytics_call_after_uninstall() {
-        $conn = getConnection(); 
-        $conn->autocommit(true);
         Preference::newInstance()->delete( array("s_section" => "plugin-google_analytics", "s_name" => "google_analytics_id") ) ;
     }
 

@@ -108,6 +108,27 @@
     }
 
     /**
+     * Gets user's profile url
+     *
+     * @return string
+     */
+    function osc_user_public_profile_url($id = null) {
+        if($id==null) {
+            $id = osc_user_id();
+        }
+        if ($id != '') {
+            if ( osc_rewrite_enabled() ) {
+                $path = osc_base_url() . 'user/profile/' . $id;
+            } else {
+                $path = sprintf(osc_base_url(true) . '?page=user&action=pub_profile&id=%d', $id) ;
+            }
+        } else {
+            $path = '' ;
+        }
+        return $path ;
+    }
+
+    /**
      * Gets true if admin user is logged in
      *
      * @return boolean
@@ -244,7 +265,7 @@
      *
      * @return string
      */
-    function osc_user_phone_moble() {
+    function osc_user_phone_mobile() {
         return (string) osc_user_field("s_phone_mobile");
     }
 

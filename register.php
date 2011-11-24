@@ -1,4 +1,4 @@
-<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
 
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
@@ -19,30 +19,39 @@
 
     class CWebRegister extends BaseModel
     {
-
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
+
             if( !osc_users_enabled() ) {
                 osc_add_flash_error_message( _m('Users not enabled') ) ;
-                $this->redirectTo(osc_base_url(true));
+                $this->redirectTo( osc_base_url(true) ) ;
             }
 
             if( !osc_user_registration_enabled() ) {
                 osc_add_flash_error_message( _m('User registration is not enabled') ) ;
-                $this->redirectTo(osc_base_url(true));
+                $this->redirectTo( osc_base_url(true) ) ;
             }
         }
 
-        //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             switch( $this->action ) {
                 case('register'):       //register user
                                         $this->doView('user-register.php') ;
                 break;
                 case('register_post'):  //register user
+                                        if( !osc_users_enabled() ) {
+                                            osc_add_flash_error_message( _m('Users are not enabled') ) ;
+                                            $this->redirectTo( osc_base_url() ) ;
+                                        }
+
+                                        osc_run_hook('before_user_register') ;
+
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $userActions = new UserActions(false) ;
-                                        $success = $userActions->add() ;
+                                        $success     = $userActions->add() ;
+
                                         switch($success) {
                                             case 1: osc_add_flash_ok_message( _m('The user has been created. An activation email has been sent')) ;
                                                     $this->redirectTo( osc_base_url() ) ;
@@ -50,83 +59,67 @@
                                             case 2: osc_add_flash_ok_message( _m('Your account has been created successfully')) ;
                                                     $this->doView('user-login.php') ;
                                             break;
-                                            case 3: osc_add_flash_error_message( _m('The specified e-mail is already in use')) ;
+                                            case 3: osc_add_flash_warning_message( _m('The specified e-mail is already in use')) ;
                                                     $this->doView('user-register.php') ;
                                             break;
                                             case 4: osc_add_flash_error_message( _m('The reCAPTCHA was not introduced correctly')) ;
                                                     $this->doView('user-register.php') ;
                                             break;
-                                            case 5: osc_add_flash_error_message( _m('The email is not valid')) ;
+                                            case 5: osc_add_flash_warning_message( _m('The email is not valid')) ;
+                                                    $this->doView('user-register.php') ;
+                                            break;
+                                            case 6: osc_add_flash_warning_message( _m('The password cannot be empty')) ;
+                                                    $this->doView('user-register.php') ;
+                                            break;
+                                            case 7: osc_add_flash_warning_message( _m("Passwords don't match")) ;
                                                     $this->doView('user-register.php') ;
                                             break;
                                         }
                 break;
                 case('validate'):       //validate account
-                                        $id = intval( Params::getParam('id') ) ;
-                                        $code = Params::getParam('code') ;
+                                        $id          = intval( Params::getParam('id') ) ;
+                                        $code        = Params::getParam('code') ;
                                         $userManager = new User() ;
-                                        $user = $userManager->findByIdSecret($id, $code) ;
-                                            
-                                        if ($user) {
-                                            if ($user['b_active']==0) {
-                                                $userManager = new User() ;
-                                                $userManager->update(
-                                                        array('b_active' => '1')
-                                                        ,array('pk_i_id' => $id, 's_secret' => $code)
-                                                ) ;
-                                                
-                                                $pageManager = new Page() ;
-                                                $locale = osc_current_user_locale() ;
-                                                $aPage = $pageManager->findByInternalName('email_user_registration') ;
-                                                $content = array() ;
-                                                if(isset($aPage['locale'][$locale]['s_title'])) {
-                                                    $content = $aPage['locale'][$locale] ;
-                                                } else {
-                                                    $content = current($aPage['locale']) ;
-                                                }
+                                        $user        = $userManager->findByIdSecret($id, $code) ;
 
-                                                if (!is_null($content)) {
-                                                    $words   = array();
-                                                    $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_TITLE}', '{WEB_URL}') ;
-                                                    $words[] = array($user['s_name'], $user['s_email'], osc_page_title(), '<a href="' . osc_base_url() . '" >' . osc_base_url() . '</a>' ) ;
-                                                    $title = osc_mailBeauty($content['s_title'], $words) ;
-                                                    $body = osc_mailBeauty($content['s_text'], $words) ;
-
-                                                    $emailParams = array(
-                                                        'subject'  => $title
-                                                        ,'to'       => $user['s_email']
-                                                        ,'to_name'  => $user['s_name']
-                                                        ,'body'     => $body
-                                                        ,'alt_body' => $body
-                                                    );
-                                                    osc_sendMail($emailParams) ;
-                                                }
-                                                osc_run_hook('validate_user', $user) ;
-                                                osc_add_flash_ok_message( _m('Your account has been validated')) ;
-                                                // Auto-login
-                                                Session::newInstance()->_set('userId', $user['pk_i_id']) ;
-                                                Session::newInstance()->_set('userName', $user['s_name']) ;
-                                                Session::newInstance()->_set('userEmail', $user['s_email']) ;
-                                                $phone = ($user['s_phone_mobile']) ? $user['s_phone_mobile'] : $user['s_phone_land'];
-                                                Session::newInstance()->_set('userPhone', $phone) ;
-                                            } else {
-                                                osc_add_flash_error_message( _m('Your account has already been validated')) ;
-                                            }
-                                        } else {
-                                            osc_add_flash_error_message( _m('The link is not valid anymore. Sorry for the inconvenience!')) ;
+                                        if ( !$user ) {
+                                            osc_add_flash_error_message( _m('The link is not valid anymore. Sorry for the inconvenience!') ) ;
+                                            $this->redirectTo( osc_base_url() ) ;
                                         }
+
+                                        if ( $user['b_active'] == 1 ) {
+                                            osc_add_flash_error_message( _m('Your account has already been validated')) ;
+                                            $this->redirectTo( osc_base_url() ) ;
+                                        }
+
+                                        $userManager = new User() ;
+                                        $userManager->update(
+                                                 array('b_active' => '1')
+                                                ,array('pk_i_id' => $id, 's_secret' => $code)
+                                        ) ;
+
+                                        osc_run_hook('hook_email_user_registration', $user);
+                                        osc_run_hook('validate_user', $user) ;
+
+                                        // Auto-login
+                                        Session::newInstance()->_set('userId', $user['pk_i_id']) ;
+                                        Session::newInstance()->_set('userName', $user['s_name']) ;
+                                        Session::newInstance()->_set('userEmail', $user['s_email']) ;
+                                        $phone = ($user['s_phone_mobile']) ? $user['s_phone_mobile'] : $user['s_phone_land'];
+                                        Session::newInstance()->_set('userPhone', $phone) ;
+
+                                        osc_add_flash_ok_message( _m('Your account has been validated')) ;
                                         $this->redirectTo( osc_base_url() ) ;
                 break;
             }
-
         }
 
-        //hopefully generic...
-        function doView($file) {
-            osc_run_hook("before_html");
-            osc_current_web_theme_path($file) ;
-            Session::newInstance()->_clearVariables();
-            osc_run_hook("after_html");
+        function doView($file)
+        {
+            osc_run_hook( 'before_html' );
+            osc_current_web_theme_path( $file ) ;
+            Session::newInstance()->_clearVariables() ;
+            osc_run_hook( 'after_html' ) ;
         }
     }
 

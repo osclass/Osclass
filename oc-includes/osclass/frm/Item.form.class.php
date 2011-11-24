@@ -53,6 +53,8 @@
                 echo '<option value="">' . __('Select a category') . '</option>' ;
             }
 
+            if(count($categories)==1) { $parent_selectable = 1; };
+            
             foreach($categories as $c) {
                 if ( !osc_selectable_parent_categories() && !$parent_selectable ) {
                     echo '<optgroup label="' . $c['s_name'] . '">' ;
@@ -170,9 +172,9 @@
         {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('price') != "" ) {
-                $item['f_price'] = Session::newInstance()->_getForm('price');
+                $item['i_price'] = Session::newInstance()->_getForm('price');
             }
-            parent::generic_input_text('price', (isset($item['f_price'])) ? $item['f_price'] : null) ;
+            parent::generic_input_text('price', (isset($item['i_price'])) ? osc_prepare_price($item['i_price']) : null) ;
         }
         // OK
         static public function currency_select($currencies = null, $item = null) {
@@ -183,7 +185,7 @@
             }
             if(count($currencies) > 1 ) {
                 $default_key = null;
-                $currency = Preference::newInstance()->findByConditions(array('s_section' => 'osclass', 's_name' => 'currency')) ;
+                $currency = osc_get_preference('currency');
                 if ( isset($item['fk_c_currency_code']) ) {
                     $default_key = $item['fk_c_currency_code'];
                 } elseif ( is_array($currency) ) {
@@ -208,13 +210,6 @@
                 }
                 parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select a country...'), (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : null) ;
                 return true ;
-//            } else if ( count($countries) == 1 ) {
-//                if( Session::newInstance()->_getForm('countryId') != "" ) {
-//                    $item['fk_c_country_code'] = Session::newInstance()->_getForm('countryId');
-//                }
-//                parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
-//                echo '<span>' .$countries[0]['s_name'] . '</span>';
-//                return false ;
             } else {
                 if( Session::newInstance()->_getForm('country') != "" ) {
                     $item['s_country'] = Session::newInstance()->_getForm('country');
@@ -257,18 +252,11 @@
                 if( Session::newInstance()->_getForm('regionId') != "" ) {
                     $item['fk_i_region_id'] = Session::newInstance()->_getForm('regionId');
                     if( Session::newInstance()->_getForm('countryId') != "" ) {
-                        $regions = Region::newInstance()->getByCountry(Session::newInstance()->_getForm('countryId')) ;
+                        $regions = Region::newInstance()->findByCountry(Session::newInstance()->_getForm('countryId')) ;
                     }
                 }
                 parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select a region...'), (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : null) ;
                 return true ;
-//            } else if ( count($regions) == 1 ) {
-//                if( Session::newInstance()->_getForm('regionId') != "" ) {
-//                    $item['fk_i_region_id'] = Session::newInstance()->_getForm('regionId');
-//                }
-//                parent::generic_input_hidden('regionId', (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
-//                echo '<span>' .$regions[0]['s_name'] . '</span>';
-//                return false ;
             } else {
                 if( Session::newInstance()->_getForm('region') != "" ) {
                     $item['s_region'] = Session::newInstance()->_getForm('region');
@@ -290,18 +278,11 @@
                 if( Session::newInstance()->_getForm('cityId') != "" ) {
                     $item['fk_i_city_id'] = Session::newInstance()->_getForm('cityId');
                     if( Session::newInstance()->_getForm('regionId') != "" ) {
-                        $cities = City::newInstance()->listWhere("fk_i_region_id = %d", Session::newInstance()->_getForm('regionId') ) ;
+                        $cities = City::newInstance()->findByRegion( Session::newInstance()->_getForm('regionId') ) ;
                     }
                 }
                 parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select a city...'), (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : null) ;
                 return true ;
-//            } else if ( count($cities) == 1 ) {
-//                if( Session::newInstance()->_getForm('cityId') != "" ) {
-//                    $item['fk_i_city_id'] = Session::newInstance()->_getForm('cityId');
-//                }
-//                parent::generic_input_hidden('cityId', (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : $cities[0]['pk_i_id']) ;
-//                echo '<span>' .$cities[0]['s_name'] . '</span>';
-//                return false ;
             } else {
                 if( Session::newInstance()->_getForm('city') != "" ) {
                     $item['s_city'] = Session::newInstance()->_getForm('city');
@@ -396,29 +377,29 @@
         $('#region').attr( "autocomplete", "off" );
         $('#city').attr( "autocomplete", "off" );
 
-        $("#countryId").change(function(){
-            $("regionId").val('');
-            $("region").val('');
-            $("cityId").val('');
-            $("city").val('');
+        $('#countryId').change(function(){
+            $('#regionId').val('');
+            $('#region').val('');
+            $('#cityId').val('');
+            $('#city').val('');            
         });
 
 
         $('#region').live('keyup.autocomplete', function(){
-            $("#regionId").val('');
+            $('#regionId').val('');
             $( this ).autocomplete({
                 source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_regions&country="+$('#countryId').val(),
                 minLength: 2,
                 select: function( event, ui ) {
-                    $("#cityId").val('');
-                    $("#city").val('');
+                    $('#cityId').val('');
+                    $('#city').val('');
                     $('#regionId').val(ui.item.id);
                 }
             });
         });
 
         $('#city').live('keyup.autocomplete', function(){
-            $("#cityId").val('');
+            $('#cityId').val('');
             $( this ).autocomplete({
                 source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_cities&region="+$('#regionId').val(),
                 minLength: 2,
@@ -456,9 +437,8 @@
                     digits: true
                 },
                 <?php if(osc_price_enabled_at_items()) { ?>
-                price: {
-                    number: true,
-                    maxlength: 15
+                price: {                   
+                    maxlength: 50
                 },
                 currency: "required",
                 <?php } ?>
@@ -486,8 +466,7 @@
                 catId: "<?php _e('Choose one category'); ?>.",
                 <?php if(osc_price_enabled_at_items()) { ?>
                 price: {
-                    number: "<?php _e('Price: enter a valid number'); ?>.",
-                    maxlength: "<?php _e("Price: no more than 15 characters"); ?>."
+                    maxlength: "<?php _e("Price: no more than 50 characters"); ?>."
                 },
                 currency: "<?php _e("Currency: make your selection"); ?>.",
                 <?php } ?>
@@ -583,13 +562,6 @@
 
             if(pk_c_code != '') {
 
-                if (typeof $.uniform != 'undefined') {
-                    $.uniform.restore("#regionId");
-                    $.uniform.restore("#region");
-                    $.uniform.restore("#cityId");
-                    $.uniform.restore("#city");
-                }
-                
                 $("#regionId").attr('disabled',false);
                 $("#cityId").attr('disabled',true);
 
@@ -615,13 +587,6 @@
                             
                             $("#regionId").val("");
 
-                            if (typeof $.uniform != 'undefined') {
-                                $("#regionId").uniform();
-                                $("#cityId").uniform();
-                                $("#uniform-regionId span").html("<?php _e("Select a region..."); ?>");
-                                $("#uniform-cityId span").html("<?php _e("Select a city..."); ?>");
-                            }
-
                         } else {
 
                             $("#regionId").before('<input type="text" name="region" id="region" />');
@@ -630,10 +595,6 @@
                             $("#cityId").before('<input type="text" name="city" id="city" />');
                             $("#cityId").remove();
                             
-                            if (typeof $.uniform != 'undefined') {
-                                $("#region").uniform();
-                                $("#city").uniform();
-                            }
                         }
 
                         $("#regionId").html(result);
@@ -642,12 +603,6 @@
                  });
 
              } else {
-                 if (typeof $.uniform != 'undefined') {
-                     $.uniform.restore("#regionId");
-                     $.uniform.restore("#region");
-                     $.uniform.restore("#cityId");
-                     $.uniform.restore("#city");
-                 }
 
                  // add empty select
                  $("#region").before('<select name="regionId" id="regionId" ><option value=""><?php _e("Select a region..."); ?></option></select>');
@@ -668,11 +623,6 @@
                      $("#city").before('<select name="cityId" id="cityId" ><option value=""><?php _e("Select a city..."); ?></option></select>');
                      $("#city").remove();
                  }
-                 if (typeof $.uniform != 'undefined') {
-                     $("#regionId").uniform();
-                     $("#cityId").uniform();
-                 }
-
                  $("#regionId").attr('disabled',true);
                  $("#cityId").attr('disabled',true);
              }
@@ -690,11 +640,6 @@
 
             if(pk_c_code != '') {
                 
-                if (typeof $.uniform != 'undefined') {
-                    $.uniform.restore("#cityId");
-                    $.uniform.restore("#city");
-                }
-
                 $("#cityId").attr('disabled',false);
                 $.ajax({
                     type: "POST",
@@ -716,11 +661,6 @@
                             $("#cityId").remove();
                         }
                         $("#cityId").html(result);
-                        // uniform
-                        if (typeof $.uniform != 'undefined') {
-                            $("#cityId").uniform();
-                            $("#city").uniform();
-                        }
                     }
                  });
              } else {
@@ -767,7 +707,6 @@
                 },
                 <?php if(osc_price_enabled_at_items()) { ?>
                 price: {
-                    number: true,
                     maxlength: 15
                 },
                 currency: "required",
@@ -808,8 +747,7 @@
                 catId: "<?php _e('Choose one category'); ?>.",
                 <?php if(osc_price_enabled_at_items()) { ?>
                 price: {
-                    number: "<?php _e('Price: enter a valid number'); ?>.",
-                    maxlength: "<?php _e("Price: no more than 15 characters"); ?>."
+                    maxlength: "<?php _e("Price: no more than 50 characters"); ?>."
                 },
                 currency: "<?php _e("Currency: make your selection"); ?>.",
                 <?php } ?>
@@ -901,7 +839,7 @@
             if($resources!=null && is_array($resources) && count($resources)>0) {
                 foreach($resources as $_r) { ?>
                     <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
-                        <img src="<?php echo osc_base_url() . $_r['s_path'] . $_r['pk_i_id'] . '_thumbnail.' . $_r['s_extension']; ?>" /><a href="javascript:delete_image(<?php echo $_r['pk_i_id'].", ".$_r['fk_i_item_id'].", '".$_r['s_name']."', '".Params::getParam('secret')."'" ;?>);"  class="delete"><?php _e('Delete'); ?></a>
+                        <img src="<?php echo osc_apply_filter('resource_path', osc_base_url() . $_r['s_path']) . $_r['pk_i_id'] . '_thumbnail.' . $_r['s_extension']; ?>" /><a href="javascript:delete_image(<?php echo $_r['pk_i_id'].", ".$_r['fk_i_item_id'].", '".$_r['s_name']."', '".Params::getParam('secret')."'" ;?>);"  class="delete"><?php _e('Delete'); ?></a>
                     </div>
                 <?php }
             }
@@ -944,7 +882,6 @@
 
             gebi('photos').appendChild(d);
 
-            $("#"+id+" input:file").uniform();
         } else {
             alert('<?php _e('Sorry, you have reached the maximum number of images per ad');?>');
         }

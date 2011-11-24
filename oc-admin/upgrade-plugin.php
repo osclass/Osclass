@@ -139,22 +139,26 @@ switch($action) {
 
 	case 'execute-sql':
 		if(file_exists(ABS_PATH.'oc-temp/upgrade.sql')) {
-			$sql = file_get_contents(ABS_PATH.'oc-temp/upgrade.sql') ;
-			$conn = getConnection() ;
-	        $conn->osc_dbImportSQL($sql) ;
-			$message = __('upgrade.sql executed') ;
-		} else {
-			$message = __('No SQL to execute') ;
-		}
-		
-		break;
+                    $sql = file_get_contents(ABS_PATH.'oc-temp/upgrade.sql') ;
+
+                    $conn = DBConnectionClass::newInstance();
+                    $c_db = $conn->getOsclassDb() ;
+                    $comm = new DBCommandClass( $c_db ) ;
+                    $comm->updateDB( str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ) ;
+			
+                    $message = __('upgrade.sql executed') ;
+                } else {
+                    $message = __('No SQL to execute') ;
+                }
+
+                break;
 
 	case 'execute-actions':
 		if(file_exists(ABS_PATH.'oc-temp/custom.actions')) {
-			require_once ABS_PATH . 'oc-temp/custom.actions' ;
-			$message = __('Custom actions executed') ;
+                    require_once ABS_PATH . 'oc-temp/custom.actions' ;
+                    $message = __('Custom actions executed') ;
 		} else {
-			$message = __('No action to execute') ;
+                    $message = __('No action to execute') ;
 		}
 		
 		break;
