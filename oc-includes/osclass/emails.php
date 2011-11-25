@@ -921,8 +921,8 @@
         $words[] = array('{COMMENT_AUTHOR}', '{COMMENT_EMAIL}', '{COMMENT_TITLE}',
                          '{COMMENT_TEXT}', '{ITEM_TITLE}', '{ITEM_ID}', '{ITEM_URL}', '{SELLER_NAME}', '{SELLER_EMAIL}');
         $words[] = array($authorName, $authorEmail, $title, $body, $item['s_title'], $itemId, $itemURL, $item['s_contact_name'], $item['s_contact_email']);
-        $title_email = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_comment_admin_title', $content['s_title'])), $words);
-        $body_email = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_comment_admin_description', $content['s_text'])), $words);
+        $title_email = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_comment_user_title', $content['s_title'])), $words);
+        $body_email = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_comment_user_description', $content['s_text'])), $words);
 
         $from = osc_contact_email() ;
         $from_name = osc_page_title() ;
