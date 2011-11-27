@@ -82,6 +82,16 @@
             $this->dao         = new DBCommandClass($data) ;
             $this->tablePrefix = DB_TABLE_PREFIX ;
         }
+        
+        /**
+         * Reinitialize connection to the database once the object is unserialized
+         */
+        public function __wakeup()
+        {
+            $conn              = DBConnectionClass::newInstance() ;
+            $data              = $conn->getOsclassDb();
+            $this->dao         = new DBCommandClass($data) ;
+        }
 
         /**
          * Get the result match of the primary key passed by parameter
