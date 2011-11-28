@@ -102,36 +102,44 @@
          */
         public function decreaseNumItems($categoryId) 
         {
-            $this->dao->select('i_num_items') ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where($this->getPrimaryKey(), $categoryId) ;
-            $result = $this->dao->get() ;
+            $this->dao->select( 'i_num_items' ) ;
+            $this->dao->from( $this->getTableName() ) ;
+            $this->dao->where( $this->getPrimaryKey(), $categoryId ) ;
+            $result       = $this->dao->get() ;
             $categoryStat = $result->row() ; 
-            $return = 0;
-            if(isset($categoryStat['i_num_items'])) {
-                $return = $this->dao->update($this->getTableName(), 'i_num_items = i_num_items - 1', 'i_num_items > 0 AND fk_i_category_id = '.$categoryId ) ;
+            $return       = 0 ;
+
+            if( isset( $categoryStat['i_num_items'] ) ) {
+                $this->dao->from( $this->getTableName() ) ;
+                $this->dao->set( 'i_num_items', 'i_num_items - 1', false ) ;
+                $this->dao->where( 'i_num_items > 0' ) ;
+                $this->dao->where( 'fk_i_category_id', $categoryId ) ;
+
+                $return = $this->dao->update() ;
             } else {
                 $array_set = array(
                     'fk_i_category_id'  => $categoryId,
                     'i_num_items'       => 0
-                );
+                ) ;
                 $res = $this->dao->insert($this->getTableName(), $array_set);
                 if($res === false) {
-                    $return = false;
+                    $return = false ;
                 }
             }
-            if($return !== false) {
-                $result = Category::newInstance()->findByPrimaryKey($categoryId);
-                if($result['fk_i_parent_id']!=NULL) {
-                    $parent_res = $this->decreaseNumItems($result['fk_i_parent_id']);
-                    if($parent_res !== false){
+
+            if( $return !== false ) {
+                $result = Category::newInstance()->findByPrimaryKey($categoryId) ;
+                if( $result['fk_i_parent_id'] != NULL ) {
+                    $parent_res = $this->decreaseNumItems( $result['fk_i_parent_id'] ) ;
+                    if( $parent_res !== false ) {
                         $return += $parent_res ;
-                    }else{
-                        $return = false;
+                    } else {
+                        $return = false ;
                     }
                 }
             }
-            return $return;
+
+            return $return ;
         }
 
         public function setNumItems($categoryID, $numItems)
