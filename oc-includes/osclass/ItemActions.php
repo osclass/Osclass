@@ -489,15 +489,15 @@
          */
         public function delete( $secret, $itemId )
         {
+            $item = $this->manager->findByPrimaryKey($itemId) ;
 
-
-            $item = $this->manager->findByPrimaryKey($itemId);
-            if($item['s_secret']==$secret) {
-                $this->deleteResourcesFromHD($itemId);
-                Log::newInstance()->insertLog('item', 'delete', $itemId, $item['s_title'], $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
-                return $this->manager->deleteByPrimaryKey($itemId);
+            if( $item['s_secret'] == $secret ) {
+                $this->deleteResourcesFromHD( $itemId ) ;
+                Log::newInstance()->insertLog( 'item', 'delete', $itemId, $item['s_title'], $this->is_admin ? 'admin' : 'user', $this->is_admin ? osc_logged_admin_id() : osc_logged_user_id() ) ;
+                return $this->manager->deleteByPrimaryKey( $itemId ) ;
             }
-            return false;
+
+            return false ;
         }
 
         /**
