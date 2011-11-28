@@ -702,30 +702,32 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=cron');
                 break;
                 case('update'):         // update index view
-                                        $iUpdated      = 0;
-                                        $sPageTitle    = Params::getParam('pageTitle');
-                                        $sPageDesc     = Params::getParam('pageDesc');
-                                        $sContactEmail = Params::getParam('contactEmail');
-                                        $sLanguage     = Params::getParam('language');
-                                        $sDateFormat   = Params::getParam('dateFormat');
-                                        $sCurrency     = Params::getParam('currency');
-                                        $sWeekStart    = Params::getParam('weekStart');
-                                        $sTimeFormat   = Params::getParam('timeFormat');
-                                        $sTimezone     = Params::getParam('timezone');
-                                        $sNumRssItems  = Params::getParam('num_rss_items');
+                                        $iUpdated       = 0;
+                                        $sPageTitle     = Params::getParam('pageTitle');
+                                        $sPageDesc      = Params::getParam('pageDesc');
+                                        $sContactEmail  = Params::getParam('contactEmail');
+                                        $sLanguage      = Params::getParam('language');
+                                        $sDateFormat    = Params::getParam('dateFormat');
+                                        $sCurrency      = Params::getParam('currency');
+                                        $sWeekStart     = Params::getParam('weekStart');
+                                        $sTimeFormat    = Params::getParam('timeFormat');
+                                        $sTimezone      = Params::getParam('timezone');
+                                        $sNumRssItems   = Params::getParam('num_rss_items');
                                         $maxLatestItems = Params::getParam('max_latest_items_at_home');
+                                        $numItemsSearch = Params::getParam('default_results_per_page') ;
 
                                         // preparing parameters
-                                        $sPageTitle    = strip_tags($sPageTitle);
-                                        $sPageDesc     = strip_tags($sPageDesc);
-                                        $sContactEmail = strip_tags($sContactEmail);
-                                        $sLanguage     = strip_tags($sLanguage);
-                                        $sDateFormat   = strip_tags($sDateFormat);
-                                        $sCurrency     = strip_tags($sCurrency);
-                                        $sWeekStart    = strip_tags($sWeekStart);
-                                        $sTimeFormat   = strip_tags($sTimeFormat);
-                                        $sNumRssItems  = (int)strip_tags($sNumRssItems);
-                                        $maxLatestItems = (int)strip_tags($maxLatestItems);
+                                        $sPageTitle     = strip_tags($sPageTitle);
+                                        $sPageDesc      = strip_tags($sPageDesc);
+                                        $sContactEmail  = strip_tags($sContactEmail);
+                                        $sLanguage      = strip_tags($sLanguage);
+                                        $sDateFormat    = strip_tags($sDateFormat);
+                                        $sCurrency      = strip_tags($sCurrency);
+                                        $sWeekStart     = strip_tags($sWeekStart);
+                                        $sTimeFormat    = strip_tags($sTimeFormat);
+                                        $sNumRssItems   = (int) strip_tags($sNumRssItems);
+                                        $maxLatestItems = (int) strip_tags($maxLatestItems);
+                                        $numItemsSearch = (int) $numItemsSearch ;
 
                                         $error = "";
 
@@ -764,6 +766,12 @@
                                             if($error != '') $error .= "<br/>";
                                             $error .= _m('Number of recent items displayed at home must be integer');
                                         }
+
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value'   => $numItemsSearch),
+                                                array('s_section' => 'osclass',
+                                                      's_name'    => 'defaultResultsPerPage@search')
+                                        );
 
                                         if($iUpdated > 0) {
                                             if($error != '') {

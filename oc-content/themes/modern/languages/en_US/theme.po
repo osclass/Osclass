@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: modern theme 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-08 18:35+0100\n"
+"POT-Creation-Date: 2011-11-24 15:52+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
 "Language-Team: OSClass <info@osclass.org>\n"
@@ -52,36 +52,36 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/contact.php:42
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/contact.php:44
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-contact.php:53
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:205
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:221
 msgid "optional"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/contact.php:43
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-contact.php:54
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-send-friend.php:53
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:206
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:222
 msgid "Message"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/contact.php:44
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-contact.php:50
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-send-friend.php:48
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:154
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:203
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:156
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:219
 msgid "Your name"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/contact.php:45
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-contact.php:51
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-send-friend.php:49
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:204
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:220
 msgid "Your e-mail address"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/contact.php:47
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-send-friend.php:56
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:159
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:226
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:161
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:242
 msgid "Send"
 msgstr ""
 
@@ -118,7 +118,7 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/functions.php:61
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-contact.php:36
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:102
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:104
 msgid "Contact seller"
 msgstr ""
 
@@ -145,6 +145,7 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/functions.php:129
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/header.php:35
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:199
 msgid "Login"
 msgstr ""
 
@@ -202,12 +203,13 @@ msgid "Logout"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/header.php:38
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:200
 msgid "Register for a free account"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/header.php:44
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-post.php:145
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:193
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:209
 msgid "E-mail"
 msgstr ""
 
@@ -255,7 +257,7 @@ msgid "Item"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-contact.php:53
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:205
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:221
 msgid "Phone number"
 msgstr ""
 
@@ -346,8 +348,8 @@ msgid "Seller's information"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-post.php:141
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:188
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:190
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:204
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:206
 msgid "Name"
 msgstr ""
 
@@ -403,75 +405,87 @@ msgstr ""
 msgid "Modified date"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:106
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:108
 msgid "Share"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:112
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:114
 msgid "Useful information"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:114
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:116
 msgid "Avoid scams by acting locally or paying with PayPal"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:115
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:117
 msgid "Never pay with Western Union, Moneygram or other anonymous payment services"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:116
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:118
 msgid "Don't buy or sell outside of your country. Don't accept cashier cheques from outside your country"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:117
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:119
 msgid "This site is never involved in any transaction, and does not handle payments, shipping, guarantee transactions, provide escrow services, or offer \"buyer protection\" or \"seller certification\""
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:123
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:125
 msgid "Comments"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:130
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:132
 msgid "by"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:134
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:136
 msgid "Delete your comment"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:134
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:136
 msgid "Delete"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:146
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:148
 msgid "Leave your comment (spam and offensive messages will be removed)"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:155
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:157
 msgid "Your e-mail"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:157
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:159
 msgid "Title"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:158
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:160
 msgid "Comment"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:186
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:185
 msgid "Contact publisher"
 msgstr ""
 
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:188
+msgid "The item is expired. You cannot contact the publisher."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:192
+msgid "It's your own item, you cannot contact the publisher."
+msgstr ""
+
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:196
+msgid "You must login or register a new free account in order to contact the advertiser"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:212
 msgid "Tel"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:220
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:236
 msgid "Enter the words above"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:222
+#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:238
 msgid "Help"
 msgstr ""
 

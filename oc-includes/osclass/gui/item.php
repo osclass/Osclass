@@ -87,9 +87,11 @@
                                 <br/>
                                 <div class="meta_list">
                                     <?php while ( osc_has_item_meta() ) { ?>
-                                        <div class="meta">
-                                            <strong><?php echo osc_item_meta_name(); ?>:</strong> <?php echo osc_item_meta_value(); ?>
-                                        </div>
+                                        <?php if(osc_item_meta_value()!='') { ?>
+                                            <div class="meta">
+                                                <strong><?php echo osc_item_meta_name(); ?>:</strong> <?php echo osc_item_meta_value(); ?>
+                                            </div>
+                                        <?php } ?>
                                     <?php } ?>
                                 </div>
                             <?php } ?>
@@ -185,7 +187,7 @@
                             <p>
                                 <?php _e('The item is expired. You cannot contact the publisher.', 'modern') ; ?>
                             </p>
-                        <?php } else if( osc_logged_user_id() == osc_item_user_id() ) { ?>
+                        <?php } else if( ( osc_logged_user_id() == osc_item_user_id() ) && osc_logged_user_id() != 0 ) { ?>
                             <p>
                                 <?php _e("It's your own item, you cannot contact the publisher.", 'modern') ; ?>
                             </p>

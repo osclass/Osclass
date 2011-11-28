@@ -33,6 +33,7 @@
         private function __construct($imagePath) {
             if(!file_exists($imagePath)) throw new Exception("$imagePath does not exist!");
             if(!is_readable($imagePath)) throw new Exception("$imagePath is not readable!");
+            if(filesize($imagePath)==0) throw new Exception("$imagePath is corrupt or broken!");
 
             if(osc_use_imagick()) {
                 $this->im = new Imagick($imagePath);                
