@@ -1362,14 +1362,18 @@
          * @param mixed $value
          * @return DBCommandClass 
          */
-        function set($key, $value = '')
+        function set($key, $value = '', $escape = true)
         {
             if( !is_array($key) ) {
                 $key = array($key => $value) ;
             }
 
             foreach($key as $k => $v) {
-                $this->aSet[$k] = $this->escape($v) ;
+                if( $escape ) {
+                    $this->aSet[$k] = $this->escape($v) ;
+                } else {
+                    $this->aSet[$k] = $v ;
+                }
             }
 
             return $this ;
