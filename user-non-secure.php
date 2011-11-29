@@ -90,21 +90,19 @@
 
                 break;
                 case 'pub_profile':
-                    $id = Params::getParam('id');
-                    if($id!='') {
-                        $user = User::newInstance()->findByPrimaryKey($id);
-                        if($user) {
-                            View::newInstance()->_exportVariableToView('user', $user) ;
-                            $items = Item::newInstance()->findByUserIDEnabled($user['pk_i_id'], 0, 3);
-                            View::newInstance()->_exportVariableToView('items', $items) ;
-                            $this->doView('user-public-profile.php') ;
-                        } else {
-                            $this->redirectTo(osc_base_url());
-                        }
-                    } else {
+                    $userID = Params::getParam('id') ;
+
+                    $user = User::newInstance()->findByPrimaryKey( $userID ) ;
+                    // user doesn't exist
+                    if( !$user ) {
+                        osc_add_flash_error_message( _m("There is no user with such id") ) ;
                         $this->redirectTo(osc_base_url());
                     }
 
+                    View::newInstance()->_exportVariableToView( 'user', $user ) ;
+                    $items = Item::newInstance()->findByUserIDEnabled( $user['pk_i_id'], 0, 3 ) ;
+                    View::newInstance()->_exportVariableToView( 'items', $items ) ;
+                    $this->doView('user-public-profile.php') ;
                 break;
                 case 'contact_post':
                     $user = User::newInstance()->findByPrimaryKey( Params::getParam('id') ) ;
