@@ -95,6 +95,7 @@
                     $user = User::newInstance()->findByPrimaryKey( $userID ) ;
                     // user doesn't exist
                     if( !$user ) {
+                        osc_add_flash_error_message( _m("There is no user with such id") ) ;
                         $this->redirectTo(osc_base_url());
                     }
 
