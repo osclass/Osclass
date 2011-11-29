@@ -190,6 +190,74 @@
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
                 break;
+                case 'backup-sql_file': if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
+                                        }
+                                        //databasse dump...
+
+                                        $filename = 'OSClass_mysqlbackup.' . date('YmdHis') . '.sql';
+                                        $path = sys_get_temp_dir()."/";
+
+                                        switch ( osc_dbdump($path, $filename) ) {
+                                            case(-1):   $msg = _m('Path is empty') ;
+                                                        osc_add_flash_error_message( $msg, 'admin') ;
+                                            break;
+                                            case(-2):   $msg = sprintf(_m('Could not connect with the database. Error: %s'), mysql_error()) ;
+                                                        osc_add_flash_error_message( $msg, 'admin') ;
+                                            break;
+                                            case(-3):   $msg = sprintf(_m('Could not select the database. Error: %s'), mysql_error()) ;
+                                                        osc_add_flash_error_message( $msg, 'admin') ;
+                                            break;
+                                            case(-4):   $msg = _m('There are no tables to back up') ;
+                                                        osc_add_flash_error_message( $msg, 'admin') ;
+                                            break;
+                                            case(-5):   $msg = _m('The folder is not writable') ;
+                                                        osc_add_flash_error_message( $msg, 'admin') ;
+                                            break;
+                                            default:    $msg = _m('Backup has been done properly') ;
+                                                        osc_add_flash_ok_message( $msg, 'admin') ;
+                                                        header('Content-Description: File Transfer');
+                                                        header('Content-Type: application/octet-stream');
+                                                        header('Content-Disposition: attachment; filename='.basename($filename));
+                                                        header('Content-Transfer-Encoding: binary');
+                                                        header('Expires: 0');
+                                                        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                                                        header('Pragma: public');
+                                                        header('Content-Length: ' . filesize($path.$filename));
+                                                        flush();
+                                                        readfile($path.$filename);
+                                                        exit;
+                                            break;
+                                        }
+                                        $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
+                break;
+                case 'backup-zip_file':      if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
+                                        }
+                                        $filename = "OSClass_backup." . date('YmdHis') . ".zip" ;
+                                        $path = sys_get_temp_dir()."/";
+
+                                        if ( osc_zip_folder(osc_base_path(),$path. $filename) ) {
+                                            $msg = _m('Archiving successful!') ;
+                                            osc_add_flash_ok_message( $msg, 'admin') ;
+                                            header('Content-Description: File Transfer');
+                                            header('Content-Type: application/octet-stream');
+                                            header('Content-Disposition: attachment; filename='.basename($filename));
+                                            header('Content-Transfer-Encoding: binary');
+                                            header('Expires: 0');
+                                            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                                            header('Pragma: public');
+                                            header('Content-Length: ' . filesize($path.$filename));
+                                            flush();
+                                            readfile($path.$filename);
+                                            exit;
+                                        }else{
+                                            $msg = _m('Error, the zip file was not created at the specified directory') ;
+                                            osc_add_flash_error_message( $msg, 'admin') ;
+                                        }
+                                        $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
                 case 'backup-zip':      if( defined('DEMO') ) {
                                             osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
