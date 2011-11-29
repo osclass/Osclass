@@ -216,23 +216,23 @@
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
                 case 'delete':          //delete
-                                        $id = Params::getParam('id') ;
-                                        $success = false;
+                                        $id      = Params::getParam('id') ;
+                                        $success = false ;
                                         
-                                        foreach($id as $i) {
-                                            if ($i) {
-                                                $item = $this->itemManager->findByPrimaryKey($i) ;
-                                                $mItems = new ItemActions(true);
-                                                $success = $mItems->delete($item['s_secret'], $item['pk_i_id']);
+                                        foreach( $id as $i ) {
+                                            if ( $i ) {
+                                                $aItem   = $this->itemManager->findByPrimaryKey( $i ) ;
+                                                $mItems  = new ItemActions( true ) ;
+                                                $success = $mItems->delete( $aItem['s_secret'], $aItem['pk_i_id'] ) ;
                                             }
                                         }
 
-                                        if($success) {
+                                        if( $success ) {
                                             osc_add_flash_ok_message( _m('The item has been deleted'), 'admin') ;
                                         } else {
                                             osc_add_flash_error_message( _m('The item couldn\'t be deleted'), 'admin') ;
                                         }
-                                        
+
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
                 case 'status':          //status
