@@ -100,10 +100,10 @@
             $this->dao->from($this->getTableName()) ;
             $this->dao->where($this->getPrimaryKey(), $id) ;
             $result = $this->dao->get();
-            $row = $result->row() ;
+            $row    = $result->row() ;
 
-            if(is_null($row)) {
-                return array();
+            if( $result->numRows() != 1 ) {
+                return array() ;
             }
 
             $this->dao->select() ;
