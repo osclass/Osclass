@@ -355,6 +355,23 @@
             return true ;
         }
 
+        public function resend_activation($user_id)
+        {
+            $user = $this->manager->findByPrimaryKey($user_id) ;
+            $input['s_secret'] = $user['s_secret'];
+
+            if( !$user  || $user['b_active']==0) {
+                return 0 ;
+            }
+
+            if( osc_user_validation_enabled() ) {
+                osc_run_hook('hook_email_user_validation', $user, $input) ;
+                return 1 ;
+            }
+
+            return 0 ;
+        }
+
         public function bootstrap_login($user_id)
         {
             $user = User::newInstance()->findByPrimaryKey( $user_id ) ;

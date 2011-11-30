@@ -79,7 +79,7 @@
                                 ?> | <?php
                                 
                                 if($u['b_enabled']==0) {?><a href='<?php echo osc_admin_base_url(true); ?>?page=users&action=enable&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php _e('Enable user'); ?></a><?php } else {?><a href='<?php echo osc_admin_base_url(true); ?>?page=users&action=disable&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php _e('Disable user'); ?></a><?php }; 
-
+                                if(osc_user_validation_enabled() && $u['b_active']==0) {?> | <a href='<?php echo osc_admin_base_url(true); ?>?page=users&action=resend_activation&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php _e('Re-send activation email'); ?></a><?php }
                                 ?> | <a href='<?php echo osc_admin_base_url(true); ?>?page=users&action=edit&amp;id=<?php echo $u['pk_i_id']; ?>'><?php _e('Edit'); ?></a> | <a onclick=\"javascript:return confirm('<?php _e('This action can\\\\\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=users&action=delete&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php _e('Delete'); ?></a></div>"
 						        ,"<?php echo addcslashes($u['s_name'], '"') ; ?>"
 						        ,"<?php echo $u['dt_reg_date'] ; ?>"
@@ -128,6 +128,7 @@
                             <option value="deactivate"><?php _e('Deactivate'); ?></option>
                             <option value="enable"><?php _e('Enable'); ?></option>
                             <option value="disable"><?php _e('Disable'); ?></option>
+                            <option value="resend_activation"><?php _e('Resend activation'); ?></option>
                         </select>
                         &nbsp;<button id="bulk_apply" class="display"><?php _e('Apply'); ?></button>
                     </div>
