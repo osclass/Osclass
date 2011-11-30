@@ -490,7 +490,7 @@
                     break;
             }
             $array_conditions = array('fk_i_item_id' => $id);
-            return $this->update(DB_TABLE_PREFIX.'t_item_stats', $array_set, $array_conditions);
+            return $this->dao->update(DB_TABLE_PREFIX.'t_item_stats', $array_set, $array_conditions);
         }
         
         /**
