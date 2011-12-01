@@ -69,9 +69,11 @@
                 </li>
             <?php } ?>
         </ul>
-        <div id="form_publish">
-            <strong class="publish_button"><a href="<?php echo osc_item_post_url_in_category() ; ?>"><?php _e("Publish your ad for free", 'modern');?></a></strong>
-        </div>
+        <?php if( osc_users_enabled() || ( !osc_users_enabled() && !osc_reg_user_post() )) { ?>
+            <div id="form_publish">
+                <strong class="publish_button"><a href="<?php echo osc_item_post_url_in_category() ; ?>"><?php _e("Publish your ad for free", 'modern');?></a></strong>
+            </div>
+        <?php } ?>
         <div class="empty"></div>
     </div>
 </div>
