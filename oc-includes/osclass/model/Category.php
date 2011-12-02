@@ -152,7 +152,7 @@
             }
 
             if(count($this->relation) == 0 || !isset($this->relation[0]) ) {
-                return null;
+                return array();
             }
 
             $this->tree = $this->sideTree($this->relation[0], $this->categories, $this->relation);
