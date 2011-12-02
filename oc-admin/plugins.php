@@ -78,7 +78,7 @@
 
                     // CATCH FATAL ERRORS
                     $old_value = error_reporting(0);
-                    register_shutdown_function(array($this, 'errorHandler'), $pn);
+                    register_shutdown_function(array($this, 'errorHandler'), $pn, 'install');
                     $installed = Plugins::install($pn);
                     
                     if($installed) {
@@ -106,7 +106,7 @@
 
                     // CATCH FATAL ERRORS
                     $old_value = error_reporting(0);
-                    register_shutdown_function(array($this, 'errorHandler'), $pn);
+                    register_shutdown_function(array($this, 'errorHandler'), $pn, 'enable');
                     $enabled = Plugins::activate($pn);
                     
                     if($enabled) {
@@ -220,10 +220,13 @@
             Session::newInstance()->_clearVariables();
         }
 
-        function errorHandler($pn)
+        function errorHandler($pn, $action)
         {
             if( false === is_null($aError = error_get_last()) ) {
                 Plugins::deactivate($pn);
+                if($action=='install') {
+                    Plugins::uninstall($pn);
+                }
                 osc_add_flash_error_message( sprintf(_m('There was a fatal error and the plugin was not installed.<br />Error: "%s" Line: %s<br/>File: %s'), $aError['message'], $aError['line'], $aError['file']), 'admin');
                 $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
             }

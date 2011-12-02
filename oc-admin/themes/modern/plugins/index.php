@@ -40,7 +40,7 @@
                         <?php osc_plugin_is_installed($p) ? $installed = 1 : $installed = 0; ?>
                         <?php osc_plugin_is_enabled($p) ? $enabled = 1 : $enabled = 0; ?>
                             [
-                                "<input type='hidden' name='installed' value='<?php echo $installed ?>' />" +
+                                "<input type='hidden' name='installed' value='<?php echo $installed ?>' enabled='<?php echo $enabled ?>' />" +
                                 "<?php echo addcslashes($p_info['plugin_name'], '"'); ?>&nbsp;<div id='datatables_quick_edit'><?php if(osc_plugin_check_update($p_info['filename'])) { ?><a href='<?php echo osc_admin_base_url(true);?>?page=upgrade-plugin&plugin=<?php echo $p_info['filename']; ?>'><?php _e('There\'s a new version. You should update!'); ?></a><?php }; ?></div>",
                                 "<?php echo addcslashes($p_info['description'], '"'); ?>",
                                 "<?php if(isset($active_plugins[$p.'_configure'])) { ?><a href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=admin&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Configure'); ?></a><?php }; ?>",
@@ -80,9 +80,12 @@
                     "fnDrawCallback": function() {
                         $('input:hidden[name=installed]').each(function() {
                             $(this).parent().parent().children().css('background', 'none');
-
                             if ($(this).val() == '1') {
-                                $(this).parent().parent().css('background-color', '#EDFFDF');
+                                if($(this).attr("enabled")==1) {
+                                    $(this).parent().parent().css('background-color', '#EDFFDF');
+                                } else {
+                                    $(this).parent().parent().css('background-color', '#FFFFDF');
+                                }
                             } else {
                                 $(this).parent().parent().css('background-color', '#FFF0DF');
                             }

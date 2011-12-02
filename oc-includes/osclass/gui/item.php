@@ -99,7 +99,7 @@
                         <?php osc_run_hook('item_detail', osc_item() ) ; ?>
                         <p class="contact_button">
                             <?php if( !osc_item_is_expired () ) { ?>
-                            <?php if(osc_logged_user_id() != osc_item_user_id()) { ?>
+                            <?php if( !( ( osc_logged_user_id() == osc_item_user_id() ) && osc_logged_user_id() != 0 ) ) { ?>
                                 <?php     if(osc_reg_user_can_contact() && osc_is_web_user_logged_in() || !osc_reg_user_can_contact() ) { ?>
                                     <strong><a href="#contact"><?php _e('Contact seller', 'modern') ; ?></a></strong>
                                 <?php     } ?>

@@ -188,22 +188,26 @@
                 $this->dao->limit($limit, $start) ;
             }
             $result = $this->dao->get() ;
-            $aPages = $result->result() ;
+            if($result) {
+                $aPages = $result->result() ;
 
-            if( count($aPages) == 0 ) {
-                return array() ;
-            }
-
-            $resultPages = array() ;
-            foreach($aPages as $aPage) {
-                $data = $this->extendDescription($aPage, $locale) ;
-                if(count($data) > 0) {
-                    $resultPages[] = $data ;
+                if( count($aPages) == 0 ) {
+                    return array() ;
                 }
-                unset($data) ;
-            }
 
-            return $resultPages ;
+                $resultPages = array() ;
+                foreach($aPages as $aPage) {
+                    $data = $this->extendDescription($aPage, $locale) ;
+                    if(count($data) > 0) {
+                        $resultPages[] = $data ;
+                    }
+                    unset($data) ;
+                }
+
+                return $resultPages ;
+            } else {
+                return array();
+            }
         }
 
         /**
