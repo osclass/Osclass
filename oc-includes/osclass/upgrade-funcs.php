@@ -203,6 +203,8 @@
         osc_changeVersionTo(230) ;
     }
 
+    osc_changeVersionTo(231) ;
+    
     if(Params::getParam('action') == '') {
         $title   = 'OSClass &raquo; Updated correctly' ;
         $message = 'OSClass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>';

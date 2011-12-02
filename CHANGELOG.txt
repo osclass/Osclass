@@ -1,3 +1,12 @@
+OSClass 2.3.1 2011-12-02
+----------------------
+- Redirect to last page after logging in works with permalinks too
+- Reconnect to database when getting serialize object for Alerts
+- Don't load public user profile if it doesn't exist
+- Decrease category stats works fine now
+- Don't send admin notification when admin create a user
+- Clear "Mark as" option in oc-admin
+
 OSClass 2.3 2011-11-24
 ----------------------
 - New DAO (Database Access Object)
