@@ -72,7 +72,7 @@
 
             $user = $this->manager->findByPrimaryKey($userId) ;
 
-            if( osc_notify_new_user() ) {
+            if( osc_notify_new_user() && !$this->is_admin ) {
                 osc_run_hook('hook_email_admin_new_user', $user) ;
             }
 
