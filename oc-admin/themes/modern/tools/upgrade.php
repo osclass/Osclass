@@ -92,7 +92,7 @@
                                 <?php if($ok) {?>
                                     <label><?php echo sprintf(__('Your OSClass installation can be auto-upgraded. Please, backup your database and the folder oc-content before attempting to upgrade your OSClass installation. You can also upgrade OSClass manaully, more information in the %s', '<a href="http://wiki.osclas.org/" >Wiki</a>'), 'admin'); ?></label>
                                 <?php } else { ?>
-                                    <label><?php _e('Your OSClass installation can not be auto-upgraded. Files and folders need to be writable. You could apply 644 permissions via SSH with the command "chmod -R 644 *" (without quotes) or via a FTP client, it depends on the program so we can not provide more information. You could also upgrade OSClass downloading the upgrade package, unzip it and replace the files on your server with the ones on the package.', 'admin'); ?></label>
+                                    <label><?php _e('Your OSClass installation can not be auto-upgraded. Files and folders need to be writable. You could apply write permissions via SSH with the command "chmod -R a+w *" (without quotes) or via a FTP client, it depends on the program so we can not provide more information. You could also upgrade OSClass downloading the upgrade package, unzip it and replace the files on your server with the ones on the package.', 'admin'); ?></label>
                                 <?php }; ?>
                             </fieldset>
                         </div>
