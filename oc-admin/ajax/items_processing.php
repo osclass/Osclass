@@ -46,7 +46,6 @@
         private $tables_columns = 
             array(  0=> NULL,
                     1=> NULL,
-//                    2=> '%st_user',
                     2=> NULL,
                     3=> NULL,
                     4=> NULL,
