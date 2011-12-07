@@ -36,7 +36,7 @@
         private $column_names  = 
             array(  0=> 'dt_pub_date',
                     1=> 's_title',
-                    2=> 's_name',
+                    2=> 's_contact_name',
                     3=> 's_category_name',
                     4=> 's_country',
                     5=> 's_region',
@@ -46,7 +46,8 @@
         private $tables_columns = 
             array(  0=> NULL,
                     1=> NULL,
-                    2=> '%st_user',
+//                    2=> '%st_user',
+                    2=> NULL,
                     3=> NULL,
                     4=> NULL,
                     5=> NULL,
