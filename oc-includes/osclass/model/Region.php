@@ -66,7 +66,7 @@
          */
         public function getByCountry($countryId)
         {
-            $this->findByCountry($countryId) ;
+            return $this->findByCountry($countryId) ;
         }
 
         /**
