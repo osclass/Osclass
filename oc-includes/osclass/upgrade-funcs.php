@@ -192,12 +192,19 @@
         $result = $comm->query(sprintf("SELECT pk_i_id, f_price FROM %st_item", DB_TABLE_PREFIX));
         $items  = $result->result();
         foreach($items as $item) {
-            $comm->query(sprintf("UPDATE %st_item SET i_price = %d WHERE pk_i_id = %d", DB_TABLE_PREFIX, (1000000*$item['f_price']), $item['pk_i_id']) );
+            if( $item['f_price'] == null ) {
+                $sql = sprintf( "UPDATE %st_item SET i_price = NULL WHERE pk_i_id = %d", DB_TABLE_PREFIX, $item['pk_i_id']) ;
+            } else {
+                $sql = sprintf( "UPDATE %st_item SET i_price = %f WHERE pk_i_id = %d", DB_TABLE_PREFIX, (1000000 * $item['f_price']), $item['pk_i_id'] )  ;
+            }
+            $comm->query( $sql );
         }
 
         osc_changeVersionTo(230) ;
     }
 
+    osc_changeVersionTo(231) ;
+    
     if(Params::getParam('action') == '') {
         $title   = 'OSClass &raquo; Updated correctly' ;
         $message = 'OSClass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>';
