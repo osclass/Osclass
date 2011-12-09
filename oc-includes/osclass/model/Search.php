@@ -844,6 +844,7 @@
             $this->dao->having("items $zero 0");
             
             $city_int = (int)$city;
+
             if(is_numeric($city_int) && $city_int!=0) {
                 $this->dao->where("fk_i_city_id = $city_int");
             }
