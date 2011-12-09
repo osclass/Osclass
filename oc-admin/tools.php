@@ -175,13 +175,10 @@
                                             case(-2):   $msg = sprintf(_m('Could not connect with the database. Error: %s'), mysql_error()) ;
                                                         osc_add_flash_error_message( $msg, 'admin') ;
                                             break;
-                                            case(-3):   $msg = sprintf(_m('Could not select the database. Error: %s'), mysql_error()) ;
+                                            case(-3):   $msg = _m('There are no tables to back up') ;
                                                         osc_add_flash_error_message( $msg, 'admin') ;
                                             break;
-                                            case(-4):   $msg = _m('There are no tables to back up') ;
-                                                        osc_add_flash_error_message( $msg, 'admin') ;
-                                            break;
-                                            case(-5):   $msg = _m('The folder is not writable') ;
+                                            case(-4):   $msg = _m('The folder is not writable') ;
                                                         osc_add_flash_error_message( $msg, 'admin') ;
                                             break;
                                             default:    $msg = _m('Backup has been done properly') ;
