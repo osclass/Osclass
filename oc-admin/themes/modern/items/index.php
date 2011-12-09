@@ -157,6 +157,7 @@
                 $(this).css('color', '#555555');
             });
             
+            
             function show_filters(){
                 div_filter = this;
                 $('#TableToolsLinks').toggle(function(){
@@ -199,11 +200,12 @@
                                     <input id="sSearch" type="text" name="sSearch"/><span style="padding-left:1em;">*(<?php _e('Title and Description'); ?>)</span>
                                 </div>
                                 <div class="row">
+                                    <label><?php _e('Item ID'); ?></label>
+                                    <input id="pk_i_id" type="text" name="pk_i_id"/>
+                                </div>
+                                <div class="row">
                                     <label><?php _e('Item posted by'); ?></label>
-                                    <?php
-                                        array_unshift($users, array('pk_i_id' => 'NULL', 's_name' => __('Non-registered user')) );
-                                        UserForm::user_select($users);
-                                    ?>
+                                    <input id="userId" type="text" name="userId"/>
                                 </div>
                                 <div class="row">
                                     <label><?php _e('Country'); ?></label>
@@ -350,6 +352,17 @@
                         return false;
                     }
                 });
+                
+                $( "#userId" ).autocomplete({
+                    source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax",
+                    minLength: 2,
+                    select: function( event, ui ) {
+                        log( ui.item ?
+                            "Selected: " + ui.item.value + " aka " + ui.item.id :
+                            "Nothing selected, input was " + this.value );
+                    }
+                });
+                
             </script>
             <div style="clear: both;"></div>
 

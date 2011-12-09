@@ -78,6 +78,7 @@ var osc_datatable = function()
     /*
      * Search filters.
      */
+    this._fItemId           = undefined;
     this._fUserId           = undefined;
     this._fCountryId        = undefined;
     this._fCountry          = undefined;
@@ -610,6 +611,7 @@ function _fnUpdateData()
     // &catId=integer_id like from admin panel dashboard
     if(this._fCatId  != undefined )        url += "&catId="+this._fCatId;
     if(this._fUserId != undefined)         url += "&fCol_userIdValue="+this._fUserId;
+    if(this._fItemId != undefined)         url += "&fCol_itemIdValue="+this._fItemId;
 
     if(this._fCountryId != undefined )     url += "&fCol_countryId="+this._fCountryId;
     if(this._fCountry != undefined )       url += "&fCol_country="+this._fCountry;
@@ -829,6 +831,7 @@ function applyFilters(){
     // get filters
     
     this._fUserId       = ( $('#userId').val() == '' ) ? undefined : $('#userId').val() ;
+    this._fItemId       = ( $('#pk_i_id').val() == '' ) ? undefined : $('#pk_i_id').val() ;
     
     this._fCountryId    = ( $('#countryId').val() == '' ) ? undefined : $('#countryId').val() ;
     this._fCountry      = ( $('#country').val() == '' ) ? undefined : $('#country').val() ;
