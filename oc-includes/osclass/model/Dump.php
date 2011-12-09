@@ -48,7 +48,7 @@
         }
 
         /**
-         * Set data from t_admin table
+         * Set data 
          */
         function __construct()
         {
