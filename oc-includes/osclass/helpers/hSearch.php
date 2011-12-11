@@ -112,7 +112,16 @@
             return '';
         }
     }
-    
+
+    /**
+     * Gets current search region
+     *
+     * @return string
+     */
+    function osc_search_region() {
+        return View::newInstance()->_get('search_region');
+    }
+
     /**
      * Gets current search city
      *

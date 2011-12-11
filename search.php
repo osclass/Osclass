@@ -219,6 +219,7 @@
                 $this->_exportVariableToView('search_total_pages', $iNumPages) ;
                 $this->_exportVariableToView('search_page', $p_iPage) ;
                 $this->_exportVariableToView('search_has_pic', $p_bPic) ;
+                $this->_exportVariableToView('search_region', $p_sRegion) ;
                 $this->_exportVariableToView('search_city', $p_sCity) ;
                 $this->_exportVariableToView('search_price_min', $p_sPriceMin) ;
                 $this->_exportVariableToView('search_price_max', $p_sPriceMax) ;
