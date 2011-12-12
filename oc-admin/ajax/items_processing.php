@@ -67,6 +67,7 @@
                 ,'fCol_bActive'     => '%st_item.b_active'
                 ,'fCol_bEnabled'    => '%st_item.b_enabled'
                 ,'fCol_bSpam'       => '%st_item.b_spam'
+                ,'fCol_itemIdValue' => '%st_item.pk_i_id'
                 );
 
         /* For Datatables */
@@ -186,6 +187,7 @@
                 // get all filters
                 // user filter
                 if($k == 'fCol_userIdValue')    array_push($this->filters, array($this->tables_filters[$k], $v ));
+                if($k == 'fCol_itemIdValue')    array_push($this->filters, array($this->tables_filters[$k], $v ));
                 if($k == 'fCol_countryId')      array_push($this->filters, array($this->tables_filters[$k], $v ));
                 if($k == 'fCol_country')        array_push($this->filters, array($this->tables_filters[$k], $v ));
                 if($k == 'fCol_regionId')       array_push($this->filters, array($this->tables_filters[$k], $v ));

@@ -89,6 +89,29 @@
          * Find an user by its primary key
          *
          * @access public
+         * @since 2.3.2
+         * @param string $term
+         * @return array
+         */
+        public function ajax($query = '') {
+            $this->dao->select('pk_i_id as id, s_name as label, s_name as value') ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->like('s_name', $query, 'after') ;
+
+            $result = $this->dao->get() ;
+
+            if( $result == false ) {
+                return array() ;
+            }
+
+            return $result->result() ;
+        }
+
+                
+        /**
+         * Find an user by its primary key
+         *
+         * @access public
          * @since unknown
          * @param int $id
          * @param string $locale

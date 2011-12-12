@@ -46,6 +46,10 @@
                     $cities = City::newInstance()->ajax(Params::getParam("term"));
                     echo json_encode($cities);
                     break;
+                case 'userajax': // This is the autocomplete AJAX
+                    $users = User::newInstance()->ajax(Params::getParam("term"));
+                    echo json_encode($users);
+                    break;
                 case 'alerts': // Allow to register to an alert given (not sure it's used on admin)
                     $alert = Params::getParam("alert");
                     $email = Params::getParam("email");

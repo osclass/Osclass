@@ -157,6 +157,7 @@
                 $(this).css('color', '#555555');
             });
             
+            
             function show_filters(){
                 div_filter = this;
                 $('#TableToolsLinks').toggle(function(){
@@ -190,6 +191,7 @@
                 <div>
                     <form id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>?page=items" method="post">
                         <input type="hidden" name="action" value="bulk_actions" />
+                        <input type="hidden" id="userId" name="userId" value="" />
                         <div style="clear:both;"></div>
                         <div id="show_filter" style="color:#555555; cursor: pointer;margin-top:10px;border-bottom:1px #444444 solid;" onclick="show_filters();"> <strong>+ <?php _e('Show filters')?></strong> </div>
                         <div id="TableToolsLinks" style="display:none;">
@@ -199,11 +201,12 @@
                                     <input id="sSearch" type="text" name="sSearch"/><span style="padding-left:1em;">*(<?php _e('Title and Description'); ?>)</span>
                                 </div>
                                 <div class="row">
+                                    <label><?php _e('Item ID'); ?></label>
+                                    <input id="pk_i_id" type="text" name="pk_i_id"/>
+                                </div>
+                                <div class="row">
                                     <label><?php _e('Item posted by'); ?></label>
-                                    <?php
-                                        array_unshift($users, array('pk_i_id' => 'NULL', 's_name' => __('Non-registered user')) );
-                                        UserForm::user_select($users);
-                                    ?>
+                                    <input id="userName" type="text" name="userName" value=""/>
                                 </div>
                                 <div class="row">
                                     <label><?php _e('Country'); ?></label>
@@ -350,6 +353,15 @@
                         return false;
                     }
                 });
+                
+                $( "#userName" ).autocomplete({
+                    source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax",
+                    minLength: 2,
+                    select: function( event, ui ) {
+                        $("#userId").attr("value", ui.item.id);
+                    }
+                });
+                
             </script>
             <div style="clear: both;"></div>
 
