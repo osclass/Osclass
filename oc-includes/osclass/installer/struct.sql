@@ -229,7 +229,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item_description (
     fk_c_locale_code CHAR(5) NOT NULL,
     s_title VARCHAR(100) NOT NULL,
     s_description MEDIUMTEXT NOT NULL,
-    s_what VARCHAR(100) NULL,
+    s_what LONGTEXT NULL,
         PRIMARY KEY (fk_i_item_id, fk_c_locale_code),
         INDEX (fk_i_item_id),
         FULLTEXT s_description (s_description, s_title)
