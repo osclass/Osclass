@@ -191,6 +191,7 @@
                 <div>
                     <form id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>?page=items" method="post">
                         <input type="hidden" name="action" value="bulk_actions" />
+                        <input type="hidden" id="userId" name="userId" value="" />
                         <div style="clear:both;"></div>
                         <div id="show_filter" style="color:#555555; cursor: pointer;margin-top:10px;border-bottom:1px #444444 solid;" onclick="show_filters();"> <strong>+ <?php _e('Show filters')?></strong> </div>
                         <div id="TableToolsLinks" style="display:none;">
@@ -205,7 +206,7 @@
                                 </div>
                                 <div class="row">
                                     <label><?php _e('Item posted by'); ?></label>
-                                    <input id="userId" type="text" name="userId" value=""/>
+                                    <input id="userName" type="text" name="userName" value=""/>
                                 </div>
                                 <div class="row">
                                     <label><?php _e('Country'); ?></label>
@@ -353,13 +354,11 @@
                     }
                 });
                 
-                $( "#userId" ).autocomplete({
+                $( "#userName" ).autocomplete({
                     source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax",
                     minLength: 2,
                     select: function( event, ui ) {
-                        console.log( ui.item ?
-                            "<?php _e('Selected', 'modern'); ?>: " + ui.item.value + " aka " + ui.item.id :
-                            "<?php _e('Nothing selected, input was', 'modern'); ?> " + this.value );
+                        $("#userId").attr("value", ui.item.id);
                     }
                 });
                 

@@ -94,7 +94,7 @@
          * @return array
          */
         public function ajax($query = '') {
-            $this->dao->select('pk_i_id as id, s_name as label, pk_i_id as value') ;
+            $this->dao->select('pk_i_id as id, s_name as label, s_name as value') ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->like('s_name', $query, 'after') ;
 
