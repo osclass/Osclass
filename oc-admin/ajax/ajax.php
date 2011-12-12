@@ -88,7 +88,6 @@
                     break;
                 case 'items': // Return items (use external file oc-admin/ajax/item_processing.php)
                     require_once osc_admin_base_path() . 'ajax/items_processing.php';
-                    print_r(Params::getParamsAsArray("get"));
                     $items_processing = new ItemsProcessingAjax(Params::getParamsAsArray("get"));
                     break;
                 case 'media': // Return items (use external file oc-admin/ajax/media_processing.php)
