@@ -108,7 +108,7 @@
         }
 
                 
-                /**
+        /**
          * Find an user by its primary key
          *
          * @access public

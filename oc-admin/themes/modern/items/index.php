@@ -205,7 +205,7 @@
                                 </div>
                                 <div class="row">
                                     <label><?php _e('Item posted by'); ?></label>
-                                    <input id="userId" type="text" name="userId"/>
+                                    <input id="userId" type="text" name="userId" value=""/>
                                 </div>
                                 <div class="row">
                                     <label><?php _e('Country'); ?></label>
@@ -357,9 +357,9 @@
                     source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax",
                     minLength: 2,
                     select: function( event, ui ) {
-                        log( ui.item ?
-                            "Selected: " + ui.item.value + " aka " + ui.item.id :
-                            "Nothing selected, input was " + this.value );
+                        console.log( ui.item ?
+                            "<?php _e('Selected', 'modern'); ?>: " + ui.item.value + " aka " + ui.item.id :
+                            "<?php _e('Nothing selected, input was', 'modern'); ?> " + this.value );
                     }
                 });
                 
