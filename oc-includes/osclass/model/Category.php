@@ -77,6 +77,8 @@
         /**
          * Comodin function to serve multiple queries
          * 
+         * *Note: param needs to be escaped, inside function will not be escaped
+         * 
          * @access public
          * @since unknown
          * @param mixed 
@@ -571,16 +573,7 @@
          */
         public function insertDescription($fields_description) {
             if (!empty($fields_description['s_name'])) {
-                $columns = implode(', ', array_keys($fields_description));
-
-                $set = "";
-                foreach ($fields_description as $value) {
-                    if ($set != "")
-                        $set .= ", ";
-                    $set .= "'$value'";
-                }
-                $sql = 'INSERT INTO ' . DB_TABLE_PREFIX . 't_category_description (' . $columns . ') VALUES (' . $set . ')';
-                $this->dao->query($sql);
+                $this->dao->insert(DB_TABLE_PREFIX . 't_category_description', $fields_description );
             }
         }
 

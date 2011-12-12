@@ -731,7 +731,7 @@
             $sql .= 'ORDER BY '.$order.' ) as b ' ;
             $sql .= 'RIGHT JOIN '.DB_TABLE_PREFIX.'t_region ON '.DB_TABLE_PREFIX.'t_region.pk_i_id = b.region_id ' ;
             if( $country != '%%%%') {
-                $sql .= 'WHERE '.DB_TABLE_PREFIX.'t_region.fk_c_country_code = \''.$country.'\' ' ;
+                $sql .= 'WHERE '.DB_TABLE_PREFIX.'t_region.fk_c_country_code = \''.$this->dao->connId->real_escape_string($country).'\' ' ;
             }
             $sql .= 'HAVING items '.$zero.' 0 ' ;
             $sql .= 'ORDER BY '.$order ;
