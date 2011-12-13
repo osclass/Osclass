@@ -395,7 +395,12 @@
      * @return int
      */
     function osc_item_views() {
-        return (int) osc_item_field("i_num_views") ;
+        $item = osc_item();
+        if(isset($item['i_num_views'])) {
+            return (int) osc_item_field("i_num_views") ;
+        } else {
+            return ItemStats::newInstance()->getViews(osc_item_id());
+        }
     }
 
     /**
