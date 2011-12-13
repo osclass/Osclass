@@ -1,3 +1,9 @@
+OSClass 2.3.2 2011-12-13
+----------------------
+- Delete images when editing an item from oc-admin
+- Change type of the column s_what in t_item_description
+- Modified in the upgrade the type of s_what column in t_item_description
+
 OSClass 2.3.1 2011-12-02
 ----------------------
 - Redirect to last page after logging in works with permalinks too

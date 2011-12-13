@@ -128,7 +128,7 @@
     fk_c_locale_code CHAR(5) NOT NULL,
     s_title VARCHAR(100) NOT NULL,
     s_description MEDIUMTEXT NOT NULL,
-    s_what VARCHAR(100) NULL,
+    s_what LONGTEXT NULL,
 
         PRIMARY KEY (fk_i_item_id, fk_c_locale_code),
         INDEX (fk_i_item_id),
@@ -139,7 +139,8 @@
         $result = $comm->query(sprintf("SELECT * FROM %st_item_description", DB_TABLE_PREFIX) );
         $descriptions = $result->result();
         foreach($descriptions as $d) {
-            $comm->query(sprintf("INSERT INTO %st_item_description_tmp (`fk_i_item_id` ,`fk_c_locale_code` ,`s_title` ,`s_description` ,`s_what`) VALUES ('%d',  '%s',  '%s',  '%s',  '%s')", DB_TABLE_PREFIX, $d['fk_i_item_id'], $d['fk_c_locale_code'], $d['s_title'], $d['s_description'], $d['s_what']));
+            $sql = sprintf("INSERT INTO %st_item_description_tmp (`fk_i_item_id` ,`fk_c_locale_code` ,`s_title` ,`s_description` ,`s_what`) VALUES ('%d',  '%s',  '%s',  '%s',  '%s')", DB_TABLE_PREFIX, $d['fk_i_item_id'], $d['fk_c_locale_code'], $comm->connId->real_escape_string($d['s_title']), $comm->connId->real_escape_string($d['s_description']), $comm->connId->real_escape_string($d['s_what']) );
+            $comm->query($sql);
         }
         $comm->query(sprintf("RENAME TABLE `%st_item_description` TO `%st_item_description_old`", DB_TABLE_PREFIX, DB_TABLE_PREFIX));
         $comm->query(sprintf("RENAME TABLE `%st_item_description_tmp` TO `%st_item_description`", DB_TABLE_PREFIX, DB_TABLE_PREFIX));
@@ -203,7 +204,7 @@
         osc_changeVersionTo(230) ;
     }
 
-    osc_changeVersionTo(231) ;
+    osc_changeVersionTo(232) ;
     
     if(Params::getParam('action') == '') {
         $title   = 'OSClass &raquo; Updated correctly' ;

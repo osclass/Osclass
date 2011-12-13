@@ -100,20 +100,22 @@
                         return false;
                     }
 
-                    // Check if the item belong to the user
-                    if($userId != null && $userId != $aItem['fk_i_user_id']) {
-                        $json['success'] = false;
-                        $json['msg'] = _m('The item doesn\'t belong to you');
-                        echo json_encode($json);
-                        return false;
-                    }
+                    if(!osc_is_admin_user_logged_in()) {
+                        // Check if the item belong to the user
+                        if($userId != null && $userId != $aItem['fk_i_user_id']) {
+                            $json['success'] = false;
+                            $json['msg'] = _m('The item doesn\'t belong to you');
+                            echo json_encode($json);
+                            return false;
+                        }
 
-                    // Check if the secret passphrase match with the item
-                    if($userId == null && $aItem['fk_i_user_id']==null && $secret != $aItem['s_secret']) {
-                        $json['success'] = false;
-                        $json['msg'] = _m('The item doesn\'t belong to you');
-                        echo json_encode($json);
-                        return false;
+                        // Check if the secret passphrase match with the item
+                        if($userId == null && $aItem['fk_i_user_id']==null && $secret != $aItem['s_secret']) {
+                            $json['success'] = false;
+                            $json['msg'] = _m('The item doesn\'t belong to you');
+                            echo json_encode($json);
+                            return false;
+                        }
                     }
 
                     // Does id & code combination exist?
