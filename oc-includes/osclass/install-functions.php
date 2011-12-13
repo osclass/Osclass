@@ -446,21 +446,28 @@ function copy_config_file($dbname, $username, $password, $dbhost, $tableprefix) 
     chmod(ABS_PATH . 'config.php', 0666);
 }
 
+
 function is_osclass_installed( ) {
-    if( !file_exists(ABS_PATH . 'config.php') ) {
+    if( !file_exists( ABS_PATH . 'config.php' ) ) {
         return false ;
     }
 
     require_once ABS_PATH . 'config.php' ;
 
-    $mPreference = new Preference() ;
-    $value       = $mPreference->findValueByName('osclass_installed') ;
+    $conn = new DBConnectionClass() ;
+    $c_db = $conn->getOsclassDb() ;
+    $comm = new DBCommandClass( $c_db ) ;
+    $rs = $comm->query( sprintf( "SELECT * FROM %st_preference WHERE s_name = 'osclass_installed'", DB_TABLE_PREFIX ) ) ;
 
-    if( $value == "1" ) {
-        return true ;
+    if( $rs == false ) {
+        return false ;
     }
 
-    return false ;
+    if( $rs->numRows() != 1 ) {
+        return false ;
+    }
+
+    return true ;
 }
 
 function finish_installation( $password ) {
