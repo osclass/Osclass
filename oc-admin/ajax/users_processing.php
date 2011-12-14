@@ -34,7 +34,7 @@
         private $sExtraCol = array();
 
         private $column_names  = 
-            array(  0=> 'dt_pub_date',
+            array(  0=> 'dt_reg_date',
                     1=> 's_email',
                     2=> 's_name',
                     3=> 'dt_reg_date',
