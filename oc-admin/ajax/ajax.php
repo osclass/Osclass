@@ -90,6 +90,10 @@
                     require_once osc_admin_base_path() . 'ajax/items_processing.php';
                     $items_processing = new ItemsProcessingAjax(Params::getParamsAsArray("get"));
                     break;
+                case 'users': // Return items (use external file oc-admin/ajax/item_processing.php)
+                    require_once osc_admin_base_path() . 'ajax/users_processing.php';
+                    $users_processing = new UsersProcessingAjax(Params::getParamsAsArray("get"));
+                    break;
                 case 'media': // Return items (use external file oc-admin/ajax/media_processing.php)
                     require_once osc_admin_base_path() . 'ajax/media_processing.php';
                     $media_processing = new MediaProcessingAjax(Params::getParamsAsArray("get"));
