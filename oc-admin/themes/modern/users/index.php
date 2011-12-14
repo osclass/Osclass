@@ -28,66 +28,25 @@
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
         <script type="text/javascript">
-	        $(function() {		
-		        $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings ) {
-			        var anRows = [];
-			        for ( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ ) {
-				        var nRow = oSettings.aoData[ oSettings.aiDisplay[i] ].nTr;
-				        anRows.push( nRow );
-			        }
-			        return anRows;
-		        };
-
-		        sSearchName = "<?php _e('Search'); ?>...";	
-		        oTable = $('#datatables_list').dataTable({
-	               	"bAutoWidth": false
-			        ,"sDom": '<"top"fl>rt<"bottom"ip<"clear">'
-			        ,"oLanguage": {
-					        "sProcessing":   "<?php _e('Processing'); ?>..."
-					        ,"sLengthMenu":   "<?php _e('Show _MENU_ entries'); ?>"
-					        ,"sZeroRecords":  "<?php _e('No matching records found'); ?>"
-					        ,"sInfo":         "<?php _e('Showing _START_ to _END_ of _TOTAL_ entries'); ?>"
-					        ,"sInfoEmpty":    "<?php _e('Showing 0 to 0 of 0 entries'); ?>"
-					        ,"sInfoFiltered": "(<?php _e('filtered from _MAX_ total entries'); ?>)"
-					        ,"sInfoPostFix":  ""
-					        ,"sSearch":       "<?php _e('Search'); ?>:"
-					        ,"sUrl":          ""
-					        ,"oPaginate": {
-						        "sFirst":    "<?php _e('First'); ?>",
-						        "sPrevious": "<?php _e('Previous'); ?>",
-						        "sNext":     "<?php _e('Next'); ?>",
-						        "sLast":     "<?php _e('Last'); ?>"
-					        }
-			                ,"sLengthMenu": '<div style="float:left;"><?php _e('Show'); ?> <select class="display" id="select_range">'+
-			                '<option value="10">10</option>'+
-			                '<option value="15">15</option>'+
-			                '<option value="20">20</option>'+
-			                '<option value="100">100</option>'+
-					        '</select> <?php _e('entries') ; ?>',
-			                "sSearch": '<span class="ui-icon ui-icon-search" style="display: inline-block;"></span>'
-			         }
-			        ,"sPaginationType": "full_numbers"
-			        /* THIS DATA SHOULD COME THROUGH JSON  OR MYSQL !!! */
-			        ,"aaData": [
-				        <?php foreach($users as $u) { ?>
-					        [
-						        "<input type='checkbox'  name='id[]' value='<?php echo $u['pk_i_id']; ?>' />"
-						        ,"<?php echo $u['s_email'] ; ?>&nbsp;<div id='datatables_quick_edit'><?php
-                                
-                                if($u['b_active']==0) {?><a href='<?php echo osc_admin_base_url(true); ?>?page=users&action=activate&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php _e('Activate user'); ?></a><?php } else {?><a href='<?php echo osc_admin_base_url(true); ?>?page=users&action=deactivate&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php _e('Deactivate user'); ?></a><?php }; 
-
-                                ?> | <?php
-                                
-                                if($u['b_enabled']==0) {?><a href='<?php echo osc_admin_base_url(true); ?>?page=users&action=enable&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php _e('Enable user'); ?></a><?php } else {?><a href='<?php echo osc_admin_base_url(true); ?>?page=users&action=disable&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php _e('Disable user'); ?></a><?php }; 
-                                if(osc_user_validation_enabled() && $u['b_active']==0) {?> | <a href='<?php echo osc_admin_base_url(true); ?>?page=users&action=resend_activation&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php _e('Re-send activation email'); ?></a><?php }
-                                ?> | <a href='<?php echo osc_admin_base_url(true); ?>?page=users&action=edit&amp;id=<?php echo $u['pk_i_id']; ?>'><?php _e('Edit'); ?></a> | <a onclick=\"javascript:return confirm('<?php _e('This action can\\\\\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=users&action=delete&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php _e('Delete'); ?></a></div>"
-						        ,"<?php echo addcslashes($u['s_name'], '"') ; ?>"
-						        ,"<?php echo $u['dt_reg_date'] ; ?>"
-                                ,"<?php echo $u['dt_mod_date'] ; ?>"
-					        ] <?php echo $last_id != $u['pk_i_id'] ? ',' : '' ; ?>
-				        <?php } ?>
-			        ]
-			        ,"aoColumns": [
+            $(function() {
+                oTable = new osc_datatable();
+                oTable.fnInit({
+                    'idTable'       : 'datatables_list'
+                    ,"sAjaxSource": "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=users"
+                    ,'iDisplayLength': '10'
+                    ,'iColumns'      : '5'
+                    ,'oLanguage'     : {
+                            "sInfo":         "<?php _e('Showing _START_ to _END_ of _TOTAL_ entries') ; ?>"
+                            ,"sZeroRecords":  "<?php _e('No matching records found') ; ?>"
+                            ,"sInfoFiltered": "(<?php _e('filtered from _MAX_ total entries') ; ?>)"
+                            ,"oPaginate": {
+                                        "sFirst":    "<?php _e('First') ; ?>",
+                                        "sPrevious": "<?php _e('Previous') ; ?>",
+                                        "sNext":     "<?php _e('Next') ; ?>",
+                                        "sLast":     "<?php _e('Last') ; ?>"
+                                    }
+                    }
+                    ,"aoColumns": [
 				        {"sTitle": "<div style='margin-left: 8px;'><input id='check_all' type='checkbox' /></div>"
 				         ,"bSortable": false
 				         ,"sClass": "center"
@@ -96,13 +55,30 @@
 				         }
 				        ,{"sTitle": "<?php _e('E-mail'); ?>",
 				         "sWidth": "30%"
+				         ,"bSortable": true
 				        }
-				        ,{"sTitle": "<?php _e('Real name') ?>" }
-				        ,{"sTitle": "<?php _e('Date'); ?>" }
-                        ,{"sTitle": "<?php _e('Update Date'); ?>" }
-			        ]
-		        });
-	        });
+				        ,{"sTitle": "<?php _e('Real name') ?>"
+                            ,"bSortable": true
+                        }
+				        ,{"sTitle": "<?php _e('Date'); ?>"
+                            ,"bSortable": true
+                        }
+                        ,{"sTitle": "<?php _e('Update Date'); ?>"
+                            ,"bSortable": true
+                        }
+			        ]                });
+            });
+            
+            $('#datatables_list tr').live('mouseover', function(event) {
+                $('#datatable_wrapper', this).show();
+                $('#datatables_quick_edit', this).show();
+            });
+
+            $('#datatables_list tr').live('mouseleave', function(event) {
+                $('#datatable_wrapper', this).hide();
+                $('#datatables_quick_edit', this).hide();
+            });
+
         </script>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
 		<div id="content">
