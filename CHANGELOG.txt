@@ -1,3 +1,9 @@
+OSClass 2.3.3 2011-12-17
+------------------------
+- Removed upgrade and upgrade-plugins files
+- Minor fix when editing the comments in oc-admin
+- Minor fix in the installation process if the config.php file exists
+
 OSClass 2.3.2 2011-12-13
 ----------------------
 - Delete images when editing an item from oc-admin
