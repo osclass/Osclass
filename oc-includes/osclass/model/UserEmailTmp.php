@@ -58,7 +58,7 @@
          * @return array
          */
         function findByPk($id) {
-            return $this->dao->findByPrimaryKey($id) ;
+            return $this->findByPrimaryKey($id) ;
         }
         
         /**
