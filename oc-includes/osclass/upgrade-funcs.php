@@ -204,7 +204,7 @@
         osc_changeVersionTo(230) ;
     }
 
-    osc_changeVersionTo(232) ;
+    osc_changeVersionTo(233) ;
     
     if(Params::getParam('action') == '') {
         $title   = 'OSClass &raquo; Updated correctly' ;

@@ -108,6 +108,30 @@
                 'dt_date'      => date('Y-m-d H:i:s')
             ) ) ;
         }
+
+        /**
+         * Return number of views of an item
+         *
+         * @access public
+         * @since 2.3.3
+         * @param int $itemId Item id
+         * @return int 
+         */
+        function getViews($itemId)
+        {
+            $this->dao->select('SUM(i_num_views) AS i_num_views') ;
+            $this->dao->from($this->getTableName());
+            $this->dao->where('fk_i_item_id', $itemId) ;
+            $result = $this->dao->get() ;
+            if(!$result) {
+                return 0;
+            } else {
+                $res = $result->result();
+                return $res[0]['i_num_views'];
+            }
+        }
+        
+        
     }
 
     /* file end: ./oc-includes/osclass/model/ItemStats.php */
