@@ -64,7 +64,8 @@
             $this->categories = array();
             $this->conditions = array();
             $this->search_fields = array();
-            $this->tables[] = sprintf('%st_item_description as d USE INDEX (fk_i_item_id), %st_category_description as cd ', DB_TABLE_PREFIX, DB_TABLE_PREFIX);
+            $this->addTable(sprintf('%st_item_description as d USE INDEX (fk_i_item_id)', DB_TABLE_PREFIX));
+            $this->addTable(sprintf( '%st_category_description as cd', DB_TABLE_PREFIX));
             $this->order();
             $this->limit();
             $this->results_per_page = 10;
@@ -76,7 +77,6 @@
                 $this->addConditions(sprintf(" (%st_item.b_premium = 1 || %st_category.i_expiration_days = 0 || DATEDIFF('%s', %st_item.dt_pub_date) < %st_category.i_expiration_days) ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, date('Y-m-d H:i:s'), DB_TABLE_PREFIX, DB_TABLE_PREFIX));
                 $this->addConditions(sprintf("%st_category.b_enabled = 1", DB_TABLE_PREFIX));
                 $this->addConditions(sprintf("%st_category.pk_i_id = %st_item.fk_i_category_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX));
-
             }
             $this->total_results = null;
             parent::__construct() ;
@@ -659,7 +659,15 @@
             $extraFields        = $arrayConditions['extraFields'];
             $conditionsSQL      = $arrayConditions['conditionsSQL'];
             
-            $this->sql = sprintf("SELECT %st_item.*, %st_item_location.*, cd.s_name as s_category_name %s FROM %st_item, %st_item_location, %st_category, %st_category_description as cd WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id %s AND %st_item.fk_i_category_id = cd.fk_i_category_id GROUP BY %st_item.pk_i_id ORDER BY %s %s LIMIT %d, %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, $extraFields,DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX ,DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $conditionsSQL, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $this->order_column, $this->order_direction, $this->limit_init, $this->results_per_page);
+            $this->addTable(sprintf('%st_item', DB_TABLE_PREFIX));
+            $this->addTable(sprintf('%st_item_location', DB_TABLE_PREFIX));
+            $this->addTable(sprintf('%st_category'), DB_TABLE_PREFIX);
+            $this->addTable(sprintf('%st_category_description as cd', DB_TABLE_PREFIX));
+            
+            $aTables = array_unique($this->tables);
+            $aux_tables   = implode(', ', $aTables);
+            
+            $this->sql = sprintf("SELECT %st_item.*, %st_item_location.*, cd.s_name as s_category_name %s FROM %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id %s AND %st_item.fk_i_category_id = cd.fk_i_category_id GROUP BY %st_item.pk_i_id ORDER BY %s %s LIMIT %d, %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, $extraFields, $aux_tables, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $conditionsSQL, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $this->order_column, $this->order_direction, $this->limit_init, $this->results_per_page);
             $result = $this->dao->query($this->sql);
             
             if( $result == false ) {
