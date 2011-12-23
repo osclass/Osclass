@@ -64,6 +64,7 @@
             $this->categories = array();
             $this->conditions = array();
             $this->search_fields = array();
+            $this->tables = array();
             $this->addTable(sprintf('%st_item_description as d USE INDEX (fk_i_item_id)', DB_TABLE_PREFIX));
             $this->addTable(sprintf( '%st_category_description as cd', DB_TABLE_PREFIX));
             $this->order();
