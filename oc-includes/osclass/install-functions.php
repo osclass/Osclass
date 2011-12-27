@@ -454,10 +454,10 @@ function is_osclass_installed( ) {
 
     require_once ABS_PATH . 'config.php' ;
 
-    $conn = new DBConnectionClass() ;
+    $conn = new DBConnectionClass( osc_db_host(), osc_db_user(), osc_db_password(), osc_db_name() ) ;
     $c_db = $conn->getOsclassDb() ;
     $comm = new DBCommandClass( $c_db ) ;
-    $rs = $comm->query( sprintf( "SELECT * FROM %st_preference WHERE s_name = 'osclass_installed'", DB_TABLE_PREFIX ) ) ;
+    $rs   = $comm->query( sprintf( "SELECT * FROM %st_preference WHERE s_name = 'osclass_installed'", DB_TABLE_PREFIX ) ) ;
 
     if( $rs == false ) {
         return false ;
