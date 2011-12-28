@@ -119,6 +119,8 @@
                 }
             }
 
+            osc_run_hook('user_edit_completed', $userId) ;
+
             if ( $this->is_admin ) {
                 $iUpdated = 0 ;
                 if( (Params::getParam("b_enabled") != '') && (Params::getParam("b_enabled") == 1 ) ) {
