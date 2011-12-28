@@ -65,7 +65,6 @@
             $this->conditions = array();
             $this->search_fields = array();
             $this->tables = array();
-            $this->addTable(sprintf('%st_item_description as d USE INDEX (fk_i_item_id)', DB_TABLE_PREFIX));
             $this->addTable(sprintf( '%st_category_description as cd', DB_TABLE_PREFIX));
             $this->order();
             $this->limit();
@@ -547,9 +546,9 @@
             $conditionsSQL      = $arrayConditions['conditionsSQL'];
 
             if($count) {
-                $this->sql = sprintf("SELECT  COUNT(DISTINCT %st_item.pk_i_id) as totalItems FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id %s AND %st_item.pk_i_id = d.fk_i_item_id AND %st_item.fk_i_category_id = cd.fk_i_category_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, $conditionsSQL, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX);
+                $this->sql = sprintf("SELECT  COUNT(DISTINCT %st_item.pk_i_id) as totalItems FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id %s AND %st_item.fk_i_category_id = cd.fk_i_category_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, $conditionsSQL, DB_TABLE_PREFIX, DB_TABLE_PREFIX);
             } else {
-                $this->sql = sprintf("SELECT SQL_CALC_FOUND_ROWS DISTINCT %st_item.pk_i_id, %st_item.s_contact_name as s_user_name, %st_item.s_contact_email as s_user_email, %st_item.*, %st_item_location.*, d.s_title, cd.s_name as s_category_name %s FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id %s AND %st_item.pk_i_id = d.fk_i_item_id AND %st_item.fk_i_category_id = cd.fk_i_category_id GROUP BY %st_item.pk_i_id ORDER BY %s %s LIMIT %d, %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $extraFields,DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, $conditionsSQL, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $this->order_column, $this->order_direction, $this->limit_init, $this->results_per_page);
+                $this->sql = sprintf("SELECT SQL_CALC_FOUND_ROWS DISTINCT %st_item.pk_i_id, %st_item.s_contact_name as s_user_name, %st_item.s_contact_email as s_user_email, %st_item.*, %st_item_location.*, cd.s_name as s_category_name %s FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id %s AND %st_item.fk_i_category_id = cd.fk_i_category_id GROUP BY %st_item.pk_i_id ORDER BY %s %s LIMIT %d, %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $extraFields,DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, $conditionsSQL, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $this->order_column, $this->order_direction, $this->limit_init, $this->results_per_page);
                 // hack include user data
                // $this->sql = sprintf("SELECT SQL_CALC_FOUND_ROWS DISTINCT query.*, %st_user.s_name as s_user_name FROM ( %s ) as query LEFT JOIN %st_user on %st_user.pk_i_id = query.fk_i_user_id ORDER BY %s %s LIMIT %d, %d", DB_TABLE_PREFIX, $this->sql , DB_TABLE_PREFIX, DB_TABLE_PREFIX, $this->order_column, $this->order_direction, $this->limit_init, $this->results_per_page );
             }
@@ -667,7 +666,7 @@
             
             $aux_tables   = implode(', ', $this->tables);
             
-            $this->sql = sprintf("SELECT %st_item.*, %st_item_location.*, cd.s_name as s_category_name %s FROM %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id %s AND %st_item.fk_i_category_id = cd.fk_i_category_id AND d.fk_i_item_id = %st_item.pk_i_id GROUP BY %st_item.pk_i_id ORDER BY %s %s LIMIT %d, %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, $extraFields, $aux_tables, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $conditionsSQL, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $this->order_column, $this->order_direction, $this->limit_init, $this->results_per_page);
+            $this->sql = sprintf("SELECT %st_item.*, %st_item_location.*, cd.s_name as s_category_name %s FROM %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id %s AND %st_item.fk_i_category_id = cd.fk_i_category_id GROUP BY %st_item.pk_i_id ORDER BY %s %s LIMIT %d, %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, $extraFields, $aux_tables, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $conditionsSQL, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $this->order_column, $this->order_direction, $this->limit_init, $this->results_per_page);
             $result = $this->dao->query($this->sql);
             
             if( $result == false ) {
