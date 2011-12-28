@@ -22,15 +22,19 @@
 
     class AdminSecBaseModel extends SecBaseModel
     {
-	    function __construct() {
-		    parent::__construct() ;
-	    }
+        function __construct()
+        {
+            parent::__construct() ;
+            osc_run_hook( 'init_admin' ) ;
+        }
 
-	    function isLogged() {
+        function isLogged()
+        {
             return osc_is_admin_user_logged_in() ;
-	    }
-        
-        function logout() {
+        }
+
+        function logout()
+        {
             //destroying session
             Session::newInstance()->session_destroy() ;
             Session::newInstance()->_drop('adminId') ;
@@ -45,10 +49,14 @@
             Cookie::newInstance()->set() ;
         }
 
-	    function showAuthFailPage() {
+        function showAuthFailPage()
+        {
+            // juanramon: we add here de init_admin hook becuase if not, it's not called
+            osc_run_hook( 'init_admin' ) ;
             require osc_admin_base_path() . 'gui/login.php' ;
             exit ;
         }
     }
 
+    /* file end: ./oc-includes/osclass/core/AdminSecBaseModel.php */
 ?>

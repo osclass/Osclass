@@ -101,6 +101,7 @@ require_once LIB_PATH . 'osclass/core/Cookie.php';
 require_once LIB_PATH . 'osclass/core/Session.php';
 require_once LIB_PATH . 'osclass/core/View.php';
 require_once LIB_PATH . 'osclass/core/BaseModel.php';
+require_once LIB_PATH . 'osclass/core/AdminBaseModel.php';
 require_once LIB_PATH . 'osclass/core/SecBaseModel.php';
 require_once LIB_PATH . 'osclass/core/WebSecBaseModel.php';
 require_once LIB_PATH . 'osclass/core/AdminSecBaseModel.php';

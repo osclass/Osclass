@@ -24,6 +24,10 @@
         define('MULTISITE', 0);
     }
 
+    if( !defined('OC_ADMIN') ) {
+        define('OC_ADMIN', false) ;
+    }
+
     if( !defined('LIB_PATH') ) {
         define('LIB_PATH', ABS_PATH . 'oc-includes/') ;
     }

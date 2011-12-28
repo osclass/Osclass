@@ -20,7 +20,7 @@
      */
 
     define('ABS_PATH', dirname(dirname($_SERVER['SCRIPT_FILENAME'])) . '/');
-    define('OC_ADMIN', 'true');
+    define('OC_ADMIN', true) ;
 
     require_once ABS_PATH . 'oc-load.php' ;
 
