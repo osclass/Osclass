@@ -13,16 +13,20 @@ class OCadmin_pages extends OCadminTest {
     function testPagesInsert()
     {
         $this->loginWith() ;
-//        $this->newPage('test_page_example') ;
-//        $this->assertTrue($this->selenium->isTextPresent('The page has been added'), "Insert page.");
-//        $this->deletePage('test_page_example') ;
+        $this->newPage('test_page_example') ;
+        $this->assertTrue($this->selenium->isTextPresent('The page has been added'), "Insert page.");
+        $this->deletePage('test_page_example') ;
         
         // complex title & description
         $this->newPageWithData('test_page_example', "cos's test", "cos's test") ;
         $this->assertTrue($this->selenium->isTextPresent('The page has been added'), "Insert page.");
-        $this->assertTrue($this->selenium->isTextPresent("cos's test"), "Title present");
+        $this->checkPageData('test_page_example', "cos's test", "cos's test");
+        $this->deletePage('test_page_example') ;
         
-//        $this->deletePage('test_page_example') ;
+        $this->newPageWithData('test_page_example', "cos\'s \/test", 'cos\'s \"\'\test') ;
+        $this->assertTrue($this->selenium->isTextPresent('The page has been added'), "Insert page.");
+        $this->checkPageData('test_page_example', "cos\'s \/test", 'cos\'s \"\'\test');
+        $this->deletePage('test_page_example') ;
     }
 
     /*
@@ -31,83 +35,86 @@ class OCadmin_pages extends OCadminTest {
      * Create page again
      * Delete page
      */  
-//    function testPagesInsertDuplicate()
-//    {
-//        $this->loginWith() ;
-//        $this->newPage('test_page_example') ;
-//        $this->assertTrue($this->selenium->isTextPresent('The page has been added'), "Insert page.");
-//        $this->newPage('test_page_example') ;
-//        $this->assertTrue($this->selenium->isTextPresent('Oops! That internal name is already in use. We can\'t made the changes'), "Insert page.");
-//        $this->deletePage('test_page_example') ;
-//    }
-//
-//    /*
-//     * Login oc-admin
-//     * Create page
-//     * Edit page
-//     * Delete page
-//     */  
-//    function testPageEdit()
-//    {
-//        $this->loginWith() ;
-//        $this->newPage('test_page_example') ;
-//        $this->assertTrue($this->selenium->isTextPresent('The page has been added'), "Insert page.");
-//        $this->editPage('test_page_example') ;
-//        $this->deletePage('new foo new') ;
-//    }
-//
-//    /*
-//     * Login oc-admin
-//     * insert 10 new pages and delete all the pages.
-//     */
-//    function testMultiplePagesInsert()
-//    {
-//        $this->loginWith() ;
-//     
-//        $count = 0;
-//        while( $count < 10 ) {
-//            $this->newPage('test_page_example'.$count) ;
-//            $this->assertTrue($this->selenium->isTextPresent('The page has been added'), "Insert page.");
-//            $count++;
-//        }
-//        $this->selectAndDelete('test_page_example', 0, 5);
-//        
-//        $this->selectAllAndDelete();
-//    }
-//
-//    /*
-//     * Login oc-admin
-//     * Navigate throw pages
-//     */
-//    public function testTableNavigation()
-//    {
-//        $this->loginWith() ;
-//
-//        $count = 0;
-//        while( $count < 15 ) {
-//            $this->newPage('test_page_example'.$count) ;
-//            $this->assertTrue($this->selenium->isTextPresent('The page has been added'), "Insert page.");
-//            $count++;
-//            flush();
-//        }
-//
-//        $this->selenium->open( osc_admin_base_url(true) );
-//        $this->selenium->click("link=Pages");
-//        $this->selenium->click("link=» Manage pages");
-//        $this->selenium->waitForPageToLoad("10000");
-//        $res = $this->selenium->getXpathCount("//table[@id='datatables_list']/tbody/tr");
-//        $this->assertEqual(10, $res,"10 rows does not appear [$res]");
-//
-//        $this->selenium->click("//span[@class='next paginate_button']");
-//        $this->selenium->waitForPageToLoad("10000");
-//        
-//        $res = $this->selenium->getXpathCount("//table[@id='datatables_list']/tbody/tr");
-//        $this->assertEqual(5, $res,"5 rows does not appear [$res]");
-//
-//        // two pages
-//        $this->selectAllAndDelete();
-//        $this->selectAllAndDelete();
-//    }
+    function testPagesInsertDuplicate()
+    {
+        $this->loginWith() ;
+        $this->newPage('test_page_example') ;
+        $this->assertTrue($this->selenium->isTextPresent('The page has been added'), "Insert page.");
+        $this->newPage('test_page_example') ;
+        $this->assertTrue($this->selenium->isTextPresent('Oops! That internal name is already in use. We can\'t made the changes'), "Insert page.");
+        $this->deletePage('test_page_example') ;
+    }
+
+    /*
+     * Login oc-admin
+     * Create page
+     * Edit page
+     * Delete page
+     */  
+    function testPageEdit()
+    {
+        $this->loginWith() ;
+        $this->newPageWithData('test_page_example',"cos's test", "cos's test") ;
+        $this->assertTrue($this->selenium->isTextPresent('The page has been added'), "Insert page.");
+        $this->checkPageData('test_page_example', "cos's test", "cos's test");
+        
+        $this->editPage('test_page_example', "foo's test\'", "description's \ sto") ;
+        $this->checkPageData('new foo new', "foo's test\'", "description's \ sto") ;
+        $this->deletePage('new foo new') ;
+    }
+
+    /*
+     * Login oc-admin
+     * insert 10 new pages and delete all the pages.
+     */
+    function testMultiplePagesInsert()
+    {
+        $this->loginWith() ;
+     
+        $count = 0;
+        while( $count < 10 ) {
+            $this->newPage('test_page_example'.$count) ;
+            $this->assertTrue($this->selenium->isTextPresent('The page has been added'), "Insert page.");
+            $count++;
+        }
+        $this->selectAndDelete('test_page_example', 0, 5);
+        
+        $this->selectAllAndDelete();
+    }
+
+    /*
+     * Login oc-admin
+     * Navigate throw pages
+     */
+    public function testTableNavigation()
+    {
+        $this->loginWith() ;
+
+        $count = 0;
+        while( $count < 15 ) {
+            $this->newPage('test_page_example'.$count) ;
+            $this->assertTrue($this->selenium->isTextPresent('The page has been added'), "Insert page.");
+            $count++;
+            flush();
+        }
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Pages");
+        $this->selenium->click("link=» Manage pages");
+        $this->selenium->waitForPageToLoad("10000");
+        $res = $this->selenium->getXpathCount("//table[@id='datatables_list']/tbody/tr");
+        $this->assertEqual(10, $res,"10 rows does not appear [$res]");
+
+        $this->selenium->click("//span[@class='next paginate_button']");
+        $this->selenium->waitForPageToLoad("10000");
+        
+        $res = $this->selenium->getXpathCount("//table[@id='datatables_list']/tbody/tr");
+        $this->assertEqual(5, $res,"5 rows does not appear [$res]");
+
+        // two pages
+        $this->selectAllAndDelete();
+        $this->selectAllAndDelete();
+    }
     
     /*
      * Private functions
@@ -151,7 +158,28 @@ class OCadmin_pages extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
     }
     
-    private function editPage($internal_name)
+    private function checkPageData($internal_name, $title, $description) 
+    {
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Pages");
+        $this->selenium->click("link=» Manage pages");
+        $this->selenium->waitForPageToLoad("30000");
+
+        $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'$internal_name')]");
+        $this->selenium->click("xpath=//table/tbody/tr/td[contains(.,'$internal_name')]/div/a[text()='Edit']");
+        $this->selenium->waitForPageToLoad("30000");
+        
+        // check title & description
+        $value = $this->selenium->getValue('en_US#s_title');
+        $this->assertEqual($value, $title, "Title present");
+        
+        $this->selenium->selectFrame('en_US#s_text_ifr');
+        $value = $this->selenium->getText('tinymce');
+        $this->selenium->selectWindow(null);
+        $this->assertEqual($value, $description, "Description present");
+    }
+    
+    private function editPage($internal_name, $title, $description)
     {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Pages");
@@ -164,7 +192,15 @@ class OCadmin_pages extends OCadminTest {
 
         // editing page ...
         $this->selenium->type("s_internal_name", "new foo new");
-        $this->selenium->type("en_US#s_title", "new bar");
+        $this->selenium->type("en_US#s_title", $title);
+        
+        // editing description tinymce
+        $this->selenium->selectFrame("en_US#s_text_ifr");
+        $this->selenium->focus("tinymce");
+        $this->selenium->type("tinymce", $description);
+        $this->selenium->selectWindow(null);
+        
+        
         $this->selenium->click("xpath=//button[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
