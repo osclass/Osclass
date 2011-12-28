@@ -20,7 +20,7 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    class CAdminLogin extends BaseModel
+    class CAdminLogin extends AdminBaseModel
     {
 
         function __construct() {
