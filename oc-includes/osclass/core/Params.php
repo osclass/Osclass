@@ -63,13 +63,25 @@
         static function getParamsAsArray($what = "")
         {
             switch ($what) {
-                case("get"):    return(strip_slashes_extended($_GET)) ;
+                case("get"):    
+                     if(get_magic_quotes_gpc()) {
+                        return strip_slashes_extended($_GET);
+                    }
+                    return($_GET) ;
                 break;
-                case("post"):   return(strip_slashes_extended($_POST)) ;
+                case("post"):   
+                    if(get_magic_quotes_gpc()) {
+                        return strip_slashes_extended($_POST);
+                    }
+                    return($_POST) ;
                 break;
                 case("cookie"): return($_COOKIE) ;
                 break;
-                default:        return(strip_slashes_extended($_REQUEST)) ;
+                default:        
+                    if(get_magic_quotes_gpc()) {
+                        return strip_slashes_extended($_REQUEST);
+                    }
+                    return($_REQUEST) ;
                 break;
             }
         }
