@@ -17,12 +17,12 @@ class OCadmin_pages extends OCadminTest {
 //        $this->assertTrue($this->selenium->isTextPresent('The page has been added'), "Insert page.");
 //        $this->deletePage('test_page_example') ;
         
-//        // complex title & description
+        // complex title & description
         $this->newPageWithData('test_page_example', "cos's test", "cos's test") ;
         $this->assertTrue($this->selenium->isTextPresent('The page has been added'), "Insert page.");
         $this->assertTrue($this->selenium->isTextPresent("cos's test"), "Title present");
-        sleep(5);
-        $this->deletePage('test_page_example') ;
+        
+//        $this->deletePage('test_page_example') ;
     }
 
     /*
@@ -122,7 +122,11 @@ class OCadmin_pages extends OCadminTest {
 
         $this->selenium->type("s_internal_name", $internal_name );
         $this->selenium->type("en_US#s_title", "title US");
-        $this->selenium->type("en_US#s_text", "text for US");
+        
+        $this->selenium->selectFrame("en_US#s_text_ifr");
+        $this->selenium->focus("tinymce");
+        $this->selenium->type("tinymce", "text for US");
+        $this->selenium->selectWindow(null);
 
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
@@ -137,7 +141,11 @@ class OCadmin_pages extends OCadminTest {
 
         $this->selenium->type("s_internal_name", $internal_name );
         $this->selenium->type("en_US#s_title", $title);
-        $this->selenium->type("en_US#s_text", $description);
+        
+        $this->selenium->selectFrame("en_US#s_text_ifr");
+        $this->selenium->focus("tinymce");
+        $this->selenium->type("tinymce", $description);
+        $this->selenium->selectWindow(null);
 
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
