@@ -64,7 +64,9 @@
             $this->categories = array();
             $this->conditions = array();
             $this->search_fields = array();
-            $this->tables[] = sprintf('%st_item_description as d USE INDEX (fk_i_item_id), %st_category_description as cd ', DB_TABLE_PREFIX, DB_TABLE_PREFIX);
+            $this->tables = array();
+            $this->addTable(sprintf('%st_item_description as d USE INDEX (fk_i_item_id)', DB_TABLE_PREFIX));
+            $this->addTable(sprintf( '%st_category_description as cd', DB_TABLE_PREFIX));
             $this->order();
             $this->limit();
             $this->results_per_page = 10;
@@ -73,10 +75,9 @@
                 $this->addConditions(sprintf("%st_item.b_active = 1 ", DB_TABLE_PREFIX));
                 $this->addConditions(sprintf("%st_item.b_enabled = 1 ", DB_TABLE_PREFIX));
                 $this->addConditions(sprintf("%st_item.b_spam = 0", DB_TABLE_PREFIX));
-                $this->addConditions(sprintf(" (%st_item.b_premium = 1 || %st_category.i_expiration_days = 0 ||TIMESTAMPDIFF(DAY,%st_item.dt_pub_date,'%s') < %st_category.i_expiration_days) ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, date('Y-m-d H:i:s'), DB_TABLE_PREFIX));
+                $this->addConditions(sprintf(" (%st_item.b_premium = 1 || %st_category.i_expiration_days = 0 || DATEDIFF('%s', %st_item.dt_pub_date) < %st_category.i_expiration_days) ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, date('Y-m-d H:i:s'), DB_TABLE_PREFIX, DB_TABLE_PREFIX));
                 $this->addConditions(sprintf("%st_category.b_enabled = 1", DB_TABLE_PREFIX));
                 $this->addConditions(sprintf("%st_category.pk_i_id = %st_item.fk_i_category_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX));
-
             }
             $this->total_results = null;
             parent::__construct() ;
@@ -615,7 +616,11 @@
                 return array() ;
             }
 
-            $items = $result->result();
+            if($result) {
+                $items = $result->result();
+            } else { 
+                $items = array();
+            }
 
             if($extended) {
                 return Item::newInstance()->extendData($items);
@@ -635,7 +640,7 @@
             $this->order(sprintf('order_premium_views', DB_TABLE_PREFIX), 'ASC') ;
             $this->page(0, $max);
             $this->addField(sprintf('sum(%st_item_stats.i_num_premium_views) as total_premium_views', DB_TABLE_PREFIX));
-            $this->addField(sprintf('(sum(%st_item_stats.i_num_premium_views) + sum(%st_item_stats.i_num_premium_views)*RAND()*0.7 + TIMESTAMPDIFF(DAY,%st_item.dt_pub_date,\'%s\')*0.3) as order_premium_views', DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, date('Y-m-d H:i:s')));
+            $this->addField(sprintf('( sum(%st_item_stats.i_num_premium_views) + sum(%st_item_stats.i_num_premium_views) * RAND() * 0.7 + DATEDIFF(\'%s\', %st_item.dt_pub_date) * 0.3) as order_premium_views', DB_TABLE_PREFIX, DB_TABLE_PREFIX, date('Y-m-d H:i:s'), DB_TABLE_PREFIX));
             $this->addTable(sprintf('%st_item_stats', DB_TABLE_PREFIX));
             $this->addConditions(sprintf('%st_item_stats.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
             $this->addConditions(sprintf("%st_item.b_premium = 1", DB_TABLE_PREFIX));
@@ -655,7 +660,15 @@
             $extraFields        = $arrayConditions['extraFields'];
             $conditionsSQL      = $arrayConditions['conditionsSQL'];
             
-            $this->sql = sprintf("SELECT  %st_item.*, %st_item_location.*, cd.s_name as s_category_name %s FROM %st_item, %st_item_location, %st_category, %st_category_description as cd WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id %s AND %st_item.fk_i_category_id = cd.fk_i_category_id ORDER BY %s %s LIMIT %d, %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, $extraFields,DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX ,DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $conditionsSQL, DB_TABLE_PREFIX, $this->order_column, $this->order_direction, $this->limit_init, $this->results_per_page);
+            $this->addTable(sprintf('%st_item', DB_TABLE_PREFIX));
+            $this->addTable(sprintf('%st_item_location', DB_TABLE_PREFIX));
+            $this->addTable(sprintf('%st_category'), DB_TABLE_PREFIX);
+            $this->addTable(sprintf('%st_category_description as cd', DB_TABLE_PREFIX));
+            
+            $aTables = array_unique($this->tables);
+            $aux_tables   = implode(', ', $aTables);
+            
+            $this->sql = sprintf("SELECT %st_item.*, %st_item_location.*, cd.s_name as s_category_name %s FROM %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id %s AND %st_item.fk_i_category_id = cd.fk_i_category_id GROUP BY %st_item.pk_i_id ORDER BY %s %s LIMIT %d, %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, $extraFields, $aux_tables, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $conditionsSQL, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $this->order_column, $this->order_direction, $this->limit_init, $this->results_per_page);
             $result = $this->dao->query($this->sql);
             
             if( $result == false ) {
@@ -685,7 +698,7 @@
             $sql .= 'AND '.DB_TABLE_PREFIX.'t_item.b_spam = 0 ' ;
             $sql .= 'AND '.DB_TABLE_PREFIX.'t_category.b_enabled = 1 ' ;
             $sql .= 'AND '.DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id ' ;
-            $sql .= 'AND ('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 ||DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days) ' ;
+            $sql .= 'AND ('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 || DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days) ' ;
             $sql .= 'GROUP BY '.DB_TABLE_PREFIX.'t_country.pk_c_code ) b ' ;
             $sql .= 'RIGHT JOIN '.DB_TABLE_PREFIX.'t_country ON '.DB_TABLE_PREFIX.'t_country.pk_c_code = b.pk_c_code ';
             $sql .= 'HAVING items '.$zero.' 0 ';
@@ -712,9 +725,9 @@
         public function listRegions($country = '%%%%', $zero = ">", $order = "items DESC") 
         {    
             $sql  = '' ;
-            $sql  .= 'SELECT '.DB_TABLE_PREFIX.'t_region.pk_i_id as region_id, '.DB_TABLE_PREFIX.'t_region.s_name as region_name, '.DB_TABLE_PREFIX.'t_region.fk_c_country_code as pk_c_code, IFNULL(b.items,0) as items FROM ( ' ;
-            $sql  .= 'SELECT fk_i_region_id as region_id, s_region as region_name, '.DB_TABLE_PREFIX.'t_country.pk_c_code as pk_c_code, s_country as country_name, count(*) as items, '.DB_TABLE_PREFIX.'t_country.fk_c_locale_code ' ;
-            $sql  .= 'FROM ('.DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_category, '.DB_TABLE_PREFIX.'t_country) ' ;
+            $sql  .= 'SELECT '.DB_TABLE_PREFIX.'t_region.pk_i_id as region_id, '.DB_TABLE_PREFIX.'t_region.s_name as region_name, IFNULL(b.items,0) as items FROM ( ' ;
+            $sql  .= 'SELECT fk_i_region_id as region_id, s_region as region_name, count(*) as items ' ;
+            $sql  .= 'FROM ( '.DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_category ) ' ;
             $sql  .= 'WHERE '.DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id ' ;
             $sql .= 'AND '.DB_TABLE_PREFIX.'t_item.b_enabled = 1 ' ;
             $sql .= 'AND '.DB_TABLE_PREFIX.'t_item.b_active = 1 ' ;
@@ -722,13 +735,12 @@
             $sql .= 'AND '.DB_TABLE_PREFIX.'t_category.b_enabled = 1 ' ;
             $sql .= 'AND '.DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id ' ;
             $sql .= 'AND ('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 || DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days) ' ;
-            $sql .= 'AND '.DB_TABLE_PREFIX.'t_country.pk_c_code = '.DB_TABLE_PREFIX.'t_item_location.fk_c_country_code ';
             $sql .= 'GROUP BY '.DB_TABLE_PREFIX.'t_item_location.fk_i_region_id ' ;
             $sql .= 'HAVING items ' ;
             $sql .= 'ORDER BY '.$order.' ) as b ' ;
             $sql .= 'RIGHT JOIN '.DB_TABLE_PREFIX.'t_region ON '.DB_TABLE_PREFIX.'t_region.pk_i_id = b.region_id ' ;
             if( $country != '%%%%') {
-                $sql .= 'WHERE '.DB_TABLE_PREFIX.'t_region.fk_c_country_code = \''.$country.'\' ' ;
+                $sql .= 'WHERE '.DB_TABLE_PREFIX.'t_region.fk_c_country_code = \''.$this->dao->connId->real_escape_string($country).'\' ' ;
             }
             $sql .= 'HAVING items '.$zero.' 0 ' ;
             $sql .= 'ORDER BY '.$order ;
@@ -834,13 +846,14 @@
             $this->dao->where(DB_TABLE_PREFIX.'t_item.b_spam = 0');
             $this->dao->where(DB_TABLE_PREFIX.'t_category.b_enabled = 1');
             $this->dao->where(DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id');
-            $this->dao->where('('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 ||DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days)');
+            $this->dao->where('('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 || DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days)');
             $this->dao->where('fk_i_city_area_id IS NOT NULL');
             $this->dao->where(DB_TABLE_PREFIX.'t_country.pk_c_code = fk_c_country_code');
             $this->dao->groupBy('fk_i_city_area_id');
             $this->dao->having("items $zero 0");
             
             $city_int = (int)$city;
+
             if(is_numeric($city_int) && $city_int!=0) {
                 $this->dao->where("fk_i_city_id = $city_int");
             }

@@ -82,6 +82,9 @@
                                     <br/>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_reg_user_can_contact() ? 'checked="true"' : ''); ?> name="reg_user_can_contact" onclick="checkbox_change();" id="reg_user_can_contact" value="1" />
                                     <label for="reg_user_can_contact"><?php _e('Only allow registered users to contact to seller'); ?></label>
+                                    <br/>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_item_attachment() ? 'checked="true"' : ''); ?> name="item_attachment" onclick="checkbox_change();" id="item_attachment" value="1" />
+                                    <label for="item_attachment"><?php _e('Allow attachment files in contact item seller'); ?></label>
                                 </fieldset>
                             </div>
 

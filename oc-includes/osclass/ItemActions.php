@@ -489,15 +489,15 @@
          */
         public function delete( $secret, $itemId )
         {
+            $item = $this->manager->findByPrimaryKey($itemId) ;
 
-
-            $item = $this->manager->findByPrimaryKey($itemId);
-            if($item['s_secret']==$secret) {
-                $this->deleteResourcesFromHD($itemId);
-                Log::newInstance()->insertLog('item', 'delete', $itemId, $item['s_title'], $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
-                return $this->manager->deleteByPrimaryKey($itemId);
+            if( $item['s_secret'] == $secret ) {
+                $this->deleteResourcesFromHD( $itemId ) ;
+                Log::newInstance()->insertLog( 'item', 'delete', $itemId, $item['s_title'], $this->is_admin ? 'admin' : 'user', $this->is_admin ? osc_logged_admin_id() : osc_logged_user_id() ) ;
+                return $this->manager->deleteByPrimaryKey( $itemId ) ;
             }
-            return false;
+
+            return false ;
         }
 
         /**
@@ -549,7 +549,7 @@
             $s_title    = $aItem['s_title'];
             View::newInstance()->_exportVariableToView('item', $item);
             
-            osc_run_hook('email_send_frined', $aItem);
+            osc_run_hook('hook_email_send_friend', $aItem);
             $item_url   = osc_item_url();
             $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
             Params::setParam('item_url', $item_url );
@@ -671,6 +671,11 @@
                 //Notify admin
                 if ( osc_notify_new_comment() ) {
                     osc_run_hook('hook_email_new_comment_admin', $aItem) ;
+                }
+
+                //Notify user
+                if ( osc_notify_new_comment_user() ) {
+                    osc_run_hook('hook_email_new_comment_user', $aItem) ;
                 }
 
                 osc_run_hook( 'add_comment', $commentID ) ;

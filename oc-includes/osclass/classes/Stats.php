@@ -133,6 +133,7 @@
             $this->conn->select('l.*, i.*, d.*') ;
             $this->conn->from(DB_TABLE_PREFIX.'t_item i, '.DB_TABLE_PREFIX.'t_item_location l, '.DB_TABLE_PREFIX.'t_item_description d') ;
             $this->conn->where('l.fk_i_item_id = i.pk_i_id AND d.fk_i_item_id = i.pk_i_id') ;
+            $this->conn->groupBy('i.pk_i_id');
             $this->conn->orderBy('dt_pub_date', 'DESC') ;
             $this->conn->limit('5') ;
          

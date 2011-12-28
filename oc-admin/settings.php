@@ -43,6 +43,8 @@
                                         $commentsPerPage  = Params::getParam('comments_per_page');
                                         $notifyNewComment = Params::getParam('notify_new_comment');
                                         $notifyNewComment = (($notifyNewComment != '') ? true : false);
+                                        $notifyNewCommentUser = Params::getParam('notify_new_comment_user');
+                                        $notifyNewCommentUser = (($notifyNewCommentUser != '') ? true : false);
                                         $regUserPostComments  = Params::getParam('reg_user_post_comments');
                                         $regUserPostComments  = (($regUserPostComments != '') ? true : false);
 
@@ -57,6 +59,8 @@
                                         }
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyNewComment)
                                                                                       ,array('s_name' => 'notify_new_comment'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyNewCommentUser)
+                                                                                      ,array('s_name' => 'notify_new_comment_user'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $commentsPerPage)
                                                                                       ,array('s_name' => 'comments_per_page'));
 
@@ -152,19 +156,20 @@
                                             break;
                                             case('edit_country'):   // edit country
                                                                     $countryCode = Params::getParam('country_code');
-                                                                    $request = Params::getParam('e_country');
-                                                                    $ok = true;
+                                                                    $request     = Params::getParam('e_country');
+                                                                    $ok          = true;
+
                                                                     foreach($request as $k => $v) {
-                                                                        $result = $mCountries->updateLocale($countryCode, $k, $v);
-                                                                        if(!$result) {
-                                                                            $ok = false;
+                                                                        $result = $mCountries->updateLocale($countryCode, $k, $v) ;
+                                                                        if( $result === false ) {
+                                                                            $ok = false ;
                                                                         }
                                                                     }
 
-                                                                    if($ok) {
+                                                                    if( $ok ) {
                                                                         osc_add_flash_ok_message(_m('Country has been edited'), 'admin');
                                                                     } else {
-                                                                        osc_add_flash_ok_message(_m('There were some problems editing the country'), 'admin');
+                                                                        osc_add_flash_error_message(_m('There were some problems editing the country'), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
@@ -221,6 +226,10 @@
                                                                         if($regionId != '') {
                                                                             $mRegions->update(array('s_name' => $newRegion)
                                                                                              ,array('pk_i_id' => $regionId));
+                                                                            ItemLocation::newInstance()->update(
+                                                                                array('s_region'       => $newRegion),
+                                                                                array('fk_i_region_id' => $regionId)
+                                                                            );
                                                                             osc_add_flash_ok_message(sprintf(_m('%s has been edited'),
                                                                                                               $newRegion), 'admin');
                                                                         }
@@ -276,7 +285,10 @@
                                                                     if(!isset($exists['pk_i_id']) || $exists['pk_i_id']==$cityId) {
                                                                         $mCities->update(array('s_name' => $newCity)
                                                                                         ,array('pk_i_id' => $cityId));
-
+                                                                        ItemLocation::newInstance()->update(
+                                                                            array('s_city'       => $newCity),
+                                                                            array('fk_i_city_id' => $cityId)
+                                                                        );
                                                                         osc_add_flash_ok_message(sprintf(_m('%s has been edited'),
                                                                                                          $newCity), 'admin');
                                                                     } else {
@@ -690,30 +702,32 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=cron');
                 break;
                 case('update'):         // update index view
-                                        $iUpdated      = 0;
-                                        $sPageTitle    = Params::getParam('pageTitle');
-                                        $sPageDesc     = Params::getParam('pageDesc');
-                                        $sContactEmail = Params::getParam('contactEmail');
-                                        $sLanguage     = Params::getParam('language');
-                                        $sDateFormat   = Params::getParam('dateFormat');
-                                        $sCurrency     = Params::getParam('currency');
-                                        $sWeekStart    = Params::getParam('weekStart');
-                                        $sTimeFormat   = Params::getParam('timeFormat');
-                                        $sTimezone     = Params::getParam('timezone');
-                                        $sNumRssItems  = Params::getParam('num_rss_items');
+                                        $iUpdated       = 0;
+                                        $sPageTitle     = Params::getParam('pageTitle');
+                                        $sPageDesc      = Params::getParam('pageDesc');
+                                        $sContactEmail  = Params::getParam('contactEmail');
+                                        $sLanguage      = Params::getParam('language');
+                                        $sDateFormat    = Params::getParam('dateFormat');
+                                        $sCurrency      = Params::getParam('currency');
+                                        $sWeekStart     = Params::getParam('weekStart');
+                                        $sTimeFormat    = Params::getParam('timeFormat');
+                                        $sTimezone      = Params::getParam('timezone');
+                                        $sNumRssItems   = Params::getParam('num_rss_items');
                                         $maxLatestItems = Params::getParam('max_latest_items_at_home');
+                                        $numItemsSearch = Params::getParam('default_results_per_page') ;
 
                                         // preparing parameters
-                                        $sPageTitle    = strip_tags($sPageTitle);
-                                        $sPageDesc     = strip_tags($sPageDesc);
-                                        $sContactEmail = strip_tags($sContactEmail);
-                                        $sLanguage     = strip_tags($sLanguage);
-                                        $sDateFormat   = strip_tags($sDateFormat);
-                                        $sCurrency     = strip_tags($sCurrency);
-                                        $sWeekStart    = strip_tags($sWeekStart);
-                                        $sTimeFormat   = strip_tags($sTimeFormat);
-                                        $sNumRssItems  = (int)strip_tags($sNumRssItems);
-                                        $maxLatestItems = (int)strip_tags($maxLatestItems);
+                                        $sPageTitle     = strip_tags($sPageTitle);
+                                        $sPageDesc      = strip_tags($sPageDesc);
+                                        $sContactEmail  = strip_tags($sContactEmail);
+                                        $sLanguage      = strip_tags($sLanguage);
+                                        $sDateFormat    = strip_tags($sDateFormat);
+                                        $sCurrency      = strip_tags($sCurrency);
+                                        $sWeekStart     = strip_tags($sWeekStart);
+                                        $sTimeFormat    = strip_tags($sTimeFormat);
+                                        $sNumRssItems   = (int) strip_tags($sNumRssItems);
+                                        $maxLatestItems = (int) strip_tags($maxLatestItems);
+                                        $numItemsSearch = (int) $numItemsSearch ;
 
                                         $error = "";
 
@@ -752,6 +766,12 @@
                                             if($error != '') $error .= "<br/>";
                                             $error .= _m('Number of recent items displayed at home must be integer');
                                         }
+
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value'   => $numItemsSearch),
+                                                array('s_section' => 'osclass',
+                                                      's_name'    => 'defaultResultsPerPage@search')
+                                        );
 
                                         if($iUpdated > 0) {
                                             if($error != '') {

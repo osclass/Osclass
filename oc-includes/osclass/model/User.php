@@ -89,6 +89,29 @@
          * Find an user by its primary key
          *
          * @access public
+         * @since 2.3.2
+         * @param string $term
+         * @return array
+         */
+        public function ajax($query = '') {
+            $this->dao->select('pk_i_id as id, s_name as label, s_name as value') ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->like('s_name', $query, 'after') ;
+
+            $result = $this->dao->get() ;
+
+            if( $result == false ) {
+                return array() ;
+            }
+
+            return $result->result() ;
+        }
+
+                
+        /**
+         * Find an user by its primary key
+         *
+         * @access public
          * @since unknown
          * @param int $id
          * @param string $locale
@@ -100,10 +123,10 @@
             $this->dao->from($this->getTableName()) ;
             $this->dao->where($this->getPrimaryKey(), $id) ;
             $result = $this->dao->get();
-            $row = $result->row() ;
+            $row    = $result->row() ;
 
-            if(is_null($row)) {
-                return array();
+            if( $result->numRows() != 1 ) {
+                return array() ;
             }
 
             $this->dao->select() ;
@@ -247,7 +270,7 @@
         public function deleteUser($id = null)
         {
             if($id!=null) {
-//                osc_run_hook('delete_user', $id);
+                osc_run_hook('delete_user', $id);
                 
                 $this->dao->select('pk_i_id, fk_i_category_id');
                 $this->dao->from(DB_TABLE_PREFIX."t_item") ;
@@ -328,7 +351,7 @@
         /**
          * Check if a description exists
          * 
-         * @access public
+         * @access private
          * @since unknown
          * @param array $conditions
          * @return bool
@@ -348,7 +371,50 @@
             }
             
             return (bool) $result;
-        } 
+        }
+        
+        
+        /**
+         * Return list of users
+         * 
+         * @access public
+         * @since unknown
+         * @param int $start
+         * @param int $end
+         * @param string $order_column
+         * @param string $order_direction
+         * @return array
+         */
+        public function search($start = 0, $end = 10, $order_column = 'pk_i_id', $order_direction = 'DESC')
+        {
+            
+            // SET data, so we always return a valid object
+            $users = array();
+            $users['rows'] = 0;
+            $users['total_results'] = 0;
+            $users['users'] = array();
+            
+            $sql = sprintf("SELECT SQL_CALC_FOUND_ROWS * FROM %st_user ORDER BY %s %s LIMIT %s, %s", DB_TABLE_PREFIX, $order_column, $order_direction, $start, $end);
+            $result = $this->dao->query($sql) ;
+            
+            if(!$result) {
+                return $users;
+            }
+            
+            $datatmp  = $this->dao->query('SELECT FOUND_ROWS() as total');
+            $data = $datatmp->row();
+            if(isset($data['total'])) {
+                $users['total_results'] = $data['total'];
+            }
+            
+            $users['users'] = $result->result();
+            $users['rows'] = $result->numRows();
+            
+            
+            return $users;
+        }
+        
+        
     }
 
     /* file end: ./oc-includes/osclass/model/User.php */

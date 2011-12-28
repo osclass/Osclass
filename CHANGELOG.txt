@@ -1,3 +1,39 @@
+OSClass 2.3.3 2011-12-17
+------------------------
+- Removed upgrade and upgrade-plugins files
+- Minor fix when editing the comments in oc-admin
+- Minor fix in the installation process if the config.php file exists
+
+OSClass 2.3.2 2011-12-13
+----------------------
+- Delete images when editing an item from oc-admin
+- Change type of the column s_what in t_item_description
+- Modified in the upgrade the type of s_what column in t_item_description
+
+OSClass 2.3.1 2011-12-02
+----------------------
+- Redirect to last page after logging in works with permalinks too
+- Reconnect to database when getting serialize object for Alerts
+- Don't load public user profile if it doesn't exist
+- Decrease category stats works fine now
+- Don't send admin notification when admin create a user
+- Clear "Mark as" option in oc-admin
+
+OSClass 2.3 2011-11-24
+----------------------
+- New DAO (Database Access Object)
+- Debug options to show or log queries and errors
+- Added an option to enable/disable plugins. So, you won't lose the information of this plugin
+- User is redirected to last visited page when he/she logs in
+- New notifications: e-mail to the admin when a new user is registered, e-mail to the publisher when a new comment is added
+- Profile page for users in the front-end
+- Full text search engine for searches
+- Static pages can be ordered now
+- New type of custom fields: select and radio button
+- Improved price format, now you can set: number of decimals, decimals separator and thousands separator
+- [Modern theme] Profile page for users
+- [Modern theme] Explanatory messages when contact form is not showed
+
 OSClass 2.2.3 2011-09-26
 ------------------------
 - Bug fix: with plugins in Windows environments

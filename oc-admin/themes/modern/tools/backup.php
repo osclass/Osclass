@@ -82,13 +82,15 @@
 
                             <p>
                                 <label for="data"><?php _e('Back up database'); ?> (.sql)</label>
-                                <button class="formButton" type="button" onclick="javascript:submitForm(this.form, 'sql');" ><?php _e('Backup') ; ?></button>
+                                <button class="formButton" type="button" onclick="javascript:submitForm(this.form, 'sql');" ><?php _e('Backup (store on server)') ; ?></button>
+                                <button class="formButton" type="button" onclick="javascript:submitForm(this.form, 'sql_file');" ><?php _e('Backup (download file)') ; ?></button>
                                 <div id="steps_sql"></div>
                             </p>
 
                             <p>
                                 <label for="data"><?php _e('Back up OSClass installation'); ?> (.zip)</label>
-                                <button class="formButton" type="button" onclick="javascript:submitForm(this.form, 'zip');" ><?php _e('Backup') ; ?></button>
+                                <button class="formButton" type="button" onclick="javascript:submitForm(this.form, 'zip');" ><?php _e('Backup (store on server)') ; ?></button>
+                                <button class="formButton" type="button" onclick="javascript:submitForm(this.form, 'zip_file');" ><?php _e('Backup (download file)') ; ?></button>
                                 <div id="steps_zip"></div>
                             </p>
                         </form>

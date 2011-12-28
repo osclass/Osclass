@@ -936,7 +936,9 @@
 
             $this->errorReport() ;
             if( false === $this->resultId ) {
-                $this->log->addMessage($sql, 0, $this->errorLevel, $this->errorDesc) ;
+                if( OSC_DEBUG_DB ) {
+                    $this->log->addMessage($sql, 0, $this->errorLevel, $this->errorDesc) ;
+                }
                 return false ;
             }
 
@@ -944,9 +946,11 @@
             $this->queryTimes[] = ($em + $es) - ($sm + $ss) ;
 
             $this->queryCount++ ;
-            
-            $this->log->addMessage($sql, ($em + $es) - ($sm + $ss), $this->errorLevel, $this->errorDesc) ;
-            
+
+            if( OSC_DEBUG_DB ) {
+                $this->log->addMessage($sql, ($em + $es) - ($sm + $ss), $this->errorLevel, $this->errorDesc) ;
+            }
+
             if( $this->isWriteType($sql) === true ) {
                 return true ;
             }
@@ -1011,6 +1015,7 @@
         function importSQL($sql)
         {
             $sql     = str_replace( '/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ;
+            $sql     = preg_replace('#/\*(?:[^*]*(?:\*(?!/))*)*\*/#','',($sql));
             $queries = explode( ';', $sql ) ;
 
             if( count($queries) == 0 ) {
@@ -1028,6 +1033,325 @@
 
             return true ;
         }
+        
+        /**
+         * Prepare and separe the queries, and save into data or struct queries 
+         * 
+         * @param array $queries
+         * @param array $data_queries
+         * @param array $struct_queries
+         */
+        private function prepareAndSepareQueries($queries, &$data_queries, &$struct_queries)
+        {
+            foreach($queries as $query) {
+                if(preg_match('|CREATE DATABASE ([^ ]*)|', $query, $match)) {
+                    array_unshift($struct_queries, $query);
+                } else if(preg_match('|CREATE TABLE ([^ ]*)|', $query, $match)) {
+                    $struct_queries[trim(strtolower($match[1]), '`')] = $query;
+                } else if(preg_match('|INSERT INTO ([^ ]*)|', $query, $match)) {
+                    $data_queries[] = $query;
+                } else if(preg_match('|UPDATE ([^ ]*)|', $query, $match)) {
+                    $data_queries[] = $query;
+                }
+            }
+        }
+        
+        /**
+         * Check if $table exist into array $struct_queries
+         * 
+         * @param string $table 
+         * @param array $struct_queries
+         */
+        private function existTableIntoStruct($table, $struct_queries)
+        {
+            return array_key_exists(strtolower($table), $struct_queries) ;
+        }
+        
+        /**
+         * Get fields from struct_queries (struct.sql)
+         * 
+         * @param string $table
+         * @param array $struct_queries
+         */
+        private function getTableFieldsFromStruct($table, &$struct_queries)
+        {
+            if(preg_match('|\((.*)\)|ms', $struct_queries[strtolower($table)], $match)) {
+                $fields = explode("\n", trim($match[1]));
+            } else {
+                $fields = false;
+            }
+            return $fields;
+        }
+        
+        /**
+         * Classify fields, inside arrays $normal_fields, $indexes, $constrains (foreign key's)
+         *
+         * @param type $fields
+         * @param type $normal_fields
+         * @param type $indexes
+         * @param type $constrains
+         * @param type $lastTable 
+         */
+        private function classifyFieldsSql($fields, &$normal_fields, &$indexes, &$constrains, &$lastTable)
+        {
+            foreach($fields as $field) {
+                if(preg_match('|([^ ]+)|', trim($field), $field_name)) {
+                    switch (strtolower($field_name[1])) {
+                        case '':
+                        case 'on':
+                            if($lastTable){
+                                $constrains[$lastTable] = $constrains[$lastTable].' '.trim($field);
+                            }
+                            break;
+                        case 'foreign':
+                            if( preg_match("|FOREIGN KEY\s+(.*)\s+REFERENCES\s+(.*)|mi", $field, $match) ) {
+                                $_table = $match[1];
+                                $refere = $match[2];
+                                $refere = str_replace(',', '', $refere);
+                                $lastTable = $_table;
+                                $constrains[$_table] = trim($refere);
+                            }
+                            break;
+                        case 'primary':
+                        case 'index':
+                        case 'fulltext':
+                        case 'unique':
+                        case 'key':
+                            $indexes[] = trim($field, ", \n");
+                            break;
+                        default :
+                            $normal_fields[strtolower($field_name[1])] = trim($field, ", \n");
+                            break;
+                    }
+                }
+            } 
+        }
+        
+        /**
+         * Build alter sql, ADD COLUMN, CHANGE COLUMN, ALTER COLUMN
+         * 
+         * @param array $tbl_fields, contain all fields inside database
+         * @param type $table
+         * @param type $normal_fields
+         * @param type $struct_queries 
+         */
+        private function createAlterTable($tbl_fields, $table, &$normal_fields, &$struct_queries )
+        {
+            foreach($tbl_fields as $tbl_field) {
+                //Every field should we on the definition, so else SHOULD never happen, unless a very aggressive plugin modify our tables
+                if(array_key_exists(strtolower($tbl_field['Field']), $normal_fields)) {
+                    // Take the type of the field
+                    if(preg_match("|".$tbl_field['Field']." (ENUM\s*\(([^\)]*)\))|i", $normal_fields[strtolower($tbl_field['Field'])], $match) || preg_match("|".$tbl_field['Field']." ([^ ]*( unsigned)?)|i", $normal_fields[strtolower($tbl_field['Field'])], $match)) {
+                        $field_type = $match[1];
+                        // Are they the same?
+                        if(strtolower($field_type)!=strtolower($tbl_field['Type']) && str_replace(' ', '', strtolower($field_type))!=str_replace(' ', '', strtolower($tbl_field['Type']))) {
+                            $struct_queries[] = "ALTER TABLE ".$table." CHANGE COLUMN ".$tbl_field['Field']." ".$normal_fields[strtolower($tbl_field['Field'])];
+                        }
+                    }
+                    
+                    // Have we changed the default value? [with quotes]
+                    if(preg_match("| DEFAULT\s+'(.*)'|i", $normal_fields[strtolower($tbl_field['Field'])], $default_match)) {
+                        // alter column only if default value has been changed
+                        if($tbl_field['Default'] != $default_match[1]) {
+                            $struct_queries[] = "ALTER TABLE ".$table." ALTER COLUMN ".$tbl_field['Field']." SET DEFAULT ".$default_match[1];
+                        }
+                    // Have we changed the default value? [without quotes]    
+                    } else if(preg_match("| DEFAULT\s+(.*)|i", $normal_fields[strtolower($tbl_field['Field'])], $default_match)) {
+                        if(isset($tbl_field['Default'])) {
+                            // alter column only if default value has been changed
+                            if( $tbl_field['Default'] != $default_match[1] ) {
+                                $struct_queries[] = "ALTER TABLE ".$table." ALTER COLUMN ".$tbl_field['Field']." SET DEFAULT ".$default_match[1];
+                            }
+                        } else { 
+                            // check NULL default values 
+                            // if new default value is diferent, alter column ...
+                            if($default_match[1] != 'NULL' ) {
+                                $struct_queries[] = "ALTER TABLE ".$table." ALTER COLUMN ".$tbl_field['Field']." SET DEFAULT ".$default_match[1];
+                            }
+                        }
+                    }
+                    // Remove it from the list, so it will not be added
+                    unset($normal_fields[strtolower($tbl_field['Field'])]);
+                }
+            }
+            // For the rest of normal fields (they are not in the table) we add them.
+            foreach($normal_fields as $k => $v) {
+                $struct_queries[] = "ALTER TABLE ".$table." ADD COLUMN ".$v;
+            }
+        }
+        
+        /**
+         * With all the indexes from struct.sql, remove indexes which actually 
+         * exist into database
+         *
+         * @param type $tbl_indexes
+         * @param type $indexes 
+         */
+        private function createNewIndex($tbl_indexes, &$indexes)
+        {
+            if($tbl_indexes) {
+                unset($indexes_array);
+                foreach($tbl_indexes as $tbl_index) {
+                    $indexes_array[$tbl_index['Key_name']]['columns'][] = array('fieldname' => $tbl_index['Column_name'], 'subpart' => $tbl_index['Sub_part']);
+                    $indexes_array[$tbl_index['Key_name']]['unique'] = ($tbl_index['Non_unique'] == 0)?true:false;
+                }
+                foreach($indexes_array as $k => $v) {
+                    $string = '';
+                    if ($k=='PRIMARY') {
+                        $string .= 'PRIMARY KEY ';
+                    } else if($v['unique']) {
+                        $string .= 'UNIQUE KEY ';
+                    } else {
+                        $string .= 'INDEX ';
+                    }
+
+                    $columns = '';
+                    // For each column in the index
+                    foreach ($v['columns'] as $column) {
+                        if ($columns != '') $columns .= ', ';
+                        // Add the field to the column list string
+                        $columns .= $column['fieldname'];
+                        if ($column['subpart'] != '') {
+                            $columns .= '('.$column['subpart'].')';
+                        }
+                    }
+                    // Add the column list to the index create string
+                    $string .= '('.$columns.')';
+                    $var_index = array_search($string, $indexes);
+                    if (!($var_index===false)) {
+                        unset($indexes[$var_index]);
+                    } else {
+                        $var_index = array_search(str_replace(', ', ',', $string), $indexes);
+                        if (!($var_index===false)) {
+                            unset($indexes[$var_index]);
+                        }
+                    }
+                }
+            }   
+        }
+        
+        /**
+         * Create alter table if foreign key don't exist into database structure
+         * 
+         * @param array $tbl_constraint
+         * @param string $table
+         * @param array $struct_queries
+         * @param array $constrains
+         */
+        private function createForeignKey($tbl_constraint, $table, $struct_queries, $constrains)
+        {
+            $constrainsDB  = array();
+            if(preg_match_all("| FOREIGN KEY\s+(.*)\s+REFERENCES\s+(.*),?\n|i", $tbl_constraint['Create Table'], $default_match)) {
+
+                $aTables = $default_match[1];
+                $aRefere = $default_match[2];
+                foreach($aTables as $index => $value) {
+                    $_refere = str_replace('`', '', $aRefere[$index]);
+                    $_refere = str_replace(',', '', $_refere);
+                    $_value  = str_replace('`', '', $value);
+                    $constrainsDB[$_value] = $_refere;
+                }
+            }
+
+            $keys = array_keys($constrainsDB);
+            foreach($constrains as $k => $v ) {
+                if( in_array($k, $keys) && $constrainsDB[$k] == $v ) {
+                    // nothing to do
+                } else {
+                    // alter table
+                    $index = 'FOREIGN KEY '.$k.' REFERENCES '.$v;
+                    $struct_queries[] = "ALTER TABLE ".$table." ADD ".$index;
+                }
+            }
+        }
+        
+        /**
+         * Given some queries, it will check against the installed database if the information is the same
+         * 
+         * _______pseudocode_______
+         * 
+         *   _separeQueries()
+         *   showTables_DataBase()
+         *   foreach(table)
+         *     if(table exist into struct.sql)
+         *       _getTableFields()
+         *       _createAlterTables() (save info into array)
+         *       _createNewIndex()    (save info into array)
+         *       _createForeignKeys() (save info into array)
+         *     endif
+         *   enforeach
+         * 
+         *   foreach(query created before)
+         *     exec(query)
+         *   endforeach
+         * 
+         * ______endpseudocode______
+         * 
+         * @param mixed array or string with the SQL queries.
+         * @return BOOLEAN true on success, false on fail
+        */
+        function updateDB($queries = '')
+        {
+            if(!is_array($queries)) {
+                $queries = explode(";", $queries);
+            }
+
+            // Prepare and separate the queries
+            $struct_queries = array();
+            $data_queries = array();
+            $this->prepareAndSepareQueries($queries, $data_queries, $struct_queries);
+
+            // Get tables from DB (already installed)
+            $result = $this->query('SHOW TABLES');
+            $tables = $result->result();
+            foreach($tables as $v) {
+                $table = current($v);
+                if( $this->existTableIntoStruct($table, $struct_queries) ) {
+                    $lastTable = NULL;
+                    $normal_fields = $indexes = $constrains = array();
+                    $fields = $this->getTableFieldsFromStruct($table, $struct_queries) ;
+                    if($fields) {
+                        // classify fields (into sql file)
+                        $this->classifyFieldsSql($fields, $normal_fields, $indexes, $constrains, $lastTable) ;
+                        
+                        // Take fields from the DB (now into database)
+                        $result = $this->query('DESCRIBE '.$table);
+                        $tbl_fields = $result->result();
+                        // compare and create alter statments
+                        $this->createAlterTable($tbl_fields, $table, $normal_fields, $struct_queries) ;
+                        
+                        // Go for the index part
+                        $result = $this->query("SHOW INDEX FROM ".$table);
+                        $tbl_indexes = $result->result() ;
+                        // compare table index and struct.sql index for the same table, and only add the new ones
+                        $this->createNewIndex($tbl_indexes, $indexes) ;
+                        
+                        // show create table TABLE_NAME constrains
+                        $result = $this->query("SHOW CREATE TABLE ".$table);
+                        $tbl_constraint = $result->row();
+                        // create foreign keys
+                        $this->createForeignKey($tbl_constraint, $table, $struct_queries, $constrains) ;
+                        
+                        
+                        // No need to create the table, so we delete it SQL
+                        unset($struct_queries[strtolower($table)]);
+                    }
+                }
+            }            
+            
+            $queries = array_merge($struct_queries, $data_queries);
+            $ok = true;
+            $error_queries = array();
+            foreach($queries as $query) {
+                $res = $this->query($query);
+                if(!$res) {
+                    $ok = false;
+                    $error_queries[] = $query;
+                }
+            }
+
+            return array($ok, $queries, $error_queries);
+        }
 
         /**
          * Set aSet array
@@ -1038,14 +1362,18 @@
          * @param mixed $value
          * @return DBCommandClass 
          */
-        function set($key, $value = '')
+        function set($key, $value = '', $escape = true)
         {
             if( !is_array($key) ) {
                 $key = array($key => $value) ;
             }
 
             foreach($key as $k => $v) {
-                $this->aSet[$k] = $this->escape($v) ;
+                if( $escape ) {
+                    $this->aSet[$k] = $this->escape($v) ;
+                } else {
+                    $this->aSet[$k] = $v ;
+                }
             }
 
             return $this ;

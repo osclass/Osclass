@@ -194,7 +194,8 @@ function oc_install( ) {
             }
         }
 
-        $comm = new DBCommandClass( $master_conn->getOsclassDb() ) ;
+        $m_db = $master_conn->getOsclassDb() ;
+        $comm = new DBCommandClass( $m_db ) ;
         $comm->query( sprintf("CREATE DATABASE IF NOT EXISTS %s DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI'", $dbname) ) ;
 
         $error_num = $comm->getErrorLevel() ;
@@ -211,6 +212,7 @@ function oc_install( ) {
             return array('error' => 'Cannot create the database. Error number: ' . $error_num . '.') ;
         }
 
+        unset($conn) ;
         unset($comm) ;
         unset($master_conn) ;
     }
@@ -267,7 +269,8 @@ function oc_install( ) {
 
     $sql = file_get_contents( ABS_PATH . 'oc-includes/osclass/installer/struct.sql' ) ;
 
-    $comm = new DBCommandClass( $conn->getOsclassDb() ) ;
+    $c_db = $conn->getOsclassDb() ;
+    $comm = new DBCommandClass( $c_db ) ;
     $comm->importSQL($sql) ;
 
     $error_num = $comm->getErrorLevel() ;
@@ -443,21 +446,28 @@ function copy_config_file($dbname, $username, $password, $dbhost, $tableprefix) 
     chmod(ABS_PATH . 'config.php', 0666);
 }
 
+
 function is_osclass_installed( ) {
-    if( !file_exists(ABS_PATH . 'config.php') ) {
+    if( !file_exists( ABS_PATH . 'config.php' ) ) {
         return false ;
     }
 
     require_once ABS_PATH . 'config.php' ;
 
-    $mPreference = new Preference() ;
-    $value       = $mPreference->findValueByName('osclass_installed') ;
+    $conn = new DBConnectionClass( osc_db_host(), osc_db_user(), osc_db_password(), osc_db_name() ) ;
+    $c_db = $conn->getOsclassDb() ;
+    $comm = new DBCommandClass( $c_db ) ;
+    $rs   = $comm->query( sprintf( "SELECT * FROM %st_preference WHERE s_name = 'osclass_installed'", DB_TABLE_PREFIX ) ) ;
 
-    if( $value == "1" ) {
-        return true ;
+    if( $rs == false ) {
+        return false ;
     }
 
-    return false ;
+    if( $rs->numRows() != 1 ) {
+        return false ;
+    }
+
+    return true ;
 }
 
 function finish_installation( $password ) {

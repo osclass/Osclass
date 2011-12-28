@@ -127,12 +127,21 @@
     }
 
     /**
-     * Gets if notification of new comments is enabled or not
+     * Gets if notification of new comments is enabled or not to admin
      *
      * @return boolean 
      */
     function osc_notify_new_comment() {
         return (getBoolPreference('notify_new_comment')) ;
+    }
+
+    /**
+     * Gets if notification of new comments is enabled or notto users
+     *
+     * @return boolean 
+     */
+    function osc_notify_new_comment_user() {
+        return (getBoolPreference('notify_new_comment_user')) ;
     }
 
     /**

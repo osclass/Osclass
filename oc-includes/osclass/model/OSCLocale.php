@@ -87,17 +87,21 @@
             }
             $this->dao->orderBy('s_name', 'ASC') ;
             $result = $this->dao->get();
-            $aResults = $result->result();
-            
-            if ($indexedByPk) {
-                $aTmp = array() ;
-                for ($i = 0 ; $i < count($aResults) ; $i++) {
-                    $aTmp[(string)$aResults[$i][$this->getPrimaryKey()]] = $aResults[$i] ;
-                }
-                $aResults = $aTmp ;
-            }
+            if($result) {
+                $aResults = $result->result();
 
-            return($aResults) ;
+                if ($indexedByPk) {
+                    $aTmp = array() ;
+                    for ($i = 0 ; $i < count($aResults) ; $i++) {
+                        $aTmp[(string)$aResults[$i][$this->getPrimaryKey()]] = $aResults[$i] ;
+                    }
+                    $aResults = $aTmp ;
+                }
+
+                return($aResults) ;
+            } else {
+                return array();
+            }
         }
 
         /**

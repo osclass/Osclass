@@ -40,40 +40,49 @@
             switch ($this->action)
             {
                 case 'create':          // callign create view
-                                        $aCountries = array();
-                                        $aRegions   = array();
-                                        $aCities    = array();
+                                        $aCountries = array() ;
+                                        $aRegions   = array() ;
+                                        $aCities    = array() ;
 
-                                        $aCountries = Country::newInstance()->listAll();
-                                        if(isset($aCountries[0]['pk_c_code'])) {
-                                            $aRegions = Region::newInstance()->findByCountry($aCountries[0]['pk_c_code']);
+                                        $aCountries = Country::newInstance()->listAll() ;
+
+                                        if( isset($aCountries[0]['pk_c_code']) ) {
+                                            $aRegions = Region::newInstance()->findByCountry($aCountries[0]['pk_c_code']) ;
                                         }
-                                        if(isset($aRegions[0]['pk_i_id'])) {
+
+                                        if( isset($aRegions[0]['pk_i_id']) ) {
                                             $aCities  = City::newInstance()->findByRegion($aRegions[0]['pk_i_id']) ;
                                         }
 
-                                        $this->_exportVariableToView("user", null);
-                                        $this->_exportVariableToView("countries", $aCountries);
-                                        $this->_exportVariableToView("regions", $aRegions);
-                                        $this->_exportVariableToView("cities", $aCities);
-                                        $this->_exportVariableToView("locales", OSCLocale::newInstance()->listAllEnabled());
+                                        $this->_exportVariableToView( 'user', null ) ;
+                                        $this->_exportVariableToView( 'countries', $aCountries ) ;
+                                        $this->_exportVariableToView( 'regions', $aRegions ) ;
+                                        $this->_exportVariableToView( 'cities', $aCities ) ;
+                                        $this->_exportVariableToView( 'locales', OSCLocale::newInstance()->listAllEnabled() ) ;
 
-                                        $this->doView("users/frm.php");
+                                        $this->doView("users/frm.php") ;
                 break;
                 case 'create_post':     // creating the user...
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $userActions = new UserActions(true) ;
-                                        $success = $userActions->add() ;
+                                        $success     = $userActions->add() ;
+
                                         switch($success) {
                                             case 1: osc_add_flash_ok_message( _m('The user has been created. We\'ve sent an activation e-mail'), 'admin') ;
                                             break;
-                                            case 2: osc_add_flash_ok_message( _m('The user has been created and activated'), 'admin') ;
+                                            case 2: osc_add_flash_ok_message( _m('The user has been created successfully'), 'admin') ;
                                             break;
-                                            case 3: osc_add_flash_error_message( _m('Sorry, but that e-mail is already in use'), 'admin') ;
+                                            case 3: osc_add_flash_warning_message( _m('Sorry, but that e-mail is already in use'), 'admin') ;
+                                            break;
+                                            case 5: osc_add_flash_warning_message( _m('The specified e-mail is not valid'), 'admin') ;
+                                            break;
+                                            case 6: osc_add_flash_warning_message( _m('Sorry, the password cannot be empty'), 'admin') ;
+                                            break;
+                                            case 7: osc_add_flash_warning_message( _m("Sorry, passwords don't match"), 'admin') ;
                                             break;
                                         }
 
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                 break;
                 case 'edit':            // calling the edit view
                                         $aUser      = array();
@@ -119,6 +128,28 @@
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
+                case 'resend_activation':        //activate
+                                        require_once LIB_PATH . 'osclass/UserActions.php' ;
+                                        $iUpdated = 0;
+                                        $userId   = Params::getParam('id');
+                                        if(!is_array($userId)) {
+                                            osc_add_flash_error_message(_m('User id isn\'t in the correct format'), 'admin');
+                                        }
+
+                                        $userActions = new UserActions(true) ;
+                                        foreach($userId as $id) {
+                                            $iUpdated   += $userActions->resend_activation($id);
+                                        }
+
+                                        if($iUpdated==0) {
+                                            $msg = _m('No user has been selected');
+                                        } else {
+                                            $msg = sprintf(_n('Activation email sent to one user', 'Activation email sent to %s users', $iUpdated), $iUpdated);
+                                        }
+
+                                        osc_add_flash_ok_message($msg, 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users');
+                break;
                 case 'activate':        //activate
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $iUpdated = 0;
@@ -132,13 +163,10 @@
                                             $iUpdated   += $userActions->activate($id);
                                         }
 
-                                        switch ($iUpdated) {
-                                            case (0):   $msg = _m('No user has been activated');
-                                            break;
-                                            case (1):   $msg = _m('One user has been activated');
-                                            break;
-                                            default:    $msg = sprintf(_m('%s users have been activated'), $iUpdated);
-                                            break;
+                                        if($iUpdated==0) {
+                                            $msg = _m('No user has been activated');
+                                        } else {
+                                            $msg = sprintf(_n('One user has been activated', '%s users have been activated', $iUpdated), $iUpdated);
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin');
@@ -157,13 +185,10 @@
                                             $iUpdated   += $userActions->deactivate($id);
                                         }
 
-                                        switch ($iUpdated) {
-                                            case (0):   $msg = _m('No user has been deactivated');
-                                            break;
-                                            case (1):   $msg = _m('One user has been deactivated');
-                                            break;
-                                            default:    $msg = sprintf(_m('%s users have been deactivated'), $iUpdated);
-                                            break;
+                                        if($iUpdated==0) {
+                                            $msg = _m('No user has been deactivated');
+                                        } else {
+                                            $msg = sprintf(_n('One user has been deactivated', '%s users have been deactivated', $iUpdated), $iUpdated);
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin');
@@ -182,13 +207,10 @@
                                             $iUpdated   += $userActions->enable($id);
                                         }
 
-                                        switch ($iUpdated) {
-                                            case (0):   $msg = _m('No user has been enabled');
-                                            break;
-                                            case (1):   $msg = _m('One user has been enabled');
-                                            break;
-                                            default:    $msg = sprintf(_m('%s users have been enabled'), $iUpdated);
-                                            break;
+                                        if($iUpdated==0) {
+                                            $msg = _m('No user has been enabled');
+                                        } else {
+                                            $msg = sprintf(_n('One user has been enabled', '%s users have been enabled', $iUpdated), $iUpdated);
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin');
@@ -207,13 +229,10 @@
                                             $iUpdated   += $userActions->disable($id);
                                         }
 
-                                        switch ($iUpdated) {
-                                            case (0):   $msg = _m('No user has been disabled');
-                                            break;
-                                            case (1):   $msg = _m('One user has been disabled');
-                                            break;
-                                            default:    $msg = sprintf(_m('%s users have been disabled'), $iUpdated);
-                                            break;
+                                        if($iUpdated==0) {
+                                            $msg = _m('No user has been disabled');
+                                        } else {
+                                            $msg = sprintf(_n('One user has been disabled', '%s users have been disabled', $iUpdated), $iUpdated);
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin');
@@ -234,13 +253,10 @@
                                             }
                                         }
 
-                                        switch ($iDeleted) {
-                                            case (0):   $msg = _m('No user has been deleted');
-                                            break;
-                                            case (1):   $msg = _m('One user has been deleted');
-                                            break;
-                                            default:    $msg = sprintf(_m('%s users have been deleted'), $iDeleted);
-                                            break;
+                                        if($iDeleted==0) {
+                                            $msg = _m('No user has been deleted');
+                                        } else {
+                                            $msg = sprintf(_n('One user has been deleted', '%s users have been deleted', $iDeleted), $iDeleted);
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin');

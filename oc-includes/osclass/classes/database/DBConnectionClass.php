@@ -160,7 +160,7 @@
             $this->connectToOsclassDb() ;
         }
 
-		/**
+        /**
          * Connection destructor and print debug
          */
         public function __destruct()
@@ -170,17 +170,17 @@
             $this->debug() ;
         }
 
-		/**
+        /**
          * Set error num error and error description
          * 
          * @access private
          * @since 2.3
          */
-		function errorReport()
-		{
-			$this->errorLevel = $this->db->errno ;
-			$this->errorDesc  = $this->db->error ;
-		}
+        function errorReport()
+        {
+            $this->errorLevel = $this->db->errno ;
+            $this->errorDesc  = $this->db->error ;
+        }
 
         /**
          * Set connection error num error and connection error description
@@ -273,7 +273,7 @@
             }
 
             return true ;
-		}
+        }
 
         /**
          * Connect to metadata database
@@ -286,10 +286,10 @@
         {
             $conn = $this->_connectToDb(DB_HOST, DB_USER, DB_PASSWORD, $this->metadataDb) ;
 
-			if ( $conn == false ) {
+            if ( $conn == false ) {
                 $this->releaseMetadataDb() ;
-				return false ;
-			}
+                return false ;
+            }
 
             $this->_setCharset('utf8', $this->metadataDb) ;
 
@@ -339,7 +339,7 @@
         function reconnectOsclassDb()
         {
             $this->releaseOsclassDb() ;
-			$this->connectToOsclassDb() ;
+            $this->connectToOsclassDb() ;
         }
 
         /**
@@ -351,7 +351,7 @@
         function reconnectMetadataDb()
         {
             $this->releaseMetadataDb() ;
-			$this->connectToMetadataDb() ;
+            $this->connectToMetadataDb() ;
         }
 
         /**
@@ -444,7 +444,7 @@
                 return false ;
             }
 
-            if( defined('IS_AJAX') ) {
+            if( defined('IS_AJAX') && !OSC_DEBUG_DB_LOG ) {
                 return false ;
             }
 

@@ -395,7 +395,12 @@
      * @return int
      */
     function osc_item_views() {
-        return (int) osc_item_field("i_num_views") ;
+        $item = osc_item();
+        if(isset($item['i_num_views'])) {
+            return (int) osc_item_field("i_num_views") ;
+        } else {
+            return ItemStats::newInstance()->getViews(osc_item_id());
+        }
     }
 
     /**
@@ -984,7 +989,7 @@
      * @return string
      */    
     function osc_item_meta_value() {
-        return htmlentities(osc_field(osc_item_meta(), 's_value', '')) ;
+        return htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8") ; 
     }
    
     /**
@@ -1041,7 +1046,7 @@
      */    
     function osc_total_active_items_today() {
         $search = new Search(false);
-        $search->addConditions(sprintf('TIMESTAMPDIFF(DAY,%st_item.dt_pub_date,\'%s\') < 1', DB_TABLE_PREFIX, date('Y-m-d H:i:s')));
+        $search->addConditions(sprintf('DATEDIFF(\'%s\', %st_item.dt_pub_date) < 1', date('Y-m-d H:i:s'), DB_TABLE_PREFIX));
         return $search->count();
     }
    
@@ -1052,7 +1057,7 @@
      */    
     function osc_total_items_today() {
         $search = new Search(true);
-        $search->addConditions(sprintf('TIMESTAMPDIFF(DAY,%st_item.dt_pub_date,\'%s\') < 1', DB_TABLE_PREFIX, date('Y-m-d H:i:s')));
+        $search->addConditions(sprintf('DATEDIFF(\'%s\', %st_item.dt_pub_date) < 1', date('Y-m-d H:i:s'), DB_TABLE_PREFIX));
         return $search->count();
     }
    

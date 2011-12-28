@@ -151,8 +151,6 @@
 
 
         static function activate($path) {
-            $conn = getConnection() ;
-            $conn->autocommit(false);
             try {
                 $data['s_value'] = osc_active_plugins() ;
                 $plugins_list = unserialize($data['s_value']);
@@ -173,17 +171,14 @@
                     Preference::newInstance()->update($data, $condition);
                     unset($condition);
                     unset($data);
-                    $conn->commit();
                     Plugins::reload();
                     return true;
                 } else {
                     return false;
                 }
             } catch (Exception $e) {
-                $conn->rollback();
                 echo $e->getMessage();
             }
-            $conn->autocommit(true);
         }
 
 
@@ -194,8 +189,6 @@
 
         static function deactivate($path)
         {
-            $conn = getConnection() ;
-            $conn->autocommit(false);
             try {
                 $data['s_value'] = osc_active_plugins() ;
                 $plugins_list = unserialize($data['s_value']);
@@ -212,20 +205,15 @@
                     Preference::newInstance()->update($data, $condition) ;
                     unset($condition);
                     unset($data);
-                    $conn->commit();
                     Plugins::reload();
                 }
             } catch (Exception $e) {
-                $conn->rollback();
                 echo $e->getMessage();
             }
-            $conn->autocommit(true);
-
         }
 
-        static function install($path) {
-            $conn = getConnection() ;
-            $conn->autocommit(false);
+        static function install($path) 
+        {
             try {
                 $data['s_value'] = osc_installed_plugins() ;
                 $plugins_list = unserialize($data['s_value']);
@@ -247,22 +235,17 @@
                     Preference::newInstance()->update($data, $condition);
                     unset($condition);
                     unset($data);
-                    $conn->commit();
                     return true;
                 } else {
                     return false;
                 }
             } catch (Exception $e) {
-                $conn->rollback();
                 echo $e->getMessage();
             }
-            $conn->autocommit(true);
         }
 
         static function uninstall($path)
         {
-            $conn = getConnection() ;
-            $conn->autocommit(false);
             try {
                 $data['s_value'] = osc_installed_plugins() ;
                 $plugins_list = unserialize($data['s_value']);
@@ -280,16 +263,12 @@
                     Preference::newInstance()->update($data, $condition) ;
                     unset($condition);
                     unset($data);
-                    $conn->commit();
                     $plugin = Plugins::getInfo($path);
                     Plugins::cleanCategoryFromPlugin($plugin['short_name']);
                 }
             } catch (Exception $e) {
-                $conn->rollback();
                 echo $e->getMessage();
             }
-            $conn->autocommit(true);
-
         }
         
         static function isThisCategory($name, $id) {

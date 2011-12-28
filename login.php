@@ -41,11 +41,27 @@
                                         $user = User::newInstance()->findByEmail( Params::getParam('email') ) ;
                                         
                                         $url_redirect = osc_user_dashboard_url();
-                                        if(preg_match('|[\?&]page=([^&]+)|', $_SERVER['HTTP_REFERER'].'&', $match)) {
+                                        $page_redirect = '';
+                                        if(osc_rewrite_enabled()) {
+                                            if(isset($_SERVER['HTTP_REFERER'])) {
+                                                $request_uri = urldecode(preg_replace('@^' . osc_base_url() . '@', "", $_SERVER['HTTP_REFERER']));
+                                                $tmp_ar = explode("?", $request_uri);
+                                                $request_uri = $tmp_ar[0];
+                                                $rules = Rewrite::newInstance()->listRules();
+                                                foreach($rules as $match => $uri) {
+                                                    if(preg_match('#'.$match.'#', $request_uri, $m)) {
+                                                        $request_uri = preg_replace('#'.$match.'#', $uri, $request_uri);
+                                                        if(preg_match('|([&?]{1})page=([^&]*)|', '&'.$request_uri.'&', $match)) {
+                                                            $page_redirect = $match[2];
+                                                        }
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        } else if(preg_match('|[\?&]page=([^&]+)|', $_SERVER['HTTP_REFERER'].'&', $match)) {
                                             $page_redirect = $match[1];
-                                        } else {
-                                            $page_redirect = '';
                                         }
+                                        
                                         if(Params::getParam('http_referer')!='') {
                                             Session::newInstance()->_setReferer(Params::getParam('http_referer'));
                                             $url_redirect = Params::getParam('http_referer');

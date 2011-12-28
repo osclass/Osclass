@@ -196,7 +196,16 @@
                                     <input type="text" name="max_latest_items_at_home" id="max_latest_items_at_home" value="<?php echo osc_max_latest_items_at_home(); ?>" onblur='validateInt(this,<?php echo osc_max_latest_items_at_home(); ?>)'/>
                                 </fieldset>
                             </div>
+
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Number of item displayed in search results') ; ?></legend>
+                                    <input type="text" name="default_results_per_page" id="default_results_per_page" value="<?php echo osc_default_results_per_page_at_search(); ?>" onblur='validateInt(this,<?php echo osc_default_results_per_page_at_search(); ?>)'/>
+                                </fieldset>
+                            </div>
+
                             <div style="clear: both;"></div>
+
                             <input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
                         </form>
                     </div>

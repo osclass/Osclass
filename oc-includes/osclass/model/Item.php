@@ -335,16 +335,16 @@
          */
         public function insertLocale($id, $locale, $title, $description, $what)
         {
-            $title = addslashes($title);
-            $description = addslashes($description);
-            $what = addslashes($what);
-            $array_set = array(
+            $title       = $title ;
+            $description = $description ;
+            $what        = $what ;
+            $array_set   = array(
                 'fk_i_item_id'      => $id,
                 'fk_c_locale_code'  => $locale,
                 's_title'           => $title,
                 's_description'     => $description,
                 's_what'            => $what
-            );  
+            ) ;
             return $this->dao->insert(DB_TABLE_PREFIX.'t_item_description', $array_set) ;
         }
         
@@ -490,7 +490,7 @@
                     break;
             }
             $array_conditions = array('fk_i_item_id' => $id);
-            return $this->update(DB_TABLE_PREFIX.'t_item_stats', $array_set, $array_conditions);
+            return $this->dao->update(DB_TABLE_PREFIX.'t_item_stats', $array_set, $array_conditions);
         }
         
         /**
@@ -550,23 +550,25 @@
          */
         public function deleteByPrimaryKey($id)
         {
-//            osc_run_hook('delete_item', $id);
-            $item = $this->findByPrimaryKey($id);
-            if (!is_null($item)) {
-                if($item['b_active']==1) {
-                    CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
-                }
-                $this->dao->delete(DB_TABLE_PREFIX.'t_item_description', "fk_i_item_id = $id") ;
-                $this->dao->delete(DB_TABLE_PREFIX.'t_item_comment' , "fk_i_item_id = $id") ;
-                $this->dao->delete(DB_TABLE_PREFIX.'t_item_resource', "fk_i_item_id = $id") ;
-                $this->dao->delete(DB_TABLE_PREFIX.'t_item_location', "fk_i_item_id = $id") ;
-                $this->dao->delete(DB_TABLE_PREFIX.'t_item_stats'   , "fk_i_item_id = $id") ;
-                $this->dao->delete(DB_TABLE_PREFIX.'t_item_meta'    , "fk_i_item_id = $id") ;
-                $res = parent::deleteByPrimaryKey($id) ;
-                return $res;
-            } else {
-                return false;
+            osc_run_hook('delete_item', $id) ;
+            $item = $this->findByPrimaryKey($id) ;
+
+            if ( is_null($item) ) {
+                return false ;
             }
+
+            if( $item['b_active'] == 1 ) {
+                CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']) ;
+            }
+
+            $this->dao->delete(DB_TABLE_PREFIX.'t_item_description', "fk_i_item_id = $id") ;
+            $this->dao->delete(DB_TABLE_PREFIX.'t_item_comment' , "fk_i_item_id = $id") ;
+            $this->dao->delete(DB_TABLE_PREFIX.'t_item_resource', "fk_i_item_id = $id") ;
+            $this->dao->delete(DB_TABLE_PREFIX.'t_item_location', "fk_i_item_id = $id") ;
+            $this->dao->delete(DB_TABLE_PREFIX.'t_item_stats'   , "fk_i_item_id = $id") ;
+            $this->dao->delete(DB_TABLE_PREFIX.'t_item_meta'    , "fk_i_item_id = $id") ;
+            $res = parent::deleteByPrimaryKey($id) ;
+            return $res ;
         }
         
         /**
