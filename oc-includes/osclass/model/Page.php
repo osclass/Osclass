@@ -364,8 +364,6 @@
          */
         private function insertDescription($id, $locale, $title, $text)
         {
-            $title = addslashes($title);
-            $text  = addslashes($text);
 
             $this->dao->insert($this->getDescriptionTableName() ,array(
                 'fk_i_pages_id' => $id
