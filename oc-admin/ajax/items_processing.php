@@ -91,7 +91,8 @@
                 $mSearch->addCategory(Params::getParam("catId"));
             }
             if($this->search) {
-                //$mSearch->addConditions(sprintf("(d.s_title LIKE '%%%s%%' OR d.s_description LIKE '%%%s%%')", $this->search, $this->search));
+                $mSearch->addTable(sprintf('%st_item_description as d', DB_TABLE_PREFIX));
+                $mSearch->addConditions(sprintf("d.fk_i_item_id = %st_item.pk_i_id", DB_TABLE_PREFIX));
                 $mSearch->addConditions(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->search));
             }
             
