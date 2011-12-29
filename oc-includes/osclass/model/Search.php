@@ -66,8 +66,7 @@
             $this->search_fields = array();
             $this->tables = array();
             
-            if(!defined(OC_ADMIN)) {
-                
+            if(!defined('OC_ADMIN')) {
                 $this->addTable(sprintf( '%st_item_description as d', DB_TABLE_PREFIX));
                 $this->addConditions(sprintf('%st_item.pk_i_id = d.fk_i_item_id', DB_TABLE_PREFIX));
             } else {
