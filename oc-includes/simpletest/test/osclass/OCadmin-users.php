@@ -14,6 +14,7 @@ class OCadmin_users extends OCadminTest {
         $this->loginWith() ;
         $this->insertUser() ;
         $this->deleteUser();
+        flush();
     }
 
     /*
@@ -24,6 +25,7 @@ class OCadmin_users extends OCadminTest {
         $this->loginWith() ;
         $this->insertUserByLink() ;
         $this->deleteUser();
+        flush();
     }
     
     /*
@@ -35,6 +37,7 @@ class OCadmin_users extends OCadminTest {
         $this->insertUser() ;
         $this->editUser();
         $this->deleteUser();
+        flush();
     }
 
     /*
@@ -46,6 +49,7 @@ class OCadmin_users extends OCadminTest {
         $this->insertUser() ;
         $this->extraValidations();
         $this->deleteUser();
+        flush();
     }
 
     
@@ -56,6 +60,7 @@ class OCadmin_users extends OCadminTest {
     {
         $this->loginWith() ;
         $this->settings();
+        flush();
     }
 
     /*
@@ -91,7 +96,7 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->click("//form/input[@id='button_save']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue($this->selenium->isTextPresent("The user has been created and activated"),"Create user");
+        $this->assertTrue($this->selenium->isTextPresent("The user has been created successfully"),"Create user");
     }
 
     /*
@@ -105,6 +110,7 @@ class OCadmin_users extends OCadminTest {
         $bool_reg_user_post  = $uSettings->set_reg_user_post(0);
         $bool_moderate_items = $uSettings->set_moderate_items(-1);
         
+        // add item for testing purposes
         $this->selenium->open(osc_base_url(true) . '?page=item&action=item_add' );
         $this->selenium->select("catId", "label=regexp:\\s*Animals");
 
@@ -163,7 +169,10 @@ class OCadmin_users extends OCadminTest {
         $this->assertTrue( ($this->selenium->getValue('id=phoneNumber') == '666666666'), 'Phone auto fill');
 
         // remove item
-        Item::newInstance()->delete( array('s_contact_email' => 'foobar@mail.com') ) ;
+        $aItems = Item::newInstance()->findByEmail( 'foobar@mail.com' ) ;
+        foreach($aItems as $item) {
+            Item::newInstance()->deleteByPrimaryKey($item['pk_i_id']);
+        }
     }
 
     /*
@@ -199,9 +208,9 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->select("b_company"     , "label=User");
 
         $this->selenium->click("//form/input[@id='button_save']");
-        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->waitForPageToLoad("1000");
 
-        $this->assertTrue($this->selenium->isTextPresent("The user has been created and activated"),"Create user");
+        $this->assertTrue($this->selenium->isTextPresent("The user has been created successfully"),"Create user");
     }
 
     /*
@@ -215,7 +224,8 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'mail.com')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'mail.com')]/td/div/a[text()='Edit']");
+        //table/tbody/tr[contains(.,'mail.com')]/td/div[@id='datatable_wrapper']/div/a[text()='Edit']
+        $this->selenium->click("//table/tbody/tr[contains(.,'mail.com')]/td/div[@id='datatable_wrapper']/div/a[text()='Edit']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->type("s_email"         ,"newtest@mail.com");
@@ -256,7 +266,7 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'mail.com')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'mail.com')]/td/div/a[text()='Delete']");
+        $this->selenium->click("//table/tbody/tr[contains(.,'mail.com')]/td/div[@id='datatable_wrapper']/div/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("One user has been deleted"), "Delete user" ) ;

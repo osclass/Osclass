@@ -512,10 +512,10 @@ class OCadmin_items extends OCadminTest {
         Preference::newInstance()->replace('numImages@items', '4',"osclass", 'INTEGER') ;
         
         $mItem = new Item();
-        $item = $mItem->findByEmail( 'foobar@mail.com' );
+        $aItems = $mItem->findByEmail( 'foobar@mail.com' );
         foreach($aItems as $item) {
             $res = $mItem->deleteByPrimaryKey($item['pk_i_id']);
-            $this->assertTrue($res);
+            $this->assertTrue($res, 'Item deleted ok');
         }
     }
 
@@ -695,12 +695,12 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->click('link=foo title');
         $this->selenium->waitForPageToLoad("10000");
         
-        $div_present = $this->selenium->isElementPresent("xpath=//div[@id='contact']");
+        $div_present = $this->selenium->isElementPresent("xpath=//div[@id='contact']/form[@name='contact_form']");
 
         if($bool == 1){
-            $this->assertFalse($div_present, "There are div contact form. ERROR");
+            $this->assertFalse($div_present, "There are form contact_form form. ERROR");
         } else if($bool == 0) {
-            $this->assertTrue($div_present, "There aren't div contact form. ERROR");
+            $this->assertTrue($div_present, "There aren't form contact_form form. ERROR");
         }
 
         $user = User::newInstance()->findByEmail($this->_email);
