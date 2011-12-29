@@ -33,7 +33,7 @@
     $rewrite->addRule('^contact/?$', 'index.php?page=contact');
 
     // Feed rules
-    $rewrite->addRule('^feed$', 'index.php?page=search&sFeed=rss');
+    $rewrite->addRule('^feed/?$', 'index.php?page=search&sFeed=rss');
     $rewrite->addRule('^feed/(.+)$', 'index.php?page=search&sFeed=$1');
 
     // Language rules
