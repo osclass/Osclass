@@ -247,8 +247,22 @@
      *
      * @return string
      */
-    function osc_user_info() {
-        return (string) osc_user_field("s_info");
+    function osc_user_info($locale = "") {
+        if ($locale == "") $locale = osc_current_user_locale() ;
+        $info = osc_user_field("s_info", $locale) ;
+        if($info == '') {
+            $info = osc_user_field("s_info", osc_language());
+            if($desc=='') {
+                $aLocales = osc_get_locales();
+                foreach($aLocales as $locale) {
+                    $info = osc_user_field("s_info", $locale);
+                    if($desc!='') {
+                        break;
+                    }
+                }
+            }
+        }
+        return (string) $info;
     }
 
     /**
