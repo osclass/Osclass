@@ -66,6 +66,7 @@ unset($location_array);
                             <li><?php _e('Address'); ?>: <?php echo $address; ?></li>
                             <li><?php _e('Location'); ?>: <?php echo $location; ?></li>
                             <li><?php _e('Website'); ?>: <?php echo osc_user_website(); ?></li>
+                            <li><?php _e('User Description'); ?>: <?php echo osc_user_info(); ?></li>
                         </ul>
                     </div>
                     <div id="description" class="latest_ads">
