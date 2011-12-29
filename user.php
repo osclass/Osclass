@@ -60,6 +60,8 @@
                                         $this->_exportVariableToView('regions', $aRegions) ;
                                         $this->_exportVariableToView('cities', $aCities) ;
                                         $this->_exportVariableToView('user', $user) ;
+                                        $this->_exportVariableToView('locales', OSCLocale::newInstance()->listAllEnabled() ) ;
+                                        
                                         $this->doView('user-profile.php') ;
                 break ;
                 case('profile_post'):   //profile post...

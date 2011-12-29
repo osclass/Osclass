@@ -628,7 +628,7 @@
          */
         public function extendCategoryName($items)
         {
-            if(defined('OC_ADMIN')) {
+            if( OC_ADMIN ) {
                 $prefLocale = osc_current_admin_locale();
             } else {
                 $prefLocale = osc_current_user_locale();
@@ -667,7 +667,7 @@
          */
         public function extendData($items)
         {
-            if(defined('OC_ADMIN')) {
+            if( OC_ADMIN ) {
                 $prefLocale = osc_current_admin_locale();
             } else {
                 $prefLocale = osc_current_user_locale();

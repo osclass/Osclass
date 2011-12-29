@@ -41,7 +41,8 @@ if( !file_exists(ABS_PATH . 'config.php') ) {
     osc_die($title, $message) ;
 }
 
-require_once ABS_PATH . 'config.php';
+// load database configuration
+require_once ABS_PATH . 'config.php' ;
 require_once LIB_PATH . 'osclass/default-constants.php' ;
 
 // Sets PHP error handling
@@ -64,9 +65,21 @@ require_once LIB_PATH . 'osclass/classes/database/DBConnectionClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DBCommandClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DBRecordsetClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DAO.php';
+require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
 require_once LIB_PATH . 'osclass/model/Preference.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php';
-require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
+
+// check if OSClass is installed
+if( !getBoolPreference('osclass_installed') ) {
+    require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
+
+    $title    = 'OSClass &raquo; Error' ;
+    $message  = 'OSClass isn\'t installed. <a href="http://forums.osclass.org/">Need more help?</a></p>' ;
+    $message .= '<p><a class="button" href="' . osc_get_absolute_url() .'oc-includes/osclass/install.php">Install</a></p>' ;
+
+    osc_die($title, $message) ;
+}
+
 require_once LIB_PATH . 'osclass/helpers/hDefines.php';
 require_once LIB_PATH . 'osclass/helpers/hLocale.php';
 require_once LIB_PATH . 'osclass/helpers/hMessages.php';
@@ -88,6 +101,7 @@ require_once LIB_PATH . 'osclass/core/Cookie.php';
 require_once LIB_PATH . 'osclass/core/Session.php';
 require_once LIB_PATH . 'osclass/core/View.php';
 require_once LIB_PATH . 'osclass/core/BaseModel.php';
+require_once LIB_PATH . 'osclass/core/AdminBaseModel.php';
 require_once LIB_PATH . 'osclass/core/SecBaseModel.php';
 require_once LIB_PATH . 'osclass/core/WebSecBaseModel.php';
 require_once LIB_PATH . 'osclass/core/AdminSecBaseModel.php';

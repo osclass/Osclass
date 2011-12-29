@@ -37,7 +37,7 @@
         function __construct() {
             // get user/admin locale
             $locale = '';
-            if(defined('OC_ADMIN')) {
+            if( OC_ADMIN ) {
                 $locale = osc_current_admin_locale();
             } else {
                 $locale = osc_current_user_locale();
