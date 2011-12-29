@@ -171,6 +171,8 @@
 
             // FILTERING PATTERN
             if($p_sPattern != '') {
+                $this->mSearch->addTable(sprintf('%st_item_description as d', DB_TABLE_PREFIX));
+                $this->mSearch->addConditions(sprintf("d.fk_i_item_id = %st_item.pk_i_id", DB_TABLE_PREFIX));
                 $this->mSearch->addConditions(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $p_sPattern));
                 $osc_request['sPattern'] = $p_sPattern;
             }
