@@ -96,7 +96,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         // Code for form validation
-        $("form[name=contact]").validate({
+        $("form[name=contact_form]").validate({
             rules: {
                 message: {
                     required: true,
