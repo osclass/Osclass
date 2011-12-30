@@ -27,9 +27,10 @@
  * @return string The url of the site
  */
 function get_absolute_url( ) {
-    $protocol = ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ) ? 'https' : 'http';
-    $pos = strpos($_SERVER['REQUEST_URI'], 'oc-includes');
-    return $protocol . '://' . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, $pos);
+    $protocol = ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ) ? 'https' : 'http' ;
+    $pos      = strpos($_SERVER['REQUEST_URI'], 'oc-includes') ;
+    $URI      = rtrim( substr( $_SERVER['REQUEST_URI'], 0, $pos ), '/' ) . '/' ;
+    return $protocol . '://' . $_SERVER['HTTP_HOST'] . $URI ;
 }
 
 /*
