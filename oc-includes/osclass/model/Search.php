@@ -65,6 +65,17 @@
             $this->conditions = array();
             $this->search_fields = array();
             $this->tables = array();
+            
+            if(!defined('OC_ADMIN')) {
+                $this->addTable(sprintf( '%st_item_description as d', DB_TABLE_PREFIX));
+                $this->addConditions(sprintf('%st_item.pk_i_id = d.fk_i_item_id', DB_TABLE_PREFIX));
+            } else {
+                if(!OC_ADMIN) {
+                    $this->addTable(sprintf( '%st_item_description as d', DB_TABLE_PREFIX));
+                    $this->addConditions(sprintf('%st_item.pk_i_id = d.fk_i_item_id', DB_TABLE_PREFIX));
+                }
+            }
+            
             $this->addTable(sprintf( '%st_category_description as cd', DB_TABLE_PREFIX));
             $this->order();
             $this->limit();
@@ -661,7 +672,7 @@
             
             $this->addTable(sprintf('%st_item', DB_TABLE_PREFIX));
             $this->addTable(sprintf('%st_item_location', DB_TABLE_PREFIX));
-            $this->addTable(sprintf('%st_category'), DB_TABLE_PREFIX);
+            $this->addTable(sprintf('%st_category', DB_TABLE_PREFIX));
             $this->addTable(sprintf('%st_category_description as cd', DB_TABLE_PREFIX));
             
             $aux_tables   = implode(', ', $this->tables);
