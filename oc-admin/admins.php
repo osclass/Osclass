@@ -223,7 +223,7 @@
                                     }
                                     // deleting and admin
                                     $isDeleted = false;
-                                    $adminId   = Params::getParam('id');
+                                    $adminId   = Params::getParam('id') ;
 
                                     if(!is_array($adminId)) {
                                         osc_add_flash_error_message( _m('The admin id isn\'t in the correct format'), 'admin');
@@ -236,7 +236,7 @@
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins');
                                     }
 
-                                    $isDeleted = $this->adminManager->delete(array('pk_i_id IN (' . implode(', ', $adminId) . ')')) ;
+                                    $isDeleted = $this->adminManager->deleteBatch( $adminId ) ;
 
                                     if($isDeleted) {
                                         osc_add_flash_ok_message( _m('The admin has been deleted correctly'), 'admin');
