@@ -26,6 +26,48 @@ class Frontend_users extends FrontendTest {
         unset($uSettings);
     }
 
+    /**
+     * Test user profile & public user profile.
+     */
+    function testUsers_profile()
+    {
+        
+        $this->loginWith();
+        $this->selenium->open( osc_user_profile_url() );
+        // fill all information 
+        $this->selenium->type('s_name'          , 'updated usertest');
+        $this->selenium->type('s_phone_mobile'  , '666006600');
+        $this->selenium->type('cityArea'        , 'city area');
+        $this->selenium->type('address'         , 'address 30');
+        $this->selenium->type('s_website'       , 'www.osclass.org');
+        $this->selenium->type('s_info[en_US]'   , 'user description test');
+        
+        $this->selenium->click("xpath=//span/button[text()='Update']");
+        $this->selenium->waitForPageToLoad("3000");
+        
+        $this->assertTrue( $this->selenium->isTextPresent('Your profile has been updated successfully'), 'User profile update');
+        
+        $this->assertEqual( $this->selenium->getValue('s_name')         , 'updated usertest' ) ;
+        $this->assertEqual( $this->selenium->getValue('s_phone_mobile') , '666006600' ) ;
+        $this->assertEqual( $this->selenium->getValue('cityArea')       , 'city area' ) ;
+        $this->assertEqual( $this->selenium->getValue('address')        , 'address 30' ) ;
+        $this->assertEqual( $this->selenium->getValue('s_website')      , 'www.osclass.org' ) ;
+        $this->assertEqual( $this->selenium->getValue('s_info[en_US]')  , 'user description test' ) ;
+        $this->assertFalse( $this->selenium->isElementPresent("xpath=//div[@id='contact']") );
+        
+        // test public user profile + logged in
+        $this->logout();
+        $user = User::newInstance()->findByEmail($this->_email);
+        $this->selenium->open( osc_user_public_profile_url($user['pk_i_id']) );
+        
+        // check values
+        $this->assertTrue( $this->selenium->isTextPresent( 'Full name: updated usertest') );
+        $this->assertTrue( $this->selenium->isTextPresent( 'Address: address 30, city area') );
+        $this->assertTrue( $this->selenium->isTextPresent( 'User Description: user description test') );
+        $this->assertTrue( $this->selenium->isTextPresent( 'Website: www.osclass.org') );
+        $this->assertTrue( $this->selenium->isElementPresent("xpath=//div[@id='contact']") );
+    }
+    
     /*
      * Login user.
      * Change the password:
