@@ -84,7 +84,7 @@
                                                 <strong><?php echo $info['name']; ?> <?php echo $info['version']; ?> by <a href="<?php echo $info['author_url']; ?>"><?php echo $info['author_name']; ?></a></strong>
                                             </div>
                                             <div id="available_theme_actions">
-                                                <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&action=activate&amp;theme=<?php echo $theme ; ?>"><?php _e('Activate') ; ?></a> |
+                                                <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&action=activate&theme=<?php echo $theme ; ?>"><?php _e('Activate') ; ?></a> |
                                                 <a target="_blank" href="<?php echo osc_base_url(true) ; ?>?theme=<?php echo $theme ; ?>"><?php _e('Preview') ; ?></a>
                                             </div>
                                             <div id="available_theme_pic">
