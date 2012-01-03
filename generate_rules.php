@@ -33,7 +33,7 @@
     $rewrite->addRule('^contact/?$', 'index.php?page=contact');
 
     // Feed rules
-    $rewrite->addRule('^feed$', 'index.php?page=search&sFeed=rss');
+    $rewrite->addRule('^feed/?$', 'index.php?page=search&sFeed=rss');
     $rewrite->addRule('^feed/(.+)$', 'index.php?page=search&sFeed=$1');
 
     // Language rules
@@ -66,6 +66,7 @@
     $rewrite->addRule('^user/activate/([0-9]+)/(.*?)/?$', 'index.php?page=register&action=validate&id=$1&code=$2');
     $rewrite->addRule('^user/activate_alert/([a-zA-Z0-9]+)/(.+)$', 'index.php?page=user&action=activate_alert&email=$2&secret=$1');
     $rewrite->addRule('^user/profile$', 'index.php?page=user&action=profile');
+    $rewrite->addRule('^user/profile/([0-9]+)$', 'index.php?page=user&action=pub_profile&id=$1');
     $rewrite->addRule('^user/items$', 'index.php?page=user&action=items');
     $rewrite->addRule('^user/alerts$', 'index.php?page=user&action=alerts');
     $rewrite->addRule('^user/recover/?$', 'index.php?page=login&action=recover');

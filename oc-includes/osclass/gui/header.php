@@ -23,32 +23,37 @@
     <a id="logo" href="<?php echo osc_base_url() ; ?>"><strong><?php echo osc_page_title() ; ?></strong></a>
     <div id="user_menu">
         <ul>
-            <?php if( osc_is_web_user_logged_in() ) { ?>
-                <li class="first logged">
-                    <?php echo sprintf(__('Hi %s', 'modern'), osc_logged_user_name() . '!'); ?>  &middot;
-                    <strong><a href="<?php echo osc_user_dashboard_url() ; ?>"><?php _e('My account', 'modern') ; ?></a></strong> &middot;
-                    <a href="<?php echo osc_user_logout_url() ; ?>"><?php _e('Logout', 'modern') ; ?></a>
-                </li>
-            <?php } else { ?>
-                <li class="first">
-                    <a id="login_open" href="<?php echo osc_user_login_url(); ?>"><?php _e('Login', 'modern') ; ?></a>  &middot;
-                    <a href="<?php echo osc_register_account_url() ; ?>"><?php _e('Register for a free account', 'modern'); ?></a>
-                    <form id="login" action="<?php echo osc_base_url(true) ; ?>" method="post">
-                        <fieldset>
-                            <input type="hidden" name="page" value="login" />
-                            <input type="hidden" name="action" value="login_post" />
-                            <label for="email"><?php _e('E-mail', 'modern') ; ?></label>
-                            <?php UserForm::email_login_text() ; ?>
-                            <label for="password"><?php _e('Password', 'modern') ; ?></label>
-                            <?php UserForm::password_login_text() ; ?>
-                            <p class="checkbox"><?php UserForm::rememberme_login_checkbox();?> <label for="rememberMe"><?php _e('Remember me', 'modern') ; ?></label></p>
-                            <button type="submit"><?php _e('Log in', 'modern') ; ?></button>
-                            <div class="forgot">
-                                <a href="<?php echo osc_recover_user_password_url() ; ?>"><?php _e("Forgot password?", 'modern');?></a>
-                            </div>
-                        </fieldset>
-                    </form>
-                </li>
+            <?php if(osc_users_enabled()) { ?>
+                <?php if( osc_is_web_user_logged_in() ) { ?>
+                    <li class="first logged">
+                        <?php echo sprintf(__('Hi %s', 'modern'), osc_logged_user_name() . '!'); ?>  &middot;
+                        <strong><a href="<?php echo osc_user_dashboard_url() ; ?>"><?php _e('My account', 'modern') ; ?></a></strong> &middot;
+                        <a href="<?php echo osc_user_logout_url() ; ?>"><?php _e('Logout', 'modern') ; ?></a>
+                    </li>
+                <?php } else { ?>
+                    <li class="first">
+                        <a id="login_open" href="<?php echo osc_user_login_url(); ?>"><?php _e('Login', 'modern') ; ?></a>
+                        <?php if(osc_user_registration_enabled()) { ?>
+                            &middot;
+                            <a href="<?php echo osc_register_account_url() ; ?>"><?php _e('Register for a free account', 'modern'); ?></a>
+                        <?php }; ?>
+                        <form id="login" action="<?php echo osc_base_url(true) ; ?>" method="post">
+                            <fieldset>
+                                <input type="hidden" name="page" value="login" />
+                                <input type="hidden" name="action" value="login_post" />
+                                <label for="email"><?php _e('E-mail', 'modern') ; ?></label>
+                                <?php UserForm::email_login_text() ; ?>
+                                <label for="password"><?php _e('Password', 'modern') ; ?></label>
+                                <?php UserForm::password_login_text() ; ?>
+                                <p class="checkbox"><?php UserForm::rememberme_login_checkbox();?> <label for="rememberMe"><?php _e('Remember me', 'modern') ; ?></label></p>
+                                <button type="submit"><?php _e('Log in', 'modern') ; ?></button>
+                                <div class="forgot">
+                                    <a href="<?php echo osc_recover_user_password_url() ; ?>"><?php _e("Forgot password?", 'modern');?></a>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </li>
+                <?php } ?>
             <?php } ?>
             <?php if ( osc_count_web_enabled_locales() > 1) { ?>
                 <?php osc_goto_first_locale() ; ?>
@@ -64,9 +69,11 @@
                 </li>
             <?php } ?>
         </ul>
-        <div id="form_publish">
-            <strong class="publish_button"><a href="<?php echo osc_item_post_url_in_category() ; ?>"><?php _e("Publish your ad for free", 'modern');?></a></strong>
-        </div>
+        <?php if( osc_users_enabled() || ( !osc_users_enabled() && !osc_reg_user_post() )) { ?>
+            <div id="form_publish">
+                <strong class="publish_button"><a href="<?php echo osc_item_post_url_in_category() ; ?>"><?php _e("Publish your ad for free", 'modern');?></a></strong>
+            </div>
+        <?php } ?>
         <div class="empty"></div>
     </div>
 </div>

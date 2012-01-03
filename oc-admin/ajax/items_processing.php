@@ -16,8 +16,8 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
- 
-     class items_processing_ajax extends Item
+
+     class ItemsProcessingAjax 
      {
         private $items;
         private $result;
@@ -36,7 +36,7 @@
         private $column_names  = 
             array(  0=> 'dt_pub_date',
                     1=> 's_title',
-                    2=> 's_name',
+                    2=> 's_contact_name',
                     3=> 's_category_name',
                     4=> 's_country',
                     5=> 's_region',
@@ -46,7 +46,7 @@
         private $tables_columns = 
             array(  0=> NULL,
                     1=> NULL,
-                    2=> '%st_user',
+                    2=> NULL,
                     3=> NULL,
                     4=> NULL,
                     5=> NULL,
@@ -78,8 +78,6 @@
 
         function __construct($params) {
 
-            parent::__construct() ;
-
             $this->_get = $params;
             $this->getDBParams();
 
@@ -93,7 +91,9 @@
                 $mSearch->addCategory(Params::getParam("catId"));
             }
             if($this->search) {
-                $mSearch->addConditions(sprintf("(d.s_title LIKE '%%%s%%' OR d.s_description LIKE '%%%s%%')", $this->search, $this->search));
+                $mSearch->addTable(sprintf('%st_item_description as d', DB_TABLE_PREFIX));
+                $mSearch->addConditions(sprintf("d.fk_i_item_id = %st_item.pk_i_id", DB_TABLE_PREFIX));
+                $mSearch->addConditions(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->search));
             }
             
             if(@$this->stat['spam']) {
@@ -153,7 +153,7 @@
 
             $this->result = Item::newInstance()->extendCategoryName(Item::newInstance()->extendData($list_items));
             $this->filtered_total = $mSearch->count();
-            $this->total = $this->total_items();
+            $this->total = count($list_items); //TEMPORARY FIX
 
             $this->toDatatablesFormat();
             $this->dumpToDatatables();
@@ -293,7 +293,7 @@
                         $this->sOutput .= '</div></div>",';
                     }
                     
-                    $this->sOutput .= '"'.$aRow['s_user_name'].'",';
+                    $this->sOutput .= '"'.addslashes($aRow['s_user_name']).'",';
                     $this->sOutput .= '"'.addslashes($aRow['s_category_name']).'",';
                     $this->sOutput .= '"'.$aRow['s_country'].'",';
                     $this->sOutput .= '"'.$aRow['s_region'].'",';

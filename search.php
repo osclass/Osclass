@@ -29,9 +29,8 @@
 
         //Business Layer...
         function doModel() {
+            osc_run_hook('before_search');
             $mCategories = new Category() ;
-            //$aCategories = $mCategories->findRootCategories() ;
-            $mCategoryStats = new CategoryStats() ;
 
             ////////////////////////////////
             //GETTING AND FIXING SENT DATA//
@@ -82,6 +81,7 @@
             }
 
             $p_sPattern   = strip_tags(Params::getParam('sPattern'));
+            $p_sUser      = strip_tags(Params::getParam('sUser'));
             
             // ADD TO THE LIST OF LAST SEARCHES
             if(osc_save_latest_searches()) {
@@ -171,8 +171,15 @@
 
             // FILTERING PATTERN
             if($p_sPattern != '') {
-                $this->mSearch->addConditions(sprintf("(d.s_title LIKE '%%%s%%' OR d.s_description LIKE '%%%s%%')", $p_sPattern, $p_sPattern));
+                $this->mSearch->addTable(sprintf('%st_item_description as d', DB_TABLE_PREFIX));
+                $this->mSearch->addConditions(sprintf("d.fk_i_item_id = %st_item.pk_i_id", DB_TABLE_PREFIX));
+                $this->mSearch->addConditions(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $p_sPattern));
                 $osc_request['sPattern'] = $p_sPattern;
+            }
+
+            // FILTERING USER
+            if($p_sUser != '') {
+                $this->mSearch->fromUser(explode(",", $p_sUser));
             }
 
             // FILTERING IF WE ONLY WANT ITEMS WITH PICS
@@ -210,9 +217,11 @@
                 $this->_exportVariableToView('search_order_type', $p_iOrderType) ;
                 $this->_exportVariableToView('search_order', $p_sOrder) ;
                 $this->_exportVariableToView('search_pattern', $p_sPattern) ;
+                $this->_exportVariableToView('search_from_user', $p_sUser) ;
                 $this->_exportVariableToView('search_total_pages', $iNumPages) ;
                 $this->_exportVariableToView('search_page', $p_iPage) ;
                 $this->_exportVariableToView('search_has_pic', $p_bPic) ;
+                $this->_exportVariableToView('search_region', $p_sRegion) ;
                 $this->_exportVariableToView('search_city', $p_sCity) ;
                 $this->_exportVariableToView('search_price_min', $p_sPriceMin) ;
                 $this->_exportVariableToView('search_price_max', $p_sPriceMax) ;
@@ -243,12 +252,26 @@
 
                     if(osc_count_items()>0) {
                         while(osc_has_items()) {
-                            $feed->addItem(array(
-                                'title' => osc_item_title(),
-                                'link' => htmlentities( osc_item_url() ),
-                                'description' => osc_item_description(),
-                                'dt_pub_date' => osc_item_pub_date()
-                            ));
+                            
+                            if(osc_count_item_resources() > 0){
+                                osc_has_item_resources();
+                                $feed->addItem(array(
+                                    'title' => osc_item_title(),
+                                    'link' => htmlentities( osc_item_url() ),
+                                    'description' => osc_item_description(),
+                                    'dt_pub_date' => osc_item_pub_date(),
+                                    'image'     => array(  'url'    => htmlentities(osc_resource_thumbnail_url()),
+                                                           'title'  => osc_item_title(),
+                                                           'link'   => htmlentities( osc_item_url() ) )
+                                ));
+                            } else {
+                                $feed->addItem(array(
+                                    'title' => osc_item_title(),
+                                    'link' => htmlentities( osc_item_url() ),
+                                    'description' => osc_item_description(),
+                                    'dt_pub_date' => osc_item_pub_date()
+                                ));
+                            }
                         }
                     }
 

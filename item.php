@@ -46,24 +46,23 @@
 
             switch( $this->action ){
                 case 'item_add': // post
-                    if( osc_reg_user_post() && $this->user==null ) {
-                        // CHANGEME: This text
-                        osc_add_flash_error_message( _m('Only registered users are allowed to post items')) ;
-                        $this->redirectTo(osc_user_login_url());
+                    if( osc_reg_user_post() && $this->user == null ) {
+                        osc_add_flash_warning_message( _m('Only registered users are allowed to post items') ) ;
+                        $this->redirectTo(osc_user_login_url()) ;
                     }
 
                     $countries = Country::newInstance()->listAll();
                     $regions = array();
                     if( isset($this->user['fk_c_country_code']) && $this->user['fk_c_country_code']!='' ) {
-                        $regions = Region::newInstance()->getByCountry($this->user['fk_c_country_code']);
+                        $regions = Region::newInstance()->findByCountry($this->user['fk_c_country_code']);
                     } else if( count($countries) > 0 ) {
-                        $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']);
+                        $regions = Region::newInstance()->findByCountry($countries[0]['pk_c_code']);
                     }
                     $cities = array();
                     if( isset($this->user['fk_i_region_id']) && $this->user['fk_i_region_id']!='' ) {
-                        $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$this->user['fk_i_region_id']) ;
+                        $cities = City::newInstance()->findByRegion($this->user['fk_i_region_id']) ;
                     } else if( count($regions) > 0 ) {
-                        $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
+                        $cities = City::newInstance()->findByRegion($regions[0]['pk_i_id']) ;
                     }
 
                     $this->_exportVariableToView('countries',$countries ) ;
@@ -79,11 +78,11 @@
                     
                     if( Session::newInstance()->_getForm('countryId') != "" ) {
                         $countryId  = Session::newInstance()->_getForm('countryId') ;
-                        $regions    = Region::newInstance()->getByCountry($countryId) ; 
+                        $regions    = Region::newInstance()->findByCountry($countryId) ; 
                         $this->_exportVariableToView('regions', $regions) ;
                         if(Session::newInstance()->_getForm('regionId') != "" ) {
                             $regionId  = Session::newInstance()->_getForm('regionId') ;
-                            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regionId ) ;
+                            $cities = City::newInstance()->findByRegion($regionId ) ;
                             $this->_exportVariableToView('cities', $cities ) ;
                         }
                     }
@@ -96,9 +95,9 @@
                     break;
 
                 case 'item_add_post': //post_item
-                    if( osc_reg_user_post() && $this->user==null) {
-                        osc_add_flash_error_message( _m('Only registered users are allowed to post items')) ;
-                        $this->redirectTo(osc_base_url(true));
+                    if( osc_reg_user_post() && $this->user == null ) {
+                        osc_add_flash_warning_message( _m('Only registered users are allowed to post items') ) ;
+                        $this->redirectTo( osc_base_url(true) ) ;
                     }
                     
                     $mItems = new ItemActions(false);
@@ -139,47 +138,8 @@
                             osc_add_flash_ok_message( _m('Your item has been published')) ;
                         }
                         
-                        $PcontactName   = Params::getParam('contactName');
-                        $PcontactEmail  = Params::getParam('contactEmail');
                         $itemId         = Params::getParam('itemId');
                         $item           = $this->itemManager->findByPrimaryKey($itemId);
-
-                        if( Session::newInstance()->_get('userId') == '' ){
-                            $mPages = new Page() ;
-                            $aPage = $mPages->findByInternalName('email_new_item_non_register_user') ;
-                            $locale = osc_current_user_locale() ;
-
-                            $content = array();
-                            if(isset($aPage['locale'][$locale]['s_title'])) {
-                                $content = $aPage['locale'][$locale];
-                            } else {
-                                $content = current($aPage['locale']);
-                            }
-                            //$item =  $this->itemManager->findByPrimaryKey($itemId);
-
-                            $item_url = osc_item_url( ) ;
-                            $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
-                            $edit_url = osc_item_edit_url( $item['s_secret'], $itemId );
-                            $delete_url = osc_item_delete_url( $item['s_secret'],  $itemId );
-
-                            $words   = array();
-                            $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}',
-                                             '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{EDIT_URL}', '{DELETE_LINK}', '{DELETE_URL}');
-                            $words[] = array($itemId, $PcontactName, $PcontactEmail, osc_base_url(), $item['s_title'],
-                                             $item_url, osc_page_title(), '<a href="' . $edit_url . '">' . $edit_url . '</a>', $edit_url, '<a href="' . $delete_url . '">' . $delete_url . '</a>', $delete_url) ;
-                            $title   = osc_mailBeauty($content['s_title'], $words) ;
-                            $body    = osc_mailBeauty($content['s_text'], $words) ;
-
-                            $emailParams =  array(
-                                                'subject' => $title
-                                                ,'to' => $PcontactEmail
-                                                ,'to_name' => $PcontactName
-                                                ,'body' => $body
-                                                ,'alt_body' => $body
-                                            );
-
-                            osc_sendMail($emailParams);
-                        }
 
                         osc_run_hook('posted_item', $item);
                         $category = Category::newInstance()->findByPrimaryKey(Params::getParam('catId'));
@@ -264,7 +224,7 @@
                 case 'activate':
                     $secret = Params::getParam('secret');
                     $id     = Params::getParam('id');
-                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
+                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s') OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
                     View::newInstance()->_exportVariableToView('item', $item[0]);
                     if ($item[0]['b_active']==0) {
                         // ACTIVETE ITEM
@@ -285,7 +245,7 @@
                 case 'item_delete':
                     $secret = Params::getParam('secret');
                     $id     = Params::getParam('id');
-                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
+                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s') OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
                     if (count($item) == 1) {
                         $mItems = new ItemActions(false);
                         $success = $mItems->delete($item[0]['s_secret'], $item[0]['pk_i_id']);
@@ -403,44 +363,42 @@
                     $mItem = new ItemActions(false);
 
                     $result = $mItem->contact();
-                    if(is_bool($result)){
-                        if($result){
-                            osc_add_flash_ok_message( _m('We\'ve just sent an e-mail to the seller')) ;
-                        } else {
-                            osc_add_flash_error_message( _m('There has been some errors sending the message')) ;
-                        }
-                    } else {
+                    
+                    if(is_string($result)){
                         osc_add_flash_error_message( $result ) ;
+                    } else {
+                        osc_add_flash_ok_message( _m('We\'ve just sent an e-mail to the seller')) ;
                     }
+                    
                     $this->redirectTo( osc_item_url( ) );
 
                     break;
                 case 'add_comment':
-                    $mItem = new ItemActions(false);
-                    $status = $mItem->add_comment();
+                    $mItem  = new ItemActions(false) ;
+                    $status = $mItem->add_comment() ;
                     switch ($status) {
-                        case -1: $msg = _m('Sorry, we could not save your comment. Try again later');
-                                osc_add_flash_error_message($msg);
-                        break;
-                        case 1:  $msg = _m('Your comment is awaiting moderation');
-                                osc_add_flash_error_message($msg);
-                        break;
-                        case 2:  $msg = _m('Your comment has been approved');
-                                osc_add_flash_ok_message($msg);
-                        break;
-                        case 3:  $msg = _m('Please fill the required fields (name, email)');
-                                osc_add_flash_error_message($msg);
-                        break;
-                        case 4:  $msg = _m('Please type a comment');
-                                osc_add_flash_error_message($msg);
-                        break;
-                        case 5:  $msg = _m('Your comment has been marked as spam');
-                                osc_add_flash_error_message($msg);
-                        break;
+                        case -1: $msg = _m('Sorry, we could not save your comment. Try again later') ;
+                                 osc_add_flash_error_message($msg) ;
+                        break ;
+                        case 1:  $msg = _m('Your comment is awaiting moderation') ;
+                                 osc_add_flash_info_message($msg) ;
+                        break ;
+                        case 2:  $msg = _m('Your comment has been approved') ;
+                                 osc_add_flash_ok_message($msg) ;
+                        break ;
+                        case 3:  $msg = _m('Please fill the required fields (name, email)') ;
+                                 osc_add_flash_warning_message($msg) ;
+                        break ;
+                        case 4:  $msg = _m('Please type a comment') ;
+                                 osc_add_flash_warning_message($msg) ;
+                        break ;
+                        case 5:  $msg = _m('Your comment has been marked as spam') ;
+                                 osc_add_flash_error_message($msg) ;
+                        break ;
                     }
 
-                    $this->redirectTo( osc_item_url() );
-                    break;
+                    $this->redirectTo( osc_item_url() ) ;
+                    break ;
                 case 'delete_comment':
                     $mItem = new ItemActions(false);
                     $status = $mItem->add_comment();

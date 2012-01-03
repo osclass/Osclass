@@ -40,7 +40,7 @@
             switch ($this->action)
             {
                 case 'add_post_default': // add default category and reorder parent categories
-                                        $fields['fk_i_parent_id'] = DB_CONST_NULL;
+                                        $fields['fk_i_parent_id'] = NULL;
                                         $fields['i_expiration_days'] = 0;
                                         $fields['i_position'] = 0;
                                         $fields['b_enabled'] = 1;
@@ -55,9 +55,9 @@
                                         foreach($rootCategories as $cat){
                                             $order = $cat['i_position'];
                                             $order++;
-                                            $this->categoryManager->update_order($cat['pk_i_id'],$order);
+                                            $this->categoryManager->updateOrder($cat['pk_i_id'],$order);
                                         }
-                                        $this->categoryManager->update_order($categoryId,'0');
+                                        $this->categoryManager->updateOrder($categoryId,'0');
 
                                         $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break; 

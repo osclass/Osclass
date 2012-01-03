@@ -20,10 +20,13 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    define('IS_AJAX', true) ;
+
     class CWebAjax extends BaseModel
     {
         function __construct() {
             parent::__construct() ;
+            $this->ajax = true ;
         }
 
         //Business Layer...
@@ -35,12 +38,12 @@
                 break;
                 
                 case 'regions': //Return regions given a countryId
-                    $regions = Region::newInstance()->getByCountry(Params::getParam("countryId"));
+                    $regions = Region::newInstance()->findByCountry(Params::getParam("countryId"));
                     echo json_encode($regions);
                     break;
                 
                 case 'cities': //Returns cities given a regionId
-                    $cities = City::newInstance()->getByRegion(Params::getParam("regionId"));
+                    $cities = City::newInstance()->findByRegion(Params::getParam("regionId"));
                     echo json_encode($cities);
                     break;
                 
@@ -97,24 +100,26 @@
                         return false;
                     }
 
-                    // Check if the item belong to the user
-                    if($userId != null && $userId != $aItem['fk_i_user_id']) {
-                        $json['success'] = false;
-                        $json['msg'] = _m('The item doesn\'t belong to you');
-                        echo json_encode($json);
-                        return false;
-                    }
+                    if(!osc_is_admin_user_logged_in()) {
+                        // Check if the item belong to the user
+                        if($userId != null && $userId != $aItem['fk_i_user_id']) {
+                            $json['success'] = false;
+                            $json['msg'] = _m('The item doesn\'t belong to you');
+                            echo json_encode($json);
+                            return false;
+                        }
 
-                    // Check if the secret passphrase match with the item
-                    if($userId == null && $aItem['fk_i_user_id']==null && $secret != $aItem['s_secret']) {
-                        $json['success'] = false;
-                        $json['msg'] = _m('The item doesn\'t belong to you');
-                        echo json_encode($json);
-                        return false;
+                        // Check if the secret passphrase match with the item
+                        if($userId == null && $aItem['fk_i_user_id']==null && $secret != $aItem['s_secret']) {
+                            $json['success'] = false;
+                            $json['msg'] = _m('The item doesn\'t belong to you');
+                            echo json_encode($json);
+                            return false;
+                        }
                     }
 
                     // Does id & code combination exist?
-                    $result = ItemResource::newInstance()->getResourceSecure($id, $code) ;
+                    $result = ItemResource::newInstance()->existResource($id, $code) ;
 
                     if ($result > 0) {
                         // Delete: file, db table entry
@@ -156,33 +161,8 @@
                                         return false;
                                     }
                                 } else {
-                                    $user['s_name'] = "";
                                     
-                                    // send alert validation email
-                                    $prefLocale = osc_language() ;
-                                    $page = Page::newInstance()->findByInternalName('email_alert_validation') ;
-                                    $page_description = $page['locale'] ;
-
-                                    $_title = $page_description[$prefLocale]['s_title'] ;
-                                    $_body  = $page_description[$prefLocale]['s_text'] ;
-
-                                    $validation_link  = osc_user_activate_alert_url( $secret, $email );
-
-                                    $words = array() ;
-                                    $words[] = array('{USER_NAME}'    , '{USER_EMAIL}', '{VALIDATION_LINK}') ;
-                                    $words[] = array($user['s_name']  , $email        , $validation_link ) ;
-                                    $title = osc_mailBeauty($_title, $words) ;
-                                    $body  = osc_mailBeauty($_body , $words) ;
-
-                                    $params = array(
-                                        'subject' => $_title
-                                        ,'to' => $email
-                                        ,'to_name' => $user['s_name']
-                                        ,'body' => $body
-                                        ,'alt_body' => $body
-                                    ) ;
-
-                                    osc_sendMail($params) ;
+                                    osc_run_hook('hook_email_alert_validation', $alert, $email, $secret);
                                 }
 
                                 echo "1";

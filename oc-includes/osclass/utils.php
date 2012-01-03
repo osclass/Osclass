@@ -35,6 +35,7 @@ function osc_deleteResource( $id ) {
         $resource_thum      = osc_base_path() . $resource['s_path'] .$resource['pk_i_id']."_*".".".$resource['s_extension'];
         array_map( "unlink" , glob($resource_thum));
         array_map( "unlink" , glob($resource_original));
+        osc_run_hook('delete_resource', $resource);
     }
 }
 
@@ -232,15 +233,36 @@ function osc_doRequest($url, $_data) {
 }
 
 function osc_sendMail($params) {
-    require_once osc_lib_path() . 'phpmailer/class.phpmailer.php';
+    if( key_exists('add_bcc', $params) ) {
+        if( !is_array($params['add_bcc']) ) {
+            $params['add_bcc'] = array($params['add_bcc']) ;
+        }
+    }
 
-    $mail = new PHPMailer(true);
+    require_once osc_lib_path() . 'phpmailer/class.phpmailer.php' ;
+
+    if( osc_mailserver_pop() ) {
+        require_once osc_lib_path() . 'phpmailer/class.pop3.php' ;
+        $pop = new POP3() ;
+        $pop->Authorise(
+                ( isset($params['host']) ) ? $params['host'] : osc_mailserver_host(),
+                ( isset($params['port']) ) ? $params['port'] : osc_mailserver_port(),
+                30,
+                ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username(),
+                ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username(),
+                0
+        );
+    }
+
+    $mail = new PHPMailer(true) ;
     try {
         $mail->CharSet = "utf-8";
 
         if (osc_mailserver_auth()) {
             $mail->IsSMTP() ;
             $mail->SMTPAuth = true ;
+        } else if(osc_mailserver_pop()) {
+            $mail->IsSMTP() ;
         }
 
         $mail->SMTPSecure = ( isset($params['ssl']) ) ? $params['ssl'] : osc_mailserver_ssl() ;
@@ -255,7 +277,13 @@ function osc_sendMail($params) {
         $mail->AltBody = ( isset($params['alt_body']) ) ? $params['alt_body'] : '' ;
         $to = ( isset($params['to']) ) ? $params['to'] : '' ;
         $to_name = ( isset($params['to_name']) ) ? $params['to_name'] : '' ;
-        if ( isset($params['add_bbc']) ) $mail->AddBCC($params['add_bbc']);
+
+        if ( key_exists('add_bcc', $params) ) {
+            foreach( $params['add_bcc'] as $bcc ) {
+                $mail->AddBCC($bcc) ;
+            }
+        }
+
         if ( isset($params['reply_to']) ) $mail->AddReplyTo($params['reply_to']);
 
         if( isset($params['attachment']) ) {
@@ -268,8 +296,10 @@ function osc_sendMail($params) {
         return true ;
 
     } catch (phpmailerException $e) {
+        error_log("osc_sendMail() cannot send email! ".$mail->ErrorInfo, 0);
         return false;
     } catch (Exception $e) {
+        error_log("osc_sendMail() cannot send email! ".$mail->ErrorInfo, 0);
         return false;
     }
     return false;
@@ -367,22 +397,25 @@ function osc_copyemz($file1,$file2){
 	return $status;
 } 
 
+/**
+ * Dump osclass database into path file
+ *
+ * @param type $path
+ * @param type $file
+ * @return type 
+ */
 function osc_dbdump($path, $file) {
-    if ( !is_writable($path) ) return -5 ;
-	if($path == '') return -1 ;
+    
+    require_once LIB_PATH . 'osclass/model/Dump.php';
+    if ( !is_writable($path) ) return -4 ;
+    if($path == '') return -1 ;
 
     //checking connection
-    $link = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD) ;
-    if (!$link) return -2 ;
-    
-    //selecting database
-    mysql_set_charset('utf8', $link) ;
-    $db = mysql_select_db(DB_NAME, $link) ;
-    if (!$db) return -3 ;
+    $dump = Dump::newInstance();
+    if (!$dump) return -2 ;
 
     $path .= $file ;
-    $sql = 'show tables;' ;
-    $result = mysql_query($sql) ;
+    $result = $dump->showTables();
     
     if(!$result) {
         $_str = '' ;
@@ -393,9 +426,9 @@ function osc_dbdump($path, $file) {
         fwrite($f, $_str) ;
         fclose($f) ;
 
-        return -4 ;
+        return -3 ;
     }
-
+    
     $_str = '' ;
     $_str .= '/* OSCLASS MYSQL Autobackup (' . date('Y-m-d H:i:s') . ') */' ;
     $_str .= "\n" ;
@@ -405,186 +438,29 @@ function osc_dbdump($path, $file) {
     fclose($f) ;
 
     $tables = array() ;
-    while($row = mysql_fetch_row($result)) {
-        $tables[$row[0]] = $row[0];
+    foreach($result as $_table) {
+        $tableName = current($_table);
+        $tables[$tableName] = $tableName;
     }
-
-    $tables_order = array('t_locale', 't_country', 't_currency', 't_region', 't_city', 't_city_area', 't_widget', 't_admin', 't_user', 't_user_description', 't_category', 't_category_description', 't_category_stats', 't_item', 't_item_description', 't_item_location', 't_item_stats', 't_item_resource', 't_item_comment', 't_preference', 't_user_preferences', 't_pages', 't_pages_description', 't_plugin_category', 't_cron', 't_alerts', 't_keywords');
+    
+    $tables_order = array('t_locale', 't_country', 't_currency', 't_region', 't_city', 't_city_area', 't_widget', 't_admin', 't_user', 't_user_description', 't_category', 't_category_description', 't_category_stats', 't_item', 't_item_description', 't_item_location', 't_item_stats', 't_item_resource', 't_item_comment', 't_preference', 't_user_preferences', 't_pages', 't_pages_description', 't_plugin_category', 't_cron', 't_alerts', 't_keywords', 't_meta_fields', 't_meta_categories', 't_item_meta');
     // Backup default OSClass tables in order, so no problem when importing them back
     foreach($tables_order as $table) {
         if(array_key_exists(DB_TABLE_PREFIX . $table, $tables)) {
-            osc_dump_table_structure($path, DB_TABLE_PREFIX . $table) ;
-            osc_dump_table_data($path, DB_TABLE_PREFIX . $table) ;
+            $dump->table_structure($path, DB_TABLE_PREFIX . $table) ;
+            $dump->table_data($path, DB_TABLE_PREFIX . $table) ;
             unset($tables[DB_TABLE_PREFIX . $table]) ;
         }
     }
     
     // Backup the rest of tables
     foreach($tables as $table) {
-        osc_dump_table_structure($path, $table) ;
-        osc_dump_table_data($path, $table) ;
+        $dump->table_structure($path, $table) ;
+        $dump->table_data($path, $table) ;
     }
-
-    mysql_free_result($result) ;    
-    mysql_close() ;
     
     return 1 ;
 }
-
-function osc_dump_table_structure($path, $table) {
-
-    if ( !is_writable($path) ) return false ;
-    
-    $_str = '' ;
-	$_str .= '/* Table structure for table `' . $table . '` */' ;
-    $_str .= "\n" ;
-
-	// DANGEROUS LINE
-	//fwrite($f, "DROP TABLE IF EXISTS `$table`;\n\n";
-
-	$sql = 'show create table `' . $table . '`;' ;
-	$result = mysql_query($sql) ;
-	if($result) {
-		if($row = mysql_fetch_assoc($result)) {
-			$_str .= $row['Create Table'] . ';' ;
-            $_str .= "\n\n" ;
-		}
-        mysql_free_result($result) ;
-	}
-
-    $f = fopen($path, "a") ;
-    fwrite($f, $_str) ;
-	fclose($f) ;
-
-    return true ;
-}
-
-function osc_dump_table_data($path, $table)
-{
-	if ( !is_writable($path) ) return false ;
-
-    $sql = "select * from `$table`;" ;
-	$result = mysql_query($sql) ;
-    $_str = '' ;
-	if($result) {
-		$num_rows = mysql_num_rows($result) ;
-		$num_fields = mysql_num_fields($result) ;
-
-		if( $num_rows > 0 ) {
-			$_str .= '/* dumping data for table `' . $table . '` */' ;
-            $_str .= "\n" ;
-
-			$field_type = array() ;
-			$i = 0 ;
-			while( $i < $num_fields) {
-				$meta = mysql_fetch_field($result, $i);
-				array_push($field_type, $meta->type);
-				$i++;
-			}
-
-			$_str .= 'insert into `' . $table . '` values' ;
-            $_str .= "\n" ;
-
-            $index = 0 ;
-            if($table==DB_TABLE_PREFIX.'t_category') {
-                $short_rows = array();
-                $unshort_rows = array();
-                while( $row = mysql_fetch_array($result) ) {
-                    if($row['fk_i_parent_id']==NULL) {
-                        $short_rows[] = $row;
-                    } else {
-                        $unshort_rows[$row['pk_i_id']] = $row;
-                    }
-                }
-                while(!empty($unshort_rows)) {
-                    foreach($unshort_rows as $k => $v) {
-                        foreach($short_rows as $r) {
-                            if($r['pk_i_id']==$v['fk_i_parent_id']) {
-                                unset($unshort_rows[$k]);
-                                $short_rows[] = $v;
-                            }
-                        }
-                    }
-                }
-                foreach($short_rows as $row) {
-                    $_str .= "(" ;
-
-                    for( $i = 0 ; $i < $num_fields ; $i++ ) {
-                        if(is_null( $row[$i])) {
-                            $_str .= 'null' ;
-                        } else {
-                            switch( $field_type[$i]) {
-                                case 'int':
-                                    $_str .= $row[$i] ;
-                                    break;
-                                case 'string':
-                                case 'blob' :
-                                default:
-                                    $_str .= '\'' . mysql_real_escape_string($row[$i]) . '\'' ;
-                            }
-                        }
-                        if($i < $num_fields-1) {
-                            $_str .= ',' ;
-                        }
-                    }
-                    $_str .= ')' ;
-
-                    if($index < $num_rows-1) {
-                        $_str .= ',' ;
-                    } else {
-                        $_str .= ';' ;
-                    }
-                    $_str .= "\n" ;
-
-                    $index++ ;
-                }
-            } else {
-                while( $row = mysql_fetch_row($result) ) {
-                    $_str .= "(" ;
-
-                    for( $i = 0 ; $i < $num_fields ; $i++ ) {
-                        if(is_null( $row[$i])) {
-                            $_str .= 'null' ;
-                        } else {
-                            switch( $field_type[$i]) {
-                                case 'int':
-                                    $_str .= $row[$i] ;
-                                    break;
-                                case 'string':
-                                case 'blob' :
-                                default:
-                                    $_str .= '\'' . mysql_real_escape_string($row[$i]) . '\'' ;
-                            }
-                        }
-                        if($i < $num_fields-1) {
-                            $_str .= ',' ;
-                        }
-                    }
-                    $_str .= ')' ;
-
-                    if($index < $num_rows-1) {
-                        $_str .= ',' ;
-                    } else {
-                        $_str .= ';' ;
-                    }
-                    $_str .= "\n" ;
-
-                    $index++ ;
-                }
-            }
-		}
-        mysql_free_result($result) ;
-	}
-	
-	$_str .= "\n" ;
-
-    $f = fopen($path, "a") ;
-    fwrite($f, $_str) ;
-    fclose($f) ;
-
-    return true ;
-}
-
 
 function osc_downloadFile($sourceFile, $downloadedFile) {
     $iErrorReporting = error_reporting();
@@ -1019,5 +895,32 @@ function osc_save_permissions( $dir = ABS_PATH ) {
     }
     return $perms;
 }
+
+
+function osc_prepare_price($price) {
+    return $price/1000000;
+}
+
+/**
+ * Recursive glob function
+ *
+ * @param string $pattern
+ * @param string $flags
+ * @param string $path
+ * @return array of files
+ */
+function rglob($pattern, $flags = 0, $path = '') {
+    if (!$path && ($dir = dirname($pattern)) != '.') {
+        if ($dir == '\\' || $dir == '/') $dir = '';
+        return rglob(basename($pattern), $flags, $dir . '/');
+    }
+    $paths = glob($path . '*', GLOB_ONLYDIR | GLOB_NOSORT);
+    $files = glob($path . $pattern, $flags);
+    foreach ($paths as $p) $files = array_merge($files, rglob($pattern, $flags, $p . '/'));
+    return $files;
+}
+
+    
+
 
 ?>

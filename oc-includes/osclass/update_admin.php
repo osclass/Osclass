@@ -38,7 +38,7 @@
     $response     = array('error' => 'Operation fail');
 
     $mAdmin = Admin::newInstance();
-    $admin = $mAdmin->findByConditions( array('pk_i_id' => '1', 's_password' => sha1($old_passwd) ) );
+    $admin = $mAdmin->findByIdPassword(1, sha1($old_passwd) );
 
     if($admin){
         $result = -1;

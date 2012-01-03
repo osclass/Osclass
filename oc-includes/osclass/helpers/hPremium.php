@@ -216,7 +216,7 @@
      * @return float
      */
     function osc_premium_price() {
-        return (float) osc_premium_field("f_price") ;
+        return (float) osc_premium_field("i_price") ;
     }
 
     /**
@@ -225,7 +225,7 @@
      * @return string
      */
     function osc_premium_formated_price() {
-        return (string) osc_format_price( osc_premium_field("f_price") ) ;
+        return (string) osc_format_price( osc_premium_field("i_price") ) ;
     }
 
     /**
@@ -362,7 +362,12 @@
      * @return int
      */
     function osc_premium_views() {
-        return (int) osc_premium_field("i_num_views") ;
+        $item = osc_premium();
+        if(isset($item['i_num_views'])) {
+            return (int) osc_premium_field("i_num_views") ;
+        } else {
+            return ItemStats::newInstance()->getViews(osc_premium_id());
+        }
     }
 
     /**
@@ -563,7 +568,7 @@
      */    
     function osc_count_premium_meta() {
         if ( !View::newInstance()->_exists('metafields') ) {
-            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->meta_fields(osc_premium_id()) ) ;
+            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->metaFields(osc_premium_id()) ) ;
         }
         return View::newInstance()->_count('metafields') ;
     }
@@ -575,7 +580,7 @@
      */
     function osc_has_premium_meta() {
         if ( !View::newInstance()->_exists('metafields') ) {
-            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->meta_fields(osc_premium_id()) ) ;
+            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->metaFields(osc_premium_id()) ) ;
         }
         return View::newInstance()->_next('metafields') ;
     }
@@ -587,7 +592,7 @@
      */
     function osc_get_premium_meta() {
         if ( !View::newInstance()->_exists('metafields') ) {
-            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->meta_fields(osc_premium_id()) ) ;
+            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->metaFields(osc_premium_id()) ) ;
         }
         return View::newInstance()->_get('metafields') ;
     }

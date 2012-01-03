@@ -62,7 +62,7 @@
                 $aItem['description'][$key] = $purifier->purify($value);
             }
 
-            $aItem['price']    = strip_tags( trim( $aItem['price'] ) );
+            $aItem['price']    = !is_null($aItem['price']) ? strip_tags( trim( $aItem['price'] ) ) : $aItem['price'];
             $contactName       = osc_sanitize_name( strip_tags( trim( $aItem['contactName'] ) ) );
             $contactEmail      = strip_tags( trim( $aItem['contactEmail'] ) );
             $aItem['cityArea'] = osc_sanitize_name( strip_tags( trim( $aItem['cityArea'] ) ) );
@@ -108,10 +108,9 @@
             $flash_error .=
                 ((!osc_validate_category($aItem['catId'])) ? _m("Category invalid.") . PHP_EOL : '' ) .
                 ((!osc_validate_number($aItem['price'])) ? _m("Price must be number.") . PHP_EOL : '' ) .
-                ((!osc_validate_max($aItem['price'], 9)) ? _m("Price too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['price'], 15)) ? _m("Price too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($contactName, 35)) ? _m("Name too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_email($contactEmail)) ? _m("Email invalid.") . PHP_EOL : '' ) .
-                //((!osc_validate_location($aItem['cityId'], $aItem['cityName'], $aItem['regionId'], $aItem['regionName'], $aItem['countryId'], $aItem['countryName'])) ? _m("Location not selected.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['countryName'], 3, false)) ? _m("Country too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['countryName'], 50)) ? _m("Country too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['regionName'], 3, false)) ? _m("Region too short.") . PHP_EOL : '' ) .
@@ -149,7 +148,7 @@
                     'fk_i_user_id'          => $aItem['userId'],
                     'dt_pub_date'           => date('Y-m-d H:i:s'),
                     'fk_i_category_id'      => $aItem['catId'],
-                    'f_price'               => $aItem['price'],
+                    'i_price'               => $aItem['price'],
                     'fk_c_currency_code'    => $aItem['currency'],
                     's_contact_name'        => $contactName,
                     's_contact_email'       => $contactEmail,
@@ -168,7 +167,7 @@
                     Cookie::newInstance()->set() ;
                 }
 
-                $itemId = $this->manager->getConnection()->get_last_id();
+                $itemId = $this->manager->dao->insertedId();
                 Log::newInstance()->insertLog('item', 'add', $itemId, current(array_values($aItem['title'])), $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
 
                 Params::setParam('itemId', $itemId);
@@ -255,7 +254,7 @@
                 $aItem['description'][$key] = $purifier->purify($value);
             }
 
-            $aItem['price']    = strip_tags( trim( $aItem['price'] ) );
+            $aItem['price']    = !is_null($aItem['price']) ? strip_tags( trim( $aItem['price'] ) ) : $aItem['price'];
             $aItem['cityArea'] = osc_sanitize_name( strip_tags( trim( $aItem['cityArea'] ) ) );
             $aItem['address']  = osc_sanitize_name( strip_tags( trim( $aItem['address'] ) ) );
 
@@ -297,8 +296,7 @@
             $flash_error .=
                 ((!osc_validate_category($aItem['catId'])) ? _m("Category invalid.") . PHP_EOL : '' ) .
                 ((!osc_validate_number($aItem['price'])) ? _m("Price must be number.") . PHP_EOL : '' ) .
-                ((!osc_validate_max($aItem['price'], 9)) ? _m("Price too long.") . PHP_EOL : '' ) .
-                //((!osc_validate_location($aItem['cityId'], $aItem['cityName'], $aItem['regionId'], $aItem['regionName'], $aItem['countryId'], $aItem['countryName'])) ? _m("Location not selected.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['price'], 15)) ? _m("Price too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['countryName'], 3, false)) ? _m("Country too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['countryName'], 50)) ? _m("Country too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['regionName'], 3, false)) ? _m("Region too short.") . PHP_EOL : '' ) .
@@ -357,7 +355,7 @@
                                         array(
                                             'dt_mod_date'           => date('Y-m-d H:i:s')
                                             ,'fk_i_category_id'     => $aItem['catId']
-                                            ,'f_price'              => $aItem['price']
+                                            ,'i_price'              => $aItem['price']
                                             ,'fk_c_currency_code'   => $aItem['currency']
                                         )
                                         ,array(
@@ -412,7 +410,7 @@
                     }
                 }
 
-                osc_run_hook( 'activate_item', $this->manager->findByPrimaryKey($id) );
+                osc_run_hook( 'activate_item', $id );
                 CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
                 return $result;
             } else {
@@ -427,6 +425,7 @@
                     array('b_active' => 0),
                     array('pk_i_id' => $id)
                 );
+                osc_run_hook( 'deactivate_item', $id );
                 if($item['b_enabled']==1) {
                     CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                 }
@@ -442,6 +441,7 @@
                     array('b_enabled' => 1),
                     array('pk_i_id' => $id)
                 );
+                osc_run_hook( 'enable_item', $id );
                 if($item['b_active']==1) {
                     CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']);
                 }
@@ -457,6 +457,7 @@
                     array('b_enabled' => 0),
                     array('pk_i_id' => $id)
                 );
+                osc_run_hook( 'disable_item', $id );
                 if($item['b_active']==1) {
                     CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                 }
@@ -488,15 +489,15 @@
          */
         public function delete( $secret, $itemId )
         {
+            $item = $this->manager->findByPrimaryKey($itemId) ;
 
-
-            $item = $this->manager->findByPrimaryKey($itemId);
-            if($item['s_secret']==$secret) {
-                $this->deleteResourcesFromHD($itemId);
-                Log::newInstance()->insertLog('item', 'delete', $itemId, $item['s_title'], $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
-                return $this->manager->deleteByPrimaryKey($itemId);
+            if( $item['s_secret'] == $secret ) {
+                $this->deleteResourcesFromHD( $itemId ) ;
+                Log::newInstance()->insertLog( 'item', 'delete', $itemId, $item['s_title'], $this->is_admin ? 'admin' : 'user', $this->is_admin ? osc_logged_admin_id() : osc_logged_user_id() ) ;
+                return $this->manager->deleteByPrimaryKey( $itemId ) ;
             }
-            return false;
+
+            return false ;
         }
 
         /**
@@ -547,173 +548,33 @@
             $item       = $aItem['item'];
             $s_title    = $aItem['s_title'];
             View::newInstance()->_exportVariableToView('item', $item);
+            
+            osc_run_hook('hook_email_send_friend', $aItem);
             $item_url   = osc_item_url();
             $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
-
-            $mPages = new Page();
-            $aPage = $mPages->findByInternalName('email_send_friend');
-            $locale = osc_current_user_locale();
-
-            $content = array();
-            if(isset($aPage['locale'][$locale]['s_title'])) {
-                $content = $aPage['locale'][$locale];
-            } else {
-                $content = current($aPage['locale']);
-            }
-
-            $words   = array() ;
-            $words[] = array(
-                    '{FRIEND_NAME}'
-                    ,'{USER_NAME}'
-                    ,'{USER_EMAIL}'
-                    ,'{FRIEND_EMAIL}'
-                    ,'{WEB_URL}'
-                    ,'{ITEM_TITLE}'
-                    ,'{COMMENT}'
-                    ,'{ITEM_URL}'
-                    ,'{WEB_TITLE}'
-            ) ;
-            $words[] = array(
-                    $aItem['friendName']
-                    ,$aItem['yourName']
-                    ,$aItem['yourEmail']
-                    ,$aItem['friendEmail']
-                    ,'<a href="'.osc_base_url().'" >'.osc_base_url().'</a>'
-                    ,$aItem['s_title']
-                    ,$aItem['message']
-                    ,$item_url
-                    ,osc_page_title()
-            ) ;
-            $title = osc_mailBeauty($content['s_title'], $words) ;
-            $body  = osc_mailBeauty($content['s_text'], $words) ;
-
-            if (osc_notify_contact_friends()) {
-                $add_bbc = osc_contact_email() ;
-            }
-
-            $params = array(
-                        'add_bcc'    => $add_bbc
-                        ,'from'      => $aItem['yourEmail']
-                        ,'from_name' => $aItem['yourName']
-                        ,'subject'   => $title
-                        ,'to'        => $aItem['friendEmail']
-                        ,'to_name'   => $aItem['friendName']
-                        ,'body'      => $body
-                        ,'alt_body'  => $body
-                      ) ;
-
             Params::setParam('item_url', $item_url );
-
-            if(osc_sendMail($params)) {
-                osc_add_flash_ok_message( sprintf(_m('We just send your message to %s'), $aItem['friendName']) ) ;
-                return true;
-            } else {
-                osc_add_flash_error_message( _m('We are very sorry but we could not deliver your message to your friend. Try again later')) ;
-                return false;
-            }
+            osc_add_flash_ok_message( sprintf(_m('We just send your message to %s'), $aItem['friendName']) ) ;
+            return true;
         }
 
         public function contact()
         {
             $flash_error = '';
             $aItem = $this->prepareDataForFunction( 'contact' );
-
-            $id         = $aItem['id'];
-            $yourEmail  = $aItem['yourEmail'];
-            $yourName   = $aItem['yourName'];
-            $phoneNumber= $aItem['phoneNumber'];
-            $message    = $aItem['message'];
-
+            
             // check parameters
-            if( !osc_validate_email($yourEmail, true) ){
+            if( !osc_validate_email($aItem['yourEmail'], true) ){
                 $flash_error .= __("Invalid email address") . PHP_EOL;
-            } else if( !osc_validate_text($message) ){
+            } else if( !osc_validate_text($aItem['message']) ){
                 $flash_error .= __("Message: this field is required") . PHP_EOL;
-            } else if ( !osc_validate_text($yourName) ){
+            } else if ( !osc_validate_text($aItem['yourName']) ){
                 $flash_error .= __("Your name: this field is required") . PHP_EOL;
             }
 
             if($flash_error != ''){
-                return (string)$flash_error;
+                return $flash_error ;
             } else {
-                $path = NULL;
-                $item = $this->manager->findByPrimaryKey( $id ) ;
-                View::newInstance()->_exportVariableToView('item', $item);
-
-                $mPages = new Page();
-                $aPage = $mPages->findByInternalName('email_item_inquiry');
-                $locale = osc_current_user_locale() ;
-
-                $content = array();
-                if(isset($aPage['locale'][$locale]['s_title'])) {
-                    $content = $aPage['locale'][$locale];
-                } else {
-                    $content = current($aPage['locale']);
-                }
-
-                $item_url = osc_item_url();
-                $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
-
-                $words   = array();
-                $words[] = array('{CONTACT_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{USER_PHONE}',
-                                 '{WEB_URL}', '{ITEM_TITLE}','{ITEM_URL}', '{COMMENT}');
-
-                $words[] = array($item['s_contact_name'], $yourName, $yourEmail,
-                                 $phoneNumber, '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', $item['s_title'], $item_url, $message );
-
-                $title = osc_mailBeauty($content['s_title'], $words);
-                $body = osc_mailBeauty($content['s_text'], $words);
-
-                $from = osc_contact_email() ;
-                $from_name = osc_page_title() ;
-
-                $add_bbc = '';
-                if (osc_notify_contact_item()) {
-                    $add_bbc = osc_contact_email() ;
-                }
-
-                $emailParams = array (
-                                    'add_bcc'   => $add_bbc
-                                    ,'from'      => $from
-                                    ,'from_name' => $from_name
-                                    ,'subject'   => $title
-                                    ,'to'        => $item['s_contact_email']
-                                    ,'to_name'   => $item['s_contact_name']
-                                    ,'body'      => $body
-                                    ,'alt_body'  => $body
-                                    ,'reply_to'  => $yourEmail
-                                ) ;
-
-
-                if(osc_item_attachment()) {
-                    $attachment = Params::getFiles('attachment');
-                    $resourceName = $attachment['name'] ;
-                    $tmpName = $attachment['tmp_name'] ;
-                    $resourceType = $attachment['type'] ;
-
-                    $path = osc_content_path() . 'uploads/' . time() . '_' . $resourceName ;
-
-                    if(!is_writable(osc_content_path() . 'uploads/')) {
-                        osc_add_flash_error_message( _m('There has been some errors sending the message')) ;
-                        $this->redirectTo( osc_base_url() );
-                    }
-
-                    if(!move_uploaded_file($tmpName, $path)){
-                        unset($path) ;
-                    }
-                }
-
-                if(isset($path)) {
-                    $emailParams['attachment'] = $path ;
-                }
-                
-                if(osc_sendMail($emailParams)) {
-                    return true;
-                } else {
-                    return false;
-                }
-
-                @unlink($path) ;
+                osc_run_hook('hook_email_item_inquiry', $aItem);
             }
         }
 
@@ -736,6 +597,7 @@
             $status_num     = -1;
 
             $item = $this->manager->findByPrimaryKey($itemId) ;
+            View::newInstance()->_exportVariableToView('item', $item);
             $itemURL = osc_item_url() ;
             $itemURL = '<a href="'.$itemURL.'" >'.$itemURL.'</a>';
 
@@ -796,57 +658,29 @@
                               ,'b_enabled'      => 1
                               ,'fk_i_user_id'   => $userId);
 
-            if( $mComments->insert($aComment) ){
-                if($status_num==2 && $userId!=null) { // COMMENT IS ACTIVE
+            if( $mComments->insert($aComment) ) {
+                $commentID = $mComments->dao->insertedId() ;
+                if($status_num == 2 && $userId != null) { // COMMENT IS ACTIVE
                     $user = User::newInstance()->findByPrimaryKey($userId);
-                    if($user) {
-                        User::newInstance()->update(array( 'i_comments' => $user['i_comments'] + 1)
-                                                   ,array( 'pk_i_id'    => $user['pk_i_id'] ) );
+                    if( $user ) {
+                        User::newInstance()->update( array( 'i_comments' => $user['i_comments'] + 1)
+                                                    ,array( 'pk_i_id'    => $user['pk_i_id'] ) ) ;
                     }
                 }
-                $notify      = osc_notify_new_comment() ;
-                $admin_email = osc_contact_email() ;
-                $prefLocale  = osc_language() ;
 
                 //Notify admin
-                if ($notify) {
-                    $mPages = new Page() ;
-                    $aPage = $mPages->findByInternalName('email_new_comment_admin') ;
-                    $locale = osc_current_user_locale() ;
-
-                    $content = array();
-                    if(isset($aPage['locale'][$locale]['s_title'])) {
-                        $content = $aPage['locale'][$locale];
-                    } else {
-                        $content = current($aPage['locale']);
-                    }
-
-                    $words   = array();
-                    $words[] = array('{COMMENT_AUTHOR}', '{COMMENT_EMAIL}', '{COMMENT_TITLE}',
-                                     '{COMMENT_TEXT}', '{ITEM_TITLE}', '{ITEM_ID}', '{ITEM_URL}');
-                    $words[] = array($authorName, $authorEmail, $title, $body, $item['s_title'], $itemId, $itemURL);
-                    $title_email = osc_mailBeauty($content['s_title'], $words);
-                    $body_email = osc_mailBeauty($content['s_text'], $words);
-
-                    $from = osc_contact_email() ;
-                    $from_name = osc_page_title() ;
-                    if (osc_notify_contact_item()) {
-                        $add_bbc = osc_contact_email() ;
-                    }
-
-                    $emailParams = array(
-                                    'from'      => $admin_email
-                                    ,'from_name' => __('Admin mail system')
-                                    ,'subject'   => $title_email
-                                    ,'to'        => $admin_email
-                                    ,'to_name'   => __('Admin mail system')
-                                    ,'body'      => $body_email
-                                    ,'alt_body'  => $body_email
-                                    );
-                    osc_sendMail($emailParams) ;
+                if ( osc_notify_new_comment() ) {
+                    osc_run_hook('hook_email_new_comment_admin', $aItem) ;
                 }
-                osc_run_hook('add_comment', $item);
-                return $status_num;
+
+                //Notify user
+                if ( osc_notify_new_comment_user() ) {
+                    osc_run_hook('hook_email_new_comment_user', $aItem) ;
+                }
+
+                osc_run_hook( 'add_comment', $commentID ) ;
+
+                return $status_num ;
             }
 
             return -1;
@@ -1000,7 +834,7 @@
             $aItem['regionId']      = Params::getParam('regionId');
             $aItem['city']          = Params::getParam('city');
             $aItem['cityId']        = Params::getParam('cityId');
-            $aItem['price']         = (Params::getParam('price') != '') ? Params::getParam('price') : 0;
+            $aItem['price']         = (Params::getParam('price') != '') ? Params::getParam('price') : null;
             $aItem['cityArea']      = Params::getParam('cityArea');
             $aItem['address']       = Params::getParam('address');
             $aItem['currency']      = Params::getParam('currency');
@@ -1034,7 +868,7 @@
                 $regionId = null;
                 $regionName = $aItem['region'];
                 if( $aItem['countryId'] != '' ) {
-                    $auxRegion  = Region::newInstance()->findByNameOnCountry($aItem['region'], $aItem['countryId'] );
+                    $auxRegion  = Region::newInstance()->findByName($aItem['region'], $aItem['countryId'] );
                     if($auxRegion){
                         $regionId   = $auxRegion['pk_i_id'];
                         $regionName = $auxRegion['s_name'];
@@ -1057,7 +891,7 @@
                 $cityId = null;
                 $cityName = $aItem['city'];
                 if( $aItem['countryId'] != '' ) {
-                    $auxCity = city::newInstance()->findByNameOnRegion($aItem['city'], $aItem['regionId'] );
+                    $auxCity = City::newInstance()->findByName($aItem['city'], $aItem['regionId'] );
                     if($auxCity){
                         $cityId   = $auxCity['pk_i_id'];
                         $cityName = $auxCity['s_name'];
@@ -1076,8 +910,11 @@
                 $aItem['address'] = null;
             }
 
-            if( $aItem['price'] != '' ) {
-                $aItem['price'] = (float) $aItem['price'];
+            if( !is_null($aItem['price']) ) {
+                $price = str_replace(osc_locale_thousands_sep(), '', trim($aItem['price']));
+                $price = str_replace(osc_locale_dec_point(), '.', $price);
+                $aItem['price'] = $price*1000000;
+                //$aItem['price'] = (float) $aItem['price'];
             }
 
             if( $aItem['catId'] == ''){
@@ -1115,7 +952,6 @@
                     $bool_img = false;
                     if ($error == UPLOAD_ERR_OK) {
                         $size = $aResources['size'][$key];
-//                        echo "bytes: ".$size." [$size > $maxSize]<br>";
                         if($size >= $maxSize){
                             $success = false;
                         }
@@ -1131,7 +967,7 @@
         private function checkAllowedExt($aResources)
         {
             $success = true;
-            require LIB_PATH . 'osclass/classes/mimes.php';
+            require LIB_PATH . 'osclass/mimes.php';
             if($aResources != '') {
                 // get allowedExt
                 $aMimesAllowed = array();
@@ -1190,7 +1026,7 @@
                             $itemResourceManager->insert(array(
                                 'fk_i_item_id' => $itemId
                             )) ;
-                            $resourceId = $itemResourceManager->getConnection()->get_last_id() ;
+                            $resourceId = $itemResourceManager->dao->insertedId();
 
                             // Create normal size
                             $normal_path = $path = osc_content_path() . 'uploads/' . $resourceId . '.jpg' ;
@@ -1232,6 +1068,7 @@
                                                         ,'fk_i_item_id' => $itemId
                                                     )
                             ) ;
+                            osc_run_hook('uploaded_file', ItemResource::newInstance()->findByPrimaryKey($resourceId));
                         }
                     }
                 }
@@ -1239,146 +1076,29 @@
             }
         }
 
-
-
         public function sendEmails($aItem){
 
             $item   = $aItem['item'];
-            $title  = $aItem['title'];
-            $contactEmail   = $aItem['contactEmail'];
-            $contactName    = $aItem['contactName'];
             View::newInstance()->_exportVariableToView('item', $item);
-            $mPages = new Page();
-            $locale = osc_current_user_locale();
 
             /**
-             * Send email to user requesting item activation
+             * Send email to non-reg user requesting item activation
              */
-            if ( $aItem['active']=='INACTIVE' ) {
-                $aPage = $mPages->findByInternalName('email_item_validation') ;
-
-                $content = array();
-                if(isset($aPage['locale'][$locale]['s_title'])) {
-                    $content = $aPage['locale'][$locale];
-                } else {
-                    $content = current($aPage['locale']);
-                }
-
-                $item_url = osc_item_url();
-                $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
-
-
-                $all = '';
-
-                if (isset($item['locale'])) {
-                    foreach ($item['locale'] as $locale => $data) {
-                        $locale_name = OSCLocale::newInstance()->listWhere("pk_c_code = '" . $locale . "'");
-                        $all .= '<br/>';
-                        if (isset($locale_name[0]) && isset($locale_name[0]['s_name'])) {
-                            $all .= __('Language') . ': ' . $locale_name[0]['s_name'] . '<br/>';
-                        } else {
-                            $all .= __('Language') . ': ' . $locale . '<br/>';
-                        }
-                        $all .= __('Title') . ': ' . $data['s_title'] . '<br/>';
-                        $all .= __('Description') . ': ' . $data['s_description'] . '<br/>';
-                        $all .= '<br/>';
-                    }
-                } else {
-                    $all .= __('Title') . ': ' . $item['s_title'] . '<br/>';
-                    $all .= __('Description') . ': ' . $item['s_description'] . '<br/>';
-                }
-
-                // Format activation URL
-                $validation_url = osc_item_activate_url( $item['s_secret'], $item['pk_i_id'] );
-
-                $words   = array();
-                $words[] = array('{ITEM_DESCRIPTION_ALL_LANGUAGES}', '{ITEM_DESCRIPTION}', '{ITEM_COUNTRY}',
-                                 '{ITEM_PRICE}', '{ITEM_REGION}', '{ITEM_CITY}', '{ITEM_ID}', '{USER_NAME}',
-                                 '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}', '{ITEM_URL}', '{WEB_TITLE}',
-                                 '{VALIDATION_LINK}', '{VALIDATION_URL}');
-                $words[] = array($all, $item['s_description'], $item['s_country'], $item['f_price'],
-                                 $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'],
-                                 $item['s_contact_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', $item['s_title'], $item_url,
-                                 osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url );
-                $title = osc_mailBeauty($content['s_title'], $words);
-                $body = osc_mailBeauty($content['s_text'], $words);
-
-                $emailParams =  array (
-                                    'subject'  => $title
-                                    ,'to'       => $contactEmail
-                                    ,'to_name'  => $contactName
-                                    ,'body'     => $body
-                                    ,'alt_body' => $body
-                                );
-                osc_sendMail($emailParams) ;
+            if( Session::newInstance()->_get('userId') == '' && $aItem['active']=='INACTIVE' ) {
+                osc_run_hook('hook_email_item_validation_non_register_user', $item);
+            } else if ( $aItem['active']=='INACTIVE' ) { //  USER IS REGISTERED
+                osc_run_hook('hook_email_item_validation', $item);
+            } else if( Session::newInstance()->_get('userId') == '' ){ // USER IS NOT REGISTERED
+                osc_run_hook('hook_email_new_item_non_register_user', $item);
             }
 
             /**
              * Send email to admin about the new item
              */
             if (osc_notify_new_item()) {
-                $aPage = $mPages->findByInternalName('email_admin_new_item') ;
-
-                $content = array();
-                if(isset($aPage['locale'][$locale]['s_title'])) {
-                    $content = $aPage['locale'][$locale] ;
-                } else {
-                    $content = current($aPage['locale']) ;
-                }
-
-                $item_url = osc_item_url() ;
-                $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
-
-                $all = '' ;
-
-                if (isset($item['locale'])) {
-                    foreach ($item['locale'] as $locale => $data) {
-                        $locale_name = OSCLocale::newInstance()->listWhere("pk_c_code = '" . $locale . "'") ;
-                        $all .= '<br/>';
-                        if (isset($locale_name[0]) && isset($locale_name[0]['s_name'])) {
-                            $all .= __('Language') . ': ' . $locale_name[0]['s_name'] . '<br/>';
-                        } else {
-                            $all .= __('Language') . ': ' . $locale . '<br/>';
-                        }
-                        $all .= __('Title') . ': ' . $data['s_title'] . '<br/>';
-                        $all .= __('Description') . ': ' . $data['s_description'] . '<br/>';
-                        $all .= '<br/>';
-                    }
-                } else {
-                    $all .= __('Title') . ': ' . $item['s_title'] . '<br/>';
-                    $all .= __('Description') . ': ' . $item['s_description'] . '<br/>';
-                }
-
-                // Format activation URL
-                $validation_url = osc_item_activate_url( $item['s_secret'], $item['pk_i_id'] );
-
-                // Format admin edit URL
-                $admin_edit_url =  osc_item_admin_edit_url( $item['pk_i_id'] );
-
-                $words   = array();
-                $words[] = array('{EDIT_LINK}', '{EDIT_URL}', '{ITEM_DESCRIPTION_ALL_LANGUAGES}', '{ITEM_DESCRIPTION}',
-                                 '{ITEM_COUNTRY}', '{ITEM_PRICE}', '{ITEM_REGION}', '{ITEM_CITY}', '{ITEM_ID}',
-                                 '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}', '{ITEM_URL}',
-                                 '{WEB_TITLE}', '{VALIDATION_LINK}', '{VALIDATION_URL}');
-                $words[] = array('<a href="' . $admin_edit_url . '" >' . $admin_edit_url . '</a>', $admin_edit_url, $all, $item['s_description'], $item['s_country'],
-                                 $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'],
-                                 $item['s_contact_name'], $item['s_contact_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', $item['s_title'],
-                                 $item_url, osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url );
-                $title = osc_mailBeauty($content['s_title'], $words);
-                $body  = osc_mailBeauty($content['s_text'], $words);
-
-                $emailParams = array(
-                                    'subject'  => $title
-                                    ,'to'       => osc_contact_email()
-                                    ,'to_name'  => 'admin'
-                                    ,'body'     => $body
-                                    ,'alt_body' => $body
-                ) ;
-                osc_sendMail($emailParams) ;
+                osc_run_hook('hook_email_admin_new_item', $item);
             }
         }
-
-
     }
 
 ?>

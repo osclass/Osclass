@@ -197,8 +197,8 @@
                                 
                                 $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Enable'); ?>');
                                 
-                                for(var i = 0; i < ret.afectedIds.length; i++) {
-                                    id =  ret.afectedIds[i].id ;
+                                for(var i = 0; i < ret.affectedIds.length; i++) {
+                                    id =  ret.affectedIds[i].id ;
                                     $('div[category_id='+ id +']').addClass('disabled');
                                     $('div[category_id='+ id +']').removeClass('enabled');
                                     
@@ -210,8 +210,8 @@
                                 
                                 $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Disable'); ?>');
                                 
-                                for(var i = 0; i < ret.afectedIds.length; i++) {
-                                    id =  ret.afectedIds[i].id ;
+                                for(var i = 0; i < ret.affectedIds.length; i++) {
+                                    id =  ret.affectedIds[i].id ;
                                     $('div[category_id='+ id +']').removeClass('disabled');
                                     $('div[category_id='+ id +']').addClass('enabled');
                                  

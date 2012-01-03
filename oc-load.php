@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '2.2.3') ;
+define('OSCLASS_VERSION', '2.3.3') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -41,16 +41,45 @@ if( !file_exists(ABS_PATH . 'config.php') ) {
     osc_die($title, $message) ;
 }
 
-require_once ABS_PATH . 'config.php';
+// load database configuration
+require_once ABS_PATH . 'config.php' ;
+require_once LIB_PATH . 'osclass/default-constants.php' ;
 
-if( !defined('MULTISITE') ) {
-    define('MULTISITE', 0);
+// Sets PHP error handling
+if( OSC_DEBUG ) {
+    ini_set( 'display_errors', 1 ) ;
+    error_reporting( E_ALL | E_STRICT ) ;
+
+    if( OSC_DEBUG_LOG ) {
+        ini_set( 'display_errors', 0 ) ;
+        ini_set( 'log_errors', 1 ) ;
+        ini_set( 'error_log', CONTENT_PATH . 'debug.log' ) ;
+    }
+} else {
+    error_reporting( E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_ERROR | E_WARNING | E_PARSE | E_USER_ERROR | E_USER_WARNING ) ;
 }
+
 require_once LIB_PATH . 'osclass/db.php';
-require_once LIB_PATH . 'osclass/classes/DAO.php';
+require_once LIB_PATH . 'osclass/Logger/LogDatabase.php' ;
+require_once LIB_PATH . 'osclass/classes/database/DBConnectionClass.php';
+require_once LIB_PATH . 'osclass/classes/database/DBCommandClass.php';
+require_once LIB_PATH . 'osclass/classes/database/DBRecordsetClass.php';
+require_once LIB_PATH . 'osclass/classes/database/DAO.php';
+require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
 require_once LIB_PATH . 'osclass/model/Preference.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php';
-require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
+
+// check if OSClass is installed
+if( !getBoolPreference('osclass_installed') ) {
+    require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
+
+    $title    = 'OSClass &raquo; Error' ;
+    $message  = 'OSClass isn\'t installed. <a href="http://forums.osclass.org/">Need more help?</a></p>' ;
+    $message .= '<p><a class="button" href="' . osc_get_absolute_url() .'oc-includes/osclass/install.php">Install</a></p>' ;
+
+    osc_die($title, $message) ;
+}
+
 require_once LIB_PATH . 'osclass/helpers/hDefines.php';
 require_once LIB_PATH . 'osclass/helpers/hLocale.php';
 require_once LIB_PATH . 'osclass/helpers/hMessages.php';
@@ -87,6 +116,7 @@ require_once LIB_PATH . 'osclass/locales.php';
 require_once LIB_PATH . 'osclass/plugins.php';
 require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
 require_once LIB_PATH . 'osclass/ItemActions.php';
+require_once LIB_PATH . 'osclass/emails.php';
 require_once LIB_PATH . 'osclass/model/Admin.php';
 require_once LIB_PATH . 'osclass/model/Alerts.php';
 require_once LIB_PATH . 'osclass/model/Cron.php';
@@ -103,7 +133,6 @@ require_once LIB_PATH . 'osclass/model/ItemStats.php';
 require_once LIB_PATH . 'osclass/model/Page.php';
 require_once LIB_PATH . 'osclass/model/PluginCategory.php';
 require_once LIB_PATH . 'osclass/model/Region.php';
-require_once LIB_PATH . 'osclass/model/Rewrite.php';
 require_once LIB_PATH . 'osclass/model/User.php';
 require_once LIB_PATH . 'osclass/model/UserEmailTmp.php';
 require_once LIB_PATH . 'osclass/model/ItemLocation.php';
@@ -111,7 +140,6 @@ require_once LIB_PATH . 'osclass/model/Widget.php';
 require_once LIB_PATH . 'osclass/model/Search.php';
 require_once LIB_PATH . 'osclass/model/LatestSearches.php';
 require_once LIB_PATH . 'osclass/model/SiteInfo.php';
-require_once LIB_PATH . 'osclass/model/Stats.php';
 require_once LIB_PATH . 'osclass/model/Field.php';
 require_once LIB_PATH . 'osclass/model/Log.php';
 require_once LIB_PATH . 'osclass/classes/Cache.php';
@@ -120,6 +148,8 @@ require_once LIB_PATH . 'osclass/classes/RSSFeed.php';
 require_once LIB_PATH . 'osclass/classes/Sitemap.php';
 require_once LIB_PATH . 'osclass/classes/Pagination.php';
 require_once LIB_PATH . 'osclass/classes/Watermark.php';
+require_once LIB_PATH . 'osclass/classes/Rewrite.php';
+require_once LIB_PATH . 'osclass/classes/Stats.php';
 require_once LIB_PATH . 'osclass/alerts.php';
 
 require_once LIB_PATH . 'osclass/frm/Form.form.class.php';
@@ -129,7 +159,7 @@ require_once LIB_PATH . 'osclass/frm/Item.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Contact.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Comment.form.class.php';
 require_once LIB_PATH . 'osclass/frm/User.form.class.php';
-require_once LIB_PATH . 'osclass/frm/Language.form.class.php'; // CARLOS
+require_once LIB_PATH . 'osclass/frm/Language.form.class.php';
 require_once LIB_PATH . 'osclass/frm/SendFriend.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Alert.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Field.form.class.php';
@@ -143,6 +173,10 @@ Plugins::init() ;
 Rewrite::newInstance()->init();
 // Moved from BaseModel, since we need some session magic on index.php ;)
 Session::newInstance()->session_start() ;
+
+if(osc_timezone() != '') {
+    date_default_timezone_set(osc_timezone());
+}
 
 function osc_show_maintenance() {
     if(defined('__OSC_MAINTENANCE__')) { ?>

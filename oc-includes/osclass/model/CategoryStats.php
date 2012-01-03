@@ -1,4 +1,4 @@
-<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
 
     /*
      *      OSCLass – software for creating and publishing online classified
@@ -19,51 +19,182 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
-
-    class CategoryStats extends DAO {
-
+    
+    /**
+     * Model database for CategoryStats table
+     *
+     * @package OSClass
+     * @subpackage Model
+     * @since unknown
+     */
+    class CategoryStats extends DAO
+    {
+        /**
+         * It references to self object: CategotyStats.
+         * It is used as a singleton
+         *
+         * @access private
+         * @since unknown
+         * @var CategoryStats
+         */
         private static $instance ;
 
-        public static function newInstance() {
-            if(!self::$instance instanceof self) {
+        /**
+        * It creates a new CategoryStats object class if it has been created
+        * before, it return the previous object
+        *
+        * @access public
+        * @since unknown
+        * @return CategoryStats
+        */
+        public static function newInstance()
+        {
+            if( !self::$instance instanceof self ) {
                 self::$instance = new self ;
             }
             return self::$instance ;
         }
 
-        public function getTableName() { return DB_TABLE_PREFIX . 't_category_stats'; }
-
-        public function increaseNumItems($categoryId) {
-            $this->conn->osc_dbExec('INSERT INTO %s (fk_i_category_id, i_num_items) VALUES (%d, 1) ON DUPLICATE KEY UPDATE i_num_items = i_num_items + 1', $this->getTableName(), $categoryId);
+        /**
+         * Set data related to t_category_stats table
+         */
+        function __construct()
+        {
+            parent::__construct();
+            $this->setTableName('t_category_stats') ;
+            $this->setPrimaryKey('fk_i_category_id') ;
+            $this->setFields( array('fk_i_category_id', 'i_num_items') ) ;
+        }
+        
+        /**
+         * Increase number of category items, given a category id
+         *
+         * @access public
+         * @since unknown
+         * @param int $categoryId Category id 
+         * @return int number of affected rows, id error occurred return false
+         */
+        public function increaseNumItems($categoryId) 
+        {
+            $sql = sprintf('INSERT INTO %s (fk_i_category_id, i_num_items) VALUES (%d, 1) ON DUPLICATE KEY UPDATE i_num_items = i_num_items + 1', $this->getTableName(), $categoryId);
+            $return = $this->dao->query($sql);
             $result = Category::newInstance()->findByPrimaryKey($categoryId);
-            if($result['fk_i_parent_id']!=NULL) {
-                $this->increaseNumItems($result['fk_i_parent_id']);
+            if($return !== false) {
+                if($result['fk_i_parent_id']!=NULL) {
+                    $parent_res = $this->increaseNumItems($result['fk_i_parent_id']);
+                    if($parent_res !== false){
+                        $return += $parent_res ;
+                    }else{
+                        $return = false;
+                    }
+                }
             }
+            return $return;
+        }
+        
+        /**
+         * Increase number of category items, given a category id
+         * 
+         * @access public
+         * @since unknown
+         * @param int $categoryId Category id 
+         * @return int number of affected rows, id error occurred return false
+         */
+        public function decreaseNumItems($categoryId) 
+        {
+            $this->dao->select( 'i_num_items' ) ;
+            $this->dao->from( $this->getTableName() ) ;
+            $this->dao->where( $this->getPrimaryKey(), $categoryId ) ;
+            $result       = $this->dao->get() ;
+            $categoryStat = $result->row() ; 
+            $return       = 0 ;
+
+            if( isset( $categoryStat['i_num_items'] ) ) {
+                $this->dao->from( $this->getTableName() ) ;
+                $this->dao->set( 'i_num_items', 'i_num_items - 1', false ) ;
+                $this->dao->where( 'i_num_items > 0' ) ;
+                $this->dao->where( 'fk_i_category_id', $categoryId ) ;
+
+                $return = $this->dao->update() ;
+            } else {
+                $array_set = array(
+                    'fk_i_category_id'  => $categoryId,
+                    'i_num_items'       => 0
+                ) ;
+                $res = $this->dao->insert($this->getTableName(), $array_set);
+                if($res === false) {
+                    $return = false ;
+                }
+            }
+
+            if( $return !== false ) {
+                $result = Category::newInstance()->findByPrimaryKey($categoryId) ;
+                if( $result['fk_i_parent_id'] != NULL ) {
+                    $parent_res = $this->decreaseNumItems( $result['fk_i_parent_id'] ) ;
+                    if( $parent_res !== false ) {
+                        $return += $parent_res ;
+                    } else {
+                        $return = false ;
+                    }
+                }
+            }
+
+            return $return ;
         }
 
-        public function decreaseNumItems($categoryId) {
-            $result = $this->conn->osc_dbFetchResult("SELECT i_num_items FROM %s WHERE fk_i_category_id = %d", $this->getTableName(), $categoryId);
-            if(isset($result['i_num_items'])) {
-                $this->conn->osc_dbExec('UPDATE %s SET i_num_items = i_num_items - 1 WHERE i_num_items > 0 AND fk_i_category_id = %d', $this->getTableName(), $categoryId);
-            } ELSE {
-                $this->conn->osc_dbExec('INSERT INTO %s (fk_i_category_id, i_num_items) VALUES (%d, 0)', $this->getTableName(), $categoryId);
+        public function setNumItems($categoryID, $numItems)
+        {
+            $result = $this->insert( array('fk_i_category_id' => $categoryID, 'i_num_items' => $numItems) ) ;
+
+            if( $this->dao->getErrorLevel() == '1062' ) {
+                $result = $this->update( array('i_num_items' => $numItems), array('fk_i_category_id' => $categoryID) ) ;
             }
-            $result = Category::newInstance()->findByPrimaryKey($categoryId);
-            if($result['fk_i_parent_id']!=NULL) {
-                $this->decreaseNumItems($result['fk_i_parent_id']);
-            }
+
+            return $result ;
         }
 
-        public function findByCategoryId($categoryId) {
-            return $this->conn->osc_dbFetchResult('SELECT * FROM %s WHERE fk_i_category_id = ', $this->getTableName(), $categoryId);
+        /**
+         * Find stats by category id
+         * 
+         * @access public
+         * @since unknown
+         * @param int $categoryId Category id 
+         * @return array CategoryStats
+         */
+        public function findByCategoryId($categoryId) 
+        {
+            return $this->findByPrimaryKey($categoryId);
         }
-
-        public function countItemsFromCategory($categoryId) {
-            $data = $this->conn->osc_dbFetchResult('SELECT i_num_items FROM %s WHERE fk_i_category_id = %d', $this->getTableName(), $categoryId);
+        
+        /**
+         * Count items,  given a category id
+         * 
+         * @access public
+         * @since unknown
+         * @param type $categoryId Category id
+         * @return int number of items into category
+         */
+        public function countItemsFromCategory($categoryId) 
+        {
+            $this->dao->select('i_num_items') ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where('fk_i_category_id', $categoryId) ;
+            $result = $this->dao->get() ;
+            $data = $result->row() ;
             if($data==null) { return 0; } else { return $data['i_num_items']; };
         }
-
-        function getNumItems($cat) {
+        
+        /**
+         * Get number of items 
+         *
+         * @access public
+         * @since unknown
+         * @staticvar string $numItemsMap 
+         * @param array $cat category array
+         * @return int
+         */
+        public function getNumItems($cat) 
+        {
             static $numItemsMap = null;
             if(is_null($numItemsMap)) {
                 $numItemsMap = $this->toNumItemsMap();
@@ -75,12 +206,18 @@
             else
                 return 0;
         }
-
-        public function toNumItemsMap() {
+        /**
+         *
+         * @access public
+         * @since unknown
+         * @return array
+         */
+        public function toNumItemsMap() 
+        {
             $map = array();
             $all = $this->listAll();
 	
-	    if( empty($all) ) return array();
+            if( empty($all) ) return array();
 
             $roots = Category::newInstance()->findRootCategories();
 
@@ -103,4 +240,5 @@
         }
     }
 
+    /* file end: ./oc-includes/osclass/model/CategoryStats.php */
 ?>

@@ -209,7 +209,12 @@
     function osc_validate_url ($value, $required = false) {
         if ($required || strlen($value) > 0) {
             $value = osc_sanitize_url($value);
-            if ( filter_var($value, FILTER_VALIDATE_URL) ) {
+            if(!function_exists('filter_var')) { 
+                $success = preg_match('|^(http\:\/\/[a-zA-Z0-9_\-]+(?:\.[a-zA-Z0-9_\-]+)*\.[a-zA-Z]{2,4}(?:\/[a-zA-Z0-9_]+)*(?:\/[a-zA-Z0-9_]+\.[a-zA-Z]{2,4}(?:\?[a-zA-Z0-9_]+\=[a-zA-Z0-9_]+)?)?(?:\&[a-zA-Z0-9_]+\=[a-zA-Z0-9_]+)*)$|', $value, $m);
+            } else {
+                $success = filter_var($value, FILTER_VALIDATE_URL);
+            }
+            if ($success) {
                 @$headers = get_headers($value); 
                 if (!preg_match('/^HTTP\/\d\.\d\s+(200|301|302)/', $headers[0])) {
                     return false;

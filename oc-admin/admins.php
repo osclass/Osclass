@@ -43,7 +43,10 @@
                 case 'add':         // callin add view
                                     $this->doView('admins/add.php') ;
                 break;
-                case 'add_post':    if( defined('DEMO') ) $this->redirectTo(osc_admin_base_url(true) . '?page=admins');
+                case 'add_post':    if( defined('DEMO') ) {
+                                        osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=admins');
+                                    }
                                     // adding a new admin
                                     $sPassword = Params::getParam('s_password');
                                     $sName     = Params::getParam('s_name');
@@ -120,7 +123,10 @@
                                     $this->_exportVariableToView("admin", $adminEdit);
                                     $this->doView('admins/edit.php') ;
                 break;
-                case 'edit_post':   if( defined('DEMO') ) $this->redirectTo(osc_admin_base_url(true) . '?page=admins');
+                case 'edit_post':   if( defined('DEMO') ) {
+                                        osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=admins');
+                                    }
                                     // updating a new admin
                                     $iUpdated = 0;
                                     $adminId  = Params::getParam('id');
@@ -211,10 +217,13 @@
 
                                     $this->redirectTo(osc_admin_base_url(true).'?page=admins');
                 break;
-                case 'delete':      if( defined('DEMO') ) $this->redirectTo(osc_admin_base_url(true) . '?page=admins');
+                case 'delete':      if( defined('DEMO') ) {
+                                        osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=admins');
+                                    }
                                     // deleting and admin
                                     $isDeleted = false;
-                                    $adminId   = Params::getParam('id');
+                                    $adminId   = Params::getParam('id') ;
 
                                     if(!is_array($adminId)) {
                                         osc_add_flash_error_message( _m('The admin id isn\'t in the correct format'), 'admin');
@@ -227,7 +236,7 @@
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins');
                                     }
 
-                                    $isDeleted = $this->adminManager->delete(array('pk_i_id IN (' . implode(', ', $adminId) . ')')) ;
+                                    $isDeleted = $this->adminManager->deleteBatch( $adminId ) ;
 
                                     if($isDeleted) {
                                         osc_add_flash_ok_message( _m('The admin has been deleted correctly'), 'admin');

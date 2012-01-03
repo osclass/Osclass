@@ -62,13 +62,21 @@
                 echo '<title><![CDATA[', $item['title'], ']]></title>', PHP_EOL;
                 echo '<link>', $item['link'], '</link>', PHP_EOL;
                 echo '<guid>', $item['link'], '</guid>', PHP_EOL;
-                echo '<description><![CDATA[', $item['description'], ']]></description>', PHP_EOL;
+
+                echo '<description><![CDATA[';
+                if(@$item['image']) {
+                    echo '<a href="'.$item['image']['link'].'" title="'.$item['image']['title'].'" rel="nofollow">';
+                    echo '<img style="float:left;border:0px;" src="'.$item['image']['url'].'" alt="'.$item['image']['title'].'"/> </a>';
+                }
+                echo $item['description'], ']]>';
+                echo '</description>', PHP_EOL;
+
                 echo '<pubDate>', date('r',strtotime($item['dt_pub_date'])) , '</pubDate>', PHP_EOL;
+                
                 echo '</item>', PHP_EOL;
             }
             echo '</channel>', PHP_EOL;
             echo '</rss>', PHP_EOL;
         }
     }
-
 ?>
