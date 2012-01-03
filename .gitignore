@@ -1,6 +1,10 @@
 # MAC
 .DS_Store
 
+# Aptana Project Files
+.project
+.settings/
+
 *.diff
 *.patch
 
