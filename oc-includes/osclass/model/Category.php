@@ -473,17 +473,12 @@
                 }
             }
 
-            osc_run_hook("delete_category", $pk);
-            
-            $this->dao->delete(DB_TABLE_PREFIX.'t_plugin_category', array("fk_i_category_id", $pk));
-            $this->dao->delete(DB_TABLE_PREFIX.'t_category_description', array("fk_i_category_id", $pk));
-            $this->dao->delete(DB_TABLE_PREFIX.'t_category_stats', array("fk_i_category_id", $pk));
-            $this->dao->delete(DB_TABLE_PREFIX.'t_category', array("pk_i_id", $pk));
+            osc_run_hook('delete_category', $pk) ;
 
-            $this->dao->query(sprintf("DELETE FROM %st_plugin_category WHERE fk_i_category_id = '%s'", DB_TABLE_PREFIX, $pk));
-            $this->dao->query(sprintf("DELETE FROM %st_category_description WHERE fk_i_category_id = '%s'", DB_TABLE_PREFIX, $pk));
-            $this->dao->query(sprintf("DELETE FROM %st_category_stats WHERE fk_i_category_id = '%s'", DB_TABLE_PREFIX, $pk));
-            $this->dao->query(sprintf("DELETE FROM %s WHERE pk_i_id = '%s'", $this->tableName, $pk));
+            $this->dao->delete( sprintf('%st_plugin_category', DB_TABLE_PREFIX), array('fk_i_category_id' => $pk) ) ;
+            $this->dao->delete( sprintf('%st_category_description', DB_TABLE_PREFIX), array('fk_i_category_id' => $pk) ) ;
+            $this->dao->delete( sprintf('%st_category_stats', DB_TABLE_PREFIX), array('fk_i_category_id' => $pk) ) ;
+            $this->dao->delete( sprintf('%st_category', DB_TABLE_PREFIX), array('pk_i_id' => $pk) ) ;
         }
 
         /**

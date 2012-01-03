@@ -113,7 +113,7 @@
                             } else {
                                 $body = current($page['locale']);
                             }
-                            $p_body = str_replace("'", "\'", trim(strip_tags($body['s_title']), "\x22\x27"));
+                            $p_body = addslashes(trim(strip_tags($body['s_title'])));
                         ?>
                                   [
                                     "<input type='checkbox' name='id[]' value='<?php echo osc_static_page_id(); ?>' />",

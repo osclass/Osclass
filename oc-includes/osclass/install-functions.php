@@ -27,9 +27,10 @@
  * @return string The url of the site
  */
 function get_absolute_url( ) {
-    $protocol = ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ) ? 'https' : 'http';
-    $pos = strpos($_SERVER['REQUEST_URI'], 'oc-includes');
-    return $protocol . '://' . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, $pos);
+    $protocol = ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ) ? 'https' : 'http' ;
+    $pos      = strpos($_SERVER['REQUEST_URI'], 'oc-includes') ;
+    $URI      = rtrim( substr( $_SERVER['REQUEST_URI'], 0, $pos ), '/' ) . '/' ;
+    return $protocol . '://' . $_SERVER['HTTP_HOST'] . $URI ;
 }
 
 /*
@@ -454,10 +455,10 @@ function is_osclass_installed( ) {
 
     require_once ABS_PATH . 'config.php' ;
 
-    $conn = new DBConnectionClass() ;
+    $conn = new DBConnectionClass( osc_db_host(), osc_db_user(), osc_db_password(), osc_db_name() ) ;
     $c_db = $conn->getOsclassDb() ;
     $comm = new DBCommandClass( $c_db ) ;
-    $rs = $comm->query( sprintf( "SELECT * FROM %st_preference WHERE s_name = 'osclass_installed'", DB_TABLE_PREFIX ) ) ;
+    $rs   = $comm->query( sprintf( "SELECT * FROM %st_preference WHERE s_name = 'osclass_installed'", DB_TABLE_PREFIX ) ) ;
 
     if( $rs == false ) {
         return false ;

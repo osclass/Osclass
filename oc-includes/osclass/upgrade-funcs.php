@@ -204,7 +204,13 @@
         osc_changeVersionTo(230) ;
     }
 
-    osc_changeVersionTo(233) ;
+    
+    if(osc_version() < 234) {
+        @unlink(osc_admin_base_path()."upgrade.php");
+        @unlink(osc_admin_base_path()."/themes/modern/tools/upgrade-plugins.php");
+        @unlink(osc_admin_base_path()."upgrade-plugin.php");
+        osc_changeVersionTo(234) ;
+    }
     
     if(Params::getParam('action') == '') {
         $title   = 'OSClass &raquo; Updated correctly' ;
