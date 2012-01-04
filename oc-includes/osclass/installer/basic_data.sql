@@ -4,7 +4,7 @@ INSERT INTO /*TABLE_PREFIX*/t_currency (pk_c_code, s_name, s_description, b_enab
     ('EUR', 'European Union euro', 'Euro €', true);
 
 INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
-    ('osclass', 'version', 233, 'INTEGER')
+    ('osclass', 'version', 234, 'INTEGER')
     ,('osclass', 'theme', 'modern', 'STRING')
     ,('osclass', 'admin_language', 'en_US', 'STRING')
     ,('osclass', 'language', 'en_US', 'STRING')
