@@ -62,7 +62,7 @@
 
                         <div id="current_theme"><?php _e('Current theme'); ?></div>
                         <div id="current_theme_pic">
-                            <img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo osc_theme() ; ?>/screenshot.png" style="width: 280px;" title="" alt="" />
+                            <img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo osc_theme() ; ?>/screenshot.png" style="width: 280px; height: auto;" title="" alt="" />
                         </div>
                         <div id="current_theme_info">
                             <strong><?php echo $info['name']; ?> <?php echo $info['version']; ?>. <?php _e('Author'); ?> <a target="_blank" href="<?php echo $info['author_url']; ?>"><?php echo $info['author_name']; ?></a></strong>
@@ -84,11 +84,11 @@
                                                 <strong><?php echo $info['name']; ?> <?php echo $info['version']; ?> by <a href="<?php echo $info['author_url']; ?>"><?php echo $info['author_name']; ?></a></strong>
                                             </div>
                                             <div id="available_theme_actions">
-                                                <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&action=activate&amp;theme=<?php echo $theme ; ?>"><?php _e('Activate') ; ?></a> |
+                                                <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&action=activate&theme=<?php echo $theme ; ?>"><?php _e('Activate') ; ?></a> |
                                                 <a target="_blank" href="<?php echo osc_base_url(true) ; ?>?theme=<?php echo $theme ; ?>"><?php _e('Preview') ; ?></a>
                                             </div>
                                             <div id="available_theme_pic">
-                                                <img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo $theme ; ?>/screenshot.png" style="width: 280px;" title="" alt="" />
+                                                <img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo $theme ; ?>/screenshot.png" style="width: 280px; height: auto;" title="" alt="" />
                                             </div>
                                             <div id="available_theme_desc"><?php echo $info['description'] ; ?></div>
                                             <div style="clear: both;"></div>
