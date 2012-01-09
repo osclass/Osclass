@@ -96,7 +96,7 @@
                     $res = Widget::newInstance()->update(
                         array(
                             's_description' => Params::getParam('description')
-                            ,'s_content' => Params::getParam('content')
+                            ,'s_content' => Params::getParam('content', false, false)
                         ),
                         array('pk_i_id' => Params::getParam('id') )
                     );
@@ -114,7 +114,7 @@
                             's_location' => Params::getParam('location')
                             ,'e_kind' => 'html'
                             ,'s_description' => Params::getParam('description')
-                            ,'s_content' => Params::getParam('content')
+                            ,'s_content' => Params::getParam('content', false, false)
                         )
                     );
                     osc_add_flash_ok_message( _m('Widget added correctly'), 'admin');

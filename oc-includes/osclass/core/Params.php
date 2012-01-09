@@ -23,17 +23,39 @@
 
     class Params
     {
-        function __construct() {}
+        
+        private static $purifier;
+        
+        function __construct() { }
 
-        static function getParam($param, $htmlencode = false)
+        static function getParam($param, $htmlencode = false, $xss_check = true)
         {
             if ($param == "") return '' ;
             if (!isset($_REQUEST[$param])) return '' ;
 
+            if($xss_check==true && !isset(self::$purifier)) {
+                require_once LIB_PATH . 'htmlpurifier/HTMLPurifier.auto.php';
+                $config = HTMLPurifier_Config::createDefault();
+                $config->set('HTML.Allowed', 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style]');
+                $config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
+                $config->set('Cache.SerializerPath', ABS_PATH . 'oc-content/uploads');
+                self::$purifier = new HTMLPurifier($config);
+            }
+            
             $value = $_REQUEST[$param];
+
             if (!is_array($value)) {
+                if($xss_check) {
+                    $value = self::$purifier->purify($_REQUEST[$param]);
+                }
                 if ($htmlencode) {
                     return htmlspecialchars(stripslashes($value), ENT_QUOTES);
+                }
+            } else {
+                if($xss_check) {
+                    foreach($value as $k => $v) {
+                        $value[$k] = self::$purifier->purify($v);
+                    }
                 }
             }
 
