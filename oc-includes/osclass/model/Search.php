@@ -486,16 +486,24 @@
          */
         public function addCategory($category = null)
         {
-            if($category == null) return '' ;
-
-            if(!is_numeric($category)) {
-                $category = preg_replace('|/$|','',$category);
-                $aCategory = explode('/', $category) ;
-                $category = Category::newInstance()->findBySlug($aCategory[count($aCategory)-1]) ;
-                $category = $category['pk_i_id'] ;
+            if( $category == null ) {
+                return '' ;
             }
+
+            if( !is_numeric($category) ) {
+                $category  = preg_replace('|/$|','',$category);
+                $aCategory = explode('/', $category) ;
+                $category  = Category::newInstance()->findBySlug($aCategory[count($aCategory)-1]) ;
+
+                if( count($category) == 0 ) {
+                    return '' ;
+                }
+
+                $category  = $category['pk_i_id'] ;
+            }
+
             $tree = Category::newInstance()->toSubTree($category) ;
-            if(!in_array($category, $this->categories)) {
+            if( !in_array($category, $this->categories) ) {
                 $this->categories[] = sprintf("%st_item.fk_i_category_id = %d ", DB_TABLE_PREFIX, $category) ;
             }
             $this->pruneBranches($tree) ;
@@ -670,12 +678,12 @@
             $extraFields        = $arrayConditions['extraFields'];
             $conditionsSQL      = $arrayConditions['conditionsSQL'];
             
-            $this->addTable(sprintf('%st_item', DB_TABLE_PREFIX));
-            $this->addTable(sprintf('%st_item_location', DB_TABLE_PREFIX));
-            $this->addTable(sprintf('%st_category'), DB_TABLE_PREFIX);
-            $this->addTable(sprintf('%st_category_description as cd', DB_TABLE_PREFIX));
+            $this->addTable( sprintf('%st_item', DB_TABLE_PREFIX) ) ;
+            $this->addTable( sprintf('%st_item_location', DB_TABLE_PREFIX) ) ;
+            $this->addTable( sprintf('%st_category', DB_TABLE_PREFIX) ) ;
+            $this->addTable( sprintf('%st_category_description as cd', DB_TABLE_PREFIX) ) ;
             
-            $aux_tables   = implode(', ', $this->tables);
+            $aux_tables = implode(', ', $this->tables);
             
             $this->sql = sprintf("SELECT %st_item.*, %st_item_location.*, cd.s_name as s_category_name %s FROM %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id %s AND %st_item.fk_i_category_id = cd.fk_i_category_id GROUP BY %st_item.pk_i_id ORDER BY %s %s LIMIT %d, %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, $extraFields, $aux_tables, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $conditionsSQL, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $this->order_column, $this->order_direction, $this->limit_init, $this->results_per_page);
             $result = $this->dao->query($this->sql);
@@ -686,6 +694,7 @@
             $items = $result->result();
             return Item::newInstance()->extendData($items);
         }
+
         /**
          * Returns number of ads from each country
          *

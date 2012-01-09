@@ -200,35 +200,39 @@
         }
         return($category) ;
     }
-    
+
     /**
      * Gets current search category id
      *
      * @return int
      */
     function osc_search_category_id() {
-        $categories = osc_search_category();
-        $category = array();
-        $where = array();
+        $categories = osc_search_category() ;
+        $category   = array() ;
+        $where      = array() ;
+
         foreach($categories as $cat) {
-            if(is_numeric($cat)) {
-                $where[] = "a.pk_i_id = " . $cat;
+            if( is_numeric($cat) ) {
+                $where[] = "a.pk_i_id = " . $cat ;
             } else {
-                $slug_cat = explode("/", trim($cat, "/"));
-                $where[] = "b.s_slug = '" . $slug_cat[count($slug_cat)-1] . "'";
+                $slug_cat = explode( "/", trim($cat, "/") ) ;
+                $where[]  = "b.s_slug = '" . addslashes( $slug_cat[count($slug_cat)-1] ) . "'" ;
             }
         }
-        if(empty($where)) {
-            return null;
-        } else {
-            $categories = Category::newInstance()->listWhere(implode(" OR ", $where));
-            foreach($categories as $cat) {
-                $category[] = $cat['pk_i_id'];
-            }
-            return $category;    
+
+        if( empty($where) ) {
+            return null ;
         }
+
+        // TODO: not the best way to do it
+        $categories = Category::newInstance()->listWhere( implode(" OR ", $where) ) ;
+        foreach($categories as $cat) {
+            $category[] = $cat['pk_i_id'] ;
+        }
+
+        return $category ;
     }
-    
+
     /**
      * Update the search url with new options
      *
