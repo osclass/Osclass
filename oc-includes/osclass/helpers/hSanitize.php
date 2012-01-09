@@ -55,58 +55,6 @@
 
 
     /**
-     * Sanitize string to use as a filename
-     * 
-     * @param string $value value to sanitize
-     * @param bool $relative_path if the file is in a relative path or not
-     * @return string sanitized
-     */
-    function osc_sanitize_filename($value, $relative_path = false) {
-        $blacklisted = array(
-                            "../",
-                            "<!--",
-                            "-->",
-                            "<",
-                            ">",
-                            "'",
-                            '"',
-                            '&',
-                            '$',
-                            '#',
-                            '{',
-                            '}',
-                            '[',
-                            ']',
-                            '=',
-                            ';',
-                            '?',
-                            "%20",
-                            "%22",
-                            "%3c",		// <
-                            "%253c",	// <
-                            "%3e",		// >
-                            "%0e",		// >
-                            "%28",		// (
-                            "%29",		// )
-                            "%2528",	// (
-                            "%26",		// &
-                            "%24",		// $
-                            "%3f",		// ?
-                            "%3b",		// ;
-                            "%3d"		// =
-        );
-
-        if(!$relative_path) {
-            $blaclisted[] = './';
-            $blacklsited[] = '/';
-        }
-
-        $value = remove_invisible_characters($value, FALSE);
-        return stripslashes(str_replace($blacklisted, '', $value));
-    }	
-
-
-    /**
      * Sanitize string that's all-caps
      * 
      * @param string $value value to sanitize
