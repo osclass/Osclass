@@ -82,30 +82,40 @@
         }
 
         //$what = "post, get, cookie"
-        static function getParamsAsArray($what = "")
+        static function getParamsAsArray($what = "", $xss_check = true)
         {
             switch ($what) {
                 case("get"):    
-                     if(get_magic_quotes_gpc()) {
-                        return strip_slashes_extended($_GET);
-                    }
-                    return($_GET) ;
+                    $value = $_GET;
                 break;
                 case("post"):   
-                    if(get_magic_quotes_gpc()) {
-                        return strip_slashes_extended($_POST);
-                    }
-                    return($_POST) ;
+                    $value = $_POST;
                 break;
-                case("cookie"): return($_COOKIE) ;
+                case("cookie"):
+                    $value = $_COOKIE;
                 break;
                 default:        
-                    if(get_magic_quotes_gpc()) {
-                        return strip_slashes_extended($_REQUEST);
-                    }
-                    return($_REQUEST) ;
+                    $var = $_REQUEST;
                 break;
             }
+            
+            if($xss_check==true) {
+                if(!isset(self::$purifier)) {
+                    require_once LIB_PATH . 'htmlpurifier/HTMLPurifier.auto.php';
+                    $config = HTMLPurifier_Config::createDefault();
+                    $config->set('HTML.Allowed', 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style]');
+                    $config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
+                    $config->set('Cache.SerializerPath', ABS_PATH . 'oc-content/uploads');
+                    self::$purifier = new HTMLPurifier($config);
+                }
+                foreach($value as $k => $v) {
+                    $value[$k] = self::$purifier->purify($v);
+                }
+            }
+            if(get_magic_quotes_gpc()) {
+                return strip_slashes_extended($value);
+            }
+            return $value;
         }
 
         static function setParam($key, $value)
