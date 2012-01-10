@@ -989,7 +989,22 @@
      * @return string
      */    
     function osc_item_meta_value() {
-        return htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8") ; 
+        $meta = osc_item_meta();
+        if($meta['e_type']=="CHECKBOX") {
+            if(osc_field(osc_item_meta(), 's_value', '')==1) {
+                return '<img src="'.osc_current_web_theme_url('images/tick.png').'" alt="" title=""/>';
+            } else {
+                return '<img src="'.osc_current_web_theme_url('images/cross.png').'" alt="" title=""/>';
+            }
+        } else if($meta['e_type']=="URL") {
+            if(osc_field(osc_item_meta(), 's_value', '')!='') {
+                return '<a href="'.htmlentities(osc_field(osc_item_meta(), 's_value', '')).'" >'.htmlentities(osc_field(osc_item_meta(), 's_value', '')).'</a>';
+            } else {
+                return '';
+            }
+        } else {
+            return htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8") ; 
+        }
     }
    
     /**

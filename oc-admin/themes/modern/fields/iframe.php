@@ -123,7 +123,7 @@
                 $('#div_field_options_iframe').hide();
             }
         });
-        if($("select[name='field_type']").attr('value')=='TEXT' || $("select[name='field_type']").attr('value')=='TEXTAREA') {
+        if($("select[name='field_type']").attr('value')=='TEXT' || $("select[name='field_type']").attr('value')=='TEXTAREA' || $("select[name='field_type']").attr('value')=='CHECKBOX' || $("select[name='field_type_new']").attr('value')=='URL') {
             $('#div_field_options_iframe').hide();
         }
     });

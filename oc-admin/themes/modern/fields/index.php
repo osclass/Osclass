@@ -123,7 +123,7 @@
                         $('#div_field_options').hide();
                     }
                 });
-                if($("select[name='field_type_new']").attr('value')=='TEXT' || $("select[name='field_type_new']").attr('value')=='TEXTAREA') {
+                if($("select[name='field_type_new']").attr('value')=='TEXT' || $("select[name='field_type_new']").attr('value')=='TEXTAREA' || $("select[name='field_type_new']").attr('value')=='CHECKBOX' || $("select[name='field_type_new']").attr('value')=='URL') {
                     $('#div_field_options').hide();
                 }
 
@@ -187,6 +187,8 @@
                                             <option value="TEXTAREA">TEXTAREA</option>
                                             <option value="DROPDOWN">DROPDOWN</option>
                                             <option value="RADIO">RADIO</option>
+                                            <option value="CHECKBOX">CHECKBOX</option>
+                                            <option value="URL">URL</option>
                                         </select>
                                     </div>
                                     <div class="FormElement" id="div_field_options">
