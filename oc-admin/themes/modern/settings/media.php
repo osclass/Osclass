@@ -51,12 +51,12 @@
                                 <legend><?php _e('Restrictions'); ?></legend>
                                 <p>
                                     <label for="maxSize"><?php _e('Maximum size, in KB'); ?></label><br />
-                                    <input type="text" name="maxSizeKb" id="maxSize" value="<?php echo osc_max_size_kb() ; ?>" />
+                                    <input type="text" name="maxSizeKb" id="maxSize" value="<?php echo osc_esc_html(osc_max_size_kb()) ; ?>" />
                                 </p>
 
                                 <p>
                                     <label for="allowedExt"><?php _e('Allowed format extensions (eg: png, jpg, gif)'); ?></label><br />
-                                    <input type="text" name="allowedExt" id="allowedExt" value="<?php echo osc_allowed_extension() ; ?>" />
+                                    <input type="text" name="allowedExt" id="allowedExt" value="<?php echo osc_esc_html(osc_allowed_extension()) ; ?>" />
                                 </p>
                                 <?php if(extension_loaded('imagick')) { ?>
                                 <p>
@@ -71,17 +71,17 @@
                                 <legend><?php _e('Dimensions'); ?></legend>
                                 <p>
                                     <label for="thumbnail"><?php _e('Thumbnail dimensions'); ?></label><br />
-                                    <input type="text" name="dimThumbnail" id="thumbnail" value="<?php echo osc_thumbnail_dimensions() ; ?>" />
+                                    <input type="text" name="dimThumbnail" id="thumbnail" value="<?php echo osc_esc_html(osc_thumbnail_dimensions()) ; ?>" />
                                 </p>
 
                                 <p>
                                     <label for="preview"><?php _e('Preview dimensions'); ?></label><br />
-                                    <input type="text" name="dimPreview" id="preview" value="<?php echo osc_preview_dimensions() ; ?>" />
+                                    <input type="text" name="dimPreview" id="preview" value="<?php echo osc_esc_html(osc_preview_dimensions()) ; ?>" />
                                 </p>
 
                                 <p>
                                     <label for="normal"><?php _e('Normal dimensions'); ?></label><br />
-                                    <input type="text" name="dimNormal" id="normal" value="<?php echo osc_normal_dimensions() ; ?>" />
+                                    <input type="text" name="dimNormal" id="normal" value="<?php echo osc_esc_html(osc_normal_dimensions()) ; ?>" />
                                 </p>
 
                                 <p>
@@ -111,11 +111,11 @@
 
                                     <p>
                                         <label for="watermark_color"><?php _e('Watermark color'); ?></label><br />
-                                        <input type="text" maxlength="6" id="colorpickerField" value="<?php echo osc_watermark_text_color(); ?>" name="watermark_text_color"/>
+                                        <input type="text" maxlength="6" id="colorpickerField" value="<?php echo osc_esc_html(osc_watermark_text_color()); ?>" name="watermark_text_color"/>
                                     </p>
                                     <p>
                                         <label for="watermark_text"><?php _e('Watermark text'); ?></label><br />
-                                        <input type="text" name="watermark_text" value="<?php echo htmlentities(osc_watermark_text(), null, "UTF-8"); ?>"/>
+                                        <input type="text" name="watermark_text" value="<?php echo osc_esc_html(osc_watermark_text()); ?>"/>
                                     </p>
                                     <p>
                                         <label><?php _e('Watermark place'); ?></label>
@@ -153,7 +153,7 @@
                                 </div>
 
                             </fieldset>
-                            <input id="button_save" type="submit" value="<?php _e('Update'); ?>" />
+                            <input id="button_save" type="submit" value="<?php osc_esc_html(_e('Update')); ?>" />
                         </form>
                     </div>
                 </div>
