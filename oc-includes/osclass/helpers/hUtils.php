@@ -145,7 +145,7 @@
     /**
      * Scapes letters and numbers of a string
      *
-     * @since 2.3.5
+     * @since 2.4
      * @param string $string
      * @return string
      */
