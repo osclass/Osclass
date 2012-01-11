@@ -65,7 +65,7 @@
                         if(count($options)>0) {
                             echo '<select name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '">';
                             foreach($options as $option) {
-                                echo '<option value="'.$option.'" '.($field['s_value']==$option?'selected="selected"':'').'>'.$option.'</option>';
+                                echo '<option value="'.osc_esc_html($option).'" '.($field['s_value']==$option?'selected="selected"':'').'>'.$option.'</option>';
                             }
                             echo '</select>';
                         }
@@ -76,13 +76,13 @@
                         if(count($options)>0) {
                             echo '<ul style="float:left;" >';
                             foreach($options as $key => $option) {
-                                echo '<li><input type="radio" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '_'.$key.'" value="'.$option.'" '.($field['s_value']==$option?'checked':'').'/><label style="float:none;" for="meta_' . $field['s_slug'] . '_'.$key.'">'.$option.'</label></li>';
+                                echo '<li><input type="radio" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '_'.$key.'" value="'.osc_esc_html($option).'" '.($field['s_value']==$option?'checked':'').'/><label style="float:none;" for="meta_' . $field['s_slug'] . '_'.$key.'">'.$option.'</label></li>';
                             }
                             echo '</ul>';
                         }
                     }
                 } else {
-                    echo '<input id="meta_'.$field['s_slug'].'" type="text" name="meta['.$field['pk_i_id'].']" value="' . htmlentities((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "", ENT_COMPAT, "UTF-8") . '" ' ;
+                    echo '<input id="meta_'.$field['s_slug'].'" type="text" name="meta['.$field['pk_i_id'].']" value="' . osc_esc_html((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '" ' ;
                     echo '/>' ;
                 }
             }
