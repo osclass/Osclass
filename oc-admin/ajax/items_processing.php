@@ -250,7 +250,7 @@
                     if($title != $aRow['s_title']) {
                         $title .= "...";
                     }
-                    $this->sOutput .= '"'.addslashes(preg_replace('|\s+|',' ',$title)).' <br/>';
+                    $this->sOutput .= '"'.addslashes(osc_esc_html(preg_replace('|\s+|',' ',$title))).' <br/>';
                     $this->sOutput .= '<div id=\'datatable_wrapper\'><div id=\'datatables_quick_edit\' ';
                     if($count % 2) {
                         $this->sOutput .= ' class=\'even\' ';
@@ -293,12 +293,12 @@
                         $this->sOutput .= '</div></div>",';
                     }
                     
-                    $this->sOutput .= '"'.addslashes($aRow['s_user_name']).'",';
-                    $this->sOutput .= '"'.addslashes($aRow['s_category_name']).'",';
-                    $this->sOutput .= '"'.$aRow['s_country'].'",';
-                    $this->sOutput .= '"'.$aRow['s_region'].'",';
-                    $this->sOutput .= '"'.$aRow['s_city'].'",';
-                    $this->sOutput .= '"'.addslashes($aRow['dt_pub_date']).'"';
+                    $this->sOutput .= '"'.addslashes(osc_esc_html($aRow['s_user_name'])).'",';
+                    $this->sOutput .= '"'.addslashes(osc_esc_html($aRow['s_category_name'])).'",';
+                    $this->sOutput .= '"'.addslashes(osc_esc_html($aRow['s_country'])).'",';
+                    $this->sOutput .= '"'.addslashes(osc_esc_html($aRow['s_region'])).'",';
+                    $this->sOutput .= '"'.addslashes(osc_esc_html($aRow['s_city'])).'",';
+                    $this->sOutput .= '"'.addslashes(osc_esc_html($aRow['dt_pub_date'])).'"';
                     if($this->extraCols > 0) $this->sOutput .= ',';
 
                     if(isset($aRow['i_num_spam'])) {
