@@ -21,7 +21,7 @@
      */
 
     /**
-     * Model database for City table
+     * Model database for Field table
      * 
      * @package OSClass
      * @subpackage Model
@@ -30,7 +30,7 @@
     class Field extends DAO
     {
         /**
-         * It references to self object: City.
+         * It references to self object: Field.
          * It is used as a singleton
          * 
          * @access private
@@ -237,18 +237,17 @@
          * @since unknown
          * @param int $id
          * @param array $categories 
+         * @return bool
          */
         public function insertCategories($id, $categories = null) {
             if($categories!=null) {
                 foreach($categories as $c) {
-                    $this->dao->insert(sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_category_id' => $c, 'fk_i_field_id' =>$id));
-                    $subcategories = Category::newInstance()->findSubcategories($c);
-                    if(count($subcategories)>0) {
-                        foreach($subcategories as $k => $v) {
-                            $this->insertCategories($id, array($v['pk_i_id']));
-                        }
+                    $res = $this->dao->insert(sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_category_id' => $c, 'fk_i_field_id' =>$id));
+                    if(!$res) {
+                        return $res;
                     }
                 }
+                return true;
             }
         }
         
