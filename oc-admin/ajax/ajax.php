@@ -100,13 +100,15 @@
 
                     foreach ($aIds as $id => $parent) {
                         if ($parent == 'root') {
-                            if (!$catManager->updateOrder($id, $orderParent)) {
+                            $res = $catManager->updateOrder($id, $orderParent);
+                            if (is_bool($res) && !$res) {
                                 $error = 1;
                             }
                             // set parent category 
                             $conditions = array('pk_i_id' => $id);
                             $array['fk_i_parent_id'] = NULL;
-                            if (!$catManager->update($array, $conditions) > 0) {
+                            $res = $catManager->update($array, $conditions);
+                            if (is_bool($res) && !$res) {
                                 $error = 1;
                             }
                             $orderParent++;
@@ -115,14 +117,18 @@
                                 $catParent = $parent;
                                 $orderSub = 0;
                             }
-                            if (!$catManager->updateOrder($id, $orderSub)) {
+                            
+                            $res = $catManager->updateOrder($id, $orderSub);
+                            if (is_bool($res) && !$res ) {
                                 $error = 1;
                             }
 
                             // set parent category 
                             $conditions = array('pk_i_id' => $id);
                             $array['fk_i_parent_id'] = $catParent;
-                            if (!$catManager->update($array, $conditions) > 0) {
+                            
+                            $res = $catManager->update($array, $conditions);
+                            if (is_bool($res) && !$res) {
                                 $error = 1;
                             }
                             $orderSub++;
