@@ -85,27 +85,27 @@
                                     <p>
                                         <label><?php _e('Hostname'); ?></label>
                                         <br/>
-                                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_host" id="mailserver_host" value="<?php echo osc_mailserver_host() ; ?>" />
+                                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_host" id="mailserver_host" value="<?php echo osc_esc_html(osc_mailserver_host()) ; ?>" />
                                     </p>
                                     <p>
                                         <label><?php _e('Server port'); ?></label>
                                         <br/>
-                                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_port" id="mailserver_port" value="<?php echo osc_mailserver_port() ; ?>" />
+                                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_port" id="mailserver_port" value="<?php echo osc_esc_html(osc_mailserver_port()) ; ?>" />
                                     </p>
                                     <p>
                                         <label><?php _e('Username'); ?></label>
                                         <br/>
-                                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_username" id="mailserver_username" value="<?php echo osc_mailserver_username() ; ?>" />
+                                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_username" id="mailserver_username" value="<?php echo osc_esc_html(osc_mailserver_username()) ; ?>" />
                                     </p>
                                     <p>
                                         <label><?php _e('Password'); ?></label>
                                         <br/>
-                                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="password"  name="mailserver_password" id="mailserver_password" value="<?php echo osc_mailserver_password() ; ?>" />
+                                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="password"  name="mailserver_password" id="mailserver_password" value="<?php echo osc_esc_html(osc_mailserver_password()) ; ?>" />
                                     </p>
                                     <p>
                                         <label><?php _e('Encryption'); ?></label>
                                         <br/>
-                                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_ssl" id="mailserver_ssl" value="<?php echo osc_mailserver_ssl() ; ?>" />
+                                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_ssl" id="mailserver_ssl" value="<?php echo osc_esc_html(osc_mailserver_ssl()) ; ?>" />
                                         <small><?php _e('Options: blank, ssl or tls'); ?></small>
                                     </p>
                                     <p>
@@ -155,7 +155,7 @@
                                 </fieldset>
                             </div>
                             <div style="clear: both;"></div>
-                            <input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
+                            <input id="button_save" type="submit" value="<?php osc_esc_html(_e('Update')) ; ?>" />
                         </form>
                     </div>
                 </div>

@@ -15,12 +15,11 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-
-    //$categories   = __get("categories");
-    $field        = __get("field");
-    $categories = __get("categories");
-    $selected = __get("selected");
-    $numCols = 1;
+    
+    $field          = __get("field");
+    $categories     = __get("categories");
+    $selected       = __get("selected");
+    $numCols        = 1;
 ?>
 
 <link href="<?php echo osc_current_admin_theme_styles_url('jquery.treeview.css') ; ?>" rel="stylesheet" type="text/css" />

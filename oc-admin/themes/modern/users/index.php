@@ -29,6 +29,7 @@
         <div id="update_version" style="display:none;"></div>
         <script type="text/javascript">
             $(function() {
+                sSearchName = "<?php _e('Search'); ?>...";
                 oTable = new osc_datatable();
                 oTable.fnInit({
                     'idTable'       : 'datatables_list'
