@@ -478,7 +478,8 @@
             $this->dao->delete( sprintf('%st_plugin_category', DB_TABLE_PREFIX), array('fk_i_category_id' => $pk) ) ;
             $this->dao->delete( sprintf('%st_category_description', DB_TABLE_PREFIX), array('fk_i_category_id' => $pk) ) ;
             $this->dao->delete( sprintf('%st_category_stats', DB_TABLE_PREFIX), array('fk_i_category_id' => $pk) ) ;
-            $this->dao->delete( sprintf('%st_category', DB_TABLE_PREFIX), array('pk_i_id' => $pk) ) ;
+            $this->dao->delete( sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_category_id' => $pk) ) ;
+            return $this->dao->delete( sprintf('%st_category', DB_TABLE_PREFIX), array('pk_i_id' => $pk) ) ;
         }
 
         /**
@@ -489,41 +490,62 @@
          * @param array $fields
          * @param array $aFieldsDescriptions
          * @param int $pk primary key
+         * @return mixed bool if there is an error, affectedRows if there isn't errors
          */
         public function updateByPrimaryKey($data, $pk) {
-            $fields = $data['fields'];
+            $fields             = $data['fields'];
             $aFieldsDescription = $data['aFieldsDescription'];
+            $return       = true;
+            $affectedRows = 0;
             //UPDATE for category
-            $this->dao->update($this->getTableName(), $fields, array('pk_i_id' => $pk)) ;
-            foreach ($aFieldsDescription as $k => $fieldsDescription) {
-                //UPDATE for description of categories
-                $fieldsDescription['fk_i_category_id'] = $pk;
-                $fieldsDescription['fk_c_locale_code'] = $k;
-                $slug_tmp = $slug = osc_sanitizeString(osc_apply_filter('slug', isset($fieldsDescription['s_name'])?$fieldsDescription['s_name']:''));
-                $slug_unique = 1;
-                while(true) {
-                    $cat_slug = $this->findBySlug($slug);
-                    if(!isset($cat_slug['pk_i_id']) || $cat_slug['pk_i_id']==$pk) {
-                        break;
-                    } else {
-                        $slug = $slug_tmp . "_" . $slug_unique;
-                        $slug_unique++;
+            $res = $this->dao->update($this->getTableName(), $fields, array('pk_i_id' => $pk)) ;
+            if($res >= 0) {
+                $affectedRows = $res;
+                foreach ($aFieldsDescription as $k => $fieldsDescription) {
+                    //UPDATE for description of categories
+                    $fieldsDescription['fk_i_category_id'] = $pk;
+                    $fieldsDescription['fk_c_locale_code'] = $k;
+                    $slug_tmp = $slug = osc_sanitizeString(osc_apply_filter('slug', isset($fieldsDescription['s_name'])?$fieldsDescription['s_name']:''));
+                    $slug_unique = 1;
+                    while(true) {
+                        $cat_slug = $this->findBySlug($slug);
+                        if(!isset($cat_slug['pk_i_id']) || $cat_slug['pk_i_id']==$pk) {
+                            break;
+                        } else {
+                            $slug = $slug_tmp . "_" . $slug_unique;
+                            $slug_unique++;
+                        }
                     }
-                }
-                $fieldsDescription['s_slug'] = $slug;
-                $array_where = array(
-                    'fk_i_category_id'  => $pk,
-                    'fk_c_locale_code'  => $fieldsDescription["fk_c_locale_code"]
-                );
-                
-                $rs = $this->dao->update(DB_TABLE_PREFIX.'t_category_description', $fieldsDescription, $array_where) ;
+                    $fieldsDescription['s_slug'] = $slug;
+                    $array_where = array(
+                        'fk_i_category_id'  => $pk,
+                        'fk_c_locale_code'  => $fieldsDescription["fk_c_locale_code"]
+                    );
 
-                if($rs == 0) {
-                    $rows = $this->dao->query(sprintf("SELECT * FROM %s as a INNER JOIN %st_category_description as b ON a.pk_i_id = b.fk_i_category_id WHERE a.pk_i_id = '%s' AND b.fk_c_locale_code = '%s'", $this->tableName, DB_TABLE_PREFIX, $pk, $k));
-                    if($rows->numRows == 0) {
-                        $this->insertDescription($fieldsDescription);
+                    $rs = $this->dao->update(DB_TABLE_PREFIX.'t_category_description', $fieldsDescription, $array_where) ;
+                    
+                    if($rs == 0) {
+                        $rows = $this->dao->query(sprintf("SELECT * FROM %s as a INNER JOIN %st_category_description as b ON a.pk_i_id = b.fk_i_category_id WHERE a.pk_i_id = '%s' AND b.fk_c_locale_code = '%s'", $this->tableName, DB_TABLE_PREFIX, $pk, $k));
+                        if($rows->numRows == 0) {
+                            $res_insert = $this->insertDescription($fieldsDescription);
+                            $affectedRows += 1;
+                        }
+                    } else if($rs > 0) {
+                        $affectedRows += $rs;
+                    } else if( is_bool($rs) ) { // catch error
+                        if($return) {
+                            $return = $rs;
+                        }
                     }
                 }
+            } else {
+                $return = $res;
+            }
+            
+            if($return) {
+                return $affectedRows;
+            } else {
+                return $return;
             }
         }
 
@@ -565,10 +587,11 @@
          * @access public
          * @since unknown
          * @param array $fields_description
+         * @return bool
          */
         public function insertDescription($fields_description) {
             if (!empty($fields_description['s_name'])) {
-                $this->dao->insert(DB_TABLE_PREFIX . 't_category_description', $fields_description );
+                return $this->dao->insert(DB_TABLE_PREFIX . 't_category_description', $fields_description );
             }
         }
 
