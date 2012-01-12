@@ -117,7 +117,7 @@
                         ?>
                                   [
                                     "<input type='checkbox' name='id[]' value='<?php echo osc_static_page_id(); ?>' />",
-                                    "<?php echo $page['s_internal_name']; ?><div id='datatables_quick_edit'>" +
+                                    "<?php echo addslashes(osc_esc_html($page['s_internal_name'])); ?><div id='datatables_quick_edit'>" +
                                     "<a href='<?php echo osc_static_page_url(); ?>'>" +
                                     "<?php _e('View page'); ?></a> | " +
                                     "<a href='<?php echo osc_admin_base_url(true); ?>?page=pages&action=edit&id=<?php echo osc_static_page_id(); ?>'>" +

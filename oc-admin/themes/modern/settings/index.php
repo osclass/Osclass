@@ -64,14 +64,14 @@
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('Page title'); ?></legend>
-                                    <input style="width: 95%; height: 20px; padding-left: 4px;" type="text" name="pageTitle" id="pageTitle" value="<?php echo osc_page_title() ; ?>" />
+                                    <input style="width: 95%; height: 20px; padding-left: 4px;" type="text" name="pageTitle" id="pageTitle" value="<?php echo osc_esc_html( osc_page_title() ); ?>" />
                                 </fieldset>
                             </div>
 
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('Page description'); ?></legend>
-                                    <input style="width: 95%; height: 20px; padding-left: 4px;" type="text" name="pageDesc" id="pageDesc" value="<?php echo osc_page_description() ; ?>" />
+                                    <input style="width: 95%; height: 20px; padding-left: 4px;" type="text" name="pageDesc" id="pageDesc" value="<?php echo osc_esc_html(osc_page_description() ); ?>" />
                                 </fieldset>
                             </div>
 
@@ -80,7 +80,7 @@
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('Admin e-mail'); ?></legend>
-                                    <input style="width: 95%; height: 20px; padding-left: 4px;" type="text" name="contactEmail" id="contactEmail" value="<?php echo osc_contact_email() ; ?>" />
+                                    <input style="width: 95%; height: 20px; padding-left: 4px;" type="text" name="contactEmail" id="contactEmail" value="<?php echo osc_esc_html(osc_contact_email() ); ?>" />
                                 </fieldset>
                             </div>
 
@@ -115,7 +115,7 @@
                                         <?php } ?>
 
                                         <input type="radio" name="df" id="df_custom" value="df_custom" <?php echo (($custom_checked) ? 'checked="checked"' : ''); ?> />
-                                        <label for="df_custom"><?php _e('Custom') ; ?>:</label> <input type="text" <?php echo (($custom_checked) ? 'value="' . osc_date_format() . '"' : ''); ?> onkeyup="javascript:document.getElementById('dateFormat').value = this.value;"/>
+                                        <label for="df_custom"><?php _e('Custom') ; ?>:</label> <input type="text" <?php echo (($custom_checked) ? 'value="' . osc_esc_html(osc_date_format()) . '"' : ''); ?> onkeyup="javascript:document.getElementById('dateFormat').value = this.value;"/>
                                         <input type="hidden" name="dateFormat" id="dateFormat" value="<?php echo osc_date_format(); ?>" />
                                     </div>
                                 </fieldset>
@@ -127,7 +127,7 @@
                                     <select name="currency" id="currency_admin">
                                         <?php $currentCurrency = osc_currency(); ?>
                                         <?php foreach($aCurrencies as $currency) { ?>
-                                            <option value="<?php echo $currency['pk_c_code'] ?>" <?php echo (($currentCurrency == $currency['pk_c_code']) ? 'selected="selected"' : ''); ?>><?php echo $currency['pk_c_code'] ?></option>
+                                            <option value="<?php echo osc_esc_html($currency['pk_c_code']); ?>" <?php echo (($currentCurrency == $currency['pk_c_code']) ? 'selected="selected"' : ''); ?>><?php echo $currency['pk_c_code'] ?></option>
                                         <?php } ?>
                                     </select>
                                 </fieldset>
@@ -177,8 +177,8 @@
                                                 <br />
                                             <?php } ?>
                                         <input type="radio" name="tf" id="tf_custom" value="tf_custom" <?php echo (($custom_checked) ? 'checked="checked"' : ''); ?> />
-                                        <label for="tf_custom"><?php _e('Custom') ; ?>:</label> <input type="text" <?php echo (($custom_checked) ? 'value="' . osc_time_format() . '"' : ''); ?> onkeyup="javascript:document.getElementById('timeFormat').value = this.value;"/>
-                                        <input type="hidden" name="timeFormat" id="timeFormat" value="<?php echo osc_time_format(); ?>" />
+                                        <label for="tf_custom"><?php _e('Custom') ; ?>:</label> <input type="text" <?php echo (($custom_checked) ? 'value="' . osc_esc_html(osc_time_format()) . '"' : ''); ?> onkeyup="javascript:document.getElementById('timeFormat').value = this.value;"/>
+                                        <input type="hidden" name="timeFormat" id="timeFormat" value="<?php echo osc_esc_html(osc_time_format()); ?>" />
                                     </div>
                                 </fieldset>
                             </div>
@@ -186,27 +186,27 @@
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('Number of items in the RSS') ; ?></legend>
-                                    <input type="text" id="num_rss_items" name="num_rss_items" value="<?php echo osc_num_rss_items(); ?>" onblur='validateInt(this,<?php echo osc_num_rss_items(); ?>)'/>
+                                    <input type="text" id="num_rss_items" name="num_rss_items" value="<?php echo osc_esc_html(osc_num_rss_items()); ?>" onblur='validateInt(this,<?php echo osc_num_rss_items(); ?>)'/>
                                 </fieldset>
                             </div>
 
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('Number of recent items displayed at home') ; ?></legend>
-                                    <input type="text" name="max_latest_items_at_home" id="max_latest_items_at_home" value="<?php echo osc_max_latest_items_at_home(); ?>" onblur='validateInt(this,<?php echo osc_max_latest_items_at_home(); ?>)'/>
+                                    <input type="text" name="max_latest_items_at_home" id="max_latest_items_at_home" value="<?php echo osc_esc_html(osc_max_latest_items_at_home()); ?>" onblur='validateInt(this,<?php echo osc_max_latest_items_at_home(); ?>)'/>
                                 </fieldset>
                             </div>
 
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('Number of item displayed in search results') ; ?></legend>
-                                    <input type="text" name="default_results_per_page" id="default_results_per_page" value="<?php echo osc_default_results_per_page_at_search(); ?>" onblur='validateInt(this,<?php echo osc_default_results_per_page_at_search(); ?>)'/>
+                                    <input type="text" name="default_results_per_page" id="default_results_per_page" value="<?php echo osc_esc_html(osc_default_results_per_page_at_search()); ?>" onblur='validateInt(this,<?php echo osc_default_results_per_page_at_search(); ?>)'/>
                                 </fieldset>
                             </div>
 
                             <div style="clear: both;"></div>
 
-                            <input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
+                            <input id="button_save" type="submit" value="<?php osc_esc_html(_e('Update') ); ?>" />
                         </form>
                     </div>
                 </div>

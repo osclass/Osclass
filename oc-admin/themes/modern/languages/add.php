@@ -59,7 +59,7 @@
                                 <label for="package"><?php _e('Language package') ; ?> (.zip)</label>
                                 <input type="file" name="package" id="package" />
                             </p>
-                            <input id="button_save" type="submit" value="<?php _e('Upload') ; ?>" />
+                            <input id="button_save" type="submit" value="<?php osc_esc_html(_e('Upload')) ; ?>" />
                         </form>
 
                     <?php } else { ?>
