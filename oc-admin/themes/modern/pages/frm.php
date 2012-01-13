@@ -74,7 +74,7 @@
                 <?php osc_show_flash_message('admin') ; ?>
                 <!-- add new page form -->
                 <div id="settings_form">
-                    <form name="pages_form" id="pages_form" action="<?php echo osc_admin_base_url(true); ?>?page=pages" method="post" onSubmit="return checkForm()">
+                    <form name="pages_form" id="pages_form" action="<?php echo osc_admin_base_url(true); ?>?page=pages" method="post">
                         <input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
                         <?php PageForm::primary_input_hidden($page); ?>
                         <div class="FormElement">
