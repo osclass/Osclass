@@ -53,6 +53,7 @@
                                                                     array('b_enabled' => $value)
                                                                     ,array('pk_i_id' => $_id)
                                                             ) ;
+                                                            osc_run_hook( 'enable_item', $_id );
                                                             $item = $this->itemManager->findByPrimaryKey($_id) ;
                                                             CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']) ;
                                                         }
@@ -74,6 +75,7 @@
                                                                     array('b_enabled' => $value)
                                                                     ,array('pk_i_id' => $_id)
                                                             ) ;
+                                                            osc_run_hook( 'disable_item', $_id );
                                                             $item = $this->itemManager->findByPrimaryKey($_id) ;
                                                             CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']) ;
                                                         }
@@ -94,6 +96,7 @@
                                                                     array('b_active' => $value)
                                                                     ,array('pk_i_id' => $_id)
                                                             ) ;
+                                                            osc_run_hook( 'activate_item', $_id );
                                                             $item = $this->itemManager->findByPrimaryKey($_id) ;
                                                             CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']) ;
                                                         }
@@ -114,6 +117,7 @@
                                                                     array('b_active' => $value)
                                                                     ,array('pk_i_id' => $_id)
                                                             ) ;
+                                                            osc_run_hook( 'deactivate_item', $_id );
                                                             $item = $this->itemManager->findByPrimaryKey($_id) ;
                                                             CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']) ;
                                                         }
@@ -132,6 +136,7 @@
                                                         $mItems = new ItemActions(true);
                                                         foreach ($id as $_id) {
                                                             $mItems->premium($_id);
+                                                            osc_run_hook( 'item_preium_on', $_id );
                                                         }
                                                         osc_add_flash_ok_message( sprintf(_mn('%d item has been marked as premium','%d items have been marked as premium', $count), $count), 'admin') ;
                                                     }
@@ -148,6 +153,7 @@
                                                         $mItems = new ItemActions(true);
                                                         foreach ($id as $_id) {
                                                             $mItems->premium($_id,false);
+                                                            osc_run_hook( 'item_preium_off', $_id );
                                                         }
                                                         osc_add_flash_ok_message( sprintf(_mn('%d change has been made', '%d changes have been made',$count) ,$count), 'admin') ;
                                                     }

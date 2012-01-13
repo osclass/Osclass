@@ -77,8 +77,8 @@
                                             [
                                                     "<input type='checkbox' name='id[]' value='<?php echo $a['pk_i_id']; ?>' />",
                                                     "<?php echo $a['s_username']; ?>&nbsp;<div id='datatables_quick_edit'><a href='<?php echo osc_admin_base_url(true); ?>?page=admins&action=edit&amp;id=<?php echo $a['pk_i_id']; ?>'><?php _e('Edit'); ?></a> | <a onclick=\"javascript:return confirm('<?php _e('This action can\\\\\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=admins&action=delete&amp;id[]=<?php echo $a['pk_i_id']; ?>'><?php _e('Delete'); ?></a></div>",
-                                                    "<?php echo addcslashes($a['s_name'], '"'); ?>",
-                                                    "<?php echo $a['s_email']; ?>"
+                                                    "<?php echo addslashes(osc_esc_html($a['s_name'])); ?>",
+                                                    "<?php echo addslashes(osc_esc_html($a['s_email'])); ?>"
                                             ] <?php echo $last_id != $a['pk_i_id'] ? ',' : ''; ?>
                                     <?php } ?>
                             ],

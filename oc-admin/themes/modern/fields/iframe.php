@@ -15,12 +15,11 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-
-    //$categories   = __get("categories");
-    $field        = __get("field");
-    $categories = __get("categories");
-    $selected = __get("selected");
-    $numCols = 1;
+    
+    $field          = __get("field");
+    $categories     = __get("categories");
+    $selected       = __get("selected");
+    $numCols        = 1;
 ?>
 
 <link href="<?php echo osc_current_admin_theme_styles_url('jquery.treeview.css') ; ?>" rel="stylesheet" type="text/css" />
@@ -61,7 +60,7 @@
                         <tr style="vertical-align: top;">
                             <td style="font-weight: bold;" colspan="<?php echo $numCols; ?>">
                                 <label for="categories"><?php _e("Preset categories");?></label><br />
-                                <a style="font-size: x-small; color: gray;" href="#" onclick="checkAll('field_form', true); return false;"><?php _e("Check all");?></a> - <a style="font-size: x-small; color: gray;" href="#" onclick="checkAll('field_form', false); return false;"><?php _e("Uncheck all");?></a>
+                                <a style="font-size: x-small; color: gray;" href="#" onclick="checkAll('cat_tree', true); return false;"><?php _e("Check all");?></a> - <a style="font-size: x-small; color: gray;" href="#" onclick="checkAll('cat_tree', false); return false;"><?php _e("Uncheck all");?></a>
                             </td>
                             <td>
                                 <ul id="cat_tree">
@@ -123,28 +122,26 @@
                 $('#div_field_options_iframe').hide();
             }
         });
-        if($("select[name='field_type']").attr('value')=='TEXT' || $("select[name='field_type']").attr('value')=='TEXTAREA') {
+        if($("select[name='field_type']").attr('value')=='TEXT' || $("select[name='field_type']").attr('value')=='TEXTAREA' || $("select[name='field_type']").attr('value')=='CHECKBOX' || $("select[name='field_type_new']").attr('value')=='URL') {
             $('#div_field_options_iframe').hide();
         }
     });
     
-    function checkAll (frm, check) {
-        var aa = document.getElementById(frm);
-        for (var i = 0 ; i < aa.elements.length ; i++) {
-            aa.elements[i].checked = check;
-        }
+    function checkAll (id, check) {
+        aa = $('#'+id+' input[type=checkbox]').each(
+            function(){
+                $(this).attr('checked', check);
+            }
+        );
     }
 
     function checkCat(id, check) {
-        var lay = document.getElementById("cat" + id);
-        if(lay) {
-        inp = lay.getElementsByTagName("input");
-        for (var i = 0, maxI = inp.length ; i < maxI; ++i) {
-            if(inp[i].type == "checkbox") {
-                inp[i].checked = check;
+        aa = $('#cat'+id+' input[type=checkbox]').each(
+            function(){
+                $(this).attr('checked', check);
             }
-        }}
-    }    
+        );
+    }
     
     $(document).ready(function() {
         $('#settings_form form').submit(function() {

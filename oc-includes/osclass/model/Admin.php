@@ -181,6 +181,21 @@
 
             return $result->row() ;
         }
+
+        /**
+         * Perform a batch delete (for more than one admin ID)
+         * 
+         * @access public
+         * @since 2.3.4
+         * @param array $id
+         * @return boolean
+         */
+        function deleteBatch( $id )
+        {
+            $this->dao->from( $this->getTableName() ) ;
+            $this->dao->whereIn( 'pk_i_id', $id ) ;
+            return $this->dao->delete() ;
+        }
     }
 
     /* file end: ./oc-includes/osclass/model/Admin.php */

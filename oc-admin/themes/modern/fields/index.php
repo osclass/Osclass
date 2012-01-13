@@ -16,11 +16,11 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $fields = __get("fields");
-    $last = end($fields); $last_id = $last['pk_i_id'];
+    $fields     = __get("fields");
+    $last       = end($fields); $last_id = $last['pk_i_id'];
     $categories = __get("categories");
-    $selected = __get("default_selected");
-    $numCols = 1;
+    $selected   = __get("default_selected");
+    $numCols    = 1;
 
 ?>
 
@@ -123,30 +123,28 @@
                         $('#div_field_options').hide();
                     }
                 });
-                if($("select[name='field_type_new']").attr('value')=='TEXT' || $("select[name='field_type_new']").attr('value')=='TEXTAREA') {
+                if($("select[name='field_type_new']").attr('value')=='TEXT' || $("select[name='field_type_new']").attr('value')=='TEXTAREA' || $("select[name='field_type_new']").attr('value')=='CHECKBOX' || $("select[name='field_type_new']").attr('value')=='URL') {
                     $('#div_field_options').hide();
                 }
 
                 
             });
 
-            function checkAll (frm, check) {
-                var aa = document.getElementById(frm);
-                for (var i = 0 ; i < aa.elements.length ; i++) {
-                    aa.elements[i].checked = check;
-                }
+            function checkAll (id, check) {
+                aa = $('#'+id+' input[type=checkbox]').each(
+                    function(){
+                        $(this).attr('checked', check);
+                    }
+                );
             }
 
             function checkCat(id, check) {
-                var lay = document.getElementById("cat" + id);
-                if(lay) {
-                inp = lay.getElementsByTagName("input");
-                for (var i = 0, maxI = inp.length ; i < maxI; ++i) {
-                    if(inp[i].type == "checkbox") {
-                        inp[i].checked = check;
+                aa = $('#cat'+id+' input[type=checkbox]').each(
+                    function(){
+                        $(this).attr('checked', check);
                     }
-                }}
-            }    
+                );
+            } 
         </script>
         <div id="content">
             <div id="separator"></div>	
@@ -187,6 +185,8 @@
                                             <option value="TEXTAREA">TEXTAREA</option>
                                             <option value="DROPDOWN">DROPDOWN</option>
                                             <option value="RADIO">RADIO</option>
+                                            <option value="CHECKBOX">CHECKBOX</option>
+                                            <option value="URL">URL</option>
                                         </select>
                                     </div>
                                     <div class="FormElement" id="div_field_options">
@@ -206,7 +206,7 @@
                                                 <tr style="vertical-align: top;">
                                                     <td style="font-weight: bold;" colspan="<?php echo $numCols; ?>">
                                                         <label for="categories"><?php _e("Preset categories");?></label><br />
-                                                        <a style="font-size: x-small; color: gray;" href="#" onclick="checkAll('new_field_form', true); return false;"><?php _e("Check all");?></a> - <a style="font-size: x-small; color: gray;" href="#" onclick="checkAll('new_field_form', false); return false;"><?php _e("Uncheck all");?></a>
+                                                        <a style="font-size: x-small; color: gray;" href="#" onclick="checkAll('cat_tree', true); return false;"><?php _e("Check all");?></a> - <a style="font-size: x-small; color: gray;" href="#" onclick="checkAll('cat_tree', false); return false;"><?php _e("Uncheck all");?></a>
                                                     </td>
                                                     <td>
                                                         <ul id="new_cat_tree">

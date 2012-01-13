@@ -90,7 +90,7 @@
                                 </fieldset>
                             </div>
                             <div style="clear: both;"></div>
-                            <input id="button_save" type="submit" value="<?php _e('Update'); ?>" />
+                            <input id="button_save" type="submit" value="<?php osc_esc_html(_e('Update')); ?>" />
                         </form>
                     </div>
                 </div>
