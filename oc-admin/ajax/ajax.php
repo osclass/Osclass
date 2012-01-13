@@ -232,8 +232,8 @@
 
                     break;
                 case 'enable_category':
-                    $id       = Params::getParam("id") ;
-                    $enabled  = (Params::getParam("enabled") != '') ? Params::getParam("enabled") : 0 ;
+                    $id       = strip_tags( Params::getParam('id') ) ;
+                    $enabled  = (Params::getParam('enabled') != '') ? Params::getParam('enabled') : 0 ;
                     $error    = 0 ;
                     $result   = array() ;
                     $aUpdated = array() ;
