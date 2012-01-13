@@ -480,11 +480,14 @@
                     /***********************
                      **** DOWNLOAD FILE ****
                      ***********************/
-                    if (Params::getParam('file') != '') {
+                    $data = osc_file_get_contents("http://osclass.org/latest_version.php");
+                    $data = json_decode(substr($data, 1, strlen($data)-3), true);
+                    $source_file = $data['url'];
+                    if ($source_file != '') {
 
-                        $tmp = explode("/", Params::getParam('file'));
+                        $tmp = explode("/", $source_file);
                         $filename = end($tmp);
-                        $result = osc_downloadFile(Params::getParam('file'), $filename);
+                        $result = osc_downloadFile($source_file, $filename);
 
                         if ($result) { // Everything is OK, continue
                             /**********************
