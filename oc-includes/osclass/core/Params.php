@@ -92,10 +92,10 @@
                     $value = $_POST;
                 break;
                 case("cookie"):
-                    $value = $_COOKIE;
+                    return $_COOKIE;
                 break;
                 default:        
-                    $var = $_REQUEST;
+                    $value = $_REQUEST;
                 break;
             }
             
