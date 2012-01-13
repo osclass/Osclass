@@ -621,6 +621,142 @@
                         @chmod($k, $v);
                     }
                     break;
+                    
+                /*******************************
+                 ** COMPLETE UNIVERSE PROCESS **
+                 *******************************/
+                case 'universe': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
+                    $code = Params::getParam('code');
+                    $message = "";
+                    $error = 0;
+                    $data = array();
+
+                    /************************
+                     *** CHECK VALID CODE ***
+                     ************************/
+                    if ($code != '') {
+
+                        if(stripos("http://", $code)===FALSE) {
+                            // OSCLASS OFFICIAL REPOSITORY
+                            $data = json_decode(osc_file_get_contents("http://localhost/~conejo/osclass/OSClass/oc-content/plugins/universe/universe.php?code=".$code));
+                        } else {
+                            // THIRD PARTY REPOSITORY
+                            $data = json_decode(osc_file_get_contents($code));
+                        }
+                        /***********************
+                         **** DOWNLOAD FILE ****
+                         ***********************/
+                        if(isset($data->s_name) && isset($data->s_source_file)) {
+                            $tmp = explode("/", $data->s_name);
+                            $filename = end($tmp);
+                            $result = osc_downloadFile($data->s_source_file, $filename);
+
+                            if ($result) { // Everything is OK, continue
+                                /**********************
+                                 ***** UNZIP FILE *****
+                                 **********************/
+                                @mkdir(ABS_PATH . 'oc-temp', 0777);
+                                $res = osc_unzip_file(osc_content_path() . 'downloads/' . $filename, ABS_PATH . 'oc-temp/');
+                                if ($res == 1) { // Everything is OK, continue
+                                    /**********************
+                                     ***** COPY FILES *****
+                                     **********************/
+                                    $fail = -1;
+                                    if ($handle = opendir(ABS_PATH . 'oc-temp')) {
+                                        $fail = 0;
+                                        while (false !== ($_file = readdir($handle))) {
+                                            if ($_file != '.' && $_file != '..') {
+                                                $data = osc_copy(ABS_PATH . "oc-temp/" . $_file, ABS_PATH . "oc-content/plugins/" . $_file);
+                                                if ($data == false) {
+                                                    $fail = 1;
+                                                };
+                                            }
+                                        }
+                                        closedir($handle);
+
+                                        if ($fail == 0) { // Everything is OK, continue
+                                            // Additional actions is not important for the rest of the proccess
+                                            // We will inform the user of the problems but the upgrade could continue
+                                            /****************************
+                                             ** REMOVE TEMPORARY FILES **
+                                             ****************************/
+                                            $path = ABS_PATH . 'oc-temp';
+                                            $rm_errors = 0;
+                                            $dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::CHILD_FIRST);
+                                            for ($dir->rewind(); $dir->valid(); $dir->next()) {
+                                                if ($dir->isDir()) {
+                                                    if ($dir->getFilename() != '.' && $dir->getFilename() != '..') {
+                                                        if (!rmdir($dir->getPathname())) {
+                                                            $rm_errors++;
+                                                        }
+                                                    }
+                                                } else {
+                                                    if (!unlink($dir->getPathname())) {
+                                                        $rm_errors++;
+                                                    }
+                                                }
+                                            }
+                                            if (!rmdir($path)) {
+                                                $rm_errors++;
+                                            }
+                                            if ($rm_errors == 0) {
+                                                $message = __('Everything was OK!');
+                                                $error = 0;
+                                            } else {
+                                                $message = __('Almost everything was OK! but there were some errors removing temporary files. Please, remove manually the "oc-temp" folder');
+                                                $error = 6; // Some errors removing files
+                                            }
+                                        } else {
+                                            $message = __('Problems copying files. Maybe permissions are not correct');
+                                            $error = 4; // Problems copying files. Maybe permissions are not correct
+                                        }
+                                    } else {
+                                        $message = __('Nothing to copy');
+                                        $error = 99; // Nothing to copy. THIS SHOULD NEVER HAPPENS, means we dont update any file!
+                                    }
+                                } else {
+                                    $message = __('Unzip failed');
+                                    $error = 3; // Unzip failed
+                                }
+                            } else {
+                                $message = __('Download failed');
+                                $error = 2; // Download failed
+                            }
+                        } else {
+                            $message = __('Input code not valid');
+                            $error = 7; // Input code not valid
+                        }
+                    } else {
+                        $message = __('Missing download URL');
+                        $error = 1; // Missing download URL
+                    }
+
+
+                    echo json_encode(array('error' => $error, 'message' => $message, 'data' => $data));
+
+                    break;
+                case 'check_universe': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
+                    $code = Params::getParam('code');
+                    $data = array();
+                    /************************
+                     *** CHECK VALID CODE ***
+                     ************************/
+                    if ($code != '') {
+                        if(stripos("http://", $code)===FALSE) {
+                            // OSCLASS OFFICIAL REPOSITORY
+                            $data = json_decode(osc_file_get_contents("http://localhost/~conejo/osclass/OSClass/oc-content/plugins/universe/universe.php?code=".$code), true);
+                        } else {
+                            // THIRD PARTY REPOSITORY
+                            $data = json_decode(osc_file_get_contents($code), true);
+                        }
+                        if(!isset($data['s_source_file']) || !isset($data['s_name']) || !isset($data['s_version']) || !isset($data['e_type']) || (isset($data['e_type']) && $data['e_type']!='PLUGIN' && $data['e_type']!='THEME')) {
+                            $data = array('error' => 2, 'error_msg' => __('Information is in bad format'));
+                        }
+                        
+                    } else {
+                        $data = array('error' => 1, 'error_msg' => __('No code was sumitted'));
+                    }
+                    echo json_encode($data);
                 default:
                     echo json_encode(array('error' => __('no action defined')));
                     break;

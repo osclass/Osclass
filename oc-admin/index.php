@@ -92,6 +92,10 @@
                             $do = new CAdminTools() ;
                             $do->doModel() ;
         break;
+        case('universe'):   require_once(osc_admin_base_path() . 'universe.php') ;
+                            $do = new CAdminUniverse() ;
+                            $do->doModel() ;
+        break;
         case('stats'):      require_once(osc_admin_base_path() . 'stats.php') ;
                             $do = new CAdminStats() ;
                             $do->doModel() ;
