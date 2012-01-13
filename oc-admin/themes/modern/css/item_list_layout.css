@@ -124,6 +124,28 @@
     width: 700px;
 }
 
+.meta {
+    clear: both;
+    margin: 10px 0;
+}
+
+.meta > label {
+    float: left;
+}
+
+.meta ul {
+    margin-left: 130px;
+    list-style: none;
+    padding: 0;
+}
+
+.meta ul li {
+    margin-left: 0;
+}
+
+.meta ul li label {
+    float: none;
+}
 
 /* UNIFORM */
 
