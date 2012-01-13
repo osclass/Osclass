@@ -353,6 +353,11 @@ option.pad { margin-left:10px;}
 .add_item .photos input { margin-right:10px; }
 .add_item .location label { float:left; margin-right:10px; width:120px; }
 .add_item .go_back { float:left; margin:20px 0 0 20px; }
+.meta { clear: both; margin: 10px 0; }
+.meta > label { float: left; }
+.meta ul { margin-left: 130px; list-style: none; padding: 0; }
+.meta ul li { margin-left: 0; }
+.meta ul li label { float: none; }
 
 #error_list { display:none; border: 1px solid #f7f7f7; background:#fefbea; padding:5px 5px; margin-bottom:15px; }
 #error_list li { background:url(images/icon-remove.png) left center no-repeat; list-style:none; padding:2px 0 2px 18px; }
@@ -547,4 +552,15 @@ div.uploader input { opacity: 0; filter: alpha(opacity:0); position: absolute; t
 
 #user_data {
     padding: 20px;
+}
+
+
+.user_public_profile #main .latest_ads table td.photo {
+    padding-left: 2px;
+}
+
+.user_public_profile #main .latest_ads table td {
+    border-bottom: 1px dotted #DDDDDD;
+    padding: 8px;
+    vertical-align: top;
 }
