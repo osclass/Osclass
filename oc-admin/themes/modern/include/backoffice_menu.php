@@ -136,7 +136,7 @@
         </h3>
         <ul>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings">&raquo; <?php _e('General settings'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings">&raquo; <?php _e('Settings'); ?></a>
             </li>
             <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=comments">&raquo; <?php _e('Comments'); ?></a>
