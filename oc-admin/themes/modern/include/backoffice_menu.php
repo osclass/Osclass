@@ -132,7 +132,7 @@
         </ul>
 
         <h3>
-            <a href="#"><?php _e('General settings'); ?></a>
+            <a href="#"><?php _e('Settings'); ?></a>
         </h3>
         <ul>
             <li>
