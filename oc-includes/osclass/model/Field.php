@@ -21,7 +21,7 @@
      */
 
     /**
-     * Model database for City table
+     * Model database for Field table
      * 
      * @package OSClass
      * @subpackage Model
@@ -30,7 +30,7 @@
     class Field extends DAO
     {
         /**
-         * It references to self object: City.
+         * It references to self object: Field.
          * It is used as a singleton
          * 
          * @access private
@@ -123,6 +123,10 @@
          */
         public function findByCategoryItem($catId, $itemId)
         {
+            
+            if(!is_numeric($catId) || !is_numeric($itemId)) {
+                return false;
+            }
             $result = $this->dao->query(sprintf("SELECT query.*, im.s_value as s_value FROM (SELECT mf.* FROM %st_meta_fields mf, %st_meta_categories mc WHERE mc.fk_i_category_id = %d AND mf.pk_i_id = mc.fk_i_field_id) as query LEFT JOIN %st_item_meta im ON im.fk_i_field_id = query.pk_i_id AND im.fk_i_item_id = %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, $catId, DB_TABLE_PREFIX, $itemId));
 
             if( $result == false ) {
@@ -237,18 +241,17 @@
          * @since unknown
          * @param int $id
          * @param array $categories 
+         * @return bool
          */
         public function insertCategories($id, $categories = null) {
             if($categories!=null) {
                 foreach($categories as $c) {
-                    $this->dao->insert(sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_category_id' => $c, 'fk_i_field_id' =>$id));
-                    $subcategories = Category::newInstance()->findSubcategories($c);
-                    if(count($subcategories)>0) {
-                        foreach($subcategories as $k => $v) {
-                            $this->insertCategories($id, array($v['pk_i_id']));
-                        }
+                    $res = $this->dao->insert(sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_category_id' => $c, 'fk_i_field_id' =>$id));
+                    if(!$res) {
+                        return $res;
                     }
                 }
+                return true;
             }
         }
         

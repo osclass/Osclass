@@ -121,13 +121,13 @@
     function osc_static_page_url($locale = '') {
         if($locale!='') {
             if(osc_rewrite_enabled()) {
-                return osc_base_url().osc_static_page_field("s_internal_name")."-p".osc_static_page_field("pk_i_id")."-".$locale;
+                return osc_base_url().urlencode(osc_static_page_field("s_internal_name"))."-p".osc_static_page_field("pk_i_id")."-".$locale;
             } else {
                 return osc_base_url(true)."?page=page&id=".osc_static_page_field("pk_i_id")."&lang=".$locale;
             }
         } else {
             if(osc_rewrite_enabled()) {
-                return osc_base_url().osc_static_page_field("s_internal_name")."-p".osc_static_page_field("pk_i_id");
+                return osc_base_url().urlencode(osc_static_page_field("s_internal_name"))."-p".osc_static_page_field("pk_i_id");
             } else {
                 return osc_base_url(true)."?page=page&id=".osc_static_page_field("pk_i_id");
             }

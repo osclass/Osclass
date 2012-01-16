@@ -73,7 +73,7 @@
                 <?php osc_show_flash_message('admin') ; ?>
                 <!-- add new page form -->
                 <div id="settings_form">
-                    <form name="emails_form" id="emails_form" action="<?php echo osc_admin_base_url(true); ?>?page=emails" method="post" onSubmit="return checkForm()">
+                    <form name="emails_form" id="emails_form" action="<?php echo osc_admin_base_url(true); ?>?page=emails" method="post">
                         <input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
                         <?php PageForm::primary_input_hidden($email); ?>
                         <div class="FormElement">

@@ -87,6 +87,10 @@
             if( !in_array($column, $increaseColumns) ) {
                 return false ;
             }
+            
+            if (!is_numeric($itemId)) {
+                return false;
+            }
 
             $sql = 'INSERT INTO '.$this->getTableName().' (fk_i_item_id, dt_date, '.$column.') VALUES ('.$itemId.', \''.date('Y-m-d H:i:s').'\',1) ON DUPLICATE KEY UPDATE  '.$column.' = '.$column.' + 1 ';
             return $this->dao->query($sql);

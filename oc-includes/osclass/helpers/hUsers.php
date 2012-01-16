@@ -252,11 +252,11 @@
         $info = osc_user_field("s_info", $locale) ;
         if($info == '') {
             $info = osc_user_field("s_info", osc_language());
-            if($desc=='') {
+            if($info=='') {
                 $aLocales = osc_get_locales();
                 foreach($aLocales as $locale) {
                     $info = osc_user_field("s_info", $locale);
-                    if($desc!='') {
+                    if($info!='') {
                         break;
                     }
                 }

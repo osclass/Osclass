@@ -119,13 +119,13 @@
                     echo '<div class="FormElement">';
                         echo '<div class="FormElementName">' . __('Title') . '</div>';
                         echo '<div class="FormElementInput">' ;
-                            parent::generic_input_text($locale['pk_c_code'] . '#s_name', (isset($category['locale'][$locale['pk_c_code']])) ? htmlspecialchars($category['locale'][$locale['pk_c_code']]['s_name'], ENT_QUOTES) : "") ;
+                            parent::generic_input_text($locale['pk_c_code'] . '#s_name', (isset($category['locale'][$locale['pk_c_code']])) ? $category['locale'][$locale['pk_c_code']]['s_name'] : "") ;
                         echo '</div>' ;
                     echo '</div>';
                     echo '<div class="FormElement">';
                         echo '<div class="FormElementName">' . __('Description') . '</div>';
                         echo '<div class="FormElementInput">' ;
-                            parent::generic_textarea($locale['pk_c_code'] . '#s_description', (isset($category['locale'][$locale['pk_c_code']])) ? htmlspecialchars($category['locale'][$locale['pk_c_code']]['s_description']) : "") ;
+                            parent::generic_textarea($locale['pk_c_code'] . '#s_description', (isset($category['locale'][$locale['pk_c_code']])) ? $category['locale'][$locale['pk_c_code']]['s_description'] : "") ;
                         echo '</div>' ;
                     echo '</div>';
                 echo '</div>';

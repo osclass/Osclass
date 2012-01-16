@@ -26,6 +26,7 @@
         <?php osc_current_admin_theme_path('head.php') ; ?>
     </head>
     <body>
+        
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
         <script type="text/javascript">
@@ -71,10 +72,10 @@
                     "aaData": [
                         <?php foreach($aCurrencies as $c) { ?>
                         [
-                            "<input type='checkbox' name='code[]' value='<?php echo $c['pk_c_code']; ?>' />",
-                            "<?php echo $c['pk_c_code']; ?> <div><a onclick=\"javascript:return confirm('<?php _e('This action can\\\\\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=settings&amp;action=currencies&amp;type=delete&amp;code[]=<?php echo $c['pk_c_code']; ?>'><?php _e('Delete'); ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=settings&amp;action=currencies&amp;type=edit&amp;code=<?php echo $c['pk_c_code']; ?>'><?php _e('Edit'); ?></a></div>",
-                            "<?php echo addcslashes($c['s_name'],'"'); ?>",
-                            "<?php echo addcslashes($c['s_description'],'"'); ?>"
+                            "<input type='checkbox' name='code[]' value=\"<?php echo addslashes(osc_esc_html($c['pk_c_code'])); ?>\" />",
+                            "<?php echo addslashes(osc_esc_html($c['pk_c_code'])); ?> <div><a onclick=\"javascript:return confirm('<?php _e('This action can\\\\\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=settings&amp;action=currencies&amp;type=delete&amp;code[]=<?php echo urlencode($c['pk_c_code']); ?>'><?php _e('Delete'); ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=settings&amp;action=currencies&amp;type=edit&amp;code=<?php echo urlencode($c['pk_c_code']); ?>'><?php _e('Edit'); ?></a></div>",
+                            "<?php echo addslashes(osc_esc_html($c['s_name']) ); ?>",
+                            "<?php echo addslashes(osc_esc_html($c['s_description']) ); ?>"
                         ]  <?php echo $last_id != $c['pk_c_code'] ? ',' : ''; ?>
                         <?php } ?>
                     ],
