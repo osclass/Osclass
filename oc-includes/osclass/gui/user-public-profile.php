@@ -46,11 +46,12 @@ unset($location_array);
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
         <div class="container">
             <?php osc_current_web_theme_path('header.php') ; ?>
-            <div class="content item">
+            <div class="content item user_public_profile">
                 <div id="item_head">
                     <div class="inner">
                         <h1><?php echo sprintf(__('%s\'s profile', 'modern'), osc_user_name()); ?></h1>
@@ -65,15 +66,16 @@ unset($location_array);
                             <li><?php _e('Address'); ?>: <?php echo $address; ?></li>
                             <li><?php _e('Location'); ?>: <?php echo $location; ?></li>
                             <li><?php _e('Website'); ?>: <?php echo osc_user_website(); ?></li>
+                            <li><?php _e('User Description'); ?>: <?php echo osc_user_info(); ?></li>
                         </ul>
                     </div>
-                    <div id="description">
+                    <div id="description" class="latest_ads">
                         <h2><?php _e('Latest items'); ?></h2>
                         <table border="0" cellspacing="0">
                             <tbody>
                                 <?php $class = "even" ; ?>
                                 <?php while(osc_has_items()) { ?>
-                                    <tr class="<?php echo $class; ?>">
+                                    <tr class="<?php echo $class; ?>" >
                                         <?php if( osc_images_enabled_at_items() ) { ?>
                                          <td class="photo">
                                              <?php if(osc_count_item_resources()) { ?>
@@ -104,13 +106,6 @@ unset($location_array);
                     <?php     if(osc_reg_user_can_contact() && osc_is_web_user_logged_in() || !osc_reg_user_can_contact() ) { ?>
                     <div id="contact">
                         <h2><?php _e("Contact publisher", 'modern') ; ?></h2>
-                        <p class="name"><?php _e('Name', 'modern') ?>: <?php echo osc_user_name(); ?></p>
-                        <?php if(osc_item_show_email()) { ?>
-                        <p class="email"><?php _e('E-mail', 'modern'); ?>: <?php echo osc_user_email(); ?></p>
-                        <?php } ?>
-                        <?php if ( osc_user_phone() != '' ) { ?>
-                        <p class="phone"><?php _e("Tel", 'modern'); ?>.: <?php echo osc_user_phone() ; ?></p>
-                        <?php } ?>
                         <ul id="error_list"></ul>
                         <?php ContactForm::js_validation(); ?>
                         <form action="<?php echo osc_base_url(true) ; ?>" method="post" name="contact_form" id="contact_form">
