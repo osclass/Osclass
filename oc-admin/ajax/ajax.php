@@ -638,18 +638,24 @@
 
                         if(stripos("http://", $code)===FALSE) {
                             // OSCLASS OFFICIAL REPOSITORY
-                            $data = json_decode(osc_file_get_contents("http://localhost/~conejo/osclass/OSClass/oc-content/plugins/universe/universe.php?code=".$code));
+                            $data = json_decode(osc_file_get_contents("http://localhost/~conejo/osclass/OSClass/oc-content/plugins/universe/universe.php?code=".$code), true);
                         } else {
                             // THIRD PARTY REPOSITORY
-                            $data = json_decode(osc_file_get_contents($code));
+                            $data = json_decode(osc_file_get_contents($code), true);
                         }
                         /***********************
                          **** DOWNLOAD FILE ****
                          ***********************/
-                        if(isset($data->s_name) && isset($data->s_source_file)) {
-                            $tmp = explode("/", $data->s_name);
+                        if(isset($data['s_name']) && isset($data['s_source_file']) && isset($data['s_source_file']) && isset($data['e_type'])) {
+
+                            $tmp = explode("/", $data['s_name']);
                             $filename = end($tmp);
-                            $result = osc_downloadFile($data->s_source_file, $filename);
+                            $result = osc_downloadFile($data['s_source_file'], $filename);
+                            if($data['e_type']=='THEME') {
+                                $folder = 'themes/';
+                            } else {
+                                $folder = 'plugins/';
+                            }
 
                             if ($result) { // Everything is OK, continue
                                 /**********************
@@ -666,8 +672,8 @@
                                         $fail = 0;
                                         while (false !== ($_file = readdir($handle))) {
                                             if ($_file != '.' && $_file != '..') {
-                                                $data = osc_copy(ABS_PATH . "oc-temp/" . $_file, ABS_PATH . "oc-content/plugins/" . $_file);
-                                                if ($data == false) {
+                                                $copyprocess = osc_copy(ABS_PATH . "oc-temp/" . $_file, ABS_PATH . "oc-content/" . $folder . $_file);
+                                                if ($copyprocess == false) {
                                                     $fail = 1;
                                                 };
                                             }
@@ -750,13 +756,13 @@
                             $data = json_decode(osc_file_get_contents($code), true);
                         }
                         if(!isset($data['s_source_file']) || !isset($data['s_name']) || !isset($data['s_version']) || !isset($data['e_type']) || (isset($data['e_type']) && $data['e_type']!='PLUGIN' && $data['e_type']!='THEME')) {
-                            $data = array('error' => 2, 'error_msg' => __('Information is in bad format'));
+                            $data = array('error' => 2, 'error_msg' => __('Not a valid code'));
                         }
-                        
                     } else {
                         $data = array('error' => 1, 'error_msg' => __('No code was sumitted'));
                     }
                     echo json_encode($data);
+                    break;
                 default:
                     echo json_encode(array('error' => __('no action defined')));
                     break;
