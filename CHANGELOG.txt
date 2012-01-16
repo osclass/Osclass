@@ -1,3 +1,12 @@
+OSClass 2.3.4 2012-01-03
+------------------------
+- Deleting all admins bug fixed
+- Multiple installs bug fixed
+- Feeds url using permalinks
+- SQL error using picture only items bug fixed
+- Some hooks were added on admin
+- SQL optimized a little more
+
 OSClass 2.3.3 2011-12-17
 ------------------------
 - Removed upgrade and upgrade-plugins files
