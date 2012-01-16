@@ -76,6 +76,9 @@
          */
         public function increaseNumItems($categoryId) 
         {
+            if(!is_numeric($categoryId)) {
+                return false;
+            }
             $sql = sprintf('INSERT INTO %s (fk_i_category_id, i_num_items) VALUES (%d, 1) ON DUPLICATE KEY UPDATE i_num_items = i_num_items + 1', $this->getTableName(), $categoryId);
             $return = $this->dao->query($sql);
             $result = Category::newInstance()->findByPrimaryKey($categoryId);

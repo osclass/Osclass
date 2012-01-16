@@ -99,7 +99,7 @@
          */
         public function listAll($language = '') {
             if($language=='') { $language = osc_current_user_locale(); }
-            $result = $this->dao->query(sprintf('SELECT * FROM (SELECT *, FIELD(fk_c_locale_code, \'%s\', \'%s\') as sorter FROM %st_country WHERE s_name != \'\' ORDER BY sorter DESC) dummytable GROUP BY pk_c_code ORDER BY s_name ASC',osc_current_user_locale(), $language, DB_TABLE_PREFIX));
+            $result = $this->dao->query(sprintf('SELECT * FROM (SELECT *, FIELD(fk_c_locale_code, \'%s\', \'%s\') as sorter FROM %st_country WHERE s_name != \'\' ORDER BY sorter DESC) dummytable GROUP BY pk_c_code ORDER BY s_name ASC',  $this->dao->connId->real_escape_string(osc_current_user_locale()), $this->dao->connId->real_escape_string($language), DB_TABLE_PREFIX));
             return $result->result();
         }
 
@@ -114,11 +114,14 @@
         public function listAllAdmin($language = "")
         {
             if($language=='') { $language = osc_current_user_locale(); }
-            $result = $this->dao->query(sprintf('SELECT * FROM (SELECT *, FIELD(fk_c_locale_code, \'%s\', \'%s\') as sorter FROM %st_country WHERE s_name != \'\' ORDER BY sorter DESC) dummytable GROUP BY pk_c_code ORDER BY s_name ASC',osc_current_user_locale(), $language, DB_TABLE_PREFIX));
+            $result = $this->dao->query(sprintf('SELECT * FROM (SELECT *, FIELD(fk_c_locale_code, \'%s\', \'%s\') as sorter FROM %st_country WHERE s_name != \'\' ORDER BY sorter DESC) dummytable GROUP BY pk_c_code ORDER BY s_name ASC',$this->dao->connId->real_escape_string(osc_current_user_locale()), $this->dao->connId->real_escape_string($language), DB_TABLE_PREFIX));
             $countries_temp = $result->result();
             $countries = array();
             foreach($countries_temp as $country) {
-                $locales = $this->dao->query(sprintf("SELECT * FROM %st_country WHERE pk_c_code = '%s'", DB_TABLE_PREFIX, $country['pk_c_code']));
+                $this->dao->select();
+                $this->dao->from($this->tableName);
+                $this->dao->where('pk_c_code', $country['pk_c_code']);
+                $locales = $this->dao->get();
                 $locales = $locales->result();
                 foreach($locales as $locale) {
                     $country['locales'][$locale['fk_c_locale_code']] = $locale['s_name'];
