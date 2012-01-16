@@ -24,17 +24,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('fancybox/jquery.fancybox-1.3.4.js') ; ?>"></script>
-        <link href="<?php echo osc_current_web_theme_js_url('fancybox/jquery.fancybox-1.3.4.css') ; ?>" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('fancybox/jquery.fancybox.js') ; ?>"></script>
+        <link href="<?php echo osc_current_web_theme_js_url('fancybox/jquery.fancybox.css') ; ?>" rel="stylesheet" type="text/css" />
         
         <script type="text/javascript">
             $(document).ready(function(){
                 $("a[rel=image_group]").fancybox({
-                    'transitionIn'		: 'none',
-                    'transitionOut'		: 'none',
-                    'titlePosition' 	: 'over',
-                    'titleFormat'       : function(title, currentArray, currentIndex) {
-                        return '<span id="fancybox-title-over"><?php _e('Image', 'modern'); ?>  ' +  (currentIndex + 1) + ' / ' + currentArray.length + ' ' + title + '</span>';
+                    openEffect : 'none',
+                    closeEffect	: 'none',
+                    nextEffect : 'fade',
+                    prevEffect : 'fade',
+                    loop : false,
+                    helpers : {
+                            title : {
+                                    type : 'inside'
+                            }
                     }
                 });
             });
@@ -170,7 +174,7 @@
                         <?php if( osc_count_item_resources() > 0 ) { ?>
                         <div id="photos">
                             <?php for ( $i = 0; osc_has_item_resources() ; $i++ ) { ?>
-                            <a href="<?php echo osc_resource_url(); ?>" rel="image_group">
+                            <a href="<?php echo osc_resource_url(); ?>" rel="image_group" title="<?php _e('Image', 'modern'); ?> <?php echo $i+1;?> / <?php echo osc_count_item_resources();?>">
                                 <?php if( $i == 0 ) { ?>
                                     <img src="<?php echo osc_resource_url(); ?>" width="315" alt="" title=""/>
                                 <?php } else { ?>
