@@ -172,9 +172,7 @@
                     
                     if (!isset($field['pk_i_id']) || (isset($field['pk_i_id']) && $field['pk_i_id'] == Params::getParam("id"))) {
                         // remove categories from a field
-                        if(!Field::newInstance()->cleanCategoriesFromField(Params::getParam("id"))) {
-                            $error = 1;
-                        }
+                        Field::newInstance()->cleanCategoriesFromField(Params::getParam("id"));
                         // no error... continue updating fields
                         if($error == 0) {
                             $slug = Params::getParam("field_slug") != '' ? Params::getParam("field_slug") : Params::getParam("id");
