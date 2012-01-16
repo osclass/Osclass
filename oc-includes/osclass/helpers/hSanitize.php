@@ -125,31 +125,28 @@
      * @param	string
      * @return	string
      */	
+    function osc_esc_html($str = '') {
+        if ($str === '') {
+            return '';
+        }
 
-    function osc_esc_html($str = '')
-    {
-	if ($str === '')
-	{
-		return '';
-	}
+        $temp = '__TEMP_AMPERSANDS__';
 
-	$temp = '__TEMP_AMPERSANDS__';
-	
-	// Replace entities to temporary markers so that 
-	// htmlspecialchars won't mess them up
-	$str = preg_replace("/&#(\d+);/", "$temp\\1;", $str);
-	$str = preg_replace("/&(\w+);/",  "$temp\\1;", $str);
+        // Replace entities to temporary markers so that
+        // htmlspecialchars won't mess them up
+        $str = preg_replace("/&#(\d+);/", "$temp\\1;", $str);
+        $str = preg_replace("/&(\w+);/",  "$temp\\1;", $str);
 
-	$str = htmlspecialchars($str);
+        $str = htmlspecialchars($str);
 
-	// In case htmlspecialchars misses these.
-	$str = str_replace(array("'", '"'), array("&#39;", "&quot;"), $str);	
-	
-	// Decode the temp markers back to entities
-	$str = preg_replace("/$temp(\d+);/","&#\\1;",$str);
-	$str = preg_replace("/$temp(\w+);/","&\\1;",$str);	
-	
-	return $str;	
-}
+        // In case htmlspecialchars misses these.
+        $str = str_replace(array("'", '"'), array("&#39;", "&quot;"), $str);
+
+        // Decode the temp markers back to entities
+        $str = preg_replace("/$temp(\d+);/","&#\\1;",$str);
+        $str = preg_replace("/$temp(\w+);/","&\\1;",$str);
+
+        return $str;
+    }
 
 ?>
