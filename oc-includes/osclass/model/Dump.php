@@ -115,8 +115,9 @@
         {
             if ( !is_writable($path) ) return false ;
 
-            $sql = "select * from `$table`;" ;
-            $res = $this->dao->query($sql);
+            $this->dao->select();
+            $this->dao->from($table);
+            $res = $this->dao->get();
             if($res) {
                 $result = $res->result();
             } else {

@@ -78,9 +78,9 @@
                     if(isset($field) && isset($field['s_options'])) {
                         $options = explode(",", $field['s_options']);
                         if(count($options)>0) {
-                            echo '<ul style="float:left;" >';
+                            echo '<ul>';
                             foreach($options as $key => $option) {
-                                echo '<li><input type="radio" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '_'.$key.'" value="'.osc_esc_html($option).'" '.($field['s_value']==$option?'checked':'').'/><label style="float:none;" for="meta_' . $field['s_slug'] . '_'.$key.'">'.$option.'</label></li>';
+                                echo '<li><input type="radio" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '_'.$key.'" value="'.osc_esc_html($option).'" '.($field['s_value']==$option?'checked':'').'/><label for="meta_' . $field['s_slug'] . '_'.$key.'">'.$option.'</label></li>';
                             }
                             echo '</ul>';
                         }

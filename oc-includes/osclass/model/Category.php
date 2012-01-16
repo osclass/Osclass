@@ -128,7 +128,7 @@
         public function listEnabled() 
         {
             $sql = 'SELECT * FROM (';
-            $sql .= 'SELECT a.*, b.*, c.i_num_items, FIELD(fk_c_locale_code, \''.osc_current_user_locale().'\') as locale_order FROM '.$this->getTableName().' as a INNER JOIN '.DB_TABLE_PREFIX.'t_category_description as b ON a.pk_i_id = b.fk_i_category_id ';
+            $sql .= 'SELECT a.*, b.*, c.i_num_items, FIELD(fk_c_locale_code, \''.$this->dao->connId->real_escape_string(osc_current_user_locale()).'\') as locale_order FROM '.$this->getTableName().' as a INNER JOIN '.DB_TABLE_PREFIX.'t_category_description as b ON a.pk_i_id = b.fk_i_category_id ';
             $sql .= 'LEFT JOIN '.DB_TABLE_PREFIX.'t_category_stats as c ON a.pk_i_id = c.fk_i_category_id ';
             $sql .= 'WHERE b.s_name != \'\' AND a.b_enabled = 1 ORDER BY locale_order DESC';
             $sql .= ') as dummytable GROUP BY pk_i_id ORDER BY i_position ASC';
@@ -568,10 +568,15 @@
                     );
 
                     $rs = $this->dao->update(DB_TABLE_PREFIX.'t_category_description', $fieldsDescription, $array_where) ;
-                    
                     if($rs == 0) {
-                        $rows = $this->dao->query(sprintf("SELECT * FROM %s as a INNER JOIN %st_category_description as b ON a.pk_i_id = b.fk_i_category_id WHERE a.pk_i_id = '%s' AND b.fk_c_locale_code = '%s'", $this->tableName, DB_TABLE_PREFIX, $pk, $k));
-                        if($rows->numRows == 0) {
+                        $this->dao->select();
+                        $this->dao->from($this->tableName." as a");
+                        $this->dao->join(sprintf("%st_category_description as b", DB_TABLE_PREFIX), "a.pk_i_id = b.fk_i_category_id", "INNER");
+                        $this->dao->where("a.pk_i_id", $pk);
+                        $this->dao->where("b.fk_c_locale_code", $k);
+                        $result = $this->dao->get() ;
+                        $rows = $result->result() ;
+                        if($result->numRows == 0) {
                             $res_insert = $this->insertDescription($fieldsDescription);
                             $affectedRows += 1;
                         }
@@ -652,8 +657,14 @@
          */
         public function updateOrder($pk_i_id, $order)
         {
-            $sql = 'UPDATE ' . $this->tableName . " SET `i_position` = '".$order."' WHERE `pk_i_id` = " . $pk_i_id;
-            return $this->dao->query($sql);
+            $array_set = array(
+                'i_position'    => $order
+            );
+            $array_where = array(
+                'pk_i_id'  => $pk_i_id
+            );
+            return $this->dao->update($this->tableName, $array_set, $array_where);
+
         }
 
         /**
@@ -675,7 +686,7 @@
                 'fk_i_category_id'  => $pk_i_id,
                 'fk_c_locale_code'  => $locale
             );
-            return $this->dao->update(DB_TABLE_PREFIX.'t_category_description', $array_set);
+            return $this->dao->update(DB_TABLE_PREFIX.'t_category_description', $array_set, $array_where);
         }
         
         /**
