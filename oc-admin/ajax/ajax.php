@@ -176,9 +176,12 @@
                         }
                         // no error... continue inserting categories-field
                         if($error == 0) {
-                            $res = Field::newInstance()->insertCategories(Params::getParam("id"), Params::getParam("categories"));
-                            if(!$res) {
-                                $error = 1;
+                            $aCategories = Params::getParam("categories");
+                            if( is_array($aCategories) && count($aCategories) > 0) {
+                                $res = Field::newInstance()->insertCategories(Params::getParam("id"), $aCategories);
+                                if(!$res) {
+                                    $error = 1;
+                                }
                             }
                         }
                         // error while updating?
