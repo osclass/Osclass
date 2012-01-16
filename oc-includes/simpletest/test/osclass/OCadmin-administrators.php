@@ -90,7 +90,7 @@ class OCadmin_administrators extends OCadminTest {
 //        $this->editAdministrator();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Administrators");
-        $this->selenium->click("link=» List administrators");
+        $this->selenium->click("link=» Manage administrators");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'useradminone')]");
         $this->selenium->click("//table/tbody/tr[contains(.,'useradminone')]/td/div/a[text()='Edit']");
@@ -107,7 +107,7 @@ class OCadmin_administrators extends OCadminTest {
 //        $this->editAdministrator2();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Administrators");
-        $this->selenium->click("link=» List administrators");
+        $this->selenium->click("link=» Manage administrators");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'useradminone')]");
         $this->selenium->click("//table/tbody/tr[contains(.,'useradminone')]/td/div/a[text()='Edit']");
@@ -126,7 +126,7 @@ class OCadmin_administrators extends OCadminTest {
 //        $this->editAdministratorFailPass();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Administrators");
-        $this->selenium->click("link=» List administrators");
+        $this->selenium->click("link=» Manage administrators");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'useradminone')]");
         $this->selenium->click("//table/tbody/tr[contains(.,'useradminone')]/td/div/a[text()='Edit']");
@@ -149,7 +149,7 @@ class OCadmin_administrators extends OCadminTest {
 //        $this->deleteAdministrator();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Administrators");
-        $this->selenium->click("link=» List administrators");
+        $this->selenium->click("link=» Manage administrators");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'useradminone')]");
         $this->selenium->click("//table/tbody/tr[contains(.,'useradminone')]/td/div/a[text()='Delete']");

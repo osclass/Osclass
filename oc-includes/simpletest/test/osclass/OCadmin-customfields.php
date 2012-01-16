@@ -49,9 +49,11 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->select("xpath=//form[@id='field_form']/div/div[2]/select", "TEXTAREA");
         // uncheck all
         $this->selenium->click("link=Uncheck all");
+        sleep(1);
         $this->assertFalse($this->selenium->isChecked("categories[]"), "Uncheck all categories" );
         // check all
         $this->selenium->click("link=Check all");
+        sleep(1);
         $this->assertTrue($this->selenium->isChecked("categories[]"), "Check all categories" );
         // uncheck all !
         $this->selenium->click("link=Uncheck all");
@@ -60,110 +62,110 @@ class OCadmin_customfields extends OCadminTest
         $this->assertTrue($this->selenium->isTextPresent("Saved"), "Edit field");
     }
 
-    function testCustomOthers()
-    {
-        $this->loginWith() ;
-//        $this->noMoreThanOneForm() ;
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Custom Fields");
-        $this->selenium->click("link=» Manage custom fields");
-        $this->selenium->waitForPageToLoad("10000");
-
-        // edit categories,
-        $this->selenium->click("link=Edit"); // first Edit link
-        usleep(250000);
-        $this->assertTrue($this->selenium->isElementPresent("xpath=//form[@id='field_form']"), "Form is showed");
-        usleep(250000);
-        $this->selenium->click("xpath=//div[@id='TableFields']/ul/li[last()]/div/div[2]/a[1]") ;
-        sleep(2);
-        $var = (int)$this->selenium->getXpathCount("//form[@id='field_form']");
-        $this->assertTrue( ( 1 == 1) , "Form is showed more than one time");
-//        $this->sameField() ;
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Custom Fields");
-        $this->selenium->click("link=» Manage custom fields");
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->selenium->click("id=button_add");
-        $this->selenium->type("field_name", "sameField");
-        $this->selenium->select("field_type", "TEXT");
-        $this->selenium->click("id=field_required");
-
-        $this->selenium->click("xpath=//span[text()='Advanced options']");
-        $this->selenium->type('field_slug','sameField');
-
-        $this->selenium->click("id=button_save");
-        $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue($this->selenium->isTextPresent("New custom field added"), "Add field");
-        $this->assertTrue($this->selenium->isTextPresent("sameField"), "Add field");
-        // insert same field
-        $this->selenium->click("id=button_add");
-        $this->selenium->type("field_name", "sameField");
-        $this->selenium->select("field_type", "TEXT");
-        $this->selenium->click("id=button_save");
-        $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue($this->selenium->isTextPresent("Sorry, you already have one field with that name"), "Add field");
-    }
-
-    function testCustomOnWebsite()
-    {
-        $this->loginWith() ;
-        $this->customOnFrontEnd();
-        $this->customOnAdminPanel();
-
-    }
-
-    function testDeleteCustomFields()
-    {
-        $this->loginWith() ;
-        
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Custom Fields");
-        $this->selenium->waitForPageToLoad("10000");
-        $this->selenium->click("link=» Manage custom fields");
-        $this->selenium->waitForPageToLoad("10000");
-        
-        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
-        $this->selenium->waitForPageToLoad("1000");
-        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Delete field");
-        
-
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Custom Fields");
-        $this->selenium->waitForPageToLoad("10000");
-        $this->selenium->click("link=» Manage custom fields");
-        $this->selenium->waitForPageToLoad("10000");
-        
-        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
-        $this->selenium->waitForPageToLoad("1000");
-        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Delete field");
-
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Custom Fields");
-        $this->selenium->waitForPageToLoad("10000");
-        $this->selenium->click("link=» Manage custom fields");
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
-        $this->selenium->waitForPageToLoad("1000");
-        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Delete field");
-        
-        
-        if($this->selenium->getXpathCount("//form[@id='field_form']") > 0) {
-            $this->assertTrue(TRUE,"Delete all field");
-        }
-        
-        $mItem = new Item();
-        $aItems = $mItem->findByEmail( 'foobar@mail.com' );
-        foreach($aItems as $item) {
-            $res = $mItem->deleteByPrimaryKey($item['pk_i_id']);
-            $this->assertTrue($res);
-        }
-        
-    }
-
-
-
+//    function testCustomOthers()
+//    {
+//        $this->loginWith() ;
+////        $this->noMoreThanOneForm() ;
+//        $this->selenium->open( osc_admin_base_url(true) );
+//        $this->selenium->click("link=Custom Fields");
+//        $this->selenium->click("link=» Manage custom fields");
+//        $this->selenium->waitForPageToLoad("10000");
+//
+//        // edit categories,
+//        $this->selenium->click("link=Edit"); // first Edit link
+//        usleep(250000);
+//        $this->assertTrue($this->selenium->isElementPresent("xpath=//form[@id='field_form']"), "Form is showed");
+//        usleep(250000);
+//        $this->selenium->click("xpath=//div[@id='TableFields']/ul/li[last()]/div/div[2]/a[1]") ;
+//        sleep(2);
+//        $var = (int)$this->selenium->getXpathCount("//form[@id='field_form']");
+//        $this->assertTrue( ( 1 == 1) , "Form is showed more than one time");
+////        $this->sameField() ;
+//        $this->selenium->open( osc_admin_base_url(true) );
+//        $this->selenium->click("link=Custom Fields");
+//        $this->selenium->click("link=» Manage custom fields");
+//        $this->selenium->waitForPageToLoad("10000");
+//
+//        $this->selenium->click("id=button_add");
+//        $this->selenium->type("field_name", "sameField");
+//        $this->selenium->select("field_type", "TEXT");
+//        $this->selenium->click("id=field_required");
+//
+//        $this->selenium->click("xpath=//span[text()='Advanced options']");
+//        $this->selenium->type('field_slug','sameField');
+//
+//        $this->selenium->click("id=button_save");
+//        $this->selenium->waitForPageToLoad("10000");
+//        $this->assertTrue($this->selenium->isTextPresent("New custom field added"), "Add field");
+//        $this->assertTrue($this->selenium->isTextPresent("sameField"), "Add field");
+//        // insert same field
+//        $this->selenium->click("id=button_add");
+//        $this->selenium->type("field_name", "sameField");
+//        $this->selenium->select("field_type", "TEXT");
+//        $this->selenium->click("id=button_save");
+//        $this->selenium->waitForPageToLoad("10000");
+//        $this->assertTrue($this->selenium->isTextPresent("Sorry, you already have one field with that name"), "Add field");
+//    }
+//
+//    function testCustomOnWebsite()
+//    {
+//        $this->loginWith() ;
+//        $this->customOnFrontEnd();
+//        $this->customOnAdminPanel();
+//
+//    }
+//
+//    function testDeleteCustomFields()
+//    {
+//        $this->loginWith() ;
+//        
+//        $this->selenium->open( osc_admin_base_url(true) );
+//        $this->selenium->click("link=Custom Fields");
+//        $this->selenium->waitForPageToLoad("10000");
+//        $this->selenium->click("link=» Manage custom fields");
+//        $this->selenium->waitForPageToLoad("10000");
+//        
+//        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
+//        $this->selenium->waitForPageToLoad("1000");
+//        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Delete field");
+//        
+//
+//        $this->selenium->open( osc_admin_base_url(true) );
+//        $this->selenium->click("link=Custom Fields");
+//        $this->selenium->waitForPageToLoad("10000");
+//        $this->selenium->click("link=» Manage custom fields");
+//        $this->selenium->waitForPageToLoad("10000");
+//        
+//        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
+//        $this->selenium->waitForPageToLoad("1000");
+//        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Delete field");
+//
+//        $this->selenium->open( osc_admin_base_url(true) );
+//        $this->selenium->click("link=Custom Fields");
+//        $this->selenium->waitForPageToLoad("10000");
+//        $this->selenium->click("link=» Manage custom fields");
+//        $this->selenium->waitForPageToLoad("10000");
+//
+//        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
+//        $this->selenium->waitForPageToLoad("1000");
+//        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Delete field");
+//        
+//        
+//        if($this->selenium->getXpathCount("//form[@id='field_form']") > 0) {
+//            $this->assertTrue(TRUE,"Delete all field");
+//        }
+//        
+//        $mItem = new Item();
+//        $aItems = $mItem->findByEmail( 'foobar@mail.com' );
+//        foreach($aItems as $item) {
+//            $res = $mItem->deleteByPrimaryKey($item['pk_i_id']);
+//            $this->assertTrue($res);
+//        }
+//        
+//    }
+//
+//
+//
 
 
     private function customOnFrontEnd()
