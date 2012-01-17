@@ -47,7 +47,7 @@
                 theme : "advanced",
                 skin: "o2k7",
                 width: "70%",
-                height: "140px",
+                height: "340px",
                 skin_variant : "silver",
                 theme_advanced_buttons1 : "bold,italic,underline,separator,undo,redo,separator,justifycenter,justifyright,justifyfull,separator,bullist,numlist,separator,link,unlink,separator,image,code",
                 theme_advanced_buttons2 : "",
