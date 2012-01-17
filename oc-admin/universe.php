@@ -31,7 +31,9 @@
 
             switch ($this->action) {
                 default:
-                                        $this->doView('universe/index.php');
+                            $plugins = Plugins::listAll();
+                            View::newInstance()->_exportVariableToView('plugins', $plugins);
+                            $this->doView('universe/index.php');
                 break;
             }
         }

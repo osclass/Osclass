@@ -15,6 +15,7 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
+$plugins = View::newInstance()->_get('plugins');
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -72,6 +73,28 @@
                     $("#s_code").removeAttr("readonly");
                 });
             });
+            
+            function upgrade(code) {
+                $("#s_code").attr("value", code);
+                $("#s_code").attr("readonly", "readonly");
+                $.getJSON(
+                    "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_universe",
+                    {"code" : code},
+                    function(data){
+                        if(data.error==0) {
+                            $("#universe_info").show();
+                            $("#name").text(data.s_name);
+                            $("#version").text(data.s_version);
+                            $("#description").text(data.s_description);
+                            $("#url").text(data.s_source_file);
+                        } else {
+                            $("#universe_error").show();
+                            $("#error_msg").text(data.error_msg);
+                        }
+                    }
+                );
+            }
+            
         </script>
         
         <div id="content">
@@ -91,7 +114,7 @@
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
                         <?php _e('some text explaining this process', 'universe') ; ?>
-                        <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" id="universeform" name="universeform" >
+                        <form>
                             <p>
                                 <label for="data"><?php _e('Universe code'); ?></label>
                                 <input type="text" id="s_code" name="s_code" value="" />
@@ -109,7 +132,7 @@
                 <div id="universe_info" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 10px;">
                         <?php _e('Information, MAYBE EXPLAIN and WARN THE USER THAT IT IS TRYING TO DOWNLOAD AN EXTERNAL FILE', 'universe') ; ?>
-                        <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" >
+                        <form>
                             <p>
                                 <label><?php _e('Name'); ?></label>
                                 <span id="name"></span>
@@ -132,6 +155,42 @@
                                 <div id="steps_zip"></div>
                             </p>
                         </form>
+                    </div>
+                </div>
+                <div id="universe_list" style="border: 1px solid #ccc; background: #eee; ">
+                    <div style="padding: 10px;">
+                        <?php _e('LIST OF ALL THE STUFF YOU HAVE INSTALLED', 'universe') ; ?>
+                        <a href="<?php echo osc_admin_base_url();?>?page=universe&action=check"><?php _e('Check all for updates'); ?></a>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th><?php _e('Name'); ?></th>
+                                    <th><?php _e('Version'); ?></th>
+                                    <?php if(Params::getParam('action')=='check') { ?>
+                                        <th><?php _e('Upgrade'); ?></th>
+                                    <?php }; ?>
+                                    <th><?php _e('Action'); ?></th>
+                                    <th><?php _e('Description'); ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach($plugins as $_p) { 
+                                    $p = Plugins::getInfo($_p); ?>
+                                <tr>
+                                    <td><?php echo $p['plugin_name']; ?></td>
+                                    <td><?php echo $p['version']; ?></td>
+                                    <?php if(Params::getParam('action')=='check') {
+                                        if(Plugins::checkUpdate($_p)) { ?>
+                                            <td><a href="#" onclick="upgrade('<?php echo $p['plugin_update_uri']; ?>');" ><?php _e('Upgrade available'); ?></a></td>
+                                    <?php } else { ?>
+                                            <td><?php _e('Upgrade not available'); ?></td>
+                                    <?php }; }; ?>
+                                    <td>ACTION</td>
+                                    <td><?php echo $p['description']; ?></td>
+                                </tr>
+                                <?php }; ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div> <!-- end of right column -->

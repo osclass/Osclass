@@ -638,7 +638,7 @@
 
                         if(stripos("http://", $code)===FALSE) {
                             // OSCLASS OFFICIAL REPOSITORY
-                            $data = json_decode(osc_file_get_contents("http://localhost/~conejo/osclass/OSClass/oc-content/plugins/universe/universe.php?code=".$code), true);
+                            $data = json_decode(osc_file_get_contents(osc_market_url($code)), true);
                         } else {
                             // THIRD PARTY REPOSITORY
                             $data = json_decode(osc_file_get_contents($code), true);
@@ -750,7 +750,7 @@
                     if ($code != '') {
                         if(stripos("http://", $code)===FALSE) {
                             // OSCLASS OFFICIAL REPOSITORY
-                            $data = json_decode(osc_file_get_contents("http://localhost/~conejo/osclass/OSClass/oc-content/plugins/universe/universe.php?code=".$code), true);
+                            $data = json_decode(osc_file_get_contents(osc_market_url($code)), true);
                         } else {
                             // THIRD PARTY REPOSITORY
                             $data = json_decode(osc_file_get_contents($code), true);

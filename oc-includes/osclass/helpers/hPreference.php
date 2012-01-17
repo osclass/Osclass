@@ -525,6 +525,15 @@
     }
 
     /**
+     * Gets OSClass' market URL
+     *
+     * @return int 
+     */
+    function osc_market_url($code = '') {
+        return(getPreference('marketURL').$code) ;
+    }
+    
+    /**
      * Gets recaptcha public key
      *
      * @return string

@@ -319,14 +319,21 @@
         static function checkUpdate($plugin) {
             $info = Plugins::getInfo($plugin);
             if($info['plugin_update_uri']!="") {
-                if(false===($str=@osc_file_get_contents($info['plugin_update_uri']))) {
+                
+                if(stripos("http://", $info['plugin_update_uri'])===FALSE) {
+                    // OSCLASS OFFICIAL REPOSITORY
+                    $uri = osc_market_url($info['plugin_update_uri']);
+                } else {
+                    // THIRD PARTY REPOSITORY
+                    $uri = $info['plugin_update_uri'];
+                }
+
+                if(false===($json=@osc_file_get_contents($uri))) {
                     return false;
                 } else {
-                    if(preg_match('|\?\(([^\)]+)|', preg_replace('/,\s*([\]}])/m', '$1', $str), $data)) {
-                        $json = json_decode($data[1] , true);
-                        if($json['version']>$info['version']) {
-                            return true;
-                        }
+                    $data = json_decode($json , true);
+                    if(isset($data['s_version']) && $data['s_version']>$info['version']) {
+                        return true;
                     }
                 }
             }
