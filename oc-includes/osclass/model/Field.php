@@ -123,10 +123,10 @@
          */
         public function findByCategoryItem($catId, $itemId)
         {
-            
-            if(!is_numeric($catId) || !is_numeric($itemId)) {
-                return false;
+            if( !is_numeric($catId) || (!is_numeric($itemId) && $itemId != null) ) {
+                return array() ;
             }
+
             $result = $this->dao->query(sprintf("SELECT query.*, im.s_value as s_value FROM (SELECT mf.* FROM %st_meta_fields mf, %st_meta_categories mc WHERE mc.fk_i_category_id = %d AND mf.pk_i_id = mc.fk_i_field_id) as query LEFT JOIN %st_item_meta im ON im.fk_i_field_id = query.pk_i_id AND im.fk_i_item_id = %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, $catId, DB_TABLE_PREFIX, $itemId));
 
             if( $result == false ) {
