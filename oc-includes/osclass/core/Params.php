@@ -36,7 +36,13 @@
             if($xss_check==true && !isset(self::$purifier)) {
                 require_once LIB_PATH . 'htmlpurifier/HTMLPurifier.auto.php';
                 $config = HTMLPurifier_Config::createDefault();
-                $config->set('HTML.Allowed', 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style]');
+                $allowed = 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]';
+                $allowed .= 'object[align<bottom?left?middle?right?top|archive|border|class|classid|codebase|codetype|data|';
+                $allowed .= 'declare|dir<ltr?rtl|height|hspace|id|lang|name|onclick|ondblclick|onkeydown|onkeypress|onkeyup|';
+                $allowed .= 'onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|standby|style|tabindex|title|type|usemap|vspace|width]';
+                $config->set('HTML.Allowed', $allowed);
+                $config->set("HTML", "SafeEmbed", true);
+                $config->set("HTML", "SafeObject", true);
                 $config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
                 $config->set('Cache.SerializerPath', ABS_PATH . 'oc-content/uploads');
                 self::$purifier = new HTMLPurifier($config);
