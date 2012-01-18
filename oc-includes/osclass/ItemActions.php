@@ -39,15 +39,6 @@
             $code        = osc_genRandomPassword();
             $flash_error = '';
 
-            // Initiate HTML Purifier
-            require_once LIB_PATH . 'htmlpurifier/HTMLPurifier.auto.php';
-
-            $config = HTMLPurifier_Config::createDefault();
-            $config->set('HTML.Allowed', 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style]');
-            $config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
-            $config->set('Cache.SerializerPath', ABS_PATH . 'oc-content/uploads');
-            $purifier = new HTMLPurifier($config);
-
             // Requires email validation?
             $has_to_validate = (osc_moderate_items() != -1) ? true : false ;
 
@@ -57,9 +48,6 @@
             // Sanitize
             foreach(@$aItem['title'] as $key=>$value) {
                 $aItem['title'][$key] = strip_tags( trim ( $value ) );
-            }
-            foreach(@$aItem['description'] as $key=>$value) {
-                $aItem['description'][$key] = $purifier->purify($value);
             }
 
             $aItem['price']    = !is_null($aItem['price']) ? strip_tags( trim( $aItem['price'] ) ) : $aItem['price'];
@@ -237,21 +225,9 @@
             $aItem       = $this->data;
             $flash_error = '';
 
-            // Initiate HTML Purifier
-            require_once LIB_PATH . 'htmlpurifier/HTMLPurifier.auto.php';
-
-            $config = HTMLPurifier_Config::createDefault();
-            $config->set('HTML.Allowed', 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style]');
-            $config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
-            $config->set('Cache.SerializerPath', ABS_PATH . 'oc-content/uploads');
-            $purifier = new HTMLPurifier($config);
-
             // Sanitize
             foreach(@$aItem['title'] as $key=>$value) {
                 $aItem['title'][$key] = strip_tags( trim ( $value ) );
-            }
-            foreach(@$aItem['description'] as $key=>$value) {
-                $aItem['description'][$key] = $purifier->purify($value);
             }
 
             $aItem['price']    = !is_null($aItem['price']) ? strip_tags( trim( $aItem['price'] ) ) : $aItem['price'];
