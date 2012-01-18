@@ -72,6 +72,8 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'selectable_parent_categories', '0', 'BOOLEAN')
     ,('osclass', 'reg_user_post_comments', '0', 'BOOLEAN')
     ,('osclass', 'reg_user_can_contact', '0', 'BOOLEAN')
+    ,('osclass', 'marketAllowExternalSources', '0', 'BOOLEAN')
+    ,('osclass', 'marketURL', 'http://market.osclass.org/oc-content/universe/universe.php?code=', 'STRING')
     ,('osclass', 'watermark_text', '', 'STRING')
     ,('osclass', 'watermark_text_color', '', 'STRING')
     ,('osclass', 'watermark_place', 'centre', 'STRING')

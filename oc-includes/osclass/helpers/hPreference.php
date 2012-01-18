@@ -527,10 +527,19 @@
     /**
      * Gets OSClass' market URL
      *
-     * @return int 
+     * @return string 
      */
     function osc_market_url($code = '') {
         return(getPreference('marketURL').$code) ;
+    }
+    
+    /**
+     * Gets if third party sources are allowed to install new plugins and themes
+     *
+     * @return int 
+     */
+    function osc_market_external_sourcesurl() {
+        return(getBoolPreference('marketAllowExternalSources')) ;
     }
     
     /**
