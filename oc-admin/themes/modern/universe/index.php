@@ -16,6 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 $plugins = View::newInstance()->_get('plugins');
+$themes = View::newInstance()->_get('themes');
+$code = View::newInstance()->_get('code');
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -26,77 +28,6 @@ $plugins = View::newInstance()->_get('plugins');
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <script type="text/javascript">
-            $(document).ready(function(){
-                $("#universe_info").hide();
-                $("#universe_error").hide();
-                $("#check_btn").click(function(){
-                    var code = $("#s_code").attr("value");
-                    $("#s_code").attr("readonly", "readonly");
-                    $.getJSON(
-                        "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_universe",
-                        {"code" : code},
-                        function(data){
-                            if(data.error==0) {
-                                $("#universe_info").show();
-                                $("#name").text(data.s_name);
-                                $("#version").text(data.s_version);
-                                $("#description").text(data.s_description);
-                                $("#url").text(data.s_source_file);
-                            } else {
-                                $("#universe_error").show();
-                                $("#error_msg").text(data.error_msg);
-                            }
-                        }
-                    );
-                });
-
-                $("#download_btn").click(function(){
-                    var code = $("#s_code").attr("value");
-                    $("#s_code").attr("readonly", "readonly");
-                    $.getJSON(
-                        "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=universe",
-                        {"code" : code},
-                        function(data){
-                            $("#universe_error").show();
-                            if(data.error==0) {
-                                $("#error_msg").text(data.message);
-                            } else {
-                                $("#error_msg").text(data.message + " ERROR: " + data.error);
-                            }
-                        }
-                    );
-                });
-
-                $("#cancel_btn").click(function(){
-                    $("#universe_info").hide();
-                    $("#s_code").removeAttr("readonly");
-                });
-            });
-            
-            function upgrade(code) {
-                $("#s_code").attr("value", code);
-                $("#s_code").attr("readonly", "readonly");
-                $.getJSON(
-                    "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_universe",
-                    {"code" : code},
-                    function(data){
-                        if(data.error==0) {
-                            $("#universe_info").show();
-                            $("#name").text(data.s_name);
-                            $("#version").text(data.s_version);
-                            $("#description").text(data.s_description);
-                            $("#url").text(data.s_source_file);
-                        } else {
-                            $("#universe_error").show();
-                            $("#error_msg").text(data.error_msg);
-                        }
-                    }
-                );
-            }
-            
-        </script>
-        
         <div id="content">
             <div id="separator"></div>
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
@@ -174,13 +105,14 @@ $plugins = View::newInstance()->_get('plugins');
                                 </tr>
                             </thead>
                             <tbody>
+                                <tr><td><?php _e('xxx PLUGINS NICE HEADER xxx'); ?></td></tr>
                                 <?php foreach($plugins as $_p) { 
                                     $p = Plugins::getInfo($_p); ?>
                                 <tr>
                                     <td><?php echo $p['plugin_name']; ?></td>
-                                    <td><?php echo $p['version']; ?></td>
+                                    <td><?php echo @$p['version']; ?></td>
                                     <?php if(Params::getParam('action')=='check') {
-                                        if(Plugins::checkUpdate($_p)) { ?>
+                                        if(osc_check_update(@$p['plugin_update_uri'], @$p['version'])) { ?>
                                             <td><a href="#" onclick="upgrade('<?php echo $p['plugin_update_uri']; ?>');" ><?php _e('Upgrade available'); ?></a></td>
                                     <?php } else { ?>
                                             <td><?php _e('Upgrade not available'); ?></td>
@@ -189,12 +121,102 @@ $plugins = View::newInstance()->_get('plugins');
                                     <td><?php echo $p['description']; ?></td>
                                 </tr>
                                 <?php }; ?>
+                                <tr><td><?php _e('xxx THEMES NICE HEADER xxx'); ?></td></tr>
+                                <?php foreach($themes as $_t) { 
+                                    $t = WebThemes::newInstance()->loadThemeInfo($_t); ?>
+                                <tr>
+                                    <td><?php echo $t['name']; ?></td>
+                                    <td><?php echo @$t['version']; ?></td>
+                                    <?php if(Params::getParam('action')=='check') {
+                                        if(osc_check_update(@$t['theme_update_uri'], @$t['version'])) { ?>
+                                            <td><a href="#" onclick="upgrade('<?php echo $t['theme_update_uri']; ?>');" ><?php _e('Upgrade available'); ?></a></td>
+                                    <?php } else { ?>
+                                            <td><?php _e('Upgrade not available'); ?></td>
+                                    <?php }; }; ?>
+                                    <td>ACTION</td>
+                                    <td><?php echo $t['description']; ?></td>
+                                </tr>
+                                <?php }; ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div> <!-- end of right column -->
         </div>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#universe_info").hide();
+                $("#universe_error").hide();
+                $("#check_btn").click(function(){
+                    var code = $("#s_code").attr("value");
+                    $("#s_code").attr("readonly", "readonly");
+                    $.getJSON(
+                        "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_universe",
+                        {"code" : code},
+                        function(data){
+                            if(data.error==0) {
+                                $("#universe_info").show();
+                                $("#name").text(data.s_name);
+                                $("#version").text(data.s_version);
+                                $("#description").text(data.s_description);
+                                $("#url").text(data.s_source_file);
+                            } else {
+                                $("#universe_error").show();
+                                $("#error_msg").text(data.error_msg);
+                            }
+                        }
+                    );
+                });
+
+                $("#download_btn").click(function(){
+                    var code = $("#s_code").attr("value");
+                    $("#s_code").attr("readonly", "readonly");
+                    $.getJSON(
+                        "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=universe",
+                        {"code" : code},
+                        function(data){
+                            $("#universe_error").show();
+                            if(data.error==0) {
+                                $("#error_msg").text(data.message);
+                            } else {
+                                $("#error_msg").text(data.message + " ERROR: " + data.error);
+                            }
+                        }
+                    );
+                });
+
+                $("#cancel_btn").click(function(){
+                    $("#universe_info").hide();
+                    $("#s_code").removeAttr("readonly");
+                });
+            });
+            
+            function upgrade(code) {
+                $("#s_code").attr("value", code);
+                $("#s_code").attr("readonly", "readonly");
+                $.getJSON(
+                    "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_universe",
+                    {"code" : code},
+                    function(data){
+                        if(data.error==0) {
+                            $("#universe_info").show();
+                            $("#name").text(data.s_name);
+                            $("#version").text(data.s_version);
+                            $("#description").text(data.s_description);
+                            $("#url").text(data.s_source_file);
+                        } else {
+                            $("#universe_error").show();
+                            $("#error_msg").text(data.error_msg);
+                        }
+                    }
+                );
+            }
+            
+            <?php if($code!='') { ?>
+                upgrade('<?php echo $code; ?>');
+            <?php }; ?>
+            
+        </script>
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>

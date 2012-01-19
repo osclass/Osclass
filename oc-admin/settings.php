@@ -715,6 +715,7 @@
                                         $sNumRssItems   = Params::getParam('num_rss_items');
                                         $maxLatestItems = Params::getParam('max_latest_items_at_home');
                                         $numItemsSearch = Params::getParam('default_results_per_page') ;
+                                        $bMarketSources = Params::getParam('market_external_sources')==1?1:0;
 
                                         // preparing parameters
                                         $sPageTitle     = strip_tags($sPageTitle);
@@ -751,6 +752,8 @@
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'timeFormat'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimezone)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'timezone'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $bMarketSources)
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'marketAllowExternalSources'));
                                         if(is_int($sNumRssItems)) {
                                             $iUpdated += Preference::newInstance()->update(array('s_value'   => $sNumRssItems)
                                                                                           ,array('s_section' => 'osclass', 's_name' => 'num_rss_items'));

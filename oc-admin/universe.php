@@ -31,8 +31,12 @@
 
             switch ($this->action) {
                 default:
+                            $code = html_entity_decode(Params::getParam('code'));
                             $plugins = Plugins::listAll();
+                            $themes = WebThemes::newInstance()->getListThemes();
                             View::newInstance()->_exportVariableToView('plugins', $plugins);
+                            View::newInstance()->_exportVariableToView('themes', $themes);
+                            View::newInstance()->_exportVariableToView('code', $code);
                             $this->doView('universe/index.php');
                 break;
             }

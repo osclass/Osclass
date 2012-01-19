@@ -69,6 +69,10 @@
                         </div>
                         <div id="current_theme_desc"><?php echo $info['description']; ?></div>
 
+                        <?php if(osc_check_update(@$info['theme_update_uri'], @$info['version'])) { ?>
+                            <div id="current_theme_update"><a href='<?php echo osc_admin_base_url(true);?>?page=universe&code=<?php echo htmlentities($info['theme_update_uri']); ?>'><?php _e("There's a new version available to update"); ?></a></div>
+                        <?php }; ?>
+                        
                         <div id="content_separator"></div>
                         <div id="current_theme"><?php _e('Available themes'); ?></div>
 
@@ -91,6 +95,11 @@
                                                 <img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo $theme ; ?>/screenshot.png" style="width: 280px; height: auto;" title="" alt="" />
                                             </div>
                                             <div id="available_theme_desc"><?php echo $info['description'] ; ?></div>
+
+                                            <?php if(osc_check_update(@$info['theme_update_uri'], @$info['version'])) { ?>
+                                                <div id="available_theme_update"><a href='<?php echo osc_admin_base_url(true);?>?page=universe&code=<?php echo htmlentities($info['theme_update_uri']); ?>'><?php _e("There's a new version available to update"); ?></a></div>
+                                            <?php }; ?>
+                        
                                             <div style="clear: both;"></div>
                                         </div>
                                     </center>

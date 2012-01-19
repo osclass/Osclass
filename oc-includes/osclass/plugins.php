@@ -318,26 +318,7 @@
 
         static function checkUpdate($plugin) {
             $info = Plugins::getInfo($plugin);
-            if($info['plugin_update_uri']!="") {
-                
-                if(stripos("http://", $info['plugin_update_uri'])===FALSE) {
-                    // OSCLASS OFFICIAL REPOSITORY
-                    $uri = osc_market_url($info['plugin_update_uri']);
-                } else {
-                    // THIRD PARTY REPOSITORY
-                    $uri = $info['plugin_update_uri'];
-                }
-
-                if(false===($json=@osc_file_get_contents($uri))) {
-                    return false;
-                } else {
-                    $data = json_decode($json , true);
-                    if(isset($data['s_version']) && $data['s_version']>$info['version']) {
-                        return true;
-                    }
-                }
-            }
-            return false;
+            return osc_check_update($info['plugin_update_uri'], $info['version']);
         }
 
 

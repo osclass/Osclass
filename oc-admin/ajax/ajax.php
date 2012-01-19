@@ -641,7 +641,12 @@
                             $data = json_decode(osc_file_get_contents(osc_market_url($code)), true);
                         } else {
                             // THIRD PARTY REPOSITORY
-                            $data = json_decode(osc_file_get_contents($code), true);
+                            if(osc_market_external_sources()) {
+                                $data = json_decode(osc_file_get_contents($code), true);
+                            } else {
+                                echo json_encode(array('error' => 8, 'error_msg' => __('No external sources are allowed')));
+                                break;
+                            }
                         }
                         /***********************
                          **** DOWNLOAD FILE ****
@@ -653,6 +658,8 @@
                             $result = osc_downloadFile($data['s_source_file'], $filename);
                             if($data['e_type']=='THEME') {
                                 $folder = 'themes/';
+                            } else if($data['e_type']=='LANGUAGE') {
+                                $folder = 'languages/';
                             } else {
                                 $folder = 'plugins/';
                             }
@@ -753,7 +760,12 @@
                             $data = json_decode(osc_file_get_contents(osc_market_url($code)), true);
                         } else {
                             // THIRD PARTY REPOSITORY
-                            $data = json_decode(osc_file_get_contents($code), true);
+                            if(osc_market_external_sources()) {
+                                $data = json_decode(osc_file_get_contents($code), true);
+                            } else {
+                                echo json_encode(array('error' => 3, 'error_msg' => __('No external sources are allowed')));
+                                break;
+                            }
                         }
                         if(!isset($data['s_source_file']) || !isset($data['s_name']) || !isset($data['s_version']) || !isset($data['e_type']) || (isset($data['e_type']) && $data['e_type']!='PLUGIN' && $data['e_type']!='THEME')) {
                             $data = array('error' => 2, 'error_msg' => __('Not a valid code'));

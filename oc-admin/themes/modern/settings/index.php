@@ -185,6 +185,14 @@
 
                             <div style="float: left; width: 50%;">
                                 <fieldset>
+                                    <legend><?php _e('External sources') ; ?></legend>
+                                    <input type="checkbox" id="market_external_sources" name="market_external_sources" value="1" <?php if(osc_market_external_sources()==1) {echo "checked";}; ?>/>
+                                    <label for="market_external_sources"><?php _e('Allow download packages from external sources');?></label>
+                                </fieldset>
+                            </div>
+
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
                                     <legend><?php _e('Number of items in the RSS') ; ?></legend>
                                     <input type="text" id="num_rss_items" name="num_rss_items" value="<?php echo osc_num_rss_items(); ?>" onblur='validateInt(this,<?php echo osc_num_rss_items(); ?>)'/>
                                 </fieldset>

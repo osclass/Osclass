@@ -538,7 +538,7 @@
      *
      * @return int 
      */
-    function osc_market_external_sourcesurl() {
+    function osc_market_external_sources() {
         return(getBoolPreference('marketAllowExternalSources')) ;
     }
     
