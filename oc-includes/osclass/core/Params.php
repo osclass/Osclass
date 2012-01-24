@@ -21,12 +21,26 @@
      */
 
 
+    require_once LIB_PATH . 'htmlpurifier/HTMLPurifier.auto.php';
+    
     class Params
-    {
-        
+    {    
         private static $purifier;
+        private static $config;
         
-        function __construct() { }
+        function __construct() 
+        { 
+            self::$config = HTMLPurifier_Config::createDefault();
+            $allowed = 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]';
+            $allowed .= 'object[align<bottom?left?middle?right?top|archive|border|class|classid|codebase|codetype|data|';
+            $allowed .= 'declare|dir<ltr?rtl|height|hspace|id|lang|name|onclick|ondblclick|onkeydown|onkeypress|onkeyup|';
+            $allowed .= 'onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|standby|style|tabindex|title|type|usemap|vspace|width]';
+            self::$config->set('HTML.Allowed', $allowed);
+            self::$config->set("HTML.SafeEmbed", true);
+            self::$config->set("HTML.SafeObject", true);
+            self::$config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
+            self::$config->set('Cache.SerializerPath', ABS_PATH . 'oc-content/uploads');
+        }
 
         static function getParam($param, $htmlencode = false, $xss_check = true)
         {
@@ -34,18 +48,7 @@
             if (!isset($_REQUEST[$param])) return '' ;
 
             if($xss_check==true && !isset(self::$purifier)) {
-                require_once LIB_PATH . 'htmlpurifier/HTMLPurifier.auto.php';
-                $config = HTMLPurifier_Config::createDefault();
-                $allowed = 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]';
-                $allowed .= 'object[align<bottom?left?middle?right?top|archive|border|class|classid|codebase|codetype|data|';
-                $allowed .= 'declare|dir<ltr?rtl|height|hspace|id|lang|name|onclick|ondblclick|onkeydown|onkeypress|onkeyup|';
-                $allowed .= 'onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|standby|style|tabindex|title|type|usemap|vspace|width]';
-                $config->set('HTML.Allowed', $allowed);
-                $config->set("HTML", "SafeEmbed", true);
-                $config->set("HTML", "SafeObject", true);
-                $config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
-                $config->set('Cache.SerializerPath', ABS_PATH . 'oc-content/uploads');
-                self::$purifier = new HTMLPurifier($config);
+                self::$purifier = new HTMLPurifier(self::$config);
             }
             
             $value = $_REQUEST[$param];
@@ -107,12 +110,7 @@
             
             if($xss_check==true) {
                 if(!isset(self::$purifier)) {
-                    require_once LIB_PATH . 'htmlpurifier/HTMLPurifier.auto.php';
-                    $config = HTMLPurifier_Config::createDefault();
-                    $config->set('HTML.Allowed', 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style]');
-                    $config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
-                    $config->set('Cache.SerializerPath', ABS_PATH . 'oc-content/uploads');
-                    self::$purifier = new HTMLPurifier($config);
+                    self::$purifier = new HTMLPurifier(self::$config);
                 }
                 foreach($value as $k => $v) {
                     $value[$k] = self::$purifier->purify($v);
