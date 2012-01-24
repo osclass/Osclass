@@ -20,7 +20,6 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-
     require_once LIB_PATH . 'htmlpurifier/HTMLPurifier.auto.php';
     
     class Params
@@ -47,25 +46,10 @@
             if ($param == "") return '' ;
             if (!isset($_REQUEST[$param])) return '' ;
 
-            if($xss_check==true && !isset(self::$purifier)) {
-                self::$purifier = new HTMLPurifier(self::$config);
-            }
-            
-            $value = $_REQUEST[$param];
+            $value = $this->_purify($_REQUEST[$param], $xss_check) ;
 
-            if (!is_array($value)) {
-                if($xss_check) {
-                    $value = self::$purifier->purify($_REQUEST[$param]);
-                }
-                if ($htmlencode) {
-                    return htmlspecialchars(stripslashes($value), ENT_QUOTES);
-                }
-            } else {
-                if($xss_check) {
-                    foreach($value as $k => $v) {
-                        $value[$k] = self::$purifier->purify($v);
-                    }
-                }
+            if ($htmlencode) {
+                return htmlspecialchars(stripslashes($value), ENT_QUOTES);
             }
 
             if(get_magic_quotes_gpc()) {
@@ -75,7 +59,8 @@
             return ($value);
         }
 
-        static function existParam($param) {
+        static function existParam($param)
+        {
             if ($param == "") return false ;
             if (!isset($_REQUEST[$param])) return false ;
             return true;
@@ -85,9 +70,9 @@
         {
             if (isset($_FILES[$param])) {
                 return ($_FILES[$param]);
-            } else {
-                return "";
             }
+
+            return "";
         }
 
         //$what = "post, get, cookie"
@@ -107,18 +92,13 @@
                     $value = $_REQUEST;
                 break;
             }
-            
-            if($xss_check==true) {
-                if(!isset(self::$purifier)) {
-                    self::$purifier = new HTMLPurifier(self::$config);
-                }
-                foreach($value as $k => $v) {
-                    $value[$k] = self::$purifier->purify($v);
-                }
-            }
+
+            $value = $this->_purify($value, $xss_check) ;
+
             if(get_magic_quotes_gpc()) {
-                return strip_slashes_extended($value);
+                return strip_slashes_extended($value) ;
             }
+
             return $value;
         }
 
@@ -129,8 +109,28 @@
             $_POST[$key] = $value;
         }
 
-        static function _view() {
+        static function _view()
+        {
             print_r(self::getParamsAsArray()) ;
+        }
+
+        private function _purify($value, $xss_check)
+        {
+            if( !$xss_check ) {
+                return $value ;
+            }
+
+            if( !isset(self::$purifier) ) {
+                self::$purifier = new HTMLPurifier(self::$config);
+            }
+
+            if( is_array($value) ) {
+                foreach($value as $k => &$v) {
+                    $v = $this->_purify($v, $xss_check) ;
+                }
+            }
+
+            return self::$purifier->purify($value) ;
         }
     }
 
