@@ -47,7 +47,7 @@
                 theme : "advanced",
                 skin: "o2k7",
                 width: "70%",
-                height: "140px",
+                height: "340px",
                 skin_variant : "silver",
                 theme_advanced_buttons1 : "bold,italic,underline,separator,undo,redo,separator,justifycenter,justifyright,justifyfull,separator,bullist,numlist,separator,link,unlink,separator,image,code",
                 theme_advanced_buttons2 : "",
@@ -74,7 +74,7 @@
                 <?php osc_show_flash_message('admin') ; ?>
                 <!-- add new page form -->
                 <div id="settings_form">
-                    <form name="pages_form" id="pages_form" action="<?php echo osc_admin_base_url(true); ?>?page=pages" method="post" onSubmit="return checkForm()">
+                    <form name="pages_form" id="pages_form" action="<?php echo osc_admin_base_url(true); ?>?page=pages" method="post">
                         <input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
                         <?php PageForm::primary_input_hidden($page); ?>
                         <div class="FormElement">

@@ -46,13 +46,11 @@
         }
     }
 
-
     Preference::newInstance()->update(array('s_value' => time()), array( 's_section' => 'osclass', 's_name' => 'last_version_check'));
 
     $conn = DBConnectionClass::newInstance();
     $c_db = $conn->getOsclassDb() ;
     $comm = new DBCommandClass( $c_db ) ;
-
 
     if(osc_version() < 210) {
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'save_latest_searches', '0', 'BOOLEAN')", DB_TABLE_PREFIX));
@@ -204,14 +202,15 @@
         osc_changeVersionTo(230) ;
     }
 
-    
     if(osc_version() < 234) {
         @unlink(osc_admin_base_path()."upgrade.php");
         @unlink(osc_admin_base_path()."/themes/modern/tools/upgrade-plugins.php");
         @unlink(osc_admin_base_path()."upgrade-plugin.php");
         osc_changeVersionTo(234) ;
     }
-    
+
+    osc_changeVersionTo(235) ;
+
     if(Params::getParam('action') == '') {
         $title   = 'OSClass &raquo; Updated correctly' ;
         $message = 'OSClass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>';

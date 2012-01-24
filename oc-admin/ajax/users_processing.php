@@ -135,9 +135,9 @@
 
                     $this->sOutput .= '</div></div>",';
                     
-                    $this->sOutput .= '"'.addslashes($aRow['s_name']).'",';
-                    $this->sOutput .= '"'.addslashes($aRow['dt_reg_date']).'",';
-                    $this->sOutput .= '"'.addslashes($aRow['dt_mod_date']).'"';
+                    $this->sOutput .= '"'.addslashes(osc_esc_html($aRow['s_name'])).'",';
+                    $this->sOutput .= '"'.addslashes(osc_esc_html($aRow['dt_reg_date'])).'",';
+                    $this->sOutput .= '"'.addslashes(osc_esc_html($aRow['dt_mod_date'])).'"';
 
                     if($this->extraCols > 0) $this->sOutput .= ',';
 

@@ -132,7 +132,7 @@
         </ul>
 
         <h3>
-            <a href="#"><?php _e('General settings'); ?></a>
+            <a href="#"><?php _e('Settings'); ?></a>
         </h3>
         <ul>
             <li>
@@ -226,7 +226,7 @@
         </h3>
         <ul>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=admins">&raquo; <?php _e('List administrators'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=admins">&raquo; <?php _e('Manage administrators'); ?></a>
             </li>
             <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=admins&action=add">&raquo; <?php _e('Add new administrator'); ?></a>

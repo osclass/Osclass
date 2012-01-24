@@ -108,13 +108,15 @@
 
                     foreach ($aIds as $id => $parent) {
                         if ($parent == 'root') {
-                            if (!$catManager->updateOrder($id, $orderParent)) {
+                            $res = $catManager->updateOrder($id, $orderParent);
+                            if (is_bool($res) && !$res) {
                                 $error = 1;
                             }
                             // set parent category 
                             $conditions = array('pk_i_id' => $id);
                             $array['fk_i_parent_id'] = NULL;
-                            if (!$catManager->update($array, $conditions) > 0) {
+                            $res = $catManager->update($array, $conditions);
+                            if (is_bool($res) && !$res) {
                                 $error = 1;
                             }
                             $orderParent++;
@@ -123,31 +125,31 @@
                                 $catParent = $parent;
                                 $orderSub = 0;
                             }
-                            if (!$catManager->updateOrder($id, $orderSub)) {
+                            
+                            $res = $catManager->updateOrder($id, $orderSub);
+                            if (is_bool($res) && !$res ) {
                                 $error = 1;
                             }
 
                             // set parent category 
                             $conditions = array('pk_i_id' => $id);
                             $array['fk_i_parent_id'] = $catParent;
-                            if (!$catManager->update($array, $conditions) > 0) {
+                            
+                            $res = $catManager->update($array, $conditions);
+                            if (is_bool($res) && !$res) {
                                 $error = 1;
                             }
                             $orderSub++;
                         }
                     }
 
-                    $result = "{";
-                    $error = 0;
-
-                    if ($error) {
-                        $result .= '"error" : "' . __("Some error ocurred") . '"';
+                    if($error) {
+                        $result = array( 'error' => __("Some error ocurred") ) ;
                     } else {
-                        $result .= '"ok" : "' . __("Order saved") . '"';
+                        $result = array( 'ok' => __("Order saved") ) ;
                     }
-                    $result .= "}";
-
-                    echo $result;
+                    echo json_encode($result) ;
+                    
                     break;
                 case 'category_edit_iframe':
                     $this->_exportVariableToView( 'category', Category::newInstance()->findByPrimaryKey( Params::getParam("id") ) ) ;
@@ -166,66 +168,73 @@
                     break;
                 case 'field_categories_post':
                     $error = 0;
-                    if (!$error) {
-                        try {
-                            $field = Field::newInstance()->findByName(Params::getParam("s_name"));
-                            if (!isset($field['pk_i_id']) || (isset($field['pk_i_id']) && $field['pk_i_id'] == Params::getParam("id"))) {
-                                Field::newInstance()->cleanCategoriesFromField(Params::getParam("id"));
-                                $slug = Params::getParam("field_slug") != '' ? Params::getParam("field_slug") : Params::getParam("id");
-                                $slug = preg_replace('|([-]+)|', '-', preg_replace('|[^a-z0-9_-]|', '-', strtolower($slug)));
-                                Field::newInstance()->update(array('s_name' => Params::getParam("s_name"), 'e_type' => Params::getParam("field_type"), 's_slug' => $slug, 'b_required' => Params::getParam("field_required") == "1" ? 1 : 0, 's_options' => Params::getParam('s_options')), array('pk_i_id' => Params::getParam("id")));
-                                Field::newInstance()->insertCategories(Params::getParam("id"), Params::getParam("categories"));
-                            } else {
+                    $field = Field::newInstance()->findByName(Params::getParam("s_name"));
+                    
+                    if (!isset($field['pk_i_id']) || (isset($field['pk_i_id']) && $field['pk_i_id'] == Params::getParam("id"))) {
+                        // remove categories from a field
+                        Field::newInstance()->cleanCategoriesFromField(Params::getParam("id"));
+                        // no error... continue updating fields
+                        if($error == 0) {
+                            $slug = Params::getParam("field_slug") != '' ? Params::getParam("field_slug") : Params::getParam("id");
+                            $slug = preg_replace('|([-]+)|', '-', preg_replace('|[^a-z0-9_-]|', '-', strtolower($slug)));
+                            $res = Field::newInstance()->update(array('s_name' => Params::getParam("s_name"), 'e_type' => Params::getParam("field_type"), 's_slug' => $slug, 'b_required' => Params::getParam("field_required") == "1" ? 1 : 0, 's_options' => Params::getParam('s_options')), array('pk_i_id' => Params::getParam("id")));
+                            if(is_bool($res) && !$res) {
                                 $error = 1;
-                                $message = __("Sorry, you already have one field with that name");
                             }
-                        } catch (Exception $e) {
-                            $error = 1;
+                        }
+                        // no error... continue inserting categories-field
+                        if($error == 0) {
+                            $aCategories = Params::getParam("categories");
+                            if( is_array($aCategories) && count($aCategories) > 0) {
+                                $res = Field::newInstance()->insertCategories(Params::getParam("id"), $aCategories);
+                                if(!$res) {
+                                    $error = 1;
+                                }
+                            }
+                        }
+                        // error while updating?
+                        if($error == 1) {
                             $message = __("Error while updating.");
                         }
-                    }
-
-                    $result = "{";
-                    if ($error) {
-                        $result .= '"error" : "';
-                        $result .= $message;
-                        $result .= '"';
                     } else {
-                        $result .= '"ok" : "' . __("Saved") . '", "text" : "' . Params::getParam("s_name") . '"';
+                        $error = 1;
+                        $message = __("Sorry, you already have one field with that name");
                     }
-                    $result .= "}";
 
-                    echo $result;
+                    if($error) {
+                        $result = array( 'error' => $message) ;
+                    } else {
+                        $result = array( 'ok' => __("Saved") , 'text' => Params::getParam("s_name")) ;
+                    }
+                    
+                    echo json_encode($result) ;
+                    
                     break;
                 case 'delete_field':
                     $id = Params::getParam("id");
                     $error = 0;
 
-                    try {
-                        $fieldManager = Field::newInstance();
-                        $fieldManager->deleteByPrimaryKey($id);
-
+                    $fieldManager = Field::newInstance();
+                    $res = $fieldManager->deleteByPrimaryKey($id);
+                    
+                    if($res > 0) {
                         $message = __('The custom field have been deleted');
-                    } catch (Exception $e) {
+                    } else {
                         $error = 1;
                         $message = __('Error while deleting');
                     }
 
-                    $result = "{";
-                    if ($error) {
-                        $result .= '"error" : "';
-                        $result .= $message;
-                        $result .= '"';
+                    if($error) {
+                        $result = array( 'error' => $message) ;
                     } else {
-                        $result .= '"ok" : "Saved." ';
+                        $result = array( 'ok' => __("Saved") ) ;
                     }
-                    $result .= "}";
+                    echo json_encode($result) ;
 
-                    echo $result;
                     break;
                 case 'enable_category':
-                    $id       = Params::getParam("id") ;
-                    $enabled  = (Params::getParam("enabled") != '') ? Params::getParam("enabled") : 0 ;
+                    $id       = strip_tags( Params::getParam('id') ) ;
+                    $enabled  = (Params::getParam('enabled') != '') ? Params::getParam('enabled') : 0 ;
                     $error    = 0 ;
                     $result   = array() ;
                     $aUpdated = array() ;
@@ -285,36 +294,32 @@
                     }
                     $result['affectedIds'] = array( array('id' => $id) ) ;
                     echo json_encode($result) ;
+                    
                     break ;
                 case 'delete_category':
                     $id = Params::getParam("id");
                     $error = 0;
-
-                    try {
-                        $categoryManager = Category::newInstance();
-                        $categoryManager->deleteByPrimaryKey($id);
-
+                    
+                    $categoryManager = Category::newInstance();
+                    $res = $categoryManager->deleteByPrimaryKey($id);
+                    
+                    if($res > 0) {
                         $message = __('The categories have been deleted');
-                    } catch (Exception $e) {
+                    } else {
                         $error = 1;
                         $message = __('Error while deleting');
                     }
 
-                    $result = "{";
-                    if ($error) {
-                        $result .= '"error" : "';
-                        $result .= $message;
-                        $result .= '"';
+                    if($error) {
+                        $result = array( 'error' => $message) ;
                     } else {
-                        $result .= '"ok" : "Saved." ';
+                        $result = array( 'ok' => __("Saved") ) ;
                     }
-                    $result .= "}";
-
-                    echo $result;
+                    echo json_encode($result) ;
+                    
                     break;
                 case 'edit_category_post':
                     $id = Params::getParam("id");
-
                     $fields['i_expiration_days'] = (Params::getParam("i_expiration_days") != '') ? Params::getParam("i_expiration_days") : 0;
 
                     $error = 0;
@@ -339,10 +344,10 @@
 
                     $l = osc_language();
                     if ($error==0 || ($error==1 && $has_one_title==1)) {
-                        try {
-                            $categoryManager = Category::newInstance();
-                            $categoryManager->updateByPrimaryKey(array('fields' => $fields, 'aFieldsDescription' => $aFieldsDescription), $id);
-                        } catch (Exception $e) {
+                        $categoryManager = Category::newInstance();
+                        $res = $categoryManager->updateByPrimaryKey(array('fields' => $fields, 'aFieldsDescription' => $aFieldsDescription), $id);
+                        
+                        if( is_bool($res) ) {
                             $error = 2;
                         }
                     }
@@ -360,6 +365,7 @@
                         $msg = __('Error while updating');
                     }
                     echo json_encode(array('error' => $error, 'msg' => $msg, 'text' => $aFieldsDescription[$l]['s_name']));
+                    
                     break;
                 case 'custom': // Execute via AJAX custom file
                     $ajaxfile = Params::getParam("ajaxfile");
@@ -411,6 +417,7 @@
                                 $new_order = $actual_order+1;
                             }
                         }
+                        
                         if($new_order != $actual_order) {
                             $auxpage = $mPages->findByOrder($new_order);
 
@@ -422,10 +429,8 @@
                             $conditions = array('pk_i_id' => $id);
                             $mPages->update($array, $conditions);
 
-                        } else {
-                            
                         }
-                        
+                        // TO BE IMPROVED
                         // json for datatables
                         $prefLocale = osc_current_admin_locale();
                         $aPages = $mPages->listAll(0);
@@ -442,7 +447,7 @@
                             $p_body =  str_replace("'", "\'", trim(strip_tags($body['s_title']), "\x22\x27"));
 
                             $json .= "[\"<input type='checkbox' name='id[]' value='". $page['pk_i_id'] ."' />\",";
-                            $json .= "\"".$page['s_internal_name']."<div id='datatables_quick_edit'>";
+                            $json .= "\"".osc_esc_html($page['s_internal_name'])."<div id='datatables_quick_edit'>";
                             $json .= "<a href='". osc_static_page_url() ."'>". __('View page') ."</a> | ";
                             $json .= "<a href='". osc_admin_base_url(true) ."?page=pages&action=edit&id=". $page['pk_i_id'] ."'>";
                             $json .= __('Edit') ."</a>";
@@ -462,6 +467,7 @@
                         $json .= "]";
                         echo $json;
                     }
+
                     break;
 
                 /******************************
@@ -483,11 +489,14 @@
                     /***********************
                      **** DOWNLOAD FILE ****
                      ***********************/
-                    if (Params::getParam('file') != '') {
+                    $data = osc_file_get_contents("http://osclass.org/latest_version.php");
+                    $data = json_decode(substr($data, 1, strlen($data)-3), true);
+                    $source_file = $data['url'];
+                    if ($source_file != '') {
 
-                        $tmp = explode("/", Params::getParam('file'));
+                        $tmp = explode("/", $source_file);
                         $filename = end($tmp);
-                        $result = osc_downloadFile(Params::getParam('file'), $filename);
+                        $result = osc_downloadFile($source_file, $filename);
 
                         if ($result) { // Everything is OK, continue
                             /**********************

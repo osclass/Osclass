@@ -58,7 +58,7 @@
 
                             var tempAr = data.url.split('/') ;
                             fileToUnzip = tempAr.pop() ;
-                            $.get('<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=upgrade&file=' + data.url, function(data) {
+                            $.get('<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=upgrade' , function(data) {
                                 var loading_image = document.getElementById('loading_image');
                                 loading_image.style.display = "none";
                                 steps.innerHTML += data+"<br/>";

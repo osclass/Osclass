@@ -72,10 +72,10 @@
                             <div style="padding: 4px; width: 90%;">
                                 <div style="float:left;">
                                     <div>
-                                        <a class="close" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations&type=delete_country&id=<?php echo $country['pk_c_code'] ; ?>">
+                                        <a class="close" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations&type=delete_country&id=<?php echo urlencode($country['pk_c_code']) ; ?>">
                                             <img src="<?php echo osc_admin_base_url() ; ?>images/close.png" alt="<?php _e('Close'); ?>" title="<?php _e('Close'); ?>" />
                                         </a>
-                                        <a class="edit" href="javascript:void(0);" style="padding-right: 15px;" onclick="edit_countries($(this));" data="<?php echo $data;?>" code="<?php echo $country['pk_c_code'];?>"><?php echo $country['s_name'] ; ?></a>
+                                        <a class="edit" href="javascript:void(0);" style="padding-right: 15px;" onclick="edit_countries($(this));" data="<?php echo osc_esc_html($data);?>" code="<?php echo $country['pk_c_code'];?>"><?php echo $country['s_name'] ; ?></a>
                                     </div>
                                 </div>
                                 <div style="float:right">
@@ -163,8 +163,8 @@
                         </p>
                     <?php }; ?>
                     <div style="margin-top: 8px; text-align: right; ">
-                        <input type="button" value="<?php _e('Cancel'); ?>" onclick="$('#d_add_country').css('display','none');$('#fade').css('display','none');"/>
-                        <input type="submit" name="submit" value="<?php _e('Add'); ?>" />
+                        <input type="button" value="<?php osc_esc_html(_e('Cancel')); ?>" onclick="$('#d_add_country').css('display','none');$('#fade').css('display','none');"/>
+                        <input type="submit" name="submit" value="<?php osc_esc_html(_e('Add')); ?>" />
                     </div>
                 </form>
             </div>
@@ -202,8 +202,8 @@
                         </p>
                     <?php }; ?>
                     <div style="margin-top: 8px; text-align: right; ">
-                        <input type="button" value="<?php _e('Cancel'); ?>" onclick="$('#d_edit_country').css('display','none');$('#fade').css('display','none');"/>
-                        <input type="submit" name="submit" value="<?php _e('Edit'); ?>" />
+                        <input type="button" value="<?php osc_esc_html(_e('Cancel')); ?>" onclick="$('#d_edit_country').css('display','none');$('#fade').css('display','none');"/>
+                        <input type="submit" name="submit" value="<?php osc_esc_html(_e('Edit')); ?>" />
                     </div>
                 </form>
             </div>
@@ -229,8 +229,8 @@
                         </tr>
                     </table>
                     <div style="margin-top: 8px; text-align: right; ">
-                        <input type="button" value="<?php _e('Cancel'); ?>" onclick="$('#d_add_region').css('display','none');$('#fade').css('display','none');"/>
-                        <input type="submit" name="submit" value="<?php _e('Add'); ?>" />
+                        <input type="button" value="<?php osc_esc_html(_e('Cancel')); ?>" onclick="$('#d_add_region').css('display','none');$('#fade').css('display','none');"/>
+                        <input type="submit" name="submit" value="<?php osc_esc_html(_e('Add')); ?>" />
                     </div>
                 </form>
             </div>
@@ -254,8 +254,8 @@
                         </tr>
                     </table>
                     <div style="margin-top: 8px; text-align: right; ">
-                        <input type="button" value="<?php _e('Cancel'); ?>" onclick="$('#d_edit_region').css('display','none');$('#fade').css('display','none');"/>
-                        <input type="submit" name="submit" value="<?php _e('Edit'); ?>" />
+                        <input type="button" value="<?php osc_esc_html(_e('Cancel')); ?>" onclick="$('#d_edit_region').css('display','none');$('#fade').css('display','none');"/>
+                        <input type="submit" name="submit" value="<?php osc_esc_html(_e('Edit')); ?>" />
                     </div>
                 </form>
             </div>
@@ -282,8 +282,8 @@
                         </tr>
                     </table>
                     <div style="margin-top: 8px; text-align: right; ">
-                        <input type="button" value="<?php _e('Cancel'); ?>" onclick="$('#d_add_city').css('display','none');$('#fade').css('display','none');"/>
-                        <input type="submit" name="submit" value="<?php _e('Add'); ?>" />
+                        <input type="button" value="<?php osc_esc_html(_e('Cancel')); ?>" onclick="$('#d_add_city').css('display','none');$('#fade').css('display','none');"/>
+                        <input type="submit" name="submit" value="<?php osc_esc_html(_e('Add')); ?>" />
                     </div>
                 </form>
             </div>
@@ -307,8 +307,8 @@
                         </tr>
                     </table>
                     <div style="margin-top: 8px; text-align: right; ">
-                        <input type="button" value="<?php _e('Cancel'); ?>" onclick="$('#d_edit_city').css('display','none');$('#fade').css('display','none');"/>
-                        <input type="submit" name="submit" value="<?php _e('Edit'); ?>" />
+                        <input type="button" value="<?php osc_esc_html(_e('Cancel')); ?>" onclick="$('#d_edit_city').css('display','none');$('#fade').css('display','none');"/>
+                        <input type="submit" name="submit" value="<?php osc_esc_html(_e('Edit')); ?>" />
                     </div>
                 </form>
             </div>
