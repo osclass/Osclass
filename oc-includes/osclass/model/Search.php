@@ -708,7 +708,8 @@
                 $whe .= ' AND '.DB_TABLE_PREFIX.'t_item.fk_i_category_id IN ('.$listCategories.') ';
             }
             $this->dao->where( $whe );
-            // order & limit
+            // group by & order & limit
+            $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
             $this->dao->orderBy(DB_TABLE_PREFIX.'t_item.pk_i_id', 'DESC');
             $this->dao->limit(0, $numItems);
             $rs = $this->dao->get();
