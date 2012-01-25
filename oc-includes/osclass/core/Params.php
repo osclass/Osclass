@@ -20,11 +20,12 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-
+    require_once LIB_PATH . 'htmlpurifier/HTMLPurifier.auto.php';
+    
     class Params
-    {
-        
+    {    
         private static $purifier;
+        private static $config;
         
         function __construct() { }
 
@@ -33,36 +34,10 @@
             if ($param == "") return '' ;
             if (!isset($_REQUEST[$param])) return '' ;
 
-            if($xss_check==true && !isset(self::$purifier)) {
-                require_once LIB_PATH . 'htmlpurifier/HTMLPurifier.auto.php';
-                $config = HTMLPurifier_Config::createDefault();
-                $allowed = 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]';
-                $allowed .= 'object[align<bottom?left?middle?right?top|archive|border|class|classid|codebase|codetype|data|';
-                $allowed .= 'declare|dir<ltr?rtl|height|hspace|id|lang|name|onclick|ondblclick|onkeydown|onkeypress|onkeyup|';
-                $allowed .= 'onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|standby|style|tabindex|title|type|usemap|vspace|width]';
-                $config->set('HTML.Allowed', $allowed);
-                $config->set("HTML.SafeEmbed", true);
-                $config->set("HTML.SafeObject", true);
-                $config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
-                $config->set('Cache.SerializerPath', ABS_PATH . 'oc-content/uploads');
-                self::$purifier = new HTMLPurifier($config);
-            }
-            
-            $value = $_REQUEST[$param];
+            $value = self::_purify($_REQUEST[$param], $xss_check) ;
 
-            if (!is_array($value)) {
-                if($xss_check) {
-                    $value = self::$purifier->purify($_REQUEST[$param]);
-                }
-                if ($htmlencode) {
-                    return htmlspecialchars(stripslashes($value), ENT_QUOTES);
-                }
-            } else {
-                if($xss_check) {
-                    foreach($value as $k => $v) {
-                        $value[$k] = self::$purifier->purify($v);
-                    }
-                }
+            if ($htmlencode) {
+                return htmlspecialchars(stripslashes($value), ENT_QUOTES);
             }
 
             if(get_magic_quotes_gpc()) {
@@ -72,7 +47,8 @@
             return ($value);
         }
 
-        static function existParam($param) {
+        static function existParam($param)
+        {
             if ($param == "") return false ;
             if (!isset($_REQUEST[$param])) return false ;
             return true;
@@ -82,9 +58,9 @@
         {
             if (isset($_FILES[$param])) {
                 return ($_FILES[$param]);
-            } else {
-                return "";
             }
+
+            return "";
         }
 
         //$what = "post, get, cookie"
@@ -104,25 +80,13 @@
                     $value = $_REQUEST;
                 break;
             }
-            
-            if($xss_check==true) {
-                if(!isset(self::$purifier)) {
-                    require_once LIB_PATH . 'htmlpurifier/HTMLPurifier.auto.php';
-                    $config = HTMLPurifier_Config::createDefault();
-                    $config->set('HTML.Allowed', 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style]');
-                    $config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
-                    $config->set('Cache.SerializerPath', ABS_PATH . 'oc-content/uploads');
-                    self::$purifier = new HTMLPurifier($config);
-                }
-                foreach($value as $k => $v) {
-                    if(!is_array($v)) {
-                        $value[$k] = self::$purifier->purify($v);
-                    }
-                }
-            }
+
+            $value = self::_purify($value, $xss_check) ;
+
             if(get_magic_quotes_gpc()) {
-                return strip_slashes_extended($value);
+                return strip_slashes_extended($value) ;
             }
+
             return $value;
         }
 
@@ -133,8 +97,41 @@
             $_POST[$key] = $value;
         }
 
-        static function _view() {
+        static function _view()
+        {
             print_r(self::getParamsAsArray()) ;
+        }
+
+        static private function _purify($value, $xss_check)
+        {
+            self::$config = HTMLPurifier_Config::createDefault();
+            $allowed = 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]';
+            $allowed .= 'object[align<bottom?left?middle?right?top|archive|border|class|classid|codebase|codetype|data|';
+            $allowed .= 'declare|dir<ltr?rtl|height|hspace|id|lang|name|onclick|ondblclick|onkeydown|onkeypress|onkeyup|';
+            $allowed .= 'onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|standby|style|tabindex|title|type|usemap|vspace|width]';
+            self::$config->set('HTML.Allowed', $allowed);
+            self::$config->set("HTML.SafeEmbed", true);
+            self::$config->set("HTML.SafeObject", true);
+            self::$config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
+            self::$config->set('Cache.SerializerPath', ABS_PATH . 'oc-content/uploads');
+
+            if( !$xss_check ) {
+                return $value ;
+            }
+
+            if( !isset(self::$purifier) ) {
+                self::$purifier = new HTMLPurifier(self::$config);
+            }
+
+            if( is_array($value) ) {
+                foreach($value as $k => &$v) {
+                    $v = self::_purify($v, $xss_check) ;
+                }
+            } else {
+                $value = self::$purifier->purify($value) ;
+            }
+
+            return $value ;
         }
     }
 
