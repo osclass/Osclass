@@ -121,7 +121,8 @@
     }
 
     if(osc_version() < 230) {
-        $comm->query(sprintf("CREATE TABLE %st_item_description_tmp (
+        $comm->query(sprintf("
+CREATE TABLE %st_item_description_tmp (
     fk_i_item_id INT UNSIGNED NOT NULL,
     fk_c_locale_code CHAR(5) NOT NULL,
     s_title VARCHAR(100) NOT NULL,
@@ -202,14 +203,19 @@
         osc_changeVersionTo(230) ;
     }
 
-    if(osc_version() < 234) {
+    if( osc_version() < 234 ) {
         @unlink(osc_admin_base_path()."upgrade.php");
         @unlink(osc_admin_base_path()."/themes/modern/tools/upgrade-plugins.php");
         @unlink(osc_admin_base_path()."upgrade-plugin.php");
         osc_changeVersionTo(234) ;
     }
 
-    osc_changeVersionTo(235) ;
+    if( osc_version() < 240 ) {
+        // We no longer use s_what column in /*TABLE_PREFIX*/t_item_description
+        $comm->query( sprintf('ALTER TABLE %st_item_description DROP COLUMN s_what', DB_TABLE_PREFIX) ) ;
+    }
+
+    osc_changeVersionTo(240) ;
 
     if(Params::getParam('action') == '') {
         $title   = 'OSClass &raquo; Updated correctly' ;

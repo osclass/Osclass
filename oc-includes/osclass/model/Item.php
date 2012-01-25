@@ -342,8 +342,7 @@
                 'fk_i_item_id'      => $id,
                 'fk_c_locale_code'  => $locale,
                 's_title'           => $title,
-                's_description'     => $description,
-                's_what'            => $what
+                's_description'     => $description
             ) ;
             return $this->dao->insert(DB_TABLE_PREFIX.'t_item_description', $array_set) ;
         }
@@ -510,8 +509,7 @@
                 's_title'           => $title,
                 's_description'     => $text,
                 'fk_c_locale_code'  => $locale,
-                'fk_i_item_id'      => $id,
-                's_what'            => $title . " " . $text
+                'fk_i_item_id'      => $id
             );
             return $this->dao->replace(DB_TABLE_PREFIX.'t_item_description', $array_replace) ;
         }        
@@ -688,16 +686,14 @@
                         $item['locale'][$desc['fk_c_locale_code']] = $desc;
                     }
                 }
-                if (isset($item['locale'][$prefLocale])) {
-                    $item['s_title'] = $item['locale'][$prefLocale]['s_title'];
-                    $item['s_description'] = $item['locale'][$prefLocale]['s_description'];
-                    $item['s_what'] = $item['locale'][$prefLocale]['s_what'];
+                if( isset($item['locale'][$prefLocale]) ) {
+                    $item['s_title']       = $item['locale'][$prefLocale]['s_title'] ;
+                    $item['s_description'] = $item['locale'][$prefLocale]['s_description'] ;
                 } else {
-                    $data = current($item['locale']);
-                    $item['s_title'] = $data['s_title'];
-                    $item['s_description'] = $data['s_description'];
-                    $item['s_what'] = $data['s_what'];
-                    unset($data);
+                    $data = current($item['locale']) ;
+                    $item['s_title']       = $data['s_title'] ;
+                    $item['s_description'] = $data['s_description'] ;
+                    unset($data) ;
                 }
                 $results[] = $item;
             }
