@@ -143,6 +143,17 @@
             return $p_array;
         }
 
+        
+        static function findByUpdateURI($uri) {
+            $plugins = Plugins::listAll();
+            foreach($plugins as $p) {
+                $info = Plugins::getInfo($p);
+                if($info['plugin_update_uri']==$uri) {
+                    return $p;
+                }
+            }
+            return false;
+        }
 
         static function resource($path) {
             $fullPath = osc_plugins_path() . $path;

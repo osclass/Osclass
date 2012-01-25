@@ -41,8 +41,8 @@
                 $allowed .= 'declare|dir<ltr?rtl|height|hspace|id|lang|name|onclick|ondblclick|onkeydown|onkeypress|onkeyup|';
                 $allowed .= 'onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|standby|style|tabindex|title|type|usemap|vspace|width]';
                 $config->set('HTML.Allowed', $allowed);
-                $config->set("HTML", "SafeEmbed", true);
-                $config->set("HTML", "SafeObject", true);
+                $config->set("HTML.SafeEmbed", true);
+                $config->set("HTML.SafeObject", true);
                 $config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
                 $config->set('Cache.SerializerPath', ABS_PATH . 'oc-content/uploads');
                 self::$purifier = new HTMLPurifier($config);
@@ -115,7 +115,9 @@
                     self::$purifier = new HTMLPurifier($config);
                 }
                 foreach($value as $k => $v) {
-                    $value[$k] = self::$purifier->purify($v);
+                    if(!is_array($v)) {
+                        $value[$k] = self::$purifier->purify($v);
+                    }
                 }
             }
             if(get_magic_quotes_gpc()) {

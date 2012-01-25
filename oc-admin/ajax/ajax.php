@@ -636,6 +636,8 @@
                  *******************************/
                 case 'universe': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
                     $code = Params::getParam('code');
+                    $plugin = false;
+                    $re_enable = false;
                     $message = "";
                     $error = 0;
                     $data = array();
@@ -662,17 +664,26 @@
                          ***********************/
                         if(isset($data['s_name']) && isset($data['s_source_file']) && isset($data['s_source_file']) && isset($data['e_type'])) {
 
-                            $tmp = explode("/", $data['s_name']);
-                            $filename = end($tmp);
-                            $result = osc_downloadFile($data['s_source_file'], $filename);
                             if($data['e_type']=='THEME') {
                                 $folder = 'themes/';
                             } else if($data['e_type']=='LANGUAGE') {
                                 $folder = 'languages/';
-                            } else {
+                            } else { // PLUGINS
                                 $folder = 'plugins/';
+                                $plugin = Plugins::findByUpdateURI($data['s_slug']);
+                                if($plugin!=false) {
+                                    if(Plugins::isEnabled($plugin)) {
+                                        Plugins::runHook($plugin.'_disable') ;
+                                        Plugins::deactivate($plugin);
+                                        $re_enable = true;
+                                    }
+                                }
                             }
 
+                            $tmp = explode("/", $data['s_name']);
+                            $filename = end($tmp);
+                            $result = osc_downloadFile($data['s_source_file'], $filename);
+                            
                             if ($result) { // Everything is OK, continue
                                 /**********************
                                  ***** UNZIP FILE *****
@@ -718,6 +729,16 @@
                                                     }
                                                 }
                                             }
+                                            
+                                            if($data['e_type']!='THEME' && $data['e_type']!='LANGUAGE') {
+                                                if($plugin!=false && $re_enable) {
+                                                    $enabled = Plugins::activate($plugin);
+                                                    if($enabled) {
+                                                        Plugins::runHook($plugin.'_enable') ;
+                                                    }
+                                                }
+                                            }
+
                                             if (!rmdir($path)) {
                                                 $rm_errors++;
                                             }
