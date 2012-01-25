@@ -188,11 +188,10 @@
                 $currency = osc_get_preference('currency');
                 if ( isset($item['fk_c_currency_code']) ) {
                     $default_key = $item['fk_c_currency_code'];
-                } elseif ( is_array($currency) ) {
-                    if ( isset($currency['s_value']) ) {
-                        $default_key = $currency['s_value'];
-                    }
-                }
+                } elseif ( isset($currency)  ) {
+                        $default_key = $currency;
+                  }
+                
 
                 parent::generic_select('currency', $currencies, 'pk_c_code', 's_description', null, $default_key) ;
             } else if (count($currencies) == 1) {
