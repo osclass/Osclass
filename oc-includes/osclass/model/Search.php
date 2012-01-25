@@ -672,26 +672,54 @@
             return Item::newInstance()->extendData($items);
         }
         
-        public function getLatestItems()
-        {
-            $arrayConditions    = $this->_conditions();
-            $extraFields        = $arrayConditions['extraFields'];
-            $conditionsSQL      = $arrayConditions['conditionsSQL'];
-
-            $this->addTable( sprintf('%st_item', DB_TABLE_PREFIX) ) ;
-            $this->addTable( sprintf('%st_item_location', DB_TABLE_PREFIX) ) ;
-            $this->addTable( sprintf('%st_category', DB_TABLE_PREFIX) ) ;
-            $this->addTable( sprintf('%st_category_description as cd', DB_TABLE_PREFIX) ) ;
-            
-            $aux_tables = implode(', ', $this->tables);
-            
-            $this->sql = sprintf("SELECT %st_item.*, %st_item_location.*, cd.s_name as s_category_name %s FROM %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id %s AND %st_item.fk_i_category_id = cd.fk_i_category_id GROUP BY %st_item.pk_i_id ORDER BY %s %s LIMIT %d, %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, $extraFields, $aux_tables, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $conditionsSQL, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $this->order_column, $this->order_direction, $this->limit_init, $this->results_per_page);
-            $result = $this->dao->query($this->sql);
-            
-            if( $result == false ) {
-                return array() ;
+        /**
+         * Return latest posted items, you can filter by category and specify the
+         * number of items returned.
+         * 
+         * @param int $numItems
+         * @param bool $withExpired
+         * @param mixed $category int or array(int)
+         * @return array
+         */
+        public function getLatestItems($numItems = 10, $category = array())
+        {            
+            $this->dao->select(DB_TABLE_PREFIX.'t_item.*  , '.DB_TABLE_PREFIX.'t_item_location.*  , cd.s_name as s_category_name') ;
+            $this->dao->from( DB_TABLE_PREFIX.'t_item use index (PRIMARY)' ) ;
+            $this->dao->join( DB_TABLE_PREFIX.'t_item_description',
+                    DB_TABLE_PREFIX.'t_item_description.fk_i_item_id = '.DB_TABLE_PREFIX.'t_item.pk_i_id',
+                    'LEFT' ) ;
+            $this->dao->join( DB_TABLE_PREFIX.'t_item_location', 
+                    DB_TABLE_PREFIX.'t_item_location.fk_i_item_id = '.DB_TABLE_PREFIX.'t_item.pk_i_id',
+                    'LEFT' ) ;
+            $this->dao->join( DB_TABLE_PREFIX.'t_category',
+                    DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id',
+                    'LEFT' ) ;
+            $this->dao->join( DB_TABLE_PREFIX.'t_category_description as cd',
+                    DB_TABLE_PREFIX.'t_item.fk_i_category_id = cd.fk_i_category_id',
+                    'LEFT' ) ;
+            // where
+            $whe  = DB_TABLE_PREFIX.'t_item.b_active = 1 AND ';
+            $whe .= DB_TABLE_PREFIX.'t_item.b_enabled = 1 AND ';
+            $whe .= DB_TABLE_PREFIX.'t_item.b_spam = 0 AND ';
+            $whe .= '('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 || DATEDIFF(\''. date('Y-m-d H:i:s').'\', '.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days)  ';
+            $whe .= 'AND '.DB_TABLE_PREFIX.'t_category.b_enabled = 1 ';
+            if( is_array($category) && !empty ($category) ) {
+                $listCategories = implode(',', $category );
+                $whe .= ' AND '.DB_TABLE_PREFIX.'t_item.fk_i_category_id IN ('.$listCategories.') ';
             }
-            $items = $result->result();
+            $this->dao->where( $whe );
+            // order & limit
+            $this->dao->orderBy(DB_TABLE_PREFIX.'t_item.pk_i_id', 'DESC');
+            $this->dao->limit(0, $numItems);
+            $rs = $this->dao->get();
+            if($rs === false){
+                return array();
+            }
+            if( $rs->numRows() == 0 ) {
+                return array();
+            }
+
+            $items = $rs->result();
             return Item::newInstance()->extendData($items);
         }
 
