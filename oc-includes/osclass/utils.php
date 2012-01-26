@@ -234,7 +234,7 @@ function osc_doRequest($url, $_data) {
 
 function osc_sendMail($params) {
     if( key_exists('add_bcc', $params) ) {
-        if( !is_array($params['add_bcc']) ) {
+        if( !is_array($params['add_bcc']) && $params['add_bcc'] != '' ) {
             $params['add_bcc'] = array($params['add_bcc']) ;
         }
     }
@@ -251,17 +251,17 @@ function osc_sendMail($params) {
                 ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username(),
                 ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username(),
                 0
-        );
+        ) ;
     }
 
     $mail = new PHPMailer(true) ;
     try {
-        $mail->CharSet = "utf-8";
+        $mail->CharSet = 'utf-8' ;
 
-        if (osc_mailserver_auth()) {
+        if( osc_mailserver_auth() ) {
             $mail->IsSMTP() ;
             $mail->SMTPAuth = true ;
-        } else if(osc_mailserver_pop()) {
+        } else if( osc_mailserver_pop() ) {
             $mail->IsSMTP() ;
         }
 
@@ -278,13 +278,15 @@ function osc_sendMail($params) {
         $to = ( isset($params['to']) ) ? $params['to'] : '' ;
         $to_name = ( isset($params['to_name']) ) ? $params['to_name'] : '' ;
 
-        if ( key_exists('add_bcc', $params) ) {
+        if( key_exists('add_bcc', $params) ) {
             foreach( $params['add_bcc'] as $bcc ) {
                 $mail->AddBCC($bcc) ;
             }
         }
 
-        if ( isset($params['reply_to']) ) $mail->AddReplyTo($params['reply_to']);
+        if( isset($params['reply_to']) ) {
+            $mail->AddReplyTo($params['reply_to']) ;
+        }
 
         if( isset($params['attachment']) ) {
             $mail->AddAttachment($params['attachment']) ;
@@ -294,17 +296,16 @@ function osc_sendMail($params) {
         $mail->AddAddress($to, $to_name) ;
         $mail->Send() ;
         return true ;
-
     } catch (phpmailerException $e) {
-        error_log("osc_sendMail() cannot send email! ".$mail->ErrorInfo, 0);
-        return false;
+        error_log("phpmailerException in osc_sendMail() Error: ".$mail->ErrorInfo, 0);
+        return false ;
     } catch (Exception $e) {
-        error_log("osc_sendMail() cannot send email! ".$mail->ErrorInfo, 0);
-        return false;
+        error_log("Exception in osc_sendMail() Error".$mail->ErrorInfo, 0);
+        return false ;
     }
-    return false;
-}
 
+    return false ;
+}
 
 function osc_mailBeauty($text, $params) {
 
