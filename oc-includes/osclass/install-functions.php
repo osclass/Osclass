@@ -219,27 +219,31 @@ function oc_install( ) {
     }
 
     $conn      = new DBConnectionClass($dbhost, $username, $password, $dbname) ;
-    $error_num = $conn->getErrorLevel() ;
+    $error_num = $conn->getErrorConnectionLevel() ;
 
-    if($error_num > 0) {
+    if( $error_num == 0 ) {
+        $error_num = $conn->getErrorLevel() ;
+    }
+
+    if( $error_num > 0 ) {
         if( reportToOsclass() ) {
             LogOsclassInstaller::instance()->error('Cannot connect to database. Error number: ' . $error_num , __FILE__."::".__LINE__) ;
         }
 
-        switch ($error_num) {
+        switch( $error_num ) {
             case 1049:  return array('error' => 'The database doesn\'t exist. You should check the "Create DB" checkbox and fill username and password with the right privileges') ;
-            break;
+            break ;
             case 1045:  return array('error' => 'Cannot connect to the database. Check if the user has privileges.') ;
-            break;
+            break ;
             case 1044:  return array('error' => 'Cannot connect to the database. Check if the username and password are correct.') ;
-            break;
+            break ;
             case 2005:  return array('error' => 'Cannot resolve MySQL host. Check if the host is correct.') ;
-            break;
+            break ;
             default:    return array('error' => 'Cannot connect to database. Error number: ' . $error_num . '.') ;
-            break;
+            break ;
         }
     }
-    
+
     if( file_exists(ABS_PATH . 'config.php') ) {
         if( !is_writable(ABS_PATH . 'config.php') ) {
             if( reportToOsclass() ) {

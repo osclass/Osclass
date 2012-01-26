@@ -433,7 +433,7 @@
                 $connId = @new mysqli($host, $user, $password) ;
             }
 
-            if ( $connId == false ) {
+            if ( $connId->connect_errno ) {
                 return false ;
             }
 
@@ -484,7 +484,7 @@
          */
         function _selectDb($dbName, &$connId)
         {
-            if ( !$connId ) {
+            if ( $connId->connect_errno ) {
                 return false ;
             }
 
