@@ -57,10 +57,10 @@ if( is_osclass_installed( ) ) {
     osc_die('OSClass &raquo; Error', $message) ;
 }
 
-switch ($step) {
+switch( $step ) {
     case 1:
         $requirements = get_requirements() ;
-        $error = check_requirements($requirements) ;
+        $error        = check_requirements($requirements) ;
         break;
     case 2:
         if( Params::getParam('save_stats') == '1'  || isset($_COOKIE['osclass_save_stats'])) {
