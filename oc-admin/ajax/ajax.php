@@ -662,7 +662,7 @@
                         /***********************
                          **** DOWNLOAD FILE ****
                          ***********************/
-                        if(isset($data['s_name']) && isset($data['s_source_file']) && isset($data['s_source_file']) && isset($data['e_type'])) {
+                        if( isset($data['s_slug']) && isset($data['s_source_file']) && isset($data['e_type'])) {
 
                             if($data['e_type']=='THEME') {
                                 $folder = 'themes/';
@@ -680,9 +680,11 @@
                                 }
                             }
 
-                            $tmp = explode("/", $data['s_name']);
-                            $filename = end($tmp);
-                            $result = osc_downloadFile($data['s_source_file'], $filename);
+                            $tmp      = explode("/", $data['s_slug']) ;
+                            $filename = end($tmp) ;
+                            error_log('Source file: ' . $data['s_source_file']) ;
+                            error_log('Filename: ' . $filename) ;
+                            $result   = osc_downloadFile($data['s_source_file'], $filename) ;
                             
                             if ($result) { // Everything is OK, continue
                                 /**********************
@@ -797,7 +799,7 @@
                                 break;
                             }
                         }
-                        if(!isset($data['s_source_file']) || !isset($data['s_name']) || !isset($data['s_version']) || !isset($data['e_type']) || (isset($data['e_type']) && $data['e_type']!='PLUGIN' && $data['e_type']!='THEME')) {
+                        if( !isset($data['s_source_file']) && !isset($data['s_slug']) && !isset($data['e_type'])) {
                             $data = array('error' => 2, 'error_msg' => __('Not a valid code'));
                         }
                     } else {
