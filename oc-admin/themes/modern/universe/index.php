@@ -45,15 +45,13 @@ $code = View::newInstance()->_get('code');
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
                         <?php _e('some text explaining this process', 'universe') ; ?>
-                        <form>
-                            <p>
-                                <label for="data"><?php _e('Universe code'); ?></label>
-                                <input type="text" id="s_code" name="s_code" value="" />
-                            </p>
-                            <p>
-                                <button class="formButton" type="button" id="check_btn" ><?php _e('Get Info - CHANGE TEXT OF THIS BUTTON - ') ; ?></button>
-                            </p>
-                        </form>
+                        <p>
+                            <label for="data"><?php _e('Universe code'); ?></label>
+                            <input type="text" id="s_code" name="s_code" value="" />
+                        </p>
+                        <p>
+                            <button class="formButton" type="button" id="check_btn" ><?php _e('Get Info - CHANGE TEXT OF THIS BUTTON - ') ; ?></button>
+                        </p>
                     </div>
                 </div>
                 <div id="universe_error" style="border: 1px solid #ccc; background: #eee; ">
