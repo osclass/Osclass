@@ -17,11 +17,16 @@
      */
 ?>
 <div id="header">
-    <div id="logo"><?php _e('OSClass'); ?></div>
+    <div id="logo">OSClass</div>
     <div id="arrow">&raquo;</div>
-    <div id="hostname"><?php echo osc_page_title() ; ?></div>
-    <em id="visit_site"><a title="<?php _e('Visit website'); ?>" href="<?php echo osc_base_url() ; ?>" target="_blank"><?php _e('Visit website') ; ?></a><!-- &crarr; --></em>
-    <div id="user_links"><?php _e('Hi') ; ?>, <a title="<?php _e('Your profile') ; ?>" href="<?php echo osc_admin_base_url(true) ; ?>?page=admins&action=edit"><?php echo osc_logged_admin_username() ; ?>!</a> | <a title="<?php _e('Log Out'); ?>" href="index.php?action=logout"><?php _e('Log Out'); ?></a></div>
+    <div id="hostname">
+        <?php echo osc_page_title() ; ?>
+    </div>
+    <em id="visit_site">
+        <a title="<?php _e('Visit website'); ?>" href="<?php echo osc_base_url() ; ?>" target="_blank"><?php _e('Visit website') ; ?></a>
+    </em>
+    <div id="user_links">
+        <?php _e('Hi') ; ?>, <a title="<?php _e('Your profile') ; ?>" href="<?php echo osc_admin_base_url(true) ; ?>?page=admins&action=edit"><?php echo osc_logged_admin_username() ; ?>!</a> | <a title="<?php _e('Log Out'); ?>" href="index.php?action=logout"><?php _e('Log Out'); ?></a>
+    </div>
     <?php osc_run_hook('admin_header') ; ?>
 </div>
-<div id="static"> <a style="text-decoration:none;" target="_blank" href="http://admin.osclass.org/feedback.php"><img style="border:0px;" alt="<?php _e('Feedback'); ?>" src="<?php echo  osc_current_admin_theme_url('images/feedback_button_new.gif') ; ?>"></a> </div>

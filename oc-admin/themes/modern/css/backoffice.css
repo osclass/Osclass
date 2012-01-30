@@ -1,22 +1,27 @@
+/* Global reset by Eric Meyer */
+html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, font, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td {margin: 0;padding: 0;border: 0;outline: 0;font-size: 100%;vertical-align: baseline;background: transparent;}
+ol, ul {list-style: none;}
+blockquote, q {quotes: none;}
+blockquote:before, blockquote:after,
+q:before, q:after {content: '';content: none;}
+ins {text-decoration: none;}
+del {text-decoration: line-through;}
+table {border-collapse: collapse;border-spacing: 0;}
+input:focus { outline:none; }
+
 /* GENERAL */
 body {
 	padding: 0;
 	margin: 0;
 	height:100%;
-	font-family: Arial, sans-serif;
+	font-family: sans-serif;
 	font-size: 14px;	
 }
 
-select {
-	font-family: Arial, sans-serif;
+select, textarea, input {
+	font-family: sans-serif;
 	font-size: 14px;
 	padding:4px;	
-}
-
-textarea {
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-	padding:4px;
 }
 
 button {
@@ -25,22 +30,12 @@ button {
 }
 
 button.formButton {
-	font-family: Arial, sans-serif;
 	font-size: 14px;
 	padding:4px;
 }
 
 input {
-	font-family: Arial, sans-serif;
-	font-size: 14px;
 	border: 1px solid #ccc;
-	margin-bottom: 5px;
-	padding:4px 4px;
-}
-
-h3 {
-	margin: 0px;
-	padding: 0px;
 }
 
 a,
@@ -214,7 +209,7 @@ a:hover {
 
 
 #menu h3 {
-	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	font-family: sans-serif;
 	font-size: 13px;
 	font-size-adjust: none;
 	font-style: italic;
@@ -251,7 +246,7 @@ a:hover {
 	margin-left: 10px;
 	margin-top: 2px;
 	color: #555;
-	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	font-family: sans-serif;
 	font-size: 24px;
 	font-size-adjust: none;
 	font-style: italic;
@@ -269,13 +264,13 @@ a:hover {
 #last_items_body,
 #last_news_body {
 	padding: 10px;
-	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	font-family: sans-serif;
 	font-size: 14px;
 }
 
 /* buttons */
 #button_save  {
-	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	font-family: sans-serif;
 	border: 1px solid #ccc;
 	background-color: #555;
 	color: white;
@@ -287,7 +282,7 @@ a:hover {
 }
 
 #button_open {
-	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	font-family: sans-serif;
 	border-top: 1px solid #ccc; 
 	border-left: 1px solid #ccc; 
 	border-right: 1px solid #ccc; 
@@ -305,7 +300,7 @@ a:hover {
 }
 
 #button_cancel {
-	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	font-family: sans-serif;
 	border: 1px solid #ccc; 
 	background-color: #777; 
 	color: white; 
@@ -325,7 +320,7 @@ a:hover {
 	border-right: 1px dotted #999;
 	border-bottom: 1px dotted #999;
 	height: auto;
-	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	font-family: sans-serif;
 	font-size: 14px;	
 	display: none;
 }
@@ -391,7 +386,7 @@ ul.ui-accordion-content-active li a.ui-accordion-content-active {
 .paginate_active,
 .paginate_button {
 	-moz-border-radius: 0px;
-	font-family: "Verdana";
+	font-family: sans-serif;
 	font-size: 12px;
 }
 
@@ -403,7 +398,7 @@ ul.ui-accordion-content-active li a.ui-accordion-content-active {
 #datatables_list_filter,
 #datatables_list_info,
 #datatables_list {
-	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	font-family: sans-serif;
 	font-size: 12px;
 }
 
@@ -445,46 +440,6 @@ tr.even td{
 
 .inactive {
     background-color: red;
-}
-
-/* footer */
-#footer {
-	/* position:relative; */
-	padding: 0;
-	margin: 0;
-	bottom:0;
-	width: 100%;
-	height: 50px;
-	background-color: #464646;	
-	color: #aaa;
-	font-style: italic;
-}
-
-#footer a,
-#footer a:visited {
-	color: #ccc;
-	text-decoration: none;
-}
-
-#footer a:hover {
-	color: #fff;
-	text-decoration: underline;
-}
-
-#footer_left {
-	width: 49%;
-	float: left;	
-	padding-top: 16px;	
-	padding-left: 10px;
-}
-
-#footer_right {
-	width: 49%; 
-	float: right;
-	text-align: right;
-	padding-top: 16px;	
-	padding-right: 10px;
-
 }
 
 .FlashMessage {
@@ -625,3 +580,47 @@ background: url('../images/arrow_expanded.png') no-repeat;
 #advanced_fields_iframe.shrink {
     background: url('../images/arrow_noexpanded.png') no-repeat;
 }
+
+/* start footer */
+#footer {
+    clear: both;
+    border-top: 1px solid #DDDDDD;
+	margin: 10px;
+    padding: 10px 10px 0px 10px;
+	color: #555555;
+    font-size: 12px;
+}
+
+#footer:after, #footer:before {
+    display: table;
+    content: "";
+}
+
+#footer:after {
+    clear: both ;
+}
+
+#footer_left {
+    width: 500px;
+    float: left;
+    display: inline;
+}
+
+#footer_right {
+    width: 100px; 
+	float: right;
+    display: inline;
+	text-align: right;
+    font-weight: bold;
+}
+
+#footer a, #footer a:visited {
+    color: #2AA4DB;
+    text-decoration: none;
+}
+
+#footer a:hover {
+    color: #2AA4DB;
+    text-decoration: underline;
+}
+/* end footer */

@@ -16,11 +16,11 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y');
-    $timeFormats = array('g:i a', 'g:i A', 'H:i');
+    $dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y') ;
+    $timeFormats = array('g:i a', 'g:i A', 'H:i') ;
 
-    $aLanguages  = __get('aLanguages');
-    $aCurrencies = __get('aCurrencies');
+    $aLanguages  = __get('aLanguages') ;
+    $aCurrencies = __get('aCurrencies') ;
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -28,7 +28,6 @@
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
         <script type="text/javascript">
-
             function validateInt(field,default_value) {
                 var regExpr = /^\d*$/;
                 if (!regExpr.test(field.value)) {
@@ -36,7 +35,6 @@
                   field.value = default_value;
                 }
             }
-
         </script>
     </head>
     <body>
