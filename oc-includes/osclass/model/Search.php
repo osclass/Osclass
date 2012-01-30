@@ -468,7 +468,7 @@
             if($branches!=null) {
                 foreach($branches as $branch) {
                     if(!in_array($branch['pk_i_id'], $this->categories)) {
-                        $this->categories[] = $branch['pk_i_id'];//sprintf("%st_item.fk_i_category_id = %d ", DB_TABLE_PREFIX, $branch['pk_i_id']);
+                        $this->categories[] = sprintf("%st_item.fk_i_category_id = %d ", DB_TABLE_PREFIX, $branch['pk_i_id']);
                         if(isset($branch['categories'])) {
                             $list = $this->pruneBranches($branch['categories']);
                         }
@@ -504,7 +504,7 @@
 
             $tree = Category::newInstance()->toSubTree($category) ;
             if( !in_array($category, $this->categories) ) {
-                $this->categories[] = $category;//sprintf("%st_item.fk_i_category_id = %d ", DB_TABLE_PREFIX, $category) ;
+                $this->categories[] = sprintf("%st_item.fk_i_category_id = %d ", DB_TABLE_PREFIX, $category) ;
             }
             $this->pruneBranches($tree) ;
         }
@@ -532,8 +532,7 @@
             }
 
             if(count($this->categories)>0) {
-                $this->addConditions(sprintf("%st_item.fk_i_category_id IN (%s) ", DB_TABLE_PREFIX, implode(",", $this->categories)));
-                //$this->addConditions("( ".implode(' || ', $this->categories)." )");
+                $this->addConditions("( ".implode(' || ', $this->categories)." )");
             }
 
             $conditionsSQL = implode(' AND ', $this->conditions);
