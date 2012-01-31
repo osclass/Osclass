@@ -27,7 +27,6 @@
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
-        <div id="update_version" style="display:none;"></div>
         <script type="text/javascript">
             $(document).ready(function() {
                 $("#steps_div").hide();

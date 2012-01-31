@@ -28,7 +28,6 @@
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
-        <div id="update_version" style="display:none;"></div>
         <script type="text/javascript">
             tinyMCE.init({
                 mode : "textareas",

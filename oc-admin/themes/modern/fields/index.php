@@ -33,9 +33,7 @@
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <link href="<?php echo osc_current_admin_theme_styles_url('jquery.treeview.css') ; ?>" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.treeview.js') ; ?>"></script>
-        <div id="update_version" style="display:none;"></div>
         <script type="text/javascript">
-            
             function show_iframe(class_name, id) {
                 $('div[class^="edit content_list_"]').each(function(){
                     $(this).html('');

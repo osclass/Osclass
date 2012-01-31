@@ -26,7 +26,6 @@
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
-        <div id="update_version" style="display:none;"></div>
         <?php
             if(isset($comment['pk_i_id'])) {
                 //editing...

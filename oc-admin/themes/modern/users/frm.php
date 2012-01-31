@@ -49,7 +49,6 @@
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
-        <div id="update_version" style="display:none;"></div>
         <script type="text/javascript">
             document.write('<style type="text/css">.tabber{display:none;}</style>');
             $(document).ready(function(){

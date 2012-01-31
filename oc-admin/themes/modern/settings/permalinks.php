@@ -27,20 +27,17 @@
             var base_url    = '<?php echo osc_base_url(); ?>';
             var s_close     = '<?php _e('Close'); ?>';
             var s_view_more = '<?php _e('View more'); ?>';
-        </script>
-        <?php osc_current_admin_theme_path('head.php') ; ?>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <script type="text/javascript">
             $(function() {
                 $("#rewrite_enabled").click(function(){
                     $("#custom_rules").toggle();
                 });
             });
         </script>
-        <div id="update_version" style="display:none;"></div>
-		<div id="content">
+        <?php osc_current_admin_theme_path('head.php') ; ?>
+    </head>
+    <body>
+        <?php osc_current_admin_theme_path('header.php') ; ?>
+        <div id="content">
             <div id="separator"></div>
 			<?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
 		    <div id="right_column">
