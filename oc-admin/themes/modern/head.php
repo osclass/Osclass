@@ -58,32 +58,9 @@
             jQuery('#accordion *').css('zoom', '1');
         }
 
-        if($('.Header')) $('.Header').hide(); //XXX: remove it.
         if($('.FlashMessage')) $('.FlashMessage').animate({opacity: 1.0}, 5000).fadeOut();
-        $("#static").hover(function(){ $(this).css('margin-right', '2px') }, function(){ $(this).css('margin-right','-2px') } );
     });
 </script>
-
-<?php
-    $lastCheck = (int)osc_last_version_check() ;
-    $hourInSecs = 24 * 3600 ;
-?>
-<?php if ( (time() - $lastCheck) > $hourInSecs ) { ?>
-    <script type="text/javascript">
-        $(function() {
-            var version = <?php echo osc_version() ; ?> ;
-
-            $.getJSON("http://osclass.org/latest_version.php?callback=?", function(data) {
-                var update = document.getElementById('update_version') ;
-                if(data.version > version) {
-                    var text = '<?php printf(__('OSClass %s is available!'), '\' + data.s_name + \'') ; ?> <a href="index.php?page=tools&action=upgrade"><?php _e('Please upgrade now') ; ?></a>' ;
-                    update.innerHTML = text ;
-                    update.setAttribute('style', '') ;
-                }
-            });
-        });
-    </script>
-<?php } ?>
 
 <script>
     var fileDefaultText = '<?php _e('No file selected','modern'); ?>';

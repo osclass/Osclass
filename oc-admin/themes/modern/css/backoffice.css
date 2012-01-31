@@ -92,107 +92,6 @@ a:hover {
     z-index: 1;
 }
 
-/* header related styles */
-#header {
-	width: 100%;
-	height: 50px;
-	background-color: #464646;
-}
-
-#update_version {
-	width: 100%;
-	height: 20px;
-	background-color: #FFFEEB;
-        text-align: center;
-        font-size: 1.1em;
-        padding: 5px 0px;
-        border-bottom: 1px solid #CCCCCC;
-        color: #555555;
-}
-
-#logo {
-	padding: 10px 0px 10px 10px;
-	color: #eeeeee;
-	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
-	font-size: 24px;
-	font-size-adjust: none;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: lighter;
-	line-height: normal;
-	float: left;
-}
-
-#hostname {
-	padding: 10px 0px 10px 10px;
-	color: #999999;
-	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
-	font-size: 24px;
-	font-size-adjust: none;
-	font-style: italic;
-	font-variant: normal;
-	font-weight: lighter;
-	line-height: normal;
-	float: left;
-}
-
-#arrow {
-	padding: 0px 0px 0px 10px;
-	color: #999999;
-	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
-	font-size: 40px;
-	font-size-adjust: none;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: bold;
-	line-height: normal;
-	float: left;
-}
-
-#visit_site {
-	margin: 15px 0px 0px 10px;
-	padding: 4px 4px 4px 4px;
-	/* background-color:#585858; */
-	text-shadow:#3F3F3F 0 -1px 0;
-	color: #bbb;
-	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
-	font-size: 12px;
-	font-size-adjust: none;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: bold;
-	line-height: normal;
-	float: left;
-}
-
-#visit_site a {
-	text-decoration: none;
-	color: #ccc;
-}
-
-#user_links {
-	padding: 16px 10px 10px 0px;
-	color: #AAA;
-	font-family: "Verdana";
-	font-size: 12px;
-	font-size-adjust: none;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: normal;
-	line-height: normal;
-	float: right;
-}
-
-#user_links a {
-	color: #CCC;
-	text-decoration: none;
-}
-
-#user_links a:hover {
-	color: #fff;
-	text-decoration: underline;
-}
-
 /* menu */
 #menu {
 	width: 99%;
@@ -581,6 +480,77 @@ background: url('../images/arrow_expanded.png') no-repeat;
     background: url('../images/arrow_noexpanded.png') no-repeat;
 }
 
+/* Design refactory started: 30/01/2011 */
+/* header */
+#header {
+    background-color: #222;
+    padding: 5px 0 ;
+}
+
+#header:after, #header:before {
+    display: table;
+    content: "";
+}
+
+#header:after {
+    clear: both ;
+}
+
+#site {
+    float: left;
+    display: inline;
+}
+
+#site a {
+    padding: 5px 20px;
+}
+
+#site a, #site a:active, #site a:visited {    
+	color: #BFBFBF;
+	font-size: 18px;
+    text-decoration: none;
+}
+
+#site a:hover {
+    background: #333;
+    background-color: rgba(255, 255, 255, 0.05);
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+#header .user {
+	float: right;
+    display: inline;
+	text-align: right;
+}
+
+#header .user p {
+	color: #BFBFBF;
+    padding: 3px 20px;
+    font-size: 13px;
+}
+
+#header .user a {
+	color: #CCC;
+	text-decoration: none;
+}
+
+#header .user a:hover {
+	color: #fff;
+	text-decoration: underline;
+}
+
+#update_core {
+	width: 100%;
+	background-color: #FDF5D9;
+    border-bottom: 1px solid #EEDC94;
+    text-align: center;
+    padding: 5px 0px;
+    color: #404040;
+    line-height: 18px;
+}
+
+/* /header */
 /* start footer */
 #footer {
     clear: both;
