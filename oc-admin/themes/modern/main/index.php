@@ -83,10 +83,7 @@
         </script>
         
 		<div id="content">
-			<div id="separator"></div>	
-			
 			<?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-
             <script type="text/javascript">
 
                 // this must be loaded after backoffice menu is loaded.

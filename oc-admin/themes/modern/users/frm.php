@@ -58,7 +58,6 @@
             });
         </script>
         <div id="content">
-            <div id="separator"></div>
             <?php UserForm::location_javascript("admin") ; ?>
             <?php osc_current_admin_theme_path('include/backoffice_menu.php') ; ?>
             <div id="right_column">

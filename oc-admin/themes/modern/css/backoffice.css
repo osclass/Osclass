@@ -60,13 +60,6 @@ a:hover {
 	color: red;
 }
 
-#content {
-	border: 0px solid blue;
-	/* padding-bottom:60px; */
-	min-height:100%;
-	position:relative;
-}
-
 #right_column {
 	width: 78%;
 	float: left;
@@ -74,62 +67,6 @@ a:hover {
 	position: relative;
 	padding-bottom: 20px;
 
-}
-
-#left_column {
-	width: 18%;
-	margin-right: 20px;
-	height: auto !important;
-	float: left;
-	position: relative;
-}
-#static  {
-    height: 89px;
-    position: fixed;
-    right: 0;
-    top: 350px;
-    width: 35px;
-    z-index: 1;
-}
-
-/* menu */
-#menu {
-	width: 99%;
-	height: auto !important;
-	vertical-align: top;
-	padding-bottom: 20px;
-}
-
-#menu ul {
-	padding: 12px 4px 12px 12px!important;
-	font-weight: normal;
-	font-size: 12px;
-}
-
-
-#menu h3 {
-	font-family: sans-serif;
-	font-size: 13px;
-	font-size-adjust: none;
-	font-style: italic;
-	font-variant: normal;
-	font-weight: lighter;
-	line-height: normal;
-}
-
-#menu a:active {
-	color: red;
-}
-
-#left_column a,
-#left_column a:visited {
-	color: #444;
-	text-decoration: none;
-}
-
-#left_column a:hover {
-	color: black;
-	text-decoration: none;
 }
 
 .content_header {
@@ -269,13 +206,6 @@ ul.ui-accordion-content-active li a.ui-accordion-content-active {
 .ui-state-focus {
 	background: #ddd;
 }
-
-/* separator */
-#separator {
-	width: auto;
-	padding: 10px;
-}
-
 
 /* DataTables related */
 #datatables_list_first,
@@ -506,8 +436,8 @@ background: url('../images/arrow_expanded.png') no-repeat;
 }
 
 #site a, #site a:active, #site a:visited {    
-	color: #BFBFBF;
-	font-size: 18px;
+    color: #BFBFBF;
+    font-size: 18px;
     text-decoration: none;
 }
 
@@ -519,30 +449,30 @@ background: url('../images/arrow_expanded.png') no-repeat;
 }
 
 #header .user {
-	float: right;
+    float: right;
     display: inline;
-	text-align: right;
+    text-align: right;
 }
 
 #header .user p {
-	color: #BFBFBF;
+    color: #BFBFBF;
     padding: 3px 20px;
     font-size: 13px;
 }
 
 #header .user a {
-	color: #CCC;
-	text-decoration: none;
+    color: #CCC;
+    text-decoration: none;
 }
 
 #header .user a:hover {
-	color: #fff;
-	text-decoration: underline;
+    color: #fff;
+    text-decoration: underline;
 }
 
 #update_core {
-	width: 100%;
-	background-color: #FDF5D9;
+    width: 100%;
+    background-color: #FDF5D9;
     border-bottom: 1px solid #EEDC94;
     text-align: center;
     padding: 5px 0px;
@@ -551,7 +481,94 @@ background: url('../images/arrow_expanded.png') no-repeat;
 }
 
 /* /header */
-/* start footer */
+/* container */
+#content {
+    clear: both;
+    margin-top: 10px;
+}
+
+#content:after, #content:before {
+    display: table;
+    content: "";
+}
+
+#content:after {
+    clear: both ;
+}
+/* /container */
+/* left menu */
+#content > .left {
+    width: 15%;
+    margin-right: 20px;
+    height: auto !important;
+    float: left;
+    position: relative;
+}
+
+#content .left .dashboard {
+    padding-top: 12px;
+    margin-bottom: 15px;
+}
+
+#content .left .dashboard p {
+    background: url('../images/home_icon.gif') no-repeat ;
+    padding-left: 25px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #cccccc;
+    margin-left: 5px;
+    line-height: 18px;
+}
+
+#content .left a, #content .left a:visited, #content .left a:active {
+    text-decoration: none;
+    color: #555;
+}
+
+#content .left a:hover {
+    font-weight: 600;
+    text-decoration: none ;
+    color: black;
+}
+
+.left .menu {
+    font-family: sans-serif;
+    width: 99%;
+    height: auto !important;
+    vertical-align: top;
+    padding-bottom: 20px;
+}
+
+.left .menu h3 {
+    font-family: sans-serif;
+    font-size: 12px;
+    margin: 0;
+    -webkit-border-radius: 0;
+       -moz-border-radius: 0;
+            border-radius: 0;
+}
+
+#content .left h3 a:hover {
+    font-weight: normal;
+}
+
+.left .menu ul {
+    padding: 12px 4px 12px 12px!important;
+    font-weight: normal;
+    font-size: 12px;
+}
+
+.left .menu .ui-accordion-content {
+    margin-bottom: 0;
+    -webkit-border-bottom-left-radius: 0;
+       -moz-border-bottom-left-radius: 0;
+            border-bottom-left-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+       -moz-border-bottom-right-radius: 0;
+            border-bottom-right-radius: 0;
+}
+
+/* /left menu */
+/* footer */
 #footer {
     clear: both;
     border-top: 1px solid #DDDDDD;
@@ -593,4 +610,4 @@ background: url('../images/arrow_expanded.png') no-repeat;
     color: #2AA4DB;
     text-decoration: underline;
 }
-/* end footer */
+/* /footer */

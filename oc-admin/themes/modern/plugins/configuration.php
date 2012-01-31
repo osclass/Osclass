@@ -33,7 +33,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <script type="text/javascript">
-
             function checkAll (frm, check) {
                 var aa = document.getElementById(frm);
                 for (var i = 0 ; i < aa.elements.length ; i++) {
@@ -57,14 +56,10 @@
                     collapsed: true
                 });
             });
-
         </script>
         <div id="content">
-            <div id="separator"></div>
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-
             <div id="right_column">
-
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
                         <img src="<?php echo osc_current_admin_theme_url('images/plugins-icon.png') ; ?>" title="" alt=""/>

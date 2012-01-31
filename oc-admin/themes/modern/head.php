@@ -46,19 +46,21 @@
 
 <script type="text/javascript">
     $(function() {
-        $("#menu").accordion({
+        $(".menu").accordion({
             active: false,
             collapsible: true,
             navigation: true,
             autoHeight: false,
             icons: { 'header': 'ui-icon-plus', 'headerSelected': 'ui-icon-minus' }
-        });
+        }) ;
 
         if (jQuery.browser.msie && jQuery.browser.version.substr(0,1)<7) {
             jQuery('#accordion *').css('zoom', '1');
         }
 
-        if($('.FlashMessage')) $('.FlashMessage').animate({opacity: 1.0}, 5000).fadeOut();
+        if( $('.FlashMessage') ) {
+            $('.FlashMessage').animate({opacity: 1.0}, 5000).fadeOut();
+        }
     });
 </script>
 

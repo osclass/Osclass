@@ -39,8 +39,8 @@
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
+        <!-- container -->
         <div id="content">
-            <div id="separator"></div>
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
             <div id="right_column">
                 <div id="content_header" class="content_header">
@@ -208,7 +208,8 @@
                     </div>
                 </div>
             </div> <!-- end of right column -->
-        </div><!-- end of container -->
+        </div>
+        <!-- /container -->
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>

@@ -82,7 +82,6 @@
         </script>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
 		<div id="content">
-			<div id="separator"></div>	
 			<?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
 		    <div id="right_column">
 			    <div id="content_header" class="content_header">
