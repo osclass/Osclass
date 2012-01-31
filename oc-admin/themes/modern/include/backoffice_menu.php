@@ -33,7 +33,7 @@
                 &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=items"><?php _e('Manage items') ; ?></a>
             </li>
             <li>
-                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=items&action=post"><?php _e('Add new item') ; ?></a>
+                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=items&action=post"><?php _e('Add new') ; ?></a>
             </li>
             <li>
                 &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=comments"><?php _e('Comments') ; ?></a>
@@ -66,7 +66,7 @@
                 &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=pages"><?php _e('Manage pages') ; ?></a>
             </li>
             <li>
-                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=pages&action=add"><?php _e('Create page') ; ?></a>
+                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=pages&action=add"><?php _e('Add new') ; ?></a>
             </li>
         </ul>
         <h3>
@@ -96,10 +96,10 @@
                 &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance"><?php _e('Manage themes') ; ?></a>
             </li>
             <li>
-                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance&action=add"><?php _e('Add a new theme') ; ?></a>
+                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance&action=add"><?php _e('Add new theme') ; ?></a>
             </li>
             <li>
-                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance&action=widgets"><?php _e('Add or remove widgets') ; ?></a>
+                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance&action=widgets"><?php _e('Manage widgets') ; ?></a>
             </li>
         </ul>
 
@@ -153,16 +153,16 @@
                 &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=currencies"><?php _e('Currencies') ; ?></a>
             </li>
             <li>
-                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=mailserver"><?php _e('Mail Server') ; ?></a>
+                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=mailserver"><?php _e('Mail server') ; ?></a>
             </li>
             <li>
                 &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=media"><?php _e('Media') ; ?></a>
             </li>
             <li>
-                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=cron"><?php _e('Cron system') ; ?></a>
+                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=cron"><?php _e('Cron') ; ?></a>
             </li>
             <li>
-                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=latestsearches"><?php _e('Last Searches') ; ?></a>
+                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=latestsearches"><?php _e('Last searches') ; ?></a>
             </li>
         </ul>
 
@@ -198,7 +198,7 @@
                 &raquo; <a href="<?php echo osc_admin_base_url(true); ?>?page=users"><?php _e('Manage users') ; ?></a>
             </li>
             <li>
-                &raquo; <a href="<?php echo osc_admin_base_url(true); ?>?page=users&action=create"><?php _e('Add new user') ; ?></a>
+                &raquo; <a href="<?php echo osc_admin_base_url(true); ?>?page=users&action=create"><?php _e('Add new') ; ?></a>
             </li>
             <li>
                 &raquo; <a href="<?php echo osc_admin_base_url(true); ?>?page=users&action=settings"><?php _e('Settings') ; ?></a>
@@ -213,10 +213,10 @@
                 &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=admins"><?php _e('Manage administrators') ; ?></a>
             </li>
             <li>
-                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=admins&action=add"><?php _e('Add new administrator') ; ?></a>
+                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=admins&action=add"><?php _e('Add new') ; ?></a>
             </li>
             <li>
-                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=admins&action=edit"><?php _e('Edit Your Profile') ; ?></a>
+                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=admins&action=edit"><?php _e('Your Profile') ; ?></a>
             </li>
         </ul>
 
