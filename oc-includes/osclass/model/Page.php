@@ -276,14 +276,6 @@
         public function deleteByInternalName($intName)
         {
             $row = $this->findByInternalName($intName);
-            $order = $row['i_order'];
-
-            if(!isset($row)) {
-                return false;
-            }
-
-            $this->reOrderPages($order);
-            
             return $this->deleteByPrimaryKey($row['pk_i_id']);
         }
 
