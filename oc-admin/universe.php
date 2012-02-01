@@ -30,6 +30,14 @@
         function doModel() {
 
             switch ($this->action) {
+                case 'browse':
+                    $url = Params::getParam('url');
+                    if($url=='') {
+                        $url = osc_market_url();
+                    }
+                    View::newInstance()->_exportVariableToView('url', $url);
+                    $this->doView('universe/browse.php');
+                    break;
                 default:
                             $code = html_entity_decode(Params::getParam('code'));
                             $plugins = Plugins::listAll();

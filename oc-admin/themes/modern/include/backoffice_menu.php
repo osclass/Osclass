@@ -198,6 +198,9 @@
             <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=universe">&raquo; <?php _e('Universe'); ?></a>
             </li>
+            <li>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=universe&action=browse">&raquo; <?php _e('Browse latest'); ?></a>
+            </li>
         </ul>
 
         &nbsp;
