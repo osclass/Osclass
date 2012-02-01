@@ -476,7 +476,6 @@
                 case 'upgrade': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
                     $message = "";
                     $error = 0;
-                    $remove_error_msg = "";
                     $sql_error_msg = "";
                     $rm_errors = 0;
                     $perms = osc_save_permissions();
@@ -522,20 +521,6 @@
                                     closedir($handle);
 
                                     if ($fail == 0) { // Everything is OK, continue
-                                        /**********************
-                                         **** REMOVE FILES ****
-                                         **********************/
-                                        if (file_exists(ABS_PATH . 'oc-temp/remove.list')) {
-                                            $lines = file(ABS_PATH . 'oc-temp/remove.list', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-                                            foreach ($lines as $line_num => $r_file) {
-                                                $unlink = @unlink(ABS_PATH . $r_file);
-                                                if (!$unlink) {
-                                                    $remove_error_msg .= sprintf(__('Error removing file: %s'), $r_file) . "<br/>";
-                                                }
-                                            }
-                                        }
-                                        // Removing files is not important for the rest of the proccess
-                                        // We will inform the user of the problems but the upgrade could continue
                                         /************************
                                          *** UPGRADE DATABASE ***
                                          ************************/
@@ -613,12 +598,6 @@
                     } else {
                         $message = __('Missing download URL');
                         $error = 1; // Missing download URL
-                    }
-
-                    if ($remove_error_msg != '') {
-                        if ($error == 0) {
-                            $message .= "<br /><br />" . __('We had some errors removing files, those are not super-sensitive errors, so we continued upgrading your installation. Please remove the following files (you already have OSClass upgraded, but to ensure maximun performance)');
-                        }
                     }
 
                     if ($error == 5) {
