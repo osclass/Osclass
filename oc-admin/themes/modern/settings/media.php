@@ -158,6 +158,21 @@
                     </div>
                 </div>
                 <div style="clear: both;"></div>
+                <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
+                    <fieldset>
+                        <legend><?php _e('Regenerate thumbnails'); ?></legend>
+                        <p>
+                            <?php _e('You can regenerate your thumbnails and previews images here. It\'s useful if you changed your theme and images are not showing up correctly. If you have changed the size of the thumbnails, click on update first, and then re-generate the iamges'); ?>.
+                        </p>
+                        <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
+                            <input type="hidden" name="action" value="images_post" />
+                            <input type="hidden" name="page" value="settings" />
+
+                            <input id="button_save" type="submit" value="<?php _e('Regenerate thumbnails'); ?>" />
+                        </form>
+                    </fieldset>
+                </div>
+                <div style="clear: both;"></div>
             </div> <!-- end of right column -->
         </div><!-- end of container -->
         <?php osc_current_admin_theme_path('footer.php') ; ?>

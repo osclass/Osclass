@@ -213,6 +213,7 @@ CREATE TABLE %st_item_description_tmp (
     if( osc_version() < 240 ) {
         // We no longer use s_what column in /*TABLE_PREFIX*/t_item_description
         $comm->query( sprintf('ALTER TABLE %st_item_description DROP COLUMN s_what', DB_TABLE_PREFIX) ) ;
+        @unlink(osc_admin_base_path()."/themes/modern/tools/images.php");
     }
 
     osc_changeVersionTo(240) ;

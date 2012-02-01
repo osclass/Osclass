@@ -184,9 +184,6 @@
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=upgrade">&raquo; <?php _e('Upgrade OSClass'); ?></a>
             </li>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=images">&raquo; <?php _e('Regenerate thumbnails'); ?></a>
-            </li>
-            <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=maintenance">&raquo; <?php _e('Maintenance mode'); ?></a>
             </li>
         </ul>
