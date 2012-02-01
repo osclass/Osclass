@@ -306,6 +306,60 @@
         }
 
         /**
+         * Find previous page
+         *
+         * @access public
+         * @since 2.4
+         * @param int $order
+         */
+        public function findPrevPage($order)
+        {
+            $this->dao->select();
+            $this->dao->from($this->tableName);
+            $this->dao->where('b_indelible', 0);
+            $this->dao->where('i_order < '.$order);
+            $this->dao->orderBy('i_order', 'DESC');
+            $this->dao->limit(1);
+            $result = $this->dao->get() ;
+
+            if( $result == false ) {
+                return array() ;
+            }
+
+            if( $result->numRows() == 0 ) {
+                return array() ;
+            }
+            return $result->row() ;
+        }
+
+        /**
+         * Find next page
+         *
+         * @access public
+         * @since 2.4
+         * @param int $order
+         */
+        public function findNextPage($order)
+        {
+            $this->dao->select();
+            $this->dao->from($this->tableName);
+            $this->dao->where('b_indelible', 0);
+            $this->dao->where('i_order > '.$order);
+            $this->dao->orderBy('i_order', 'ASC');
+            $this->dao->limit(1);
+            $result = $this->dao->get() ;
+
+            if( $result == false ) {
+                return array() ;
+            }
+
+            if( $result->numRows() == 0 ) {
+                return array() ;
+            }
+            return $result->row() ;
+        }
+
+        /**
          * Insert a new page. You have to pass all the parameters
          *
          * @access public

@@ -398,7 +398,6 @@
                 case 'order_pages':
                     $order = Params::getParam("order");
                     $id    = Params::getParam("id");
-                    $count = osc_count_static_pages();
                     if($order != '' && $id != '') {
                         $mPages = Page::newInstance();
                         $actual_page  = $mPages->findByPrimaryKey($id);
@@ -409,33 +408,22 @@
                         $new_order = $actual_order;
 
                         if($order == 'up') {
-                            if($actual_order > 0) {
-                                $new_order = $actual_order-1;
-                            }
+                            $page = $mPages->findPrevPage($actual_order);
                         } else if($order == 'down') {
-                            if($actual_order != ($count-1)) {
-                                $new_order = $actual_order+1;
-                            }
+                            $page = $mPages->findNextPage($actual_order);
+                        }
+                        if(isset($page['i_order'])) {
+                            $mPages->update(array('i_order' => $page['i_order']), array('pk_i_id' => $id));
+                            $mPages->update(array('i_order' => $actual_order), array('pk_i_id' => $page['pk_i_id']));
                         }
                         
-                        if($new_order != $actual_order) {
-                            $auxpage = $mPages->findByOrder($new_order);
-
-                            $array      = array('i_order' => $actual_order );
-                            $conditions = array('pk_i_id' => $auxpage['pk_i_id']);
-                            $mPages->update($array, $conditions);
-
-                            $array      = array('i_order' => $new_order );
-                            $conditions = array('pk_i_id' => $id);
-                            $mPages->update($array, $conditions);
-
-                        }
                         // TO BE IMPROVED
                         // json for datatables
                         $prefLocale = osc_current_admin_locale();
                         $aPages = $mPages->listAll(0);
-                        $json = "[";
+                        $o_json = array();
                         foreach($aPages as $key => $page) {
+                            $json_tmp = array();
 
                             $body = array();
                             
@@ -446,26 +434,27 @@
                             }
                             $p_body =  str_replace("'", "\'", trim(strip_tags($body['s_title']), "\x22\x27"));
 
-                            $json .= "[\"<input type='checkbox' name='id[]' value='". $page['pk_i_id'] ."' />\",";
-                            $json .= "\"".osc_esc_html($page['s_internal_name'])."<div id='datatables_quick_edit'>";
+                            $json_tmp[] = "<input type='checkbox' name='id[]' value='". $page['pk_i_id'] ."' />";
+                            $json = osc_esc_html($page['s_internal_name'])."<div id='datatables_quick_edit'>";
                             $json .= "<a href='". osc_static_page_url() ."'>". __('View page') ."</a> | ";
                             $json .= "<a href='". osc_admin_base_url(true) ."?page=pages&action=edit&id=". $page['pk_i_id'] ."'>";
                             $json .= __('Edit') ."</a>";
                             if(!$page['b_indelible']) {
                                 $json .= " | ";
-                                $json .= "<a onclick=\\\"javascript:return confirm('";
-                                $json .= __('This action can\\\\\'t be undone. Are you sure you want to continue?') ."')\\\" ";
+                                $json .= "<a onclick=\"javascript:return confirm('";
+                                $json .= __('This action can not be undone. Are you sure you want to continue?') ."')\" ";
                                 $json .= " href='". osc_admin_base_url(true) ."?page=pages&action=delete&id=". $page['pk_i_id'] ."'>";
                                 $json .= __('Delete') ."</a>";
                             }
-                            $json .= "</div>\",";
-                            $json .= "\"".$p_body."\",";
-                            $json .= "\"<img id='up' onclick='order_up(". $page['pk_i_id'] .");' style='cursor:pointer;width:15;height:15px;' src='". osc_current_admin_theme_url('images/arrow_up.png') ."'/> <br/> <img id='down' onclick='order_down(". $page['pk_i_id'] .");' style='cursor:pointer;width:15;height:15px;' src='". osc_current_admin_theme_url('images/arrow_down.png')."'/>\"]";
+                            $json .= "</div>";
+                            $json_tmp[] = $json;
+                            $json_tmp[] = $p_body;
+                            $json_tmp[] = $page['i_order'] . " <img id='up' onclick='order_up(". $page['pk_i_id'] .");' style='cursor:pointer;width:15;height:15px;' src='". osc_current_admin_theme_url('images/arrow_up.png') ."'/> <br/> <img id='down' onclick='order_down(". $page['pk_i_id'] .");' style='cursor:pointer;width:15;height:15px;' src='". osc_current_admin_theme_url('images/arrow_down.png')."'/>";
 
-                            if( $key != count($aPages)-1 ){ $json .= ','; } else { $json .= ''; }
+                            $o_json[] = $json_tmp;
+
                         }
-                        $json .= "]";
-                        echo $json;
+                        echo json_encode($o_json);
                     }
 
                     break;
