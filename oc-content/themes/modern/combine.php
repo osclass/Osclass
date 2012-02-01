@@ -31,6 +31,11 @@
     $type     = $_GET['type'];
     $elements = explode(',', $_GET['files']);
 
+    if( !in_array($type, array('css', 'js')) ) {
+        header ("HTTP/1.0 403 Forbidden") ;
+        exit ;
+    }
+
     // Determine last modification date of the files
     $lastmodified = 0;
     while( list(,$element) = each($elements) ) {
