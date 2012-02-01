@@ -67,8 +67,7 @@
                     <div id="content_header_arrow">&raquo; <?php _e($title); ?></div>
                     <div style="clear: both;"></div>
                 </div>
-                <div id="content_separator"></div>
-                <?php osc_show_flash_message('admin') ; ?>
+                <?php osc_show_admin_flash_messages() ; ?>
                 <!-- add new page form -->
                 <div id="settings_form">
                     <form name="emails_form" id="emails_form" action="<?php echo osc_admin_base_url(true); ?>?page=emails" method="post">

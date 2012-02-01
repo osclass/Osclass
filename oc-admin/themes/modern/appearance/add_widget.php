@@ -72,10 +72,7 @@
                     <div id="content_header_arrow">&raquo; <?php echo sprintf(__('Create widget in %s'), Params::getParam('location')); ?></div>
                     <div style="clear: both;"></div>
                 </div>
-
-                <div id="content_separator"></div>
-                
-                <?php osc_show_flash_message('admin') ; ?>
+                <?php osc_show_admin_flash_messages() ; ?>
                 <!-- add new theme form -->
                 <div id="main_div" style="border: 1px solid #ccc; background: #eee; display:block;">
                     <div style="padding: 20px; padding-top: 10px;">

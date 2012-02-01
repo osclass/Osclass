@@ -34,7 +34,6 @@
                     <div id="content_header_arrow">&raquo; <?php _e('Theme'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
-
                 <div id="content_separator"></div>
                 <div id="TableToolsToolbar"></div>
                 <div>

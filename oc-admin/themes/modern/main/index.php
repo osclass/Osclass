@@ -107,8 +107,7 @@
 					<div id="button_open"><?php _e('Settings') ; ?></div>
 					<div style="clear: both;"></div>
 				</div>
-				<?php osc_show_flash_message('admin') ; ?>
-				
+				<?php osc_show_admin_flash_messages() ; ?>
 				<!-- settings div -->
 				<div id="main_div">
 					<form id="checkboxes">

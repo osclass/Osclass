@@ -180,9 +180,7 @@
                     <div id="content_header_arrow">&raquo; <?php _e('Manage items'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
-
-                <div id="content_separator"></div>
-                <?php osc_show_flash_message('admin') ; ?>
+                <?php osc_show_admin_flash_messages() ; ?>
                 <div>
                     <form id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>?page=items" method="post">
                         <input type="hidden" name="action" value="bulk_actions" />

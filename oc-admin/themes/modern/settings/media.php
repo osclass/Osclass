@@ -36,8 +36,7 @@
                     <div id="content_header_arrow">&raquo; <?php _e('Configure media') ; ?></div>
                     <div style="clear: both;"></div>
                 </div>
-                <div id="content_separator"></div>
-                <?php osc_show_flash_message('admin') ; ?>
+                <?php osc_show_admin_flash_messages() ; ?>
                 <div style="border: 1px solid #ccc; background: #eee;">
                     <div style="padding: 20px;">
                         <div><?php _e('Please set the preferred dimensions for all the images on the website. (format: WIDTHxHEIGHT, eg: 640x480)'); ?></div>

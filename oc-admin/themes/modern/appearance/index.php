@@ -50,9 +50,7 @@
                     <a href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance&action=add" id="button_open"><?php _e('Add a new theme') ; ?></a>
                     <div style="clear: both;"></div>
                 </div>
-
-                <?php osc_show_flash_message('admin') ; ?>
-
+                <?php osc_show_admin_flash_messages() ; ?>
                 <!-- list themes -->
                 <div id="content_separator"></div>
                 <div id="list_themes_div" style="border: 1px solid #ccc; background: #eee;">

@@ -34,8 +34,7 @@
                     <div id="content_header_arrow">&raquo; <?php _e('Import data'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
-                <div id="content_separator"></div>
-                <?php osc_show_flash_message('admin') ; ?>
+                <?php osc_show_admin_flash_messages() ; ?>
                 <!-- add new item form -->
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">

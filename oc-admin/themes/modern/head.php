@@ -15,6 +15,21 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
+
+     function osc_show_admin_flash_messages() {
+        $msg = osc_get_flash_message('admin') ;
+        if( $msg != '' ) {
+            $output = <<<FLASHMESSAGE
+            <!-- flash message -->
+            <div class="alert alert-{$msg['type']}">
+                <a class="close" href="#">×</a>
+                <p>{$msg['msg']}</p>
+            </div>
+            <!-- /flash message -->
+FLASHMESSAGE;
+            echo $output ;
+        }
+     }
 ?>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -43,26 +58,8 @@
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('tiny_mce/tiny_mce.js') ; ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.dataTables.min.js') ; ?>"></script>
-
-<script type="text/javascript">
-    $(function() {
-        $(".menu").accordion({
-            active: false,
-            collapsible: true,
-            navigation: true,
-            autoHeight: false,
-            icons: { 'header': 'ui-icon-plus', 'headerSelected': 'ui-icon-minus' }
-        }) ;
-
-        if (jQuery.browser.msie && jQuery.browser.version.substr(0,1)<7) {
-            jQuery('#accordion *').css('zoom', '1');
-        }
-
-        if( $('.FlashMessage') ) {
-            $('.FlashMessage').animate({opacity: 1.0}, 5000).fadeOut();
-        }
-    });
-</script>
+<!-- global js -->
+<script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('global.js') ; ?>"></script>
 
 <script>
     var fileDefaultText = '<?php _e('No file selected','modern'); ?>';

@@ -156,9 +156,7 @@
                     <div id="jsMessage" class="" style="float:right;display:none;"></div>
                     <div style="clear: both;"></div>
                 </div>
-                <div id="content_separator"></div>
-                <?php osc_show_flash_message('admin') ; ?>
-
+                <?php osc_show_admin_flash_messages() ; ?>
                 <div id="jsMessage" class="FlashMessage" style="display:none;"></div>
 
                 <div style="clear: both;"></div>

@@ -70,7 +70,7 @@
         <div id="content">
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
             <div id="right_column">
-                <?php osc_show_flash_message('admin') ; ?>
+                <?php osc_show_admin_flash_messages() ; ?>
                 <div class="content_header" id="content_header">
                     <div style="float: left;">
                         <img alt="" title="" src="<?php echo osc_current_admin_theme_url('images/new-folder-icon.png') ; ?>">

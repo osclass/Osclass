@@ -108,9 +108,7 @@
                     <a href="<?php echo osc_admin_base_url(true); ?>?page=admins&action=add" id="button_open"><?php _e('Add new admin') ; ?></a>
                     <div style="clear: both;"></div>
                 </div>
-
-                <div id="content_separator"></div>
-                <?php osc_show_flash_message('admin'); ?>
+                <?php osc_show_admin_flash_messages() ; ?>
                 <div id="TableToolsToolbar">
                     <select id="bulk_actions" class="display">
                             <option value=""><?php _e('Bulk actions'); ?></option>

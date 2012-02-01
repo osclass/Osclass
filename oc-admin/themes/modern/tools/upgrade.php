@@ -81,7 +81,7 @@
                     <div id="content_header_arrow">&raquo; <?php _e('Upgrade OSClass', 'admin'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
-                <?php osc_show_flash_message('admin') ; ?>
+                <?php osc_show_admin_flash_messages() ; ?>
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 5px;">
                         <div style="width: 100%;">

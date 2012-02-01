@@ -83,7 +83,7 @@
                     <div id="content_header_arrow">&raquo; <?php _e('Emails & alerts'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
-                <?php osc_show_flash_message('admin') ; ?>
+                <?php osc_show_admin_flash_messages() ; ?>
                 <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list" style="border-bottom: 1px solid #AAAAAA; border-left: 1px solid #AAAAAA; border-right: 1px solid #AAAAAA;"></table>
                 <div style="clear: both;"></div>
             </div> <!-- end of right column -->

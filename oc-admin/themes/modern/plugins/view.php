@@ -35,8 +35,7 @@
                     <a href="<?php echo osc_admin_base_url(true) ; ?>?page=plugins&action=add" id="button_open"><?php _e('Add a new plugin') ; ?></a>
                     <div style="clear: both;"></div>
                 </div>
-                <?php osc_show_flash_message('admin') ; ?>
-                <div id="content_separator"></div>
+                <?php osc_show_admin_flash_messages() ; ?>
                 <div id="TableToolsToolbar"></div>
                 <div>
                     <?php require __get("file") ; ?>
