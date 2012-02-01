@@ -102,6 +102,7 @@
                         "sSearch": '<span class="ui-icon ui-icon-search" style="display: inline-block;"></span>'
                      },
                     "sPaginationType": "full_numbers",
+                    "aaSorting": [[3,'asc']],
                     "aaData": [
                         <?php if(osc_count_static_pages()>0) {
                         while(osc_has_static_pages()) { ?>
@@ -127,7 +128,7 @@
                                     "href='<?php echo osc_admin_base_url(true); ?>?page=pages&action=delete&id=<?php echo osc_static_page_id(); ?>'>" +
                                     "<?php _e('Delete'); ?></a><?php }; ?></div>",
                                     '<?php echo $p_body; ?>',
-                                    "<img id='up' onclick='order_up(<?php echo osc_static_page_id(); ?>);' style='cursor:pointer;width:15;height:15px;' src='<?php echo osc_current_admin_theme_url('images/arrow_up.png');?>'/> <br/><img id='down' onclick='order_down(<?php echo osc_static_page_id(); ?>);' style='cursor:pointer;width:15;height:15px;' src='<?php echo osc_current_admin_theme_url('images/arrow_down.png');?>'/>"
+                                    "<?php echo osc_static_page_order(); ?> <img id='up' onclick='order_up(<?php echo osc_static_page_id(); ?>);' style='cursor:pointer;width:15;height:15px;' src='<?php echo osc_current_admin_theme_url('images/arrow_up.png');?>'/> <br/><img id='down' onclick='order_down(<?php echo osc_static_page_id(); ?>);' style='cursor:pointer;width:15;height:15px;' src='<?php echo osc_current_admin_theme_url('images/arrow_down.png');?>'/>"
                                   ] <?php echo $last_id != osc_static_page_id() ? ',' : ''; ?>
                         <?php };}; ?>
                               ],
