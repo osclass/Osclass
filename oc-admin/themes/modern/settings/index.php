@@ -23,7 +23,7 @@
     $aCurrencies = __get('aCurrencies') ;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
     </head>
@@ -32,7 +32,7 @@
         <!-- container -->
         <div id="content">
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-            <!-- right  container -->
+            <!-- right container -->
             <div class="right">
                 <div class="header_title">
                     <h1 class="settings"><?php _e('General Settings') ; ?></h1>
@@ -179,7 +179,7 @@
                 </div>
                 <!-- /settings form -->
             </div>
-            <!-- /right  container -->
+            <!-- /right container -->
         </div>
         <!-- /container -->
         <?php osc_current_admin_theme_path('footer.php') ; ?>

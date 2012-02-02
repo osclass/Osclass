@@ -677,6 +677,10 @@ select, input[type="file"] {
     height: 24px;
 }
 
+input.micro {
+    width: 30px;
+}
+
 input.mini {
     width: 60px;
 }
@@ -702,18 +706,22 @@ input.xxlarge {
 }
 /* /form */
 /* settings */
-.right form {
-    margin-left: 20px;
-}
-
 .right a, .right a:visited {
     color: #2AA4DB;
     text-decoration: none;
 }
 
 .right a:hover {
-    color: #2AA4DB;
+    color: #F60;
     text-decoration: underline;
+}
+
+.right h3 {
+    margin: 10px 0;
+}
+
+.right .settings {
+    padding-left: 20px;
 }
 
 .input-line {
@@ -769,17 +777,23 @@ input.xxlarge {
     display: inline-block;
 }
 
-.input-line .input .radio {
+.input-line .input .radio, .input-line .input .checkbox {
     padding: 2px 0;
+    margin-top: 2px;
 }
 
-.input-line .input .radio input[type="radio"]{
+.input-line .input .radio input[type="radio"], .input-line .input .radio input[type="checkbox"] {
     margin-right: 5px;
 }
 
 .actions {
     margin-left: 200px;
     margin-bottom: 20px;
+}
+
+.actions.nomargin {
+    margin-left: 20px;
+    margin-top: 20px;
 }
 
 .actions input[type="submit"] {
@@ -798,7 +812,7 @@ input.xxlarge {
      -moz-border-radius: 4px;
           border-radius: 4px;
   cursor: pointer;
-}
+}opaci
 
 .actions input[type="submit"]:hover {
   color: #333333;
@@ -816,5 +830,34 @@ input.xxlarge {
     outline: thin dotted;
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px;
+}
+
+.settings ul {
+    list-style: disc;
+    margin-left: 25px;
+}
+
+.settings ul li {
+    margin: 4px 0;
+}
+
+.right .permalinks .input-line {
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.right .permalinks pre {
+    margin: 10px;
+    padding: 10px 15px;
+    overflow: auto;
+    width: 400px;
+    max-height: 300px;
+    background-color: #F0F0F0;
+}
+.alert pre {
+    margin: 10px 10px 5px 25px;
+    overflow: auto;
+    font-weight: bold;
+    
 }
 /* /settings */

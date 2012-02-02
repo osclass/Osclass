@@ -321,42 +321,71 @@
                                         $this->doView('settings/permalinks.php');
                 break;
                 case('permalinks_post'):// updating permalinks option
-                                        $htaccess_status = 0;
-                                        $file_status     = 0;
-                                        $rewriteEnabled  = Params::getParam('rewrite_enabled');
-                                        $rewriteEnabled  = ($rewriteEnabled ? true : false);
+                                        $htaccess_file  = osc_base_path() . '.htaccess' ;
+                                        $rewriteEnabled = (Params::getParam('rewrite_enabled') ? true : false) ;
 
-                                        if($rewriteEnabled) {
+                                        if( $rewriteEnabled ) {
                                             Preference::newInstance()->update(array('s_value' => '1')
-                                                                             ,array('s_name' => 'rewriteEnabled'));
+                                                                             ,array('s_name' => 'rewriteEnabled') ) ;
 
-                                            require_once ABS_PATH . 'generate_rules.php';
-                                            $htaccess = '
-    <IfModule mod_rewrite.c>
-        RewriteEngine On
-        RewriteBase ' . REL_WEB_URL . '
-        RewriteRule ^index\.php$ - [L]
-        RewriteCond %{REQUEST_FILENAME} !-f
-        RewriteCond %{REQUEST_FILENAME} !-d
-        RewriteRule . ' . REL_WEB_URL . 'index.php [L]
-    </IfModule>';
+                                            $rewrite_base = REL_WEB_URL ;
+                                            $htaccess     = <<<HTACCESS
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase {$rewrite_base}
+    RewriteRule ^index\.php$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule {$rewrite_base}index.php [L]
+</IfModule>
+HTACCESS;
 
-                                            if( file_exists(osc_base_path() . '.htaccess') ) {
-                                                $file_status = 1;
-                                            } else if(file_put_contents(osc_base_path() . '.htaccess', $htaccess)) {
-                                                $file_status = 2;
+                                            // 1. OK (ok)
+                                            // 2. OK no apache module detected (warning)
+                                            // 3. No se puede crear + apache
+                                            // 4. No se puede crear + no apache
+                                            $status = 3 ;
+                                            if( file_exists($htaccess_file) ) {
+                                                if( is_writable($htaccess_file) && file_put_contents($htaccess_file, $htaccess) ) {
+                                                    $status = 1 ;
+                                                }
                                             } else {
-                                                $file_status = 3;
+                                                if( is_writable(osc_base_path()) && file_put_contents($htaccess_file, $htaccess) ) {
+                                                    $status = 1 ;
+                                                }
                                             }
 
-                                            if(apache_mod_loaded('mod_rewrite')) {
-                                                $htaccess_status = 1;
-                                                Preference::newInstance()->update(array('s_value' => '1')
-                                                                                 ,array('s_name'  => 'mod_rewrite_loaded'));
-                                            } else {
-                                                $htaccess_status = 2;
-                                                Preference::newInstance()->update(array('s_value' => '0')
-                                                                                 ,array('s_name'  => 'mod_rewrite_loaded'));
+                                            if( !apache_mod_loaded('mod_rewrite') ) {
+                                                $status++ ;
+                                            }
+
+                                            require_once ABS_PATH . 'generate_rules.php' ;
+
+                                            switch($status) {
+                                                case 1:
+                                                    $msg  = __("Permalinks structure updated") ;
+                                                    osc_add_flash_ok_message($msg, 'admin') ;
+                                                break;
+                                                case 2:
+                                                    $msg  = __("Permalinks structure updated.") ;
+                                                    $msg .= " " ;
+                                                    $msg .= __("However, we can't check if Apache module <b>mod_rewrite</b> is loaded. If you experience some problems with the urls, you should deactivate <em>friendly urls</em>") ;
+                                                    osc_add_flash_warning_message($msg, 'admin') ;
+                                                break;
+                                                case 3:
+                                                    $msg  = __("File <b>.htaccess</b> couldn't be filled with the right content.") ;
+                                                    $msg .= " " ;
+                                                    $msg .= __("Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file, please deactivate <em>friendly urls</em> option.") ;
+                                                    $msg .= "</p><pre>" . htmlentities($htaccess) . '</pre><p>' ;
+                                                    osc_add_flash_error_message($msg, 'admin') ;
+                                                break;
+                                                case 4: 
+                                                    $msg  = __("File <b>.htaccess</b> couldn't be filled with the right content.") ;
+                                                    $msg .= " " ;
+                                                    $msg .= __("Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file or experience some problems with the urls, please deactivate <em>friendly urls</em> option.") ;
+                                                    $msg .= "</p><pre>" . htmlentities($htaccess) . '</pre><p>' ;                                            
+                                                    osc_add_flash_error_message($msg, 'admin') ;
+                                                break;
                                             }
                                             
                                             $item_url = Params::getParam('rewrite_item_url');
@@ -560,16 +589,17 @@
                                             
                                             
                                         } else {
-                                            $modRewrite = apache_mod_loaded('mod_rewrite');
                                             Preference::newInstance()->update(array('s_value' => '0')
-                                                                             ,array('s_name'  => 'rewriteEnabled'));
+                                                                             ,array('s_name'  => 'rewriteEnabled')) ;
                                             Preference::newInstance()->update(array('s_value' => '0')
-                                                                             ,array('s_name'  => 'mod_rewrite_loaded'));
+                                                                             ,array('s_name'  => 'mod_rewrite_loaded')) ;
+
+                                            osc_add_flash_ok_message(__('Friendly urls successfully deactivated'), 'admin') ;
                                         }
 
-                                        $redirectUrl  = osc_admin_base_url(true) . '?page=settings&action=permalinks&htaccess_status=';
+                                        $redirectUrl  = osc_admin_base_url(true) . '?page=settings&action=permalinks';
                                         $redirectUrl .= $htaccess_status . '&file_status=' . $file_status;
-                                        $this->redirectTo($redirectUrl);
+                                        $this->redirectTo( osc_admin_base_url(true) . '?page=settings&action=permalinks' ) ;
                 break;
                 case('spamNbots'):      // calling the spam and bots view
                                         $this->doView('settings/spamNbots.php');
