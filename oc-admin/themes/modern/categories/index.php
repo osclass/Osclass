@@ -58,6 +58,20 @@
                     stop: function(event, ui) { 
                         var list = '';
                         list = $('.sortable').nestedSortable('serialize');
+                        var array_list = $('.sortable').nestedSortable('toArray');
+                        var l = array_list.length;
+                        for(var k=0;k<l;k++) {
+                            if(array_list[k].item_id==$(ui.item).find('div').attr('category_id')) {
+                                if(array_list[k].parent_id=='root') {
+                                    $(ui.item).find('.expand_cat').show();
+                                    $(ui.item).find('.collapse_cat').show();
+                                } else {
+                                    $(ui.item).find('.expand_cat').hide();
+                                    $(ui.item).find('.collapse_cat').hide();
+                                }
+                                break;
+                            }
+                        }
                         if(list_original != list) {
                             $.ajax({
                                 url: "<?php echo osc_admin_base_url(true)."?page=ajax&action=categories_order&";?>"+list,
@@ -98,6 +112,20 @@
                         }
                     }
                 });
+                
+                
+                $(".collapse_cat").live("click", function(e){
+                    $(this).parent().parent().next('ul').hide('slow');
+                    $(this).attr('class', 'expand_cat');
+                    $(this).html('+');
+                });
+                
+                $(".expand_cat").live("click", function(e){
+                    $(this).parent().parent().next('ul').show('slow');
+                    $(this).attr('class', 'collapse_cat');
+                    $(this).html('-');
+                });
+                
             });
 
             
@@ -282,7 +310,7 @@
                         <li id="list_<?php echo $category['pk_i_id']; ?>" class="category_li <?php echo $category['b_enabled'] == 1 ? 'enabled' : 'disabled'; ?>" >
                             <div class="category_div <?php echo $category['b_enabled'] == 1 ? 'enabled' : 'disabled'; ?>" category_id="<?php echo $category['pk_i_id'];?>" >
                                 <div class="quick_edit" id="<?php echo "quick_edit_".$category['pk_i_id']; ?>" style="float:left;">
-                                    <?php echo $category['s_name'];?> 
+                                    <span class="expand_cat">+</span> <?php echo $category['s_name'];?> 
                                 </div>
                                 <div style="float:right;">
                                     <a onclick="show_iframe('content_list_<?php echo $category['pk_i_id'];?>','<?php echo $category['pk_i_id'];?>');">
@@ -298,13 +326,13 @@
                                 
                             </div>
                             <?php if($has_subcategories) { ?>
-                                <ul>
+                                <ul style="display: none;">
                                 <?php if( count($category['categories']) > 0 ) { $has_subcategories = true; } else { $has_subcategories = false; } ?>
                                 <?php foreach($category['categories'] as $category) {?>
                                     <li id="list_<?php echo $category['pk_i_id']; ?>" class="category_li <?php echo $category['b_enabled'] == 1 ? 'enabled' : 'disabled'; ?>" >
                                         <div class="category_div <?php echo $category['b_enabled'] == 1 ? 'enabled' : 'disabled'; ?>" category_id="<?php echo $category['pk_i_id'];?>" >
                                             <div class="quick_edit" id="<?php echo "quick_edit_".$category['pk_i_id']; ?>" style="float:left;">
-                                                <?php echo $category['s_name'];?> 
+                                                <span class="expand_cat" style="display:none;">+</span> <?php echo $category['s_name'];?> 
                                             </div>
                                             <div style="float:right;">
                                                 <a onclick="show_iframe('content_list_<?php echo $category['pk_i_id'];?>','<?php echo $category['pk_i_id'];?>');">
