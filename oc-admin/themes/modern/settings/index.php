@@ -171,6 +171,16 @@
                                     <p class="inline"><?php _e('items at most') ; ?></p>
                                 </div>
                             </div>
+                            <h3><?php _e('Contact Settings') ; ?></h3>
+                            <div class="input-line">
+                                <label><?php _e('Attachments') ; ?></label>
+                                <div class="input">
+                                    <label>
+                                        <input type="checkbox" <?php echo ( osc_contact_attachment() ? 'checked="true"' : '' ) ; ?> name="enabled_attachment" value="1" />
+                                        <p class="inline"><?php _e('Allow people to attach a file in the contact form') ; ?></p>
+                                    </label>
+                                </div>
+                            </div>
                             <div class="actions">
                                 <input type="submit" value="<?php osc_esc_html( _e('Save changes') ) ; ?>" />
                             </div>

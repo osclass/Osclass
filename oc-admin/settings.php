@@ -22,7 +22,6 @@
 
     class CAdminSettings extends AdminSecBaseModel
     {
-
         function __construct() {
             parent::__construct() ;
         }
@@ -363,26 +362,26 @@ HTACCESS;
 
                                             switch($status) {
                                                 case 1:
-                                                    $msg  = __("Permalinks structure updated") ;
+                                                    $msg  = _m("Permalinks structure updated") ;
                                                     osc_add_flash_ok_message($msg, 'admin') ;
                                                 break;
                                                 case 2:
-                                                    $msg  = __("Permalinks structure updated.") ;
+                                                    $msg  = _m("Permalinks structure updated.") ;
                                                     $msg .= " " ;
-                                                    $msg .= __("However, we can't check if Apache module <b>mod_rewrite</b> is loaded. If you experience some problems with the urls, you should deactivate <em>friendly urls</em>") ;
+                                                    $msg .= _m("However, we can't check if Apache module <b>mod_rewrite</b> is loaded. If you experience some problems with the urls, you should deactivate <em>friendly urls</em>") ;
                                                     osc_add_flash_warning_message($msg, 'admin') ;
                                                 break;
                                                 case 3:
-                                                    $msg  = __("File <b>.htaccess</b> couldn't be filled with the right content.") ;
+                                                    $msg  = _m("File <b>.htaccess</b> couldn't be filled with the right content.") ;
                                                     $msg .= " " ;
-                                                    $msg .= __("Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file, please deactivate <em>friendly urls</em> option.") ;
+                                                    $msg .= _m("Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file, please deactivate <em>friendly urls</em> option.") ;
                                                     $msg .= "</p><pre>" . htmlentities($htaccess) . '</pre><p>' ;
                                                     osc_add_flash_error_message($msg, 'admin') ;
                                                 break;
                                                 case 4: 
-                                                    $msg  = __("File <b>.htaccess</b> couldn't be filled with the right content.") ;
+                                                    $msg  = _m("File <b>.htaccess</b> couldn't be filled with the right content.") ;
                                                     $msg .= " " ;
-                                                    $msg .= __("Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file or experience some problems with the urls, please deactivate <em>friendly urls</em> option.") ;
+                                                    $msg .= _m("Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file or experience some problems with the urls, please deactivate <em>friendly urls</em> option.") ;
                                                     $msg .= "</p><pre>" . htmlentities($htaccess) . '</pre><p>' ;                                            
                                                     osc_add_flash_error_message($msg, 'admin') ;
                                                 break;
@@ -594,7 +593,7 @@ HTACCESS;
                                             Preference::newInstance()->update(array('s_value' => '0')
                                                                              ,array('s_name'  => 'mod_rewrite_loaded')) ;
 
-                                            osc_add_flash_ok_message(__('Friendly urls successfully deactivated'), 'admin') ;
+                                            osc_add_flash_ok_message(_m('Friendly urls successfully deactivated'), 'admin') ;
                                         }
 
                                         $redirectUrl  = osc_admin_base_url(true) . '?page=settings&action=permalinks';
@@ -981,24 +980,6 @@ HTACCESS;
                                         osc_add_flash_ok_message( _m('Re-generation complete'), 'admin') ;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media') ;
                 break;
-                case('contact'):        // calling the media view
-                                        $this->doView('settings/contact.php') ;
-                break;
-                case('contact_post'):   // updating the media config
-                                        $enabled_attachment = Params::getParam('enabled_attachment');
-                                        if ($enabled_attachment == '') $enabled_attachment = 0 ;
-                                        else $enabled_attachment = 1 ;
-
-                                        // format parameters
-                                        $iUpdated = Preference::newInstance()->update(array('s_value' => $enabled_attachment)
-                                                                                      ,array('s_name'  => 'contact_attachment'));
-
-                                        if($iUpdated > 0) {
-                                            osc_add_flash_ok_message( _m('Contact configuration has been updated'), 'admin');
-                                        }
-
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=contact');
-                break ;
                 case('cron'):           // viewing the cron view
                                         $this->doView('settings/cron.php');
                 break;
@@ -1017,69 +998,70 @@ HTACCESS;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=cron');
                 break;
                 case('update'):         // update index view
-                                        $iUpdated       = 0;
-                                        $sPageTitle     = Params::getParam('pageTitle');
-                                        $sPageDesc      = Params::getParam('pageDesc');
-                                        $sContactEmail  = Params::getParam('contactEmail');
-                                        $sLanguage      = Params::getParam('language');
-                                        $sDateFormat    = Params::getParam('dateFormat');
-                                        $sCurrency      = Params::getParam('currency');
-                                        $sWeekStart     = Params::getParam('weekStart');
-                                        $sTimeFormat    = Params::getParam('timeFormat');
-                                        $sTimezone      = Params::getParam('timezone');
-                                        $sNumRssItems   = Params::getParam('num_rss_items');
-                                        $maxLatestItems = Params::getParam('max_latest_items_at_home');
-                                        $numItemsSearch = Params::getParam('default_results_per_page') ;
+                                        $iUpdated          = 0 ;
+                                        $sPageTitle        = Params::getParam('pageTitle') ;
+                                        $sPageDesc         = Params::getParam('pageDesc') ;
+                                        $sContactEmail     = Params::getParam('contactEmail') ;
+                                        $sLanguage         = Params::getParam('language') ;
+                                        $sDateFormat       = Params::getParam('dateFormat') ;
+                                        $sCurrency         = Params::getParam('currency') ;
+                                        $sWeekStart        = Params::getParam('weekStart') ;
+                                        $sTimeFormat       = Params::getParam('timeFormat') ;
+                                        $sTimezone         = Params::getParam('timezone') ;
+                                        $sNumRssItems      = Params::getParam('num_rss_items') ;
+                                        $maxLatestItems    = Params::getParam('max_latest_items_at_home') ;
+                                        $numItemsSearch    = Params::getParam('default_results_per_page') ;
+                                        $contactAttachment = Params::getParam('enabled_attachment') ;
 
                                         // preparing parameters
-                                        $sPageTitle     = strip_tags($sPageTitle);
-                                        $sPageDesc      = strip_tags($sPageDesc);
-                                        $sContactEmail  = strip_tags($sContactEmail);
-                                        $sLanguage      = strip_tags($sLanguage);
-                                        $sDateFormat    = strip_tags($sDateFormat);
-                                        $sCurrency      = strip_tags($sCurrency);
-                                        $sWeekStart     = strip_tags($sWeekStart);
-                                        $sTimeFormat    = strip_tags($sTimeFormat);
-                                        $sNumRssItems   = (int) strip_tags($sNumRssItems);
-                                        $maxLatestItems = (int) strip_tags($maxLatestItems);
-                                        $numItemsSearch = (int) $numItemsSearch ;
-
+                                        $sPageTitle        = strip_tags($sPageTitle) ;
+                                        $sPageDesc         = strip_tags($sPageDesc) ;
+                                        $sContactEmail     = strip_tags($sContactEmail) ;
+                                        $sLanguage         = strip_tags($sLanguage) ;
+                                        $sDateFormat       = strip_tags($sDateFormat) ;
+                                        $sCurrency         = strip_tags($sCurrency) ;
+                                        $sWeekStart        = strip_tags($sWeekStart) ;
+                                        $sTimeFormat       = strip_tags($sTimeFormat) ;
+                                        $sNumRssItems      = (int) strip_tags($sNumRssItems) ;
+                                        $maxLatestItems    = (int) strip_tags($maxLatestItems) ;
+                                        $numItemsSearch    = (int) $numItemsSearch ;
+                                        $contactAttachment = ($contactAttachment != '' ? true : false) ;
                                         $error = "";
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageTitle)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'pageTitle'));
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'pageTitle')) ;
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageDesc)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'pageDesc'));
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'pageDesc')) ;
                                         if( !defined('DEMO') ) {
                                             $iUpdated += Preference::newInstance()->update(array('s_value'   => $sContactEmail)
-                                                                                          ,array('s_section' => 'osclass', 's_name' => 'contactEmail'));
+                                                                                          ,array('s_section' => 'osclass', 's_name' => 'contactEmail')) ;
                                         }
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sLanguage)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'language'));
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'language')) ;
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sDateFormat)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'dateFormat'));
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'dateFormat')) ;
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sCurrency)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'currency'));
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'currency')) ;
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sWeekStart)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'weekStart'));
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'weekStart')) ;
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimeFormat)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'timeFormat'));
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'timeFormat')) ;
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimezone)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'timezone'));
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'timezone')) ;
                                         if(is_int($sNumRssItems)) {
                                             $iUpdated += Preference::newInstance()->update(array('s_value'   => $sNumRssItems)
-                                                                                          ,array('s_section' => 'osclass', 's_name' => 'num_rss_items'));
+                                                                                          ,array('s_section' => 'osclass', 's_name' => 'num_rss_items')) ;
                                         } else {
-                                            if($error != '') $error .= "<br/>";
-                                            $error .= _m('Number of items in the RSS must be integer');
+                                            if($error != '') $error .= "</p><p>";
+                                            $error .= _m('Number of items in the RSS must be integer') ;
                                         }
 
                                         if(is_int($maxLatestItems)) {
                                             $iUpdated += Preference::newInstance()->update(array('s_value'   => $maxLatestItems)
-                                                                                          ,array('s_section' => 'osclass', 's_name' => 'maxLatestItems@home'));
+                                                                                          ,array('s_section' => 'osclass', 's_name' => 'maxLatestItems@home')) ;
                                         } else {
-                                            if($error != '') $error .= "<br/>";
-                                            $error .= _m('Number of recent items displayed at home must be integer');
+                                            if($error != '') $error .= "</p><p>";
+                                            $error .= _m('Number of recent items displayed at home must be integer') ;
                                         }
 
                                         $iUpdated += Preference::newInstance()->update(
@@ -1087,18 +1069,20 @@ HTACCESS;
                                                 array('s_section' => 'osclass',
                                                       's_name'    => 'defaultResultsPerPage@search')
                                         );
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $contactAttachment)
+                                                                                      ,array('s_name'  => 'contact_attachment')) ;
 
-                                        if($iUpdated > 0) {
-                                            if($error != '') {
-                                                osc_add_flash_error_message( $error . "<br/>" . _m('General settings have been updated'), 'admin');
+                                        if( $iUpdated > 0 ) {
+                                            if( $error != '' ) {
+                                                osc_add_flash_error_message( $error . "</p><p>" . _m('General settings have been updated'), 'admin') ;
                                             } else {
-                                                osc_add_flash_ok_message( _m('General settings have been updated'), 'admin');
+                                                osc_add_flash_ok_message( _m('General settings have been updated'), 'admin') ;
                                             }
                                         } else if($error != '') {
-                                            osc_add_flash_error_message( $error , 'admin');
+                                            osc_add_flash_error_message( $error , 'admin') ;
                                         }
 
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings') ;
                 break;
                 case('latestsearches'):       //calling the comments settings view
                                         $this->doView('settings/searches.php');

@@ -138,9 +138,6 @@
                 &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=comments"><?php _e('Comments') ; ?></a>
             </li>
             <li>
-                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=contact"><?php _e('Contact') ; ?></a>
-            </li>
-            <li>
                 &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=locations"><?php _e('Locations') ; ?></a>
             </li>
             <li>
