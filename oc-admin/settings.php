@@ -980,23 +980,6 @@ HTACCESS;
                                         osc_add_flash_ok_message( _m('Re-generation complete'), 'admin') ;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media') ;
                 break;
-                case('cron'):           // viewing the cron view
-                                        $this->doView('settings/cron.php');
-                break;
-                case('cron_post'):      // updating cron config
-                                        $iUpdated  = 0;
-                                        $bAutoCron = Params::getParam('auto_cron');
-                                        $bAutoCron = ($bAutoCron != '' ? true : false);
-
-                                        $iUpdated  += Preference::newInstance()->update(array('s_value' => $bAutoCron)
-                                                                                       ,array('s_name' => 'auto_cron'));
-
-                                        if($iUpdated > 0) {
-                                            osc_add_flash_ok_message( _m('Cron config has been updated'), 'admin');
-                                        }
-
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=cron');
-                break;
                 case('update'):         // update index view
                                         $iUpdated          = 0 ;
                                         $sPageTitle        = Params::getParam('pageTitle') ;
@@ -1012,6 +995,7 @@ HTACCESS;
                                         $maxLatestItems    = Params::getParam('max_latest_items_at_home') ;
                                         $numItemsSearch    = Params::getParam('default_results_per_page') ;
                                         $contactAttachment = Params::getParam('enabled_attachment') ;
+                                        $bAutoCron         = Params::getParam('auto_cron') ;
 
                                         // preparing parameters
                                         $sPageTitle        = strip_tags($sPageTitle) ;
@@ -1026,6 +1010,7 @@ HTACCESS;
                                         $maxLatestItems    = (int) strip_tags($maxLatestItems) ;
                                         $numItemsSearch    = (int) $numItemsSearch ;
                                         $contactAttachment = ($contactAttachment != '' ? true : false) ;
+                                        $bAutoCron         = ($bAutoCron != '' ? true : false) ;
                                         $error = "";
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageTitle)
@@ -1071,6 +1056,9 @@ HTACCESS;
                                         );
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $contactAttachment)
                                                                                       ,array('s_name'  => 'contact_attachment')) ;
+
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $bAutoCron)
+                                                                                      ,array('s_name' => 'auto_cron')) ;
 
                                         if( $iUpdated > 0 ) {
                                             if( $error != '' ) {

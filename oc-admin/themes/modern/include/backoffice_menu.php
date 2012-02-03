@@ -156,9 +156,6 @@
                 &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=media"><?php _e('Media') ; ?></a>
             </li>
             <li>
-                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=cron"><?php _e('Cron') ; ?></a>
-            </li>
-            <li>
                 &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=latestsearches"><?php _e('Last searches') ; ?></a>
             </li>
         </ul>

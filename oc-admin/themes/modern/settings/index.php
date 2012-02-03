@@ -181,6 +181,17 @@
                                     </label>
                                 </div>
                             </div>
+                            <h3><?php _e('Cron Settings') ; ?></h3>
+                            <div class="input-line">
+                                <label><?php _e('Automatic cron process') ; ?></label>
+                                <div class="input">
+                                    <label>
+                                        <input type="checkbox" <?php echo ( osc_auto_cron() ? 'checked="true"' : '' ) ; ?> name="auto_cron" />
+                                        <p class="inline"><?php printf(__('Allow OSClass to run a built-in <a href="%s">cron</a> automatically without setting crontab'), 'http://en.wikipedia.org/wiki/Cron' ) ; ?></p>
+                                        <p class="help inline"><?php _e('It is <b>recommended</b> to have this option enabled, because some features require it.') ; ?></p>
+                                    </label>
+                                </div>
+                            </div>
                             <div class="actions">
                                 <input type="submit" value="<?php osc_esc_html( _e('Save changes') ) ; ?>" />
                             </div>
