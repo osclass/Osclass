@@ -570,6 +570,66 @@
         }
         
         /**
+         * Delete by city
+         *
+         * @access public
+         * @since unknown
+         * @param int $cityId city id
+         * @return bool
+         */
+        public function deleteByCity($cityId)
+        {
+            $this->dao->select('fk_i_item_id');
+            $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
+            $this->dao->where('fk_i_city_id', $cityId) ;
+            $result = $this->dao->get() ;
+            $items  = $result->result() ;
+            foreach($items as $i) {
+                $this->deleteByPrimaryKey($i['fk_i_item_id']);
+            }
+        }
+        
+        /**
+         * Delete by region
+         *
+         * @access public
+         * @since unknown
+         * @param int $regionId region id
+         * @return bool
+         */
+        public function deleteByRegion($regionId)
+        {
+            $this->dao->select('fk_i_item_id');
+            $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
+            $this->dao->where('fk_i_region_id', $regionId) ;
+            $result = $this->dao->get() ;
+            $items  = $result->result() ;
+            foreach($items as $i) {
+                $this->deleteByPrimaryKey($i['fk_i_item_id']);
+            }
+        }
+        
+        /**
+         * Delete by country
+         *
+         * @access public
+         * @since unknown
+         * @param int $countryId country id
+         * @return bool
+         */
+        public function deleteByCountry($countryId)
+        {
+            $this->dao->select('fk_i_item_id');
+            $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
+            $this->dao->where('fk_c_country_code', $countryId) ;
+            $result = $this->dao->get() ;
+            $items  = $result->result() ;
+            foreach($items as $i) {
+                $this->deleteByPrimaryKey($i['fk_i_item_id']);
+            }
+        }
+        
+        /**
          * Extends the given array $item with description in available locales
          *  
          * @access public
