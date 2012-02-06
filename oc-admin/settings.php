@@ -628,31 +628,25 @@ HTACCESS;
                                         } else {
                                             osc_add_flash_ok_message(_m('Your Akismet key has been updated'), 'admin') ;
                                         }
-                                        if($iUpdated > 0) {
-                                            osc_add_flash_ok_message( _m('Akismet and reCAPTCHA have been updated') ,'admin');
-                                        }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=spamNbots');
                 break;
-                case('spamNbots_post'): // updating spam and bots option
-                                        $iUpdated         = 0;
-                                        $akismetKey       = Params::getParam('akismetKey');
-                                        $akismetKey       = trim($akismetKey);
-                                        $recaptchaPrivKey = Params::getParam('recaptchaPrivKey');
-                                        $recaptchaPrivKey = trim($recaptchaPrivKey);
-                                        $recaptchaPubKey  = Params::getParam('recaptchaPubKey');
-                                        $recaptchaPubKey  = trim($recaptchaPubKey);
+                case('recaptcha_post'): // updating spam and bots option
+                                        $iUpdated = 0 ;
+                                        $recaptchaPrivKey = Params::getParam('recaptchaPrivKey') ;
+                                        $recaptchaPrivKey = trim($recaptchaPrivKey) ;
+                                        $recaptchaPubKey  = Params::getParam('recaptchaPubKey') ;
+                                        $recaptchaPubKey  = trim($recaptchaPubKey) ;
 
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $akismetKey)
-                                                                                      ,array('s_name'  => 'akismetKey'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $recaptchaPrivKey)
-                                                                                      ,array('s_name'  => 'recaptchaPrivKey'));
+                                                                                      ,array('s_name'  => 'recaptchaPrivKey')) ;
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $recaptchaPubKey)
-                                                                                      ,array('s_name'  => 'recaptchaPubKey'));
-
-                                        if($iUpdated > 0) {
-                                            osc_add_flash_ok_message( _m('Akismet and reCAPTCHA have been updated') ,'admin');
+                                                                                      ,array('s_name'  => 'recaptchaPubKey')) ;
+                                        if( $recaptchaPubKey == '' ) {
+                                            osc_add_flash_info_message(_m('Your reCAPTCHA key has been cleared'), 'admin') ;
+                                        } else {
+                                            osc_add_flash_ok_message( _m('Your reCAPTCHA key has been updated') ,'admin') ;
                                         }
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=spamNbots');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=spamNbots') ;
                 break;
                 case('currencies'):     // currencies settings
                                         $currencies_action = Params::getParam('type');

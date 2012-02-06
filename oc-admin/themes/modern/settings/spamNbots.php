@@ -34,6 +34,7 @@
                 <?php osc_show_admin_flash_messages() ; ?>
 				<!-- settings form -->
                 <div class="settings spambots">
+                    <!-- akismet -->
                     <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="settings" />
                         <input type="hidden" name="action" value="akismet_post" />
@@ -75,6 +76,46 @@
                             </div>
                         </fieldset>
                     </form>
+                    <!-- /akismet -->
+                    <!-- recaptcha -->
+                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+                        <input type="hidden" name="page" value="settings" />
+                        <input type="hidden" name="action" value="recaptcha_post" />
+                        <fieldset>
+                            <h3><?php _e('reCAPTCHA') ; ?></h3>
+                            <p class="text">
+                                <?php printf(__('reCAPTCHA helps prevent automated abuse of your site by using a CAPTCHA to ensure that only humans perform certain actions. <a href="%s" target="_blank">Get your key</a>'), 'http://www.google.com/recaptcha/whyrecaptcha') ; ?>
+                            </p>
+                            <div class="input-line">
+                                <label><?php _e('reCAPTCHA Public key') ; ?></label>
+                                <div class="input">
+                                    <input type="text" class="xxlarge" name="recaptchaPubKey" value="<?php echo (osc_recaptcha_public_key() ? osc_recaptcha_public_key() : ''); ?>" />
+                                </div>
+                            </div>
+                            <div class="input-line">
+                                <label><?php _e('reCAPTCHA Private key') ; ?></label>
+                                <div class="input">
+                                    <input type="text" class="xxlarge" name="recaptchaPrivKey" value="<?php echo (osc_recaptcha_private_key() ? osc_recaptcha_private_key() : ''); ?>" />
+                                </div>
+                            </div>
+                            <div class="actions">
+                                <input type="submit" value="<?php osc_esc_html( _e('Save changes') ) ; ?>" />
+                            </div>
+                            <?php if( osc_recaptcha_public_key() != '' ) { ?>
+                            <p class="text">
+                                If you see the reCAPTCHA form below this text it means that you have entered correctly the public key
+                            </p>
+                            <div class="recaptcha">
+                            <?php
+                                    require_once(osc_lib_path() . 'recaptchalib.php');
+                                    $publickey = osc_recaptcha_public_key() ;
+                                    echo recaptcha_get_html($publickey, false);
+                                }
+                            ?>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <!-- /recaptcha -->
                 </div>
                 <!-- /settings form -->
             </div>

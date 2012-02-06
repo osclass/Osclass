@@ -874,4 +874,9 @@ input.xxlarge {
 .spambots h3 {
     font-size: 18px;
 }
+
+.spambots .recaptcha {
+    margin-left: 20px;
+    color: #B94A48; 
+}
 /* /settings */
