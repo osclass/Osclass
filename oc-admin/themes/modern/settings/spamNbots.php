@@ -125,39 +125,3 @@
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>
-
-<!--
-                <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
-                    <div style="padding: 20px;">
-
-                        <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
-                            <input type="hidden" name="page" value="settings" />
-                            <input type="hidden" name="action" value="spamNbots_post" />
-                            
-                            <fieldset>
-                                <legend><?php _e('Akismet'); ?></legend>
-                                <p>
-                                    <label for="akismetKey"><?php _e('Akismet key (same as Wordpress.com)'); ?></label><br />
-                                    <input type="text" name="akismetKey" id="akismetKey" value="<?php echo (osc_akismet_key() ? osc_akismet_key() : ''); ?>" /><br />
-                                    <span class="Explanation"><?php _e('If the field is empty it\'s because the Akismet service is disabled'); ?>. <?php _e('Get your free key at'); ?> <a href="http://akismet.com">http://akismet.com</a></span>.
-                                </p>
-                            </fieldset>
-
-                            <fieldset>
-                                <legend><?php _e('ReCAPTCHA') ; ?></legend>
-                                <p>
-                                    <?php _e('If the field is empty it\'s because the reCAPTCHA service is disabled'); ?>. <?php _e('Get your free keys at') ; ?> <a href="http://recaptcha.net" target="_blank">http://recaptcha.net</a>.
-                                </p>
-                                <p>
-                                    <label for="recaptchaPubKey"><?php _e('reCAPTCHA public key'); ?></label><br />
-                                    <input type="text" name="recaptchaPubKey" id="recaptchaPubKey" value="<?php echo (osc_recaptcha_public_key() ? osc_recaptcha_public_key() : ''); ?>" />
-                                </p>
-                                <p>
-                                    <label for="recaptchaPrivKey"><?php _e('reCAPTCHA private key'); ?></label><br />
-                                    <input type="text" name="recaptchaPrivKey" id="recaptchaPrivKey" value="<?php echo (osc_recaptcha_private_key() ? osc_recaptcha_private_key() : ''); ?>" />
-                                </p>
-                            </fieldset>
-
-                            <input id="button_save" type="submit" value="<?php _e('Update'); ?>" />
-                        </form>
-                    </div>
