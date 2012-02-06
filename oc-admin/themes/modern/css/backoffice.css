@@ -812,7 +812,7 @@ input.xxlarge {
      -moz-border-radius: 4px;
           border-radius: 4px;
   cursor: pointer;
-}opaci
+}
 
 .actions input[type="submit"]:hover {
   color: #333333;
@@ -858,6 +858,20 @@ input.xxlarge {
     margin: 10px 10px 5px 25px;
     overflow: auto;
     font-weight: bold;
-    
+}
+
+.spambots form p.text {
+    margin: 20px 0;
+}
+
+.alert-inline {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 4px 15px;
+    margin-bottom: 0px;
+}
+
+.spambots h3 {
+    font-size: 18px;
 }
 /* /settings */

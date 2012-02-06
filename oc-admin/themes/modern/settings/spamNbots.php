@@ -16,30 +16,76 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
-        <script type="text/javascript">
-            var base_url    = '<?php echo osc_base_url() ; ?>';
-            var s_close     = '<?php _e('Close'); ?>';
-            var s_view_more = '<?php _e('View more'); ?>';
-        </script>
         <?php osc_current_admin_theme_path('head.php') ; ?>
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
+        <!-- container -->
         <div id="content">
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-            <div id="right_column">
-                <div id="content_header" class="content_header">
-                    <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url('images/settings-icon.png') ; ?>" alt="" title=""/>
-                    </div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Spam and bots') ; ?></div>
-                    <div style="clear: both;"></div>
+            <!-- right container -->
+            <div class="right">
+                <div class="header_title">
+                    <h1 class="settings"><?php _e('Spam and bots Settings') ; ?></h1>
                 </div>
                 <?php osc_show_admin_flash_messages() ; ?>
+				<!-- settings form -->
+                <div class="settings spambots">
+                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+                        <input type="hidden" name="page" value="settings" />
+                        <input type="hidden" name="action" value="akismet_post" />
+                        <fieldset>
+                            <h3><?php _e('Akismet') ; ?></h3>
+                            <p class="text">
+                                Akismet is a hosted web service that saves you time by automatically detecting comment and trackback spam. It's hosted on our servers, but we give you access to it through plugins and our API.
+                            </p>
+                            <div class="input-line">
+                                <label><?php _e('Akismet API Key') ; ?></label>
+                                <div class="input">
+                                    <input type="text" class="medium" name="akismetKey" value="<?php echo ( osc_akismet_key() ? osc_akismet_key() : '' ) ; ?>" />
+                                        <?php
+                                            $akismet_status = View::newInstance()->_get('akismet_status') ;
+                                            $alert_msg      = '' ;
+                                            $alert_type     = 'error' ;
+                                            switch($akismet_status) {
+                                                case 1:
+                                                    $alert_type = 'ok' ;
+                                                    $alert_msg  = __('This key is valid') ;
+                                                break;
+                                                case 2:
+                                                    $alert_type = 'error' ;
+                                                    $alert_msg  = __('The key you entered is invalid. Please double-check it') ;
+                                                break;
+                                                case 3:
+                                                    $alert_type = 'warning' ;
+                                                    $alert_msg  = sprintf(__('Akismet is disabled, please enter an API key. <a href="%s" target="_blank">(Get your key)</a>'), 'http://akismet.com/get/') ; ;
+                                                break;
+                                            }
+                                        ?>
+                                    <div class="alert alert-inline alert-<?php echo $alert_type ; ?>">
+                                        <p><?php echo $alert_msg ; ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="actions">
+                                <input type="submit" value="<?php osc_esc_html( _e('Save changes') ) ; ?>" />
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <!-- /settings form -->
+            </div>
+            <!-- /right container -->
+        </div>
+        <!-- /container -->
+        <?php osc_current_admin_theme_path('footer.php') ; ?>
+    </body>
+</html>
+
+<!--
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
 
@@ -74,9 +120,3 @@
                             <input id="button_save" type="submit" value="<?php _e('Update'); ?>" />
                         </form>
                     </div>
-                </div>
-            </div><!-- end of right column -->
-        </div><!-- end of container -->
-        <?php osc_current_admin_theme_path('footer.php') ; ?>
-    </body>
-</html>

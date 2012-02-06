@@ -601,7 +601,37 @@ HTACCESS;
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=settings&action=permalinks' ) ;
                 break;
                 case('spamNbots'):      // calling the spam and bots view
+                                        $akismet_key    = osc_akismet_key() ;
+                                        $akismet_status = 3 ;
+                                        if( $akismet_key != '' ) {
+                                            require_once( osc_lib_path() . 'Akismet.class.php' ) ;
+                                            $akismet_obj    = new Akismet(osc_base_url(), $akismet_key) ;
+                                            $akismet_status = 2 ;
+                                            if( $akismet_obj->isKeyValid() ) {
+                                                $akismet_status = 1 ;
+                                            }
+                                        }
+
+                                        View::newInstance()->_exportVariableToView('akismet_status', $akismet_status) ;
                                         $this->doView('settings/spamNbots.php');
+                break;
+                case('akismet_post'):   // updating spam and bots option
+                                        $updated    = 0;
+                                        $akismetKey = Params::getParam('akismetKey');
+                                        $akismetKey = trim($akismetKey);
+
+                                        $updated = Preference::newInstance()->update(array('s_value' => $akismetKey)
+                                                                                    ,array('s_name'  => 'akismetKey')) ;
+
+                                        if( $akismetKey == '' ) {
+                                            osc_add_flash_info_message(_m('Your Akismet key has been cleared'), 'admin') ;
+                                        } else {
+                                            osc_add_flash_ok_message(_m('Your Akismet key has been updated'), 'admin') ;
+                                        }
+                                        if($iUpdated > 0) {
+                                            osc_add_flash_ok_message( _m('Akismet and reCAPTCHA have been updated') ,'admin');
+                                        }
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=spamNbots');
                 break;
                 case('spamNbots_post'): // updating spam and bots option
                                         $iUpdated         = 0;
