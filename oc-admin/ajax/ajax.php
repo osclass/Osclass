@@ -691,17 +691,17 @@
                                  ***** UNZIP FILE *****
                                  **********************/
                                 @mkdir(ABS_PATH . 'oc-temp', 0777);
-                                $res = osc_unzip_file(osc_content_path() . 'downloads/' . $filename, ABS_PATH . 'oc-temp/');
+                                $res = osc_unzip_file(osc_content_path() . 'downloads/' . $filename, osc_content_path() . 'downloads/oc-temp/');
                                 if ($res == 1) { // Everything is OK, continue
                                     /**********************
                                      ***** COPY FILES *****
                                      **********************/
                                     $fail = -1;
-                                    if ($handle = opendir(ABS_PATH . 'oc-temp')) {
+                                    if ($handle = opendir(osc_content_path() . 'downloads/oc-temp')) {
                                         $fail = 0;
                                         while (false !== ($_file = readdir($handle))) {
                                             if ($_file != '.' && $_file != '..') {
-                                                $copyprocess = osc_copy(ABS_PATH . "oc-temp/" . $_file, ABS_PATH . "oc-content/" . $folder . $_file);
+                                                $copyprocess = osc_copy(osc_content_path() . "downloads/oc-temp/" . $_file, ABS_PATH . "oc-content/" . $folder . $_file);
                                                 if ($copyprocess == false) {
                                                     $fail = 1;
                                                 };
@@ -709,29 +709,33 @@
                                         }
                                         closedir($handle);
 
-                                        if ($fail == 0) { // Everything is OK, continue
-                                            // Additional actions is not important for the rest of the proccess
-                                            // We will inform the user of the problems but the upgrade could continue
-                                            /****************************
-                                             ** REMOVE TEMPORARY FILES **
-                                             ****************************/
-                                            $path = ABS_PATH . 'oc-temp';
-                                            $rm_errors = 0;
-                                            $dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::CHILD_FIRST);
-                                            for ($dir->rewind(); $dir->valid(); $dir->next()) {
-                                                if ($dir->isDir()) {
-                                                    if ($dir->getFilename() != '.' && $dir->getFilename() != '..') {
-                                                        if (!rmdir($dir->getPathname())) {
-                                                            $rm_errors++;
-                                                        }
-                                                    }
-                                                } else {
-                                                    if (!unlink($dir->getPathname())) {
+                                        // Additional actions is not important for the rest of the proccess
+                                        // We will inform the user of the problems but the upgrade could continue
+                                        /****************************
+                                         ** REMOVE TEMPORARY FILES **
+                                         ****************************/
+                                        $path = osc_content_path() . 'downloads/oc-temp';
+                                        $rm_errors = 0;
+                                        $dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::CHILD_FIRST);
+                                        for ($dir->rewind(); $dir->valid(); $dir->next()) {
+                                            if ($dir->isDir()) {
+                                                if ($dir->getFilename() != '.' && $dir->getFilename() != '..') {
+                                                    if (!rmdir($dir->getPathname())) {
                                                         $rm_errors++;
                                                     }
                                                 }
+                                            } else {
+                                                if (!unlink($dir->getPathname())) {
+                                                    $rm_errors++;
+                                                }
                                             }
+                                        }
                                             
+                                        if (!rmdir($path)) {
+                                            $rm_errors++;
+                                        }
+                                            
+                                        if ($fail == 0) { // Everything is OK, continue
                                             if($data['e_type']!='THEME' && $data['e_type']!='LANGUAGE') {
                                                 if($plugin!=false && $re_enable) {
                                                     $enabled = Plugins::activate($plugin);
@@ -741,9 +745,6 @@
                                                 }
                                             }
 
-                                            if (!rmdir($path)) {
-                                                $rm_errors++;
-                                            }
                                             if ($rm_errors == 0) {
                                                 $message = __('Everything was OK!');
                                                 $error = 0;
