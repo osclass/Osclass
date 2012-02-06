@@ -41,12 +41,12 @@
                         <fieldset>
                             <h3><?php _e('Akismet') ; ?></h3>
                             <p class="text">
-                                Akismet is a hosted web service that saves you time by automatically detecting comment and trackback spam. It's hosted on our servers, but we give you access to it through plugins and our API.
+                                <?php _e("Akismet is a hosted web service that saves you time by automatically detecting comment and trackback spam. It's hosted on our servers, but we give you access to it through plugins and our API.") ; ?>
                             </p>
                             <div class="input-line">
                                 <label><?php _e('Akismet API Key') ; ?></label>
                                 <div class="input">
-                                    <input type="text" class="medium" name="akismetKey" value="<?php echo ( osc_akismet_key() ? osc_akismet_key() : '' ) ; ?>" />
+                                    <input type="text" class="medium" name="akismetKey" value="<?php echo ( osc_akismet_key() ? osc_esc_html( osc_akismet_key() ) : '' ) ; ?>" />
                                         <?php
                                             $akismet_status = View::newInstance()->_get('akismet_status') ;
                                             $alert_msg      = '' ;
@@ -89,13 +89,13 @@
                             <div class="input-line">
                                 <label><?php _e('reCAPTCHA Public key') ; ?></label>
                                 <div class="input">
-                                    <input type="text" class="xxlarge" name="recaptchaPubKey" value="<?php echo (osc_recaptcha_public_key() ? osc_recaptcha_public_key() : ''); ?>" />
+                                    <input type="text" class="xxlarge" name="recaptchaPubKey" value="<?php echo (osc_recaptcha_public_key() ? osc_esc_html( osc_recaptcha_public_key() ) : ''); ?>" />
                                 </div>
                             </div>
                             <div class="input-line">
                                 <label><?php _e('reCAPTCHA Private key') ; ?></label>
                                 <div class="input">
-                                    <input type="text" class="xxlarge" name="recaptchaPrivKey" value="<?php echo (osc_recaptcha_private_key() ? osc_recaptcha_private_key() : ''); ?>" />
+                                    <input type="text" class="xxlarge" name="recaptchaPrivKey" value="<?php echo (osc_recaptcha_private_key() ? osc_esc_html( osc_recaptcha_private_key() ) : ''); ?>" />
                                 </div>
                             </div>
                             <div class="actions">
@@ -103,13 +103,13 @@
                             </div>
                             <?php if( osc_recaptcha_public_key() != '' ) { ?>
                             <p class="text">
-                                If you see the reCAPTCHA form below this text it means that you have entered correctly the public key
+                                <?php _e('If you see the reCAPTCHA form below this text it means that you have entered correctly the public key') ; ?>
                             </p>
                             <div class="recaptcha">
                             <?php
-                                    require_once(osc_lib_path() . 'recaptchalib.php');
+                                    require_once( osc_lib_path() . 'recaptchalib.php' ) ;
                                     $publickey = osc_recaptcha_public_key() ;
-                                    echo recaptcha_get_html($publickey, false);
+                                    echo recaptcha_get_html($publickey, false) ;
                                 }
                             ?>
                             </div>
