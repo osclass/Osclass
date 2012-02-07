@@ -798,6 +798,8 @@
      * @return array
      */
     function osc_reset_items() {
+        View::newInstance()->_exportVariableToView('item', View::newInstance()->_get('oldItem'));
+        View::newInstance()->_exportVariableToView('itemLoop', '');
         return View::newInstance()->_reset('items') ;
     }
 
@@ -808,6 +810,8 @@
      * @return array
      */
     function osc_reset_latest_items() {
+        View::newInstance()->_exportVariableToView('item', View::newInstance()->_get('oldItem'));
+        View::newInstance()->_exportVariableToView('itemLoop', '');
         return View::newInstance()->_reset('latestItems') ;
     }
 
@@ -973,6 +977,17 @@
         return (int) View::newInstance()->_count('customItems') ;
     }
     
+    /**
+     * Set the internal pointer of array customItems to its first element, and return it.
+     *
+     * @since 2.4
+     * @return array
+     */
+    function osc_reset_custom_items() {
+        View::newInstance()->_exportVariableToView('item', View::newInstance()->_get('oldItem'));
+        View::newInstance()->_exportVariableToView('itemLoop', '');
+        return View::newInstance()->_reset('customItems') ;
+    }
     
     /**
      * Formats the price using the appropiate currency.
