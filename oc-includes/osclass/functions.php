@@ -190,7 +190,7 @@ function meta_description( ) {
                 $result = osc_item_category() . ', ' . osc_highlight(strip_tags(osc_item_description()), 140) . '..., ' . osc_item_category();
             }
 
-            osc_reset_items();
+            osc_reset_latest_items();
             $text = $result;
         break;
     }
