@@ -778,8 +778,17 @@
         if ( View::newInstance()->_exists('metafields') ) {
             View::newInstance()->_erase('metafields') ;
         }
+        if(View::newInstance()->_get('itemLoop')!='items') {
+            View::newInstance()->_exportVariableToView('oldItem', View::newInstance()->_get('item'));
+            View::newInstance()->_exportVariableToView('itemLoop', 'items');
+        }
         $item = View::newInstance()->_next('items') ;
-        View::newInstance()->_exportVariableToView('item', View::newInstance()->_current('items'));
+        if(!$item) {
+            View::newInstance()->_exportVariableToView('item', View::newInstance()->_get('oldItem'));
+            View::newInstance()->_exportVariableToView('itemLoop', '');
+        } else {
+            View::newInstance()->_exportVariableToView('item', View::newInstance()->_current('items'));
+        }
         return $item;
     }
 
@@ -894,8 +903,17 @@
         if ( View::newInstance()->_exists('metafields') ) {
             View::newInstance()->_erase('metafields') ;
         }
+        if(View::newInstance()->_get('itemLoop')!='latest') {
+            View::newInstance()->_exportVariableToView('oldItem', View::newInstance()->_get('item'));
+            View::newInstance()->_exportVariableToView('itemLoop', 'latest');
+        }
         $item = View::newInstance()->_next('latestItems') ;
-        View::newInstance()->_exportVariableToView('item', View::newInstance()->_current('latestItems'));
+        if(!$item) {
+            View::newInstance()->_exportVariableToView('item', View::newInstance()->_get('oldItem'));
+            View::newInstance()->_exportVariableToView('itemLoop', '');
+        } else {
+            View::newInstance()->_exportVariableToView('item', View::newInstance()->_current('latestItems'));
+        }
         return $item;
     }
 
@@ -917,6 +935,45 @@
     //////////////
 
 
+    /**
+     * Gets next item of custom items
+     *
+     * @return array
+     */
+    function osc_has_custom_items() {
+        if ( View::newInstance()->_exists('resources') ) {
+            View::newInstance()->_erase('resources') ;
+        }
+        if ( View::newInstance()->_exists('item_category') ) {
+            View::newInstance()->_erase('item_category') ;
+        }
+        if ( View::newInstance()->_exists('metafields') ) {
+            View::newInstance()->_erase('metafields') ;
+        }
+        if(View::newInstance()->_get('itemLoop')!='custom') {
+            View::newInstance()->_exportVariableToView('oldItem', View::newInstance()->_get('item'));
+            View::newInstance()->_exportVariableToView('itemLoop', 'custom');
+        }
+        $item = View::newInstance()->_next('customItems') ;
+        if(!$item) {
+            View::newInstance()->_exportVariableToView('item', View::newInstance()->_get('oldItem'));
+            View::newInstance()->_exportVariableToView('itemLoop', '');
+        } else {
+            View::newInstance()->_exportVariableToView('item', View::newInstance()->_current('customItems'));
+        }
+        return $item;
+    }
+
+    /**
+     * Gets number of custom items
+     *
+     * @return int
+     */
+    function osc_count_custom_items() {
+        return (int) View::newInstance()->_count('customItems') ;
+    }
+    
+    
     /**
      * Formats the price using the appropiate currency.
      *

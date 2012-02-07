@@ -476,7 +476,7 @@
                             $item['locale'][$k]['s_description'] = nl2br(osc_apply_filter('item_description',$v['s_description']));
                         }
 
-                        $this->_exportVariableToView('items', array($item)) ;
+                        $this->_exportVariableToView('item', $item);//array($item)) ;
 
                         osc_run_hook('show_item', $item) ;
 
