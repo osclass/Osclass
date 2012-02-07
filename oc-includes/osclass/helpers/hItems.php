@@ -37,9 +37,7 @@
     * @return array $item, or null if not exist
     */
     function osc_item() {
-        if (View::newInstance()->_exists('items')) {
-            $item = View::newInstance()->_current('items') ;
-        } else if(View::newInstance()->_exists('item')) {
+        if(View::newInstance()->_exists('item')) {
             $item = View::newInstance()->_get('item') ;
         } else {
             $item = null;
@@ -780,7 +778,9 @@
         if ( View::newInstance()->_exists('metafields') ) {
             View::newInstance()->_erase('metafields') ;
         }
-        return View::newInstance()->_next('items') ;
+        $item = View::newInstance()->_next('items') ;
+        View::newInstance()->_exportVariableToView('item', View::newInstance()->_current('items'));
+        return $item;
     }
 
     /**
@@ -793,12 +793,22 @@
     }
 
     /**
+     * Set the internal pointer of array latestItems to its first element, and return it.
+     *
+     * @since 2.4
+     * @return array
+     */
+    function osc_reset_latest_items() {
+        return View::newInstance()->_reset('latestItems') ;
+    }
+
+    /**
      * Gets number of items in current array items
      *
      * @return int
      */
     function osc_count_items() {
-        return osc_priv_count_items() ;
+        return (int) View::newInstance()->_count('items') ;
     }
 
     /**
@@ -810,7 +820,7 @@
         if ( !View::newInstance()->_exists('resources') ) {
             View::newInstance()->_exportVariableToView('resources', ItemResource::newInstance()->getAllResources( osc_item_id() ) ) ;
         }
-        return osc_priv_count_item_resources() ;
+        return (int) View::newInstance()->_count('resources') ;
     }
 
     /**
@@ -870,12 +880,23 @@
      * @return array
      */
     function osc_has_latest_items() {
-        if ( !View::newInstance()->_exists('items') ) {
+        if ( !View::newInstance()->_exists('latestItems') ) {
             $search = new Search();
             $search->limit(0, osc_max_latest_items());
-            View::newInstance()->_exportVariableToView('items', $search->getLatestItems());
+            View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems());
         }
-        return osc_has_items() ;
+        if ( View::newInstance()->_exists('resources') ) {
+            View::newInstance()->_erase('resources') ;
+        }
+        if ( View::newInstance()->_exists('item_category') ) {
+            View::newInstance()->_erase('item_category') ;
+        }
+        if ( View::newInstance()->_exists('metafields') ) {
+            View::newInstance()->_erase('metafields') ;
+        }
+        $item = View::newInstance()->_next('latestItems') ;
+        View::newInstance()->_exportVariableToView('item', View::newInstance()->_current('latestItems'));
+        return $item;
     }
 
     /**
@@ -884,12 +905,12 @@
      * @return int
      */
     function osc_count_latest_items() {
-        if ( !View::newInstance()->_exists('items') ) {
+        if ( !View::newInstance()->_exists('latestItems') ) {
             $search = new Search();
             $search->limit(0, osc_max_latest_items());
-            View::newInstance()->_exportVariableToView('items', $search->getLatestItems());
-        }
-        return osc_priv_count_items() ;
+            View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems());
+        };
+        return (int) View::newInstance()->_count('latestItems') ;
     }
     //////////////
     // END HOME //
@@ -917,6 +938,7 @@
     /**
      * Gets number of items
      *
+     * @deprecated deprecated since version 2.4
      * @access private
      * @return int
      */
@@ -927,6 +949,7 @@
     /**
      * Gets number of item resources
      *
+     * @deprecated deprecated since version 2.4
      * @access private
      * @return int
      */
