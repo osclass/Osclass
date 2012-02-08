@@ -138,7 +138,7 @@ switch( $step ) {
                             <div class="requirements_help">
                                 <p><b><?php _e('Requirements help:'); ?></b></p>
                                 <ul>
-                                <?php /*$solve_requirements = get_solution_requirements();*/ foreach($requirements as $k => $v) { ?>
+                                <?php foreach($requirements as $k => $v) { ?>
                                     <?php  if(!$v['fn'] && $v['solution'] != ''){ ?>
                                     <li><?php echo $v['solution']; ?></li>
                                     <?php } ?>
