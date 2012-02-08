@@ -14,15 +14,22 @@ require_once LIB_PATH . 'osclass/classes/database/DAO.php';
 require_once LIB_PATH . 'osclass/Logger/Logger.php' ;
 require_once LIB_PATH . 'osclass/Logger/LogDatabase.php' ;
 require_once LIB_PATH . 'osclass/Logger/LogOsclass.php' ;
+require_once LIB_PATH . 'osclass/core/Session.php';
 require_once LIB_PATH . 'osclass/core/Params.php';
 require_once LIB_PATH . 'osclass/model/Preference.php' ;
 require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
+require_once LIB_PATH . 'osclass/helpers/hDefines.php';
+require_once LIB_PATH . 'osclass/helpers/hErrors.php';
+require_once LIB_PATH . 'osclass/helpers/hLocale.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php' ;
+require_once LIB_PATH . 'osclass/helpers/hTranslations.php' ;
 require_once LIB_PATH . 'osclass/compatibility.php';
 require_once LIB_PATH . 'osclass/default-constants.php';
 require_once LIB_PATH . 'osclass/formatting.php';
 require_once LIB_PATH . 'osclass/install-functions.php';
 require_once LIB_PATH . 'osclass/utils.php';
+require_once LIB_PATH . 'osclass/core/Translation.php';
+require_once LIB_PATH . 'osclass/plugins.php';
 
 if( is_osclass_installed() ) {
     die() ;
@@ -84,14 +91,14 @@ function basic_info() {
         )
     ) ;
     
-    $body  = 'Welcome ' . Params::getParam('webtitle') . ',<br/><br/>' ;
-    $body .= 'Your OSClass installation at ' . WEB_PATH . ' is up and running. You can access to the administration panel with this data access:<br/>' ;
-    $body .= '<ul>' ;
-    $body .= '<li>username: ' . $admin . '</li>' ;
-    $body .= '<li>password: ' . $password . '</li>' ;
+    $body  = sprintf(__('Welcome %s,'),Params::getParam('webtitle'))."<br/><br/>" ;
+    $body .= sprintf(__('Your OSClass installation at %s is up and running. You can access to the administration panel with this data access:'), WEB_PATH)."<br/>";
+    $body .= '<ul>';
+    $body .= '<li>'.sprintf(__('username: %s'), $admin).'</li>';
+    $body .= '<li>'.sprintf(__('password: %s'), $password).'</li>';
     $body .= '</ul>' ;
-    $body .= 'Regards,<br/>' ;
-    $body .= 'The <a href=\'http://osclass.org/\'>OSClass</a> team' ;
+    $body .= __('Regards,')."<br/>";
+    $body .= __('The <a href=\'http://osclass.org/\'>OSClass</a> team') ;
 
     $sitename = strtolower( $_SERVER['SERVER_NAME'] ) ;
     if ( substr( $sitename, 0, 4 ) == 'www.' ) {
