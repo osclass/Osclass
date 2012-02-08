@@ -43,9 +43,12 @@ require_once LIB_PATH . 'osclass/helpers/hErrors.php';
 require_once LIB_PATH . 'osclass/helpers/hLocale.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php';
 require_once LIB_PATH . 'osclass/helpers/hSearch.php';
+require_once LIB_PATH . 'osclass/helpers/hTranslations.php';
 require_once LIB_PATH . 'osclass/default-constants.php';
 require_once LIB_PATH . 'osclass/install-functions.php';
 require_once LIB_PATH . 'osclass/utils.php';
+require_once LIB_PATH . 'osclass/core/Translation.php';
+require_once LIB_PATH . 'osclass/plugins.php';
 
 $step = Params::getParam('step');
 if( !is_numeric($step) ) {
@@ -135,9 +138,9 @@ switch( $step ) {
                             <div class="requirements_help">
                                 <p><b><?php _e('Requirements help:'); ?></b></p>
                                 <ul>
-                                <?php $solve_requirements = get_solution_requirements(); foreach($requirements as $k => $v) { ?>
-                                    <?php  if(!$v && $solve_requirements[$k] != ''){ ?>
-                                    <li><?php echo $solve_requirements[$k]; ?></li>
+                                <?php /*$solve_requirements = get_solution_requirements();*/ foreach($requirements as $k => $v) { ?>
+                                    <?php  if(!$v['fn'] && $v['solution'] != ''){ ?>
+                                    <li><?php echo $v['solution']; ?></li>
                                     <?php } ?>
                                 <?php } ?>
                                     <li><a href="http://forums.osclass.org/"><?php _e('Need more help?');?></a></li>
@@ -148,7 +151,7 @@ switch( $step ) {
                             <?php } ?>
                             <ul>
                             <?php foreach($requirements as $k => $v) { ?>
-                                <li><?php echo $k; ?> <img src="<?php echo get_absolute_url(); ?>oc-includes/images/<?php echo $v ? 'tick.png' : 'cross.png'; ?>" alt="" title="" /></li>
+                                <li><?php echo $v['requirement']; ?> <img src="<?php echo get_absolute_url(); ?>oc-includes/images/<?php echo $v['fn'] ? 'tick.png' : 'cross.png'; ?>" alt="" title="" /></li>
                             <?php } ?>
                             </ul>
                             <div class="more-stats">

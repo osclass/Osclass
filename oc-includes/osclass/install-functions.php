@@ -55,12 +55,35 @@ function get_relative_url( ) {
 function get_requirements( ) {
     $gd    = gd_info();
     $array = array(
-        'PHP version >= 5.x' => version_compare(PHP_VERSION, '5.0.0', '>='),
-        'MySQLi extension for PHP' => extension_loaded('mysqli'),
-        'GD extension for PHP' => extension_loaded('gd'),
-        'Folder <code>oc-content/uploads</code> exists' => file_exists( ABS_PATH . 'oc-content/uploads/' ),
-        'Folder <code>oc-content/uploads</code> is writable' => is_writable( ABS_PATH . 'oc-content/uploads/' ),
-        'Folder <code>oc-content/languages</code> exists' => file_exists( ABS_PATH . 'oc-content/languages/' )
+        'PHP version >= 5.x' => array(
+            'requirement' => 'PHP version >= 5.x', 
+            'fn' => version_compare(PHP_VERSION, '5.0.0', '>='), 
+            'solution' => __('PHP5 is required to run OSClass. You may talk with your hosting to upgrade your PHP version.')),
+
+        'MySQLi extension for PHP' => array(
+            'requirement' => 'MySQLi extension for PHP', 
+            'fn' => extension_loaded('mysqli'), 
+            'solution' => __('MySQLi extension is required. How to <a target="_blank" href="http://www.php.net/manual/en/mysqli.setup.php">install/configure</a>.')),
+
+        'GD extension for PHP' => array(
+            'requirement' => 'GD extension for PHP', 
+            'fn' => extension_loaded('gd'), 
+            'solution' => __('GD extension is required. How to <a target="_blank" href="http://www.php.net/manual/en/image.setup.php">install/configure</a>.')),
+
+        'Folder <code>oc-content/uploads</code> exists' => array(
+            'requirement' => 'Folder <code>oc-content/uploads</code> exists', 
+            'fn' => file_exists( ABS_PATH . 'oc-content/uploads/' ), 
+            'solution' => sprintf(__('You have to create <code>uploads</code> folder, i.e.: <code>mkdir %soc-content/uploads/</code>' ), ABS_PATH)),
+
+        'Folder <code>oc-content/uploads</code> is writable' => array(
+            'requirement' => 'Folder <code>oc-content/uploads</code> is writable', 
+            'fn' => is_writable( ABS_PATH . 'oc-content/uploads/' ), 
+            'solution' => sprintf(__('Folder <code>uploads</code> has to be writable, i.e.: <code>chmod a+w %soc-content/uploads/</code>'), ABS_PATH)),
+
+        'Folder <code>oc-content/languages</code> exists' => array(
+            'requirement' => 'Folder <code>oc-content/languages</code> exists', 
+            'fn' => file_exists( ABS_PATH . 'oc-content/languages/' ), 
+            'solution' => sprintf(__('You have to create <code>languages</code> folder, i.e.: <code>mkdir %soc-content/languages/</code>'), ABS_PATH))
     );
 
     $config_writable = false;
@@ -70,43 +93,31 @@ function get_requirements( ) {
         if( is_writable(ABS_PATH . 'config.php') ) {
             $config_writable = true;
         }
-        $array['File <code>config.php</code> is writable'] = $config_writable;
+        $array['File <code>config.php</code> is writable'] = array(
+            'requirement' => 'File <code>config.php</code> is writable', 
+            'fn' => $config_writable, 
+            'solution' => sprintf(__('Root folder has to be writable, i.e.: <code>chmod a+w %s</code>'), ABS_PATH));
     } else {
         if (is_writable(ABS_PATH) ) {
             $root_writable = true;
         }
-        $array['Root directory is writable'] = $root_writable;
+        $array['Root directory is writable'] = array(
+            'requirement' => 'Root directory is writable', 
+            'fn' => $root_writable, 
+            'solution' => sprintf(__('File <code>config.php</code> has to be writable, i.e.: <code>chmod a+w %sconfig.php</code>'), ABS_PATH));
 
         if( file_exists(ABS_PATH . 'config-sample.php') ) {
             $config_sample = true;
         }
-        $array['File <code>config-sample.php</code> exists'] = $config_sample;
+        $array['File <code>config-sample.php</code> exists'] = array(
+            'requirement' => 'File <code>config-sample.php</code> exists', 
+            'fn' => $config_sample, 
+            'solution' => __('File <code>config-sample.php</code> is required, you should download OSClass again.'));
     }
     
     return $array;
 }
 
-/*
- * Get help of requirements to install OSClass
- *
- * @since 2.1
- *
- * @return array Help of requirements
- */
-function get_solution_requirements( ) {
-    $array = array(
-        'PHP version >= 5.x' => __('PHP5 is required to run OSClass. You may talk with your hosting to upgrade your PHP version.'),
-        'MySQLi extension for PHP' => __('MySQLi extension is required. How to <a target="_blank" href="http://www.php.net/manual/en/mysqli.setup.php">install/configure</a>.'),
-        'GD extension for PHP' => __('GD extension is required. How to <a target="_blank" href="http://www.php.net/manual/en/image.setup.php">install/configure</a>.'),
-        'Folder <code>oc-content/uploads</code> exists' => sprintf(__('You have to create <code>uploads</code> folder, i.e.: <code>mkdir %soc-content/uploads/</code>' ), ABS_PATH),
-        'Folder <code>oc-content/uploads</code> is writable' => sprintf(__('Folder <code>uploads</code> has to be writable, i.e.: <code>chmod a+w %soc-content/uploads/</code>'), ABS_PATH),
-        'Folder <code>oc-content/languages</code> exists' => sprintf(__('You have to create <code>languages</code> folder, i.e.: <code>mkdir %soc-content/languages/</code>'), ABS_PATH),
-        'Root directory is writable' => sprintf(__('Root folder has to be writable, i.e.: <code>chmod a+w %s</code>'), ABS_PATH),
-        'File <code>config.php</code> is writable' => sprintf(__('File <code>config.php</code> has to be writable, i.e.: <code>chmod a+w %sconfig.php</code>'), ABS_PATH),
-        'File <code>config-sample.php</code> exists' => __('File <code>config-sample.php</code> is required, you should download OSClass again.')
-    );
-    return $array;
-}
 
 /**
  * Check if some of the requirements to install OSClass are correct or not
@@ -117,7 +128,7 @@ function get_solution_requirements( ) {
  */
 function check_requirements($array) {
     foreach($array as $k => $v) {
-        if( !$v ) return true;
+        if( !$v['fn'] ) return true;
     }
     return false;
 }
