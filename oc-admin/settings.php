@@ -354,7 +354,7 @@ HTACCESS;
                                                 }
                                             }
 
-                                            if( !apache_mod_loaded('mod_rewrite') ) {
+                                            if( !@apache_mod_loaded('mod_rewrite') ) {
                                                 $status++ ;
                                             }
 
@@ -810,24 +810,24 @@ HTACCESS;
                                         }
                 break ;
                 case('mailserver'):     // calling the mailserver view
-                                        $this->doView('settings/mailserver.php');
+                                        $this->doView('settings/mailserver.php') ;
                 break;
                 case('mailserver_post'):if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
-                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver');
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver') ;
                                         }
                                         // updating mailserver
-                                        $iUpdated           = 0;
-                                        $mailserverAuth     = Params::getParam('mailserver_auth');
-                                        $mailserverAuth     = ($mailserverAuth != '' ? true : false);
-                                        $mailserverPop     = Params::getParam('mailserver_pop');
-                                        $mailserverPop     = ($mailserverPop != '' ? true : false);
-                                        $mailserverType     = Params::getParam('mailserver_type');
-                                        $mailserverHost     = Params::getParam('mailserver_host');
-                                        $mailserverPort     = Params::getParam('mailserver_port');
-                                        $mailserverUsername = Params::getParam('mailserver_username');
-                                        $mailserverPassword = Params::getParam('mailserver_password', false, false);
-                                        $mailserverSsl      = Params::getParam('mailserver_ssl');
+                                        $iUpdated           = 0 ;
+                                        $mailserverAuth     = Params::getParam('mailserver_auth') ;
+                                        $mailserverAuth     = ($mailserverAuth != '' ? true : false) ;
+                                        $mailserverPop      = Params::getParam('mailserver_pop') ;
+                                        $mailserverPop      = ($mailserverPop != '' ? true : false) ;
+                                        $mailserverType     = Params::getParam('mailserver_type') ;
+                                        $mailserverHost     = Params::getParam('mailserver_host') ;
+                                        $mailserverPort     = Params::getParam('mailserver_port') ;
+                                        $mailserverUsername = Params::getParam('mailserver_username') ;
+                                        $mailserverPassword = Params::getParam('mailserver_password') ;
+                                        $mailserverSsl      = Params::getParam('mailserver_ssl') ;
 
                                         if( !in_array($mailserverType, array('custom', 'gmail')) ) {
                                             osc_add_flash_error_message( _m('Mail server type is incorrect'), 'admin');

@@ -171,7 +171,7 @@
                             </div>
 
                             <div class="actions nomargin">
-                                <input type="submit" value="<?php osc_esc_html( _e('Save changes') ) ; ?>" />
+                                <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
                             </div>
                         </fieldset>
                     </form>

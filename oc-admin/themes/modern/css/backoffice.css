@@ -500,7 +500,7 @@ input.xxlarge {
     margin-top: 20px;
 }
 
-.actions input[type="submit"], .actions input[type="button"] {
+input[type="submit"], input[type="button"] {
   display: inline-block;
   padding: 4px 10px 4px;
   font-size: 13px;
@@ -518,7 +518,7 @@ input.xxlarge {
   cursor: pointer;
 }
 
-.actions input[type="submit"]:hover, .actions input[type="button"]:hover {
+input[type="submit"]:hover, input[type="button"]:hover {
   color: #333333;
   text-decoration: none;
   background-color: #e6e6e6;
@@ -530,7 +530,7 @@ input.xxlarge {
            transition: background-position 0.1s linear;
 }
 
-.actions input[type="submit"]:focus, .actions input[type="button"]:focus {
+input[type="submit"]:focus, input[type="button"]:focus {
     outline: thin dotted;
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px;
@@ -564,7 +564,7 @@ input.xxlarge {
     font-weight: bold;
 }
 
-.spambots form p.text {
+p.text {
     margin: 20px 0;
 }
 

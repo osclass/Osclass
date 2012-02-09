@@ -386,24 +386,24 @@
                     }
                     break;
                 case 'test_mail':
-                    $title = __('Test email').", ".osc_page_title();
-                    $body  = __("Test email")."<br><br>".osc_page_title();
+                    $title = sprintf( __('Test email, %s'), osc_page_title() ) ;
+                    $body  = __("Test email") . "<br><br>" . osc_page_title() ;
 
                     $emailParams = array(
-                                'subject'  => $title
-                                ,'to'       => osc_contact_email()
-                                ,'to_name'  => 'admin'
-                                ,'body'     => $body
-                                ,'alt_body' => $body
+                        'subject'  => $title,
+                        'to'       => osc_contact_email(),
+                        'to_name'  => 'admin',
+                        'body'     => $body,
+                        'alt_body' => $body
                     ) ;
 
-                    $array = array();
+                    $array = array() ;
                     if( osc_sendMail($emailParams) ) {
-                        $array = array('status' => '1', 'html' => __('Email sent successfully'));
+                        $array = array('status' => '1', 'html' => __('Email sent successfully') ) ;
                     } else {
-                        $array = array('status' => '0', 'html' => __('An error has occurred while sending email'));
+                        $array = array('status' => '0', 'html' => __('An error has occurred while sending email') ) ;
                     }
-                    echo json_encode($array);
+                    echo json_encode($array) ;
                     break;
                 case 'order_pages':
                     $order = Params::getParam("order");
