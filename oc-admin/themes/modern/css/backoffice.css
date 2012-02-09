@@ -272,7 +272,7 @@ body {
 /* /footer */
 /* alert messages */
 .alert {
-    padding: 8px 35px 8px 14px;
+    padding: 6px 35px 6px 14px;
     margin-bottom: 18px;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
     background-color: #fcf8e3;
@@ -323,6 +323,10 @@ body {
 .alert-block {
     padding-top: 14px;
     padding-bottom: 14px;
+}
+
+.alert-block p {
+    margin: 2px 0;
 }
 
 .alert-block > p, .alert-block > ul {
@@ -419,6 +423,10 @@ input.xxlarge {
     padding-left: 20px;
 }
 
+.right .settings.currencies {
+    padding: 0;
+}
+
 .input-line {
     margin-bottom: 12px;
     line-height: 18px;
@@ -492,7 +500,7 @@ input.xxlarge {
     margin-top: 20px;
 }
 
-.actions input[type="submit"] {
+.actions input[type="submit"], .actions input[type="button"] {
   display: inline-block;
   padding: 4px 10px 4px;
   font-size: 13px;
@@ -510,7 +518,7 @@ input.xxlarge {
   cursor: pointer;
 }
 
-.actions input[type="submit"]:hover {
+.actions input[type="submit"]:hover, .actions input[type="button"]:hover {
   color: #333333;
   text-decoration: none;
   background-color: #e6e6e6;
@@ -522,7 +530,7 @@ input.xxlarge {
            transition: background-position 0.1s linear;
 }
 
-.actions input[type="submit"]:focus {
+.actions input[type="submit"]:focus, .actions input[type="button"]:focus {
     outline: thin dotted;
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px;

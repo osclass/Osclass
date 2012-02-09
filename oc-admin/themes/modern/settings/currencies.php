@@ -23,6 +23,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
+        <link href="<?php echo osc_current_admin_theme_styles_url('demo_table.css') ; ?>" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.dataTables.min.js') ; ?>"></script>
         <script type="text/javascript">
             $(function() {
@@ -52,7 +53,7 @@
                         [
                             '<input type="checkbox" name="code[]" value="<?php  echo osc_esc_html($c['pk_c_code']) ; ?>" />',
                             "<?php echo osc_esc_html($c['pk_c_code']) ; ?> " +
-                                "<small>(<a onclick=\"javascript:return confirm('<?php echo addslashes( osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) ) ; ?>');\" href=\"<?php echo osc_admin_base_url(true) ; ?>?page=settings&amp;action=currencies&amp;type=delete&amp;code[]=<?php echo urlencode($c['pk_c_code']); ?>\"><?php _e('Delete'); ?></a>" + 
+                                "<small>(<a onclick=\"javascript:return confirm('<?php echo addslashes( osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) ) ; ?>');\" href=\"<?php echo osc_admin_base_url(true) ; ?>?page=settings&amp;action=currencies&amp;type=delete&amp;code=<?php echo urlencode($c['pk_c_code']); ?>\"><?php _e('Delete'); ?></a>" + 
                                 " &middot; <a href=\"<?php echo osc_admin_base_url(true); ?>?page=settings&amp;action=currencies&amp;type=edit&amp;code=<?php echo urlencode($c['pk_c_code']); ?>\"><?php _e('Edit') ; ?></a>)</small>",
                             "<?php echo osc_esc_html($c['s_name']) ; ?>",
                             "<?php echo osc_esc_html($c['s_description']) ; ?>"

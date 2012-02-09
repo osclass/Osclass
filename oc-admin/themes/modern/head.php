@@ -37,7 +37,7 @@ FLASHMESSAGE;
 
 <link href="<?php echo osc_current_admin_theme_styles_url('jquery-ui.css') ; ?>" rel="stylesheet" type="text/css" />
 <link href="<?php echo osc_current_admin_theme_styles_url('backoffice.css') ; ?>" rel="stylesheet" type="text/css" />
-<link href="<?php echo osc_current_admin_theme_styles_url('demo_table.css') ; ?>" rel="stylesheet" type="text/css" />
+<!--<link href="<?php echo osc_current_admin_theme_styles_url('demo_table.css') ; ?>" rel="stylesheet" type="text/css" />-->
 <!--<link href="<?php echo osc_current_admin_theme_styles_url('admins_list_layout.css') ; ?>" rel="stylesheet" type="text/css" />-->
 <!--<link href="<?php echo osc_current_admin_theme_styles_url('new_item_layout.css') ; ?>" rel="stylesheet" type="text/css" />-->
 <!--<link href="<?php echo osc_current_admin_theme_styles_url('item_list_layout.css') ; ?>" rel="stylesheet" type="text/css" />-->
