@@ -22,13 +22,12 @@ function osc_listLocales() {
     $codes = osc_listLanguageCodes();
     foreach($codes as $code) {
         $path = sprintf('%s%s/index.php', osc_translations_path(), $code);
+        $fxName = sprintf('locale_%s_info', $code);
         if(file_exists($path)) {
-            require $path;
-            $fxName = sprintf('locale_%s_info', $code);
+            require_once $path;
             if(function_exists($fxName)) {
-                $lang = call_user_func($fxName);
-                $lang['code'] = $code;
-                $languages[] = $lang;
+                $languages[$code] = call_user_func($fxName);
+                $languages[$code]['code'] = $code;
             }
         }
     }

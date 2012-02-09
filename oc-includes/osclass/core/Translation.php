@@ -34,9 +34,8 @@
             return self::$instance ;
         }
 
-        function __construct() {
+        function __construct($locale = '') {
             // get user/admin locale
-            $locale = '';
             if( OC_ADMIN ) {
                 $locale = osc_current_admin_locale();
             } else {

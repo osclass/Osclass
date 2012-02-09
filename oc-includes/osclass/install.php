@@ -49,6 +49,29 @@ require_once LIB_PATH . 'osclass/install-functions.php';
 require_once LIB_PATH . 'osclass/utils.php';
 require_once LIB_PATH . 'osclass/core/Translation.php';
 require_once LIB_PATH . 'osclass/plugins.php';
+require_once LIB_PATH . 'osclass/locales.php';
+
+
+Session::newInstance()->session_start() ;
+
+$locales = osc_listLocales();
+
+if(Params::getParam('install_locale')) {
+    Session::newInstance()->_set('userLocale', Params::getParam('install_locale')) ;
+    Session::newInstance()->_set('adminLocale', Params::getParam('install_locale')) ;
+}
+
+if(Session::newInstance()->_get('userLocale')!='' && key_exists(Session::newInstance()->_get('userLocale'), $locales)) {
+    $current_locale = Session::newInstance()->_get('userLocale');
+} else if(isset($locales['en_US'])) {
+    $current_locale = 'en_US';
+} else {
+    $current_locale = key($locales);
+}
+
+$translation = new Translation($current_locale);
+
+
 
 $step = Params::getParam('step');
 if( !is_numeric($step) ) {
@@ -165,6 +188,15 @@ switch( $step ) {
                                 <label for="save_stats">
                                     <?php _e('Help make OSClass better by automatically sending usage statistics and crash reports to OSClass.');?>
                                 </label>
+                                <?php if(count($locales)>1) { ?>
+                                    <br/>
+                                    <label><?php _e('Choose language'); ?></label>
+                                    <select name="install_locale" id="install_locale" onChange="window.location.href='?install_locale='+document.getElementById(this.id).value">
+                                        <?php foreach($locales as $k => $locale) {?>
+                                        <option value="<?php echo $k; ?>" <?php if($k==$current_locale) { echo 'selected="selected"';};?>><?php echo $locale['name']; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                <?php }; ?>
                             </div>
                         </div>
                         <?php if($error) { ?>

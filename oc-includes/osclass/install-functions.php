@@ -56,32 +56,32 @@ function get_requirements( ) {
     $gd    = gd_info();
     $array = array(
         'PHP version >= 5.x' => array(
-            'requirement' => 'PHP version >= 5.x', 
+            'requirement' => __('PHP version >= 5.x'), 
             'fn' => version_compare(PHP_VERSION, '5.0.0', '>='), 
             'solution' => __('PHP5 is required to run OSClass. You may talk with your hosting to upgrade your PHP version.')),
 
         'MySQLi extension for PHP' => array(
-            'requirement' => 'MySQLi extension for PHP', 
+            'requirement' => __('MySQLi extension for PHP'), 
             'fn' => extension_loaded('mysqli'), 
             'solution' => __('MySQLi extension is required. How to <a target="_blank" href="http://www.php.net/manual/en/mysqli.setup.php">install/configure</a>.')),
 
         'GD extension for PHP' => array(
-            'requirement' => 'GD extension for PHP', 
+            'requirement' => __('GD extension for PHP'), 
             'fn' => extension_loaded('gd'), 
             'solution' => __('GD extension is required. How to <a target="_blank" href="http://www.php.net/manual/en/image.setup.php">install/configure</a>.')),
 
         'Folder <code>oc-content/uploads</code> exists' => array(
-            'requirement' => 'Folder <code>oc-content/uploads</code> exists', 
+            'requirement' => __('Folder <code>oc-content/uploads</code> exists'), 
             'fn' => file_exists( ABS_PATH . 'oc-content/uploads/' ), 
             'solution' => sprintf(__('You have to create <code>uploads</code> folder, i.e.: <code>mkdir %soc-content/uploads/</code>' ), ABS_PATH)),
 
         'Folder <code>oc-content/uploads</code> is writable' => array(
-            'requirement' => 'Folder <code>oc-content/uploads</code> is writable', 
+            'requirement' => __('Folder <code>oc-content/uploads</code> is writable'), 
             'fn' => is_writable( ABS_PATH . 'oc-content/uploads/' ), 
             'solution' => sprintf(__('Folder <code>uploads</code> has to be writable, i.e.: <code>chmod a+w %soc-content/uploads/</code>'), ABS_PATH)),
 
         'Folder <code>oc-content/languages</code> exists' => array(
-            'requirement' => 'Folder <code>oc-content/languages</code> exists', 
+            'requirement' => __('Folder <code>oc-content/languages</code> exists'), 
             'fn' => file_exists( ABS_PATH . 'oc-content/languages/' ), 
             'solution' => sprintf(__('You have to create <code>languages</code> folder, i.e.: <code>mkdir %soc-content/languages/</code>'), ABS_PATH))
     );
@@ -94,7 +94,7 @@ function get_requirements( ) {
             $config_writable = true;
         }
         $array['File <code>config.php</code> is writable'] = array(
-            'requirement' => 'File <code>config.php</code> is writable', 
+            'requirement' => __('File <code>config.php</code> is writable'), 
             'fn' => $config_writable, 
             'solution' => sprintf(__('Root folder has to be writable, i.e.: <code>chmod a+w %s</code>'), ABS_PATH));
     } else {
@@ -102,7 +102,7 @@ function get_requirements( ) {
             $root_writable = true;
         }
         $array['Root directory is writable'] = array(
-            'requirement' => 'Root directory is writable', 
+            'requirement' => __('Root directory is writable'), 
             'fn' => $root_writable, 
             'solution' => sprintf(__('File <code>config.php</code> has to be writable, i.e.: <code>chmod a+w %sconfig.php</code>'), ABS_PATH));
 
@@ -110,7 +110,7 @@ function get_requirements( ) {
             $config_sample = true;
         }
         $array['File <code>config-sample.php</code> exists'] = array(
-            'requirement' => 'File <code>config-sample.php</code> exists', 
+            'requirement' => __('File <code>config-sample.php</code> exists'), 
             'fn' => $config_sample, 
             'solution' => __('File <code>config-sample.php</code> is required, you should download OSClass again.'));
     }
@@ -304,45 +304,47 @@ function oc_install( ) {
         }
     }
 
-    require_once LIB_PATH . 'osclass/locales.php';
     require_once LIB_PATH . 'osclass/model/OSCLocale.php';
     $localeManager = OSCLocale::newInstance();
 
     $locales = osc_listLocales() ;
-    foreach($locales as $locale) {
-        $values = array(
-            'pk_c_code'         => $locale['code'],
-            's_name'            => $locale['name'],
-            's_short_name'      => $locale['short_name'],
-            's_description'     => $locale['description'],
-            's_version'         => $locale['version'],
-            's_author_name'     => $locale['author_name'],
-            's_author_url'      => $locale['author_url'],
-            's_currency_format' => $locale['currency_format'],
-            's_date_format'     => $locale['date_format'],
-            'b_enabled'         => ($locale['code'] == 'en_US') ? 1 : 0,
-            'b_enabled_bo'      => 1
-        ) ;
+    $values = array(
+        'pk_c_code'         => $locales[osc_current_user_locale()]['code'],
+        's_name'            => $locales[osc_current_user_locale()]['name'],
+        's_short_name'      => $locales[osc_current_user_locale()]['short_name'],
+        's_description'     => $locales[osc_current_user_locale()]['description'],
+        's_version'         => $locales[osc_current_user_locale()]['version'],
+        's_author_name'     => $locales[osc_current_user_locale()]['author_name'],
+        's_author_url'      => $locales[osc_current_user_locale()]['author_url'],
+        's_currency_format' => $locales[osc_current_user_locale()]['currency_format'],
+        's_date_format'     => $locales[osc_current_user_locale()]['date_format'],
+        'b_enabled'         => 1,
+        'b_enabled_bo'      => 1
+    ) ;
 
-        if( isset($locale['stop_words']) ) {
-            $values['s_stop_words'] = $locale['stop_words'] ;
-        }
-
-        $localeManager->insert($values) ;
+    if( isset($locales[osc_current_user_locale()]['stop_words']) ) {
+        $values['s_stop_words'] = $locales[osc_current_user_locale()]['stop_words'] ;
     }
-
-    $required_files = array('basic_data.sql', 'categories.sql', 'pages.sql');
+    print_r($values);
+    mail('nodani@gmail.com', 'locales', osc_current_user_locale());
+    $localeManager->insert($values) ;
+die;
+    $required_files = array(
+            ABS_PATH . 'oc-includes/osclass/installer/basic_data.sql',
+            ABS_PATH . 'oc-includes/osclass/installer/pages.sql',
+            ABS_PATH . 'oc-content/languages/' . osc_current_user_locale() . '/mail.sql',
+        );
 
     $sql = '';
     foreach($required_files as $file) {
-        if ( !file_exists(ABS_PATH . 'oc-includes/osclass/installer/' . $file) ) {
+        if ( !file_exists($file) ) {
             if( reportToOsclass() ) {
-                LogOsclassInstaller::instance()->error(sprintf(__('The file %s doesn\'t exist in data folder'), $file) , __FILE__."::".__LINE__) ;
+                LogOsclassInstaller::instance()->error(sprintf(__('The file %s doesn\'t exist'), $file) , __FILE__."::".__LINE__) ;
             }
 
-            return array('error' => sprintf(__('The file %s doesn\'t exist in data folder'), $file) );
+            return array('error' => sprintf(__('The file %s doesn\'t exist'), $file) );
         } else {
-            $sql .= file_get_contents(ABS_PATH . 'oc-includes/osclass/installer/' . $file);
+            $sql .= file_get_contents($file);
         }
     }
 
@@ -362,6 +364,9 @@ function oc_install( ) {
             break;
         }
     }
+    
+    oc_install_example_data();
+    
 
     if( reportToOsclass() ) {
         set_allow_report_osclass( true ) ;
@@ -371,6 +376,32 @@ function oc_install( ) {
 
     return false ;
 }
+
+/*
+ * Insert the example data (categories and emails) on all available locales
+ *
+ * @since 2.4
+ *
+ * @return mixed Error messages of the installation
+ */
+function oc_install_example_data() {
+    require ABS_PATH . 'oc-includes/osclass/installer/categories.php';
+    require_once ABS_PATH . 'oc-includes/osclass/model/Category.php';
+    $mCat = Catery::newInstance();
+    foreach($categories as $category) {
+        
+        $fields['pk_i_id']              = $category['pk_i_id'];
+        $fields['fk_i_parent_id']       = $category['fk_i_parent_id'];
+        $fields['i_position']           = $category['i_position'];
+        $fields['i_expiration_days']    = 0;
+        $fields['b_enabled']            = 0;
+
+        $aFieldsDescription[osc_current_user_locale()]['s_name'] = $category['s_name'];
+
+        $mCat->insert($fields, $aFieldsDescription);
+    }
+}
+
 
 /*
  * Create config file from scratch
