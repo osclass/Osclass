@@ -61,15 +61,15 @@ if(Params::getParam('install_locale')) {
     Session::newInstance()->_set('adminLocale', Params::getParam('install_locale')) ;
 }
 
-if(Session::newInstance()->_get('userLocale')!='' && key_exists(Session::newInstance()->_get('userLocale'), $locales)) {
-    $current_locale = Session::newInstance()->_get('userLocale');
+if(Session::newInstance()->_get('adminLocale')!='' && key_exists(Session::newInstance()->_get('adminLocale'), $locales)) {
+    $current_locale = Session::newInstance()->_get('adminLocale');
 } else if(isset($locales['en_US'])) {
     $current_locale = 'en_US';
 } else {
     $current_locale = key($locales);
 }
 
-$translation = new Translation($current_locale);
+$translation = new Translation(true);
 
 
 

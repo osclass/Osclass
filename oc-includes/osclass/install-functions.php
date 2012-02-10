@@ -309,30 +309,29 @@ function oc_install( ) {
 
     $locales = osc_listLocales() ;
     $values = array(
-        'pk_c_code'         => $locales[osc_current_user_locale()]['code'],
-        's_name'            => $locales[osc_current_user_locale()]['name'],
-        's_short_name'      => $locales[osc_current_user_locale()]['short_name'],
-        's_description'     => $locales[osc_current_user_locale()]['description'],
-        's_version'         => $locales[osc_current_user_locale()]['version'],
-        's_author_name'     => $locales[osc_current_user_locale()]['author_name'],
-        's_author_url'      => $locales[osc_current_user_locale()]['author_url'],
-        's_currency_format' => $locales[osc_current_user_locale()]['currency_format'],
-        's_date_format'     => $locales[osc_current_user_locale()]['date_format'],
+        'pk_c_code'         => $locales[osc_current_admin_locale()]['code'],
+        's_name'            => $locales[osc_current_admin_locale()]['name'],
+        's_short_name'      => $locales[osc_current_admin_locale()]['short_name'],
+        's_description'     => $locales[osc_current_admin_locale()]['description'],
+        's_version'         => $locales[osc_current_admin_locale()]['version'],
+        's_author_name'     => $locales[osc_current_admin_locale()]['author_name'],
+        's_author_url'      => $locales[osc_current_admin_locale()]['author_url'],
+        's_currency_format' => $locales[osc_current_admin_locale()]['currency_format'],
+        's_date_format'     => $locales[osc_current_admin_locale()]['date_format'],
         'b_enabled'         => 1,
         'b_enabled_bo'      => 1
     ) ;
 
-    if( isset($locales[osc_current_user_locale()]['stop_words']) ) {
-        $values['s_stop_words'] = $locales[osc_current_user_locale()]['stop_words'] ;
+    if( isset($locales[osc_current_admin_locale()]['stop_words']) ) {
+        $values['s_stop_words'] = $locales[osc_current_admin_locale()]['stop_words'] ;
     }
-    print_r($values);
-    mail('nodani@gmail.com', 'locales', osc_current_user_locale());
     $localeManager->insert($values) ;
-die;
+    
+    
     $required_files = array(
             ABS_PATH . 'oc-includes/osclass/installer/basic_data.sql',
             ABS_PATH . 'oc-includes/osclass/installer/pages.sql',
-            ABS_PATH . 'oc-content/languages/' . osc_current_user_locale() . '/mail.sql',
+            ABS_PATH . 'oc-content/languages/' . osc_current_admin_locale() . '/mail.sql',
         );
 
     $sql = '';
@@ -347,7 +346,6 @@ die;
             $sql .= file_get_contents($file);
         }
     }
-
     $comm->importSQL($sql) ;
 
     $error_num = $comm->getErrorLevel() ;
@@ -364,6 +362,9 @@ die;
             break;
         }
     }
+    
+    osc_set_preference('language', osc_current_admin_locale());
+    osc_set_preference('admin_language', osc_current_admin_locale());
     
     oc_install_example_data();
     
@@ -385,9 +386,18 @@ die;
  * @return mixed Error messages of the installation
  */
 function oc_install_example_data() {
-    require ABS_PATH . 'oc-includes/osclass/installer/categories.php';
-    require_once ABS_PATH . 'oc-includes/osclass/model/Category.php';
-    $mCat = Catery::newInstance();
+    require_once LIB_PATH . 'osclass/formatting.php';
+    require LIB_PATH . 'osclass/installer/categories.php';
+    require_once LIB_PATH . 'osclass/model/Category.php';
+    $mCat = Category::newInstance();
+    
+    if(!function_exists('osc_apply_filter')) {
+        function osc_apply_filter($dummyfilter, $str) {
+            return $str;
+        }
+    }
+    
+    
     foreach($categories as $category) {
         
         $fields['pk_i_id']              = $category['pk_i_id'];
@@ -396,7 +406,7 @@ function oc_install_example_data() {
         $fields['i_expiration_days']    = 0;
         $fields['b_enabled']            = 0;
 
-        $aFieldsDescription[osc_current_user_locale()]['s_name'] = $category['s_name'];
+        $aFieldsDescription[osc_current_admin_locale()]['s_name'] = $category['s_name'];
 
         $mCat->insert($fields, $aFieldsDescription);
     }
