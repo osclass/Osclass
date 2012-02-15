@@ -175,8 +175,18 @@
                         Field::newInstance()->cleanCategoriesFromField(Params::getParam("id"));
                         // no error... continue updating fields
                         if($error == 0) {
-                            $slug = Params::getParam("field_slug") != '' ? Params::getParam("field_slug") : Params::getParam("id");
-                            $slug = preg_replace('|([-]+)|', '-', preg_replace('|[^a-z0-9_-]|', '-', strtolower($slug)));
+                            $slug = Params::getParam("field_slug") != '' ? Params::getParam("field_slug") : Params::getParam("s_name");
+                            $slug_tmp = $slug = preg_replace('|([-]+)|', '-', preg_replace('|[^a-z0-9_-]|', '-', strtolower($slug)));
+                            $slug_k = 0;
+                            while(true) {
+                                $field = Field::newInstance()->findBySlug($slug);
+                                if(!$field || $field['pk_i_id']==Params::getParam("id")) {
+                                    break;
+                                } else {
+                                    $slug_k++;
+                                    $slug = $slug_tmp."_".$slug_k;
+                                }
+                            }
                             $res = Field::newInstance()->update(array('s_name' => Params::getParam("s_name"), 'e_type' => Params::getParam("field_type"), 's_slug' => $slug, 'b_required' => Params::getParam("field_required") == "1" ? 1 : 0, 's_options' => Params::getParam('s_options')), array('pk_i_id' => Params::getParam("id")));
                             if(is_bool($res) && !$res) {
                                 $error = 1;
