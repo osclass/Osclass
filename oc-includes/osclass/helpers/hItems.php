@@ -755,6 +755,18 @@
     function osc_resource_original_url() {
         return (string) osc_resource_path().osc_resource_id()."_original.".osc_resource_field("s_extension");
     }
+    
+    /**
+     * Set the internal pointer of array resources to its first element, and return it.
+     * 
+     * @since 2.3.6
+     * @return array
+     */
+    function osc_reset_resources() {
+        return View::newInstance()->_reset('resources') ;
+    }
+    
+    
     ///////////////////////////////
     // END HELPERS FOR RESOURCES //
     ///////////////////////////////

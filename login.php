@@ -108,6 +108,7 @@
                                                 Cookie::newInstance()->push('oc_userId', $user['pk_i_id']) ;
                                                 Cookie::newInstance()->push('oc_userSecret', $secret) ;
                                                 Cookie::newInstance()->set() ;
+                                                
                                             }
 
                                             $this->redirectTo( $url_redirect ) ;
