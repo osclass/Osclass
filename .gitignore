@@ -19,3 +19,5 @@ oc-content/explain_queries.log
 oc-content/uploads/*
 
 oc-includes/osclass/t/config.php
+oc-content/plugins/lopd/admin_user.php
+oc-content/plugins/lopd/ajax.php
