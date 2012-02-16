@@ -415,6 +415,29 @@
         }
         
         
+        
+        
+        /**
+         * Return number of users
+         * 
+         * @since 2.3.6
+         * @return int
+         */
+        public function countUsers($condition = 'b_enabled = 1 AND b_active = 1') {
+            $this->dao->select("COUNT(*) as i_total") ;
+            $this->dao->from(DB_TABLE_PREFIX.'t_user');
+            $this->dao->where($condition) ;
+            
+            $result = $this->dao->get() ;
+            
+            if( $result == false || $result->numRows() == 0) {
+                return 0;
+            }
+            
+            $row = $result->row() ;
+            return $row['i_total'];
+        }
+        
     }
 
     /* file end: ./oc-includes/osclass/model/User.php */
