@@ -387,6 +387,16 @@
         return osc_user_field("i_comments");
     }
     
+    /**
+     * Gets number of users
+     *
+     * @return int
+     */
+    function osc_total_users() {
+        $conn = getConnection();
+        $users=$conn->osc_dbFetchResults("SELECT pk_i_id FROM %st_user", DB_TABLE_PREFIX);
+        return (int) count($users);
+    }    
     /////////////
     // ALERTS  //
     /////////////
