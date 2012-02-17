@@ -226,6 +226,11 @@ body {
 #content .right .header_title h1.currencies {
     background: url('../images/currencies.gif') no-repeat ;
 }
+
+#content .right .header_title h1.media {
+    background: url('../images/media-config-icon.png') no-repeat ;
+}
+
 /* /right container */
 /* footer */
 #footer {
@@ -376,6 +381,10 @@ select, input[type="file"] {
     height: 24px;
 }
 
+input[type="file"] {
+    border: 0;
+}
+
 input.micro {
     width: 30px;
 }
@@ -415,7 +424,7 @@ input.xxlarge {
     text-decoration: underline;
 }
 
-.right h3 {
+.right h2, .right h3 {
     margin: 10px 0;
 }
 
@@ -483,7 +492,6 @@ input.xxlarge {
 .input-line .input .radio, .input-line .input .checkbox {
     padding: 2px 0;
     margin-top: 2px;
-    margin-left: 20px;
 }
 
 .input-line .input .radio input[type="radio"], .input-line .input .radio input[type="checkbox"] {
@@ -495,9 +503,10 @@ input.xxlarge {
     margin-bottom: 20px;
 }
 
-.actions.nomargin {
+.actions-nomargin {
     margin-left: 20px;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 input[type="submit"], input[type="button"] {
@@ -575,8 +584,14 @@ p.text {
     margin-bottom: 0px;
 }
 
-.spambots h3 {
+.right h2 {
     font-size: 18px;
+    font-weight: normal;
+}
+
+.right h3 {
+    font-size: 16px;
+    font-weight: normal;
 }
 
 .spambots .recaptcha {

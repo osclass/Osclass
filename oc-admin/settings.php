@@ -857,106 +857,176 @@ HTACCESS;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver');
                 break;
                 case('media'):          // calling the media view
+                                        $max_upload   = (int)( ini_get('upload_max_filesize') ) ;
+                                        $max_post     = (int)( ini_get('post_max_size') ) ;
+                                        $memory_limit = (int)( ini_get('memory_limit') ) ;
+                                        $upload_mb    = min($max_upload, $max_post, $memory_limit) * 1024 ;
+
+                                        $this->_exportVariableToView('max_size_upload', $upload_mb) ;
                                         $this->doView('settings/media.php') ;
                 break;
                 case('media_post'):     // updating the media config
-                                        $iUpdated          = 0;
-                                        $maxSizeKb         = Params::getParam('maxSizeKb');
-                                        $allowedExt        = Params::getParam('allowedExt');
-                                        $dimThumbnail      = Params::getParam('dimThumbnail');
-                                        $dimPreview        = Params::getParam('dimPreview');
-                                        $dimNormal         = Params::getParam('dimNormal');
-                                        $keepOriginalImage = Params::getParam('keep_original_image');
-                                        $use_imagick       = Params::getParam('use_imagick');
-                                        $type_watermark    = Params::getParam('watermark_type');
-                                        $watermark_color   = Params::getParam('watermark_text_color');
-                                        $watermark_text    = Params::getParam('watermark_text');
-                                        $watermark_image   = Params::getParam('watermark_image');
-                                       
+                                        $status = 'ok' ;
+                                        $error  = '' ;
+
+                                        $iUpdated          = 0 ;
+                                        $maxSizeKb         = Params::getParam('maxSizeKb') ;
+                                        $allowedExt        = Params::getParam('allowedExt') ;
+                                        $dimThumbnail      = Params::getParam('dimThumbnail') ;
+                                        $dimPreview        = Params::getParam('dimPreview') ;
+                                        $dimNormal         = Params::getParam('dimNormal') ;
+                                        $keepOriginalImage = Params::getParam('keep_original_image') ;
+                                        $use_imagick       = Params::getParam('use_imagick') ;
+                                        $type_watermark    = Params::getParam('watermark_type') ;
+                                        $watermark_color   = Params::getParam('watermark_text_color') ;
+                                        $watermark_text    = Params::getParam('watermark_text') ;
+
                                         switch ($type_watermark) {
                                             case 'none':
-                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
-                                                                                              ,array('s_name'  => 'watermark_text_color'));
-                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
-                                                                                              ,array('s_name'  => 'watermark_text'));
-                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
-                                                                                              ,array('s_name'  => 'watermark_image'));
-                                            break;
+                                                $iUpdated += Preference::newInstance()->update(
+                                                        array('s_value' => ''),
+                                                        array('s_name'  => 'watermark_text_color')
+                                                ) ;
+                                                $iUpdated += Preference::newInstance()->update(
+                                                        array('s_value' => ''),
+                                                        array('s_name'  => 'watermark_text')
+                                                ) ;
+                                                $iUpdated += Preference::newInstance()->update(
+                                                        array('s_value' => ''),
+                                                        array('s_name'  => 'watermark_image')
+                                                ) ;
+                                            break ;
                                             case 'text':
-                                                $iUpdated += Preference::newInstance()->update(array('s_value' => $watermark_color)
-                                                                                              ,array('s_name'  => 'watermark_text_color'));
-                                                $iUpdated += Preference::newInstance()->update(array('s_value' => $watermark_text)
-                                                                                              ,array('s_name'  => 'watermark_text'));
-                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
-                                                                                              ,array('s_name'  => 'watermark_image'));
-                                                $iUpdated += Preference::newInstance()->update(array('s_value' => Params::getParam('watermark_text_place'))
-                                                                                              ,array('s_name'  => 'watermark_place'));
-                                            break;
+                                                $iUpdated += Preference::newInstance()->update(
+                                                        array('s_value' => $watermark_color),
+                                                        array('s_name'  => 'watermark_text_color')
+                                                ) ;
+                                                $iUpdated += Preference::newInstance()->update(
+                                                        array('s_value' => $watermark_text),
+                                                        array('s_name'  => 'watermark_text')
+                                                ) ;
+                                                $iUpdated += Preference::newInstance()->update(
+                                                        array('s_value' => ''),
+                                                        array('s_name'  => 'watermark_image')
+                                                ) ;
+                                                $iUpdated += Preference::newInstance()->update(
+                                                        array('s_value' => Params::getParam('watermark_text_place')),
+                                                        array('s_name'  => 'watermark_place')
+                                                ) ;
+                                            break ;
                                             case 'image':
                                                 // upload image & move to path
                                                 if( $_FILES['watermark_image']['error'] == UPLOAD_ERR_OK ) {
                                                     $tmpName = $_FILES['watermark_image']['tmp_name'] ;
-                                                    $path = osc_content_path() . 'uploads/watermark.png' ;
+                                                    $path    = osc_content_path() . 'uploads/watermark.png' ;
                                                     if( move_uploaded_file($tmpName, $path) ){
-                                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $path)
-                                                                                                      ,array('s_name'  => 'watermark_image'));
+                                                        $iUpdated += Preference::newInstance()->update(
+                                                                array('s_value' => $path),
+                                                                array('s_name'  => 'watermark_image')
+                                                        ) ;
                                                     } else {
-                                                        $iUpdated += Preference::newInstance()->update(array('s_value' => '')
-                                                                                                      ,array('s_name'  => 'watermark_image'));
+                                                        $iUpdated += Preference::newInstance()->update(
+                                                                array('s_value' => ''),
+                                                                array('s_name'  => 'watermark_image')
+                                                        ) ;
                                                     }
                                                 }
-                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
-                                                                                              ,array('s_name'  => 'watermark_text_color'));
-                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
-                                                                                              ,array('s_name'  => 'watermark_text'));
-                                                $iUpdated += Preference::newInstance()->update(array('s_value' => Params::getParam('watermark_image_place'))
-                                                                                              ,array('s_name'  => 'watermark_place'));
+                                                $iUpdated += Preference::newInstance()->update(
+                                                        array('s_value' => ''),
+                                                        array('s_name'  => 'watermark_text_color')
+                                                ) ;
+                                                $iUpdated += Preference::newInstance()->update(
+                                                        array('s_value' => ''),
+                                                        array('s_name'  => 'watermark_text')
+                                                ) ;
+                                                $iUpdated += Preference::newInstance()->update(
+                                                        array('s_value' => Params::getParam('watermark_image_place')),
+                                                        array('s_name'  => 'watermark_place')
+                                                ) ;
                                             break;
-
                                             default:
                                             break;
                                         }
-                                        
+
                                         // format parameters
-                                        $maxSizeKb         = strip_tags($maxSizeKb);
-                                        $allowedExt        = strip_tags($allowedExt);
-                                        $dimThumbnail      = strip_tags($dimThumbnail);
+                                        $maxSizeKb         = strip_tags($maxSizeKb) ;
+                                        $allowedExt        = strip_tags($allowedExt) ;
+                                        $dimThumbnail      = strip_tags($dimThumbnail) ;
                                         $dimPreview        = strip_tags($dimPreview);
-                                        $dimNormal         = strip_tags($dimNormal);
-                                        $keepOriginalImage = ($keepOriginalImage != '' ? true : false);
-                                        $use_imagick       = ($use_imagick != '' ? true : false);
-                                        if(!extension_loaded('imagick')) {
-                                            $use_imagick = false;
+                                        $dimNormal         = strip_tags($dimNormal) ;
+                                        $keepOriginalImage = ($keepOriginalImage != '' ? true : false) ;
+                                        $use_imagick       = ($use_imagick != '' ? true : false) ;
+
+                                        // is imagick extension loaded?
+                                        if( !@extension_loaded('imagick') ) {
+                                            $use_imagick = false ;
                                         }
 
-                                        
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $maxSizeKb)
-                                                                                      ,array('s_name'  => 'maxSizeKb'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $allowedExt)
-                                                                                      ,array('s_name'  => 'allowedExt'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $dimThumbnail)
-                                                                                      ,array('s_name'  => 'dimThumbnail'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $dimPreview)
-                                                                                      ,array('s_name'  => 'dimPreview'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $dimNormal)
-                                                                                      ,array('s_name'  => 'dimNormal'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $keepOriginalImage)
-                                                                                      ,array('s_name'  => 'keep_original_image'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $use_imagick)
-                                                                                      ,array('s_name'  => 'use_imagick'));
+                                        // max size allowed by PHP configuration?
+                                        $max_upload   = (int)( ini_get('upload_max_filesize') ) ;
+                                        $max_post     = (int)( ini_get('post_max_size') ) ;
+                                        $memory_limit = (int)( ini_get('memory_limit') ) ;
+                                        $upload_mb    = min($max_upload, $max_post, $memory_limit) * 1024 ;
 
-                                        if($iUpdated > 0) {
-                                            osc_add_flash_ok_message( _m('Media config has been updated'), 'admin');
+                                        // set maxSizeKB equals to PHP configuration if it's bigger
+                                        if( $maxSizeKb > $upload_mb ) {
+                                            $status    = 'warning' ;
+                                            $maxSizeKb = $upload_mb ;
+                                            // flash message text warning
+                                            $error     = sprintf( _m("You cannot set a maximum size file higher than the one that allows PHP configuration: <b>%d KB</b>"), $upload_mb ) ;
                                         }
 
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media');
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value' => $maxSizeKb),
+                                                array('s_name'  => 'maxSizeKb')
+                                        ) ;
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value' => $allowedExt),
+                                                array('s_name'  => 'allowedExt')
+                                        ) ;
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value' => $dimThumbnail),
+                                                array('s_name'  => 'dimThumbnail')
+                                        ) ;
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value' => $dimPreview),
+                                                array('s_name'  => 'dimPreview')
+                                        ) ;
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value' => $dimNormal),
+                                                array('s_name'  => 'dimNormal')
+                                        );
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value' => $keepOriginalImage),
+                                                array('s_name'  => 'keep_original_image')
+                                        ) ;
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value' => $use_imagick),
+                                                array('s_name'  => 'use_imagick')
+                                        ) ;
+
+                                        $msg = '' ;
+                                        if( $iUpdated > 0 ) {
+                                            $msg .= _m('Media config has been updated') ;
+                                        }
+
+                                        if( $error != '' ) {
+                                            $msg .= '</p><p>' . $error ;
+                                        }
+
+                                        switch( $status ) {
+                                            case('ok'):         osc_add_flash_ok_message($msg, 'admin') ;
+                                            break ;
+                                            case('warning'):    osc_add_flash_warning_message($msg, 'admin') ;
+                                            break ;
+                                        }
+
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media') ;
                 break ;
-                case 'images_post':     if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
-                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media');
+                case('images_post'):    if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media') ;
                                         }
-                                        
-                                        $preferences = Preference::newInstance()->toArray() ;
 
                                         $wat = new Watermark();
                                         $aResources = ItemResource::newInstance()->getAllResources();

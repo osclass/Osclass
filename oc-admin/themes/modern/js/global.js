@@ -11,6 +11,10 @@ $(document).ready(function() {
 
             var matches = loc_url.match(/(.*?)\?(.*)/) ;
 
+            if( matches == null ) {
+                return false ;
+            }
+
             if( matches.length != 3 ) {
                 return false ;
             }

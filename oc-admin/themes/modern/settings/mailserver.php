@@ -70,7 +70,7 @@
                 <?php osc_show_admin_flash_messages() ; ?>
                 <!-- mail-server form -->
                 <div class="settings mail-server">
-                    <h3><?php _e('Configuration') ; ?></h3>
+                    <h2><?php _e('Configuration') ; ?></h2>
                     <!-- configuration -->
                     <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="settings" />
@@ -143,7 +143,7 @@
                         </div>
                     </form>
                     <!-- /configuration -->
-                    <h3><?php _e('Help') ; ?></h3>
+                    <h2><?php _e('Help') ; ?></h2>
                     <p class="text"><?php printf( __('Send an e-mail to </code>%s</code> to test mail server configuration'), osc_contact_email() ) ; ?> <input id="testMail" type="button" value="<?php echo osc_esc_html( __('Send e-mail') ) ; ?>" /></p>
                     <!-- test email -->
                     <div id="testMail_message" class="alert" style="display:none;">

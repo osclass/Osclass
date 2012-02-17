@@ -33,53 +33,53 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <script type="text/javascript">
-            $.extend({
-                initDashboard: function(args) {
-                    $.isArray(args) ? true : false;
-                    $.each(args, function(i, val) {
-                        $("#" + val.substr(3)).show();
-                        $("#" + val).attr('checked', 'checked');
-                    });
-                },
-                setCookie: function(args) {
-                    $.isArray(args) ? true : false;
-                    $.cookie.set("osc_admin_main", args, {json: true});
-                }
-            });
-
-            $(function() {
-                if ($.cookie.get("osc_admin_main") == '' || $.cookie.get("osc_admin_main") == null) { 
-                    var sections = ['cb_last_items', 'cb_statistics', 'cb_last_comments', 'cb_last_news'];
-                    $.initDashboard(sections);
-                    $.setCookie(sections);
-
-                } else { // else read it and apply it!
-                    var enabled_sections = $.cookie.get("osc_admin_main", true);
-                    $.initDashboard(enabled_sections);
-                    $.setCookie(enabled_sections);
-                }
-
-                // save settings
-                $("#button_save").click(function() {
-                    var sections = [];
-                    $('#checkboxes input:checkbox:checked').each(function() {
-                        sections.push($(this).attr('id'));
-                    });
-
-                    $.setCookie(sections);
-                    $('#main_div').hide();
-                });
-
-
-                $('#button_open').click(function() {
-                    $('#main_div').toggle();
-                });
-
-                $("#checkboxes input[type='checkbox']").click(function() {
-                    var val = $(this).attr('id');
-                    $("#" + val.substr(3)).toggle();
-                });
-            });
+//            $.extend({
+//                initDashboard: function(args) {
+//                    $.isArray(args) ? true : false;
+//                    $.each(args, function(i, val) {
+//                        $("#" + val.substr(3)).show();
+//                        $("#" + val).attr('checked', 'checked');
+//                    });
+//                },
+//                setCookie: function(args) {
+//                    $.isArray(args) ? true : false;
+//                    $.cookie.set("osc_admin_main", args, {json: true});
+//                }
+//            });
+//
+//            $(function() {
+//                if ($.cookie.get("osc_admin_main") == '' || $.cookie.get("osc_admin_main") == null) { 
+//                    var sections = ['cb_last_items', 'cb_statistics', 'cb_last_comments', 'cb_last_news'];
+//                    $.initDashboard(sections);
+//                    $.setCookie(sections);
+//
+//                } else { // else read it and apply it!
+//                    var enabled_sections = $.cookie.get("osc_admin_main", true);
+//                    $.initDashboard(enabled_sections);
+//                    $.setCookie(enabled_sections);
+//                }
+//
+//                // save settings
+//                $("#button_save").click(function() {
+//                    var sections = [];
+//                    $('#checkboxes input:checkbox:checked').each(function() {
+//                        sections.push($(this).attr('id'));
+//                    });
+//
+//                    $.setCookie(sections);
+//                    $('#main_div').hide();
+//                });
+//
+//
+//                $('#button_open').click(function() {
+//                    $('#main_div').toggle();
+//                });
+//
+//                $("#checkboxes input[type='checkbox']").click(function() {
+//                    var val = $(this).attr('id');
+//                    $("#" + val.substr(3)).toggle();
+//                });
+//            });
         </script>
         
 		<div id="content">
@@ -87,15 +87,15 @@
             <script type="text/javascript">
 
                 // this must be loaded after backoffice menu is loaded.
-                $(function() {
-                    // other tweaks
-                    $('#sortable_left').sortable({
-                        connectWith: ["#sortable_right"], placeholder: 'widget-placeholder', containment: 'body'
-                    });
-                    $('#sortable_right').sortable({
-                        connectWith: ["#sortable_left"], placeholder: 'widget-placeholder', containment: 'body'
-                    });
-                });
+//                $(function() {
+//                    // other tweaks
+//                    $('#sortable_left').sortable({
+//                        connectWith: ["#sortable_right"], placeholder: 'widget-placeholder', containment: 'body'
+//                    });
+//                    $('#sortable_right').sortable({
+//                        connectWith: ["#sortable_left"], placeholder: 'widget-placeholder', containment: 'body'
+//                    });
+//                });
             </script>
             
 			<div id="right_column">

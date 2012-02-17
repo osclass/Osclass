@@ -171,7 +171,7 @@
                                     <p class="inline"><?php _e('items at most') ; ?></p>
                                 </div>
                             </div>
-                            <h3><?php _e('Contact Settings') ; ?></h3>
+                            <h2><?php _e('Contact Settings') ; ?></h2>
                             <div class="input-line">
                                 <label><?php _e('Attachments') ; ?></label>
                                 <div class="input">
@@ -181,7 +181,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <h3><?php _e('Cron Settings') ; ?></h3>
+                            <h2><?php _e('Cron Settings') ; ?></h2>
                             <div class="input-line">
                                 <label><?php _e('Automatic cron process') ; ?></label>
                                 <div class="input">

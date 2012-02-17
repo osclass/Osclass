@@ -39,7 +39,7 @@
                         <input type="hidden" name="page" value="settings" />
                         <input type="hidden" name="action" value="akismet_post" />
                         <fieldset>
-                            <h3><?php _e('Akismet') ; ?></h3>
+                            <h2><?php _e('Akismet') ; ?></h2>
                             <p class="text">
                                 <?php _e("Akismet is a hosted web service that saves you time by automatically detecting comment and trackback spam. It's hosted on our servers, but we give you access to it through plugins and our API.") ; ?>
                             </p>
@@ -82,7 +82,7 @@
                         <input type="hidden" name="page" value="settings" />
                         <input type="hidden" name="action" value="recaptcha_post" />
                         <fieldset>
-                            <h3><?php _e('reCAPTCHA') ; ?></h3>
+                            <h2><?php _e('reCAPTCHA') ; ?></h2>
                             <p class="text">
                                 <?php printf(__('reCAPTCHA helps prevent automated abuse of your site by using a CAPTCHA to ensure that only humans perform certain actions. <a href="%s" target="_blank">Get your key</a>'), 'http://www.google.com/recaptcha/whyrecaptcha') ; ?>
                             </p>

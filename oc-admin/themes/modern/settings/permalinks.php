@@ -170,12 +170,12 @@
                                 </fieldset>
                             </div>
 
-                            <div class="actions nomargin">
+                            <div class="actions-nomargin">
                                 <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
                             </div>
                         </fieldset>
                     </form>
-                    <h3><?php _e('Useful information') ; ?></h3>
+                    <h2><?php _e('Useful information') ; ?></h2>
                     <?php
                         $mod_rewrite = '';
                         if( apache_mod_loaded('mod_rewrite') ) {
@@ -205,8 +205,6 @@
                             ?>
                         </li>
                     </ul>
-                    <p>
-                    </p>
                 </div>
             </div>
             <!-- /right container -->

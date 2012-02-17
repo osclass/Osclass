@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="input-line comments_approved">
                                     <div class="input">
-                                        Before a comment appears, comment author must have <input type="text" class="micro" name="num_moderate_comments" value="<?php echo ( (osc_moderate_comments() == -1 ) ? '' : osc_moderate_comments() ) ; ?>" /> previously approved comment
+                                        <?php printf( __('Before a comment appears, comment author must have %s previously approved comment'), '<input type="text" class="micro" name="num_moderate_comments" value="' . ( (osc_moderate_comments() == -1 ) ? '' : osc_esc_html( osc_moderate_comments() ) ) . '" />' ) ; ?>
                                         <p class="help"><?php _e('If the value is zero an administrator must always approve the comment') ; ?></p>
                                     </div>
                                 </div>
@@ -79,11 +79,11 @@
                             <div class="input-line">
                                 <label><?php _e('Other comment settings') ; ?></label>
                                 <div class="input">
-                                    Break comments into pages with <input type="text" class="micro" name="comments_per_page" value="<?php echo osc_comments_per_page(); ?>" /> comments per page
-                                    <p class="help">If the value is zero all the comments are showed</p>
+                                    <?php printf( __('Break comments into pages with %s comments per page'), '<input type="text" class="micro" name="comments_per_page" value="' . osc_esc_html( osc_comments_per_page() ) . '" />' ) ; ?>
+                                    <p class="help"><?php _e('If the value is zero all the comments are showed' ) ; ?></p>
                                 </div>
                             </div>
-                            <h3>Notifications</h3>
+                            <h2><?php _e('Notifications') ; ?></h2>
                             <div class="input-line">
                                 <label><?php _e('E-mail admin whenever') ?></label>
                                 <div class="input">
