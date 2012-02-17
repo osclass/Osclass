@@ -358,6 +358,120 @@
                                                 Preference::newInstance()->update(array('s_value' => '0')
                                                                                  ,array('s_name'  => 'mod_rewrite_loaded'));
                                             }
+                                            
+                                            $item_url = Params::getParam('rewrite_item_url');
+                                            Preference::newInstance()->update(array('s_value' => $item_url)
+                                                                             ,array('s_name' => 'rewrite_item_url'));
+                                            $page_url = Params::getParam('rewrite_page_url');
+                                            Preference::newInstance()->update(array('s_value' => $page_url)
+                                                                             ,array('s_name' => 'rewrite_page_url'));
+                                            $cat_url = Params::getParam('rewrite_cat_url');
+                                            Preference::newInstance()->update(array('s_value' => $cat_url)
+                                                                             ,array('s_name' => 'rewrite_cat_url'));
+                                            
+                                            $rewrite = Rewrite::newInstance();
+                                            $rewrite->clearRules();
+                                            
+                                            /*****************************
+                                             ********* Add rules *********
+                                             *****************************/
+
+                                            // Contact rules
+                                            $rewrite->addRule('^contact/?$', 'index.php?page=contact');
+
+                                            // Feed rules
+                                            $rewrite->addRule('^feed/?$', 'index.php?page=search&sFeed=rss');
+                                            $rewrite->addRule('^feed/(.+)$', 'index.php?page=search&sFeed=$1');
+
+                                            // Language rules
+                                            $rewrite->addRule('^language/(.*?)/?$', 'index.php?page=language&locale=$1');
+
+                                            // Search rules
+                                            $rewrite->addRule('^search/(.*)$', 'index.php?page=search&sPattern=$1');
+                                            $rewrite->addRule('^s/(.*)$', 'index.php?page=search&sPattern=$1');
+
+                                            // Item rules
+                                            $rewrite->addRule('^item/mark/(.*?)/([0-9]+)$', 'index.php?page=item&action=mark&as=$1&id=$2');
+                                            $rewrite->addRule('^item/send-friend/([0-9]+)$', 'index.php?page=item&action=send_friend&id=$1');
+                                            $rewrite->addRule('^item/contact/([0-9]+)$', 'index.php?page=item&action=contact&id=$1');
+                                            $rewrite->addRule('^item/new$', 'index.php?page=item&action=item_add');
+                                            $rewrite->addRule('^item/new/([0-9]+)$', 'index.php?page=item&action=item_add&catId=$1');
+                                            $rewrite->addRule('^item/activate/([0-9]+)/(.*?)/?$', 'index.php?page=item&action=activate&id=$1&secret=$2');
+                                            $rewrite->addRule('^item/edit/([0-9]+)/(.*?)/?$', 'index.php?page=item&action=item_edit&id=$1&secret=$2');
+                                            $rewrite->addRule('^item/delete/([0-9]+)/(.*?)/?$', 'index.php?page=item&action=item_delete&id=$1&secret=$2');
+                                            $rewrite->addRule('^item/resource/delete/([0-9]+)/([0-9]+)/([0-9A-Za-z]+)/?(.*?)/?$', 'index.php?page=item&action=deleteResource&id=$1&item=$2&code=$3&secret=$4');
+
+                                            
+                                            // Item rules
+                                            $id_pos = stripos($item_url, '{ITEM_ID}');
+                                            $title_pos = stripos($item_url, '{ITEM_SLUG}');
+                                            $cat_pos = stripos($item_url, '{CATEGORIES');
+                                            $param_pos = 1;
+                                            if($title_pos!==false && $id_pos>$title_pos) {
+                                                $param_pos++;
+                                            }
+                                            if($cat_pos!==false && $id_pos>$cat_pos) {
+                                                $param_pos++;
+                                            }
+                                            $comments_pos = 1;
+                                            if($id_pos!==false) { $comments_pos++; }
+                                            if($title_pos!==false) { $comments_pos++; }
+                                            if($cat_pos!==false) { $comments_pos++; }
+                                            $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url.'\?comments-page=([0-9al]*)'))).'$', 'index.php?page=item&id=$'.$param_pos.'&comments-page=$'.$comments_pos);
+                                            $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url.'\?comments-page=([0-9al]*)'))).'$', 'index.php?page=item&id=$'.($param_pos+2).'lang=$1_$2&comments-page=$'.$comments_pos);
+                                            $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url))).'$', 'index.php?page=item&id=$'.$param_pos);
+                                            $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url))).'$', 'index.php?page=item&id=$'.($param_pos+2).'lang=$1_$2');
+
+
+                                            // User rules
+                                            $rewrite->addRule('^user/login$', 'index.php?page=login');
+                                            $rewrite->addRule('^user/dashboard/?$', 'index.php?page=user&action=dashboard');
+                                            $rewrite->addRule('^user/logout$', 'index.php?page=main&action=logout');
+                                            $rewrite->addRule('^user/register$', 'index.php?page=register&action=register');
+                                            $rewrite->addRule('^user/activate/([0-9]+)/(.*?)/?$', 'index.php?page=register&action=validate&id=$1&code=$2');
+                                            $rewrite->addRule('^user/activate_alert/([a-zA-Z0-9]+)/(.+)$', 'index.php?page=user&action=activate_alert&email=$2&secret=$1');
+                                            $rewrite->addRule('^user/profile$', 'index.php?page=user&action=profile');
+                                            $rewrite->addRule('^user/profile/([0-9]+)$', 'index.php?page=user&action=pub_profile&id=$1');
+                                            $rewrite->addRule('^user/items$', 'index.php?page=user&action=items');
+                                            $rewrite->addRule('^user/alerts$', 'index.php?page=user&action=alerts');
+                                            $rewrite->addRule('^user/recover/?$', 'index.php?page=login&action=recover');
+                                            $rewrite->addRule('^user/forgot/([0-9]+)/(.*)$', 'index.php?page=login&action=forgot&userId=$1&code=$2');
+                                            $rewrite->addRule('^user/change_password$', 'index.php?page=user&action=change_password');
+                                            $rewrite->addRule('^user/change_email$', 'index.php?page=user&action=change_email');
+                                            $rewrite->addRule('^user/change_email_confirm/([0-9]+)/(.*?)/?$', 'index.php?page=user&action=change_email_confirm&userId=$1&code=$2');
+
+                                            // Page rules
+                                            $id_pos = stripos($page_url, '{PAGE_ID}');
+                                            $slug_pos = stripos($page_url, '{PAGE_SLUG}');
+                                            if($id_pos!==false && $slug_pos!==false && $id_pos>$slug_pos) {
+                                                $param_pos = 2;
+                                            } else {
+                                                $param_pos = 1;
+                                            }
+                                            $rewrite->addRule('^'.str_replace('{PAGE_SLUG}', '([a-zA-Z_]*)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url)).'$', 'index.php?page=page&id=$'.$param_pos);
+                                            $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{PAGE_SLUG}', '([a-zA-Z_]*)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url)).'$', 'index.php?page=page&id=$'.($param_pos+2).'lang=$1_$2');
+
+                                            // Clean archive files
+                                            $rewrite->addRule('^(.+?)\.php(.*)$', '$1.php$2');
+
+                                            // Category rules
+                                            $id_pos = stripos($item_url, '{CATEGORY_ID}');
+                                            $title_pos = stripos($item_url, '{CATEGORY_SLUG}');
+                                            $cat_pos = stripos($item_url, '{CATEGORIES');
+                                            $param_pos = 1;
+                                            if($title_pos!==false && $id_pos>$title_pos) {
+                                                $param_pos++;
+                                            }
+                                            if($cat_pos!==false && $id_pos>$cat_pos) {
+                                                $param_pos++;
+                                            }
+                                            $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.*)', str_replace('{CATEGORY_SLUG}', '([^/]*)', str_replace('{CATEGORY_ID}', '([0-9]+)', $cat_url))).'$', 'index.php?page=search&sCategory=$'.$param_pos);
+
+                                            //Write rule to DB
+                                            $rewrite->setRules();
+
+                                            
+                                            
                                         } else {
                                             $modRewrite = apache_mod_loaded('mod_rewrite');
                                             Preference::newInstance()->update(array('s_value' => '0')

@@ -290,26 +290,15 @@
      * @param string $pattern
      * @return string the url
      */
-    function osc_search_category_url($pattern = '') {
-        $category = osc_category() ;
-
+    function osc_search_category_url() {
         $path = '' ;
         if ( osc_rewrite_enabled() ) {
-            if ($category != '') {
-                $category = Category::newInstance()->hierarchy($category['pk_i_id']) ;
-                $sanitized_category = "" ;
+                $category = Category::newInstance()->hierarchy(osc_category_id()) ;
+                $sanitized_categories = array();
                 for ($i = count($category); $i > 0; $i--) {
-                    $sanitized_category .= $category[$i - 1]['s_slug'] . '/' ;
+                    $sanitized_categories[] = $category[$i - 1]['s_slug'];
                 }
-                $path = osc_base_url() . $sanitized_category ;
-            }
-            if ($pattern != '') {
-                if ($path == '') {
-                    $path = osc_base_url() . 'search/' . $pattern ;
-                } else {
-                    $path .= 'search/' . $pattern ;
-                }
-            }
+                $path = osc_base_url() . str_replace('{CATEGORIES}', implode("/", $sanitized_categories), str_replace('{CATEGORY_ID}', osc_category_id(), str_replace('{CATEGORY_SLUG}', osc_category_slug(), osc_get_preference('rewrite_cat_url'))));
         } else {
             $path = sprintf( osc_base_url(true) . '?page=search&sCategory=%d', $category['pk_i_id'] ) ;
         }
@@ -421,19 +410,18 @@
      */
     function osc_item_url($locale = '') {
         if ( osc_rewrite_enabled() ) {
-            $sanitized_title = osc_sanitizeString(osc_item_title()) ;
-            $sanitized_category = '';
+            $sanitized_categories = array();
             $cat = Category::newInstance()->hierarchy(osc_item_category_id()) ;
             for ($i = (count($cat)); $i > 0; $i--) {
-                $sanitized_category .= $cat[$i - 1]['s_slug'] . '/' ;
+                $sanitized_categories[] = $cat[$i - 1]['s_slug'];
             }
+            $url = str_replace('{CATEGORIES}', implode("/", $sanitized_categories), str_replace('{ITEM_ID}', osc_item_id(), str_replace('{ITEM_TITLE}', osc_sanitizeString(osc_item_title()), osc_get_preference('rewrite_item_url'))));
             if($locale!='') {
-                $path = osc_base_url() . sprintf('%s_%s%s_%d', $locale, $sanitized_category, $sanitized_title, osc_item_id()) ;
+                $path = osc_base_url().$locale."/".$url;
             } else {
-                $path = osc_base_url() . sprintf('%s%s_%d', $sanitized_category, $sanitized_title, osc_item_id()) ;
+                $path = osc_base_url().$url;
             }
         } else {
-            //$path = osc_base_url(true) . sprintf('?page=item&id=%d', osc_item_id()) ;
             $path = osc_item_url_ns( osc_item_id(), $locale ) ;
         }
         return $path ;

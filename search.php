@@ -213,6 +213,7 @@
                 //$this->_exportVariableToView('non_empty_categories', $aCategories) ;
                 $this->_exportVariableToView('search_start', $iStart) ;
                 $this->_exportVariableToView('search_end', $iEnd) ;
+                print_r($p_sCategory);
                 $this->_exportVariableToView('search_category', $p_sCategory) ;
                 $this->_exportVariableToView('search_order_type', $p_iOrderType) ;
                 $this->_exportVariableToView('search_order', $p_sOrder) ;

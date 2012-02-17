@@ -67,6 +67,23 @@
                             <?php if(osc_rewrite_enabled()) { ?>
                             <div style="float: left; width: 100%;">
                                 <fieldset>
+                                    <legend><?php _e('Rewrite rules'); ?></legend>
+                                    <label for="rewrite_item_url"><?php echo sprintf(__('Item URL. Accepted keywords: %s'), '{ITEM_ID},{ITEM_TITLE},{CATEGORIES}') ; ?></label>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text" name="rewrite_item_url" id="rewrite_item_url" value="<?php echo osc_get_preference('rewrite_item_url'); ?>" />
+                                    <br/>
+                                    <label for="rewrite_page_url"><?php echo sprintf(__('Page URL. Accepted keywords: %s'), '{PAGE_ID},{PAGE_SLUG}') ; ?></label>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text" name="rewrite_page_url" id="rewrite_page_url" value="<?php echo osc_get_preference('rewrite_page_url'); ?>" />
+                                    <br/>
+                                    <label for="rewrite_cat_url"><?php echo sprintf(__('Category URL. Accepted keywords: %s'), '{CATEGORY_ID},{CATEGORY_NAME},{CATEGORIES}') ; ?></label>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text" name="rewrite_cat_url" id="rewrite_cat_url" value="<?php echo osc_get_preference('rewrite_cat_url'); ?>" />
+                                    <br/>
+                                </fieldset>
+                            </div>
+
+                            <div style="clear: both;"></div>
+                            
+                            <div style="float: left; width: 100%;">
+                                <fieldset>
                                     <legend><?php _e('.htaccess file'); ?></legend>
                                     <?php switch($htaccess_status) {
                                             case 1:     _e('Module <em>mod_rewrite</em> was found on the server.');
