@@ -123,7 +123,7 @@
                         <div class="input-line">
                             <label><?php _e('SMTP') ; ?></label>
                             <div class="input">
-                                <label>
+                                <label class="checkbox">
                                     <input type="checkbox" <?php echo ( osc_mailserver_auth() ? 'checked="true"' : '' ) ; ?> name="mailserver_auth" value="1" />
                                     <p class="inline"><?php _e('SMTP authentication enabled') ; ?></p>
                                 </label>
@@ -132,7 +132,7 @@
                         <div class="input-line">
                             <label><?php _e('POP') ; ?></label>
                             <div class="input">
-                                <label>
+                                <label class="checkbox">
                                     <input type="checkbox" <?php echo ( osc_mailserver_pop() ? 'checked="true"' : '' ) ; ?> name="mailserver_pop" value="1" />
                                     <p class="inline"><?php _e('Use POP before SMTP') ; ?></p>
                                 </label>

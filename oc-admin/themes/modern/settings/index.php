@@ -175,7 +175,7 @@
                             <div class="input-line">
                                 <label><?php _e('Attachments') ; ?></label>
                                 <div class="input">
-                                    <label>
+                                    <label class="checkbox">
                                         <input type="checkbox" <?php echo ( osc_contact_attachment() ? 'checked="true"' : '' ) ; ?> name="enabled_attachment" value="1" />
                                         <p class="inline"><?php _e('Allow people to attach a file in the contact form') ; ?></p>
                                     </label>
@@ -185,7 +185,7 @@
                             <div class="input-line">
                                 <label><?php _e('Automatic cron process') ; ?></label>
                                 <div class="input">
-                                    <label>
+                                    <label class="checkbox">
                                         <input type="checkbox" <?php echo ( osc_auto_cron() ? 'checked="true"' : '' ) ; ?> name="auto_cron" />
                                         <p class="inline"><?php printf(__('Allow OSClass to run a built-in <a href="%s">cron</a> automatically without setting crontab'), 'http://en.wikipedia.org/wiki/Cron' ) ; ?></p>
                                         <p class="help inline"><?php _e('It is <b>recommended</b> to have this option enabled, because some features require it.') ; ?></p>
