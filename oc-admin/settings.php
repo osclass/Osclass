@@ -368,6 +368,24 @@
                                             $cat_url = Params::getParam('rewrite_cat_url');
                                             Preference::newInstance()->update(array('s_value' => $cat_url)
                                                                              ,array('s_name' => 'rewrite_cat_url'));
+                                            $search_url = Params::getParam('rewrite_search_url');
+                                            Preference::newInstance()->update(array('s_value' => $search_url)
+                                                                             ,array('s_name' => 'rewrite_search_url'));
+
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_country'))
+                                                                             ,array('s_name' => 'rewrite_search_country'));
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_region'))
+                                                                             ,array('s_name' => 'rewrite_search_region'));
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_city'))
+                                                                             ,array('s_name' => 'rewrite_search_city'));
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_city_area'))
+                                                                             ,array('s_name' => 'rewrite_search_city_area'));
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_category'))
+                                                                             ,array('s_name' => 'rewrite_search_category'));
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_user'))
+                                                                             ,array('s_name' => 'rewrite_search_user'));
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_pattern'))
+                                                                             ,array('s_name' => 'rewrite_search_pattern'));
                                             
                                             $rewrite = Rewrite::newInstance();
                                             $rewrite->clearRules();
@@ -387,8 +405,7 @@
                                             $rewrite->addRule('^language/(.*?)/?$', 'index.php?page=language&locale=$1');
 
                                             // Search rules
-                                            $rewrite->addRule('^search/(.*)$', 'index.php?page=search&sPattern=$1');
-                                            $rewrite->addRule('^s/(.*)$', 'index.php?page=search&sPattern=$1');
+                                            $rewrite->addRule('^'.$search_url.'(.*)$', 'index.php?page=search&sParams=$1');
 
                                             // Item rules
                                             $rewrite->addRule('^item/mark/(.*?)/([0-9]+)$', 'index.php?page=item&action=mark&as=$1&id=$2');

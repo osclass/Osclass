@@ -435,19 +435,18 @@
      */
     function osc_premium_url($locale = '') {
         if ( osc_rewrite_enabled() ) {
-            $sanitized_title = osc_sanitizeString(osc_premium_title()) ;
-            $sanitized_category = '';
+            $sanitized_categories = array();
             $cat = Category::newInstance()->hierarchy(osc_premium_category_id()) ;
             for ($i = (count($cat)); $i > 0; $i--) {
-                $sanitized_category .= $cat[$i - 1]['s_slug'] . '/' ;
+                $sanitized_categories[] = $cat[$i - 1]['s_slug'];
             }
+            $url = str_replace('{CATEGORIES}', implode("/", $sanitized_categories), str_replace('{ITEM_ID}', osc_premium_id(), str_replace('{ITEM_TITLE}', osc_sanitizeString(osc_premium_title()), osc_get_preference('rewrite_item_url'))));
             if($locale!='') {
-                $path = osc_base_url() . sprintf('%s_%s%s_%d', $locale, $sanitized_category, $sanitized_title, osc_premium_id()) ;
+                $path = osc_base_url().$locale."/".$url;
             } else {
-                $path = osc_base_url() . sprintf('%s%s_%d', $sanitized_category, $sanitized_title, osc_premium_id()) ;
+                $path = osc_base_url().$url;
             }
         } else {
-            //$path = osc_base_url(true) . sprintf('?page=item&id=%d', osc_item_id()) ;
             $path = osc_item_url_ns( osc_premium_id(), $locale ) ;
         }
         return $path ;

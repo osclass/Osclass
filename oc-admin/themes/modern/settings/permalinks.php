@@ -77,6 +77,30 @@
                                     <label for="rewrite_cat_url"><?php echo sprintf(__('Category URL. Accepted keywords: %s'), '{CATEGORY_ID},{CATEGORY_NAME},{CATEGORIES}') ; ?></label>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text" name="rewrite_cat_url" id="rewrite_cat_url" value="<?php echo osc_get_preference('rewrite_cat_url'); ?>" />
                                     <br/>
+                                    <label for="rewrite_search_url"><?php _e('Search URL:'); ?></label>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text" name="rewrite_search_url" id="rewrite_search_url" value="<?php echo osc_get_preference('rewrite_search_url'); ?>" />
+                                    <br/>
+                                    <label for="rewrite_search_country"><?php _e('Search keyword country') ; ?></label>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text" name="rewrite_search_country" id="rewrite_search_country" value="<?php echo osc_get_preference('rewrite_search_country'); ?>" />
+                                    <br/>
+                                    <label for="rewrite_search_region"><?php _e('Search keyword region') ; ?></label>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text" name="rewrite_search_region" id="rewrite_search_region" value="<?php echo osc_get_preference('rewrite_search_region'); ?>" />
+                                    <br/>
+                                    <label for="rewrite_search_city"><?php _e('Search keyword city') ; ?></label>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text" name="rewrite_search_city" id="rewrite_search_city" value="<?php echo osc_get_preference('rewrite_search_city'); ?>" />
+                                    <br/>
+                                    <label for="rewrite_search_city_area"><?php _e('Search keyword city area') ; ?></label>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text" name="rewrite_search_city_area" id="rewrite_search_city_area" value="<?php echo osc_get_preference('rewrite_search_city_area'); ?>" />
+                                    <br/>
+                                    <label for="rewrite_search_category"><?php _e('Search keyword category') ; ?></label>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text" name="rewrite_search_category" id="rewrite_search_category" value="<?php echo osc_get_preference('rewrite_search_category'); ?>" />
+                                    <br/>
+                                    <label for="rewrite_search_user"><?php _e('Search keyword user') ; ?></label>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text" name="rewrite_search_user" id="rewrite_search_user" value="<?php echo osc_get_preference('rewrite_search_user'); ?>" />
+                                    <br/>
+                                    <label for="rewrite_search_pattern"><?php _e('Search keyword pattern') ; ?></label>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text" name="rewrite_search_pattern" id="rewrite_search_pattern" value="<?php echo osc_get_preference('rewrite_search_pattern'); ?>" />
+                                    <br/>
                                 </fieldset>
                             </div>
 

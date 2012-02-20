@@ -31,6 +31,46 @@
         function doModel() {
             osc_run_hook('before_search');
             $mCategories = new Category() ;
+            
+            if(osc_rewrite_enabled()) {
+                // IF rewrite is not enabled, skip this part, preg_match is always time&resources consuming task
+                $p_sParams = "/".Params::getParam('sParams', false, false);
+                if(preg_match_all('|\/([^,]+),([^\/]*)|', $p_sParams, $m)) {
+                    $l = count($m[0]);
+                    for($k = 0;$k<$l;$k++) {
+                        switch($m[1][$k]) {
+                            case osc_get_preference('rewrite_search_country'):
+                                $m[1][$k] = 'sCountry';
+                                break;
+                            case osc_get_preference('rewrite_search_region'):
+                                $m[1][$k] = 'sRegion';
+                                break;
+                            case osc_get_preference('rewrite_search_city'):
+                                $m[1][$k] = 'sCity';
+                                break;
+                            case osc_get_preference('rewrite_search_city_area'):
+                                $m[1][$k] = 'sCityArea';
+                                break;
+                            case osc_get_preference('rewrite_search_category'):
+                                $m[1][$k] = 'sCategory';
+                                break;
+                            case osc_get_preference('rewrite_search_user'):
+                                $m[1][$k] = 'sUser';
+                                break;
+                            case osc_get_preference('rewrite_search_pattern'):
+                                $m[1][$k] = 'sPattern';
+                                break;
+                            default :
+                                break;
+                        }
+                        $_REQUEST[$m[1][$k]] = $m[2][$k];
+                        $_GET[$m[1][$k]] = $m[2][$k];
+                        unset($_REQUEST['sParams']);
+                        unset($_GET['sParams']);
+                        unset($_POST['sParams']);
+                    }
+                }
+            }
 
             ////////////////////////////////
             //GETTING AND FIXING SENT DATA//

@@ -214,6 +214,23 @@ CREATE TABLE %st_item_description_tmp (
         // We no longer use s_what column in /*TABLE_PREFIX*/t_item_description
         $comm->query( sprintf('ALTER TABLE %st_item_description DROP COLUMN s_what', DB_TABLE_PREFIX) ) ;
         @unlink(osc_admin_base_path()."/themes/modern/tools/images.php");
+        
+        // NEW REWRITE
+        // Uncomment the unlink line prior to release
+        //@unlink(osc_base_path()."generate_rules.php");
+        osc_set_preference('rewrite_item_url', 'item/{ITEM_ID}/{ITEM_TITLE}');
+        osc_set_preference('rewrite_cat_url', '{CATEGORIES}/');
+        osc_set_preference('rewrite_page_url', 'page/{PAGE_SLUG}');
+        osc_set_preference('rewrite_search_url', 'search/');
+        osc_set_preference('rewrite_search_country', '');
+        osc_set_preference('rewrite_search_region', '');
+        osc_set_preference('rewrite_search_city', '');
+        osc_set_preference('rewrite_search_city_area', '');
+        osc_set_preference('rewrite_search_category', '');
+        osc_set_preference('rewrite_search_user', '');
+        osc_set_preference('rewrite_search_pattern', 'pattern');
+        
+        
     }
 
     osc_changeVersionTo(240) ;
