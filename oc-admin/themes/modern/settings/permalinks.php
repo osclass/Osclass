@@ -32,6 +32,13 @@
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
+        <script type="text/javascript">
+            $(function() {
+                $("#rewrite_enabled").click(function(){
+                    $("#custom_rules").toggle();
+                });
+            });
+        </script>
         <div id="update_version" style="display:none;"></div>
 		<div id="content">
             <div id="separator"></div>
@@ -64,8 +71,7 @@
                                 </fieldset>
                             </div>
 
-                            <?php if(osc_rewrite_enabled()) { ?>
-                            <div style="float: left; width: 100%;">
+                            <div id="custom_rules" style="float: left; width: 100%;<?php if(!osc_rewrite_enabled()) { echo "display:none;";}?>">
                                 <fieldset>
                                     <legend><?php _e('Rewrite rules'); ?></legend>
                                     <label for="rewrite_item_url"><?php echo sprintf(__('Item URL. Accepted keywords: %s'), '{ITEM_ID},{ITEM_TITLE},{CATEGORIES}') ; ?></label>
@@ -105,7 +111,8 @@
                             </div>
 
                             <div style="clear: both;"></div>
-                            
+
+                            <?php if(osc_rewrite_enabled()) { ?>
                             <div style="float: left; width: 100%;">
                                 <fieldset>
                                     <legend><?php _e('.htaccess file'); ?></legend>

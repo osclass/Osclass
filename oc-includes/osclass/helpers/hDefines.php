@@ -292,15 +292,15 @@
      */
     function osc_search_category_url() {
         $path = '' ;
-        if ( osc_rewrite_enabled() ) {
-                $category = Category::newInstance()->hierarchy(osc_category_id()) ;
-                $sanitized_categories = array();
-                for ($i = count($category); $i > 0; $i--) {
-                    $sanitized_categories[] = $category[$i - 1]['s_slug'];
-                }
-                $path = osc_base_url() . str_replace('{CATEGORIES}', implode("/", $sanitized_categories), str_replace('{CATEGORY_ID}', osc_category_id(), str_replace('{CATEGORY_SLUG}', osc_category_slug(), osc_get_preference('rewrite_cat_url'))));
+        if(osc_rewrite_enabled()) {
+            $category = Category::newInstance()->hierarchy(osc_category_id()) ;
+            $sanitized_categories = array();
+            for ($i = count($category); $i > 0; $i--) {
+                $sanitized_categories[] = $category[$i - 1]['s_slug'];
+            }
+            $path = osc_base_url() . str_replace('{CATEGORIES}', implode("/", $sanitized_categories), str_replace('{CATEGORY_ID}', osc_category_id(), str_replace('{CATEGORY_SLUG}', osc_category_slug(), osc_get_preference('rewrite_cat_url'))));
         } else {
-            $path = sprintf( osc_base_url(true) . '?page=search&sCategory=%d', $category['pk_i_id'] ) ;
+            $path = sprintf( osc_base_url(true) . '?page=search&sCategory=%d', osc_category_id() ) ;
         }
         return $path ;
     }
