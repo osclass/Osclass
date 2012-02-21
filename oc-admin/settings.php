@@ -435,9 +435,9 @@
                                             if($title_pos!==false) { $comments_pos++; }
                                             if($cat_pos!==false) { $comments_pos++; }
                                             $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url.'\?comments-page=([0-9al]*)'))).'$', 'index.php?page=item&id=$'.$param_pos.'&comments-page=$'.$comments_pos);
-                                            $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url.'\?comments-page=([0-9al]*)'))).'$', 'index.php?page=item&id=$'.($param_pos+2).'lang=$1_$2&comments-page=$'.$comments_pos);
+                                            $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url.'\?comments-page=([0-9al]*)'))).'$', 'index.php?page=item&id=$'.($param_pos+2).'&lang=$1_$2&comments-page=$'.$comments_pos);
                                             $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url))).'$', 'index.php?page=item&id=$'.$param_pos);
-                                            $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url))).'$', 'index.php?page=item&id=$'.($param_pos+2).'lang=$1_$2');
+                                            $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url))).'$', 'index.php?page=item&id=$'.($param_pos+2).'&lang=$1_$2');
 
 
                                             // User rules
@@ -460,13 +460,23 @@
                                             // Page rules
                                             $id_pos = stripos($page_url, '{PAGE_ID}');
                                             $slug_pos = stripos($page_url, '{PAGE_SLUG}');
-                                            if($id_pos!==false && $slug_pos!==false && $id_pos>$slug_pos) {
-                                                $param_pos = 2;
-                                            } else {
-                                                $param_pos = 1;
+                                            $title_pos = stripos($page_url, '{PAGE_TITLE}');
+                                            $params_pos = 1;
+                                            $params2_pos = 1;
+                                            if($title_pos!==false && $id_pos>$title_pos) {
+                                                $param_pos++;
                                             }
-                                            $rewrite->addRule('^'.str_replace('{PAGE_SLUG}', '([a-zA-Z_]*)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url)).'$', 'index.php?page=page&id=$'.$param_pos);
-                                            $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{PAGE_SLUG}', '([a-zA-Z_]*)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url)).'$', 'index.php?page=page&id=$'.($param_pos+2).'lang=$1_$2');
+                                            if($slug_pos!==false && $id_pos>$slug_pos) {
+                                                $param_pos++;
+                                            }
+                                            if($title_pos!==false && $slug_pos>$title_pos) {
+                                                $param2_pos++;
+                                            }
+                                            if($id_pos!==false && $slug_pos>$id_pos) {
+                                                $param2_pos++;
+                                            }
+                                            $rewrite->addRule('^'.str_replace('{PAGE_TITLE}', '([^\/]+)', str_replace('{PAGE_SLUG}', '([a-zA-Z_]*)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url))).'$', 'index.php?page=page&id=$'.$param_pos."&slug=".$params2_pos);
+                                            $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{PAGE_TITLE}', '([^\/]+)', str_replace('{PAGE_SLUG}', '([a-zA-Z_]*)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url))).'$', 'index.php?page=page&id=$'.($param_pos+2).'&lang=$1_$2'."&slug=".($params2_pos+2));
 
                                             // Clean archive files
                                             $rewrite->addRule('^(.+?)\.php(.*)$', '$1.php$2');

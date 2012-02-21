@@ -77,7 +77,7 @@
                                     <label for="rewrite_item_url"><?php echo sprintf(__('Item URL. Accepted keywords: %s'), '{ITEM_ID},{ITEM_TITLE},{CATEGORIES}') ; ?></label>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text" name="rewrite_item_url" id="rewrite_item_url" value="<?php echo osc_get_preference('rewrite_item_url'); ?>" />
                                     <br/>
-                                    <label for="rewrite_page_url"><?php echo sprintf(__('Page URL. Accepted keywords: %s'), '{PAGE_ID},{PAGE_SLUG}') ; ?></label>
+                                    <label for="rewrite_page_url"><?php echo sprintf(__('Page URL. Accepted keywords: %s ({PAGE_TITLE} requires a "/" at the end of it)'), '{PAGE_ID},{PAGE_SLUG}, {PAGE_TITLE}/') ; ?></label>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text" name="rewrite_page_url" id="rewrite_page_url" value="<?php echo osc_get_preference('rewrite_page_url'); ?>" />
                                     <br/>
                                     <label for="rewrite_cat_url"><?php echo sprintf(__('Category URL. Accepted keywords: %s'), '{CATEGORY_ID},{CATEGORY_NAME},{CATEGORIES}') ; ?></label>
