@@ -265,36 +265,44 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 case('settings'):       // calling the users settings view
-                                        $this->doView('users/settings.php');
+                                        $this->doView('users/settings.php') ;
                 break;
                 case('settings_post'):  // updating users
-                                        $iUpdated                = 0;
-                                        $enabledUserValidation   = Params::getParam('enabled_user_validation');
-                                        $enabledUserValidation   = (($enabledUserValidation != '') ? true : false);
-                                        $enabledUserRegistration = Params::getParam('enabled_user_registration');
-                                        $enabledUserRegistration = (($enabledUserRegistration != '') ? true : false);
-                                        $enabledUsers            = Params::getParam('enabled_users');
-                                        $enabledUsers            = (($enabledUsers != '') ? true : false);
-                                        $notifyNewUser           = Params::getParam('notify_new_user');
-                                        $notifyNewUser           = (($notifyNewUser != '') ? true : false);
+                                        $iUpdated                = 0 ;
+                                        $enabledUserValidation   = Params::getParam('enabled_user_validation') ;
+                                        $enabledUserValidation   = (($enabledUserValidation != '') ? true : false) ;
+                                        $enabledUserRegistration = Params::getParam('enabled_user_registration') ;
+                                        $enabledUserRegistration = (($enabledUserRegistration != '') ? true : false) ;
+                                        $enabledUsers            = Params::getParam('enabled_users') ;
+                                        $enabledUsers            = (($enabledUsers != '') ? true : false) ;
+                                        $notifyNewUser           = Params::getParam('notify_new_user') ;
+                                        $notifyNewUser           = (($notifyNewUser != '') ? true : false) ;
 
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledUserValidation)
-                                                                                      ,array('s_name'  => 'enabled_user_validation'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledUserRegistration)
-                                                                                      ,array('s_name'  => 'enabled_user_registration'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledUsers)
-                                                                                      ,array('s_name'  => 'enabled_users'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyNewUser)
-                                                                                      ,array('s_name'  => 'notify_new_user'));
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value' => $enabledUserValidation),
+                                                array('s_name'  => 'enabled_user_validation')
+                                        ) ;
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value' => $enabledUserRegistration),
+                                                array('s_name'  => 'enabled_user_registration')
+                                        ) ;
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value' => $enabledUsers),
+                                                array('s_name'  => 'enabled_users')
+                                        ) ;
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value' => $notifyNewUser),
+                                                array('s_name'  => 'notify_new_user')
+                                        ) ;
 
-                                        if($iUpdated > 0) {
-                                            osc_add_flash_ok_message( _m('Users\' settings have been updated'), 'admin');
+                                        if( $iUpdated > 0 ) {
+                                            osc_add_flash_ok_message( _m('Users\' settings have been updated'), 'admin') ;
                                         }
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=settings');
-                break;
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=settings') ;
+                break ;
                 default:                // manage users view
                                         $this->doView("users/index.php") ;
-                break;
+                break ;
             }
         }
 
@@ -302,7 +310,7 @@
         function doView($file)
         {
             osc_current_admin_theme_path($file) ;
-            Session::newInstance()->_clearVariables();
+            Session::newInstance()->_clearVariables() ;
         }
     }
 
