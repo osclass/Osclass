@@ -23,9 +23,10 @@
     class CAdminUsers extends AdminSecBaseModel
     {
         //specific for this class
-        private $userManager;
+        private $userManager ;
 
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
 
             //specific things for this class
@@ -33,13 +34,13 @@
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             parent::doModel() ;
 
             //specific things for this class
-            switch ($this->action)
-            {
-                case 'create':          // callign create view
+            switch ($this->action) {
+                case('create'):         // callign create view
                                         $aCountries = array() ;
                                         $aRegions   = array() ;
                                         $aCities    = array() ;
@@ -62,7 +63,7 @@
 
                                         $this->doView("users/frm.php") ;
                 break;
-                case 'create_post':     // creating the user...
+                case('create_post'):    // creating the user...
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $userActions = new UserActions(true) ;
                                         $success     = $userActions->add() ;
@@ -84,7 +85,7 @@
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                 break;
-                case 'edit':            // calling the edit view
+                case('edit'):           // calling the edit view
                                         $aUser      = array();
                                         $aCountries = array();
                                         $aRegions   = array();
@@ -112,7 +113,7 @@
                                         $this->_exportVariableToView("locales", OSCLocale::newInstance()->listAllEnabled());
                                         $this->doView("users/frm.php");
                 break;
-                case 'edit_post':       // edit post
+                case('edit_post'):      // edit post
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $userActions = new UserActions(true) ;
                                         $success = $userActions->edit( Params::getParam("id") ) ;
@@ -128,7 +129,8 @@
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
-                case 'resend_activation':        //activate
+                case('resend_activation'):
+                                        //activate
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $iUpdated = 0;
                                         $userId   = Params::getParam('id');
@@ -150,7 +152,7 @@
                                         osc_add_flash_ok_message($msg, 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
-                case 'activate':        //activate
+                case('activate'):       //activate
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $iUpdated = 0;
                                         $userId   = Params::getParam('id');
@@ -172,7 +174,7 @@
                                         osc_add_flash_ok_message($msg, 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
-                case 'deactivate':      //deactivate
+                case('deactivate'):     //deactivate
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $iUpdated = 0;
                                         $userId   = Params::getParam('id');
@@ -194,7 +196,7 @@
                                         osc_add_flash_ok_message($msg, 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
-                case 'enable':
+                case('enable'):
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $iUpdated = 0;
                                         $userId   = Params::getParam('id');
@@ -216,7 +218,7 @@
                                         osc_add_flash_ok_message($msg, 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
-                case 'disable':
+                case('disable'):
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $iUpdated = 0;
                                         $userId   = Params::getParam('id');
@@ -238,7 +240,7 @@
                                         osc_add_flash_ok_message($msg, 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
-                case 'delete':          //delete
+                case('delete'):         //delete
                                         $iDeleted = 0;
                                         $userId   = Params::getParam('id');
                                         if(!is_array($userId)) {
@@ -262,10 +264,10 @@
                                         osc_add_flash_ok_message($msg, 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
-                case ('settings'):         // calling the users settings view
+                case('settings'):       // calling the users settings view
                                         $this->doView('users/settings.php');
                 break;
-                case ('settings_post'):    // updating users
+                case('settings_post'):  // updating users
                                         $iUpdated                = 0;
                                         $enabledUserValidation   = Params::getParam('enabled_user_validation');
                                         $enabledUserValidation   = (($enabledUserValidation != '') ? true : false);
@@ -291,19 +293,18 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=settings');
                 break;
                 default:                // manage users view
-                                        $aUsers = $this->userManager->listAll();
-
-                                        $this->_exportVariableToView("users", $aUsers);
-                                        $this->doView("users/index.php");
+                                        $this->doView("users/index.php") ;
                 break;
             }
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_current_admin_theme_path($file) ;
             Session::newInstance()->_clearVariables();
         }
     }
 
+    /* file end: ./oc-admin/users.php */
 ?>

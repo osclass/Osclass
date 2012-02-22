@@ -1165,7 +1165,37 @@ button.btn.small, input[type="submit"].btn.small {
 }
 
 /* Specific styles */
-.datatables .filter {
+#datatables_list_wrapper {
+    position: relative;
+}
+
+.dataTables_processing {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 250px;
+    height: 30px;
+    margin-left: -125px;
+    margin-top: -15px;
+    padding: 14px 0 2px 0;
+    border: 1px solid #DDD;
+    text-align: center;
+    font-size: 14px;
+    background-color: white;
+    -webkit-border-radius: 4px;
+       -moz-border-radius: 4px;
+            border-radiux: 4px;
+}
+
+#datatables_list tbody > tr {
+    height: 45px;
+}
+
+.currencies #datatables_list tbody > tr {
+    height: auto;
+}
+
+.datatables .filter, .datatables .paginate {
     float: right;
     text-align: right;
     width: auto;
@@ -1206,6 +1236,7 @@ div.dataTables_paginate {
 table.table {
     clear: both;
     margin-bottom: 6px !important;
+    font-size: 12px;
 }
 
 table.table thead .sorting,
@@ -1231,4 +1262,10 @@ table.dataTable th:active {
 .datatables a.btn, .datatables a.btn:visited, .datatables a.btn:hover {
     color: #333;
     text-decoration: none;
+}
+
+table .dataTables_empty {
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
 }

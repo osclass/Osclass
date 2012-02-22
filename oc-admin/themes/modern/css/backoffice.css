@@ -231,6 +231,10 @@ body {
     background: url('../images/media-config-icon.png') no-repeat ;
 }
 
+#content .right .header_title h1.users {
+    background: url('../images/user-group-icon.png') no-repeat ;
+}
+
 /* /right container */
 /* footer */
 #footer {
@@ -432,7 +436,7 @@ input.xxlarge {
     padding-left: 20px;
 }
 
-.right .settings.currencies {
+.right .currencies, .right .users {
     padding: 0;
 }
 
