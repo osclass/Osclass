@@ -133,7 +133,7 @@ body {
 /* /container */
 /* left menu */
 #content > .left {
-    width: 15%;
+    width: 18%;
     margin-right: 20px;
     float: left;
 }
@@ -199,7 +199,7 @@ body {
 /* /left menu */
 /* right container */
 #content > .right {
-	width: 82%;
+	width: 80%;
 	float: left;
 }
 
@@ -441,7 +441,7 @@ input.xxlarge {
 }
 
 .input-line {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     line-height: 18px;
     font-size: 13px;
 }
@@ -469,6 +469,8 @@ input.xxlarge {
 
 .input-line .input {
     margin-left: 200px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 .input-line .input input, .input-line .input textarea, .input-line .input select {
