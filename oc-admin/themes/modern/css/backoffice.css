@@ -134,7 +134,7 @@ body {
 /* left menu */
 #content > .left {
     width: 18%;
-    margin-right: 20px;
+    margin-right: 15px;
     float: left;
 }
 
@@ -233,6 +233,10 @@ body {
 
 #content .right .header_title h1.users {
     background: url('../images/user-group-icon.png') no-repeat ;
+}
+
+#content .right .header_title h1.admins {
+    background: url('../images/admin-icon.png') no-repeat ;
 }
 
 /* /right container */
@@ -436,7 +440,7 @@ input.xxlarge {
     padding-left: 20px;
 }
 
-.right .currencies, .right .users {
+.right .currencies, .right .users, .right .admins {
     padding: 0;
 }
 

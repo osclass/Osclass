@@ -133,7 +133,7 @@
                         </label>
                     </div>
                     <div id="add_user_button">
-                        <a href="<?php echo osc_admin_base_url(true); ?>?page=users&amp;action=create" class="btn" id="button_open"><?php _e('Add User') ; ?></a>
+                        <a href="<?php echo osc_admin_base_url(true); ?>?page=users&amp;action=create" class="btn" id="button_open"><?php _e('Add user') ; ?></a>
                     </div>
                     <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatables_list"></table>
                 </form>
