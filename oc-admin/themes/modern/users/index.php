@@ -123,13 +123,13 @@
                         <label>
                             <select name="action" id="action" class="display">
                                 <option value=""><?php _e('Bulk Actions') ; ?></option>
-                                <option value="delete"><?php _e('Delete') ; ?></option>
                                 <option value="activate"><?php _e('Activate') ; ?></option>
                                 <option value="deactivate"><?php _e('Deactivate') ; ?></option>
-                                <option value="enable"><?php _e('Enable') ; ?></option>
-                                <option value="disable"><?php _e('Disable') ; ?></option>
+                                <option value="enable"><?php _e('Block') ; ?></option>
+                                <option value="disable"><?php _e('Unblock') ; ?></option>
+                                <option value="delete"><?php _e('Delete') ; ?></option>
                                 <option value="resend_activation"><?php _e('Resend activation') ; ?></option>
-                            </select> <input type="button" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>">
+                            </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>">
                         </label>
                     </div>
                     <div id="add_user_button">

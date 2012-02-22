@@ -59,6 +59,7 @@
                 <div class="header_title">
                     <h1 class="users"><?php echo $title ; ?></h1>
                 </div>
+                <?php osc_show_admin_flash_messages() ; ?>
                 <!-- add user form -->
                 <div class="settings general">
                     <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
@@ -161,7 +162,7 @@
                                 </div>
                             </div>
                             <div class="actions">
-                                <input type="submit" value="<?php echo $btn_text ; ?>" />
+                                <input type="submit" value="<?php echo osc_esc_html($btn_text) ; ?>" />
                             </div>
                         </fieldset>
                     </form>

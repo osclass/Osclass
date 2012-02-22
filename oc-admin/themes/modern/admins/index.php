@@ -17,8 +17,6 @@
      */
 
     $admins = __get("admins") ;
-    $last = end($admins) ;
-    $last_id = $last['pk_i_id'] ;
 
     $aData = array() ;
     foreach($admins as $admin) {
@@ -114,14 +112,13 @@
                 <?php osc_show_admin_flash_messages() ; ?>
                 <!-- datatables admins -->
                 <form class="settings admins datatables" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-                    <input type="hidden" name="action" value="delete" />
                     <input type="hidden" name="page" value="admins" />
                     <div id="bulk_actions">
                         <label>
                             <select name="action" id="action" class="display">
                                 <option value=""><?php _e('Bulk actions') ; ?></option>
-                                <option value="delete_all"><?php _e('Delete') ; ?></option>
-                            </select> <input type="button" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>">
+                                <option value="delete"><?php _e('Delete') ; ?></option>
+                            </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>">
                         </label>
                     </div>
                     <div id="add_admin_button">
