@@ -358,6 +358,207 @@
                                                 Preference::newInstance()->update(array('s_value' => '0')
                                                                                  ,array('s_name'  => 'mod_rewrite_loaded'));
                                             }
+                                            
+                                            $item_url = Params::getParam('rewrite_item_url');
+                                            Preference::newInstance()->update(array('s_value' => $item_url)
+                                                                             ,array('s_name' => 'rewrite_item_url'));
+                                            $page_url = Params::getParam('rewrite_page_url');
+                                            Preference::newInstance()->update(array('s_value' => $page_url)
+                                                                             ,array('s_name' => 'rewrite_page_url'));
+                                            $cat_url = Params::getParam('rewrite_cat_url');
+                                            Preference::newInstance()->update(array('s_value' => $cat_url)
+                                                                             ,array('s_name' => 'rewrite_cat_url'));
+                                            $search_url = Params::getParam('rewrite_search_url');
+                                            Preference::newInstance()->update(array('s_value' => $search_url)
+                                                                             ,array('s_name' => 'rewrite_search_url'));
+
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_country'))
+                                                                             ,array('s_name' => 'rewrite_search_country'));
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_region'))
+                                                                             ,array('s_name' => 'rewrite_search_region'));
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_city'))
+                                                                             ,array('s_name' => 'rewrite_search_city'));
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_city_area'))
+                                                                             ,array('s_name' => 'rewrite_search_city_area'));
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_category'))
+                                                                             ,array('s_name' => 'rewrite_search_category'));
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_user'))
+                                                                             ,array('s_name' => 'rewrite_search_user'));
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_pattern'))
+                                                                             ,array('s_name' => 'rewrite_search_pattern'));
+                                            
+                                            
+
+
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_contact').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_contact'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_feed').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_feed'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_language').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_language'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_mark').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_item_mark'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_send_friend').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_item_send_friend'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_contact').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_item_contact'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_new').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_item_new'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_activate').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_item_activate'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_edit').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_item_edit'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_delete').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_item_delete'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_resource_delete').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_item_resource_delete'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_login').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_login'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_dashboard').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_dashboard'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_logout').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_logout'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_register').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_register'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_activate').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_activate'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_activate_alert').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_activate_alert'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_profile').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_profile'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_items').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_items'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_alerts').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_alerts'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_recover').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_recover'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_forgot').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_forgot'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_change_password').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_change_password'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_change_email').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_change_email'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_change_email_confirm').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_change_email_confirm'));
+
+
+
+                                            
+                                            
+                                            osc_reset_preferences();
+                                            
+                                            $rewrite = Rewrite::newInstance();
+                                            $rewrite->clearRules();
+                                            
+                                            /*****************************
+                                             ********* Add rules *********
+                                             *****************************/
+
+                                            // Contact rules
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_contact').'?$', 'index.php?page=contact');
+
+                                            // Feed rules
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_feed').'?$', 'index.php?page=search&sFeed=rss');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_feed').'(.+)/?$', 'index.php?page=search&sFeed=$1');
+
+                                            // Language rules
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_language').'(.*?)/?$', 'index.php?page=language&locale=$1');
+
+                                            // Search rules
+                                            $rewrite->addRule('^'.$search_url.'(.*)$', 'index.php?page=search&sParams=$1');
+
+                                            // Item rules
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_item_mark').'(.*?)/([0-9]+)/?$', 'index.php?page=item&action=mark&as=$1&id=$2');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_item_send_friend').'([0-9]+)/?$', 'index.php?page=item&action=send_friend&id=$1');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_item_contact').'([0-9]+)/?$', 'index.php?page=item&action=contact&id=$1');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_item_new').'?$', 'index.php?page=item&action=item_add');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_item_new').'([0-9]+)/?$', 'index.php?page=item&action=item_add&catId=$1');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_item_activate').'([0-9]+)/(.*?)/?$', 'index.php?page=item&action=activate&id=$1&secret=$2');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_item_edit').'([0-9]+)/(.*?)/?$', 'index.php?page=item&action=item_edit&id=$1&secret=$2');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_item_delete').'([0-9]+)/(.*?)/?$', 'index.php?page=item&action=item_delete&id=$1&secret=$2');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_item_resource_delete').'([0-9]+)/([0-9]+)/([0-9A-Za-z]+)/?(.*?)/?$', 'index.php?page=item&action=deleteResource&id=$1&item=$2&code=$3&secret=$4');
+
+                                            
+                                            // Item rules
+                                            $id_pos = stripos($item_url, '{ITEM_ID}');
+                                            $title_pos = stripos($item_url, '{ITEM_TITLE}');
+                                            $cat_pos = stripos($item_url, '{CATEGORIES');
+                                            $param_pos = 1;
+                                            if($title_pos!==false && $id_pos>$title_pos) {
+                                                $param_pos++;
+                                            }
+                                            if($cat_pos!==false && $id_pos>$cat_pos) {
+                                                $param_pos++;
+                                            }
+                                            $comments_pos = 1;
+                                            if($id_pos!==false) { $comments_pos++; }
+                                            if($title_pos!==false) { $comments_pos++; }
+                                            if($cat_pos!==false) { $comments_pos++; }
+                                            $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url.'\?comments-page=([0-9al]*)'))).'$', 'index.php?page=item&id=$'.$param_pos.'&comments-page=$'.$comments_pos);
+                                            $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url.'\?comments-page=([0-9al]*)'))).'$', 'index.php?page=item&id=$'.($param_pos+2).'&lang=$1_$2&comments-page=$'.$comments_pos);
+                                            $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url))).'$', 'index.php?page=item&id=$'.$param_pos);
+                                            $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url))).'$', 'index.php?page=item&id=$'.($param_pos+2).'&lang=$1_$2');
+
+
+                                            // User rules
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_login').'?$', 'index.php?page=login');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_dashboard').'?$', 'index.php?page=user&action=dashboard');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_logout').'?$', 'index.php?page=main&action=logout');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_register').'?$', 'index.php?page=register&action=register');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_activate').'([0-9]+)/(.*?)/?$', 'index.php?page=register&action=validate&id=$1&code=$2');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_activate_alert').'([a-zA-Z0-9]+)/(.+)$', 'index.php?page=user&action=activate_alert&email=$2&secret=$1');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_profile').'?$', 'index.php?page=user&action=profile');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_profile').'([0-9]+)/?$', 'index.php?page=user&action=pub_profile&id=$1');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_items').'?$', 'index.php?page=user&action=items');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_alerts').'?$', 'index.php?page=user&action=alerts');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_recover').'?$', 'index.php?page=login&action=recover');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_forgot').'([0-9]+)/(.*)/?$', 'index.php?page=login&action=forgot&userId=$1&code=$2');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_change_password').'?$', 'index.php?page=user&action=change_password');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_change_email').'?$', 'index.php?page=user&action=change_email');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_change_email_confirm').'([0-9]+)/(.*?)/?$', 'index.php?page=user&action=change_email_confirm&userId=$1&code=$2');
+
+                                            // Page rules
+                                            $id_pos = stripos($page_url, '{PAGE_ID}');
+                                            $slug_pos = stripos($page_url, '{PAGE_SLUG}');
+                                            $title_pos = stripos($page_url, '{PAGE_TITLE}');
+                                            $params_pos = 1;
+                                            $params2_pos = 1;
+                                            if($title_pos!==false && $id_pos>$title_pos) {
+                                                $param_pos++;
+                                            }
+                                            if($slug_pos!==false && $id_pos>$slug_pos) {
+                                                $param_pos++;
+                                            }
+                                            if($title_pos!==false && $slug_pos>$title_pos) {
+                                                $param2_pos++;
+                                            }
+                                            if($id_pos!==false && $slug_pos>$id_pos) {
+                                                $param2_pos++;
+                                            }
+                                            $rewrite->addRule('^'.str_replace('{PAGE_TITLE}', '(.+)', str_replace('{PAGE_SLUG}', '([a-zA-Z_]+)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url))).'$', 'index.php?page=page&id=$'.$param_pos."&slug=".$params2_pos);
+                                            $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{PAGE_TITLE}', '(.+)', str_replace('{PAGE_SLUG}', '([a-zA-Z_]+)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url))).'$', 'index.php?page=page&id=$'.($param_pos+2).'&lang=$1_$2'."&slug=".($params2_pos+2));
+
+                                            // Clean archive files
+                                            $rewrite->addRule('^(.+?)\.php(.*)$', '$1.php$2');
+
+                                            // Category rules
+                                            $id_pos = stripos($item_url, '{CATEGORY_ID}');
+                                            $title_pos = stripos($item_url, '{CATEGORY_SLUG}');
+                                            $cat_pos = stripos($item_url, '{CATEGORIES');
+                                            $param_pos = 1;
+                                            if($title_pos!==false && $id_pos>$title_pos) {
+                                                $param_pos++;
+                                            }
+                                            if($cat_pos!==false && $id_pos>$cat_pos) {
+                                                $param_pos++;
+                                            }
+                                            $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.*)', str_replace('{CATEGORY_SLUG}', '([^/]*)', str_replace('{CATEGORY_ID}', '([0-9]+)', $cat_url))).'$', 'index.php?page=search&sCategory=$'.$param_pos);
+
+                                            //Write rule to DB
+                                            $rewrite->setRules();
+
+                                            
+                                            
                                         } else {
                                             $modRewrite = apache_mod_loaded('mod_rewrite');
                                             Preference::newInstance()->update(array('s_value' => '0')

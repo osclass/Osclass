@@ -56,7 +56,7 @@ Session::newInstance()->session_start() ;
 
 $locales = osc_listLocales();
 
-if(Params::getParam('install_locale')) {
+if(Params::getParam('install_locale')!='') {
     Session::newInstance()->_set('userLocale', Params::getParam('install_locale')) ;
     Session::newInstance()->_set('adminLocale', Params::getParam('install_locale')) ;
 }
@@ -68,6 +68,10 @@ if(Session::newInstance()->_get('adminLocale')!='' && key_exists(Session::newIns
 } else {
     $current_locale = key($locales);
 }
+
+Session::newInstance()->_set('userLocale', $current_locale);
+Session::newInstance()->_set('adminLocale', $current_locale);
+
 
 $translation = new Translation(true);
 

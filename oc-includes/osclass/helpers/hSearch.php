@@ -246,7 +246,8 @@
         }
         unset($request['sCategory[]']);
         $merged = array_merge($request, $params);
-        return osc_base_url(true) ."?" . http_build_query($merged, '', $delimiter);
+        return osc_search_url($merged);
+        //return osc_base_url(true) ."?" . http_build_query($merged, '', $delimiter);
     }
 
     /**
@@ -294,10 +295,44 @@
      * @return string
      */
     function osc_search_url($params = null) {
-        $url = osc_base_url(true) . '?page=search';
-        if($params!=null) {
-            foreach($params as $k => $v) {
-                $url .= "&" . $k . "=" . $v;
+        if(osc_rewrite_enabled()) {
+            $url = osc_base_url().osc_get_preference('rewrite_search_url');
+            if($params!=null) {
+                foreach($params as $k => $v) {
+                    switch($k) {
+                        case 'sCountry':
+                            $k = osc_get_preference('rewrite_search_country');
+                            break;
+                        case 'sRegion':
+                            $k = osc_get_preference('rewrite_search_region');
+                            break;
+                        case 'sCity':
+                            $k = osc_get_preference('rewrite_search_city');
+                            break;
+                        case 'sCityArea':
+                            $k = osc_get_preference('rewrite_search_city_area');
+                            break;
+                        case 'sCategory':
+                            $k = osc_get_preference('rewrite_search_category');
+                            break;
+                        case 'sUser':
+                            $k = osc_get_preference('rewrite_search_user');
+                            break;
+                        case 'sPattern':
+                            $k = osc_get_preference('rewrite_search_pattern');
+                            break;
+                        default:
+                            break;
+                    }
+                    $url .= $k.",".$v."/";
+                }
+            }
+        } else {
+            $url = osc_base_url(true) . '?page=search';
+            if($params!=null) {
+                foreach($params as $k => $v) {
+                    $url .= "&" . $k . "=" . $v;
+                }
             }
         }
         return $url;
