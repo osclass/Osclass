@@ -56,7 +56,7 @@ Session::newInstance()->session_start() ;
 
 $locales = osc_listLocales();
 
-if(Params::getParam('install_locale')) {
+if(Params::getParam('install_locale')!='') {
     Session::newInstance()->_set('userLocale', Params::getParam('install_locale')) ;
     Session::newInstance()->_set('adminLocale', Params::getParam('install_locale')) ;
 }
