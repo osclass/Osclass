@@ -245,7 +245,7 @@
      */
     function osc_contact_url() {
         if ( osc_rewrite_enabled() ) {
-            $path = osc_base_url() . 'contact/' ;
+            $path = osc_base_url() . osc_get_preference('rewrite_contact');
         } else {
             $path = osc_base_url(true) . '?page=contact' ;
         }
@@ -260,7 +260,7 @@
     function osc_item_post_url_in_category() {
         if (osc_category_id() > 0) {
             if ( osc_rewrite_enabled() ) {
-                $path = osc_base_url() . 'item/new/' . osc_category_id();
+                $path = osc_base_url() . osc_get_preference('rewrite_item_new') . '/' . osc_category_id();
             } else {
                 $path = sprintf(osc_base_url(true) . '?page=item&action=item_add&catId=%d', osc_category_id()) ;
             }
@@ -277,7 +277,7 @@
      */
     function osc_item_post_url() {
         if ( osc_rewrite_enabled() ) {
-            $path = osc_base_url() . 'item/new' ;
+            $path = osc_base_url() . osc_get_preference('rewrite_item_new') ;
         } else {
             $path = sprintf(osc_base_url(true) . '?page=item&action=item_add') ;
         }
@@ -312,7 +312,7 @@
      */
     function osc_user_dashboard_url() {
         if ( osc_rewrite_enabled() ) {
-            $path = osc_base_url() . 'user/dashboard' ;
+            $path = osc_base_url() . osc_get_preference('rewrite_user_dashboard');
         } else {
             $path = osc_base_url(true) . '?page=user&action=dashboard' ;
         }
@@ -326,7 +326,7 @@
      */
     function osc_user_logout_url() {
         if ( osc_rewrite_enabled() ) {
-            $path = osc_base_url() . 'user/logout' ;
+            $path = osc_base_url() . osc_get_preference('rewrite_user_logout');
         } else {
             $path = osc_base_url(true) . '?page=main&action=logout' ;
         }
@@ -340,7 +340,7 @@
      */
     function osc_user_login_url() {
         if ( osc_rewrite_enabled() ) {
-            $path = osc_base_url() . 'user/login' ;
+            $path = osc_base_url() . osc_get_preference('rewrite_user_login');
         } else {
             $path = osc_base_url(true) . '?page=login' ;
         }
@@ -354,7 +354,7 @@
      */
     function osc_register_account_url() {
         if ( osc_rewrite_enabled() ) {
-            $path = osc_base_url() . 'user/register' ;
+            $path = osc_base_url() . osc_get_preference('rewrite_user_register');
         } else {
             $path = osc_base_url(true) . '?page=register&action=register' ;
         }
@@ -370,7 +370,7 @@
      */
     function osc_user_activate_url($id, $code) {
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'user/activate/' . $id . '/' . $code ;
+            return osc_base_url() . osc_get_preference('rewrite_user_activate') . '/' . $id . '/' . $code ;
         } else {
             return osc_base_url(true) . '?page=register&action=validate&id=' . $id . '&code=' . $code ;
         }
@@ -485,7 +485,7 @@
      */
     function osc_user_alerts_url() {
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'user/alerts' ;
+            return osc_base_url() . osc_get_preference('rewrite_user_alerts') ;
         } else {
             return osc_base_url(true) . '?page=user&action=alerts' ;
         }
@@ -513,7 +513,7 @@
      */
     function osc_user_activate_alert_url( $secret , $email ) {
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'user/activate_alert/' . $secret . '/' . urlencode($email) ;
+            return osc_base_url() . osc_get_preference('rewrite_user_activate_alert') . '/' . $secret . '/' . urlencode($email) ;
         } else {
             return osc_base_url(true) . '?page=user&action=activate_alert&email=' . urlencode($email) . '&secret=' . $secret ;
         }
@@ -527,7 +527,7 @@
      */
     function osc_user_profile_url() {
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'user/profile' ;
+            return osc_base_url() . osc_get_preference('rewrite_user_profile') ;
         } else {
             return osc_base_url(true) . '?page=user&action=profile' ;
         }
@@ -542,9 +542,9 @@
     function osc_user_list_items_url($page = '') {
         if ( osc_rewrite_enabled() ) {
             if($page=='') {
-                return osc_base_url() . 'user/items' ;
+                return osc_base_url() . osc_get_preference('rewrite_user_items');
             } else {
-                return osc_base_url() . 'user/items?iPage='.$page ;
+                return osc_base_url() . osc_get_preference('rewrite_user_items') . '?iPage='.$page ;
             }
         } else {
             if($page=='') {
@@ -562,7 +562,7 @@
      */
     function osc_change_user_email_url() {
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'user/change_email' ;
+            return osc_base_url() . osc_get_preference('rewrite_user_change_email');
         } else {
             return osc_base_url(true) . '?page=user&action=change_email' ;
         }
@@ -577,7 +577,7 @@
      */
     function osc_change_user_email_confirm_url($userId, $code) {
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'user/change_email_confirm/' . $userId . '/' . $code ;
+            return osc_base_url() . osc_get_preference('rewrite_user_change_email_confirm') . '/' . $userId . '/' . $code ;
         } else {
             return osc_base_url(true) . '?page=user&action=change_email_confirm&userId=' . $userId . '&code=' . $code ;
         }
@@ -590,7 +590,7 @@
      */
     function osc_change_user_password_url() {
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'user/change_password' ;
+            return osc_base_url() . osc_get_preference('rewrite_user_change_password');
         } else {
             return osc_base_url(true) . '?page=user&action=change_password' ;
         }
@@ -603,7 +603,7 @@
      */
     function osc_recover_user_password_url() {
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'user/recover' ;
+            return osc_base_url() . osc_get_preference('rewrite_user_recover');
         } else {
             return osc_base_url(true) . '?page=login&action=recover' ;
         }
@@ -618,7 +618,7 @@
      */
     function osc_forgot_user_password_confirm_url($userId, $code) {
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'user/forgot/' . $userId . '/' . $code ;
+            return osc_base_url() . osc_get_preference('rewrite_user_forgot') . '/' . $userId . '/' . $code ;
         } else {
             return osc_base_url(true) . '?page=login&action=forgot&userId='.$userId.'&code='.$code;
         }
@@ -643,7 +643,7 @@
      */
     function osc_change_language_url($locale) {
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'language/' . $locale ;
+            return osc_base_url() . osc_get_preference('rewrite_language') . '/' . $locale ;
         } else {
             return osc_base_url(true) . '?page=language&locale=' . $locale ;
         }
@@ -663,7 +663,7 @@
     function osc_item_edit_url($secret = '', $id = '') {
         if ($id == '') $id = osc_item_id();
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'item/edit/' . $id . '/' . $secret ;
+            return osc_base_url() . osc_get_preference('rewrite_item_edit') . '/' . $id . '/' . $secret ;
         } else {
             return osc_base_url(true) . '?page=item&action=item_edit&id=' . $id . ($secret != '' ? '&secret=' . $secret : '') ;
         }
@@ -679,7 +679,7 @@
     function osc_item_delete_url($secret = '', $id = '') {
         if ($id == '') $id = osc_item_id();
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'item/delete/' . $id . '/' . $secret ;
+            return osc_base_url() . osc_get_preference('rewrite_item_delete') . '/' . $id . '/' . $secret ;
         } else {
             return osc_base_url(true) . '?page=item&action=item_delete&id=' . $id . ($secret != '' ? '&secret=' . $secret : '') ;
         }
@@ -695,7 +695,7 @@
     function osc_item_activate_url($secret = '', $id = '') {
         if ($id == '') $id = osc_item_id();
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'item/activate/' . $id . '/' . $secret ;
+            return osc_base_url() . osc_get_preference('rewrite_item_activate') . '/' . $id . '/' . $secret ;
         } else {
             return osc_base_url(true) . '?page=item&action=activate&id=' . $id . ($secret != '' ? '&secret=' . $secret : '') ;
         }
@@ -712,7 +712,7 @@
      */
     function osc_item_resource_delete_url($id, $item, $code, $secret = '') {
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'item/resource/delete/' . $id . '/' . $item . '/' . $code . ($secret != '' ? '/' . $secret : '');
+            return osc_base_url() . osc_get_preference('rewrite_item_resource_delete') . '/' . $id . '/' . $item . '/' . $code . ($secret != '' ? '/' . $secret : '');
         } else {
             return osc_base_url(true) . '?page=item&action=deleteResource&id=' . $id . '&item=' . $item . '&code=' . $code . ($secret != '' ? '&secret=' . $secret : '') ;
         }
@@ -725,7 +725,7 @@
      */
     function osc_item_send_friend_url() {
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'item/send-friend/' . osc_item_id() ;
+            return osc_base_url() . osc_get_preference('rewrite_item_send_friend') . '/' . osc_item_id() ;
         } else {
             return osc_base_url(true)."?page=item&action=send_friend&id=".osc_item_id();
         }

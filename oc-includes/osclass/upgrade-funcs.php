@@ -222,15 +222,41 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('rewrite_cat_url', '{CATEGORIES}/');
         osc_set_preference('rewrite_page_url', 'page/{PAGE_SLUG}');
         osc_set_preference('rewrite_search_url', 'search/');
-        osc_set_preference('rewrite_search_country', '');
-        osc_set_preference('rewrite_search_region', '');
-        osc_set_preference('rewrite_search_city', '');
-        osc_set_preference('rewrite_search_city_area', '');
-        osc_set_preference('rewrite_search_category', '');
-        osc_set_preference('rewrite_search_user', '');
+        osc_set_preference('rewrite_search_country', 'country');
+        osc_set_preference('rewrite_search_region', 'region');
+        osc_set_preference('rewrite_search_city', 'city');
+        osc_set_preference('rewrite_search_city_area', 'cityarea');
+        osc_set_preference('rewrite_search_category', 'category');
+        osc_set_preference('rewrite_search_user', 'user');
         osc_set_preference('rewrite_search_pattern', 'pattern');
         
-        
+
+
+        osc_set_preference('rewrite_contact', 'contact');
+        osc_set_preference('rewrite_feed', 'feed');
+        osc_set_preference('rewrite_language', 'language');
+        osc_set_preference('rewrite_item_mark', 'item/mark');
+        osc_set_preference('rewrite_item_send_friend', 'item/send-friend');
+        osc_set_preference('rewrite_item_contact', 'item/contact');
+        osc_set_preference('rewrite_item_new', 'item/new');
+        osc_set_preference('rewrite_item_activate', 'item/activate');
+        osc_set_preference('rewrite_item_edit', 'item/edit');
+        osc_set_preference('rewrite_item_delete', 'item/delete');
+        osc_set_preference('rewrite_item_resource_delete', 'item/resource/delete');
+        osc_set_preference('rewrite_user_login', 'user/login');
+        osc_set_preference('rewrite_user_dashboard', 'user/dashboard');
+        osc_set_preference('rewrite_user_logout', 'user/logout');
+        osc_set_preference('rewrite_user_register', 'user/register');
+        osc_set_preference('rewrite_user_activate', 'user/activate');
+        osc_set_preference('rewrite_user_activate_alert', 'user/activate_alert');
+        osc_set_preference('rewrite_user_profile', 'user/profile');
+        osc_set_preference('rewrite_user_items', 'user/items');
+        osc_set_preference('rewrite_user_alerts', 'user/alerts');
+        osc_set_preference('rewrite_user_recover', 'user/recover');
+        osc_set_preference('rewrite_user_forgot', 'user/forgot');
+        osc_set_preference('rewrite_user_change_password', 'user/change_password');
+        osc_set_preference('rewrite_user_change_email', 'user/change_email');
+        osc_set_preference('rewrite_user_change_email_confirm', 'user/change_email_confirm');
     }
 
     osc_changeVersionTo(240) ;
