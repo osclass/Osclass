@@ -26,6 +26,7 @@
         private $limit ;
         private $start ;
         private $total ;
+        private $total_filtered ;
         private $search ;
         private $order_by = array() ;
 
@@ -46,11 +47,10 @@
             $this->_get = $params ;
             $this->getDBParams() ;
 
-            $list_users  = User::newInstance()->search($this->start, $this->limit, $this->order_by['column_name'], $this->order_by['type']) ;
+            $list_users  = User::newInstance()->search($this->start, $this->limit, $this->order_by['column_name'], $this->order_by['type'], $this->search) ;
             $this->users = $list_users['users'] ;
-            $this->filtered_total = $list_users['total_results'] ;
-            // $this->total = $list_users['rows'];
             $this->total = $list_users['total_results'] ;
+            $this->total_filtered = $list_users['rows'] ;
 
             $this->toDatatablesFormat() ;
             $this->dumpToDatatables() ;
@@ -81,12 +81,15 @@
                 if( $k == 'sEcho' ) {
                     $this->sEcho = intval($v) ;
                 }
+                if( $k == 'sSearch' ) {
+                    $this->search = $v ;
+                }
 
                 /* for sorting */
-                if($k == 'iSortCol_0') {
+                if( $k == 'iSortCol_0' ) {
                     $this->order_by['column_name'] = $this->column_names[$v];
                 }
-                if($k == 'sSortDir_0') {
+                if( $k == 'sSortDir_0' ) {
                     $this->order_by['type'] = $v ;
                 }
             }
@@ -100,8 +103,8 @@
          */
         private function toDatatablesFormat()
         {
-            $this->result['iTotalRecords']        = $this->total ;
-            $this->result['iTotalDisplayRecords'] = $this->filtered_total ;
+            $this->result['iTotalRecords']        = $this->total_filtered ;
+            $this->result['iTotalDisplayRecords'] = $this->total ;
             $this->result['sEcho']                = $this->sEcho ;
             $this->result['aaData']               = array() ;
 
@@ -117,11 +120,6 @@
                 // second column
                 $second  = $aRow['s_email'] . '<br/>' ;
                 $second .= '<div class="datatable_wrapper"><div class="datatables_quick_edit" ' ;
-                if($count % 2) {
-                    $second .= ' class="even" ' ;
-                }else{
-                    $second .= ' class="odd" ' ;
-                }
                 $second .= ' style="position:absolute; display:none ;">' ;
                 if( $aRow['b_active'] == 1 ) {
                     $second .= '<a href="' . osc_admin_base_url(true) . '?page=users&action=deactivate&amp;id[]=' . $aRow['pk_i_id'] .'">' . __('Deactivate') . '</a>' ;

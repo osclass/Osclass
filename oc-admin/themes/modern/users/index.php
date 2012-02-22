@@ -48,7 +48,7 @@
                     "bProcessing": true,
                     "bServerSide":true,
                     "bPaginate": true,
-                    "bFilter": false,
+                    "bFilter": true,
                     "oLanguage": {
                         "oPaginate": {
                             "sNext" : "<?php echo osc_esc_html( __('Next') ) ; ?>",
@@ -60,7 +60,7 @@
                         "sInfoFiltered": "<?php echo osc_esc_html( sprintf( __('(filtered from %s total entries)'), '_MAX_' ) ) ; ?>",
                         "sLoadingRecords": "<?php echo osc_esc_html( __('Loading...') ) ; ?>",
                         "sProcessing": "<?php echo osc_esc_html( __('Processing...') ) ; ?>",
-                        "sSearch": "<?php echo osc_esc_html( __('Search:') ) ; ?>",
+                        "sSearch": "<?php echo osc_esc_html( __('Search by name') ) ; ?>",
                         "sZeroRecords": "<?php echo osc_esc_html( __('No matching records found') ) ; ?>"
                     },
                     "aoColumns": [
@@ -75,7 +75,7 @@
                             "bSortable": true
                         },
                         {
-                            "sTitle": "<?php echo osc_esc_html( __('Real name') ) ; ?>",
+                            "sTitle": "<?php echo osc_esc_html( __('Name') ) ; ?>",
                             "bSortable": true
                         },
                         {
