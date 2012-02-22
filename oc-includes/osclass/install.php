@@ -69,6 +69,10 @@ if(Session::newInstance()->_get('adminLocale')!='' && key_exists(Session::newIns
     $current_locale = key($locales);
 }
 
+Session::newInstance()->_set('userLocale', $current_locale);
+Session::newInstance()->_set('adminLocale', $current_locale);
+
+
 $translation = new Translation(true);
 
 
