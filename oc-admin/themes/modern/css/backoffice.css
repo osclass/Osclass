@@ -239,6 +239,10 @@ body {
     background: url('../images/admin-icon.png') no-repeat ;
 }
 
+#content .right .header_title h1.plugins {
+    background: url('../images/plugins-icon.png') no-repeat ;
+}
+
 /* /right container */
 /* footer */
 #footer {
