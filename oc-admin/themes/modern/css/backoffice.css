@@ -247,6 +247,10 @@ body {
     background: url('../images/tools-icon.png') no-repeat ;
 }
 
+#content .right .header_title h1.languages {
+    background: url('../images/icon-language.png') no-repeat ;
+}
+
 /* /right container */
 /* footer */
 #footer {
@@ -428,6 +432,10 @@ input.xlarge {
 input.xxlarge {
     width: 530px;
 }
+
+textarea {
+    min-width: 400px;
+}
 /* /form */
 /* settings */
 .right a, .right a:visited {
@@ -448,7 +456,7 @@ input.xxlarge {
     padding-left: 20px;
 }
 
-.right .currencies, .right .users, .right .admins {
+.right .datatables {
     padding: 0;
 }
 
