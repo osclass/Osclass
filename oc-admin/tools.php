@@ -37,8 +37,8 @@
                                         $this->doView('tools/import.php') ;
                 break ;
                 case('import_post'):    if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
-                                            $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=import');
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=import') ;
                                         }
                                         // calling
                                         $sql = Params::getFiles('sql') ;
@@ -54,16 +54,16 @@
                                                 osc_add_flash_error_message( _m('There was a problem importing data to the database'), 'admin') ;
                                             }
                                         } else {
-                                            osc_add_flash_error_message( _m('No file was uploaded'), 'admin') ;
+                                            osc_add_flash_warning_message( _m('No file was uploaded'), 'admin') ;
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=import') ;
-                break;
+                break ;
                 case('upgrade'):
                                         $this->doView('tools/upgrade.php') ;
-                break;
+                break ;
                 case('backup'):
                                         $this->doView('tools/backup.php') ;
-                break;
+                break ;
                 case('backup-sql'):     if( defined('DEMO') ) {
                                             osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
@@ -97,7 +97,7 @@
                                             break;
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
-                break;
+                break ;
                 case('backup-sql_file'):
                                         if( defined('DEMO') ) {
                                             osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
@@ -140,8 +140,8 @@
                                             break;
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
-                break;
-                case 'backup-zip_file'):
+                break ;
+                case('backup-zip_file'):
                                         if( defined('DEMO') ) {
                                             osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
@@ -168,6 +168,7 @@
                                             osc_add_flash_error_message( $msg, 'admin') ;
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
+                break ;
                 case('backup-zip'):     if( defined('DEMO') ) {
                                             osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
@@ -192,10 +193,10 @@
                                             osc_add_flash_error_message( $msg, 'admin') ;
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
-                break;
+                break ;
                 case('backup_post'):
                                         $this->doView('tools/backup.php') ;
-                break;
+                break ;
                 case('maintenance'):    if( defined('DEMO') ) {
                                             osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
                                             $this->doView('tools/maintenance.php') ;
