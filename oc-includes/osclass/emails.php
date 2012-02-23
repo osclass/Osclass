@@ -877,7 +877,6 @@
 
         osc_sendMail($emailParams);
 
-        @unlink($path) ;
     }
     osc_add_hook('hook_email_contact_user', 'fn_email_contact_user');
     
