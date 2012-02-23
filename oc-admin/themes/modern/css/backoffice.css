@@ -243,6 +243,10 @@ body {
     background: url('../images/plugins-icon.png') no-repeat ;
 }
 
+#content .right .header_title h1.tools {
+    background: url('../images/tools-icon.png') no-repeat ;
+}
+
 /* /right container */
 /* footer */
 #footer {
