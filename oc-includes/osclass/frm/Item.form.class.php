@@ -241,7 +241,7 @@
             if( Session::newInstance()->_getForm('region') != ''){
                 $regions = null;
             } else {
-                if($regions==null) { $regions = osc_get_regions(); };
+                if($regions==null) { $regions = array(); };
             }
             
             if($item==null) { $item = osc_item(); };
@@ -269,7 +269,7 @@
             if( Session::newInstance()->_getForm('city') != ''){
                 $cities = null;
             } else {
-                if($cities==null) { $cities = osc_get_cities(); };
+                if($cities==null) { $cities = array(); };
             }
             if($item==null) { $item = osc_item(); };
             if( count($cities) >= 1 ) {
