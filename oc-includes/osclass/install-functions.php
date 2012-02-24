@@ -168,7 +168,7 @@ function oc_install( ) {
     $dbhost      = Params::getParam('dbhost') ;
     $dbname      = Params::getParam('dbname') ;
     $username    = Params::getParam('username') ;
-    $password    = Params::getParam('password') ;
+    $password    = Params::getParam('password', false, false) ;
     $tableprefix = Params::getParam('tableprefix') ;
     $createdb    = false ;
 
@@ -182,7 +182,7 @@ function oc_install( ) {
 
     if ( $createdb ) {
         $adminuser = Params::getParam('admin_username') ;
-        $adminpwd  = Params::getParam('admin_password') ;
+        $adminpwd  = Params::getParam('admin_password', false, false) ;
 
         $master_conn = new DBConnectionClass($dbhost, $adminuser, $adminpwd, '') ;
         $error_num   = $master_conn->getErrorConnectionLevel() ;
@@ -426,6 +426,7 @@ function oc_install_example_data() {
  * @return mixed Error messages of the installation
  */
 function create_config_file($dbname, $username, $password, $dbhost, $tableprefix) {
+    $password = addslashes($password);
     $abs_url = get_absolute_url();
     $rel_url = get_relative_url();
     $config_text = <<<CONFIG
@@ -465,6 +466,7 @@ CONFIG;
  * @since 1.2
  */
 function copy_config_file($dbname, $username, $password, $dbhost, $tableprefix) {
+    $password = addslashes($password);
     $abs_url = get_absolute_url();
     $rel_url = get_relative_url();
     $config_sample = file(ABS_PATH . 'config-sample.php');
@@ -907,7 +909,7 @@ function display_finish($password) {
                 <th><label><?php _e('Password');?></label></th>
                 <td>
                     <div class="s_passwd">
-                        <span style="float: left;"><?php echo $data['password']; ?></span>
+                        <span style="float: left;"><?php echo osc_esc_html($data['password']); ?></span>
                     </div>
                 </td>
             </tr>

@@ -44,6 +44,7 @@ require_once LIB_PATH . 'osclass/helpers/hLocale.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php';
 require_once LIB_PATH . 'osclass/helpers/hSearch.php';
 require_once LIB_PATH . 'osclass/helpers/hTranslations.php';
+require_once LIB_PATH . 'osclass/helpers/hSanitize.php';
 require_once LIB_PATH . 'osclass/default-constants.php';
 require_once LIB_PATH . 'osclass/install-functions.php';
 require_once LIB_PATH . 'osclass/utils.php';
@@ -115,10 +116,10 @@ switch( $step ) {
         if( Params::getParam('result') != '' ) {
             $error = Params::getParam('result');
         }
-        $password = Params::getParam('password');
+        $password = Params::getParam('password', false, false);
         break;
     case 5:
-        $password = Params::getParam('password');
+        $password = Params::getParam('password', false, false);
         break;
     default:
         break;

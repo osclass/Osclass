@@ -33,7 +33,7 @@
                 case('login_post'):     //post execution for the login
                                         $admin = Admin::newInstance()->findByUsername( Params::getParam('user') ) ;
                                         if ($admin) {
-                                            if ( $admin["s_password"] == sha1( Params::getParam('password') ) ) {
+                                            if ( $admin["s_password"] == sha1( Params::getParam('password', false, false) ) ) {
                                                 if ( Params::getParam('remember') ) {
                                                     //this include contains de osc_genRandomPassword function
                                                     require_once osc_lib_path() . 'osclass/helpers/hSecurity.php';
@@ -117,10 +117,10 @@
                 case('forgot_post'):
                                         $admin = Admin::newInstance()->findByIdSecret(Params::getParam('adminId'), Params::getParam('code'));
                                         if($admin) {
-                                            if(Params::getParam('new_password')==Params::getParam('new_password2')) {
+                                            if(Params::getParam('new_password', false, false)==Params::getParam('new_password2', false, false)) {
                                                 Admin::newInstance()->update(
                                                     array('s_secret' => osc_genRandomPassword()
-                                                        , 's_password' => sha1(Params::getParam('new_password'))
+                                                        , 's_password' => sha1(Params::getParam('new_password', false, false))
                                                     ), array('pk_i_id' => $admin['pk_i_id'])
                                                 );
                                                 osc_add_flash_ok_message( _m('The password has been changed'), 'admin');
