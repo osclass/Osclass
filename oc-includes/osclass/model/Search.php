@@ -824,7 +824,7 @@
          */
         public function listCountries($zero = ">", $order = "items DESC")
         {
-           
+           return CountryStats::newInstance()->listCities($zero, $order);
         }
 
         /**
@@ -832,6 +832,8 @@
          * <code>
          *  Search::newInstance()->listRegions($country, ">=", "country_name ASC" )
          * </code>
+         * 
+         * @deprecated
          * @access public
          * @since unknown
          * @param string $country
@@ -840,7 +842,7 @@
          */
         public function listRegions($country = '%%%%', $zero = ">", $order = "items DESC") 
         {    
-           
+           return RegionsStats::newInstance()->listCities($country, $zero, $order);
         }
 
         /**
@@ -850,6 +852,7 @@
          *  Search::newInstance()->listCities($region, ">=", "city_name ASC" )
          * </code>
          * 
+         * @deprecated
          * @access public
          * @since unknown
          * @param string $region
@@ -858,7 +861,7 @@
          */
         public function listCities($region = null, $zero = ">", $order = "city_name ASC") 
         {
-            
+            return CityStats::newInstance()->listCities($region, $zero, $order);
         }
 
         /**
@@ -872,7 +875,35 @@
          */
         public function listCityAreas($city = null, $zero = ">", $order = "items DESC") 
         {
-          
+           $aOrder = split(' ', $order);
+            $nOrder = count($aOrder);
+            
+            if($nOrder == 2) $this->dao->orderBy($aOrder[0], $aOrder[1]);
+            else if($nOrder == 1) $this->dao->orderBy($aOrder[0], 'DESC');
+            else $this->dao->orderBy('item', 'DESC');
+            
+            $this->dao->select('fk_i_city_area_id as city_area_id, s_city_area as city_area_name, fk_i_city_id , s_city as city_name, fk_i_region_id as region_id, s_region as region_name, fk_c_country_code as pk_c_code, s_country as country_name, count(*) as items, '.DB_TABLE_PREFIX.'t_country.fk_c_locale_code');
+            $this->dao->from(DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_category, '.DB_TABLE_PREFIX.'t_country');
+            $this->dao->where(DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id');
+            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_enabled = 1');
+            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_active = 1');
+            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_spam = 0');
+            $this->dao->where(DB_TABLE_PREFIX.'t_category.b_enabled = 1');
+            $this->dao->where(DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id');
+            $this->dao->where('('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 || DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days)');
+            $this->dao->where('fk_i_city_area_id IS NOT NULL');
+            $this->dao->where(DB_TABLE_PREFIX.'t_country.pk_c_code = fk_c_country_code');
+            $this->dao->groupBy('fk_i_city_area_id');
+            $this->dao->having("items $zero 0");
+            
+            $city_int = (int)$city;
+
+            if(is_numeric($city_int) && $city_int!=0) {
+                $this->dao->where("fk_i_city_id = $city_int");
+            }
+            
+            $result = $this->dao->get();
+            return $result->result();
         }
     }
 
