@@ -240,6 +240,15 @@
     function osc_item_mod_date() {
         return (string) osc_item_field("dt_mod_date");
     }
+    
+    /**
+     * Gets date expiration of current item
+     *
+     * @return string
+     */
+    function osc_item_d_expiration() {
+        return (string) osc_item_field("d_expiration");
+    }
 
     /**
      * Gets price of current item
@@ -410,17 +419,7 @@
         if( osc_item_is_premium() ) {
             return false;
         } else {
-            $category = Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) ;
-            $expiration = $category['i_expiration_days'];
-
-            if($expiration == 0){ return false; }
-            else{
-                $date_expiration = strtotime(date("Y-m-d H:i:s", strtotime( osc_item_pub_date() )) . " +$expiration day");
-                $now             = strtotime(date('Y-m-d H:i:s'));
-
-                if( $date_expiration < $now ) { return true; }
-                else { return false; }
-            }
+            return osc_isExpired(osc_item_d_expiration());
         }
     }
     
@@ -899,6 +898,7 @@
     //////////
     // HOME //
     //////////
+    
     /**
      * Gets next item of last items
      *
@@ -946,10 +946,10 @@
         };
         return (int) View::newInstance()->_count('latestItems') ;
     }
+    
     //////////////
     // END HOME //
     //////////////
-
 
     /**
      * Gets next item of custom items

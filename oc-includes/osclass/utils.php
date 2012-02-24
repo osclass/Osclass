@@ -20,6 +20,23 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+/**
+ * check if the item is expired 
+ */
+function osc_isExpired($d_expiration) {
+    $now       = date("Ymdhis");
+    
+    $d_expiration = str_replace(' ', '', $d_expiration);
+    $d_expiration = str_replace('-', '', $d_expiration);
+    $d_expiration = str_replace(':', '', $d_expiration);
+
+    if ($d_expiration > $now) { 
+        return false;
+    } else {
+        return true;
+    }
+}
 /**
  * Remove resources from disk
  * @param <type> $id

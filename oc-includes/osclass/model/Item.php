@@ -297,9 +297,8 @@
             $this->dao->where( 'fk_i_category_id', $category['pk_i_id'] ) ;
             $this->dao->where( 'b_enabled', $enabled ) ;
             $this->dao->where( 'b_active', $active ) ;
-            if( $category['i_expiration_days'] != 0 ) {
-                $this->dao->where( '( b_premium = 1 OR ( DATEDIFF(\'' . date('Y-m-d H:i:s') .'\', dt_pub_date) < ' . $category['i_expiration_days'] . ' ) )' ) ;
-            }
+            $this->dao->where( '( b_premium = 1 || d_expiration >= \'' . date('Y-m-d H:i:s') .'\' )' ) ;
+            
             $result = $this->dao->get() ;
 
             if( $result == false ) {
@@ -555,8 +554,19 @@
                 return false ;
             }
 
-            if( $item['b_active'] == 1 ) {
+            if( $item['b_active'] == 1 && $item['b_enabled']==1 && $item['b_spam']==0) {
+                if($item['fk_i_user_id']!=null) {
+                    $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
+                    if($user) {
+                        User::newInstance()->update( array( 'i_items' => $user['i_items']-1)
+                                                    ,array( 'pk_i_id' => $user['pk_i_id'] ) ) ;
+                    }
+                }
                 CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']) ;
+                // decrease location stats
+                CountryStats::newInstance()->decreaseNumItems($item['fk_c_country_code']);
+                RegionStats::newInstance()->decreaseNumItems($item['fk_i_region_id']);
+                CityStats::newInstance()->decreaseNumItems($item['fk_i_city_id']);
             }
 
             $this->dao->delete(DB_TABLE_PREFIX.'t_item_description', "fk_i_item_id = $id") ;
@@ -707,7 +717,11 @@
                     $item['s_category_name'] = $item['locale'][$prefLocale]['s_category_name'];
                 } else {
                     $data = current($item['locale']);
-                    $item['s_category_name'] = $data['s_category_name'];
+                    if( isset($data['s_category_name']) ) {
+                        $item['s_category_name'] = $data['s_category_name'];
+                    } else {
+                        $item['s_category_name'] = '';
+                    }
                     unset($data);
                 }
                 $results[] = $item;
@@ -735,7 +749,7 @@
             foreach ($items as $item) {
                 $this->dao->select() ;
                 $this->dao->from(DB_TABLE_PREFIX.'t_item_description') ;
-                $this->dao->where('fk_i_item_id', $item['pk_i_id']) ;
+                $this->dao->where(DB_TABLE_PREFIX.'t_item_description.fk_i_item_id', $item['pk_i_id']) ;
                 
                 $result = $this->dao->get() ;
                 $descriptions = $result->result() ;
@@ -755,6 +769,23 @@
                     $item['s_description'] = $data['s_description'];
                     unset($data);
                 }
+                
+                // populate locations and category_name
+                $this->dao->select() ;
+                $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
+                $this->dao->from(DB_TABLE_PREFIX.'t_category_description as cd') ;
+                $this->dao->from(DB_TABLE_PREFIX.'t_item_stats') ;
+                $this->dao->where(DB_TABLE_PREFIX.'t_item_location.fk_i_item_id', $item['pk_i_id']) ;
+                $this->dao->where(DB_TABLE_PREFIX.'t_item_stats.fk_i_item_id', $item['pk_i_id']) ;
+                $this->dao->where('cd.fk_i_category_id', $item['fk_i_category_id']) ;
+                
+                $result = $this->dao->get() ;
+                $extraFields = $result->row() ;
+                
+                foreach($extraFields as $key => $value) {
+                    $item[$key] = $value;
+                }
+                
                 $results[] = $item;
             }
             return $results;

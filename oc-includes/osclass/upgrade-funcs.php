@@ -24,12 +24,14 @@
     require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
     
     if( !defined('AUTO_UPGRADE') ) {
+        error_log("init");
         if(file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
             $sql  = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
             
             $conn = DBConnectionClass::newInstance();
             $c_db = $conn->getOsclassDb() ;
             $comm = new DBCommandClass( $c_db ) ;
+            error_log("init file exist") ;
             $error_queries = $comm->updateDB( str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ) ;
             
         }
@@ -258,9 +260,44 @@ CREATE TABLE %st_item_description_tmp (
 
         osc_set_preference('last_version_check', time());
         osc_set_preference('update_core_json', '');
+        
+        // set default date for items that not expire (default MAX datetime)
+        $sql = sprintf("update %st_item as a 
+                left join %st_category  as b
+                on b.pk_i_id = a.fk_i_category_id
+                set a.d_expiration = '9999-12-31 23:59:59'
+                where b.i_expiration_days = 0", DB_TABLE_PREFIX, DB_TABLE_PREFIX
+                );
+        $comm->query( $sql ) ;
+        $update_d_expiration = sprintf('update %st_item as a 
+                    left join %st_category  as b on b.pk_i_id = a.fk_i_category_id
+                    set a.d_expiration = date_add(a.dt_pub_date, INTERVAL b.i_expiration_days DAY) 
+                    where b.i_expiration_days > 0', DB_TABLE_PREFIX, DB_TABLE_PREFIX );
+        $comm->query( $update_d_expiration ) ;
+      
+        // we need populate location table stats
+        $rs = $comm->query( sprintf('SELECT pk_c_code FROM %st_country', DB_TABLE_PREFIX) );
+        $aCountry = $rs->result();
+        foreach($aCountry as $country) {
+            // insert into country_stats with i_num_items = 0
+            $comm->query( sprintf('INSERT INTO %st_country_stats (fk_c_country_code, i_num_items) VALUES (\'%s\', 0)', DB_TABLE_PREFIX, $country['pk_c_code']) ) ;
+            $rs = $comm->query( sprintf('SELECT pk_i_id FROM %st_region WHERE fk_c_country_code = \'%s\'', DB_TABLE_PREFIX, $country['pk_c_code']) ); 
+            $aRegion = $rs->result();
+            foreach($aRegion as $region) {
+                // insert into region_stats with i_num_items = 0
+                $comm->query( sprintf('INSERT INTO %st_region_stats (fk_i_region_id, i_num_items) VALUES (%s, 0)', DB_TABLE_PREFIX, $region['pk_i_id']) ) ;
+                $rs = $comm->query( sprintf('SELECT pk_i_id FROM %st_city WHERE fk_i_region_id = %s', DB_TABLE_PREFIX, $region['pk_i_id']) ); 
+                $aCity = $rs->result();
+                foreach($aCity as $city) {
+                    // insert into city_stats with i_num_items = 0
+                    $comm->query( sprintf('INSERT INTO %st_city_stats (fk_i_city_id, i_num_items) VALUES (%s, 0)', DB_TABLE_PREFIX, $city['pk_i_id']) ) ;
+                }
+            }
+        }
+        echo '<p><b>'.__('You need to calculate locations stats, please go to admin panel, tools, recalculate location stats') .'</b></p>';
     }
 
-    osc_changeVersionTo(240) ;
+//    osc_changeVersionTo(240) ;
 
     if(Params::getParam('action') == '') {
         $title   = 'OSClass &raquo; Updated correctly' ;

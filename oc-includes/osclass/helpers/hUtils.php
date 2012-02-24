@@ -202,7 +202,6 @@
      * @return string
      */
     function osc_highlight($txt, $len = 300, $start_tag = '<strong>', $end_tag = '</strong>') {
-
         if (strlen($txt) > $len) {
             $txt = mb_substr($txt, 0, $len, 'utf-8') . "..." ;
         }
@@ -211,7 +210,7 @@
         $query = trim(preg_replace('/\s\s+/', ' ', $query)) ;
         $aQuery = explode(' ', $query) ;
         foreach ($aQuery as $word) {
-            $txt = str_replace($word, $start_tag . $word. $end_tag, $txt) ;
+            $txt = preg_replace("/($word)/i", $start_tag . "$01". $end_tag, $txt) ;
         }
         return $txt ;
     }

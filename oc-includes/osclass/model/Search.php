@@ -65,38 +65,37 @@
             $this->conditions = array();
             $this->search_fields = array();
             $this->tables = array();
+
             
-            if(!defined('OC_ADMIN')) {
-                $this->addTable(sprintf( '%st_item_description as d', DB_TABLE_PREFIX));
-                $this->addConditions(sprintf('%st_item.pk_i_id = d.fk_i_item_id', DB_TABLE_PREFIX));
-            } else {
-                if(!OC_ADMIN) {
-                    $this->addTable(sprintf( '%st_item_description as d', DB_TABLE_PREFIX));
-                    $this->addConditions(sprintf('%st_item.pk_i_id = d.fk_i_item_id', DB_TABLE_PREFIX));
-                }
-            }
             
-            $this->addTable(sprintf( '%st_category_description as cd', DB_TABLE_PREFIX));
             $this->order();
             $this->limit();
             $this->results_per_page = 10;
-            if(!$expired) {
-                $this->addTable(sprintf('%st_category', DB_TABLE_PREFIX));
-                $this->addConditions(sprintf("%st_item.b_active = 1 ", DB_TABLE_PREFIX));
+            if(!$expired) {                
                 $this->addConditions(sprintf("%st_item.b_enabled = 1 ", DB_TABLE_PREFIX));
+                $this->addConditions(sprintf("%st_item.b_active = 1 ", DB_TABLE_PREFIX));
                 $this->addConditions(sprintf("%st_item.b_spam = 0", DB_TABLE_PREFIX));
-                $this->addConditions(sprintf(" (%st_item.b_premium = 1 || %st_category.i_expiration_days = 0 || DATEDIFF('%s', %st_item.dt_pub_date) < %st_category.i_expiration_days) ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, date('Y-m-d H:i:s'), DB_TABLE_PREFIX, DB_TABLE_PREFIX));
-                $this->addConditions(sprintf("%st_category.b_enabled = 1", DB_TABLE_PREFIX));
-                $this->addConditions(sprintf("%st_category.pk_i_id = %st_item.fk_i_category_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+            
+                $this->addConditions(sprintf("(%st_item.b_premium = 1 || %st_item.d_expiration >= '%s')", DB_TABLE_PREFIX, DB_TABLE_PREFIX, date('Y-m-d H:i:s')) ) ;            
             }
             $this->total_results = null;
             parent::__construct() ;
             $this->setTableName('t_item') ;
             $this->setFields( array('pk_i_id') ) ;
+            
+            // get all item_location data
+            if(OC_ADMIN) {
+                $this->addField(sprintf('%st_item.s_contact_name as s_user_name', DB_TABLE_PREFIX) );
+                
+                $this->addField(sprintf('%st_item_location.*', DB_TABLE_PREFIX) );
+                $this->addTable( sprintf('%st_item_location', DB_TABLE_PREFIX) ) ;
+                $this->addConditions(sprintf("%st_item.pk_i_id = %st_item_location.fk_i_item_id ", DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+                
+            }
         }
 
         public static function getAllowedColumnsForSorting() {
-            return( array('i_price', 'dt_pub_date') ) ;
+            return( array('i_price', 'dt_pub_date','relevance') ) ;
         }
         
         public static function getAllowedTypesForSorting() {
@@ -204,6 +203,7 @@
          * @param string $table
          */
         public function order($o_c = 'dt_pub_date', $o_d = 'DESC',$table = NULL) {
+            
             if($table == '') {
                 $this->order_column = $o_c;
             } else if($table != ''){
@@ -213,9 +213,9 @@
                     $this->order_column = sprintf("$table.$o_c", DB_TABLE_PREFIX);
                 }
             } else {
-//                $this->order_column = sprintf("query.$o_c", DB_TABLE_PREFIX);
                 $this->order_column = sprintf("$o_c", DB_TABLE_PREFIX);
             }
+            
             $this->order_direction = $o_d;
         }
 
@@ -272,7 +272,12 @@
                         if(is_numeric($c)) {
                             $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $c);
                         } else {
-                            $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%%%s%%' ", DB_TABLE_PREFIX, $c);
+                            $_city_area = CityArea::newInstance()->findByName($c) ;
+                            if( !empty($_city_area) ) {
+                                $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $_city_area['pk_i_id']);
+                            } else {
+                                $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%%%s%%' ", DB_TABLE_PREFIX, $c);
+                            }
                         }
                     }
                 }
@@ -282,7 +287,12 @@
                     if(is_numeric($city_area)) {
                         $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $city_area);
                     } else {
-                        $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%%%s%%' ", DB_TABLE_PREFIX, $city_area);
+                        $_city_area = CityArea::newInstance()->findByName($city_area) ;
+                        if( !empty($_city_area) ) {
+                            $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $_city_area['pk_i_id']);
+                        } else {
+                            $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%%%s%%' ", DB_TABLE_PREFIX, $city_area);
+                        }
                     }
                 }
             }
@@ -297,23 +307,35 @@
          */
         public function addCity($city = array()) {
             if(is_array($city)) {
+                $this->addTable(sprintf('%st_item_location', DB_TABLE_PREFIX)) ;
                 foreach($city as $c) {
                     $c = trim($c);
                     if($c!='') {
                         if(is_numeric($c)) {
                             $this->cities[] = sprintf("%st_item_location.fk_i_city_id = %d ", DB_TABLE_PREFIX, $c);
                         } else {
-                            $this->cities[] = sprintf("%st_item_location.s_city LIKE '%%%s%%' ", DB_TABLE_PREFIX, $c);
+                            $_city = City::newInstance()->findByName($c) ;
+                            if( !empty($_city) ) {
+                                $this->cities[] = sprintf("%st_item_location.fk_i_city_id = %d ", DB_TABLE_PREFIX, $_city);
+                            } else {
+                                $this->cities[] = sprintf("%st_item_location.s_city LIKE '%%%s%%' ", DB_TABLE_PREFIX, $c);
+                            }
                         }
                     }
                 }
             } else {
+                $this->addTable(sprintf('%st_item_location', DB_TABLE_PREFIX)) ;
                 $city = trim($city);
                 if($city!="") {
                     if(is_numeric($city)) {
                         $this->cities[] = sprintf("%st_item_location.fk_i_city_id = %d ", DB_TABLE_PREFIX, $city);
                     } else {
-                        $this->cities[] = sprintf("%st_item_location.s_city LIKE '%%%s%%' ", DB_TABLE_PREFIX, $city);
+                        $_city = City::newInstance()->findByName($city) ;
+                        if( !empty($_city) ) {
+                            $this->cities[] = sprintf("%st_item_location.fk_i_city_id = %d ", DB_TABLE_PREFIX, $_city['pk_i_id']);
+                        } else {
+                            $this->cities[] = sprintf("%st_item_location.s_city LIKE '%%%s%%' ", DB_TABLE_PREFIX, $city);
+                        }
                     }
                 }
             }
@@ -328,23 +350,35 @@
          */
         public function addRegion($region = array()) {
             if(is_array($region)) {
+                $this->addTable(sprintf('%st_item_location', DB_TABLE_PREFIX)) ;
                 foreach($region as $r) {
                     $r = trim($r);
                     if($r!='') {
                         if(is_numeric($r)) {
                             $this->regions[] = sprintf("%st_item_location.fk_i_region_id = %d ", DB_TABLE_PREFIX, $r);
                         } else {
-                            $this->regions[] = sprintf("%st_item_location.s_region LIKE '%%%s%%' ", DB_TABLE_PREFIX, $r);
+                            $_region = Region::newInstance()->findByName($r) ;
+                            if( !empty($_region) ) {
+                                $this->regions[] = sprintf("%st_item_location.fk_i_region_id = %d ", DB_TABLE_PREFIX, $_region['pk_i_id']);
+                            } else {
+                                $this->regions[] = sprintf("%st_item_location.s_region LIKE '%%%s%%' ", DB_TABLE_PREFIX, $r);
+                            }
                         }
                     }
                 }
             } else {
+                $this->addTable(sprintf('%st_item_location', DB_TABLE_PREFIX)) ;
                 $region = trim($region);
                 if($region!="") {
                     if(is_numeric($region)) {
                         $this->regions[] = sprintf("%st_item_location.fk_i_region_id = %d ", DB_TABLE_PREFIX, $region);
                     } else {
-                        $this->regions[] = sprintf("%st_item_location.s_region LIKE '%%%s%%' ", DB_TABLE_PREFIX, $region);
+                        $_region = Region::newInstance()->findByName($region) ;
+                        if( !empty($_region) ) {
+                            $this->regions[] = sprintf("%st_item_location.fk_i_region_id = %d ", DB_TABLE_PREFIX, $_region['pk_i_id']);
+                        } else {
+                            $this->regions[] = sprintf("%st_item_location.s_region LIKE '%%%s%%' ", DB_TABLE_PREFIX, $region);
+                        }
                     }
                 }
             }
@@ -359,23 +393,35 @@
          */
         public function addCountry($country = array()) {
             if(is_array($country)) {
+                $this->addTable(sprintf('%st_item_location', DB_TABLE_PREFIX)) ;
                 foreach($country as $c) {
                     $c = trim($c);
                     if($c!='') {
                         if(strlen($c)==2) {
                             $this->countries[] = sprintf("%st_item_location.fk_c_country_code = '%s' ", DB_TABLE_PREFIX, strtolower($c));
                         } else {
-                            $this->countries[] = sprintf("%st_item_location.s_country LIKE '%%%s%%' ", DB_TABLE_PREFIX, $c);
+                            $_country = Country::newInstance()->findByName($c) ;
+                            if( !empty($_country) ) {
+                                $this->countries[] = sprintf("%st_item_location.fk_c_country_code = '%s' ", DB_TABLE_PREFIX, strtolower($_country['pk_c_code']));
+                            } else {
+                                $this->countries[] = sprintf("%st_item_location.s_country LIKE '%%%s%%' ", DB_TABLE_PREFIX, $c);
+                            }
                         }
                     }
                 }
             } else {
+                $this->addTable(sprintf('%st_item_location', DB_TABLE_PREFIX)) ;
                 $country = trim($country);
                 if($country!="") {
                     if(strlen($country)==2) {
                         $this->countries[] = sprintf("%st_item_location.fk_c_country_code = '%s' ", DB_TABLE_PREFIX, strtolower($country));
                     } else {
-                        $this->countries[] = sprintf("%st_item_location.s_country LIKE '%%%s%%' ", DB_TABLE_PREFIX, $country);
+                        $_country = Country::newInstance()->findByName($c) ;
+                        if( !empty($_country) ) {
+                            $this->countries[] = sprintf("%st_item_location.fk_c_country_code = '%s' ", DB_TABLE_PREFIX, strtolower($_country['pk_c_code']));
+                        } else {
+                            $this->countries[] = sprintf("%st_item_location.s_country LIKE '%%%s%%' ", DB_TABLE_PREFIX, $country);
+                        }
                     }
                 }
             }
@@ -468,7 +514,7 @@
             if($branches!=null) {
                 foreach($branches as $branch) {
                     if(!in_array($branch['pk_i_id'], $this->categories)) {
-                        $this->categories[] = sprintf("%st_item.fk_i_category_id = %d ", DB_TABLE_PREFIX, $branch['pk_i_id']);
+                        $this->categories[] = $branch['pk_i_id'] ; // sprintf("%st_item.fk_i_category_id = %d ", DB_TABLE_PREFIX, $branch['pk_i_id']);
                         if(isset($branch['categories'])) {
                             $list = $this->pruneBranches($branch['categories']);
                         }
@@ -504,7 +550,7 @@
 
             $tree = Category::newInstance()->toSubTree($category) ;
             if( !in_array($category, $this->categories) ) {
-                $this->categories[] = sprintf("%st_item.fk_i_category_id = %d ", DB_TABLE_PREFIX, $category) ;
+                $this->categories[] = $category ;
             }
             $this->pruneBranches($tree) ;
         }
@@ -532,12 +578,14 @@
             }
 
             if(count($this->categories)>0) {
-                $this->addConditions("( ".implode(' || ', $this->categories)." )");
+                $this->addConditions(sprintf("%st_item.fk_i_category_id IN ( ".implode(', ', $this->categories)." )", DB_TABLE_PREFIX) ) ;
+//                $this->addConditions("( ".implode(' || ', $this->categories)." )");
             }
 
             $conditionsSQL = implode(' AND ', $this->conditions);
             if($conditionsSQL!='') {
-                $conditionsSQL = " AND ".$conditionsSQL;
+//                $conditionsSQL = " AND ".$conditionsSQL;
+                $conditionsSQL = " ".$conditionsSQL;
             }
 
             $extraFields = "";
@@ -546,11 +594,53 @@
                 $extraFields .= implode(' ,', $this->search_fields);
             }
             return array(
-                'extraFields'   => $extraFields,
+                'extraFields'    => $extraFields,
                 'conditionsSQL'  => $conditionsSQL
                 );
         }
 
+        private function _returnSQL($count = false)
+        {
+            $arrayConditions    = $this->_conditions();
+            $extraFields        = $arrayConditions['extraFields'];
+            $conditionsSQL      = $arrayConditions['conditionsSQL'];
+            
+            // conditions - 
+            if( !$count ) {
+                $this->dao->select(DB_TABLE_PREFIX.'t_item.*');
+                // ADD EXTRA FIELDS !!
+                $this->dao->select($extraFields) ;
+            } else {
+                $this->dao->select(DB_TABLE_PREFIX.'t_item.pk_i_id');
+            }
+            // from + tables
+            $this->dao->from( DB_TABLE_PREFIX.'t_item ' ) ; // use index (PRIMARY)
+            // ADD EXTRA TABLE !!
+            if( !empty($this->tables) ) {
+                $tables             = implode(', ', $this->tables) ;
+                $this->dao->from($tables) ;
+            }
+            // ADD EXTRA WHERE !!
+            if(count($this->conditions) > 0) {
+                $this->dao->where ($conditionsSQL) ;
+            }
+            // END EXTRA WHERE
+            if( !$count ) {
+                // group by & order & limit
+                $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
+                $this->dao->orderBy( $this->order_column, $this->order_direction);
+                $this->dao->limit( $this->limit_init, $this->results_per_page);
+            } else {
+               // $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
+                $this->dao->limit(100*$this->results_per_page) ;
+            }
+            
+            $aux_sql = $this->dao->_getSelect() ;
+            $this->dao->_resetSelect() ;
+//            echo $aux_sql;
+            return $aux_sql;
+        }
+    
         /**
          * Make the SQL for the search with all the conditions and filters specified
          *
@@ -558,18 +648,12 @@
          * @since unknown
          * @param bool $count
          */
-        public function makeSQL($count = false) {
-
-            $arrayConditions    = $this->_conditions();
-            $extraFields        = $arrayConditions['extraFields'];
-            $conditionsSQL      = $arrayConditions['conditionsSQL'];
-
+        public function makeSQL($count = false) 
+        {
             if($count) {
-                $this->sql = sprintf("SELECT  COUNT(DISTINCT %st_item.pk_i_id) as totalItems FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id %s AND %st_item.fk_i_category_id = cd.fk_i_category_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, $conditionsSQL, DB_TABLE_PREFIX, DB_TABLE_PREFIX);
+                $this->sql = $this->_returnSQL(true) ;
             } else {
-                $this->sql = sprintf("SELECT SQL_CALC_FOUND_ROWS DISTINCT %st_item.pk_i_id, %st_item.s_contact_name as s_user_name, %st_item.s_contact_email as s_user_email, %st_item.*, %st_item_location.*, cd.s_name as s_category_name %s FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id %s AND %st_item.fk_i_category_id = cd.fk_i_category_id GROUP BY %st_item.pk_i_id ORDER BY %s %s LIMIT %d, %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $extraFields,DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, $conditionsSQL, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $this->order_column, $this->order_direction, $this->limit_init, $this->results_per_page);
-                // hack include user data
-               // $this->sql = sprintf("SELECT SQL_CALC_FOUND_ROWS DISTINCT query.*, %st_user.s_name as s_user_name FROM ( %s ) as query LEFT JOIN %st_user on %st_user.pk_i_id = query.fk_i_user_id ORDER BY %s %s LIMIT %d, %d", DB_TABLE_PREFIX, $this->sql , DB_TABLE_PREFIX, DB_TABLE_PREFIX, $this->order_column, $this->order_direction, $this->limit_init, $this->results_per_page );
+                $this->sql = $this->_returnSQL() ;
             }
             return $this->sql;
         }
@@ -608,7 +692,6 @@
             if( is_null($this->total_results) ) {
                 $this->doSearch();
             }
-
             return $this->total_results;
         }
 
@@ -619,16 +702,16 @@
          * @since unknown
          * @param bool $extended if you want to extend ad's data
          */
-        public function doSearch($extended = true) {
-            $result = $this->dao->query($this->makeSQL(false));
-            // get total items
-            $datatmp  = $this->dao->query('SELECT FOUND_ROWS() as totalItems');
-            $data = $datatmp->row();
-            if(isset($data['totalItems'])) {
-                $this->total_results = $data['totalItems'];
-            } else {
-                $this->total_results = 0;
-            }
+        public function doSearch($extended = true) 
+        {
+            $sql = $this->makeSQL(false) ;
+            $result = $this->dao->query($sql);
+            // ---- new count ---
+            $sql = $this->makeSQL(true) ;
+//            error_log($sql) ;
+            $datatmp  = $this->dao->query( $sql ) ; // COUNT
+            
+            $this->total_results = $datatmp->numRows() ;
             
             if( $result == false ) {
                 return array() ;
@@ -654,15 +737,15 @@
          * @since unknown
          * @param int $max
          */
-        public function getPremiums($max = 2) {
-            $this->order(sprintf('order_premium_views', DB_TABLE_PREFIX), 'ASC') ;
+        public function getPremiums($max = 2) 
+        {    
+            $this->order(sprintf('order_premium_views', DB_TABLE_PREFIX), 'ASC', NULL) ;
             $this->page(0, $max);
             $this->addField(sprintf('sum(%st_item_stats.i_num_premium_views) as total_premium_views', DB_TABLE_PREFIX));
             $this->addField(sprintf('( sum(%st_item_stats.i_num_premium_views) + sum(%st_item_stats.i_num_premium_views) * RAND() * 0.7 + DATEDIFF(\'%s\', %st_item.dt_pub_date) * 0.3) as order_premium_views', DB_TABLE_PREFIX, DB_TABLE_PREFIX, date('Y-m-d H:i:s'), DB_TABLE_PREFIX));
             $this->addTable(sprintf('%st_item_stats', DB_TABLE_PREFIX));
             $this->addConditions(sprintf('%st_item_stats.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
             $this->addConditions(sprintf("%st_item.b_premium = 1", DB_TABLE_PREFIX));
-            
             $items = $this->doSearch(false);
             
             $mStat = ItemStats::newInstance();
@@ -684,6 +767,7 @@
         public function getLatestItems($numItems = 10, $category = array())
         {            
             $this->dao->select(DB_TABLE_PREFIX.'t_item.*  , '.DB_TABLE_PREFIX.'t_item_location.*  , cd.s_name as s_category_name') ;
+            // from + tables
             $this->dao->from( DB_TABLE_PREFIX.'t_item use index (PRIMARY)' ) ;
             $this->dao->join( DB_TABLE_PREFIX.'t_item_description',
                     DB_TABLE_PREFIX.'t_item_description.fk_i_item_id = '.DB_TABLE_PREFIX.'t_item.pk_i_id',
@@ -697,22 +781,28 @@
             $this->dao->join( DB_TABLE_PREFIX.'t_category_description as cd',
                     DB_TABLE_PREFIX.'t_item.fk_i_category_id = cd.fk_i_category_id',
                     'LEFT' ) ;
+            
             // where
             $whe  = DB_TABLE_PREFIX.'t_item.b_active = 1 AND ';
             $whe .= DB_TABLE_PREFIX.'t_item.b_enabled = 1 AND ';
             $whe .= DB_TABLE_PREFIX.'t_item.b_spam = 0 AND ';
-            $whe .= '('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 || DATEDIFF(\''. date('Y-m-d H:i:s').'\', '.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days)  ';
+            
+            $whe .= '('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_item.d_expiration >= \''. date('Y-m-d H:i:s').'\') ';
+
             $whe .= 'AND '.DB_TABLE_PREFIX.'t_category.b_enabled = 1 ';
             if( is_array($category) && !empty ($category) ) {
                 $listCategories = implode(',', $category );
                 $whe .= ' AND '.DB_TABLE_PREFIX.'t_item.fk_i_category_id IN ('.$listCategories.') ';
             }
             $this->dao->where( $whe );
+            
             // group by & order & limit
             $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
             $this->dao->orderBy(DB_TABLE_PREFIX.'t_item.pk_i_id', 'DESC');
             $this->dao->limit(0, $numItems);
+            
             $rs = $this->dao->get();
+            
             if($rs === false){
                 return array();
             }
@@ -734,28 +824,7 @@
          */
         public function listCountries($zero = ">", $order = "items DESC")
         {
-            $sql  = '' ;
-            $sql .= 'SELECT '.DB_TABLE_PREFIX.'t_country.pk_c_code, '.DB_TABLE_PREFIX.'t_country.fk_c_locale_code, '.DB_TABLE_PREFIX.'t_country.s_name as country_name, IFNULL(b.items,0) as items ';
-            $sql .= 'FROM (SELECT  '.DB_TABLE_PREFIX.'t_country.pk_c_code, count(*) as items ' ;
-            $sql .= 'FROM ('.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_category) ' ;
-            $sql .= 'RIGHT JOIN '.DB_TABLE_PREFIX.'t_item ON '.DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id ' ;
-            $sql .= 'RIGHT JOIN '.DB_TABLE_PREFIX.'t_country ON '.DB_TABLE_PREFIX.'t_country.pk_c_code = '.DB_TABLE_PREFIX.'t_item_location.fk_c_country_code ';
-            $sql .= 'WHERE '.DB_TABLE_PREFIX.'t_item.b_enabled = 1 ' ;
-            $sql .= 'AND '.DB_TABLE_PREFIX.'t_item.b_active = 1 ' ;
-            $sql .= 'AND '.DB_TABLE_PREFIX.'t_item.b_spam = 0 ' ;
-            $sql .= 'AND '.DB_TABLE_PREFIX.'t_category.b_enabled = 1 ' ;
-            $sql .= 'AND '.DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id ' ;
-            $sql .= 'AND ('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 || DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days) ' ;
-            $sql .= 'GROUP BY '.DB_TABLE_PREFIX.'t_country.pk_c_code ) b ' ;
-            $sql .= 'RIGHT JOIN '.DB_TABLE_PREFIX.'t_country ON '.DB_TABLE_PREFIX.'t_country.pk_c_code = b.pk_c_code ';
-            $sql .= 'HAVING items '.$zero.' 0 ';
-            $sql .= 'ORDER BY '.$order;
-            
-            $result = $this->dao->query($sql);
-            if( $result == false ) {
-                return array() ;
-            }
-            return $result->result();
+           
         }
 
         /**
@@ -771,32 +840,7 @@
          */
         public function listRegions($country = '%%%%', $zero = ">", $order = "items DESC") 
         {    
-            $sql  = '' ;
-            $sql  .= 'SELECT '.DB_TABLE_PREFIX.'t_region.pk_i_id as region_id, '.DB_TABLE_PREFIX.'t_region.s_name as region_name, IFNULL(b.items,0) as items FROM ( ' ;
-            $sql  .= 'SELECT fk_i_region_id as region_id, s_region as region_name, count(*) as items ' ;
-            $sql  .= 'FROM ( '.DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_category ) ' ;
-            $sql  .= 'WHERE '.DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id ' ;
-            $sql .= 'AND '.DB_TABLE_PREFIX.'t_item.b_enabled = 1 ' ;
-            $sql .= 'AND '.DB_TABLE_PREFIX.'t_item.b_active = 1 ' ;
-            $sql .= 'AND '.DB_TABLE_PREFIX.'t_item.b_spam = 0 ' ;
-            $sql .= 'AND '.DB_TABLE_PREFIX.'t_category.b_enabled = 1 ' ;
-            $sql .= 'AND '.DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id ' ;
-            $sql .= 'AND ('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 || DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days) ' ;
-            $sql .= 'GROUP BY '.DB_TABLE_PREFIX.'t_item_location.fk_i_region_id ' ;
-            $sql .= 'HAVING items ' ;
-            $sql .= 'ORDER BY '.$order.' ) as b ' ;
-            $sql .= 'RIGHT JOIN '.DB_TABLE_PREFIX.'t_region ON '.DB_TABLE_PREFIX.'t_region.pk_i_id = b.region_id ' ;
-            if( $country != '%%%%') {
-                $sql .= 'WHERE '.DB_TABLE_PREFIX.'t_region.fk_c_country_code = \''.$this->dao->connId->real_escape_string($country).'\' ' ;
-            }
-            $sql .= 'HAVING items '.$zero.' 0 ' ;
-            $sql .= 'ORDER BY '.$order ;
-            
-            $result = $this->dao->query($sql);
-            if( $result == false ) {
-                return array() ;
-            }
-            return $result->result();
+           
         }
 
         /**
@@ -812,59 +856,9 @@
          * @param string $zero if you want to include locations with zero results
          * @param string $order
          */
-        public function listCities($region = null, $zero = ">", $order = "city_name ASC") {
-            $city_table     = $this->getTablePrefix() . 't_city' ;
-            $location_table = $this->getTablePrefix() . 't_item_location' ;
-            $item_table     = $this->getTablePrefix() . 't_item' ;
-            $category_table = $this->getTablePrefix() . 't_category' ;
-
-            $this->dao->select(array(
-                $location_table . '.fk_i_city_id as city_id',
-                $location_table . '.s_city as city_name',
-                'count(*) as items',
-            )) ;
-            $this->dao->from(array(
-                $item_table,
-                $location_table,
-                $category_table,
-            )) ;
-            $this->dao->where($item_table . '.pk_i_id = ' . $location_table . '.fk_i_item_id') ;
-            $this->dao->where($category_table . '.pk_i_id = ' . $item_table . '.fk_i_category_id') ;
-            $this->dao->where($item_table . '.b_enabled', '1') ;
-            $this->dao->where($item_table . '.b_active', '1') ;
-            $this->dao->where($item_table . '.b_spam', '0') ;
-            $this->dao->where($category_table . '.b_enabled', '1') ;
-            $this->dao->where($location_table . '.fk_i_city_id IS NOT NULL') ;
-            $this->dao->where('(' . $item_table . '.b_premium = 1 || ' . $category_table . '.i_expiration_days = 0 || DATEDIFF(\'' . date('Y-m-d H:i:s') . '\', ' . $item_table . '.dt_pub_date) < ' . $category_table . '.i_expiration_days)') ;
-            if( is_numeric($region) ) {
-                $this->dao->where($location_table . '.fk_i_region_id', $region) ;
-            }
-            $this->dao->groupBy($location_table . '.fk_i_city_id') ;
-            $this->dao->having('items > 0') ;
-            $this->dao->orderBy($order) ;
-
-            $rs = $this->dao->get();
-            if( $rs == false ) {
-                return array() ;
-            }
-
-            $result = $rs->result() ;
-
-            if($zero == '>=') {
-                $aCities     = City::newInstance()->listAll() ;
-                $totalCities = array() ;
-                foreach($aCities as $city) {
-                    $totalCities[$city['pk_i_id']] = array('city_id' => $city['pk_i_id'], 'city_name' => $city['s_name'], 'items' => 0) ;
-                }
-                unset($aCities) ;
-                foreach($result as $c) {
-                    $totalCities[$c['city_id']]['items'] = $c['items'] ;
-                }
-                $result = $totalCities ;
-                unset($totalCities) ;
-            }
-
-            return $result ;
+        public function listCities($region = null, $zero = ">", $order = "city_name ASC") 
+        {
+            
         }
 
         /**
@@ -876,37 +870,9 @@
          * @param string $zero if you want to include locations with zero results
          * @param string $order
          */
-        public function listCityAreas($city = null, $zero = ">", $order = "items DESC") {
-            
-            $aOrder = split(' ', $order);
-            $nOrder = count($aOrder);
-            
-            if($nOrder == 2) $this->dao->orderBy($aOrder[0], $aOrder[1]);
-            else if($nOrder == 1) $this->dao->orderBy($aOrder[0], 'DESC');
-            else $this->dao->orderBy('item', 'DESC');
-            
-            $this->dao->select('fk_i_city_area_id as city_area_id, s_city_area as city_area_name, fk_i_city_id , s_city as city_name, fk_i_region_id as region_id, s_region as region_name, fk_c_country_code as pk_c_code, s_country  as country_name, count(*) as items, '.DB_TABLE_PREFIX.'t_country.fk_c_locale_code');
-            $this->dao->from(DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_category, '.DB_TABLE_PREFIX.'t_country');
-            $this->dao->where(DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id');
-            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_enabled = 1');
-            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_active = 1');
-            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_spam = 0');
-            $this->dao->where(DB_TABLE_PREFIX.'t_category.b_enabled = 1');
-            $this->dao->where(DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id');
-            $this->dao->where('('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 || DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days)');
-            $this->dao->where('fk_i_city_area_id IS NOT NULL');
-            $this->dao->where(DB_TABLE_PREFIX.'t_country.pk_c_code = fk_c_country_code');
-            $this->dao->groupBy('fk_i_city_area_id');
-            $this->dao->having("items $zero 0");
-            
-            $city_int = (int)$city;
-
-            if(is_numeric($city_int) && $city_int!=0) {
-                $this->dao->where("fk_i_city_id = $city_int");
-            }
-            
-            $result = $this->dao->get();
-            return $result->result();
+        public function listCityAreas($city = null, $zero = ">", $order = "items DESC") 
+        {
+          
         }
     }
 

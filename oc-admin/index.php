@@ -30,6 +30,15 @@
 
     WebThemes::newInstance();
     
+    // force upgrade-funcs.php
+//    $new_version = str_replace('.', '', OSCLASS_VERSION);
+//    error_log($new_version ." !=  ". Preference::newInstance()->get('version'));
+////    if( $new_version != Preference::newInstance()->get('version') ) {
+//            require_once(osc_admin_base_path() . 'upgrade.php') ;
+//            $do = new CAdminUpgrade() ;
+//            $do->doModel() ;
+//        break;
+//    }
     switch( Params::getParam('page') )
     {
         case('items'):      require_once(osc_admin_base_path() . 'items.php') ;

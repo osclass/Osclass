@@ -69,6 +69,7 @@
             'fCol_itemIdValue' => '%st_item.pk_i_id'
         ) ;
 
+        private $conditions = array();
         /* For Datatables */
         private $sEcho = null ;
         private $sColumns = array() ;

@@ -38,7 +38,7 @@
                  <?php } ?>
                  <td class="text">
                      <h3>
-                         <span style="float:left;"><a href="<?php echo osc_premium_url() ; ?>"><?php echo osc_premium_title() ; ?></a></span><span style="float:right;"><?php _e("Sponsored ad", "modern"); ?></span>
+                         <span style="float:left;"><a href="<?php echo osc_premium_url() ; ?>"><?php echo osc_highlight( strip_tags( osc_premium_title() ) ); ?></a></span><span style="float:right;"><?php _e("Sponsored ad", "modern"); ?></span>
                      </h3>
                      <p style="clear: left;">
                          <strong><?php if( osc_price_enabled_at_items() ) { echo osc_premium_formated_price() ; ?> - <?php } echo osc_premium_city(); ?> (<?php echo osc_premium_region(); ?>) - <?php echo osc_format_date(osc_premium_pub_date()); ?></strong>
@@ -67,7 +67,7 @@
                  <?php } ?>
                  <td class="text">
                      <h3>
-                         <a href="<?php echo osc_item_url() ; ?>"><?php echo osc_item_title() ; ?></a>
+                         <a href="<?php echo osc_item_url() ; ?>"><?php echo osc_highlight( strip_tags( osc_item_title() ) ); ?></a>
                      </h3>
                      <p>
                          <strong><?php if( osc_price_enabled_at_items() ) { echo osc_item_formated_price() ; ?> - <?php } echo osc_item_city(); ?> (<?php echo osc_item_region(); ?>) - <?php echo osc_format_date(osc_item_pub_date()); ?></strong>

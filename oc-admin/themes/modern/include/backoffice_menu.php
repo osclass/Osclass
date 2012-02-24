@@ -174,7 +174,10 @@
                 &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=tools&action=upgrade"><?php _e('Upgrade OSClass') ; ?></a>
             </li>
             <li>
-                &raquo; <a href="<?php echo osc_admin_base_url(true) ; ?>?page=tools&action=maintenance"><?php _e('Maintenance mode') ; ?></a>
+                &raquo; <a href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=locations"><?php _e('Location stats') ; ?></a>
+            </li>
+            <li>
+                &raquo; <a href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=maintenance"><?php _e('Maintenance mode') ; ?></a>
             </li>
         </ul>
 
