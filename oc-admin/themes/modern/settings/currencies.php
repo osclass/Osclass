@@ -17,7 +17,21 @@
      */
 
     $aCurrencies = __get('aCurrencies') ;
-    $last = end($aCurrencies); $last_id = $last['pk_c_code'] ;
+
+    $aData = array() ;
+    foreach($aCurrencies as $currency) {
+        $row = array() ;
+        $row[] = '<input type="checkbox" name="code[]" value="' . osc_esc_html($currency['pk_c_code']) . '" />' ;
+
+        $options   = array() ;
+        $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) . '\') ;" href="' . osc_admin_base_url(true) . '?page=settings&amp;action=currencies&amp;type=delete&amp;code=' . $currency['pk_c_code'] . '">' . __('Delete') . '</a>' ;
+        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=settings&amp;action=currencies&amp;type=edit&amp;code=' . $currency['pk_c_code'] . '">' . __('Edit') . '</a>' ;
+
+        $row[] = $currency['pk_c_code'] . ' <small>(' . implode(' &middot; ', $options) . ')</small>' ;
+        $row[] = $currency['s_name'] ;
+        $row[] = $currency['s_description'] ;
+        $aData[] = $row ;
+    }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
@@ -48,18 +62,7 @@
                     "bPaginate": false,
                     "bProcessing": false,
                     "bLengthChange": false,
-                    "aaData": [
-                        <?php foreach($aCurrencies as $c) { ?>
-                        [
-                            '<input type="checkbox" name="code[]" value="<?php  echo osc_esc_html($c['pk_c_code']) ; ?>" />',
-                            "<?php echo osc_esc_html($c['pk_c_code']) ; ?> " +
-                                "<small>(<a onclick=\"javascript:return confirm('<?php echo addslashes( osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) ) ; ?>');\" href=\"<?php echo osc_admin_base_url(true) ; ?>?page=settings&amp;action=currencies&amp;type=delete&amp;code=<?php echo urlencode($c['pk_c_code']); ?>\"><?php _e('Delete'); ?></a>" + 
-                                " &middot; <a href=\"<?php echo osc_admin_base_url(true); ?>?page=settings&amp;action=currencies&amp;type=edit&amp;code=<?php echo urlencode($c['pk_c_code']); ?>\"><?php _e('Edit') ; ?></a>)</small>",
-                            "<?php echo osc_esc_html($c['s_name']) ; ?>",
-                            "<?php echo osc_esc_html($c['s_description']) ; ?>"
-                        ]  <?php echo $last_id != $c['pk_c_code'] ? ',' : ''; ?>
-                        <?php } ?>
-                    ],
+                    "aaData": <?php echo json_encode($aData) ; ?>,
                     "aoColumns": [
                         {
                             "sTitle": '<input id="check_all" type="checkbox" />',
