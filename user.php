@@ -143,7 +143,7 @@
                                                     $this->redirectTo( osc_change_user_password_url() ) ;
                                                 }
 
-                                                if( Params::getParam('new_password') != Params::getParam('new_password2', false, false) ) {
+                                                if( Params::getParam('new_password', false, false) != Params::getParam('new_password2', false, false) ) {
                                                     osc_add_flash_error_message( _m('Passwords don\'t match'));
                                                     $this->redirectTo( osc_change_user_password_url() ) ;
                                                 }
