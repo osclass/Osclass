@@ -76,31 +76,31 @@
                             <h3><?php _e('Contact info') ; ?></h3>
                             <div class="input-line">
                                 <label><?php _e('Name') ; ?> <em><?php _e('(required)') ; ?></em></label>
-                                <div class="input">
+                                <div class="input large">
                                     <?php UserForm::name_text($user) ; ?>
                                 </div>
                             </div>
                             <div class="input-line">
                                 <label><?php _e('E-mail') ; ?> <em><?php _e('(required)') ; ?></em></label>
-                                <div class="input">
+                                <div class="input large">
                                     <?php UserForm::email_text($user) ; ?>
                                 </div>
                             </div>
                             <div class="input-line">
                                 <label><?php _e('Cell phone') ; ?></label>
-                                <div class="input">
+                                <div class="input medium">
                                     <?php UserForm::mobile_text($user) ; ?>
                                 </div>
                             </div>
                             <div class="input-line">
                                 <label><?php _e('Phone') ; ?></label>
-                                <div class="input">
+                                <div class="input medium">
                                     <?php UserForm::phone_land_text($user) ; ?>
                                 </div>
                             </div>
                             <div class="input-line">
                                 <label><?php _e('Website') ; ?></label>
-                                <div class="input">
+                                <div class="input medium">
                                     <?php UserForm::website_text($user) ; ?>
                                 </div>
                             </div>
@@ -138,25 +138,25 @@
                             </div>
                             <div class="input-line">
                                 <label><?php _e('City area') ; ?></label>
-                                <div class="input">
+                                <div class="input medium">
                                     <?php UserForm::city_area_text($user) ; ?>
                                 </div>
                             </div>
                             <div class="input-line">
                                 <label><?php _e('Address') ; ?></label>
-                                <div class="input">
+                                <div class="input medium">
                                     <?php UserForm::address_text($user) ; ?>
                                 </div>
                             </div>
                             <div class="input-line">
                                 <label><?php _e('New password') ; ?> <?php if( !$edit ) { printf('<em>%s</em>', __('(twice, required)')) ; } ?></label>
-                                <div class="input">
+                                <div class="input medium">
                                     <?php UserForm::password_text($user) ; ?>
                                     <?php if( $edit ) { ?>
                                     <p class="help-inline"><?php _e('If you would like to change the password type a new one. Otherwise leave this blank') ; ?></p>
                                     <?php } ?>
                                 </div>
-                                <div class="input">
+                                <div class="input medium">
                                     <?php UserForm::check_password_text($user) ; ?>
                                     <?php if( $edit ) { ?>
                                     <p class="help-inline"><?php _e('Type your new password again') ; ?></p>

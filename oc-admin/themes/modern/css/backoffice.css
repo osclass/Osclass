@@ -410,31 +410,31 @@ input[type="file"] {
     border: 0;
 }
 
-input.micro {
+input.micro, .micro > input {
     width: 30px;
 }
 
-input.mini {
+input.mini, .mini > input {
     width: 60px;
 }
 
-input.small {
+input.small, .small > input {
     width: 90px;
 }
 
-input.medium {
+input.medium, .medium > input {
     width: 150px;
 }
 
-input.large {
+input.large, .large > input {
     width: 210px;
 }
 
-input.xlarge {
+input.xlarge, .xlarge > input {
     width: 270px;
 }
 
-input.xxlarge {
+input.xxlarge, .xxlarge > input {
     width: 530px;
 }
 
