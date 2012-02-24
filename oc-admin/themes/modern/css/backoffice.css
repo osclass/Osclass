@@ -251,6 +251,11 @@ body {
     background: url('../images/icon-language.png') no-repeat ;
 }
 
+#content .right p.info {
+    padding-left: 25px;
+    background: url('../images/info-icon.png') no-repeat ;
+}
+
 /* /right container */
 /* footer */
 #footer {
@@ -458,6 +463,17 @@ textarea {
 
 .right .datatables {
     padding: 0;
+}
+
+.right .languages pre {
+    width: 80%;
+    text-align: center;
+    padding: 15px 20px;
+    margin: auto;
+    border: 1px solid #DDD;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius:4px;
 }
 
 .input-line {
