@@ -54,6 +54,7 @@
                                     $sUserName = Params::getParam('s_username');
 
                                     // cleaning parameters
+                                    $sPassword = trim($sPassword);
                                     $sName     = strip_tags($sName);
                                     $sName     = trim($sName);
                                     $sEmail    = strip_tags($sEmail);
@@ -137,6 +138,9 @@
                                     $sUserName      = Params::getParam('s_username');
 
                                     // cleaning parameters
+                                    $sPassword      = trim($sPassword);
+                                    $sPassword2     = trim($sPassword2);
+                                    $sOldPassword   = trim($sOldPassword);
                                     $sName          = strip_tags($sName);
                                     $sName          = trim($sName);
                                     $sEmail         = strip_tags($sEmail);
