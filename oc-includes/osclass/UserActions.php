@@ -37,11 +37,11 @@
                 }
             }
 
-            if( Params::getParam('s_password') == '' ) {
+            if( Params::getParam('s_password', false, false) == '' ) {
                 return 6 ;
             }
 
-            if( Params::getParam('s_password') != Params::getParam('s_password2') ) {
+            if( Params::getParam('s_password', false, false) != Params::getParam('s_password2', false, false) ) {
                 return 7 ;
             }
 
@@ -201,13 +201,13 @@
             if ( $this->is_admin || $is_add ) {
                 $input['s_email'] = Params::getParam('s_email') ;
 
-                if( Params::getParam('s_password') != Params::getParam('s_password2') ) {
+                if( Params::getParam('s_password', false, false) != Params::getParam('s_password2', false, false) ) {
                     return 1 ;
                 }
 
                 //if we want to change the password
-                if( Params::getParam('s_password') != '') {
-                    $input['s_password'] = sha1( Params::getParam('s_password') ) ;
+                if( Params::getParam('s_password', false, false) != '') {
+                    $input['s_password'] = sha1( Params::getParam('s_password', false, false) ) ;
                 }
             }
 

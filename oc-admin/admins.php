@@ -48,7 +48,7 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=admins');
                                     }
                                     // adding a new admin
-                                    $sPassword = Params::getParam('s_password');
+                                    $sPassword = Params::getParam('s_password', false, false);
                                     $sName     = Params::getParam('s_name');
                                     $sEmail    = Params::getParam('s_email');
                                     $sUserName = Params::getParam('s_username');
@@ -131,9 +131,9 @@
                                     $iUpdated = 0;
                                     $adminId  = Params::getParam('id');
 
-                                    $sPassword      = Params::getParam('s_password');
-                                    $sPassword2     = Params::getParam('s_password2');
-                                    $sOldPassword   = Params::getParam('old_password');
+                                    $sPassword      = Params::getParam('s_password', false, false);
+                                    $sPassword2     = Params::getParam('s_password2', false, false);
+                                    $sOldPassword   = Params::getParam('old_password', false, false);
                                     $sName          = Params::getParam('s_name');
                                     $sEmail         = Params::getParam('s_email');
                                     $sUserName      = Params::getParam('s_username');

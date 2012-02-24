@@ -58,7 +58,7 @@ function basic_info() {
         $admin = 'admin' ;
     }
 
-    $password = Params::getParam('s_passwd') ;
+    $password = Params::getParam('s_passwd', false, false) ;
     if( $password == '' ) {
         $password = osc_genRandomPassword() ;
     }
