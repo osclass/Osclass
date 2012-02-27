@@ -465,7 +465,7 @@ textarea {
     padding: 0;
 }
 
-.right .languages pre {
+.right .languages pre, .right .plugins pre {
     width: 80%;
     text-align: center;
     padding: 15px 20px;
