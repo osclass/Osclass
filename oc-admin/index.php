@@ -109,6 +109,10 @@
                             $do = new CAdminCFields() ;
                             $do->doModel() ;
         break;
+        case('upgrade'):    require_once(osc_admin_base_path() . 'upgrade.php') ;
+                            $do = new CAdminUpgrade() ;
+                            $do->doModel() ;
+        break;
         default:            //login of oc-admin
                             require_once(osc_admin_base_path() . 'main.php') ;
                             $do = new CAdminMain() ;

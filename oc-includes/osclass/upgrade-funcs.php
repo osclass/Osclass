@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -298,11 +298,10 @@ CREATE TABLE %st_item_description_tmp (
     }
 
 //    osc_changeVersionTo(240) ;
-
-    if(Params::getParam('action') == '') {
-        $title   = 'OSClass &raquo; Updated correctly' ;
-        $message = 'OSClass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>';
-        osc_die($title, $message) ;
-    }
+    
+    echo '<div style="border: 1px solid rgb(204, 204, 204); background: none repeat scroll 0% 0% rgb(238, 238, 238);"> <div style="padding: 20px;">';
+    echo '<p>'.__('OSClass &raquo; Updated correctly').'</p>' ;
+    echo '<p>'.__('OSClass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
+    echo "</div></div>";
 
 ?>
