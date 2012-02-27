@@ -702,16 +702,18 @@
          * @since unknown
          * @param bool $extended if you want to extend ad's data
          */
-        public function doSearch($extended = true) 
+        public function doSearch($extended = true, $count = true) 
         {
             $sql = $this->makeSQL(false) ;
             $result = $this->dao->query($sql);
-            // ---- new count ---
-            $sql = $this->makeSQL(true) ;
-//            error_log($sql) ;
-            $datatmp  = $this->dao->query( $sql ) ; // COUNT
             
-            $this->total_results = $datatmp->numRows() ;
+            if($count) {
+                $sql = $this->makeSQL(true) ;
+                $datatmp  = $this->dao->query( $sql ) ; // COUNT
+                $this->total_results = $datatmp->numRows() ;
+            } else {
+                $this->total_results = 0;                
+            }
             
             if( $result == false ) {
                 return array() ;
@@ -746,7 +748,7 @@
             $this->addTable(sprintf('%st_item_stats', DB_TABLE_PREFIX));
             $this->addConditions(sprintf('%st_item_stats.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
             $this->addConditions(sprintf("%st_item.b_premium = 1", DB_TABLE_PREFIX));
-            $items = $this->doSearch(false);
+            $items = $this->doSearch(false, false);
             
             $mStat = ItemStats::newInstance();
             foreach($items as $item) {
