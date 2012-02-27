@@ -22,12 +22,14 @@
 
     class CAdminSettings extends AdminSecBaseModel
     {
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             switch($this->action) {
                 case('comments'):       //calling the comments settings view
                                         $this->doView('settings/comments.php');
@@ -1238,12 +1240,14 @@ HTACCESS;
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_current_admin_theme_path($file) ;
             Session::newInstance()->_clearVariables();
         }
 
-        function install_location_by_country() {
+        function install_location_by_country()
+        {
             $country_code    = Params::getParam('c_country');
             $aCountryCode[] = trim($country_code);
             
@@ -1307,7 +1311,8 @@ HTACCESS;
             osc_add_flash_ok_message(sprintf(_m('%s has been added as a new country'), $country), 'admin');
         }
 
-        function install_location_by_region() {
+        function install_location_by_region()
+        {
             $countryParent = Params::getParam('country_c_parent');
             $region        = Params::getParam('region');
 
@@ -1373,4 +1378,5 @@ HTACCESS;
         }
     }
 
+    /* file end: ./oc-admin/settings.php */
 ?>

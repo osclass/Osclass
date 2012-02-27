@@ -22,13 +22,14 @@
 
     class CAdminMain extends AdminSecBaseModel
     {
-
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             switch($this->action) {
                 case('logout'):     // unset only the required parameters in Session
                                     Session::newInstance()->_drop('adminId') ;
@@ -59,10 +60,12 @@
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_current_admin_theme_path($file) ;
             Session::newInstance()->_clearVariables();
         }
     }
 
+    /* file end: ./oc-admin/main.php */
 ?>
