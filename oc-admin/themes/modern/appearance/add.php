@@ -16,66 +16,58 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
+        <!-- container -->
         <div id="content">
-            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-            <div id="right_column">
-                <div id="content_header" class="content_header">
-                    <div style="float: left;">
-                        <img src="<?php echo  osc_current_admin_theme_url('images/pages-icon.png') ; ?>" title="" alt="" />
-                    </div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Add new theme') ; ?></div>
-                    <div style="clear: both;"></div>
+            <?php osc_current_admin_theme_path( 'include/backoffice_menu.php' ) ; ?>
+            <!-- right container -->
+            <div class="right">
+                <div class="header_title">
+                    <h1 class="themes"><?php _e('Add new theme') ; ?></h1>
                 </div>
                 <?php osc_show_admin_flash_messages() ; ?>
-                <!-- add new plugin form -->
-                <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
-                    <div style="padding: 20px;">
-
-                        <?php if(is_writable(osc_themes_path())) { ?>
-
-
-                            <p style="border-bottom: 1px black solid;padding-bottom: 10px;">
-                                <img style="padding-right: 10px;"src="<?php echo osc_current_admin_theme_url('images/info-icon.png') ; ?>"/>
-                                Download more themes at <a href="https://sourceforge.net/projects/osclass/files/Themes/" target="_blank">Sourceforge</a>
-                            </p>
-
-                            <form action="<?php echo osc_admin_base_url(true); ?>" method="post" enctype="multipart/form-data">
-                                <input type="hidden" name="action" value="add_post" />
-                                <input type="hidden" name="page" value="appearance"/>
-                                <p>
-                                    <label for="package"><?php _e('Theme package') ; ?> (.zip)</label>
-                                    <input type="file" name="package" id="package" />
-                                </p>
-                                <input id="button_save" type="submit" value="<?php _e('Upload') ; ?>" />
-                            </form>
-
-                        <?php } else { ?>
-
-                            <div id="flash_message">
-                                <p>
-                                    <?php echo sprintf(__('The theme folder %s is not writable on your server, <span class="OSClass">OSClass</span> can\'t upload themes from the administration panel. Please copy the theme package using FTP or SSH, or make the mentioned themes folder writable.'), osc_themes_path()); ?>
-                                </p>
-                                <p>
-                                    <?php _e('To make a directory writable under UNIX execute this command from the shell'); ?>:
-                                </p>
-                                <p style="background-color: white; border: 1px solid black; padding: 8px;">
-                                    chmod a+w <?php echo osc_themes_path() ; ?>
-                                </p>
-                            </div>
-                        <?php } ?>
-
+                <!-- add themes form -->
+                <div class="appearance">
+                <?php if( is_writable( osc_themes_path() ) ) { ?>
+                    <div class="alert alert-info">
+                        <p class="info"><?php printf( __('Download more themes at %s'), '<a href="https://sourceforge.net/projects/osclass/files/Themes/" target="_blank">Sourceforge</a>') ; ?></p>
                     </div>
+                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="action" value="add_post" />
+                        <input type="hidden" name="page" value="appearance" />
+                        <div class="actions-nomargin">
+                            <p class="text">
+                                <?php _e('Theme package (.zip)') ; ?>
+                                <input type="file" name="package" id="package" />
+                            </p>
+                            <input type="submit" value="<?php echo osc_esc_html( __('Upload') ) ; ?>" />
+                        </div>
+                    </form>
+                <?php } else { ?>
+                    <div class="alert alert-error">
+                        <a class="close" href="#">×</a>
+                        <p><?php _e('Cannot install a new theme') ; ?></p>
+                    </div>
+                    <p class="text">
+                        <?php _e('The theme folder is not writable on your server and you cannot upload thmes from the administration panel. Please make the translation folder writable') ; ?>
+                    </p>
+                    <p class="text">
+                        <?php _e('To make the directory writable under UNIX execute this command from the shell:') ; ?>
+                    </p>
+                    <pre>chmod a+w <?php echo osc_themes_path() ; ?></pre>
+                <?php } ?>
                 </div>
+                <!-- /add themes form -->
             </div>
+            <!-- /right container -->
         </div>
+        <!-- /container -->
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>

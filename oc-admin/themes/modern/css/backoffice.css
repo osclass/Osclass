@@ -203,12 +203,16 @@ body {
 	float: left;
 }
 
-#content .right .header_title {
+#content .header_title {
     padding-top: 5px;
     margin-bottom: 15px;
 }
 
-#content .right .header_title h1 {
+#content .header_title input[type="button"] {
+    float: right;
+}
+
+#content .header_title h1 {
     padding-left: 40px;
     padding-bottom: 2px;
     border-bottom: 1px dotted #CCC;
@@ -219,36 +223,48 @@ body {
     color: #464646;
 }
 
-#content .right .header_title h1.settings {
+#content .header_title h1.settings {
     background: url('../images/settings-icon.png') no-repeat ;
 }
 
-#content .right .header_title h1.currencies {
+#content .header_title h1.currencies {
     background: url('../images/currencies.gif') no-repeat ;
 }
 
-#content .right .header_title h1.media {
+#content .header_title h1.media {
     background: url('../images/media-config-icon.png') no-repeat ;
 }
 
-#content .right .header_title h1.users {
+#content .header_title h1.users {
     background: url('../images/user-group-icon.png') no-repeat ;
 }
 
-#content .right .header_title h1.admins {
+#content .header_title h1.admins {
     background: url('../images/admin-icon.png') no-repeat ;
 }
 
-#content .right .header_title h1.plugins {
+#content .header_title h1.plugins {
     background: url('../images/plugins-icon.png') no-repeat ;
 }
 
-#content .right .header_title h1.tools {
+#content .header_title h1.tools {
     background: url('../images/tools-icon.png') no-repeat ;
 }
 
-#content .right .header_title h1.languages {
+#content .header_title h1.languages {
     background: url('../images/icon-language.png') no-repeat ;
+}
+
+#content .header_title h1.pages {
+    background: url('../images/pages-icon.png') no-repeat ;
+}
+
+#content .header_title h1.themes {
+    background: url('../images/themes-icon.png') no-repeat ;
+}
+
+#content .header_title h1.widgets {
+    background: url('../images/widget-icon.png') no-repeat ;
 }
 
 #content .right p.info {
@@ -465,7 +481,7 @@ textarea {
     padding: 0;
 }
 
-.right .languages pre, .right .plugins pre {
+.right .languages pre, .right .plugins pre, .right .appearance pre {
     width: 80%;
     text-align: center;
     padding: 15px 20px;
@@ -642,3 +658,62 @@ p.text {
     color: #B94A48; 
 }
 /* /settings */
+/* themes */
+.current-theme:after, .current-theme:before {
+    display: table;
+    content: "";
+}
+
+.current-theme:after {
+    clear: both ;
+}
+
+.current-theme h3 {
+    margin-top: 0px;
+}
+
+.current-theme img {
+    float: left;
+    border: 1px solid #ddd;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    width:240px;
+}
+
+.theme {
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-right: 20px;
+    overflow: hidden;
+    padding: 20px 10px;
+    width: 240px;
+}
+
+.theme img {
+    border: 1px solid #ddd;
+    width:240px;
+
+}
+
+.theme h3 {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.theme-actions {
+    margin: 10px 0;
+}
+/* /themes */
+/* widgets */
+.widget-sections {
+    margin: 0 0 20px 0;
+}
+
+.widget-sections ul {
+    margin-left: 10px;
+}
+
+.widget-sections ul li {
+    margin-top: 5px;
+}
+/* /widgets */

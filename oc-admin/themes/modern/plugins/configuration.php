@@ -71,8 +71,8 @@
                         <input type="hidden" name="action" value="configure_post" />
                         <input type="hidden" name="plugin" value="<?php echo $plugin_data['filename']; ?>" />
                         <input type="hidden" name="plugin_short_name" value="<?php echo $plugin_data['short_name']; ?>" />
-                        <h3><?php  echo $plugin_data['plugin_name'] ; ?></h3>
-                        <p class="text"><?php echo $plugin_data['description']; ?></p>
+                        <h2><?php  echo $plugin_data['plugin_name'] ; ?></h2>
+                        <p class="text"><?php echo $plugin_data['description'] ; ?></p>
                         <p class="text">
                             <?php _e('Select the categories where you want to apply these attributes (click on their names to expand them):') ; ?>
                         </p>
