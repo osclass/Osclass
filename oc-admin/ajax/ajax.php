@@ -429,42 +429,36 @@
                         
                         // TO BE IMPROVED
                         // json for datatables
-                        $prefLocale = osc_current_admin_locale();
-                        $aPages = $mPages->listAll(0);
-                        $o_json = array();
-                        foreach($aPages as $key => $page) {
-                            $json_tmp = array();
+                        $prefLocale = osc_current_user_locale() ;
+                        $this->_exportVariableToView( 'pages', $mPages->listAll(0) ) ;
+                        $o_json = array() ;
+                        while( osc_has_static_pages() ) {
+                            $row  = array() ;
+                            $page = osc_static_page();
 
-                            $body = array();
-                            
-                            if(isset($page['locale'][$prefLocale]) && !empty($page['locale'][$prefLocale]['s_title'])) {
-                                $body = $page['locale'][$prefLocale];
+                            $content = array() ;
+                            if( isset($page['locale'][$prefLocale]) && !empty($page['locale'][$prefLocale]['s_title']) ) {
+                                $content = $page['locale'][$prefLocale] ;
                             } else {
-                                $body = current($page['locale']);
+                                $content = current($page['locale']) ;
                             }
-                            $p_body =  str_replace("'", "\'", trim(strip_tags($body['s_title']), "\x22\x27"));
 
-                            $json_tmp[] = "<input type='checkbox' name='id[]' value='". $page['pk_i_id'] ."' />";
-                            $json = osc_esc_html($page['s_internal_name'])."<div id='datatables_quick_edit'>";
-                            $json .= "<a href='". osc_static_page_url() ."'>". __('View page') ."</a> | ";
-                            $json .= "<a href='". osc_admin_base_url(true) ."?page=pages&action=edit&id=". $page['pk_i_id'] ."'>";
-                            $json .= __('Edit') ."</a>";
-                            if(!$page['b_indelible']) {
-                                $json .= " | ";
-                                $json .= "<a onclick=\"javascript:return confirm('";
-                                $json .= __('This action can not be undone. Are you sure you want to continue?') ."')\" ";
-                                $json .= " href='". osc_admin_base_url(true) ."?page=pages&action=delete&id=". $page['pk_i_id'] ."'>";
-                                $json .= __('Delete') ."</a>";
+                            $options   = array() ;
+                            $options[] = '<a href="' . osc_static_page_url() . '">' . __('View page') . '</a>' ;
+                            $options[] = '<a href="' . osc_admin_base_url(true) . '?page=pages&amp;action=edit&amp;id=' . osc_static_page_id() . '">' . __('Edit') . '</a>' ;
+                            if( !$page['b_indelible'] ) {
+                                $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js("This action can't be undone. Are you sure you want to continue?") . '\')" href="' . osc_admin_base_url(true) . '?page=pages&amp;action=delete&amp;id=' . osc_static_page_id() . '">' . __('Delete') . '</a>' ;
                             }
-                            $json .= "</div>";
-                            $json_tmp[] = $json;
-                            $json_tmp[] = $p_body;
-                            $json_tmp[] = $page['i_order'] . " <img id='up' onclick='order_up(". $page['pk_i_id'] .");' style='cursor:pointer;width:15;height:15px;' src='". osc_current_admin_theme_url('images/arrow_up.png') ."'/> <br/> <img id='down' onclick='order_down(". $page['pk_i_id'] .");' style='cursor:pointer;width:15;height:15px;' src='". osc_current_admin_theme_url('images/arrow_down.png')."'/>";
 
-                            $o_json[] = $json_tmp;
+                            $row[] = '<input type="checkbox" name="id[]"" value="' . osc_static_page_id() . '"" />' ;
+                            $row[] = $page['s_internal_name'] . '<div id="datatables_quick_edit" style="display: none;">' . implode(' &middot; ', $options) . '</div>' ;
+                            $row[] = $content['s_title'] ;
+                            $row[] = osc_static_page_order() . ' <img id="up" onclick="order_up(' . osc_static_page_id() . ');" style="cursor:pointer; width:15px; height:15px;" src="' . osc_current_admin_theme_url('images/arrow_up.png') . '"/> <br/><img id="down" onclick="order_down(' . osc_static_page_id() . ');" style="cursor:pointer; width:15px; height:15px; margin-left: 10px;" src="' . osc_current_admin_theme_url('images/arrow_down.png') .'"/>' ;
 
+                            $o_json[] = $row ;
                         }
-                        echo json_encode($o_json);
+
+                        echo json_encode($o_json) ;
                     }
 
                     break;
