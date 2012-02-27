@@ -9,13 +9,14 @@ del {text-decoration: line-through;}
 table {border-collapse: collapse;border-spacing: 0;}
 input:focus { outline:none; }
 
-/* adding/overwriting our styles over jQuery UI CSS Theme */
-.sortable_div .ui-widget-content
-{
+/* adding/overwriting our styles over jQuery UI CSS Theme - dashboard */
+.sortable_div .ui-widget-content {
 	min-height: 200px;
-	height: auto !important;
-	height: 200px; 
+	height: auto;
 	margin: 5px 5px 20px 5px;
+    width: 48%;
+    display: inline-block;
+    float: left;
 }
 
 .sortable_div .ui-state-default {
@@ -25,20 +26,28 @@ input:focus { outline:none; }
 	font-size: 16px;
 }
 
-.widget-placeholder { border: 2px dashed #CCC; height: 200px;}  
+.sortable_div .ui-state-body {
+    padding: 5px 10px;
+}
 
-#sortable_left .widget-placeholder { margin: 5px 5px 20px 10px; }  
-#sortable_right .widget-placeholder { margin: 5px 5px 20px 10px; }
+.latest-items ul li ul {
+    margin-left: 10px;
+}
+
+.main-page li {
+    margin: 2px 0;
+}
+
+.widget-placeholder { border: 2px dashed #CCC; height: 200px; }
 
 ul.ui-accordion-content-active li a.ui-accordion-content-active {
 	font-weight: bold;
 }
 
-.ui-state-active,
-.ui-state-focus {
+.ui-state-active, .ui-state-focus {
 	background: #ddd;
 }
-/* Design refactory started: 30/01/2011 */
+/* Design refactory */
 body {
 	padding: 0;
 	margin: 0;
@@ -221,6 +230,10 @@ body {
     line-height: 34px;
     font-weight: normal;
     color: #464646;
+}
+
+#content .header_title h1.dashboard {
+    background: url('../images/home.png') no-repeat ;
 }
 
 #content .header_title h1.settings {
