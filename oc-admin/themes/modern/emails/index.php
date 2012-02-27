@@ -40,6 +40,7 @@
         <?php osc_current_admin_theme_path('head.php') ; ?>
         <link href="<?php echo osc_current_admin_theme_styles_url('demo_table.css') ; ?>" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.dataTables.min.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.pagination.js') ; ?>"></script>
         <script type="text/javascript">
             $(function() {
                 $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings ) {
@@ -56,11 +57,11 @@
                 } );
 
                 oTable = $('#datatables_list').dataTable({
-                    "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+                    "sDom": "<'row'<'span6 length-menu'l><'span6 filter'>fr>t<'row'<'span6 info-results'i><'span6 paginate'p>>",
                     "sPaginationType": "bootstrap",
-                    "bInfo": false,
+                    "bInfo": true,
                     "bFilter": false,
-                    "bPaginate": false,
+                    "bPaginate": true,
                     "bProcessing": false,
                     "bLengthChange": false,
                     "aaData": <?php echo json_encode($aData) ; ?>,
