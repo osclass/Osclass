@@ -22,7 +22,7 @@
 
     class AdminSecBaseModel extends SecBaseModel
     {
-        function __construct($redirect = true)
+        function __construct()
         {
             parent::__construct() ;
             osc_run_hook( 'init_admin' ) ;
@@ -41,7 +41,8 @@
                 osc_reset_preferences() ;
             }
 
-            if($redirect) {
+            // if there are files from new version, go to upgrade page
+            if( get_class($this) != 'CAdminUpgrade' ) {
                 $config_version = str_replace('.', '', OSCLASS_VERSION);
                 error_log( $config_version."  ".Preference::newInstance()->get('version'));
                 if( $config_version > Preference::newInstance()->get('version')) {

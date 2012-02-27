@@ -23,7 +23,7 @@
     class CAdminUpgrade extends AdminSecBaseModel
     {
         function __construct() {
-            parent::__construct(false) ;
+            parent::__construct() ;
         }
 
         //Business Layer...
