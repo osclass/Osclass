@@ -26,16 +26,14 @@
     require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
     
     if( !defined('AUTO_UPGRADE') ) {
-        error_log("init");
         if(file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
             $sql  = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
             
             $conn = DBConnectionClass::newInstance();
             $c_db = $conn->getOsclassDb() ;
             $comm = new DBCommandClass( $c_db ) ;
-            error_log("init file exist") ;
-            $error_queries = $comm->updateDB( str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ) ;
             
+            $error_queries = $comm->updateDB( str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ) ;   
         }
         
         if( Params::getParam('skipdb') == '' ){
@@ -113,7 +111,6 @@
         $comm->query(sprintf("INSERT INTO %st_pages (s_internal_name, b_indelible, dt_pub_date) VALUES ('email_comment_validated', 1, '%s' )", DB_TABLE_PREFIX, date('Y-m-d H:i:s')));
         $comm->query(sprintf("INSERT INTO %st_pages_description (fk_i_pages_id, fk_c_locale_code, s_title, s_text) VALUES (%d, 'en_US', '{WEB_TITLE} - Your comment has been approved', '<p>Hi {COMMENT_AUTHOR},</p>\n<p>Your comment has been approved on the following item: {ITEM_URL}</p>\n<p>Regards,</p>\n<p>{WEB_TITLE}</p>')", DB_TABLE_PREFIX, $comm->insertedId()));
         
-        osc_changeVersionTo(210) ;
     }
 
     if(osc_version() < 220) {
@@ -121,7 +118,6 @@
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'watermark_text_color', '', 'STRING')", DB_TABLE_PREFIX));
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'watermark_image','', 'STRING')", DB_TABLE_PREFIX));
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'watermark_place', 'centre', 'STRING')", DB_TABLE_PREFIX));
-        osc_changeVersionTo(220) ;
     }
 
     if(osc_version() < 230) {
@@ -203,15 +199,12 @@ CREATE TABLE %st_item_description_tmp (
             }
             $comm->query( $sql );
         }
-
-        osc_changeVersionTo(230) ;
     }
 
     if( osc_version() < 234 ) {
         @unlink(osc_admin_base_path()."upgrade.php");
         @unlink(osc_admin_base_path()."/themes/modern/tools/upgrade-plugins.php");
         @unlink(osc_admin_base_path()."upgrade-plugin.php");
-        osc_changeVersionTo(234) ;
     }
 
     if( osc_version() < 240 ) {
@@ -263,14 +256,6 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('last_version_check', time());
         osc_set_preference('update_core_json', '');
         
-        // set default date for items that not expire (default MAX datetime)
-        $sql = sprintf("update %st_item as a 
-                left join %st_category  as b
-                on b.pk_i_id = a.fk_i_category_id
-                set a.d_expiration = '9999-12-31 23:59:59'
-                where b.i_expiration_days = 0", DB_TABLE_PREFIX, DB_TABLE_PREFIX
-                );
-        $comm->query( $sql ) ;
         $update_d_expiration = sprintf('update %st_item as a 
                     left join %st_category  as b on b.pk_i_id = a.fk_i_category_id
                     set a.d_expiration = date_add(a.dt_pub_date, INTERVAL b.i_expiration_days DAY) 
@@ -299,7 +284,7 @@ CREATE TABLE %st_item_description_tmp (
         echo '<p><b>'.__('You need to calculate locations stats, please go to admin panel, tools, recalculate location stats') .'</b></p>';
     }
 
-//    osc_changeVersionTo(240) ;
+    osc_changeVersionTo(240) ;
     
     echo '<div style="border: 1px solid rgb(204, 204, 204); background: none repeat scroll 0% 0% rgb(238, 238, 238);"> <div style="padding: 20px;">';
     echo '<p>'.__('OSClass &raquo; Updated correctly').'</p>' ;

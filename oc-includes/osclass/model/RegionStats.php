@@ -85,7 +85,7 @@
         }
         
         /**
-         * Increase number of region items, given a region id
+         * Decrease number of region items, given a region id
          * 
          * @access public
          * @since unknown
