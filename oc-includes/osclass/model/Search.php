@@ -704,6 +704,7 @@
          */
         public function doSearch($extended = true, $count = true) 
         {
+            
             $sql = $this->makeSQL(false) ;
             $result = $this->dao->query($sql);
             
@@ -813,6 +814,7 @@
             }
 
             $items = $rs->result();
+            print_r($items);
             return Item::newInstance()->extendData($items);
         }
 
