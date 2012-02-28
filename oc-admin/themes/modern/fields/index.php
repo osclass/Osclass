@@ -131,7 +131,7 @@
                     <h1 class="categories"><?php _e('Custom fields') ; ?></h1>
                 </div>
                 <?php osc_show_admin_flash_messages() ; ?>
-                <div class="jsMessage alert alert-info" style="display: none;">
+                <div class="jsMessage alert alert-ok" style="display: none;">
                     <a class="close" href="#">×</a>
                     <p></p>
                 </div>

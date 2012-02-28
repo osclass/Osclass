@@ -289,6 +289,16 @@ body {
     background: url('../images/info-icon.png') no-repeat ;
 }
 
+#content .right p.ok {
+    padding-left: 25px;
+    background: url('../images/tick.png') no-repeat ;
+}
+
+#content .right p.error {
+    padding-left: 25px;
+    background: url('../images/cross.png') no-repeat ;
+}
+
 /* /right container */
 /* footer */
 #footer {
@@ -546,18 +556,18 @@ textarea {
     display: inline-block;
 }
 
-.input-line .input .help {
+.input .help {
     margin-top: 2px;
     font-size: 12px;
     color: #555555;
 }
 
-.input-line .input .inline {
+.input .inline {
     padding-left: 5px;
     display: inline-block;
 }
 
-.input-line .input .help-inline {
+.input .help-inline {
     padding-left: 5px;
     font-size: 12px;
     color: #555555;
@@ -821,3 +831,53 @@ p.text {
     float: right;
 }
 /* /custom fields */
+/* categories */
+.list-categories a {
+    cursor: pointer;
+}
+
+ul.subcategories {
+    margin-left: 20px;
+}
+
+.category_div {
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+
+div.disabled .category_row {
+    background-color: #FFE8E8;
+}
+
+.category_row, .iframe-category {
+    padding: 5px 10px;
+}
+
+.category_div:after, .category_div:before, .category_row:after, .category_row:before {
+    display: table;
+    content: "";
+}
+
+.category_div:after, .category_row:after {
+    clear: both ;
+}
+
+.toggle {
+    cursor: pointer;
+}
+
+.name-cat {
+    float: left;
+}
+
+.actions-cat {
+    float: right;
+}
+
+.iframe-category h3 {
+    border-bottom: 1px dotted #CCC;
+    padding-bottom: 5px;
+}
+/* /categories */

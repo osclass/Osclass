@@ -99,58 +99,59 @@
                     $media_processing = new MediaProcessingAjax(Params::getParamsAsArray("get"));
                     break;
                 case 'categories_order': // Save the order of the categories
-                    $aIds = Params::getParam('list');
-                    $orderParent = 0;
-                    $orderSub = 0;
-                    $catParent = 0;
+                    $aIds        = Params::getParam('list') ;
+                    $orderParent = 0 ;
+                    $orderSub    = 0 ;
+                    $catParent   = 0 ;
+                    $error       = 0 ;
 
-                    $catManager = Category::newInstance();
+                    $catManager = Category::newInstance() ;
 
-                    foreach ($aIds as $id => $parent) {
-                        if ($parent == 'root') {
-                            $res = $catManager->updateOrder($id, $orderParent);
-                            if (is_bool($res) && !$res) {
-                                $error = 1;
+                    foreach($aIds as $id => $parent) {
+                        if( $parent == 'root' ) {
+                            $res = $catManager->updateOrder($id, $orderParent) ;
+                            if( is_bool($res) && !$res ) {
+                                $error = 1 ;
                             }
                             // set parent category 
-                            $conditions = array('pk_i_id' => $id);
-                            $array['fk_i_parent_id'] = NULL;
-                            $res = $catManager->update($array, $conditions);
-                            if (is_bool($res) && !$res) {
-                                $error = 1;
+                            $conditions = array('pk_i_id' => $id) ;
+                            $array['fk_i_parent_id'] = NULL ;
+                            $res = $catManager->update($array, $conditions) ;
+                            if( is_bool($res) && !$res ) {
+                                $error = 1 ;
                             }
-                            $orderParent++;
+                            $orderParent++ ;
                         } else {
-                            if ($parent != $catParent) {
-                                $catParent = $parent;
-                                $orderSub = 0;
+                            if( $parent != $catParent ) {
+                                $catParent = $parent ;
+                                $orderSub  = 0 ;
                             }
-                            
-                            $res = $catManager->updateOrder($id, $orderSub);
-                            if (is_bool($res) && !$res ) {
-                                $error = 1;
+
+                            $res = $catManager->updateOrder($id, $orderSub) ;
+                            if( is_bool($res) && !$res ) {
+                                $error = 1 ;
                             }
 
                             // set parent category 
-                            $conditions = array('pk_i_id' => $id);
-                            $array['fk_i_parent_id'] = $catParent;
-                            
-                            $res = $catManager->update($array, $conditions);
-                            if (is_bool($res) && !$res) {
-                                $error = 1;
+                            $conditions = array('pk_i_id' => $id) ;
+                            $array['fk_i_parent_id'] = $catParent ;
+
+                            $res = $catManager->update($array, $conditions) ;
+                            if( is_bool($res) && !$res ) {
+                                $error = 1 ;
                             }
-                            $orderSub++;
+                            $orderSub++ ;
                         }
                     }
 
-                    if($error) {
+                    if( $error ) {
                         $result = array( 'error' => __("Some error ocurred") ) ;
                     } else {
                         $result = array( 'ok' => __("Order saved") ) ;
                     }
+
                     echo json_encode($result) ;
-                    
-                    break;
+                break ;
                 case 'category_edit_iframe':
                     $this->_exportVariableToView( 'category', Category::newInstance()->findByPrimaryKey( Params::getParam("id") ) ) ;
                     $this->_exportVariableToView( 'languages', OSCLocale::newInstance()->listAllEnabled() ) ;

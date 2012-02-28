@@ -37,16 +37,6 @@ FLASHMESSAGE;
 
 <link href="<?php echo osc_current_admin_theme_styles_url('jquery-ui.css') ; ?>" rel="stylesheet" type="text/css" />
 <link href="<?php echo osc_current_admin_theme_styles_url('backoffice.css') ; ?>" rel="stylesheet" type="text/css" />
-<!--<link href="<?php echo osc_current_admin_theme_styles_url('demo_table.css') ; ?>" rel="stylesheet" type="text/css" />-->
-<!--<link href="<?php echo osc_current_admin_theme_styles_url('admins_list_layout.css') ; ?>" rel="stylesheet" type="text/css" />-->
-<!--<link href="<?php echo osc_current_admin_theme_styles_url('new_item_layout.css') ; ?>" rel="stylesheet" type="text/css" />-->
-<!--<link href="<?php echo osc_current_admin_theme_styles_url('item_list_layout.css') ; ?>" rel="stylesheet" type="text/css" />-->
-<!--<link href="<?php echo osc_current_admin_theme_styles_url('tabs.css') ; ?>" rel="stylesheet" type="text/css" />-->
-<!--<link href="<?php echo osc_current_admin_theme_styles_url('appearance_layout.css') ; ?>" rel="stylesheet" type="text/css" />-->
-<!--<link href="<?php echo osc_current_admin_theme_styles_url('languages_layout.css') ; ?>" rel="stylesheet" type="text/css" />-->
-<!--<link href="<?php echo osc_current_admin_theme_styles_url('settings_layout.css') ; ?>" rel="stylesheet" type="text/css" />-->
-<!--<link href="<?php echo osc_current_admin_theme_styles_url('location_layout.css') ; ?>" rel="stylesheet" type="text/css" />-->
-<!--<link href="<?php echo osc_current_admin_theme_styles_url('cat_list_layout.css') ; ?>" rel="stylesheet" type="text/css" />-->
 
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.js') ; ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery-ui.js') ; ?>"></script>
@@ -56,11 +46,6 @@ FLASHMESSAGE;
 <!-- global js -->
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('global.js') ; ?>"></script>
 <!-- /global js -->
-<!--<script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('osclass_datatables.js') ; ?>"></script>-->
-<!--<script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('tabber-minimized.js') ; ?>"></script>-->
-<!--<script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('tiny_mce/tiny_mce.js') ; ?>"></script>-->
-<!--<script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.dataTables.min.js') ; ?>"></script>-->
-<!--<script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>-->
 
 <script type="text/javascript">
     var fileDefaultText = '<?php echo osc_esc_js( __('No file selected', 'modern') ) ; ?>';
