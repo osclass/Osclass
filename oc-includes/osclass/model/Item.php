@@ -514,6 +514,39 @@
         }        
         
         /**
+         * Update d_expiration field, using $i_expiration_days 
+         * 
+         * @param type $i_expiration_days 
+         * @return string new date expiration, false if error occurs
+         */
+        public function updateExpirationDate($id, $i_expiration_days) 
+        {
+            if($i_expiration_days > 0) {
+                $sql =  sprintf("UPDATE %s SET d_expiration = ", $this->getTableName());
+                $sql .= sprintf(' date_add(%s.dt_pub_date, INTERVAL %d DAY) ', $this->getTableName(), $i_expiration_days) ;
+                $sql .= sprintf(' WHERE pk_i_id = %d', $id);
+            } else {
+                $sql = sprintf("UPDATE %s SET d_expiration = '9999-12-31 23:59:59'", $this->getTableName());
+            }
+            
+            $result = $this->dao->query($sql);
+            
+            if($result && $result>0) {
+                $this->dao->select('d_expiration');
+                $this->dao->from($this->getTableName());
+                $this->dao->where('pk_i_id', $id);
+                $result = $this->dao->get();
+                
+                if($result && $result->result()>0) {
+                    $_item = $result->row();
+                    return $_item['d_expiration'];
+                }
+                return false;
+            }
+            return false;
+        }
+            
+        /**
          * Return meta fields for a given item
          *
          * @access public
@@ -554,16 +587,11 @@
                 return false ;
             }
 
-            if( $item['b_active'] == 1 && $item['b_enabled']==1 && $item['b_spam']==0) {
+            if( $item['b_active'] == 1 && $item['b_enabled']==1 && $item['b_spam']==0 && !osc_isExpired($item['d_expiration'])) {
                 if($item['fk_i_user_id']!=null) {
-                    $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
-                    if($user) {
-                        User::newInstance()->update( array( 'i_items' => $user['i_items']-1)
-                                                    ,array( 'pk_i_id' => $user['pk_i_id'] ) ) ;
-                    }
+                    User::newInstance()->decreaseNumItems($item['fk_i_user_id']);
                 }
                 CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']) ;
-                // decrease location stats
                 CountryStats::newInstance()->decreaseNumItems($item['fk_c_country_code']);
                 RegionStats::newInstance()->decreaseNumItems($item['fk_i_region_id']);
                 CityStats::newInstance()->decreaseNumItems($item['fk_i_city_id']);

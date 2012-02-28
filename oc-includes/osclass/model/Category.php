@@ -91,26 +91,6 @@
                 $this->dao->where( $where ) ;
             }
 
-            // TODO: Can it be done without subquery?
-            // create subquery
-//            $this->dao->select() ;
-//            $this->dao->from( sprintf( '%s as a', $this->getTableName() ) ) ;
-//            $this->dao->join( sprintf( '%st_category_description as b', $this->getTablePrefix() ), 'a.pk_i_id = b.fk_i_category_id', 'INNER' ) ;
-//            $this->dao->where( "b.s_name != ''" ) ;
-//            $this->dao->orderBy( 'a.i_position', 'DESC' ) ;
-//            $subquery = $this->dao->_getSelect() ;
-//            $this->dao->_resetSelect() ;
-//
-//            $this->dao->select() ;
-//            $this->dao->from( sprintf( '(%s) dummytable', $subquery ) ) ;
-//            $this->dao->join( sprintf( '%st_category_stats as c', $this->getTablePrefix() ), 'dummytable.pk_i_id = c.fk_i_category_id', 'LEFT' ) ;
-//            $this->dao->groupBy( 'pk_i_id' ) ;
-//            $this->dao->orderBy( 'i_position', 'ASC' ) ;
-//            // debug
-//            $_s = $this->dao->_getSelect() ;
-//            error_log( " consulta 1 ".$_s );
-//            $rs = $this->dao->get() ;
-
             $this->dao->select() ;
             $this->dao->from( sprintf( '%s as a', $this->getTableName() ) ) ;
             $this->dao->join( sprintf( '%st_category_description as b', $this->getTablePrefix() ), 'a.pk_i_id = b.fk_i_category_id', 'LEFT' ) ;

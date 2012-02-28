@@ -210,19 +210,14 @@
                 if($active=='INACTIVE') {
                     return 1;
                 } else {
-                    if($aItem['userId']!=null) {
-                        $user = User::newInstance()->findByPrimaryKey($aItem['userId']);
-                        if($user) {
-                            User::newInstance()->update(array( 'i_items' => $user['i_items']+1)
-                                                       ,array( 'pk_i_id' => $user['pk_i_id'] ) );
-                        }
-                    }
-                    CategoryStats::newInstance()->increaseNumItems($aItem['catId']);
-                    // increase location stats
-                    error_log('insert item ... '. $location['fk_c_country_code']);
-                    CountryStats::newInstance()->increaseNumItems($location['fk_c_country_code']);
-                    RegionStats::newInstance()->increaseNumItems($location['fk_i_region_id']);
-                    CityStats::newInstance()->increaseNumItems($location['fk_i_city_id']);
+                    $aAux = array(
+                        'fk_i_user_id'      => $aItem['userId'],
+                        'fk_i_category_id'  => $aItem['catId'],
+                        'fk_c_country_code' => $location['fk_c_country_code'],
+                        'fk_i_region_id'    => $location['fk_i_region_id'],
+                        'fk_i_city_id'      => $location['fk_i_city_id']
+                    );
+                    $this->_increaseStats($aAux);
                     return 2;
                 }
             }
@@ -375,31 +370,89 @@
                     }
                 }
                 
-                // only update stats if item is enabled/actived/noSpam/noExpired
-                if($result==1 && $old_item['b_enabled']==1 && $old_item['b_active']==1 && $old_item['b_spam']==0 && !osc_isExpired($old_item['d_expiration']) ) {
-                    error_log('ItemActions::edit - recalculate stats') ;
+                $oldIsExpired = osc_isExpired($old_item['d_expiration']);
+                $newIsExpired = $oldIsExpired;
+                
+                $d_expiration = $old_item['d_expiration'];
+                // recalculate d_expiration t_item
+                if( $result==1 && $old_item['fk_i_category_id'] != $aItem['catId'] ) {
+                    $_category = Category::newInstance()->findByPrimaryKey($aItem['catId']);
+                    // update d_expiration 
+                    $i_expiration_days = $_category['i_expiration_days'];
+                    $d_expiration = Item::newInstance()->updateExpirationDate($aItem['idItem'], $i_expiration_days);
+                    $newIsExpired = osc_isExpired($d_expiration);
+                }
+                
+                // Recalculate stats related with items
+                $this->_editStats($result, $old_item, $oldIsExpired, $old_item_location, $aItem, $newIsExpired, $location);
+                
+                unset($old_item) ;
+                
+                osc_run_hook('item_edit_post', $aItem['catId'], $aItem['idItem']);
+                return $result;
+            }
+
+            return 0;
+        }           
+     
+        /**
+         * Increment or decrement stats related with items. 
+         *
+         * User item stats, Category item stats,
+         *  country item stats, region item stats, city item stats
+         * 
+         * @param type $result
+         * @param type $old_item
+         * @param type $oldIsExpired
+         * @param type $old_item_location
+         * @param type $aItem
+         * @param type $newIsExpired
+         * @param type $location 
+         */
+        private function _editStats($result, $old_item, $oldIsExpired, $old_item_location, $aItem, $newIsExpired, $location)
+        {
+            if($result==1 && $old_item['b_enabled']==1 && $old_item['b_active']==1 && $old_item['b_spam']==0) {
+                // if old item is expired and new item is not expired.
+                if($oldIsExpired && !$newIsExpired) {
+                    error_log('Item::edit old EXPIRED - new NOTEXPIRED');
+                    // increment new item stats (user, category, location_stats)
+                    if( is_numeric($aItem['userId']) ) {
+                        User::newInstance()->increaseNumItems( $aItem['userId'] ) ;
+                    }
+                    CategoryStats::newInstance()->increaseNumItems($aItem['catId']) ;
+                    CountryStats::newInstance()->increaseNumItems($location['fk_c_country_code']);
+                    RegionStats::newInstance()->increaseNumItems($location['fk_i_region_id']);
+                    CityStats::newInstance()->increaseNumItems($location['fk_i_city_id']);
+                }
+                // if old is not expired and new is expired
+                if(!$oldIsExpired && $newIsExpired) {
+                    error_log('Item::edit old NOTEXPIRED - new EXPIRED');
+                    // decrement new item stats (user, category, location_stats)
+                    if( is_numeric($old_item['fk_i_user_id']) ) {
+                        User::newInstance()->decreaseNumItems( $old_item['fk_i_user_id'] ) ;
+                    }
+                    CategoryStats::newInstance()->decreaseNumItems($aItem['catId']) ;
+                    CountryStats::newInstance()->decreaseNumItems($location['fk_c_country_code']);
+                    RegionStats::newInstance()->decreaseNumItems($location['fk_i_region_id']);
+                    CityStats::newInstance()->decreaseNumItems($location['fk_i_city_id']);
+                }
+                // if old item is not expired and new item is not expired
+                if(!$oldIsExpired && !$newIsExpired) {
+                    error_log('Item::edit old NOTEXPIRED - new NOTEXPIRED');
                     // Update user stats - if old user diferent to actual user, update user stats
                     if($old_item['fk_i_user_id'] != $aItem['userId']) {
                         if( is_numeric($old_item['fk_i_user_id']) ) {
-                            $user = User::newInstance()->findByPrimaryKey($old_item['fk_i_user_id']);
-                            if($user) {
-                                User::newInstance()->update( array( 'i_items' => $user['i_items']-1)
-                                                            ,array( 'pk_i_id' => $user['pk_i_id'] ) ) ;
-                            }
+                            User::newInstance()->decreaseNumItems( $old_item['fk_i_user_id'] ) ;
                         }
                         if( is_numeric($aItem['userId']) ) {
-                            $user = User::newInstance()->findByPrimaryKey($aItem['userId']);
-                            if($user) {
-                                User::newInstance()->update( array( 'i_items' => $user['i_items']+1)
-                                                            ,array( 'pk_i_id' => $user['pk_i_id'] ) ) ;
-                            }
-                        }    
+                            User::newInstance()->increaseNumItems( $aItem['userId'] ) ;
+                        }
                     }
-                    
                     // Update category numbers
                     if($old_item['fk_i_category_id'] != $aItem['catId']) {
                         CategoryStats::newInstance()->increaseNumItems($aItem['catId']) ;
                         CategoryStats::newInstance()->decreaseNumItems($old_item['fk_i_category_id']) ;
+                        // recalculate d_expiration 
                     }
                     // Update location stats
                     if($old_item_location['fk_c_country_code'] != $location['fk_c_country_code']) {
@@ -414,23 +467,13 @@
                         CityStats::newInstance()->decreaseNumItems($old_item_location['fk_i_city_id']);
                         CityStats::newInstance()->increaseNumItems($location['fk_i_city_id']);
                     }
-                } else {
-                    error_log($result.' - '.$old_item['b_enabled'].' - '.$old_item['b_active'].' - '.$old_item['b_spam'].' - ' ) ;
-                    if( !osc_isExpired($old_item['d_expiration'] ) ) {
-                        error_log('NO EXPIRED');
-                    }
                 }
-                
-                unset($old_item) ;
-                // update user 
-                
-                osc_run_hook('item_edit_post', $aItem['catId'], $aItem['idItem']);
-                return $result;
-            }
-
-            return 0;
-        }           
-     
+                // if old and new items are expired [nothing to do]
+                if($oldIsExpired && $newIsExpired) {
+                    error_log('Item::edit old EXPIRED - new EXPIRED');
+                }
+            } 
+        }
         /**
          * Activates an item.
          * Set s_enabled value to 1, for a given item id
@@ -459,8 +502,8 @@
                 // updated correctly
                 if($result == 1) {
                     osc_run_hook( 'activate_item', $id );
-                    
-                    if($item[0]['b_spam']==0) {
+                    // b_enabled == 1 && b_active == 1
+                    if($item[0]['b_spam']==0 && !osc_isExpired($item[0]['d_expiration'])) {
                         $this->_increaseStats($item[0]);
                     }
                     
@@ -491,8 +534,8 @@
                 // updated correctly
                 if($result == 1) {
                     osc_run_hook( 'deactivate_item', $id );
-                    
-                    if($item['b_enabled']==1 && $item['b_spam']==0) {
+                    // b_active = 0
+                    if($item['b_enabled']==1 && $item['b_spam']==0 && !osc_isExpired($item['d_expiration'])) {
                         $this->_decreaseStats($item);
                     }
                     return true;
@@ -521,8 +564,8 @@
                 // updated correctly
                 if($result == 1) {
                     osc_run_hook( 'enable_item', $id );
-                    
-                    if($item['b_active']==1 && $item['b_spam']==0 ) {
+                    // b_enable==1 
+                    if($item['b_active']==1 && $item['b_spam']==0 && !osc_isExpired($item['d_expiration']) ) {
                         $this->_increaseStats($item);
                     }
                     return true;
@@ -552,7 +595,7 @@
                 if($result == 1) {
                     osc_run_hook( 'disable_item', $id );
                     
-                    if($item['b_active']==1 && $item['b_spam']==0) {
+                    if($item['b_active']==1 && $item['b_spam']==0 && !osc_isExpired($item['d_expiration'])) {
                        $this->_decreaseStats($item);
                     }
                     return true;
@@ -625,9 +668,9 @@
                     osc_run_hook("item_spam_off", $id);
                 }
                 
-                if($item['b_active']==1 && $item['b_enabled']==1 && $item['b_spam']==0) {
+                if($item['b_active']==1 && $item['b_enabled']==1 && !osc_isExpired($item['d_expiration']) && $item['b_spam']==0) {
                     $this->_decreaseStats($item);
-                } else if($item['b_active']==1 && $item['b_enabled']==1 && $item['b_spam']==1) {
+                } else if($item['b_active']==1 && $item['b_enabled']==1 && !osc_isExpired($item['d_expiration']) && $item['b_spam']==1) {
                     $this->_increaseStats($item);
                 }
                 
@@ -645,11 +688,7 @@
         private function _increaseStats($item)
         {
             if($item['fk_i_user_id']!=null) {
-                $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
-                if($user) {
-                    User::newInstance()->update( array( 'i_items' => $user['i_items']+1)
-                                                ,array( 'pk_i_id' => $user['pk_i_id'] ) ) ;
-                }
+                User::newInstance()->increaseNumItems($item['fk_i_user_id']);
             }
             CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']);
             CountryStats::newInstance()->increaseNumItems($item['fk_c_country_code']);
@@ -666,11 +705,7 @@
         private function _decreaseStats($item)
         {
             if($item['fk_i_user_id']!=null) {
-                $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
-                if($user) {
-                    User::newInstance()->update( array( 'i_items' => $user['i_items']-1)
-                                                ,array( 'pk_i_id' => $user['pk_i_id'] ) ) ;
-                }
+                User::newInstance()->decreaseNumItems($item['fk_i_user_id']);
             }
             CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
             CountryStats::newInstance()->decreaseNumItems($item['fk_c_country_code']);
