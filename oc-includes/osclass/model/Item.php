@@ -526,7 +526,7 @@
                 $sql .= sprintf(' date_add(%s.dt_pub_date, INTERVAL %d DAY) ', $this->getTableName(), $i_expiration_days) ;
                 $sql .= sprintf(' WHERE pk_i_id = %d', $id);
             } else {
-                $sql = sprintf("UPDATE %s SET d_expiration = '9999-12-31 23:59:59'", $this->getTableName());
+                $sql = sprintf("UPDATE %s SET d_expiration = '9999-12-31 23:59:59'  WHERE pk_i_id = %d", $this->getTableName(), $id);
             }
             
             $result = $this->dao->query($sql);
@@ -534,7 +534,7 @@
             if($result && $result>0) {
                 $this->dao->select('d_expiration');
                 $this->dao->from($this->getTableName());
-                $this->dao->where('pk_i_id', $id);
+                $this->dao->where('pk_i_id', (int)$id );
                 $result = $this->dao->get();
                 
                 if($result && $result->result()>0) {
@@ -797,7 +797,7 @@
                     $item['s_description'] = $data['s_description'];
                     unset($data);
                 }
-                
+//                print_r($item);
                 // populate locations and category_name
                 $this->dao->select() ;
                 $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
