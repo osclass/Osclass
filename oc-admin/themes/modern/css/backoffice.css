@@ -280,6 +280,10 @@ body {
     background: url('../images/widget-icon.png') no-repeat ;
 }
 
+#content .header_title h1.categories {
+    background: url('../images/cat-icon.png') no-repeat ;
+}
+
 #content .right p.info {
     padding-left: 25px;
     background: url('../images/info-icon.png') no-repeat ;
@@ -730,3 +734,90 @@ p.text {
     margin-top: 5px;
 }
 /* /widgets */
+/* custom fields */
+.custom-field-frame {
+    margin: 20px 0;
+    padding: 10px 20px;
+    border: 1px solid #CCC;
+    -webkit-border-radius: 4px;
+       -moz-border-radius: 4px;
+            border-radius: 4px;
+}
+
+.custom-field-frame h3 {
+    border-bottom: 1px dotted #CCC;
+    padding-bottom: 5px;
+}
+
+.preset-categories td {
+    padding: 0 10px;
+    line-height: 14px;
+}
+
+.preset-categories input[type="checkbox"] {
+    margin-left: 2px;
+    margin-right: 5px;
+}
+
+#advanced_fields, #advanced_fields_iframe {
+    cursor: pointer;
+    padding-left: 20px;
+    margin-bottom: 10px;
+}
+
+#advanced_fields p, #advanced_fields_iframe p {
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #999;
+}
+
+.custom-field-expanded {
+    background: url('../images/arrow_expanded.png') no-repeat;
+}
+
+.custom-field-shrink {
+    background: url('../images/arrow_noexpanded.png') no-repeat;
+}
+
+#more-options, #more-options_iframe {
+    margin-left: 20px;
+}
+
+.actions-cfield {
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+.list-fields {
+    margin: 0 20px;
+}
+
+.list-fields a {
+    cursor: pointer;
+}
+
+.list-fields li {
+    padding: 5px 0;
+}
+
+.cfield-div {
+    padding: 5px 5px 5px 0;
+    border-bottom: 1px dotted #CCC;
+}
+
+.cfield-div:after, .cfield-div:before {
+    display: table;
+    content: "";
+}
+
+.cfield-div:after {
+    clear: both ;
+}
+
+.name-edit-cfield {
+    float: left;
+}
+
+.actions-edit-cfield {
+    float: right;
+}
+/* /custom fields */
