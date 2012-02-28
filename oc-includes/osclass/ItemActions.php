@@ -35,6 +35,7 @@
         {
             $success     = true;
             $aItem       = $this->data;
+            
             $code        = osc_genRandomPassword();
             $flash_error = '';
 
@@ -135,6 +136,12 @@
             if ($flash_error) {
                 return $flash_error;
             } else {
+                if($aItem['price']!='') {
+                    $aItem['currency'] = $aItem['currency'];
+                } else {
+                    $aItem['currency'] = NULL;
+                }
+                
                 $this->manager->insert(array(
                     'fk_i_user_id'          => $aItem['userId'],
                     'dt_pub_date'           => date('Y-m-d H:i:s'),
@@ -161,11 +168,22 @@
                 $itemId = $this->manager->dao->insertedId();
                 Log::newInstance()->insertLog('item', 'add', $itemId, current(array_values($aItem['title'])), $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
 
+                // update d_expiration at t_item
+                $_category = Category::newInstance()->findByPrimaryKey($aItem['catId']);
+                // update d_expiration 
+                $i_expiration_days = $_category['i_expiration_days'];
+                $d_expiration = Item::newInstance()->updateExpirationDate($itemId, $i_expiration_days);
+                
                 Params::setParam('itemId', $itemId);
 
                 // INSERT title and description locales
                 $this->insertItemLocales('ADD', $aItem['title'], $aItem['description'], $itemId );
                 // INSERT location item
+                // when id location is null, check locations_name
+//                if($aItem['countryId']==''){
+//                    $aItem['countryId'] = Country::newInstance();
+//                }
+                
                 $location = array(
                     'fk_i_item_id'      => $itemId,
                     'fk_c_country_code' => $aItem['countryId'],
@@ -337,6 +355,12 @@
                     $aItem['contactEmail'] = $user['s_email'];
                 } else {
                     $aItem['userId']      = NULL;
+                }
+                
+                if($aItem['price']!='') {
+                    $aItem['currency'] = $aItem['currency'];
+                } else {
+                    $aItem['currency'] = NULL;
                 }
                 
                 $result = $this->manager->update (
@@ -1077,7 +1101,7 @@
             $aItem['photos']        = Params::getFiles('photos');
 
             // check params
-            // ---------
+
             $country = Country::newInstance()->findByCode($aItem['countryId']);
             if( count($country) > 0 ) {
                 $countryId = $country['pk_c_code'];
@@ -1112,6 +1136,9 @@
             $aItem['regionId']      = $regionId ;
             $aItem['regionName']    = $regionName;
 
+            error_log('find '.$auxRegion['pk_i_id'].'  '.$auxRegion['s_name']);
+            error_log('find '.$auxRegion['pk_i_id'].'  '.$aItem['regionName']);
+            
             if( $aItem['cityId'] != '' ) {
                 if( intval($aItem['cityId']) ) {
                     $city = City::newInstance()->findByPrimaryKey($aItem['cityId']);
