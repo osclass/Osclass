@@ -17,7 +17,9 @@
      */
 
     set_time_limit(0);
-
+    
+    error_log(' ------- START upgrade-funcs ------- ');
+    
     if(!defined('ABS_PATH')) {
         define('ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/');
     }
@@ -47,7 +49,7 @@
             }
         }
     }
-
+    echo '<div style="border: 1px solid rgb(204, 204, 204); background: none repeat scroll 0% 0% rgb(238, 238, 238);"> <div style="padding: 20px;">';
     Preference::newInstance()->update(array('s_value' => time()), array( 's_section' => 'osclass', 's_name' => 'last_version_check'));
 
     $conn = DBConnectionClass::newInstance();
@@ -286,7 +288,7 @@ CREATE TABLE %st_item_description_tmp (
 
     osc_changeVersionTo(240) ;
     
-    echo '<div style="border: 1px solid rgb(204, 204, 204); background: none repeat scroll 0% 0% rgb(238, 238, 238);"> <div style="padding: 20px;">';
+//    echo '<div style="border: 1px solid rgb(204, 204, 204); background: none repeat scroll 0% 0% rgb(238, 238, 238);"> <div style="padding: 20px;">';
     echo '<p>'.__('OSClass &raquo; Updated correctly').'</p>' ;
     echo '<p>'.__('OSClass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
     echo "</div></div>";

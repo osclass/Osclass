@@ -1148,7 +1148,7 @@
                             $struct_queries[] = "ALTER TABLE ".$table." CHANGE COLUMN ".$tbl_field['Field']." ".$normal_fields[strtolower($tbl_field['Field'])];
                         }
                     }
-//                    error_log("--- ".$normal_fields[strtolower($tbl_field['Field'])]);
+                    error_log(" --- ".$normal_fields[strtolower($tbl_field['Field'])]);
                     
                     // Have we changed the default value? [with quotes]
                     if(preg_match("| DEFAULT\s+'(.*)'|i", $normal_fields[strtolower($tbl_field['Field'])], $default_match)) {
@@ -1329,6 +1329,7 @@
         */
         function updateDB($queries = '')
         {
+            error_log(' ----- START updateDB ----- ');
             if(!is_array($queries)) {
                 $queries = explode(";", $queries);
             }
@@ -1343,6 +1344,7 @@
             $tables = $result->result();
             foreach($tables as $v) {
                 $table = current($v);
+                error_log(' ---- ' . $table);
                 if( $this->existTableIntoStruct($table, $struct_queries) ) {
                     $lastTable = NULL;
                     $normal_fields = $indexes = $constrains = array();
@@ -1367,6 +1369,10 @@
                         $this->createForeignKey($tbl_constraint, $table, $struct_queries, $constrains) ;
                         // No need to create the table, so we delete it SQL
                         unset($struct_queries[strtolower($table)]);
+                        error_log(' --- struct_queries ---');
+                        foreach($struct_queries as $q) {
+                            error_log(' --- ' . $q );
+                        }
                     }
                 }
             }        
@@ -1381,7 +1387,15 @@
                     $error_queries[] = $query;
                 }
             }
-
+            if(!empty($error_queries)) {
+                error_log(' --- error_queries ---');
+                foreach($struct_queries as $q) {
+                    error_log(' --- ' . $q );
+                }
+            }
+            
+            error_log(' ----- END updateDB ----- ');
+            
             return array($ok, $queries, $error_queries);
         }
 
