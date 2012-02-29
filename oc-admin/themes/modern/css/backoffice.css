@@ -552,6 +552,10 @@ textarea {
     margin-bottom: 2px;
 }
 
+.input-line > .nested {
+    margin-left: 222px;
+}
+
 .input-line .input input, .input-line .input textarea, .input-line .input select {
     display: inline-block;
 }
