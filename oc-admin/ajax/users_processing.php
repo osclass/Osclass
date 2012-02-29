@@ -148,7 +148,6 @@
                 $row[] = $aRow['dt_mod_date'] ;
 
                 $count++ ;
-
                 $this->result['aaData'][] = $row ;
             }
 
