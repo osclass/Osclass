@@ -112,7 +112,7 @@
             <!-- right container -->
             <div class="right">
                 <div class="header_title">
-                    <h1 class="media"><?php _e('Media') ; ?></h1>
+                    <h1 class="media"><?php _e('Manage Media') ; ?></h1>
                 </div>
                 <?php osc_show_admin_flash_messages() ; ?>
                 <!-- datatables media -->
