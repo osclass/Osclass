@@ -80,7 +80,7 @@
             $this->dao->from($this->getTableName() . ' r') ;
             $this->dao->join($this->getTableItemName() . ' c', 'c.pk_i_id = r.fk_i_item_id') ;
             if( !is_null($itemId) ) {
-                $this->dao->where('r.fk_i_item_id', $itemId) ;
+                $this->dao->where('r.fk_i_item_id', (int)$itemId) ;
             }
 
             $result = $this->dao->get() ;
