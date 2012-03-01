@@ -23,12 +23,14 @@
     class CAdminLogin extends AdminBaseModel
     {
 
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             switch( $this->action ) {
                 case('login_post'):     //post execution for the login
                                         $admin = Admin::newInstance()->findByUsername( Params::getParam('user') ) ;
@@ -139,9 +141,11 @@
         }
 
         //in this case, this function is prepared for the "recover your password" form
-        function doView($file) {
+        function doView($file)
+        {
             require osc_admin_base_path() . $file ;
         }
     }
 
+    /* file end: ./oc-admin/login.php */
 ?>

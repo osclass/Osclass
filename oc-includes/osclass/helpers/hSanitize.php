@@ -122,6 +122,7 @@
      * Formats text so that it can be safely placed in a form field in the event it has HTML tags.
      *
      * @access	public
+     * @version 2.4
      * @param	string
      * @return	string
      */	
@@ -147,6 +148,23 @@
         $str = preg_replace("/$temp(\w+);/","&\\1;",$str);
 
         return $str;
+    }
+
+    /**
+     * Escape single quotes, double quotes, <, >, & and line endings
+     *
+     * @access public
+     * @version 2.4
+     * @param string $str
+     * @return string
+     */
+    function osc_esc_js($str) {
+        $str = htmlspecialchars($str, ENT_COMPAT) ;
+        $str = str_replace("\r", '', $str) ;
+        $str = str_replace("\n", '\\n', $str) ;
+        $str = addslashes($str) ;
+
+        return $str ;
     }
 
 ?>

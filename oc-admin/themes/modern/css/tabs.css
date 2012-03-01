@@ -16,31 +16,26 @@
 }
 
 .tabberlive {
-	margin-top:1em;
+	margin-top: 1em;
 }
 
 /*--------------------------------------------------
   ul.tabbernav = the tab navigation list
   li.tabberactive = the active tab
   --------------------------------------------------*/
-ul.tabbernav
-{
-	margin:0;
-	padding: 3px 0;
+ul.tabbernav {
+	margin: 0;
 	border-bottom: 1px solid #DFDFDF;
 }
 
-ul.tabbernav li
-{
+ul.tabbernav li {
 	list-style: none;
 	margin: 0;
 	display: inline;
 }
 
-ul.tabbernav li a
-{
+ul.tabbernav li a {
 	padding: 3px 0.5em;
-	margin-left: 3px;
 	border:1px solid #DFDFDF;
 	border-bottom: none;
 	background: #F1F1F1;
@@ -53,22 +48,19 @@ ul.tabbernav li a:link { color: #D54E21; }
 ul.tabbernav li a:visited { color: #D54E21; }
 */
 
-ul.tabbernav li a:hover
-{
+ul.tabbernav li a:hover {
 	color: #D54E21;
 }
 
 /**/
-ul.tabbernav li.tabberactive a
-{
+ul.tabbernav li.tabberactive a {
 	color: #333333;
 	background-color: #E3EEF7;
 	border-bottom: 1px solid #E3EEF7;
 }
 
 /**/
-ul.tabbernav li.tabberactive a:hover
-{
+ul.tabbernav li.tabberactive a:hover {
 	color: #333333;
 	background: #E3EEF7;
 	border-bottom: 1px solid #E3EEF7;

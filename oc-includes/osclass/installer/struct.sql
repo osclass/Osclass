@@ -133,9 +133,9 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     i_items INT(10) UNSIGNED NULL DEFAULT 0,
     i_comments INT(10) UNSIGNED NULL DEFAULT 0,
 
-
         PRIMARY KEY (pk_i_id),
         UNIQUE KEY (s_email),
+        KEY idx_s_name (s_name(6)),
         FOREIGN KEY (fk_c_country_code) REFERENCES /*TABLE_PREFIX*/t_country (pk_c_code),
         FOREIGN KEY (fk_i_region_id) REFERENCES /*TABLE_PREFIX*/t_region (pk_i_id),
         FOREIGN KEY (fk_i_city_id) REFERENCES /*TABLE_PREFIX*/t_city (pk_i_id),

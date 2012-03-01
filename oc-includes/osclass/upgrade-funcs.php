@@ -213,6 +213,7 @@ CREATE TABLE %st_item_description_tmp (
     if( osc_version() < 240 ) {
         // We no longer use s_what column in /*TABLE_PREFIX*/t_item_description
         $comm->query( sprintf('ALTER TABLE %st_item_description DROP COLUMN s_what', DB_TABLE_PREFIX) ) ;
+
         @unlink(osc_admin_base_path()."/themes/modern/tools/images.php");
         
         // NEW REWRITE
@@ -229,9 +230,6 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('rewrite_search_category', 'category');
         osc_set_preference('rewrite_search_user', 'user');
         osc_set_preference('rewrite_search_pattern', 'pattern');
-        
-
-
         osc_set_preference('rewrite_contact', 'contact');
         osc_set_preference('rewrite_feed', 'feed');
         osc_set_preference('rewrite_language', 'language');
@@ -257,6 +255,9 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('rewrite_user_change_password', 'user/change_password');
         osc_set_preference('rewrite_user_change_email', 'user/change_email');
         osc_set_preference('rewrite_user_change_email_confirm', 'user/change_email_confirm');
+
+        osc_set_preference('last_version_check', time());
+        osc_set_preference('update_core_json', '');
     }
 
     osc_changeVersionTo(240) ;

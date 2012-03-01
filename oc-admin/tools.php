@@ -22,20 +22,23 @@
 
     class CAdminTools extends AdminSecBaseModel
     {
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
+            parent::doModel() ;
 
-            switch ($this->action) {
-                case 'import':          // calling import view
-                                        $this->doView('tools/import.php');
-                break;
-                case 'import_post':     if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
-                                            $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=import');
+            switch($this->action) {
+                case('import'):         // calling import view
+                                        $this->doView('tools/import.php') ;
+                break ;
+                case('import_post'):    if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=import') ;
                                         }
                                         // calling
                                         $sql = Params::getFiles('sql') ;
@@ -51,17 +54,17 @@
                                                 osc_add_flash_error_message( _m('There was a problem importing data to the database'), 'admin') ;
                                             }
                                         } else {
-                                            osc_add_flash_error_message( _m('No file was uploaded'), 'admin') ;
+                                            osc_add_flash_warning_message( _m('No file was uploaded'), 'admin') ;
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=import') ;
-                break;
-                case 'upgrade':
+                break ;
+                case('upgrade'):
                                         $this->doView('tools/upgrade.php') ;
-                break;
-                case 'backup':
+                break ;
+                case('backup'):
                                         $this->doView('tools/backup.php') ;
-                break;
-                case 'backup-sql':      if( defined('DEMO') ) {
+                break ;
+                case('backup-sql'):     if( defined('DEMO') ) {
                                             osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
                                         }
@@ -94,8 +97,9 @@
                                             break;
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
-                break;
-                case 'backup-sql_file': if( defined('DEMO') ) {
+                break ;
+                case('backup-sql_file'):
+                                        if( defined('DEMO') ) {
                                             osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
                                         }
@@ -136,8 +140,9 @@
                                             break;
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
-                break;
-                case 'backup-zip_file':      if( defined('DEMO') ) {
+                break ;
+                case('backup-zip_file'):
+                                        if( defined('DEMO') ) {
                                             osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
                                         }
@@ -163,7 +168,8 @@
                                             osc_add_flash_error_message( $msg, 'admin') ;
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
-                case 'backup-zip':      if( defined('DEMO') ) {
+                break ;
+                case('backup-zip'):     if( defined('DEMO') ) {
                                             osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
                                         }
@@ -187,46 +193,48 @@
                                             osc_add_flash_error_message( $msg, 'admin') ;
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
-                break;
-                case 'backup_post':
-                                        $this->doView('tools/backup.php');
-                break;
-                case 'maintenance':     if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
-                                            $this->doView('tools/maintenance.php');
-                                            break;
+                break ;
+                case('backup_post'):
+                                        $this->doView('tools/backup.php') ;
+                break ;
+                case('maintenance'):    if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
+                                            $this->doView('tools/maintenance.php') ;
+                                            break ;
                                         }
-                                        $mode = Params::getParam('mode');
-                                        if($mode=='on') {
-                                            $maintenance_file = ABS_PATH . '.maintenance';
-                                            $fileHandler = @fopen($maintenance_file, 'w');
-                                            if($fileHandler) {
+                                        $mode = Params::getParam('mode') ;
+                                        if( $mode == 'on' ) {
+                                            $maintenance_file = osc_base_path() . '.maintenance' ;
+                                            $fileHandler = @fopen($maintenance_file, 'w') ;
+                                            if( $fileHandler ) {
                                                 osc_add_flash_ok_message( _m('Maintenance mode is ON'), 'admin') ;
                                             } else {
-                                                osc_add_flash_error_message( _m('There was an error creating .maintenance file, please create it manually at the root folder'), 'admin') ;
+                                                osc_add_flash_error_message( _m('There was an error creating .maintenance file, please create it manually at the root folder'), 'admin')  ;
                                             }
-                                            fclose($fileHandler);
+                                            fclose($fileHandler) ;
                                             $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=maintenance' ) ;
-                                        } else if($mode=='off') {
-                                            $deleted = @unlink(ABS_PATH . '.maintenance');
-                                            if($deleted) {
+                                        } else if( $mode == 'off' ) {
+                                            $deleted = @unlink(osc_base_path() . '.maintenance') ;
+                                            if( $deleted ) {
                                                 osc_add_flash_ok_message( _m('Maintenance mode is OFF'), 'admin') ;
                                             } else {
                                                 osc_add_flash_error_message( _m('There was an error removing .maintenance file, please remove it manually from the root folder'), 'admin') ;
                                             }
                                             $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=maintenance' ) ;
                                         }
-                                        $this->doView('tools/maintenance.php');
-                break;
+                                        $this->doView('tools/maintenance.php') ;
+                break ;
                 default:
             }
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_current_admin_theme_path($file) ;
-            Session::newInstance()->_clearVariables();
+            Session::newInstance()->_clearVariables() ;
         }
     }
 
+    /* file end: ./oc-admin/tools.php */
 ?>

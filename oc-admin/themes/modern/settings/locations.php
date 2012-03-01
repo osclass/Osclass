@@ -32,9 +32,7 @@
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
-        <div id="update_version" style="display:none;"></div>
         <div id="content">
-            <div id="separator"></div>
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
             <div id="right_column">
                 <div id="content_header" class="content_header">
@@ -44,8 +42,7 @@
                     <div id="content_header_arrow">&raquo; <?php _e('Locations'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
-                <div id="content_separator"></div>
-                <?php osc_show_flash_message('admin') ; ?>
+                <?php osc_show_admin_flash_messages() ; ?>
                 <!-- settings form -->
                 <div id="settings_form" class="locations" style="border: 1px solid #ccc; background: #eee; min-height: 200px; ">
                     <!-- Country -->

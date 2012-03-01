@@ -1,20 +1,3 @@
-fieldset {
-	margin: 10px;
-	background-color: #efefef;
-	border: 1px solid #bbb;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-}
-
-legend {
-	padding-left: 6px;
-	padding-right: 6px;
-	font-family: Verdana;
-	font-size: 12px;
-	font-weight: bold;
-	color: #454545;
-}
-
 #button_save {
 	margin-left: 10px;
 }

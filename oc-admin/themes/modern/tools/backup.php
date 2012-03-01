@@ -16,88 +16,62 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <div id="update_version" style="display:none;"></div>
         <script type="text/javascript">
-            $(document).ready(function(){
-                $.ajaxSetup({
-                    error: function(x,e){
-                        if(x.status==0){
-                            alert("<?php _e('You\'re offline! Please check your connection'); ?>");
-                        } else if(x.status==404){
-                            alert("<?php _e('Requested URL not found'); ?>");
-                        } else if(x.status==500){
-                            alert("<?php _e('Internal server error'); ?>");
-                        } else if(e=='parsererror'){
-                            alert("<?php _e('Error. Parsing JSON request failed'); ?>");
-                        } else if(e=='timeout'){
-                            alert("<?php _e('Request timeout'); ?>");
-                        } else {
-                            alert("<?php _e('Unknown error'); ?>" + x.responseText);
-                        }
-                    }
-                });
-            });
-
             function submitForm(frm, type) {
                 frm.action.value = 'backup-' + type ;
                 frm.submit() ;
             }
-
         </script>
-        
+    </head>
+    <body>
+        <?php osc_current_admin_theme_path('header.php') ; ?>
+        <!-- container -->
         <div id="content">
-            <div id="separator"></div>
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-            <div id="right_column">
-                <div id="content_header" class="content_header">
-                    <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url('images/tools-icon.png') ; ?>" title="" alt=""/>
-                    </div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Backup OSClass'); ?></div>
-                    <div style="clear: both;"></div>
+            <!-- right container -->
+            <div class="right">
+                <div class="header_title">
+                    <h1 class="tools"><?php _e('Backup') ; ?></h1>
                 </div>
-                <div id="content_separator"></div>
-                <?php osc_show_flash_message('admin') ; ?>
-                <!-- add new item form -->
-                <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
-                    <div style="padding: 20px;">
-                        <?php _e('You can back up OSClass here. WARNING: If you don\'t specify a backup folder, the backup files will be created in the root of your OSClass installation') ; ?>
-                        <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" id="bckform" name="bckform" >
-                            <input type="hidden" name="page" value="tools" />
-                            <input type="hidden" name="action" value="" />
-
-                            <p>
-                                <label for="data"><?php _e('Backup folder'); ?></label>
-                                <input type="text" id="backup_dir" name="bck_dir" value="<?php echo osc_base_path() ; ?>" />
-                                <?php _e('This is the folder in which your backups will be created. We recommend that you choose a non-public path. For more information, please refer to OSClass\' documentation')?>.
+                <?php osc_show_admin_flash_messages() ; ?>
+                <!-- tools backup -->
+                <div class="tools backup">
+                    <p class="text">
+                        <?php _e("<strong>WARNING</strong>: If you don't specify a backup folder, the backup files will be created in the root of your OSClass installation.") ; ?>
+                    </p>
+                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" id="bckform" name="bckform" >
+                        <input type="hidden" name="page" value="tools" />
+                        <input type="hidden" name="action" value="" />
+                        <fieldset>
+                            <p class="text">
+                                <?php _e('Backup folder') ; ?>
+                                <input type="text" class="xxlarge" id="backup_dir" name="bck_dir" value="<?php echo osc_base_path() ; ?>" />
                             </p>
-
-                            <p>
-                                <label for="data"><?php _e('Back up database'); ?> (.sql)</label>
-                                <button class="formButton" type="button" onclick="javascript:submitForm(this.form, 'sql');" ><?php _e('Backup (store on server)') ; ?></button>
-                                <button class="formButton" type="button" onclick="javascript:submitForm(this.form, 'sql_file');" ><?php _e('Backup (download file)') ; ?></button>
-                                <div id="steps_sql"></div>
+                            <p class="text">
+                                <?php _e("This is the folder in which your backups will be created. We recommend that you choose a non-public path. For more information, please refer to OSClass' documentation.") ; ?>
                             </p>
-
-                            <p>
-                                <label for="data"><?php _e('Back up OSClass installation'); ?> (.zip)</label>
-                                <button class="formButton" type="button" onclick="javascript:submitForm(this.form, 'zip');" ><?php _e('Backup (store on server)') ; ?></button>
-                                <button class="formButton" type="button" onclick="javascript:submitForm(this.form, 'zip_file');" ><?php _e('Backup (download file)') ; ?></button>
-                                <div id="steps_zip"></div>
+                            <h3><?php _e('Back up database (.sql)') ; ?></h3>
+                            <p class="text">
+                                <input type="button" onclick="javascript:submitForm(this.form, 'sql');" value="<?php echo osc_esc_html( __('Backup (store on server)') ) ; ?>" >
+                                <input type="button" onclick="javascript:submitForm(this.form, 'sql_file');" value="<?php echo osc_esc_html( __('Backup (download file)') ) ; ?>" >
                             </p>
-                        </form>
-                    </div>
+                            <h3><?php _e('Back up OSClass installation') ; ?></h3>
+                            <p class="text">
+                                <input type="button" onclick="javascript:submitForm(this.form, 'zip');" value="<?php echo osc_esc_html( __('Backup (store on server)') ) ; ?>" >
+                                <!--<input type="button" onclick="javascript:submitForm(this.form, 'zip_file');" value="<?php echo osc_esc_html( __('Backup (download file)') ) ; ?>" >-->
+                            </p>
+                        </fieldset>
+                    </form>
                 </div>
-            </div> <!-- end of right column -->
+                <!-- /tools backup -->
+            </div>
+            <!-- /right container -->
         </div>
+        <!-- /container -->
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>

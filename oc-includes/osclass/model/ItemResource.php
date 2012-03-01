@@ -208,11 +208,6 @@
          */
         function getResources($itemId = NULL, $start = 0, $length = 10, $order = 'pk_i_id', $type = 'DESC')
         {
-            if( !in_array($order, $this->getFields()) ) {
-                // order by is incorrect
-                return array() ;
-            }
-
             if( !in_array(strtoupper($type), array('DESC', 'ASC')) ) {
                 // order type is incorrect
                 return array() ;
