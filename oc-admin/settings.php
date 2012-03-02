@@ -598,8 +598,6 @@ HTACCESS;
                                             osc_add_flash_ok_message(_m('Friendly urls successfully deactivated'), 'admin') ;
                                         }
 
-                                        $redirectUrl  = osc_admin_base_url(true) . '?page=settings&action=permalinks';
-                                        $redirectUrl .= $htaccess_status . '&file_status=' . $file_status;
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=settings&action=permalinks' ) ;
                 break;
                 case('spamNbots'):      // calling the spam and bots view
