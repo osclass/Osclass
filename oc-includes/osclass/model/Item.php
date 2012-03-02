@@ -333,7 +333,7 @@
          * @param string $what
          * @return boolean
          */
-        public function insertLocale($id, $locale, $title, $description, $what)
+        public function insertLocale($id, $locale, $title, $description)
         {
             $title       = $title ;
             $description = $description ;
@@ -342,8 +342,7 @@
                 'fk_i_item_id'      => $id,
                 'fk_c_locale_code'  => $locale,
                 's_title'           => $title,
-                's_description'     => $description,
-                's_what'            => $what
+                's_description'     => $description
             ) ;
             return $this->dao->insert(DB_TABLE_PREFIX.'t_item_description', $array_set) ;
         }
@@ -510,8 +509,7 @@
                 's_title'           => $title,
                 's_description'     => $text,
                 'fk_c_locale_code'  => $locale,
-                'fk_i_item_id'      => $id,
-                's_what'            => $title . " " . $text
+                'fk_i_item_id'      => $id
             );
             return $this->dao->replace(DB_TABLE_PREFIX.'t_item_description', $array_replace) ;
         }        
