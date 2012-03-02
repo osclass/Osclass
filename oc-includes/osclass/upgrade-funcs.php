@@ -49,7 +49,7 @@
             }
         }
     }
-    echo '<div style="border: 1px solid rgb(204, 204, 204); background: none repeat scroll 0% 0% rgb(238, 238, 238);"> <div style="padding: 20px;">';
+    $aMessages = array();
     Preference::newInstance()->update(array('s_value' => time()), array( 's_section' => 'osclass', 's_name' => 'last_version_check'));
 
     $conn = DBConnectionClass::newInstance();
@@ -283,14 +283,17 @@ CREATE TABLE %st_item_description_tmp (
                 }
             }
         }
-        echo '<p><b>'.__('You need to calculate locations stats, please go to admin panel, tools, recalculate location stats') .'</b></p>';
+        $url_location_stats = osc_base_admin_url(true)."?page=tools&action=locations";
+        $aMessages[] = '<p><b>'.__('You need to calculate locations stats, please go to admin panel, tools, recalculate location stats or click') .'  <a href="'.$url_location_stats.'">'.__('here').'</a></b></p>';
     }
 
     osc_changeVersionTo(240) ;
     
-//    echo '<div style="border: 1px solid rgb(204, 204, 204); background: none repeat scroll 0% 0% rgb(238, 238, 238);"> <div style="padding: 20px;">';
+    echo '<div style="border: 1px solid rgb(204, 204, 204); background: none repeat scroll 0% 0% rgb(238, 238, 238);"> <div style="padding: 20px;">';
     echo '<p>'.__('OSClass &raquo; Updated correctly').'</p>' ;
     echo '<p>'.__('OSClass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
+    foreach($aMessages as $msg){
+        echo "<p>".$msg."</p>";
+    }
     echo "</div></div>";
-
 ?>
