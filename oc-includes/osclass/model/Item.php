@@ -333,7 +333,7 @@
          * @param string $what
          * @return boolean
          */
-        public function insertLocale($id, $locale, $title, $description, $what)
+        public function insertLocale($id, $locale, $title, $description)
         {
             $title       = $title ;
             $description = $description ;
