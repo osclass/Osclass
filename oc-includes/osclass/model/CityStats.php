@@ -25,7 +25,7 @@
      *
      * @package OSClass
      * @subpackage Model
-     * @since unknown
+     * @since 2.4
      */
     class CityStats extends DAO
     {
@@ -34,7 +34,7 @@
          * It is used as a singleton
          *
          * @access private
-         * @since unknown
+         * @since 2.4
          * @var CityStats
          */
         private static $instance ;
@@ -44,7 +44,7 @@
         * before, it return the previous object
         *
         * @access public
-        * @since unknown
+        * @since 2.4
         * @return CategoryStats
         */
         public static function newInstance()
@@ -57,6 +57,9 @@
 
         /**
          * Set data related to t_city_stats table
+         * 
+         * @access public
+         * @since 2.4
          */
         function __construct()
         {
@@ -70,7 +73,7 @@
          * Increase number of city items, given a city id
          *
          * @access public
-         * @since unknown
+         * @since 2.4
          * @param int $cityId City id 
          * @return int number of affected rows, id error occurred return false
          */
@@ -88,7 +91,7 @@
          * Increase number of city items, given a city id
          * 
          * @access public
-         * @since unknown
+         * @since 2.4
          * @param int $cityId City id 
          * @return int number of affected rows, id error occurred return false
          */
@@ -120,6 +123,8 @@
         /**
          * Set i_num_items, given a city id
          *
+         * @access public
+         * @since 2.4
          * @param type $cityID
          * @param type $numItems
          * @return type 
@@ -135,8 +140,8 @@
          * Find stats by city id
          * 
          * @access public
-         * @since unknown
-         * @param int $cityId city id 
+         * @since 2.4
+         * @param int $cityId city id
          * @return array
          */
         public function findByCityId($cityId) 
@@ -144,6 +149,11 @@
             return $this->findByPrimaryKey($cityId);
         }
         
+        /**
+         *
+         * @param type $regionId
+         * @return type 
+         */
         public function deleteByRegion($regionId)
         {
             $sql = 'delete from '.DB_TABLE_PREFIX.'t_city_stats where fk_i_city_id IN (select pk_i_id from '.DB_TABLE_PREFIX.'t_city where fk_i_region_id = '.$regionId.');' ;
@@ -181,6 +191,12 @@
             return $rs->result() ;
         }
         
+        /**
+         * Calculate the total items that belong to city id 
+         *
+         * @param type $cityId
+         * @return int total items
+         */
         function calculateNumItems($cityId)
         {
             $sql  = 'SELECT count(*) as total FROM '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_category ' ;

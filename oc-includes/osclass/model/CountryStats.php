@@ -57,6 +57,9 @@
 
         /**
          * Set data related to t_country_stats table
+         * 
+         * @access public
+         * @since 2.4
          */
         function __construct()
         {
@@ -121,6 +124,8 @@
         /**
          * Set i_num_items, given a country code
          *
+         * @access public
+         * @since 2.4
          * @param type $countryCode
          * @param type $numItems
          * @return type 
@@ -136,7 +141,7 @@
          * Find stats by country code
          * 
          * @access public
-         * @since unknown
+         * @since 2.4
          * @param int $countryCode country id 
          * @return array 
          */
@@ -152,6 +157,8 @@
          * and ordered by country_name or items counter.
          * $order = 'country_name ASC' OR $oder = 'items DESC'
          *
+         * @access public
+         * @since 2.4
          * @param string $zero
          * @param string $order
          * @return array 
@@ -172,6 +179,12 @@
             return $rs->result() ;
         }
         
+        /**
+         * Calculate the total items that belong to countryCode 
+         *
+         * @param type $countryCode
+         * @return int total items
+         */
         function calculateNumItems($countryCode)
         {
             $sql  = 'SELECT count(*) as total FROM '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_category ' ;
@@ -196,5 +209,5 @@
         }
     }
 
-    /* file end: ./oc-includes/osclass/model/RegionStats.php */
+    /* file end: ./oc-includes/osclass/model/CountryStats.php */
 ?>

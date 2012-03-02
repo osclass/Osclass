@@ -25,7 +25,7 @@
      *
      * @package OSClass
      * @subpackage Model
-     * @since unknown
+     * @since 2.4
      */
     class RegionStats extends DAO
     {
@@ -34,7 +34,7 @@
          * It is used as a singleton
          *
          * @access private
-         * @since unknown
+         * @since 2.4
          * @var RegionStats
          */
         private static $instance ;
@@ -44,7 +44,7 @@
         * before, it return the previous object
         *
         * @access public
-        * @since unknown
+        * @since 2.4
         * @return RegionStats
         */
         public static function newInstance()
@@ -57,6 +57,8 @@
 
         /**
          * Set data related to t_region_stats table
+         * @access public
+         * @since 2.4
          */
         function __construct()
         {
@@ -70,7 +72,7 @@
          * Increase number of region items, given a region id
          *
          * @access public
-         * @since unknown
+         * @since 2.4
          * @param int $regionId Region id 
          * @return int number of affected rows, id error occurred return false
          */
@@ -88,7 +90,7 @@
          * Decrease number of region items, given a region id
          * 
          * @access public
-         * @since unknown
+         * @since 2.4
          * @param int $regionId Region id 
          * @return int number of affected rows, id error occurred return false
          */
@@ -100,9 +102,9 @@
             $this->dao->select( 'i_num_items' ) ;
             $this->dao->from( $this->getTableName() ) ;
             $this->dao->where( $this->getPrimaryKey(), $regionId ) ;
-            $result       = $this->dao->get() ;
-            $regionStat = $result->row() ; 
-            $return       = 0 ;
+            $result         = $this->dao->get() ;
+            $regionStat     = $result->row() ; 
+            $return         = 0 ;
 
             if( isset( $regionStat['i_num_items'] ) ) {
                 $this->dao->from( $this->getTableName() ) ;
@@ -118,7 +120,9 @@
 
         /**
          * Set i_num_items, given a region id
-         *
+         * 
+         * @access public
+         * @since 2.4
          * @param type $regionID
          * @param type $numItems
          * @return type 
@@ -134,7 +138,7 @@
          * Find stats by region id
          * 
          * @access public
-         * @since unknown
+         * @since 2.4
          * @param int $regionId region id 
          * @return array
          */
@@ -150,6 +154,8 @@
          * and ordered by region_name or items counter.
          * $order = 'region_name ASC' OR $oder = 'items DESC'
          * 
+         * @access public
+         * @since 2.4
          * @param string $country
          * @param string $zero
          * @param string $order
@@ -182,6 +188,12 @@
             return $rs->result() ;
         }
         
+        /**
+         * Calculate the total items that belong to region 
+         *
+         * @param type $regionId
+         * @return int total items
+         */
         function calculateNumItems($regionId)
         {
             $sql  = 'SELECT count(*) as total FROM '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_category ' ;
