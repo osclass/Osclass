@@ -408,7 +408,7 @@
                 }
                 
                 // Recalculate stats related with items
-                $this->_editStats($result, $old_item, $oldIsExpired, $old_item_location, $aItem, $newIsExpired, $location);
+                $this->_updateStats($result, $old_item, $oldIsExpired, $old_item_location, $aItem, $newIsExpired, $location);
                 
                 unset($old_item) ;
                 
@@ -433,12 +433,11 @@
          * @param type $newIsExpired
          * @param type $location 
          */
-        private function _editStats($result, $old_item, $oldIsExpired, $old_item_location, $aItem, $newIsExpired, $location)
+        private function _updateStats($result, $old_item, $oldIsExpired, $old_item_location, $aItem, $newIsExpired, $location)
         {
             if($result==1 && $old_item['b_enabled']==1 && $old_item['b_active']==1 && $old_item['b_spam']==0) {
                 // if old item is expired and new item is not expired.
                 if($oldIsExpired && !$newIsExpired) {
-                    error_log('Item::edit old EXPIRED - new NOTEXPIRED');
                     // increment new item stats (user, category, location_stats)
                     if( is_numeric($aItem['userId']) ) {
                         User::newInstance()->increaseNumItems( $aItem['userId'] ) ;
@@ -450,7 +449,6 @@
                 }
                 // if old is not expired and new is expired
                 if(!$oldIsExpired && $newIsExpired) {
-                    error_log('Item::edit old NOTEXPIRED - new EXPIRED');
                     // decrement new item stats (user, category, location_stats)
                     if( is_numeric($old_item['fk_i_user_id']) ) {
                         User::newInstance()->decreaseNumItems( $old_item['fk_i_user_id'] ) ;
@@ -462,7 +460,6 @@
                 }
                 // if old item is not expired and new item is not expired
                 if(!$oldIsExpired && !$newIsExpired) {
-                    error_log('Item::edit old NOTEXPIRED - new NOTEXPIRED');
                     // Update user stats - if old user diferent to actual user, update user stats
                     if($old_item['fk_i_user_id'] != $aItem['userId']) {
                         if( is_numeric($old_item['fk_i_user_id']) ) {
@@ -476,7 +473,6 @@
                     if($old_item['fk_i_category_id'] != $aItem['catId']) {
                         CategoryStats::newInstance()->increaseNumItems($aItem['catId']) ;
                         CategoryStats::newInstance()->decreaseNumItems($old_item['fk_i_category_id']) ;
-                        // recalculate d_expiration 
                     }
                     // Update location stats
                     if($old_item_location['fk_c_country_code'] != $location['fk_c_country_code']) {
@@ -493,11 +489,10 @@
                     }
                 }
                 // if old and new items are expired [nothing to do]
-                if($oldIsExpired && $newIsExpired) {
-                    error_log('Item::edit old EXPIRED - new EXPIRED');
-                }
+                // if($oldIsExpired && $newIsExpired) { }
             } 
         }
+        
         /**
          * Activates an item.
          * Set s_enabled value to 1, for a given item id
@@ -1135,9 +1130,6 @@
             
             $aItem['regionId']      = $regionId ;
             $aItem['regionName']    = $regionName;
-
-            error_log('find '.$auxRegion['pk_i_id'].'  '.$auxRegion['s_name']);
-            error_log('find '.$auxRegion['pk_i_id'].'  '.$aItem['regionName']);
             
             if( $aItem['cityId'] != '' ) {
                 if( intval($aItem['cityId']) ) {
