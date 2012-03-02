@@ -98,6 +98,7 @@
                                                                                         'fk_c_locale_code' => $k,
                                                                                         's_name'           => $v);
                                                                             $mCountries->insert($data);
+                                                                            CountryStats::newInstance()->setNumItems($countryCode, 0);
                                                                         }
                                                                         if(isset($countries->error)) { // Country is not in our GEO database
                                                                             // We have no region for user-typed countries
@@ -114,6 +115,8 @@
                                                                                             "fk_c_country_code" => $r->country_code,
                                                                                             "s_name" => $r->name
                                                                                         ));
+                                                                                        $id = $manager_region->dao->insertedId();
+                                                                                        RegionStats::newInstance()->setNumItems($id, 0);
                                                                                     }
                                                                                 }
                                                                                 unset($regions);
@@ -137,6 +140,8 @@
                                                                                                                     ,"s_name" => $ci->name
                                                                                                                     ,"fk_c_country_code" => $ci->country_code
                                                                                                                 ));
+                                                                                                                $id = $manager_city->dao->insertedId();
+                                                                                                                CityStats::newInstance()->setNumItems($id, 0);
                                                                                                             }
                                                                                                         }
                                                                                                     }
@@ -222,6 +227,8 @@
                                                                             $data = array('fk_c_country_code' => $countryCode
                                                                                          ,'s_name' => $regionName);
                                                                             $mRegions->insert($data);
+                                                                            $id = $mRegions->dao->insertedId();
+                                                                            RegionStats::newInstance()->setNumItems($id, 0);
                                                                             osc_add_flash_ok_message(sprintf(_m('%s has been added as a new region'),
                                                                                                              $regionName), 'admin');
                                                                         } else {
@@ -286,7 +293,9 @@
                                                                         $mCities->insert(array('fk_i_region_id'    => $regionId
                                                                                               ,'s_name'            => $newCity
                                                                                               ,'fk_c_country_code' => $countryCode));
-
+                                                                        $id = $mCities->dao->insertedId();
+                                                                        CityStats::newInstance()->setNumItems($id, 0);
+                                                                        
                                                                         osc_add_flash_ok_message(sprintf(_m('%s has been added as a new city'),
                                                                                                          $newCity), 'admin');
                                                                     } else {
