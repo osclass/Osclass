@@ -52,6 +52,7 @@
         <link href="<?php echo osc_current_admin_theme_styles_url('demo_table.css') ; ?>" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.dataTables.js') ; ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.pagination.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.extend.js') ; ?>"></script>
         <script type="text/javascript">
             function order_up(id) {
                 $('#datatables_list_processing').show() ;
@@ -86,19 +87,6 @@
             }
 
             $(function() {
-                $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings ) {
-                    var anRows = [];
-                    for ( var i=0, iLen = oSettings.aiDisplay.length ; i < iLen ; i++ ) {
-                        var nRow = oSettings.aoData[ oSettings.aiDisplay[i] ].nTr;
-                        anRows.push( nRow );
-                    }
-                    return anRows;
-                };
-
-                $.extend( $.fn.dataTableExt.oStdClasses, {
-                    "sWrapper": "dataTables_wrapper form-inline"
-                } ) ;
-
                 oTable = $('#datatables_list').dataTable({
                     "sDom": "<'row'<'span6 length-menu'l><'span6 filter'>fr>t<'row'<'span6 info-results'i><'span6 paginate'p>>",
                     "sPaginationType": "bootstrap",

@@ -288,6 +288,10 @@ body {
     background: url('../images/comments-icon2.png') no-repeat ;
 }
 
+#content .header_title h1.items {
+    background: url('../images/new-folder-icon.png') no-repeat ;
+}
+
 #content .right p.info {
     padding-left: 25px;
     background: url('../images/info-icon.png') no-repeat ;
