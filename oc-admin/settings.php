@@ -337,7 +337,7 @@
     RewriteRule ^index\.php$ - [L]
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule {$rewrite_base}index.php [L]
+    RewriteRule . {$rewrite_base}index.php [L]
 </IfModule>
 HTACCESS;
 
@@ -359,8 +359,6 @@ HTACCESS;
                                             if( !@apache_mod_loaded('mod_rewrite') ) {
                                                 $status++ ;
                                             }
-
-                                            require_once ABS_PATH . 'generate_rules.php' ;
 
                                             switch($status) {
                                                 case 1:
