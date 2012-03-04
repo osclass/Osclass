@@ -29,6 +29,68 @@
             $(function() {
                 oTable = $('#datatables_list').dataTable({
                     "sAjaxSource": "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=items<?php if( Params::getParam('catId') != '' ) { ?>&catId=<?php echo Params::getParam('catId') ; } ?>",
+                    "fnServerParams": function ( aoData ) {
+                        if( $('input[name="sSearch"]').val() ) {
+                            aoData.push({
+                                "name": "sSearch",
+                                "value": $('input[name="sSearch"]').val()
+                            }) ;
+                        }
+                        if( $('input[name="pk_i_id"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_itemIdValue",
+                                "value": $('input[name="pk_i_id"]').val()
+                            }) ;
+                        }
+                        if( $('input[name="userName"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_userIdValue",
+                                "value": $('input[name="userName"]').val()
+                            }) ;
+                        }
+                        if( $('select[name="countryId"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_countryId",
+                                "value": $('select[name="countryId"]').val()
+                            }) ;
+                        }
+                        if( $('input[name="country"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_country",
+                                "value": $('input[name="country"]').val()
+                            }) ;
+                        }
+                        if( $('input[name="regionId"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_regionId",
+                                "value": $('select[name="regionId"]').val()
+                            }) ;
+                        }
+                        if( $('input[name="region"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_region",
+                                "value": $('input[name="region"]').val()
+                            }) ;
+                        }
+                        if( $('select[name="cityId"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_cityId",
+                                "value": $('select[name="cityId"]').val()
+                            }) ;
+                        }
+                        if( $('input[name="city"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_city",
+                                "value": $('input[name="city"]').val()
+                            }) ;
+                        }
+                        if( $('select[name="catId"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_catId",
+                                "value": $('select[name="catId"]').val()
+                            }) ;
+                        }
+                    },
                     "iDisplayLength": "25",
                     "sDom": "<'row'<'span6 length-menu'l><'span6 filter'>fr>t<'row'<'span6 info-results'i><'span6 paginate'p>>",
                     "sPaginationType": "bootstrap",
@@ -130,6 +192,21 @@
 
                 $('.length-menu').append( $("#bulk_actions") ) ;
                 $('.filter').append( $("#add_item_button") ) ;
+
+                $('input[name="apply-filters"]').bind('click', function() {
+                    oTable.fnDraw() ;
+                }) ;
+
+                $('.show-filters').bind('click', function() {
+                    if( $(this).attr('data-showed') == 'true' ) {
+                        $(this).html('+ <?php _e('Show filters') ; ?>') ;
+                        $(this).attr('data-showed', 'false') ;
+                    } else {
+                        $(this).html('- <?php _e('Hide filters') ; ?>') ;
+                        $(this).attr('data-showed', 'true') ;
+                    }
+                    $('.items-filters').toggle() ;
+                }) ;
             }) ;
         </script>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
@@ -148,6 +225,56 @@
                     <h1 class="items"><?php _e('Manage Items') ; ?></h1>
                 </div>
                 <?php osc_show_admin_flash_messages() ; ?>
+                <!-- items filters -->
+                <h3 class="show-filters" data-showed="false">+ <?php _e('Show filters') ; ?></h3>
+                <div class="items-filters" style="display: none;">
+                    <div class="input-line">
+                        <label><?php _e('Search') ; ?></label>
+                        <div class="input">
+                            <input type="text" class="xlarge" name="sSearch" value="" />
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Item ID') ; ?></label>
+                        <div class="input">
+                            <input type="text" class="small" name="pk_i_id" value="" />
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Item user') ; ?></label>
+                        <div class="input">
+                            <input type="text" class="medium" name="userName" value="" />
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Country') ; ?></label>
+                        <div class="input">
+                            <?php ItemForm::country_select($countries, array('countryId' => '') ) ; ?>
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Region') ; ?></label>
+                        <div class="input">
+                            <?php ItemForm::region_select($regions, null) ; ?>
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('City') ; ?></label>
+                        <div class="input">
+                            <?php ItemForm::city_select($cities, null) ; ?>
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Category') ; ?></label>
+                        <div class="input">
+                            <?php ItemForm::category_select($categories, null, null, true) ; ?>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <input type="button" name="apply-filters" value="<?php echo osc_esc_html( __('Apply filters') ) ; ?>" />
+                    </div>
+                </div>
+                <!-- /items filters -->
                 <!-- datatables items -->
                 <form class="items datatables" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                     <input type="hidden" name="page" value="items" />

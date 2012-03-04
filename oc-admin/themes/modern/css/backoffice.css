@@ -459,38 +459,47 @@ select, input[type="file"] {
 
 input[type="file"] {
     border: 0;
+    margin: 0;
 }
 
 input.micro, .micro > input {
     width: 30px;
+    margin: 0;
 }
 
 input.mini, .mini > input {
     width: 60px;
+    margin: 0;
 }
 
 input.small, .small > input {
     width: 90px;
+    margin: 0;
 }
 
 input.medium, .medium > input {
     width: 150px;
+    margin: 0;
 }
 
 input.large, .large > input {
     width: 210px;
+    margin: 0;
 }
 
 input.xlarge, .xlarge > input {
     width: 270px;
+    margin: 0;
 }
 
 input.xxlarge, .xxlarge > input {
     width: 530px;
+    margin: 0;
 }
 
 textarea {
     min-width: 400px;
+    margin: 0;
 }
 /* /form */
 /* settings */
@@ -566,6 +575,7 @@ textarea {
 
 .input-line .input input, .input-line .input textarea, .input-line .input select {
     display: inline-block;
+    margin: 0;
 }
 
 .input .help {
@@ -893,3 +903,6 @@ div.disabled .category_row {
     padding-bottom: 5px;
 }
 /* /categories */
+.show-filters {
+    cursor: pointer;
+}
