@@ -255,7 +255,7 @@
             if($info=='') {
                 $aLocales = osc_get_locales();
                 foreach($aLocales as $locale) {
-                    $info = osc_user_field("s_info", $locale);
+                    $info = osc_user_field("s_info", $locale['pk_c_code']) ;
                     if($info!='') {
                         break;
                     }
