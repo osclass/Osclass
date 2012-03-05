@@ -291,12 +291,10 @@
                 if(isset($item['locale'][$prefLocale])) {
                     $item['s_title']        = $item['locale'][$prefLocale]['s_title'];
                     $item['s_description']  = $item['locale'][$prefLocale]['s_description'];
-                    $item['s_what']         = $item['locale'][$prefLocale]['s_what'];
                 } else {
                     $data = current($item['locale']);
                     $item['s_title']        = $data['s_title'];
                     $item['s_description']  = $data['s_description'];
-                    $item['s_what']         = $data['s_what'];
                     unset($data);
                 }
                 $results[] = $item;

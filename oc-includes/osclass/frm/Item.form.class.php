@@ -178,26 +178,24 @@
         }
         // OK
         static public function currency_select($currencies = null, $item = null) {
-            if($currencies==null) { $currencies = osc_get_currencies(); };
-            if($item==null) { $item = osc_item(); }
-            if( Session::newInstance()->_getForm('currency') != "" ) {
-                $item['fk_c_currency_code'] = Session::newInstance()->_getForm('currency');
+            if( $currencies == null ) { $currencies = osc_get_currencies() ; }
+            if( $item == null) { $item = osc_item() ; }
+            if( Session::newInstance()->_getForm('currency') != '' ) {
+                $item['fk_c_currency_code'] = Session::newInstance()->_getForm('currency') ;
             }
-            if(count($currencies) > 1 ) {
-                $default_key = null;
-                $currency = osc_get_preference('currency');
-                if ( isset($item['fk_c_currency_code']) ) {
-                    $default_key = $item['fk_c_currency_code'];
-                } elseif ( is_array($currency) ) {
-                    if ( isset($currency['s_value']) ) {
-                        $default_key = $currency['s_value'];
-                    }
+            if( count($currencies) > 1 ) {
+                $default_key = null ;
+                $currency = osc_get_preference('currency') ;
+                if( isset($item['fk_c_currency_code']) ) {
+                    $default_key = $item['fk_c_currency_code'] ;
+                } elseif( isset( $currency ) ) {
+                    $default_key = $currency ;
                 }
 
                 parent::generic_select('currency', $currencies, 'pk_c_code', 's_description', null, $default_key) ;
-            } else if (count($currencies) == 1) {
+            } else if( count($currencies) == 1 ) {
                 parent::generic_input_hidden("currency", $currencies[0]["pk_c_code"]) ;
-                echo $currencies[0]['s_description'];
+                echo $currencies[0]['s_description'] ;
             }
         }
         // OK
@@ -243,7 +241,7 @@
             if( Session::newInstance()->_getForm('region') != ''){
                 $regions = null;
             } else {
-                if($regions==null) { $regions = osc_get_regions(); };
+                if($regions==null) { $regions = array(); };
             }
             
             if($item==null) { $item = osc_item(); };
@@ -271,7 +269,7 @@
             if( Session::newInstance()->_getForm('city') != ''){
                 $cities = null;
             } else {
-                if($cities==null) { $cities = osc_get_cities(); };
+                if($cities==null) { $cities = array(); };
             }
             if($item==null) { $item = osc_item(); };
             if( count($cities) >= 1 ) {

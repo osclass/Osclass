@@ -122,12 +122,21 @@
                     $result = ItemResource::newInstance()->existResource($id, $code) ;
 
                     if ($result > 0) {
-                        // Delete: file, db table entry
-                        osc_deleteResource($id);
-                        ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $item, 's_name' => $code) );
+                        
+                        $resource = ItemResource::newInstance()->findByPrimaryKey($id);
+                        
+                        if($resource['fk_i_item_id']==$item) {
 
-                        $json['msg'] =  _m('The selected photo has been successfully deleted') ;
-                        $json['success'] = 'true';
+                            // Delete: file, db table entry
+                            osc_deleteResource($id);
+                            ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $item, 's_name' => $code) );
+
+                            $json['msg'] =  _m('The selected photo has been successfully deleted') ;
+                            $json['success'] = 'true';
+                        } else {
+                            $json['msg'] = _m("The selected photo does not belong to you") ;
+                            $json['success'] = 'false';
+                        }
                     } else {
                         $json['msg'] = _m("The selected photo couldn't be deleted") ;
                         $json['success'] = 'false';

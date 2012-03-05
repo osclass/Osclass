@@ -28,7 +28,7 @@
                             <img src="oc-includes/images/osclass-logo.png" alt="OSClass" title="OSClass"/>
                         </a>
                         <br/>
-                        Version 2.3.5
+                        Version 2.3.6
                     </h1>
                 </div>
                 <div id="content">

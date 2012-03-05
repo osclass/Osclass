@@ -68,7 +68,8 @@
                                         $wat = new Watermark();
                                         $aResources = ItemResource::newInstance()->getAllResources();
                                         foreach($aResources as $resource) {
-                                            
+                                            Log::newInstance()->insertLog('tools', 'regenerate images', $resource['pk_i_id'], $resource['pk_i_id'], 'admin', osc_logged_admin_id());
+
                                             osc_run_hook('regenerate_image', $resource);
                                             
                                             $path = osc_content_path() . 'uploads/' ;
@@ -131,11 +132,10 @@
                                                 osc_run_hook('regenerated_image', ItemResource::newInstance()->findByPrimaryKey($resource['pk_i_id']));
                                                 // si extension es direfente a jpg, eliminar las imagenes con $extension si hay
                                                 if( $extension != 'jpg' ) {
-                                                    $files_to_remove = osc_content_path(). 'uploads/' . $resource['pk_i_id'] . "*" . $extension;
-                                                    $fs = glob( $files_to_remove );
-                                                    if(is_array($fs)) {
-                                                        array_map( "unlink", $fs );
-                                                    }
+                                                    @unlink(osc_content_path(). 'uploads/' . $resource['pk_i_id'] . "." . $extension);
+                                                    @unlink(osc_content_path(). 'uploads/' . $resource['pk_i_id'] . "_original." . $extension);
+                                                    @unlink(osc_content_path(). 'uploads/' . $resource['pk_i_id'] . "_preview." . $extension);
+                                                    @unlink(osc_content_path(). 'uploads/' . $resource['pk_i_id'] . "_thumbnail." . $extension);
                                                 }
                                                 // ....
                                             } else {
