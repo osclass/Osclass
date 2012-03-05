@@ -1,3 +1,14 @@
+OSClass 2.3.5 2012-03-05
+------------------------
+- PHP Warning in user profile when the description was empty
+- Added missing helper: osc_reset_resources
+- Contact publisher is working OK now
+- Database errors during the installation are caught correctly. Now if you don't set well the database configuration, it warns you
+- Fixed redirect after wrong reCAPTCHA code after posting an item
+- We've removed PHP warnings from HTMLPurifier library
+- Default currency is selected in item forms
+- We've added more checks in image deletion
+
 OSClass 2.3.5 2012-01-16
 ------------------------
 - Escape quotes in attr values of input tags using a new helper: osc_esc_html
