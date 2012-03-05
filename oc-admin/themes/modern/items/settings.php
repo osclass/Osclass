@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="input">
                                     <label class="checkbox">
-                                        <input type="checkbox" <?php echo ( ( osc_moderate_items() == -1 ) ? '' : 'checked="true"' ) ; ?> name="moderate_items" value="1" />
+                                        <input type="checkbox" <?php echo ( ( osc_recaptcha_items_enabled() == '0' ) ? '' : 'checked="true"' ) ; ?> name="enabled_recaptcha_items" value="1" />
                                         <p class="inline"><?php _e('Show reCAPTCHA in add/edit item form') ; ?></p>
                                         <p class="help-inline"><?php _e('<strong>Remember</strong> that you must configure reCAPTCHA first') ; ?></p>
                                     </label>

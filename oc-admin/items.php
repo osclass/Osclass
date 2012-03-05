@@ -532,7 +532,7 @@
                 case('settings_post'):     // update item settings
                                         $iUpdated                   = 0;
                                         $enabledRecaptchaItems      = Params::getParam('enabled_recaptcha_items');
-                                        $enabledRecaptchaItems      = (($enabledRecaptchaItems != '') ? true : false);
+                                        $enabledRecaptchaItems      = (($enabledRecaptchaItems == '1') ? true : false);
                                         $moderateItems              = Params::getParam('moderate_items');
                                         $moderateItems              = (($moderateItems != '') ? true : false);
                                         $numModerateItems           = Params::getParam('num_moderate_items');
