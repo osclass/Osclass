@@ -30,8 +30,9 @@
          * @var type 
          */
         private $conditions;
+        private $itemConditions;
         private $tables;
-        private $tables_join;
+        private $tables_join; // ?
         private $sql;
         private $order_column;
         private $order_direction;
@@ -47,6 +48,17 @@
         private $sPattern;
         
         private $withPattern;
+        private $withPicture;
+        private $withLocations;
+        private $withCategoryId;
+        private $withUserId;
+        private $withItemId;
+        
+        private $price_min;
+        private $price_max;
+        
+        private $user_ids;
+        private $itemId;
         
         private static $instance ;
 
@@ -68,7 +80,17 @@
             $this->setTableName('t_item') ;
             $this->setFields( array('pk_i_id') ) ;
             
-            $this->withPattern  = false;
+            $this->withPattern      = false;
+            $this->withLocations    = false;
+            $this->withCategoryId   = false;
+            $this->withUserId       = false;
+            $this->withPicture      = false;
+            
+            $this->price_min = null;
+            $this->price_max = null;
+            
+            $this->user_ids  = null;
+            $this->itemId    = null;
             
             $this->city_areas   = array();
             $this->cities       = array();
@@ -79,6 +101,7 @@
             $this->tables       = array();
             $this->tables_join  = array();
             $this->search_fields = array();
+            $this->itemConditions   = array();
             
             $this->order();
             $this->limit();
@@ -88,10 +111,10 @@
                 // t_category
                 $this->addJoinTable('category', sprintf('%st_category', DB_TABLE_PREFIX), sprintf('%st_category.pk_i_id = %st_item.fk_i_category_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX), 'LEFT');
                 // t_item 
-                $this->addConditions(sprintf("%st_item.b_enabled = 1 ", DB_TABLE_PREFIX));
-                $this->addConditions(sprintf("%st_item.b_active = 1 ", DB_TABLE_PREFIX));
-                $this->addConditions(sprintf("%st_item.b_spam = 0", DB_TABLE_PREFIX));
-                $this->addConditions(sprintf("(%st_item.b_premium = 1 || %st_item.d_expiration >= '%s')", DB_TABLE_PREFIX, DB_TABLE_PREFIX, date('Y-m-d H:i:s')) ) ;            
+                $this->addItemConditions(sprintf("%st_item.b_enabled = 1 ", DB_TABLE_PREFIX));
+                $this->addItemConditions(sprintf("%st_item.b_active = 1 ", DB_TABLE_PREFIX));
+                $this->addItemConditions(sprintf("%st_item.b_spam = 0", DB_TABLE_PREFIX));
+                $this->addItemConditions(sprintf("(%st_item.b_premium = 1 || %st_item.d_expiration >= '%s')", DB_TABLE_PREFIX, DB_TABLE_PREFIX, date('Y-m-d H:i:s')) ) ;
             }
             $this->total_results = null;
             
@@ -100,7 +123,7 @@
                 // s_user_name
                 $this->addField(sprintf('%st_item.s_contact_name as s_user_name', DB_TABLE_PREFIX) );
                 // t_location
-                $this->addJoinTable('locations', sprintf('%st_item_location',DB_TABLE_PREFIX), sprintf('%st_item_location.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX), 'LEFT');
+//                $this->addJoinTable('locations', sprintf('%st_item_location',DB_TABLE_PREFIX), sprintf('%st_item_location.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX), 'LEFT');
                 $this->addField(sprintf('%st_item_location.*', DB_TABLE_PREFIX) );
             }
         }
@@ -155,6 +178,34 @@
                 if($conditions!='') {
                     if(!in_array($conditions, $this->conditions)) {
                         $this->conditions[] = $conditions;
+                    }
+                }
+            }
+        }
+        
+        /**
+         * Add item conditions to the search
+         *
+         * @access public
+         * @since unknown
+         * @param mixed $conditions
+         */
+        public function addItemConditions($conditions) 
+        {
+            if(is_array($conditions)) {
+                foreach($conditions as $condition) {
+                    $condition = trim($condition);
+                    if($condition!='') {
+                        if(!in_array($condition, $this->itemConditions)) {
+                            $this->itemConditions[] = $condition;
+                        }
+                    }
+                }
+            } else {
+                $conditions = trim($conditions);
+                if($conditions!='') {
+                    if(!in_array($conditions, $this->itemConditions)) {
+                        $this->itemConditions[] = $conditions;
                     }
                 }
             }
@@ -460,14 +511,18 @@
          * @param int $price_max
          */
         public function priceRange( $price_min = 0, $price_max = 0) 
-                {
-            $price_min = 1000000*$price_min;
-            $price_max = 1000000*$price_max;
-            if(is_numeric($price_min) && $price_min!=0) {
-                $this->addConditions(sprintf("i_price >= %0.0f", $price_min));
+        {
+            $this->price_min = 1000000*$price_min;
+            $this->price_max = 1000000*$price_max;
+        }
+        
+        private function _priceRange()
+        {
+            if(is_numeric($this->price_min) && $this->price_min!=0) {
+                $this->dao->where(sprintf("i_price >= %0.0f", $this->price_min));
             }
-            if(is_numeric($price_max) && $price_max>0) {
-                $this->addConditions(sprintf("i_price <= %0.0f", $price_max));
+            if(is_numeric($this->price_max) && $this->price_max>0) {
+                $this->dao->where(sprintf("i_price <= %0.0f", $this->price_max));
             }
         }
 
@@ -505,8 +560,7 @@
         public function withPicture($pic = false) 
         {
             if($pic) {
-                $this->addTable(sprintf('%st_item_resource', DB_TABLE_PREFIX));
-                $this->addConditions(sprintf("%st_item_resource.s_content_type LIKE '%%image%%' AND %st_item.pk_i_id = %st_item_resource.fk_i_item_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+                $this->withPicture = true;
             }
         }
 
@@ -521,8 +575,6 @@
         {
             $this->withPattern  = true;
             $this->sPattern     = $pattern;
-//            $this->addField(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE) as relevance", $pattern));
-//            $this->addConditions(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $pattern));
         }
         
         /**
@@ -535,16 +587,36 @@
         public function fromUser($id = NULL) 
         {
             if(is_array($id)) {
+                $this->withUserId = true;
                 $ids = array();
                 foreach($id as $_id) {
                     $ids[] = sprintf("%st_item.fk_i_user_id = %d ", DB_TABLE_PREFIX, $_id);
                 }
-                $this->addConditions(" ( ".implode(" || ", $ids)." ) ");
+                $this->user_ids = $ids;
             } else {
-                $this->addConditions(sprintf("%st_item.fk_i_user_id = %d ", DB_TABLE_PREFIX, $id));
+                $this->withUserId = true;
+                $this->user_ids = $id;
+
+            }
+        }
+        
+        private function _fromUser()
+        {
+            $this->dao->from(sprintf('%st_user',DB_TABLE_PREFIX));
+            $this->dao->where(sprintf('%st_user.pk_i_id = %st_item.fk_i_user_id',DB_TABLE_PREFIX,DB_TABLE_PREFIX));
+            
+            if(is_array($this->user_ids)) {
+                $this->dao->where(" ( ".implode(" || ", $this->user_ids)." ) ");
+            } else {
+                $this->addConditions(sprintf("%st_item.fk_i_user_id = %d ", DB_TABLE_PREFIX, $this->user_ids));
             }
         }
 
+        public function addItemId($id)
+        {
+            $this->withItemId = true;
+            $this->itemId = $id;
+        }
         /**
          * Clear the categories
          *
@@ -631,29 +703,24 @@
          */
         private function _conditions()
         {
-            $locations = false;
             if(count($this->city_areas)>0) {
-                $locations = true;
-                $this->addConditions("( ".implode(' || ', $this->city_areas)." )");
+                $this->withLocations = true;
             }
 
             if(count($this->cities)>0) {
-                $locations = true;
-                $this->addConditions("( ".implode(' || ', $this->cities)." )");
+                $this->withLocations = true;
             }
 
             if(count($this->regions)>0) {
-                $locations = true;
-                $this->addConditions("( ".implode(' || ', $this->regions)." )");
+                $this->withLocations = true;
             }
 
             if(count($this->countries)>0) {
-                $locations = true;
-                $this->addConditions("( ".implode(' || ', $this->countries)." )");
+                $this->withLocations = true;
             }
 
             if(count($this->categories)>0) {
-                $this->addConditions(sprintf("%st_item.fk_i_category_id IN ( ".implode(', ', $this->categories)." )", DB_TABLE_PREFIX) ) ;
+                $this->withCategoryId = true;
             }
 
             $conditionsSQL = implode(' AND ', $this->conditions);
@@ -665,11 +732,6 @@
             if( count($this->search_fields) > 0 ) {
                 $extraFields = ",";
                 $extraFields .= implode(' ,', $this->search_fields);
-            }
-            
-            // add join if there is some location condition
-            if($locations) {
-                $this->addJoinTable('locations', sprintf('%st_item_location',DB_TABLE_PREFIX), sprintf('%st_item_location.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX), 'LEFT');
             }
             
             return array(
@@ -687,7 +749,7 @@
          */
         private function _makeSQL($count = false) 
         {
-           $arrayConditions    = $this->_conditions();
+            $arrayConditions    = $this->_conditions();
             $extraFields        = $arrayConditions['extraFields'];
             $conditionsSQL      = $arrayConditions['conditionsSQL'];
             
@@ -695,137 +757,148 @@
             // if there is a pattern to search, return diferent sql query
             // for optimitzation issues
             if ($this->withPattern ) {
-// select oc_t_item.*
-// from oc_t_item
-// LEFT JOIN oc_t_item_description as d ON d.fk_i_item_id = oc_t_item.pk_i_id
-//where oc_t_item.pk_i_id IN
-                // sub select
+                // sub select ----------------------
                 $this->dao->select('distinct d.fk_i_item_id');
                 $this->dao->from(DB_TABLE_PREFIX.'t_item_description as d');
-                $this->dao->join(sprintf('%st_item_location', DB_TABLE_PREFIX), sprintf('%st_item_location.fk_i_item_id = d.fk_i_item_id', DB_TABLE_PREFIX), 'LEFT');
                 $this->dao->where(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->sPattern));
-                //----
-                if(count($this->cities)>0) {
-                    $this->dao->where("( ".implode(' || ', $this->cities)." )");
-                }
-
-                if(count($this->regions)>0) {
-                    $this->dao->where("( ".implode(' || ', $this->regions)." )");
-                }
-
-                if(count($this->countries)>0) {
-                    $this->dao->where("( ".implode(' || ', $this->countries)." )");
-                }
+               
                 $subSelect = $this->dao->_getSelect();
                 $this->dao->_resetSelect();
-                //----
-               
-//  (SELECT distinct d.fk_i_item_id
-//  FROM (oc_t_item_description as d )
-//  LEFT JOIN oc_t_item_location ON oc_t_item_location.fk_i_item_id = d.fk_i_item_id
-//  WHERE  MATCH(d.s_title, d.s_description) AGAINST('house' IN BOOLEAN MODE) 
-//  AND oc_t_item_location.fk_c_country_code = 'ES' AND oc_t_item_location.fk_i_region_id = '54'
-//  )
-// ORDER BY oc_t_item.dt_pub_date asc LIMIT 0, 10
+                // END sub select ----------------------
+
                 if( !$count ) {
                     $this->dao->select(DB_TABLE_PREFIX.'t_item.*');
-                    $this->dao->select($extraFields) ;
+                    //$this->dao->select($extraFields) ; // plugins!
                 } else {
                     $this->dao->select(DB_TABLE_PREFIX.'t_item.pk_i_id');
                 }
                 
                 $this->dao->from( DB_TABLE_PREFIX.'t_item' ) ; 
+                if($this->withLocations) {
+                    $this->dao->join(sprintf('%st_item_location', DB_TABLE_PREFIX), sprintf('%st_item_location.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX), 'LEFT');
+                    
+                    if(count($this->cities)>0) {
+                        $this->dao->where("( ".implode(' || ', $this->cities)." )");
+                    }
+
+                    if(count($this->regions)>0) {
+                        $this->dao->where("( ".implode(' || ', $this->regions)." )");
+                    }
+
+                    if(count($this->countries)>0) {
+                        $this->dao->where("( ".implode(' || ', $this->countries)." )");
+                    }
+                }     
                 
-                if( !empty($this->tables) ) {
-                    $tables             = implode(', ', $this->tables) ;
-                    $this->dao->from($tables) ;
+                // WHERE
+                if($this->withPicture) {
+                    $this->dao->from(sprintf('%st_item_resource', DB_TABLE_PREFIX));
+                    $this->dao->where(sprintf("%st_item_resource.s_content_type LIKE '%%image%%' AND %st_item.pk_i_id = %st_item_resource.fk_i_item_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+                }
+                if($this->withUserId) {
+                    $this->_fromUser();
+                }
+                if($this->withCategoryId) {
+                    $this->dao->where(sprintf("%st_item.fk_i_category_id", DB_TABLE_PREFIX) .' IN ('. implode(', ', $this->categories) .')' ) ;
                 }
                 
-                // JOIN TABLES 
-                $this->dao->join(sprintf('%st_item',DB_TABLE_PREFIX), sprintf('d.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX), 'LEFT');
-                $this->_joinTable();
-                
-                // WHERE 
-//                if(count($this->conditions) > 0) {
-//                    $this->dao->where($conditionsSQL) ;
-//                }
-                
-                if( !$count ) {
-                    // order & limit
-                    $this->dao->orderBy( $this->order_column, $this->order_direction);
-                    $this->dao->limit( $this->limit_init, $this->results_per_page);
-                } else {
-                    $this->dao->limit(100*$this->results_per_page) ;
+                $this->_priceRange();
+                // item conditions 
+                if(count($this->itemConditions)>0) {
+                    $itemConditions = implode(' AND ', $this->itemConditions);
+                    $this->dao->where($itemConditions);
                 }
-                error_log('--> with pattern');
-//                // SELECT
-//                if( !$count ) {
-//                    $this->dao->select('DISTINCT d.fk_i_item_id,'.DB_TABLE_PREFIX.'t_item.*');
-//                    $this->dao->select($extraFields) ;
-//                } else {
-//                    $this->dao->select(DB_TABLE_PREFIX.'t_item.pk_i_id');
-//                }
-//                
-//                $this->dao->from( DB_TABLE_PREFIX.'t_item_description as d ' ) ; 
-//                
+                // subselect item_description
+                $this->dao->where(DB_TABLE_PREFIX.'t_item.pk_i_id IN ('.$subSelect.')');
+                
+                // PLUGINS
+                // PLUGINS TABLES !!
 //                if( !empty($this->tables) ) {
 //                    $tables             = implode(', ', $this->tables) ;
 //                    $this->dao->from($tables) ;
-//                }
-//                
-//                // JOIN TABLES 
-//                $this->dao->join(sprintf('%st_item',DB_TABLE_PREFIX), sprintf('d.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX), 'LEFT');
-//                $this->_joinTable();
-//                
-//                // WHERE 
+//                }           
+                //  WHERE PLUGINS extra conditions
 //                if(count($this->conditions) > 0) {
 //                    $this->dao->where($conditionsSQL) ;
 //                }
-//                
-//                if( !$count ) {
-//                    // order & limit
-//                    $this->dao->orderBy( $this->order_column, $this->order_direction);
-//                    $this->dao->limit( $this->limit_init, $this->results_per_page);
-//                } else {
-//                    $this->dao->limit(100*$this->results_per_page) ;
-//                }
-            } else {
-                // SELECT
-                if( !$count ) {
-                    $this->dao->select(DB_TABLE_PREFIX.'t_item.*');
-                    $this->dao->select($extraFields) ;
-                } else {
-                    $this->dao->select(DB_TABLE_PREFIX.'t_item.pk_i_id');
-                }
                 
-                $this->dao->from( DB_TABLE_PREFIX.'t_item ' ) ; 
-                
-                if( !empty($this->tables) ) {
-                    $tables             = implode(', ', $this->tables) ;
-                    $this->dao->from($tables) ;
-                }
-                
-                // JOIN TABLES 
-                $this->_joinTable();
-                
-                // WHERE 
-                if(count($this->conditions) > 0) {
-                    $this->dao->where ($conditionsSQL) ;
-                }
-                
-                if( !$count ) {
-                    // order & limit
-                    $this->dao->orderBy( $this->order_column, $this->order_direction);
-                    $this->dao->limit( $this->limit_init, $this->results_per_page);
-                } else {
+                // order & limit
+                $this->dao->orderBy( $this->order_column, $this->order_direction);
+                if($count) {
                     $this->dao->limit(100*$this->results_per_page) ;
+                } else {
+                    $this->dao->limit( $this->limit_init, $this->results_per_page);
+                }
+            } else if($this->withItemId) { 
+                $this->dao->select(sprintf('%st_item.*', DB_TABLE_PREFIX) );
+                $this->dao->from(sprintf('%st_item', DB_TABLE_PREFIX));
+                $this->dao->where('pk_i_id', (int)$this->itemId);
+            } else {
+                // no item description
+                $subSelect = '';
+                // saber la tabla sobre la que se va a hacer el sort
+                if($this->order_column=='dt_pub_date' || $this->order_column=='i_price') {
+                    
+                    // query + subquery
+                    if($count) {
+                        $this->dao->select(DB_TABLE_PREFIX.'t_item.pk_i_id');
+                    } else {
+                        $this->dao->select(DB_TABLE_PREFIX.'t_item.*, '.DB_TABLE_PREFIX.'t_item.s_contact_name as s_user_name');
+                    }
+                    $this->dao->from(DB_TABLE_PREFIX.'t_item');
+                    
+                    if($this->withLocations) {
+                        $this->dao->join(DB_TABLE_PREFIX.'t_item_location', DB_TABLE_PREFIX.'t_item_location.fk_i_item_id = '.DB_TABLE_PREFIX.'t_item.pk_i_id', 'LEFT');
+                        if(count($this->countries)>0) {
+                            $this->dao->where("( ".implode(' || ', $this->countries)." )");
+                        }
+                        if(count($this->regions)>0) {
+                            $this->dao->where("( ".implode(' || ', $this->regions)." )");
+                        }
+                        if(count($this->cities)>0) {
+                            $this->dao->where("( ".implode(' || ', $this->cities)." )");
+                        }
+
+                    }
+                    if($this->withPicture) {
+                        $this->dao->from(sprintf('%st_item_resource', DB_TABLE_PREFIX));
+                        $this->dao->where(sprintf("%st_item_resource.s_content_type LIKE '%%image%%' AND %st_item.pk_i_id = %st_item_resource.fk_i_item_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+                    }
+                    if($this->withUserId) {
+                        $this->_fromUser();
+                    }
+                    if($this->withCategoryId) {
+                        $this->dao->where(sprintf("%st_item.fk_i_category_id", DB_TABLE_PREFIX) .' IN ('. implode(', ', $this->categories) .')' ) ;
+                    }
+                    $this->_priceRange();
+                    
+                    // PLUGINS
+                // PLUGINS TABLES !!
+//                if( !empty($this->tables) ) {
+//                    $tables             = implode(', ', $this->tables) ;
+//                    $this->dao->from($tables) ;
+//                }           
+                //  WHERE PLUGINS extra conditions
+//                if(count($this->conditions) > 0) {
+//                    $this->dao->where($conditionsSQL) ;
+//                }
+                    
+                    $this->dao->orderBy( $this->order_column, $this->order_direction);
+                    if($count) {
+                        $this->dao->limit( 0, 100*$this->results_per_page);
+                    } else {
+                        $this->dao->limit( $this->limit_init, $this->results_per_page);
+                    }
+                    
+                } else if ($this->order_column=='') {
+                    // TODO now only order by t_item table fields
                 }
             }
             
             $this->sql = $this->dao->_getSelect() ;
             // reset dao attributes
             $this->dao->_resetSelect() ;
-            
+            error_log($this->sql);
             return $this->sql;
         }
 
@@ -853,13 +926,11 @@
         public function doSearch($extended = true, $count = true) 
         {   
             $sql = $this->_makeSQL(false) ;
-            error_log($sql);
             $result = $this->dao->query($sql);
             
             if($count) {
                 $sql = $this->_makeSQL(true) ;
                 $datatmp  = $this->dao->query( $sql ) ;
-//                echo $sql."<br>";
                 $this->total_results = $datatmp->numRows() ;
             } else {
                 $this->total_results = 0;                
@@ -889,7 +960,7 @@
          * @since unknown
          * @param int $max
          */
-        public function getPremiums($max = 2) 
+        public function getPremiums($max = 2)
         {    
             $this->order(sprintf('order_premium_views', DB_TABLE_PREFIX), 'ASC', NULL) ;
             $this->page(0, $max);
@@ -936,7 +1007,6 @@
                     'LEFT' ) ;
             
             if($withPicture) {
-                $this->addConditions(sprintf("%st_item_resource.s_content_type LIKE '%%image%%' AND %st_item.pk_i_id = %st_item_resource.fk_i_item_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
                 $this->dao->from(sprintf('%st_item_resource', DB_TABLE_PREFIX));
                 $this->dao->where(sprintf("%st_item_resource.s_content_type LIKE '%%image%%' AND %st_item.pk_i_id = %st_item_resource.fk_i_item_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
             }
