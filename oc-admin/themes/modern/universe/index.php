@@ -15,36 +15,107 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-$plugins = View::newInstance()->_get('plugins');
-$themes = View::newInstance()->_get('themes');
-$code = View::newInstance()->_get('code');
-?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+    $plugins = View::newInstance()->_get('plugins');
+    $themes = View::newInstance()->_get('themes');
+    $code = View::newInstance()->_get('code');
+?>
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
+        <link href="<?php echo osc_current_admin_theme_styles_url('demo_table.css') ; ?>" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.dataTables.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.pagination.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.extend.js') ; ?>"></script>
+        <script type="text/javascript">
+            $(function() {
+                oTable = $('#datatables_list').dataTable({
+                    "bAutoWidth": false,
+                    "iDisplayLength": 50,
+                    "aaData": [
+                        <?php foreach($plugins as $_p){
+                            $p = Plugins::getInfo($_p);
+                            $up = osc_check_update(@$p['plugin_update_uri'], @$p['version']);
+                            ?>
+                            [
+                                "<input type='hidden' name='upgradable' value='<?php echo $up?'1':'0'; ?>' />" +
+                                "<?php echo addcslashes($p['plugin_name'], '"'); ?>&nbsp;",
+                                "<?php echo addcslashes($p['version'], '"'); ?>",
+                                "<?php echo addcslashes($p['description'], '"'); ?>",
+                                <?php if($up) { ?>
+                                    "<td><a href=\"#\" onclick=\"upgrade('<?php echo $p['plugin_update_uri']; ?>');\" ><?php _e('Upgrade available'); ?></a></td>"
+                                <?php } else { ?>
+                                    "<td><?php _e('No upgrade needed'); ?></td>"
+                                <?php }; ?>
+                            ],
+                        <?php } ?>
+                        <?php foreach($themes as $_t){
+                            $t = WebThemes::newInstance()->loadThemeInfo($_t);
+                            $up = osc_check_update(@$t['theme_update_uri'], @$t['version']);
+                            ?>
+                            [
+                                "<input type='hidden' name='upgradable' value='<?php echo $up?'1':'0'; ?>' />" +
+                                "<?php echo addcslashes($t['name'], '"'); ?>&nbsp;",
+                                "<?php echo addcslashes($t['version'], '"'); ?>",
+                                "<?php echo addcslashes($t['description'], '"'); ?>",
+                                <?php if($up) { ?>
+                                    "<td><a href=\"#\" onclick=\"upgrade('<?php echo $t['theme_update_uri']; ?>');\" ><?php _e('Upgrade available'); ?></a></td>"
+                                <?php } else { ?>
+                                    "<td><?php _e('No upgrade needed'); ?></td>"
+                                <?php }; ?>
+                            ] <?php echo $t != end($themes) ? ',' : ''; ?>
+                        <?php } ?>
+                    ],
+                    "aoColumns": [
+                        {
+                            "sTitle": "<?php echo osc_esc_html( __('Name') ) ; ?>"
+                        },
+                        {
+                            "sTitle": "<?php echo osc_esc_html( __('Version') ) ; ?>"
+                        },
+                        {
+                            "sTitle": "<?php echo osc_esc_html( __('Description') ) ; ?>"
+                        },
+                        {
+                            "sTitle": "<?php echo osc_esc_html( __('Upgrade') ) ; ?>"
+                        }
+                    ],
+                    "fnDrawCallback": function() {
+                        $('input:hidden[name="upgradable"]').each(function() {
+                            $(this).parent().parent().children().css('background', 'none') ;
+                            if( $(this).val() == '1' ) {
+                                $(this).parent().parent().css('background-color', '#FFF0DF') ;
+                            } else {
+                                $(this).parent().parent().css('background-color', '#EDFFDF') ;
+                            }
+                        }) ;
+                    }
+                });
+
+                $('.filter').append( $("#add_plugin_button") ) ;
+            });
+        </script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
-        <div id="update_version" style="display:none;"></div>
+        <!-- container -->
         <div id="content">
-            <div id="separator"></div>
-            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-            <div id="right_column">
-                <div id="content_header" class="content_header">
-                    <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url('images/tools-icon.png') ; ?>" title="" alt=""/>
-                    </div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Universe'); ?></div>
-                    <div style="clear: both;"></div>
+            <?php osc_current_admin_theme_path( 'include/backoffice_menu.php' ) ; ?>
+            <!-- right container -->
+            <div class="right">
+                <div class="header_title">
+                    <h1 class="universe"><?php _e('Universe') ; ?></h1>
                 </div>
-                <div id="content_separator"></div>
-                <?php osc_show_flash_message('admin') ; ?>
-                <!-- add new item form -->
-                <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
+                <?php osc_show_admin_flash_messages() ; ?>
+                
+                
+                <div>
+                    <?php _e('some text explaining this process', 'universe') ; ?>
+                </div>
+                <div id="universe_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
-                        <?php _e('some text explaining this process', 'universe') ; ?>
+                        
                         <p>
                             <label for="data"><?php _e('Universe code'); ?></label>
                             <input type="text" id="s_code" name="s_code" value="" />
@@ -85,62 +156,17 @@ $code = View::newInstance()->_get('code');
                             </p>
                         </form>
                     </div>
+                </div>                
+                <!-- datatables universe -->
+                <div class="datatables">
+                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatables_list"></table>
                 </div>
-                <div id="universe_list" style="border: 1px solid #ccc; background: #eee; ">
-                    <div style="padding: 10px;">
-                        <?php _e('LIST OF ALL THE STUFF YOU HAVE INSTALLED', 'universe') ; ?>
-                        <a href="<?php echo osc_admin_base_url();?>?page=universe&action=check"><?php _e('Check all for updates'); ?></a>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th><?php _e('Name'); ?></th>
-                                    <th><?php _e('Version'); ?></th>
-                                    <?php if(Params::getParam('action')=='check') { ?>
-                                        <th><?php _e('Upgrade'); ?></th>
-                                    <?php }; ?>
-                                    <th><?php _e('Action'); ?></th>
-                                    <th><?php _e('Description'); ?></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td><?php _e('xxx PLUGINS NICE HEADER xxx'); ?></td></tr>
-                                <?php foreach($plugins as $_p) { 
-                                    $p = Plugins::getInfo($_p); ?>
-                                <tr>
-                                    <td><?php echo $p['plugin_name']; ?></td>
-                                    <td><?php echo @$p['version']; ?></td>
-                                    <?php if(Params::getParam('action')=='check') {
-                                        if(osc_check_update(@$p['plugin_update_uri'], @$p['version'])) { ?>
-                                            <td><a href="#" onclick="upgrade('<?php echo $p['plugin_update_uri']; ?>');" ><?php _e('Upgrade available'); ?></a></td>
-                                    <?php } else { ?>
-                                            <td><?php _e('Upgrade not available'); ?></td>
-                                    <?php }; }; ?>
-                                    <td>ACTION</td>
-                                    <td><?php echo $p['description']; ?></td>
-                                </tr>
-                                <?php }; ?>
-                                <tr><td><?php _e('xxx THEMES NICE HEADER xxx'); ?></td></tr>
-                                <?php foreach($themes as $_t) { 
-                                    $t = WebThemes::newInstance()->loadThemeInfo($_t); ?>
-                                <tr>
-                                    <td><?php echo $t['name']; ?></td>
-                                    <td><?php echo @$t['version']; ?></td>
-                                    <?php if(Params::getParam('action')=='check') {
-                                        if(osc_check_update(@$t['theme_update_uri'], @$t['version'])) { ?>
-                                            <td><a href="#" onclick="upgrade('<?php echo $t['theme_update_uri']; ?>');" ><?php _e('Upgrade available'); ?></a></td>
-                                    <?php } else { ?>
-                                            <td><?php _e('Upgrade not available'); ?></td>
-                                    <?php }; }; ?>
-                                    <td>ACTION</td>
-                                    <td><?php echo $t['description']; ?></td>
-                                </tr>
-                                <?php }; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div> <!-- end of right column -->
+                <!-- /datatables universe -->
+            </div>
+            <!-- /right container -->
         </div>
+        <!-- /container -->
+        
         <script type="text/javascript">
             $(document).ready(function(){
                 $("#universe_info").hide();
@@ -214,7 +240,7 @@ $code = View::newInstance()->_get('code');
                 upgrade('<?php echo $code; ?>');
             <?php }; ?>
             
-        </script>
+        </script>        
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>
