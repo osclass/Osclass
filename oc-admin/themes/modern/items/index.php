@@ -15,6 +15,12 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
+
+$categories = __get("categories");
+$countries = __get("countries");
+//$regions = __get("regions");
+//$cities = __get("cities");
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
@@ -49,6 +55,7 @@
                             }) ;
                         }
                         if( $('select[name="countryId"]').val() ) {
+
                             aoData.push({
                                 "name": "fCol_countryId",
                                 "value": $('select[name="countryId"]').val()
@@ -60,7 +67,7 @@
                                 "value": $('input[name="country"]').val()
                             }) ;
                         }
-                        if( $('input[name="regionId"]').val() ) {
+                        if( $('select[name="regionId"]').val() ) {
                             aoData.push({
                                 "name": "fCol_regionId",
                                 "value": $('select[name="regionId"]').val()
@@ -195,7 +202,10 @@
 
                 $('input[name="apply-filters"]').bind('click', function() {
                     oTable.fnDraw() ;
-                }) ;
+                });
+                $('input[name="findById"]').bind('click', function() {
+                    oTable.fnDraw() ;
+                });
 
                 $('.show-filters').bind('click', function() {
                     if( $(this).attr('data-showed') == 'true' ) {
@@ -235,12 +245,6 @@
                         </div>
                     </div>
                     <div class="input-line">
-                        <label><?php _e('Item ID') ; ?></label>
-                        <div class="input">
-                            <input type="text" class="small" name="pk_i_id" value="" />
-                        </div>
-                    </div>
-                    <div class="input-line">
                         <label><?php _e('Item user') ; ?></label>
                         <div class="input">
                             <input type="text" class="medium" name="userName" value="" />
@@ -255,13 +259,13 @@
                     <div class="input-line">
                         <label><?php _e('Region') ; ?></label>
                         <div class="input">
-                            <?php ItemForm::region_select($regions, null) ; ?>
+                            <?php ItemForm::region_select(null, null) ; ?>
                         </div>
                     </div>
                     <div class="input-line">
                         <label><?php _e('City') ; ?></label>
                         <div class="input">
-                            <?php ItemForm::city_select($cities, null) ; ?>
+                            <?php ItemForm::city_select(null, null) ; ?>
                         </div>
                     </div>
                     <div class="input-line">
@@ -296,6 +300,8 @@
                         </label>
                     </div>
                     <div id="add_item_button">
+                        <input type="text" class="medium" name="pk_i_id" value="" />
+                        <input type="button" name="findById" value="<?php echo osc_esc_html( __('Find by Item id') ) ; ?>" />
                         <a href="<?php echo osc_admin_base_url(true) ; ?>?page=items&amp;action=post" class="btn" id="button_open"><?php _e('Add item') ; ?></a>
                     </div>
                     <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatables_list"></table>
