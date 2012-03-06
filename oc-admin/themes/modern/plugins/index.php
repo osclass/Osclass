@@ -16,22 +16,39 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $plugins        = __get("plugins");
-    $last           = end($plugins); $last_id = $last['int_name'];
-    $active_plugins = osc_get_plugins();
-?>
+    $plugins        = __get('plugins') ;
+    $active_plugins = osc_get_plugins() ;
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+    $aData = array() ;
+    foreach($plugins as $plugin) {
+        $row       = array() ;
+        $p_info    = osc_plugin_get_info($plugin) ;
+        $installed = ( osc_plugin_is_installed($plugin) ?  1 : 0 ) ;
+        $enabled   = ( osc_plugin_is_enabled($plugin) ? 1 : 0 ) ;
+
+        $row[] = '<input type="hidden" name="installed" value="' . $installed . '" enabled="' . $enabled . '" />' . $p_info['plugin_name'] . ' <div id="datatables_quick_edit">' . ( osc_plugin_check_update($p_info['filename']) ? '<a href="' . osc_admin_base_url(true) . '?page=upgrade-plugin&amp;plugin=' . $p_info['filename'] . '">' . __("There's a new version. You should update!") . '</a>' : '' ) . '</div>' ;
+        $row[] = $p_info['description'] ;
+        $row[] = ( isset($active_plugins[$plugin . '_configure']) ? '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=admin&amp;plugin=' . $p_info['filename'] . '">' . __('Configure') . '</a>' : '' ) ;
+        if( $installed ) {
+            $row[] = ( $enabled ? '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=disable&amp;plugin=' . $p_info['filename'] . '">' . __('Disable') . '</a>' : '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=enable&amp;plugin=' . $p_info['filename'] . '">' . __('Enable') . '</a>') ;
+        } else {
+            $row[] = '' ;
+        }
+        $row[] = ( $installed ? '<a onclick="javascript:return confirm(\'' . osc_esc_js( __('This action can not be undone. Uninstalling plugins may result in a permanent lost of data. Are you sure you want to continue?') ) . '\')" href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=uninstall&amp;plugin=' . $p_info['filename'] . '">' . __('Uninstall') . '</a>' : '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=install&amp;plugin=' . $p_info['filename'] . '">' . __('Install') . '</a>' ) ;
+
+        $aData[] = $row ;
+    }
+
+?>
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php'); ?>
-        <div id="update_version" style="display:none;"></div>
+        <link href="<?php echo osc_current_admin_theme_styles_url('demo_table.css') ; ?>" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.dataTables.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.pagination.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.extend.js') ; ?>"></script>
         <script type="text/javascript">
             $(function() {
-                sSearchName = "<?php _e('Search'); ?>...";
                 oTable = $('#datatables_list').dataTable({
                     "bAutoWidth": false,
                     "aaData": [
@@ -51,68 +68,68 @@
                     ],
                     "aoColumns": [
                         {
-                            "sTitle": "<?php _e('Name'); ?>",
-                            "sWidth": "auto"
+                            "sTitle": "<?php echo osc_esc_html( __('Name') ) ; ?>"
                         },
                         {
-                            "sTitle": "<?php _e('Description'); ?>"
+                            "sTitle": "<?php echo osc_esc_html( __('Description') ) ; ?>"
                         },
                         {
                             "sTitle": "",
-                            "sClass": "center",
                             "sWidth": "65px"
                         },
                         {
                             "sTitle": "",
-                            "sClass": "center",
                             "sWidth": "65px"
                         },
                         {
                             "sTitle": "",
-                            "sClass": "center",
                             "sWidth": "65px"
                         }
                     ],
-                    "aaSorting": [[4,'desc'], [3,'asc']],
-                    "bPaginate": false,
-                    "bFilter": false,
-                    "bInfo": false,
                     "fnDrawCallback": function() {
-                        $('input:hidden[name=installed]').each(function() {
-                            $(this).parent().parent().children().css('background', 'none');
-                            if ($(this).val() == '1') {
-                                if($(this).attr("enabled")==1) {
-                                    $(this).parent().parent().css('background-color', '#EDFFDF');
+                        $('input:hidden[name="installed"]').each(function() {
+                            $(this).parent().parent().children().css('background', 'none') ;
+                            if( $(this).val() == '1' ) {
+                                if( $(this).attr("enabled") == 1 ) {
+                                    $(this).parent().parent().css('background-color', '#EDFFDF') ;
                                 } else {
-                                    $(this).parent().parent().css('background-color', '#FFFFDF');
+                                    $(this).parent().parent().css('background-color', '#FFFFDF') ;
                                 }
                             } else {
-                                $(this).parent().parent().css('background-color', '#FFF0DF');
+                                $(this).parent().parent().css('background-color', '#FFF0DF') ;
                             }
-                        });
+                        }) ;
                     }
                 });
+
+                $('.filter').append( $("#add_plugin_button") ) ;
             });
         </script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_url('js/datatables.post_init.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
+    </head>
+    <body>
+        <?php osc_current_admin_theme_path('header.php') ; ?>
+        <!-- container -->
         <div id="content">
-            <div id="separator"></div>
-            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-            <div id="right_column">
-                <div id="content_header" class="content_header">
-                    <div style="float: left;">
-                        <img src="<?php echo  osc_current_admin_theme_url('images/plugins-icon.png') ; ?>" title="" alt=""/>
-                    </div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Plugins'); ?></div>
-                    <a href="<?php echo osc_admin_base_url(true) ; ?>?page=plugins&action=add" id="button_open"><?php _e('Add a new plugin') ; ?></a>
-                    <div style="clear: both;"></div>
+            <?php osc_current_admin_theme_path( 'include/backoffice_menu.php' ) ; ?>
+            <!-- right container -->
+            <div class="right">
+                <div class="header_title">
+                    <h1 class="plugins"><?php _e('Plugins') ; ?></h1>
                 </div>
-                <?php osc_show_flash_message('admin') ; ?>
-                <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list" style="border-bottom: 1px solid #AAAAAA; border-left: 1px solid #AAAAAA; border-right: 1px solid #AAAAAA;"></table>
-                <div style="clear: both;"></div>
-            </div> <!-- end of right column -->
-            <div style="clear: both;"></div>
-        </div> <!-- end of container -->
+                <?php osc_show_admin_flash_messages() ; ?>
+                <!-- datatables plugins -->
+                <div id="add_plugin_button">
+                    <a href="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=add" class="btn" id="button_open"><?php _e('Add new plugin') ; ?></a>
+                </div>
+                <div class="datatables">
+                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatables_list"></table>
+                </div>
+                <!-- /datatables plugins -->
+            </div>
+            <!-- /right container -->
+        </div>
+        <!-- /container -->
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>

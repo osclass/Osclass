@@ -16,90 +16,72 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $category   = __get("category");
-    $action_frm = "edit_category_post";
-    
+    $category = __get("category") ;
+    $locales  = OSCLocale::newInstance()->listAllEnabled() ;
 ?>
-
-<div id="settings_form">
-    <form action="<?php echo osc_admin_base_url(true); ?>?page=ajax" method="post">
-            <input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
-            
-            <?php CategoryForm::primary_input_hidden($category) ; ?>
-            
-            <div class="FormElement">
-                <div class="FormElementName"><?php _e('Expirations days'); ?> <?php _e('(0 = no expiration)'); ?></div>
-                <div class="FormElementInput">
-                   <?php CategoryForm::expiration_days_input_text($category); ?>
+<div class="iframe-category">
+    <h3><?php _e('Edit category') ; ?></h3>
+    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+        <input type="hidden" name="page" value="ajax" />
+        <input type="hidden" name="action" value="edit_category_post" />
+        <?php CategoryForm::primary_input_hidden($category) ; ?>
+        <fieldset>
+            <div class="input-line">
+                <label><?php _e('Expirations days') ; ?></label>
+                <div class="input micro">
+                    <?php CategoryForm::expiration_days_input_text($category) ; ?>
+                    <p class="help-inline"><?php _e("If the value is zero it means that there isn't expiration for this category") ; ?></p>
                 </div>
             </div>
-
-            <div class="clear20"></div>
-
-            <?php 
-                $locales = OSCLocale::newInstance()->listAllEnabled();
-                CategoryForm::multilanguage_name_description($locales, $category) ; 
-            ?>
-
-            <div class="FormElement">
-                <div class="FormElementName"></div>
-                <div class="FormElementInput">
-                    <button class="formButton" type="button" onclick="$('#settings_form').remove();" ><?php _e('Cancel'); ?></button>
-                    <button class="formButton" type="submit" ><?php _e('Save'); ?></button>
+            <div class="input-line">
+                <label></label>
+                <div class="input">
+                    <?php CategoryForm::multilanguage_name_description($locales, $category) ; ?>
                 </div>
             </div>
-
+            <div class="actions">
+                <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
+                <input type="button" onclick="$('.iframe-category').remove() ;" value="<?php echo osc_esc_html( __('Cancel') ) ; ?>" />
+            </div>
+        </fieldset>
     </form>
 </div>
-
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#settings_form form').submit(function() {
+        $('.iframe-category form').submit(function() {
+            $(".jsMessage").hide() ;
             $.ajax({
                 type: 'POST',
                 url: $(this).attr('action'),
                 data: $(this).serialize(),
                 // Mostramos un mensaje con la respuesta de PHP
                 success: function(data) {
-                    var ret = eval( "(" + data + ")");
-                  
-                    var message = "";
-                    if(ret.error==0 || ret.error==4) {
-                        $('#settings_form').fadeOut('fast', function(){
-                            $('#settings_form').remove();
-                        });
-                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/tick.png');?>"/>';
-                        message += ret.msg;
-                        $('div#settings_form').parent().parent().find('.quick_edit').html(ret.text);
+                    var ret = eval( "(" + data + ")") ;
+                    var message = "" ;
+                    if( ret.error == 0 || ret.error == 4 ) {
+                        $('.iframe-category').fadeOut('fast', function(){
+                            $('.iframe-category').remove();
+                        }) ;
+                        $(".jsMessage p").attr('class', 'ok') ;
+                        message += ret.msg ;
+                        $('.iframe-category').parent().parent().find('.name').html(ret.text) ;
                     } else {
-                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/cross.png');?>"/>';
-                        message += ret.msg; 
-
+                        $(".jsMessage p").attr('class', 'error') ;
+                        message += ret.msg ;
                     }
 
-                    $("#jsMessage").fadeIn("fast");
-                    $("#jsMessage").html(message);
-                    setTimeout(function(){
-                        $("#jsMessage").fadeOut("slow", function () {
-                            $("#jsMessage").html("");
-                        });
-                    }, 3000);
-                    $('div.content_list_<?php echo osc_category_id();?>').html('');
+                    $(".jsMessage").fadeIn("fast") ;
+                    $(".jsMessage p").html(message) ;
+                    $('div.content_list_<?php echo osc_category_id() ; ?>').html('') ;
                 },
                 error: function(){
-                    $("#jsMessage").fadeIn("fast");
-                    $("#jsMessage").html("<?php _e('Ajax error, try again.');?>");
-                    setTimeout(function(){
-                        $("#jsMessage").fadeOut("slow", function () {
-                            $("#jsMessage").html("");
-                        });
-                    }, 3000);
+                    $(".jsMessage").fadeIn("fast") ;
+                    $(".jsMessage p").attr('class', '') ;
+                    $(".jsMessage p").html("<?php _e('Ajax error, try again.') ; ?>") ;
                 }
-                
-            })        
-            return false;
+            })
+            return false ;
         });
-        
-    });     
-    tabberAutomatic();
+    }) ;
+    tabberAutomatic() ;
 </script>

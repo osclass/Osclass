@@ -333,17 +333,13 @@
          * @param string $what
          * @return boolean
          */
-        public function insertLocale($id, $locale, $title, $description, $what)
+        public function insertLocale($id, $locale, $title, $description)
         {
-            $title       = $title ;
-            $description = $description ;
-            $what        = $what ;
             $array_set   = array(
                 'fk_i_item_id'      => $id,
                 'fk_c_locale_code'  => $locale,
                 's_title'           => $title,
-                's_description'     => $description,
-                's_what'            => $what
+                's_description'     => $description
             ) ;
             return $this->dao->insert(DB_TABLE_PREFIX.'t_item_description', $array_set) ;
         }
@@ -510,8 +506,7 @@
                 's_title'           => $title,
                 's_description'     => $text,
                 'fk_c_locale_code'  => $locale,
-                'fk_i_item_id'      => $id,
-                's_what'            => $title . " " . $text
+                'fk_i_item_id'      => $id
             );
             return $this->dao->replace(DB_TABLE_PREFIX.'t_item_description', $array_replace) ;
         }        
@@ -569,6 +564,66 @@
             $this->dao->delete(DB_TABLE_PREFIX.'t_item_meta'    , "fk_i_item_id = $id") ;
             $res = parent::deleteByPrimaryKey($id) ;
             return $res ;
+        }
+        
+        /**
+         * Delete by city
+         *
+         * @access public
+         * @since unknown
+         * @param int $cityId city id
+         * @return bool
+         */
+        public function deleteByCity($cityId)
+        {
+            $this->dao->select('fk_i_item_id');
+            $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
+            $this->dao->where('fk_i_city_id', $cityId) ;
+            $result = $this->dao->get() ;
+            $items  = $result->result() ;
+            foreach($items as $i) {
+                $this->deleteByPrimaryKey($i['fk_i_item_id']);
+            }
+        }
+        
+        /**
+         * Delete by region
+         *
+         * @access public
+         * @since unknown
+         * @param int $regionId region id
+         * @return bool
+         */
+        public function deleteByRegion($regionId)
+        {
+            $this->dao->select('fk_i_item_id');
+            $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
+            $this->dao->where('fk_i_region_id', $regionId) ;
+            $result = $this->dao->get() ;
+            $items  = $result->result() ;
+            foreach($items as $i) {
+                $this->deleteByPrimaryKey($i['fk_i_item_id']);
+            }
+        }
+        
+        /**
+         * Delete by country
+         *
+         * @access public
+         * @since unknown
+         * @param int $countryId country id
+         * @return bool
+         */
+        public function deleteByCountry($countryId)
+        {
+            $this->dao->select('fk_i_item_id');
+            $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
+            $this->dao->where('fk_c_country_code', $countryId) ;
+            $result = $this->dao->get() ;
+            $items  = $result->result() ;
+            foreach($items as $i) {
+                $this->deleteByPrimaryKey($i['fk_i_item_id']);
+            }
         }
         
         /**
@@ -691,12 +746,10 @@
                 if (isset($item['locale'][$prefLocale])) {
                     $item['s_title'] = $item['locale'][$prefLocale]['s_title'];
                     $item['s_description'] = $item['locale'][$prefLocale]['s_description'];
-                    $item['s_what'] = $item['locale'][$prefLocale]['s_what'];
                 } else {
                     $data = current($item['locale']);
                     $item['s_title'] = $data['s_title'];
                     $item['s_description'] = $data['s_description'];
-                    $item['s_what'] = $data['s_what'];
                     unset($data);
                 }
                 $results[] = $item;

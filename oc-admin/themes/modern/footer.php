@@ -16,16 +16,15 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 ?>
-        
-<div style="clear: both;"></div>
+<!-- footer -->
 <div id="footer">
-    <?php osc_run_hook('admin_footer'); ?>
+    <?php osc_run_hook('admin_footer') ; ?>
     <div id="footer_left">
-        <?php _e('Thank you for using'); ?> <a href="http://osclass.org/" target="_blank"><?php _e('OSClass'); ?></a> |
-        <a title="<?php _e('Documentation'); ?>" href="http://wiki.osclass.org/" target="_blank"><?php _e('Documentation'); ?></a> |
-        <a title="<?php _e('Forums'); ?>" href="http://forums.osclass.org" target="_blank"><?php _e('Forums'); ?></a>
+        <?php _e('Thank you for using'); ?> <a href="http://osclass.org/" target="_blank">OSClass</a> -
+        <a title="<?php _e('Documentation'); ?>" href="http://wiki.osclass.org/" target="_blank"><?php _e('Documentation') ; ?></a> &middot;
+        <a title="<?php _e('Forums'); ?>" href="http://forums.osclass.org/" target="_blank"><?php _e('Forums') ; ?></a> &middot;
+        <a title="<?php _e('Feedback') ; ?>" href="http://admin.osclass.org/feedback.php" target="_blank"><?php _e('Feedback') ; ?></a>
     </div>
-    <div id="footer_right">
-        <?php _e('OSClass'); ?> <?php echo OSCLASS_VERSION; ?>
-    </div>
+    <div id="footer_right">OSClass <?php echo OSCLASS_VERSION ; ?></div>
 </div>
+<!-- /footer -->

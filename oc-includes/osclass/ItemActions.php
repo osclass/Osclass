@@ -353,7 +353,6 @@
                 $this->uploadItemResources( $aItem['photos'], $aItem['idItem'] ) ;
 
                 Log::newInstance()->insertLog('item', 'edit', $aItem['idItem'], current(array_values($aItem['title'])), $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
-                
                 /**
                  * META FIELDS
                  */
@@ -476,7 +475,7 @@
             $item = $this->manager->findByPrimaryKey($itemId) ;
 
             if( $item['s_secret'] == $secret ) {
-                $this->deleteResourcesFromHD( $itemId ) ;
+                $this->deleteResourcesFromHD( $item['pk_i_id'] ) ;
                 Log::newInstance()->insertLog( 'item', 'delete', $itemId, $item['s_title'], $this->is_admin ? 'admin' : 'user', $this->is_admin ? osc_logged_admin_id() : osc_logged_user_id() ) ;
                 return $this->manager->deleteByPrimaryKey( $itemId ) ;
             }
@@ -918,7 +917,7 @@
                 $_title         = $title[$k];
                 $_description   = $description[$k];
                 if($type == 'ADD'){
-                    $this->manager->insertLocale($itemId, $k, $_title, $_description, $_title . " " . $_description);
+                    $this->manager->insertLocale($itemId, $k, $_title, $_description);
                 }else if($type == 'EDIT'){
                     $this->manager->updateLocaleForce($itemId, $k, $_title, $_description) ;
                 }

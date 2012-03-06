@@ -128,27 +128,27 @@
                 case 'change_password_post':    //change password post
                                                 $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId') ) ;
 
-                                                if( (Params::getParam('password') == '') || (Params::getParam('new_password') == '') || (Params::getParam('new_password2') == '') ) {
+                                                if( (Params::getParam('password', false, false) == '') || (Params::getParam('new_password', false, false) == '') || (Params::getParam('new_password2', false, false) == '') ) {
                                                     osc_add_flash_warning_message( _m('Password cannot be blank')) ;
                                                     $this->redirectTo( osc_change_user_password_url() ) ;
                                                 }
 
-                                                if( $user['s_password'] != sha1( Params::getParam('password') ) ) {
+                                                if( $user['s_password'] != sha1( Params::getParam('password', false, false) ) ) {
                                                     osc_add_flash_error_message( _m('Current password doesn\'t match')) ;
                                                     $this->redirectTo( osc_change_user_password_url() ) ;
                                                 }
 
-                                                if( !Params::getParam('new_password') ) {
+                                                if( !Params::getParam('new_password', false, false) ) {
                                                     osc_add_flash_error_message( _m('Passwords can\'t be empty')) ;
                                                     $this->redirectTo( osc_change_user_password_url() ) ;
                                                 }
 
-                                                if( Params::getParam('new_password') != Params::getParam('new_password2') ) {
+                                                if( Params::getParam('new_password', false, false) != Params::getParam('new_password2', false, false) ) {
                                                     osc_add_flash_error_message( _m('Passwords don\'t match'));
                                                     $this->redirectTo( osc_change_user_password_url() ) ;
                                                 }
 
-                                                User::newInstance()->update(array( 's_password' => sha1( Params::getParam ('new_password') ) )
+                                                User::newInstance()->update(array( 's_password' => sha1( Params::getParam ('new_password', false, false) ) )
                                                                            ,array( 'pk_i_id' => Session::newInstance()->_get('userId') ) ) ;
 
                                                 osc_add_flash_ok_message( _m('Password has been changed')) ;
@@ -205,10 +205,24 @@
                     $name = Params::getParam('name') ;
                     $fkid = Params::getParam('fkid') ;
 
-                    osc_deleteResource($id);
+                    $resource = ItemResource::newInstance()->findByPrimaryKey($id);
+                    $item = Item::newInstance()->findByPrimaryKey($fkid);
 
-                    ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name) );
+                    if ($resource && $item) {
+                        if($resource['fk_i_item_id']==$fkid && $item['fk_i_user_id']==  osc_logged_user_id()) {
 
+                            // Delete: file, db table entry
+                            osc_deleteResource($id);
+                            ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $item, 's_name' => $name) );
+
+                            osc_add_flash_ok_message(_m('The selected photo has been successfully deleted'));
+                        } else {
+                            osc_add_flash_error_message(_m("The selected photo does not belong to you"));
+                        }
+                    } else {
+                        osc_add_flash_error_message(_m("The selected photo couldn't be deleted"));
+                    }
+                    
                     $this->redirectTo( osc_base_url(true) . "?page=item&action=item_edit&id=" . $fkid );
                 break;
 

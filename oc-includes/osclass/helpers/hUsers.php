@@ -255,7 +255,7 @@
             if($info=='') {
                 $aLocales = osc_get_locales();
                 foreach($aLocales as $locale) {
-                    $info = osc_user_field("s_info", $locale);
+                    $info = osc_user_field("s_info", $locale['pk_c_code']) ;
                     if($info!='') {
                         break;
                     }
@@ -387,6 +387,24 @@
         return osc_user_field("i_comments");
     }
     
+    /**
+     * Gets number of users
+     *
+     * @return int
+     */
+    function osc_total_users($condition = '') {
+        switch($condition) {
+            case 'active':
+                return User::newInstance()->countUsers('b_active = 1');
+                break;
+            case 'enabled':
+                return User::newInstance()->countUsers('b_enabled = 1');
+                break;
+            default:
+                return User::newInstance()->countUsers();
+                break;
+        }
+    }    
     /////////////
     // ALERTS  //
     /////////////

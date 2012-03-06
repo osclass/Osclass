@@ -80,7 +80,7 @@
             $this->dao->from($this->getTableName() . ' r') ;
             $this->dao->join($this->getTableItemName() . ' c', 'c.pk_i_id = r.fk_i_item_id') ;
             if( !is_null($itemId) ) {
-                $this->dao->where('r.fk_i_item_id', $itemId) ;
+                $this->dao->where('r.fk_i_item_id', (int)$itemId) ;
             }
 
             $result = $this->dao->get() ;
@@ -208,11 +208,6 @@
          */
         function getResources($itemId = NULL, $start = 0, $length = 10, $order = 'pk_i_id', $type = 'DESC')
         {
-            if( !in_array($order, $this->getFields()) ) {
-                // order by is incorrect
-                return array() ;
-            }
-
             if( !in_array(strtoupper($type), array('DESC', 'ASC')) ) {
                 // order type is incorrect
                 return array() ;

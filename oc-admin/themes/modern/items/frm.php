@@ -26,7 +26,6 @@
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
-        <div id="update_version" style="display:none;"></div>
         <script type="text/javascript">
             document.write('<style type="text/css">.tabber{display:none;}<\/style>');
             $(document).ready(function(){
@@ -69,12 +68,9 @@
         <?php ItemForm::location_javascript_new('admin'); ?>
         <?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript(); ?>
         <div id="content">
-            <div id="separator"></div>
-
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-
             <div id="right_column">
-                <?php osc_show_flash_message('admin') ; ?>
+                <?php osc_show_admin_flash_messages() ; ?>
                 <div class="content_header" id="content_header">
                     <div style="float: left;">
                         <img alt="" title="" src="<?php echo osc_current_admin_theme_url('images/new-folder-icon.png') ; ?>">

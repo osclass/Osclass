@@ -200,11 +200,11 @@
                             }
                         }
                     
-                        if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
-                            if(!osc_check_recaptcha()) {
-                                osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;
-                                $this->redirectTo( osc_item_post_url() );
-                                return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
+                        if( (osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field") ) {
+                            if( !osc_check_recaptcha() ) {
+                                osc_add_flash_error_message( _m('The Recaptcha code is wrong') ) ;
+                                $this->redirectTo( osc_item_edit_url() ) ;
+                                return false ; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                             }
                         }
                         
@@ -476,7 +476,7 @@
                             $item['locale'][$k]['s_description'] = nl2br(osc_apply_filter('item_description',$v['s_description']));
                         }
 
-                        $this->_exportVariableToView('items', array($item)) ;
+                        $this->_exportVariableToView('item', $item);//array($item)) ;
 
                         osc_run_hook('show_item', $item) ;
 

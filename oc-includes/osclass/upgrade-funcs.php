@@ -121,7 +121,8 @@
     }
 
     if(osc_version() < 230) {
-        $comm->query(sprintf("CREATE TABLE %st_item_description_tmp (
+        $comm->query(sprintf("
+CREATE TABLE %st_item_description_tmp (
     fk_i_item_id INT UNSIGNED NOT NULL,
     fk_c_locale_code CHAR(5) NOT NULL,
     s_title VARCHAR(100) NOT NULL,
@@ -202,14 +203,64 @@
         osc_changeVersionTo(230) ;
     }
 
-    if(osc_version() < 234) {
+    if( osc_version() < 234 ) {
         @unlink(osc_admin_base_path()."upgrade.php");
         @unlink(osc_admin_base_path()."/themes/modern/tools/upgrade-plugins.php");
         @unlink(osc_admin_base_path()."upgrade-plugin.php");
         osc_changeVersionTo(234) ;
     }
 
-    osc_changeVersionTo(235) ;
+    if( osc_version() < 240 ) {
+        // We no longer use s_what column in /*TABLE_PREFIX*/t_item_description
+        $comm->query( sprintf('ALTER TABLE %st_item_description DROP COLUMN s_what', DB_TABLE_PREFIX) ) ;
+
+        @unlink(osc_admin_base_path()."/themes/modern/tools/images.php");
+        
+        // NEW REWRITE
+        // Uncomment the unlink line prior to release
+        //@unlink(osc_base_path()."generate_rules.php");
+        osc_set_preference('rewrite_item_url', 'item/{ITEM_ID}/{ITEM_TITLE}');
+        osc_set_preference('rewrite_cat_url', '{CATEGORIES}/');
+        osc_set_preference('rewrite_page_url', 'page/{PAGE_SLUG}');
+        osc_set_preference('rewrite_search_url', 'search/');
+        osc_set_preference('rewrite_search_country', 'country');
+        osc_set_preference('rewrite_search_region', 'region');
+        osc_set_preference('rewrite_search_city', 'city');
+        osc_set_preference('rewrite_search_city_area', 'cityarea');
+        osc_set_preference('rewrite_search_category', 'category');
+        osc_set_preference('rewrite_search_user', 'user');
+        osc_set_preference('rewrite_search_pattern', 'pattern');
+        osc_set_preference('rewrite_contact', 'contact');
+        osc_set_preference('rewrite_feed', 'feed');
+        osc_set_preference('rewrite_language', 'language');
+        osc_set_preference('rewrite_item_mark', 'item/mark');
+        osc_set_preference('rewrite_item_send_friend', 'item/send-friend');
+        osc_set_preference('rewrite_item_contact', 'item/contact');
+        osc_set_preference('rewrite_item_new', 'item/new');
+        osc_set_preference('rewrite_item_activate', 'item/activate');
+        osc_set_preference('rewrite_item_edit', 'item/edit');
+        osc_set_preference('rewrite_item_delete', 'item/delete');
+        osc_set_preference('rewrite_item_resource_delete', 'item/resource/delete');
+        osc_set_preference('rewrite_user_login', 'user/login');
+        osc_set_preference('rewrite_user_dashboard', 'user/dashboard');
+        osc_set_preference('rewrite_user_logout', 'user/logout');
+        osc_set_preference('rewrite_user_register', 'user/register');
+        osc_set_preference('rewrite_user_activate', 'user/activate');
+        osc_set_preference('rewrite_user_activate_alert', 'user/activate_alert');
+        osc_set_preference('rewrite_user_profile', 'user/profile');
+        osc_set_preference('rewrite_user_items', 'user/items');
+        osc_set_preference('rewrite_user_alerts', 'user/alerts');
+        osc_set_preference('rewrite_user_recover', 'user/recover');
+        osc_set_preference('rewrite_user_forgot', 'user/forgot');
+        osc_set_preference('rewrite_user_change_password', 'user/change_password');
+        osc_set_preference('rewrite_user_change_email', 'user/change_email');
+        osc_set_preference('rewrite_user_change_email_confirm', 'user/change_email_confirm');
+
+        osc_set_preference('last_version_check', time());
+        osc_set_preference('update_core_json', '');
+    }
+
+    osc_changeVersionTo(240) ;
 
     if(Params::getParam('action') == '') {
         $title   = 'OSClass &raquo; Updated correctly' ;

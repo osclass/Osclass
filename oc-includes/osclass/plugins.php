@@ -34,7 +34,7 @@
                 for($priority = 0;$priority<=10;$priority++) {
                     if(isset(Plugins::$hooks[$hook][$priority]) && is_array(Plugins::$hooks[$hook][$priority])) {
                         foreach(Plugins::$hooks[$hook][$priority] as $fxName) {
-                            if(function_exists($fxName)) {
+                            if(is_callable($fxName)) {
                                 call_user_func_array($fxName, $args);
                             }
                         }
@@ -48,7 +48,7 @@
                 for($priority = 0;$priority<=10;$priority++) {
                     if(isset(Plugins::$hooks[$hook][$priority]) && is_array(Plugins::$hooks[$hook][$priority])) {
                         foreach(Plugins::$hooks[$hook][$priority] as $fxName) {
-                            if(function_exists($fxName)) {
+                            if(is_callable($fxName)) {
                                 $content = call_user_func($fxName, $content);
                             }
                         }
@@ -393,11 +393,14 @@
             $hook         = str_replace($plugin_path, '', $hook) ;
             $found_plugin = false;
             if(isset(Plugins::$hooks[$hook])) {
-                if(is_array(Plugins::$hooks[$hook])) {
-                    foreach(Plugins::$hooks[$hook] as $fxName) {
-                        if($fxName==$function) {
-                            $found_plugin = true;
-                            break;
+                for($_priority = 0;$_priority<=10;$_priority++) {
+                    if(isset(Plugins::$hooks[$hook][$_priority])) {
+                        foreach(Plugins::$hooks[$hook][$_priority] as $fxName) {
+                            if($fxName==$function) {
+                                $found_plugin = true;
+                                break;
+                                break;
+                            }
                         }
                     }
                 }
@@ -406,7 +409,15 @@
         }
 
         static function removeHook($hook, $function) {
-            unset(Plugins::$hooks[$hook][$function]);
+            for($priority = 0;$priority<=10;$priority++) {
+                if(isset(Plugins::$hooks[$hook][$priority])) {
+                    foreach(Plugins::$hooks[$hook][$priority] as $k => $v) {
+                        if($v==$function) {
+                            unset(Plugins::$hooks[$hook][$priority][$k]);
+                        }
+                    }
+                }
+            }
         }
 
         static function getActive() {

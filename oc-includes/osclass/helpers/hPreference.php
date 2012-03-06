@@ -390,6 +390,15 @@
     }
 
     /**
+     * Gets json response when checking if there is available a new version
+     *
+     * @return string
+     */
+    function osc_update_core_json() {
+        return (getPreference('update_core_json')) ;
+    }
+
+    /**
      * Gets current version
      *
      * @return int

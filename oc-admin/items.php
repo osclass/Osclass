@@ -25,7 +25,8 @@
         //specific for this class
         private $itemManager ;
 
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
 
             //specific things for this class
@@ -33,12 +34,12 @@
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             parent::doModel() ;
 
             //specific things for this class
-            switch ($this->action)
-            {
+            switch($this->action) {
                 case 'bulk_actions':
                                         switch ( Params::getParam('bulk_actions') )
                                         {
@@ -531,7 +532,7 @@
                 case('settings_post'):     // update item settings
                                         $iUpdated                   = 0;
                                         $enabledRecaptchaItems      = Params::getParam('enabled_recaptcha_items');
-                                        $enabledRecaptchaItems      = (($enabledRecaptchaItems != '') ? true : false);
+                                        $enabledRecaptchaItems      = (($enabledRecaptchaItems == '1') ? true : false);
                                         $moderateItems              = Params::getParam('moderate_items');
                                         $moderateItems              = (($moderateItems != '') ? true : false);
                                         $numModerateItems           = Params::getParam('num_moderate_items');
@@ -621,10 +622,12 @@
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_current_admin_theme_path($file) ;
             Session::newInstance()->_clearVariables();
         }
     }
 
+    /* file end: ./oc-admin/items.php */
 ?>

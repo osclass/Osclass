@@ -104,16 +104,13 @@
 
         static private function _purify($value, $xss_check)
         {
-            self::$config = HTMLPurifier_Config::createDefault();
-            $allowed = 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]';
-            $allowed .= 'object[align<bottom?left?middle?right?top|archive|border|class|classid|codebase|codetype|data|';
-            $allowed .= 'declare|dir<ltr?rtl|height|hspace|id|lang|name|onclick|ondblclick|onkeydown|onkeypress|onkeyup|';
-            $allowed .= 'onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|standby|style|tabindex|title|type|usemap|vspace|width]';
-            self::$config->set('HTML.Allowed', $allowed);
-            self::$config->set("HTML.SafeEmbed", true);
-            self::$config->set("HTML.SafeObject", true);
-            self::$config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
-            self::$config->set('Cache.SerializerPath', ABS_PATH . 'oc-content/uploads');
+            self::$config = HTMLPurifier_Config::createDefault() ;
+            $allowed = 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]' ;
+            self::$config->set('HTML.Allowed', $allowed) ;
+            self::$config->set("HTML.SafeEmbed", true) ;
+            self::$config->set("HTML.SafeObject", true) ;
+            self::$config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align') ;
+            self::$config->set('Cache.SerializerPath', ABS_PATH . 'oc-content/uploads') ;
 
             if( !$xss_check ) {
                 return $value ;

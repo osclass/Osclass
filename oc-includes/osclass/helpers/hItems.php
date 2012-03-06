@@ -37,9 +37,7 @@
     * @return array $item, or null if not exist
     */
     function osc_item() {
-        if (View::newInstance()->_exists('items')) {
-            $item = View::newInstance()->_current('items') ;
-        } else if(View::newInstance()->_exists('item')) {
+        if(View::newInstance()->_exists('item')) {
             $item = View::newInstance()->_get('item') ;
         } else {
             $item = null;
@@ -757,6 +755,18 @@
     function osc_resource_original_url() {
         return (string) osc_resource_path().osc_resource_id()."_original.".osc_resource_field("s_extension");
     }
+    
+    /**
+     * Set the internal pointer of array resources to its first element, and return it.
+     * 
+     * @since 2.3.6
+     * @return array
+     */
+    function osc_reset_resources() {
+        return View::newInstance()->_reset('resources') ;
+    }
+    
+    
     ///////////////////////////////
     // END HELPERS FOR RESOURCES //
     ///////////////////////////////
@@ -780,7 +790,18 @@
         if ( View::newInstance()->_exists('metafields') ) {
             View::newInstance()->_erase('metafields') ;
         }
-        return View::newInstance()->_next('items') ;
+        if(View::newInstance()->_get('itemLoop')!='items') {
+            View::newInstance()->_exportVariableToView('oldItem', View::newInstance()->_get('item'));
+            View::newInstance()->_exportVariableToView('itemLoop', 'items');
+        }
+        $item = View::newInstance()->_next('items') ;
+        if(!$item) {
+            View::newInstance()->_exportVariableToView('item', View::newInstance()->_get('oldItem'));
+            View::newInstance()->_exportVariableToView('itemLoop', '');
+        } else {
+            View::newInstance()->_exportVariableToView('item', View::newInstance()->_current('items'));
+        }
+        return $item;
     }
 
     /**
@@ -789,7 +810,21 @@
      * @return array
      */
     function osc_reset_items() {
+        View::newInstance()->_exportVariableToView('item', View::newInstance()->_get('oldItem'));
+        View::newInstance()->_exportVariableToView('itemLoop', '');
         return View::newInstance()->_reset('items') ;
+    }
+
+    /**
+     * Set the internal pointer of array latestItems to its first element, and return it.
+     *
+     * @since 2.4
+     * @return array
+     */
+    function osc_reset_latest_items() {
+        View::newInstance()->_exportVariableToView('item', View::newInstance()->_get('oldItem'));
+        View::newInstance()->_exportVariableToView('itemLoop', '');
+        return View::newInstance()->_reset('latestItems') ;
     }
 
     /**
@@ -798,7 +833,7 @@
      * @return int
      */
     function osc_count_items() {
-        return osc_priv_count_items() ;
+        return (int) View::newInstance()->_count('items') ;
     }
 
     /**
@@ -810,7 +845,7 @@
         if ( !View::newInstance()->_exists('resources') ) {
             View::newInstance()->_exportVariableToView('resources', ItemResource::newInstance()->getAllResources( osc_item_id() ) ) ;
         }
-        return osc_priv_count_item_resources() ;
+        return (int) View::newInstance()->_count('resources') ;
     }
 
     /**
@@ -870,12 +905,32 @@
      * @return array
      */
     function osc_has_latest_items() {
-        if ( !View::newInstance()->_exists('items') ) {
+        if ( !View::newInstance()->_exists('latestItems') ) {
             $search = new Search();
             $search->limit(0, osc_max_latest_items());
-            View::newInstance()->_exportVariableToView('items', $search->getLatestItems());
+            View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems());
         }
-        return osc_has_items() ;
+        if ( View::newInstance()->_exists('resources') ) {
+            View::newInstance()->_erase('resources') ;
+        }
+        if ( View::newInstance()->_exists('item_category') ) {
+            View::newInstance()->_erase('item_category') ;
+        }
+        if ( View::newInstance()->_exists('metafields') ) {
+            View::newInstance()->_erase('metafields') ;
+        }
+        if(View::newInstance()->_get('itemLoop')!='latest') {
+            View::newInstance()->_exportVariableToView('oldItem', View::newInstance()->_get('item'));
+            View::newInstance()->_exportVariableToView('itemLoop', 'latest');
+        }
+        $item = View::newInstance()->_next('latestItems') ;
+        if(!$item) {
+            View::newInstance()->_exportVariableToView('item', View::newInstance()->_get('oldItem'));
+            View::newInstance()->_exportVariableToView('itemLoop', '');
+        } else {
+            View::newInstance()->_exportVariableToView('item', View::newInstance()->_current('latestItems'));
+        }
+        return $item;
     }
 
     /**
@@ -884,18 +939,68 @@
      * @return int
      */
     function osc_count_latest_items() {
-        if ( !View::newInstance()->_exists('items') ) {
+        if ( !View::newInstance()->_exists('latestItems') ) {
             $search = new Search();
             $search->limit(0, osc_max_latest_items());
-            View::newInstance()->_exportVariableToView('items', $search->getLatestItems());
-        }
-        return osc_priv_count_items() ;
+            View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems());
+        };
+        return (int) View::newInstance()->_count('latestItems') ;
     }
     //////////////
     // END HOME //
     //////////////
 
 
+    /**
+     * Gets next item of custom items
+     *
+     * @return array
+     */
+    function osc_has_custom_items() {
+        if ( View::newInstance()->_exists('resources') ) {
+            View::newInstance()->_erase('resources') ;
+        }
+        if ( View::newInstance()->_exists('item_category') ) {
+            View::newInstance()->_erase('item_category') ;
+        }
+        if ( View::newInstance()->_exists('metafields') ) {
+            View::newInstance()->_erase('metafields') ;
+        }
+        if(View::newInstance()->_get('itemLoop')!='custom') {
+            View::newInstance()->_exportVariableToView('oldItem', View::newInstance()->_get('item'));
+            View::newInstance()->_exportVariableToView('itemLoop', 'custom');
+        }
+        $item = View::newInstance()->_next('customItems') ;
+        if(!$item) {
+            View::newInstance()->_exportVariableToView('item', View::newInstance()->_get('oldItem'));
+            View::newInstance()->_exportVariableToView('itemLoop', '');
+        } else {
+            View::newInstance()->_exportVariableToView('item', View::newInstance()->_current('customItems'));
+        }
+        return $item;
+    }
+
+    /**
+     * Gets number of custom items
+     *
+     * @return int
+     */
+    function osc_count_custom_items() {
+        return (int) View::newInstance()->_count('customItems') ;
+    }
+    
+    /**
+     * Set the internal pointer of array customItems to its first element, and return it.
+     *
+     * @since 2.4
+     * @return array
+     */
+    function osc_reset_custom_items() {
+        View::newInstance()->_exportVariableToView('item', View::newInstance()->_get('oldItem'));
+        View::newInstance()->_exportVariableToView('itemLoop', '');
+        return View::newInstance()->_reset('customItems') ;
+    }
+    
     /**
      * Formats the price using the appropiate currency.
      *
@@ -917,6 +1022,7 @@
     /**
      * Gets number of items
      *
+     * @deprecated deprecated since version 2.4
      * @access private
      * @return int
      */
@@ -927,6 +1033,7 @@
     /**
      * Gets number of item resources
      *
+     * @deprecated deprecated since version 2.4
      * @access private
      * @return int
      */

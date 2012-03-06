@@ -17,8 +17,6 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-
-
     function fn_email_alert_validation($alert, $email, $secret) {
         $user['s_name'] = "";
                                     
@@ -438,105 +436,102 @@
                     ,$item_url
                     ,osc_page_title()
         ) ;
+
         $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_send_friend_title', $content['s_title'])), $words) ;
         $body  = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_send_friend_description', $content['s_text'])), $words) ;
 
-        $add_bcc = '' ;
-        if (osc_notify_contact_friends()) {
-            $add_bcc = osc_contact_email() ;
+        $params = array(
+            'from'      => $aItem['yourEmail']
+           ,'from_name' => $aItem['yourName']
+           ,'subject'   => $title
+           ,'to'        => $aItem['friendEmail']
+           ,'to_name'   => $aItem['friendName']
+           ,'body'      => $body
+           ,'alt_body'  => $body
+        ) ;
+
+        if( osc_notify_contact_friends() ) {
+            $params['add_bcc'] = osc_contact_email() ;
         }
 
-        $params = array(
-                    'add_bcc'    => $add_bcc
-                    ,'from'      => $aItem['yourEmail']
-                    ,'from_name' => $aItem['yourName']
-                    ,'subject'   => $title
-                    ,'to'        => $aItem['friendEmail']
-                    ,'to_name'   => $aItem['friendName']
-                    ,'body'      => $body
-                    ,'alt_body'  => $body
-                 ) ;
-        osc_sendMail($params);
+        osc_sendMail($params) ;
     }
     osc_add_hook('hook_email_send_friend', 'fn_email_send_friend');
     
     function fn_email_item_inquiry($aItem) {
-        $id         = $aItem['id'];
-        $yourEmail  = $aItem['yourEmail'];
-        $yourName   = $aItem['yourName'];
-        $phoneNumber= $aItem['phoneNumber'];
-        $message    = $aItem['message'];
+        $id         = $aItem['id'] ;
+        $yourEmail  = $aItem['yourEmail'] ;
+        $yourName   = $aItem['yourName'] ;
+        $phoneNumber= $aItem['phoneNumber'] ;
+        $message    = $aItem['message'] ;
 
-        $path = NULL;
+        $path = null ;
         $item = Item::newInstance()->findByPrimaryKey( $id ) ;
-        View::newInstance()->_exportVariableToView('item', $item);
+        View::newInstance()->_exportVariableToView('item', $item) ;
 
-        $mPages = new Page();
-        $aPage = $mPages->findByInternalName('email_item_inquiry');
+        $mPages = new Page() ;
+        $aPage  = $mPages->findByInternalName('email_item_inquiry') ;
         $locale = osc_current_user_locale() ;
 
-        $content = array();
-        if(isset($aPage['locale'][$locale]['s_title'])) {
-            $content = $aPage['locale'][$locale];
+        $content = array() ;
+        if( isset($aPage['locale'][$locale]['s_title']) ) {
+            $content = $aPage['locale'][$locale] ;
         } else {
-            $content = current($aPage['locale']);
+            $content = current($aPage['locale']) ;
         }
 
-        $item_url = osc_item_url();
-        $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
+        $item_url = osc_item_url() ;
+        $item_url = '<a href="' . $item_url . '" >' . $item_url . '</a>' ;
 
         $words   = array();
         $words[] = array('{CONTACT_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{USER_PHONE}',
-                             '{WEB_URL}', '{ITEM_TITLE}','{ITEM_URL}', '{COMMENT}');
+                             '{WEB_URL}', '{ITEM_TITLE}','{ITEM_URL}', '{COMMENT}') ;
 
         $words[] = array($item['s_contact_name'], $yourName, $yourEmail,
-                         $phoneNumber, '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', $item['s_title'], $item_url, $message );
+                         $phoneNumber, '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', $item['s_title'], $item_url, $message ) ;
 
-        $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_inquiry_title', $content['s_title'])), $words);
-        $body = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_inquiry_description', $content['s_text'])), $words);
+        $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_inquiry_title', $content['s_title'])), $words) ;
+        $body  = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_inquiry_description', $content['s_text'])), $words) ;
 
-        $from = osc_contact_email() ;
+        $from      = osc_contact_email() ;
         $from_name = osc_page_title() ;
 
-        $add_bcc = '';
-        if (osc_notify_contact_item()) {
-            $add_bcc = osc_contact_email() ;
+        $emailParams = array (
+            'from'      => $from
+           ,'from_name' => $from_name
+           ,'subject'   => $title
+           ,'to'        => $item['s_contact_email']
+           ,'to_name'   => $item['s_contact_name']
+           ,'body'      => $body
+           ,'alt_body'  => $body
+           ,'reply_to'  => $yourEmail
+        ) ;
+
+        if( osc_notify_contact_item() ) {
+            $emailParams['add_bcc'] = osc_contact_email() ;
         }
 
-        $emailParams = array (
-                             'add_bcc'   => $add_bcc
-                            ,'from'      => $from
-                            ,'from_name' => $from_name
-                            ,'subject'   => $title
-                            ,'to'        => $item['s_contact_email']
-                            ,'to_name'   => $item['s_contact_name']
-                            ,'body'      => $body
-                            ,'alt_body'  => $body
-                            ,'reply_to'  => $yourEmail
-                        ) ;
-
-
-        if(osc_item_attachment()) {
-            $attachment = Params::getFiles('attachment');
+        if( osc_item_attachment() ) {
+            $attachment   = Params::getFiles('attachment');
             $resourceName = $attachment['name'] ;
-            $tmpName = $attachment['tmp_name'] ;
+            $tmpName      = $attachment['tmp_name'] ;
             $resourceType = $attachment['type'] ;
-            $path = osc_content_path() . 'uploads/' . time() . '_' . $resourceName ;
+            $path         = osc_content_path() . 'uploads/' . time() . '_' . $resourceName ;
 
-            if(!is_writable(osc_content_path() . 'uploads/')) {
-                osc_add_flash_error_message( _m('There has been some errors sending the message')) ;
-                //$this->redirectTo( osc_base_url() );
+            if( !is_writable(osc_content_path() . 'uploads/') ) {
+                osc_add_flash_error_message( _m('There has been some errors sending the message') ) ;
             }
 
-            if(!move_uploaded_file($tmpName, $path)){
+            if( !move_uploaded_file($tmpName, $path) ) {
                 unset($path) ;
             }
         }
 
-        if(isset($path)) {
+        if( isset($path) ) {
             $emailParams['attachment'] = $path ;
         }
-        osc_sendMail($emailParams);
+
+        osc_sendMail($emailParams) ;
 
         @unlink($path) ;
     }
@@ -865,26 +860,23 @@
         $from = osc_contact_email() ;
         $from_name = osc_page_title() ;
 
-        $add_bcc = '';
-        if (osc_notify_contact_item()) {
-            $add_bcc = osc_contact_email() ;
-        }
-
         $emailParams = array (
-                            'add_bcc'   => $add_bcc
-                            ,'from'      => $from
-                            ,'from_name' => $from_name
-                            ,'subject'   => $title
-                            ,'to'        => osc_user_email()
-                            ,'to_name'   => osc_user_name()
-                            ,'body'      => $body
-                            ,'alt_body'  => $body
-                            ,'reply_to'  => $yourEmail
-                        ) ;
+            'from'      => $from
+           ,'from_name' => $from_name
+           ,'subject'   => $title
+           ,'to'        => osc_user_email()
+           ,'to_name'   => osc_user_name()
+           ,'body'      => $body
+           ,'alt_body'  => $body
+           ,'reply_to'  => $yourEmail
+        ) ;
+
+        if( osc_notify_contact_item() ) {
+            $emailParams['add_bcc'] = osc_contact_email() ;
+        }
 
         osc_sendMail($emailParams);
 
-        @unlink($path) ;
     }
     osc_add_hook('hook_email_contact_user', 'fn_email_contact_user');
     
