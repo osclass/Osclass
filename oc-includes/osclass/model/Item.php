@@ -334,9 +334,6 @@
          */
         public function insertLocale($id, $locale, $title, $description)
         {
-            $title       = $title ;
-            $description = $description ;
-            $what        = $what ;
             $array_set   = array(
                 'fk_i_item_id'      => $id,
                 'fk_c_locale_code'  => $locale,

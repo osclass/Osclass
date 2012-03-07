@@ -265,7 +265,7 @@
         }
         
         /**
-         * Extends an array of comments with title / description / what
+         * Extends an array of comments with title / description 
          * 
          * @access private
          * @since unknown
