@@ -903,6 +903,13 @@ div.disabled .category_row {
     padding-bottom: 5px;
 }
 /* /categories */
+/* items */
 .show-filters {
     cursor: pointer;
 }
+
+.xxlarge .title input {
+    width: 400px;
+    margin: 0;
+}
+/* /items */
