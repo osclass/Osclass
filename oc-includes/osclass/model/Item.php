@@ -771,6 +771,7 @@
             }
 
             $results = array();
+            
             foreach ($items as $item) {
                 $this->dao->select() ;
                 $this->dao->from(DB_TABLE_PREFIX.'t_item_description') ;
@@ -794,7 +795,7 @@
                     $item['s_description'] = $data['s_description'];
                     unset($data);
                 }
-//                print_r($item);
+
                 // populate locations and category_name
                 $this->dao->select() ;
                 $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
