@@ -539,7 +539,7 @@
      * @return string 
      */
     function osc_market_url($code = '') {
-        return(getPreference('marketURL').$code) ;
+        return(getPreference('marketURL')."?code=".$code) ;
     }
     
     /**

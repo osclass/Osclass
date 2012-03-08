@@ -30,21 +30,14 @@
         function doModel() {
 
             switch ($this->action) {
-                case 'browse':
-                    $url = Params::getParam('url');
-                    if($url=='') {
-                        $url = osc_market_url();
-                    }
-                    View::newInstance()->_exportVariableToView('url', $url);
-                    $this->doView('universe/browse.php');
-                    break;
                 default:
                             $code = html_entity_decode(Params::getParam('code'));
-                            $plugins = Plugins::listAll();
-                            $themes = WebThemes::newInstance()->getListThemes();
-                            View::newInstance()->_exportVariableToView('plugins', $plugins);
-                            View::newInstance()->_exportVariableToView('themes', $themes);
                             View::newInstance()->_exportVariableToView('code', $code);
+                            //$url = Params::getParam('url');
+                            //if($url=='') {
+                                $url = osc_market_url();
+                            //}
+                            View::newInstance()->_exportVariableToView('url', $url);
                             $this->doView('universe/index.php');
                 break;
             }

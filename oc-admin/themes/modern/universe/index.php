@@ -16,86 +16,11 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $plugins = View::newInstance()->_get('plugins');
-    $themes = View::newInstance()->_get('themes');
     $code = View::newInstance()->_get('code');
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
-        <link href="<?php echo osc_current_admin_theme_styles_url('demo_table.css') ; ?>" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.dataTables.js') ; ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.pagination.js') ; ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.extend.js') ; ?>"></script>
-        <script type="text/javascript">
-            $(function() {
-                oTable = $('#datatables_list').dataTable({
-                    "bAutoWidth": false,
-                    "iDisplayLength": 50,
-                    "aaData": [
-                        <?php foreach($plugins as $_p){
-                            $p = Plugins::getInfo($_p);
-                            $up = osc_check_update(@$p['plugin_update_uri'], @$p['version']);
-                            ?>
-                            [
-                                "<input type='hidden' name='upgradable' value='<?php echo $up?'1':'0'; ?>' />" +
-                                "<?php echo addcslashes($p['plugin_name'], '"'); ?>&nbsp;",
-                                "<?php echo addcslashes($p['version'], '"'); ?>",
-                                "<?php echo addcslashes($p['description'], '"'); ?>",
-                                <?php if($up) { ?>
-                                    "<td><a href=\"#\" onclick=\"upgrade('<?php echo $p['plugin_update_uri']; ?>');\" ><?php _e('Upgrade available'); ?></a></td>"
-                                <?php } else { ?>
-                                    "<td><?php _e('No upgrade needed'); ?></td>"
-                                <?php }; ?>
-                            ],
-                        <?php } ?>
-                        <?php foreach($themes as $_t){
-                            $t = WebThemes::newInstance()->loadThemeInfo($_t);
-                            $up = osc_check_update(@$t['theme_update_uri'], @$t['version']);
-                            ?>
-                            [
-                                "<input type='hidden' name='upgradable' value='<?php echo $up?'1':'0'; ?>' />" +
-                                "<?php echo addcslashes($t['name'], '"'); ?>&nbsp;",
-                                "<?php echo addcslashes($t['version'], '"'); ?>",
-                                "<?php echo addcslashes($t['description'], '"'); ?>",
-                                <?php if($up) { ?>
-                                    "<td><a href=\"#\" onclick=\"upgrade('<?php echo $t['theme_update_uri']; ?>');\" ><?php _e('Upgrade available'); ?></a></td>"
-                                <?php } else { ?>
-                                    "<td><?php _e('No upgrade needed'); ?></td>"
-                                <?php }; ?>
-                            ] <?php echo $t != end($themes) ? ',' : ''; ?>
-                        <?php } ?>
-                    ],
-                    "aoColumns": [
-                        {
-                            "sTitle": "<?php echo osc_esc_html( __('Name') ) ; ?>"
-                        },
-                        {
-                            "sTitle": "<?php echo osc_esc_html( __('Version') ) ; ?>"
-                        },
-                        {
-                            "sTitle": "<?php echo osc_esc_html( __('Description') ) ; ?>"
-                        },
-                        {
-                            "sTitle": "<?php echo osc_esc_html( __('Upgrade') ) ; ?>"
-                        }
-                    ],
-                    "fnDrawCallback": function() {
-                        $('input:hidden[name="upgradable"]').each(function() {
-                            $(this).parent().parent().children().css('background', 'none') ;
-                            if( $(this).val() == '1' ) {
-                                $(this).parent().parent().css('background-color', '#FFF0DF') ;
-                            } else {
-                                $(this).parent().parent().css('background-color', '#EDFFDF') ;
-                            }
-                        }) ;
-                    }
-                });
-
-                $('.filter').append( $("#add_plugin_button") ) ;
-            });
-        </script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
@@ -111,7 +36,7 @@
                 
                 
                 <div>
-                    <?php _e('some text explaining this process', 'universe') ; ?>
+                    <?php _e('Browse the official repository of OSClass and discover new plugins and themes for your website', 'universe') ; ?>
                 </div>
                 <div id="universe_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
@@ -121,7 +46,7 @@
                             <input type="text" id="s_code" name="s_code" value="" />
                         </p>
                         <p>
-                            <button class="formButton" type="button" id="check_btn" ><?php _e('Get Info - CHANGE TEXT OF THIS BUTTON - ') ; ?></button>
+                            <button class="formButton" type="button" id="check_btn" ><?php _e('Download package') ; ?></button>
                         </p>
                     </div>
                 </div>
@@ -131,7 +56,7 @@
                 </div>
                 <div id="universe_info" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 10px;">
-                        <?php _e('Information, MAYBE EXPLAIN and WARN THE USER THAT IT IS TRYING TO DOWNLOAD AN EXTERNAL FILE', 'universe') ; ?>
+                        <?php _e('Information, you are going to download and install the following package:') ; ?>
                         <form>
                             <p>
                                 <label><?php _e('Name'); ?></label>
@@ -151,17 +76,29 @@
                             </p>
                             <p>
                                 <button class="formButton" type="button" id="cancel_btn" ><?php _e('Cancel') ; ?></button>
-                                <button class="formButton" type="button" id="download_btn" ><?php _e('Download') ; ?></button>
+                                <button class="formButton" type="button" id="download_btn" ><?php _e('I understand the risk, continue') ; ?></button>
                                 <div id="steps_zip"></div>
                             </p>
                         </form>
                     </div>
-                </div>                
-                <!-- datatables universe -->
-                <div class="datatables">
-                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatables_list"></table>
-                </div>
-                <!-- /datatables universe -->
+                </div>     
+                <br/>
+                <!-- boxes -->
+                    <div class="sortable_div">
+                        <div class="latest-items ui-widget-content ui-corner-all">
+                            <h3 class="ui-state-default"><?php _e('Plugins') ; ?></h3>
+                            <div class="ui-state-body">
+                                <ul id="plugins_ul"></ul>
+                            </div>
+                        </div>
+                        <div class="dashboard-statistics ui-widget-content ui-corner-all">
+                            <h3 class="ui-state-default"><?php _e('Themes'); ?></h3>
+                            <div class="ui-state-body">
+                                <ul id="themes_ul"></ul>
+                            </div>
+                        </div>
+                    </div>
+                <!-- /boxes -->
             </div>
             <!-- /right container -->
         </div>
@@ -235,6 +172,24 @@
                     }
                 );
             }
+            
+            function addItem(item, list) {
+                
+                console.log(item);
+                //$(list).append("<li>"+item.s_name+"</li>");
+                
+            }
+            
+            $.getJSON(
+                "<?php echo osc_market_url(); ?>",
+                {"section" : 'all'},
+                function(data){
+                    $.each(data.plugins,console.log(value));
+                    data.themes.each(addItem(this,"#themes_ul"));
+                }
+            );
+
+            
             
             <?php if($code!='') { ?>
                 upgrade('<?php echo $code; ?>');
