@@ -322,7 +322,7 @@
         }
         
         /**
-         * Insert title, description and what for a given locale and item id.
+         * Insert title and description for a given locale and item id.
          * 
          * @access public
          * @since unknown
@@ -330,7 +330,6 @@
          * @param string $locale
          * @param string $title
          * @param string $description
-         * @param string $what
          * @return boolean
          */
         public function insertLocale($id, $locale, $title, $description)

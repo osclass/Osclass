@@ -489,10 +489,14 @@
          */
         public function deleteResourcesFromHD( $itemId )
         {
-            $resources = ItemResource::newInstance()->getAllResources($itemId);
+            $resources = ItemResource::newInstance()->getAllResourcesFromItem($itemId);
+            Log::newInstance()->insertLog('itemActions', 'deleteResourcesFromHD', $itemId, $itemId, $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id()) ;
+            $log_ids = '';
             foreach($resources as $resource) {
-                osc_deleteResource($resource['pk_i_id']);
+                osc_deleteResource($resource['pk_i_id'], $this->is_admin);
+                $log_ids .= $resource['pk_i_id'].",";
             }
+            Log::newInstance()->insertLog('itemActions', 'deleteResourcesFromHD', $itemId, substr($log_ids,0, 250), $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id()) ;
         }
 
         /**
