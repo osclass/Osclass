@@ -152,15 +152,17 @@
                 if( $k == 'fCol_cityId' ) {
                     $this->mSearch->addCity($v);
                 }
-//                if( $k == 'fCol_country' ) {
-//                    array_push( $this->filters, array($this->tables_filters[$k], $v) ) ;
-//                }
-//                if( $k == 'fCol_region' ) {
-//                    array_push( $this->filters, array($this->tables_filters[$k], $v) ) ;
-//                }
-//                if( $k == 'fCol_city' ) {
-//                    array_push( $this->filters, array($this->tables_filters[$k], $v) ) ;
-//                }
+                
+                if( $k == 'fCol_country' ) {
+                    $this->mSearch->addCountry($v);
+                }
+                if( $k == 'fCol_region' ) {
+                    $this->mSearch->addRegion($v);
+                }
+                if( $k == 'fCol_city' ) {
+                    $this->mSearch->addCity($v);
+                }
+                
                 if( $k == 'fCol_catId' ) {
                     $this->mSearch->addCategory($v);
                 }

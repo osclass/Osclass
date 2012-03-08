@@ -50,10 +50,10 @@
                                 "value": $('input[name="pk_i_id"]').val()
                             }) ;
                         }
-                        if( $('input[name="userName"]').val() ) {
+                        if( $('select[name="userId"]').val() ) {
                             aoData.push({
                                 "name": "fCol_userIdValue",
-                                "value": $('input[name="userName"]').val()
+                                "value": $('select[name="userId"]').val()
                             }) ;
                         }
                         if( $('select[name="countryId"]').val() ) {
@@ -224,7 +224,24 @@
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
         <!-- /datatables js -->
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
-        <?php ItemForm::location_javascript('admin') ; ?>
+        <?php ItemForm::location_javascript_new('admin') ; ?>
+        <script type="text/javascript">
+            // autocomplete users
+            $(document).ready(function(){
+                $('#user').attr( "autocomplete", "off" );
+                $('#user').live('keyup.autocomplete', function(){
+                    $('#userId').val('');
+                    $( this ).autocomplete({
+                        source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax&term="+$('#user').val(),
+                        minLength: 2,
+                        select: function( event, ui ) {
+                            $('#userId').val(ui.item.id);
+                        }
+                    });
+                }); 
+            });
+        </script>
+
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
@@ -249,25 +266,26 @@
                     <div class="input-line">
                         <label><?php _e('Item user') ; ?></label>
                         <div class="input">
-                            <input type="text" class="medium" name="userName" value="" />
+                            <input id="user" name="user" type="text" value=""/>
+                            <input id="userId" name="userId" type="hidden" value=""/>
                         </div>
                     </div>
                     <div class="input-line">
                         <label><?php _e('Country') ; ?></label>
                         <div class="input">
-                            <?php ItemForm::country_select($countries, array('countryId' => '') ) ; ?>
+                            <?php ItemForm::country_text(); ?>
                         </div>
                     </div>
                     <div class="input-line">
                         <label><?php _e('Region') ; ?></label>
                         <div class="input">
-                            <?php ItemForm::region_select(array(''), '') ; ?>
+                            <?php ItemForm::region_text(); ?>
                         </div>
                     </div>
                     <div class="input-line">
                         <label><?php _e('City') ; ?></label>
                         <div class="input">
-                            <?php ItemForm::city_select(array(''), '') ; ?>
+                            <?php ItemForm::city_text(); ?>
                         </div>
                     </div>
                     <div class="input-line">
