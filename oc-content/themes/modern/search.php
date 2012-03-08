@@ -76,6 +76,8 @@
                     <div class="filters">
                         <form action="<?php echo osc_base_url(true); ?>" method="get" onSubmit="return checkEmptyCategories()">
                             <input type="hidden" name="page" value="search" />
+                            <input type="hidden" name="sOrder" value="<?php echo osc_search_order(); ?>" />
+                            <input type="hidden" name="iOrderType" value="<?php $allowedTypesForSorting = Search::getAllowedTypesForSorting() ; echo $allowedTypesForSorting[osc_search_order_type()]; ?>" />
                             <fieldset class="box location">
                                 <h3><strong><?php _e('Your search', 'modern'); ?></strong></h3>
                                 <div class="row one_input">

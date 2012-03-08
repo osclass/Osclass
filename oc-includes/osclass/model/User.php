@@ -445,6 +445,46 @@
             $row = $result->row() ;
             return $row['i_total'];
         }
+
+        /**
+         * Increase number of items, given a user id
+         *
+         * @access public
+         * @since unknown
+         * @param int $id user id 
+         * @return int number of affected rows, id error occurred return false
+         */
+        public function increaseNumItems($id) 
+        {
+            if(!is_numeric($id)) {
+                return false;
+            }
+            
+            $sql = sprintf('UPDATE %s SET i_items = i_items + 1 WHERE pk_i_id = %d', $this->getTableName(), $id);
+            $res = $this->dao->query($sql);
+            
+            return $res;
+        }
+        
+        /**
+         * Decrease number of items, given a user id
+         * 
+         * @access public
+         * @since unknown
+         * @param int $id user id 
+         * @return int number of affected rows, id error occurred return false
+         */
+        public function decreaseNumItems($id)
+        {
+            if(!is_numeric($id)) {
+                return false;
+            }
+            
+            $sql = sprintf('UPDATE %s SET i_items = i_items - 1 WHERE pk_i_id = %d', $this->getTableName(), $id);
+            $res = $this->dao->query($sql);
+            
+            return $res;
+        }
     }
 
     /* file end: ./oc-includes/osclass/model/User.php */

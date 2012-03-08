@@ -22,6 +22,7 @@
     $countries  = __get('countries') ;
     $regions    = __get('regions') ;
     $cities     = __get('cities') ;
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
@@ -49,13 +50,14 @@
                                 "value": $('input[name="pk_i_id"]').val()
                             }) ;
                         }
-                        if( $('input[name="userName"]').val() ) {
+                        if( $('select[name="userId"]').val() ) {
                             aoData.push({
                                 "name": "fCol_userIdValue",
-                                "value": $('input[name="userName"]').val()
+                                "value": $('select[name="userId"]').val()
                             }) ;
                         }
                         if( $('select[name="countryId"]').val() ) {
+
                             aoData.push({
                                 "name": "fCol_countryId",
                                 "value": $('select[name="countryId"]').val()
@@ -67,7 +69,7 @@
                                 "value": $('input[name="country"]').val()
                             }) ;
                         }
-                        if( $('input[name="regionId"]').val() ) {
+                        if( $('select[name="regionId"]').val() ) {
                             aoData.push({
                                 "name": "fCol_regionId",
                                 "value": $('select[name="regionId"]').val()
@@ -95,6 +97,31 @@
                             aoData.push({
                                 "name": "fCol_catId",
                                 "value": $('select[name="catId"]').val()
+                            }) ;
+                        }
+                        // status filters
+                        if( $('select[name="b_premium"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_bPremium",
+                                "value": $('select[name="b_premium"]').val()
+                            }) ;
+                        }
+                        if( $('select[name="b_active"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_bActive",
+                                "value": $('select[name="b_active"]').val()
+                            }) ;
+                        }
+                        if( $('select[name="b_enabled"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_bEnabled",
+                                "value": $('select[name="b_enabled"]').val()
+                            }) ;
+                        }
+                        if( $('select[name="b_spam"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_bSpam",
+                                "value": $('select[name="b_spam"]').val()
                             }) ;
                         }
                     },
@@ -159,31 +186,6 @@
                             "bSearchable": false,
                             "bSortable": true,
                             "defaultSortable" : true
-                        },
-                        {
-                            "sTitle": "Spam",
-                            "bSortable": false,
-                            "bVisible": false
-                        },
-                        {
-                            "sTitle": "Repeated",
-                            "bSortable": false,
-                            "bVisible": false
-                        },
-                        {
-                            "sTitle": "Bad",
-                            "bSortable": false,
-                            "bVisible": false
-                        },
-                        {
-                            "sTitle": "Offensive",
-                            "bSortable": false,
-                            "bVisible": false
-                        },
-                        {
-                            "sTitle": "Expired",
-                            "bSortable": false,
-                            "bVisible": false
                         }
                     ],
                     "aaSorting": [[7,'desc']]
@@ -202,7 +204,10 @@
 
                 $('input[name="apply-filters"]').bind('click', function() {
                     oTable.fnDraw() ;
-                }) ;
+                });
+                $('input[name="findById"]').bind('click', function() {
+                    oTable.fnDraw() ;
+                });
 
                 $('.show-filters').bind('click', function() {
                     if( $(this).attr('data-showed') == 'true' ) {
@@ -219,7 +224,24 @@
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
         <!-- /datatables js -->
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
-        <?php ItemForm::location_javascript('admin') ; ?>
+        <?php ItemForm::location_javascript_new('admin') ; ?>
+        <script type="text/javascript">
+            // autocomplete users
+            $(document).ready(function(){
+                $('#user').attr( "autocomplete", "off" );
+                $('#user').live('keyup.autocomplete', function(){
+                    $('#userId').val('');
+                    $( this ).autocomplete({
+                        source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax&term="+$('#user').val(),
+                        minLength: 2,
+                        select: function( event, ui ) {
+                            $('#userId').val(ui.item.id);
+                        }
+                    });
+                }); 
+            });
+        </script>
+
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
@@ -242,33 +264,28 @@
                         </div>
                     </div>
                     <div class="input-line">
-                        <label><?php _e('Item ID') ; ?></label>
-                        <div class="input">
-                            <input type="text" class="small" name="pk_i_id" value="" />
-                        </div>
-                    </div>
-                    <div class="input-line">
                         <label><?php _e('Item user') ; ?></label>
                         <div class="input">
-                            <input type="text" class="medium" name="userName" value="" />
+                            <input id="user" name="user" type="text" value=""/>
+                            <input id="userId" name="userId" type="hidden" value=""/>
                         </div>
                     </div>
                     <div class="input-line">
                         <label><?php _e('Country') ; ?></label>
                         <div class="input">
-                            <?php ItemForm::country_select($countries, array('countryId' => '') ) ; ?>
+                            <?php ItemForm::country_text(); ?>
                         </div>
                     </div>
                     <div class="input-line">
                         <label><?php _e('Region') ; ?></label>
                         <div class="input">
-                            <?php ItemForm::region_select($regions, null) ; ?>
+                            <?php ItemForm::region_text(); ?>
                         </div>
                     </div>
                     <div class="input-line">
                         <label><?php _e('City') ; ?></label>
                         <div class="input">
-                            <?php ItemForm::city_select($cities, null) ; ?>
+                            <?php ItemForm::city_text(); ?>
                         </div>
                     </div>
                     <div class="input-line">
@@ -277,6 +294,50 @@
                             <?php ItemForm::category_select($categories, null, null, true) ; ?>
                         </div>
                     </div>
+                    
+                    <strong><?php _e('Status') ?></strong>
+                    
+                    <div class="input-line">
+                        <label><?php _e('Premium') ; ?></label>
+                        <div class="input">
+                            <select id="b_premium" name="b_premium">
+                                <option value=""><?php _e('ALL'); ?></option>
+                                <option value="1"><?php _e('ON'); ?></option>
+                                <option value="0"><?php _e('OFF'); ?></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Active') ; ?></label>
+                        <div class="input">
+                            <select id="b_active" name="b_active">
+                                <option value=""><?php _e('ALL'); ?></option>
+                                <option value="1"><?php _e('ON'); ?></option>
+                                <option value="0"><?php _e('OFF'); ?></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Enabled') ; ?></label>
+                        <div class="input">
+                            <select id="b_enabled" name="b_enabled">
+                                <option value=""><?php _e('ALL'); ?></option>
+                                <option value="1"><?php _e('ON'); ?></option>
+                                <option value="0"><?php _e('OFF'); ?></option>
+                            </select>    
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Spam') ; ?></label>
+                        <div class="input">
+                            <select id="b_spam" name="b_spam">
+                                <option value=""><?php _e('ALL'); ?></option>
+                                <option value="1"><?php _e('ON'); ?></option>
+                                <option value="0"><?php _e('OFF'); ?></option>
+                            </select>
+                        </div>
+                    </div>
+                    
                     <div class="actions">
                         <input type="button" name="apply-filters" value="<?php echo osc_esc_html( __('Apply filters') ) ; ?>" />
                     </div>
@@ -303,6 +364,8 @@
                         </label>
                     </div>
                     <div id="add_item_button">
+                        <input type="text" class="medium" name="pk_i_id" value="" />
+                        <input type="button" name="findById" value="<?php echo osc_esc_html( __('Find by Item id') ) ; ?>" />
                         <a href="<?php echo osc_admin_base_url(true) ; ?>?page=items&amp;action=post" class="btn" id="button_open"><?php _e('Add item') ; ?></a>
                     </div>
                     <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatables_list"></table>

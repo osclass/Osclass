@@ -19,6 +19,7 @@
 
      class ItemsProcessingAjax 
      {
+        private $mSearch;
         private $items ;
         private $result ;
         private $toJSON ;
@@ -69,6 +70,7 @@
             'fCol_itemIdValue' => '%st_item.pk_i_id'
         ) ;
 
+        private $conditions = array();
         /* For Datatables */
         private $sEcho = null ;
         private $sColumns = array() ;
@@ -76,70 +78,28 @@
 
         function __construct($params)
         {
+            $this->mSearch = new Search(true) ;
+            
             $this->_get = $params ;
             $this->getDBParams() ;
 
-            $mSearch = new Search(true) ;
-            $mSearch->limit($this->start, $this->limit) ;
-            $mSearch->order($this->order_by['column_name'], $this->order_by['type'], $this->order_by['table_name'] ) ;
+            $this->mSearch->limit($this->start, $this->limit) ;
+            // only some fields can be ordered
+            $this->mSearch->order($this->order_by['column_name'], $this->order_by['type'], $this->order_by['table_name'] ) ;
+            
             if( Params::getParam('catId') != '' ) {
-                $mSearch->addCategory( Params::getParam('catId') ) ;
+                $this->mSearch->addCategory( Params::getParam('catId') ) ;
             }
             if( $this->search ) {
-                $mSearch->addTable(sprintf('%st_item_description as d', DB_TABLE_PREFIX)) ;
-                $mSearch->addConditions(sprintf("d.fk_i_item_id = %st_item.pk_i_id", DB_TABLE_PREFIX)) ;
-                $mSearch->addConditions(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->search)) ;
+                $this->mSearch->addPattern($this->search);
             }
 
-            // stats
-            if( array_key_exists('spam', $this->stat) ) {
-                $mSearch->addField('SUM(s.i_num_spam) as i_num_spam') ;
-                $mSearch->addConditions("s.i_num_spam > 0") ;
-                $mSearch->addConditions(sprintf("%st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX)) ;
-                $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX)) ;
-            }
-            if( array_key_exists('duplicated', $this->stat) ) {
-                $mSearch->addField('SUM(s.i_num_repeated) as i_num_repeated') ;
-                $mSearch->addConditions("s.i_num_repeated > 0") ;
-                $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX)) ;
-                $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX)) ;
-            }
-            if( array_key_exists('bad', $this->stat) ) {
-                $mSearch->addField('SUM(s.i_num_bad_classified) as i_num_bad_classified') ;
-                $mSearch->addConditions("s.i_num_bad_classified > 0") ;
-                $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX)) ;
-                $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX)) ;
-            }
-            if( array_key_exists('offensive', $this->stat) ) {
-                $mSearch->addField('SUM(s.i_num_offensive) as i_num_offensive') ;
-                $mSearch->addConditions("s.i_num_offensive > 0") ;
-                $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX)) ;
-                $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX)) ;
-            }
-            if( array_key_exists('expired', $this->stat) ) {
-                $mSearch->addField('SUM(s.i_num_expired) as i_num_expired') ;
-                $mSearch->addConditions("s.i_num_expired > 0");
-                $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX)) ;
-                $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX)) ;
-            }
-
-            foreach($this->filters as $aFilter) {
-                $sFilter = '' ;
-
-                if( $aFilter[1] == 'NULL' ) {
-                    $sFilter .= $aFilter[0] . " IS NULL" ;
-                } else {
-                    $sFilter .= $aFilter[0] . " = '" . $aFilter[1] . "'" ;
-                }
-                $sFilter = sprintf( $sFilter , DB_TABLE_PREFIX ) ;
-                $mSearch->addConditions( $sFilter ) ;
-            }
             // do Search
-            $list_items = $mSearch->doSearch(true) ;
+            $list_items = $this->mSearch->doSearch(true) ;
 
-            $this->items = Item::newInstance()->extendCategoryName( Item::newInstance()->extendData($list_items) ) ;
-            $this->total_filtered = $mSearch->count() ;
-            $this->total = count($list_items) ;
+            $this->items = Item::newInstance()->extendCategoryName( $list_items ); 
+            $this->total_filtered = $this->mSearch->countAll();
+            $this->total = $this->mSearch->count() ;
 
             $this->toDatatablesFormat() ;
             $this->dumpToDatatables() ;
@@ -173,65 +133,50 @@
                 }
 
                 if( $k == 'sSearch' ) {
-                    $this->search = base64_decode($v) ;
-                }
-
-                // mark as
-                if( $k == 'spam' ) {
-                    $this->stat['spam'] = true ;
-                }
-                if( $k == 'duplicated' ) {
-                    $this->stat['duplicated'] = true ;
-                }
-                if( $k == 'offensive' ) {
-                    $this->stat['offensive'] = true ;
-                }
-                if( $k == 'bad' ) {
-                    $this->stat['bad'] = true ;
-                }
-                if( $k == 'expired' ) {
-                    $this->stat['expired'] = true ;
+                    $this->search = $v;
                 }
 
                 // filters
                 if( $k == 'fCol_userIdValue' ) {
-                    array_push( $this->filters, array($this->tables_filters[$k], $v) ) ;
+                    $this->mSearch->fromUser($v);
                 }
                 if( $k == 'fCol_itemIdValue' ) {
-                    array_push( $this->filters, array($this->tables_filters[$k], $v) ) ;
+                    $this->mSearch->addItemId($v);
                 }
                 if( $k == 'fCol_countryId' ) {
-                    array_push( $this->filters, array($this->tables_filters[$k], $v) ) ;
-                }
-                if( $k == 'fCol_country' ) {
-                    array_push( $this->filters, array($this->tables_filters[$k], $v) ) ;
+                    $this->mSearch->addCountry($v);
                 }
                 if( $k == 'fCol_regionId' ) {
-                    array_push( $this->filters, array($this->tables_filters[$k], $v) ) ;
-                }
-                if( $k == 'fCol_region' ) {
-                    array_push( $this->filters, array($this->tables_filters[$k], $v) ) ;
+                    $this->mSearch->addRegion($v);
                 }
                 if( $k == 'fCol_cityId' ) {
-                    array_push( $this->filters, array($this->tables_filters[$k], $v) ) ;
+                    $this->mSearch->addCity($v);
+                }
+                
+                if( $k == 'fCol_country' ) {
+                    $this->mSearch->addCountry($v);
+                }
+                if( $k == 'fCol_region' ) {
+                    $this->mSearch->addRegion($v);
                 }
                 if( $k == 'fCol_city' ) {
-                    array_push( $this->filters, array($this->tables_filters[$k], $v) ) ;
+                    $this->mSearch->addCity($v);
                 }
+                
                 if( $k == 'fCol_catId' ) {
-                    array_push( $this->filters, array($this->tables_filters[$k], $v) ) ;
+                    $this->mSearch->addCategory($v);
                 }
                 if( $k == 'fCol_bPremium' ) {
-                    array_push( $this->filters, array($this->tables_filters[$k], $v) ) ;
+                    $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_premium = '.$v);
                 }
                 if( $k == 'fCol_bActive' ) {
-                    array_push( $this->filters, array($this->tables_filters[$k], $v) ) ;
+                    $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_active = '.$v);
                 }
                 if( $k == 'fCol_bEnabled' ) {
-                    array_push( $this->filters, array($this->tables_filters[$k], $v) ) ;
+                    $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_enabled = '.$v);
                 }
                 if( $k == 'fCol_bSpam' ) {
-                    array_push( $this->filters, array($this->tables_filters[$k], $v) ) ;
+                    $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_spam = '.$v);
                 }
             }
         }
@@ -286,7 +231,7 @@
                 $onclick_delete = 'onclick="javascript:return confirm(\'' . osc_esc_js( __('This action can not be undone. Are you sure you want to continue?') ) . '\')"' ;
                 $options[] = '<a ' . $onclick_delete . ' href="' . osc_admin_base_url(true) . '?page=items&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
                 foreach($this->stat as $k => $s) {
-                    $options[] = '<a ' .$onclick_delete . ' href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;stat=' . $key . '&amp;id=' . $aRow['pk_i_id'] . '">' . sprintf( __('Clear %s'), $key ) . '</a>' ;
+                    $options[] = '<a ' .$onclick_delete . ' href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;stat=' . $k . '&amp;id=' . $aRow['pk_i_id'] . '">' . sprintf( __('Clear %s'), $k ) . '</a>' ;
                 }
  
                 // fill a row
@@ -298,33 +243,6 @@
                 $row[] = $aRow['s_region'] ;
                 $row[] = $aRow['s_city'] ;
                 $row[] = $aRow['dt_pub_date'] ;
-
-                // reported statistics
-                if( array_key_exists('i_num_spam', $aRow) ) {
-                    $row[] = $aRow['i_num_spam'] ;
-                } else {
-                    $row[] = '0' ;
-                }
-                if( array_key_exists('i_num_repeated', $aRow) ) {
-                    $row[] = $aRow['i_num_repeated'] ;
-                } else {
-                    $row[] = '0' ;
-                }
-                if( array_key_exists('i_num_bad_classified', $aRow) ) {
-                    $row[] = $aRow['i_num_bad_classified'] ;
-                } else {
-                    $row[] = '0' ;
-                }
-                if( array_key_exists('i_num_offensive', $aRow) ) {
-                    $row[] = $aRow['i_num_offensive'] ;
-                } else {
-                    $row[] = '0' ;
-                }
-                if( array_key_exists('i_num_expired', $aRow) ) {
-                    $row[] = $aRow['i_num_expired'] ;
-                } else {
-                    $row[] = '0' ;
-                }
 
                 $count++ ;
                 $this->result['aaData'][] = $row ;
