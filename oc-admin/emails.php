@@ -53,7 +53,7 @@
                     $s_internal_name = Params::getParam("s_internal_name");
 
                     $aFieldsDescription = array();
-                    $postParams = Params::getParamsAsArray();
+                    $postParams = Params::getParamsAsArray('', false);
                     $not_empty = false;
                     foreach ($postParams as $k => $v) {
                         if(preg_match('|(.+?)#(.+)|', $k, $m)) {
