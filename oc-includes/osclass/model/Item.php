@@ -322,7 +322,7 @@
         }
         
         /**
-         * Insert title, description and what for a given locale and item id.
+         * Insert title and description for a given locale and item id.
          * 
          * @access public
          * @since unknown
@@ -330,14 +330,10 @@
          * @param string $locale
          * @param string $title
          * @param string $description
-         * @param string $what
          * @return boolean
          */
         public function insertLocale($id, $locale, $title, $description)
         {
-            $title       = $title ;
-            $description = $description ;
-            $what        = $what ;
             $array_set   = array(
                 'fk_i_item_id'      => $id,
                 'fk_c_locale_code'  => $locale,

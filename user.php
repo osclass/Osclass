@@ -212,7 +212,8 @@
                         if($resource['fk_i_item_id']==$fkid && $item['fk_i_user_id']==  osc_logged_user_id()) {
 
                             // Delete: file, db table entry
-                            osc_deleteResource($id);
+                            osc_deleteResource($id, false);
+                            Log::newInstance()->insertLog('user', 'deleteResource', $id, $id, 'user', osc_logged_user_id()) ;
                             ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $item, 's_name' => $name) );
 
                             osc_add_flash_ok_message(_m('The selected photo has been successfully deleted'));
