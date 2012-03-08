@@ -97,6 +97,31 @@ $countries = __get("countries");
                                 "value": $('select[name="catId"]').val()
                             }) ;
                         }
+                        // status filters
+                        if( $('select[name="b_premium"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_bPremium",
+                                "value": $('select[name="b_premium"]').val()
+                            }) ;
+                        }
+                        if( $('select[name="b_active"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_bActive",
+                                "value": $('select[name="b_active"]').val()
+                            }) ;
+                        }
+                        if( $('select[name="b_enabled"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_bEnabled",
+                                "value": $('select[name="b_enabled"]').val()
+                            }) ;
+                        }
+                        if( $('select[name="b_spam"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_bSpam",
+                                "value": $('select[name="b_spam"]').val()
+                            }) ;
+                        }
                     },
                     "iDisplayLength": "25",
                     "sDom": "<'row'<'span6 length-menu'l><'span6 filter'>fr>t<'row'<'span6 info-results'i><'span6 paginate'p>>",
@@ -159,31 +184,6 @@ $countries = __get("countries");
                             "bSearchable": false,
                             "bSortable": true,
                             "defaultSortable" : true
-                        },
-                        {
-                            "sTitle": "Spam",
-                            "bSortable": false,
-                            "bVisible": false
-                        },
-                        {
-                            "sTitle": "Repeated",
-                            "bSortable": false,
-                            "bVisible": false
-                        },
-                        {
-                            "sTitle": "Bad",
-                            "bSortable": false,
-                            "bVisible": false
-                        },
-                        {
-                            "sTitle": "Offensive",
-                            "bSortable": false,
-                            "bVisible": false
-                        },
-                        {
-                            "sTitle": "Expired",
-                            "bSortable": false,
-                            "bVisible": false
                         }
                     ],
                     "aaSorting": [[7,'desc']]
@@ -274,6 +274,50 @@ $countries = __get("countries");
                             <?php ItemForm::category_select($categories, null, null, true) ; ?>
                         </div>
                     </div>
+                    
+                    <strong><?php _e('Status') ?></strong>
+                    
+                    <div class="input-line">
+                        <label><?php _e('Premium') ; ?></label>
+                        <div class="input">
+                            <select id="b_premium" name="b_premium">
+                                <option value=""><?php _e('ALL'); ?></option>
+                                <option value="1"><?php _e('ON'); ?></option>
+                                <option value="0"><?php _e('OFF'); ?></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Active') ; ?></label>
+                        <div class="input">
+                            <select id="b_active" name="b_active">
+                                <option value=""><?php _e('ALL'); ?></option>
+                                <option value="1"><?php _e('ON'); ?></option>
+                                <option value="0"><?php _e('OFF'); ?></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Enabled') ; ?></label>
+                        <div class="input">
+                            <select id="b_enabled" name="b_enabled">
+                                <option value=""><?php _e('ALL'); ?></option>
+                                <option value="1"><?php _e('ON'); ?></option>
+                                <option value="0"><?php _e('OFF'); ?></option>
+                            </select>    
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Spam') ; ?></label>
+                        <div class="input">
+                            <select id="b_spam" name="b_spam">
+                                <option value=""><?php _e('ALL'); ?></option>
+                                <option value="1"><?php _e('ON'); ?></option>
+                                <option value="0"><?php _e('OFF'); ?></option>
+                            </select>
+                        </div>
+                    </div>
+                    
                     <div class="actions">
                         <input type="button" name="apply-filters" value="<?php echo osc_esc_html( __('Apply filters') ) ; ?>" />
                     </div>

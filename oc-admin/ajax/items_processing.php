@@ -94,55 +94,12 @@
                 $this->mSearch->addPattern($this->search);
             }
 
-//            // stats
-//            if( array_key_exists('spam', $this->stat) ) {
-//                $this->mSearch->addField('SUM(s.i_num_spam) as i_num_spam') ;
-//                $this->mSearch->addConditions("s.i_num_spam > 0") ;
-//                $this->mSearch->addConditions(sprintf("%st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX)) ;
-//                $this->mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX)) ;
-//            }
-//            if( array_key_exists('duplicated', $this->stat) ) {
-//                $this->mSearch->addField('SUM(s.i_num_repeated) as i_num_repeated') ;
-//                $this->mSearch->addConditions("s.i_num_repeated > 0") ;
-//                $this->mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX)) ;
-//                $this->mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX)) ;
-//            }
-//            if( array_key_exists('bad', $this->stat) ) {
-//                $this->mSearch->addField('SUM(s.i_num_bad_classified) as i_num_bad_classified') ;
-//                $this->mSearch->addConditions("s.i_num_bad_classified > 0") ;
-//                $this->mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX)) ;
-//                $this->mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX)) ;
-//            }
-//            if( array_key_exists('offensive', $this->stat) ) {
-//                $this->mSearch->addField('SUM(s.i_num_offensive) as i_num_offensive') ;
-//                $this->mSearch->addConditions("s.i_num_offensive > 0") ;
-//                $this->mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX)) ;
-//                $this->mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX)) ;
-//            }
-//            if( array_key_exists('expired', $this->stat) ) {
-//                $this->mSearch->addField('SUM(s.i_num_expired) as i_num_expired') ;
-//                $this->mSearch->addConditions("s.i_num_expired > 0");
-//                $this->mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX)) ;
-//                $this->mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX)) ;
-//            }
-
-//            foreach($this->filters as $aFilter) {
-//                $sFilter = '' ;
-//
-//                if( $aFilter[1] == 'NULL' ) {
-//                    $sFilter .= $aFilter[0] . " IS NULL" ;
-//                } else {
-//                    $sFilter .= $aFilter[0] . " = '" . $aFilter[1] . "'" ;
-//                }
-//                $sFilter = sprintf( $sFilter , DB_TABLE_PREFIX ) ;
-//                $this->mSearch->addConditions( $sFilter ) ;
-//            }
             // do Search
             $list_items = $this->mSearch->doSearch(true) ;
 
-            $this->items = Item::newInstance()->extendCategoryName( Item::newInstance()->extendData($list_items) ) ;
-            $this->total_filtered = $this->mSearch->count() ;
-            $this->total = count($list_items) ;
+            $this->items = Item::newInstance()->extendCategoryName( $list_items ); 
+            $this->total_filtered = $this->mSearch->countAll();
+            $this->total = $this->mSearch->count() ;
 
             $this->toDatatablesFormat() ;
             $this->dumpToDatatables() ;
@@ -176,26 +133,8 @@
                 }
 
                 if( $k == 'sSearch' ) {
-                    $this->search = $v; //base64_decode($v) ;
-                    error_log($this->search);
+                    $this->search = $v;
                 }
-
-//                // mark as
-//                if( $k == 'spam' ) {
-//                    $this->stat['spam'] = true ;
-//                }
-//                if( $k == 'duplicated' ) {
-//                    $this->stat['duplicated'] = true ;
-//                }
-//                if( $k == 'offensive' ) {
-//                    $this->stat['offensive'] = true ;
-//                }
-//                if( $k == 'bad' ) {
-//                    $this->stat['bad'] = true ;
-//                }
-//                if( $k == 'expired' ) {
-//                    $this->stat['expired'] = true ;
-//                }
 
                 // filters
                 if( $k == 'fCol_userIdValue' ) {
@@ -226,16 +165,16 @@
                     $this->mSearch->addCategory($v);
                 }
                 if( $k == 'fCol_bPremium' ) {
-                    $this->mSearch->addConditions(DB_TABLE_PREFIX.'t_item.b_premium = 1');
+                    $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_premium = '.$v);
                 }
                 if( $k == 'fCol_bActive' ) {
-                    $this->mSearch->addConditions(DB_TABLE_PREFIX.'t_item.b_active = 1');
+                    $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_active = '.$v);
                 }
                 if( $k == 'fCol_bEnabled' ) {
-                    $this->mSearch->addConditions(DB_TABLE_PREFIX.'t_item.b_enabled = 1');
+                    $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_enabled = '.$v);
                 }
                 if( $k == 'fCol_bSpam' ) {
-                    $this->mSearch->addConditions(DB_TABLE_PREFIX.'t_item.b_spam = 1');
+                    $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_spam = '.$v);
                 }
             }
         }
@@ -290,7 +229,7 @@
                 $onclick_delete = 'onclick="javascript:return confirm(\'' . osc_esc_js( __('This action can not be undone. Are you sure you want to continue?') ) . '\')"' ;
                 $options[] = '<a ' . $onclick_delete . ' href="' . osc_admin_base_url(true) . '?page=items&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
                 foreach($this->stat as $k => $s) {
-                    $options[] = '<a ' .$onclick_delete . ' href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;stat=' . $key . '&amp;id=' . $aRow['pk_i_id'] . '">' . sprintf( __('Clear %s'), $key ) . '</a>' ;
+                    $options[] = '<a ' .$onclick_delete . ' href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;stat=' . $k . '&amp;id=' . $aRow['pk_i_id'] . '">' . sprintf( __('Clear %s'), $k ) . '</a>' ;
                 }
  
                 // fill a row
@@ -302,33 +241,6 @@
                 $row[] = $aRow['s_region'] ;
                 $row[] = $aRow['s_city'] ;
                 $row[] = $aRow['dt_pub_date'] ;
-
-                // reported statistics
-                if( array_key_exists('i_num_spam', $aRow) ) {
-                    $row[] = $aRow['i_num_spam'] ;
-                } else {
-                    $row[] = '0' ;
-                }
-                if( array_key_exists('i_num_repeated', $aRow) ) {
-                    $row[] = $aRow['i_num_repeated'] ;
-                } else {
-                    $row[] = '0' ;
-                }
-                if( array_key_exists('i_num_bad_classified', $aRow) ) {
-                    $row[] = $aRow['i_num_bad_classified'] ;
-                } else {
-                    $row[] = '0' ;
-                }
-                if( array_key_exists('i_num_offensive', $aRow) ) {
-                    $row[] = $aRow['i_num_offensive'] ;
-                } else {
-                    $row[] = '0' ;
-                }
-                if( array_key_exists('i_num_expired', $aRow) ) {
-                    $row[] = $aRow['i_num_expired'] ;
-                } else {
-                    $row[] = '0' ;
-                }
 
                 $count++ ;
                 $this->result['aaData'][] = $row ;
