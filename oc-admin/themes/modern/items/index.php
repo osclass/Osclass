@@ -261,13 +261,13 @@
                     <div class="input-line">
                         <label><?php _e('Region') ; ?></label>
                         <div class="input">
-                            <?php ItemForm::region_select(null, null) ; ?>
+                            <?php ItemForm::region_select(array(''), '') ; ?>
                         </div>
                     </div>
                     <div class="input-line">
                         <label><?php _e('City') ; ?></label>
                         <div class="input">
-                            <?php ItemForm::city_select(null, null) ; ?>
+                            <?php ItemForm::city_select(array(''), '') ; ?>
                         </div>
                     </div>
                     <div class="input-line">
