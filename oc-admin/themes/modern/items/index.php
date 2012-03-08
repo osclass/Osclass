@@ -16,10 +16,12 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-$categories = __get("categories");
-$countries = __get("countries");
-//$regions = __get("regions");
-//$cities = __get("cities");
+    $users      = __get('users') ;
+    $stat       = __get('stat') ;
+    $categories = __get('categories') ;
+    $countries  = __get('countries') ;
+    $regions    = __get('regions') ;
+    $cities     = __get('cities') ;
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
