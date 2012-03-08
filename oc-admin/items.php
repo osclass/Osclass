@@ -333,6 +333,7 @@
 
                                         $form     = count(Session::newInstance()->_getForm());
                                         $keepForm = count(Session::newInstance()->_getKeepForm());
+                                        
                                         if($form==0 || $form==$keepForm) {
                                             Session::newInstance()->_dropKeepForm();
                                         }
@@ -362,6 +363,7 @@
                                         $success = $mItems->edit();
                                         
                                         if($success==1){
+                                            Session::newInstance()->_clearVariables();
                                             osc_add_flash_ok_message( _m('Changes saved correctly'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         } else {
@@ -416,6 +418,7 @@
                                         $success = $mItem->add();
                                         
                                         if( $success==1 || $success==2 ) {
+                                            Session::newInstance()->_clearVariables();
                                             osc_add_flash_ok_message( _m('A new item has been added'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         } else {
@@ -513,6 +516,7 @@
                                         $this->_exportVariableToView("countries", $countries);
                                         $this->_exportVariableToView("regions", $regions);
                                         $this->_exportVariableToView("cities", $cities);
+                                        
                                         //calling the view...
                                         $this->doView('items/index.php') ;
             }
