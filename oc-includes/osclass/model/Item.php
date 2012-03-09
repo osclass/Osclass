@@ -294,9 +294,11 @@
         {
             $this->dao->select( 'COUNT(*) AS total' ) ;
             $this->dao->from( $this->getTableName() ) ;
-            $this->dao->where( 'fk_i_category_id', $category['pk_i_id'] ) ;
+            $this->dao->where( 'fk_i_category_id', (int)$category['pk_i_id'] ) ;
             $this->dao->where( 'b_enabled', $enabled ) ;
             $this->dao->where( 'b_active', $active ) ;
+            $this->dao->where( 'b_spam', 0 ) ;
+            
             $this->dao->where( '( b_premium = 1 || d_expiration >= \'' . date('Y-m-d H:i:s') .'\' )' ) ;
             
             $result = $this->dao->get() ;

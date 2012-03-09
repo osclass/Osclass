@@ -181,7 +181,8 @@
         
         /**
          * Calculate the total items that belong to countryCode 
-         *
+         * @access public
+         * @since 2.4
          * @param type $countryCode
          * @return int total items
          */
