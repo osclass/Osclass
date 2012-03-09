@@ -20,45 +20,10 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    set_time_limit(0);
+
     if( !defined('__FROM_CRON__') ) {
         define('__FROM_CRON__', true) ;
-    }
-
-    function update_cat_stats() {
-        $categoryTotal = array() ;
-        $categoryTree  = array() ;
-        $aCategories   = Category::newInstance()->listAll(false) ;
-
-        // append root categories and get the number of items of each category
-        foreach($aCategories as $category) {
-            $total     = Item::newInstance()->numItems($category, true, true) ;
-            $category += array('category' => array()) ;
-            if( is_null($category['fk_i_parent_id']) ) {
-                $categoryTree += array($category['pk_i_id'] => $category) ;
-            }
-
-            $categoryTotal += array($category['pk_i_id'] => $total) ;
-        }
-        
-        // append childs to root categories
-        foreach($aCategories as $category) {
-            if( !is_null($category['fk_i_parent_id']) ) {
-                $categoryTree[$category['fk_i_parent_id']]['category'][] = $category ;
-            }
-        }
-
-        // sum the result of the subcategories and set in the parent category
-        foreach($categoryTree as $category) {
-            if( count( $category['category'] ) > 0 ) {
-                foreach($category['category'] as $subcategory) {
-                    $categoryTotal[$category['pk_i_id']] += $categoryTotal[$subcategory['pk_i_id']] ;
-                }
-            }
-        }
-
-        foreach($categoryTotal as $k => $v) {
-            CategoryStats::newInstance()->setNumItems($k, $v) ;
-        }
     }
 
     function purge_latest_searches_hourly() {
@@ -69,12 +34,10 @@
             LatestSearches::newInstance()->purgeNumber($purge) ;
         }
     }
-
-    osc_add_hook('cron_hourly', 'update_cat_stats') ;
+    
     osc_add_hook('cron_hourly', 'purge_latest_searches_hourly') ;
 
     osc_runAlert('HOURLY') ;
 
     osc_run_hook('cron_hourly') ;
-
 ?>
