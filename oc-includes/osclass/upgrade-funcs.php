@@ -285,6 +285,22 @@ CREATE TABLE %st_item_description_tmp (
         }
         $url_location_stats = osc_base_admin_url(true)."?page=tools&action=locations";
         $aMessages[] = '<p><b>'.__('You need to calculate locations stats, please go to admin panel, tools, recalculate location stats or click') .'  <a href="'.$url_location_stats.'">'.__('here').'</a></b></p>';
+        
+        // update t_alerts update object serialized to json
+        // get all alerts
+        $aAlerts = Alerts::newInstance()->findByType('HOURLY');
+        foreach($aAlerts as $hourly) {
+            $sSearch = $hourly['s_search'];
+//            $sSearch->conditions;
+        }
+        $aAlerts = Alerts::newInstance()->findByType('DAILY');
+        
+        $aAlerts = Alerts::newInstance()->findByType('WEEKLY');
+        // get params
+        
+        // crete json
+        
+        // save into db
     }
 
     osc_changeVersionTo(240) ;

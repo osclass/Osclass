@@ -48,6 +48,12 @@
 
             // Get if there're new ads on this search
             $a_search = osc_unserialize(base64_decode($s_search['s_search'])) ;
+           
+//            unset( $a_search->dao );
+            
+            print_r($a_search) ;
+            $a_search->getConditions();
+            
             $cron = Cron::newInstance()->getCronByType($type);
             if (is_array($cron)) {
                 $last_exec = $cron['d_last_exec'] ;

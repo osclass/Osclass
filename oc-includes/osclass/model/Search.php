@@ -109,8 +109,6 @@
             $this->results_per_page = 10;
             
             if(!$expired) {
-                // t_category
-                $this->addJoinTable('category', sprintf('%st_category', DB_TABLE_PREFIX), sprintf('%st_category.pk_i_id = %st_item.fk_i_category_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX), 'LEFT');
                 // t_item 
                 $this->addItemConditions(sprintf("%st_item.b_enabled = 1 ", DB_TABLE_PREFIX));
                 $this->addItemConditions(sprintf("%st_item.b_active = 1 ", DB_TABLE_PREFIX));
@@ -832,7 +830,7 @@
                 }
                 
             } else if($this->withItemId) { 
-                
+                // add field s_user_name
                 $this->dao->select(sprintf('%st_item.*', DB_TABLE_PREFIX) );
                 $this->dao->from(sprintf('%st_item', DB_TABLE_PREFIX));
                 $this->dao->where('pk_i_id', (int)$this->itemId);
@@ -1162,6 +1160,103 @@
             $result = $this->dao->get();
             return $result->result();
         }
+        
+        // testing functions - parse old models
+        public function getConditions() 
+        {
+            $aData = array();
+            
+            $item_id                = DB_TABLE_PREFIX.'t_item.pk_i_id';
+            $item_category_id       = DB_TABLE_PREFIX.'t_item.fk_i_category_id';
+            
+            $item_description_id    = 'd.fk_i_item_id';
+            $category_id            = DB_TABLE_PREFIX.'t_category.pk_i_id';
+            $item_location_id       = DB_TABLE_PREFIX.'t_item_location.fk_i_item_id';
+            
+            
+            // get item conditions.
+            foreach($this->conditions as $condition) {
+                // item table
+                if(preg_match('/'.DB_TABLE_PREFIX.'t_item.b_active/', $condition, $matches) ) {
+                    $aData['itemConditions'][] = $condition;
+                } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item.b_spam/', $condition, $matches) ) {
+                    $aData['itemConditions'][] = $condition;
+                } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item.b_enabled/', $condition, $matches) ) {
+                    $aData['itemConditions'][] = $condition;
+                } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item.b_premium/', $condition, $matches) ) {
+                    $aData['itemConditions'][] = $condition;
+                } else if(preg_match('/'.DB_TABLE_PREFIX.'t_category.b_enabled/', $condition, $matches) ) {
+                    // t_category.b_enabled is not longer needed
+                    
+                    // ( oc_t_item_location.s_city LIKE '%barcelona%'  || oc_t_item_location.s_city LIKE '%girona%'  )
+                } else if(preg_match_all('/('.DB_TABLE_PREFIX.'t_item_location.s_city\s*LIKE\s*\'%([\s*|[\p{L}][\p{L}]*)%\'\s*)/', $condition, $matches) ) {
+                    print_r($matches);
+                    $aData['s_city'] = $matches[2];
+                    
+                    
+                } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item_location.fk_i_city_id = (.*)/', $condition, $matches) ) {
+                    $aData['fk_i_city_id'][] = $matches[1];
+                } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item_location.s_region LIKE \'%(.*)%\'/', $condition, $matches) ) {
+                    $aData['s_region'][] = $matches[1];
+                } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item_location.fk_i_region_id = (.*)/', $condition, $matches) ) {
+                    $aData['fk_i_region_id'][] = $matches[1];
+                } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item_location.s_country LIKE \'%(.*)%\'/', $condition, $matches) ) {
+                    $aData['s_country'][] = $matches[1];
+                } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item_location.fk_c_country_code = \'?(.*)\'?/', $condition, $matches) ) {
+                    $aData['fk_c_country_code'][] = $matches[1];
+                } else if(preg_match('/MATCH\(d.s_title, d.s_description\) AGAINST\(\'(.*)\' IN BOOLEAN MODE\)/', $condition, $matches) ) {
+                    $aData['sPattern'][] = $matches[1];
+                } else if(preg_match("/$item_id\s*=\s*$item_description_id/", $condition, $matches_1)   || preg_match("/$item_description_id\s*=\s*$item_id/", $condition, $matches_2)) {
+                } else if(preg_match("/$category_id\s*=\s*$item_category_id/", $condition, $matches_1)  || preg_match("/$item_id\s*=\s*$item_category_id/", $condition, $matches_2)) {
+                } else if(preg_match("/$item_location_id\s*=\s*$item_id/", $condition, $matches_1)      || preg_match("/$item_id\s*=\s*$item_location_id/", $condition, $matches_2)) {
+                } else if(preg_match_all('/(oc_t_item.fk_i_category_id = (\d*))/', $condition, $matches) ) {
+                    $aData['aCategories'] = $matches[2];
+                } else {
+                    $aData['no_catched_conditions'][] = $condition;
+                }
+                
+                error_log($condition);
+            }
+            error_log('----------------------------------');
+            // get tables
+            foreach($this->tables as $table) {
+                if( preg_match('/('.DB_TABLE_PREFIX.'t_item)/', $table, $matches ) ) {
+                // t_item is allways included
+                } else if( preg_match('/('.DB_TABLE_PREFIX.'t_item_description( as d)?)/', $table, $matches ) ) {
+                // t_item_description is allways included
+                } else if( preg_match('/('.DB_TABLE_PREFIX.'t_category_description( as cd)?)/', $table, $matches ) ) {
+                // t_item_description
+                    $aData['tables'] = $matches[1];
+                } else if( preg_match('/('.DB_TABLE_PREFIX.'t_item_resource)/', $table, $matches ) ) {
+                // t_item_resource
+                    $aData['withPicture'] = true;
+                    $aData['tables'] = $matches[1];
+                } else if( preg_match('/('.DB_TABLE_PREFIX.'t_item_resource)/', $table, $matches ) ) {
+                // t_item_resource
+                    $aData['tables'] = $matches[1];
+                } else {
+                    $aData['no_catched_tables'] = $table;
+                }
+                error_log($table);
+            }
+            error_log('----------------------------------');
+            
+            // faltan locations 
+            print_r($this->search_fields);
+//            foreach($this->search_fields as $field) {
+//                error_log($field);
+//            }
+            error_log('----------------------------------');
+            
+            // get order & limit
+            $aData['order_column']      = $this->order_column;
+            $aData['order_direction']   = $this->order_direction;
+            $aData['limit_init']        = $this->limit_init;
+            $aData['results_per_page']  = $this->results_per_page;
+            
+            print_r($aData);
+        }
+        
     }
 
     /* file end: ./oc-includes/osclass/model/Search.php */
