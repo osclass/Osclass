@@ -80,7 +80,7 @@
         public function increaseNumItems($countryCode) 
         {
             $lenght = strlen($countryCode);
-            if($lenght > 2 || $lenght < 0) {
+            if($lenght > 2 || $lenght=='' ) {
                 return false;
             }
             $sql = sprintf('INSERT INTO %s (fk_c_country_code, i_num_items) VALUES (\'%s\', 1) ON DUPLICATE KEY UPDATE i_num_items = i_num_items + 1', $this->getTableName(), $countryCode);
@@ -99,7 +99,7 @@
         public function decreaseNumItems($countryCode) 
         {
             $lenght = strlen($countryCode);
-            if($lenght > 2 || $lenght < 0) {
+            if($lenght > 2 || $lenght=='' ) {
                 return false;
             }
             $this->dao->select( 'i_num_items' ) ;
