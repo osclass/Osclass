@@ -1,3 +1,14 @@
+OSClass 2.3.5 2012-01-16
+------------------------
+- Escape quotes in attr values of input tags using a new helper: osc_esc_html
+- PHP Warning if the user doesn't have a description in his profile
+- PHP Warning in Search model
+- Modified behavior in add/edit form of custom fields
+- Style of radio buttons in custom fields
+- JS error in add/edit page in oc-admin
+- XSS vulnerabilities in search page
+- SQL injections in search page and AJAX request in oc-admin (need to be logged as an admin)
+
 OSClass 2.3.4 2012-01-03
 ------------------------
 - Deleting all admins bug fixed

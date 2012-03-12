@@ -27,6 +27,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_country (
     s_name VARCHAR(80) NOT NULL,
 
         PRIMARY KEY (pk_c_code, fk_c_locale_code),
+        INDEX idx_s_name (s_name),
         FOREIGN KEY (fk_c_locale_code) REFERENCES /*TABLE_PREFIX*/t_locale (pk_c_code) 
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
@@ -48,6 +49,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_region (
 
         PRIMARY KEY (pk_i_id),
         INDEX (fk_c_country_code),
+        INDEX idx_s_name (s_name),
         FOREIGN KEY (fk_c_country_code) REFERENCES /*TABLE_PREFIX*/t_country (pk_c_code) 
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
@@ -61,6 +63,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_city (
 
         PRIMARY KEY (pk_i_id),
         INDEX (fk_i_region_id),
+        INDEX idx_s_name (s_name),
         FOREIGN KEY (fk_i_region_id) REFERENCES /*TABLE_PREFIX*/t_region (pk_i_id),
         FOREIGN KEY (fk_c_country_code) REFERENCES /*TABLE_PREFIX*/t_country (pk_c_code)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
@@ -72,6 +75,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_city_area (
 
         PRIMARY KEY (pk_i_id),
         INDEX (fk_i_city_id),
+        INDEX idx_s_name (s_name),
         FOREIGN KEY (fk_i_city_id) REFERENCES /*TABLE_PREFIX*/t_city (pk_i_id) 
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
@@ -133,9 +137,9 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     i_items INT(10) UNSIGNED NULL DEFAULT 0,
     i_comments INT(10) UNSIGNED NULL DEFAULT 0,
 
-
         PRIMARY KEY (pk_i_id),
         UNIQUE KEY (s_email),
+        INDEX idx_s_name (s_name(6)),
         FOREIGN KEY (fk_c_country_code) REFERENCES /*TABLE_PREFIX*/t_country (pk_c_code),
         FOREIGN KEY (fk_i_region_id) REFERENCES /*TABLE_PREFIX*/t_region (pk_i_id),
         FOREIGN KEY (fk_i_city_id) REFERENCES /*TABLE_PREFIX*/t_city (pk_i_id),
@@ -212,16 +216,20 @@ CREATE TABLE /*TABLE_PREFIX*/t_item (
     b_spam TINYINT(1) NOT NULL DEFAULT 0,
     s_secret VARCHAR(40) NULL,
     b_show_email TINYINT(1) NULL,
+    d_expiration datetime NOT NULL DEFAULT '9999-12-31 23:59:59',
 
         PRIMARY KEY (pk_i_id),
-        INDEX (fk_i_user_id),
         FOREIGN KEY (fk_i_user_id) REFERENCES /*TABLE_PREFIX*/t_user (pk_i_id),
-        INDEX (fk_i_category_id),
         FOREIGN KEY (fk_i_category_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id),
-        INDEX (fk_c_currency_code),
-        FOREIGN KEY (fk_c_currency_code) REFERENCES /*TABLE_PREFIX*/t_currency (pk_c_code) 
+        FOREIGN KEY (fk_c_currency_code) REFERENCES /*TABLE_PREFIX*/t_currency (pk_c_code)
         ON DELETE CASCADE
-        ON UPDATE CASCADE
+        ON UPDATE CASCADE,
+
+        INDEX (fk_i_user_id),
+        INDEX (fk_i_category_id),
+        INDEX (fk_c_currency_code),
+        INDEX idx_pub_date (dt_pub_date),
+        INDEX idx_price (i_price)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_item_description (
@@ -229,9 +237,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item_description (
     fk_c_locale_code CHAR(5) NOT NULL,
     s_title VARCHAR(100) NOT NULL,
     s_description MEDIUMTEXT NOT NULL,
-    s_what LONGTEXT NULL,
         PRIMARY KEY (fk_i_item_id, fk_c_locale_code),
-        INDEX (fk_i_item_id),
         FULLTEXT s_description (s_description, s_title)
 ) ENGINE=MyISAM DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
@@ -285,6 +291,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item_resource (
 
         PRIMARY KEY (pk_i_id),
         INDEX (fk_i_item_id),
+        INDEX idx_s_content_type (pk_i_id,s_content_type(10)),
         FOREIGN KEY (fk_i_item_id) REFERENCES /*TABLE_PREFIX*/t_item (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
@@ -422,4 +429,37 @@ CREATE TABLE /*TABLE_PREFIX*/t_log (
     s_ip VARCHAR(50) NOT NULL,
     s_who VARCHAR(50) NOT NULL,
     fk_i_who_id INT(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
+CREATE TABLE /*TABLE_PREFIX*/t_city_stats (
+    fk_i_city_id INT(10) UNSIGNED NOT NULL,
+    i_num_items INT(10) UNSIGNED NOT NULL DEFAULT 0,
+
+        PRIMARY KEY (fk_i_city_id),
+        INDEX idx_num_items (i_num_items),
+        FOREIGN KEY (fk_i_city_id) REFERENCES /*TABLE_PREFIX*/t_city (pk_i_id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
+CREATE TABLE /*TABLE_PREFIX*/t_region_stats (
+    fk_i_region_id INT(10) UNSIGNED NOT NULL,
+    i_num_items INT(10) UNSIGNED NOT NULL DEFAULT 0,
+
+        PRIMARY KEY (fk_i_region_id),
+        INDEX idx_num_items (i_num_items),
+        FOREIGN KEY (fk_i_region_id) REFERENCES /*TABLE_PREFIX*/t_region (pk_i_id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
+CREATE TABLE /*TABLE_PREFIX*/t_country_stats (
+    fk_c_country_code CHAR(2) NOT NULL,
+    i_num_items INT(10) UNSIGNED NOT NULL DEFAULT 0,
+
+        PRIMARY KEY (fk_c_country_code),
+        INDEX idx_num_items (i_num_items),
+        FOREIGN KEY (fk_c_country_code) REFERENCES /*TABLE_PREFIX*/t_country (pk_c_code)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
+CREATE TABLE /*TABLE_PREFIX*/t_locations_tmp (
+    id_location varchar(10) NOT NULL,
+    e_type enum('COUNTRY','REGION','CITY') NOT NULL,
+    PRIMARY KEY (id_location, e_type)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';

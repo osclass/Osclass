@@ -19,9 +19,9 @@ class TestOfInstaller extends WebTestCase {
 
     function setUp()
     {
+        require('config_test.php');
         echo "<br><div style='background-color: Wheat; color: black;'>init test</div>";
         flush();
-        $browser = "*googlechrome";
         $this->selenium = new Testing_Selenium($browser, "http://localhost/");
         $this->selenium->start();
         $this->selenium->setSpeed("150");
@@ -37,6 +37,7 @@ class TestOfInstaller extends WebTestCase {
     /*           TESTS          */
     function testInstaller1()
     {
+        require('config_test.php');
         echo "<div style='background-color: green; color: white;'><em><h2>drop database & remove \$ROOT/config.php</h2></em></div>";
         echo "<div style='background-color: green; color: white;'><h2>testInstaller1</h2></div>";
         echo "<div style='background-color: green; color: white;padding-left:15px;'>testInstaller1</div>";
@@ -53,12 +54,14 @@ class TestOfInstaller extends WebTestCase {
 
             // step 2
             $this->assertTrue( $this->selenium->isTextPresent("Database information"), "IS NOT STEP 2 ! (databse information)" );
-            $this->selenium->type("username", "root");
-            $this->selenium->type("password", "");
+            $this->selenium->type("dbhost", $db_host);
+            $this->selenium->type("dbname", $db_name);
+            $this->selenium->type("username", $db_user);
+            $this->selenium->type("password", $db_pass);
             $this->selenium->click("css=span");
             $this->selenium->click("createdb");
-            $this->selenium->type("admin_username", "root");
-            $this->selenium->type("admin_password", "");
+            $this->selenium->type("admin_username", $db_user);
+            $this->selenium->type("admin_password", $db_pass);
             $this->selenium->type("tableprefix", "test_");
             $this->selenium->click("submit");
             $this->selenium->waitForPageToLoad("30000");
@@ -72,7 +75,7 @@ class TestOfInstaller extends WebTestCase {
             $this->selenium->type("s_passwd", "admin");
             
             $this->selenium->type("webtitle", "test_web_osclass");
-            $this->selenium->type("email", "carlos@osclass.org");
+            $this->selenium->type("email", $email);
 
             $this->selenium->type("xpath=//input[@id='t_country']", "spai");
             $this->selenium->keyDown( "xpath=//input[@id='t_country']", "n" ) ;

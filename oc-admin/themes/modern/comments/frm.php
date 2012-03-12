@@ -26,7 +26,6 @@
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
-        <div id="update_version" style="display:none;"></div>
         <?php
             if(isset($comment['pk_i_id'])) {
                 //editing...
@@ -68,10 +67,7 @@
             }
         </script>
         <div id="content">
-            <div id="separator"></div>
-
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
@@ -80,10 +76,7 @@
                     <div id="content_header_arrow">&raquo; <?php _e($title); ?></div>
                     <div style="clear: both;"></div>
                 </div>
-
-                <div id="content_separator"></div>
-                <?php osc_show_flash_message('admin'); ?>
-
+                <?php osc_show_admin_flash_messages() ; ?>
                 <!-- add new page form -->
                 <div id="settings_form">
                     <form name="comment_form" id="comment_form" action="<?php echo osc_admin_base_url(true); ?>" method="post" onSubmit="return checkForm()">

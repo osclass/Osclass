@@ -24,7 +24,7 @@
      * @subpackage Database
      * @since 2.3
      */
-	class DBRecordsetClass
+    class DBRecordsetClass
     {
         /**
          * Database connection object to OSClass database
@@ -33,7 +33,7 @@
          * @since 2.3
          * @var mysqli 
          */
-		public $connId ;
+        public $connId ;
         /**
          * Database result object
          * 

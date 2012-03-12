@@ -120,9 +120,13 @@ abstract class FrontendTest extends WebTestCase {
         $this->selenium->type("cityArea", "my area");
         $this->selenium->type("address", "my address");
         if( count($aPhotos) > 0 ){
-            $this->selenium->type("photos[]", LIB_PATH."simpletest/test/osclass/img_test1.gif");
-            $this->selenium->click("link=Add new photo");
-            $this->selenium->type("//div[@id='p-0']/div/input", LIB_PATH."simpletest/test/osclass/img_test2.gif");
+            sleep(2);
+            $this->selenium->type("photos[]", LIB_PATH."simpletest/test/osclass/".$aPhotos[0]);
+            for($k=1;$k<count($aPhotos);$k++) {
+                sleep(2);
+                $this->selenium->click("link=Add new photo");
+                $this->selenium->type("//div[@id='p-0']/div/input", LIB_PATH."simpletest/test/osclass/".$aPhotos[$k]);
+            }
         }
         $this->selenium->type("contactName" , $user);
         $this->selenium->type("contactEmail", $email);

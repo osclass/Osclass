@@ -123,10 +123,10 @@
          */
         public function findByCategoryItem($catId, $itemId)
         {
-            
-            if(!is_numeric($catId) || !is_numeric($itemId)) {
-                return false;
+            if( !is_numeric($catId) || (!is_numeric($itemId) && $itemId != null) ) {
+                return array() ;
             }
+
             $result = $this->dao->query(sprintf("SELECT query.*, im.s_value as s_value FROM (SELECT mf.* FROM %st_meta_fields mf, %st_meta_categories mc WHERE mc.fk_i_category_id = %d AND mf.pk_i_id = mc.fk_i_field_id) as query LEFT JOIN %st_item_meta im ON im.fk_i_field_id = query.pk_i_id AND im.fk_i_item_id = %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, $catId, DB_TABLE_PREFIX, $itemId));
 
             if( $result == false ) {
@@ -223,11 +223,21 @@
          * @param array $categories 
          */
         public function insertField($name, $type, $slug, $required, $options, $categories = null) {
+            if($slug=='') {
+                $slug = preg_replace('|([-]+)|', '-', preg_replace('|[^a-z0-9_-]|', '-', strtolower($name)));
+            }
+            $slug_tmp = $slug;
+            $slug_k = 0;
+            while(true) {
+                if(!$this->findBySlug($slug)) {
+                    break;
+                } else {
+                    $slug_k++;
+                    $slug = $slug_tmp."_".$slug_k;
+                }
+            }
             $this->dao->insert($this->getTableName(), array("s_name" => $name, "e_type" =>$type, "b_required" => $required, "s_slug" => $slug, 's_options' => $options));
             $id = $this->dao->insertedId();
-            if($slug=='') {
-                $this->dao->update($this->getTableName(), array('s_slug' => $id), array('pk_i_id' => $id));
-            }
             foreach($categories as $c) {
                 $this->dao->insert(sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_category_id' => $c, 'fk_i_field_id' =>$id));
             }

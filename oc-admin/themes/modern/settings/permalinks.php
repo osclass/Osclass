@@ -15,113 +15,312 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-
-    $htaccess_status = __get('htaccess');
-    $file_status     = __get('file');
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
-        <script type="text/javascript">
-            var base_url    = '<?php echo osc_base_url(); ?>';
-            var s_close     = '<?php _e('Close'); ?>';
-            var s_view_more = '<?php _e('View more'); ?>';
-        </script>
         <?php osc_current_admin_theme_path('head.php') ; ?>
+        <script type="text/javascript">
+            $(function() {
+                $("#rewrite_enabled").click(function(){
+                    $("#custom_rules").toggle();
+                });
+            });
+        </script>
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
-        <div id="update_version" style="display:none;"></div>
-		<div id="content">
-            <div id="separator"></div>
-			<?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-		    <div id="right_column">
-				<div id="content_header" class="content_header">
-					<div style="float: left;">
-                        <img src="<?php echo  osc_current_admin_theme_url('images/settings-icon.png') ; ?>" alt="" title=""/>
-                    </div>
-					<div id="content_header_arrow">&raquo; <?php _e('Permalinks settings'); ?></div>
-					<div style="clear: both;"></div>
-				</div>
-				<div id="content_separator"></div>
-				<?php osc_show_flash_message('admin'); ?>
-				<!-- settings form -->
-				<div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
-					<div style="padding: 20px;">
-
-                        <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
-                            <input type="hidden" name="page" value="settings" />
-                            <input type="hidden" name="action" value="permalinks_post" />
-						
-                            <div style="float: left; width: 100%;">
-                                <fieldset>
-                                    <legend><?php _e('Friendly urls'); ?></legend>
-                                    <div><?php _e('By default OSClass uses web URLs which have question marks and lots of numbers in them. However, OSClass offers you friendly urls. This can improve the aesthetics, usability, and forward-compatibility of your links'); ?>.</div>
-                                    <br />
-                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_rewrite_enabled() ? 'checked="true"' : ''); ?> name="rewrite_enabled" id="rewrite_enabled" value="1" />
-                                    <label for="rewrite_enabled"><?php _e('Enable friendly urls') ; ?></label>
-                                </fieldset>
+        <!-- container -->
+        <div id="content">
+            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
+            <!-- right container -->
+            <div class="right">
+                <div class="header_title">
+                    <h1 class="settings"><?php _e('Permalinks Settings') ; ?></h1>
+                </div>
+                <?php osc_show_admin_flash_messages() ; ?>
+                <!-- settings form -->
+                <div class="settings permalinks">
+                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+                        <input type="hidden" name="page" value="settings" />
+                        <input type="hidden" name="action" value="permalinks_post" />
+                        <fieldset>
+                            <div class="input-line">
+                            <p>
+                                <?php _e('By default OSClass uses web URLs which have question marks and lots of numbers in them. However, OSClass offers you friendly urls. This can improve the aesthetics, usability, and forward-compatibility of your links'); ?>
+                            </p>
+                            </div>
+                            <div class="input-line">
+                                <label class="checkbox">
+                                    <input type="checkbox" <?php echo ( osc_rewrite_enabled() ? 'checked="true"' : '' ) ; ?> name="rewrite_enabled" id="rewrite_enabled" value="1" />
+                                    <?php _e('Enable friendly urls') ; ?>
+                                </label>
                             </div>
 
-                            <?php if(osc_rewrite_enabled()) { ?>
-                            <div style="float: left; width: 100%;">
-                                <fieldset>
-                                    <legend><?php _e('.htaccess file'); ?></legend>
-                                    <?php switch($htaccess_status) {
-                                            case 1:     _e('Module <em>mod_rewrite</em> was found on the server.');
-                                            break;
-                                            case 2:     _e('Warning! Rewrite module wasn\'t found on the server. This means you don\'t have it enabled or you\'re running PHP as CGI (or fastCGI). In the case you don\'t have mod_rewrite you could still use friendly urls if AcceptPathInfo option is on in your Apache configuration (we can\'t know if it\'s enabled or not, but it usually is). "Index.php" will appear as a part of your URL (ie. http://www.example.com/index.php/nice/url).');
-                                            break;
-                                          }
-                                    ?>
-                                         <br/>
-                                    <?php switch ($file_status) {
-                                            case 3:     _e('Error. We couldn\'t write the .htaccess file on your server. Please create a file called .htaccess in the root of your OSClass installation with the following content.');
-                                            break;
-                                            case 1:     _e('File .htaccess already exists. Please check that the .htaccess file has the following content.');
-                                            break;
-                                            case 2:     _e('We\'ve created a .htaccess file on the root of your OSClass installation.');
-                                            break;
-                                          }
-                                    ?>
-                                    <div style="margin-top: 10px; clear: both;"></div>
-                                    <div style="float: left; width: 50%;">
-                                        <?php _e('Content of .htaccess file should look like this:'); ?>
-                                        <textarea rows="8" style="width: 90%;">
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase <?php echo REL_WEB_URL; ?>
+                            <div id="custom_rules" <?php if(!osc_rewrite_enabled()) { echo "style=\"display:none;\"";}?>>
+                                <h2><?php _e('Rewrite rules') ; ?></h2>
+                                <div class="input-line">
+                                    <label for="rewrite_item_url"><?php echo sprintf(__('Item URL. Accepted keywords: %s'), '{ITEM_ID},{ITEM_TITLE},{CATEGORIES}') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_item_url" id="rewrite_item_url" value="<?php echo osc_get_preference('rewrite_item_url'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_page_url"><?php echo sprintf(__('Page URL. Accepted keywords: %s'), '{PAGE_ID},{PAGE_SLUG}, {PAGE_TITLE}') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_page_url" id="rewrite_page_url" value="<?php echo osc_get_preference('rewrite_page_url'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_cat_url"><?php echo sprintf(__('Category URL. Accepted keywords: %s'), '{CATEGORY_ID},{CATEGORY_NAME},{CATEGORIES}') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_cat_url" id="rewrite_cat_url" value="<?php echo osc_get_preference('rewrite_cat_url'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_search_url"><?php _e('Search URL:'); ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_search_url" id="rewrite_search_url" value="<?php echo osc_get_preference('rewrite_search_url'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_search_country"><?php _e('Search keyword country') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_search_country" id="rewrite_search_country" value="<?php echo osc_get_preference('rewrite_search_country'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_search_region"><?php _e('Search keyword region') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_search_region" id="rewrite_search_region" value="<?php echo osc_get_preference('rewrite_search_region'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_search_city"><?php _e('Search keyword city') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_search_city" id="rewrite_search_city" value="<?php echo osc_get_preference('rewrite_search_city'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_search_city_area"><?php _e('Search keyword city area') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_search_city_area" id="rewrite_search_city_area" value="<?php echo osc_get_preference('rewrite_search_city_area'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_search_category"><?php _e('Search keyword category') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_search_category" id="rewrite_search_category" value="<?php echo osc_get_preference('rewrite_search_category'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_search_user"><?php _e('Search keyword user') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_search_user" id="rewrite_search_user" value="<?php echo osc_get_preference('rewrite_search_user'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_search_pattern"><?php _e('Search keyword pattern') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_search_pattern" id="rewrite_search_pattern" value="<?php echo osc_get_preference('rewrite_search_pattern'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_contact"><?php _e('Contact') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_contact" id="rewrite_contact" value="<?php echo osc_get_preference('rewrite_contact'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_feed"><?php _e('Feed') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_feed" id="rewrite_feed" value="<?php echo osc_get_preference('rewrite_feed'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_language"><?php _e('Language') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_language" id="rewrite_language" value="<?php echo osc_get_preference('rewrite_language'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_item_mark"><?php _e('Item mark') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_item_mark" id="rewrite_item_mark" value="<?php echo osc_get_preference('rewrite_item_mark'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_item_send_friend"><?php _e('Item send friend') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_item_send_friend" id="rewrite_item_send_friend" value="<?php echo osc_get_preference('rewrite_item_send_friend'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_item_contact"><?php _e('Item contact') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_item_contact" id="rewrite_item_contact" value="<?php echo osc_get_preference('rewrite_item_contact'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_item_new"><?php _e('Item new') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_item_new" id="rewrite_item_new" value="<?php echo osc_get_preference('rewrite_item_new'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_item_activate"><?php _e('Item activate') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_item_activate" id="rewrite_item_activate" value="<?php echo osc_get_preference('rewrite_item_activate'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_item_edit"><?php _e('Item edit') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_item_edit" id="rewrite_item_edit" value="<?php echo osc_get_preference('rewrite_item_edit'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_item_delete"><?php _e('Item delete') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_item_delete" id="rewrite_item_delete" value="<?php echo osc_get_preference('rewrite_item_delete'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_item_resource_delete"><?php _e('Item resource delete') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_item_resource_delete" id="rewrite_item_resource_delete" value="<?php echo osc_get_preference('rewrite_item_resource_delete'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_user_login"><?php _e('User login') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_user_login" id="rewrite_user_login" value="<?php echo osc_get_preference('rewrite_user_login'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_user_dashboard"><?php _e('User dashboard') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_user_dashboard" id="rewrite_user_dashboard" value="<?php echo osc_get_preference('rewrite_user_dashboard'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_user_logout"><?php _e('User logout') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_user_logout" id="rewrite_user_logout" value="<?php echo osc_get_preference('rewrite_user_logout'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_user_register"><?php _e('User register') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_user_register" id="rewrite_user_register" value="<?php echo osc_get_preference('rewrite_user_register'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_user_activate"><?php _e('User activate') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_user_activate" id="rewrite_user_activate" value="<?php echo osc_get_preference('rewrite_user_activate'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_user_activate_alert"><?php _e('User activate alert') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_user_activate_alert" id="rewrite_user_activate_alert" value="<?php echo osc_get_preference('rewrite_user_activate_alert'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_user_profile"><?php _e('User profile') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_user_profile" id="rewrite_user_profile" value="<?php echo osc_get_preference('rewrite_user_profile'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_user_items"><?php _e('User items') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_user_items" id="rewrite_user_items" value="<?php echo osc_get_preference('rewrite_user_items'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_user_alerts"><?php _e('User alerts') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_user_alerts" id="rewrite_user_alerts" value="<?php echo osc_get_preference('rewrite_user_alerts'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_user_recover"><?php _e('User recover') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_user_recover" id="rewrite_user_recover" value="<?php echo osc_get_preference('rewrite_user_recover'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_user_forgot"><?php _e('User forgot') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_user_forgot" id="rewrite_user_forgot" value="<?php echo osc_get_preference('rewrite_user_forgot'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_user_change_password"><?php _e('User change password') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_user_change_password" id="rewrite_user_change_password" value="<?php echo osc_get_preference('rewrite_user_change_password'); ?>" />
+                                    </div>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_user_change_email"><?php _e('User change email') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_user_change_email" id="rewrite_user_change_email" value="<?php echo osc_get_preference('rewrite_user_change_email'); ?>" />
+                                    </div>
 
-    RewriteRule ^index\.php$ - [L]
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule . <?php echo REL_WEB_URL; ?>index.php [L]
-</IfModule>
-                                        </textarea>
+                                </div>
+                                <div class="input-line">
+                                    <label for="rewrite_user_change_email_confirm"><?php _e('User change email confirm') ; ?></label>
+                                    <div class="input">
+                                        <input class="xlarge" type="text" name="rewrite_user_change_email_confirm" id="rewrite_user_change_email_confirm" value="<?php echo osc_get_preference('rewrite_user_change_email_confirm'); ?>" />
                                     </div>
-                                    <div style="float: right; width: 50%;">
-                                        <?php
-                                            if(file_exists(ABS_PATH.'.htaccess')) {
-                                                $htaccess_content = file_get_contents(osc_base_path() . '.htaccess');
-                                                if($htaccess_content) {
-                                                    _e('Current content of your .htaccess file:');
-                                        ?>
-                                        <br />
-                                        <textarea rows="8" style="width: 90%;"><?php echo $htaccess_content ; ?></textarea>
-                                        <?php }
-                                        } ?>
-                                    </div>
-                                </fieldset>
+                                </div>
                             </div>
-                            <?php } ?>
-                            <div style="clear: both;"></div>
-                            <input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
-                        </form>
-					</div>
-				</div>
-			</div> <!-- end of right column -->
+
+                            <div class="actions">
+                                <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
+                            </div>
+                        </fieldset>
+                    </form>
+                    
+                    <h2><?php _e('Useful information') ; ?></h2>
+                    <?php
+                        $mod_rewrite = '';
+                        if( apache_mod_loaded('mod_rewrite') ) {
+                            $mod_rewrite = sprintf( __('Apache Module <a href="%s">mod_rewrite</a> is loaded'), 'http://httpd.apache.org/docs/2.0/mod/mod_rewrite.html' ) ;
+                        } else {
+                            $mod_rewrite = sprintf( __('Apache Module <a href="%s">mod_rewrite</a> is <b>not</b> loaded'), 'http://httpd.apache.org/docs/2.0/mod/mod_rewrite.html' ) ;
+                        }
+                        $htaccess_exist = false ;
+                        $htaccess_text  = __("It doesn't exist <em>.htaccess</em> file") ;
+                        if( file_exists( osc_base_path() . '.htaccess' ) ) {
+                            $htaccess_exist = true ;
+                            $htaccess_text  = __("It exists <em>.htaccess</em> file. Below you can see the content of the file:") ;
+                        }
+                    ?>
+                    <ul>
+                        <li>
+                            <?php echo $mod_rewrite ; ?>
+                        </li>
+                        <li>
+                            <?php
+                                echo $htaccess_text ;
+                                if( $htaccess_exist && is_readable( osc_base_path() . '.htaccess' ) ) {
+                                    echo '<pre>' ;
+                                    echo osc_esc_html( file_get_contents(osc_base_path() . '.htaccess') ) ;
+                                    echo '</pre>' ;
+                                }
+                            ?>
+                        </li>
+                    </ul>
+                    
+                </div>
+                <!-- /settings form -->
+            </div>
+            <!-- /right container -->
         </div>
+        <!-- /container -->
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>

@@ -378,43 +378,113 @@
          * Return list of users
          * 
          * @access public
-         * @since unknown
+         * @since 2.4
          * @param int $start
          * @param int $end
          * @param string $order_column
          * @param string $order_direction
+         * @parma string $name
          * @return array
          */
-        public function search($start = 0, $end = 10, $order_column = 'pk_i_id', $order_direction = 'DESC')
+        public function search($start = 0, $end = 10, $order_column = 'pk_i_id', $order_direction = 'DESC', $name = '')
         {
-            
             // SET data, so we always return a valid object
-            $users = array();
-            $users['rows'] = 0;
-            $users['total_results'] = 0;
-            $users['users'] = array();
+            $users = array() ;
+            $users['rows']          = 0 ;
+            $users['total_results'] = 0 ;
+            $users['users']         = array() ;
+
+            $this->dao->select('SQL_CALC_FOUND_ROWS *') ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->orderBy($order_column, $order_direction) ;
+            $this->dao->limit($start, $end) ;
+            if( $name != '' ) {
+                $this->dao->like('s_name', $name) ;
+            }
+            $rs = $this->dao->get() ;
+
+            if( !$rs ) {
+                return $users ;
+            }
+
+            $users['users'] = $rs->result() ;
+
+            $rsRows = $this->dao->query('SELECT FOUND_ROWS() as total') ;
+            $data   = $rsRows->row() ;
+            if( $data['total'] ) {
+                $users['total_results'] = $data['total'] ;
+            }
+
+            $rsTotal = $this->dao->query('SELECT COUNT(*) as total FROM oc_t_user') ;
+            $data   = $rsTotal->row() ;
+            if( $data['total'] ) {
+                $users['rows'] = $data['total'] ;
+            }
+
+            return $users ;
+        }
+
+        /**
+         * Return number of users
+         * 
+         * @since 2.3.6
+         * @return int
+         */
+        public function countUsers($condition = 'b_enabled = 1 AND b_active = 1')
+        {
+            $this->dao->select("COUNT(*) as i_total") ;
+            $this->dao->from(DB_TABLE_PREFIX.'t_user');
+            $this->dao->where($condition) ;
             
-            $sql = sprintf("SELECT SQL_CALC_FOUND_ROWS * FROM %st_user ORDER BY %s %s LIMIT %s, %s", DB_TABLE_PREFIX, $order_column, $order_direction, $start, $end);
-            $result = $this->dao->query($sql) ;
+            $result = $this->dao->get() ;
             
-            if(!$result) {
-                return $users;
+            if( $result == false || $result->numRows() == 0) {
+                return 0;
             }
             
-            $datatmp  = $this->dao->query('SELECT FOUND_ROWS() as total');
-            $data = $datatmp->row();
-            if(isset($data['total'])) {
-                $users['total_results'] = $data['total'];
+            $row = $result->row() ;
+            return $row['i_total'];
+        }
+
+        /**
+         * Increase number of items, given a user id
+         *
+         * @access public
+         * @since unknown
+         * @param int $id user id 
+         * @return int number of affected rows, id error occurred return false
+         */
+        public function increaseNumItems($id) 
+        {
+            if(!is_numeric($id)) {
+                return false;
             }
             
-            $users['users'] = $result->result();
-            $users['rows'] = $result->numRows();
+            $sql = sprintf('UPDATE %s SET i_items = i_items + 1 WHERE pk_i_id = %d', $this->getTableName(), $id);
+            $res = $this->dao->query($sql);
             
-            
-            return $users;
+            return $res;
         }
         
-        
+        /**
+         * Decrease number of items, given a user id
+         * 
+         * @access public
+         * @since unknown
+         * @param int $id user id 
+         * @return int number of affected rows, id error occurred return false
+         */
+        public function decreaseNumItems($id)
+        {
+            if(!is_numeric($id)) {
+                return false;
+            }
+            
+            $sql = sprintf('UPDATE %s SET i_items = i_items - 1 WHERE pk_i_id = %d', $this->getTableName(), $id);
+            $res = $this->dao->query($sql);
+            
+            return $res;
+        }
     }
 
     /* file end: ./oc-includes/osclass/model/User.php */

@@ -26,6 +26,28 @@
         {
             parent::__construct() ;
             osc_run_hook( 'init_admin' ) ;
+
+            // check if exist a new version each day
+            if( (time() - osc_last_version_check()) > (24 * 3600) ) {
+                $data = osc_file_get_contents('http://osclass.org/latest_version.php?callback=?') ;
+                $data = preg_replace('|^\?\((.*?)\);$|', '$01', $data) ;
+                $json = json_decode($data) ;
+                if( $json->version > osc_version() ) {
+                    osc_set_preference( 'update_core_json', $data ) ;
+                } else {
+                    osc_set_preference( 'update_core_json', '' ) ;
+                }
+                osc_set_preference( 'last_version_check', time() ) ;
+                osc_reset_preferences() ;
+            }
+
+            // if there are files from new version, go to upgrade page
+            if( get_class($this) != 'CAdminUpgrade' ) {
+                $config_version = str_replace('.', '', OSCLASS_VERSION);
+                if( $config_version > Preference::newInstance()->get('version')) {
+                    $this->redirectTo(osc_admin_base_url(true) . '?page=upgrade');
+                }
+            }
         }
 
         function isLogged()

@@ -78,7 +78,7 @@
                                             $this->redirectTo(osc_user_login_url());
                                         }
 
-                                        if ( $user["s_password"] != sha1( Params::getParam('password') ) ) {
+                                        if ( $user["s_password"] != sha1( Params::getParam('password', false, false) ) ) {
                                             osc_add_flash_error_message( _m('The password is incorrect')) ;
                                             $this->redirectTo(osc_user_login_url());
                                         }
@@ -108,6 +108,7 @@
                                                 Cookie::newInstance()->push('oc_userId', $user['pk_i_id']) ;
                                                 Cookie::newInstance()->push('oc_userSecret', $secret) ;
                                                 Cookie::newInstance()->set() ;
+                                                
                                             }
 
                                             $this->redirectTo( $url_redirect ) ;
@@ -163,19 +164,19 @@
                                         }
                 break;
                 case('forgot_post'):
-                                        if( (Params::getParam('new_password') == '') || (Params::getParam('new_password2') == '') ) {
+                                        if( (Params::getParam('new_password', false, false) == '') || (Params::getParam('new_password2', false, false) == '') ) {
                                             osc_add_flash_warning_message( _m('Password cannot be blank')) ;
                                             $this->redirectTo(osc_forgot_user_password_confirm_url(Params::getParam('userId'), Params::getParam('code')));
                                         }
 
                                         $user = User::newInstance()->findByIdPasswordSecret(Params::getParam('userId'), Params::getParam('code'));
                                         if($user['b_enabled'] == 1) {
-                                            if(Params::getParam('new_password')==Params::getParam('new_password2')) {
+                                            if(Params::getParam('new_password', false, false)==Params::getParam('new_password2', false, false)) {
                                                 User::newInstance()->update(
                                                     array('s_pass_code' => osc_genRandomPassword(50)
                                                         , 's_pass_date' => date('Y-m-d H:i:s', 0)
                                                         , 's_pass_ip' => $_SERVER['REMOTE_ADDR']
-                                                        , 's_password' => sha1(Params::getParam('new_password'))
+                                                        , 's_password' => sha1(Params::getParam('new_password', false, false))
                                                     ), array('pk_i_id' => $user['pk_i_id'])
                                                 );
                                                 osc_add_flash_ok_message( _m('The password has been changed'));

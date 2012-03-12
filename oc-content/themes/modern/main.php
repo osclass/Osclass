@@ -76,7 +76,6 @@
                             ?>
                         <?php } ?>
                    </div>
-
                    <div class="latest_ads">
                         <h1><strong><?php _e('Latest Items', 'modern') ; ?></strong></h1>
                         <?php if( osc_count_latest_items() == 0) { ?>
@@ -91,7 +90,7 @@
                                              <td class="photo">
                                                 <?php if( osc_count_item_resources() ) { ?>
                                                     <a href="<?php echo osc_item_url() ; ?>">
-                                                        <img src="<?php echo osc_resource_thumbnail_url() ; ?>" width="75px" height="56px" title="" alt="" />
+                                                        <img src="<?php echo osc_resource_thumbnail_url() ; ?>" width="75px" height="56px" title="<?php echo osc_item_title(); ?>" alt="<?php echo osc_item_title(); ?>" />
                                                     </a>
                                                 <?php } else { ?>
                                                     <img src="<?php echo osc_current_web_theme_url('images/no_photo.gif') ; ?>" alt="" title=""/>
@@ -109,19 +108,20 @@
                                 </tbody>
                             </table>
                             <?php if( osc_count_latest_items() == osc_max_latest_items() ) { ?>
+                            <p class='pagination'><?php echo osc_search_pagination(); ?></p>
                                 <p class="see_more_link"><a href="<?php echo osc_search_show_all_url();?>"><strong><?php _e("See all offers", 'modern'); ?> &raquo;</strong></a></p>
                             <?php } ?>
-                        <?php } ?>
+                        <?php View::newInstance()->_erase('items') ; } ?>
                     </div>
                 </div>
                 <div id="sidebar">
                     <div class="navigation">
-                        <?php if( osc_count_list_regions() > 0 ) { ?>
+                        <?php if(osc_count_list_regions() > 0 ) { ?>
                         <div class="box location">
                             <h3><strong><?php _e("Location", 'modern') ; ?></strong></h3>
                             <ul>
-                            <?php while( osc_has_list_regions() ) { ?>
-                                <li><a href="<?php echo osc_search_url( array( 'sRegion' => osc_list_region_name() ) ) ; ?>"><?php echo osc_list_region_name() ; ?></a> <em>(<?php echo osc_list_region_items() ; ?>)</em></li>
+                            <?php while(osc_has_list_regions() ) { ?>
+                                <li><a href="<?php echo osc_search_url( array( 'sRegion' => osc_list_region_id() ) ) ; ?>"><?php echo osc_list_region_name() ; ?></a> <em>(<?php echo osc_list_region_items() ; ?>)</em></li>
                             <?php } ?>
                             </ul>
                         </div>

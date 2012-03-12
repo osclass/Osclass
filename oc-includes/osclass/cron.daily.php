@@ -20,10 +20,101 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    set_time_limit(0);
+
     if( !defined('__FROM_CRON__') ) {
         define('__FROM_CRON__', true) ;
     }
 
+    function update_cat_stats() {
+        $categoryTotal = array() ;
+        $categoryTree  = array() ;
+        $aCategories   = Category::newInstance()->listAll(false) ;
+
+        // append root categories and get the number of items of each category
+        foreach($aCategories as $category) {
+            $total     = Item::newInstance()->numItems($category, true, true) ;
+            $category += array('category' => array()) ;
+            if( is_null($category['fk_i_parent_id']) ) {
+                $categoryTree += array($category['pk_i_id'] => $category) ;
+            }
+
+            $categoryTotal += array($category['pk_i_id'] => $total) ;
+        }
+        
+        // append childs to root categories
+        foreach($aCategories as $category) {
+            if( !is_null($category['fk_i_parent_id']) ) {
+                $categoryTree[$category['fk_i_parent_id']]['category'][] = $category ;
+            }
+        }
+
+        // sum the result of the subcategories and set in the parent category
+        foreach($categoryTree as $category) {
+            if( count( $category['category'] ) > 0 ) {
+                foreach($category['category'] as $subcategory) {
+                    $categoryTotal[$category['pk_i_id']] += $categoryTotal[$subcategory['pk_i_id']] ;
+                }
+            }
+        }
+
+        $sql = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_category_stats (fk_i_category_id, i_num_items) VALUES ';
+        $aValues = array();
+        foreach($categoryTotal as $k => $v) {
+            array_push($aValues, "($k, $v)" );
+        }
+        $sql .= implode(',', $aValues);
+        $result = CategoryStats::newInstance()->dao->query($sql);
+    }
+    
+    function update_location_stats()
+    {
+        $aCountries     = Country::newInstance()->listAll();
+        $aCountryValues = array();
+        
+        $aRegions       = array();
+        $aRegionValues  = array();
+        
+        $aCities        = array();
+        $aCityValues    = array();
+        
+        foreach($aCountries as $country){
+            $id = $country['pk_c_code'] ;
+            $numItems = CountryStats::newInstance()->calculateNumItems( $id ) ;
+            array_push($aCountryValues, "('$id', $numItems)" );
+            unset($numItems) ;
+            
+            $aRegions = Region::newInstance()->findByCountry($id);
+            foreach($aRegions as $region) {
+                $id = $region['pk_i_id'] ;
+                $numItems = RegionStats::newInstance()->calculateNumItems( $id ) ;
+                array_push($aRegionValues, "($id, $numItems)" );
+                unset($numItems) ;
+                
+                $aCities = City::newInstance()->findByRegion($id) ;
+                foreach($aCities as $city) {
+                    $id = $city['pk_i_id'];
+                    $numItems = CityStats::newInstance()->calculateNumItems( $id );
+                    array_push($aCityValues, "($id, $numItems)" );
+                    unset($numItems);
+                }
+            }
+        }    
+        
+        // insert Country stats
+        $sql_country  = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_country_stats (fk_c_country_code, i_num_items) VALUES ';
+        $sql_country .= implode(',', $aCountryValues);
+        CountryStats::newInstance()->dao->query($sql_country);
+        // insert Region stats
+        $sql_region   = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_region_stats (fk_i_region_id, i_num_items) VALUES ';
+        $sql_region  .= implode(',', $aRegionValues);
+        RegionStats::newInstance()->dao->query($sql_region);
+        // insert City stats
+        $sql_city     = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_city_stats (fk_i_city_id, i_num_items) VALUES ';
+        $sql_city    .= implode(',', $aCityValues);
+        CityStats::newInstance()->dao->query($sql_city);
+    }
+    
     function purge_latest_searches_daily() {
         $purge = osc_purge_latest_searches() ;
         if( $purge == 'day' ) {
@@ -31,6 +122,8 @@
         }
     }
 
+    osc_add_hook('cron_daily', 'update_cat_stats') ;
+    osc_add_hook('cron_daily', 'update_location_stats') ;
     osc_add_hook('cron_daily', 'purge_latest_searches_daily') ;
     
     osc_runAlert('DAILY') ;
