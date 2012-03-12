@@ -117,7 +117,7 @@
                         function(data){
                             if(data.error==0) {
                                 $("#universe_info").show();
-                                $("#name").text(data.s_name);
+                                $("#name").text(data.s_title);
                                 $("#version").text(data.s_version);
                                 $("#description").text(data.s_description);
                                 $("#url").text(data.s_source_file);
@@ -161,7 +161,7 @@
                     function(data){
                         if(data.error==0) {
                             $("#universe_info").show();
-                            $("#name").text(data.s_name);
+                            $("#name").text(data.s_title);
                             $("#version").text(data.s_version);
                             $("#description").text(data.s_description);
                             $("#url").text(data.s_source_file);
@@ -174,9 +174,7 @@
             }
             
             function addItem(item, list) {
-                
-                console.log(item);
-                //$(list).append("<li>"+item.s_name+"</li>");
+                $(list).append("<li><h3>" + item.s_title + " - " + item.s_version + "</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;" + item.s_description + " <a href=\"<?php echo osc_admin_base_url(true);?>?page=universe&code=" + item.s_slug + "\"><?php _e('Install'); ?></a></p></li>");
                 
             }
             
@@ -184,8 +182,14 @@
                 "<?php echo osc_market_url(); ?>",
                 {"section" : 'all'},
                 function(data){
-                    $.each(data.plugins,console.log(value));
-                    data.themes.each(addItem(this,"#themes_ul"));
+                    var l = data.plugins.length;
+                    for(var k = 0;k<l;k++) {
+                        addItem(data.plugins[k], "#plugins_ul");
+                    }
+                    l = data.themes.length;
+                    for(var k = 0;k<l;k++) {
+                        addItem(data.themes[k], "#themes_ul");
+                    }
                 }
             );
 

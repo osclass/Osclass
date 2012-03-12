@@ -773,7 +773,7 @@
                                 break;
                             }
                         }
-                        if( !isset($data['s_source_file']) && !isset($data['s_slug']) && !isset($data['e_type'])) {
+                        if( !isset($data['s_source_file']) || !isset($data['s_slug']) || !isset($data['e_type'])) {
                             $data = array('error' => 2, 'error_msg' => __('Not a valid code'));
                         }
                     } else {
