@@ -21,3 +21,5 @@ oc-content/uploads/*
 oc-includes/osclass/t/config.php
 oc-content/plugins/lopd/admin_user.php
 oc-content/plugins/lopd/ajax.php
+
+oc-includes/simpletest/test/osclass/custom_config.php

@@ -54,6 +54,8 @@ class TestOfInstaller extends WebTestCase {
 
             // step 2
             $this->assertTrue( $this->selenium->isTextPresent("Database information"), "IS NOT STEP 2 ! (databse information)" );
+            $this->selenium->type("dbhost", $db_host);
+            $this->selenium->type("dbname", $db_name);
             $this->selenium->type("username", $db_user);
             $this->selenium->type("password", $db_pass);
             $this->selenium->click("css=span");
