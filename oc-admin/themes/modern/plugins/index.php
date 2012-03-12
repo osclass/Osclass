@@ -125,6 +125,17 @@
                     <h1 class="plugins"><?php _e('Plugins') ; ?></h1>
                 </div>
                 <?php osc_show_admin_flash_messages() ; ?>
+                <?php if( Params::getParam('error') != '' ) { ?>
+                    <!-- flash message -->
+                    <div class="alert alert-error">
+                        <a class="close" href="#">×</a>
+                        <p>
+                            <?php _e("Plugin couldn't be installed because it triggered a <strong>fatal error</strong>") ; ?>
+                        </p>
+                        <iframe style="border:0;" width="100%" height="80px" src="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=error_plugin&amp;plugin=<?php echo Params::getParam('error') ; ?>"></iframe>
+                    </div>
+                    <!-- /flash message -->
+                <?php } ?>
                 <!-- datatables plugins -->
                 <div id="add_plugin_button">
                     <a href="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=add" class="btn" id="button_open"><?php _e('Add new plugin') ; ?></a>
