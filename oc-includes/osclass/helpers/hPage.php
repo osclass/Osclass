@@ -113,25 +113,41 @@
     }
 
     /**
+     * Gets current page slug or internal name
+     *
+     * @return string
+     */
+    function osc_static_page_slug() {
+        return osc_static_page_field("s_internal_name") ;
+    }
+
+    /**
      * Gets current page url
      *
      * @param string $locale
      * @return string
      */
     function osc_static_page_url($locale = '') {
-        if($locale!='') {
-            if(osc_rewrite_enabled()) {
-                return osc_base_url().urlencode(osc_static_page_field("s_internal_name"))."-p".osc_static_page_field("pk_i_id")."-".$locale;
+        if ( osc_rewrite_enabled() ) {
+            $sanitized_categories = array();
+            $cat = Category::newInstance()->hierarchy(osc_item_category_id()) ;
+            for ($i = (count($cat)); $i > 0; $i--) {
+                $sanitized_categories[] = $cat[$i - 1]['s_slug'];
+            }
+            $url = str_replace('{PAGE_TITLE}', osc_static_page_title(), str_replace('{PAGE_ID}', osc_static_page_id(), str_replace('{PAGE_SLUG}', urlencode(osc_static_page_slug()), osc_get_preference('rewrite_page_url'))));
+            if($locale!='') {
+                $path = osc_base_url().$locale."/".$url;
             } else {
-                return osc_base_url(true)."?page=page&id=".osc_static_page_field("pk_i_id")."&lang=".$locale;
+                $path = osc_base_url().$url;
             }
         } else {
-            if(osc_rewrite_enabled()) {
-                return osc_base_url().urlencode(osc_static_page_field("s_internal_name"))."-p".osc_static_page_field("pk_i_id");
+            if($locale!='') {
+                $path = osc_base_url(true)."?page=page&id=".osc_static_page_id()."&lang=".$locale;
             } else {
-                return osc_base_url(true)."?page=page&id=".osc_static_page_field("pk_i_id");
+                $path = osc_base_url(true)."?page=page&id=".osc_static_page_id();
             }
         }
+        return $path ;
     }
     
     /**

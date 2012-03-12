@@ -25,7 +25,8 @@
         //specific for this class
         private $categoryManager ;
 
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
 
             //specific things for this class
@@ -33,7 +34,8 @@
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             parent::doModel() ;
 
             //specific things for this class
@@ -61,32 +63,36 @@
 
                                         $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break; 
-                case('settings'):     // calling the categories settings view
-                                        $this->doView('categories/settings.php');
+                case('settings'):       // calling the categories settings view
+                                        $this->doView('categories/settings.php') ;
                 break;
-                case('settings_post'):// updating categories option
-                                        $selectableParent = Params::getParam('selectable_parent_categories');
+                case('settings_post'):  // updating categories option
+                                        $selectableParent = Params::getParam('selectable_parent_categories') ;
 
-                                        $updated = Preference::newInstance()->update(array('s_value' => $selectableParent)
-                                                                                    ,array('s_name'  => 'selectable_parent_categories'));
-                                        if($updated > 0) {
-                                            osc_add_flash_ok_message( _m('Categories\' settings have been updated'), 'admin');
+                                        $updated = Preference::newInstance()->update(
+                                            array('s_value' => $selectableParent),
+                                            array('s_name'  => 'selectable_parent_categories')
+                                        ) ;
+
+                                        if( $updated > 0 ) {
+                                            osc_add_flash_ok_message( _m("Categories' settings have been updated"), 'admin') ;
                                         }
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=categories&action=settings');
-
+                                        $this->redirectTo( osc_admin_base_url(true) . '?page=categories&action=settings' ) ;
                 break;
-                default:
-                    $this->_exportVariableToView("categories", $this->categoryManager->toTreeAll() );
-                    $this->doView("categories/index.php");
+                default:                //
+                                        $this->_exportVariableToView("categories", $this->categoryManager->toTreeAll() );
+                                        $this->doView("categories/index.php") ;
 
             }
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_current_admin_theme_path($file) ;
             Session::newInstance()->_clearVariables();
         }
     }
 
+    /* file end: ./oc-admin/categories.php */
 ?>

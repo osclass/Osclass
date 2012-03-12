@@ -31,7 +31,12 @@
         function doModel()
         {
             $id   = Params::getParam('id') ;
-            $page = $this->pageManager->findByPrimaryKey($id) ;
+            $page = false;
+            if($id!='') {
+                $page = $this->pageManager->findByPrimaryKey($id) ;
+            } else {
+                $page = $this->pageManager->findBySlug(Params::getParam('slug'));
+            }
             
             if( $page == false) {
                 $this->do404() ;

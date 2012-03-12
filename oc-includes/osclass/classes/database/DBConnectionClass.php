@@ -178,8 +178,13 @@
          */
         function errorReport()
         {
-            $this->errorLevel = $this->db->errno ;
-            $this->errorDesc  = $this->db->error ;
+            if( OSC_DEBUG ) {
+                $this->errorLevel = $this->db->errno ;
+                $this->errorDesc  = $this->db->error ;
+            } else {
+                $this->errorLevel = @$this->db->errno ;
+                $this->errorDesc  = @$this->db->error ;
+            }
         }
 
         /**
@@ -190,8 +195,13 @@
          */
         function errorConnection()
         {
-            $this->connErrorLevel = $this->db->connect_errno ;
-            $this->connErrorDesc  = $this->db->connect_error ;
+            if( OSC_DEBUG ) {
+                $this->connErrorLevel = $this->db->connect_errno ;
+                $this->connErrorDesc  = $this->db->connect_error ;
+            } else {
+                $this->connErrorLevel = @$this->db->connect_errno ;
+                $this->connErrorDesc  = @$this->db->connect_error ;
+            }
         }
 
         /**
@@ -417,9 +427,13 @@
          */
         function _connectToDb($host, $user, $password, &$connId)
         {
-            $connId = new mysqli($host, $user, $password) ;
+            if( OSC_DEBUG ) {
+                $connId = new mysqli($host, $user, $password) ;
+            } else {
+                $connId = @new mysqli($host, $user, $password) ;
+            }
 
-            if ( $connId == false ) {
+            if ( $connId->connect_errno ) {
                 return false ;
             }
 
@@ -470,15 +484,15 @@
          */
         function _selectDb($dbName, &$connId)
         {
-            if ( !$connId ) {
+            if ( $connId->connect_errno ) {
                 return false ;
             }
 
-            if ( !$connId->select_db($dbName) ) {
-                return false ;
+            if( OSC_DEBUG ) {
+                return $connId->select_db($dbName) ;
             }
 
-            return true ;
+            return @$connId->select_db($dbName) ;
         }
 
         /**
@@ -491,7 +505,11 @@
          */
         function _setCharset($charset, &$connId)
         {
-            $connId->set_charset($charset) ;
+            if( OSC_DEBUG ) {
+                $connId->set_charset($charset) ;
+            }
+
+            @$connId->set_charset($charset) ;
         }
 
         /**

@@ -79,7 +79,7 @@ unset($location_array);
                                         <?php if( osc_images_enabled_at_items() ) { ?>
                                          <td class="photo">
                                              <?php if(osc_count_item_resources()) { ?>
-                                                <a href="<?php echo osc_item_url() ; ?>"><img src="<?php echo osc_resource_thumbnail_url() ; ?>" width="75px" height="56px" title="" alt="" /></a>
+                                                <a href="<?php echo osc_item_url() ; ?>"><img src="<?php echo osc_resource_thumbnail_url() ; ?>" width="75px" height="56px" title="<?php echo osc_item_title(); ?>" alt="<?php echo osc_item_title(); ?>" /></a>
                                             <?php } else { ?>
                                                 <img src="<?php echo osc_current_web_theme_url('images/no_photo.gif') ; ?>" title="" alt="" />
                                             <?php } ?>

@@ -20,21 +20,52 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+/**
+ * check if the item is expired 
+ */
+function osc_isExpired($d_expiration) {
+    $now       = date("Ymdhis");
+    
+    $d_expiration = str_replace(' ', '', $d_expiration);
+    $d_expiration = str_replace('-', '', $d_expiration);
+    $d_expiration = str_replace(':', '', $d_expiration);
+
+    if ($d_expiration > $now) { 
+        return false;
+    } else {
+        return true;
+    }
+}
 /**
  * Remove resources from disk
  * @param <type> $id
+ * @param boolean $admin
  * @return boolean
  */
-function osc_deleteResource( $id ) {
+function osc_deleteResource( $id , $admin) {
     if( is_array( $id ) ){
         $id = $id[0];
     }
     $resource = ItemResource::newInstance()->findByPrimaryKey($id) ;
     if( !is_null($resource) ){
-        $resource_original  = osc_base_path() . $resource['s_path'] .$resource['pk_i_id'].".".$resource['s_extension'];
-        $resource_thum      = osc_base_path() . $resource['s_path'] .$resource['pk_i_id']."_*".".".$resource['s_extension'];
-        array_map( "unlink" , glob($resource_thum));
-        array_map( "unlink" , glob($resource_original));
+        Log::newInstance()->insertLog('item', 'delete resource', $resource['pk_i_id'], $id, $admin?'admin':'user', $admin ? osc_logged_admin_id() : osc_logged_user_id()) ;
+        
+        $backtracel = '';
+        foreach(debug_backtrace() as $k=>$v){
+            if($v['function'] == "include" || $v['function'] == "include_once" || $v['function'] == "require_once" || $v['function'] == "require"){
+                $backtracel .= "#".$k." ".$v['function']."(".$v['args'][0].") called@ [".$v['file'].":".$v['line']."] / ";
+            }else{
+                $backtracel .= "#".$k." ".$v['function']." called@ [".$v['file'].":".$v['line']."] / ";
+            }
+        }
+        
+        Log::newInstance()->insertLog('item', 'delete resource backtrace', $resource['pk_i_id'], $backtracel, $admin?'admin':'user', $admin ? osc_logged_admin_id() : osc_logged_user_id()) ;
+
+        @unlink(osc_base_path() . $resource['s_path'] .$resource['pk_i_id'].".".$resource['s_extension']);
+        @unlink(osc_base_path() . $resource['s_path'] .$resource['pk_i_id']."_original.".$resource['s_extension']);
+        @unlink(osc_base_path() . $resource['s_path'] .$resource['pk_i_id']."_thumbnail.".$resource['s_extension']);
+        @unlink(osc_base_path() . $resource['s_path'] .$resource['pk_i_id']."_preview.".$resource['s_extension']);
         osc_run_hook('delete_resource', $resource);
     }
 }
@@ -234,7 +265,7 @@ function osc_doRequest($url, $_data) {
 
 function osc_sendMail($params) {
     if( key_exists('add_bcc', $params) ) {
-        if( !is_array($params['add_bcc']) ) {
+        if( !is_array($params['add_bcc']) && $params['add_bcc'] != '' ) {
             $params['add_bcc'] = array($params['add_bcc']) ;
         }
     }
@@ -251,17 +282,17 @@ function osc_sendMail($params) {
                 ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username(),
                 ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username(),
                 0
-        );
+        ) ;
     }
 
     $mail = new PHPMailer(true) ;
     try {
-        $mail->CharSet = "utf-8";
+        $mail->CharSet = 'utf-8' ;
 
-        if (osc_mailserver_auth()) {
+        if( osc_mailserver_auth() ) {
             $mail->IsSMTP() ;
             $mail->SMTPAuth = true ;
-        } else if(osc_mailserver_pop()) {
+        } else if( osc_mailserver_pop() ) {
             $mail->IsSMTP() ;
         }
 
@@ -278,13 +309,15 @@ function osc_sendMail($params) {
         $to = ( isset($params['to']) ) ? $params['to'] : '' ;
         $to_name = ( isset($params['to_name']) ) ? $params['to_name'] : '' ;
 
-        if ( key_exists('add_bcc', $params) ) {
+        if( key_exists('add_bcc', $params) ) {
             foreach( $params['add_bcc'] as $bcc ) {
                 $mail->AddBCC($bcc) ;
             }
         }
 
-        if ( isset($params['reply_to']) ) $mail->AddReplyTo($params['reply_to']);
+        if( isset($params['reply_to']) ) {
+            $mail->AddReplyTo($params['reply_to']) ;
+        }
 
         if( isset($params['attachment']) ) {
             $mail->AddAttachment($params['attachment']) ;
@@ -294,17 +327,16 @@ function osc_sendMail($params) {
         $mail->AddAddress($to, $to_name) ;
         $mail->Send() ;
         return true ;
-
     } catch (phpmailerException $e) {
-        error_log("osc_sendMail() cannot send email! ".$mail->ErrorInfo, 0);
-        return false;
+        error_log("phpmailerException in osc_sendMail() Error: ".$mail->ErrorInfo, 0);
+        return false ;
     } catch (Exception $e) {
-        error_log("osc_sendMail() cannot send email! ".$mail->ErrorInfo, 0);
-        return false;
+        error_log("Exception in osc_sendMail() Error".$mail->ErrorInfo, 0);
+        return false ;
     }
-    return false;
-}
 
+    return false ;
+}
 
 function osc_mailBeauty($text, $params) {
 
