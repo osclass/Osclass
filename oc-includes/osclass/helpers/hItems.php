@@ -729,21 +729,31 @@
     }
 
     /**
-     * Gets thumbnail url of current resource
-     *
-     * @return <type>
-     */
-    function osc_resource_thumbnail_url() {
-        return (string) osc_resource_path().osc_resource_id()."_thumbnail.".osc_resource_field("s_extension");
-    }
-
-    /**
      * Gets url of current resource
      *
      * @return string
      */
     function osc_resource_url() {
         return (string) osc_resource_path().osc_resource_id().".".osc_resource_field("s_extension");
+    }
+
+    /**
+     * Gets thumbnail url of current resource
+     *
+     * @return string
+     */
+    function osc_resource_thumbnail_url() {
+        return (string) osc_resource_path().osc_resource_id()."_thumbnail.".osc_resource_field("s_extension");
+    }
+
+    /**
+     * Gets preview url of current resource
+     *
+     * @since 2.3.7
+     * @return string
+     */
+    function osc_resource_preview_url() {
+        return (string) osc_resource_path().osc_resource_id()."_preview.".osc_resource_field("s_extension");
     }
 
     /**
