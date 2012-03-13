@@ -79,7 +79,7 @@ class TestOfInstaller extends WebTestCase {
             if( $this->assertFalse($this->selenium->isTextPresent("Hay tablas con el mismo nombre en la base de datos. Cambia el prefijo o la base de datos y prueba de nuevo."), "NEED DROP DATABASE osclass, for continue the installation!") ) {
                 $this->can_continue = false;
             }
-            $this->assertTrue( $this->selenium->isTextPresent("No se ha especificado una acción"), "IS NOT STEP 3 ! (information needed)" );
+            $this->assertTrue( $this->selenium->isTextPresent("Localización"), "IS NOT STEP 3 ! (information needed)" );
             $this->selenium->type("s_name", "admin");
             $this->selenium->type("s_passwd", "admin");
             
