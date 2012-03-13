@@ -220,14 +220,41 @@
                     break;
                     
                 case 'custom': // Execute via AJAX custom file
-                    $ajaxfile = Params::getParam("ajaxfile");
-                    if($ajaxfile!='') {
-                        require_once osc_plugins_path() . $ajaxfile;
-                    } else {
-                        echo json_encode(array('error' => __('no action defined')));
+                    $ajaxFile = Params::getParam("ajaxfile");
+                    $ajaxType = Params::getParam("type") ;
+
+                    // for versions < 2.4
+                    if( $ajaxType == '' ) {
+                        $ajaxType = 'plugin' ;
                     }
-                    break;
-                    
+
+                    if( $ajaxFile == '' || !in_array($ajaxType, array('theme', 'plugin')) ) {
+                        echo json_encode(array('error' => 'no action defined'));
+                        break ;
+                    }
+
+                    // valid file?
+                    if( stripos($ajaxFile, '../') !== false ) {
+                        echo json_encode(array('error' => 'no valid ajaxFile'));
+                        break ;
+                    }
+
+                    switch($ajaxType) {
+                        case('theme'):
+                            $path = osc_themes_path() ;
+                        break;
+                        case('plugin'):
+                            $path = osc_plugins_path() ;
+                        break;
+                    }
+
+                    if( !file_exists($path . $ajaxFile) ) {
+                        echo json_encode(array('error' => "ajaxFile doesn't exist"));
+                        break;
+                    }
+
+                    require_once $path . $ajaxFile ;
+                break;
                 default:
                     echo json_encode(array('error' => __('no action defined')));
                     break;
