@@ -3584,7 +3584,7 @@ msgstr ""
 
 #: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:300
 msgid "There are tables with the same name in the database. Change the table prefix or the database and try again."
-msgstr ""
+msgstr "Hay tablas con el mismo nombre en la base de datos. Cambia el prefijo o la base de datos y prueba de nuevo."
 
 #: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:341
 #: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:344
@@ -3606,9 +3606,8 @@ msgid "Cannot insert basic configuration. Error number: "
 msgstr ""
 
 #: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:584
-#, fuzzy
 msgid "Database information"
-msgstr "Formato de Fecha"
+msgstr "Información de la base de datos"
 
 #: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:589
 #, fuzzy
@@ -3787,7 +3786,7 @@ msgstr "Configuración"
 
 #: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:894
 msgid "OSClass has been installed. Were you expecting more steps? Sorry to disappoint."
-msgstr ""
+msgstr "OSClass se ha instalado. ¿Esperabas más pasos? Sentimos defraudarte."
 
 #: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:895
 #, php-format
@@ -3938,11 +3937,11 @@ msgstr ""
 
 #: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:11
 msgid "Jobs"
-msgstr ""
+msgstr "Trabajos"
 
 #: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:12
 msgid "Animals"
-msgstr ""
+msgstr "Animales"
 
 #: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:13
 msgid "Art - Collectibles"
