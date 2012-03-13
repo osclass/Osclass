@@ -42,7 +42,8 @@ class TestOfInstaller extends WebTestCase {
         echo "<div style='background-color: green; color: white;'><h2>testInstaller1</h2></div>";
         echo "<div style='background-color: green; color: white;padding-left:15px;'>testInstaller1</div>";
         flush();
-       
+        $this->clean();
+        
         $config_file = ABS_PATH . "config.php";
         if( !file_exists($config_file) ) {
             $this->can_continue = true;
@@ -71,7 +72,7 @@ class TestOfInstaller extends WebTestCase {
             $this->selenium->click("createdb");
             $this->selenium->type("admin_username", $db_user);
             $this->selenium->type("admin_password", $db_pass);
-            $this->selenium->type("tableprefix", "test_es_");
+            $this->selenium->type("tableprefix", "test_");
             $this->selenium->click("submit");
             $this->selenium->waitForPageToLoad("30000");
 
@@ -100,9 +101,6 @@ class TestOfInstaller extends WebTestCase {
             $this->selenium->waitForPageToLoad("30000");
             // step 5
             $this->assertTrue($this->selenium->isTextPresent("OSClass se ha instalado."), "OSClass has NOT been installed!");
-            
-            //REMOVE config.php to start again
-            unlink(ABS_PATH . "config.php");
         } else {
             echo "<div style='background-color: red; color: white;padding-left:15px;'>$config_file EXIST, CANNOT INSTALL OSCLASS IF EXIST</div>";
             $this->can_continue = false;
@@ -120,6 +118,7 @@ class TestOfInstaller extends WebTestCase {
         echo "<div style='background-color: green; color: white;'><h2>testInstaller1</h2></div>";
         echo "<div style='background-color: green; color: white;padding-left:15px;'>testInstaller1</div>";
         flush();
+        $this->clean();
        
         $config_file = ABS_PATH . "config.php";
         if( !file_exists($config_file) ) {
@@ -183,6 +182,17 @@ class TestOfInstaller extends WebTestCase {
             $this->can_continue = false;
         }
     }
+    
+    
+    function clean() {
+        require('config_test.php');
+        // DROP DATABASE
+        $mysqli = new mysqli($db_host, $db_user, $db_pass);
+        $mysqli->query("DROP DATABASE ".$db_name);
+        // REMOVE config.php file
+        unlink(ABS_PATH . "config.php");
+    }
+    
 }
 ?>
 
