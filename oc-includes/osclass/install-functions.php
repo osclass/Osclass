@@ -636,7 +636,7 @@ function display_database_config() {
             <tbody>
                 <tr>
                     <th></th>
-                    <td><input type="checkbox" id="createdb" name="createdb" onclick="db_admin();" value="1" /><label for="createdb"><?php _e('Create DB<'); ?>/label></td>
+                    <td><input type="checkbox" id="createdb" name="createdb" onclick="db_admin();" value="1" /><label for="createdb"><?php _e('Create DB'); ?></label></td>
                     <td class="small"><?php _e('Check here if the database is not created and you want to create it now'); ?></td>
                 </tr>
                 <tr id="admin_username_row">
