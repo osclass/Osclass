@@ -192,12 +192,16 @@
                     }
                     echo '0';
                     return false;
-                    break;
-                    
-                case 'runhook': //Run hooks
-                    $hook = Params::getParam("hook");
-                    switch ($hook) {
+                break;
+                case 'runhook': // run hooks
+                    $hook = Params::getParam('hook');
 
+                    if($hook == '') {
+                        echo json_encode(array('error' => 'hook parameter not defined')) ;
+                        break;
+                    }
+
+                    switch($hook) {
                         case 'item_form':
                             $catId = Params::getParam("catId");
                             if($catId!='') {
@@ -205,30 +209,21 @@
                             } else {
                                 osc_run_hook("item_form");
                             }
-                            break;
-                            
+                        break;
                         case 'item_edit':
                             $catId = Params::getParam("catId");
                             $itemId = Params::getParam("itemId");
                             osc_run_hook("item_edit", $catId, $itemId);
-                            break;
-                            
+                        break;
                         default:
-                            if($hook=='') { return false; } else { osc_run_hook($hook); }
-                            break;
+                            osc_run_hook('ajax_' . $hook);
+                        break;
                     }
-                    break;
-                    
+                break;
                 case 'custom': // Execute via AJAX custom file
                     $ajaxFile = Params::getParam("ajaxfile");
-                    $ajaxType = Params::getParam("type") ;
 
-                    // for versions < 2.4
-                    if( $ajaxType == '' ) {
-                        $ajaxType = 'plugin' ;
-                    }
-
-                    if( $ajaxFile == '' || !in_array($ajaxType, array('theme', 'plugin')) ) {
+                    if($ajaxFile == '') {
                         echo json_encode(array('error' => 'no action defined'));
                         break ;
                     }
@@ -239,21 +234,12 @@
                         break ;
                     }
 
-                    switch($ajaxType) {
-                        case('theme'):
-                            $path = osc_themes_path() ;
-                        break;
-                        case('plugin'):
-                            $path = osc_plugins_path() ;
-                        break;
-                    }
-
-                    if( !file_exists($path . $ajaxFile) ) {
+                    if( !file_exists(osc_plugins_path() . $ajaxFile) ) {
                         echo json_encode(array('error' => "ajaxFile doesn't exist"));
                         break;
                     }
 
-                    require_once $path . $ajaxFile ;
+                    require_once osc_plugins_path() . $ajaxFile ;
                 break;
                 default:
                     echo json_encode(array('error' => __('no action defined')));
