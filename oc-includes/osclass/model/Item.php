@@ -80,7 +80,7 @@
                 'b_spam',
                 's_secret',
                 'b_show_email',
-                'd_expiration'
+                'dt_expiration'
             );
             $this->setFields($array_fields) ;
         }
