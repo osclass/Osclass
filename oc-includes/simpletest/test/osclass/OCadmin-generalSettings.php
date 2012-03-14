@@ -12,7 +12,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * Logout.
      */
 
-    /*function testCrontab()
+    function testCrontab()
     {
         $uSettings = new utilSettings();
         
@@ -39,14 +39,14 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->assertEqual($cron, $this->selenium->getValue("auto_cron"), "Cron tab, check values/ preference values.");
         
         unset($uSettings);
-    }*/
+    }
     
     /*
      * Login oc-admin
      * Update all inputs and check if change has been saved, update old configuration and check again.
      * Logout
      */
-    /*function testMediatab()
+    function testMediatab()
     {
         $uSettings = new utilSettings();
         
@@ -103,7 +103,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->assertEqual( $this->selenium->getValue('dimPreview')     , $dimPreview);
         $this->assertEqual( $this->selenium->getValue('dimNormal')      , $dimNormal);
         $this->assertEqual( $this->selenium->getValue('keep_original_image'), 'on');
-    }*/
+    }
     
     /*
      * Login oc-admin
@@ -111,7 +111,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * update configuration and check and set old configuration again and check.
      * Logout.
      */
-    /*function testMailServer()
+    function testMailServer()
     {
         $uSettings = new utilSettings();
         
@@ -176,7 +176,7 @@ class OCadmin_generalSettings extends OCadminTest {
         
         unset($pref);
         unset($uSettings);
-    }*/
+    }
     
     /*
      * Login oc-admin
@@ -198,26 +198,40 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->click("link=Settings");
         $this->selenium->click("link=Spam and bots");
         $this->selenium->waitForPageToLoad("10000");
+        
+        // AKISMET
 
         $this->selenium->type('akismetKey'          , '9f18f856aa3c');
-        $this->selenium->type('recaptchaPrivKey'    , '1234567890');
-        $this->selenium->type('recaptchaPubKey'     , '1234567890');
-        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->click("//input[@id='submit_akismet']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("Your Akismet key has been updated") ,"Can't update the Akismet Key. ERROR");
-        $this->assertEqual( $this->selenium->getValue('akismetKey')         , '1234567890', 'Spam&Bots, akismet key');
-        $this->assertEqual( $this->selenium->getValue('recaptchaPrivKey')   , '1234567890', 'Spam&Bots, recaptcha private key');
-        $this->assertEqual( $this->selenium->getValue('recaptchaPubKey')    , '1234567890', 'Spam&Bots, recaptcha public key');
+        $this->assertEqual( $this->selenium->getValue('akismetKey')         , '9f18f856aa3c', 'Spam&Bots, akismet key');
 
         $this->selenium->type('akismetKey'          , $pref['akismet_key']);
-        $this->selenium->type('recaptchaPrivKey'    , $pref['recaptchaPrivKey']);
-        $this->selenium->type('recaptchaPubKey'     , $pref['recaptchaPubKey']);
-        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->click("//input[@id='submit_akismet']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("Your Akismet key has been cleared") ,"Can't update the Akismet Key. ERROR");
         $this->assertEqual( $this->selenium->getValue('akismetKey')         , $pref['akismet_key'] , 'Spam&Bots, akismet key');
+        
+        // RECAPTCHA
+        
+        $this->selenium->type('recaptchaPrivKey'    , '1234567890');
+        $this->selenium->type('recaptchaPubKey'     , '1234567890');
+        $this->selenium->click("//input[@id='submit_recaptcha']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("Your reCAPTCHA key has been updated") ,"Can't update the reCAPTCHA Key. ERROR");
+        $this->assertEqual( $this->selenium->getValue('recaptchaPrivKey')   , '1234567890', 'Spam&Bots, recaptcha private key');
+        $this->assertEqual( $this->selenium->getValue('recaptchaPubKey')    , '1234567890', 'Spam&Bots, recaptcha public key');
+
+        $this->selenium->type('recaptchaPrivKey'    , $pref['recaptchaPrivKey']);
+        $this->selenium->type('recaptchaPubKey'     , $pref['recaptchaPubKey']);
+        $this->selenium->click("//input[@id='submit_recaptcha']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("Your reCAPTCHA key has been cleared") ,"Can't update the reCAPTCHA Key. ERROR");
         $this->assertEqual( $this->selenium->getValue('recaptchaPrivKey')   , $pref['recaptchaPrivKey'] , 'Spam&Bots, recaptcha private key');
         $this->assertEqual( $this->selenium->getValue('recaptchaPubKey')    , $pref['recaptchaPubKey'] , 'Spam&Bots, recaptcha public key');
         
@@ -231,7 +245,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * Set rewrite, and check
      * Logout
      */
-    /*function testPermalinks()
+    function testPermalinks()
     {
         $uSettings = new utilSettings();
 
@@ -265,52 +279,8 @@ class OCadmin_generalSettings extends OCadminTest {
         
         unset($pref);
         unset($uSettings);
-    }*/
+    }
     
-    /*
-     * Login oc-admin
-     * GeneralSettings -> contact
-     * set enabled attachment, check
-     * Logout
-     */
-    /*function testContact()
-    {
-        $uSettings = new utilSettings();
-        
-        $pref = array();
-        $pref['contact_attachment'] = Preference::newInstance()->findValueByName('contact_attachment') ;
-        if($pref['contact_attachment'] == 1){ $pref['contact_attachment'] = 'on';} else { $pref['contact_attachment'] = 'off'; }
-
-        $this->loginWith();
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Settings");
-        $this->selenium->click("link=Contact");
-        $this->selenium->waitForPageToLoad("10000");
-        $this->assertEqual( $this->selenium->getValue('enabled_attachment'), $pref['contact_attachment'] , 'Contact, check.') ;
-
-        $this->selenium->click("enabled_attachment");
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->assertTrue( $this->selenium->isTextPresent("Contact configuration has been updated") , 'Contact, check.');
-
-        if( $pref['contact_attachment'] == 'on' ) {
-            $this->assertEqual( $this->selenium->getValue('enabled_attachment'), 'off', 'Contact, check.' ) ;
-        } else {
-            $this->assertEqual( $this->selenium->getValue('enabled_attachment'), 'on', 'Contact, check.' ) ;
-        }
-
-        $this->selenium->click("enabled_attachment");
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->assertTrue( $this->selenium->isTextPresent("Contact configuration has been updated") , 'Contact, check.');
-        $this->assertEqual( $this->selenium->getValue('enabled_attachment'), $pref['contact_attachment'], 'Contact, check.' ) ;
-        
-        unset($uSettings);
-        unset($pref);
-    }*/
-
     /*
      * Login oc-admin
      * GeneralSettings -> Comments
@@ -318,7 +288,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * Logout
      * 
      */
-    /*function testComments()
+    function testComments()
     {
         $uSettings = new utilSettings();
         $pref = array();
@@ -397,7 +367,7 @@ class OCadmin_generalSettings extends OCadminTest {
         
         unset($pref);
         unset($uSettings);
-    }*/
+    }
     
     private function getPreferencesGeneralSettings()
     {
@@ -413,6 +383,8 @@ class OCadmin_generalSettings extends OCadminTest {
         $pref['num_rss_items']  = Preference::newInstance()->findValueByName('num_rss_items') ;
         $pref['tf']             = Preference::newInstance()->findValueByName('timeFormat') ;
         $pref['max_latest_items_at_home']  = Preference::newInstance()->findValueByName('maxLatestItems@home') ;
+        $pref['contact_attachment'] = Preference::newInstance()->findValueByName('contact_attachment') ;
+        if($pref['contact_attachment'] == 1){ $pref['contact_attachment'] = 'on';} else { $pref['contact_attachment'] = 'off'; }
         unset($uSettings);  
         return $pref;
     }
@@ -423,14 +395,14 @@ class OCadmin_generalSettings extends OCadminTest {
      * update settings, and check
      * Logout
      */
-    /*function testGeneralSettings()
+    function testGeneralSettings()
     {
         $pref = $this->getPreferencesGeneralSettings();
         
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Settings");
-        $this->selenium->click("link=General settings");
+        $this->selenium->click("link=General");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->type("pageTitle"   ,"New title web");
@@ -442,7 +414,9 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->type("max_latest_items_at_home" , "20");
         $this->selenium->click("m/d/Y");
         $this->selenium->click("H:i");
-
+        $this->assertEqual( $this->selenium->getValue('enabled_attachment'), $pref['contact_attachment'] , 'Contact, check.') ;
+        $this->selenium->click("enabled_attachment");
+        
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
@@ -457,8 +431,14 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->assertEqual( $this->selenium->getValue('max_latest_items_at_home')       , '20'  , 'GeneralSettings, check.' ) ;
         $this->assertEqual( $this->selenium->getValue('timeFormat')    , "H:i"          , 'GeneralSettings, check.') ;
 
+        if( $pref['contact_attachment'] == 'on' ) {
+            $this->assertEqual( $this->selenium->getValue('enabled_attachment'), 'off', 'Contact, check.' ) ;
+        } else {
+            $this->assertEqual( $this->selenium->getValue('enabled_attachment'), 'on', 'Contact, check.' ) ;
+        }
+
         $this->selenium->click("link=Settings");
-        $this->selenium->click("link=General settings");
+        $this->selenium->click("link=General");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->type("pageTitle"   , $pref['pageTitle']);
         $this->selenium->type("contactEmail", $pref['contactEmail']);
@@ -469,6 +449,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->type("max_latest_items_at_home" , $pref['max_latest_items_at_home'] ) ;
         $this->selenium->click($pref['df']);
         $this->selenium->click($pref['tf']);
+        $this->selenium->click("enabled_attachment");
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
         
@@ -482,6 +463,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->assertEqual( $this->selenium->getValue('num_rss_items') , $pref['num_rss_items']  , 'GeneralSettings, check.') ;
         $this->assertEqual( $this->selenium->getValue('timeFormat')    , $pref['tf']             , 'GeneralSettings, check.') ;
         $this->assertEqual( $this->selenium->getValue('max_latest_items_at_home') , $pref['max_latest_items_at_home']  , 'GeneralSettings, check.') ;
+        $this->assertEqual( $this->selenium->getValue('enabled_attachment'), $pref['contact_attachment'], 'Contact, check.' ) ;
     }
 
     /*
@@ -490,7 +472,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * Add & edit & delete locations 
      * Logout
      */
-    /*function testLocationsGEO()
+    function testLocationsGEO()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -523,7 +505,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete Country" ) ;
 
-    }*/
+    }
 
     /*
      * Login oc-admin
@@ -533,7 +515,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * delete country
      * Logout
      */
-    /*function testLocationsNEW()
+    function testLocationsNEW()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -608,7 +590,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div[1]/div/a[1]");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete Country" ) ;
-    }*/
+    }
 
     /*
      * Login oc-admin
@@ -617,7 +599,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * edit country/region/city test location already exist
      * Logout
      */
-    /*function testLocationsNEWForceError()
+    function testLocationsNEWForceError()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -746,7 +728,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete Country" ) ;
 
-    }*/
+    }
         
     /*
      * Login oc-admin
@@ -754,7 +736,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * edit & delete the currency
      * Logout
      */
-    /*function testCurrency()
+    function testCurrency()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -806,7 +788,7 @@ class OCadmin_generalSettings extends OCadminTest {
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete a currency" ) ;
         $this->assertTrue( !$this->selenium->isTextPresent("regexp:Indian_Rupee") , "Can't delete a currency" ) ;
-    }*/
+    }
 
     /*
      * Login oc-admin
@@ -814,7 +796,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * Delete 
      * Logout
      */
-    /*function testAddCurrencyTwice()
+    function testAddCurrencyTwice()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -867,6 +849,6 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete a currency" ) ;
-    }*/
+    }
 }
 ?>

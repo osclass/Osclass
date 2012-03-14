@@ -21,16 +21,17 @@ abstract class OCadminTest extends WebTestCase {
         include 'config_test.php';
         
         $this->_adminUser = "testadmin";
-        $this->_email    = $email_admin;
+        $this->_email    = "testing+testadmin@osclass.org";
         $this->_password = $password_admin;
         
-        /*Admin::newInstance()->insert(array(
+        Admin::newInstance()->delete(array('s_email' => $this->_email));
+        Admin::newInstance()->insert(array(
             's_name' => 'Test Admin',
             's_username' => 'testadmin',
             's_password' => sha1($this->_password),
             's_secret' => 'mvqdnrpt',
             's_email' => $this->_email
-        ));*/
+        ));
         
 
         $this->selenium = new Testing_Selenium( $browser, "http://localhost/");
@@ -41,8 +42,7 @@ abstract class OCadminTest extends WebTestCase {
     function tearDown()
     {
         $this->selenium->stop();
-        $admin = Admin::newInstance()->findByEmail($this->_email);
-        //Admin::newInstance()->delete(array('pk_i_id' =>$admin['pk_i_id']));
+        Admin::newInstance()->delete(array('s_email' => $this->_email));
     }
     
     /*
