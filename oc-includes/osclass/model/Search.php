@@ -1189,7 +1189,7 @@
                     // t_category.b_enabled is not longer needed
                     
                     // ( oc_t_item_location.s_city LIKE '%barcelona%'  || oc_t_item_location.s_city LIKE '%girona%'  )
-                } else if(preg_match_all('/('.DB_TABLE_PREFIX.'t_item_location.s_city\s*LIKE\s*\'%([\s*|[\p{L}][\p{L}]*)%\'\s*)/', $condition, $matches) ) {
+                } else if(preg_match_all('/('.DB_TABLE_PREFIX.'t_item_location.s_city\s*LIKE\s*\'%([\p{L}][\p{L}]*(\s*[\p{L}][\p{L}]*)*)%\'\s*)/', $condition, $matches) ) {
                     print_r($matches);
                     $aData['s_city'] = $matches[2];
                     
