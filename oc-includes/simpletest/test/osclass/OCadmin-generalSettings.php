@@ -12,7 +12,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * Logout.
      */
 
-    function testCrontab()
+    /*function testCrontab()
     {
         $uSettings = new utilSettings();
         
@@ -46,7 +46,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * Update all inputs and check if change has been saved, update old configuration and check again.
      * Logout
      */
-    function testMediatab()
+    /*function testMediatab()
     {
         $uSettings = new utilSettings();
         
@@ -111,7 +111,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * update configuration and check and set old configuration again and check.
      * Logout.
      */
-    function testMailServer()
+    /*function testMailServer()
     {
         $uSettings = new utilSettings();
         
@@ -184,7 +184,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * Set akismet, recaptcha, check modifications
      * Logout
      */
-    function testSpamAndBots()
+    /*function testSpamAndBots()
     {
         $uSettings = new utilSettings();
         
@@ -245,7 +245,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * Set rewrite, and check
      * Logout
      */
-    function testPermalinks()
+    /*function testPermalinks()
     {
         $uSettings = new utilSettings();
 
@@ -288,7 +288,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * Logout
      * 
      */
-    function testComments()
+    /*function testComments()
     {
         $uSettings = new utilSettings();
         $pref = array();
@@ -395,7 +395,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * update settings, and check
      * Logout
      */
-    function testGeneralSettings()
+    /*function testGeneralSettings()
     {
         $pref = $this->getPreferencesGeneralSettings();
         
@@ -472,7 +472,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * Add & edit & delete locations 
      * Logout
      */
-    function testLocationsGEO()
+    /*function testLocationsGEO()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -515,7 +515,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * delete country
      * Logout
      */
-    function testLocationsNEW()
+    /*function testLocationsNEW()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -599,7 +599,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * edit country/region/city test location already exist
      * Logout
      */
-    function testLocationsNEWForceError()
+    /*function testLocationsNEWForceError()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
