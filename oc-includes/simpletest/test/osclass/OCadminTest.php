@@ -23,8 +23,15 @@ abstract class OCadminTest extends WebTestCase {
         $this->_adminUser = "testadmin";
         $this->_email    = $email_admin;
         $this->_password = $password_admin;
-        $conn = getConnection();
-        $conn->osc_dbExec(sprintf("INSERT INTO `%st_admin` (`s_name` ,`s_username` ,`s_password` ,`s_secret` ,`s_email`) VALUES ('Test Admin','testadmin','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8','mvqdnrpt','".$this->_email."')", DB_TABLE_PREFIX));
+        
+        /*Admin::newInstance()->insert(array(
+            's_name' => 'Test Admin',
+            's_username' => 'testadmin',
+            's_password' => sha1($this->_password),
+            's_secret' => 'mvqdnrpt',
+            's_email' => $this->_email
+        ));*/
+        
 
         $this->selenium = new Testing_Selenium( $browser, "http://localhost/");
         $this->selenium->start();
@@ -35,7 +42,7 @@ abstract class OCadminTest extends WebTestCase {
     {
         $this->selenium->stop();
         $admin = Admin::newInstance()->findByEmail($this->_email);
-        Admin::newInstance()->delete(array('pk_i_id' =>$admin['pk_i_id']));
+        //Admin::newInstance()->delete(array('pk_i_id' =>$admin['pk_i_id']));
     }
     
     /*
