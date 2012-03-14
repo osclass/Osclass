@@ -258,11 +258,11 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('last_version_check', time());
         osc_set_preference('update_core_json', '');
         
-        $update_d_expiration = sprintf('update %st_item as a 
+        $update_dt_expiration = sprintf('update %st_item as a 
                     left join %st_category  as b on b.pk_i_id = a.fk_i_category_id
-                    set a.d_expiration = date_add(a.dt_pub_date, INTERVAL b.i_expiration_days DAY) 
+                    set a.dt_expiration = date_add(a.dt_pub_date, INTERVAL b.i_expiration_days DAY) 
                     where b.i_expiration_days > 0', DB_TABLE_PREFIX, DB_TABLE_PREFIX );
-        $comm->query( $update_d_expiration ) ;
+        $comm->query( $update_dt_expiration ) ;
       
         // we need populate location table stats
         $rs = $comm->query( sprintf('SELECT pk_c_code FROM %st_country', DB_TABLE_PREFIX) );

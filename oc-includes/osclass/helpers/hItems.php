@@ -246,8 +246,8 @@
      *
      * @return string
      */
-    function osc_item_d_expiration() {
-        return (string) osc_item_field("d_expiration");
+    function osc_item_dt_expiration() {
+        return (string) osc_item_field("dt_expiration");
     }
 
     /**
@@ -419,7 +419,7 @@
         if( osc_item_is_premium() ) {
             return false;
         } else {
-            return osc_isExpired(osc_item_d_expiration());
+            return osc_isExpired(osc_item_dt_expiration());
         }
     }
     
