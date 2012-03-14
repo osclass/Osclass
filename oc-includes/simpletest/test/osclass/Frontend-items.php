@@ -13,7 +13,7 @@ class Frontend_items extends FrontendTest {
      */
     function testItems_noUser()
     {
-        include 'itemData.php';
+        require 'ItemData.php';
         $item = $aData[0];
         $uSettings = new utilSettings();
         $items_wait_time                  = $uSettings->set_items_wait_time(0);
@@ -68,7 +68,7 @@ class Frontend_items extends FrontendTest {
      */
     function testItems_User()
     {
-        include 'itemData.php';
+        require 'ItemData.php';
         $item = $aData[0];
         
         $uSettings = new utilSettings();

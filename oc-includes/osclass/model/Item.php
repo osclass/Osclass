@@ -79,7 +79,8 @@
                 'b_active',
                 'b_spam',
                 's_secret',
-                'b_show_email'
+                'b_show_email',
+                'd_expiration'
             );
             $this->setFields($array_fields) ;
         }
