@@ -216,7 +216,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item (
     b_spam TINYINT(1) NOT NULL DEFAULT 0,
     s_secret VARCHAR(40) NULL,
     b_show_email TINYINT(1) NULL,
-    d_expiration datetime NOT NULL DEFAULT '9999-12-31 23:59:59',
+    dt_expiration datetime NOT NULL DEFAULT '9999-12-31 23:59:59',
 
         PRIMARY KEY (pk_i_id),
         FOREIGN KEY (fk_i_user_id) REFERENCES /*TABLE_PREFIX*/t_user (pk_i_id),

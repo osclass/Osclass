@@ -562,13 +562,13 @@
             //UPDATE for category
             $res = $this->dao->update($this->getTableName(), $fields, array('pk_i_id' => $pk)) ;
             if($res >= 0) {
-                // update d_expiration (tablel t_item) using category.i_expiration_days
-                $update_d_expiration = sprintf('update %st_item as a 
+                // update dt_expiration (tablel t_item) using category.i_expiration_days
+                $update_dt_expiration = sprintf('update %st_item as a 
                     left join %st_category  as b on b.pk_i_id = a.fk_i_category_id
-                    set a.d_expiration = date_add(a.dt_pub_date, INTERVAL b.i_expiration_days DAY) 
+                    set a.dt_expiration = date_add(a.dt_pub_date, INTERVAL b.i_expiration_days DAY) 
                     where a.fk_i_category_id = %d', DB_TABLE_PREFIX, DB_TABLE_PREFIX, $pk );
                 // end update
-                $this->dao->query($update_d_expiration);
+                $this->dao->query($update_dt_expiration);
                  
                 $affectedRows = $res;
                 
