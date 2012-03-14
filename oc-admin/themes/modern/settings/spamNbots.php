@@ -72,7 +72,7 @@
                                 </div>
                             </div>
                             <div class="actions">
-                                <input type="submit" value="<?php osc_esc_html( _e('Save changes') ) ; ?>" />
+                                <input type="submit" id="submit_akismet" value="<?php osc_esc_html( _e('Save changes') ) ; ?>" />
                             </div>
                         </fieldset>
                     </form>
@@ -99,7 +99,7 @@
                                 </div>
                             </div>
                             <div class="actions">
-                                <input type="submit" value="<?php osc_esc_html( _e('Save changes') ) ; ?>" />
+                                <input type="submit" id="submit_recaptcha" value="<?php osc_esc_html( _e('Save changes') ) ; ?>" />
                             </div>
                             <?php if( osc_recaptcha_public_key() != '' ) { ?>
                             <p class="text">
