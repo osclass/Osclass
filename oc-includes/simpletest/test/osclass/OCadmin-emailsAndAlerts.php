@@ -14,7 +14,7 @@ class OCadmin_emailsAndAlerts extends OCadminTest {
         
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Emails & Alerts");
-        $this->selenium->click("link=» Manage emails & alerts");
+        $this->selenium->click("link=Manage emails & alerts");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("link=Edit"); // edit first email/alert
         $this->selenium->waitForPageToLoad("10000");
