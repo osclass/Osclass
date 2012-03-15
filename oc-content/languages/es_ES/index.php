@@ -23,10 +23,10 @@ function locale_es_ES_info() {
 		'name' => 'Spanish'
 		,'short_name' => 'Spanish'
 		,'description' => 'Spanish translation'
-		,'version' => '2.3'
+		,'version' => '2.0'
 		,'author_name' => 'OSClass'
 		,'author_url' => 'http://osclass.org/'
-		,'currency_format' => '{NUMBER} {CURRENCY}'
+		,'currency_format' => 'EUR %.02f'
 		,'date_format' => 'm/d/Y'
 		,'stop_words' => ''
 	);

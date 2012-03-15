@@ -12,9 +12,9 @@ class AllTests extends TestSuite {
         //$this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-customfields.php');    // NOT FINISHED LOT OF FAILS
         
         //$this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-emailsAndAlerts.php');    // NEED DOC
-        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-users.php');    // NEED DOC
-//        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-languages.php');
-//        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-tools.php');              // OK
+        //$this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-users.php');    // NEED DOC HAS BUGS
+        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-languages.php'); // CURRENCY FORMAT HAS CHANGED, NEED TO UPDATE TEST, ALSO NEED TO UPDATE PACKAGE .ZIP
+        //$this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-tools.php');              // OK
 //        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-pages.php');              // OK
 //        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-plugins.php');            // OK        
 //        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-appearance.php');         // OK
