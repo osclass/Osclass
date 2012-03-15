@@ -25,7 +25,7 @@ class OCadmin_emailsAndAlerts extends OCadminTest {
         $body = $this->selenium->getText("//html/body");
         $this->selenium->type("xpath=//html/body[@id='tinymce']", "NEW MAIL TEXT".$body);
         $this->selenium->selectFrame("relative=top");
-        $this->selenium->click("//button[@type='submit']");
+        $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue($this->selenium->isTextPresent("The email/alert has been updated"), "Edit emails and alerts");
     }

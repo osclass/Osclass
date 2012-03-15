@@ -20,7 +20,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Create a new user
      */
-    function testUserInsertbyLink()
+    /*function testUserInsertbyLink()
     {
         $this->loginWith() ;
         $this->insertUserByLink() ;
@@ -31,7 +31,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Edit an user
      */
-    public function testUserEdit()
+    /*public function testUserEdit()
     {
         $this->loginWith() ;
         $this->insertUser() ;
@@ -43,7 +43,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Validations
      */
-    public function testExtraValidations()
+    /*public function testExtraValidations()
     {
         $this->loginWith() ;
         $this->insertUser() ;
@@ -56,7 +56,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Test settings (users enabled, validation,...)
      */
-    public function testSettings()
+    /*public function testSettings()
     {
         $this->loginWith() ;
         $this->settings();
@@ -70,7 +70,7 @@ class OCadmin_users extends OCadminTest {
     {
         $this->selenium->open( osc_admin_base_url(true) ) ;
         $this->selenium->click("link=Users");
-        $this->selenium->click("link=» Add new user");
+        $this->selenium->click("//a[@id='users_new']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->type("s_email"         ,"test@mail.com");
@@ -93,7 +93,7 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->select("cityId"        , "label=Sabadell");
         $this->selenium->select("b_company"     , "label=User");
         
-        $this->selenium->click("//form/input[@id='button_save']");
+        $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The user has been created successfully"),"Create user");
@@ -182,7 +182,7 @@ class OCadmin_users extends OCadminTest {
     {
         $this->selenium->open( osc_admin_base_url(true) ) ;
         $this->selenium->click("link=Users");
-        $this->selenium->click("link=» Add new user");
+        $this->selenium->click("link=Add new user");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("link=Add a new user");
         $this->selenium->waitForPageToLoad("10000");
@@ -220,7 +220,7 @@ class OCadmin_users extends OCadminTest {
     {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Users");
-        $this->selenium->click("link=» Manage users");
+        $this->selenium->click("link=Manage users");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'mail.com')]");
@@ -262,7 +262,7 @@ class OCadmin_users extends OCadminTest {
     {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Users");
-        $this->selenium->click("link=» Manage users");
+        $this->selenium->click("link=Manage users");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'mail.com')]");
@@ -287,7 +287,7 @@ class OCadmin_users extends OCadminTest {
 
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("xpath=//a[text()='Users']");
-        $this->selenium->click("xpath=//li[3]/a[text()='» Settings']");
+        $this->selenium->click("xpath=//li[3]/a[text()='Settings']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("enabled_users");
