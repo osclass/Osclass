@@ -168,11 +168,11 @@
                 $itemId = $this->manager->dao->insertedId();
                 Log::newInstance()->insertLog('item', 'add', $itemId, current(array_values($aItem['title'])), $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
 
-                // update d_expiration at t_item
+                // update dt_expiration at t_item
                 $_category = Category::newInstance()->findByPrimaryKey($aItem['catId']);
-                // update d_expiration 
+                // update dt_expiration 
                 $i_expiration_days = $_category['i_expiration_days'];
-                $d_expiration = Item::newInstance()->updateExpirationDate($itemId, $i_expiration_days);
+                $dt_expiration = Item::newInstance()->updateExpirationDate($itemId, $i_expiration_days);
                 
                 Params::setParam('itemId', $itemId);
 
@@ -394,17 +394,17 @@
                     }
                 }
                 
-                $oldIsExpired = osc_isExpired($old_item['d_expiration']);
+                $oldIsExpired = osc_isExpired($old_item['dt_expiration']);
                 $newIsExpired = $oldIsExpired;
                 
-                $d_expiration = $old_item['d_expiration'];
-                // recalculate d_expiration t_item
+                $dt_expiration = $old_item['dt_expiration'];
+                // recalculate dt_expiration t_item
                 if( $result==1 && $old_item['fk_i_category_id'] != $aItem['catId'] ) {
                     $_category = Category::newInstance()->findByPrimaryKey($aItem['catId']);
-                    // update d_expiration 
+                    // update dt_expiration 
                     $i_expiration_days = $_category['i_expiration_days'];
-                    $d_expiration = Item::newInstance()->updateExpirationDate($aItem['idItem'], $i_expiration_days);
-                    $newIsExpired = osc_isExpired($d_expiration);
+                    $dt_expiration = Item::newInstance()->updateExpirationDate($aItem['idItem'], $i_expiration_days);
+                    $newIsExpired = osc_isExpired($dt_expiration);
                 }
                 
                 // Recalculate stats related with items
@@ -522,7 +522,7 @@
                 if($result == 1) {
                     osc_run_hook( 'activate_item', $id );
                     // b_enabled == 1 && b_active == 1
-                    if($item[0]['b_spam']==0 && !osc_isExpired($item[0]['d_expiration'])) {
+                    if($item[0]['b_spam']==0 && !osc_isExpired($item[0]['dt_expiration'])) {
                         $this->_increaseStats($item[0]);
                     }
                     
@@ -554,7 +554,7 @@
                 if($result == 1) {
                     osc_run_hook( 'deactivate_item', $id );
                     // b_active = 0
-                    if($item['b_enabled']==1 && $item['b_spam']==0 && !osc_isExpired($item['d_expiration'])) {
+                    if($item['b_enabled']==1 && $item['b_spam']==0 && !osc_isExpired($item['dt_expiration'])) {
                         $this->_decreaseStats($item);
                     }
                     return true;
@@ -584,7 +584,7 @@
                 if($result == 1) {
                     osc_run_hook( 'enable_item', $id );
                     // b_enable==1 
-                    if($item['b_active']==1 && $item['b_spam']==0 && !osc_isExpired($item['d_expiration']) ) {
+                    if($item['b_active']==1 && $item['b_spam']==0 && !osc_isExpired($item['dt_expiration']) ) {
                         $this->_increaseStats($item);
                     }
                     return true;
@@ -614,7 +614,7 @@
                 if($result == 1) {
                     osc_run_hook( 'disable_item', $id );
                     
-                    if($item['b_active']==1 && $item['b_spam']==0 && !osc_isExpired($item['d_expiration'])) {
+                    if($item['b_active']==1 && $item['b_spam']==0 && !osc_isExpired($item['dt_expiration'])) {
                        $this->_decreaseStats($item);
                     }
                     return true;
@@ -687,9 +687,9 @@
                     osc_run_hook("item_spam_off", $id);
                 }
                 
-                if($item['b_active']==1 && $item['b_enabled']==1 && !osc_isExpired($item['d_expiration']) && $item['b_spam']==0) {
+                if($item['b_active']==1 && $item['b_enabled']==1 && !osc_isExpired($item['dt_expiration']) && $item['b_spam']==0) {
                     $this->_decreaseStats($item);
-                } else if($item['b_active']==1 && $item['b_enabled']==1 && !osc_isExpired($item['d_expiration']) && $item['b_spam']==1) {
+                } else if($item['b_active']==1 && $item['b_enabled']==1 && !osc_isExpired($item['dt_expiration']) && $item['b_spam']==1) {
                     $this->_increaseStats($item);
                 }
                 

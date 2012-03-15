@@ -246,8 +246,8 @@
      *
      * @return string
      */
-    function osc_item_d_expiration() {
-        return (string) osc_item_field("d_expiration");
+    function osc_item_dt_expiration() {
+        return (string) osc_item_field("dt_expiration");
     }
 
     /**
@@ -419,7 +419,7 @@
         if( osc_item_is_premium() ) {
             return false;
         } else {
-            return osc_isExpired(osc_item_d_expiration());
+            return osc_isExpired(osc_item_dt_expiration());
         }
     }
     
@@ -729,21 +729,31 @@
     }
 
     /**
-     * Gets thumbnail url of current resource
-     *
-     * @return <type>
-     */
-    function osc_resource_thumbnail_url() {
-        return (string) osc_resource_path().osc_resource_id()."_thumbnail.".osc_resource_field("s_extension");
-    }
-
-    /**
      * Gets url of current resource
      *
      * @return string
      */
     function osc_resource_url() {
         return (string) osc_resource_path().osc_resource_id().".".osc_resource_field("s_extension");
+    }
+
+    /**
+     * Gets thumbnail url of current resource
+     *
+     * @return string
+     */
+    function osc_resource_thumbnail_url() {
+        return (string) osc_resource_path().osc_resource_id()."_thumbnail.".osc_resource_field("s_extension");
+    }
+
+    /**
+     * Gets preview url of current resource
+     *
+     * @since 2.3.7
+     * @return string
+     */
+    function osc_resource_preview_url() {
+        return (string) osc_resource_path().osc_resource_id()."_preview.".osc_resource_field("s_extension");
     }
 
     /**

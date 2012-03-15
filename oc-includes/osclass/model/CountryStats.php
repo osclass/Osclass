@@ -80,7 +80,7 @@
         public function increaseNumItems($countryCode) 
         {
             $lenght = strlen($countryCode);
-            if($lenght > 2 || $lenght < 0) {
+            if($lenght > 2 || $lenght=='' ) {
                 return false;
             }
             $sql = sprintf('INSERT INTO %s (fk_c_country_code, i_num_items) VALUES (\'%s\', 1) ON DUPLICATE KEY UPDATE i_num_items = i_num_items + 1', $this->getTableName(), $countryCode);
@@ -99,7 +99,7 @@
         public function decreaseNumItems($countryCode) 
         {
             $lenght = strlen($countryCode);
-            if($lenght > 2 || $lenght < 0) {
+            if($lenght > 2 || $lenght=='' ) {
                 return false;
             }
             $this->dao->select( 'i_num_items' ) ;
@@ -193,7 +193,7 @@
             $sql .= DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id AND ' ;
             $sql .= DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id AND ' ;
             $sql .= DB_TABLE_PREFIX.'t_item.b_active = 1 AND '.DB_TABLE_PREFIX.'t_item.b_enabled = 1 AND '.DB_TABLE_PREFIX.'t_item.b_spam = 0 AND ' ;
-            $sql .= '('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_item.d_expiration >= \''.date('Y-m-d H:i:s').'\' ) AND ' ;
+            $sql .= '('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_item.dt_expiration >= \''.date('Y-m-d H:i:s').'\' ) AND ' ;
             $sql .= DB_TABLE_PREFIX.'t_category.b_enabled = 1 ' ;
 
             $return = $this->dao->query($sql);

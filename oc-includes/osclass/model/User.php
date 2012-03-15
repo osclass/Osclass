@@ -415,7 +415,7 @@
                 $users['total_results'] = $data['total'] ;
             }
 
-            $rsTotal = $this->dao->query('SELECT COUNT(*) as total FROM oc_t_user') ;
+            $rsTotal = $this->dao->query('SELECT COUNT(*) as total FROM '.$this->getTableName()) ;
             $data   = $rsTotal->row() ;
             if( $data['total'] ) {
                 $users['rows'] = $data['total'] ;
