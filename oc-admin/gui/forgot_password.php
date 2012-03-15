@@ -25,7 +25,7 @@
         <link type="text/css" href="style/backoffice_login.css" media="screen" rel="stylesheet" />
     </head>
 
-    <body class="login">
+    <body class="forgot">
         <div id="login">
             <h1>
                 <a href="<?php echo osc_base_url() ; ?>" title="OSClass">
@@ -33,7 +33,7 @@
                 </a>
             </h1>
             <?php osc_show_flash_message('admin') ; ?>
-            <div class="message warning" style="text-align:center;">
+            <div class="message warning">
                 <?php _e('Type your new password') ; ?>.
             </div>
 
@@ -43,15 +43,15 @@
                         <input type="hidden" name="adminId" value="<?php echo Params::getParam('adminId'); ?>" />
                         <input type="hidden" name="code" value="<?php echo Params::getParam('code'); ?>" />
                             <p>
-                                <label for="new_email">
-                                    <?php _e('New pasword', 'modern') ; ?>
-                                    <input id="user_pass" type="password" name="new_password" value="" />
+                                <label for="new_password">
+                                    <span><?php _e('New pasword', 'modern') ; ?></span>
+                                    <input id="new_password" type="password" name="new_password" value="" />
                                 </label>
                             </p>
                             <p>
-                                <label for="new_email">
-                                    <?php _e('Repeat new pasword', 'modern') ; ?>
-                                    <input id="user_pass" type="password" name="new_password2" value="" />
+                                <label for="new_password2">
+                                    <span><?php _e('Repeat new pasword', 'modern') ; ?></span>
+                                    <input id="new_password2" type="password" name="new_password2" value="" />
                                 </label>
                             </p>
                             <p class="submit">
@@ -65,5 +65,18 @@
 
         </div>
         <p id="backtoblog"><a href="<?php echo osc_base_url() ; ?>" title="<?php _e('Back to') . ' ' . osc_page_title() ; ?>">&larr; <?php _e('Back to') ; ?> <?php echo osc_page_title() ; ?></a></p>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#new_password, #new_password2').focus(function(){
+                        $(this).prev().hide();
+                }).blur(function(){
+                    if($(this).val() == '') {
+                        $(this).prev().show();
+                    }
+                }).prev().click(function(){
+                    $(this).hide();
+                });
+            });
+        </script>
     </body>
 </html>

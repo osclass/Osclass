@@ -37,14 +37,14 @@
                 <input type="hidden" name="action" value="login_post" />
                 <p>
                     <label>
-                        <?php _e('Username') ; ?>
-                        <input type="text" name="user" id="user_login" class="input" value="<?php if( defined('DEMO') ) echo 'admin' ; ?>" size="20" tabindex="10" />
+                        <span>Username</span>
+                        <input type="text" name="user" id="user_login" class="input" value="<?php if( defined('DEMO') ){ echo 'admin'; } ?>" size="20" tabindex="10" />
                     </label>
                 </p>
                 <p>
                     <label>
-                        <?php _e('Password') ; ?>
-                        <input type="password" name="password" id="user_pass" class="input" value="<?php if( defined('DEMO') ) echo 'admin' ; ?>" size="20" tabindex="20" />
+                        <span>Password</span>
+                        <input type="password" name="password" id="user_pass" class="input" value="<?php if( defined('DEMO') ) { echo 'admin'; }?>" size="20" tabindex="20" />
                     </label>
                 </p>
 
@@ -79,9 +79,23 @@
         </div>
         <p id="backtoblog"><a href="<?php echo osc_base_url() ; ?>" title="<?php _e('Back to') . ' ' . osc_page_title() ; ?>">&larr; <?php _e('Back to') ; ?> <?php echo osc_page_title() ; ?></a></p>
         <script type="text/javascript">
-            try{
-                document.getElementById('user_login').focus();
-            }catch(e){}
+            $(document).ready(function(){
+                $('#user_login, #user_pass').each(function(){
+                    $(this).focus(function(){
+                        $(this).prev().hide();
+                    }).blur(function(){
+                        if($(this).val() == '') {
+                            $(this).prev().show();
+                        }
+                    }).prev().click(function(){
+                        $(this).hide().next().focus();
+                    });
+                    if($(this).val() != ''){
+                        $(this).prev().hide();
+                    }
+                });
+
+            });
         </script>
     </body>
 </html>
