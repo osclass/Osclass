@@ -746,17 +746,16 @@ class OCadmin_generalSettings extends OCadminTest {
 
         $this->selenium->click("link=Add");
 
-        $this->selenium->click("button_open");
         $this->selenium->waitForPageToLoad("30000");
 
-        $this->selenium->type("code", "INR");
-        $this->selenium->type("name", "Indian Rupee");
-        $this->selenium->type("description", "Indian Rupee र");
+        $this->selenium->type("pk_c_code", "INR");
+        $this->selenium->type("s_name", "Indian Rupee");
+        $this->selenium->type("s_description", "Indian Rupee र");
 
-        $this->selenium->click("//input[@id='button_save' and @value='Create']");
+        $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:New currency has been added") , "Can't add a currency" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Currency added") , "Add currency" ) ;
 
         // edit
         $this->selenium->open( osc_admin_base_url(true) );
@@ -764,30 +763,27 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->click("link=Currencies");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'INR')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/div/a[text()='Edit']");
-        $this->selenium->waitForPageToLoad("10000");
-        
-        $this->selenium->type("name", "Indian_Rupee");
-        $this->selenium->type("description", "Indian_Rupee र");
-
-        $this->selenium->click("//input[@id='button_save' and @value='Edit']");
+        $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/small/a[text()='Edit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:Currency has been updated") , "Can't edit a currency" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:Indian_Rupee") , "Can't edit a currency" ) ;
+        $this->selenium->type("s_name", "Indian_Rupee");
+        $this->selenium->type("s_description", "Indian_Rupee र");
+
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("Currency updated") , "Edit currency" ) ;
         // delete
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Settings");
         $this->selenium->click("link=Currencies");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'INR')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/div/a[text()='Delete']");
+        $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/small/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete a currency" ) ;
-        $this->assertTrue( !$this->selenium->isTextPresent("regexp:Indian_Rupee") , "Can't delete a currency" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("One currency has been deleted") , "Delete currency" ) ;
+        $this->assertTrue( !$this->selenium->isTextPresent("Indian_Rupee") , "Delete currency" ) ;
     }
 
     /*
@@ -806,17 +802,16 @@ class OCadmin_generalSettings extends OCadminTest {
 
         $this->selenium->click("link=Add");
 
-        $this->selenium->click("button_open");
         $this->selenium->waitForPageToLoad("30000");
 
-        $this->selenium->type("code", "INR");
-        $this->selenium->type("name", "Indian Rupee");
-        $this->selenium->type("description", "Indian Rupee र");
+        $this->selenium->type("pk_c_code", "INR");
+        $this->selenium->type("s_name", "Indian Rupee");
+        $this->selenium->type("s_description", "Indian Rupee र");
 
-        $this->selenium->click("//input[@id='button_save' and @value='Create']");
+        $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:New currency has been added") , "Can't add a currency" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Currency added") , "Add currency" ) ;
 
         // add the same currency again
         // $this->selenium->open( osc_admin_base_url(true) );
@@ -826,17 +821,16 @@ class OCadmin_generalSettings extends OCadminTest {
 
         $this->selenium->click("link=Add");
 
-        $this->selenium->click("button_open");
         $this->selenium->waitForPageToLoad("30000");
 
-        $this->selenium->type("code", "INR");
-        $this->selenium->type("name", "Indian Rupee");
-        $this->selenium->type("description", "Indian Rupee र");
+        $this->selenium->type("pk_c_code", "INR");
+        $this->selenium->type("s_name", "Indian Rupee");
+        $this->selenium->type("s_description", "Indian Rupee र");
 
-        $this->selenium->click("//input[@id='button_save' and @value='Create']");
+        $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:Error: currency couldn't be added") , "Can add existent currency. ERROR" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Currency couldn't be added") , "Add currency twice. ERROR" ) ;
 
          // delete
         $this->selenium->open( osc_admin_base_url(true) );
@@ -844,11 +838,11 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->click("link=Currencies");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'INR')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/div/a[text()='Delete']");
+        $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/small/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete a currency" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("One currency has been deleted") , "Delete currency" ) ;
+        $this->assertTrue( !$this->selenium->isTextPresent("Indian_Rupee") , "Delete currency" ) ;
     }
 }
 ?>

@@ -73,7 +73,7 @@ abstract class OCadminTest extends WebTestCase {
     {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->waitForPageToLoad(10000);
-        $this->selenium->click('link=Log Out');
+        $this->selenium->click('link=Sign out');
         $this->selenium->waitForPageToLoad(10000);
     }
 }
