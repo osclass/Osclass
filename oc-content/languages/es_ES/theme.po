@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: OSClass 2.0\n"
+"Project-Id-Version: OSClass\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-02-24 18:52+0100\n"
 "PO-Revision-Date: \n"
@@ -26,12 +26,6 @@ msgstr "Ha habido un problema con la alerta"
 msgid "Subscribe to this search"
 msgstr "Suscribirse a esta búsqueda"
 
-msgid "Subscribe now!"
-msgstr "¡Suscríbete ahora!"
-
-msgid "Contact with us"
-msgstr "Contacta con nosotros"
-
 msgid "Subject"
 msgstr "Asunto"
 
@@ -40,9 +34,6 @@ msgstr "Mensaje"
 
 msgid "Your name"
 msgstr "Tu nombre"
-
-msgid "(optional)"
-msgstr "(opcional)"
 
 msgid "Your e-mail address"
 msgstr "Tu e-mail"
@@ -248,9 +239,6 @@ msgstr "Contacta con el anunciante"
 msgid "Tel"
 msgstr "Teléfono"
 
-msgid "Your name (optional)"
-msgstr "Tu nombre (opcional)"
-
 msgid "Latest Items"
 msgstr "Últimos anuncios"
 
@@ -400,4 +388,151 @@ msgstr "Las contraseñas no coinciden"
 
 msgid "Create"
 msgstr "Crear"
+
+msgid "New password"
+msgstr "Nueva contraseña"
+
+msgid "Dashboard"
+msgstr "Escritorio"
+
+msgid "Upload"
+msgstr "Subir"
+
+msgid "To make a directory writable under UNIX execute this command from the shell"
+msgstr "Para dar permisos de escritura a un directorio desde UNIX debes ejecutar este comando desde la línea de comandos"
+
+msgid "Latest items"
+msgstr "Últimos anuncios"
+
+msgid "Help"
+msgstr "Ayuda"
+
+msgid "Subscribe now"
+msgstr "Suscríbete ahora"
+
+msgid "Edit your item"
+msgstr "Edita tu anuncio"
+
+msgid "page"
+msgstr "página"
+
+msgid "Show all items"
+msgstr "Mostrar todos los anuncios"
+
+msgid "Create a new account"
+msgstr "Crear una cuenta nueva"
+
+msgid "Manage my items"
+msgstr "Gestionar mis anuncios"
+
+msgid "Manage my alerts"
+msgstr "Gestionar mis alertas"
+
+msgid "Update my profile"
+msgstr "Actualizar mi perfil"
+
+msgid "Change my email"
+msgstr "Cambiar mi email"
+
+msgid "Change my password"
+msgstr "Cambiar mi contraseña"
+
+msgid "Recover my password"
+msgstr "Recuperar mi contraseña"
+
+msgid "Delete your comment"
+msgstr "Elimina tu comentario"
+
+msgid "Enter the words above"
+msgstr "Introduce las palabras abajo"
+
+msgid "Repeat new password"
+msgstr "Repetir contraseña nueva"
+
+msgid "Change password"
+msgstr "Cambiar contraseña"
+
+msgid "This action can not be undone. Are you sure you want to continue?"
+msgstr "Esta acción no se puede deshacer. ¿Estás seguro de que quieres continuar?"
+
+msgid "User type"
+msgstr "Tipo de usuario"
+
+msgid "Invalid email address"
+msgstr "Dirección de correo no válida"
+
+msgid "Modern theme"
+msgstr "Plantilla Moderna"
+
+msgid "Settings theme"
+msgstr "Configuración de la plantilla"
+
+msgid "Image"
+msgstr "Imagen"
+
+msgid "Published date"
+msgstr "Fecha publicación"
+
+msgid "Modified date"
+msgstr "Fecha modificación"
+
+msgid "The preferred size of the logo is 600x100"
+msgstr "Las medidas recomendadas del logo són 600x100"
+
+msgid "Logo image"
+msgstr "Imagen logo"
+
+msgid "Remove logo"
+msgstr "Eliminar logo"
+
+msgid "Has not uploaded any logo image"
+msgstr "No ha subido ninguna imagen de logo"
+
+msgid "The images folder %s is not writable on your server"
+msgstr "La carpeta de imagenes %s no tiene permisos para escribir en tú servidor"
+
+msgid "OSClass can't upload logo image from the administration panel"
+msgstr "OSClass no puede subir la imagen de logo desde el panel de administración"
+
+msgid "Please make the mentioned images folder writable"
+msgstr "Por favor dé permisos de escritura a la mencionada carpeta de imagenes"
+
+msgid "Contact us"
+msgstr "Contáctanos"
+
+msgid "Error"
+msgstr "Error"
+
+msgid "No file selected"
+msgstr "Fichero no seleccionado"
+
+msgid "Choose File"
+msgstr "Escoge Fichero"
+
+msgid "Sponsored ad"
+msgstr "Destacado"
+
+msgid "View item"
+msgstr "Ver anuncio"
+
+msgid "Note: Uploading another logo will overwrite current logo"
+msgstr "Aviso: Cargar un logo nuevo supone la eliminación del actual"
+
+msgid "The item is expired. You cannot contact the publisher."
+msgstr ""
+
+msgid "It's your own item, you cannot contact the publisher."
+msgstr ""
+
+msgid "You must login or register a new free account in order to contact the advertiser"
+msgstr ""
+
+msgid "%s's profile"
+msgstr ""
+
+msgid "Profile"
+msgstr ""
+
+msgid "Full name"
+msgstr ""
 
