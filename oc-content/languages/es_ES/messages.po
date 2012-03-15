@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: OSClass 2.0\n"
+"Project-Id-Version: OSClass\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-02-24 18:52+0100\n"
 "PO-Revision-Date: \n"
@@ -17,17 +17,62 @@ msgstr ""
 msgid "Passwords don't match"
 msgstr "Las contraseñas no coinciden"
 
+msgid "%s has been added as a new country"
+msgstr "El país \"%s\" se ha añadido correctamente"
+
+msgid "%s has been edited"
+msgstr "\"%s\" se ha modificado correctamente"
+
+msgid "%s has been deleted"
+msgstr "\"%s\" se ha eliminado correctamente"
+
+msgid "%s has been added as a new region"
+msgstr "La provincia \"%s\" se ha añadido correctamente"
+
+msgid "%s has been added as a new city"
+msgstr "La ciudad \"%s\" se ha añadido correctamente"
+
+msgid "No currencies have been deleted"
+msgstr "No se ha elininado ninguna moneda"
+
+msgid "One currency has been deleted"
+msgstr "La moneda se ha eliminado correctamente"
+
+msgid "%s currencies have been deleted"
+msgstr "%s monedas se han eliminado correctamente"
+
+msgid "%s has been added as a region of %s"
+msgstr "La región \"%s\" se ha añadido correctamente en %s"
+
+msgid "Archiving successful!"
+msgstr "Backup efecutado correctamente"
+
+msgid "User id isn't in the correct format"
+msgstr "El identificador de usuario no está en el formato correcto"
+
+msgid "One user has been activated"
+msgstr "El usuario se ha activado correctamente"
+
+msgid "%s users have been activated"
+msgstr "%s usuarios se han activado correctamente"
+
+msgid "One user has been deactivated"
+msgstr "El usuario se ha desactivado correctamente"
+
+msgid "%s users have been deactivated"
+msgstr "%s usuarios se han desactivado correctamente"
+
+msgid "One user has been deleted"
+msgstr "El usuario ha sido eliminado correctamente"
+
+msgid "%s users have been deleted"
+msgstr "%s usuarios se han eliminado correctamente"
+
 msgid "Your e-mail has been sent properly. Thank your for contacting us!"
 msgstr "Tu e-mail se ha enviado correctamente. Gracias por contactar con nosotros."
 
-msgid "Users not enable"
-msgstr "Usuarios no habilitados"
-
 msgid "Only registered users are allowed to post items"
 msgstr "Sólo los usuarios registrados pueden publicar anuncios"
-
-msgid "Users not allowed"
-msgstr "Usuarios no permitidos"
 
 msgid "Sorry, we don't have any items with that ID"
 msgstr "Lo sentimos, no existe ningún anuncio con el identificador especificado"
@@ -74,12 +119,6 @@ msgstr "La contraseña es incorrecta"
 msgid "The username doesn't exist"
 msgstr "El nombre de usuario no existe"
 
-msgid "A new password has been sent to your account"
-msgstr "Te hemos enviado un e-mail con tu nueva contraseña"
-
-msgid "The email isn't associated to a valid user. Please, try again"
-msgstr "El e-mail no está asociado a ningún usuario válido. Por favor, inténtalo de nuevo"
-
 msgid "The user has been created. An activation email has been sent"
 msgstr "El usuario se ha creado correctamente. Te hemos enviado un e-mail de activación"
 
@@ -91,9 +130,6 @@ msgstr "El e-mail especificado está ya siendo utilizado"
 
 msgid "Your account has been validated"
 msgstr "Tu cuenta ha sido validada"
-
-msgid "Your account has already been activated"
-msgstr "Tu cuenta ya había sido activada"
 
 msgid "The link is not valid anymore. Sorry for the inconvenience!"
 msgstr "El enlace ya no es válido"
@@ -125,12 +161,6 @@ msgstr "El administrador se ha añadido correctamente"
 msgid "There have been an error adding a new admin"
 msgstr "Ha habido problemas añadiendo un nuevo administrador"
 
-msgid "It doesn't exist an admin with this id"
-msgstr "No existe un administrador con ese identificador"
-
-msgid "There admin doesn't exist"
-msgstr "El administrador no existe"
-
 msgid "Existing username"
 msgstr "El nombre de usuario ya existe"
 
@@ -152,47 +182,14 @@ msgstr "El administrador se ha borrado correctamente"
 msgid "The admin couldn't be deleted"
 msgstr "El administrador no se ha podido eliminar"
 
-msgid "The category has been added"
-msgstr "La categoría se ha añadido correctamente"
-
-msgid "Error: "
-msgstr "Error:"
-
-msgid "The category has been updated."
-msgstr "La categoría se ha modificado correctamente"
-
-msgid "The categories have been deleted"
-msgstr "Las categorías se han borrado correctamente"
-
-msgid "The category has been enabled"
-msgstr "La categoría se ha activado correctamente"
-
-msgid "The category has been disabled"
-msgstr "La categoría se ha desactivado correctamente"
-
-msgid "There was a problem with this page. The ID for the category hasn't been set"
-msgstr "Ha habido un problema con esta página. El identificador de la categoria no se ha podido añadir"
-
-msgid "The categories have been enabled"
-msgstr "Las categorías se han activado correctamente"
-
-msgid "The selected categories have been disabled"
-msgstr "Las categorías han sido desactivadas correctamente"
-
 msgid "The comments have been deleted"
 msgstr "Los comentarios han sido eliminados correctamente"
 
 msgid "The comments have been approved"
 msgstr "Los comentarios han sido aprovados correctamente"
 
-msgid "The comments have been unapproved"
-msgstr "Los comentarios han sido desactivados correctamente"
-
 msgid "The comment has been approved"
 msgstr "El comentario ha sido aprobado correctamente"
-
-msgid "The comment has been unapproved"
-msgstr "El comentario ha sido desactivado correctamente"
 
 msgid "Great! We just updated your comment"
 msgstr "El comentario se ha modificado correctamente"
@@ -203,21 +200,6 @@ msgstr "La alerta ha sido modificada correctamente"
 msgid "You can't repeat internal name"
 msgstr "El nombre interno especificado ya está siendo utilizando. Inténtalo de nuevo utilizando un nombre diferente"
 
-msgid "The items have been activated"
-msgstr "Los anuncios se han activado correctamente"
-
-msgid "The items have been deactivated"
-msgstr "Los anuncios se han desactivado correctamente"
-
-msgid "The items have been marked as premium"
-msgstr "Los anuncios se han destacado correctamente"
-
-msgid "The changes have been made"
-msgstr "Los cambios se han guardado correctamente"
-
-msgid "The items have been deleted"
-msgstr "Los anuncios se han borrado correctamente"
-
 msgid "The item has been activated"
 msgstr "El anuncio se ha activado correctamente"
 
@@ -227,14 +209,8 @@ msgstr "Los cambios se han aplicado correctamente"
 msgid "A new item has been added"
 msgstr "Se ha añadido un nuevo anuncio"
 
-msgid "The item can't be added"
-msgstr "El anuncio no se ha podido añadir"
-
 msgid "The language has been installed correctly"
 msgstr "El idioma se ha instalado correctamente"
-
-msgid "There was a problem adding the language. Please, try again. If the problem persists, install it manually via FTP/SSH."
-msgstr "Ha habido un problema añadiendo el idioma. Por favor, inténtalo de nuevo. Si el problema continua lo puedes instalar manualmente via FTP/SSH"
 
 msgid "Language id isn't in the correct format"
 msgstr "El identificador del idioma no está en el formato correcto"
@@ -253,9 +229,6 @@ msgstr "El campo para la descripción del idioma no puede ser vacío"
 
 msgid "%s has been updated"
 msgstr "%s se ha modificado correctamente"
-
-msgid "%d can't be disabled because it's the default language. You can change the default language under General Settings in order to disable it"
-msgstr "%d no se puede desactivar porque es el idioma por defecto. Puedes cambiar el idioma por defecto desde Configuración General y después desactivarlo"
 
 msgid "The language has been enabled for the public website"
 msgstr "El idioma se ha activado correctamente (web)"
@@ -288,19 +261,13 @@ msgid "Selected languages have been disabled for the backoffice (oc-admin)"
 msgstr "Los idiomas seleccionados han sido desactivados para el backoffice (oc-admin)"
 
 msgid "Directory \"%s\" couldn't be removed"
-msgstr "El directorio \"%s\" no se puede eliminar"
+msgstr "El directorio \\\"%s\\\" no se puede eliminar"
 
 msgid "Directory \"%s\" couldn't be removed because it's the default language. Set another language as default first and try again"
-msgstr "El directorio \"%s\" no puede ser eliminado porque es el idioma por defecto. Elige otro idioma como predeterminado e inténtalo de nuevo"
+msgstr "El directorio \\\"%s\\\" no puede ser eliminado porque es el idioma por defecto. Elige otro idioma como predeterminado e inténtalo de nuevo"
 
 msgid "That username does not exist"
 msgstr "El usuario no existe"
-
-msgid "A new password has been sent to your e-mail."
-msgstr "Te hemos enviado un e-mail con tu nueva contraseña "
-
-msgid "The email you have entered does not belong to a valid administrator."
-msgstr "El e-mail que has introducido no pertenece a ningún administrador válido."
 
 msgid "The page has been updated"
 msgstr "La página se ha modificado correctamente"
@@ -350,9 +317,6 @@ msgstr "La configuración de anuncios se ha modificado correctamente"
 msgid "Comments' settings have been updated"
 msgstr "La configuración de comentarios se ha modificado correctamente"
 
-msgid "Users' settings have been updated."
-msgstr "La configuración de usuarios se ha modificado correctamente"
-
 msgid "Akismet and reCAPTCHA have been updated"
 msgstr "Akismet y reCAPTCHA se han modificado correctamente"
 
@@ -364,9 +328,6 @@ msgstr "La moneda se ha añadido correctamente"
 
 msgid "Error: currency couldn't be added"
 msgstr "Error: La moneda no se pudo añadir"
-
-msgid "Error: the currency code isn't in the correct format"
-msgstr "Error: El código de moneda no está en el formato correcto"
 
 msgid "Error: the currency doesn't exist"
 msgstr "Error: La moneda no existe"
@@ -392,20 +353,11 @@ msgstr "La configuración para el sistema de cron se ha modificado correctamente
 msgid "General settings have been updated"
 msgstr "La configuración se ha modificado correctamente"
 
-msgid "Population of the database done properly"
-msgstr "La base de datos se ha rellenado correctamente"
-
-msgid "Population of the database reverted"
-msgstr "La base de datos se ha vaciado correctamente"
-
 msgid "Re-generation complete"
 msgstr "La regeneración de imágenes se ha efectuado correctamente"
 
 msgid "The user has been created. We've sent an activation e-mail"
 msgstr "El usuario se ha creado correctamente. Te hemos enviado un e-mail de activación"
-
-msgid "The user has been created and activated"
-msgstr "El usuario ha sido creado y activado correctamente"
 
 msgid "Sorry, but that e-mail is already in use"
 msgstr "El e-mail especificado está ya siendo utilizado"
@@ -416,24 +368,543 @@ msgstr "El usuario se ha modificado y activado correctamente"
 msgid "The user has been updated"
 msgstr "El usuario se ha modificado correctamente"
 
-msgid "You need to input your name and email to be able to publish a new item"
-msgstr "Error: falta tu nombre y e-mail para poder añadir el anuncio"
+msgid "The Recaptcha code is wrong"
+msgstr "El código Recaptcha es incorrecto"
 
-msgid "Great! You'll receive an e-mail to activate your item"
-msgstr "Tu e-mail ha sido guardado correctamente. Te hemos enviado un e-mail con la información para activarlo"
+msgid "You have to introduce a correct e-mail"
+msgstr "Tienes que introducir un email válido"
 
-msgid "Great! We've just published your item"
-msgstr "La publicación del anuncio se ha efectuado correctamente"
+msgid "Users not enabled"
+msgstr "Usuarios no activados"
 
-msgid "We just send your message to "
-msgstr "Hemos enviado un email a"
+msgid "The selected photo couldn't be deleted, the url doesn't exist"
+msgstr "La imágen seleccionada no pudo ser eliminada, la url no existe"
 
-msgid "We are very sorry but we could not deliver your message to your friend. Try again later"
-msgstr "No se ha podido enviar el e-mail. Inténtalo de nuevo más tarde"
+msgid "The item doesn't exist"
+msgstr "El anuncio no existe"
 
-msgid "There has been some erro sending the message"
-msgstr "No se ha podido enviar el e-mail. Inténtalo de nuevo más tarde"
+msgid "The item doesn't belong to you"
+msgstr "El anuncio no te pertenece"
 
-msgid "We are very sorry but could not save your comment. Try again later"
-msgstr "Tu comentario no se ha podido guardar correctamente. Inténtalo de nuevo más tarde"
+msgid "The selected photo has been successfully deleted"
+msgstr "La imágen seleccionada ha sido eliminada correctamente"
+
+msgid "The selected photo couldn't be deleted"
+msgstr "La imágen seleccionada no pudo ser eliminada"
+
+msgid "Sorry, we could not save your comment. Try again later"
+msgstr "Lo lamento, no hemos podido guardar tu comentario. Vuelve a intentarlo mas tarde"
+
+msgid "Your comment is awaiting moderation"
+msgstr "Tu comentario está esperando moderación"
+
+msgid "Your comment has been approved"
+msgstr "Tu comentario ha sido aprobado"
+
+msgid "Please fill the required fields (name, email)"
+msgstr "Por favor, completa los campos requeridos (nombre, email)"
+
+msgid "Please type a comment"
+msgstr "Por favor, escribe un comentario"
+
+msgid "Your comment has been marked as spam"
+msgstr "Tu comentario ha sido marcado como spam"
+
+msgid "The comment doesn't exist"
+msgstr "El comentario no existe"
+
+msgid "The comment is not active, you cannot delete it"
+msgstr "El comentario no está activo, no puedes eliminarlo"
+
+msgid "The user has not been validated yet"
+msgstr "El usuario aún no ha sido validado"
+
+msgid "We have sent you an email with the instructions to reset your password"
+msgstr "Te hemos enviado un email con las instrucciones para restablecer tu contraseña"
+
+msgid "The password has been changed"
+msgstr "La contraseña ha sido cambiada"
+
+msgid "Error, the password don't match"
+msgstr "Error, la contraseña no coincide"
+
+msgid "The reCAPTCHA was not introduced correctly"
+msgstr "El reCAPTCHA  no fué introducido correctamente"
+
+msgid "The specified e-mail is not valid"
+msgstr "El e-mail especificado no es válido"
+
+msgid "We tried to sent you an e-mail, but it failed. Please, contact the administrator"
+msgstr "Intentamos enviarte un e-mail, pero falló. Por favor, contacta con el administrador."
+
+msgid "Email invalid"
+msgstr "Email no válido"
+
+msgid "Username invalid"
+msgstr "Nombre de usuario no válido"
+
+msgid "Password invalid"
+msgstr "Contraseña no válida"
+
+msgid "Email already in use"
+msgstr "Email ya en uso"
+
+msgid "Username already in use"
+msgstr "Nombre de usuario ya en uso"
+
+msgid "There is no admin admin with this id"
+msgstr "No hay administrador con este id"
+
+msgid "This admin doesn't exist"
+msgstr "El administrador no existe"
+
+msgid "Existing email"
+msgstr "Email existente"
+
+msgid "The theme folder is not writable"
+msgstr "El directorio del tema no es escribible"
+
+msgid "The theme has been installed correctly"
+msgstr "El tema ha sido instalado correctamente"
+
+msgid "The zip file is not valid"
+msgstr "El fichero zip no es válido"
+
+msgid "There was a problem adding the theme"
+msgstr "Hubo un problema añadiendo el tema"
+
+msgid "Widget removed correctly"
+msgstr "Widget eliminado correctamente"
+
+msgid "Widget added correctly"
+msgstr "Widget añadido correctamente"
+
+msgid "Theme activated correctly"
+msgstr "Tema activado correctamente"
+
+msgid "The comments have been disapproved"
+msgstr "Los comentarios han sido descartados"
+
+msgid "The comment has been disapproved"
+msgstr "El comentario ha sido descartado"
+
+msgid "The comment have been deleted"
+msgstr "El comentario ha sido eliminado"
+
+msgid "The email couldn't be updated, at least one title should not be empty"
+msgstr "El email no pudo ser actualizado, al menos un título no debe estar vacío"
+
+msgid "The item has been deleted"
+msgstr "El anuncio ha sido eliminado"
+
+msgid "The item couldn't be deleted"
+msgstr "El anuncio no pudo ser eliminado"
+
+msgid "The item has been deactivated"
+msgstr "El anuncio ha sido desactivado"
+
+msgid "Changes saved correctly"
+msgstr "Cambios guardados correctamente"
+
+msgid "Resource deleted"
+msgstr "Recursos eliminado"
+
+msgid "The translation folder is not writable"
+msgstr "El directorio de la traducción no es escribible"
+
+msgid "There was a problem adding the language"
+msgstr "Hubo un problema agregando el idioma"
+
+msgid "Directory \"%s\" has been successfully removed"
+msgstr "El directorio \"%s\" ha sido eliminado correctamente"
+
+msgid "A new password has been sent to your e-mail"
+msgstr "Una nueva contraseña ha sido enviada a tu e-mail"
+
+msgid "The page couldn't be updated, at least one title should not be empty"
+msgstr "La página no pudo ser actualizada, al menos un título no debe estar vacío"
+
+msgid "The page couldn't be added, at least one title should not be empty"
+msgstr "La página no pudo ser añadida, al menos un título no debe estar vacío"
+
+msgid "The plugin folder is not writable"
+msgstr "El directorio del plugin no es escribible"
+
+msgid "The plugin has been uploaded correctly"
+msgstr "El plugin ha sido cargado correctamente"
+
+msgid "There was a problem adding the plugin"
+msgstr "Hubo un problema agregando el plugin"
+
+msgid "Users' settings have been updated"
+msgstr "La configuración de los usuarios ha sido actualizada"
+
+msgid "Import complete"
+msgstr "Importación completada"
+
+msgid "There was a problem importing data to the database"
+msgstr "Hubo un problema importando datos a la base de datos"
+
+msgid "Path is empty"
+msgstr "La ruta está vacía"
+
+msgid "There are no tables to back up"
+msgstr "No hay tablas para respaldar"
+
+msgid "The folder is not writable"
+msgstr "El directorio no es escribible"
+
+msgid "Backup has been done properly"
+msgstr "El respaldo se ha hecho correctamente"
+
+msgid "Error, the zip file was not created at the specified directory"
+msgstr "Error, el archivo zip no fué creado en el directorio especificado"
+
+msgid "No user has been activated"
+msgstr "Ningún usuario ha sido activado"
+
+msgid "No user has been deactivated"
+msgstr "Ningún usuario ha sido desactivado"
+
+msgid "No user has been deleted"
+msgstr "Ningún usuario ha sido eliminado"
+
+msgid "There has been some errors sending the message"
+msgstr "Hay algunos errores al enviar el mensaje"
+
+msgid "Invalid email address"
+msgstr "Dirección de correo no válida"
+
+msgid "One of the files you tried to upload exceeds the maximum size"
+msgstr "Uno de los archivos que intentaste cargar excede el tamaño máximo"
+
+msgid "The file you tried to upload does not have an allowed extension"
+msgstr "El archivo que intentaste cargar no tiene una extensión permitida"
+
+msgid "Error: Plugin already installed"
+msgstr "Error: Plugin ya instalado"
+
+msgid "%s already was in the database"
+msgstr "%s ya estaba en la base de datos"
+
+msgid "%s can not be deleted, some items are located in it"
+msgstr "%s no puede ser eliminado, algunos anuncios están situados en el"
+
+msgid "%s cannot be added"
+msgstr "%s no se puede añadir"
+
+msgid "Error: %s"
+msgstr "Error: %s"
+
+msgid "INACTIVE"
+msgstr "INACTIVO"
+
+msgid "DISABLED"
+msgstr "DESACTIVADO"
+
+msgid "Check your inbox to verify your email address"
+msgstr "comprueba tu bandeja de entrada para verificar tu dirección de correo electrónico."
+
+msgid "Your item has been published"
+msgstr "Tu anuncio ha sido publicado"
+
+msgid "You can't contact the seller, only registered users can"
+msgstr "No puedes contactar con el vendedor, sólo los usuarios registrados pueden"
+
+msgid "You must be logged in to delete a comment"
+msgstr "Has de estar conectado para borrar un comentario"
+
+msgid "The comment was not added by you, you cannot delete it"
+msgstr "Este comentario no ha sido añadido por tí, por eso no puedes borrarlo"
+
+msgid "The comment has been deleted"
+msgstr "El comentario ha sido eliminado"
+
+msgid "The item has been suspended"
+msgstr "El anuncio ha sido suspendido"
+
+msgid "The user has been suspended"
+msgstr "El usuario ha sido suspendido"
+
+msgid "This should never happens"
+msgstr "Esto no debería pasar"
+
+msgid "We were not able to identify you given the information provided"
+msgstr "No ha sido posible identificarte con la información proporcionada"
+
+msgid "The recaptcha code is wrong"
+msgstr "Código de recaptcha erróneo"
+
+msgid "The email is not valid"
+msgstr "Dirección de correo no válida"
+
+msgid "Your account has already been validated"
+msgstr "Tu cuenta ya ha sido validada"
+
+msgid "Alert activated"
+msgstr "Alerta activada"
+
+msgid "Ops! There was a problem trying to activate alert. Please contact the administrator"
+msgstr "¡Ops! Ha habido un problema intentando activar la alerta. Por favor, contacta con el administrador"
+
+msgid "Unsubscribed correctly"
+msgstr "Se ha eliminado la suscripción"
+
+msgid "Ops! There was a problem trying to unsubscribe you. Please contact the administrator"
+msgstr "¡Ops! Ha habido un problema intentando eliminar la alerta. Por favor, contacta con el administrador"
+
+msgid "Real Name invalid"
+msgstr "Nombre real no válido"
+
+msgid "Categories' settings have been updated"
+msgstr "Ajustes de categoría actualizados"
+
+msgid "The comment has been enabled"
+msgstr "El comentario ha sido activado"
+
+msgid "The comment has been disabled"
+msgstr "El comentario ha sido desactivado"
+
+msgid "The item has been enabled"
+msgstr "El anuncio ha sido activado"
+
+msgid "The item has been disabled"
+msgstr "El anuncio ha sido desactivado"
+
+msgid "The item has been unmarked as"
+msgstr "El anuncio ha sido desmarcado como"
+
+msgid "The item hasn't been unmarked as"
+msgstr "El anuncio no ha sido desmarcado como"
+
+msgid "The language can't be disabled because it's the default language. You can change modify it in General Settings"
+msgstr "Este idioma no se puede desactivar porque es el idioma por defecto. Puedes cambiarlo en ajustes generales"
+
+msgid "There was a fatal error and the plugin was not installed.<br />Error: \"%s\" Line: %s<br/>File: %s"
+msgstr "Ha habido un error fatal y el plugin no se ha instalado.<br>Error: \\\"%s\\\" Línea: %s<br>Fila: %s"
+
+msgid "Country has been edited"
+msgstr "El país ha sido editado"
+
+msgid "There were some problems editing the country"
+msgstr "Ha habido algunos problemas editando el país"
+
+msgid "%s could not be deleted because it's the default currency"
+msgstr "%s no se puede eliminar porque es la moneda por defecto"
+
+msgid "Settings have been updated"
+msgstr "Los ajustes se han actualizado"
+
+msgid "Could not connect with the database. Error: %s"
+msgstr "No se puede conectar con la base de datos. Error: %s"
+
+msgid "Could not select the database. Error: %s"
+msgstr "No se puede seleccionar la base de datos. Error: %s"
+
+msgid "Maintenance mode is ON"
+msgstr "Modo de mantenimiento activo"
+
+msgid "Maintenance mode is OFF"
+msgstr "Modo de mantenimiento inactivo"
+
+msgid "No user has been enabled"
+msgstr "Ningún usuario ha sido activado"
+
+msgid "One user has been enabled"
+msgstr "Ha sido activado un usuario"
+
+msgid "%s users have been enabled"
+msgstr "%s usuarios han sido activados"
+
+msgid "No user has been disabled"
+msgstr "Ningún usuario ha sido desactivado"
+
+msgid "One user has been disabled"
+msgstr "Ha sido desactivado un usuario"
+
+msgid "%s users have been disabled"
+msgstr "%s usuarios han sido desactivados"
+
+msgid "Image with incorrect extension."
+msgstr "Extensión de la imagen incorrecta"
+
+msgid "Images too big. Max. size"
+msgstr "Imágenes demasiado grandes. Tamaño máximo"
+
+msgid "Title too short."
+msgstr "Título muy corto."
+
+msgid "Title too long."
+msgstr "Título muy largo."
+
+msgid "Description too short."
+msgstr "Descripción muy corta."
+
+msgid "Description too long."
+msgstr "Descripción muy larga."
+
+msgid "Category invalid."
+msgstr "Categoría errónea."
+
+msgid "Price must be number."
+msgstr "El precio ha de ser un número."
+
+msgid "Price too long."
+msgstr "Precio demasiado largo"
+
+msgid "Name too long."
+msgstr "Nombre demasiado largo."
+
+msgid "Email invalid."
+msgstr "Dirección de correo no válida."
+
+msgid "Municipality too short."
+msgstr "Nombre del municipio demasiado corto."
+
+msgid "Municipality too long."
+msgstr "Nombre del municipio demasiado largo."
+
+msgid "Address too short."
+msgstr "Dirección demasiado corta."
+
+msgid "Address too long."
+msgstr "Dirección demasiado larga."
+
+msgid "Too fast. You should wait a little to publish your ad."
+msgstr "Demasiado rápido. Debes esperar un poco para publicar tu anuncio."
+
+msgid "We just send your message to %s"
+msgstr "Te acabamos de enviar un mensaje a %s"
+
+msgid "Sorry, you already have one field with that name"
+msgstr "Lo sentimos, ya hay un campo con ese nombre"
+
+msgid "User registration is not enabled"
+msgstr "El registro de usuario no está conectado"
+
+msgid "No file was uploaded"
+msgstr "No se ha cargado ningún archivo"
+
+msgid "Widget updated correctly"
+msgstr "Widget actualizado correctamente"
+
+msgid "Widget cannot be updated correctly"
+msgstr "No se ha podido actualizar correctamente el widget"
+
+msgid "New custom field added"
+msgstr "Nuevo campo personalizado añadido"
+
+msgid "The language can't be disabled because it's the default language. You can change the default language under General Settings in order to disable it"
+msgstr "Este idioma no se puede desactivar porque es el idioma por defecto. Puedes cambiarlo en ajustes generales y desactivarlo después               "
+
+msgid "There was an error creating .maintenance file, please create it manually at the root folder"
+msgstr "Ha habido un error creando el archivo de mantenimiento (.maintenance), por favor créalo de forma manual en la carpeta \"root\" "
+
+msgid "There was an error removing .maintenance file, please remove it manually from the root folder"
+msgstr "Ha habido un error eliminando el archivo de mantenimiento (.maintenance), por favor elimínalo de forma manual en la carpeta \"root\""
+
+msgid "The logo image has been uploaded correctly"
+msgstr "La imagen del logotipo se ha cargado correctamente"
+
+msgid "An error has occurred, please try again"
+msgstr "Ha ocurrido un error, inténtalo de nuevo"
+
+msgid "The logo image has been removed"
+msgstr "La imagen del logotipo ha sido eliminada"
+
+msgid "Image not found"
+msgstr "Imagen no encontrada"
+
+msgid "Country too short."
+msgstr "Nombre del país muy corto."
+
+msgid "Country too long."
+msgstr "Nombre del país muy largo."
+
+msgid "Region too short."
+msgstr "Nombre de la provincia muy corto."
+
+msgid "Region too long."
+msgstr "Nombre de la provincia muy largo."
+
+msgid "City too short."
+msgstr "Nombre de la ciudad muy corto."
+
+msgid "City too long."
+msgstr "Nombre de la ciudad muy largo."
+
+msgid "%s field is required."
+msgstr "%s campo obligatorio."
+
+msgid "Users are not enabled"
+msgstr ""
+
+msgid "Password cannot be blank"
+msgstr ""
+
+msgid "The password cannot be empty"
+msgstr ""
+
+msgid "This action cannot be done because is a demo site"
+msgstr ""
+
+msgid "Name can not be empty"
+msgstr ""
+
+msgid "%d item has been enabled"
+msgstr ""
+
+msgid "%d item has been disabled"
+msgstr ""
+
+msgid "%d item has been activated"
+msgstr ""
+
+msgid "%d item has been deactivated"
+msgstr ""
+
+msgid "%d item has been marked as premium"
+msgstr ""
+
+msgid "%d change has been made"
+msgstr ""
+
+msgid "%d item has been marked as spam"
+msgstr ""
+
+msgid "%d change have been made"
+msgstr ""
+
+msgid "%d item has been deleted"
+msgstr ""
+
+msgid "You have to set a different internal name"
+msgstr ""
+
+msgid "Plugin enabled"
+msgstr ""
+
+msgid "Error: Plugin already enabled"
+msgstr ""
+
+msgid "Plugin disabled"
+msgstr ""
+
+msgid "%s could not be deleted because this currency still in use"
+msgstr ""
+
+msgid "Number of items in the RSS must be integer"
+msgstr ""
+
+msgid "Number of recent items displayed at home must be integer"
+msgstr ""
+
+msgid "The user has been created successfully"
+msgstr ""
+
+msgid "Sorry, the password cannot be empty"
+msgstr ""
+
+msgid "Sorry, passwords don't match"
+msgstr ""
 
