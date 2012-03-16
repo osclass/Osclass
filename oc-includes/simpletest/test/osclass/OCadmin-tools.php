@@ -10,7 +10,7 @@ class OCadmin_tools extends OCadminTest {
      * Import sql
      * Remove imported data
      */
-    /*function testImportData()
+    function testImportData()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -36,7 +36,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Import bad file. 
      */
-    /*function testImportDataFail()
+    function testImportDataFail()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -60,7 +60,7 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->click("link=Tools");
         $this->selenium->click("link=Backup data");
         $this->selenium->waitForPageToLoad("30000");
-        $this->selenium->click("//h3//p/input[@value='Backup (store on server)']");
+        $this->selenium->click("//input[@id='backup_sql']");
         $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue($this->selenium->isTextPresent("Backup has been done properly"), "Backup database.");
     }
@@ -69,17 +69,17 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Backup oclass
      */
-    /*function testBackupZip()
+    function testBackupZip()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Tools");
         $this->selenium->click("link=Backup data");
         $this->selenium->waitForPageToLoad("30000");
-        $this->selenium->click("//h3[contains(.,'Back up OSClass installation')]/p/input[@value='Backup (store on server)']");
-        $this->selenium->waitForPageToLoad("30000");
-        $this->assertTrue($this->selenium->isTextPresent("Backup has been done properly"), "Backup osclass.");
-    }*/
+        $this->selenium->click("//input[@id='backup_zip']");
+        $this->selenium->waitForPageToLoad("300000");
+        $this->assertTrue($this->selenium->isTextPresent("Archiving successful!"), "Backup osclass.");
+    }
     
     
 }
