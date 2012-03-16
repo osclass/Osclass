@@ -56,12 +56,12 @@
                             </p>
                             <h3><?php _e('Back up database (.sql)') ; ?></h3>
                             <p class="text">
-                                <input type="button" onclick="javascript:submitForm(this.form, 'sql');" value="<?php echo osc_esc_html( __('Backup (store on server)') ) ; ?>" >
-                                <input type="button" onclick="javascript:submitForm(this.form, 'sql_file');" value="<?php echo osc_esc_html( __('Backup (download file)') ) ; ?>" >
+                                <input type="button" id="backup_sql" onclick="javascript:submitForm(this.form, 'sql');" value="<?php echo osc_esc_html( __('Backup (store on server)') ) ; ?>" >
+                                <input type="button" id="backup_sql_file" onclick="javascript:submitForm(this.form, 'sql_file');" value="<?php echo osc_esc_html( __('Backup (download file)') ) ; ?>" >
                             </p>
                             <h3><?php _e('Back up OSClass installation') ; ?></h3>
                             <p class="text">
-                                <input type="button" onclick="javascript:submitForm(this.form, 'zip');" value="<?php echo osc_esc_html( __('Backup (store on server)') ) ; ?>" >
+                                <input type="button" id="backup_zip" onclick="javascript:submitForm(this.form, 'zip');" value="<?php echo osc_esc_html( __('Backup (store on server)') ) ; ?>" >
                                 <!--<input type="button" onclick="javascript:submitForm(this.form, 'zip_file');" value="<?php echo osc_esc_html( __('Backup (download file)') ) ; ?>" >-->
                             </p>
                         </fieldset>
