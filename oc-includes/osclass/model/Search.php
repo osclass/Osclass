@@ -663,7 +663,7 @@
             if( !in_array($category, $this->categories) ) {
                 $this->categories[] = $category ;
             }
-            $this->pruneBranches($tree) ;
+            $this->pruneBranches($tree);
         }
         
         /**
@@ -872,7 +872,7 @@
                     if($this->withUserId) {
                         $this->_fromUser();
                     }
-                    if($this->withCategoryId) {
+                    if($this->withCategoryId) { 
                         $this->dao->where(sprintf("%st_item.fk_i_category_id", DB_TABLE_PREFIX) .' IN ('. implode(', ', $this->categories) .')' ) ;
                     }
                     $this->_priceRange();
@@ -908,7 +908,6 @@
             $this->sql = $this->dao->_getSelect() ;
             // reset dao attributes
             $this->dao->_resetSelect() ;
-//            error_log($this->sql);
             
             return $this->sql;
         }
@@ -1164,91 +1163,89 @@
         }
         
         // testing functions - parse old models
-        public function getConditions() 
+        private function _getConditions() 
         {
             $aData = array();
-            
+   
             $item_id                = DB_TABLE_PREFIX.'t_item.pk_i_id';
             $item_category_id       = DB_TABLE_PREFIX.'t_item.fk_i_category_id';
-            
             $item_description_id    = 'd.fk_i_item_id';
             $category_id            = DB_TABLE_PREFIX.'t_category.pk_i_id';
             $item_location_id       = DB_TABLE_PREFIX.'t_item_location.fk_i_item_id';
+            $item_resource_id       = DB_TABLE_PREFIX.'t_item_resource.fk_i_item_id';
             
-            
-            // get item conditions.
+            // get item conditions
             foreach($this->conditions as $condition) {
                 // item table
-                if(preg_match('/'.DB_TABLE_PREFIX.'t_item.b_active/', $condition, $matches) ) {
+                if(preg_match('/'.DB_TABLE_PREFIX.'t_item\.b_active/', $condition, $matches) ) {
                     $aData['itemConditions'][] = $condition;
-                } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item.b_spam/', $condition, $matches) ) {
+                } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item\.b_spam/', $condition, $matches) ) {
                     $aData['itemConditions'][] = $condition;
-                } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item.b_enabled/', $condition, $matches) ) {
+                } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item\.b_enabled/', $condition, $matches) ) {
                     $aData['itemConditions'][] = $condition;
-                } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item.b_premium/', $condition, $matches) ) {
+                } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item\.b_premium/', $condition, $matches) ) {
                     $aData['itemConditions'][] = $condition;
+                } else if(preg_match('/('.DB_TABLE_PREFIX.'t_item\.)?f_price >= (.*)/', $condition, $matches) ) {
+                    $aData['price_min'] = (int) $matches[2];
+                } else if(preg_match('/('.DB_TABLE_PREFIX.'t_item\.)?f_price <= (.*)/', $condition, $matches) ) {
+                    $aData['price_max'] = (int) $matches[2];
+                } else if(preg_match('/('.DB_TABLE_PREFIX.'t_item\.)?i_price >= (.*)/', $condition, $matches) ) {
+                    $aData['price_min'] = ( (double) $matches[2] / 1000000 );
+                } else if(preg_match('/('.DB_TABLE_PREFIX.'t_item\.)?i_price <= (.*)/', $condition, $matches) ) {
+                    $aData['price_max'] = ( (double) $matches[2] / 1000000 );
                 } else if(preg_match('/'.DB_TABLE_PREFIX.'t_category.b_enabled/', $condition, $matches) ) {
                     // t_category.b_enabled is not longer needed
-                    
-                    // ( oc_t_item_location.s_city LIKE '%barcelona%'  || oc_t_item_location.s_city LIKE '%girona%'  )
-                } else if(preg_match_all('/('.DB_TABLE_PREFIX.'t_item_location.s_city\s*LIKE\s*\'%([\p{L}][\p{L}]*(\s*[\p{L}][\p{L}]*)*)%\'\s*)/', $condition, $matches) ) {
-                    print_r($matches);
-                    $aData['s_city'] = $matches[2];
-                    
-                    
+                } else if(preg_match_all('/('.DB_TABLE_PREFIX.'t_item_location.s_city_area\s*LIKE\s*\'%([\s\p{L}\p{N}]*)%\'\s*)/u', $condition, $matches) ) { // OJO
+                    $aData['s_city_area'][] = $matches[2];
+                } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item_location.fk_i_city_area_id = (.*)/', $condition, $matches) ) {
+                    $aData['fk_i_city_area_id'][] = $matches[1];
+                } else if(preg_match_all('/('.DB_TABLE_PREFIX.'t_item_location.s_city\s*LIKE\s*\'%([\s\p{L}\p{N}]*)%\'\s*)/u', $condition, $matches) ) { // OJO
+                    $aData['s_city'][] = $matches[2];
                 } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item_location.fk_i_city_id = (.*)/', $condition, $matches) ) {
                     $aData['fk_i_city_id'][] = $matches[1];
-                } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item_location.s_region LIKE \'%(.*)%\'/', $condition, $matches) ) {
-                    $aData['s_region'][] = $matches[1];
+                } else if(preg_match_all('/('.DB_TABLE_PREFIX.'t_item_location.s_region\s*LIKE\s*\'%([\s\p{L}\p{N}]*)%\'\s*)/u', $condition, $matches) ) { // OJO
+                    $aData['s_region'][] = $matches[2];
                 } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item_location.fk_i_region_id = (.*)/', $condition, $matches) ) {
-                    $aData['fk_i_region_id'][] = $matches[1];
-                } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item_location.s_country LIKE \'%(.*)%\'/', $condition, $matches) ) {
-                    $aData['s_country'][] = $matches[1];
+                    $aData['fk_i_region_id'] = $matches[1];
+                } else if(preg_match_all('/('.DB_TABLE_PREFIX.'t_item_location.s_country\s*LIKE\s*\'%([\s\p{L}\p{N}]*)%\'\s*)/u', $condition, $matches) ) { // OJO
+                    $aData['s_country'][] = $matches[2];
                 } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item_location.fk_c_country_code = \'?(.*)\'?/', $condition, $matches) ) {
                     $aData['fk_c_country_code'][] = $matches[1];
-                } else if(preg_match('/MATCH\(d.s_title, d.s_description\) AGAINST\(\'(.*)\' IN BOOLEAN MODE\)/', $condition, $matches) ) {
-                    $aData['sPattern'][] = $matches[1];
+                } else if(preg_match('/d\.s_title\s*LIKE\s*\'%([\s\p{L}\p{N}]*)%\'/u', $condition, $matches) ) {  // OJO
+                    $aData['sPattern']      = $matches[1];
+                    $aData['withPattern']   = true;
+                } else if(preg_match('/MATCH\(d\.s_title, d\.s_description\) AGAINST\(\'([\s\p{L}\p{N}]*)\' IN BOOLEAN MODE\)/u', $condition, $matches) ) { // OJO
+                    $aData['sPattern'] = $matches[1];
+                    $aData['withPattern']   = true;
                 } else if(preg_match("/$item_id\s*=\s*$item_description_id/", $condition, $matches_1)   || preg_match("/$item_description_id\s*=\s*$item_id/", $condition, $matches_2)) {
                 } else if(preg_match("/$category_id\s*=\s*$item_category_id/", $condition, $matches_1)  || preg_match("/$item_id\s*=\s*$item_category_id/", $condition, $matches_2)) {
                 } else if(preg_match("/$item_location_id\s*=\s*$item_id/", $condition, $matches_1)      || preg_match("/$item_id\s*=\s*$item_location_id/", $condition, $matches_2)) {
-                } else if(preg_match_all('/(oc_t_item.fk_i_category_id = (\d*))/', $condition, $matches) ) {
+                } else if(preg_match("/$item_id\s*=\s*$item_resource_id/", $condition, $matches_1)      || preg_match("/$item_resource_id\s*=\s*$item_id/", $condition, $matches_2)) {
+                    // nothing to do, catch table
+                } else if(preg_match_all('/(oc_t_item\.fk_i_category_id = (\d*))/', $condition, $matches) ) {
                     $aData['aCategories'] = $matches[2];
                 } else {
                     $aData['no_catched_conditions'][] = $condition;
                 }
-                
-                error_log($condition);
             }
-            error_log('----------------------------------');
+            
             // get tables
             foreach($this->tables as $table) {
-                if( preg_match('/('.DB_TABLE_PREFIX.'t_item)/', $table, $matches ) ) {
-                // t_item is allways included
+                if( preg_match('/('.DB_TABLE_PREFIX.'t_item$)/', $table, $matches ) ) {
+                    // t_item is allways included
                 } else if( preg_match('/('.DB_TABLE_PREFIX.'t_item_description( as d)?)/', $table, $matches ) ) {
-                // t_item_description is allways included
+                    // t_item_description is allways included
+                } else if( preg_match('/'.DB_TABLE_PREFIX.'t_category/', $table, $matches ) ) {
+                    // t_category is allways included
                 } else if( preg_match('/('.DB_TABLE_PREFIX.'t_category_description( as cd)?)/', $table, $matches ) ) {
-                // t_item_description
-                    $aData['tables'] = $matches[1];
+                    // t_item_description
+                    $aData['tables'][] = $matches[1];
                 } else if( preg_match('/('.DB_TABLE_PREFIX.'t_item_resource)/', $table, $matches ) ) {
-                // t_item_resource
                     $aData['withPicture'] = true;
-                    $aData['tables'] = $matches[1];
-                } else if( preg_match('/('.DB_TABLE_PREFIX.'t_item_resource)/', $table, $matches ) ) {
-                // t_item_resource
-                    $aData['tables'] = $matches[1];
                 } else {
-                    $aData['no_catched_tables'] = $table;
+                    $aData['no_catched_tables'][] = $table;
                 }
-                error_log($table);
             }
-            error_log('----------------------------------');
-            
-            // faltan locations 
-            print_r($this->search_fields);
-//            foreach($this->search_fields as $field) {
-//                error_log($field);
-//            }
-            error_log('----------------------------------');
             
             // get order & limit
             $aData['order_column']      = $this->order_column;
@@ -1256,9 +1253,187 @@
             $aData['limit_init']        = $this->limit_init;
             $aData['results_per_page']  = $this->results_per_page;
             
-            print_r($aData);
+            return $aData;
         }
         
+        /**
+         * Return json with all search attributes
+         *
+         * @return string
+         */
+        public function toJson($convert = false)
+        {
+            if($convert) {
+                $aData = $this->_getConditions();
+            } else {
+                $aData['price_min']     = $this->price_min / 1000000;
+                $aData['price_max']     = $this->price_max / 1000000;
+                $aData['aCategories']   = $this->categories;
+                // locations
+                $aData['city_areas']    = $this->city_areas;
+                $aData['cities']        = $this->cities;
+                $aData['regions']       = $this->regions;
+                $aData['countries']     = $this->countries;
+                // pattern
+                $aData['withPattern']   = $this->withPattern;
+                $aData['sPattern']      = $this->sPattern;
+                if($this->withPicture) {
+                    $aData['withPicture']   = $this->withPicture;
+                }
+                
+                $aData['tables']        = $this->tables;
+                $aData['tables_join']   = $this->tables_join;
+                
+                $aData['no_catched_tables']     = $this->tables;
+                $aData['no_catched_conditions'] = $this->conditions;
+                
+                $aData['user_ids']          = $this->user_ids;
+                
+                // get order & limit
+                $aData['order_column']      = $this->order_column;
+                $aData['order_direction']   = $this->order_direction;
+                $aData['limit_init']        = $this->limit_init;
+                $aData['results_per_page']  = $this->results_per_page;
+            }
+            return json_encode($aData);
+        }
+        
+        public function setJsonAlert($aData, $convert = false)
+        {
+            if(!$convert) {
+                $this->priceRange($aData['price_min'], $aData['price_max'] );
+                
+                $this->categories   = $aData['aCategories'];
+                // locations
+                $this->city_areas   = $aData['city_areas'] ;
+                $this->cities       = $aData['cities']; 
+                $this->regions      = $aData['regions'] ;
+                $this->countries    = $aData['countries'];
+                
+                $this->user_ids     = $aData['user_ids'];
+                
+                $this->tables_join  = $aData['tables_join'];
+                $this->tables       = $aData['no_catched_tables'];
+                $this->conditions   = $aData['no_catched_conditions'];
+                
+                // get order & limit
+                $this->order_column     = $aData['order_column'];
+                $this->order_direction  = $aData['order_direction'];
+                $this->limit_init       = $aData['limit_init'];
+                $this->results_per_page = $aData['results_per_page'];
+                
+                // pattern
+                $this->addPattern($aData['sPattern']);
+                if( isset($aData['withPicture']) ) {
+                    $this->withPicture(true);
+                }
+                
+            } else {
+                // old alert 
+                $price_min  = 0;
+                $price_max  = 0;
+                
+                if(isset($aData['no_catched_tables']) ) {
+                    if(count($aData['no_catched_tables']) > 0) {
+                        foreach($aData['no_catched_tables'] as $table) {
+                            $this->addTable($table);
+                        }
+                    }
+                }
+                if(isset($aData['sPattern']) ) {
+                    $this->addPattern($aData['sPattern']);
+                }
+                if(isset($aData['price_min']) ) {
+                    $price_min = $aData['price_min'];
+                }
+                if(isset($aData['price_max']) ) {
+                    $price_max = $aData['price_max'];
+                }
+                if(isset($aData['itemConditions']) ) {
+                }
+                if(isset($aData['user_ids']) ) {
+                    // add users
+                }
+                if(isset($aData['no_catched_conditions']) ) {
+                    $this->addItemConditions($aData['no_catched_conditions']);
+                }
+                if( isset($aData['aCategories']) ) {
+                    if(count($aData['aCategories']) > 0) {
+                        foreach($aData['aCategories'] as $category) {
+                            $this->addCategory($category);
+                        }
+                    }
+                }
+                // locations 
+                if(isset($aData['s_city_area']) ) {
+                    if(count($aData['s_city_area']) > 0) {
+                        foreach($aData['s_city_area'] as $aux) {
+                            $this->addCityArea($aux);
+                        }
+                    }
+                }
+                if(isset($aData['fk_i_city_area_id']) ) {
+                    if(count($aData['fk_i_city_area_id']) > 0) {
+                        foreach($aData['fk_i_city_area_id'] as $aux) {
+                            $this->addCityArea($aux);
+                        }
+                    }
+                }
+                if(isset($aData['s_city']) ) {
+                    if(count($aData['s_city']) > 0) {
+                        foreach($aData['s_city'] as $aux) {
+                            $this->addCity($aux);
+                        }
+                    }
+                }
+                if(isset($aData['fk_i_city_id']) ) {
+                    if(count($aData['fk_i_city_id']) > 0) {
+                        foreach($aData['fk_i_city_id'] as $aux) {
+                            $this->addCity($aux);
+                        }
+                    }
+                }
+                if(isset($aData['s_region']) ) {
+                    if(count($aData['s_region']) > 0) {
+                        foreach($aData['s_region'] as $aux) {
+                            $this->addRegion($aux);
+                        }
+                    }
+                }
+                if(isset($aData['fk_i_region_id']) ) {
+                    if(count($aData['fk_i_region_id']) > 0) {
+                        foreach($aData['fk_i_region_id'] as $aux) {
+                            $this->addRegion($aux);
+                        }
+                    }
+                }
+                if(isset($aData['s_country']) ) {
+                    if(count($aData['s_country']) > 0) {
+                        foreach($aData['s_country'] as $aux) {
+                            $this->addCountry($aux);
+                        }
+                    }
+                }
+                if(isset($aData['fk_c_country_code']) ) {
+                    if(count($aData['fk_c_country_code']) > 0) {
+                        foreach($aData['fk_c_country_code'] as $aux) {
+                            $this->addCountry($aux);
+                        }    
+                    }
+                }
+
+                if(isset($aData['withPicture'])) {
+                    $this->withPicture(true);
+                }
+            
+                //FILTERING BY RANGE PRICE
+                $this->priceRange($price_min, $price_max);
+                //ORDERING THE SEARCH RESULTS
+                $this->order( $aData['order_column'], $aData['order_direction']) ;
+                //SET PAGE
+                $this->page($aData['limit_init'], $aData['results_per_page']);
+            }
+        }
     }
 
     /* file end: ./oc-includes/osclass/model/Search.php */

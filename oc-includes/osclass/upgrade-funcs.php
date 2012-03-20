@@ -40,7 +40,7 @@
         
         if( Params::getParam('skipdb') == '' ){
             if(!$error_queries[0]) {
-                $skip_db_link = osc_base_url() . "oc-includes/osclass/upgrade-funcs.php?skipdb=true";
+                $skip_db_link = osc_admin_base_url(true) . "?page=upgrade&action=upgrade-funcs&skipdb=true";
                 $title    = __('OSClass &raquo; Has some errors') ;
                 $message  = __('We encountered some problems updating the database structure. The following queries failed:');
                 $message .= "<br/><br/>" . implode("<br>", $error_queries[2]);
@@ -286,23 +286,20 @@ CREATE TABLE %st_item_description_tmp (
         $url_location_stats = osc_base_admin_url(true)."?page=tools&action=locations";
         $aMessages[] = '<p><b>'.__('You need to calculate locations stats, please go to admin panel, tools, recalculate location stats or click') .'  <a href="'.$url_location_stats.'">'.__('here').'</a></b></p>';
         
-        // update t_alerts update object serialized to json
-        // get all alerts
+        // update t_alerts - Search object serialized to json
         $aAlerts = Alerts::newInstance()->findByType('HOURLY');
-        foreach($aAlerts as $hourly) {
-            $sSearch = $hourly['s_search'];
-//            $sSearch->conditions;
-        }
-        $aAlerts = Alerts::newInstance()->findByType('DAILY');
-        
-        $aAlerts = Alerts::newInstance()->findByType('WEEKLY');
-        // get params
-        
-        // crete json
-        
-        // save into db
-    }
+        foreach($aAlerts as $hourly) 
+            convertAlert($hourly);
 
+        $aAlerts = Alerts::newInstance()->findByType('DAILY');
+        foreach($aAlerts as $daily)
+            convertAlert($daily);
+
+        $aAlerts = Alerts::newInstance()->findByType('WEEKLY');
+        foreach($aAlerts as $weekly) 
+            convertAlert($weekly);
+    } 
+    
     osc_changeVersionTo(240) ;
     
     echo '<div style="border: 1px solid rgb(204, 204, 204); background: none repeat scroll 0% 0% rgb(238, 238, 238);"> <div style="padding: 20px;">';
@@ -312,4 +309,31 @@ CREATE TABLE %st_item_description_tmp (
         echo "<p>".$msg."</p>";
     }
     echo "</div></div>";
+    
+    function convertAlert($alert)
+    {
+        // decode search model
+        $data = base64_decode($alert['s_search']);
+        if (is_serialized($data)) { // don't attempt to unserialize data that wasn't serialized going in
+            $data = unserialize($data);
+            // if search model, convert alert
+            if(get_class($data) == 'Search') {
+                $json = $data->toJson(true);
+                // insert new alert with json 
+                $aCondition = array(
+                    's_email'       => $alert['s_email'],
+                    'b_active'      => $alert['b_active'],
+                    'e_type'        => $alert['e_type']
+                );
+                if($alert['fk_i_user_id']!='') {
+                    $aCondition['fk_i_user_id'] = (int)$alert['fk_i_user_id'];
+                }
+                if($alert['s_secret']!='') {
+                    $aCondition['s_secret']     = $alert['s_secret']; 
+                }
+                
+                Alerts::newInstance()->update(array('s_search' => base64_encode($json)), $aCondition);
+            }
+        }
+    }
 ?>
