@@ -545,6 +545,13 @@
             return false;
         }
             
+        public function enableByCategory($enable, $aIds)
+        {
+            $sql  = sprintf('UPDATE %st_item SET b_enabled = %d WHERE ', DB_TABLE_PREFIX, $enable );
+            $sql .= sprintf('%st_item.fk_i_category_id IN (%s)', DB_TABLE_PREFIX, implode(',', $aIds) );
+            
+            return $this->dao->query($sql);
+        }
         /**
          * Return meta fields for a given item
          *
@@ -799,7 +806,7 @@
                 }
 
                 // populate locations and category_name
-                $this->dao->select() ;
+                $this->dao->select(DB_TABLE_PREFIX.'t_item_location.*, '.DB_TABLE_PREFIX.'t_item_stats.*, cd.s_name as s_category_name') ;
                 $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
                 $this->dao->from(DB_TABLE_PREFIX.'t_category_description as cd') ;
                 $this->dao->from(DB_TABLE_PREFIX.'t_item_stats') ;
