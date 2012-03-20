@@ -48,7 +48,11 @@
                     break;
                 case 'userajax': // This is the autocomplete AJAX
                     $users = User::newInstance()->ajax(Params::getParam("term"));
-                    echo json_encode($users);
+                    if(count($users)==0) {
+                        echo json_encode(array(0 => array('id'=> '', 'label' => __('No results'), 'value' => __('No results')) ));
+                    } else {
+                        echo json_encode($users);
+                    }
                     break;
                 case 'alerts': // Allow to register to an alert given (not sure it's used on admin)
                     $alert = Params::getParam("alert");
@@ -266,10 +270,14 @@
 
                         $subCategories = $mCategory->findSubcategories( $id ) ;
 
+                        $aIds = array($id);
                         $aUpdated[] = array('id' => $id) ;
                         foreach( $subCategories as $subcategory ) {
+                            $aIds[]     = $subcategory['pk_i_id'];
                             $aUpdated[] = array( 'id' => $subcategory['pk_i_id'] ) ;
                         }
+                        
+                        Item::newInstance()->enableByCategory($enabled, $aIds);
 
                         if( $enabled ) {
                             $result = array(
