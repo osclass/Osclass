@@ -50,42 +50,33 @@
                     $users = User::newInstance()->ajax(Params::getParam("term"));
                     echo json_encode($users);
                     break;
-                case 'alerts': // Allow to register to an alert given (not sure it's used on admin)
-                    $alert = Params::getParam("alert");
-                    $email = Params::getParam("email");
-                    $userid = Params::getParam("userid");
-                    if ($alert != '' && $email != '') {
-                        Alerts::newInstance()->insert(array('fk_i_user_id' => $userid, 's_email' => $email, 's_search' => $alert, 'e_type' => 'DAILY'));
-                        echo "1";
-                        return true;
+                case 'runhook': // run hooks
+                    $hook = Params::getParam('hook');
+
+                    if($hook == '') {
+                        echo json_encode(array('error' => 'hook parameter not defined')) ;
+                        break;
                     }
-                    echo '0';
-                    break;
-                case 'runhook': //Run hooks
-                    $hook = Params::getParam("hook");
-                    switch ($hook) {
+
+                    switch($hook) {
                         case 'item_form':
                             $catId = Params::getParam("catId");
-                            if ($catId != '') {
+                            if($catId!='') {
                                 osc_run_hook("item_form", $catId);
                             } else {
                                 osc_run_hook("item_form");
                             }
-                            break;
+                        break;
                         case 'item_edit':
                             $catId = Params::getParam("catId");
                             $itemId = Params::getParam("itemId");
                             osc_run_hook("item_edit", $catId, $itemId);
-                            break;
+                        break;
                         default:
-                            if ($hook == '') {
-                                return false;
-                            } else {
-                                osc_run_hook($hook);
-                            }
-                            break;
+                            osc_run_hook('ajax_admin_' . $hook);
+                        break;
                     }
-                    break;
+                break;
                 case 'items': // Return items (use external file oc-admin/ajax/item_processing.php)
                     require_once osc_admin_base_path() . 'ajax/items_processing.php';
                     $items_processing = new ItemsProcessingAjax(Params::getParamsAsArray("get"));
@@ -379,13 +370,26 @@
                     
                     break;
                 case 'custom': // Execute via AJAX custom file
-                    $ajaxfile = Params::getParam("ajaxfile");
-                    if ($ajaxfile != '') {
-                        require_once osc_admin_base_path() . $ajaxfile;
-                    } else {
-                        echo json_encode(array('error' => __('no action defined')));
+                    $ajaxFile = Params::getParam("ajaxfile");
+
+                    if($ajaxFile == '') {
+                        echo json_encode(array('error' => 'no action defined'));
+                        break ;
                     }
-                    break;
+
+                    // valid file?
+                    if( stripos($ajaxFile, '../') !== false ) {
+                        echo json_encode(array('error' => 'no valid ajaxFile'));
+                        break ;
+                    }
+
+                    if( !file_exists(osc_plugins_path() . $ajaxFile) ) {
+                        echo json_encode(array('error' => "ajaxFile doesn't exist"));
+                        break;
+                    }
+
+                    require_once osc_plugins_path() . $ajaxFile ;
+                break;
                 case 'test_mail':
                     $title = sprintf( __('Test email, %s'), osc_page_title() ) ;
                     $body  = __("Test email") . "<br><br>" . osc_page_title() ;
