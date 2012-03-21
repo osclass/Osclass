@@ -1,6 +1,9 @@
 # MAC
 .DS_Store
 
+# Sublime 2
+sftp-config*
+
 *.diff
 *.patch
 
