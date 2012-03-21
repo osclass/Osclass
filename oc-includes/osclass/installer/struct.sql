@@ -221,9 +221,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item (
         PRIMARY KEY (pk_i_id),
         FOREIGN KEY (fk_i_user_id) REFERENCES /*TABLE_PREFIX*/t_user (pk_i_id),
         FOREIGN KEY (fk_i_category_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id),
-        FOREIGN KEY (fk_c_currency_code) REFERENCES /*TABLE_PREFIX*/t_currency (pk_c_code)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
+        FOREIGN KEY (fk_c_currency_code) REFERENCES /*TABLE_PREFIX*/t_currency (pk_c_code),
 
         INDEX (fk_i_user_id),
         INDEX (fk_i_category_id),

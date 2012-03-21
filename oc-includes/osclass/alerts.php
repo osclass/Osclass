@@ -43,11 +43,14 @@
 
         $active = TRUE;
         $searches = Alerts::newInstance()->findByTypeGroup($type,$active) ;
-        foreach ($searches as $s_search) {
-            $a_search = Search::newInstance();
-
+        foreach($searches as $s_search) {
             // Get if there're new ads on this search
-            $a_search = osc_unserialize(base64_decode($s_search['s_search'])) ;
+            $json               = base64_decode($s_search['s_search']) ;
+            $array_conditions   = (array)json_decode($json);
+
+            $new_search = Search::newInstance();
+            $new_search->setJsonAlert($array_conditions);
+        
             $cron = Cron::newInstance()->getCronByType($type);
             if (is_array($cron)) {
                 $last_exec = $cron['d_last_exec'] ;
@@ -55,10 +58,10 @@
                 $last_exec = '0000-00-00 00:00:00' ;
             }
 
-            $a_search->addConditions(sprintf(" %st_item.dt_pub_date > '%s' ", DB_TABLE_PREFIX, $last_exec)) ;
-
-            $totalItems = $a_search->count();
-            $items = $a_search->doSearch();
+            $new_search->addConditions(sprintf(" %st_item.dt_pub_date > '%s' ", DB_TABLE_PREFIX, $last_exec)) ;
+            
+            $items      = $new_search->doSearch();
+            $totalItems = $new_search->count();
 
             if (count($items) > 0) {
                 //If we have new items from last check
@@ -66,7 +69,6 @@
                 $users = Alerts::newInstance()->findUsersBySearchAndType($s_search['s_search'], $type, $active) ;
 
                 if (count($users) > 0 ) {
-
 
                     $ads = "";
                     foreach ($items as $item) {

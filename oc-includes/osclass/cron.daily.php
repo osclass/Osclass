@@ -122,8 +122,8 @@
         }
     }
 
-    osc_add_hook('cron_daily', 'update_cat_stats') ;
-    osc_add_hook('cron_daily', 'update_location_stats') ;
+//    osc_add_hook('cron_daily', 'update_cat_stats') ;
+//    osc_add_hook('cron_daily', 'update_location_stats') ;
     osc_add_hook('cron_daily', 'purge_latest_searches_daily') ;
     
     osc_runAlert('DAILY') ;

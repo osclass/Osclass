@@ -19,6 +19,9 @@
     $numUsers            = __get("numUsers") ;
     $numAdmins           = __get("numAdmins") ;
     $numItems            = __get("numItems") ;
+    $numItemsSpam        = __get("numItemsSpam") ;
+    $numItemsBlock       = __get("numItemsBlock") ;
+    $numItemsInactive    = __get("numItemsInactive") ;
     $numItemsPerCategory = __get("numItemsPerCategory") ;
     $newsList            = __get("newsList") ;
     $comments            = __get("comments") ;
@@ -75,6 +78,10 @@
                                     <li><?php printf( __('Number of items: %d'), (int) $numItems ) ; ?></li>
                                     <li><?php printf( __('Number of public users: %d'), (int) $numUsers ) ; ?></li>
                                     <li><?php printf( __('Number of administrators: %d'), $numAdmins ) ; ?></li>
+                                    
+                                    <li><?php printf( __('Number of items marked as spam: %d'), $numItemsSpam) ; ?></li>
+                                    <li><?php printf( __('Number of items marked as blocked: %d'), $numItemsBlock) ; ?></li>
+                                    <li><?php printf( __('Number of items marked as inactive: %d'), $numItemsInactive ) ; ?></li>
                                 </ul>
                             </div>
                         </div>

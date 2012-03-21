@@ -171,7 +171,10 @@
             
             function enable_cat(id) {
                 var enabled ;
-                $(".jsMessage").hide() ;
+                
+                $(".jsMessage").fadeIn("fast") ;
+                $(".jsMessage p").attr('class', '') ;
+                $(".jsMessage p").html("<img height='16' width='16' src='<?php echo osc_current_admin_theme_url('images/spinner_loading.gif');?>'> <?php _e('This action can take a while.') ; ?>") ;
 
                 if( $('div[category_id=' + id + ']').hasClass('disabled') ) {
                     enabled = 1 ;
@@ -218,10 +221,14 @@
                             $(".jsMessage p").attr('class', 'ok') ;
                         }
 
+                        // hide jsMessage
+                        $(".jsMessage").hide() ;
                         $(".jsMessage").fadeIn("fast");
                         $(".jsMessage p").html(message);
                     },
                     error: function(){
+                        // hide jsMessage
+                        $(".jsMessage").hide() ;
                         $(".jsMessage").fadeIn("fast") ;
                         $(".jsMessage p").attr('class', '') ;
                         $(".jsMessage p").html("<?php _e('Ajax error, try again.') ; ?>") ;
