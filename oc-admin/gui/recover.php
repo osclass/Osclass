@@ -16,11 +16,10 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 ?>
-
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title><?php _e('OSClass admin panel login') ; ?></title>
+        <title><?php echo osc_page_title() ; ?> &raquo; <?php _e('Lost your password') ; ?></title>
         <script type="text/javascript" src="<?php echo osc_admin_base_url() ; ?>themes/modern/js/jquery.js"></script>
         <link type="text/css" href="style/backoffice_login.css" media="screen" rel="stylesheet" />
     </head>
@@ -48,13 +47,11 @@
                 <?php osc_show_recaptcha(); ?>
                 <p class="submit"><input type="submit" name="submit" id="submit" value="<?php _e('Get new password') ; ?>" tabindex="100" /></p>
             </form>
-
             <p id="nav">
                 <a title="<?php _e('Log in') ; ?>" href="<?php echo osc_admin_base_url() ; ?>"><?php _e('Log in') ; ?></a>
             </p>
-
         </div>
-        <p id="backtoblog"><a href="<?php echo osc_base_url() ; ?>" title="<?php _e('Back to') . ' ' . osc_page_title() ; ?>">&larr; <?php _e('Back to') ; ?> <?php echo osc_page_title() ; ?></a></p>
+        <p id="backtoblog"><a href="<?php echo osc_base_url() ; ?>" title="<?php printf( __('Back to %s'), osc_page_title() ) ; ?>">&larr; <?php printf( __('Back to %s'), osc_page_title() ) ; ?></a></p>
         <script type="text/javascript">
             $(document).ready(function(){
                 $('#user_email').focus(function(){

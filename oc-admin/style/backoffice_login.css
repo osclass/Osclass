@@ -10,6 +10,15 @@ body {
 
     background-color:#F2F2F2;
 }
+
+a {
+    color: #259FA5;
+}
+
+a:hover {
+    color: #08737B;
+}
+
 #login{
     width:750px;
     margin:80px auto;
