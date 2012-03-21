@@ -2,8 +2,8 @@
 require_once('../../../../oc-load.php');
 require_once('../../test_case.php');
 
-class AllTests extends TestSuite {
-    function AllTests() {
+class AllAdminTests extends TestSuite {
+    function AllAdminTests() {
         $this->TestSuite('All tests');
         
         // OC-CONTENT / LANGUAGES & PLUGINS need to be writable
