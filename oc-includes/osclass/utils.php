@@ -24,14 +24,14 @@
 /**
  * check if the item is expired 
  */
-function osc_isExpired($d_expiration) {
+function osc_isExpired($dt_expiration) {
     $now       = date("Ymdhis");
     
-    $d_expiration = str_replace(' ', '', $d_expiration);
-    $d_expiration = str_replace('-', '', $d_expiration);
-    $d_expiration = str_replace(':', '', $d_expiration);
+    $dt_expiration = str_replace(' ', '', $dt_expiration);
+    $dt_expiration = str_replace('-', '', $dt_expiration);
+    $dt_expiration = str_replace(':', '', $dt_expiration);
 
-    if ($d_expiration > $now) { 
+    if ($dt_expiration > $now) { 
         return false;
     } else {
         return true;

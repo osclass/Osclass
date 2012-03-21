@@ -192,12 +192,10 @@ class Frontend_search extends FrontendTest {
         $aItems = $mItems->listWhere('fk_i_category_id = 39');
         foreach($aItems as $actual_item) {
             echo "update -> " . $actual_item['pk_i_id'] ."<br>";
-            $mItems->update( array('dt_pub_date' => '2010-05-05 10:00:00') , array('pk_i_id' => $actual_item['pk_i_id']) );
+            $mItems->update( array('dt_expiration' => '2010-05-05 10:00:00', 'dt_pub_date' => '2010-05-03 10:00:00') , array('pk_i_id' => $actual_item['pk_i_id']) );
         }
 
-        $conn = getConnection();
-        $conn->osc_dbExec(sprintf("UPDATE %st_cron set d_last_exec = '0000-00-00 00:00:00', d_next_exec = '0000-00-00 00:00:00' WHERE e_type = 'HOURLY'",DB_TABLE_PREFIX) );
-        unset($conn);
+        Cron::newInstance()->update(array('d_last_exec' => '0000-00-00 00:00:00', 'd_next_exec' => '0000-00-00 00:00:00'), array('e_type' => 'DAILY'));
         
         $this->selenium->open( osc_base_url(true) . "?page=cron" );
         $this->selenium->waitForPageToLoad("3000");

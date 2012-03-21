@@ -13,16 +13,17 @@ class OCadmin_appearance extends OCadminTest {
     function testAddTheme() {
         $this->loginWith();
 
+        @chmod(CONTENT_PATH."themes/", 0777);
         $this->selenium->open(osc_admin_base_url(true));
         $this->selenium->click("link=Appearance");
-        $this->selenium->click("link=» Add a new theme");
+        $this->selenium->click("link=Add new theme");
         $this->selenium->waitForPageToLoad("10000");
 
         if ($this->selenium->isTextPresent("chmod a+w ")) {
             $this->assertTrue(FALSE, "NOTICE, You need give permissions to the folder");
         } else {
             $this->selenium->type("package", $this->selenium->_path(LIB_PATH . "simpletest/test/osclass/newcorp.zip"));
-            $this->selenium->click("button_save");
+            $this->selenium->click("//input[@type='submit']");
             $this->selenium->waitForPageToLoad("30000");
             $this->assertTrue($this->selenium->isTextPresent("The theme has been installed correctly"), "Add a new theme.");
         }
@@ -33,36 +34,27 @@ class OCadmin_appearance extends OCadminTest {
      * Appearance -> Manage themes
      * Activate theme and deactivate (activate default theme)
      */
-
     function testActivateTheme() {
         $this->loginWith();
 
         $this->selenium->open(osc_admin_base_url(true));
         $this->selenium->click("link=Appearance");
-        $this->selenium->click("link=» Manage themes");
+        $this->selenium->click("link=Manage themes");
         $this->selenium->waitForPageToLoad("10000");
 
-        if ($this->selenium->isTextPresent("chmod a+w ")) {
-            $this->assertTrue(FALSE, "NOTICE, You need give permissions to the folder");
-        } else {
-            $this->selenium->click("link=Activate");
-            $this->selenium->waitForPageToLoad("30000");
-            $text_element = $this->selenium->getText("xpath=//div[@id='current_theme_info']");
-            if (preg_match('/NewCorp Theme/', $text_element)) {
-                $this->assertTrue(TRUE, "Activate new theme.");
-            } else {
-                $this->assertTrue(FALSE, "Activate new theme.");
-            }
-            // activate default theme again
-            $this->selenium->click("link=Activate");
-            $this->selenium->waitForPageToLoad("30000");
-            $text_element = $this->selenium->getText("xpath=//div[@id='current_theme_info']");
-            if (preg_match('/Modern Theme/', $text_element)) {
-                $this->assertTrue(TRUE, "Activate default theme.");
-            } else {
-                $this->assertTrue(FALSE, "Activate default theme.");
-            }
-        }
+        $this->selenium->click("//a[@href[contains(.,'newcorp')] and text()='Activate']");
+        $this->selenium->waitForPageToLoad("10000");
+        sleep(10);
+        $this->assertTrue('Theme activated correctly', "Activate newcorp theme.");
+
+        
+        $this->selenium->click("link=Appearance");
+        $this->selenium->click("link=Manage themes");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->click("//a[@href[contains(.,'modern')] and text()='Activate']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->assertTrue('Theme activated correctly', "Activate modern theme.");
     }
 
     /*
@@ -88,11 +80,11 @@ class OCadmin_appearance extends OCadminTest {
     private function widgetsHeader() {
         $this->selenium->open(osc_admin_base_url(true));
         $this->selenium->click("link=Appearance");
-        $this->selenium->click("link=» Add or remove widgets");
+        $this->selenium->click("link=Manage widgets");
         $this->selenium->waitForPageToLoad("10000");
 
         // add header widget
-        $this->selenium->click("xpath=//div[@id='settings_form']/div/div[1]/div/a");
+        $this->selenium->click("//h4[contains(.,'header')]/a");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->type("description", "header1");
         $this->selenium->selectFrame("index=0");
@@ -110,7 +102,7 @@ class OCadmin_appearance extends OCadminTest {
 
         $this->selenium->open(osc_admin_base_url(true));
         $this->selenium->click("link=Appearance");
-        $this->selenium->click("link=» Add or remove widgets");
+        $this->selenium->click("link=Manage widgets");
         $this->selenium->waitForPageToLoad("10000");
 
         // remove widget
@@ -127,11 +119,11 @@ class OCadmin_appearance extends OCadminTest {
     private function widgetsFooter() {
         $this->selenium->open(osc_admin_base_url(true));
         $this->selenium->click("link=Appearance");
-        $this->selenium->click("link=» Add or remove widgets");
+        $this->selenium->click("link=Manage widgets");
         $this->selenium->waitForPageToLoad("10000");
 
         // add categories widget
-        $this->selenium->click("xpath=//div[@id='settings_form']/div/div[2]/div/a");
+        $this->selenium->click("//h4[contains(.,'footer')]/a");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->type("description", "footer1");
         $this->selenium->selectFrame("index=0");
@@ -148,8 +140,8 @@ class OCadmin_appearance extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent('New Widget Footer'), "Footer widget at website.");
 
         $this->selenium->open(osc_admin_base_url(true));
-        $this->selenium->click("link=Appearance");
-        $this->selenium->click("link=» Add or remove widgets");
+        $this->selenium->click("link='Appearance']");
+        $this->selenium->click("link=Manage widgets");
         $this->selenium->waitForPageToLoad("10000");
 
         //remove widget
@@ -166,11 +158,11 @@ class OCadmin_appearance extends OCadminTest {
     private function editWidgetsHeader() {
         $this->selenium->open(osc_admin_base_url(true));
         $this->selenium->click("link=Appearance");
-        $this->selenium->click("link=» Add or remove widgets");
+        $this->selenium->click("link=Manage widgets");
         $this->selenium->waitForPageToLoad("10000");
 
         // add header widget
-        $this->selenium->click("xpath=//div[@id='settings_form']/div/div[1]/div/a");
+        $this->selenium->click("//h4[contains(.,'header')]/a");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->type("description", "header1");
         $this->selenium->selectFrame("index=0");
@@ -200,7 +192,7 @@ class OCadmin_appearance extends OCadminTest {
 
         $this->selenium->open(osc_admin_base_url(true));
         $this->selenium->click("link=Appearance");
-        $this->selenium->click("link=» Add or remove widgets");
+        $this->selenium->click("link=Manage widgets");
         $this->selenium->waitForPageToLoad("10000");
 
         // remove widget

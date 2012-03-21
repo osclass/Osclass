@@ -5,7 +5,7 @@ require_once('OCadminTest.php');
 require_once('MyReporter.php');
 require_once("util_settings.php");
 
-$test = new AllTests();
+$test = new AllAdminTests();
 $test->run(new MyReporter());
 
 ?>

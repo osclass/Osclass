@@ -348,7 +348,7 @@
                         }
                     }
 
-                    if( osc_isExpired($item['d_expiration']) ) {
+                    if( osc_isExpired($item['dt_expiration']) ) {
                         osc_add_flash_error_message( _m('We\'re sorry, but the item has expired. You can\'t contact the seller')) ;
                         $this->redirectTo(osc_item_url());
                     }

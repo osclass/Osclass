@@ -20,8 +20,8 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->assertTrue(!$this->selenium->isTextPresent('Log in'), "Login oc-admin.");
         
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» Cron system");
+        $this->selenium->click("link=Settings");
+        $this->selenium->click("link=General");
         $this->selenium->waitForPageToLoad("10000");
         
         $cron = $uSettings->findValueByName('auto_cron');
@@ -61,12 +61,12 @@ class OCadmin_generalSettings extends OCadminTest {
         if($keep_original_image == 1){ $keep_original_image = 'on';} else { $keep_original_image = 'off'; }
 
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» Media");
+        $this->selenium->click("link=Settings");
+        $this->selenium->click("link=Media");
         $this->selenium->waitForPageToLoad("10000");
 
         // change values to some test-defined ones
-        $this->selenium->type('maxSizeKb'   , '500000');
+        $this->selenium->type('maxSizeKb'   , '500');
         $this->selenium->type('allowedExt'  , 'ext,deg,osc');
         $this->selenium->type('dimThumbnail', '10x10');
         $this->selenium->type('dimPreview'  , '50x50');
@@ -78,7 +78,7 @@ class OCadmin_generalSettings extends OCadminTest {
 
         $this->assertTrue($this->selenium->isTextPresent("Media config has been updated"), "Media tab, update.");
 
-        $this->assertEqual( $this->selenium->getValue("maxSizeKb")      , '500000', 'Media tab, check maxSizeKb');
+        $this->assertEqual( $this->selenium->getValue("maxSizeKb")      , '500', 'Media tab, check maxSizeKb');
         $this->assertEqual( $this->selenium->getValue('allowedExt')     , 'ext,deg,osc', 'Media tab, check allowedExt ext,deg,osc');
         $this->assertEqual( $this->selenium->getValue('dimThumbnail')   , '10x10', 'Media tab, check dimThumnai 10x10');
         $this->assertEqual( $this->selenium->getValue('dimPreview')     , '50x50' , 'Media tab, check dimPreview 50x50');
@@ -128,8 +128,8 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->loginWith();
 
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» Mail Server");
+        $this->selenium->click("link=Settings");
+        $this->selenium->click("link=Mail server");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->type('mailserver_type'     , 'custom');
@@ -195,29 +195,43 @@ class OCadmin_generalSettings extends OCadminTest {
 
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» Spam and bots");
+        $this->selenium->click("link=Settings");
+        $this->selenium->click("link=Spam and bots");
+        $this->selenium->waitForPageToLoad("10000");
+        
+        // AKISMET
+
+        $this->selenium->type('akismetKey'          , '9f18f856aa3c');
+        $this->selenium->click("//input[@id='submit_akismet']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->type('akismetKey'          , '1234567890');
+        $this->assertTrue( $this->selenium->isTextPresent("Your Akismet key has been updated") ,"Can't update the Akismet Key. ERROR");
+        $this->assertEqual( $this->selenium->getValue('akismetKey')         , '9f18f856aa3c', 'Spam&Bots, akismet key');
+
+        $this->selenium->type('akismetKey'          , $pref['akismet_key']);
+        $this->selenium->click("//input[@id='submit_akismet']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("Your Akismet key has been cleared") ,"Can't update the Akismet Key. ERROR");
+        $this->assertEqual( $this->selenium->getValue('akismetKey')         , $pref['akismet_key'] , 'Spam&Bots, akismet key');
+        
+        // RECAPTCHA
+        
         $this->selenium->type('recaptchaPrivKey'    , '1234567890');
         $this->selenium->type('recaptchaPubKey'     , '1234567890');
-        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->click("//input[@id='submit_recaptcha']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("Akismet and reCAPTCHA have been updated") ,"Can't update Spam and bots. ERROR");
-        $this->assertEqual( $this->selenium->getValue('akismetKey')         , '1234567890', 'Spam&Bots, akismet key');
+        $this->assertTrue( $this->selenium->isTextPresent("Your reCAPTCHA key has been updated") ,"Can't update the reCAPTCHA Key. ERROR");
         $this->assertEqual( $this->selenium->getValue('recaptchaPrivKey')   , '1234567890', 'Spam&Bots, recaptcha private key');
         $this->assertEqual( $this->selenium->getValue('recaptchaPubKey')    , '1234567890', 'Spam&Bots, recaptcha public key');
 
-        $this->selenium->type('akismetKey'          , $pref['akismet_key']);
         $this->selenium->type('recaptchaPrivKey'    , $pref['recaptchaPrivKey']);
         $this->selenium->type('recaptchaPubKey'     , $pref['recaptchaPubKey']);
-        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->click("//input[@id='submit_recaptcha']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("Akismet and reCAPTCHA have been updated") ,"Can't update Spam and bots. ERROR");
-        $this->assertEqual( $this->selenium->getValue('akismetKey')         , $pref['akismet_key'] , 'Spam&Bots, akismet key');
+        $this->assertTrue( $this->selenium->isTextPresent("Your reCAPTCHA key has been cleared") ,"Can't update the reCAPTCHA Key. ERROR");
         $this->assertEqual( $this->selenium->getValue('recaptchaPrivKey')   , $pref['recaptchaPrivKey'] , 'Spam&Bots, recaptcha private key');
         $this->assertEqual( $this->selenium->getValue('recaptchaPubKey')    , $pref['recaptchaPubKey'] , 'Spam&Bots, recaptcha public key');
         
@@ -241,8 +255,8 @@ class OCadmin_generalSettings extends OCadminTest {
 
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» Permalinks");
+        $this->selenium->click("link=Settings");
+        $this->selenium->click("link=Permalinks");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertEqual( $this->selenium->getValue('rewrite_enabled'), $pref['rewrite_enabled'] , 'Permalinks, check.' ) ;
@@ -269,50 +283,6 @@ class OCadmin_generalSettings extends OCadminTest {
     
     /*
      * Login oc-admin
-     * GeneralSettings -> contact
-     * set enabled attachment, check
-     * Logout
-     */
-    function testContact()
-    {
-        $uSettings = new utilSettings();
-        
-        $pref = array();
-        $pref['contact_attachment'] = Preference::newInstance()->findValueByName('contact_attachment') ;
-        if($pref['contact_attachment'] == 1){ $pref['contact_attachment'] = 'on';} else { $pref['contact_attachment'] = 'off'; }
-
-        $this->loginWith();
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» Contact");
-        $this->selenium->waitForPageToLoad("10000");
-        $this->assertEqual( $this->selenium->getValue('enabled_attachment'), $pref['contact_attachment'] , 'Contact, check.') ;
-
-        $this->selenium->click("enabled_attachment");
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->assertTrue( $this->selenium->isTextPresent("Contact configuration has been updated") , 'Contact, check.');
-
-        if( $pref['contact_attachment'] == 'on' ) {
-            $this->assertEqual( $this->selenium->getValue('enabled_attachment'), 'off', 'Contact, check.' ) ;
-        } else {
-            $this->assertEqual( $this->selenium->getValue('enabled_attachment'), 'on', 'Contact, check.' ) ;
-        }
-
-        $this->selenium->click("enabled_attachment");
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->assertTrue( $this->selenium->isTextPresent("Contact configuration has been updated") , 'Contact, check.');
-        $this->assertEqual( $this->selenium->getValue('enabled_attachment'), $pref['contact_attachment'], 'Contact, check.' ) ;
-        
-        unset($uSettings);
-        unset($pref);
-    }
-
-    /*
-     * Login oc-admin
      * GeneralSettings -> Comments
      * update settings, and check
      * Logout
@@ -337,8 +307,8 @@ class OCadmin_generalSettings extends OCadminTest {
 
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("xpath=(//a[text()='» Comments'])[position()=2]");
+        $this->selenium->click("link=Settings");
+        $this->selenium->click("xpath=(//a[text()='Comments'])[position()=2]");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("enabled_comments");
         $this->selenium->click("reg_user_post_comments");
@@ -413,6 +383,8 @@ class OCadmin_generalSettings extends OCadminTest {
         $pref['num_rss_items']  = Preference::newInstance()->findValueByName('num_rss_items') ;
         $pref['tf']             = Preference::newInstance()->findValueByName('timeFormat') ;
         $pref['max_latest_items_at_home']  = Preference::newInstance()->findValueByName('maxLatestItems@home') ;
+        $pref['contact_attachment'] = Preference::newInstance()->findValueByName('contact_attachment') ;
+        if($pref['contact_attachment'] == 1){ $pref['contact_attachment'] = 'on';} else { $pref['contact_attachment'] = 'off'; }
         unset($uSettings);  
         return $pref;
     }
@@ -429,8 +401,8 @@ class OCadmin_generalSettings extends OCadminTest {
         
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» General settings");
+        $this->selenium->click("link=Settings");
+        $this->selenium->click("link=General");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->type("pageTitle"   ,"New title web");
@@ -442,7 +414,9 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->type("max_latest_items_at_home" , "20");
         $this->selenium->click("m/d/Y");
         $this->selenium->click("H:i");
-
+        $this->assertEqual( $this->selenium->getValue('enabled_attachment'), $pref['contact_attachment'] , 'Contact, check.') ;
+        $this->selenium->click("enabled_attachment");
+        
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
@@ -457,8 +431,14 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->assertEqual( $this->selenium->getValue('max_latest_items_at_home')       , '20'  , 'GeneralSettings, check.' ) ;
         $this->assertEqual( $this->selenium->getValue('timeFormat')    , "H:i"          , 'GeneralSettings, check.') ;
 
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» General settings");
+        if( $pref['contact_attachment'] == 'on' ) {
+            $this->assertEqual( $this->selenium->getValue('enabled_attachment'), 'off', 'Contact, check.' ) ;
+        } else {
+            $this->assertEqual( $this->selenium->getValue('enabled_attachment'), 'on', 'Contact, check.' ) ;
+        }
+
+        $this->selenium->click("link=Settings");
+        $this->selenium->click("link=General");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->type("pageTitle"   , $pref['pageTitle']);
         $this->selenium->type("contactEmail", $pref['contactEmail']);
@@ -469,6 +449,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->type("max_latest_items_at_home" , $pref['max_latest_items_at_home'] ) ;
         $this->selenium->click($pref['df']);
         $this->selenium->click($pref['tf']);
+        $this->selenium->click("enabled_attachment");
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
         
@@ -482,6 +463,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->assertEqual( $this->selenium->getValue('num_rss_items') , $pref['num_rss_items']  , 'GeneralSettings, check.') ;
         $this->assertEqual( $this->selenium->getValue('timeFormat')    , $pref['tf']             , 'GeneralSettings, check.') ;
         $this->assertEqual( $this->selenium->getValue('max_latest_items_at_home') , $pref['max_latest_items_at_home']  , 'GeneralSettings, check.') ;
+        $this->assertEqual( $this->selenium->getValue('enabled_attachment'), $pref['contact_attachment'], 'Contact, check.' ) ;
     }
 
     /*
@@ -494,8 +476,8 @@ class OCadmin_generalSettings extends OCadminTest {
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» Locations");
+        $this->selenium->click("link=Settings");
+        $this->selenium->click("link=Locations");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("xpath=//a[@id='b_new_country']");
@@ -537,8 +519,8 @@ class OCadmin_generalSettings extends OCadminTest {
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» Locations");
+        $this->selenium->click("link=Settings");
+        $this->selenium->click("link=Locations");
         $this->selenium->waitForPageToLoad("10000");
         // add Country
         $this->selenium->click("xpath=//a[@id='b_new_country']");
@@ -621,8 +603,8 @@ class OCadmin_generalSettings extends OCadminTest {
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» Locations");
+        $this->selenium->click("link=Settings");
+        $this->selenium->click("link=Locations");
         $this->selenium->waitForPageToLoad("10000");
         // add Country
         $this->selenium->click("xpath=//a[@id='b_new_country']");
@@ -638,8 +620,8 @@ class OCadmin_generalSettings extends OCadminTest {
         // add country again
 
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» Locations");
+        $this->selenium->click("link=Settings");
+        $this->selenium->click("link=Locations");
         $this->selenium->waitForPageToLoad("10000");
         // add Country
         $this->selenium->click("xpath=//a[@id='b_new_country']");
@@ -758,54 +740,50 @@ class OCadmin_generalSettings extends OCadminTest {
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» Currencies");
+        $this->selenium->click("link=Settings");
+        $this->selenium->click("link=Currencies");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("link=Add");
 
-        $this->selenium->click("button_open");
         $this->selenium->waitForPageToLoad("30000");
 
-        $this->selenium->type("code", "INR");
-        $this->selenium->type("name", "Indian Rupee");
-        $this->selenium->type("description", "Indian Rupee र");
+        $this->selenium->type("pk_c_code", "INR");
+        $this->selenium->type("s_name", "Indian Rupee");
+        $this->selenium->type("s_description", "Indian Rupee र");
 
-        $this->selenium->click("//input[@id='button_save' and @value='Create']");
+        $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:New currency has been added") , "Can't add a currency" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Currency added") , "Add currency" ) ;
 
         // edit
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» Currencies");
+        $this->selenium->click("link=Settings");
+        $this->selenium->click("link=Currencies");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'INR')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/div/a[text()='Edit']");
-        $this->selenium->waitForPageToLoad("10000");
-        
-        $this->selenium->type("name", "Indian_Rupee");
-        $this->selenium->type("description", "Indian_Rupee र");
-
-        $this->selenium->click("//input[@id='button_save' and @value='Edit']");
+        $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/small/a[text()='Edit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:Currency has been updated") , "Can't edit a currency" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:Indian_Rupee") , "Can't edit a currency" ) ;
+        $this->selenium->type("s_name", "Indian_Rupee");
+        $this->selenium->type("s_description", "Indian_Rupee र");
+
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("Currency updated") , "Edit currency" ) ;
         // delete
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» Currencies");
+        $this->selenium->click("link=Settings");
+        $this->selenium->click("link=Currencies");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'INR')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/div/a[text()='Delete']");
+        $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/small/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete a currency" ) ;
-        $this->assertTrue( !$this->selenium->isTextPresent("regexp:Indian_Rupee") , "Can't delete a currency" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("One currency has been deleted") , "Delete currency" ) ;
+        $this->assertTrue( !$this->selenium->isTextPresent("Indian_Rupee") , "Delete currency" ) ;
     }
 
     /*
@@ -818,55 +796,53 @@ class OCadmin_generalSettings extends OCadminTest {
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» Currencies");
+        $this->selenium->click("link=Settings");
+        $this->selenium->click("link=Currencies");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("link=Add");
 
-        $this->selenium->click("button_open");
         $this->selenium->waitForPageToLoad("30000");
 
-        $this->selenium->type("code", "INR");
-        $this->selenium->type("name", "Indian Rupee");
-        $this->selenium->type("description", "Indian Rupee र");
+        $this->selenium->type("pk_c_code", "INR");
+        $this->selenium->type("s_name", "Indian Rupee");
+        $this->selenium->type("s_description", "Indian Rupee र");
 
-        $this->selenium->click("//input[@id='button_save' and @value='Create']");
+        $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:New currency has been added") , "Can't add a currency" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Currency added") , "Add currency" ) ;
 
         // add the same currency again
         // $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» Currencies");
+        $this->selenium->click("link=Settings");
+        $this->selenium->click("link=Currencies");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("link=Add");
 
-        $this->selenium->click("button_open");
         $this->selenium->waitForPageToLoad("30000");
 
-        $this->selenium->type("code", "INR");
-        $this->selenium->type("name", "Indian Rupee");
-        $this->selenium->type("description", "Indian Rupee र");
+        $this->selenium->type("pk_c_code", "INR");
+        $this->selenium->type("s_name", "Indian Rupee");
+        $this->selenium->type("s_description", "Indian Rupee र");
 
-        $this->selenium->click("//input[@id='button_save' and @value='Create']");
+        $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:Error: currency couldn't be added") , "Can add existent currency. ERROR" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Currency couldn't be added") , "Add currency twice. ERROR" ) ;
 
          // delete
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» Currencies");
+        $this->selenium->click("link=Settings");
+        $this->selenium->click("link=Currencies");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'INR')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/div/a[text()='Delete']");
+        $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/small/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete a currency" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("One currency has been deleted") , "Delete currency" ) ;
+        $this->assertTrue( !$this->selenium->isTextPresent("Indian_Rupee") , "Delete currency" ) ;
     }
 }
 ?>

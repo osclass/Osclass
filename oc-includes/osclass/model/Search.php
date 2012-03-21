@@ -115,7 +115,7 @@
                 $this->addItemConditions(sprintf("%st_item.b_enabled = 1 ", DB_TABLE_PREFIX));
                 $this->addItemConditions(sprintf("%st_item.b_active = 1 ", DB_TABLE_PREFIX));
                 $this->addItemConditions(sprintf("%st_item.b_spam = 0", DB_TABLE_PREFIX));
-                $this->addItemConditions(sprintf("(%st_item.b_premium = 1 || %st_item.d_expiration >= '%s')", DB_TABLE_PREFIX, DB_TABLE_PREFIX, date('Y-m-d H:i:s')) ) ;
+                $this->addItemConditions(sprintf("(%st_item.b_premium = 1 || %st_item.dt_expiration >= '%s')", DB_TABLE_PREFIX, DB_TABLE_PREFIX, date('Y-m-d H:i:s')) ) ;
             }
             $this->total_results        = null;
             $this->total_results_table  = null;
@@ -791,8 +791,9 @@
                 
                 // WHERE
                 if($this->withPicture) {
-                    $this->dao->from(sprintf('%st_item_resource', DB_TABLE_PREFIX));
-                    $this->dao->where(sprintf("%st_item_resource.s_content_type LIKE '%%image%%' AND %st_item.pk_i_id = %st_item_resource.fk_i_item_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+                    $this->dao->join(sprintf('%st_item_resource', DB_TABLE_PREFIX), sprintf('%st_item_resource.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX), 'LEFT');
+                    $this->dao->where(sprintf("%st_item_resource.s_content_type LIKE '%%image%%' ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+                    $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
                 }
                 if($this->withUserId) {
                     $this->_fromUser();
@@ -866,8 +867,9 @@
                     }
                     
                     if($this->withPicture) {
-                        $this->dao->from(sprintf('%st_item_resource', DB_TABLE_PREFIX));
-                        $this->dao->where(sprintf("%st_item_resource.s_content_type LIKE '%%image%%' AND %st_item.pk_i_id = %st_item_resource.fk_i_item_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+                        $this->dao->join(sprintf('%st_item_resource', DB_TABLE_PREFIX), sprintf('%st_item_resource.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX), 'LEFT');
+                        $this->dao->where(sprintf("%st_item_resource.s_content_type LIKE '%%image%%' ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+                        $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
                     }
                     if($this->withUserId) {
                         $this->_fromUser();
@@ -1043,7 +1045,7 @@
             $whe .= DB_TABLE_PREFIX.'t_item.b_enabled = 1 AND ';
             $whe .= DB_TABLE_PREFIX.'t_item.b_spam = 0 AND ';
             
-            $whe .= '('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_item.d_expiration >= \''. date('Y-m-d H:i:s').'\') ';
+            $whe .= '('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_item.dt_expiration >= \''. date('Y-m-d H:i:s').'\') ';
 
             $whe .= 'AND '.DB_TABLE_PREFIX.'t_category.b_enabled = 1 ';
             if( is_array($category) && !empty ($category) ) {

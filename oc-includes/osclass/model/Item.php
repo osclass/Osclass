@@ -79,7 +79,8 @@
                 'b_active',
                 'b_spam',
                 's_secret',
-                'b_show_email'
+                'b_show_email',
+                'dt_expiration'
             );
             $this->setFields($array_fields) ;
         }
@@ -299,7 +300,7 @@
             $this->dao->where( 'b_active', $active ) ;
             $this->dao->where( 'b_spam', 0 ) ;
             
-            $this->dao->where( '( b_premium = 1 || d_expiration >= \'' . date('Y-m-d H:i:s') .'\' )' ) ;
+            $this->dao->where( '( b_premium = 1 || dt_expiration >= \'' . date('Y-m-d H:i:s') .'\' )' ) ;
             
             $result = $this->dao->get() ;
 
@@ -512,7 +513,7 @@
         }        
         
         /**
-         * Update d_expiration field, using $i_expiration_days 
+         * Update dt_expiration field, using $i_expiration_days 
          * 
          * @param type $i_expiration_days 
          * @return string new date expiration, false if error occurs
@@ -520,24 +521,24 @@
         public function updateExpirationDate($id, $i_expiration_days) 
         {
             if($i_expiration_days > 0) {
-                $sql =  sprintf("UPDATE %s SET d_expiration = ", $this->getTableName());
+                $sql =  sprintf("UPDATE %s SET dt_expiration = ", $this->getTableName());
                 $sql .= sprintf(' date_add(%s.dt_pub_date, INTERVAL %d DAY) ', $this->getTableName(), $i_expiration_days) ;
                 $sql .= sprintf(' WHERE pk_i_id = %d', $id);
             } else {
-                $sql = sprintf("UPDATE %s SET d_expiration = '9999-12-31 23:59:59'  WHERE pk_i_id = %d", $this->getTableName(), $id);
+                $sql = sprintf("UPDATE %s SET dt_expiration = '9999-12-31 23:59:59'  WHERE pk_i_id = %d", $this->getTableName(), $id);
             }
             
             $result = $this->dao->query($sql);
             
             if($result && $result>0) {
-                $this->dao->select('d_expiration');
+                $this->dao->select('dt_expiration');
                 $this->dao->from($this->getTableName());
                 $this->dao->where('pk_i_id', (int)$id );
                 $result = $this->dao->get();
                 
                 if($result && $result->result()>0) {
                     $_item = $result->row();
-                    return $_item['d_expiration'];
+                    return $_item['dt_expiration'];
                 }
                 return false;
             }
@@ -585,7 +586,7 @@
                 return false ;
             }
 
-            if( $item['b_active'] == 1 && $item['b_enabled']==1 && $item['b_spam']==0 && !osc_isExpired($item['d_expiration'])) {
+            if( $item['b_active'] == 1 && $item['b_enabled']==1 && $item['b_spam']==0 && !osc_isExpired($item['dt_expiration'])) {
                 if($item['fk_i_user_id']!=null) {
                     User::newInstance()->decreaseNumItems($item['fk_i_user_id']);
                 }
