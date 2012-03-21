@@ -89,7 +89,7 @@ class MyReporter extends SimpleReporter {
         print "</div>\n";
         print "</body>\n</html>\n";
         
-        if(($this->getFailCount() + $this->getExceptionCount()) > 0) {
+        if($this->fails!='') {
             $subject = '[ERROR] Test results';
         } else {
             $subject = '[OK] Test results';
