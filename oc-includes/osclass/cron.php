@@ -24,19 +24,19 @@
     $i_now = strtotime($d_now) ;
 
     // Hourly crons
-//    $cron = Cron::newInstance()->getCronByType('HOURLY') ;
-//    if( is_array($cron) ) {
-//        $i_next = strtotime($cron['d_next_exec']);
-//
-//        if( ($i_now - $i_next) >= 0 ) {
-//            require_once LIB_PATH . 'osclass/cron.hourly.php' ;
-//
-//            // update the next execution time in t_cron
-//            $d_next = date('Y-m-d H:i:s', $i_now + 3600) ;
-//            Cron::newInstance()->update(array('d_last_exec' => $d_now, 'd_next_exec' => $d_next),
-//                                        array('e_type'      => 'HOURLY')) ;
-//        }
-//    }
+    $cron = Cron::newInstance()->getCronByType('HOURLY') ;
+    if( is_array($cron) ) {
+        $i_next = strtotime($cron['d_next_exec']);
+
+        if( ($i_now - $i_next) >= 0 ) {
+            require_once LIB_PATH . 'osclass/cron.hourly.php' ;
+
+            // update the next execution time in t_cron
+            $d_next = date('Y-m-d H:i:s', $i_now + 3600) ;
+            Cron::newInstance()->update(array('d_last_exec' => $d_now, 'd_next_exec' => $d_next),
+                                        array('e_type'      => 'HOURLY')) ;
+        }
+    }
 
     // Daily crons
     $cron = Cron::newInstance()->getCronByType('DAILY') ;
