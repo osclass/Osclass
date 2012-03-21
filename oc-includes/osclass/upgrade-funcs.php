@@ -286,20 +286,27 @@ CREATE TABLE %st_item_description_tmp (
         $url_location_stats = osc_base_admin_url(true)."?page=tools&action=locations";
         $aMessages[] = '<p><b>'.__('You need to calculate locations stats, please go to admin panel, tools, recalculate location stats or click') .'  <a href="'.$url_location_stats.'">'.__('here').'</a></b></p>';
         
+       
         // update t_alerts - Search object serialized to json
         $aAlerts = Alerts::newInstance()->findByType('HOURLY');
-        foreach($aAlerts as $hourly) 
+        foreach($aAlerts as $hourly) {
             convertAlert($hourly);
-
+        }
+        unset($aAlerts);
+        
         $aAlerts = Alerts::newInstance()->findByType('DAILY');
-        foreach($aAlerts as $daily)
+        foreach($aAlerts as $daily) {
             convertAlert($daily);
+        }
+        unset($aAlerts);
 
         $aAlerts = Alerts::newInstance()->findByType('WEEKLY');
-        foreach($aAlerts as $weekly) 
+        foreach($aAlerts as $weekly) { 
             convertAlert($weekly);
+        }
+        unset($aAlerts);
     } 
-    
+        
     osc_changeVersionTo(240) ;
     
     echo '<div style="border: 1px solid rgb(204, 204, 204); background: none repeat scroll 0% 0% rgb(238, 238, 238);"> <div style="padding: 20px;">';
@@ -310,6 +317,11 @@ CREATE TABLE %st_item_description_tmp (
     }
     echo "</div></div>";
     
+    /**
+     * Convert alerts < 2.4, updating s_search with json encoded to based64.
+     *
+     * @param string $alert base64+serialized
+     */
     function convertAlert($alert)
     {
         // decode search model
@@ -318,7 +330,6 @@ CREATE TABLE %st_item_description_tmp (
             $data = unserialize($data);
             // if search model, convert alert
             if(get_class($data) == 'Search') {
-                $json = $data->toJson(true);
                 // insert new alert with json 
                 $aCondition = array(
                     's_email'       => $alert['s_email'],
