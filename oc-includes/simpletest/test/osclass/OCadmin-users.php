@@ -151,9 +151,7 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->open(osc_base_url(true) . '?page=item&action=item_add');
         $this->assertTrue( ($this->selenium->getSelectedLabel('id=countryId') == 'Spain'), 'Country auto fill');
         $this->assertTrue( ($this->selenium->getValue('id=region')  == 'Barcelona'), 'Region auto fill');
-//        $this->assertTrue( ($this->selenium->getSelectedLabel('id=regionId')  == 'Barcelona'), 'Region not auto filled ERROR');
         $this->assertTrue( ($this->selenium->getValue('id=city')  == 'Barcelona'), 'City auto fill');
-//        $this->assertTrue( ($this->selenium->getSelectedLabel('id=cityId')  == 'Sabadell'), 'City not auto filled ERROR');
         $this->assertTrue( ($this->selenium->getValue('id=cityArea') == 'city area'), 'City area auto fill');
         $this->assertTrue( ($this->selenium->getValue('id=address') == 'address user'), 'Address auto fill');
         // alerts
