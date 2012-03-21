@@ -265,8 +265,8 @@
         {
             $this->dao->select('count(*) as total') ;
             $this->dao->from($this->getTableName().' i') ;
-            $this->dao->join(DB_TABLE_PREFIX.'t_category c', 'c.pk_i_id = i.fk_i_category_id') ;
             if(!is_null($categoryId)) {
+                $this->dao->join(DB_TABLE_PREFIX.'t_category c', 'c.pk_i_id = i.fk_i_category_id') ;
                 $this->dao->where('i.fk_i_category_id', $categoryId) ;
             }
             
@@ -278,6 +278,12 @@
                     break;
                     case 'INACTIVE':   
                         $this->dao->where('b_active', 0);
+                    break;
+                    case 'ENABLE':  
+                        $this->dao->where('b_enabled', 1);
+                    break;
+                    case 'DISABLED':   
+                        $this->dao->where('b_enabled', 0);
                     break;
                     case 'SPAM':   
                         $this->dao->where('b_spam', 1);
