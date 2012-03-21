@@ -60,15 +60,10 @@
 
                     switch($hook) {
                         case 'item_form':
-                            $catId = Params::getParam("catId");
-                            if($catId!='') {
-                                osc_run_hook("item_form", $catId);
-                            } else {
-                                osc_run_hook("item_form");
-                            }
+                            osc_run_hook('item_form', Params::getParam('catId'));
                         break;
                         case 'item_edit':
-                            $catId = Params::getParam("catId");
+                            $catId  = Params::getParam("catId");
                             $itemId = Params::getParam("itemId");
                             osc_run_hook("item_edit", $catId, $itemId);
                         break;
