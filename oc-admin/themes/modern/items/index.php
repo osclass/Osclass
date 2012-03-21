@@ -149,7 +149,7 @@
                     },
                     "aoColumns": [
                         {
-                            "sTitle": "",
+                            "sTitle": '<input id="check_all" type="checkbox" />',
                             "sWidth": "10px",
                             "bSearchable": false,
                             "bSortable": false
