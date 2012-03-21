@@ -123,11 +123,11 @@
             $p_sUser      = Params::getParam('sUser');
             if(!is_array($p_sUser)) {
                 if($p_sUser == '') {
-                    $p_sUser = array() ;
+                    $p_sUser = '';
                 } else {
                     $p_sUser = explode(",", $p_sUser);
                 }
-            }
+            } 
             
             $p_sPattern   = strip_tags(Params::getParam('sPattern'));
             
