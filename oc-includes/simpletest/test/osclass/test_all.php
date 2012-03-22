@@ -1,6 +1,6 @@
 <?php
 
-require_once('testSuiteInstaller.php');
+require_once('testSuiteAll.php');
 require_once('InstallerTest.php');
 require_once('FrontendTest.php');
 require_once('OCadminTest.php');
