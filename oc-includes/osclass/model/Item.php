@@ -591,8 +591,7 @@
          * @return bool
          */
         public function deleteByPrimaryKey($id)
-        {
-            osc_run_hook('delete_item', $id) ;
+        {             
             $item = $this->findByPrimaryKey($id) ;
 
             if ( is_null($item) ) {
@@ -615,8 +614,11 @@
             $this->dao->delete(DB_TABLE_PREFIX.'t_item_location', "fk_i_item_id = $id") ;
             $this->dao->delete(DB_TABLE_PREFIX.'t_item_stats'   , "fk_i_item_id = $id") ;
             $this->dao->delete(DB_TABLE_PREFIX.'t_item_meta'    , "fk_i_item_id = $id") ;
-            $res = parent::deleteByPrimaryKey($id) ;
-            return $res ;
+            $res = parent::deleteByPrimaryKey($id);
+            if($res==1) {
+                osc_run_hook('delete_item', $id) ;
+            }
+            return $res ;  
         }
         
         /**
