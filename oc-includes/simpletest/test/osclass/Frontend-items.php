@@ -1,5 +1,5 @@
 <?php
-require_once '../../../../oc-load.php';
+require_once dirname(__FILE__).'/../../../../oc-load.php';
 
 //require_once('FrontendTest.php');
 
@@ -68,7 +68,7 @@ class Frontend_items extends FrontendTest {
      */
     function testItems_User()
     {
-        require 'ItemData.php';
+        require dirname(__FILE__).'/ItemData.php';
         $item = $aData[0];
         
         $uSettings = new utilSettings();

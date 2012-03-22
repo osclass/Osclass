@@ -1,5 +1,5 @@
 <?php
-require_once '../../../../oc-load.php';
+require_once dirname(__FILE__).'/../../../../oc-load.php';
 
 //require_once('FrontendTest.php');
 
@@ -9,7 +9,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Create a new user
      */
-    /*function testUserInsert()
+    function testUserInsert()
     {
         $this->loginWith() ;
         $this->insertUser() ;
@@ -20,7 +20,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Create a new user
      */
-    /*function testUserInsertbyLink()
+    function testUserInsertbyLink()
     {
         $this->loginWith() ;
         $this->insertUserByLink() ;
@@ -31,7 +31,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Edit an user
      */
-    /*public function testUserEdit()
+    public function testUserEdit()
     {
         $this->loginWith() ;
         $this->insertUser() ;
@@ -56,7 +56,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Test settings (users enabled, validation,...)
      */
-    /*public function testSettings()
+    public function testSettings()
     {
         $this->loginWith() ;
         $this->settings();

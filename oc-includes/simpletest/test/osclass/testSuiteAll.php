@@ -1,23 +1,53 @@
 <?php
-require_once('../../../../oc-load.php');
-require_once('../../test_case.php');
+require_once(dirname(__FILE__).'/../../../../oc-load.php');
+require_once(dirname(__FILE__).'/../../test_case.php');
 
 class AllTests extends TestSuite {
     function AllTests() {
         $this->TestSuite('All tests');
-        
         $tests = array();
-        foreach($_REQUEST as $k => $v) {
-            if($k=='installer' || $k=='frontend' || $k=='admin') {
-                $tests[$k] = explode(",", $v);
+        
+        if(PHP_SAPI==='cli') {
+            foreach($_SERVER['argv'] as $k => $v) {
+                $tmp_arg = explode("=", $v);
+                $k = str_replace("--", "", $tmp_arg[0]);
+                if(count($tmp_arg)>1) {
+                    $v = $tmp_arg[1];
+                    if($k=='installer' || $k=='frontend' || $k=='admin') {
+                        if($v=='' || $v==null) {
+                            $tests[$k] = '';
+                        } else {
+                            $tmp = explode(",", $v);
+                            foreach ($tmp as $t) {
+                                $tests[$k][$t] = 1;
+                            }
+                        }
+                    }
+                } else {
+                    $tests[$k] = '';
+                }
+            }
+        } else {
+            foreach($_REQUEST as $k => $v) {
+                if($k=='installer' || $k=='frontend' || $k=='admin') {
+                    if($v=='' || $v==null) {
+                        $tests[$k] = '';
+                    } else {
+                        $tmp = explode(",", $v);
+                        foreach ($tmp as $t) {
+                            $tests[$k][$t] = 1;
+                        }
+                    }
+                }
             }
         }
+        
         if(empty($tests)) {
             $tests['installer'] = '';
             $tests['frontend'] = '';
             $tests['admin'] = '';
         }
-        
+
         // INSTALLER
         if(isset($tests['installer'])) {
             $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Installer-installer.php');

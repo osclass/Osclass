@@ -1,9 +1,9 @@
 <?php
 
-require_once('testSuiteFrontend.php');
-require_once('FrontendTest.php');
-require_once('MyReporter.php');
-require_once("util_settings.php");
+require_once(dirname(__FILE__).'/testSuiteFrontend.php');
+require_once(dirname(__FILE__).'/FrontendTest.php');
+require_once(dirname(__FILE__).'/MyReporter.php');
+require_once(dirname(__FILE__).'/util_settings.php');
 
 $test = new AllFrontEndTests();
 $test->run(new MyReporter());

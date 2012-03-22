@@ -1,8 +1,8 @@
 <?php
 require_once LIB_PATH . 'Selenium.php';
 
-require_once('../../simpletest.php');
-require_once('../../web_tester.php');
+require_once(dirname(__FILE__).'/../../simpletest.php');
+require_once(dirname(__FILE__).'/../../web_tester.php');
 
 
 abstract class FrontendTest extends WebTestCase {
@@ -17,7 +17,7 @@ abstract class FrontendTest extends WebTestCase {
     
     function setUp()
     {
-        include 'config_test.php';
+        include dirname(__FILE__).'/config_test.php';
 
         $this->_email    = $email;
         $this->_password = $password;

@@ -1,8 +1,8 @@
 <?php
 require_once LIB_PATH . 'Selenium.php';
 
-require_once('../../simpletest.php');
-require_once('../../web_tester.php');
+require_once(dirname(__FILE__).'/../../simpletest.php');
+require_once(dirname(__FILE__).'/../../web_tester.php');
 
 // LOAD OSCLASS
 define( 'ABS_PATH', dirname( dirname( dirname( dirname( dirname(__FILE__) ) ) ) ) . '/' ) ;

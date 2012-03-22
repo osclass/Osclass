@@ -1,7 +1,7 @@
 <?php
 
-require_once('../../../../oc-load.php');
-require_once('../../test_case.php');
+require_once(dirname(__FILE__).'/../../../../oc-load.php');
+require_once(dirname(__FILE__).'/../../test_case.php');
 
 class AllFrontEndTests extends TestSuite {
     function AllFrontEndTests() {

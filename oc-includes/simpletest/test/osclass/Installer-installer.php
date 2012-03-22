@@ -1,12 +1,12 @@
 <?php
-require_once '../../../../oc-load.php';
+require_once dirname(__FILE__).'/../../../../oc-load.php';
 
 class Installer_installer extends InstallerTest {
     
     /*           TESTS          */
     function testInstaller1()
     {
-        require('config_test.php');
+        require(dirname(__FILE__).'/config_test.php');
         flush();
         $this->clean();
         
@@ -79,7 +79,7 @@ class Installer_installer extends InstallerTest {
     /*           TESTS          */
     function testInstaller2()
     {
-        require('config_test.php');
+        require(dirname(__FILE__).'/config_test.php');
         flush();
         $this->clean();
        

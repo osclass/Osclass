@@ -1,8 +1,8 @@
 <?php
 require_once LIB_PATH . 'Selenium.php';
 
-require_once('../../simpletest.php');
-require_once('../../web_tester.php');
+require_once(dirname(__FILE__).'/../../simpletest.php');
+require_once(dirname(__FILE__).'/../../web_tester.php');
 
 
 abstract class OCadminTest extends WebTestCase {
@@ -18,7 +18,7 @@ abstract class OCadminTest extends WebTestCase {
     
     function setUp()
     {
-        include 'config_test.php';
+        include dirname(__FILE__).'/config_test.php';
         
         $this->_adminUser = "testadmin";
         $this->_email    = "testing+testadmin@osclass.org";

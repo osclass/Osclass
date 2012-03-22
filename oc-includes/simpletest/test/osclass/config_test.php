@@ -21,5 +21,9 @@ if(file_exists(dirname(__FILE__)."/custom_config.php")) {
     // test admin config
     $email_admin    = $email;
     $password_admin = 'password';
+    
+    $https = 'off';
+    $host = 'localhost';
+    
 };
 ?>

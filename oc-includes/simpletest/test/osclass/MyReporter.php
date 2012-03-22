@@ -1,5 +1,5 @@
 <?php
-require_once('../../scorer.php');
+require_once(dirname(__FILE__).'/../../scorer.php');
 /**
  *    Sample minimal test displayer. Generates only
  *    failure messages and a pass count.
