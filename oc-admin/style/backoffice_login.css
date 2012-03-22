@@ -7,7 +7,6 @@ body {
     border-top:none;
     font: 12px Arial,Helvetica Neue,Helvetica,sans-serif;
     text-align: center;
-
     background-color:#F2F2F2;
 }
 
@@ -42,7 +41,6 @@ form{
 form input{
     width:300px; height:45px; background-color:#E2E2E2;
     margin: 0px; padding: 0px; border:0px; font-size:25px; padding-left:10px; font-weight:bold; padding-top:7px; padding-bottom:7px;
-
     -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px;
 }
 p{
@@ -54,6 +52,8 @@ p label{
 p label span{
     color:#58595B; font-weight:bold; display: block; padding-top:8px;
     position: absolute; left:10px; font-size:25px;
+    padding-top: 15px\9;
+    *padding-top: 15px;
 }
 .submit{
     position:relative; 
@@ -65,18 +65,17 @@ p label span{
     height:45px; background-color:#2FBFD1; color:#fff; width:auto;
     font-size:25px; line-height:25px; font-weight:bold; 
     margin: 0px; padding:0 20px; border:0px; float: right; text-transform:lowercase;
-
     -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px;
 }
 .forgetmenot{
     color: #999999; font-weight:bold; font-size: 12px;
     width:299px; float: left;
     text-align:left;
-
     padding-left:5px;
 }
 .forgetmenot input{
     width:auto; height:auto;
+    background-color: transparent;
 }
 
 #nav{
@@ -89,19 +88,16 @@ p label span{
 .message{
     margin:5px 5px 15px 445px; padding:0px; text-align:left; 
     /*border:solid 1px #BCE8F1; background-color:#D9EDF7; color:#3A87AD;*/ color: #999999; font-weight:bold; font-size: 12px;
-
     -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px;
 }
 #FlashMessage{
     margin:5px 5px 15px 445px; padding:15px;
     border:solid 1px #BCE8F1; background-color:#D9EDF7; color:#3A87AD;
-
     -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px;
 }
 #FlashMessage.error{
     background-color: #F2DEDE;
     border-color: #EED3D7;
-
     color:#B94A48;
     font-size: 13px;
 }
@@ -119,7 +115,6 @@ p label span{
     -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-
     position: absolute; top:0; left:0; width:100%;
 }
 #backtoblog a{
