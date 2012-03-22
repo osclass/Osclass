@@ -75,21 +75,28 @@
         </div>
         <p id="backtoblog"><a href="<?php echo osc_base_url() ; ?>" title="<?php printf( __('Back to %s'), osc_page_title() ) ; ?>">&larr; <?php printf( __('Back to %s'), osc_page_title() ) ; ?></a></p>
         <script type="text/javascript">
-            $(document).ready(function(){
-                $('#user_login, #user_pass').each(function(){
-                    $(this).focus(function(){
-                        $(this).prev().hide();
-                    }).blur(function(){
-                        if($(this).val() == '') {
-                            $(this).prev().show();
+            $(function(){
+                function placeholder(input_form) {
+                    input_form.each(function(){
+                        $(this).focus(function(){
+                            $(this).prev().hide();
+                        }).blur(function(){
+                            if($(this).val() == '') {
+                                $(this).prev().show();
+                            }
+                        }).prev().click(function(){
+                            $(this).hide().next().focus();
+                        });
+                        if($(this).val() != ''){
+                            $(this).prev().hide();
                         }
-                    }).prev().click(function(){
-                        $(this).hide().next().focus();
                     });
-                    if($(this).val() != ''){
-                        $(this).prev().hide();
-                    }
-                });
+                }
+
+                placeholder($('#user_login, #user_pass')) ;
+                setTimeout(function() {
+                    placeholder($('#user_login, #user_pass'));
+                }, '100') ;
             });
         </script>
     </body>
