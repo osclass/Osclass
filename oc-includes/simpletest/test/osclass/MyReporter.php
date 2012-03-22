@@ -100,7 +100,7 @@ class MyReporter extends SimpleReporter {
         $body .= "<strong>" . $this->getFailCount() . "</strong> fails and ";
         $body .= "<strong>" . $this->getExceptionCount() . "</strong> exceptions.<br/>\n";
         $body .= $this->fails;
-        require_once('../../../osclass/utils.php');
+        require_once(dirname(__FILE__).'/../../../osclass/utils.php');
         osc_sendMail(array(
             'to' => 'testing@osclass.org',
             'to_name' => 'OSClass Testing',
