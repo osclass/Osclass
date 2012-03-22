@@ -138,7 +138,10 @@
      * @return string
      */
     function osc_search_user() {
-        return View::newInstance()->_get('search_from_user');
+        if(is_array(View::newInstance()->_get('search_from_user') ) ){
+            return View::newInstance()->_get('search_from_user');
+        }
+        return array();
     }
     /**
      * Gets current search max price
