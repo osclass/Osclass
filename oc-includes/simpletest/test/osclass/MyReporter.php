@@ -8,7 +8,8 @@ require_once('../../scorer.php');
  */
 class MyReporter extends SimpleReporter {
     private $character_set;
-
+    private $fails;
+    
     /**
      *    Does nothing yet. The first output will
      *    be sent on the first test start. For use
@@ -18,6 +19,7 @@ class MyReporter extends SimpleReporter {
     function __construct($character_set = 'ISO-8859-1') {
         parent::__construct();
         $this->character_set = $character_set;
+        $this->fails = "";
     }
 
     /**
@@ -86,6 +88,28 @@ class MyReporter extends SimpleReporter {
         print "<strong>" . $this->getExceptionCount() . "</strong> exceptions.";
         print "</div>\n";
         print "</body>\n</html>\n";
+        
+        if($this->fails!='') {
+            $subject = '[ERROR] Test results';
+        } else {
+            $subject = '[OK] Test results';
+        }
+        $body = $this->getTestCaseProgress() . "/" . $this->getTestCaseCount();
+        $body .= " test cases complete:\n";
+        $body .= "<strong>" . $this->getPassCount() . "</strong> passes, ";
+        $body .= "<strong>" . $this->getFailCount() . "</strong> fails and ";
+        $body .= "<strong>" . $this->getExceptionCount() . "</strong> exceptions.<br/>\n";
+        $body .= $this->fails;
+        require_once('../../../osclass/utils.php');
+        osc_sendMail(array(
+            'to' => 'testing@osclass.org',
+            'to_name' => 'OSClass Testing',
+            'from' => 'testing@osclass.org',
+            'from_name' => 'OSClass Testing',
+            'subject' => $subject,
+            'body' => $body
+        ));
+        
     }
 
     /**
@@ -97,11 +121,14 @@ class MyReporter extends SimpleReporter {
      */
     function paintFail($message) {
         parent::paintFail($message);
-        print "<span class=\"fail\">Fail</span>: ";
+        $fail = "<span class=\"fail\">Fail</span>: ";
         $breadcrumb = $this->getTestList();
         array_shift($breadcrumb);
-        print implode(" -&gt; ", $breadcrumb);
-        print " -&gt; " . $this->htmlEntities($message) . "<br />\n";
+        $fail .= implode(" -&gt; ", $breadcrumb);
+        $fail .= " -&gt; " . $this->htmlEntities($message);
+        $fail .= "<br />\n";
+        $this->fails .= $fail;
+        print $fail;
     }
 
     function  paintPass($message) {
