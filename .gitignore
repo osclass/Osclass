@@ -1,16 +1,16 @@
 # MAC
 .DS_Store
 
+# Git
 *.diff
 *.patch
 
-.htaccess
+# Sublime 2
+sftp-config*
 
-# CONFIG OSClass
+# Config OSClass
 config.php
-
-.gitignore
-dist
+oc-includes/osclass/t/config.php
 
 # oc-content
 oc-content/debug.log
@@ -18,6 +18,6 @@ oc-content/queries.log
 oc-content/explain_queries.log
 oc-content/uploads/*
 
-oc-includes/osclass/t/config.php
-oc-content/plugins/lopd/admin_user.php
-oc-content/plugins/lopd/ajax.php
+# Others
+.htaccess
+dist
