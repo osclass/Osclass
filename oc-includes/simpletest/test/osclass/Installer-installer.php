@@ -1,5 +1,5 @@
 <?php
-
+require_once '../../../../oc-load.php';
 
 class Installer_installer extends InstallerTest {
     

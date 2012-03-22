@@ -1,16 +1,13 @@
 <?php
-require_once('../../autorun.php');
+require_once LIB_PATH . 'Selenium.php';
+
+require_once('../../simpletest.php');
 require_once('../../web_tester.php');
-require_once('../../reporter.php');
 
 // LOAD OSCLASS
 define( 'ABS_PATH', dirname( dirname( dirname( dirname( dirname(__FILE__) ) ) ) ) . '/' ) ;
 define( 'LIB_PATH',  ABS_PATH .'oc-includes/' );
 require_once LIB_PATH . 'osclass/helpers/hErrors.php';
-
-
-
-require_once LIB_PATH . 'Selenium.php';
 
 class InstallerTest extends WebTestCase {
 
