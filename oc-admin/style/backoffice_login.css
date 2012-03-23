@@ -38,10 +38,15 @@ a:hover {
 form{
     padding-left:440px;
 }
-form input{
+form input, form select{
     width:300px; height:45px; background-color:#E2E2E2;
     margin: 0px; padding: 0px; border:0px; font-size:25px; padding-left:10px; font-weight:bold; padding-top:7px; padding-bottom:7px;
     -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px;
+}
+form select {
+    border: 1px solid #CCC;
+    background: #E2E2E2;
+    color: #58595B;
 }
 p{
     margin-bottom:15px;

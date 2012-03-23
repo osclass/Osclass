@@ -49,13 +49,11 @@
                 <?php $locales = osc_all_enabled_locales_for_admin() ; ?>
                 <?php if(count($locales) > 1) { ?>
                     <p>
-                        <label><?php _e('Language') ; ?><br />
-                            <select name="locale" id="user_language">
-                                <?php foreach($locales as $locale) { ?>
-                                    <option value="<?php echo $locale ['pk_c_code'] ; ?>" <?php if(osc_admin_language() == $locale['pk_c_code']) echo 'selected="selected"' ; ?>><?php echo $locale['s_short_name'] ; ?></option>
-                                <?php } ?>
-                            </select>
-                        </label>
+                        <select name="locale" id="user_language">
+                        <?php foreach($locales as $locale) { ?>
+                            <option value="<?php echo $locale ['pk_c_code'] ; ?>" <?php if(osc_admin_language() == $locale['pk_c_code']) echo 'selected="selected"' ; ?>><?php echo $locale['s_short_name'] ; ?></option>
+                        <?php } ?>
+                        </select>
                     </p>
                 <?php } else {?>
                     <input type="hidden" name="locale" value="<?php echo $locales[0]["pk_c_code"] ; ?>" />
