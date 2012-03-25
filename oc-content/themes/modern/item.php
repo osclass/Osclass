@@ -58,7 +58,8 @@
             <div class="content item">
                 <div id="item_head">
                     <div class="inner">
-                        <h1><?php if( osc_price_enabled_at_items() ) { ?><span class="price"><?php echo osc_item_formated_price() ; ?></span> <?php } ?><strong><?php echo osc_item_title(); ?></strong></h1>
+                        <h1><?php if( osc_price_enabled_at_items() ) { ?><span class="price"><?php echo osc_item_formated_price() ; ?></span> <?php } ?><strong><?php echo osc_item_title(); ?></strong><?php if(osc_is_web_user_logged_in() && (osc_item_user_id()==  osc_logged_user_id())) { ?>
+    			   <?php echo('<a href="'.osc_item_edit_url().'" />'.__('Edit this item', 'modern').'</a>'); ?><?php }?></h1>
                         <p id="report">
                             <strong><?php _e('Mark as', 'modern') ; ?></strong>
                             <span>
