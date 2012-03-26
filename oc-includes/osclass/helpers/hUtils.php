@@ -205,12 +205,16 @@
         if (strlen($txt) > $len) {
             $txt = mb_substr($txt, 0, $len, 'utf-8') . "..." ;
         }
-
+        
         $query = osc_search_pattern() . " " . osc_search_city() ;
-        $query = trim(preg_replace('/\s\s+/', ' ', $query)) ;
+        $query = trim(preg_replace('/\s+/', ' ', $query)) ;
+        
         $aQuery = explode(' ', $query) ;
         foreach ($aQuery as $word) {
-            $txt = preg_replace("/($word)/i", $start_tag . "$01". $end_tag, $txt) ;
+            $word = trim($word);
+            if($word!='') {
+                $txt = preg_replace("/($word)/i", $start_tag . "$01". $end_tag, $txt) ;
+            }
         }
         return $txt ;
     }
