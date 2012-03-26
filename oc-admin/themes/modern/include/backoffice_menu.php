@@ -181,6 +181,15 @@
             </li>
         </ul>
 
+        <h3>
+            <a href="#"><?php _e('Universe'); ?></a>
+        </h3>
+        <ul>
+            <li>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=universe">&raquo; <?php _e('Universe'); ?></a>
+            </li>
+        </ul>
+
         &nbsp;
 
         <?php osc_run_hook('admin_menu') ; ?>

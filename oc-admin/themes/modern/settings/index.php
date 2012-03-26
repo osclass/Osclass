@@ -134,6 +134,18 @@
                                 </div>
                             </div>
                             <div class="input-line">
+                                <label><?php _e('External sources'); ?></label>
+                                <div class="input">
+                                    <input type="checkbox" id="market_external_sources" name="market_external_sources" value="1" <?php if(osc_market_external_sources()==1) {echo "checked";}; ?>/>
+                                    <p class="inline"><?php _e('Allow download packages from external sources'); ?></p>
+                                </div>
+                            </div>
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Number of items in the RSS') ; ?></legend>
+                                    <input type="text" id="num_rss_items" name="num_rss_items" value="<?php echo osc_esc_html(osc_num_rss_items()); ?>" onblur='validateInt(this,<?php echo osc_num_rss_items(); ?>)'/>
+                                </fieldset>
+                            <div class="input-line">
                                 <label><?php _e('Time format') ; ?></label>
                                 <div class="input">
                                     <?php

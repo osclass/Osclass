@@ -529,6 +529,7 @@ function osc_file_get_contents($url){
     
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' OSClass (v.'.osc_version().')');
     if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
@@ -951,7 +952,39 @@ function rglob($pattern, $flags = 0, $path = '') {
     return $files;
 }
 
-    
+
+/**
+ * Check if a package could be update or not
+ *
+ * @param string $update_uri
+ * @since 2.4
+ * @return boolean
+ */
+function osc_check_update($update_uri, $version = null) {
+    if($update_uri!="" && $version!=null) {
+
+        if(stripos("http://", $update_uri)===FALSE) {
+            // OSCLASS OFFICIAL REPOSITORY
+            $uri = osc_market_url($update_uri);
+        } else {
+            // THIRD PARTY REPOSITORY
+            if(!osc_market_external_sources()) {
+                return false;
+            }
+            $uri = $update_uri;
+        }
+
+        if(false===($json=@osc_file_get_contents($uri))) {
+            return false;
+        } else {
+            $data = json_decode($json , true);
+            if(isset($data['s_version']) && $data['s_version']>$version) {
+                return true;
+            }
+        }
+    }
+    return false;
+}    
 
 
 ?>
