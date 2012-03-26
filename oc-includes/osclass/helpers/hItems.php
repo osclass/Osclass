@@ -240,6 +240,15 @@
     function osc_item_mod_date() {
         return (string) osc_item_field("dt_mod_date");
     }
+    
+    /**
+     * Gets date expiration of current item
+     *
+     * @return string
+     */
+    function osc_item_dt_expiration() {
+        return (string) osc_item_field("dt_expiration");
+    }
 
     /**
      * Gets price of current item
@@ -410,17 +419,7 @@
         if( osc_item_is_premium() ) {
             return false;
         } else {
-            $category = Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) ;
-            $expiration = $category['i_expiration_days'];
-
-            if($expiration == 0){ return false; }
-            else{
-                $date_expiration = strtotime(date("Y-m-d H:i:s", strtotime( osc_item_pub_date() )) . " +$expiration day");
-                $now             = strtotime(date('Y-m-d H:i:s'));
-
-                if( $date_expiration < $now ) { return true; }
-                else { return false; }
-            }
+            return osc_isExpired(osc_item_dt_expiration());
         }
     }
     
@@ -730,21 +729,31 @@
     }
 
     /**
-     * Gets thumbnail url of current resource
-     *
-     * @return <type>
-     */
-    function osc_resource_thumbnail_url() {
-        return (string) osc_resource_path().osc_resource_id()."_thumbnail.".osc_resource_field("s_extension");
-    }
-
-    /**
      * Gets url of current resource
      *
      * @return string
      */
     function osc_resource_url() {
         return (string) osc_resource_path().osc_resource_id().".".osc_resource_field("s_extension");
+    }
+
+    /**
+     * Gets thumbnail url of current resource
+     *
+     * @return string
+     */
+    function osc_resource_thumbnail_url() {
+        return (string) osc_resource_path().osc_resource_id()."_thumbnail.".osc_resource_field("s_extension");
+    }
+
+    /**
+     * Gets preview url of current resource
+     *
+     * @since 2.3.7
+     * @return string
+     */
+    function osc_resource_preview_url() {
+        return (string) osc_resource_path().osc_resource_id()."_preview.".osc_resource_field("s_extension");
     }
 
     /**
@@ -843,7 +852,7 @@
      */
     function osc_count_item_resources() {
         if ( !View::newInstance()->_exists('resources') ) {
-            View::newInstance()->_exportVariableToView('resources', ItemResource::newInstance()->getAllResources( osc_item_id() ) ) ;
+            View::newInstance()->_exportVariableToView('resources', ItemResource::newInstance()->getAllResourcesFromItem( osc_item_id() ) ) ;
         }
         return (int) View::newInstance()->_count('resources') ;
     }
@@ -855,7 +864,7 @@
      */
     function osc_has_item_resources() {
         if ( !View::newInstance()->_exists('resources') ) {
-            View::newInstance()->_exportVariableToView('resources', ItemResource::newInstance()->getAllResources( osc_item_id() ) ) ;
+            View::newInstance()->_exportVariableToView('resources', ItemResource::newInstance()->getAllResourcesFromItem( osc_item_id() ) ) ;
         }
         return View::newInstance()->_next('resources') ;
     }
@@ -867,7 +876,7 @@
      */
     function osc_get_item_resources() {
         if ( !View::newInstance()->_exists('resources') ) {
-            View::newInstance()->_exportVariableToView('resources', ItemResource::newInstance()->getAllResources( osc_item_id() ) ) ;
+            View::newInstance()->_exportVariableToView('resources', ItemResource::newInstance()->getAllResourcesFromItem( osc_item_id() ) ) ;
         }
         return View::newInstance()->_get('resources') ;
     }
@@ -899,16 +908,19 @@
     //////////
     // HOME //
     //////////
+    
     /**
      * Gets next item of last items
      *
      * @return array
      */
-    function osc_has_latest_items() {
+    function osc_has_latest_items($total_latest_items = null, $category = array()) {
         if ( !View::newInstance()->_exists('latestItems') ) {
-            $search = new Search();
-            $search->limit(0, osc_max_latest_items());
-            View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems());
+            $search = Search::newInstance() ;
+            if( !is_numeric($total_latest_items) ) {
+                $total_latest_items = osc_max_latest_items() ;
+            }
+            View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems($total_latest_items, $category));
         }
         if ( View::newInstance()->_exists('resources') ) {
             View::newInstance()->_erase('resources') ;
@@ -938,18 +950,20 @@
      *
      * @return int
      */
-    function osc_count_latest_items() {
+    function osc_count_latest_items($total_latest_items = null, $category = array()) {
         if ( !View::newInstance()->_exists('latestItems') ) {
-            $search = new Search();
-            $search->limit(0, osc_max_latest_items());
-            View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems());
+            $search = Search::newInstance() ;
+            if( !is_numeric($total_latest_items) ) {
+                $total_latest_items = osc_max_latest_items() ;
+            }
+            View::newInstance()->_exportVariableToView('latestItems', $search->getLatestItems($total_latest_items, $category)) ;
         };
         return (int) View::newInstance()->_count('latestItems') ;
     }
+    
     //////////////
     // END HOME //
     //////////////
-
 
     /**
      * Gets next item of custom items

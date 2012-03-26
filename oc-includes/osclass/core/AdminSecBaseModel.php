@@ -40,6 +40,14 @@
                 osc_set_preference( 'last_version_check', time() ) ;
                 osc_reset_preferences() ;
             }
+
+            // if there are files from new version, go to upgrade page
+            if( get_class($this) != 'CAdminUpgrade' ) {
+                $config_version = str_replace('.', '', OSCLASS_VERSION);
+                if( $config_version > Preference::newInstance()->get('version')) {
+                    $this->redirectTo(osc_admin_base_url(true) . '?page=upgrade');
+                }
+            }
         }
 
         function isLogged()

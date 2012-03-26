@@ -58,7 +58,7 @@
                     }
 
                     $aFieldsDescription = array();
-                    $postParams = Params::getParamsAsArray();
+                    $postParams = Params::getParamsAsArray('', false);
                     $not_empty = false;
                     foreach ($postParams as $k => $v) {
                         if(preg_match('|(.+?)#(.+)|', $k, $m)) {
@@ -91,7 +91,7 @@
                     break;
                 case 'add_post':
                     // setForm just in case the form fails
-                    foreach (Params::getParamsAsArray() as $k => $v) {
+                    foreach (Params::getParamsAsArray('', false) as $k => $v) {
                         Session::newInstance()->_setForm($k, $v);
                     }
 
@@ -110,7 +110,7 @@
                     if(!isset($page['pk_i_id'])) {
                         $aFields = array('s_internal_name' => $s_internal_name, 'b_indelible' => '0');
                         $aFieldsDescription = array();
-                        $postParams = Params::getParamsAsArray();
+                        $postParams = Params::getParamsAsArray('', false);
                         $not_empty = false;
                         foreach ($postParams as $k => $v) {
                             if(preg_match('|(.+?)#(.+)|', $k, $m)) {

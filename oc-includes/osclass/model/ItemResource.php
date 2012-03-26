@@ -67,21 +67,40 @@
         }
 
         /**
-         * Get all resources belong to an item given its id
+         * Get all resources
          *
          * @access public
          * @since unknown
          * @param int $itemId Item id
          * @return array of resources 
          */
-        function getAllResources($itemId = null)
+        function getAllResources()
         {
             $this->dao->select('r.*, c.dt_pub_date') ;
             $this->dao->from($this->getTableName() . ' r') ;
             $this->dao->join($this->getTableItemName() . ' c', 'c.pk_i_id = r.fk_i_item_id') ;
-            if( !is_null($itemId) ) {
-                $this->dao->where('r.fk_i_item_id', (int)$itemId) ;
+
+            $result = $this->dao->get() ;
+
+            if( $result == false ) {
+                return array() ;
             }
+
+            return $result->result() ;
+        }
+
+        /**
+         * Get all resources belong to an item given its id
+         *
+         * @access public
+         * @since 2.3.7
+         * @param int $itemId Item id
+         * @return array of resources 
+         */
+        function getAllResourcesFromItem($itemId) {
+            $this->dao->select() ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where('fk_i_item_id', (int)$itemId) ;
 
             $result = $this->dao->get() ;
 

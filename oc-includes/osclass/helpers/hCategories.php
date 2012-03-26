@@ -57,9 +57,9 @@
      * @return <array>
      */
     function osc_get_categories() {
-       //if ( !View::newInstance()->_exists('categories') ) {
+       if ( !View::newInstance()->_exists('categories') ) {
             View::newInstance()->_exportVariableToView('categories', Category::newInstance()->toTree() ) ;
-        //}
+        }
         return  View::newInstance()->_get('categories') ;
     }
     

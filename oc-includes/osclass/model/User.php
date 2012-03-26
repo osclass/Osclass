@@ -93,13 +93,15 @@
          * @param string $term
          * @return array
          */
-        public function ajax($query = '') {
+        public function ajax($query = '') 
+        {
             $this->dao->select('pk_i_id as id, s_name as label, s_name as value') ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->like('s_name', $query, 'after') ;
+            $this->dao->limit(0, 10);
 
             $result = $this->dao->get() ;
-
+            
             if( $result == false ) {
                 return array() ;
             }
@@ -415,7 +417,7 @@
                 $users['total_results'] = $data['total'] ;
             }
 
-            $rsTotal = $this->dao->query('SELECT COUNT(*) as total FROM oc_t_user') ;
+            $rsTotal = $this->dao->query('SELECT COUNT(*) as total FROM '.$this->getTableName()) ;
             $data   = $rsTotal->row() ;
             if( $data['total'] ) {
                 $users['rows'] = $data['total'] ;
@@ -444,6 +446,46 @@
             
             $row = $result->row() ;
             return $row['i_total'];
+        }
+
+        /**
+         * Increase number of items, given a user id
+         *
+         * @access public
+         * @since unknown
+         * @param int $id user id 
+         * @return int number of affected rows, id error occurred return false
+         */
+        public function increaseNumItems($id) 
+        {
+            if(!is_numeric($id)) {
+                return false;
+            }
+            
+            $sql = sprintf('UPDATE %s SET i_items = i_items + 1 WHERE pk_i_id = %d', $this->getTableName(), $id);
+            $res = $this->dao->query($sql);
+            
+            return $res;
+        }
+        
+        /**
+         * Decrease number of items, given a user id
+         * 
+         * @access public
+         * @since unknown
+         * @param int $id user id 
+         * @return int number of affected rows, id error occurred return false
+         */
+        public function decreaseNumItems($id)
+        {
+            if(!is_numeric($id)) {
+                return false;
+            }
+            
+            $sql = sprintf('UPDATE %s SET i_items = i_items - 1 WHERE pk_i_id = %d', $this->getTableName(), $id);
+            $res = $this->dao->query($sql);
+            
+            return $res;
         }
     }
 

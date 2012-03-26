@@ -177,6 +177,13 @@
                                 </div>
                             </div>
                             <div class="input-line">
+                                <label><?php _e('The latest items shows') ; ?></label>
+                                <div class="input">
+                                    <input type="text" class="mini" name="max_latest_items_at_home" value="<?php echo osc_esc_html(osc_max_latest_items_at_home()) ; ?>" />
+                                    <p class="inline"><?php _e('items at most') ; ?></p>
+                                </div>
+                            </div>
+                            <div class="input-line">
                                 <label><?php _e('The search page shows') ; ?></label>
                                 <div class="input">
                                     <input type="text" class="mini" name="default_results_per_page" value="<?php echo osc_esc_html(osc_default_results_per_page_at_search()); ?>" />

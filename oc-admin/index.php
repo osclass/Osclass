@@ -29,7 +29,7 @@
     }
 
     WebThemes::newInstance();
-    
+
     switch( Params::getParam('page') )
     {
         case('items'):      require_once(osc_admin_base_path() . 'items.php') ;
@@ -102,6 +102,10 @@
         break;
         case('cfields'):    require_once(osc_admin_base_path() . 'custom_fields.php') ;
                             $do = new CAdminCFields() ;
+                            $do->doModel() ;
+        break;
+        case('upgrade'):    require_once(osc_admin_base_path() . 'upgrade.php') ;
+                            $do = new CAdminUpgrade() ;
                             $do->doModel() ;
         break;
         default:            //login of oc-admin

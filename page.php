@@ -32,10 +32,13 @@
         {
             $id   = Params::getParam('id') ;
             $page = false;
-            if($id!='') {
+            if($id!='' && is_numeric($id)) {
                 $page = $this->pageManager->findByPrimaryKey($id) ;
+                if($page == false) {
+                    $page = $this->pageManager->findByInternalName(Params::getParam('slug'));
+                }
             } else {
-                $page = $this->pageManager->findBySlug(Params::getParam('slug'));
+                $page = $this->pageManager->findByInternalName(Params::getParam('slug'));
             }
             
             if( $page == false) {

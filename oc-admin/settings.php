@@ -98,6 +98,7 @@
                                                                                         'fk_c_locale_code' => $k,
                                                                                         's_name'           => $v);
                                                                             $mCountries->insert($data);
+                                                                            CountryStats::newInstance()->setNumItems($countryCode, 0);
                                                                         }
                                                                         if(isset($countries->error)) { // Country is not in our GEO database
                                                                             // We have no region for user-typed countries
@@ -114,6 +115,8 @@
                                                                                             "fk_c_country_code" => $r->country_code,
                                                                                             "s_name" => $r->name
                                                                                         ));
+                                                                                        $id = $manager_region->dao->insertedId();
+                                                                                        RegionStats::newInstance()->setNumItems($id, 0);
                                                                                     }
                                                                                 }
                                                                                 unset($regions);
@@ -137,6 +140,8 @@
                                                                                                                     ,"s_name" => $ci->name
                                                                                                                     ,"fk_c_country_code" => $ci->country_code
                                                                                                                 ));
+                                                                                                                $id = $manager_city->dao->insertedId();
+                                                                                                                CityStats::newInstance()->setNumItems($id, 0);
                                                                                                             }
                                                                                                         }
                                                                                                     }
@@ -176,9 +181,27 @@
                                             break;
                                             case('delete_country'): // delete country
                                                                     $countryId = Params::getParam('id');
-                                                                    Item::newInstance()->deleteByCountry($countryId);
-                                                                    $mRegions = new Region();
-                                                                    $mCities = new City();
+
+                                                                    // HAS ITEMS?
+                                                                    $has_items = Item::newInstance()->listWhere('l.fk_c_country_code = \'%s\' LIMIT 1', $countryId);
+                                                                    if(!$has_items) {
+                                                                        $mRegions = new Region();
+                                                                        $mCities = new City();
+
+                                                                        $aCountries = $mCountries->findByCode($countryId);
+                                                                        $aRegions = $mRegions->findByCountry($aCountries['pk_c_code']);
+                                                                        foreach($aRegions as $region) {
+                                                                            // remove city_stats
+                                                                            CityStats::newInstance()->deleteByRegion($region['pk_i_id']) ;
+                                                                            $mCities->delete(array('fk_i_region_id' => $region['pk_i_id']));
+                                                                            // remove region_stats
+                                                                            RegionStats::newInstance()->delete( array('fk_i_region_id' => $region['pk_i_id']) ) ;
+                                                                            $mRegions->delete(array('pk_i_id' => $region['pk_i_id']));
+                                                                        }
+                                                                        //remove country stats
+                                                                        CountryStats::newInstance()->delete( array('fk_c_country_code' => $aCountries['pk_c_code'] ) ) ;
+                                                                        $mCountries->delete(array('pk_c_code' => $aCountries['pk_c_code']));
+                                                                    }
 
                                                                     $aCountries = $mCountries->findByCode($countryId);
                                                                     $aRegions = $mRegions->findByCountry($aCountries['pk_c_code']);
@@ -204,6 +227,8 @@
                                                                             $data = array('fk_c_country_code' => $countryCode
                                                                                          ,'s_name' => $regionName);
                                                                             $mRegions->insert($data);
+                                                                            $id = $mRegions->dao->insertedId();
+                                                                            RegionStats::newInstance()->setNumItems($id, 0);
                                                                             osc_add_flash_ok_message(sprintf(_m('%s has been added as a new region'),
                                                                                                              $regionName), 'admin');
                                                                         } else {
@@ -244,8 +269,12 @@
                                                                     if($regionId != '') {
                                                                         Item::newInstance()->deleteByRegion($regionId);
                                                                         $aRegion = $mRegion->findByPrimaryKey($regionId);
-
+                                                                        
+                                                                        // remove city_stats
+                                                                        CityStats::newInstance()->deleteByRegion($regionId) ;
                                                                         $mCities->delete(array('fk_i_region_id' => $regionId));
+                                                                        // remove region_stats
+                                                                        RegionStats::newInstance()->delete( array('fk_i_region_id' => $regionId) ) ;
                                                                         $mRegion->delete(array('pk_i_id' => $regionId));
 
                                                                         osc_add_flash_ok_message(sprintf(_m('%s has been deleted'),
@@ -264,7 +293,9 @@
                                                                         $mCities->insert(array('fk_i_region_id'    => $regionId
                                                                                               ,'s_name'            => $newCity
                                                                                               ,'fk_c_country_code' => $countryCode));
-
+                                                                        $id = $mCities->dao->insertedId();
+                                                                        CityStats::newInstance()->setNumItems($id, 0);
+                                                                        
                                                                         osc_add_flash_ok_message(sprintf(_m('%s has been added as a new city'),
                                                                                                          $newCity), 'admin');
                                                                     } else {
@@ -299,6 +330,8 @@
                                                                     $cityId  = Params::getParam('id');
                                                                     Item::newInstance()->deleteByCity($cityId);
                                                                     $aCity   = $mCities->findByPrimaryKey($cityId);
+                                                                    // remove region_stats
+                                                                    CityStats::newInstance()->delete( array('fk_i_city_id' => $cityId) ) ;
                                                                     $mCities->delete(array('pk_i_id' => $cityId));
 
                                                                     osc_add_flash_ok_message(sprintf(_m('%s has been deleted'),
@@ -563,8 +596,8 @@ HTACCESS;
                                             if($id_pos!==false && $slug_pos>$id_pos) {
                                                 $param2_pos++;
                                             }
-                                            $rewrite->addRule('^'.str_replace('{PAGE_TITLE}', '(.+)', str_replace('{PAGE_SLUG}', '([a-zA-Z_]+)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url))).'$', 'index.php?page=page&id=$'.$param_pos."&slug=".$params2_pos);
-                                            $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{PAGE_TITLE}', '(.+)', str_replace('{PAGE_SLUG}', '([a-zA-Z_]+)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url))).'$', 'index.php?page=page&id=$'.($param_pos+2).'&lang=$1_$2'."&slug=".($params2_pos+2));
+                                            $rewrite->addRule('^'.str_replace('{PAGE_TITLE}', '(.+)', str_replace('{PAGE_SLUG}', '([a-zA-Z_]+)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url))).'$', 'index.php?page=page&id=$'.$param_pos."&slug=$".$params2_pos);
+                                            $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{PAGE_TITLE}', '(.+)', str_replace('{PAGE_SLUG}', '([a-zA-Z_]+)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url))).'$', 'index.php?page=page&id=$'.($param_pos+2).'&lang=$1_$2'."&slug=$".($params2_pos+2));
 
                                             // Clean archive files
                                             $rewrite->addRule('^(.+?)\.php(.*)$', '$1.php$2');

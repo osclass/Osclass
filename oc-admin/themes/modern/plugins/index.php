@@ -22,7 +22,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
-        <link href="<?php echo osc_current_admin_theme_styles_url('demo_table.css') ; ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo osc_current_admin_theme_styles_url('datatables.css') ; ?>" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.dataTables.js') ; ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.pagination.js') ; ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.extend.js') ; ?>"></script>
@@ -97,6 +97,17 @@
                     <h1 class="plugins"><?php _e('Plugins') ; ?></h1>
                 </div>
                 <?php osc_show_admin_flash_messages() ; ?>
+                <?php if( Params::getParam('error') != '' ) { ?>
+                    <!-- flash message -->
+                    <div class="alert alert-error">
+                        <a class="close" href="#">×</a>
+                        <p>
+                            <?php _e("Plugin couldn't be installed because it triggered a <strong>fatal error</strong>") ; ?>
+                        </p>
+                        <iframe style="border:0;" width="100%" height="80px" src="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=error_plugin&amp;plugin=<?php echo Params::getParam('error') ; ?>"></iframe>
+                    </div>
+                    <!-- /flash message -->
+                <?php } ?>
                 <!-- datatables plugins -->
                 <div id="add_plugin_button">
                     <a href="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=add" class="btn" id="button_open"><?php _e('Add new plugin') ; ?></a>

@@ -45,9 +45,11 @@
                                                 $ids = Params::getParam("id");
                                                 if( is_array($ids) ) {
                                                     foreach($ids as $id) {
-                                                        osc_deleteResource( $id ) ;
+                                                        osc_deleteResource( $id , true);
                                                     }
-                                                    $this->resourcesManager->deleteResourcesIds($ids) ;
+                                                    $log_ids = substr(implode(",",$ids),0, 250);
+                                                    Log::newInstance()->insertLog('media', 'delete bulk', $log_ids, $log_ids, 'admin', osc_logged_admin_id()) ;
+                                                    $this->resourcesManager->deleteResourcesIds($ids);
                                                 }
                                                 osc_add_flash_ok_message( _m('Resource deleted'), 'admin') ;
                                             break ;
@@ -60,9 +62,11 @@
                                         $ids = Params::getParam('id') ;
                                         if( is_array($ids) ) {
                                             foreach($ids as $id) {
-                                                osc_deleteResource( $id ) ;
+                                                osc_deleteResource( $id , true);
                                             }
-                                            $this->resourcesManager->deleteResourcesIds($ids) ;
+                                            $log_ids = substr(implode(",",$ids),0, 250);
+                                            Log::newInstance()->insertLog('media', 'delete', $log_ids, $log_ids, 'admin', osc_logged_admin_id()) ;
+                                            $this->resourcesManager->deleteResourcesIds($ids);
                                         }
                                         osc_add_flash_ok_message( _m('Resource deleted'), 'admin' ) ;
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=media' ) ;

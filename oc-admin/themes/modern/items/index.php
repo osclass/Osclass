@@ -15,12 +15,20 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
+
+    $users      = __get('users') ;
+    $stat       = __get('stat') ;
+    $categories = __get('categories') ;
+    $countries  = __get('countries') ;
+    $regions    = __get('regions') ;
+    $cities     = __get('cities') ;
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
-        <link href="<?php echo osc_current_admin_theme_styles_url('demo_table.css') ; ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo osc_current_admin_theme_styles_url('datatables.css') ; ?>" rel="stylesheet" type="text/css" />
         <!-- datatables js -->
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.dataTables.js') ; ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.pagination.js') ; ?>"></script>
@@ -42,13 +50,14 @@
                                 "value": $('input[name="pk_i_id"]').val()
                             }) ;
                         }
-                        if( $('input[name="userName"]').val() ) {
+                        if( $('select[name="userId"]').val() ) {
                             aoData.push({
                                 "name": "fCol_userIdValue",
-                                "value": $('input[name="userName"]').val()
+                                "value": $('select[name="userId"]').val()
                             }) ;
                         }
                         if( $('select[name="countryId"]').val() ) {
+
                             aoData.push({
                                 "name": "fCol_countryId",
                                 "value": $('select[name="countryId"]').val()
@@ -60,7 +69,7 @@
                                 "value": $('input[name="country"]').val()
                             }) ;
                         }
-                        if( $('input[name="regionId"]').val() ) {
+                        if( $('select[name="regionId"]').val() ) {
                             aoData.push({
                                 "name": "fCol_regionId",
                                 "value": $('select[name="regionId"]').val()
@@ -90,6 +99,31 @@
                                 "value": $('select[name="catId"]').val()
                             }) ;
                         }
+                        // status filters
+                        if( $('select[name="b_premium"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_bPremium",
+                                "value": $('select[name="b_premium"]').val()
+                            }) ;
+                        }
+                        if( $('select[name="b_active"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_bActive",
+                                "value": $('select[name="b_active"]').val()
+                            }) ;
+                        }
+                        if( $('select[name="b_enabled"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_bEnabled",
+                                "value": $('select[name="b_enabled"]').val()
+                            }) ;
+                        }
+                        if( $('select[name="b_spam"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_bSpam",
+                                "value": $('select[name="b_spam"]').val()
+                            }) ;
+                        }
                     },
                     "iDisplayLength": "25",
                     "sDom": "<'row'<'span6 length-menu'l><'span6 filter'>fr>t<'row'<'span6 info-results'i><'span6 paginate'p>>",
@@ -115,7 +149,7 @@
                     },
                     "aoColumns": [
                         {
-                            "sTitle": "",
+                            "sTitle": '<input id="check_all" type="checkbox" />',
                             "sWidth": "10px",
                             "bSearchable": false,
                             "bSortable": false
@@ -152,31 +186,6 @@
                             "bSearchable": false,
                             "bSortable": true,
                             "defaultSortable" : true
-                        },
-                        {
-                            "sTitle": "Spam",
-                            "bSortable": false,
-                            "bVisible": false
-                        },
-                        {
-                            "sTitle": "Repeated",
-                            "bSortable": false,
-                            "bVisible": false
-                        },
-                        {
-                            "sTitle": "Bad",
-                            "bSortable": false,
-                            "bVisible": false
-                        },
-                        {
-                            "sTitle": "Offensive",
-                            "bSortable": false,
-                            "bVisible": false
-                        },
-                        {
-                            "sTitle": "Expired",
-                            "bSortable": false,
-                            "bVisible": false
                         }
                     ],
                     "aaSorting": [[7,'desc']]
@@ -195,7 +204,10 @@
 
                 $('input[name="apply-filters"]').bind('click', function() {
                     oTable.fnDraw() ;
-                }) ;
+                });
+                $('input[name="findById"]').bind('click', function() {
+                    oTable.fnDraw() ;
+                });
 
                 $('.show-filters').bind('click', function() {
                     if( $(this).attr('data-showed') == 'true' ) {
@@ -212,7 +224,32 @@
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
         <!-- /datatables js -->
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
-        <?php ItemForm::location_javascript('admin') ; ?>
+        <?php ItemForm::location_javascript_new('admin') ; ?>
+        <script type="text/javascript">
+            // autocomplete users
+            $(document).ready(function(){
+                $('#user').attr( "autocomplete", "off" );
+                $('#user').live('keyup.autocomplete', function(){
+                    $('#userId').val('');
+                    $( this ).autocomplete({
+                        source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax&term="+$('#user').val(),
+                        minLength: 0,
+                        select: function( event, ui ) {
+                            if(ui.item.id=='') 
+                                return false;
+                            $('#userId').val(ui.item.id);
+                        }
+                    });
+                });
+            });
+            
+        </script>
+        <style>
+            .ui-autocomplete-loading {
+                background: white url("<?php echo osc_current_admin_theme_url('images/loading.gif'); ?>") right center no-repeat;
+            }
+        </style>
+
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
@@ -235,33 +272,28 @@
                         </div>
                     </div>
                     <div class="input-line">
-                        <label><?php _e('Item ID') ; ?></label>
-                        <div class="input">
-                            <input type="text" class="small" name="pk_i_id" value="" />
-                        </div>
-                    </div>
-                    <div class="input-line">
                         <label><?php _e('Item user') ; ?></label>
                         <div class="input">
-                            <input type="text" class="medium" name="userName" value="" />
+                            <input id="user" name="user" type="text" value=""/>
+                            <input id="userId" name="userId" type="hidden" value=""/>
                         </div>
                     </div>
                     <div class="input-line">
                         <label><?php _e('Country') ; ?></label>
                         <div class="input">
-                            <?php ItemForm::country_select($countries, array('countryId' => '') ) ; ?>
+                            <?php ItemForm::country_text(); ?>
                         </div>
                     </div>
                     <div class="input-line">
                         <label><?php _e('Region') ; ?></label>
                         <div class="input">
-                            <?php ItemForm::region_select($regions, null) ; ?>
+                            <?php ItemForm::region_text(); ?>
                         </div>
                     </div>
                     <div class="input-line">
                         <label><?php _e('City') ; ?></label>
                         <div class="input">
-                            <?php ItemForm::city_select($cities, null) ; ?>
+                            <?php ItemForm::city_text(); ?>
                         </div>
                     </div>
                     <div class="input-line">
@@ -270,6 +302,50 @@
                             <?php ItemForm::category_select($categories, null, null, true) ; ?>
                         </div>
                     </div>
+                    
+                    <strong><?php _e('Status') ?></strong>
+                    
+                    <div class="input-line">
+                        <label><?php _e('Premium') ; ?></label>
+                        <div class="input">
+                            <select id="b_premium" name="b_premium">
+                                <option value=""><?php _e('ALL'); ?></option>
+                                <option value="1"><?php _e('ON'); ?></option>
+                                <option value="0"><?php _e('OFF'); ?></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Active') ; ?></label>
+                        <div class="input">
+                            <select id="b_active" name="b_active">
+                                <option value=""><?php _e('ALL'); ?></option>
+                                <option value="1"><?php _e('ON'); ?></option>
+                                <option value="0"><?php _e('OFF'); ?></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Enabled') ; ?></label>
+                        <div class="input">
+                            <select id="b_enabled" name="b_enabled">
+                                <option value=""><?php _e('ALL'); ?></option>
+                                <option value="1"><?php _e('ON'); ?></option>
+                                <option value="0"><?php _e('OFF'); ?></option>
+                            </select>    
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Spam') ; ?></label>
+                        <div class="input">
+                            <select id="b_spam" name="b_spam">
+                                <option value=""><?php _e('ALL'); ?></option>
+                                <option value="1"><?php _e('ON'); ?></option>
+                                <option value="0"><?php _e('OFF'); ?></option>
+                            </select>
+                        </div>
+                    </div>
+                    
                     <div class="actions">
                         <input type="button" name="apply-filters" value="<?php echo osc_esc_html( __('Apply filters') ) ; ?>" />
                     </div>
@@ -286,8 +362,8 @@
                                 <option value="delete_all"><?php _e('Delete') ; ?></option>
                                 <option value="activate_all"><?php _e('Activate') ; ?></option>
                                 <option value="deactivate_all"><?php _e('Deactivate') ; ?></option>
-                                <option value="enable_all"><?php _e('Block') ; ?></option>
-                                <option value="disable_all"><?php _e('Unblock') ; ?></option>
+                                <option value="disable_all"><?php _e('Block') ; ?></option>
+                                <option value="enable_all"><?php _e('Unblock') ; ?></option>
                                 <option value="premium_all"><?php _e('Mark as premium') ; ?></option>
                                 <option value="depremium_all"><?php _e('Unmark as premium') ; ?></option>
                                 <option value="spam_all"><?php _e('Mark as spam') ; ?></option>
@@ -296,6 +372,8 @@
                         </label>
                     </div>
                     <div id="add_item_button">
+                        <input type="text" class="medium" name="pk_i_id" value="" />
+                        <input type="button" name="findById" value="<?php echo osc_esc_html( __('Find by Item id') ) ; ?>" />
                         <a href="<?php echo osc_admin_base_url(true) ; ?>?page=items&amp;action=post" class="btn" id="button_open"><?php _e('Add item') ; ?></a>
                     </div>
                     <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatables_list"></table>
