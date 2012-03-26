@@ -94,7 +94,7 @@
                 placeholder($('#user_login, #user_pass')) ;
                 setTimeout(function() {
                     placeholder($('#user_login, #user_pass'));
-                }, '100') ;
+                }, '500') ;
             });
         </script>
     </body>
