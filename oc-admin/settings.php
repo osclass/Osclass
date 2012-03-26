@@ -596,8 +596,8 @@ HTACCESS;
                                             if($id_pos!==false && $slug_pos>$id_pos) {
                                                 $param2_pos++;
                                             }
-                                            $rewrite->addRule('^'.str_replace('{PAGE_TITLE}', '(.+)', str_replace('{PAGE_SLUG}', '([a-zA-Z_]+)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url))).'$', 'index.php?page=page&id=$'.$param_pos."&slug=".$params2_pos);
-                                            $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{PAGE_TITLE}', '(.+)', str_replace('{PAGE_SLUG}', '([a-zA-Z_]+)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url))).'$', 'index.php?page=page&id=$'.($param_pos+2).'&lang=$1_$2'."&slug=".($params2_pos+2));
+                                            $rewrite->addRule('^'.str_replace('{PAGE_TITLE}', '(.+)', str_replace('{PAGE_SLUG}', '([a-zA-Z_]+)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url))).'$', 'index.php?page=page&id=$'.$param_pos."&slug=$".$params2_pos);
+                                            $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{PAGE_TITLE}', '(.+)', str_replace('{PAGE_SLUG}', '([a-zA-Z_]+)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url))).'$', 'index.php?page=page&id=$'.($param_pos+2).'&lang=$1_$2'."&slug=$".($params2_pos+2));
 
                                             // Clean archive files
                                             $rewrite->addRule('^(.+?)\.php(.*)$', '$1.php$2');
