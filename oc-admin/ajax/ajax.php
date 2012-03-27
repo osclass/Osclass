@@ -54,6 +54,9 @@
                         echo json_encode($users);
                     }
                     break;
+                case 'date_format':
+                    echo json_encode(array('format' => Params::getParam('format'), 'str_formatted' => date(Params::getParam('format'))));
+                    break;
                 case 'runhook': // run hooks
                     $hook = Params::getParam('hook');
 
