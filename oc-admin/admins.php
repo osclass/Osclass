@@ -40,7 +40,8 @@
 
             switch($this->action) {
                 case('add'):        // callin add view
-                                    $this->doView('admins/add.php') ;
+                                    $this->_exportVariableToView( 'admin', null ) ;
+                                    $this->doView('admins/frm.php') ;
                 break ;
                 case('add_post'):   if( defined('DEMO') ) {
                                         osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
@@ -122,7 +123,7 @@
                                     }
 
                                     $this->_exportVariableToView("admin", $adminEdit) ;
-                                    $this->doView('admins/edit.php') ;
+                                    $this->doView('admins/frm.php') ;
                 break ;
                 case('edit_post'):  if( defined('DEMO') ) {
                                         osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
