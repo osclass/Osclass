@@ -29,13 +29,11 @@
         <?php
             if(isset($comment['pk_i_id'])) {
                 //editing...
-                $edit = true ;
                 $title = __("Edit comment") ;
                 $action_frm = "comment_edit_post";
                 $btn_text = __("Save");
             } else {
                 //adding...
-                $edit = false ;
                 $title = __("Add a comment");
                 $action_frm = "add_comment_post";
                 $btn_text = __('Add');
@@ -82,7 +80,7 @@
                     <form name="comment_form" id="comment_form" action="<?php echo osc_admin_base_url(true); ?>" method="post" onSubmit="return checkForm()">
                         <input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
                         <input type="hidden" name="page" value="comments" />
-                        <?php PageForm::primary_input_hidden($comment); ?>
+                        <?php CommentForm::primary_input_hidden($comment); ?>
 
                         <div class="FormElement">
                             <div class="FormElementName">
