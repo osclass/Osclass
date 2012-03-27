@@ -179,9 +179,9 @@ function meta_description( ) {
 
             osc_reset_items();
             $text = $result;
+            break;
         case(''): // home
             $result = '';
-
             if(osc_count_latest_items() == 0) {
                 $text = '';
             }
