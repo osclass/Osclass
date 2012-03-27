@@ -737,21 +737,115 @@
         }
     
         /**
+         * Only search by pattern + location + category
+         *
+         * @param type $num 
+         */
+        private function _makeSQLPremium($num = 2) 
+        {
+            if ($this->withPattern ) {
+                // sub select for JOIN ----------------------
+                $this->dao->select('distinct d.fk_i_item_id');
+                $this->dao->from(DB_TABLE_PREFIX . 't_item_description as d');
+                $this->dao->where(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->sPattern));
+
+                $subSelect = $this->dao->_getSelect();
+                $this->dao->_resetSelect();
+                // END sub select ----------------------
+                $this->dao->select(DB_TABLE_PREFIX.'t_item.*, '.DB_TABLE_PREFIX.'t_item.s_contact_name as s_user_name');
+                $this->dao->from( DB_TABLE_PREFIX.'t_item' ) ;
+                $this->dao->from(sprintf('%st_item_stats', DB_TABLE_PREFIX));
+                $this->dao->where(sprintf('%st_item_stats.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+                $this->dao->where(sprintf("%st_item.b_premium = 1", DB_TABLE_PREFIX));
+                
+                if($this->withLocations || OC_ADMIN) {
+                    $this->dao->join(sprintf('%st_item_location', DB_TABLE_PREFIX), sprintf('%st_item_location.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX), 'LEFT');
+                    
+                    if(count($this->cities)>0) {
+                        $this->dao->where("( ".implode(' || ', $this->cities)." )");
+                    }
+
+                    if(count($this->regions)>0) {
+                        $this->dao->where("( ".implode(' || ', $this->regions)." )");
+                    }
+
+                    if(count($this->countries)>0) {
+                        $this->dao->where("( ".implode(' || ', $this->countries)." )");
+                    }
+                }
+                if($this->withCategoryId) {
+                    $this->dao->where(sprintf("%st_item.fk_i_category_id", DB_TABLE_PREFIX) .' IN ('. implode(', ', $this->categories) .')' ) ;
+                }
+                $this->dao->where(DB_TABLE_PREFIX.'t_item.pk_i_id IN ('.$subSelect.')');
+                
+                $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
+                $this->dao->orderBy(sprintf('%st_item_stats.i_num_premium_views', DB_TABLE_PREFIX), 'ASC');
+                $this->dao->orderBy(null, 'random');
+                $this->dao->limit(0, $num);
+                
+            } else {
+                $this->dao->select(DB_TABLE_PREFIX.'t_item.*, '.DB_TABLE_PREFIX.'t_item.s_contact_name as s_user_name');
+                $this->dao->from( DB_TABLE_PREFIX.'t_item' ) ;
+                $this->dao->from(sprintf('%st_item_stats', DB_TABLE_PREFIX));
+                $this->dao->where(sprintf('%st_item_stats.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+                $this->dao->where(sprintf("%st_item.b_premium = 1", DB_TABLE_PREFIX));
+                
+                if($this->withLocations || OC_ADMIN) {
+                    $this->dao->join(sprintf('%st_item_location', DB_TABLE_PREFIX), sprintf('%st_item_location.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX), 'LEFT');
+                    
+                    if(count($this->cities)>0) {
+                        $this->dao->where("( ".implode(' || ', $this->cities)." )");
+                    }
+
+                    if(count($this->regions)>0) {
+                        $this->dao->where("( ".implode(' || ', $this->regions)." )");
+                    }
+
+                    if(count($this->countries)>0) {
+                        $this->dao->where("( ".implode(' || ', $this->countries)." )");
+                    }
+                }
+                if($this->withCategoryId) {
+                    $this->dao->where(sprintf("%st_item.fk_i_category_id", DB_TABLE_PREFIX) .' IN ('. implode(', ', $this->categories) .')' ) ;
+                }
+                
+                $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
+                $this->dao->orderBy(sprintf('%st_item_stats.i_num_premium_views', DB_TABLE_PREFIX), 'ASC');
+                $this->dao->orderBy(null, 'random');
+                $this->dao->limit(0, $num);
+            }
+            
+            $sql = $this->dao->_getSelect() ;
+            // reset dao attributes
+            $this->dao->_resetSelect() ;
+            
+            return $sql;
+        }
+        /**
          * Make the SQL for the search with all the conditions and filters specified
          *
          * @access private
          * @since unknown
          * @param bool $count
          */
-        private function _makeSQL($count = false) 
+        private function _makeSQL($count = false,$premium = false) 
         {
             $arrayConditions    = $this->_conditions();
             $extraFields        = $arrayConditions['extraFields'];
             $conditionsSQL      = $arrayConditions['conditionsSQL'];
             
             $sql = '';
-            // if there is a pattern to search, return diferent sql query
-            // for optimitzation issues
+            // if there is a pattern to search, return diferent sql query for optimitzation issues
+            
+//            $this->addTable(sprintf('%st_item_stats', DB_TABLE_PREFIX));
+//            $this->addConditions(sprintf('%st_item_stats.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+//            $this->addConditions(sprintf("%st_item.b_premium = 1", DB_TABLE_PREFIX));
+//            $this->dao->aOrderby = array();
+//            $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
+//            $this->dao->orderBy(sprintf('%st_item_stats.i_num_premium_views', DB_TABLE_PREFIX), 'ASC');
+//            $this->dao->orderBy(null, 'random');
+//            $this->page(0, $max);
+            
             if ($this->withPattern ) {
                 // sub select for JOIN ----------------------
                 $this->dao->select('distinct d.fk_i_item_id');
@@ -819,11 +913,10 @@
                 if(count($this->conditions) > 0) {
                     $this->dao->where($conditionsSQL) ;
                 }
-                // ---------------------------------------------------------
                 
                 // order & limit
                 $this->dao->orderBy( $this->order_column, $this->order_direction);
-                
+
                 if($count) {
                     $this->dao->limit(100*$this->results_per_page) ;
                 } else {
@@ -985,17 +1078,16 @@
          * @since unknown
          * @param int $max
          */
+        /**
+         * solo acepta pattern + location + stats, category
+         * 
+         */
         public function getPremiums($max = 2)
-        {    
-            $this->order(sprintf('order_premium_views', DB_TABLE_PREFIX), 'ASC', NULL) ;
-            $this->page(0, $max);
-            $this->addField(sprintf('sum(%st_item_stats.i_num_premium_views) as total_premium_views', DB_TABLE_PREFIX));
-            $this->addField(sprintf('( sum(%st_item_stats.i_num_premium_views) + sum(%st_item_stats.i_num_premium_views) * RAND() * 0.7 + DATEDIFF(\'%s\', %st_item.dt_pub_date) * 0.3) as order_premium_views', DB_TABLE_PREFIX, DB_TABLE_PREFIX, date('Y-m-d H:i:s'), DB_TABLE_PREFIX));
-            $this->addTable(sprintf('%st_item_stats', DB_TABLE_PREFIX));
-            $this->addConditions(sprintf('%st_item_stats.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
-            $this->addConditions(sprintf("%st_item.b_premium = 1", DB_TABLE_PREFIX));
-            $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
-            $items = $this->doSearch(false, false);
+        {
+            $premium_sql = $this->_makeSQLPremium($max); // make premium sql
+
+            $result = $this->dao->query($premium_sql);
+            $items = $result->result();
             
             $mStat = ItemStats::newInstance();
             foreach($items as $item) {
