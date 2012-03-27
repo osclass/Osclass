@@ -142,8 +142,10 @@ function meta_title( ) {
         break;
     }
 
-    $text = str_replace('"', "'", $text);
-    return (osc_apply_filter('meta_title_filter', $text));
+    $text = str_replace("\n", '', $text) ;
+    $text = trim($text) ;
+    $text = osc_esc_html($text) ;
+    return (osc_apply_filter('meta_title_filter', $text)) ;
 }
 
 function meta_description( ) {
@@ -164,7 +166,7 @@ function meta_description( ) {
             }
         break;
         case('page'):
-            $text = osc_highlight(strip_tags(osc_static_page_text()), 140);
+            $text = osc_highlight(strip_tags(osc_static_page_text()), 140, '', '') ;
         break;
         case('search'):
             $result = '';
@@ -195,8 +197,10 @@ function meta_description( ) {
         break;
     }
 
-    $text = str_replace('"', "'", $text);
-    return (osc_apply_filter('meta_description_filter', $text));
+    $text = str_replace("\n", '', $text) ;
+    $text = trim($text) ;
+    $text = osc_esc_html($text) ;
+    return (osc_apply_filter('meta_description_filter', $text)) ;
 }
 
 
