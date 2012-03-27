@@ -51,7 +51,7 @@
                 <label></label>
                 <div class="input">
                     <label class="checkbox">
-                        <input type="checkbox" name="field_required" value="1" <?php if( $field['b_required'] == 1 ) { echo 'checked="checked"' ; } ?>/>
+                        <?php FieldForm::required_checkbox($field); ?>
                         <p class="inline"><?php _e('This field is required') ; ?></p>
                     </label>
                 </div>
@@ -132,7 +132,7 @@
                         });
                         message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/tick.png');?>"/>';
                         message += ret.ok ;
-                        $('div#settings_form').parent().parent().find('.quick_edit').html(ret.text);
+                        $('#quick_edit_'+ret.field_id).html(ret.text);
                     }
 
                     $(".jsMessage").fadeIn('fast') ;

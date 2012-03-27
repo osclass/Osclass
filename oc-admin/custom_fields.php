@@ -40,21 +40,6 @@
 
             //specific things for this class
             switch( $this->action ) {
-                case 'add_post':
-                    if( Params::getParam('field_name') != '' ) {
-                        $field = $this->fieldManager->findByName(Params::getParam('field_name')) ;
-                        if( !isset($field['pk_i_id']) ) {
-                            $slug = preg_replace('|([-]+)|', '-', preg_replace( '|[^a-z0-9_-]|', '-', strtolower( Params::getParam("field_slug")) ) ) ;
-                            $this->fieldManager->insertField(Params::getParam("field_name"), Params::getParam("field_type_new"), $slug, ( Params::getParam("field_required") == "1" ? 1 : 0 ), Params::getParam('field_options'), Params::getParam('categories')) ;
-                            osc_add_flash_ok_message( _m("New custom field added"), 'admin' ) ;
-                        } else {
-                            osc_add_flash_error_message( _m("Sorry, you already have one field with that name"), 'admin' ) ;
-                        }
-                    } else {
-                        osc_add_flash_error_message( _m("Name can not be empty"), 'admin' ) ;
-                    }
-                    $this->redirectTo(osc_admin_base_url(true) . "?page=cfields") ; 
-                break ;
                 default:
                     $categories = Category::newInstance()->toTreeAll() ;
                     $selected   = array() ;
