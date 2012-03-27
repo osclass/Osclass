@@ -20,7 +20,7 @@
  */
 
 
-define('OSCLASS_VERSION', '2.3.6') ;
+define('OSCLASS_VERSION', '2.4-dev') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
