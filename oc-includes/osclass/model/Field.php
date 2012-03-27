@@ -238,9 +238,12 @@
             }
             $this->dao->insert($this->getTableName(), array("s_name" => $name, "e_type" =>$type, "b_required" => $required, "s_slug" => $slug, 's_options' => $options));
             $id = $this->dao->insertedId();
+            $return = true;
             foreach($categories as $c) {
-                $this->dao->insert(sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_category_id' => $c, 'fk_i_field_id' =>$id));
+                $result = $this->dao->insert(sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_category_id' => $c, 'fk_i_field_id' =>$id));
+                if(!$result) { $return = false; };
             }
+            return $return;
         }
         
         
@@ -255,14 +258,16 @@
          */
         public function insertCategories($id, $categories = null) {
             if($categories!=null) {
+                $return = true;
                 foreach($categories as $c) {
-                    $res = $this->dao->insert(sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_category_id' => $c, 'fk_i_field_id' =>$id));
-                    if(!$res) {
-                        return $res;
+                    $result = $this->dao->insert(sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_category_id' => $c, 'fk_i_field_id' =>$id));
+                    if(!$result) {
+                        $return = false;
                     }
                 }
-                return true;
+                return $return;
             }
+            return false;
         }
         
         /**

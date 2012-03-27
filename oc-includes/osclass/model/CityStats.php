@@ -82,9 +82,7 @@
             if(!is_numeric($cityId)) {
                 return false;
             }
-            $sql = sprintf('INSERT INTO %s (fk_i_city_id, i_num_items) VALUES (%d, 1) ON DUPLICATE KEY UPDATE i_num_items = i_num_items + 1', $this->getTableName(), $cityId);
-            $return = $this->dao->query($sql);
-            return $return;
+            return $this->dao->query(sprintf('INSERT INTO %s (fk_i_city_id, i_num_items) VALUES (%d, 1) ON DUPLICATE KEY UPDATE i_num_items = i_num_items + 1', $this->getTableName(), $cityId));
         }
         
         /**
@@ -106,7 +104,6 @@
             $this->dao->where( $this->getPrimaryKey(), $cityId ) ;
             $result       = $this->dao->get() ;
             $cityStat = $result->row() ; 
-            $return       = 0 ;
 
             if( isset( $cityStat['i_num_items'] ) ) {
                 $this->dao->from( $this->getTableName() ) ;
@@ -114,10 +111,10 @@
                 $this->dao->where( 'i_num_items > 0' ) ;
                 $this->dao->where( 'fk_i_city_id', $cityId ) ;
 
-                $return = $this->dao->update() ;
+                return $this->dao->update() ;
             } 
 
-            return $return ;
+            return false;
         }
 
         /**
@@ -131,9 +128,7 @@
          */
         public function setNumItems($cityID, $numItems)
         {
-            $sql = "INSERT INTO ".$this->getTableName()." (fk_i_city_id, i_num_items) VALUES ($cityID, $numItems) ON DUPLICATE KEY UPDATE i_num_items = ".$numItems;
-            $result = $this->dao->query($sql) ;
-            return $result ;
+            return $this->dao->query("INSERT INTO ".$this->getTableName()." (fk_i_city_id, i_num_items) VALUES ($cityID, $numItems) ON DUPLICATE KEY UPDATE i_num_items = ".$numItems);
         }
 
         /**
@@ -156,9 +151,7 @@
          */
         public function deleteByRegion($regionId)
         {
-            $sql = 'delete from '.DB_TABLE_PREFIX.'t_city_stats where fk_i_city_id IN (select pk_i_id from '.DB_TABLE_PREFIX.'t_city where fk_i_region_id = '.$regionId.');' ;
-            $result = $this->dao->query($sql) ;
-            return $result ;
+            return $this->dao->query('DELETE FROM '.DB_TABLE_PREFIX.'t_city_stats WHERE fk_i_city_id IN (SELECT pk_i_id FROM '.DB_TABLE_PREFIX.'t_city WHERE fk_i_region_id = '.$regionId.');');
         }
         
         /**

@@ -259,10 +259,8 @@
             
             $this->reOrderPages($order);
 
-            $result = $this->dao->delete($this->getDescriptionTableName(), array('fk_i_pages_id' => $id));
-            $result = $this->dao->delete($this->tableName, array('pk_i_id' => $id));
-            
-            return $result;
+            $this->dao->delete($this->getDescriptionTableName(), array('fk_i_pages_id' => $id));
+            return $this->dao->delete($this->tableName, array('pk_i_id' => $id));
         }
 
         /**
@@ -289,12 +287,14 @@
         private function reOrderPages($order)
         {
             $aPages = $this->listAll(false);
+            $arows = 0;
             foreach($aPages as $page){
                 if($page['i_order'] > $order){
                     $new_order = $page['i_order']-1;
-                    $this->dao->update($this->tableName, array('i_order' => $new_order), array('pk_i_id' => $page['pk_i_id']) );
+                    $arows += $this->dao->update($this->tableName, array('i_order' => $new_order), array('pk_i_id' => $page['pk_i_id']) );
                 }
             }
+            return $arows;
         }
 
         /**
@@ -474,8 +474,7 @@
             $result = $this->dao->get();
             $count = $result->row();
             
-            if($count['total'] > 0) return true;
-            else return false;
+            return ($count['total']>0)?true:false;
         }
 
         /**
@@ -493,9 +492,7 @@
                              'dt_mod_date'    => date('Y-m-d H:i:s'));
             $where  = array('pk_i_id' => $id);
 
-            $result = $this->dao->update($this->tableName, $fields, $where);
-
-            return $result;
+            return $this->dao->update($this->tableName, $fields, $where);
         }
 
         /**

@@ -82,8 +82,7 @@
                 return false;
             }
             $sql = sprintf('INSERT INTO %s (fk_i_region_id, i_num_items) VALUES (%d, 1) ON DUPLICATE KEY UPDATE i_num_items = i_num_items + 1', $this->getTableName(), $regionId);
-            $return = $this->dao->query($sql);
-            return $return;
+            return $this->dao->query($sql);
         }
         
         /**
@@ -104,7 +103,6 @@
             $this->dao->where( $this->getPrimaryKey(), $regionId ) ;
             $result         = $this->dao->get() ;
             $regionStat     = $result->row() ; 
-            $return         = 0 ;
 
             if( isset( $regionStat['i_num_items'] ) ) {
                 $this->dao->from( $this->getTableName() ) ;
@@ -112,10 +110,10 @@
                 $this->dao->where( 'i_num_items > 0' ) ;
                 $this->dao->where( 'fk_i_region_id', $regionId ) ;
 
-                $return = $this->dao->update() ;
+                return $this->dao->update() ;
             } 
             
-            return $return ;
+            return false;
         }
 
         /**
@@ -130,8 +128,7 @@
         public function setNumItems($regionID, $numItems)
         {
             $sql = "INSERT INTO ".$this->getTableName()." (fk_i_region_id, i_num_items) VALUES ($regionID, $numItems) ON DUPLICATE KEY UPDATE i_num_items = ".$numItems;
-            $result = $this->dao->query($sql) ;
-            return $result ;
+            return $this->dao->query($sql) ;
         }
 
         /**

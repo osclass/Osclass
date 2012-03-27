@@ -84,8 +84,7 @@
                 return false;
             }
             $sql = sprintf('INSERT INTO %s (fk_c_country_code, i_num_items) VALUES (\'%s\', 1) ON DUPLICATE KEY UPDATE i_num_items = i_num_items + 1', $this->getTableName(), $countryCode);
-            $return = $this->dao->query($sql);
-            return $return;
+            return $this->dao->query($sql);
         }
         
         /**
@@ -115,10 +114,10 @@
                 $this->dao->where( 'i_num_items > 0' ) ;
                 $this->dao->where( 'fk_c_country_code', $countryCode ) ;
 
-                $return = $this->dao->update() ;
+                return $this->dao->update() ;
             } 
             
-            return $return ;
+            return false;
         }
 
         /**
@@ -132,9 +131,7 @@
          */
         public function setNumItems($countryCode, $numItems)
         {
-            $sql = "INSERT INTO ".$this->getTableName()." (fk_c_country_code, i_num_items) VALUES ('$countryCode', $numItems) ON DUPLICATE KEY UPDATE i_num_items = ".$numItems;
-            $result = $this->dao->query($sql) ;
-            return $result ;
+            return $this->dao->query("INSERT INTO ".$this->getTableName()." (fk_c_country_code, i_num_items) VALUES ('$countryCode', $numItems) ON DUPLICATE KEY UPDATE i_num_items = ".$numItems);
         }
 
         /**
