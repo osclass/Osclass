@@ -636,9 +636,11 @@
             $this->dao->where('fk_i_city_id', $cityId) ;
             $result = $this->dao->get() ;
             $items  = $result->result() ;
+            $arows = 0;
             foreach($items as $i) {
-                $this->deleteByPrimaryKey($i['fk_i_item_id']);
+                $arows += $this->deleteByPrimaryKey($i['fk_i_item_id']);
             }
+            return $arows;
         }
         
         /**
@@ -656,9 +658,11 @@
             $this->dao->where('fk_i_region_id', $regionId) ;
             $result = $this->dao->get() ;
             $items  = $result->result() ;
+            $arows = 0;
             foreach($items as $i) {
-                $this->deleteByPrimaryKey($i['fk_i_item_id']);
+                $arows += $this->deleteByPrimaryKey($i['fk_i_item_id']);
             }
+            return $arows;
         }
         
         /**
@@ -676,9 +680,11 @@
             $this->dao->where('fk_c_country_code', $countryId) ;
             $result = $this->dao->get() ;
             $items  = $result->result() ;
+            $arows = 0;
             foreach($items as $i) {
-                $this->deleteByPrimaryKey($i['fk_i_item_id']);
+                $arows += $this->deleteByPrimaryKey($i['fk_i_item_id']);
             }
+            return $arows;
         }
         
         /**
