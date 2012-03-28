@@ -54,6 +54,9 @@
                         echo json_encode($users);
                     }
                     break;
+                case 'date_format':
+                    echo json_encode(array('format' => Params::getParam('format'), 'str_formatted' => date(Params::getParam('format'))));
+                    break;
                 case 'runhook': // run hooks
                     $hook = Params::getParam('hook');
 
@@ -205,7 +208,7 @@
                     if($error) {
                         $result = array( 'error' => $message) ;
                     } else {
-                        $result = array( 'ok' => __("Saved") , 'text' => Params::getParam("s_name")) ;
+                        $result = array( 'ok' => __("Saved") , 'text' => Params::getParam("s_name"), 'field_id' => $field['pk_i_id']) ;
                     }
                     
                     echo json_encode($result) ;
@@ -232,6 +235,27 @@
                     }
                     echo json_encode($result) ;
 
+                    break;
+                case 'add_field':
+                    $s_name = __('NEW custom field');
+                    $slug_tmp = $slug = preg_replace('|([-]+)|', '-', preg_replace('|[^a-z0-9_-]|', '-', strtolower($s_name)));
+                    $slug_k = 0;
+                    while(true) {
+                        $field = Field::newInstance()->findBySlug($slug);
+                        if(!$field || $field['pk_i_id']==Params::getParam("id")) {
+                            break;
+                        } else {
+                            $slug_k++;
+                            $slug = $slug_tmp."_".$slug_k;
+                        }
+                    }
+                    $fieldManager = Field::newInstance();
+                    $result = $fieldManager->insertField($s_name, 'TEXT', $slug, 0, '', array()) ;
+                    if($result) {
+                        echo json_encode(array('error' => 0, 'field_id' => $fieldManager->dao->insertedId(), 'field_name' => $s_name));
+                    } else {
+                        echo json_encode(array('error' => 1));
+                    }
                     break;
                 case 'enable_category':
                     $id       = strip_tags( Params::getParam('id') ) ;

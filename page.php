@@ -31,46 +31,46 @@
         function doModel()
         {
             $id   = Params::getParam('id') ;
-            $page = false;
-            if($id!='' && is_numeric($id)) {
+            $page = false ;
+
+            if( is_numeric($id) ) {
                 $page = $this->pageManager->findByPrimaryKey($id) ;
-                if($page == false) {
-                    $page = $this->pageManager->findByInternalName(Params::getParam('slug'));
-                }
             } else {
-                $page = $this->pageManager->findByInternalName(Params::getParam('slug'));
+                $page = $this->pageManager->findByInternalName(Params::getParam('slug')) ;
             }
-            
-            if( $page == false) {
+
+            // page not found
+            if( $page == false ) {
                 $this->do404() ;
                 return ;
             }
 
+            // this page shouldn't be shown (i.e.: e-mail templates)
             if( $page['b_indelible'] == 1 ) {
                 $this->do404() ;
                 return ;
             }
 
-            if(file_exists(osc_themes_path() . osc_theme() . '/' . $page['s_internal_name'].".php")) {
-                $this->doView($page['s_internal_name'].".php") ;
-            } else if( file_exists(osc_themes_path() . osc_theme() . '/pages/' . $page['s_internal_name'] . ".php") ) {
-                $this->doView("pages/".$page['s_internal_name'].".php") ;
-            } else {
-                if( Params::getParam('lang') != '' ) {
-                    Session::newInstance()->_set('userLocale', Params::getParam('lang')) ;
-                }
+            // export $page content to View
+            $this->_exportVariableToView('page', $page) ;
+            if( Params::getParam('lang') != '' ) {
+                Session::newInstance()->_set('userLocale', Params::getParam('lang')) ;
+            }
 
-                $this->_exportVariableToView('page', $page) ;
+            // load the right template file
+            if( file_exists(osc_themes_path() . osc_theme() . '/page-' . $page['s_internal_name'] . '.php') ) {
+                $this->doView('page-' . $page['s_internal_name'] . '.php') ;
+            } else {
                 $this->doView('page.php') ;
             }
         }
 
         function doView($file)
         {
-            osc_run_hook("before_html") ;
+            osc_run_hook('before_html') ;
             osc_current_web_theme_path($file) ;
             Session::newInstance()->_clearVariables() ;
-            osc_run_hook("after_html") ;
+            osc_run_hook('after_html') ;
         }
     }
 
