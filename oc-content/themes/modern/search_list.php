@@ -19,7 +19,7 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-//    osc_get_premiums();
+    osc_get_premiums();
     if(osc_count_premiums() > 0) {
 ?>
 <table border="0" cellspacing="0">
