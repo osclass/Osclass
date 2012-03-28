@@ -74,7 +74,7 @@
                                         }
 
                                         if (!$user) {
-                                            osc_add_flash_error_message(_m('The username doesn\'t exist')) ;
+                                            osc_add_flash_error_message(_m('The user doesn\'t exist')) ;
                                             $this->redirectTo(osc_user_login_url());
                                         }
 
@@ -87,7 +87,7 @@
                                         $logged = $uActions->bootstrap_login($user['pk_i_id']) ;
                                         
                                         if($logged==0) {
-                                            osc_add_flash_error_message(_m('The username doesn\'t exist')) ;
+                                            osc_add_flash_error_message(_m('The user doesn\'t exist')) ;
                                         } else if($logged==1) {
                                             osc_add_flash_error_message(_m('The user has not been validated yet'));
                                         } else if($logged==2) {
