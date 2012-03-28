@@ -40,11 +40,11 @@
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $user = User::newInstance()->findByEmail( Params::getParam('email') ) ;
                                         
-                                        $url_redirect = osc_user_dashboard_url();
-                                        $page_redirect = '';
+                                        
+                                        $url_redirect = osc_get_http_referer();
                                         if(osc_rewrite_enabled()) {
-                                            if(isset($_SERVER['HTTP_REFERER'])) {
-                                                $request_uri = urldecode(preg_replace('@^' . osc_base_url() . '@', "", $_SERVER['HTTP_REFERER']));
+                                            if($url_redirect!='') {
+                                                $request_uri = urldecode(preg_replace('@^' . osc_base_url() . '@', "", $url_redirect));
                                                 $tmp_ar = explode("?", $request_uri);
                                                 $request_uri = $tmp_ar[0];
                                                 $rules = Rewrite::newInstance()->listRules();
@@ -58,19 +58,11 @@
                                                     }
                                                 }
                                             }
-                                        } else if(preg_match('|[\?&]page=([^&]+)|', $_SERVER['HTTP_REFERER'].'&', $match)) {
+                                        } else if(preg_match('|[\?&]page=([^&]+)|', $url_redirect.'&', $match)) {
                                             $page_redirect = $match[1];
                                         }
-                                        
-                                        if(Params::getParam('http_referer')!='') {
-                                            Session::newInstance()->_setReferer(Params::getParam('http_referer'));
-                                            $url_redirect = Params::getParam('http_referer');
-                                        } else if(Session::newInstance()->_getReferer()!='') {
-                                            Session::newInstance()->_setReferer(Session::newInstance()->_getReferer());
-                                            $url_redirect = Session::newInstance()->_getReferer();
-                                        } else if($page_redirect!='' && $page_redirect!='login') {
-                                            Session::newInstance()->_setReferer($_SERVER['HTTP_REFERER']);
-                                            $url_redirect = $_SERVER['HTTP_REFERER'];
+                                        if($page_redirect=='' || $page_redirect=='login' || $url_redirect=='') {
+                                            $url_redirect = osc_user_dashboard_url();
                                         }
 
                                         if (!$user) {
@@ -192,6 +184,7 @@
                 break;
 
                 default:                //login
+                                        Session::newInstance()->_setReferer(osc_get_http_referer());
                                         if( osc_logged_user_id() != '') {
                                             $this->redirectTo(osc_user_dashboard_url());
                                         }
