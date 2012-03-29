@@ -96,30 +96,11 @@ class MyReporter extends SimpleReporter {
         }
         $body = $this->getTestCaseProgress() . "/" . $this->getTestCaseCount();
         $body .= " test cases complete:\n";
-        $body .= "<strong>" . $this->getPassCount() . "</strong> passes, ";
-        $body .= "<strong>" . $this->getFailCount() . "</strong> fails and ";
-        $body .= "<strong>" . $this->getExceptionCount() . "</strong> exceptions.<br/>\n";
+        $body .= "*" . $this->getPassCount() . "* passes, ";
+        $body .= "*" . $this->getFailCount() . "* fails and ";
+        $body .= "*" . $this->getExceptionCount() . "* exceptions.<br/>\r\n\r";
         $body .= $this->fails;
-        require_once dirname(__FILE__).'/../../../phpmailer/class.phpmailer.php' ;
-        
-        $mail = new PHPMailer(true) ;
-        try {
-            $mail->CharSet = 'utf-8' ;
-
-            $mail->From = 'testing@osclass.org';
-            $mail->FromName = 'OSClass Testing';
-            $mail->Subject = $subject;
-            $mail->Body = $body;
-            $mail->AltBody = $body;
-            $mail->IsHTML(false) ;
-            $mail->AddAddress('testing@osclass.org', "OSClass testing") ;
-            $mail->Send() ;       
-            mail("testing@osclass.org", $subject." _mail_", $body);
-        } catch (phpmailerException $e) {
-            print_r("EMAIL COULD NOT BE SENT (phpmailerException)");
-        } catch (Exception $e) {
-            print_r("EMAIL COULD NOT BE SENT (Exception)");
-        }
+        mail("testing@osclass.org", $subject." _mail_", $body);
     }
 
     /**
