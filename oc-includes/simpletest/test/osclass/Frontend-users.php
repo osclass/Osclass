@@ -1,6 +1,6 @@
 <?php
 
-require_once '../../../../oc-load.php';
+require_once dirname(__FILE__).'/../../../../oc-load.php';
 
 class Frontend_users extends FrontendTest {
 

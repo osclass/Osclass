@@ -1,18 +1,17 @@
 <?php
-require_once '../../../../oc-load.php';
-
 class Installer_installer extends InstallerTest {
     
     /*           TESTS          */
     function testInstaller1()
     {
-        require('config_test.php');
+        require(dirname(__FILE__).'/config_test.php');
         flush();
         $this->clean();
         
         $config_file = ABS_PATH . "config.php";
         if( !file_exists($config_file) ) {
             $this->can_continue = true;
+            
             
             $this->selenium->open( osc_get_absolute_url() . "oc-includes/osclass/install.php" );
             
@@ -79,7 +78,7 @@ class Installer_installer extends InstallerTest {
     /*           TESTS          */
     function testInstaller2()
     {
-        require('config_test.php');
+        require(dirname(__FILE__).'/config_test.php');
         flush();
         $this->clean();
        

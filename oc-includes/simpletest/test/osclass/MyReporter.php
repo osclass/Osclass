@@ -1,5 +1,5 @@
 <?php
-require_once('../../scorer.php');
+require_once(dirname(__FILE__).'/../../scorer.php');
 /**
  *    Sample minimal test displayer. Generates only
  *    failure messages and a pass count.
@@ -96,20 +96,11 @@ class MyReporter extends SimpleReporter {
         }
         $body = $this->getTestCaseProgress() . "/" . $this->getTestCaseCount();
         $body .= " test cases complete:\n";
-        $body .= "<strong>" . $this->getPassCount() . "</strong> passes, ";
-        $body .= "<strong>" . $this->getFailCount() . "</strong> fails and ";
-        $body .= "<strong>" . $this->getExceptionCount() . "</strong> exceptions.<br/>\n";
+        $body .= "*" . $this->getPassCount() . "* passes, ";
+        $body .= "*" . $this->getFailCount() . "* fails and ";
+        $body .= "*" . $this->getExceptionCount() . "* exceptions.<br/>\r\n\r";
         $body .= $this->fails;
-        require_once('../../../osclass/utils.php');
-        osc_sendMail(array(
-            'to' => 'testing@osclass.org',
-            'to_name' => 'OSClass Testing',
-            'from' => 'testing@osclass.org',
-            'from_name' => 'OSClass Testing',
-            'subject' => $subject,
-            'body' => $body
-        ));
-        
+        mail("testing@osclass.org", $subject." _mail_", $body);
     }
 
     /**

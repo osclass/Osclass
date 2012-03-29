@@ -1,8 +1,8 @@
 <?php
-require_once LIB_PATH . 'Selenium.php';
+require_once dirname(__FILE__).'/../../../Selenium.php';
 
-require_once('../../simpletest.php');
-require_once('../../web_tester.php');
+require_once(dirname(__FILE__).'/../../simpletest.php');
+require_once(dirname(__FILE__).'/../../web_tester.php');
 
 // LOAD OSCLASS
 define( 'ABS_PATH', dirname( dirname( dirname( dirname( dirname(__FILE__) ) ) ) ) . '/' ) ;
@@ -20,7 +20,7 @@ class InstallerTest extends WebTestCase {
 
     function setUp()
     {
-        require('config_test.php');
+        require(dirname(__FILE__).'/config_test.php');
         flush();
         $this->selenium = new Testing_Selenium($browser, "http://localhost/");
         $this->selenium->start();
@@ -34,7 +34,7 @@ class InstallerTest extends WebTestCase {
     }
     
     function clean() {
-        require('config_test.php');
+        require(dirname(__FILE__).'/config_test.php');
         // DROP DATABASE
         $mysqli = new mysqli($db_host, $db_user, $db_pass);
         $mysqli->query("DROP DATABASE ".$db_name);
