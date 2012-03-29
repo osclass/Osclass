@@ -99,6 +99,9 @@ unset($location_array);
                                 <?php } ?>
                             </tbody>
                         </table>
+                        <?php if(osc_search_total_pages() > osc_max_results_per_page_at_search() ) { ?>
+                        <p class="see_more_link"><a href="<?php echo osc_base_url(true).'&page=search&sUser[]='.osc_user_id(); ?>"><strong>See all offers »</strong></a></p>
+                        <?php } ?>
                     </div>
                 </div>
                 <div id="sidebar">

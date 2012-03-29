@@ -529,6 +529,7 @@ function osc_file_get_contents($url){
     
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' OSClass (v.'.osc_version().')');
     if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
@@ -864,32 +865,32 @@ function osc_change_permissions( $dir = ABS_PATH ) {
     clearstatcache();
     if ($dh = opendir($dir)) {
         while (($file = readdir($dh)) !== false) {
-            if($file!="." && $file!="..") {
+            if($file!="." && $file!=".." && substr($file,0,1)!="." ) {
                 if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
                     if(!is_writable(str_replace("//", "/", $dir . "/" . $file))) {
                         $res = @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
                     }
-                    if(!$res) { return false; };
+                    if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
                     if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/themes")) {
                         if($file=="modern" || $file=="index.php") {
                             $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                            if(!$res) { return false; };
+                            if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/plugins")) {
                         if($file=="google_maps" || $file=="google_analytics" || $file=="index.php") {
                             $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                            if(!$res) { return false; };
+                            if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/languages")) {
                         if($file=="en_US" || $file=="index.php") {
                             $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                            if(!$res) { return false; };
+                            if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/downloads")) {
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/uploads")) {
                     } else {
-                        $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                        if(!$res) { return false; };
+                        $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file)); 
+                        if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
                     }
                 } else {
                     if(!is_writable(str_replace("//", "/", $dir . "/" . $file))) {
@@ -904,7 +905,6 @@ function osc_change_permissions( $dir = ABS_PATH ) {
     }
     return true;
 }
-
 
 function osc_save_permissions( $dir = ABS_PATH ) {
     $perms = array();
@@ -952,7 +952,39 @@ function rglob($pattern, $flags = 0, $path = '') {
     return $files;
 }
 
-    
+
+/**
+ * Check if a package could be update or not
+ *
+ * @param string $update_uri
+ * @since 2.4
+ * @return boolean
+ */
+function osc_check_update($update_uri, $version = null) {
+    if($update_uri!="" && $version!=null) {
+
+        if(stripos("http://", $update_uri)===FALSE) {
+            // OSCLASS OFFICIAL REPOSITORY
+            $uri = osc_market_url($update_uri);
+        } else {
+            // THIRD PARTY REPOSITORY
+            if(!osc_market_external_sources()) {
+                return false;
+            }
+            $uri = $update_uri;
+        }
+
+        if(false===($json=@osc_file_get_contents($uri))) {
+            return false;
+        } else {
+            $data = json_decode($json , true);
+            if(isset($data['s_version']) && $data['s_version']>$version) {
+                return true;
+            }
+        }
+    }
+    return false;
+}    
 
 
 ?>

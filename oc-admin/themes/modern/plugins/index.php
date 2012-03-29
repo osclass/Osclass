@@ -18,27 +18,6 @@
 
     $plugins        = __get('plugins') ;
     $active_plugins = osc_get_plugins() ;
-
-    $aData = array() ;
-    foreach($plugins as $plugin) {
-        $row       = array() ;
-        $p_info    = osc_plugin_get_info($plugin) ;
-        $installed = ( osc_plugin_is_installed($plugin) ?  1 : 0 ) ;
-        $enabled   = ( osc_plugin_is_enabled($plugin) ? 1 : 0 ) ;
-
-        $row[] = '<input type="hidden" name="installed" value="' . $installed . '" enabled="' . $enabled . '" />' . $p_info['plugin_name'] . ' <div id="datatables_quick_edit">' . ( osc_plugin_check_update($p_info['filename']) ? '<a href="' . osc_admin_base_url(true) . '?page=upgrade-plugin&amp;plugin=' . $p_info['filename'] . '">' . __("There's a new version. You should update!") . '</a>' : '' ) . '</div>' ;
-        $row[] = $p_info['description'] ;
-        $row[] = ( isset($active_plugins[$plugin . '_configure']) ? '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=admin&amp;plugin=' . $p_info['filename'] . '">' . __('Configure') . '</a>' : '' ) ;
-        if( $installed ) {
-            $row[] = ( $enabled ? '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=disable&amp;plugin=' . $p_info['filename'] . '">' . __('Disable') . '</a>' : '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=enable&amp;plugin=' . $p_info['filename'] . '">' . __('Enable') . '</a>') ;
-        } else {
-            $row[] = '' ;
-        }
-        $row[] = ( $installed ? '<a onclick="javascript:return confirm(\'' . osc_esc_js( __('This action can not be undone. Uninstalling plugins may result in a permanent lost of data. Are you sure you want to continue?') ) . '\')" href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=uninstall&amp;plugin=' . $p_info['filename'] . '">' . __('Uninstall') . '</a>' : '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=install&amp;plugin=' . $p_info['filename'] . '">' . __('Install') . '</a>' ) ;
-
-        $aData[] = $row ;
-    }
-
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
@@ -50,29 +29,22 @@
         <script type="text/javascript">
             $(function() {
                 oTable = $('#datatables_list').dataTable({
-                    "sDom": "<'row'<'span6 length-menu'l><'span6 filter'>fr>t<'row'<'span6 info-results'i><'span6 paginate'p>>",
-                    "sPaginationType": "bootstrap",
-                    "bLengthChange": false,
-                    "bProcessing": true,
-                    "bServerSide":false,
-                    "bPaginate": true,
-                    "bFilter": false,
-                    "aaSorting": [[4,'desc'], [3,'asc']],
-                    "oLanguage": {
-                        "oPaginate": {
-                            "sNext" : "<?php echo osc_esc_html( __('Next') ) ; ?>",
-                            "sPrevious" : "<?php echo osc_esc_html( __('Previous') ) ; ?>"
-                        },
-                        "sEmptyTable" : "<?php echo osc_esc_html( __('No data available in table') ) ; ?>",
-                        "sInfo": "<?php echo osc_esc_html( sprintf( __('Showing %s to %s of %s entries'), '_START_', '_END_', '_TOTAL_') ) ; ?>",
-                        "sInfoEmpty": "<?php echo osc_esc_html( __('No entries to show') ) ; ?>",
-                        "sInfoFiltered": "<?php echo osc_esc_html( sprintf( __('(filtered from %s total entries)'), '_MAX_' ) ) ; ?>",
-                        "sLoadingRecords": "<?php echo osc_esc_html( __('Loading...') ) ; ?>",
-                        "sProcessing": "<?php echo osc_esc_html( __('Processing...') ) ; ?>",
-                        "sSearch": "<?php echo osc_esc_html( __('Search') ) ; ?>",
-                        "sZeroRecords": "<?php echo osc_esc_html( __('No matching records found') ) ; ?>"
-                    },
-                    "aaData": <?php echo json_encode($aData) ; ?>,
+                    "bAutoWidth": false,
+                    "aaData": [
+                        <?php foreach($plugins as $p){ ?>
+                        <?php $p_info = osc_plugin_get_info($p); ?>
+                        <?php osc_plugin_is_installed($p) ? $installed = 1 : $installed = 0; ?>
+                        <?php osc_plugin_is_enabled($p) ? $enabled = 1 : $enabled = 0; ?>
+                            [
+                                "<input type='hidden' name='installed' value='<?php echo $installed ?>' enabled='<?php echo $enabled ?>' />" +
+                                "<?php echo addcslashes($p_info['plugin_name'], '"'); ?>&nbsp;<div><?php if(osc_check_update(@$p_info['plugin_update_uri'], @$p_info['version'])) { ?><a href='<?php echo osc_admin_base_url(true);?>?page=universe&code=<?php echo htmlentities($p_info['plugin_update_uri']); ?>'><?php _e("There's a new version available to update"); ?></a><?php }; ?></div>",
+                                "<?php echo addcslashes($p_info['description'], '"'); ?>",
+                                "<?php if(isset($active_plugins[$p.'_configure'])) { ?><a href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=admin&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Configure'); ?></a><?php }; ?>",
+                                "<?php if($installed) { if($enabled) { ?><a href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=disable&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Disable'); ?></a><?php } else { ?><a href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=enable&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Enable'); ?></a><?php }; };?>",
+                                "<?php if($installed) { ?><a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Uninstalling plugins may result in a permanent lost of data. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=uninstall&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Uninstall'); ?></a><?php } else { ?><a href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=install&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Install'); ?></a><?php }; ?>"
+                            ] <?php echo $p != end($plugins) ? ',' : ''; ?>
+                        <?php } ?>
+                    ],
                     "aoColumns": [
                         {
                             "sTitle": "<?php echo osc_esc_html( __('Name') ) ; ?>"

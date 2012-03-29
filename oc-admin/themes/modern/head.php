@@ -42,7 +42,6 @@ FLASHMESSAGE;
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery-ui.js') ; ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.cookie.js') ; ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.json.js') ; ?>"></script>
-<!--<script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.uniform.js') ; ?>"></script>-->
 <!-- global js -->
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('global.js') ; ?>"></script>
 <!-- /global js -->

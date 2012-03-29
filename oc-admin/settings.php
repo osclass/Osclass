@@ -539,7 +539,6 @@ HTACCESS;
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_item_delete').'/([0-9]+)/(.*?)/?$', 'index.php?page=item&action=item_delete&id=$1&secret=$2');
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_item_resource_delete').'/([0-9]+)/([0-9]+)/([0-9A-Za-z]+)/?(.*?)/?$', 'index.php?page=item&action=deleteResource&id=$1&item=$2&code=$3&secret=$4');
 
-                                            
                                             // Item rules
                                             $id_pos = stripos($item_url, '{ITEM_ID}');
                                             $title_pos = stripos($item_url, '{ITEM_TITLE}');
@@ -579,25 +578,27 @@ HTACCESS;
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_change_email_confirm').'/([0-9]+)/(.*?)/?$', 'index.php?page=user&action=change_email_confirm&userId=$1&code=$2');
 
                                             // Page rules
-                                            $id_pos = stripos($page_url, '{PAGE_ID}');
-                                            $slug_pos = stripos($page_url, '{PAGE_SLUG}');
-                                            $title_pos = stripos($page_url, '{PAGE_TITLE}');
-                                            $params_pos = 1;
-                                            $params2_pos = 1;
-                                            if($title_pos!==false && $id_pos>$title_pos) {
-                                                $param_pos++;
+                                            $pos_pID   = stripos($page_url, '{PAGE_ID}') ;
+                                            $pos_pSlug = stripos($page_url, '{PAGE_SLUG}') ;
+                                            $pID_pos   = 1 ;
+                                            $pSlug_pos = 1 ;
+                                            if( is_numeric($pos_pID) && is_numeric($pos_pSlug) ) {
+                                                // set the order of the parameters
+                                                if($pos_pID > $pos_pSlug) {
+                                                    $pID_pos++;
+                                                } else {
+                                                    $pSlug_pos++;
+                                                }
+
+                                                $rewrite->addRule('^' . str_replace('{PAGE_SLUG}', '([\p{L}\p{N}_\-,]+)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url)) . '$', 'index.php?page=page&id=$' . $pID_pos . "&slug=$" . $pSlug_pos) ;
+                                                $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/' . str_replace('{PAGE_SLUG}', '([\p{L}\p{N}_\-,]+)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url)) . '$', 'index.php?page=page&lang=$1_$2&id=$' . ($pID_pos + 2) . '&slug=$' . ($pSlug_pos + 2) ) ;
+                                            } else if( is_numeric($pos_pID) ) {
+                                                $rewrite->addRule('^' .  str_replace('{PAGE_ID}', '([0-9]+)', $page_url) . '$', 'index.php?page=page&id=$1') ;
+                                                $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/' . str_replace('{PAGE_ID}', '([0-9]+)', $page_url) . '$', 'index.php?page=page&lang=$1_$2&id=$3' ) ;
+                                            } else {
+                                                $rewrite->addRule('^' . str_replace('{PAGE_SLUG}', '([\p{L}\p{N}_\-,]+)', $page_url) . '$', 'index.php?page=page&slug=$1') ;
+                                                $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/' . str_replace('{PAGE_SLUG}', '([\p{L}\p{N}_\-,]+)', $page_url) . '$', 'index.php?page=page&lang=$1_$2&slug=$3' ) ;
                                             }
-                                            if($slug_pos!==false && $id_pos>$slug_pos) {
-                                                $param_pos++;
-                                            }
-                                            if($title_pos!==false && $slug_pos>$title_pos) {
-                                                $param2_pos++;
-                                            }
-                                            if($id_pos!==false && $slug_pos>$id_pos) {
-                                                $param2_pos++;
-                                            }
-                                            $rewrite->addRule('^'.str_replace('{PAGE_TITLE}', '(.+)', str_replace('{PAGE_SLUG}', '([a-zA-Z_]+)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url))).'$', 'index.php?page=page&id=$'.$param_pos."&slug=".$params2_pos);
-                                            $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{PAGE_TITLE}', '(.+)', str_replace('{PAGE_SLUG}', '([a-zA-Z_]+)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url))).'$', 'index.php?page=page&id=$'.($param_pos+2).'&lang=$1_$2'."&slug=".($params2_pos+2));
 
                                             // Clean archive files
                                             $rewrite->addRule('^(.+?)\.php(.*)$', '$1.php$2');
@@ -1156,6 +1157,7 @@ HTACCESS;
                                         $numItemsSearch    = Params::getParam('default_results_per_page') ;
                                         $contactAttachment = Params::getParam('enabled_attachment') ;
                                         $bAutoCron         = Params::getParam('auto_cron') ;
+                                        $bMarketSources = Params::getParam('market_external_sources')==1?1:0;
 
                                         // preparing parameters
                                         $sPageTitle        = strip_tags($sPageTitle) ;
@@ -1192,7 +1194,9 @@ HTACCESS;
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimeFormat)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'timeFormat')) ;
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimezone)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'timezone')) ;
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'timezone'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $bMarketSources)
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'marketAllowExternalSources'));
                                         if(is_int($sNumRssItems)) {
                                             $iUpdated += Preference::newInstance()->update(array('s_value'   => $sNumRssItems)
                                                                                           ,array('s_section' => 'osclass', 's_name' => 'num_rss_items')) ;

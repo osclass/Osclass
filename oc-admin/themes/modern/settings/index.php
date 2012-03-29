@@ -29,6 +29,37 @@
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
+        <script type="text/javascript">
+            
+            function custom_date(date_format) {
+                $.getJSON(
+                    "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=date_format",
+                    {"format" : date_format},
+                    function(data){
+                        if(data.str_formatted!='') {
+                            $("#custom_date").html(' <?php _e('Preview'); ?>: ' + data.str_formatted)
+                        } else {
+                            $("#custom_date").html('');
+                        }
+                    }
+                );
+            }
+            
+            function custom_time(time_format) {
+                $.getJSON(
+                    "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=date_format",
+                    {"format" : time_format},
+                    function(data){
+                        if(data.str_formatted!='') {
+                            $("#custom_time").html(' <?php _e('Preview'); ?>: ' + data.str_formatted)
+                        } else {
+                            $("#custom_time").html('');
+                        }
+                    }
+                );
+            }
+            
+        </script>
         <!-- container -->
         <div id="content">
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
@@ -127,12 +158,24 @@
                                     <?php } ?>
                                     <label class="radio">
                                         <input type="radio" name="df" id="df_custom" value="df_custom" <?php echo ( $custom_checked ? 'checked="checked"' : '' ) ; ?> />
-                                        <input type="text" class="small" <?php echo ( $custom_checked ? 'value="' . osc_esc_html( osc_date_format() ) . '"' : '' ) ; ?> onkeyup="javascript:document.getElementById('dateFormat').value = this.value;"/>
+                                        <input type="text" class="small" <?php echo ( $custom_checked ? 'value="' . osc_esc_html( osc_date_format() ) . '"' : '' ) ; ?> onkeyup="javascript:custom_date(this.value);"/><span id="custom_date"></span>
                                     </label>
                                     <p class="help"><a href="http://php.net/date"><?php _e('Documentation on date and time formatting') ; ?></a></p>
                                     <input type="hidden" name="dateFormat" id="dateFormat" value="<?php echo osc_date_format() ; ?>" />
                                 </div>
                             </div>
+                            <div class="input-line">
+                                <label><?php _e('External sources'); ?></label>
+                                <div class="input">
+                                    <input type="checkbox" id="market_external_sources" name="market_external_sources" value="1" <?php if(osc_market_external_sources()==1) {echo "checked";}; ?>/>
+                                    <p class="inline"><?php _e('Allow download packages from external sources'); ?></p>
+                                </div>
+                            </div>
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Number of items in the RSS') ; ?></legend>
+                                    <input type="text" id="num_rss_items" name="num_rss_items" value="<?php echo osc_esc_html(osc_num_rss_items()); ?>" onblur='validateInt(this,<?php echo osc_num_rss_items(); ?>)'/>
+                                </fieldset>
                             <div class="input-line">
                                 <label><?php _e('Time format') ; ?></label>
                                 <div class="input">
@@ -151,7 +194,7 @@
                                     <?php } ?>
                                     <label class="radio">
                                         <input type="radio" name="tf" id="tf_custom" value="tf_custom" <?php echo ( $custom_checked ? 'checked="checked"' : '' ) ; ?> />
-                                        <input type="text" class="small" <?php echo ( $custom_checked ? 'value="' . osc_esc_html( osc_time_format() ) . '"' : ''); ?> onkeyup="javascript:document.getElementById('timeFormat').value = this.value;"/>
+                                        <input type="text" class="small" <?php echo ( $custom_checked ? 'value="' . osc_esc_html( osc_time_format() ) . '"' : ''); ?> onkeyup="javascript:custom_time(this.value);"/><span id="custom_time"></span>
                                     </label>
                                     <p class="help"><a href="http://php.net/date"><?php _e('Documentation on date and time formatting') ; ?></a></p>
                                     <input type="hidden" name="timeFormat" id="timeFormat" value="<?php echo osc_esc_html( osc_time_format() ) ; ?>" />

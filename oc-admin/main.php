@@ -50,6 +50,11 @@
                                     $this->_exportVariableToView( "numAdmins", Admin::newInstance()->count() ) ;
 
                                     $this->_exportVariableToView( "numItems", Item::newInstance()->count() ) ;
+                                    
+                                    $this->_exportVariableToView( "numItemsSpam", Item::newInstance()->totalItems(null, 'SPAM') ) ;
+                                    $this->_exportVariableToView( "numItemsBlock", Item::newInstance()->totalItems(null, 'DISABLED') ) ;
+                                    $this->_exportVariableToView( "numItemsInactive", Item::newInstance()->totalItems(null, 'INACTIVE') ) ;
+                                    
                                     $this->_exportVariableToView( "numItemsPerCategory", osc_get_non_empty_categories() ) ;
                                     $this->_exportVariableToView( "newsList", osc_listNews() ) ;
                                     $this->_exportVariableToView( "comments", ItemComment::newInstance()->getLastComments(5) ) ;
