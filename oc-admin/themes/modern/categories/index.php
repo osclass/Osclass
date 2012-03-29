@@ -28,6 +28,14 @@
         <script type="text/javascript">
             document.write('<style type="text/css">.tabber{ display:none ; }</style>');
         </script>
+        <style>
+            .placeholder {
+                background-color: #cfcfcf;
+            }
+            ul.sortable > li > ul {
+                margin-left: 20px;
+            }
+        </style>
         <script type="text/javascript">
             $(function() {
                 var list_original = '' ;
@@ -57,11 +65,9 @@
                         for(var k = 0; k < l; k++ ) {
                             if( array_list[k].item_id == $(ui.item).find('div').attr('category_id') ) {
                                 if(array_list[k].parent_id=='root') {
-                                    $(ui.item).find('.expand_cat').show() ;
-                                    $(ui.item).find('.collapse_cat').show() ;
+                                    $(ui.item).find('.toggle').show() ;
                                 } else {
-                                    $(ui.item).find('.expand_cat').hide() ;
-                                    $(ui.item).find('.collapse_cat').hide() ;
+                                    $(ui.item).find('.toggle').hide() ;
                                 }
                                 break ;
                             }
@@ -98,14 +104,17 @@
                     }
                 }) ;
                 
-                $(".toggle").bind("click", function(e){
-                    var id = $(this).parent().parent().parent().attr('category_id') ;
+                $(".toggle").bind("click", function(e) {
+                    var list = $(this).parent().parent().parent().parent().find('ul');
+                    var li   = $(this).parent().parent().parent().parent().parent();
                     if( $(this).attr('status') == 'collapsed' ) {
-                        $('.subcategories-' + id).show('slow') ;
+                        $(li).removeClass('no-nest');
+                        $(list).show();
                         $(this).attr('status', 'expanded');
                         $(this).html('-');
                     } else {
-                        $('.subcategories-' + id).hide('slow') ;
+                        $(li).addClass('no-nest');
+                        $(list).hide();
                         $(this).attr('status', 'collapsed');
                         $(this).html('+');
                     }
@@ -264,12 +273,14 @@
                         <?php
                             if( count($category['categories']) > 0 ) { $has_subcategories = true ; } else { $has_subcategories = false ; }
                         ?>
-                            <li id="list_<?php echo $category['pk_i_id'] ; ?>" class="category_li <?php echo ( $category['b_enabled'] == 1 ? 'enabled' : 'disabled' ) ; ?>" >
+                            <li id="list_<?php echo $category['pk_i_id'] ; ?>" class="category_li <?php echo ( $category['b_enabled'] == 1 ? 'enabled' : 'disabled' ) ; ?> <?php if($has_subcategories) { echo 'no-nest'; } ?>" >
                                 <div class="category_div <?php echo ( $category['b_enabled'] == 1 ? 'enabled' : 'disabled' ) ; ?>" category_id="<?php echo $category['pk_i_id'] ; ?>" >
                                     <div class="category_row">
                                         <div class="name-cat" id="<?php echo 'quick_edit_' . $category['pk_i_id'] ; ?>">
                                             <?php if( $has_subcategories ) { ?>
                                             <span class="toggle" status="collapsed">+</span>
+                                            <?php } else { ?>
+                                            <span class="toggle" status="expanded">-</span>
                                             <?php } ?>
                                             <span class="name"><?php echo $category['s_name'] ; ?></span>
                                         </div>
@@ -284,12 +295,13 @@
                                     <div class="edit content_list_<?php echo $category['pk_i_id'] ; ?>"></div>
                                 </div>
                                 <?php if($has_subcategories) { ?>
-                                    <ul class="subcategories subcategories-<?php echo $category['pk_i_id'] ; ?>" style="display:none ;">
+                                    <ul class=" subcategories-<?php echo $category['pk_i_id'] ; ?>" style="display: none;">
                                     <?php foreach($category['categories'] as $category) {?>
                                         <li id="list_<?php echo $category['pk_i_id'] ; ?>" class="category_li <?php echo ( $category['b_enabled'] == 1 ? 'enabled' : 'disabled' ) ; ?>" >
                                             <div class="category_div <?php echo ( $category['b_enabled'] == 1 ? 'enabled' : 'disabled' ) ; ?>" category_id="<?php echo $category['pk_i_id'] ; ?>" >
                                                 <div class="category_row">
                                                     <div class="name-cat" id="<?php echo "quick_edit_" . $category['pk_i_id'] ; ?>">
+                                                        <span class="toggle" status="expanded" style="display:none;">-</span>
                                                         <span class="name"><?php echo $category['s_name'] ; ?></span>
                                                     </div>
                                                     <div class="actions-cat">
