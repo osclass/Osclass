@@ -17,7 +17,7 @@
      */
 
     //getting variables for this view
-    $adminEdit = __get("admin") ;
+    $admin = __get("admin") ;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
@@ -25,6 +25,21 @@
         <?php osc_current_admin_theme_path('head.php') ; ?>
     </head>
     <body>
+        <?php 
+            if(isset($admin['pk_i_id'])) {
+                // Editing an admin
+                $admin_edit = true;
+                $title = __("Edit admin") ;
+                $action_frm = "edit_post";
+                $btn_text = __("Save");
+            } else {
+                // Adding new admin
+                $admin_edit = false;
+                $title = __("Add new admin") ;
+                $action_frm = "add_post";
+                $btn_text = __("Add");
+            }
+        ?>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <!-- container -->
         <div id="content">
@@ -32,53 +47,58 @@
             <!-- right container -->
             <div class="right">
                 <div class="header_title">
-                    <h1 class="admins"><?php _e('Edit admin') ; ?></h1>
+                    <h1 class="admins"><?php echo $title; ?></h1>
                 </div>
                 <?php osc_show_admin_flash_messages() ; ?>
                 <!-- add admin form -->
                 <div class="settings general">
                     <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-                        <input type="hidden" name="action" value="edit_post" />
+                        <input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
                         <input type="hidden" name="page" value="admins" />
-                        <input type="hidden" name="id" value="<?php echo $adminEdit['pk_i_id'] ; ?>" />
+                        <?php AdminForm::primary_input_hidden($admin); ?>
+                        
                         <fieldset>
                             <div class="input-line">
                                 <label><?php _e('Name <em>(required)</em>') ; ?></label>
                                 <div class="input">
-                                    <input type="text" class="large" name="s_name" value="<?php echo osc_esc_html($adminEdit['s_name']) ; ?>" />
+                                    <?php AdminForm::name_text($admin) ; ?>
                                 </div>
                             </div>
                             <div class="input-line">
                                 <label><?php _e('Username <em>(required)</em>') ; ?></label>
                                 <div class="input">
-                                    <input type="text" class="large" name="s_username" value="<?php echo osc_esc_html($adminEdit['s_username']) ; ?>" />
+                                    <?php AdminForm::username_text($admin) ; ?>
                                 </div>
                             </div>
                             <div class="input-line">
                                 <label><?php _e('E-mail <em>(required)</em>') ; ?></label>
                                 <div class="input">
-                                    <input type="text" class="large" name="s_email" value="<?php echo osc_esc_html($adminEdit['s_email']) ; ?>" />
+                                    <?php AdminForm::email_text($admin) ; ?>
                                 </div>
                             </div>
-                            <div class="input-line">
-                                <label><?php _e('Current password') ; ?></label>
-                                <div class="input">
-                                    <input type="password" class="large" name="old_password" value="" />
-                                    <p class="help-inline"><em><?php _e('If you would like to change the password type a new one. Otherwise leave this blank') ; ?></em></p>
+                            <?php if($admin_edit) { ?>
+                                <div class="input-line">
+                                    <label><?php _e('Current password') ; ?></label>
+                                    <div class="input">
+                                        <?php AdminForm::old_password_text($admin) ; ?>
+                                        <p class="help-inline"><em><?php _e('If you would like to change the password type a new one. Otherwise leave this blank') ; ?></em></p>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php }; ?>
                             <div class="input-line">
                                 <label><?php _e('New password') ; ?></label>
                                 <div class="input">
-                                    <input type="password" class="large" name="s_password" value="" />
+                                    <?php AdminForm::password_text($admin) ; ?>
                                 </div>
-                                <div class="input">
-                                    <input type="password" class="large" name="s_password2" value="" />
-                                    <p class="help-inline"><em><?php _e('Type your new password again') ; ?></em></p>
-                                </div>
+                                <?php if($admin_edit) { ?>
+                                    <div class="input">
+                                        <?php AdminForm::check_password_text($admin) ; ?>
+                                        <p class="help-inline"><em><?php _e('Type your new password again') ; ?></em></p>
+                                    </div>
+                                <?php }; ?>
                             </div>
                             <div class="actions">
-                                <input type="submit" value="<?php echo osc_esc_html( __('Update admin') ) ; ?>" />
+                                <input type="submit" value="<?php echo osc_esc_html($btn_text) ; ?>" />
                             </div>
                         </fieldset>
                     </form>

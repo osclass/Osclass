@@ -52,6 +52,7 @@
         <?php if( osc_images_enabled_at_items() ) ItemForm::photos_javascript() ; ?>
         <link href="<?php echo osc_current_admin_theme_styles_url('tabs.css') ; ?>" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('tabber-minimized.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>

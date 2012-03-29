@@ -20,50 +20,34 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    class CAdminCFields extends AdminSecBaseModel
+    class CAdminUniverse extends AdminSecBaseModel
     {
-        //specific for this class
-        private $fieldManager ;
-
-        function __construct()
-        {
+        function __construct() {
             parent::__construct() ;
-
-            //specific things for this class
-            $this->fieldManager = Field::newInstance() ;
         }
 
         //Business Layer...
-        function doModel()
-        {
-            parent::doModel() ;
+        function doModel() {
 
-            //specific things for this class
-            switch( $this->action ) {
+            switch ($this->action) {
                 default:
-                    $categories = Category::newInstance()->toTreeAll() ;
-                    $selected   = array() ;
-                    foreach($categories as $c) {
-                        $selected[] = $c['pk_i_id'] ;
-                        foreach($c['categories'] as $cc) {
-                            $selected[] = $cc['pk_i_id'] ;
-                        }
-                    }
-                    $this->_exportVariableToView('categories', $categories) ;
-                    $this->_exportVariableToView('default_selected', $selected) ;
-                    $this->_exportVariableToView('fields', $this->fieldManager->listAll()) ;
-                    $this->doView("fields/index.php") ;
-                break ;
+                            $code = html_entity_decode(Params::getParam('code'));
+                            View::newInstance()->_exportVariableToView('code', $code);
+                            //$url = Params::getParam('url');
+                            //if($url=='') {
+                                $url = osc_market_url();
+                            //}
+                            View::newInstance()->_exportVariableToView('url', $url);
+                            $this->doView('universe/index.php');
+                break;
             }
         }
 
         //hopefully generic...
-        function doView($file)
-        {
+        function doView($file) {
             osc_current_admin_theme_path($file) ;
             Session::newInstance()->_clearVariables();
         }
     }
 
-    /* file end: ./oc-admin/custom_fields.php */
 ?>

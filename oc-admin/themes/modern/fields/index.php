@@ -96,7 +96,38 @@
 
             $(document).ready(function() {
                 $("#add-button").bind('click', function() {
-                    $('#add-custom-field-frame').fadeIn('fast') ;
+                    $.ajax({
+                        url: '<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=add_field',
+                        context: document.body,
+                        success: function(res){
+                            var ret = eval( "(" + res + ")");
+                            console.log(ret);
+                            if(ret.error==0) {
+                                var html = '';
+                                html += '<li id="list_'+ret.field_id+'" class="field_li even">';
+                                    html += '<div class="cfield-div" field_id="'+ret.field_id+'" >';
+                                        html += '<div class="name-edit-cfield" id="quick_edit_'+ret.field_id+'">';
+                                            html += ret.field_name;
+                                        html += '</div>';
+                                        html += '<div class="actions-edit-cfield">';
+                                            html += '<a onclick="show_iframe(\'content_list_'+ret.field_id+'\',\''+ret.field_id+'\');"><?php _e('Edit') ; ?></a>';
+                                             html += '&middot;';
+                                            html += '<a onclick="delete_field(\''+ret.field_id+'\');"><?php _e('Delete') ; ?></a>';
+                                        html += '</div>';
+                                    html += '</div>';
+                                    html += '<div class="edit content_list_'+ret.field_id+'"></div>';
+                                html += '</li>';
+                                $("#ul_fields").append(html);
+                                show_iframe('content_list_'+ret.field_id, ret.field_id);
+                            } else {
+                                var message = "";
+                                message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/cross.png');?>"/>';
+                                message += '<?php _e('Custom field could not be added'); ?>'
+                                $(".jsMessage").fadeIn('fast') ;
+                                $(".jsMessage p").html(message) ;
+                            }
+                        }
+                    }) ;
                 }) ;
 
                 $("#new_cat_tree").treeview({
@@ -137,102 +168,9 @@
                 </div>
                 <!-- custom fields -->
                 <div class="custom-fields">
-                    <!-- custom field frame -->
-                    <div id="add-custom-field-frame" class="custom-field-frame" style="display: none;">
-                        <form id="new_field_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-                            <input type="hidden" name="page" value="cfields" />
-                            <input type="hidden" name="action" value="add_post" />
-                            <fieldset>
-                                <h3><?php _e('New custom field') ; ?></h3>
-                                <div class="input-line">
-                                    <label><?php _e('Name') ; ?></label>
-                                    <div class="input medium">
-                                        <input type="text" class="medium" name="field_name" value="" />
-                                    </div>
-                                </div>
-                                <div class="input-line">
-                                    <label><?php _e('Type') ; ?></label>
-                                    <div class="input">
-                                        <select name="field_type_new">
-                                            <option value="TEXT">TEXT</option>
-                                            <option value="TEXTAREA">TEXTAREA</option>
-                                            <option value="DROPDOWN">DROPDOWN</option>
-                                            <option value="RADIO">RADIO</option>
-                                            <option value="CHECKBOX">CHECKBOX</option>
-                                            <option value="URL">URL</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div id="div_field_options" class="input-line">
-                                    <label><?php _e('Options') ; ?></label>
-                                    <div class="input medium">
-                                        <input class="xlarge" type="text" name="field_options" value="" />
-                                        <p class="help-inline"><?php _e('Separate the options by commas') ; ?></p>
-                                    </div>
-                                </div>
-                                <div class="input-line">
-                                    <label></label>
-                                    <div class="input">
-                                        <label class="checkbox">
-                                            <input type="checkbox" name="field_required" value="1"/>
-                                            <p class="inline"><?php _e('This field is required') ; ?></p>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="categories-tree">
-                                    <p>
-                                        <?php _e('Select the categories where you want to apply these attribute:') ; ?>
-                                    </p>
-                                    <table class="preset-categories">
-                                        <tr>
-                                            <td>
-                                                <a href="javascript:void() ;" onclick="checkAll('new_cat_tree', true) ; return false ;"><?php _e('Check all') ; ?></a> &middot;
-                                                <a href="javascript:void() ;" onclick="checkAll('new_cat_tree', false) ; return false ;"><?php _e('Uncheck all') ; ?></a>
-                                            </td>
-                                            <td>
-                                                <ul id="new_cat_tree">
-                                                    <?php CategoryForm::categories_tree($categories, $selected) ; ?>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <div id="advanced_fields" class="custom-field-shrink">
-                                    <p><?php _e('Advanced options') ; ?></p>
-                                </div>
-                                <div id="more-options" class="input-line">
-                                    <label><?php _e('Identifier name') ; ?></label>
-                                    <div class="input medium">
-                                        <input type="text" class="medium" name="field_slug" value="" />
-                                        <p class="help-inline"><?php _e('Only alphanumeric characters are allowed [a-z0-9_-]') ; ?></p>
-                                    </div>
-                                </div>
-                                <div class="actions-cfield">
-                                    <input type="submit" value="<?php echo osc_esc_html( __('Add custom field') ) ; ?>">
-                                    <input type="button" value="<?php echo osc_esc_html( __('Cancel') ) ; ?>" onclick="$('#add-custom-field-frame').fadeOut('fast') ;">
-                                </div>
-                            </fieldset>
-                        </form>
-                        <script type="text/javascript">
-                            $(document).ready(function() {
-                                $('#advanced_fields').bind('click',function() {
-                                    $('#more-options').toggle() ;
-                                    if( $('#advanced_fields').attr('class') == 'custom-field-shrink' ) {
-                                        $('#advanced_fields').removeClass('custom-field-shrink');
-                                        $('#advanced_fields').addClass('custom-field-expanded');
-                                    } else {
-                                        $('#advanced_fields').addClass('custom-field-shrink');
-                                        $('#advanced_fields').removeClass('custom-field-expanded');
-                                    }
-                                }) ;
-                                $('#more-options').hide() ;
-                            }) ;
-                        </script>
-                    </div>
-                    <!-- /custom field frame -->
                     <!-- list fields -->
                     <div class="list-fields">
-                        <ul>
+                        <ul id="ul_fields">
                         <?php $even = true ;
                         if( count($fields) == 0 ) { ?>
                             <?php _e("You don't have any custom fields yet") ; ?>

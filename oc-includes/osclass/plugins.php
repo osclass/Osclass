@@ -142,6 +142,17 @@
             return $p_array;
         }
 
+        static function findByUpdateURI($uri) {
+            $plugins = Plugins::listAll();
+            foreach($plugins as $p) {
+                $info = Plugins::getInfo($p);
+                if($info['plugin_update_uri']==$uri) {
+                    return $p;
+                }
+            }
+            return false;
+        }
+
         static function resource($path)
         {
             $fullPath = osc_plugins_path() . $path;
@@ -338,22 +349,9 @@
             return $info;
         }
 
-        static function checkUpdate($plugin)
-        {
-            $info = self::getInfo($plugin);
-            if($info['plugin_update_uri']!="") {
-                if(false===($str=@osc_file_get_contents($info['plugin_update_uri']))) {
-                    return false;
-                } else {
-                    if(preg_match('|\?\(([^\)]+)|', preg_replace('/,\s*([\]}])/m', '$1', $str), $data)) {
-                        $json = json_decode($data[1] , true);
-                        if($json['version']>$info['version']) {
-                            return true;
-                        }
-                    }
-                }
-            }
-            return false;
+        static function checkUpdate($plugin) {
+            $info = Plugins::getInfo($plugin);
+            return osc_check_update($info['plugin_update_uri'], $info['version']);
         }
 
 

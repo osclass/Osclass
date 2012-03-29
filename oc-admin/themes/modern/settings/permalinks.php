@@ -57,7 +57,7 @@
                                 </label>
                             </div>
 
-                            <div id="custom_rules" <?php if(!osc_rewrite_enabled()) { echo "style=\"display:none;\"";}?>>
+                            <div id="custom_rules" <?php if( !osc_rewrite_enabled() ) { echo 'style="display:none;"'; } ?>>
                                 <h2><?php _e('Rewrite rules') ; ?></h2>
                                 <div class="input-line">
                                     <label for="rewrite_item_url"><?php echo sprintf(__('Item URL. Accepted keywords: %s'), '{ITEM_ID},{ITEM_TITLE},{CATEGORIES}') ; ?></label>
@@ -66,7 +66,7 @@
                                     </div>
                                 </div>
                                 <div class="input-line">
-                                    <label for="rewrite_page_url"><?php echo sprintf(__('Page URL. Accepted keywords: %s'), '{PAGE_ID},{PAGE_SLUG}, {PAGE_TITLE}') ; ?></label>
+                                    <label for="rewrite_page_url"><?php echo sprintf(__('Page URL. Accepted keywords: %s'), '{PAGE_ID}, {PAGE_SLUG}') ; ?></label>
                                     <div class="input">
                                         <input class="xlarge" type="text" name="rewrite_page_url" id="rewrite_page_url" value="<?php echo osc_get_preference('rewrite_page_url'); ?>" />
                                     </div>

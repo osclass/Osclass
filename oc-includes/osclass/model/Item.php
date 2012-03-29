@@ -265,8 +265,8 @@
         {
             $this->dao->select('count(*) as total') ;
             $this->dao->from($this->getTableName().' i') ;
-            $this->dao->join(DB_TABLE_PREFIX.'t_category c', 'c.pk_i_id = i.fk_i_category_id') ;
             if(!is_null($categoryId)) {
+                $this->dao->join(DB_TABLE_PREFIX.'t_category c', 'c.pk_i_id = i.fk_i_category_id') ;
                 $this->dao->where('i.fk_i_category_id', $categoryId) ;
             }
             
@@ -278,6 +278,12 @@
                     break;
                     case 'INACTIVE':   
                         $this->dao->where('b_active', 0);
+                    break;
+                    case 'ENABLE':  
+                        $this->dao->where('b_enabled', 1);
+                    break;
+                    case 'DISABLED':   
+                        $this->dao->where('b_enabled', 0);
                     break;
                     case 'SPAM':   
                         $this->dao->where('b_spam', 1);
@@ -545,6 +551,13 @@
             return false;
         }
             
+        public function enableByCategory($enable, $aIds)
+        {
+            $sql  = sprintf('UPDATE %st_item SET b_enabled = %d WHERE ', DB_TABLE_PREFIX, $enable );
+            $sql .= sprintf('%st_item.fk_i_category_id IN (%s)', DB_TABLE_PREFIX, implode(',', $aIds) );
+            
+            return $this->dao->query($sql);
+        }
         /**
          * Return meta fields for a given item
          *
@@ -578,8 +591,7 @@
          * @return bool
          */
         public function deleteByPrimaryKey($id)
-        {
-            osc_run_hook('delete_item', $id) ;
+        {             
             $item = $this->findByPrimaryKey($id) ;
 
             if ( is_null($item) ) {
@@ -602,8 +614,11 @@
             $this->dao->delete(DB_TABLE_PREFIX.'t_item_location', "fk_i_item_id = $id") ;
             $this->dao->delete(DB_TABLE_PREFIX.'t_item_stats'   , "fk_i_item_id = $id") ;
             $this->dao->delete(DB_TABLE_PREFIX.'t_item_meta'    , "fk_i_item_id = $id") ;
-            $res = parent::deleteByPrimaryKey($id) ;
-            return $res ;
+            $res = parent::deleteByPrimaryKey($id);
+            if($res==1) {
+                osc_run_hook('delete_item', $id) ;
+            }
+            return $res ;  
         }
         
         /**
@@ -621,9 +636,11 @@
             $this->dao->where('fk_i_city_id', $cityId) ;
             $result = $this->dao->get() ;
             $items  = $result->result() ;
+            $arows = 0;
             foreach($items as $i) {
-                $this->deleteByPrimaryKey($i['fk_i_item_id']);
+                $arows += $this->deleteByPrimaryKey($i['fk_i_item_id']);
             }
+            return $arows;
         }
         
         /**
@@ -641,9 +658,11 @@
             $this->dao->where('fk_i_region_id', $regionId) ;
             $result = $this->dao->get() ;
             $items  = $result->result() ;
+            $arows = 0;
             foreach($items as $i) {
-                $this->deleteByPrimaryKey($i['fk_i_item_id']);
+                $arows += $this->deleteByPrimaryKey($i['fk_i_item_id']);
             }
+            return $arows;
         }
         
         /**
@@ -661,9 +680,11 @@
             $this->dao->where('fk_c_country_code', $countryId) ;
             $result = $this->dao->get() ;
             $items  = $result->result() ;
+            $arows = 0;
             foreach($items as $i) {
-                $this->deleteByPrimaryKey($i['fk_i_item_id']);
+                $arows += $this->deleteByPrimaryKey($i['fk_i_item_id']);
             }
+            return $arows;
         }
         
         /**
@@ -799,7 +820,7 @@
                 }
 
                 // populate locations and category_name
-                $this->dao->select() ;
+                $this->dao->select(DB_TABLE_PREFIX.'t_item_location.*, '.DB_TABLE_PREFIX.'t_item_stats.*, cd.s_name as s_category_name') ;
                 $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
                 $this->dao->from(DB_TABLE_PREFIX.'t_category_description as cd') ;
                 $this->dao->from(DB_TABLE_PREFIX.'t_item_stats') ;

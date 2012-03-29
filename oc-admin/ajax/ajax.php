@@ -48,44 +48,37 @@
                     break;
                 case 'userajax': // This is the autocomplete AJAX
                     $users = User::newInstance()->ajax(Params::getParam("term"));
-                    echo json_encode($users);
-                    break;
-                case 'alerts': // Allow to register to an alert given (not sure it's used on admin)
-                    $alert = Params::getParam("alert");
-                    $email = Params::getParam("email");
-                    $userid = Params::getParam("userid");
-                    if ($alert != '' && $email != '') {
-                        Alerts::newInstance()->insert(array('fk_i_user_id' => $userid, 's_email' => $email, 's_search' => $alert, 'e_type' => 'DAILY'));
-                        echo "1";
-                        return true;
+                    if(count($users)==0) {
+                        echo json_encode(array(0 => array('id'=> '', 'label' => __('No results'), 'value' => __('No results')) ));
+                    } else {
+                        echo json_encode($users);
                     }
-                    echo '0';
                     break;
-                case 'runhook': //Run hooks
-                    $hook = Params::getParam("hook");
-                    switch ($hook) {
+                case 'date_format':
+                    echo json_encode(array('format' => Params::getParam('format'), 'str_formatted' => date(Params::getParam('format'))));
+                    break;
+                case 'runhook': // run hooks
+                    $hook = Params::getParam('hook');
+
+                    if($hook == '') {
+                        echo json_encode(array('error' => 'hook parameter not defined')) ;
+                        break;
+                    }
+
+                    switch($hook) {
                         case 'item_form':
-                            $catId = Params::getParam("catId");
-                            if ($catId != '') {
-                                osc_run_hook("item_form", $catId);
-                            } else {
-                                osc_run_hook("item_form");
-                            }
-                            break;
+                            osc_run_hook('item_form', Params::getParam('catId'));
+                        break;
                         case 'item_edit':
-                            $catId = Params::getParam("catId");
+                            $catId  = Params::getParam("catId");
                             $itemId = Params::getParam("itemId");
                             osc_run_hook("item_edit", $catId, $itemId);
-                            break;
+                        break;
                         default:
-                            if ($hook == '') {
-                                return false;
-                            } else {
-                                osc_run_hook($hook);
-                            }
-                            break;
+                            osc_run_hook('ajax_admin_' . $hook);
+                        break;
                     }
-                    break;
+                break;
                 case 'items': // Return items (use external file oc-admin/ajax/item_processing.php)
                     require_once osc_admin_base_path() . 'ajax/items_processing.php';
                     $items_processing = new ItemsProcessingAjax(Params::getParamsAsArray("get"));
@@ -215,7 +208,7 @@
                     if($error) {
                         $result = array( 'error' => $message) ;
                     } else {
-                        $result = array( 'ok' => __("Saved") , 'text' => Params::getParam("s_name")) ;
+                        $result = array( 'ok' => __("Saved") , 'text' => Params::getParam("s_name"), 'field_id' => $field['pk_i_id']) ;
                     }
                     
                     echo json_encode($result) ;
@@ -243,6 +236,27 @@
                     echo json_encode($result) ;
 
                     break;
+                case 'add_field':
+                    $s_name = __('NEW custom field');
+                    $slug_tmp = $slug = preg_replace('|([-]+)|', '-', preg_replace('|[^a-z0-9_-]|', '-', strtolower($s_name)));
+                    $slug_k = 0;
+                    while(true) {
+                        $field = Field::newInstance()->findBySlug($slug);
+                        if(!$field || $field['pk_i_id']==Params::getParam("id")) {
+                            break;
+                        } else {
+                            $slug_k++;
+                            $slug = $slug_tmp."_".$slug_k;
+                        }
+                    }
+                    $fieldManager = Field::newInstance();
+                    $result = $fieldManager->insertField($s_name, 'TEXT', $slug, 0, '', array()) ;
+                    if($result) {
+                        echo json_encode(array('error' => 0, 'field_id' => $fieldManager->dao->insertedId(), 'field_name' => $s_name));
+                    } else {
+                        echo json_encode(array('error' => 1));
+                    }
+                    break;
                 case 'enable_category':
                     $id       = strip_tags( Params::getParam('id') ) ;
                     $enabled  = (Params::getParam('enabled') != '') ? Params::getParam('enabled') : 0 ;
@@ -266,10 +280,14 @@
 
                         $subCategories = $mCategory->findSubcategories( $id ) ;
 
+                        $aIds = array($id);
                         $aUpdated[] = array('id' => $id) ;
                         foreach( $subCategories as $subcategory ) {
+                            $aIds[]     = $subcategory['pk_i_id'];
                             $aUpdated[] = array( 'id' => $subcategory['pk_i_id'] ) ;
                         }
+                        
+                        Item::newInstance()->enableByCategory($enabled, $aIds);
 
                         if( $enabled ) {
                             $result = array(
@@ -379,13 +397,26 @@
                     
                     break;
                 case 'custom': // Execute via AJAX custom file
-                    $ajaxfile = Params::getParam("ajaxfile");
-                    if ($ajaxfile != '') {
-                        require_once osc_admin_base_path() . $ajaxfile;
-                    } else {
-                        echo json_encode(array('error' => __('no action defined')));
+                    $ajaxFile = Params::getParam("ajaxfile");
+
+                    if($ajaxFile == '') {
+                        echo json_encode(array('error' => 'no action defined'));
+                        break ;
                     }
-                    break;
+
+                    // valid file?
+                    if( stripos($ajaxFile, '../') !== false ) {
+                        echo json_encode(array('error' => 'no valid ajaxFile'));
+                        break ;
+                    }
+
+                    if( !file_exists(osc_plugins_path() . $ajaxFile) ) {
+                        echo json_encode(array('error' => "ajaxFile doesn't exist"));
+                        break;
+                    }
+
+                    require_once osc_plugins_path() . $ajaxFile ;
+                break;
                 case 'test_mail':
                     $title = sprintf( __('Test email, %s'), osc_page_title() ) ;
                     $body  = __("Test email") . "<br><br>" . osc_page_title() ;
@@ -602,6 +633,184 @@
                     foreach ($perms as $k => $v) {
                         @chmod($k, $v);
                     }
+                    break;
+                    
+                /*******************************
+                 ** COMPLETE UNIVERSE PROCESS **
+                 *******************************/
+                case 'universe': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
+                    $code = Params::getParam('code');
+                    $plugin = false;
+                    $re_enable = false;
+                    $message = "";
+                    $error = 0;
+                    $data = array();
+
+                    /************************
+                     *** CHECK VALID CODE ***
+                     ************************/
+                    if ($code != '') {
+
+                        if(stripos("http://", $code)===FALSE) {
+                            // OSCLASS OFFICIAL REPOSITORY
+                            $data = json_decode(osc_file_get_contents(osc_market_url($code)), true);
+                        } else {
+                            // THIRD PARTY REPOSITORY
+                            if(osc_market_external_sources()) {
+                                $data = json_decode(osc_file_get_contents($code), true);
+                            } else {
+                                echo json_encode(array('error' => 8, 'error_msg' => __('No external sources are allowed')));
+                                break;
+                            }
+                        }
+                        /***********************
+                         **** DOWNLOAD FILE ****
+                         ***********************/
+                        if( isset($data['s_slug']) && isset($data['s_source_file']) && isset($data['e_type'])) {
+
+                            if($data['e_type']=='THEME') {
+                                $folder = 'themes/';
+                            } else if($data['e_type']=='LANGUAGE') {
+                                $folder = 'languages/';
+                            } else { // PLUGINS
+                                $folder = 'plugins/';
+                                $plugin = Plugins::findByUpdateURI($data['s_slug']);
+                                if($plugin!=false) {
+                                    if(Plugins::isEnabled($plugin)) {
+                                        Plugins::runHook($plugin.'_disable') ;
+                                        Plugins::deactivate($plugin);
+                                        $re_enable = true;
+                                    }
+                                }
+                            }
+
+                            $tmp      = explode("/", $data['s_slug']) ;
+                            $filename = end($tmp) ;
+                            error_log('Source file: ' . $data['s_source_file']) ;
+                            error_log('Filename: ' . $filename) ;
+                            $result   = osc_downloadFile($data['s_source_file'], $filename) ;
+                            
+                            if ($result) { // Everything is OK, continue
+                                /**********************
+                                 ***** UNZIP FILE *****
+                                 **********************/
+                                @mkdir(ABS_PATH . 'oc-temp', 0777);
+                                $res = osc_unzip_file(osc_content_path() . 'downloads/' . $filename, osc_content_path() . 'downloads/oc-temp/');
+                                if ($res == 1) { // Everything is OK, continue
+                                    /**********************
+                                     ***** COPY FILES *****
+                                     **********************/
+                                    $fail = -1;
+                                    if ($handle = opendir(osc_content_path() . 'downloads/oc-temp')) {
+                                        $fail = 0;
+                                        while (false !== ($_file = readdir($handle))) {
+                                            if ($_file != '.' && $_file != '..') {
+                                                $copyprocess = osc_copy(osc_content_path() . "downloads/oc-temp/" . $_file, ABS_PATH . "oc-content/" . $folder . $_file);
+                                                if ($copyprocess == false) {
+                                                    $fail = 1;
+                                                };
+                                            }
+                                        }
+                                        closedir($handle);
+
+                                        // Additional actions is not important for the rest of the proccess
+                                        // We will inform the user of the problems but the upgrade could continue
+                                        /****************************
+                                         ** REMOVE TEMPORARY FILES **
+                                         ****************************/
+                                        $path = osc_content_path() . 'downloads/oc-temp';
+                                        $rm_errors = 0;
+                                        $dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::CHILD_FIRST);
+                                        for ($dir->rewind(); $dir->valid(); $dir->next()) {
+                                            if ($dir->isDir()) {
+                                                if ($dir->getFilename() != '.' && $dir->getFilename() != '..') {
+                                                    if (!rmdir($dir->getPathname())) {
+                                                        $rm_errors++;
+                                                    }
+                                                }
+                                            } else {
+                                                if (!unlink($dir->getPathname())) {
+                                                    $rm_errors++;
+                                                }
+                                            }
+                                        }
+                                            
+                                        if (!rmdir($path)) {
+                                            $rm_errors++;
+                                        }
+                                            
+                                        if ($fail == 0) { // Everything is OK, continue
+                                            if($data['e_type']!='THEME' && $data['e_type']!='LANGUAGE') {
+                                                if($plugin!=false && $re_enable) {
+                                                    $enabled = Plugins::activate($plugin);
+                                                    if($enabled) {
+                                                        Plugins::runHook($plugin.'_enable') ;
+                                                    }
+                                                }
+                                            }
+
+                                            if ($rm_errors == 0) {
+                                                $message = __('Everything was OK!');
+                                                $error = 0;
+                                            } else {
+                                                $message = __('Almost everything was OK! but there were some errors removing temporary files. Please, remove manually the "oc-temp" folder');
+                                                $error = 6; // Some errors removing files
+                                            }
+                                        } else {
+                                            $message = __('Problems copying files. Maybe permissions are not correct');
+                                            $error = 4; // Problems copying files. Maybe permissions are not correct
+                                        }
+                                    } else {
+                                        $message = __('Nothing to copy');
+                                        $error = 99; // Nothing to copy. THIS SHOULD NEVER HAPPENS, means we dont update any file!
+                                    }
+                                } else {
+                                    $message = __('Unzip failed');
+                                    $error = 3; // Unzip failed
+                                }
+                            } else {
+                                $message = __('Download failed');
+                                $error = 2; // Download failed
+                            }
+                        } else {
+                            $message = __('Input code not valid');
+                            $error = 7; // Input code not valid
+                        }
+                    } else {
+                        $message = __('Missing download URL');
+                        $error = 1; // Missing download URL
+                    }
+
+
+                    echo json_encode(array('error' => $error, 'message' => $message, 'data' => $data));
+
+                    break;
+                case 'check_universe': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
+                    $code = Params::getParam('code');
+                    $data = array();
+                    /************************
+                     *** CHECK VALID CODE ***
+                     ************************/
+                    if ($code != '') {
+                        if(stripos("http://", $code)===FALSE) {
+                            // OSCLASS OFFICIAL REPOSITORY
+                            $data = json_decode(osc_file_get_contents(osc_market_url($code)), true);
+                        } else {
+                            // THIRD PARTY REPOSITORY
+                            if(osc_market_external_sources()) {
+                                $data = json_decode(osc_file_get_contents($code), true);
+                            } else {
+                                echo json_encode(array('error' => 3, 'error_msg' => __('No external sources are allowed')));
+                                break;
+                            }
+                        }
+                        if( !isset($data['s_source_file']) || !isset($data['s_slug']) || !isset($data['e_type'])) {
+                            $data = array('error' => 2, 'error_msg' => __('Not a valid code'));
+                        }
+                    } else {
+                        $data = array('error' => 1, 'error_msg' => __('No code was sumitted'));
+                    }
+                    echo json_encode($data);
                     break;
                 default:
                     echo json_encode(array('error' => __('no action defined')));

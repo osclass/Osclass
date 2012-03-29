@@ -93,13 +93,15 @@
          * @param string $term
          * @return array
          */
-        public function ajax($query = '') {
+        public function ajax($query = '') 
+        {
             $this->dao->select('pk_i_id as id, s_name as label, s_name as value') ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->like('s_name', $query, 'after') ;
+            $this->dao->limit(0, 10);
 
             $result = $this->dao->get() ;
-
+            
             if( $result == false ) {
                 return array() ;
             }
@@ -311,13 +313,7 @@
                 's_info'            => $info
             );
             
-            $res = $this->dao->insert(DB_TABLE_PREFIX.'t_user_description', $array_set) ;
-            
-            if($res) {
-                return true;
-            } else {
-                return false;
-            }
+            return $this->dao->insert(DB_TABLE_PREFIX.'t_user_description', $array_set) ;
         }
         
         /**
@@ -344,8 +340,7 @@
                 'fk_c_locale_code'  => $locale,
                 'fk_i_user_id'      => $id
             );
-            $result = $this->dao->update(DB_TABLE_PREFIX.'t_user_description', array('s_info'    => $info), $array_where) ;
-            return $result;
+            return $this->dao->update(DB_TABLE_PREFIX.'t_user_description', array('s_info'    => $info), $array_where) ;
         }
         
         /**
@@ -461,9 +456,7 @@
             }
             
             $sql = sprintf('UPDATE %s SET i_items = i_items + 1 WHERE pk_i_id = %d', $this->getTableName(), $id);
-            $res = $this->dao->query($sql);
-            
-            return $res;
+            return $this->dao->query($sql);
         }
         
         /**
@@ -481,9 +474,7 @@
             }
             
             $sql = sprintf('UPDATE %s SET i_items = i_items - 1 WHERE pk_i_id = %d', $this->getTableName(), $id);
-            $res = $this->dao->query($sql);
-            
-            return $res;
+            return $this->dao->query($sql);
         }
     }
 

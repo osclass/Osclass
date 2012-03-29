@@ -79,6 +79,9 @@
                             <div class="theme-actions">
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=activate&amp;theme=<?php echo $theme ; ?>"><?php _e('Activate') ; ?></a> &middot;
                                 <a target="_blank" href="<?php echo osc_base_url(true) ; ?>?theme=<?php echo $theme ; ?>"><?php _e('Preview') ; ?></a>
+                                <?php if(osc_check_update(@$info['theme_update_uri'], @$info['version'])) { ?>
+                                <div id="available_theme_update"><a href='<?php echo osc_admin_base_url(true);?>?page=universe&code=<?php echo htmlentities($info['theme_update_uri']); ?>'><?php _e("There's a new version available to update"); ?></a></div>
+                                <?php }; ?>
                             </div>
                         </div>
                         <?php } ?>

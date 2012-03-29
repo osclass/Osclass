@@ -120,8 +120,16 @@
                 }
             }
 
+            $p_sUser      = Params::getParam('sUser');
+            if(!is_array($p_sUser)) {
+                if($p_sUser == '') {
+                    $p_sUser = '';
+                } else {
+                    $p_sUser = explode(",", $p_sUser);
+                }
+            } 
+            
             $p_sPattern   = strip_tags(Params::getParam('sPattern'));
-            $p_sUser      = strip_tags(Params::getParam('sUser'));
             
             // ADD TO THE LIST OF LAST SEARCHES
             if(osc_save_latest_searches()) {
@@ -179,6 +187,7 @@
 
             //FILTERING CATEGORY
             $bAllCategoriesChecked = false ;
+            
             if(count($p_sCategory) > 0) {
                 foreach($p_sCategory as $category) {
                     $this->mSearch->addCategory($category);
@@ -231,7 +240,7 @@
 
             // FILTERING USER
             if($p_sUser != '') {
-                $this->mSearch->fromUser(explode(",", $p_sUser));
+                $this->mSearch->fromUser($p_sUser);
             }
 
             // FILTERING IF WE ONLY WANT ITEMS WITH PICS
@@ -252,7 +261,7 @@
 
             if(!Params::existParam('sFeed')) {
                 // RETRIEVE ITEMS AND TOTAL
-                $aItems = $this->mSearch->doSearch();
+                $aItems      = $this->mSearch->doSearch();
                 $iTotalItems = $this->mSearch->count();
                 
                 $iStart    = $p_iPage * $p_iPageSize ;
@@ -284,7 +293,11 @@
                 $this->_exportVariableToView('items', $aItems) ;
                 $this->_exportVariableToView('search_show_as', $p_sShowAs) ;
                 $this->_exportVariableToView('search', $this->mSearch) ;
-                $this->_exportVariableToView('search_alert', base64_encode(serialize($this->mSearch))) ;
+                
+                // json
+                $json = $this->mSearch->toJson();
+                
+                $this->_exportVariableToView('search_alert', base64_encode($json)) ;
                 
                 //calling the view...
                 $this->doView('search.php') ;

@@ -149,7 +149,7 @@
                     },
                     "aoColumns": [
                         {
-                            "sTitle": "",
+                            "sTitle": '<input id="check_all" type="checkbox" />',
                             "sWidth": "10px",
                             "bSearchable": false,
                             "bSortable": false
@@ -233,14 +233,22 @@
                     $('#userId').val('');
                     $( this ).autocomplete({
                         source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax&term="+$('#user').val(),
-                        minLength: 2,
+                        minLength: 0,
                         select: function( event, ui ) {
+                            if(ui.item.id=='') 
+                                return false;
                             $('#userId').val(ui.item.id);
                         }
                     });
-                }); 
+                });
             });
+            
         </script>
+        <style>
+            .ui-autocomplete-loading {
+                background: white url("<?php echo osc_current_admin_theme_url('images/loading.gif'); ?>") right center no-repeat;
+            }
+        </style>
 
     </head>
     <body>
@@ -354,8 +362,8 @@
                                 <option value="delete_all"><?php _e('Delete') ; ?></option>
                                 <option value="activate_all"><?php _e('Activate') ; ?></option>
                                 <option value="deactivate_all"><?php _e('Deactivate') ; ?></option>
-                                <option value="enable_all"><?php _e('Block') ; ?></option>
-                                <option value="disable_all"><?php _e('Unblock') ; ?></option>
+                                <option value="disable_all"><?php _e('Block') ; ?></option>
+                                <option value="enable_all"><?php _e('Unblock') ; ?></option>
                                 <option value="premium_all"><?php _e('Mark as premium') ; ?></option>
                                 <option value="depremium_all"><?php _e('Unmark as premium') ; ?></option>
                                 <option value="spam_all"><?php _e('Mark as spam') ; ?></option>

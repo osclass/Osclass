@@ -20,7 +20,7 @@
  */
 
 
-define('OSCLASS_VERSION', '2.3.6') ;
+define('OSCLASS_VERSION', '2.4-dev') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -172,6 +172,7 @@ require_once LIB_PATH . 'osclass/frm/Language.form.class.php';
 require_once LIB_PATH . 'osclass/frm/SendFriend.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Alert.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Field.form.class.php';
+require_once LIB_PATH . 'osclass/frm/Admin.form.class.php';
 
 require_once LIB_PATH . 'osclass/functions.php';
 

@@ -543,23 +543,19 @@
          */
         public function deactivate($id)
         {
-            $item = $this->manager->findByPrimaryKey($id);
-            if($item['b_active']==1) {
-                $result = $this->manager->update(
-                    array('b_active' => 0),
-                    array('pk_i_id' => $id)
-                );
-                
-                // updated correctly
-                if($result == 1) {
-                    osc_run_hook( 'deactivate_item', $id );
-                    // b_active = 0
-                    if($item['b_enabled']==1 && $item['b_spam']==0 && !osc_isExpired($item['dt_expiration'])) {
-                        $this->_decreaseStats($item);
-                    }
-                    return true;
+            $result = $this->manager->update(
+                array('b_active' => 0),
+                array('pk_i_id' => $id)
+            );
+
+            // updated correctly
+            if($result == 1) {
+                osc_run_hook( 'deactivate_item', $id );
+                $item = $this->manager->findByPrimaryKey($id);
+                if($item['b_enabled']==1 && $item['b_spam']==0 && !osc_isExpired($item['dt_expiration'])) {
+                    $this->_decreaseStats($item);
                 }
-                return false;
+                return true;
             }
             return false;
         }
@@ -573,23 +569,19 @@
          */
         public function enable($id) 
         {
-            $item = $this->manager->findByPrimaryKey($id);
-            if($item['b_enabled']==0) {
-                $result = $this->manager->update(
-                    array('b_enabled' => 1),
-                    array('pk_i_id' => $id)
-                );
-                
-                // updated correctly
-                if($result == 1) {
-                    osc_run_hook( 'enable_item', $id );
-                    // b_enable==1 
-                    if($item['b_active']==1 && $item['b_spam']==0 && !osc_isExpired($item['dt_expiration']) ) {
-                        $this->_increaseStats($item);
-                    }
-                    return true;
+            $result = $this->manager->update(
+                array('b_enabled' => 1),
+                array('pk_i_id' => $id)
+            );
+
+            // updated correctly
+            if($result == 1) {
+                osc_run_hook( 'enable_item', $id );
+                $item = $this->manager->findByPrimaryKey($id);
+                if($item['b_active']==1 && $item['b_spam']==0 && !osc_isExpired($item['dt_expiration']) ) {
+                    $this->_increaseStats($item);
                 }
-                return false;
+                return true;
             }
             return false;
         }
@@ -603,23 +595,19 @@
          */
         public function disable($id) 
         {
-            $item = $this->manager->findByPrimaryKey($id);
-            if($item['b_enabled']==1) {
-                $result = $this->manager->update(
-                    array('b_enabled' => 0),
-                    array('pk_i_id' => $id)
-                );
-                
-                // updated correctly
-                if($result == 1) {
-                    osc_run_hook( 'disable_item', $id );
-                    
-                    if($item['b_active']==1 && $item['b_spam']==0 && !osc_isExpired($item['dt_expiration'])) {
-                       $this->_decreaseStats($item);
-                    }
-                    return true;
+            $result = $this->manager->update(
+                array('b_enabled' => 0),
+                array('pk_i_id' => $id)
+            );
+
+            // updated correctly
+            if($result == 1) {
+                osc_run_hook( 'disable_item', $id );
+                $item = $this->manager->findByPrimaryKey($id);
+                if($item['b_active']==1 && $item['b_spam']==0 && !osc_isExpired($item['dt_expiration'])) {
+                   $this->_decreaseStats($item);
                 }
-                return false;
+                return true;
             }
             return false;
         }
@@ -633,18 +621,15 @@
          */
         public function premium($id, $on = true) 
         {
+            $value = 0;
             if($on) {
-                $result = $this->manager->update(
-                    array('b_premium' => '1')
-                    ,array('pk_i_id' => $id)
-                );
-            } else {
-                $result = $this->manager->update(
-                    array('b_premium' => '0')
-                    ,array('pk_i_id' => $id)
-                );
+                $value = 1;
             }
             
+            $result = $this->manager->update(
+                array('b_premium' => (int)$value)
+                ,array('pk_i_id' => $id)
+            );
             // updated corretcly
             if($result == 1) {
                 if($on) {

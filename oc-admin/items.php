@@ -61,7 +61,7 @@
                                                 if ($id) {
                                                     $numSuccess = 0;
                                                     foreach ($id as $_id) {
-                                                        if( $mItems->disable($_id) ) {
+                                                        if( $mItems->disable((int)$_id) ) {
                                                             $numSuccess++;
                                                         }
                                                     }

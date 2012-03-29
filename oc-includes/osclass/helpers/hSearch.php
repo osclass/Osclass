@@ -133,6 +133,17 @@
     }
     
     /**
+     * Gets current search users
+     * 
+     * @return string
+     */
+    function osc_search_user() {
+        if(is_array(View::newInstance()->_get('search_from_user') ) ){
+            return View::newInstance()->_get('search_from_user');
+        }
+        return array();
+    }
+    /**
      * Gets current search max price
      *
      * @return float
@@ -257,13 +268,6 @@
      * @return void
      */
     function osc_alert_form() {
-        if( !View::newInstance()->_exists('search_alert') ) {
-            $search = osc_search() ;
-            $search->order() ;
-            $search->limit() ;
-            View::newInstance()->_exportVariableToView('search_alert', base64_encode(serialize($search))) ;
-        }
-
         osc_current_web_theme_path('alert-form.php') ;
     }
     

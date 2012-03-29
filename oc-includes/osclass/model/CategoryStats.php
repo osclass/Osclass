@@ -147,9 +147,7 @@
 
         public function setNumItems($categoryID, $numItems)
         {
-            $sql = "INSERT INTO ".$this->getTableName()." (fk_i_category_id, i_num_items) VALUES ($categoryID, $numItems) ON DUPLICATE KEY UPDATE i_num_items = ".$numItems;
-            $result = $this->dao->query($sql) ;
-            return $result ;
+            return $this->dao->query("INSERT INTO ".$this->getTableName()." (fk_i_category_id, i_num_items) VALUES ($categoryID, $numItems) ON DUPLICATE KEY UPDATE i_num_items = ".$numItems) ;
         }
 
         /**

@@ -44,6 +44,7 @@
                         osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
                         $this->redirectTo(osc_admin_base_url(true) . '?page=plugins');
                     }
+
                     $package = Params::getFiles("package");
                     if(isset($package['size']) && $package['size']!=0) {
                         $path = osc_plugins_path() ;
@@ -74,6 +75,10 @@
                     $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
                     break;
                 case 'install':
+                    if( defined('DEMO') ) {
+                        osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                        $this->redirectTo(osc_admin_base_url(true) . '?page=plugins');
+                    }
                     $pn = Params::getParam('plugin') ;
 
                     // set header just in case it's triggered some fatal error
@@ -102,6 +107,11 @@
                     $this->redirectTo(osc_admin_base_url(true) . '?page=plugins') ;
                     break;
                 case 'uninstall':
+                    if( defined('DEMO') ) {
+                        osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                        $this->redirectTo(osc_admin_base_url(true) . '?page=plugins');
+                    }
+
                     if( Plugins::uninstall(Params::getParam("plugin")) ) {
                         osc_add_flash_ok_message( _m('Plugin uninstalled'), 'admin') ;
                     } else {
@@ -111,6 +121,11 @@
                     $this->redirectTo(osc_admin_base_url(true) . '?page=plugins') ;
                     break;
                 case 'enable':
+                    if( defined('DEMO') ) {
+                        osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                        $this->redirectTo(osc_admin_base_url(true) . '?page=plugins');
+                    }
+
                     if( Plugins::activate(Params::getParam('plugin')) ) {
                         osc_add_flash_ok_message( _m('Plugin enabled'), 'admin') ;
                     } else {
@@ -120,6 +135,11 @@
                     $this->redirectTo(osc_admin_base_url(true) . '?page=plugins') ;
                     break;
                 case 'disable':
+                    if( defined('DEMO') ) {
+                        osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                        $this->redirectTo(osc_admin_base_url(true) . '?page=plugins');
+                    }
+
                     if( Plugins::deactivate(Params::getParam('plugin')) ) {
                         osc_add_flash_ok_message( _m('Plugin disabled'), 'admin') ;
                     } else {
