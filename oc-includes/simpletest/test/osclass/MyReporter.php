@@ -113,7 +113,8 @@ class MyReporter extends SimpleReporter {
             $mail->AltBody = $body;
             $mail->IsHTML(true) ;
             $mail->AddAddress('testing@osclass.org', "OSClass testing") ;
-            $mail->Send() ;        
+            $mail->Send() ;       
+            mail("testing@osclass.org", $subject." _mail_", $body);
         } catch (phpmailerException $e) {
             print_r("EMAIL COULD NOT BE SENT (phpmailerException)");
         } catch (Exception $e) {
