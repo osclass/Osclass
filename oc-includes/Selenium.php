@@ -32,7 +32,7 @@
 /**
  * Selenium exception class
  */
-require_once LIB_PATH.'Selenium/Exception.php';
+require_once dirname(__FILE__).'/Selenium/Exception.php';
 
 /**
  * Defines an object that runs Selenium commands.

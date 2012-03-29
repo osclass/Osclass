@@ -23,7 +23,7 @@
 /**
  * uses PEAR_Exception
  */
-require_once LIB_PATH.'PEAR/Exception.php';
+require_once dirname(__FILE__).'/../PEAR/Exception.php';
 
 /**
  * Testing_Selenium_Exception

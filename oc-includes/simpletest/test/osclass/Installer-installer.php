@@ -1,6 +1,4 @@
 <?php
-require_once dirname(__FILE__).'/../../../../oc-load.php';
-
 class Installer_installer extends InstallerTest {
     
     /*           TESTS          */
@@ -13,6 +11,7 @@ class Installer_installer extends InstallerTest {
         $config_file = ABS_PATH . "config.php";
         if( !file_exists($config_file) ) {
             $this->can_continue = true;
+            
             
             $this->selenium->open( osc_get_absolute_url() . "oc-includes/osclass/install.php" );
             

@@ -1,12 +1,10 @@
 <?php
-require_once(dirname(__FILE__).'/../../../../oc-load.php');
 require_once(dirname(__FILE__).'/../../test_case.php');
-
 class AllTests extends TestSuite {
     function AllTests() {
         $this->TestSuite('All tests');
         $tests = array();
-        
+
         if(PHP_SAPI==='cli') {
             foreach($_SERVER['argv'] as $k => $v) {
                 $tmp_arg = explode("=", $v);
@@ -56,6 +54,8 @@ class AllTests extends TestSuite {
 
         // FRONTEND
         if(isset($tests['frontend'])) {
+            require_once(dirname(__FILE__).'/../../../../oc-load.php');
+            
             if(isset($tests['frontend']['contact']) || $tests['frontend']=='') {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-contactForm.php');
             }
@@ -82,6 +82,8 @@ class AllTests extends TestSuite {
         
         // ADMIN
         if(isset($tests['admin'])) {
+            require_once(dirname(__FILE__).'/../../../../oc-load.php');
+            
             if(isset($tests['admin']['settings']) || $tests['admin']=='') {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-generalSettings.php');    // OK
             }

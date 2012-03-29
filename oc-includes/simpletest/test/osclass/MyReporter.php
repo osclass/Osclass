@@ -100,16 +100,25 @@ class MyReporter extends SimpleReporter {
         $body .= "<strong>" . $this->getFailCount() . "</strong> fails and ";
         $body .= "<strong>" . $this->getExceptionCount() . "</strong> exceptions.<br/>\n";
         $body .= $this->fails;
-        require_once(dirname(__FILE__).'/../../../osclass/utils.php');
-        osc_sendMail(array(
-            'to' => 'testing@osclass.org',
-            'to_name' => 'OSClass Testing',
-            'from' => 'testing@osclass.org',
-            'from_name' => 'OSClass Testing',
-            'subject' => $subject,
-            'body' => $body
-        ));
+        require_once dirname(__FILE__).'/../../../phpmailer/class.phpmailer.php' ;
         
+        $mail = new PHPMailer(true) ;
+        try {
+            $mail->CharSet = 'utf-8' ;
+
+            $mail->From = 'testing@osclass.org';
+            $mail->FromName = 'OSClass Testing';
+            $mail->Subject = $subject;
+            $mail->Body = $body;
+            $mail->AltBody = $body;
+            $mail->IsHTML(true) ;
+            $mail->AddAddress('testing@osclass.org', "OSClass testing") ;
+            $mail->Send() ;        
+        } catch (phpmailerException $e) {
+            print_r("EMAIL COULD NOT BE SENT (phpmailerException)");
+        } catch (Exception $e) {
+            print_r("EMAIL COULD NOT BE SENT (Exception)");
+        }
     }
 
     /**
