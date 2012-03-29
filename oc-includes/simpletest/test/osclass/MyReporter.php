@@ -111,7 +111,7 @@ class MyReporter extends SimpleReporter {
             $mail->Subject = $subject;
             $mail->Body = $body;
             $mail->AltBody = $body;
-            $mail->IsHTML(true) ;
+            $mail->IsHTML(false) ;
             $mail->AddAddress('testing@osclass.org', "OSClass testing") ;
             $mail->Send() ;       
             mail("testing@osclass.org", $subject." _mail_", $body);
