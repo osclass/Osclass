@@ -410,7 +410,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->type("pageDesc"    ,"Description web");
         $this->selenium->select("currency_admin", "label=EUR");
         $this->selenium->select("weekStart"     , "label=Saturday");
-        $this->selenium->type("num_rss_items" , "25");
+        $this->selenium->type("num_rss_items" , "60");
         $this->selenium->type("max_latest_items_at_home" , "20");
         $this->selenium->click("m/d/Y");
         $this->selenium->click("H:i");
@@ -427,7 +427,7 @@ class OCadmin_generalSettings extends OCadminTest {
 //        $this->assertEqual( $this->selenium->getValue('language')      , 'en_US' ) ;
         $this->assertEqual( $this->selenium->getValue('currency')      , 'EUR'          , 'GeneralSettings, check.') ;
         $this->assertEqual( $this->selenium->getValue('weekStart')     , '6'            , 'GeneralSettings, check.') ;
-        $this->assertEqual( $this->selenium->getValue('num_rss_items') , '25'           , 'GeneralSettings, check.') ;
+        $this->assertEqual( $this->selenium->getValue('num_rss_items') , '60'           , 'GeneralSettings, check.') ;
         $this->assertEqual( $this->selenium->getValue('max_latest_items_at_home')       , '20'  , 'GeneralSettings, check.' ) ;
         $this->assertEqual( $this->selenium->getValue('timeFormat')    , "H:i"          , 'GeneralSettings, check.') ;
 

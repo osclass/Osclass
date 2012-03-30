@@ -1,5 +1,5 @@
 <?php
-require_once LIB_PATH . 'Selenium.php';
+require_once dirname(__FILE__) . '/../../../Selenium.php';
 
 require_once(dirname(__FILE__).'/../../simpletest.php');
 require_once(dirname(__FILE__).'/../../web_tester.php');
