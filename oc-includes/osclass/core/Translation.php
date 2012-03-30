@@ -38,16 +38,10 @@
             if(!$install) {
                 // get user/admin locale
                 if( OC_ADMIN ) {
-                    print_r("OC_ADMIN---");
                     $locale = osc_current_admin_locale();
                 } else {
-                    print_r("OC_USER---");
                     $locale = osc_current_user_locale();
                 }
-                
-                print_r("LOCALE_________");
-                print_r($locale);
-                print_r("_________LOCALE");
 
                 // load core
                 $core_file = osc_translations_path() . $locale . '/core.mo';
