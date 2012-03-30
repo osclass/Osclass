@@ -6,8 +6,7 @@ require_once(dirname(__FILE__).'/../../web_tester.php');
 
 // LOAD OSCLASS
 define( 'ABS_PATH', dirname( dirname( dirname( dirname( dirname(__FILE__) ) ) ) ) . '/' ) ;
-define( 'LIB_PATH',  ABS_PATH .'oc-includes/' );
-require_once LIB_PATH . 'osclass/helpers/hErrors.php';
+require_once dirname( dirname( dirname( dirname(__FILE__) ) ) )  . '/osclass/helpers/hErrors.php';
 
 class InstallerTest extends WebTestCase {
 
