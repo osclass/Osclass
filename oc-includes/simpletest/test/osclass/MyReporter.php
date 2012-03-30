@@ -76,6 +76,8 @@ class MyReporter extends SimpleReporter {
      *    @access public
      */
     function paintFooter($test_name) {
+        global $test_str;
+        
         $colour = ($this->getFailCount() + $this->getExceptionCount() > 0 ? "red" : "green");
         print "<div style=\"";
         print "padding: 8px; margin-top: 1em; background-color: $colour; color: white;";
@@ -94,13 +96,23 @@ class MyReporter extends SimpleReporter {
         } else {
             $subject = '[OK] Test results';
         }
-        $body = $this->getTestCaseProgress() . "/" . $this->getTestCaseCount();
+        $body = $test_str.$this->getTestCaseProgress() . "/" . $this->getTestCaseCount();
         $body .= " test cases complete:\n";
         $body .= "*" . $this->getPassCount() . "* passes, ";
         $body .= "*" . $this->getFailCount() . "* fails and ";
-        $body .= "*" . $this->getExceptionCount() . "* exceptions.<br/>\r\n\r";
+        $body .= "*" . $this->getExceptionCount() . "* exceptions.\r\n\r";
+        $talker_text = $body;
+        $body .= "<br/>";
         $body .= $this->fails;
         mail("testing@osclass.org", $subject." _mail_", $body);
+        
+        require(dirname(__FILE__)."/config_test.php");
+        if($talker_room!='' && $talker_token!='') {
+            require(dirname(__FILE__)."/../../../talkerplugin/class.talker.php");
+            $talker = new Talker();
+            $talker->connect($talker_room, $talker_token);
+            $talker->send_message($talker_text);
+        }
     }
 
     /**

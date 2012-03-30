@@ -515,7 +515,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * delete country
      * Logout
      */
-    function testLocationsNEW()
+    /*function testLocationsNEW()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -590,7 +590,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div[1]/div/a[1]");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete Country" ) ;
-    }
+    }*/
 
     /*
      * Login oc-admin
