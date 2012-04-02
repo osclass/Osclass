@@ -31,6 +31,11 @@
             <meta name="robots" content="index, follow" />
             <meta name="googlebot" content="index, follow" />
         <?php } ?>
+            <style>
+                ul.sub {
+                    padding-left: 20px;
+                }
+            </style>
     </head>
     <body>
         <div class="container">
@@ -122,8 +127,18 @@
                                             <?php // RESET CATEGORIES IF WE USED THEN IN THE HEADER ?>
                                             <?php osc_goto_first_category() ; ?>
                                             <?php while(osc_has_categories()) { ?>
-                                                <li>
-                                                    <input type="checkbox" id="cat<?php echo osc_category_id(); ?>" name="sCategory[]" value="<?php echo osc_category_id(); ?>" <?php echo ( (in_array(osc_category_id(), osc_search_category()) || in_array(osc_category_slug()."/", osc_search_category()) || in_array(osc_category_slug(), osc_search_category()) || count(osc_search_category())==0 )  ? 'checked' : '') ; ?> /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
+                                                <li class="parent">
+                                                    <input type="checkbox" id="cat<?php echo osc_category_id(); ?>" name="sCategory[]" value="<?php echo osc_category_id(); ?>" <?php $parentSelected=false; if (in_array(osc_category_id(), osc_search_category()) || in_array(osc_category_slug()."/", osc_search_category()) || in_array(osc_category_slug(), osc_search_category()) || count(osc_search_category())==0 ){ echo 'checked'; $parentSelected=true;} ?> /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
+                                                    <?php if(osc_count_subcategories() > 0) { ?>
+                                                    <ul class="sub">
+                                                        <?php while(osc_has_subcategories()) { ?>
+                                                        <li>
+                                                        <input type="checkbox" name="sCategory[]" value="<?php echo osc_category_id(); ?>"  <?php if( $parentSelected || in_array(osc_category_id(), osc_search_category()) || in_array(osc_category_slug()."/", osc_search_category()) || in_array(osc_category_slug(), osc_search_category()) || count(osc_search_category())==0 ){echo 'checked';} ?>/>
+                                                        <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
+                                                        </li>
+                                                        <?php } ?>
+                                                    </ul>
+                                                    <?php } ?>
                                                 </li>
                                             <?php } ?>
                                         </ul>
@@ -170,6 +185,14 @@
                             return false;
                         }
                     }
+                    
+                    $(document).ready(function(){
+
+                        $('li.parent>ul.sub').hide();
+                        var span = $('<span onclick="$(this).parent().find(\'\')">+</span>');
+                        $('li.parent').prepend(span);
+                        
+                    });
                 </script>
             </div>
             <?php osc_current_web_theme_path('footer.php') ; ?>
