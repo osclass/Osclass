@@ -128,8 +128,8 @@
                         <div class="FormElement">
                             <div class="FormElementName"></div>
                             <div class="FormElementInput">
-                                <button class="formButton" type="button" onclick="window.location='<?php echo osc_admin_base_url(true);?>?page=comments';" ><?php _e('Cancel'); ?></button>
-                                <button class="formButton" type="submit"><?php echo $btn_text; ?></button>
+                                <input class="formButton" type="button" onclick="window.location='<?php echo osc_admin_base_url(true);?>?page=comments';" value="<?php _e('Cancel'); ?>" />
+                                <input class="formButton" type="submit" value="<?php echo $btn_text; ?>" />
                             </div>
                         </div>
                     </form>
