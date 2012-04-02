@@ -225,9 +225,13 @@
          * @param string $type order type [DESC|ASC]
          * @return array of resources 
          */
-        function getResources($itemId = NULL, $start = 0, $length = 10, $order = 'pk_i_id', $type = 'DESC')
+        function getResources($itemId = NULL, $start = 0, $length = 10, $order = 'r.pk_i_id', $type = 'DESC')
         {
-            if( !in_array($order, $this->getFields()) ) {
+            if( !in_array($order, array(  0=> 'r.pk_i_id',
+                    1=> 'r.pk_i_id',
+                    2=> 'r.pk_i_id',
+                    3=> 'r.fk_i_item_id',
+                    4=> 'c.dt_pub_date')) ) {
                 // order by is incorrect
                 return array() ;
             }
@@ -246,7 +250,6 @@
             $this->dao->orderBy($order, $type) ;
             $this->dao->limit($start) ;
             $this->dao->offset($length) ;
-
             $result = $this->dao->get() ;
 
             if( $result == false ) {
