@@ -131,7 +131,7 @@
          */
         public static function getAllowedColumnsForSorting() 
         {
-            return( array('i_price', 'dt_pub_date','relevance') ) ;
+            return( array('i_price', 'dt_pub_date') ) ;
         }
         
         /**
