@@ -150,6 +150,16 @@
                                         osc_add_flash_ok_message( _m('Re-generation complete'), 'admin') ;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=images') ;
                 break;
+                case('category'):       $this->doView('tools/category.php') ;
+                break;
+                case('category_post'):  if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=category') ;
+                                        }
+                                        osc_update_cat_stats();
+                                        osc_add_flash_ok_message(_m("Recount category stats has been successful"), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=category') ;
+                break;
                 case('locations'):      $this->doView('tools/locations.php') ;
                 break;
                 case('locations_post'): if( defined('DEMO') ) {
