@@ -181,12 +181,6 @@
                                         
                                         Preference::newInstance()->replace('location_todo', $workToDo ) ;
                                         
-                                        if($workToDo > 0) {
-                                            $file = __DIR__.'/locations_batch_cli.php';
-                                            exec("php $file >/dev/null &");
-                                            osc_add_flash_ok_message( _m('Recalculating'), 'admin') ;
-                                        }
-                                        
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=locations' ) ;
                 break;
                 case('upgrade'):
