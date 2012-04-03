@@ -23,6 +23,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
         <?php 
@@ -52,10 +53,12 @@
                 <?php osc_show_admin_flash_messages() ; ?>
                 <!-- add admin form -->
                 <div class="settings general">
-                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+                    <ul id="error_list"></ul>
+                    <form name="admin_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
                         <input type="hidden" name="page" value="admins" />
                         <?php AdminForm::primary_input_hidden($admin); ?>
+                        <?php AdminForm::js_validation(); ?>
                         
                         <fieldset>
                             <div class="input-line">
