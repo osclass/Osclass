@@ -20,9 +20,34 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                // Code for form validation
+                $("form[name=searches_form]").validate({
+                    rules: {
+                        custom_queries: {
+                            required: true,
+                            digits: true
+                        }
+                    },
+                    messages: {
+                        custom_queries: {
+                            required: "<?php _e("Custom number: this field is required"); ?>.",
+                            digits: "<?php _e("Custom number: this field has to be numeric only"); ?>."
+                        }
+                    },
+                    wrapper: "li",
+                        errorLabelContainer: "#error_list",
+                        invalidHandler: function(form, validator) {
+                            $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+                        }
+                });
+            }) ;
+        </script>
         <!-- container -->
         <div id="content">
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
@@ -34,7 +59,8 @@
                 <?php osc_show_admin_flash_messages() ; ?>
                 <!-- latest searches form -->
                 <div class="settings latest-searches">
-                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+                    <ul id="error_list"></ul>
+                    <form name="searches_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="settings" />
                         <input type="hidden" name="action" value="latestsearches_post" />
                         <fieldset>
@@ -73,7 +99,7 @@
                                     </label>
                                     <label class="radio">
                                         <input type="radio" name="purge_searches" id="purge_searches" value="custom" <?php echo ( !in_array( osc_purge_latest_searches(), array('hour', 'day', 'week', 'forever', '1000') ) ? 'checked="checked"' : '' ) ; ?> />
-                                        <?php printf( __('Store %s queries'), '<input type="text" class="small" ' . ( !in_array( osc_purge_latest_searches(), array('hour', 'day', 'week', 'forever', '1000') ) ? 'value="' . osc_esc_html( osc_purge_latest_searches() ) . '"' : '') . ' onkeyup="javascript:document.getElementById(\'customPurge\').value = this.value;"/>' ) ; ?>
+                                        <?php printf( __('Store %s queries'), '<input name="custom_queries" type="text" class="small" ' . ( !in_array( osc_purge_latest_searches(), array('hour', 'day', 'week', 'forever', '1000') ) ? 'value="' . osc_esc_html( osc_purge_latest_searches() ) . '"' : '') . ' onkeyup="javascript:document.getElementById(\'customPurge\').value = this.value;"/>' ) ; ?>
                                         <p class="help">
                                             <?php _e("This feature can generate a lot of data. It's recommended to purge this data periodically.") ; ?>
                                         </p>
