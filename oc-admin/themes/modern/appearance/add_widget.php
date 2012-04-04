@@ -35,6 +35,7 @@
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('tiny_mce/tiny_mce.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <script type="text/javascript">
             tinyMCE.init({
                 mode : "textareas",
@@ -60,6 +61,28 @@
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                // Code for form validation
+                $("form[name=widget_form]").validate({
+                    rules: {
+                        description: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        description: {
+                            required:  "<?php _e("Description: this field is required"); ?>."
+                        }
+                    },
+                    errorLabelContainer: "#error_list",
+                    wrapper: "li",
+                    invalidHandler: function(form, validator) {
+                        $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+                    }
+                });
+            });
+        </script>
         <!-- container -->
         <div id="content">
             <?php osc_current_admin_theme_path( 'include/backoffice_menu.php' ) ; ?>
@@ -71,7 +94,8 @@
                 <?php osc_show_admin_flash_messages() ; ?>
                 <!-- add widgets form -->
                 <div class="widgets">
-                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+                    <ul id="error_list"></ul>
+                    <form name="widget_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="action" value="<?php echo ( $edit ? 'edit_widget_post' : 'add_widget_post' ) ; ?>" />
                         <input type="hidden" name="page" value="appearance" />
                         <?php if( $edit) { ?>

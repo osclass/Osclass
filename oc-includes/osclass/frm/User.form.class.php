@@ -200,6 +200,8 @@
                     minlength: "<?php _e("Password: enter at least 5 characters"); ?>."
                 },
                 s_password2: {
+                    required: "<?php _e("Second password: this field is required"); ?>.",
+                    minlength: "<?php _e("Second password: enter at least 5 characters"); ?>.",
                     equalTo: "<?php _e("Passwords don't match"); ?>."
                 }
             },
@@ -272,48 +274,53 @@ function checkForm() {
         static public function js_validation_edit() {
 ?>
 <script type="text/javascript">
-$(document).ready(function(){
-    $('#s_name').focus(function(){
-        $('#s_name').css('border', '');
+    $(document).ready(function(){
+        // Code for form validation
+        $("form[name=register]").validate({
+            rules: {
+                s_name: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 50
+                },
+                s_email: {
+                    required: true,
+                    email: true
+                },
+                s_password: {
+                    minlength: 5
+                },
+                s_password2: {
+                    minlength: 5,
+                    equalTo: "#s_password"
+                }
+            },
+            messages: {
+                s_name: {
+                    minlength: "<?php _e("Name: enter at least 3 characters"); ?>.",
+                    maxlength: "<?php _e("Name: no more than 50 characters"); ?>."
+                },
+                s_email: {
+                    required: "<?php _e("Email: this field is required"); ?>.",
+                    email: "<?php _e("Invalid email address"); ?>."
+                },
+                s_password: {
+                    minlength: "<?php _e("Password: enter at least 5 characters"); ?>."
+                },
+                s_password2: {
+                    minlength: "<?php _e("Second password: enter at least 5 characters"); ?>.",
+                    equalTo: "<?php _e("Passwords don't match"); ?>."
+                }
+            },
+            errorLabelContainer: "#error_list",
+            wrapper: "li",
+            invalidHandler: function(form, validator) {
+                $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+            }
+        });
     });
-
-    $('#s_email').focus(function(){
-        $('#s_email').css('border', '');
-    });
-
-    $('#s_password').focus(function(){
-        $('#s_password').css('border', '');
-        $('#password-error').css('display', 'none');
-    });
-
-    $('#s_password2').focus(function(){
-        $('#s_password2').css('border', '');
-        $('#password-error').css('display', 'none');
-    });
-});
-
-function checkForm() {
-    var num_errors = 0;
-    if( $('#s_name').val() == '' ) {
-        $('#s_name').css('border', '1px solid red');
-        num_errors = num_errors + 1;
-    }
-    if( $('#s_email').val() == '' ) {
-        $('#s_email').css('border', '1px solid red');
-        num_errors = num_errors + 1;
-    }
-    if( $('#s_password').val() != $('#s_password2').val() ) {
-        $('#password-error').css('display', 'block');
-        num_errors = num_errors + 1;
-    }
-    if(num_errors > 0) {
-        return false;
-    }
-
-    return true;
-}
 </script>
-<?php
+<?php 
         }
 
         static public function location_javascript($path = 'front') {
