@@ -25,5 +25,9 @@ if(file_exists(dirname(__FILE__)."/custom_config.php")) {
     $https = 'off';
     $host = 'localhost';
     
+    
+    $talker_room = "";
+    $talker_token = "";
+    
 };
 ?>

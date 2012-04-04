@@ -2,6 +2,7 @@
 require_once(dirname(__FILE__).'/../../test_case.php');
 class AllTests extends TestSuite {
     function AllTests() {
+        global $test_str;
         $this->TestSuite('All tests');
         $tests = array();
 
@@ -46,6 +47,14 @@ class AllTests extends TestSuite {
             $tests['admin'] = '';
         }
 
+        $test_str = '';
+        
+        foreach($tests as $k => $v) {
+            if($k=="installer" || $k=="frontend" || $k=="admin") {
+                $test_str .= $k." {".(is_array($v)?implode(",", array_keys($v)):'all')."}    ";
+            }
+        }
+        
         // INSTALLER
         if(isset($tests['installer'])) {
             $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Installer-installer.php');
