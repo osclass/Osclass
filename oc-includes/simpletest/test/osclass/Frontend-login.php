@@ -26,7 +26,7 @@ class Frontend_login extends FrontendTest {
         $this->assertTrue( $this->selenium->isTextPresent("The password is incorrect"), 'Testing, Login user with incorrect password' );
 
         $this->loginWith('some@mail.com', NULL);
-        $this->assertTrue( $this->selenium->isTextPresent("The username doesn't exist"), 'Testing, Login user with incorrect username' );
+        $this->assertTrue( $this->selenium->isTextPresent("The user doesn't exist"), 'Testing, Login user with incorrect username' );
 
         $this->loginWith();
         $this->assertTrue( $this->selenium->isTextPresent("User account manager"), 'Testing, Login user.' );
