@@ -48,6 +48,20 @@
                                         $notifyNewCommentUser = (($notifyNewCommentUser != '') ? true : false);
                                         $regUserPostComments  = Params::getParam('reg_user_post_comments');
                                         $regUserPostComments  = (($regUserPostComments != '') ? true : false);
+                                        
+                                        
+                                        $msg = '';
+                                        if(!osc_validate_int(Params::getParam("num_moderate_comments"))) {
+                                            $msg .= _m("Number of moderate comments has to be numeric only")."<br/>";
+                                        }
+                                        if(!osc_validate_int(Params::getParam("comments_per_page"))) {
+                                            $msg .= _m("Comments per page has to be numeric only")."<br/>";
+                                        }
+                                        if($msg!='') {
+                                            osc_add_flash_error_message( $msg, 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=comments');
+                                        }
+
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledComments)
                                                                                       ,array('s_name' => 'enabled_comments'));

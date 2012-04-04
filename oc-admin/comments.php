@@ -151,7 +151,25 @@
                                             $this->_exportVariableToView('comment', $comment) ;
                                             $this->doView('comments/frm.php') ;
                 break;
-                case('comment_edit_post'):  $this->itemCommentManager->update(
+                case('comment_edit_post'):  
+                    
+                                            $msg = '';
+                                            if(!osc_validate_text(Params::getParam('authorName'),1 , true)) {
+                                                $msg .= _m("Author's name is required")."<br/>";
+                                            }
+                                            if(!osc_validate_email(Params::getParam('authorEmail'),true)) {
+                                                $msg .= _m('Email is not correct')."<br/>";
+                                            }
+                                            if(!osc_validate_text(Params::getParam('body'),1 , true)) {
+                                                $msg .= _m('Comment is required')."<br/>";
+                                            }
+                                            
+                                            if($msg!='') {
+                                                osc_add_flash_error_message( $msg, 'admin' ) ;
+                                                $this->redirectTo( osc_admin_base_url(true) . "?page=comments&action=comment_edit&id=".Params::getParam('id') ) ;
+                                            }
+                    
+                                            $this->itemCommentManager->update(
                                                 array(
                                                     's_title'        => Params::getParam('title'),
                                                     's_body'         => Params::getParam('body'),
