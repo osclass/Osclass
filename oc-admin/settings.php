@@ -407,115 +407,261 @@ HTACCESS;
                                                 $status++ ;
                                             }
 
-                                            switch($status) {
-                                                case 1:
-                                                    $msg  = _m("Permalinks structure updated") ;
-                                                    osc_add_flash_ok_message($msg, 'admin') ;
-                                                break;
-                                                case 2:
-                                                    $msg  = _m("Permalinks structure updated.") ;
-                                                    $msg .= " " ;
-                                                    $msg .= _m("However, we can't check if Apache module <b>mod_rewrite</b> is loaded. If you experience some problems with the urls, you should deactivate <em>friendly urls</em>") ;
-                                                    osc_add_flash_warning_message($msg, 'admin') ;
-                                                break;
-                                                case 3:
-                                                    $msg  = _m("File <b>.htaccess</b> couldn't be filled with the right content.") ;
-                                                    $msg .= " " ;
-                                                    $msg .= _m("Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file, please deactivate <em>friendly urls</em> option.") ;
-                                                    $msg .= "</p><pre>" . htmlentities($htaccess) . '</pre><p>' ;
-                                                    osc_add_flash_error_message($msg, 'admin') ;
-                                                break;
-                                                case 4: 
-                                                    $msg  = _m("File <b>.htaccess</b> couldn't be filled with the right content.") ;
-                                                    $msg .= " " ;
-                                                    $msg .= _m("Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file or experience some problems with the urls, please deactivate <em>friendly urls</em> option.") ;
-                                                    $msg .= "</p><pre>" . htmlentities($htaccess) . '</pre><p>' ;                                            
-                                                    osc_add_flash_error_message($msg, 'admin') ;
-                                                break;
+                                            $errors = 0;
+                                            $item_url = substr(str_replace('//', '/', Params::getParam('rewrite_item_url').'/'), 0, -1);
+                                            if(!osc_validate_text($item_url)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $item_url)
+                                                                                 ,array('s_name' => 'rewrite_item_url'));
+                                            }
+                                            $page_url = substr(str_replace('//', '/', Params::getParam('rewrite_page_url').'/'), 0, -1);
+                                            if(!osc_validate_text($page_url)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $page_url)
+                                                                                 ,array('s_name' => 'rewrite_page_url'));
+                                            }
+                                            $cat_url = substr(str_replace('//', '/', Params::getParam('rewrite_cat_url').'/'), 0, -1);
+                                            if(!osc_validate_text($cat_url)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $cat_url)
+                                                                                 ,array('s_name' => 'rewrite_cat_url'));
+                                            }
+                                            $search_url = substr(str_replace('//', '/', Params::getParam('rewrite_search_url').'/'), 0, -1);
+                                            if(!osc_validate_text($search_url)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $search_url)
+                                                                                 ,array('s_name' => 'rewrite_search_url'));
+                                            }
+
+                                            
+                                            
+                                            
+                                            if(!osc_validate_text(Params::getParam('rewrite_search_country'))) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_country'))
+                                                                                 ,array('s_name' => 'rewrite_search_country'));
+                                            }
+                                            if(!osc_validate_text(Params::getParam('rewrite_search_region'))) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_region'))
+                                                                                 ,array('s_name' => 'rewrite_search_region'));
+                                            }
+                                            if(!osc_validate_text(Params::getParam('rewrite_search_city'))) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_city'))
+                                                                                 ,array('s_name' => 'rewrite_search_city'));
+                                            }
+                                            if(!osc_validate_text(Params::getParam('rewrite_search_city_area'))) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_city_area'))
+                                                                                 ,array('s_name' => 'rewrite_search_city_area'));
+                                            }
+                                            if(!osc_validate_text(Params::getParam('rewrite_search_category'))) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_category'))
+                                                                                 ,array('s_name' => 'rewrite_search_category'));
+                                            }
+                                            if(!osc_validate_text(Params::getParam('rewrite_search_user'))) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_user'))
+                                                                                 ,array('s_name' => 'rewrite_search_user'));
+                                            }
+                                            if(!osc_validate_text(Params::getParam('rewrite_search_pattern'))) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_pattern'))
+                                                                                 ,array('s_name' => 'rewrite_search_pattern'));
+                                            }                                            
+                                            
+
+                                            
+                                            
+                                            $rewrite_contact = substr(str_replace('//', '/', Params::getParam('rewrite_contact').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_contact)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_contact)
+                                                                                 ,array('s_name' => 'rewrite_contact'));
+                                            }
+                                            $rewrite_feed = substr(str_replace('//', '/', Params::getParam('rewrite_feed').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_feed)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_feed)
+                                                                                 ,array('s_name' => 'rewrite_feed'));
+                                            }
+                                            $rewrite_language = substr(str_replace('//', '/', Params::getParam('rewrite_language').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_language)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_language)
+                                                                                 ,array('s_name' => 'rewrite_language'));
+                                            }
+                                            $rewrite_item_mark = substr(str_replace('//', '/', Params::getParam('rewrite_item_mark').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_item_mark)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_item_mark)
+                                                                                 ,array('s_name' => 'rewrite_item_mark'));
+                                            }
+                                            $rewrite_item_send_friend = substr(str_replace('//', '/', Params::getParam('rewrite_item_send_friend').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_item_send_friend)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_item_send_friend)
+                                                                                 ,array('s_name' => 'rewrite_item_send_friend'));
+                                            }
+                                            $rewrite_item_contact = substr(str_replace('//', '/', Params::getParam('rewrite_item_contact').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_item_contact)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_item_contact)
+                                                                                 ,array('s_name' => 'rewrite_item_contact'));
+                                            }
+                                            $rewrite_item_new = substr(str_replace('//', '/', Params::getParam('rewrite_item_new').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_item_new)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_item_new)
+                                                                                 ,array('s_name' => 'rewrite_item_new'));
+                                            }
+                                            $rewrite_item_activate = substr(str_replace('//', '/', Params::getParam('rewrite_item_activate').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_item_activate)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_item_activate)
+                                                                                 ,array('s_name' => 'rewrite_item_activate'));
+                                            }
+                                            $rewrite_item_edit = substr(str_replace('//', '/', Params::getParam('rewrite_item_edit').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_item_edit)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_item_edit)
+                                                                                 ,array('s_name' => 'rewrite_item_edit'));
+                                            }
+                                            $rewrite_item_delete = substr(str_replace('//', '/', Params::getParam('rewrite_item_delete').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_item_delete)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_item_delete)
+                                                                                 ,array('s_name' => 'rewrite_item_delete'));
+                                            }
+                                            $rewrite_item_resource_delete = substr(str_replace('//', '/', Params::getParam('rewrite_item_resource_delete').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_item_resource_delete)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_item_resource_delete)
+                                                                                 ,array('s_name' => 'rewrite_item_resource_delete'));
+                                            }
+                                            $rewrite_user_login = substr(str_replace('//', '/', Params::getParam('rewrite_user_login').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_user_login)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_user_login)
+                                                                                 ,array('s_name' => 'rewrite_user_login'));
+                                            }
+                                            $rewrite_user_dashboard = substr(str_replace('//', '/', Params::getParam('rewrite_user_dashboard').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_user_dashboard)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_user_dashboard)
+                                                                                 ,array('s_name' => 'rewrite_user_dashboard'));
+                                            }
+                                            $rewrite_user_logout = substr(str_replace('//', '/', Params::getParam('rewrite_user_logout').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_user_logout)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_user_logout)
+                                                                                 ,array('s_name' => 'rewrite_user_logout'));
+                                            }
+                                            $rewrite_user_register = substr(str_replace('//', '/', Params::getParam('rewrite_user_register').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_user_register)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_user_register)
+                                                                                 ,array('s_name' => 'rewrite_user_register'));
+                                            }
+                                            $rewrite_user_activate = substr(str_replace('//', '/', Params::getParam('rewrite_user_activate').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_user_activate)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_user_activate)
+                                                                                 ,array('s_name' => 'rewrite_user_activate'));
+                                            }
+                                            $rewrite_user_activate_alert = substr(str_replace('//', '/', Params::getParam('rewrite_user_activate_alert').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_user_activate_alert)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_user_activate_alert)
+                                                                                 ,array('s_name' => 'rewrite_user_activate_alert'));
+                                            }
+                                            $rewrite_user_profile = substr(str_replace('//', '/', Params::getParam('rewrite_user_profile').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_user_profile)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_user_profile)
+                                                                                 ,array('s_name' => 'rewrite_user_profile'));
+                                            }
+                                            $rewrite_user_items = substr(str_replace('//', '/', Params::getParam('rewrite_user_items').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_user_items)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_user_items)
+                                                                                 ,array('s_name' => 'rewrite_user_items'));
+                                            }
+                                            $rewrite_user_alerts = substr(str_replace('//', '/', Params::getParam('rewrite_user_alerts').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_user_alerts)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_user_alerts)
+                                                                                 ,array('s_name' => 'rewrite_user_alerts'));
+                                            }
+                                            $rewrite_user_recover = substr(str_replace('//', '/', Params::getParam('rewrite_user_recover').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_user_recover)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_user_recover)
+                                                                                 ,array('s_name' => 'rewrite_user_recover'));
+                                            }
+                                            $rewrite_user_forgot = substr(str_replace('//', '/', Params::getParam('rewrite_user_forgot').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_user_forgot)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_user_forgot)
+                                                                                 ,array('s_name' => 'rewrite_user_forgot'));
+                                            }
+                                            $rewrite_user_change_password = substr(str_replace('//', '/', Params::getParam('rewrite_user_change_password').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_user_change_password)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_user_change_password)
+                                                                                 ,array('s_name' => 'rewrite_user_change_password'));
+                                            }
+                                            $rewrite_user_change_email = substr(str_replace('//', '/', Params::getParam('rewrite_user_change_email').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_user_change_email)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_user_change_email)
+                                                                                 ,array('s_name' => 'rewrite_user_change_email'));
+                                            }
+                                            $rewrite_user_change_email_confirm = substr(str_replace('//', '/', Params::getParam('rewrite_user_change_email_confirm').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_user_change_email_confirm)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_user_change_email_confirm)
+                                                                                 ,array('s_name' => 'rewrite_user_change_email_confirm'));
                                             }
                                             
-                                            $item_url = Params::getParam('rewrite_item_url');
-                                            Preference::newInstance()->update(array('s_value' => $item_url)
-                                                                             ,array('s_name' => 'rewrite_item_url'));
-                                            $page_url = Params::getParam('rewrite_page_url');
-                                            Preference::newInstance()->update(array('s_value' => $page_url)
-                                                                             ,array('s_name' => 'rewrite_page_url'));
-                                            $cat_url = Params::getParam('rewrite_cat_url');
-                                            Preference::newInstance()->update(array('s_value' => $cat_url)
-                                                                             ,array('s_name' => 'rewrite_cat_url'));
-                                            $search_url = Params::getParam('rewrite_search_url');
-                                            Preference::newInstance()->update(array('s_value' => $search_url)
-                                                                             ,array('s_name' => 'rewrite_search_url'));
-
-                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_country'))
-                                                                             ,array('s_name' => 'rewrite_search_country'));
-                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_region'))
-                                                                             ,array('s_name' => 'rewrite_search_region'));
-                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_city'))
-                                                                             ,array('s_name' => 'rewrite_search_city'));
-                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_city_area'))
-                                                                             ,array('s_name' => 'rewrite_search_city_area'));
-                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_category'))
-                                                                             ,array('s_name' => 'rewrite_search_category'));
-                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_user'))
-                                                                             ,array('s_name' => 'rewrite_search_user'));
-                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_pattern'))
-                                                                             ,array('s_name' => 'rewrite_search_pattern'));
-                                            
-                                            
-
-
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_contact').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_contact'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_feed').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_feed'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_language').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_language'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_mark').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_item_mark'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_send_friend').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_item_send_friend'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_contact').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_item_contact'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_new').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_item_new'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_activate').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_item_activate'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_edit').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_item_edit'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_delete').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_item_delete'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_resource_delete').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_item_resource_delete'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_login').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_user_login'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_dashboard').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_user_dashboard'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_logout').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_user_logout'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_register').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_user_register'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_activate').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_user_activate'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_activate_alert').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_user_activate_alert'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_profile').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_user_profile'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_items').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_user_items'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_alerts').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_user_alerts'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_recover').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_user_recover'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_forgot').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_user_forgot'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_change_password').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_user_change_password'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_change_email').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_user_change_email'));
-                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_change_email_confirm').'/'), 0, -1))
-                                                                             ,array('s_name' => 'rewrite_user_change_email_confirm'));
- 
                                             osc_reset_preferences();
                                             
                                             $rewrite = Rewrite::newInstance();
@@ -629,6 +775,48 @@ HTACCESS;
                                             //Write rule to DB
                                             $rewrite->setRules();
 
+                                            $msg_error = '<br/>'._m('No fields could be left empty.')." ".sprintf(_n('One field was not updated', '%s fields were not updated', $errors), $errors);
+                                            switch($status) {
+                                                case 1:
+                                                    $msg  = _m("Permalinks structure updated") ;
+                                                    if($errors>0) {
+                                                        $msg .= $msg_error;
+                                                        osc_add_flash_warning_message($msg, 'admin') ;
+                                                    } else {
+                                                        osc_add_flash_ok_message($msg, 'admin') ;
+                                                    }
+                                                break;
+                                                case 2:
+                                                    $msg  = _m("Permalinks structure updated.") ;
+                                                    $msg .= " " ;
+                                                    $msg .= _m("However, we can't check if Apache module <b>mod_rewrite</b> is loaded. If you experience some problems with the urls, you should deactivate <em>friendly urls</em>") ;
+                                                    if($errors>0) {
+                                                        $msg .= $msg_error;
+                                                    }
+                                                    osc_add_flash_warning_message($msg, 'admin') ;
+                                                break;
+                                                case 3:
+                                                    $msg  = _m("File <b>.htaccess</b> couldn't be filled with the right content.") ;
+                                                    $msg .= " " ;
+                                                    $msg .= _m("Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file, please deactivate <em>friendly urls</em> option.") ;
+                                                    $msg .= "</p><pre>" . htmlentities($htaccess) . '</pre><p>' ;
+                                                    if($errors>0) {
+                                                        $msg .= $msg_error;
+                                                    }
+                                                    osc_add_flash_error_message($msg, 'admin') ;
+                                                break;
+                                                case 4: 
+                                                    $msg  = _m("File <b>.htaccess</b> couldn't be filled with the right content.") ;
+                                                    $msg .= " " ;
+                                                    $msg .= _m("Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file or experience some problems with the urls, please deactivate <em>friendly urls</em> option.") ;
+                                                    $msg .= "</p><pre>" . htmlentities($htaccess) . '</pre><p>' ;                                            
+                                                    if($errors>0) {
+                                                        $msg .= $msg_error;
+                                                    }
+                                                    osc_add_flash_error_message($msg, 'admin') ;
+                                                break;
+                                            }
+                                            
                                             
                                             
                                         } else {
@@ -1185,6 +1373,30 @@ HTACCESS;
                                         $bAutoCron         = ($bAutoCron != '' ? true : false) ;
                                         $error = "";
 
+                                        
+                                            
+                                        $msg = '';
+                                        if(osc_validate_text($sPageTitle)) {
+                                            $msg .= _m("Page title field is required")."<br/>";
+                                        }
+                                        if(osc_validate_text($sContactEmail)) {
+                                            $msg .= _m("Contact email field is required")."<br/>";
+                                        }
+                                        if(osc_validate_int($sNumRssItems)) {
+                                            $msg .= _m("Number of RSS items has to be numeric only")."<br/>";
+                                        }
+                                        if(osc_validate_int($maxLatestItems)) {
+                                            $msg .= _m("Max latest items has to be numeric only")."<br/>";
+                                        }
+                                        if(osc_validate_int($numItemsSearch)) {
+                                            $msg .= _m("Number of items on search has to be numeric only")."<br/>";
+                                        }
+                                        if($msg!='') {
+                                            osc_add_flash_error_message( $msg, 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=languages&action=edit&id='.$languageCode);
+                                        }
+
+                                        
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageTitle)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'pageTitle')) ;
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageDesc)
