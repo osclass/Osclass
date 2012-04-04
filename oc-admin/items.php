@@ -458,6 +458,25 @@
                                         $regUserCanContact          = (($regUserCanContact != '') ? true : false);
                                         $contactItemAttachment      = Params::getParam('item_attachment');
                                         $contactItemAttachment      = (($contactItemAttachment != '') ? true : false);
+                                        
+                                        
+                                        
+                                        $msg = '';
+                                        if(!osc_validate_int(Params::getParam("items_wait_time"))) {
+                                            $msg .= _m("Wait time has to be numeric only")."<br/>";
+                                        }
+                                        if(!osc_validate_int(Params::getParam("num_moderate_items"))) {
+                                            $msg .= _m("Number of moderateditems has to be numeric only")."<br/>";
+                                        }
+                                        if(!osc_validate_int($numImagesItems)) {
+                                            $msg .= _m("Images per item has to be numeric only")."<br/>";
+                                        }
+                                        if($msg!='') {
+                                            osc_add_flash_error_message( $msg, 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=items&action=settings');
+                                        }
+                                        
+                                        
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledRecaptchaItems)
                                                                                       ,array('s_name'  => 'enabled_recaptcha_items'));
