@@ -31,6 +31,124 @@
             <meta name="robots" content="index, follow" />
             <meta name="googlebot" content="index, follow" />
         <?php } ?>
+            <style>
+                ul.sub {
+                    padding-left: 20px;
+                }
+                .chbx{
+                    width:15px; height:15px;
+                    display: inline;
+                    padding:8px 3px;
+                    background-repeat:no-repeat;
+                    cursor: pointer;
+                }
+                .chbx span{
+                    width:13px; height:13px;
+                    display: inline-block;
+                    border:solid 1px #bababa;
+
+                    border-radius:2px;
+                    -moz-border-radius:2px;
+                    -webkit-border-radius:2px;
+
+                }
+                .chbx.checked{
+                    background-image:url('<?php echo osc_current_web_theme_url('images/checkmark.png'); ?>');
+                }
+                .chbx.semi-checked{
+                    background-image:url('<?php echo osc_current_web_theme_url('images/checkmark-partial.png'); ?>');
+                }
+
+            </style>
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    $('li.parent').each(function() {
+                        var totalInputSub = $(this).find('ul.sub>li>input').size();
+                        var totalInputSubChecked = $(this).find('ul.sub>li>input:checked').size();
+
+                        $(this).find('ul.sub>li>input').each(function(){
+                            $(this).hide();
+                            if( $(this).is(':checked') ){
+                                $(this).before('<div class="chbx checked"><span></span></div>');
+                            } else {
+                                $(this).before('<div class="chbx"><span></span></div>');
+                            }
+                        });
+
+                        if(totalInputSub == totalInputSubChecked) {
+                            var input = $(this).find('input.parent');
+                            $(input).hide();
+                            $(input).before('<div class="chbx checked"><span></span></div>');
+                        }else if(totalInputSubChecked == 0) {
+                            // no input checked
+                            var input = $(this).find('input.parent');
+                            $(input).hide();
+                            $(input).before('<div class="chbx"><span></span></div>');
+                        }else if(totalInputSubChecked < totalInputSub) {
+                            var input = $(this).find('input.parent');
+                            $(input).hide();
+                            $(input).before('<div class="chbx semi-checked"><span></span></div>');
+                        }
+                    });
+                    
+                    $('li.parent').prepend('<span style="width:6px;display:inline-block;" class="toggle">+</span>');
+                    $('ul.sub').toggle();
+                    
+                    $('span.toggle').click(function(){ 
+                        $(this).parent().find('ul.sub').toggle();
+                        if($(this).text()=='+'){
+                            $(this).html('-');
+                        } else {
+                            $(this).html('+');
+                        }
+                    });
+                    
+                    $('div.chbx').click( function() {
+                        var isChecked = $(this).hasClass('checked');
+                        
+                        if(isChecked) {
+                            $(this).removeClass('checked');
+                            $(this).next('input').attr('checked', false);
+                        } else {
+                            $(this).addClass('checked');
+                            $(this).next('input').attr('checked', true);
+                        }
+                        // parent category
+                        if($(this).parent().find('ul.sub').size()>0) {
+                            if(isChecked){
+                                $(this).parent().find('ul.sub>li>div.chbx').removeClass('checked');
+                                $(this).parent().find('ul.sub>li>input').attr('checked', false);
+                            } else {
+                                $(this).parent().find('ul.sub>li>div.chbx').addClass('checked');
+                                $(this).parent().find('ul.sub>li>input').attr('checked', true);
+                            }
+                        } else {
+                            // is subcategory checkbox
+                            var parentLi = $(this).parent().parent().parent();
+                            
+                            var totalInputSub           = $(parentLi).find('ul.sub>li>input').size();
+                            var totalInputSubChecked    = $(parentLi).find('ul.sub>li>input:checked').size();
+                                                        
+                            var input    = $(parentLi).find('input.parent');
+                            var divInput = $(parentLi).find('div.chbx').first();
+                            
+                            $(input).attr('checked', false);
+                            $(divInput).removeClass('checked');
+                            $(divInput).removeClass('semi-checked');
+                            $(divInput).addClass('fuck');
+                            
+                            if(totalInputSub == totalInputSubChecked) {    
+                                $(divInput).addClass('checked');
+                                $(input).attr('checked', true);
+                            }else if(totalInputSubChecked == 0) {
+                                // no input checked;
+                            }else if(totalInputSubChecked < totalInputSub) {
+                                $(divInput).addClass('semi-checked');
+                            }   
+                        }
+                    });
+                });
+            </script>
     </head>
     <body>
         <div class="container">
@@ -122,8 +240,18 @@
                                             <?php // RESET CATEGORIES IF WE USED THEN IN THE HEADER ?>
                                             <?php osc_goto_first_category() ; ?>
                                             <?php while(osc_has_categories()) { ?>
-                                                <li>
-                                                    <input type="checkbox" id="cat<?php echo osc_category_id(); ?>" name="sCategory[]" value="<?php echo osc_category_id(); ?>" <?php echo ( (in_array(osc_category_id(), osc_search_category()) || in_array(osc_category_slug()."/", osc_search_category()) || in_array(osc_category_slug(), osc_search_category()) || count(osc_search_category())==0 )  ? 'checked' : '') ; ?> /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
+                                                <li class="parent">
+                                                    <input class="parent" type="checkbox" id="cat<?php echo osc_category_id(); ?>" name="sCategory[]" value="<?php echo osc_category_id(); ?>" <?php $parentSelected=false; if (in_array(osc_category_id(), osc_search_category()) || in_array(osc_category_slug()."/", osc_search_category()) || in_array(osc_category_slug(), osc_search_category()) || count(osc_search_category())==0 ){ echo 'checked'; $parentSelected=true;} ?> /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
+                                                    <?php if(osc_count_subcategories() > 0) { ?>
+                                                    <ul class="sub">
+                                                        <?php while(osc_has_subcategories()) { ?>
+                                                        <li>
+                                                        <input type="checkbox" name="sCategory[]" value="<?php echo osc_category_id(); ?>"  <?php if( $parentSelected || in_array(osc_category_id(), osc_search_category()) || in_array(osc_category_slug()."/", osc_search_category()) || in_array(osc_category_slug(), osc_search_category()) || count(osc_search_category())==0 ){echo 'checked';} ?>/>
+                                                        <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
+                                                        </li>
+                                                        <?php } ?>
+                                                    </ul>
+                                                    <?php } ?>
                                                 </li>
                                             <?php } ?>
                                         </ul>

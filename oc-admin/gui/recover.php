@@ -28,7 +28,7 @@
         <div id="login">
             <h1>
                 <a href="<?php echo osc_base_url() ; ?>" title="OSClass">
-                    <img src="images/osclass-logo.png" border="0" title="" alt=""/>
+                    <img src="images/osclass-logo.gif" border="0" title="" alt=""/>
                 </a>
             </h1>
             <?php osc_show_flash_message('admin') ; ?>

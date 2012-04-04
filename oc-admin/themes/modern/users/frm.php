@@ -65,7 +65,8 @@
                 <?php osc_show_admin_flash_messages() ; ?>
                 <!-- add user form -->
                 <div class="settings general">
-                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+                    <ul id="error_list"></ul>
+                    <form name="register" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="users" />
                         <input type="hidden" name="action" value="<?php echo $action_frm ; ?>"/>
                         <?php UserForm::primary_input_hidden($user) ; ?>

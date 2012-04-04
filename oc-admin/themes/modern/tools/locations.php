@@ -24,45 +24,58 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
-        <script>
+        <script type="text/javascript">
             function reload() {
                 window.location = '<?php echo osc_admin_base_url(true).'?page=tools&action=locations'; ?>' ;
             }
+            
+            function ajax_() {
+                $.ajax({
+                    type: "POST",
+                    url: '<?php echo osc_admin_base_url(true)?>?page=ajax&action=location_stats',
+                    dataType: 'json',
+                    success: function(data) {
+                        if(data.status=='done') {
+                        }else{
+                            var pending = data.pending;
+                            var all = <?php echo $all;?>;
+                            var percent = parseInt( ((all-pending)*100) / all );
+                            $('span#percent').html(percent);
+                            ajax_();
+                        }
+                    }
+                });
+            }
+            
+            $(document).ready(function(){
+                if(<?php echo $worktodo;?>> 0) {
+                    ajax_();
+                }
+            });
         </script>
     </head>
-    <body <?php if( $worktodo > 0 ){ echo 'onLoad="setTimeout(\'reload()\', 5000)"';} ?>>
+    <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
-        <div id="update_version" style="display:none;"></div>
         <div id="content">
-            <div id="separator"></div>
-            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-            <div id="right_column">
-                <div id="content_header" class="content_header">
-                    <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url('images/tools-icon.png') ; ?>" title="" alt=""/>
-                    </div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Location stats'); ?></div>
-                    <div style="clear: both;"></div>
+            <?php osc_current_admin_theme_path( 'include/backoffice_menu.php' ) ; ?>
+            <!-- right container -->
+            <div class="right">
+                <div class="header_title">
+                    <h1 class="items"><?php _e('Location stats') ; ?></h1>
                 </div>
-                <div id="content_separator"></div>
-                <?php osc_show_flash_message('admin') ; ?>
+                <?php osc_show_admin_flash_messages() ; ?>
                 <div id="locations_stats_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
-                        <?php $percent = 0;
-                        if($all>0) {
-                            $done    = $all-$worktodo ;
-                            $percent = ($done*100) / $all ;
-                            $percent = sprintf("%01.2f", $percent) ;
-                        }
-                        ?>
                         <?php if($worktodo > 0) { ?>
                         <p>
-                            <?php echo $percent; ?> % <?php _e("Complete"); ?>
+                            <span id="percent">0</span> % <?php _e("Complete"); ?>
                         </p>
+                        <br/>
                         <?php } ?>
                         <p>
                             <?php _e('You can recalculate your locations stats. This is useful if you upgrade from versions below osclass 2.4'); ?>.
                         </p>
+                        <br/>
                         <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
                             <input type="hidden" name="action" value="locations_post" />
                             <input type="hidden" name="page" value="tools" />
@@ -71,8 +84,9 @@
                         </form>
                     </div>
                 </div>
-            </div> <!-- end of right column -->
+            </div>
         </div>
+        <!-- /container -->
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>

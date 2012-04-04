@@ -82,7 +82,7 @@
                 <div class="tools upgrade">
                 <?php if( $ok ) { ?>
                     <p class="text">
-                        <?php printf( __('Your OSClass installation can be auto-upgraded. Please, backup your database and the folder oc-content before attempting to upgrade your OSClass installation. You can also upgrade OSClass manaully, more information in the %s'), '<a href="http://wiki.osclas.org/">Wiki</a>') ; ?>
+                        <?php printf( __('Your OSClass installation can be auto-upgraded. Please, backup your database and the folder oc-content before attempting to upgrade your OSClass installation. You can also upgrade OSClass manaully, more information in the %s'), '<a href="http://wiki.osclass.org/">Wiki</a>') ; ?>
                     </p>
                 <?php } else { ?>
                     <p class="text">

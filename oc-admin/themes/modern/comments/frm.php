@@ -23,6 +23,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
@@ -39,31 +40,7 @@
                 $btn_text = __('Add');
             }
         ?>
-        <script type="text/javascript">
-            function checkForm() {
-                if(document.getElementById('s_title').value == "") {
-                    alert("<?php  _e('You have to write a title.');?>");
-                    return false;
-                }
-
-                if(document.getElementById('s_body').value == "") {
-                    alert("<?php  _e('You have to write a comment.');?>");
-                    return false;
-                }
-
-                if(document.getElementById('s_author_name').value == "") {
-                    alert("<?php  _e('Author\'s name can not be empty.');?>");
-                    return false;
-                }
-
-                if(document.getElementById('s_author_email').value == "") {
-                    alert("<?php  _e('Author\'s email can not be empty.');?>");
-                    return false;
-                }
-
-                return true;
-            }
-        </script>
+        <?php CommentForm::js_validation(true); ?>
         <div id="content">
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
             <div id="right_column">
@@ -71,12 +48,13 @@
                     <div style="float: left;">
                         <img src="<?php echo osc_current_admin_theme_url('images/comments-icon2.png') ; ?>" title="" alt=""/>
                     </div>
-                    <div id="content_header_arrow">&raquo; <?php _e($title); ?></div>
+                    <h1>&raquo; <?php _e($title); ?></h1>
                     <div style="clear: both;"></div>
                 </div>
                 <?php osc_show_admin_flash_messages() ; ?>
                 <!-- add new page form -->
                 <div id="settings_form">
+                    <ul id="error_list"></ul>
                     <form name="comment_form" id="comment_form" action="<?php echo osc_admin_base_url(true); ?>" method="post" onSubmit="return checkForm()">
                         <input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
                         <input type="hidden" name="page" value="comments" />
@@ -128,8 +106,8 @@
                         <div class="FormElement">
                             <div class="FormElementName"></div>
                             <div class="FormElementInput">
-                                <button class="formButton" type="button" onclick="window.location='<?php echo osc_admin_base_url(true);?>?page=comments';" ><?php _e('Cancel'); ?></button>
-                                <button class="formButton" type="submit"><?php echo $btn_text; ?></button>
+                                <input class="formButton" type="button" onclick="window.location='<?php echo osc_admin_base_url(true);?>?page=comments';" value="<?php _e('Cancel'); ?>" />
+                                <input class="formButton" type="submit" value="<?php echo $btn_text; ?>" />
                             </div>
                         </div>
                     </form>

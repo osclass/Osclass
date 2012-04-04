@@ -96,6 +96,9 @@
                             case('error_file'):
                                 osc_add_flash_error_message( _m("Plugin couldn't be installed because their files are missing"), 'admin') ;
                             break;
+                            case('custom_error'):
+                                osc_add_flash_error_message( sprintf(_m("Plugin couldn't be installed because of: %s"), $installed['msg']), 'admin') ;
+                            break;
                             default:
                                 osc_add_flash_error_message( _m("Plugin couldn't be installed"), 'admin') ;
                             break;
