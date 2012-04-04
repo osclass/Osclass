@@ -812,6 +812,48 @@
                     }
                     echo json_encode($data);
                     break;
+                    
+                case 'location_stats':
+                    $workToDo = LocationsTmp::newInstance()->count() ;
+                    if( $workToDo > 0 ) {
+                        // there are wotk to do
+                        $aLocations = LocationsTmp::newInstance()->getLocations(1000) ;
+                        foreach($aLocations as $location) {
+                            $id     = $location['id_location'];
+                            $type   = $location['e_type'];
+                            $data   = 0; 
+                            // update locations stats
+                            switch ( $type ) {
+                                case 'COUNTRY':
+                                    $numItems = CountryStats::newInstance()->calculateNumItems( $id ) ;
+                                    $data = CountryStats::newInstance()->setNumItems($id, $numItems) ;
+                                    unset($numItems) ;
+                                break;
+                                case 'REGION' :
+                                    $numItems = RegionStats::newInstance()->calculateNumItems( $id ) ;
+                                    $data = RegionStats::newInstance()->setNumItems($id, $numItems) ;
+                                    unset($numItems) ;
+                                break;
+                                case 'CITY' :
+                                    $numItems = CityStats::newInstance()->calculateNumItems( $id ) ;
+                                    $data = CityStats::newInstance()->setNumItems($id, $numItems) ;
+                                    unset($numItems) ;
+                                break;
+                                default:
+                                break;
+                            }
+                            if($data >= 0) {
+                                LocationsTmp::newInstance()->delete(array('e_type' => $location['e_type'], 'id_location' => $location['id_location']) ) ;
+                            }
+                        }
+                        $array['status']  = 'more';
+                        $array['pending'] = $workToDo = LocationsTmp::newInstance()->count() ;
+                        echo json_encode($array);
+                    } else {
+                        $array['status']  = 'done';
+                        echo json_encode($array);
+                    }
+                    break;
                 default:
                     echo json_encode(array('error' => __('no action defined')));
                     break;
