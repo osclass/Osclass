@@ -68,26 +68,35 @@
 
                         $(this).find('ul.sub>li>input').each(function(){
                             $(this).hide();
+                            var id = $(this).attr('id');
                             if( $(this).is(':checked') ){
-                                $(this).before('<div class="chbx checked"><span></span></div>');
+                                var aux = $('<div class="chbx checked"><span></span></div>').attr('id', id);
+                                $(this).before(aux);
                             } else {
-                                $(this).before('<div class="chbx"><span></span></div>');
+                                var aux = $('<div class="chbx"><span></span></div>').attr('id', id);
+                                $(this).before(aux);
                             }
                         });
 
                         if(totalInputSub == totalInputSubChecked) {
                             var input = $(this).find('input.parent');
                             $(input).hide();
-                            $(input).before('<div class="chbx checked"><span></span></div>');
+                            var id = $(input).attr('id');
+                            var aux = $('<div class="chbx checked"><span></span></div>').attr('id', id);
+                            $(input).before(aux);
                         }else if(totalInputSubChecked == 0) {
                             // no input checked
                             var input = $(this).find('input.parent');
                             $(input).hide();
-                            $(input).before('<div class="chbx"><span></span></div>');
+                            var id = $(input).attr('id');
+                            var aux = $('<div class="chbx"><span></span></div>').attr('id', id);
+                            $(input).before(aux);
                         }else if(totalInputSubChecked < totalInputSub) {
                             var input = $(this).find('input.parent');
                             $(input).hide();
-                            $(input).before('<div class="chbx semi-checked"><span></span></div>');
+                            var id = $(input).attr('id');
+                            var aux = $('<div class="chbx semi-checked"><span></span></div>').attr('id', id);
+                            $(input).before();
                         }
                     });
                     
@@ -246,7 +255,7 @@
                                                     <ul class="sub">
                                                         <?php while(osc_has_subcategories()) { ?>
                                                         <li>
-                                                        <input type="checkbox" name="sCategory[]" value="<?php echo osc_category_id(); ?>"  <?php if( $parentSelected || in_array(osc_category_id(), osc_search_category()) || in_array(osc_category_slug()."/", osc_search_category()) || in_array(osc_category_slug(), osc_search_category()) || count(osc_search_category())==0 ){echo 'checked';} ?>/>
+                                                        <input type="checkbox" id="cat<?php echo osc_category_id(); ?>" name="sCategory[]" value="<?php echo osc_category_id(); ?>"  <?php if( $parentSelected || in_array(osc_category_id(), osc_search_category()) || in_array(osc_category_slug()."/", osc_search_category()) || in_array(osc_category_slug(), osc_search_category()) || count(osc_search_category())==0 ){echo 'checked';} ?>/>
                                                         <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
                                                         </li>
                                                         <?php } ?>
