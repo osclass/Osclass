@@ -27,7 +27,7 @@
         <div id="login">
             <h1>
                 <a href="<?php echo osc_base_url() ; ?>" title="OSClass">
-                    <img src="images/osclass-logo.png" border="0" title="" alt=""/>
+                    <img src="images/osclass-logo.gif" border="0" title="" alt=""/>
                 </a>
             </h1>
             <?php osc_show_flash_message('admin') ; ?>
@@ -62,14 +62,13 @@
                     <label>
                         <input name="remember" type="checkbox" id="remember" value="1" tabindex="90" /> <?php _e('Remember me') ; ?>
                     </label>
+                        <a href="<?php echo osc_admin_base_url(true); ?>?page=login&amp;action=recover" title="<?php _e('Forgot your password?') ; ?>" class="forgot"><?php _e('Forgot your password?') ; ?></a>
                 </p>
                 <p class="submit">
                     <input type="submit" name="submit" id="submit" value="<?php _e('Log in') ; ?>" tabindex="100" />
                 </p>
             </form>
-            <p id="nav">
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=login&amp;action=recover" title="<?php _e('Forgot your password?') ; ?>"><?php _e('Forgot your password?') ; ?></a>
-            </p>
+            
         </div>
         <p id="backtoblog"><a href="<?php echo osc_base_url() ; ?>" title="<?php printf( __('Back to %s'), osc_page_title() ) ; ?>">&larr; <?php printf( __('Back to %s'), osc_page_title() ) ; ?></a></p>
         <script type="text/javascript">

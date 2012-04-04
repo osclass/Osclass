@@ -19,24 +19,28 @@ a:hover {
 }
 
 #login{
-    width:750px;
-    margin:80px auto;
+    width:800px;
+    margin:100px auto 80px;
+    overflow: visible;
 }
 #login h1{
-    float:left;
-    width:412px; height:92px;
+    float: left;
+    width: 436px;
+    height: 150px;
+    margin-top: -35px;
+    position: relative;
 }
 #login h1 a{
-    background-image:url(../images/osclass-logo.2.gif);
+    background-image:url(../images/osclass-logo.gif);
     display: block;
-    width:412px; height:92px;
+    width:436px; height:150px;
 }
 #login h1 img{
     display:none;
 }
 
 form{
-    padding-left:440px;
+    padding-left:490px;
 }
 form input, form select{
     width:300px; height:45px; background-color:#E2E2E2;
@@ -57,8 +61,7 @@ p label{
 p label span{
     color:#58595B; font-weight:bold; display: block; padding-top:8px;
     position: absolute; left:10px; font-size:25px;
-    padding-top: 15px\9;
-    *padding-top: 15px;
+    padding-top: 8px;
 }
 .submit{
     position:relative; 
@@ -82,21 +85,25 @@ p label span{
     width:auto; height:auto;
     background-color: transparent;
 }
+a.forgot{
+    color: #2FBFD1; font-weight:bold; font-size: 12px; text-decoration:none; display: block; padding-left:0px; margin-top:15px; *margin-top:12px;
+}
 
 #nav{
-    padding-left:440px;
+    padding-left:490px;
     text-align:left;    
 }
 #nav a{
     color: #2FBFD1; font-weight:bold; font-size: 12px; text-decoration:none; display: block; padding-left:5px;
 }
+
 .message{
-    margin:5px 5px 15px 445px; padding:0px; text-align:left; 
+    margin:5px 5px 15px 495px; padding:0px; text-align:left; 
     /*border:solid 1px #BCE8F1; background-color:#D9EDF7; color:#3A87AD;*/ color: #999999; font-weight:bold; font-size: 12px;
     -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px;
 }
 #FlashMessage{
-    margin:5px 5px 15px 445px; padding:15px;
+    margin:5px 5px 15px 495px; padding:15px;
     border:solid 1px #BCE8F1; background-color:#D9EDF7; color:#3A87AD;
     -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px;
 }
@@ -105,6 +112,10 @@ p label span{
     border-color: #EED3D7;
     color:#B94A48;
     font-size: 13px;
+}
+.error a{
+    color:#B94A48;
+    display:block;
 }
 #backtoblog{
     padding:10px 0;
