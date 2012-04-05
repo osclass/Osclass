@@ -141,7 +141,7 @@ AdTech Ad
 ',
     'price'         => '8000',
     'regionId'      => 'Madrid'  ,'cityId'        => 'Alameda del Valle',
-    'cityArea'      => ''           ,'address'       => '',
+    'cityArea'      => 'city area test'           ,'address'       => '',
     'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => $email
 );
 array_push($aData, $aux);
@@ -180,7 +180,7 @@ $aux = array(
     'description'   => 'SELLBYTEL is one of the leading European service providers for Customer Management Solutions with more than 4.000 employees at 22 locations worldwide. Our clients belong to the top 500 business companies in the sectors IT and hi-tech, telecommunications, automotive, financial services, health care and commerce. We are a dynamic company in constant growth. Please find more about us on our corporate website. ',
     'price'         => '',
     'regionId'      => 'Alicante'  ,'cityId'        => 'Agres',
-    'cityArea'      => ''           ,'address'       => '',
+    'cityArea'      => 'city area test'           ,'address'       => '',
     'photo'         => array(),'contactName'   => 'contact ad 1','contactEmail'  => $email
 );
 array_push($aData, $aux);
