@@ -361,6 +361,7 @@
                     if(is_numeric($city_area)) {
                         $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $city_area);
                     } else {
+                        echo "debug";
                         $_city_area = CityArea::newInstance()->findByName($city_area) ;
                         if( !empty($_city_area) ) {
                             $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $_city_area['pk_i_id']);
@@ -760,18 +761,7 @@
                 
                 if($this->withLocations || OC_ADMIN) {
                     $this->dao->join(sprintf('%st_item_location', DB_TABLE_PREFIX), sprintf('%st_item_location.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX), 'LEFT');
-                    
-                    if(count($this->cities)>0) {
-                        $this->dao->where("( ".implode(' || ', $this->cities)." )");
-                    }
-
-                    if(count($this->regions)>0) {
-                        $this->dao->where("( ".implode(' || ', $this->regions)." )");
-                    }
-
-                    if(count($this->countries)>0) {
-                        $this->dao->where("( ".implode(' || ', $this->countries)." )");
-                    }
+                    $this->_addLocations();
                 }
                 if($this->withCategoryId) {
                     $this->dao->where(sprintf("%st_item.fk_i_category_id", DB_TABLE_PREFIX) .' IN ('. implode(', ', $this->categories) .')' ) ;
@@ -792,18 +782,7 @@
                 
                 if($this->withLocations || OC_ADMIN) {
                     $this->dao->join(sprintf('%st_item_location', DB_TABLE_PREFIX), sprintf('%st_item_location.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX), 'LEFT');
-                    
-                    if(count($this->cities)>0) {
-                        $this->dao->where("( ".implode(' || ', $this->cities)." )");
-                    }
-
-                    if(count($this->regions)>0) {
-                        $this->dao->where("( ".implode(' || ', $this->regions)." )");
-                    }
-
-                    if(count($this->countries)>0) {
-                        $this->dao->where("( ".implode(' || ', $this->countries)." )");
-                    }
+                    $this->_addLocations();
                 }
                 if($this->withCategoryId) {
                     $this->dao->where(sprintf("%st_item.fk_i_category_id", DB_TABLE_PREFIX) .' IN ('. implode(', ', $this->categories) .')' ) ;
@@ -820,6 +799,22 @@
             $this->dao->_resetSelect() ;
             
             return $sql;
+        }
+        
+        private function _addLocations()
+        {
+            if(count($this->city_areas)>0) {
+                $this->dao->where("( ".implode(' || ', $this->city_areas)." )");
+            }
+            if(count($this->cities)>0) {
+                $this->dao->where("( ".implode(' || ', $this->cities)." )");
+            }
+            if(count($this->regions)>0) {
+                $this->dao->where("( ".implode(' || ', $this->regions)." )");
+            }
+            if(count($this->countries)>0) {
+                $this->dao->where("( ".implode(' || ', $this->countries)." )");
+            }
         }
         /**
          * Make the SQL for the search with all the conditions and filters specified
@@ -841,16 +836,7 @@
                 $this->dao->select(sprintf('%st_item.*', DB_TABLE_PREFIX) );
                 $this->dao->from(sprintf('%st_item', DB_TABLE_PREFIX));
                 $this->dao->where('pk_i_id', (int)$this->itemId);
-            } else {
-                // SUB SELECT for JOIN ----------------------
-//                if ($this->withPattern ) {
-//                    $this->dao->select('distinct d.fk_i_item_id');
-//                    $this->dao->from(DB_TABLE_PREFIX.'t_item_description as d');
-//                    $this->dao->where(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->sPattern) );
-//                    $subSelect = $this->dao->_getSelect();
-//                    $this->dao->_resetSelect();
-//                }
-                
+            } else {  
                 if($count) {
                     $this->dao->select(DB_TABLE_PREFIX.'t_item.pk_i_id');
                 } else {
@@ -863,12 +849,7 @@
                 
                 if ($this->withPattern ) {
                     $this->dao->join(DB_TABLE_PREFIX.'t_item_description as d','d.fk_i_item_id = '.DB_TABLE_PREFIX.'t_item.pk_i_id','LEFT');
-                    
-//                    $this->dao->select('distinct d.fk_i_item_id');
-//                    $this->dao->from(DB_TABLE_PREFIX.'t_item_description as d');
                     $this->dao->where(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->sPattern) );
-//                    $subSelect = $this->dao->_getSelect();
-//                    $this->dao->_resetSelect();
                 }
                 
                 
@@ -886,15 +867,7 @@
                 }
                 if($this->withLocations || OC_ADMIN) {
                     $this->dao->join(sprintf('%st_item_location', DB_TABLE_PREFIX), sprintf('%st_item_location.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX), 'LEFT');
-                    if(count($this->cities)>0) {
-                        $this->dao->where("( ".implode(' || ', $this->cities)." )");
-                    }
-                    if(count($this->regions)>0) {
-                        $this->dao->where("( ".implode(' || ', $this->regions)." )");
-                    }
-                    if(count($this->countries)>0) {
-                        $this->dao->where("( ".implode(' || ', $this->countries)." )");
-                    }
+                    $this->_addLocations();
                 }
                 if($this->withPicture) {
                     $this->dao->join(sprintf('%st_item_resource', DB_TABLE_PREFIX), sprintf('%st_item_resource.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX), 'LEFT');
