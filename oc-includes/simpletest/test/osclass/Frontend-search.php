@@ -260,11 +260,12 @@ class Frontend_search extends FrontendTest {
 
         // tests
         // _testMainFrontend();
-        $this->selenium->open( osc_base_url(true) );
+        $this->selenium->open( osc_base_url() );
         $this->assertTrue($this->selenium->isTextPresent("Classes (0)"), "Main frontend - category parent of category id 39 have bad counters ERROR" );
         $this->assertTrue($this->selenium->isTextPresent("Language Classes (0)"), "Main frontend - category 'Language Classes' (id 39) have bad counters ERROR" );
         // _testSearch();
-        $this->selenium->open( osc_base_url(true) . "?page=search&sCategory=3" );
+        $searchCategory = osc_search_url(array('sCategory'  => '3'));
+        $this->selenium->open( $searchCategory );
         $this->assertTrue($this->selenium->isTextPresent("There are no results matching"), "search frontend - there are items ERROR" );
     }
     

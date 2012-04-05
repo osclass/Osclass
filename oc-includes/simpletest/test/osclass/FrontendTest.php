@@ -44,7 +44,7 @@ abstract class FrontendTest extends WebTestCase {
         if( is_null($pass) ) $pass = $this->_password;
         if( is_null($pass2) ) $pass2 = $pass;
 
-        $this->selenium->open( osc_base_url(true) );
+        $this->selenium->open( osc_base_url() );
         $this->selenium->click("link=Register for a free account");
         $this->selenium->waitForPageToLoad("3000");
 
@@ -73,7 +73,7 @@ abstract class FrontendTest extends WebTestCase {
         if( is_null($mail) ) $mail = $this->_email;
         if( is_null($pass) ) $pass = $this->_password;
         
-        $this->selenium->open( osc_base_url(true) );
+        $this->selenium->open( osc_base_url() );
         $this->selenium->click("login_open");
         $this->selenium->type("email", $mail);
         $this->selenium->type("password", $pass);
@@ -87,7 +87,7 @@ abstract class FrontendTest extends WebTestCase {
      */
     function logout()
     {
-        $this->selenium->open( osc_base_url(true) );
+        $this->selenium->open( osc_base_url() );
         $this->selenium->click("link=Logout");
         $this->selenium->waitForPageToLoad("30000");
     }
@@ -105,7 +105,7 @@ abstract class FrontendTest extends WebTestCase {
     
     public function insertItem($cat, $title, $description, $price, $regionId, $cityId, $cityArea, $aPhotos, $user, $email , $logged = 0)
     {
-        $this->selenium->open( osc_base_url(true) );
+        $this->selenium->open( osc_base_url() );
 
         $this->selenium->click("link=Publish your ad for free");
         $this->selenium->waitForPageToLoad("30000");
