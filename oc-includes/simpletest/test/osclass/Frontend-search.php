@@ -14,7 +14,6 @@ class Frontend_search extends FrontendTest {
         parent::__construct($label);
     }
 
-
     /*
      * Load items for test propouse.
      */
@@ -52,21 +51,20 @@ class Frontend_search extends FrontendTest {
      */
     function testNewly()
     {
-        $this->selenium->open( osc_base_url(true) . "?page=search" );
+        $this->selenium->open( osc_search_url() );
         $this->selenium->click("link=Newly listed");
         $this->selenium->waitForPageToLoad("30000");
         // last item added -> TITLE : SPANISH LESSONS
         $text = $this->selenium->getText('//table/tbody/tr[1]/td[2]');
         $this->assertTrue(preg_match('/SPANISH LESSONS/i', $text), "Search, order by Newly");
     }
-
     
     /*
      * Order results by Lower price
      */
     function testLowerPrice()
     {
-        $this->selenium->open( osc_base_url(true) . "?page=search" );
+        $this->selenium->open( osc_search_url() );
         $this->selenium->click("link=Lower price first");
         $this->selenium->waitForPageToLoad("30000");
         // last item added -> TITLE : German Training Coordination Agent (Barcelona centre) en Barcelona
@@ -80,7 +78,7 @@ class Frontend_search extends FrontendTest {
      */
     function testHigherPrice()
     {
-        $this->selenium->open( osc_base_url(true) . "?page=search" );
+        $this->selenium->open( osc_search_url() );
         $this->selenium->click("link=Higher price first");
         $this->selenium->waitForPageToLoad("30000");
         // last item added -> TITLE : Avion ULM TL96 cerca de Biniagual
@@ -94,7 +92,7 @@ class Frontend_search extends FrontendTest {
      */
     function testSPattern()
     {
-        $this->selenium->open( osc_base_url(true) . "?page=search" );
+        $this->selenium->open( osc_search_url() );
         $this->selenium->type("sPattern", "Moto");
         $this->selenium->click("xpath=//span/button[text()='Apply']");
         $this->selenium->waitForPageToLoad("30000");
@@ -107,7 +105,7 @@ class Frontend_search extends FrontendTest {
      */
     function testSPatternCombi1()
     {
-        $this->selenium->open( osc_base_url(true) . "?page=search" );
+        $this->selenium->open( osc_search_url() );
         $this->selenium->type("sPattern", "Moto");
         $this->selenium->type("sPriceMin", "3000");
         $this->selenium->type("sPriceMax", "9000");
@@ -123,7 +121,7 @@ class Frontend_search extends FrontendTest {
      */
     function testSPatternCombi2()
     {
-        $this->selenium->open( osc_base_url(true) . "?page=search" );
+        $this->selenium->open( osc_search_url() );
         $this->selenium->type("sPattern", "Moto");
         $this->selenium->type("sCity" , "Balsareny");
         $this->selenium->click("xpath=//span/button[text()='Apply']");
@@ -137,7 +135,7 @@ class Frontend_search extends FrontendTest {
      */
     function testSPatternCombi3()
     {
-        $this->selenium->open( osc_base_url(true) . "?page=search" );
+        $this->selenium->open( osc_search_url() );
         $this->selenium->type("sCity" , "Balsareny");
         $this->selenium->click("xpath=//span/button[text()='Apply']");
         $this->selenium->waitForPageToLoad("30000");
@@ -164,14 +162,75 @@ class Frontend_search extends FrontendTest {
      */
     function testSPatternCombi5()
     {
-        $this->selenium->open( osc_base_url(true) . "?page=search" );
+        $this->selenium->open( osc_search_url() );
         $this->selenium->click("bPic"); // only items with pictures
         $this->selenium->click("xpath=//span/button[text()='Apply']");
         $this->selenium->waitForPageToLoad("30000");
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
         $this->assertTrue($count == 9 , "Search by [ Show only items with pictures ].");
     }
-
+    
+    /*
+     * Search by userId
+     * Prepare new user and add new items
+     */
+    function testSearchUserItems()
+    {
+        require 'ItemData.php';
+        $uSettings = new utilSettings();
+        $old_enable_user_val  = $uSettings->set_enabled_user_validation(0);
+        // create a new user
+        $userId = $this->doRegisterUser();
+        // add new items to user
+        $this->loginWith();
+        for($i=0; $i<2; $i++){
+            $item = $aData[$i];
+            $this->insertItem(  $item['catId'], $item['title'], 
+                                $item['description'], $item['price'],
+                                $item['regionId'], $item['cityId'], 
+                                $item['photo'], $item['contactName'], 
+                                $this->_email);
+            $this->assertTrue($this->selenium->isTextPresent("Your item has been published", "Insert item.") );
+        }
+        
+        $uSettings->set_enabled_user_validation( $old_enable_user_val );
+        
+        // check search
+        $this->selenium->open( osc_search_url(array('sUser' => $userId)) );
+        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        
+        $this->assertTrue($count == 2 , "Search by [ User id ].");
+        
+        // remove user test
+        $this->removeUserByMail();
+    }
+    
+    /*
+     * Search test sCountry - sRegion - sCity - sCityArea
+     */
+    function testLocations()
+    {
+        $searchCountry  = osc_search_url(array('sCountry'   => 'ES'));
+        $this->selenium->open( $searchCountry );
+        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $this->assertTrue($count == 10 , "Search by [ sCountry es ].");
+        
+        $searchRegion   = osc_search_url(array('sRegion'    => 'Alicante'));
+        $this->selenium->open( $searchRegion );
+        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $this->assertTrue($count == 3 , "Search by [ sRegion Alicante ].");
+        
+        $searchCity     = osc_search_url(array('sCity'      => 'Balsareny'));
+        $this->selenium->open( $searchCity );
+        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $this->assertTrue($count == 4 , "Search by [ sCity Balsereny ].");
+        
+        $searchCityArea = osc_search_url(array('sCityArea'  => 'city area test'));
+        echo $searchCityArea."<br>";
+        $this->selenium->open( $searchCityArea );
+        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $this->assertTrue($count == 2 , "Search by [ sCityArea city area test ].");
+    }
     /*
      *  1) expire one category
      *  2) update dt_pub_date 
@@ -182,7 +241,6 @@ class Frontend_search extends FrontendTest {
      *      search
      */
     function testExpiredItems()
-
     {
         // expire one category (Language Classes)
         $mCategory = new Category();
@@ -197,7 +255,7 @@ class Frontend_search extends FrontendTest {
 
         Cron::newInstance()->update(array('d_last_exec' => '0000-00-00 00:00:00', 'd_next_exec' => '0000-00-00 00:00:00'), array('e_type' => 'DAILY'));
         
-        $this->selenium->open( osc_base_url(true) . "?page=cron" );
+        $this->selenium->open( osc_base_url(true) . "?page=cron" ); 
         $this->selenium->waitForPageToLoad("3000");
 
         // tests
@@ -209,7 +267,6 @@ class Frontend_search extends FrontendTest {
         $this->selenium->open( osc_base_url(true) . "?page=search&sCategory=3" );
         $this->assertTrue($this->selenium->isTextPresent("There are no results matching"), "search frontend - there are items ERROR" );
     }
-
     
     /*
      * Remove all items inserted previously
@@ -223,7 +280,7 @@ class Frontend_search extends FrontendTest {
             $this->selenium->open( $url );
             $this->assertTrue($this->selenium->isTextPresent("Your item has been deleted"), "Delete item.");
         }
-        
     }
+    
 }
 ?>
