@@ -152,11 +152,44 @@ class OCadmin_languages extends OCadminTest {
             $this->selenium->waitForPageToLoad("10000");
             $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Spanish')]");
             $this->selenium->click("//table/tbody/tr/td[contains(.,'Spanish')]/div/div/a[text()='Edit']");
+            
+            // TEST JS VALIDATION
+            $this->selenium->type("s_name","");
+            $this->selenium->type("s_short_name","");
+            $this->selenium->type("s_description","");
+            $this->selenium->type("s_currency_format","");
+            $this->selenium->type("i_num_dec","sfd");
+            $this->selenium->type("s_dec_point","");
+            $this->selenium->type("s_thousand_sep","");
+            $this->selenium->type("s_date_format","");
+            $this->selenium->click("//input[@type='submit']");
+
+            sleep(4);
+            
+            $this->assertTrue($this->selenium->isTextPresent("Number of decimals: this field has to be numeric only."),"Edit language Spanish - JS validation -");
+            $this->assertTrue($this->selenium->isTextPresent("Name: this field is required."),"Edit language Spanish - JS validation -");
+            $this->assertTrue($this->selenium->isTextPresent("Short name: this field is required."),"Edit language Spanish - JS validation -");
+            $this->assertTrue($this->selenium->isTextPresent("Description: this field is required."),"Edit language Spanish - JS validation -");
+            $this->assertTrue($this->selenium->isTextPresent("Currency format: this field is required."),"Edit language Spanish - JS validation -");
+            $this->assertTrue($this->selenium->isTextPresent("Decimal point: this field is required."),"Edit language Spanish - JS validation -");
+            $this->assertTrue($this->selenium->isTextPresent("Date format: this field is required."),"Edit language Spanish - JS validation -");
+            
+            $this->selenium->click("link=Languages");
+            $this->selenium->click("link=Manage languages");
+            $this->selenium->waitForPageToLoad("10000");
+            $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Spanish')]");
+            $this->selenium->click("//table/tbody/tr/td[contains(.,'Spanish')]/div/div/a[text()='Edit']");
             $this->selenium->type("s_name","Spanish upadated");
             $this->selenium->type("s_short_name","Spanish upadated");
             $this->selenium->type("s_description","Spanish translation updated");
+            $this->selenium->type("s_currency_format","currency");
+            $this->selenium->type("i_num_dec","3");
+            $this->selenium->type("s_dec_point","x");
+            $this->selenium->type("s_thousand_sep","y");
+            $this->selenium->type("s_date_format","Ymd");
             $this->selenium->type("s_stop_words","foo,bar");
             $this->selenium->click("b_enabled");
+            $this->selenium->click("b_enabled_bo");
             $this->selenium->click("//input[@type='submit']");
             $this->selenium->waitForPageToLoad("10000");
             $this->assertTrue($this->selenium->isTextPresent("Spanish upadated has been updated"),"Edit language Spanish");
