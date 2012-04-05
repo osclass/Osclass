@@ -43,4 +43,3 @@ class InstallerTest extends WebTestCase {
     
 }
 ?>
-

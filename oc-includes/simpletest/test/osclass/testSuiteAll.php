@@ -123,6 +123,9 @@ class AllTests extends TestSuite {
             if(isset($tests['admin']['items']) || $tests['admin']=='') {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-items.php');     // necesita limpiar código     
             }
+            if(isset($tests['admin']['stats']) || $tests['admin']=='') {
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-stats.php');     // only test that the page load
+            }
         }
 
 

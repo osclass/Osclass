@@ -42,15 +42,37 @@ class OCadmin_languages extends OCadminTest {
         if($this->canUpload){
             $this->loginWith();
             // insert language
+            $this->deleteLanguage("Spanish", false);
             $this->selenium->open( osc_admin_base_url(true) ) ;
             $this->selenium->click("link=Languages");
-            $this->selenium->click("link=Add a language");
+            $this->selenium->click("//a[@id='languages_new']");
             $this->selenium->waitForPageToLoad("10000");
             $this->selenium->type("package", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/lang_es_ES_2.0.zip"));
             $this->selenium->click("//input[@type='submit']");
             $this->selenium->waitForPageToLoad("10000");
             $this->assertTrue($this->selenium->isTextPresent("The language has been installed correctly"),"Upload new language lang_es_ES_2.0.zip");
             $this->deleteLanguage();
+        }
+    }
+    
+    /*
+     * Login oc-admin
+     * Insert wrong language file
+     */
+    function testInsertWrongLanguage()
+    {    
+        if($this->canUpload){
+            $this->loginWith();
+            // insert language
+            $this->deleteLanguage("Spanish", false);
+            $this->selenium->open( osc_admin_base_url(true) ) ;
+            $this->selenium->click("link=Languages");
+            $this->selenium->click("//a[@id='languages_new']");
+            $this->selenium->waitForPageToLoad("10000");
+            $this->selenium->type("package", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/logo.jpg"));
+            $this->selenium->click("//input[@type='submit']");
+            $this->selenium->waitForPageToLoad("10000");
+            $this->assertTrue($this->selenium->isTextPresent("The zip file is not valid"),"Upload WRONG language file");
         }
     }
     
@@ -63,11 +85,12 @@ class OCadmin_languages extends OCadminTest {
         if($this->canUpload){
             $this->loginWith();
             // insert by link 
+            $this->deleteLanguage("Spanish", false);
             $this->selenium->open( osc_admin_base_url(true) ) ;
             $this->selenium->click("link=Languages");
             $this->selenium->click("link=Manage languages");
             $this->selenium->waitForPageToLoad("10000");
-            $this->selenium->click("link=Add language");
+            $this->selenium->click("//a[@id='button_open']");
             $this->selenium->waitForPageToLoad("10000");
             $this->selenium->type("package", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/lang_es_ES_2.0.zip"));
             $this->selenium->click("//input[@type='submit']");
@@ -167,11 +190,13 @@ class OCadmin_languages extends OCadminTest {
     
     
     // private functions
-    private function deleteLanguage($lang = "Spanish")
+    private function deleteLanguage($lang = "Spanish", $check = true)
     {
         $this->doAction("Delete");
         $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue($this->selenium->isTextPresent("has been successfully removed"),"Can't delete language Spanish");
+        if($check) {
+            $this->assertTrue($this->selenium->isTextPresent("has been successfully removed"),"Delete language Spanish");
+        }
     }
     
     private function isDisabledOCAdmin($lang)
@@ -208,7 +233,7 @@ class OCadmin_languages extends OCadminTest {
     {
         $this->doAction("Enable (website)", $lang);
         $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue($this->selenium->isTextPresent("Selected languages have been enabled for the website"),"Can't enable (website) language $lang");
+        $this->assertTrue($this->selenium->isTextPresent("Selected languages have been enabled for the website"),"Enable (website) language $lang");
     }
 
     private function checkWebsiteEnabled($lang)
@@ -221,14 +246,14 @@ class OCadmin_languages extends OCadminTest {
         $this->selenium->click("link=$lang");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue($this->selenium->isTextPresent("Idioma"),"Can't find $lang strings (website language $lang)");
+        $this->assertTrue($this->selenium->isTextPresent("Idioma"),"Find $lang strings (website language $lang)");
     }
 
     private function disableWebsite($lang)
     {
         $this->doAction("Disable (website)", $lang);
         $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue($this->selenium->isTextPresent("Selected languages have been disabled for the website"),"Can't disable (website) language $lang");
+        $this->assertTrue($this->selenium->isTextPresent("Selected languages have been disabled for the website"),"Disable (website) language $lang");
     }
 
     private function checkWebsiteDisabled($lang)
@@ -241,7 +266,7 @@ class OCadmin_languages extends OCadminTest {
         $this->doAction("Enable (oc-admin)", $lang);
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue($this->selenium->isTextPresent("Selected languages have been enabled for the backoffice (oc-admin)"),"Can't enable (backoffice) language $lang");
+        $this->assertTrue($this->selenium->isTextPresent("Selected languages have been enabled for the backoffice (oc-admin)"),"Enable (backoffice) language $lang");
     }
 
     private function checkOCAdminEnabled($lang)
@@ -275,7 +300,7 @@ class OCadmin_languages extends OCadminTest {
     {
         $this->doAction("Disable (oc-admin)", $lang);
         $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue($this->selenium->isTextPresent("Selected languages have been disabled for the backoffice (oc-admin)"),"Can't disable (backoffice) language $lang");
+        $this->assertTrue($this->selenium->isTextPresent("Selected languages have been disabled for the backoffice (oc-admin)"),"Disable (backoffice) language $lang");
     }
 
     private function checkOCAdminDisabled($lang)
