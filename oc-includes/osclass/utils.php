@@ -986,5 +986,51 @@ function osc_check_update($update_uri, $version = null) {
     return false;
 }    
 
+/**
+ * Update category stats
+ *
+ * @param string $update_uri
+ * @return boolean
+ */
+function osc_update_cat_stats() {
+    $categoryTotal = array() ;
+    $categoryTree  = array() ;
+    $aCategories   = Category::newInstance()->listAll(false) ;
+
+    // append root categories and get the number of items of each category
+    foreach($aCategories as $category) {
+        $total     = Item::newInstance()->numItems($category, true, true) ;
+        $category += array('category' => array()) ;
+        if( is_null($category['fk_i_parent_id']) ) {
+            $categoryTree += array($category['pk_i_id'] => $category) ;
+        }
+
+        $categoryTotal += array($category['pk_i_id'] => $total) ;
+    }
+
+    // append childs to root categories
+    foreach($aCategories as $category) {
+        if( !is_null($category['fk_i_parent_id']) ) {
+            $categoryTree[$category['fk_i_parent_id']]['category'][] = $category ;
+        }
+    }
+
+    // sum the result of the subcategories and set in the parent category
+    foreach($categoryTree as $category) {
+        if( count( $category['category'] ) > 0 ) {
+            foreach($category['category'] as $subcategory) {
+                $categoryTotal[$category['pk_i_id']] += $categoryTotal[$subcategory['pk_i_id']] ;
+            }
+        }
+    }
+
+    $sql = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_category_stats (fk_i_category_id, i_num_items) VALUES ';
+    $aValues = array();
+    foreach($categoryTotal as $k => $v) {
+        array_push($aValues, "($k, $v)" );
+    }
+    $sql .= implode(',', $aValues);
+    $result = CategoryStats::newInstance()->dao->query($sql);
+}
 
 ?>

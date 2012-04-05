@@ -190,7 +190,11 @@
             }
             ob_end_clean() ;
 
-            self::runHook('install_' . $path) ;
+            try {
+                self::runHook('install_' . $path) ;
+            } catch(Exception $e) {
+                return array('error_code' => 'custom_error' ,'msg' => $e->getMessage()) ;
+            }
 
             if( !self::activate($path) ) {
                 return array('error_code' => '') ;

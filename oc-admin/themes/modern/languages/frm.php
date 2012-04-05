@@ -22,9 +22,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
+        <?php LanguageForm::js_validation(); ?>
         <!-- container -->
         <div id="content">
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
@@ -36,7 +38,8 @@
                 <?php osc_show_admin_flash_messages() ; ?>
                 <!-- language form -->
                 <div class="languages">
-                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+                    <ul id="error_list"></ul>
+                    <form name="language_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="languages" />
                         <input type="hidden" name="action" value="edit_post" />
                         <?php LanguageForm::primary_input_hidden($aLocale) ; ?>

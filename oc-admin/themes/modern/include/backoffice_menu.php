@@ -177,6 +177,9 @@
                 &raquo; <a id="tools_location" href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=locations"><?php _e('Location stats') ; ?></a>
             </li>
             <li>
+                &raquo; <a id="tools_category" href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=category"><?php _e('Category stats') ; ?></a>
+            </li>
+            <li>
                 &raquo; <a id="tools_maintenance" href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=maintenance"><?php _e('Maintenance mode') ; ?></a>
             </li>
         </ul>

@@ -131,7 +131,7 @@
          */
         public static function getAllowedColumnsForSorting() 
         {
-            return( array('i_price', 'dt_pub_date','relevance') ) ;
+            return( array('i_price', 'dt_pub_date') ) ;
         }
         
         /**
@@ -843,13 +843,13 @@
                 $this->dao->where('pk_i_id', (int)$this->itemId);
             } else {
                 // SUB SELECT for JOIN ----------------------
-                if ($this->withPattern ) {
-                    $this->dao->select('distinct d.fk_i_item_id');
-                    $this->dao->from(DB_TABLE_PREFIX.'t_item_description as d');
-                    $this->dao->where(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->sPattern) );
-                    $subSelect = $this->dao->_getSelect();
-                    $this->dao->_resetSelect();
-                }
+//                if ($this->withPattern ) {
+//                    $this->dao->select('distinct d.fk_i_item_id');
+//                    $this->dao->from(DB_TABLE_PREFIX.'t_item_description as d');
+//                    $this->dao->where(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->sPattern) );
+//                    $subSelect = $this->dao->_getSelect();
+//                    $this->dao->_resetSelect();
+//                }
                 
                 if($count) {
                     $this->dao->select(DB_TABLE_PREFIX.'t_item.pk_i_id');
@@ -858,6 +858,21 @@
                     $this->dao->select($extraFields) ; // plugins!
                 }
                 $this->dao->from(DB_TABLE_PREFIX.'t_item');
+                
+                
+                
+                if ($this->withPattern ) {
+                    $this->dao->join(DB_TABLE_PREFIX.'t_item_description as d','d.fk_i_item_id = '.DB_TABLE_PREFIX.'t_item.pk_i_id','LEFT');
+                    
+//                    $this->dao->select('distinct d.fk_i_item_id');
+//                    $this->dao->from(DB_TABLE_PREFIX.'t_item_description as d');
+                    $this->dao->where(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->sPattern) );
+//                    $subSelect = $this->dao->_getSelect();
+//                    $this->dao->_resetSelect();
+                }
+                
+                
+                
                 // item conditions 
                 if(count($this->itemConditions)>0) {
                     $itemConditions = implode(' AND ', $this->itemConditions);
@@ -888,9 +903,10 @@
                 }
                 $this->_priceRange();
 
-                if ($this->withPattern ) {
-                    $this->dao->where(DB_TABLE_PREFIX.'t_item.pk_i_id IN ('.$subSelect.')');
-                }
+//                if ($this->withPattern ) {
+//                    $this->dao->where(DB_TABLE_PREFIX.'t_item.pk_i_id IN ('.$subSelect.')');
+//                }
+                
                 // PLUGINS TABLES !!
                 if( !empty($this->tables) ) {
                     $tables = implode(', ', $this->tables) ;
@@ -916,7 +932,7 @@
             $this->sql = $this->dao->_getSelect() ;
             // reset dao attributes
             $this->dao->_resetSelect() ;
-            
+            error_log($this->sql);
             return $this->sql;
         }
 
@@ -1022,10 +1038,10 @@
          */
         public function getLatestItems($numItems = 10, $category = array(), $withPicture = false)
         {            
-            $this->dao->select(DB_TABLE_PREFIX.'t_item.*  , '.DB_TABLE_PREFIX.'t_item_location.*  , cd.s_name as s_category_name') ;
+            $this->dao->select(DB_TABLE_PREFIX.'t_item.*  '); // , '.DB_TABLE_PREFIX.'t_item_location.*  , cd.s_name as s_category_name') ;
             // from + tables
             $this->dao->from( DB_TABLE_PREFIX.'t_item use index (PRIMARY)' ) ;
-            $this->dao->join( DB_TABLE_PREFIX.'t_item_description',
+            /*$this->dao->join( DB_TABLE_PREFIX.'t_item_description',
                     DB_TABLE_PREFIX.'t_item_description.fk_i_item_id = '.DB_TABLE_PREFIX.'t_item.pk_i_id',
                     'LEFT' ) ;
             $this->dao->join( DB_TABLE_PREFIX.'t_item_location', 
@@ -1037,7 +1053,7 @@
             $this->dao->join( DB_TABLE_PREFIX.'t_category_description as cd',
                     DB_TABLE_PREFIX.'t_item.fk_i_category_id = cd.fk_i_category_id',
                     'LEFT' ) ;
-            
+            */
             if($withPicture) {
                 $this->dao->from(sprintf('%st_item_resource', DB_TABLE_PREFIX));
                 $this->dao->where(sprintf("%st_item_resource.s_content_type LIKE '%%image%%' AND %st_item.pk_i_id = %st_item_resource.fk_i_item_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
@@ -1050,7 +1066,7 @@
             
             $whe .= '('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_item.dt_expiration >= \''. date('Y-m-d H:i:s').'\') ';
 
-            $whe .= 'AND '.DB_TABLE_PREFIX.'t_category.b_enabled = 1 ';
+            //$whe .= 'AND '.DB_TABLE_PREFIX.'t_category.b_enabled = 1 ';
             if( is_array($category) && !empty ($category) ) {
                 $listCategories = implode(',', $category );
                 $whe .= ' AND '.DB_TABLE_PREFIX.'t_item.fk_i_category_id IN ('.$listCategories.') ';
@@ -1104,7 +1120,7 @@
          */
         public function listRegions($country = '%%%%', $zero = ">", $order = "items DESC") 
         {    
-           return RegionsStats::newInstance()->listCities($country, $zero, $order);
+           return RegionStats::newInstance()->listRegions($country, $zero, $order);
         }
 
         /**

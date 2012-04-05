@@ -501,11 +501,7 @@ HTACCESS;
                                                                              ,array('s_name' => 'rewrite_user_change_email'));
                                             Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_change_email_confirm').'/'), 0, -1))
                                                                              ,array('s_name' => 'rewrite_user_change_email_confirm'));
-
-
-
-                                            
-                                            
+ 
                                             osc_reset_preferences();
                                             
                                             $rewrite = Rewrite::newInstance();
@@ -516,7 +512,7 @@ HTACCESS;
                                              *****************************/
 
                                             // Contact rules
-                                            $rewrite->addRule('^'.osc_get_preference('rewrite_contact').'?$', 'index.php?page=contact');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_contact').'/?$', 'index.php?page=contact');
 
                                             // Feed rules
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_feed').'/?$', 'index.php?page=search&sFeed=rss');
@@ -590,14 +586,14 @@ HTACCESS;
                                                     $pSlug_pos++;
                                                 }
 
-                                                $rewrite->addRule('^' . str_replace('{PAGE_SLUG}', '([\p{L}\p{N}_\-,]+)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url)) . '$', 'index.php?page=page&id=$' . $pID_pos . "&slug=$" . $pSlug_pos) ;
-                                                $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/' . str_replace('{PAGE_SLUG}', '([\p{L}\p{N}_\-,]+)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url)) . '$', 'index.php?page=page&lang=$1_$2&id=$' . ($pID_pos + 2) . '&slug=$' . ($pSlug_pos + 2) ) ;
+                                                $rewrite->addRule('^' . str_replace('{PAGE_SLUG}', '([\p{L}\p{N}_\-,]+)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url)) . '/?$', 'index.php?page=page&id=$' . $pID_pos . "&slug=$" . $pSlug_pos) ;
+                                                $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/' . str_replace('{PAGE_SLUG}', '([\p{L}\p{N}_\-,]+)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url)) . '/?$', 'index.php?page=page&lang=$1_$2&id=$' . ($pID_pos + 2) . '&slug=$' . ($pSlug_pos + 2) ) ;
                                             } else if( is_numeric($pos_pID) ) {
-                                                $rewrite->addRule('^' .  str_replace('{PAGE_ID}', '([0-9]+)', $page_url) . '$', 'index.php?page=page&id=$1') ;
-                                                $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/' . str_replace('{PAGE_ID}', '([0-9]+)', $page_url) . '$', 'index.php?page=page&lang=$1_$2&id=$3' ) ;
+                                                $rewrite->addRule('^' .  str_replace('{PAGE_ID}', '([0-9]+)', $page_url) . '/?$', 'index.php?page=page&id=$1') ;
+                                                $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/' . str_replace('{PAGE_ID}', '([0-9]+)', $page_url) . '/?$', 'index.php?page=page&lang=$1_$2&id=$3' ) ;
                                             } else {
-                                                $rewrite->addRule('^' . str_replace('{PAGE_SLUG}', '([\p{L}\p{N}_\-,]+)', $page_url) . '$', 'index.php?page=page&slug=$1') ;
-                                                $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/' . str_replace('{PAGE_SLUG}', '([\p{L}\p{N}_\-,]+)', $page_url) . '$', 'index.php?page=page&lang=$1_$2&slug=$3' ) ;
+                                                $rewrite->addRule('^' . str_replace('{PAGE_SLUG}', '([\p{L}\p{N}_\-,]+)', $page_url) . '/?$', 'index.php?page=page&slug=$1') ;
+                                                $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/' . str_replace('{PAGE_SLUG}', '([\p{L}\p{N}_\-,]+)', $page_url) . '/?$', 'index.php?page=page&lang=$1_$2&slug=$3' ) ;
                                             }
 
                                             // Clean archive files
