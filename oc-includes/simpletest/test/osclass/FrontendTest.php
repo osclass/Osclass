@@ -103,7 +103,7 @@ abstract class FrontendTest extends WebTestCase {
         User::newInstance()->deleteUser($user['pk_i_id']);
     }
     
-    public function insertItem($cat, $title, $description, $price, $regionId, $cityId, $aPhotos, $user, $email , $logged = 0)
+    public function insertItem($cat, $title, $description, $price, $regionId, $cityId, $cityArea, $aPhotos, $user, $email , $logged = 0)
     {
         $this->selenium->open( osc_base_url(true) );
 
@@ -120,7 +120,11 @@ abstract class FrontendTest extends WebTestCase {
         $this->selenium->click('id=ui-active-menuitem');
         $this->selenium->type('id=city', $cityId);
         $this->selenium->click('id=ui-active-menuitem');
-        $this->selenium->type("cityArea", "my area");
+        if($cityArea==NULL) {
+            $this->selenium->type("cityArea", "my area");
+        } else {
+            $this->selenium->type("cityArea", $cityArea);
+        }
         $this->selenium->type("address", "my address");
         if( count($aPhotos) > 0 ){
             sleep(2);

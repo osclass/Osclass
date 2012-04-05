@@ -30,7 +30,7 @@ class Frontend_search extends FrontendTest {
         foreach($aData as $item){
             $this->insertItem(  $item['catId'], $item['title'], 
                                 $item['description'], $item['price'],
-                                $item['regionId'], $item['cityId'], 
+                                $item['regionId'], $item['cityId'],  $item['cityArea'],
                                 $item['photo'], $item['contactName'], 
                                 $this->_email);
             
@@ -187,7 +187,7 @@ class Frontend_search extends FrontendTest {
             $item = $aData[$i];
             $this->insertItem(  $item['catId'], $item['title'], 
                                 $item['description'], $item['price'],
-                                $item['regionId'], $item['cityId'], 
+                                $item['regionId'], $item['cityId'], $item['cityArea'], 
                                 $item['photo'], $item['contactName'], 
                                 $this->_email);
             $this->assertTrue($this->selenium->isTextPresent("Your item has been published", "Insert item.") );

@@ -23,7 +23,7 @@ class Frontend_items extends FrontendTest {
         
         $this->insertItem($item['catId'], $item['title'], 
                                 $item['description'], $item['price'],
-                                $item['regionId'], $item['cityId'], 
+                                $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'], 
                                 $this->_email);
         $this->assertTrue($this->selenium->isTextPresent("Your item has been published"),"Items, insert item, no user, no validation.") ;
@@ -31,7 +31,7 @@ class Frontend_items extends FrontendTest {
         $uSettings->set_moderate_items(111);
         $this->insertItem($item['catId'], $item['title'], 
                                 $item['description'], $item['price'],
-                                $item['regionId'], $item['cityId'], 
+                                $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'], 
                                 $this->_email);
         $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address"),"Items, insert item, no user, with validation.") ;
@@ -83,7 +83,7 @@ class Frontend_items extends FrontendTest {
         $old_logged_user_item_validation = $uSettings->set_logged_user_item_validation(1);
         $this->insertItem($item['catId'], $item['title'], 
                                 $item['description'], $item['price'],
-                                $item['regionId'], $item['cityId'], 
+                                $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'], 
                                 $this->_email);
         $this->assertTrue($this->selenium->isTextPresent("Your item has been published"),"insert ad error ") ;
@@ -91,7 +91,7 @@ class Frontend_items extends FrontendTest {
         $uSettings->set_logged_user_item_validation(0);
         $this->insertItem($item['catId'], $item['title'], 
                                 $item['description'], $item['price'],
-                                $item['regionId'], $item['cityId'], 
+                                $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'], 
                                 $this->_email);
         $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address"),"Need validation but message don't appear")   ;
