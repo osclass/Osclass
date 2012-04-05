@@ -57,6 +57,9 @@ abstract class FrontendTest extends WebTestCase {
         $this->selenium->waitForPageToLoad("3000");
 
         echo "< ".$this->selenium->getText('//*[@id="FlashMessage"]')." ><br>";
+        
+        $user = User::newInstance()->findByEmail($mail);
+        return $user['pk_i_id'];
     }
 
     /**
