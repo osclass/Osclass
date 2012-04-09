@@ -265,7 +265,7 @@
         }
         
         /**
-         * Extends an array of comments with title / description / what
+         * Extends an array of comments with title / description 
          * 
          * @access private
          * @since unknown
@@ -289,13 +289,13 @@
                     $item['locale'][$desc['fk_c_locale_code']] = $desc;
                 }
                 if(isset($item['locale'][$prefLocale])) {
-                    $item['s_title']        = $item['locale'][$prefLocale]['s_title'];
-                    $item['s_description']  = $item['locale'][$prefLocale]['s_description'];
+                    $item['s_title']       = $item['locale'][$prefLocale]['s_title'] ;
+                    $item['s_description'] = $item['locale'][$prefLocale]['s_description'] ;
                 } else {
                     $data = current($item['locale']);
-                    $item['s_title']        = $data['s_title'];
-                    $item['s_description']  = $data['s_description'];
-                    unset($data);
+                    $item['s_title']       = $data['s_title'] ;
+                    $item['s_description'] = $data['s_description'] ;
+                    unset($data) ;
                 }
                 $results[] = $item;
             }

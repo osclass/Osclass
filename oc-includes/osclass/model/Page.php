@@ -276,14 +276,6 @@
         public function deleteByInternalName($intName)
         {
             $row = $this->findByInternalName($intName);
-            $order = $row['i_order'];
-
-            if(!isset($row)) {
-                return false;
-            }
-
-            $this->reOrderPages($order);
-            
             return $this->deleteByPrimaryKey($row['pk_i_id']);
         }
 
@@ -303,6 +295,60 @@
                     $this->dao->update($this->tableName, array('i_order' => $new_order), array('pk_i_id' => $page['pk_i_id']) );
                 }
             }
+        }
+
+        /**
+         * Find previous page
+         *
+         * @access public
+         * @since 2.4
+         * @param int $order
+         */
+        public function findPrevPage($order)
+        {
+            $this->dao->select();
+            $this->dao->from($this->tableName);
+            $this->dao->where('b_indelible', 0);
+            $this->dao->where('i_order < '.$order);
+            $this->dao->orderBy('i_order', 'DESC');
+            $this->dao->limit(1);
+            $result = $this->dao->get() ;
+
+            if( $result == false ) {
+                return array() ;
+            }
+
+            if( $result->numRows() == 0 ) {
+                return array() ;
+            }
+            return $result->row() ;
+        }
+
+        /**
+         * Find next page
+         *
+         * @access public
+         * @since 2.4
+         * @param int $order
+         */
+        public function findNextPage($order)
+        {
+            $this->dao->select();
+            $this->dao->from($this->tableName);
+            $this->dao->where('b_indelible', 0);
+            $this->dao->where('i_order > '.$order);
+            $this->dao->orderBy('i_order', 'ASC');
+            $this->dao->limit(1);
+            $result = $this->dao->get() ;
+
+            if( $result == false ) {
+                return array() ;
+            }
+
+            if( $result->numRows() == 0 ) {
+                return array() ;
+            }
+            return $result->row() ;
         }
 
         /**

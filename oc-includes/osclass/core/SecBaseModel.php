@@ -40,12 +40,14 @@
         }
 
         //granting methods
-        function setGranting($grant) {
+        function setGranting($grant)
+        {
             $this->grant = $grant ;
         }
 
         //destroying current session
-        function logout() {
+        function logout()
+        {
             //destroying session
             Session::newInstance()->session_destroy() ;
         }
@@ -55,4 +57,5 @@
         function doView($file) {}
     }
 
+    /* file end: ./oc-includes/osclass/core/SecBaseModel.php */
 ?>

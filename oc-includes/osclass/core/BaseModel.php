@@ -26,11 +26,12 @@
         protected $ajax ;
         protected $time ;
 
-        function  __construct()
+        function __construct()
         {
             $this->action = Params::getParam('action') ;
             $this->ajax   = false ;
             $this->time   = list($sm, $ss) = explode(' ', microtime()) ;
+            osc_run_hook( 'init' ) ;
         }
 
         function __destruct()
@@ -76,4 +77,5 @@
         }
     }
 
+    /* file end: ./oc-includes/osclass/core/BaseModel.php */
 ?>

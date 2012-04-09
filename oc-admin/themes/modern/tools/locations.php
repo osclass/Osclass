@@ -15,14 +15,22 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
+     
+    $all        = Preference::newInstance()->findValueByName('location_todo') ;
+    $worktodo   = LocationsTmp::newInstance()->count() ;
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
+        <script>
+            function reload() {
+                window.location = '<?php echo osc_admin_base_url(true).'?page=tools&action=locations'; ?>' ;
+            }
+        </script>
     </head>
-    <body>
+    <body <?php if( $worktodo > 0 ){ echo 'onLoad="setTimeout(\'reload()\', 5000)"';} ?>>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
         <div id="content">
@@ -33,22 +41,33 @@
                     <div style="float: left;">
                         <img src="<?php echo osc_current_admin_theme_url('images/tools-icon.png') ; ?>" title="" alt=""/>
                     </div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Regenerate thumbnails'); ?></div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Location stats'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
                 <div id="content_separator"></div>
                 <?php osc_show_flash_message('admin') ; ?>
-                <!-- add new item form -->
-                <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
+                <div id="locations_stats_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
+                        <?php $percent = 0;
+                        if($all>0) {
+                            $done    = $all-$worktodo ;
+                            $percent = ($done*100) / $all ;
+                            $percent = sprintf("%01.2f", $percent) ;
+                        }
+                        ?>
+                        <?php if($worktodo > 0) { ?>
                         <p>
-                            <?php _e('You can regenerate your thumbnails and previews images here. It\'s useful if you changed your theme and images are not showing up correctly. Please, check the size values defined in the settings/media section'); ?>.
+                            <?php echo $percent; ?> % <?php _e("Complete"); ?>
+                        </p>
+                        <?php } ?>
+                        <p>
+                            <?php _e('You can recalculate your locations stats. This is useful if you upgrade from versions below osclass 2.4'); ?>.
                         </p>
                         <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
-                            <input type="hidden" name="action" value="images_post" />
+                            <input type="hidden" name="action" value="locations_post" />
                             <input type="hidden" name="page" value="tools" />
 
-                            <input id="button_save" type="submit" value="<?php _e('Regenerate thumbnails'); ?>" />
+                            <input id="button_save" type="submit" value="<?php _e('Calculate locations stats'); ?>" />
                         </form>
                     </div>
                 </div>

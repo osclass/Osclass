@@ -25,7 +25,8 @@
         //specific for this class
         private $emailManager ;
 
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
 
             //specific things for this class
@@ -33,12 +34,12 @@
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             parent::doModel() ;
 
             //specific things for this class
-            switch ($this->action)
-            {
+            switch($this->action) {
 
                 case 'edit':
                     if(Params::getParam("id")=='') {
@@ -52,7 +53,7 @@
                     $s_internal_name = Params::getParam("s_internal_name");
 
                     $aFieldsDescription = array();
-                    $postParams = Params::getParamsAsArray();
+                    $postParams = Params::getParamsAsArray('', false);
                     $not_empty = false;
                     foreach ($postParams as $k => $v) {
                         if(preg_match('|(.+?)#(.+)|', $k, $m)) {
@@ -87,10 +88,12 @@
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_current_admin_theme_path($file) ;
             Session::newInstance()->_clearVariables();
         }
     }
 
+    /* file end: ./oc-admin/emails.php */
 ?>

@@ -16,234 +16,224 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 ?>
-
 <!-- menu -->
-<div id="left_column"> 
-    <div style="padding-top: 9px;">
-        <div style="float: left; padding-left: 5px; padding-top: 5px;">
-            <img src="<?php echo osc_current_admin_theme_url('images/home_icon.gif') ; ?>" alt="" title="" />
-        </div>
-        <div style="float: left; padding-top: 5px; padding-left: 5px;">&raquo; <a href="<?php echo osc_admin_base_url(); ?>"><?php _e('Dashboard'); ?></a></div>
-        <div style="clear: both;"></div>
-        <div style="border-top: 1px solid #ccc; width: 99%;">&nbsp;</div>
+<div class="left">
+    <div class="dashboard">
+        <p>
+            <a href="<?php echo osc_admin_base_url() ; ?>"><?php _e('Dashboard') ; ?></a>
+        </p>
     </div>
 
-    <div id="menu">
+    <div class="menu">
         <h3>
-            <a href="#"><?php _e('Items'); ?></a>
+            <a id="items" href="#"><?php _e('Items') ; ?></a>
         </h3>
         <ul>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=items">&raquo; <?php _e('Manage items'); ?></a>
+                &raquo; <a id="items_manage" href="<?php echo osc_admin_base_url(true) ; ?>?page=items"><?php _e('Manage items') ; ?></a>
             </li>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&action=post">&raquo; <?php _e('Add new item'); ?></a>
+                &raquo; <a id="items_new" href="<?php echo osc_admin_base_url(true) ; ?>?page=items&action=post"><?php _e('Add new') ; ?></a>
             </li>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=comments">&raquo; <?php _e('Comments'); ?></a>
+                &raquo; <a id="items_comments" href="<?php echo osc_admin_base_url(true) ; ?>?page=comments"><?php _e('Comments') ; ?></a>
             </li>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=media">&raquo; <?php _e('Manage media'); ?></a>
+                &raquo; <a id="items_media" href="<?php echo osc_admin_base_url(true) ; ?>?page=media"><?php _e('Manage media') ; ?></a>
             </li>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&action=settings">&raquo; <?php _e('Settings'); ?></a>
+                &raquo; <a id="items_settings" href="<?php echo osc_admin_base_url(true) ; ?>?page=items&action=settings"><?php _e('Settings') ; ?></a>
             </li>
         </ul>
 
         <h3>
-            <a href="#"><?php _e('Categories'); ?></a>
+            <a id="categories" href="#"><?php _e('Categories') ; ?></a>
         </h3>
         <ul>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=categories">&raquo; <?php _e('Manage categories'); ?></a>
+                &raquo; <a id="categories_manage" href="<?php echo osc_admin_base_url(true) ; ?>?page=categories"><?php _e('Manage categories') ; ?></a>
             </li>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=categories&action=settings">&raquo; <?php _e('Settings'); ?></a>
+                &raquo; <a id="categories_settings" href="<?php echo osc_admin_base_url(true) ; ?>?page=categories&action=settings"><?php _e('Settings') ; ?></a>
             </li>
         </ul>
 
         <h3>
-            <a href="#"><?php _e('Pages'); ?></a>
+            <a id="pages" href="#"><?php _e('Pages') ; ?></a>
         </h3>
         <ul>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=pages">&raquo; <?php _e('Manage pages'); ?></a>
+                &raquo; <a id="pages_manage" href="<?php echo osc_admin_base_url(true) ; ?>?page=pages"><?php _e('Manage pages') ; ?></a>
             </li>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=pages&action=add">&raquo; <?php _e('Create page'); ?></a>
+                &raquo; <a id="pages_new" href="<?php echo osc_admin_base_url(true) ; ?>?page=pages&action=add"><?php _e('Add new') ; ?></a>
             </li>
         </ul>
         <h3>
-            <a href="#"><?php _e('Emails & Alerts'); ?></a>
+            <a id="emails" href="#"><?php _e('Emails & Alerts') ; ?></a>
         </h3>
         <ul>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=emails">&raquo; <?php _e('Manage emails & alerts'); ?></a>
+                &raquo; <a id="emails_manage" href="<?php echo osc_admin_base_url(true) ; ?>?page=emails"><?php _e('Manage emails & alerts') ; ?></a>
             </li>
         </ul>
         <h3>
-            <a href="#"><?php _e('Custom Fields'); ?></a>
+            <a id="fields" href="#"><?php _e('Custom Fields') ; ?></a>
         </h3>
         <ul>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=cfields">&raquo; <?php _e('Manage custom fields'); ?></a>
-            </li>
-        </ul>
-
-        &nbsp;
-
-        <h3>
-            <a href="#"><?php _e('Appearance'); ?></a>
-        </h3>
-        <ul>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance">&raquo; <?php _e('Manage themes'); ?></a>
-            </li>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&action=add">&raquo; <?php _e('Add a new theme'); ?></a>
-            </li>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&action=widgets">&raquo; <?php _e('Add or remove widgets'); ?></a>
-            </li>
-        </ul>
-
-        <h3>
-            <a href="#"><?php _e('Plugins'); ?></a>
-        </h3>
-        <ul>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=plugins">&raquo; <?php _e('Manage plugins'); ?></a>
-            </li>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=plugins&action=add">&raquo; <?php _e('Add new plugin'); ?></a>
-            </li>
-        </ul>
-
-        <h3>
-            <a href="#"><?php _e('Languages'); ?></a>
-        </h3>
-        <ul>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=languages">&raquo; <?php _e('Manage languages'); ?></a>
-            </li>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=languages&action=add">&raquo; <?php _e('Add a language'); ?></a>
-            </li>
-        </ul>
-
-        <h3>
-            <a href="#"><?php _e('General settings'); ?></a>
-        </h3>
-        <ul>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings">&raquo; <?php _e('General settings'); ?></a>
-            </li>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=comments">&raquo; <?php _e('Comments'); ?></a>
-            </li>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=contact">&raquo; <?php _e('Contact'); ?></a>
-            </li>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations">&raquo; <?php _e('Locations'); ?></a>
-            </li>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=permalinks">&raquo; <?php _e('Permalinks'); ?></a>
-            </li>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=spamNbots">&raquo; <?php _e('Spam and bots'); ?></a>
-            </li>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=currencies">&raquo; <?php _e('Currencies'); ?></a>
-            </li>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=mailserver">&raquo; <?php _e('Mail Server'); ?></a>
-            </li>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=media">&raquo; <?php _e('Media'); ?></a>
-            </li>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=cron">&raquo; <?php _e('Cron system'); ?></a>
-            </li>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=latestsearches">&raquo; <?php _e('Last Searches'); ?></a>
-            </li>
-        </ul>
-
-        <h3>
-            <a href="#"><?php _e('Tools'); ?></a>
-        </h3>
-        <ul>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=import">&raquo; <?php _e('Import data'); ?></a>
-            </li>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=backup">&raquo; <?php _e('Backup data'); ?></a>
-            </li>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=upgrade">&raquo; <?php _e('Upgrade OSClass'); ?></a>
-            </li>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=images">&raquo; <?php _e('Regenerate thumbnails'); ?></a>
-            </li>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=maintenance">&raquo; <?php _e('Maintenance mode'); ?></a>
+                &raquo; <a id="fields_manage" href="<?php echo osc_admin_base_url(true) ; ?>?page=cfields"><?php _e('Manage custom fields') ; ?></a>
             </li>
         </ul>
 
         &nbsp;
 
-        <?php osc_run_hook('admin_menu'); ?>
+        <h3>
+            <a id="appearance" href="#"><?php _e('Appearance') ; ?></a>
+        </h3>
+        <ul>
+            <li>
+                &raquo; <a id="appearance_manage" href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance"><?php _e('Manage themes') ; ?></a>
+            </li>
+            <li>
+                &raquo; <a id="appearance_new" href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance&action=add"><?php _e('Add new theme') ; ?></a>
+            </li>
+            <li>
+                &raquo; <a id="appearance_widgets" href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance&action=widgets"><?php _e('Manage widgets') ; ?></a>
+            </li>
+        </ul>
+
+        <h3>
+            <a id="plugins" href="#"><?php _e('Plugins') ; ?></a>
+        </h3>
+        <ul>
+            <li>
+                &raquo; <a id="plugins_manage" href="<?php echo osc_admin_base_url(true) ; ?>?page=plugins"><?php _e('Manage plugins') ; ?></a>
+            </li>
+            <li>
+                &raquo; <a id="plugins_new" href="<?php echo osc_admin_base_url(true) ; ?>?page=plugins&action=add"><?php _e('Add new plugin') ; ?></a>
+            </li>
+        </ul>
+
+        <h3>
+            <a id="languages" href="#"><?php _e('Languages') ; ?></a>
+        </h3>
+        <ul>
+            <li>
+                &raquo; <a id="language_manage" href="<?php echo osc_admin_base_url(true) ; ?>?page=languages"><?php _e('Manage languages') ; ?></a>
+            </li>
+            <li>
+                &raquo; <a id="languages_new" href="<?php echo osc_admin_base_url(true) ; ?>?page=languages&action=add"><?php _e('Add a language') ; ?></a>
+            </li>
+        </ul>
+
+        <h3>
+            <a id="settings" href="#"><?php _e('Settings') ; ?></a>
+        </h3>
+        <ul>
+            <li>
+                &raquo; <a id="settings_general" href="<?php echo osc_admin_base_url(true) ; ?>?page=settings"><?php _e('General') ; ?></a>
+            </li>
+            <li>
+                &raquo; <a id="settings_comments" href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=comments"><?php _e('Comments') ; ?></a>
+            </li>
+            <li>
+                &raquo; <a id="settings_locations" href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=locations"><?php _e('Locations') ; ?></a>
+            </li>
+            <li>
+                &raquo; <a id="settings_permalinks" href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=permalinks"><?php _e('Permalinks') ; ?></a>
+            </li>
+            <li>
+                &raquo; <a id="settings_spambots" href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=spamNbots"><?php _e('Spam and bots') ; ?></a>
+            </li>
+            <li>
+                &raquo; <a id="settings_currencies" href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=currencies"><?php _e('Currencies') ; ?></a>
+            </li>
+            <li>
+                &raquo; <a id="settings_mailserver" href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=mailserver"><?php _e('Mail server') ; ?></a>
+            </li>
+            <li>
+                &raquo; <a id="settings_media" href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=media"><?php _e('Media') ; ?></a>
+            </li>
+            <li>
+                &raquo; <a id="settings_searches" href="<?php echo osc_admin_base_url(true) ; ?>?page=settings&action=latestsearches"><?php _e('Last searches') ; ?></a>
+            </li>
+        </ul>
+
+        <h3>
+            <a id="tools" href="#"><?php _e('Tools') ; ?></a>
+        </h3>
+        <ul>
+            <li>
+                &raquo; <a id="tools_import" href="<?php echo osc_admin_base_url(true) ; ?>?page=tools&action=import"><?php _e('Import data') ; ?></a>
+            </li>
+            <li>
+                &raquo; <a id="tools_backup" href="<?php echo osc_admin_base_url(true) ; ?>?page=tools&action=backup"><?php _e('Backup data') ; ?></a>
+            </li>
+            <li>
+                &raquo; <a id="tools_upgrade" href="<?php echo osc_admin_base_url(true) ; ?>?page=tools&action=upgrade"><?php _e('Upgrade OSClass') ; ?></a>
+            </li>
+            <li>
+                &raquo; <a id="tools_location" href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=locations"><?php _e('Location stats') ; ?></a>
+            </li>
+            <li>
+                &raquo; <a id="tools_maintenance" href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=maintenance"><?php _e('Maintenance mode') ; ?></a>
+            </li>
+        </ul>
+
+        &nbsp;
+
+        <?php osc_run_hook('admin_menu') ; ?>
 
         &nbsp;
 
         <h3>
-            <a href="#"><?php _e('Users'); ?></a>
+            <a id="users" href="#"><?php _e('Users') ; ?></a>
         </h3>
         <ul>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=users">&raquo; <?php _e('Manage users'); ?></a>
+                &raquo; <a id="users_manage" href="<?php echo osc_admin_base_url(true); ?>?page=users"><?php _e('Manage users') ; ?></a>
             </li>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=users&action=create">&raquo; <?php _e('Add new user'); ?></a>
+                &raquo; <a id="users_new" href="<?php echo osc_admin_base_url(true); ?>?page=users&action=create"><?php _e('Add new') ; ?></a>
             </li>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=users&action=settings">&raquo; <?php _e('Settings'); ?></a>
+                &raquo; <a id="users_settings" href="<?php echo osc_admin_base_url(true); ?>?page=users&action=settings"><?php _e('Settings') ; ?></a>
             </li>
         </ul>
 
         <h3>
-            <a href="#"><?php _e('Administrators'); ?></a>
+            <a id="administrators" href="#"><?php _e('Administrators') ; ?></a>
         </h3>
         <ul>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=admins">&raquo; <?php _e('List administrators'); ?></a>
+                &raquo; <a id="administrators_manage" href="<?php echo osc_admin_base_url(true) ; ?>?page=admins"><?php _e('Manage administrators') ; ?></a>
             </li>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=admins&action=add">&raquo; <?php _e('Add new administrator'); ?></a>
+                &raquo; <a id="administrators_new" href="<?php echo osc_admin_base_url(true) ; ?>?page=admins&action=add"><?php _e('Add new') ; ?></a>
             </li>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=admins&action=edit">&raquo; <?php _e('Edit Your Profile'); ?></a>
+                &raquo; <a id="administrators_profile" href="<?php echo osc_admin_base_url(true) ; ?>?page=admins&action=edit"><?php _e('Your Profile') ; ?></a>
             </li>
         </ul>
 
         <h3>
-            <a href="#"><?php _e('Statistics'); ?></a>
+            <a id="stats" href="#"><?php _e('Statistics') ; ?></a>
         </h3>
         <ul>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=users">&raquo; <?php _e('Users'); ?></a>
+                &raquo; <a id="stats_users" href="<?php echo osc_admin_base_url(true) ; ?>?page=stats&action=users"><?php _e('Users') ; ?></a>
             </li>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=items">&raquo; <?php _e('Items'); ?></a>
+                &raquo; <a id="stats_items" href="<?php echo osc_admin_base_url(true) ; ?>?page=stats&action=items"><?php _e('Items') ; ?></a>
             </li>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=comments">&raquo; <?php _e('Comments'); ?></a>
+                &raquo; <a id="stats_comments" href="<?php echo osc_admin_base_url(true) ; ?>?page=stats&action=comments"><?php _e('Comments') ; ?></a>
             </li>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=reports">&raquo; <?php _e('Reports'); ?></a>
+                &raquo; <a id="stats_reports" href="<?php echo osc_admin_base_url(true) ; ?>?page=stats&action=reports"><?php _e('Reports') ; ?></a>
             </li>
         </ul>
-
     </div>
 </div>
+<!-- /menu -->

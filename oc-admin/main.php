@@ -22,13 +22,14 @@
 
     class CAdminMain extends AdminSecBaseModel
     {
-
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             switch($this->action) {
                 case('logout'):     // unset only the required parameters in Session
                                     Session::newInstance()->_drop('adminId') ;
@@ -49,6 +50,11 @@
                                     $this->_exportVariableToView( "numAdmins", Admin::newInstance()->count() ) ;
 
                                     $this->_exportVariableToView( "numItems", Item::newInstance()->count() ) ;
+                                    
+                                    $this->_exportVariableToView( "numItemsSpam", Item::newInstance()->totalItems(null, 'SPAM') ) ;
+                                    $this->_exportVariableToView( "numItemsBlock", Item::newInstance()->totalItems(null, 'DISABLED') ) ;
+                                    $this->_exportVariableToView( "numItemsInactive", Item::newInstance()->totalItems(null, 'INACTIVE') ) ;
+                                    
                                     $this->_exportVariableToView( "numItemsPerCategory", osc_get_non_empty_categories() ) ;
                                     $this->_exportVariableToView( "newsList", osc_listNews() ) ;
                                     $this->_exportVariableToView( "comments", ItemComment::newInstance()->getLastComments(5) ) ;
@@ -59,10 +65,12 @@
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_current_admin_theme_path($file) ;
             Session::newInstance()->_clearVariables();
         }
     }
 
+    /* file end: ./oc-admin/main.php */
 ?>

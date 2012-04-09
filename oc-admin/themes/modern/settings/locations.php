@@ -32,9 +32,7 @@
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
-        <div id="update_version" style="display:none;"></div>
         <div id="content">
-            <div id="separator"></div>
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
             <div id="right_column">
                 <div id="content_header" class="content_header">
@@ -44,8 +42,7 @@
                     <div id="content_header_arrow">&raquo; <?php _e('Locations'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
-                <div id="content_separator"></div>
-                <?php osc_show_flash_message('admin') ; ?>
+                <?php osc_show_admin_flash_messages() ; ?>
                 <!-- settings form -->
                 <div id="settings_form" class="locations" style="border: 1px solid #ccc; background: #eee; min-height: 200px; ">
                     <!-- Country -->
@@ -72,7 +69,7 @@
                             <div style="padding: 4px; width: 90%;">
                                 <div style="float:left;">
                                     <div>
-                                        <a class="close" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations&type=delete_country&id=<?php echo urlencode($country['pk_c_code']) ; ?>">
+                                        <a class="close" onclick="javascript:return confirm('This action can not be undone. Items with this location associated will be deleted. Are you sure you want to continue?');" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations&type=delete_country&id=<?php echo urlencode($country['pk_c_code']) ; ?>">
                                             <img src="<?php echo osc_admin_base_url() ; ?>images/close.png" alt="<?php _e('Close'); ?>" title="<?php _e('Close'); ?>" />
                                         </a>
                                         <a class="edit" href="javascript:void(0);" style="padding-right: 15px;" onclick="edit_countries($(this));" data="<?php echo osc_esc_html($data);?>" code="<?php echo $country['pk_c_code'];?>"><?php echo $country['s_name'] ; ?></a>

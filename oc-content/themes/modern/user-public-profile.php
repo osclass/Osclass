@@ -79,7 +79,7 @@ unset($location_array);
                                         <?php if( osc_images_enabled_at_items() ) { ?>
                                          <td class="photo">
                                              <?php if(osc_count_item_resources()) { ?>
-                                                <a href="<?php echo osc_item_url() ; ?>"><img src="<?php echo osc_resource_thumbnail_url() ; ?>" width="75px" height="56px" title="" alt="" /></a>
+                                                <a href="<?php echo osc_item_url() ; ?>"><img src="<?php echo osc_resource_thumbnail_url() ; ?>" width="75px" height="56px" title="<?php echo osc_item_title(); ?>" alt="<?php echo osc_item_title(); ?>" /></a>
                                             <?php } else { ?>
                                                 <img src="<?php echo osc_current_web_theme_url('images/no_photo.gif') ; ?>" title="" alt="" />
                                             <?php } ?>
@@ -99,6 +99,9 @@ unset($location_array);
                                 <?php } ?>
                             </tbody>
                         </table>
+                        <?php if(osc_search_total_pages() > osc_max_results_per_page_at_search() ) { ?>
+                        <p class="see_more_link"><a href="<?php echo osc_base_url(true).'&page=search&sUser[]='.osc_user_id(); ?>"><strong>See all offers »</strong></a></p>
+                        <?php } ?>
                     </div>
                 </div>
                 <div id="sidebar">

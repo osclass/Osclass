@@ -348,16 +348,9 @@
                         }
                     }
 
-                    $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
-
-                    if($category['i_expiration_days'] > 0) {
-                        $item_date = strtotime($item['dt_pub_date'])+($category['i_expiration_days']*(24*3600)) ;
-                        $date = time();
-                        if($item_date < $date && $item['b_premium']!=1) {
-                            // The item is expired, we can not contact the seller
-                            osc_add_flash_error_message( _m('We\'re sorry, but the item has expired. You can\'t contact the seller')) ;
-                            $this->redirectTo(osc_item_url( ));
-                        }
+                    if( osc_isExpired($item['dt_expiration']) ) {
+                        osc_add_flash_error_message( _m('We\'re sorry, but the item has expired. You can\'t contact the seller')) ;
+                        $this->redirectTo(osc_item_url());
                     }
 
                     $mItem = new ItemActions(false);
@@ -476,7 +469,7 @@
                             $item['locale'][$k]['s_description'] = nl2br(osc_apply_filter('item_description',$v['s_description']));
                         }
 
-                        $this->_exportVariableToView('items', array($item)) ;
+                        $this->_exportVariableToView('item', $item);//array($item)) ;
 
                         osc_run_hook('show_item', $item) ;
 

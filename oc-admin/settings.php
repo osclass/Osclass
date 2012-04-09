@@ -22,13 +22,14 @@
 
     class CAdminSettings extends AdminSecBaseModel
     {
-
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             switch($this->action) {
                 case('comments'):       //calling the comments settings view
                                         $this->doView('settings/comments.php');
@@ -97,6 +98,7 @@
                                                                                         'fk_c_locale_code' => $k,
                                                                                         's_name'           => $v);
                                                                             $mCountries->insert($data);
+                                                                            CountryStats::newInstance()->setNumItems($countryCode, 0);
                                                                         }
                                                                         if(isset($countries->error)) { // Country is not in our GEO database
                                                                             // We have no region for user-typed countries
@@ -113,6 +115,8 @@
                                                                                             "fk_c_country_code" => $r->country_code,
                                                                                             "s_name" => $r->name
                                                                                         ));
+                                                                                        $id = $manager_region->dao->insertedId();
+                                                                                        RegionStats::newInstance()->setNumItems($id, 0);
                                                                                     }
                                                                                 }
                                                                                 unset($regions);
@@ -136,6 +140,8 @@
                                                                                                                     ,"s_name" => $ci->name
                                                                                                                     ,"fk_c_country_code" => $ci->country_code
                                                                                                                 ));
+                                                                                                                $id = $manager_city->dao->insertedId();
+                                                                                                                CityStats::newInstance()->setNumItems($id, 0);
                                                                                                             }
                                                                                                         }
                                                                                                     }
@@ -175,6 +181,7 @@
                                             break;
                                             case('delete_country'): // delete country
                                                                     $countryId = Params::getParam('id');
+
                                                                     // HAS ITEMS?
                                                                     $has_items = Item::newInstance()->listWhere('l.fk_c_country_code = \'%s\' LIMIT 1', $countryId);
                                                                     if(!$has_items) {
@@ -184,15 +191,27 @@
                                                                         $aCountries = $mCountries->findByCode($countryId);
                                                                         $aRegions = $mRegions->findByCountry($aCountries['pk_c_code']);
                                                                         foreach($aRegions as $region) {
+                                                                            // remove city_stats
+                                                                            CityStats::newInstance()->deleteByRegion($region['pk_i_id']) ;
                                                                             $mCities->delete(array('fk_i_region_id' => $region['pk_i_id']));
+                                                                            // remove region_stats
+                                                                            RegionStats::newInstance()->delete( array('fk_i_region_id' => $region['pk_i_id']) ) ;
                                                                             $mRegions->delete(array('pk_i_id' => $region['pk_i_id']));
                                                                         }
+                                                                        //remove country stats
+                                                                        CountryStats::newInstance()->delete( array('fk_c_country_code' => $aCountries['pk_c_code'] ) ) ;
                                                                         $mCountries->delete(array('pk_c_code' => $aCountries['pk_c_code']));
-
-                                                                        osc_add_flash_ok_message(sprintf(_m('%s has been deleted'), $aCountries['s_name']), 'admin');
-                                                                    } else {
-                                                                        osc_add_flash_error_message(sprintf(_m('%s can not be deleted, some items are located in it'), $aCountries['s_name']), 'admin');
                                                                     }
+
+                                                                    $aCountries = $mCountries->findByCode($countryId);
+                                                                    $aRegions = $mRegions->findByCountry($aCountries['pk_c_code']);
+                                                                    foreach($aRegions as $region) {
+                                                                        $mCities->delete(array('fk_i_region_id' => $region['pk_i_id']));
+                                                                        $mRegions->delete(array('pk_i_id' => $region['pk_i_id']));
+                                                                    }
+                                                                    $mCountries->delete(array('pk_c_code' => $aCountries['pk_c_code']));
+
+                                                                    osc_add_flash_ok_message(sprintf(_m('%s has been deleted'), $aCountries['s_name']), 'admin');
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
                                             case('add_region'):     // add region
@@ -208,6 +227,8 @@
                                                                             $data = array('fk_c_country_code' => $countryCode
                                                                                          ,'s_name' => $regionName);
                                                                             $mRegions->insert($data);
+                                                                            $id = $mRegions->dao->insertedId();
+                                                                            RegionStats::newInstance()->setNumItems($id, 0);
                                                                             osc_add_flash_ok_message(sprintf(_m('%s has been added as a new region'),
                                                                                                              $regionName), 'admin');
                                                                         } else {
@@ -246,9 +267,14 @@
                                                                     $regionId = Params::getParam('id');
 
                                                                     if($regionId != '') {
+                                                                        Item::newInstance()->deleteByRegion($regionId);
                                                                         $aRegion = $mRegion->findByPrimaryKey($regionId);
-
+                                                                        
+                                                                        // remove city_stats
+                                                                        CityStats::newInstance()->deleteByRegion($regionId) ;
                                                                         $mCities->delete(array('fk_i_region_id' => $regionId));
+                                                                        // remove region_stats
+                                                                        RegionStats::newInstance()->delete( array('fk_i_region_id' => $regionId) ) ;
                                                                         $mRegion->delete(array('pk_i_id' => $regionId));
 
                                                                         osc_add_flash_ok_message(sprintf(_m('%s has been deleted'),
@@ -267,7 +293,9 @@
                                                                         $mCities->insert(array('fk_i_region_id'    => $regionId
                                                                                               ,'s_name'            => $newCity
                                                                                               ,'fk_c_country_code' => $countryCode));
-
+                                                                        $id = $mCities->dao->insertedId();
+                                                                        CityStats::newInstance()->setNumItems($id, 0);
+                                                                        
                                                                         osc_add_flash_ok_message(sprintf(_m('%s has been added as a new city'),
                                                                                                          $newCity), 'admin');
                                                                     } else {
@@ -300,8 +328,10 @@
                                             case('delete_city'):    // delete city
                                                                     $mCities = new City();
                                                                     $cityId  = Params::getParam('id');
-
+                                                                    Item::newInstance()->deleteByCity($cityId);
                                                                     $aCity   = $mCities->findByPrimaryKey($cityId);
+                                                                    // remove region_stats
+                                                                    CityStats::newInstance()->delete( array('fk_i_city_id' => $cityId) ) ;
                                                                     $mCities->delete(array('pk_i_id' => $cityId));
 
                                                                     osc_add_flash_ok_message(sprintf(_m('%s has been deleted'),
@@ -325,135 +355,398 @@
                                         $this->doView('settings/permalinks.php');
                 break;
                 case('permalinks_post'):// updating permalinks option
-                                        $htaccess_status = 0;
-                                        $file_status     = 0;
-                                        $rewriteEnabled  = Params::getParam('rewrite_enabled');
-                                        $rewriteEnabled  = ($rewriteEnabled ? true : false);
+                                        $htaccess_file  = osc_base_path() . '.htaccess' ;
+                                        $rewriteEnabled = (Params::getParam('rewrite_enabled') ? true : false) ;
 
-                                        if($rewriteEnabled) {
+                                        if( $rewriteEnabled ) {
                                             Preference::newInstance()->update(array('s_value' => '1')
-                                                                             ,array('s_name' => 'rewriteEnabled'));
+                                                                             ,array('s_name' => 'rewriteEnabled') ) ;
 
-                                            require_once ABS_PATH . 'generate_rules.php';
-                                            $htaccess = '
-    <IfModule mod_rewrite.c>
-        RewriteEngine On
-        RewriteBase ' . REL_WEB_URL . '
-        RewriteRule ^index\.php$ - [L]
-        RewriteCond %{REQUEST_FILENAME} !-f
-        RewriteCond %{REQUEST_FILENAME} !-d
-        RewriteRule . ' . REL_WEB_URL . 'index.php [L]
-    </IfModule>';
+                                            $rewrite_base = REL_WEB_URL ;
+                                            $htaccess     = <<<HTACCESS
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase {$rewrite_base}
+    RewriteRule ^index\.php$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . {$rewrite_base}index.php [L]
+</IfModule>
+HTACCESS;
 
-                                            if( file_exists(osc_base_path() . '.htaccess') ) {
-                                                $file_status = 1;
-                                            } else if(file_put_contents(osc_base_path() . '.htaccess', $htaccess)) {
-                                                $file_status = 2;
+                                            // 1. OK (ok)
+                                            // 2. OK no apache module detected (warning)
+                                            // 3. No se puede crear + apache
+                                            // 4. No se puede crear + no apache
+                                            $status = 3 ;
+                                            if( file_exists($htaccess_file) ) {
+                                                if( is_writable($htaccess_file) && file_put_contents($htaccess_file, $htaccess) ) {
+                                                    $status = 1 ;
+                                                }
                                             } else {
-                                                $file_status = 3;
+                                                if( is_writable(osc_base_path()) && file_put_contents($htaccess_file, $htaccess) ) {
+                                                    $status = 1 ;
+                                                }
                                             }
 
-                                            if(apache_mod_loaded('mod_rewrite')) {
-                                                $htaccess_status = 1;
-                                                Preference::newInstance()->update(array('s_value' => '1')
-                                                                                 ,array('s_name'  => 'mod_rewrite_loaded'));
-                                            } else {
-                                                $htaccess_status = 2;
-                                                Preference::newInstance()->update(array('s_value' => '0')
-                                                                                 ,array('s_name'  => 'mod_rewrite_loaded'));
+                                            if( !@apache_mod_loaded('mod_rewrite') ) {
+                                                $status++ ;
                                             }
+
+                                            switch($status) {
+                                                case 1:
+                                                    $msg  = _m("Permalinks structure updated") ;
+                                                    osc_add_flash_ok_message($msg, 'admin') ;
+                                                break;
+                                                case 2:
+                                                    $msg  = _m("Permalinks structure updated.") ;
+                                                    $msg .= " " ;
+                                                    $msg .= _m("However, we can't check if Apache module <b>mod_rewrite</b> is loaded. If you experience some problems with the urls, you should deactivate <em>friendly urls</em>") ;
+                                                    osc_add_flash_warning_message($msg, 'admin') ;
+                                                break;
+                                                case 3:
+                                                    $msg  = _m("File <b>.htaccess</b> couldn't be filled with the right content.") ;
+                                                    $msg .= " " ;
+                                                    $msg .= _m("Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file, please deactivate <em>friendly urls</em> option.") ;
+                                                    $msg .= "</p><pre>" . htmlentities($htaccess) . '</pre><p>' ;
+                                                    osc_add_flash_error_message($msg, 'admin') ;
+                                                break;
+                                                case 4: 
+                                                    $msg  = _m("File <b>.htaccess</b> couldn't be filled with the right content.") ;
+                                                    $msg .= " " ;
+                                                    $msg .= _m("Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file or experience some problems with the urls, please deactivate <em>friendly urls</em> option.") ;
+                                                    $msg .= "</p><pre>" . htmlentities($htaccess) . '</pre><p>' ;                                            
+                                                    osc_add_flash_error_message($msg, 'admin') ;
+                                                break;
+                                            }
+                                            
+                                            $item_url = Params::getParam('rewrite_item_url');
+                                            Preference::newInstance()->update(array('s_value' => $item_url)
+                                                                             ,array('s_name' => 'rewrite_item_url'));
+                                            $page_url = Params::getParam('rewrite_page_url');
+                                            Preference::newInstance()->update(array('s_value' => $page_url)
+                                                                             ,array('s_name' => 'rewrite_page_url'));
+                                            $cat_url = Params::getParam('rewrite_cat_url');
+                                            Preference::newInstance()->update(array('s_value' => $cat_url)
+                                                                             ,array('s_name' => 'rewrite_cat_url'));
+                                            $search_url = Params::getParam('rewrite_search_url');
+                                            Preference::newInstance()->update(array('s_value' => $search_url)
+                                                                             ,array('s_name' => 'rewrite_search_url'));
+
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_country'))
+                                                                             ,array('s_name' => 'rewrite_search_country'));
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_region'))
+                                                                             ,array('s_name' => 'rewrite_search_region'));
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_city'))
+                                                                             ,array('s_name' => 'rewrite_search_city'));
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_city_area'))
+                                                                             ,array('s_name' => 'rewrite_search_city_area'));
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_category'))
+                                                                             ,array('s_name' => 'rewrite_search_category'));
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_user'))
+                                                                             ,array('s_name' => 'rewrite_search_user'));
+                                            Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_pattern'))
+                                                                             ,array('s_name' => 'rewrite_search_pattern'));
+                                            
+                                            
+
+
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_contact').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_contact'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_feed').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_feed'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_language').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_language'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_mark').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_item_mark'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_send_friend').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_item_send_friend'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_contact').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_item_contact'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_new').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_item_new'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_activate').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_item_activate'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_edit').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_item_edit'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_delete').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_item_delete'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_item_resource_delete').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_item_resource_delete'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_login').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_login'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_dashboard').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_dashboard'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_logout').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_logout'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_register').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_register'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_activate').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_activate'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_activate_alert').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_activate_alert'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_profile').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_profile'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_items').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_items'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_alerts').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_alerts'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_recover').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_recover'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_forgot').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_forgot'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_change_password').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_change_password'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_change_email').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_change_email'));
+                                            Preference::newInstance()->update(array('s_value' => substr(str_replace('//', '/', Params::getParam('rewrite_user_change_email_confirm').'/'), 0, -1))
+                                                                             ,array('s_name' => 'rewrite_user_change_email_confirm'));
+
+
+
+                                            
+                                            
+                                            osc_reset_preferences();
+                                            
+                                            $rewrite = Rewrite::newInstance();
+                                            $rewrite->clearRules();
+                                            
+                                            /*****************************
+                                             ********* Add rules *********
+                                             *****************************/
+
+                                            // Contact rules
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_contact').'?$', 'index.php?page=contact');
+
+                                            // Feed rules
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_feed').'/?$', 'index.php?page=search&sFeed=rss');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_feed').'/(.+)/?$', 'index.php?page=search&sFeed=$1');
+
+                                            // Language rules
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_language').'/(.*?)/?$', 'index.php?page=language&locale=$1');
+
+                                            // Search rules
+                                            $rewrite->addRule('^'.$search_url.'(.*)$', 'index.php?page=search&sParams=$1');
+
+                                            // Item rules
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_item_mark').'/(.*?)/([0-9]+)/?$', 'index.php?page=item&action=mark&as=$1&id=$2');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_item_send_friend').'/([0-9]+)/?$', 'index.php?page=item&action=send_friend&id=$1');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_item_contact').'/([0-9]+)/?$', 'index.php?page=item&action=contact&id=$1');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_item_new').'/?$', 'index.php?page=item&action=item_add');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_item_new').'/([0-9]+)/?$', 'index.php?page=item&action=item_add&catId=$1');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_item_activate').'/([0-9]+)/(.*?)/?$', 'index.php?page=item&action=activate&id=$1&secret=$2');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_item_edit').'/([0-9]+)/(.*?)/?$', 'index.php?page=item&action=item_edit&id=$1&secret=$2');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_item_delete').'/([0-9]+)/(.*?)/?$', 'index.php?page=item&action=item_delete&id=$1&secret=$2');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_item_resource_delete').'/([0-9]+)/([0-9]+)/([0-9A-Za-z]+)/?(.*?)/?$', 'index.php?page=item&action=deleteResource&id=$1&item=$2&code=$3&secret=$4');
+
+                                            
+                                            // Item rules
+                                            $id_pos = stripos($item_url, '{ITEM_ID}');
+                                            $title_pos = stripos($item_url, '{ITEM_TITLE}');
+                                            $cat_pos = stripos($item_url, '{CATEGORIES');
+                                            $param_pos = 1;
+                                            if($title_pos!==false && $id_pos>$title_pos) {
+                                                $param_pos++;
+                                            }
+                                            if($cat_pos!==false && $id_pos>$cat_pos) {
+                                                $param_pos++;
+                                            }
+                                            $comments_pos = 1;
+                                            if($id_pos!==false) { $comments_pos++; }
+                                            if($title_pos!==false) { $comments_pos++; }
+                                            if($cat_pos!==false) { $comments_pos++; }
+                                            $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url.'\?comments-page=([0-9al]*)'))).'$', 'index.php?page=item&id=$'.$param_pos.'&comments-page=$'.$comments_pos);
+                                            $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url.'\?comments-page=([0-9al]*)'))).'$', 'index.php?page=item&id=$'.($param_pos+2).'&lang=$1_$2&comments-page=$'.$comments_pos);
+                                            $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url))).'$', 'index.php?page=item&id=$'.$param_pos);
+                                            $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url))).'$', 'index.php?page=item&id=$'.($param_pos+2).'&lang=$1_$2');
+
+
+                                            // User rules
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_login').'/?$', 'index.php?page=login');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_dashboard').'/?$', 'index.php?page=user&action=dashboard');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_logout').'/?$', 'index.php?page=main&action=logout');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_register').'/?$', 'index.php?page=register&action=register');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_activate').'/([0-9]+)/(.*?)/?$', 'index.php?page=register&action=validate&id=$1&code=$2');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_activate_alert').'/([a-zA-Z0-9]+)/(.+)$', 'index.php?page=user&action=activate_alert&email=$2&secret=$1');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_profile').'/?$', 'index.php?page=user&action=profile');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_profile').'/([0-9]+)/?$', 'index.php?page=user&action=pub_profile&id=$1');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_items').'/?$', 'index.php?page=user&action=items');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_alerts').'/?$', 'index.php?page=user&action=alerts');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_recover').'/?$', 'index.php?page=login&action=recover');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_forgot').'/([0-9]+)/(.*)/?$', 'index.php?page=login&action=forgot&userId=$1&code=$2');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_change_password').'/?$', 'index.php?page=user&action=change_password');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_change_email').'/?$', 'index.php?page=user&action=change_email');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_change_email_confirm').'/([0-9]+)/(.*?)/?$', 'index.php?page=user&action=change_email_confirm&userId=$1&code=$2');
+
+                                            // Page rules
+                                            $id_pos = stripos($page_url, '{PAGE_ID}');
+                                            $slug_pos = stripos($page_url, '{PAGE_SLUG}');
+                                            $title_pos = stripos($page_url, '{PAGE_TITLE}');
+                                            $params_pos = 1;
+                                            $params2_pos = 1;
+                                            if($title_pos!==false && $id_pos>$title_pos) {
+                                                $param_pos++;
+                                            }
+                                            if($slug_pos!==false && $id_pos>$slug_pos) {
+                                                $param_pos++;
+                                            }
+                                            if($title_pos!==false && $slug_pos>$title_pos) {
+                                                $param2_pos++;
+                                            }
+                                            if($id_pos!==false && $slug_pos>$id_pos) {
+                                                $param2_pos++;
+                                            }
+                                            $rewrite->addRule('^'.str_replace('{PAGE_TITLE}', '(.+)', str_replace('{PAGE_SLUG}', '([a-zA-Z_]+)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url))).'$', 'index.php?page=page&id=$'.$param_pos."&slug=".$params2_pos);
+                                            $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{PAGE_TITLE}', '(.+)', str_replace('{PAGE_SLUG}', '([a-zA-Z_]+)', str_replace('{PAGE_ID}', '([0-9]+)', $page_url))).'$', 'index.php?page=page&id=$'.($param_pos+2).'&lang=$1_$2'."&slug=".($params2_pos+2));
+
+                                            // Clean archive files
+                                            $rewrite->addRule('^(.+?)\.php(.*)$', '$1.php$2');
+
+                                            // Category rules
+                                            $id_pos = stripos($item_url, '{CATEGORY_ID}');
+                                            $title_pos = stripos($item_url, '{CATEGORY_SLUG}');
+                                            $cat_pos = stripos($item_url, '{CATEGORIES');
+                                            $param_pos = 1;
+                                            if($title_pos!==false && $id_pos>$title_pos) {
+                                                $param_pos++;
+                                            }
+                                            if($cat_pos!==false && $id_pos>$cat_pos) {
+                                                $param_pos++;
+                                            }
+                                            $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.*)', str_replace('{CATEGORY_SLUG}', '([^/]*)', str_replace('{CATEGORY_ID}', '([0-9]+)', $cat_url))).'$', 'index.php?page=search&sCategory=$'.$param_pos);
+
+                                            //Write rule to DB
+                                            $rewrite->setRules();
+
+                                            
+                                            
                                         } else {
-                                            $modRewrite = apache_mod_loaded('mod_rewrite');
                                             Preference::newInstance()->update(array('s_value' => '0')
-                                                                             ,array('s_name'  => 'rewriteEnabled'));
+                                                                             ,array('s_name'  => 'rewriteEnabled')) ;
                                             Preference::newInstance()->update(array('s_value' => '0')
-                                                                             ,array('s_name'  => 'mod_rewrite_loaded'));
+                                                                             ,array('s_name'  => 'mod_rewrite_loaded')) ;
+
+                                            osc_add_flash_ok_message(_m('Friendly urls successfully deactivated'), 'admin') ;
                                         }
 
-                                        $redirectUrl  = osc_admin_base_url(true) . '?page=settings&action=permalinks&htaccess_status=';
-                                        $redirectUrl .= $htaccess_status . '&file_status=' . $file_status;
-                                        $this->redirectTo($redirectUrl);
+                                        $this->redirectTo( osc_admin_base_url(true) . '?page=settings&action=permalinks' ) ;
                 break;
                 case('spamNbots'):      // calling the spam and bots view
+                                        $akismet_key    = osc_akismet_key() ;
+                                        $akismet_status = 3 ;
+                                        if( $akismet_key != '' ) {
+                                            require_once( osc_lib_path() . 'Akismet.class.php' ) ;
+                                            $akismet_obj    = new Akismet(osc_base_url(), $akismet_key) ;
+                                            $akismet_status = 2 ;
+                                            if( $akismet_obj->isKeyValid() ) {
+                                                $akismet_status = 1 ;
+                                            }
+                                        }
+
+                                        View::newInstance()->_exportVariableToView('akismet_status', $akismet_status) ;
                                         $this->doView('settings/spamNbots.php');
                 break;
-                case('spamNbots_post'): // updating spam and bots option
-                                        $iUpdated         = 0;
-                                        $akismetKey       = Params::getParam('akismetKey');
-                                        $akismetKey       = trim($akismetKey);
-                                        $recaptchaPrivKey = Params::getParam('recaptchaPrivKey');
-                                        $recaptchaPrivKey = trim($recaptchaPrivKey);
-                                        $recaptchaPubKey  = Params::getParam('recaptchaPubKey');
-                                        $recaptchaPubKey  = trim($recaptchaPubKey);
+                case('akismet_post'):   // updating spam and bots option
+                                        $updated    = 0;
+                                        $akismetKey = Params::getParam('akismetKey');
+                                        $akismetKey = trim($akismetKey);
 
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $akismetKey)
-                                                                                      ,array('s_name'  => 'akismetKey'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $recaptchaPrivKey)
-                                                                                      ,array('s_name'  => 'recaptchaPrivKey'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $recaptchaPubKey)
-                                                                                      ,array('s_name'  => 'recaptchaPubKey'));
+                                        $updated = Preference::newInstance()->update(array('s_value' => $akismetKey)
+                                                                                    ,array('s_name'  => 'akismetKey')) ;
 
-                                        if($iUpdated > 0) {
-                                            osc_add_flash_ok_message( _m('Akismet and reCAPTCHA have been updated') ,'admin');
+                                        if( $akismetKey == '' ) {
+                                            osc_add_flash_info_message(_m('Your Akismet key has been cleared'), 'admin') ;
+                                        } else {
+                                            osc_add_flash_ok_message(_m('Your Akismet key has been updated'), 'admin') ;
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=spamNbots');
                 break;
+                case('recaptcha_post'): // updating spam and bots option
+                                        $iUpdated = 0 ;
+                                        $recaptchaPrivKey = Params::getParam('recaptchaPrivKey') ;
+                                        $recaptchaPrivKey = trim($recaptchaPrivKey) ;
+                                        $recaptchaPubKey  = Params::getParam('recaptchaPubKey') ;
+                                        $recaptchaPubKey  = trim($recaptchaPubKey) ;
+
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $recaptchaPrivKey)
+                                                                                      ,array('s_name'  => 'recaptchaPrivKey')) ;
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $recaptchaPubKey)
+                                                                                      ,array('s_name'  => 'recaptchaPubKey')) ;
+                                        if( $recaptchaPubKey == '' ) {
+                                            osc_add_flash_info_message(_m('Your reCAPTCHA key has been cleared'), 'admin') ;
+                                        } else {
+                                            osc_add_flash_ok_message( _m('Your reCAPTCHA key has been updated') ,'admin') ;
+                                        }
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=spamNbots') ;
+                break;
                 case('currencies'):     // currencies settings
-                                        $currencies_action = Params::getParam('type');
+                                        $currencies_action = Params::getParam('type') ;
 
                                         switch ($currencies_action) {
                                             case('add'):        // calling add currency view
-                                                                $this->doView('settings/add_currency.php');
-                                            break;
+                                                                $aCurrency = array(
+                                                                    'pk_c_code'     => '',
+                                                                    's_name'        => '',
+                                                                    's_description' => '',
+                                                                ) ;
+                                                                $this->_exportVariableToView('aCurrency', $aCurrency) ;
+                                                                $this->_exportVariableToView('typeForm', 'add_post') ;
+
+                                                                $this->doView('settings/currency_form.php') ;
+                                            break ;
                                             case('add_post'):   // adding a new currency
-                                                                $currencyCode         = Params::getParam('pk_c_code');
-                                                                $currencyName         = Params::getParam('s_name');
-                                                                $currencyDescription  = Params::getParam('s_description');
+                                                                $currencyCode        = Params::getParam('pk_c_code') ;
+                                                                $currencyName        = Params::getParam('s_name') ;
+                                                                $currencyDescription = Params::getParam('s_description') ;
 
                                                                 // cleaning parameters
-                                                                $currencyName        = strip_tags($currencyName);
-                                                                $currencyDescription = strip_tags($currencyDescription);
-                                                                $currencyCode        = strip_tags($currencyCode);
-                                                                $currencyCode        = trim($currencyCode);
+                                                                $currencyName        = strip_tags($currencyName) ;
+                                                                $currencyDescription = strip_tags($currencyDescription) ;
+                                                                $currencyCode        = strip_tags($currencyCode) ;
+                                                                $currencyCode        = trim($currencyCode) ;
 
-                                                                if(!preg_match('/^.{1,3}$/', $currencyCode)) {
-                                                                    osc_add_flash_error_message( _m('Error: the currency code is not in the correct format'), 'admin');
-                                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
+                                                                if( !preg_match('/^.{1,3}$/', $currencyCode) ) {
+                                                                    osc_add_flash_error_message( _m('The currency code is not in the correct format'), 'admin') ;
+                                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies') ;
                                                                 }
 
-                                                                $fields               = array('pk_c_code'     => $currencyCode
-                                                                                             ,'s_name'        => $currencyName
-                                                                                             ,'s_description' => $currencyDescription);
+                                                                $fields = array(
+                                                                    'pk_c_code'     => $currencyCode,
+                                                                    's_name'        => $currencyName,
+                                                                    's_description' => $currencyDescription,
+                                                                ) ;
 
-                                                                $isInserted = Currency::newInstance()->insert($fields);
+                                                                $isInserted = Currency::newInstance()->insert($fields) ;
 
-                                                                if($isInserted) {
-                                                                    osc_add_flash_ok_message( _m('New currency has been added'), 'admin');
+                                                                if( $isInserted ) {
+                                                                    osc_add_flash_ok_message( _m('Currency added'), 'admin') ;
                                                                 } else {
-                                                                    osc_add_flash_error_message( _m('Error: currency couldn\'t be added'), 'admin');
+                                                                    osc_add_flash_error_message( _m("Currency couldn't be added"), 'admin') ;
                                                                 }
-                                                                $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
-                                            break;
+                                                                $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies') ;
+                                            break ;
                                             case('edit'):       // calling edit currency view
-                                                                $currencyCode = Params::getParam('code');
-                                                                $currencyCode = strip_tags($currencyCode);
-                                                                $currencyCode = trim($currencyCode);
+                                                                $currencyCode = Params::getParam('code') ;
+                                                                $currencyCode = strip_tags($currencyCode) ;
+                                                                $currencyCode = trim($currencyCode) ;
 
-                                                                if($currencyCode == '') {
-                                                                    osc_add_flash_error_message( _m('Error: the currency code is not in the correct format'), 'admin');
-                                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
+                                                                if( $currencyCode == '' ) {
+                                                                    osc_add_flash_warning_message( sprintf( _m("The currency code '%s' doesn't exist"), $currencyCode ), 'admin') ;
+                                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies') ;
                                                                 }
 
-                                                                $aCurrency = Currency::newInstance()->findByPrimaryKey($currencyCode);
+                                                                $aCurrency = Currency::newInstance()->findByPrimaryKey($currencyCode) ;
 
-                                                                if(count($aCurrency) == 0) {
-                                                                    osc_add_flash_error_message( _m('Error: the currency doesn\'t exist'), 'admin');
-                                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
+                                                                if( !       $aCurrency ) {
+                                                                    osc_add_flash_warning_message( sprintf( _m("The currency code '%s' doesn't exist"), $currencyCode ), 'admin') ;
+                                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies') ;
                                                                 }
 
-                                                                $this->_exportVariableToView('aCurrency', $aCurrency);
-                                                                $this->doView('settings/edit_currency.php');
-                                            break;
+                                                                $this->_exportVariableToView('aCurrency', $aCurrency) ;
+                                                                $this->_exportVariableToView('typeForm', 'edit_post') ;
+
+                                                                $this->doView('settings/currency_form.php');
+                                            break ;
                                             case('edit_post'):  // updating currency
                                                                 $currencyName        = Params::getParam('s_name');
                                                                 $currencyDescription = Params::getParam('s_description');
@@ -470,79 +763,102 @@
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
                                                                 }
 
-                                                                $iUpdated = Currency::newInstance()->update(array('s_name'        => $currencyName
-                                                                                                                  ,'s_description' => $currencyDescription)
-                                                                                                            ,array('pk_c_code'     => $currencyCode));
+                                                                $updated = Currency::newInstance()->update(
+                                                                        array(
+                                                                            's_name'        => $currencyName,
+                                                                            's_description' => $currencyDescription
+                                                                        ),
+                                                                        array('pk_c_code'   => $currencyCode)
+                                                                ) ;
 
-                                                                if($iUpdated == 1) {
-                                                                    osc_add_flash_ok_message( _m('Currency has been updated'), 'admin');
+                                                                if($updated == 1) {
+                                                                    osc_add_flash_ok_message( _m('Currency updated'), 'admin') ;
+                                                                } else {
+                                                                    osc_add_flash_info_message( _m('No changes were made'), 'admin') ;
                                                                 }
-                                                                $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
-                                            break;
+                                                                $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies') ;
+                                            break ;
                                             case('delete'):     // deleting a currency
-                                                                $rowChanged    = 0;
-                                                                $aCurrencyCode = Params::getParam('code');
+                                                                $rowChanged    = 0 ;
+                                                                $aCurrencyCode = Params::getParam('code') ;
 
-                                                                if(!is_array($aCurrencyCode)) {
-                                                                    osc_add_flash_error_message( _m('Error: the currency code is not in the correct format'), 'admin');
-                                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
+                                                                if( !is_array($aCurrencyCode) ) {
+                                                                    $aCurrencyCode = array($aCurrencyCode) ;
                                                                 }
 
                                                                 $msg_current = '';
                                                                 foreach($aCurrencyCode as $currencyCode) {
-                                                                    if(preg_match('/.{1,3}/', $currencyCode) && $currencyCode != osc_currency()) {
-                                                                        $rowChanged += Currency::newInstance()->delete(array('pk_c_code' => $currencyCode));
+                                                                    if( preg_match('/.{1,3}/', $currencyCode) && $currencyCode != osc_currency() ) {
+                                                                        $rowChanged += Currency::newInstance()->delete( array('pk_c_code' => $currencyCode) ) ;
                                                                     }
-                                                                    if($currencyCode == osc_currency()) {
-                                                                        $msg_current = sprintf('. ' . _m("%s could not be deleted because it's the default currency"), $currencyCode) ;
+
+                                                                    // foreign key error
+                                                                    if( Currency::newInstance()->getErrorLevel() == '1451' ) {
+                                                                        $msg_current .= sprintf('</p><p>' . _m("%s could not be deleted because it has items associated"), $currencyCode) ;
+                                                                    } else if( $currencyCode == osc_currency() ) {
+                                                                        $msg_current .= sprintf('</p><p>' . _m("%s could not be deleted because it's the default currency"), $currencyCode) ;
                                                                     }
                                                                 }
 
-                                                                $msg = '';
-                                                                switch ($rowChanged) {
-                                                                    case ('0'): $msg = _m('No currencies have been deleted');
-                                                                            osc_add_flash_error_message($msg . $msg_current, 'admin');
+                                                                $msg    = '' ;
+                                                                $status = '' ;
+                                                                switch($rowChanged) {
+                                                                    case('0'):
+                                                                                $msg    = _m('No currencies have been deleted') ;
+                                                                                $status = 'error' ;
+                                                                    break ;
+                                                                    case('1'):
+                                                                                $msg    = _m('One currency has been deleted') ;
+                                                                                $status = 'ok' ;
+                                                                    break ;
+                                                                    default:
+                                                                                $msg    = sprintf( _m('%s currencies have been deleted'), $rowChanged) ;
+                                                                                $status = 'ok' ;
+                                                                    break ;
+                                                                }
+
+                                                                if( $status == 'ok' && $msg_current != '' ) {
+                                                                    $status = 'warning' ;
+                                                                }
+
+                                                                switch($status) {
+                                                                    case('error'):      osc_add_flash_error_message($msg . $msg_current, 'admin') ;
                                                                     break;
-                                                                    case ('1'): $msg = _m('One currency has been deleted');
-                                                                            osc_add_flash_ok_message($msg . $msg_current, 'admin');
+                                                                    case('warning'):    osc_add_flash_warning_message($msg . $msg_current, 'admin') ;
                                                                     break;
-                                                                    case ('-1'): $msg = sprintf(_m("%s could not be deleted because this currency still in use"), $currencyCode);
-                                                                            osc_add_flash_error_message($msg . $msg_current, 'admin');
-                                                                    break;
-                                                                    default:    $msg = sprintf(_m('%s currencies have been deleted'), $rowChanged);
-                                                                            osc_add_flash_ok_message($msg . $msg_current, 'admin');
+                                                                    case('ok'):         osc_add_flash_ok_message($msg, 'admin') ;
                                                                     break;
                                                                 }
 
-                                                                $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
+                                                                $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies') ;
                                             break;
                                             default:            // calling the currencies view
-                                                                $aCurrencies = Currency::newInstance()->listAll();
-                                                                $this->_exportVariableToView('aCurrencies', $aCurrencies);
+                                                                $aCurrencies = Currency::newInstance()->listAll() ;
+                                                                $this->_exportVariableToView('aCurrencies', $aCurrencies) ;
 
-                                                                $this->doView('settings/currencies.php');
+                                                                $this->doView('settings/currencies.php') ;
                                             break;
                                         }
-                break;
+                break ;
                 case('mailserver'):     // calling the mailserver view
-                                        $this->doView('settings/mailserver.php');
+                                        $this->doView('settings/mailserver.php') ;
                 break;
                 case('mailserver_post'):if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
-                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver');
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver') ;
                                         }
                                         // updating mailserver
-                                        $iUpdated           = 0;
-                                        $mailserverAuth     = Params::getParam('mailserver_auth');
-                                        $mailserverAuth     = ($mailserverAuth != '' ? true : false);
-                                        $mailserverPop     = Params::getParam('mailserver_pop');
-                                        $mailserverPop     = ($mailserverPop != '' ? true : false);
-                                        $mailserverType     = Params::getParam('mailserver_type');
-                                        $mailserverHost     = Params::getParam('mailserver_host');
-                                        $mailserverPort     = Params::getParam('mailserver_port');
-                                        $mailserverUsername = Params::getParam('mailserver_username');
-                                        $mailserverPassword = Params::getParam('mailserver_password');
-                                        $mailserverSsl      = Params::getParam('mailserver_ssl');
+                                        $iUpdated           = 0 ;
+                                        $mailserverAuth     = Params::getParam('mailserver_auth') ;
+                                        $mailserverAuth     = ($mailserverAuth != '' ? true : false) ;
+                                        $mailserverPop      = Params::getParam('mailserver_pop') ;
+                                        $mailserverPop      = ($mailserverPop != '' ? true : false) ;
+                                        $mailserverType     = Params::getParam('mailserver_type') ;
+                                        $mailserverHost     = Params::getParam('mailserver_host') ;
+                                        $mailserverPort     = Params::getParam('mailserver_port') ;
+                                        $mailserverUsername = Params::getParam('mailserver_username') ;
+                                        $mailserverPassword = Params::getParam('mailserver_password') ;
+                                        $mailserverSsl      = Params::getParam('mailserver_ssl') ;
 
                                         if( !in_array($mailserverType, array('custom', 'gmail')) ) {
                                             osc_add_flash_error_message( _m('Mail server type is incorrect'), 'admin');
@@ -572,199 +888,325 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver');
                 break;
                 case('media'):          // calling the media view
+                                        $max_upload   = (int)( ini_get('upload_max_filesize') ) ;
+                                        $max_post     = (int)( ini_get('post_max_size') ) ;
+                                        $memory_limit = (int)( ini_get('memory_limit') ) ;
+                                        $upload_mb    = min($max_upload, $max_post, $memory_limit) * 1024 ;
+
+                                        $this->_exportVariableToView('max_size_upload', $upload_mb) ;
                                         $this->doView('settings/media.php') ;
                 break;
                 case('media_post'):     // updating the media config
-                                        $iUpdated          = 0;
-                                        $maxSizeKb         = Params::getParam('maxSizeKb');
-                                        $allowedExt        = Params::getParam('allowedExt');
-                                        $dimThumbnail      = Params::getParam('dimThumbnail');
-                                        $dimPreview        = Params::getParam('dimPreview');
-                                        $dimNormal         = Params::getParam('dimNormal');
-                                        $keepOriginalImage = Params::getParam('keep_original_image');
-                                        $use_imagick       = Params::getParam('use_imagick');
-                                        $type_watermark    = Params::getParam('watermark_type');
-                                        $watermark_color   = Params::getParam('watermark_text_color');
-                                        $watermark_text    = Params::getParam('watermark_text');
-                                        $watermark_image   = Params::getParam('watermark_image');
-                                       
+                                        $status = 'ok' ;
+                                        $error  = '' ;
+
+                                        $iUpdated          = 0 ;
+                                        $maxSizeKb         = Params::getParam('maxSizeKb') ;
+                                        $allowedExt        = Params::getParam('allowedExt') ;
+                                        $dimThumbnail      = Params::getParam('dimThumbnail') ;
+                                        $dimPreview        = Params::getParam('dimPreview') ;
+                                        $dimNormal         = Params::getParam('dimNormal') ;
+                                        $keepOriginalImage = Params::getParam('keep_original_image') ;
+                                        $use_imagick       = Params::getParam('use_imagick') ;
+                                        $type_watermark    = Params::getParam('watermark_type') ;
+                                        $watermark_color   = Params::getParam('watermark_text_color') ;
+                                        $watermark_text    = Params::getParam('watermark_text') ;
+
                                         switch ($type_watermark) {
                                             case 'none':
-                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
-                                                                                              ,array('s_name'  => 'watermark_text_color'));
-                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
-                                                                                              ,array('s_name'  => 'watermark_text'));
-                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
-                                                                                              ,array('s_name'  => 'watermark_image'));
-                                            break;
+                                                $iUpdated += Preference::newInstance()->update(
+                                                        array('s_value' => ''),
+                                                        array('s_name'  => 'watermark_text_color')
+                                                ) ;
+                                                $iUpdated += Preference::newInstance()->update(
+                                                        array('s_value' => ''),
+                                                        array('s_name'  => 'watermark_text')
+                                                ) ;
+                                                $iUpdated += Preference::newInstance()->update(
+                                                        array('s_value' => ''),
+                                                        array('s_name'  => 'watermark_image')
+                                                ) ;
+                                            break ;
                                             case 'text':
-                                                $iUpdated += Preference::newInstance()->update(array('s_value' => $watermark_color)
-                                                                                              ,array('s_name'  => 'watermark_text_color'));
-                                                $iUpdated += Preference::newInstance()->update(array('s_value' => $watermark_text)
-                                                                                              ,array('s_name'  => 'watermark_text'));
-                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
-                                                                                              ,array('s_name'  => 'watermark_image'));
-                                                $iUpdated += Preference::newInstance()->update(array('s_value' => Params::getParam('watermark_text_place'))
-                                                                                              ,array('s_name'  => 'watermark_place'));
-                                            break;
+                                                $iUpdated += Preference::newInstance()->update(
+                                                        array('s_value' => $watermark_color),
+                                                        array('s_name'  => 'watermark_text_color')
+                                                ) ;
+                                                $iUpdated += Preference::newInstance()->update(
+                                                        array('s_value' => $watermark_text),
+                                                        array('s_name'  => 'watermark_text')
+                                                ) ;
+                                                $iUpdated += Preference::newInstance()->update(
+                                                        array('s_value' => ''),
+                                                        array('s_name'  => 'watermark_image')
+                                                ) ;
+                                                $iUpdated += Preference::newInstance()->update(
+                                                        array('s_value' => Params::getParam('watermark_text_place')),
+                                                        array('s_name'  => 'watermark_place')
+                                                ) ;
+                                            break ;
                                             case 'image':
                                                 // upload image & move to path
                                                 if( $_FILES['watermark_image']['error'] == UPLOAD_ERR_OK ) {
                                                     $tmpName = $_FILES['watermark_image']['tmp_name'] ;
-                                                    $path = osc_content_path() . 'uploads/watermark.png' ;
+                                                    $path    = osc_content_path() . 'uploads/watermark.png' ;
                                                     if( move_uploaded_file($tmpName, $path) ){
-                                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $path)
-                                                                                                      ,array('s_name'  => 'watermark_image'));
+                                                        $iUpdated += Preference::newInstance()->update(
+                                                                array('s_value' => $path),
+                                                                array('s_name'  => 'watermark_image')
+                                                        ) ;
                                                     } else {
-                                                        $iUpdated += Preference::newInstance()->update(array('s_value' => '')
-                                                                                                      ,array('s_name'  => 'watermark_image'));
+                                                        $iUpdated += Preference::newInstance()->update(
+                                                                array('s_value' => ''),
+                                                                array('s_name'  => 'watermark_image')
+                                                        ) ;
                                                     }
                                                 }
-                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
-                                                                                              ,array('s_name'  => 'watermark_text_color'));
-                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
-                                                                                              ,array('s_name'  => 'watermark_text'));
-                                                $iUpdated += Preference::newInstance()->update(array('s_value' => Params::getParam('watermark_image_place'))
-                                                                                              ,array('s_name'  => 'watermark_place'));
+                                                $iUpdated += Preference::newInstance()->update(
+                                                        array('s_value' => ''),
+                                                        array('s_name'  => 'watermark_text_color')
+                                                ) ;
+                                                $iUpdated += Preference::newInstance()->update(
+                                                        array('s_value' => ''),
+                                                        array('s_name'  => 'watermark_text')
+                                                ) ;
+                                                $iUpdated += Preference::newInstance()->update(
+                                                        array('s_value' => Params::getParam('watermark_image_place')),
+                                                        array('s_name'  => 'watermark_place')
+                                                ) ;
                                             break;
-
                                             default:
                                             break;
                                         }
-                                        
+
                                         // format parameters
-                                        $maxSizeKb         = strip_tags($maxSizeKb);
-                                        $allowedExt        = strip_tags($allowedExt);
-                                        $dimThumbnail      = strip_tags($dimThumbnail);
+                                        $maxSizeKb         = strip_tags($maxSizeKb) ;
+                                        $allowedExt        = strip_tags($allowedExt) ;
+                                        $dimThumbnail      = strip_tags($dimThumbnail) ;
                                         $dimPreview        = strip_tags($dimPreview);
-                                        $dimNormal         = strip_tags($dimNormal);
-                                        $keepOriginalImage = ($keepOriginalImage != '' ? true : false);
-                                        $use_imagick       = ($use_imagick != '' ? true : false);
-                                        if(!extension_loaded('imagick')) {
-                                            $use_imagick = false;
+                                        $dimNormal         = strip_tags($dimNormal) ;
+                                        $keepOriginalImage = ($keepOriginalImage != '' ? true : false) ;
+                                        $use_imagick       = ($use_imagick != '' ? true : false) ;
+
+                                        // is imagick extension loaded?
+                                        if( !@extension_loaded('imagick') ) {
+                                            $use_imagick = false ;
                                         }
 
-                                        
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $maxSizeKb)
-                                                                                      ,array('s_name'  => 'maxSizeKb'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $allowedExt)
-                                                                                      ,array('s_name'  => 'allowedExt'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $dimThumbnail)
-                                                                                      ,array('s_name'  => 'dimThumbnail'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $dimPreview)
-                                                                                      ,array('s_name'  => 'dimPreview'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $dimNormal)
-                                                                                      ,array('s_name'  => 'dimNormal'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $keepOriginalImage)
-                                                                                      ,array('s_name'  => 'keep_original_image'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $use_imagick)
-                                                                                      ,array('s_name'  => 'use_imagick'));
+                                        // max size allowed by PHP configuration?
+                                        $max_upload   = (int)( ini_get('upload_max_filesize') ) ;
+                                        $max_post     = (int)( ini_get('post_max_size') ) ;
+                                        $memory_limit = (int)( ini_get('memory_limit') ) ;
+                                        $upload_mb    = min($max_upload, $max_post, $memory_limit) * 1024 ;
 
-                                        if($iUpdated > 0) {
-                                            osc_add_flash_ok_message( _m('Media config has been updated'), 'admin');
+                                        // set maxSizeKB equals to PHP configuration if it's bigger
+                                        if( $maxSizeKb > $upload_mb ) {
+                                            $status    = 'warning' ;
+                                            $maxSizeKb = $upload_mb ;
+                                            // flash message text warning
+                                            $error     = sprintf( _m("You cannot set a maximum size file higher than the one that allows PHP configuration: <b>%d KB</b>"), $upload_mb ) ;
                                         }
 
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media');
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value' => $maxSizeKb),
+                                                array('s_name'  => 'maxSizeKb')
+                                        ) ;
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value' => $allowedExt),
+                                                array('s_name'  => 'allowedExt')
+                                        ) ;
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value' => $dimThumbnail),
+                                                array('s_name'  => 'dimThumbnail')
+                                        ) ;
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value' => $dimPreview),
+                                                array('s_name'  => 'dimPreview')
+                                        ) ;
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value' => $dimNormal),
+                                                array('s_name'  => 'dimNormal')
+                                        );
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value' => $keepOriginalImage),
+                                                array('s_name'  => 'keep_original_image')
+                                        ) ;
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value' => $use_imagick),
+                                                array('s_name'  => 'use_imagick')
+                                        ) ;
+
+                                        $msg = '' ;
+                                        if( $iUpdated > 0 ) {
+                                            $msg .= _m('Media config has been updated') ;
+                                        }
+
+                                        if( $error != '' ) {
+                                            $msg .= '</p><p>' . $error ;
+                                        }
+
+                                        switch( $status ) {
+                                            case('ok'):         osc_add_flash_ok_message($msg, 'admin') ;
+                                            break ;
+                                            case('warning'):    osc_add_flash_warning_message($msg, 'admin') ;
+                                            break ;
+                                        }
+
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media') ;
                 break ;
-                case('contact'):        // calling the media view
-                                        $this->doView('settings/contact.php') ;
-                break;
-                case('contact_post'):   // updating the media config
-                                        $enabled_attachment = Params::getParam('enabled_attachment');
-                                        if ($enabled_attachment == '') $enabled_attachment = 0 ;
-                                        else $enabled_attachment = 1 ;
-
-                                        // format parameters
-                                        $iUpdated = Preference::newInstance()->update(array('s_value' => $enabled_attachment)
-                                                                                      ,array('s_name'  => 'contact_attachment'));
-
-                                        if($iUpdated > 0) {
-                                            osc_add_flash_ok_message( _m('Contact configuration has been updated'), 'admin');
+                case('images_post'):    if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media') ;
                                         }
 
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=contact');
-                break ;
-                case('cron'):           // viewing the cron view
-                                        $this->doView('settings/cron.php');
-                break;
-                case('cron_post'):      // updating cron config
-                                        $iUpdated  = 0;
-                                        $bAutoCron = Params::getParam('auto_cron');
-                                        $bAutoCron = ($bAutoCron != '' ? true : false);
+                                        $wat = new Watermark();
+                                        $aResources = ItemResource::newInstance()->getAllResources();
+                                        foreach($aResources as $resource) {
+                                            
+                                            osc_run_hook('regenerate_image', $resource);
+                                            
+                                            $path = osc_content_path() . 'uploads/' ;
+                                            // comprobar que no haya original
+                                            $img_original = $path . $resource['pk_i_id']. "_original*";
+                                            $aImages = glob($img_original);
+                                            // there is original image
+                                            if( count($aImages) == 1 ) {
+                                                $image_tmp = $aImages[0] ;
+                                            } else {
+                                                $img_normal = $path . $resource['pk_i_id']. ".*" ;
+                                                $aImages = glob( $img_normal );
+                                                if( count($aImages) == 1 ) {
+                                                    $image_tmp = $aImages[0] ;
+                                                } else {
+                                                    $img_thumbnail = $path . $resource['pk_i_id']. "_thumbnail*" ;
+                                                    $aImages = glob( $img_thumbnail );
+                                                    $image_tmp = $aImages[0] ;
+                                                }
+                                            }
+                                            
+                                            // extension
+                                            preg_match('/\.(.*)$/', $image_tmp, $matches) ;
+                                            if( isset($matches[1]) ) {
+                                                $extension = $matches[1] ;
 
-                                        $iUpdated  += Preference::newInstance()->update(array('s_value' => $bAutoCron)
-                                                                                       ,array('s_name' => 'auto_cron'));
+                                                // Create normal size
+                                                $path_normal = $path = osc_content_path() . 'uploads/' . $resource['pk_i_id'] . '.jpg' ;
+                                                $size = explode('x', osc_normal_dimensions()) ;
+                                                ImageResizer::fromFile($image_tmp)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
-                                        if($iUpdated > 0) {
-                                            osc_add_flash_ok_message( _m('Cron config has been updated'), 'admin');
+                                                if( osc_is_watermark_text() ) {
+                                                    $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , 'image/jpeg' );
+                                                } elseif ( osc_is_watermark_image() ){
+                                                    $wat->doWatermarkImage( $path, 'image/jpeg');
+                                                }
+
+                                                // Create preview
+                                                $path = osc_content_path(). 'uploads/' . $resource['pk_i_id'] . '_preview.jpg' ;
+                                                $size = explode('x', osc_preview_dimensions()) ;
+                                                ImageResizer::fromFile($path_normal)->resizeTo($size[0], $size[1])->saveToFile($path) ;
+
+                                                // Create thumbnail
+                                                $path = osc_content_path(). 'uploads/' . $resource['pk_i_id'] . '_thumbnail.jpg' ;
+                                                $size = explode('x', osc_thumbnail_dimensions()) ;
+                                                ImageResizer::fromFile($path_normal)->resizeTo($size[0], $size[1])->saveToFile($path) ;
+
+                                                // update resource info
+                                                ItemResource::newInstance()->update(
+                                                                        array(
+                                                                            's_path'            => 'oc-content/uploads/'
+                                                                            ,'s_name'           => osc_genRandomPassword()
+                                                                            ,'s_extension'      => 'jpg'
+                                                                            ,'s_content_type'   => 'image/jpeg'
+                                                                        )
+                                                                        ,array(
+                                                                            'pk_i_id'       => $resource['pk_i_id']
+                                                                        )
+                                                ) ;
+                                                osc_run_hook('regenerated_image', ItemResource::newInstance()->findByPrimaryKey($resource['pk_i_id']));
+                                                // si extension es direfente a jpg, eliminar las imagenes con $extension si hay
+                                                if( $extension != 'jpg' ) {
+                                                    @unlink(osc_content_path(). 'uploads/' . $resource['pk_i_id'] . "." . $extension);
+                                                    @unlink(osc_content_path(). 'uploads/' . $resource['pk_i_id'] . "_original." . $extension);
+                                                    @unlink(osc_content_path(). 'uploads/' . $resource['pk_i_id'] . "_preview." . $extension);
+                                                    @unlink(osc_content_path(). 'uploads/' . $resource['pk_i_id'] . "_thumbnail." . $extension);
+                                                }
+                                                // ....
+                                            } else {
+                                                // no es imagen o imagen sin extesión
+                                            }
+                                            
                                         }
 
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=cron');
+                                        osc_add_flash_ok_message( _m('Re-generation complete'), 'admin') ;
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media') ;
                 break;
                 case('update'):         // update index view
-                                        $iUpdated       = 0;
-                                        $sPageTitle     = Params::getParam('pageTitle');
-                                        $sPageDesc      = Params::getParam('pageDesc');
-                                        $sContactEmail  = Params::getParam('contactEmail');
-                                        $sLanguage      = Params::getParam('language');
-                                        $sDateFormat    = Params::getParam('dateFormat');
-                                        $sCurrency      = Params::getParam('currency');
-                                        $sWeekStart     = Params::getParam('weekStart');
-                                        $sTimeFormat    = Params::getParam('timeFormat');
-                                        $sTimezone      = Params::getParam('timezone');
-                                        $sNumRssItems   = Params::getParam('num_rss_items');
-                                        $maxLatestItems = Params::getParam('max_latest_items_at_home');
-                                        $numItemsSearch = Params::getParam('default_results_per_page') ;
+                                        $iUpdated          = 0 ;
+                                        $sPageTitle        = Params::getParam('pageTitle') ;
+                                        $sPageDesc         = Params::getParam('pageDesc') ;
+                                        $sContactEmail     = Params::getParam('contactEmail') ;
+                                        $sLanguage         = Params::getParam('language') ;
+                                        $sDateFormat       = Params::getParam('dateFormat') ;
+                                        $sCurrency         = Params::getParam('currency') ;
+                                        $sWeekStart        = Params::getParam('weekStart') ;
+                                        $sTimeFormat       = Params::getParam('timeFormat') ;
+                                        $sTimezone         = Params::getParam('timezone') ;
+                                        $sNumRssItems      = Params::getParam('num_rss_items') ;
+                                        $maxLatestItems    = Params::getParam('max_latest_items_at_home') ;
+                                        $numItemsSearch    = Params::getParam('default_results_per_page') ;
+                                        $contactAttachment = Params::getParam('enabled_attachment') ;
+                                        $bAutoCron         = Params::getParam('auto_cron') ;
 
                                         // preparing parameters
-                                        $sPageTitle     = strip_tags($sPageTitle);
-                                        $sPageDesc      = strip_tags($sPageDesc);
-                                        $sContactEmail  = strip_tags($sContactEmail);
-                                        $sLanguage      = strip_tags($sLanguage);
-                                        $sDateFormat    = strip_tags($sDateFormat);
-                                        $sCurrency      = strip_tags($sCurrency);
-                                        $sWeekStart     = strip_tags($sWeekStart);
-                                        $sTimeFormat    = strip_tags($sTimeFormat);
-                                        $sNumRssItems   = (int) strip_tags($sNumRssItems);
-                                        $maxLatestItems = (int) strip_tags($maxLatestItems);
-                                        $numItemsSearch = (int) $numItemsSearch ;
-
+                                        $sPageTitle        = strip_tags($sPageTitle) ;
+                                        $sPageDesc         = strip_tags($sPageDesc) ;
+                                        $sContactEmail     = strip_tags($sContactEmail) ;
+                                        $sLanguage         = strip_tags($sLanguage) ;
+                                        $sDateFormat       = strip_tags($sDateFormat) ;
+                                        $sCurrency         = strip_tags($sCurrency) ;
+                                        $sWeekStart        = strip_tags($sWeekStart) ;
+                                        $sTimeFormat       = strip_tags($sTimeFormat) ;
+                                        $sNumRssItems      = (int) strip_tags($sNumRssItems) ;
+                                        $maxLatestItems    = (int) strip_tags($maxLatestItems) ;
+                                        $numItemsSearch    = (int) $numItemsSearch ;
+                                        $contactAttachment = ($contactAttachment != '' ? true : false) ;
+                                        $bAutoCron         = ($bAutoCron != '' ? true : false) ;
                                         $error = "";
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageTitle)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'pageTitle'));
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'pageTitle')) ;
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageDesc)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'pageDesc'));
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'pageDesc')) ;
                                         if( !defined('DEMO') ) {
                                             $iUpdated += Preference::newInstance()->update(array('s_value'   => $sContactEmail)
-                                                                                          ,array('s_section' => 'osclass', 's_name' => 'contactEmail'));
+                                                                                          ,array('s_section' => 'osclass', 's_name' => 'contactEmail')) ;
                                         }
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sLanguage)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'language'));
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'language')) ;
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sDateFormat)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'dateFormat'));
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'dateFormat')) ;
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sCurrency)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'currency'));
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'currency')) ;
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sWeekStart)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'weekStart'));
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'weekStart')) ;
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimeFormat)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'timeFormat'));
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'timeFormat')) ;
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimezone)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'timezone'));
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'timezone')) ;
                                         if(is_int($sNumRssItems)) {
                                             $iUpdated += Preference::newInstance()->update(array('s_value'   => $sNumRssItems)
-                                                                                          ,array('s_section' => 'osclass', 's_name' => 'num_rss_items'));
+                                                                                          ,array('s_section' => 'osclass', 's_name' => 'num_rss_items')) ;
                                         } else {
-                                            if($error != '') $error .= "<br/>";
-                                            $error .= _m('Number of items in the RSS must be integer');
+                                            if($error != '') $error .= "</p><p>";
+                                            $error .= _m('Number of items in the RSS must be integer') ;
                                         }
 
                                         if(is_int($maxLatestItems)) {
                                             $iUpdated += Preference::newInstance()->update(array('s_value'   => $maxLatestItems)
-                                                                                          ,array('s_section' => 'osclass', 's_name' => 'maxLatestItems@home'));
+                                                                                          ,array('s_section' => 'osclass', 's_name' => 'maxLatestItems@home')) ;
                                         } else {
-                                            if($error != '') $error .= "<br/>";
-                                            $error .= _m('Number of recent items displayed at home must be integer');
+                                            if($error != '') $error .= "</p><p>";
+                                            $error .= _m('Number of recent items displayed at home must be integer') ;
                                         }
 
                                         $iUpdated += Preference::newInstance()->update(
@@ -772,41 +1214,54 @@
                                                 array('s_section' => 'osclass',
                                                       's_name'    => 'defaultResultsPerPage@search')
                                         );
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $contactAttachment)
+                                                                                      ,array('s_name'  => 'contact_attachment')) ;
 
-                                        if($iUpdated > 0) {
-                                            if($error != '') {
-                                                osc_add_flash_error_message( $error . "<br/>" . _m('General settings have been updated'), 'admin');
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $bAutoCron)
+                                                                                      ,array('s_name' => 'auto_cron')) ;
+
+                                        if( $iUpdated > 0 ) {
+                                            if( $error != '' ) {
+                                                osc_add_flash_error_message( $error . "</p><p>" . _m('General settings have been updated'), 'admin') ;
                                             } else {
-                                                osc_add_flash_ok_message( _m('General settings have been updated'), 'admin');
+                                                osc_add_flash_ok_message( _m('General settings have been updated'), 'admin') ;
                                             }
                                         } else if($error != '') {
-                                            osc_add_flash_error_message( $error , 'admin');
+                                            osc_add_flash_error_message( $error , 'admin') ;
                                         }
 
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings') ;
                 break;
                 case('latestsearches'):       //calling the comments settings view
                                         $this->doView('settings/searches.php');
                 break;
                 case('latestsearches_post'):  // updating comment
-                                        if(Params::getParam('save_latest_searches')=='on') {
-                                            Preference::newInstance()->update(array('s_value' => 1)
-                                                                                ,array('s_name' => 'save_latest_searches'));
+                                        if( Params::getParam('save_latest_searches') == 'on' ) {
+                                            Preference::newInstance()->update(
+                                                    array('s_value' => 1),
+                                                    array('s_name'  => 'save_latest_searches')
+                                            ) ;
                                         } else {
-                                            Preference::newInstance()->update(array('s_value' => 0)
-                                                                                ,array('s_name' => 'save_latest_searches'));
+                                            Preference::newInstance()->update(
+                                                    array('s_value' => 0),
+                                                    array('s_name'  => 'save_latest_searches')
+                                            ) ;
                                         }
-                                        Preference::newInstance()->update(array('s_value' => Params::getParam('customPurge'))
-                                                                                ,array('s_name' => 'purge_latest_searches'));
-                                        osc_add_flash_ok_message( _m('Settings have been updated'), 'admin');
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=latestsearches');
+
+                                        Preference::newInstance()->update(
+                                                array('s_value' => Params::getParam('customPurge')),
+                                                array('s_name'  => 'purge_latest_searches')
+                                        ) ;
+
+                                        osc_add_flash_ok_message( _m('Last search settings have been updated'), 'admin') ;
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=latestsearches') ;
                 break;
                 default:                // calling the view
                                         $aLanguages = OSCLocale::newInstance()->listAllEnabled() ;
                                         $aCurrencies = Currency::newInstance()->listAll() ;
 
-                                        $this->_exportVariableToView('aLanguages', $aLanguages);
-                                        $this->_exportVariableToView('aCurrencies', $aCurrencies);
+                                        $this->_exportVariableToView('aLanguages', $aLanguages) ;
+                                        $this->_exportVariableToView('aCurrencies', $aCurrencies) ;
 
                                         $this->doView('settings/index.php') ;
                 break;
@@ -814,12 +1269,14 @@
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_current_admin_theme_path($file) ;
             Session::newInstance()->_clearVariables();
         }
 
-        function install_location_by_country() {
+        function install_location_by_country()
+        {
             $country_code    = Params::getParam('c_country');
             $aCountryCode[] = trim($country_code);
             
@@ -883,7 +1340,8 @@
             osc_add_flash_ok_message(sprintf(_m('%s has been added as a new country'), $country), 'admin');
         }
 
-        function install_location_by_region() {
+        function install_location_by_region()
+        {
             $countryParent = Params::getParam('country_c_parent');
             $region        = Params::getParam('region');
 
@@ -949,4 +1407,5 @@
         }
     }
 
+    /* file end: ./oc-admin/settings.php */
 ?>

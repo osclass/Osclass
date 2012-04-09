@@ -30,7 +30,7 @@
      * @since 2.3
      */
 	class DAO
-    {
+        {
         /**
          * DBCommandClass object
          * 

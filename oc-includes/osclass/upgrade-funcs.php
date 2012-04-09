@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -16,6 +16,10 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    set_time_limit(0);
+    
+    error_log(' ------- START upgrade-funcs ------- ');
+    
     if(!defined('ABS_PATH')) {
         define('ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/');
     }
@@ -30,13 +34,13 @@
             $conn = DBConnectionClass::newInstance();
             $c_db = $conn->getOsclassDb() ;
             $comm = new DBCommandClass( $c_db ) ;
-            $error_queries = $comm->updateDB( str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ) ;
             
+            $error_queries = $comm->updateDB( str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ) ;   
         }
         
         if( Params::getParam('skipdb') == '' ){
             if(!$error_queries[0]) {
-                $skip_db_link = osc_base_url() . "oc-includes/osclass/upgrade-funcs.php?skipdb=true";
+                $skip_db_link = osc_admin_base_url(true) . "?page=upgrade&action=upgrade-funcs&skipdb=true";
                 $title    = __('OSClass &raquo; Has some errors') ;
                 $message  = __('We encountered some problems updating the database structure. The following queries failed:');
                 $message .= "<br/><br/>" . implode("<br>", $error_queries[2]);
@@ -45,7 +49,7 @@
             }
         }
     }
-
+    $aMessages = array();
     Preference::newInstance()->update(array('s_value' => time()), array( 's_section' => 'osclass', 's_name' => 'last_version_check'));
 
     $conn = DBConnectionClass::newInstance();
@@ -109,7 +113,6 @@
         $comm->query(sprintf("INSERT INTO %st_pages (s_internal_name, b_indelible, dt_pub_date) VALUES ('email_comment_validated', 1, '%s' )", DB_TABLE_PREFIX, date('Y-m-d H:i:s')));
         $comm->query(sprintf("INSERT INTO %st_pages_description (fk_i_pages_id, fk_c_locale_code, s_title, s_text) VALUES (%d, 'en_US', '{WEB_TITLE} - Your comment has been approved', '<p>Hi {COMMENT_AUTHOR},</p>\n<p>Your comment has been approved on the following item: {ITEM_URL}</p>\n<p>Regards,</p>\n<p>{WEB_TITLE}</p>')", DB_TABLE_PREFIX, $comm->insertedId()));
         
-        osc_changeVersionTo(210) ;
     }
 
     if(osc_version() < 220) {
@@ -117,11 +120,11 @@
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'watermark_text_color', '', 'STRING')", DB_TABLE_PREFIX));
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'watermark_image','', 'STRING')", DB_TABLE_PREFIX));
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'watermark_place', 'centre', 'STRING')", DB_TABLE_PREFIX));
-        osc_changeVersionTo(220) ;
     }
 
     if(osc_version() < 230) {
-        $comm->query(sprintf("CREATE TABLE %st_item_description_tmp (
+        $comm->query(sprintf("
+CREATE TABLE %st_item_description_tmp (
     fk_i_item_id INT UNSIGNED NOT NULL,
     fk_c_locale_code CHAR(5) NOT NULL,
     s_title VARCHAR(100) NOT NULL,
@@ -198,23 +201,150 @@
             }
             $comm->query( $sql );
         }
-
-        osc_changeVersionTo(230) ;
     }
 
-    if(osc_version() < 234) {
+    if( osc_version() < 234 ) {
         @unlink(osc_admin_base_path()."upgrade.php");
         @unlink(osc_admin_base_path()."/themes/modern/tools/upgrade-plugins.php");
         @unlink(osc_admin_base_path()."upgrade-plugin.php");
-        osc_changeVersionTo(234) ;
     }
 
-    osc_changeVersionTo(236) ;
+    if( osc_version() < 240 ) {
+        // We no longer use s_what column in /*TABLE_PREFIX*/t_item_description
+        $comm->query( sprintf('ALTER TABLE %st_item_description DROP COLUMN s_what', DB_TABLE_PREFIX) ) ;
 
-    if(Params::getParam('action') == '') {
-        $title   = 'OSClass &raquo; Updated correctly' ;
-        $message = 'OSClass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>';
-        osc_die($title, $message) ;
+        @unlink(osc_admin_base_path()."/themes/modern/tools/images.php");
+        
+        // NEW REWRITE
+        // Uncomment the unlink line prior to release
+        //@unlink(osc_base_path()."generate_rules.php");
+        osc_set_preference('rewrite_item_url', 'item/{ITEM_ID}/{ITEM_TITLE}');
+        osc_set_preference('rewrite_cat_url', '{CATEGORIES}/');
+        osc_set_preference('rewrite_page_url', 'page/{PAGE_SLUG}');
+        osc_set_preference('rewrite_search_url', 'search/');
+        osc_set_preference('rewrite_search_country', 'country');
+        osc_set_preference('rewrite_search_region', 'region');
+        osc_set_preference('rewrite_search_city', 'city');
+        osc_set_preference('rewrite_search_city_area', 'cityarea');
+        osc_set_preference('rewrite_search_category', 'category');
+        osc_set_preference('rewrite_search_user', 'user');
+        osc_set_preference('rewrite_search_pattern', 'pattern');
+        osc_set_preference('rewrite_contact', 'contact');
+        osc_set_preference('rewrite_feed', 'feed');
+        osc_set_preference('rewrite_language', 'language');
+        osc_set_preference('rewrite_item_mark', 'item/mark');
+        osc_set_preference('rewrite_item_send_friend', 'item/send-friend');
+        osc_set_preference('rewrite_item_contact', 'item/contact');
+        osc_set_preference('rewrite_item_new', 'item/new');
+        osc_set_preference('rewrite_item_activate', 'item/activate');
+        osc_set_preference('rewrite_item_edit', 'item/edit');
+        osc_set_preference('rewrite_item_delete', 'item/delete');
+        osc_set_preference('rewrite_item_resource_delete', 'item/resource/delete');
+        osc_set_preference('rewrite_user_login', 'user/login');
+        osc_set_preference('rewrite_user_dashboard', 'user/dashboard');
+        osc_set_preference('rewrite_user_logout', 'user/logout');
+        osc_set_preference('rewrite_user_register', 'user/register');
+        osc_set_preference('rewrite_user_activate', 'user/activate');
+        osc_set_preference('rewrite_user_activate_alert', 'user/activate_alert');
+        osc_set_preference('rewrite_user_profile', 'user/profile');
+        osc_set_preference('rewrite_user_items', 'user/items');
+        osc_set_preference('rewrite_user_alerts', 'user/alerts');
+        osc_set_preference('rewrite_user_recover', 'user/recover');
+        osc_set_preference('rewrite_user_forgot', 'user/forgot');
+        osc_set_preference('rewrite_user_change_password', 'user/change_password');
+        osc_set_preference('rewrite_user_change_email', 'user/change_email');
+        osc_set_preference('rewrite_user_change_email_confirm', 'user/change_email_confirm');
+
+        osc_set_preference('last_version_check', time());
+        osc_set_preference('update_core_json', '');
+        
+        $update_dt_expiration = sprintf('update %st_item as a 
+                    left join %st_category  as b on b.pk_i_id = a.fk_i_category_id
+                    set a.dt_expiration = date_add(a.dt_pub_date, INTERVAL b.i_expiration_days DAY) 
+                    where b.i_expiration_days > 0', DB_TABLE_PREFIX, DB_TABLE_PREFIX );
+        $comm->query( $update_dt_expiration ) ;
+      
+        // we need populate location table stats
+        $rs = $comm->query( sprintf('SELECT pk_c_code FROM %st_country', DB_TABLE_PREFIX) );
+        $aCountry = $rs->result();
+        foreach($aCountry as $country) {
+            // insert into country_stats with i_num_items = 0
+            $comm->query( sprintf('INSERT INTO %st_country_stats (fk_c_country_code, i_num_items) VALUES (\'%s\', 0)', DB_TABLE_PREFIX, $country['pk_c_code']) ) ;
+            $rs = $comm->query( sprintf('SELECT pk_i_id FROM %st_region WHERE fk_c_country_code = \'%s\'', DB_TABLE_PREFIX, $country['pk_c_code']) ); 
+            $aRegion = $rs->result();
+            foreach($aRegion as $region) {
+                // insert into region_stats with i_num_items = 0
+                $comm->query( sprintf('INSERT INTO %st_region_stats (fk_i_region_id, i_num_items) VALUES (%s, 0)', DB_TABLE_PREFIX, $region['pk_i_id']) ) ;
+                $rs = $comm->query( sprintf('SELECT pk_i_id FROM %st_city WHERE fk_i_region_id = %s', DB_TABLE_PREFIX, $region['pk_i_id']) ); 
+                $aCity = $rs->result();
+                foreach($aCity as $city) {
+                    // insert into city_stats with i_num_items = 0
+                    $comm->query( sprintf('INSERT INTO %st_city_stats (fk_i_city_id, i_num_items) VALUES (%s, 0)', DB_TABLE_PREFIX, $city['pk_i_id']) ) ;
+                }
+            }
+        }
+        $url_location_stats = osc_base_admin_url(true)."?page=tools&action=locations";
+        $aMessages[] = '<p><b>'.__('You need to calculate locations stats, please go to admin panel, tools, recalculate location stats or click') .'  <a href="'.$url_location_stats.'">'.__('here').'</a></b></p>';
+        
+       
+        // update t_alerts - Search object serialized to json
+        $aAlerts = Alerts::newInstance()->findByType('HOURLY');
+        foreach($aAlerts as $hourly) {
+            convertAlert($hourly);
+        }
+        unset($aAlerts);
+        
+        $aAlerts = Alerts::newInstance()->findByType('DAILY');
+        foreach($aAlerts as $daily) {
+            convertAlert($daily);
+        }
+        unset($aAlerts);
+
+        $aAlerts = Alerts::newInstance()->findByType('WEEKLY');
+        foreach($aAlerts as $weekly) { 
+            convertAlert($weekly);
+        }
+        unset($aAlerts);
+    } 
+        
+    osc_changeVersionTo(240) ;
+    
+    echo '<div style="border: 1px solid rgb(204, 204, 204); background: none repeat scroll 0% 0% rgb(238, 238, 238);"> <div style="padding: 20px;">';
+    echo '<p>'.__('OSClass &raquo; Updated correctly').'</p>' ;
+    echo '<p>'.__('OSClass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
+    foreach($aMessages as $msg){
+        echo "<p>".$msg."</p>";
     }
-
+    echo "</div></div>";
+    
+    /**
+     * Convert alerts < 2.4, updating s_search with json encoded to based64.
+     *
+     * @param string $alert base64+serialized
+     */
+    function convertAlert($alert)
+    {
+        // decode search model
+        $data = base64_decode($alert['s_search']);
+        if (is_serialized($data)) { // don't attempt to unserialize data that wasn't serialized going in
+            $data = unserialize($data);
+            // if search model, convert alert
+            if(get_class($data) == 'Search') {
+                // insert new alert with json 
+                $aCondition = array(
+                    's_email'       => $alert['s_email'],
+                    'b_active'      => $alert['b_active'],
+                    'e_type'        => $alert['e_type']
+                );
+                if($alert['fk_i_user_id']!='') {
+                    $aCondition['fk_i_user_id'] = (int)$alert['fk_i_user_id'];
+                }
+                if($alert['s_secret']!='') {
+                    $aCondition['s_secret']     = $alert['s_secret']; 
+                }
+                
+                Alerts::newInstance()->update(array('s_search' => base64_encode($json)), $aCondition);
+            }
+        }
+    }
 ?>

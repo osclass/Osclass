@@ -19,6 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 define('OSCLASS_VERSION', '2.3.6') ;
 
 if( !defined('ABS_PATH') ) {
@@ -101,6 +102,7 @@ require_once LIB_PATH . 'osclass/core/Cookie.php';
 require_once LIB_PATH . 'osclass/core/Session.php';
 require_once LIB_PATH . 'osclass/core/View.php';
 require_once LIB_PATH . 'osclass/core/BaseModel.php';
+require_once LIB_PATH . 'osclass/core/AdminBaseModel.php';
 require_once LIB_PATH . 'osclass/core/SecBaseModel.php';
 require_once LIB_PATH . 'osclass/core/WebSecBaseModel.php';
 require_once LIB_PATH . 'osclass/core/AdminSecBaseModel.php';
@@ -123,6 +125,7 @@ require_once LIB_PATH . 'osclass/model/Cron.php';
 require_once LIB_PATH . 'osclass/model/Category.php';
 require_once LIB_PATH . 'osclass/model/CategoryStats.php';
 require_once LIB_PATH . 'osclass/model/City.php';
+require_once LIB_PATH . 'osclass/model/CityArea.php';
 require_once LIB_PATH . 'osclass/model/Country.php';
 require_once LIB_PATH . 'osclass/model/Currency.php';
 require_once LIB_PATH . 'osclass/model/OSCLocale.php';
@@ -142,6 +145,12 @@ require_once LIB_PATH . 'osclass/model/LatestSearches.php';
 require_once LIB_PATH . 'osclass/model/SiteInfo.php';
 require_once LIB_PATH . 'osclass/model/Field.php';
 require_once LIB_PATH . 'osclass/model/Log.php';
+require_once LIB_PATH . 'osclass/model/CountryStats.php';
+require_once LIB_PATH . 'osclass/model/RegionStats.php';
+require_once LIB_PATH . 'osclass/model/CityStats.php';
+
+require_once LIB_PATH . 'osclass/model/LocationsTmp.php';
+
 require_once LIB_PATH . 'osclass/classes/Cache.php';
 require_once LIB_PATH . 'osclass/classes/ImageResizer.php';
 require_once LIB_PATH . 'osclass/classes/RSSFeed.php';

@@ -1,1 +1,1 @@
-<?php /* Frakkin toaster */ ?>
+<?php /* So say we all */ ?>

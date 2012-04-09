@@ -20,18 +20,48 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+/**
+ * check if the item is expired 
+ */
+function osc_isExpired($dt_expiration) {
+    $now       = date("Ymdhis");
+    
+    $dt_expiration = str_replace(' ', '', $dt_expiration);
+    $dt_expiration = str_replace('-', '', $dt_expiration);
+    $dt_expiration = str_replace(':', '', $dt_expiration);
+
+    if ($dt_expiration > $now) { 
+        return false;
+    } else {
+        return true;
+    }
+}
 /**
  * Remove resources from disk
  * @param <type> $id
+ * @param boolean $admin
  * @return boolean
  */
-function osc_deleteResource( $id ) {
+function osc_deleteResource( $id , $admin) {
     if( is_array( $id ) ){
         $id = $id[0];
     }
     $resource = ItemResource::newInstance()->findByPrimaryKey($id) ;
     if( !is_null($resource) ){
-        Log::newInstance()->insertLog('item', 'delete resource', $resource['pk_i_id'], $id, osc_is_admin_user_logged_in()?'admin':'user', osc_is_admin_user_logged_in() ? osc_logged_admin_id() : osc_logged_user_id()) ;
+        Log::newInstance()->insertLog('item', 'delete resource', $resource['pk_i_id'], $id, $admin?'admin':'user', $admin ? osc_logged_admin_id() : osc_logged_user_id()) ;
+        
+        $backtracel = '';
+        foreach(debug_backtrace() as $k=>$v){
+            if($v['function'] == "include" || $v['function'] == "include_once" || $v['function'] == "require_once" || $v['function'] == "require"){
+                $backtracel .= "#".$k." ".$v['function']."(".$v['args'][0].") called@ [".$v['file'].":".$v['line']."] / ";
+            }else{
+                $backtracel .= "#".$k." ".$v['function']." called@ [".$v['file'].":".$v['line']."] / ";
+            }
+        }
+        
+        Log::newInstance()->insertLog('item', 'delete resource backtrace', $resource['pk_i_id'], $backtracel, $admin?'admin':'user', $admin ? osc_logged_admin_id() : osc_logged_user_id()) ;
+
         @unlink(osc_base_path() . $resource['s_path'] .$resource['pk_i_id'].".".$resource['s_extension']);
         @unlink(osc_base_path() . $resource['s_path'] .$resource['pk_i_id']."_original.".$resource['s_extension']);
         @unlink(osc_base_path() . $resource['s_path'] .$resource['pk_i_id']."_thumbnail.".$resource['s_extension']);
@@ -834,32 +864,32 @@ function osc_change_permissions( $dir = ABS_PATH ) {
     clearstatcache();
     if ($dh = opendir($dir)) {
         while (($file = readdir($dh)) !== false) {
-            if($file!="." && $file!="..") {
+            if($file!="." && $file!=".." && substr($file,0,1)!="." ) {
                 if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
                     if(!is_writable(str_replace("//", "/", $dir . "/" . $file))) {
                         $res = @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
                     }
-                    if(!$res) { return false; };
+                    if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
                     if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/themes")) {
                         if($file=="modern" || $file=="index.php") {
                             $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                            if(!$res) { return false; };
+                            if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/plugins")) {
                         if($file=="google_maps" || $file=="google_analytics" || $file=="index.php") {
                             $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                            if(!$res) { return false; };
+                            if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/languages")) {
                         if($file=="en_US" || $file=="index.php") {
                             $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                            if(!$res) { return false; };
+                            if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/downloads")) {
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/uploads")) {
                     } else {
-                        $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                        if(!$res) { return false; };
+                        $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file)); 
+                        if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
                     }
                 } else {
                     if(!is_writable(str_replace("//", "/", $dir . "/" . $file))) {
@@ -874,7 +904,6 @@ function osc_change_permissions( $dir = ABS_PATH ) {
     }
     return true;
 }
-
 
 function osc_save_permissions( $dir = ABS_PATH ) {
     $perms = array();

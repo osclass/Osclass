@@ -119,12 +119,42 @@
      * Formats the date using the appropiate format.
      *
      * @param string $date
+     * @return string
      */
     function osc_format_date($date) {
-        //$date = strtotime($item['dt_pub_date']) ;
-        return date(osc_date_format(), strtotime($date)) ;
+        
+        $month = array('', __('January'), __('February'), __('March'), __('April'), __('May'), __('June'), __('July'), __('August'), __('September'), __('October'), __('November'), __('December'));
+        $month_short = array('', __('Jan'), __('Feb'), __('Mar'), __('Apr'), __('May'), __('Jun'), __('Jul'), __('Aug'), __('Sep'), __('Oct'), __('Nov'), __('Dec'));
+        $day = array('', __('Sunday'), __('Monday'), __('Tuesday'), __('Wednesday'), __('Thursday'), __('Friday'), __('Saturday'));
+        $day_short = array('', __('Sun'), __('Mon'), __('Tue'), __('Wed'), __('Thu'), __('Fri'), __('Sat'));
+        $ampm = array('AM' => __('AM'), 'PM' => __('PM'), 'am' => __('am'), 'pm' => __('pm'));
+
+        
+        $time = strtotime($date);
+        $dateformat = osc_date_format();
+        $dateformat = preg_replace('|(?<!\\\)F|', osc_escape_string($month[date('n', $time)]), $dateformat);
+        $dateformat = preg_replace('|(?<!\\\)M|', osc_escape_string($month_short[date('n', $time)]), $dateformat);
+        $dateformat = preg_replace('|(?<!\\\)l|', osc_escape_string($day[date('N', $time)]), $dateformat);
+        $dateformat = preg_replace('|(?<!\\\)D|', osc_escape_string($day_short[date('N', $time)]), $dateformat);
+        $dateformat = preg_replace('|(?<!\\\)A|', osc_escape_string($ampm[date('A', $time)]), $dateformat);
+        $dateformat = preg_replace('|(?<!\\\)a|', osc_escape_string($ampm[date('a', $time)]), $dateformat);
+        return date($dateformat, $time);
     }
 
+    
+    /**
+     * Scapes letters and numbers of a string
+     *
+     * @since 2.4
+     * @param string $string
+     * @return string
+     */
+    function osc_escape_string($string) {
+        $string = preg_replace('/^([0-9])/', '\\\\\\\\\1', $string);
+        $string = preg_replace('/([a-z])/i', '\\\\\1', $string);
+        return $string;
+    }    
+    
     /**
      * Prints the user's account menu
      *
@@ -172,7 +202,6 @@
      * @return string
      */
     function osc_highlight($txt, $len = 300, $start_tag = '<strong>', $end_tag = '</strong>') {
-
         if (strlen($txt) > $len) {
             $txt = mb_substr($txt, 0, $len, 'utf-8') . "..." ;
         }
@@ -181,7 +210,7 @@
         $query = trim(preg_replace('/\s\s+/', ' ', $query)) ;
         $aQuery = explode(' ', $query) ;
         foreach ($aQuery as $word) {
-            $txt = str_replace($word, $start_tag . $word. $end_tag, $txt) ;
+            $txt = preg_replace("/($word)/i", $start_tag . "$01". $end_tag, $txt) ;
         }
         return $txt ;
     }

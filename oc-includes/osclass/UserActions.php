@@ -37,11 +37,11 @@
                 }
             }
 
-            if( Params::getParam('s_password') == '' ) {
+            if( Params::getParam('s_password', false, false) == '' ) {
                 return 6 ;
             }
 
-            if( Params::getParam('s_password') != Params::getParam('s_password2') ) {
+            if( Params::getParam('s_password', false, false) != Params::getParam('s_password2', false, false) ) {
                 return 7 ;
             }
 
@@ -118,6 +118,8 @@
                     $this->manager->updateDescription($userId, $key, $value) ;
                 }
             }
+
+            osc_run_hook('user_edit_completed', $userId) ;
 
             if ( $this->is_admin ) {
                 $iUpdated = 0 ;
@@ -199,13 +201,13 @@
             if ( $this->is_admin || $is_add ) {
                 $input['s_email'] = Params::getParam('s_email') ;
 
-                if( Params::getParam('s_password') != Params::getParam('s_password2') ) {
+                if( Params::getParam('s_password', false, false) != Params::getParam('s_password2', false, false) ) {
                     return 1 ;
                 }
 
                 //if we want to change the password
-                if( Params::getParam('s_password') != '') {
-                    $input['s_password'] = sha1( Params::getParam('s_password') ) ;
+                if( Params::getParam('s_password', false, false) != '') {
+                    $input['s_password'] = sha1( Params::getParam('s_password', false, false) ) ;
                 }
             }
 
@@ -353,6 +355,23 @@
             }
 
             return true ;
+        }
+
+        public function resend_activation($user_id)
+        {
+            $user = $this->manager->findByPrimaryKey($user_id) ;
+            $input['s_secret'] = $user['s_secret'];
+
+            if( !$user  || $user['b_active']==0) {
+                return 0 ;
+            }
+
+            if( osc_user_validation_enabled() ) {
+                osc_run_hook('hook_email_user_validation', $user, $input) ;
+                return 1 ;
+            }
+
+            return 0 ;
         }
 
         public function bootstrap_login($user_id)

@@ -31,10 +31,10 @@
     require_once ABS_PATH . 'oc-includes/osclass/compatibility.php';
     require_once ABS_PATH . 'config.php';
 
-    $old_passwd   = Params::getParam('old_password');
+    $old_passwd   = Params::getParam('old_password', false, false);
     $id_admin     = Params::getParam('id');
     $new_username = Params::getParam('new_username');
-    $new_passwd   = Params::getParam('new_password');
+    $new_passwd   = Params::getParam('new_password', false, false);
     $response     = array('error' => 'Operation fail');
 
     $mAdmin = Admin::newInstance();

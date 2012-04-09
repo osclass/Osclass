@@ -69,7 +69,18 @@
             $this->dao->where('pk_c_code', $code) ;
             $this->dao->where('fk_c_locale_code', osc_current_user_locale()) ;
             $result = $this->dao->get() ;
-            return $result->row();
+            
+            $data = $result->row();
+            if(isset($data['s_name']) && $data['s_name']!=''){
+                return $data;
+            } 
+            
+            $this->dao->select('*') ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where('pk_c_code', $code) ;
+            $result = $this->dao->get() ;
+            
+            return $result->row(); 
         }
 
         /**
