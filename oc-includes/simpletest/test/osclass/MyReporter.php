@@ -104,7 +104,7 @@ class MyReporter extends SimpleReporter {
         $talker_text = $body;
         $body .= "<br/>";
         $body .= $this->fails;
-        mail("testing@osclass.org", $subject." _mail_", $body);
+        //mail("testing@osclass.org", $subject." _mail_", $body);
         
         require(dirname(__FILE__)."/config_test.php");
         if($talker_room!='' && $talker_token!='') {

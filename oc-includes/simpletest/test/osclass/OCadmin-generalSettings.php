@@ -78,6 +78,31 @@ class OCadmin_generalSettings extends OCadminTest {
 
         $this->assertTrue($this->selenium->isTextPresent("Media config has been updated"), "Media tab, update.");
 
+        // change values to some test-defined ones
+        $this->selenium->type('maxSizeKb'   , 'ads');
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue($this->selenium->isTextPresent("Maximun size: this field has to be numeric only"), "Media tab JS, update.");
+        $this->selenium->type('maxSizeKb'   , '500');
+        $this->selenium->type('dimThumbnail', 'bsg');
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue($this->selenium->isTextPresent("Thumbnail size: is not in the correct format"), "Media tab JS, update.");
+        $this->selenium->type('dimThumbnail', '10x10');
+        $this->selenium->type('dimPreview'  , 'cylon');
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue($this->selenium->isTextPresent("Preview size: is not in the correct format"), "Media tab JS, update.");
+        $this->selenium->type('dimPreview'  , '50x50');
+        $this->selenium->type('dimNormal'   , 'adama');
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue($this->selenium->isTextPresent("Normal size: is not in the correct format"), "Media tab JS, update.");
+        $this->selenium->type('dimNormal'   , '100x100');
+        $this->selenium->click("//input[@type='submit']");
+
+        $this->assertTrue($this->selenium->isTextPresent("Media config has been updated"), "Media tab, update.");
+
         $this->assertEqual( $this->selenium->getValue("maxSizeKb")      , '500', 'Media tab, check maxSizeKb');
         $this->assertEqual( $this->selenium->getValue('allowedExt')     , 'ext,deg,osc', 'Media tab, check allowedExt ext,deg,osc');
         $this->assertEqual( $this->selenium->getValue('dimThumbnail')   , '10x10', 'Media tab, check dimThumnai 10x10');
