@@ -99,7 +99,7 @@
                     $this->http_referer = $ref_match[1];
                     $_SERVER['REQUEST_URI'] = preg_replace('|[\?&]{1}http_referer=(.*)$|', "", urldecode($_SERVER['REQUEST_URI']));
                 }
-                $request_uri = preg_replace('@^' . REL_WEB_URL . '@', "", $_SERVER['REQUEST_URI']);
+                $request_uri = preg_replace('@^' . REL_WEB_URL . '@', "", urldecode($_SERVER['REQUEST_URI']));
                 if(osc_rewrite_enabled()) {
                     $this->extractParams($request_uri);
                     $tmp_ar = explode("?", $request_uri);

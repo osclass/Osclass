@@ -23,7 +23,7 @@ class Frontend_items extends FrontendTest {
         
         $this->insertItem($item['catId'], $item['title'], 
                                 $item['description'], $item['price'],
-                                $item['regionId'], $item['cityId'], 
+                                $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'], 
                                 $this->_email);
         $this->assertTrue($this->selenium->isTextPresent("Your item has been published"),"Items, insert item, no user, no validation.") ;
@@ -31,13 +31,13 @@ class Frontend_items extends FrontendTest {
         $uSettings->set_moderate_items(111);
         $this->insertItem($item['catId'], $item['title'], 
                                 $item['description'], $item['price'],
-                                $item['regionId'], $item['cityId'], 
+                                $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'], 
                                 $this->_email);
         $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address"),"Items, insert item, no user, with validation.") ;
         
         $uSettings->set_reg_user_post(1);
-        $this->selenium->open( osc_base_url(true) );
+        $this->selenium->open( osc_base_url() );
         $this->selenium->click("link=Publish your ad for free");
         $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue($this->selenium->isTextPresent("Only registered users are allowed to post items"), "Items, insert item, no user, can't publish");
@@ -83,7 +83,7 @@ class Frontend_items extends FrontendTest {
         $old_logged_user_item_validation = $uSettings->set_logged_user_item_validation(1);
         $this->insertItem($item['catId'], $item['title'], 
                                 $item['description'], $item['price'],
-                                $item['regionId'], $item['cityId'], 
+                                $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'], 
                                 $this->_email);
         $this->assertTrue($this->selenium->isTextPresent("Your item has been published"),"insert ad error ") ;
@@ -91,7 +91,7 @@ class Frontend_items extends FrontendTest {
         $uSettings->set_logged_user_item_validation(0);
         $this->insertItem($item['catId'], $item['title'], 
                                 $item['description'], $item['price'],
-                                $item['regionId'], $item['cityId'], 
+                                $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'], 
                                 $this->_email);
         $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address"),"Need validation but message don't appear")   ;
@@ -109,7 +109,7 @@ class Frontend_items extends FrontendTest {
      */
     function testEditUserItemBadId()
     {
-        $this->selenium->open( osc_base_url(true) . "?page=item&action=item_edit&id=9999" );
+        $this->selenium->open( osc_item_edit_url('', '9999') );
         $this->assertTrue($this->selenium->isTextPresent("Sorry, we don't have any items with that ID"));
     }
 
@@ -120,7 +120,7 @@ class Frontend_items extends FrontendTest {
     {
         $this->loginWith();
         
-        $this->selenium->open( osc_base_url(true) );
+        $this->selenium->open( osc_base_url() );
         $this->selenium->click("link=My account");
         $this->selenium->waitForPageToLoad("30000");
         $this->selenium->click("xpath=//ul/li/a[text()='Manage your items']");
@@ -143,7 +143,7 @@ class Frontend_items extends FrontendTest {
         $uSettings = new utilSettings();
         $old_moderate_items = $uSettings->set_moderate_items(0);
         
-        $this->selenium->open( osc_base_url(true) );
+        $this->selenium->open( osc_base_url() );
         $this->selenium->click("link=My account");
         $this->selenium->waitForPageToLoad("30000");
         $this->selenium->click("xpath=//ul/li/a[text()='Manage your items']");
@@ -192,7 +192,7 @@ class Frontend_items extends FrontendTest {
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("3000");
         
-        $this->assertTrue(  $this->selenium->isTextPresent("Great! We've just updated your item") ,"Items, edit first item, without validation.");
+        $this->assertTrue( $this->selenium->isTextPresent("Great! We've just updated your item") ,"Items, edit first item, without validation." );
         
         $uSettings->set_moderate_items($old_moderate_items);
         
@@ -203,7 +203,7 @@ class Frontend_items extends FrontendTest {
     {
         $this->loginWith();
         
-        $this->selenium->open( osc_base_url(true) );
+        $this->selenium->open( osc_base_url() );
         $this->selenium->click("link=My account");
         $this->selenium->waitForPageToLoad("30000");
 
@@ -220,17 +220,14 @@ class Frontend_items extends FrontendTest {
             
             $numItems = $this->selenium->getXpathCount("//div[@class='item']/p/a[text()='Delete']");
             
-            $this->selenium->open( osc_base_url(true) );
+            $this->selenium->open( osc_base_url() );
             $this->selenium->click("link=My account");
             $this->selenium->waitForPageToLoad("30000");
 
             $this->selenium->click("xpath=//ul/li/a[text()='Manage your items']");
             $this->selenium->waitForPageToLoad("30000");
         }
-
         $this->removeUserByMail();
-
     }
-
 }
 ?>

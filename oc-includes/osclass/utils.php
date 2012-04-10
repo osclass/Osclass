@@ -340,93 +340,93 @@ function osc_sendMail($params) {
 
 function osc_mailBeauty($text, $params) {
 
-	$text = str_ireplace($params[0], $params[1], $text) ;
-	$kwords = array('{WEB_URL}', '{WEB_TITLE}', '{CURRENT_DATE}', '{HOUR}') ;
-	$rwords = array(osc_base_url(), osc_page_title(), date('Y-m-d H:i:s'), date('H:i')) ;
-	$text = str_ireplace($kwords, $rwords, $text) ;
+    $text = str_ireplace($params[0], $params[1], $text) ;
+    $kwords = array('{WEB_URL}', '{WEB_TITLE}', '{CURRENT_DATE}', '{HOUR}') ;
+    $rwords = array(osc_base_url(), osc_page_title(), date('Y-m-d H:i:s'), date('H:i')) ;
+    $text = str_ireplace($kwords, $rwords, $text) ;
     
-	return $text ;
+    return $text ;
 }
 
 
 function osc_copy($source, $dest, $options=array('folderPermission'=>0755,'filePermission'=>0755)) {
-	$result =true;
-	if (is_file($source)) {
-		if ($dest[strlen($dest)-1]=='/') {
-			if (!file_exists($dest)) {
-				cmfcDirectory::makeAll($dest,$options['folderPermission'],true);
-			}
-			$__dest=$dest."/".basename($source);
-		} else {
-			$__dest=$dest;
-		}
-		if(function_exists('copy')) {
+    $result =true;
+    if (is_file($source)) {
+        if ($dest[strlen($dest)-1]=='/') {
+            if (!file_exists($dest)) {
+                cmfcDirectory::makeAll($dest,$options['folderPermission'],true);
+            }
+            $__dest=$dest."/".basename($source);
+        } else {
+            $__dest=$dest;
+        }
+        if(function_exists('copy')) {
             $result = @copy($source, $__dest);
-		} else {
-			$result=osc_copyemz($source, $__dest);
-		}
-		@chmod($__dest,$options['filePermission']);
+        } else {
+            $result=osc_copyemz($source, $__dest);
+        }
+        @chmod($__dest,$options['filePermission']);
 
-	} elseif(is_dir($source)) {
-		if ($dest[strlen($dest)-1]=='/') {
-			if ($source[strlen($source)-1]=='/') {
-				//Copy only contents
-			} else {
-				//Change parent itself and its contents
-				$dest=$dest.basename($source);
-				@mkdir($dest);
-				@chmod($dest,$options['filePermission']);
-			}
-		} else {
-			if ($source[strlen($source)-1]=='/') {
-				//Copy parent directory with new name and all its content
-				@mkdir($dest,$options['folderPermission']);
-				@chmod($dest,$options['filePermission']);
-			} else {
-				//Copy parent directory with new name and all its content
-				@mkdir($dest,$options['folderPermission']);
-				@chmod($dest,$options['filePermission']);
-			}
-		}
+    } elseif(is_dir($source)) {
+        if ($dest[strlen($dest)-1]=='/') {
+            if ($source[strlen($source)-1]=='/') {
+                //Copy only contents
+            } else {
+                //Change parent itself and its contents
+                $dest=$dest.basename($source);
+                @mkdir($dest);
+                @chmod($dest,$options['filePermission']);
+            }
+        } else {
+            if ($source[strlen($source)-1]=='/') {
+                //Copy parent directory with new name and all its content
+                @mkdir($dest,$options['folderPermission']);
+                @chmod($dest,$options['filePermission']);
+            } else {
+                //Copy parent directory with new name and all its content
+                @mkdir($dest,$options['folderPermission']);
+                @chmod($dest,$options['filePermission']);
+            }
+        }
 
-		$dirHandle=opendir($source);
-		$result = true;
-		while($file=readdir($dirHandle)) {
-			if($file!="." && $file!="..") {
-				if(!is_dir($source."/".$file)) {
-					$__dest=$dest."/".$file;
-				} else {
-					$__dest=$dest."/".$file;
-				}
-				//echo "$source/$file ||| $__dest<br />";
-				$data = osc_copy($source."/".$file, $__dest, $options);
-				if($data==false) {
-				    $result = false;
-				}
-			}
-		}
-		closedir($dirHandle);
+        $dirHandle=opendir($source);
+        $result = true;
+        while($file=readdir($dirHandle)) {
+            if($file!="." && $file!="..") {
+                if(!is_dir($source."/".$file)) {
+                    $__dest=$dest."/".$file;
+                } else {
+                    $__dest=$dest."/".$file;
+                }
+                //echo "$source/$file ||| $__dest<br />";
+                $data = osc_copy($source."/".$file, $__dest, $options);
+                if($data==false) {
+                    $result = false;
+                }
+            }
+        }
+        closedir($dirHandle);
 
-	} else {
-		$result=true;
-	}
-	return $result;
+    } else {
+        $result=true;
+    }
+    return $result;
 }
 
 
 
 function osc_copyemz($file1,$file2){
-	$contentx =@file_get_contents($file1);
-	$openedfile = fopen($file2, "w");
-	fwrite($openedfile, $contentx);
-	fclose($openedfile);
-	if ($contentx === FALSE) {
-		$status=false;
-	} else {
-		$status=true;
-	}
+    $contentx =@file_get_contents($file1);
+    $openedfile = fopen($file2, "w");
+    fwrite($openedfile, $contentx);
+    fclose($openedfile);
+    if ($contentx === FALSE) {
+        $status=false;
+    } else {
+        $status=true;
+    }
                    
-	return $status;
+    return $status;
 } 
 
 /**
@@ -495,48 +495,37 @@ function osc_dbdump($path, $file) {
 }
 
 function osc_downloadFile($sourceFile, $downloadedFile) {
-    $iErrorReporting = error_reporting();
-    error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
-
     require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
 
-	@set_time_limit(0);
-	ini_set('display_errors',true);
-			
-	$fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
-	if($fp) {
-	    $ch = curl_init($sourceFile);
-	    @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
-	    curl_setopt($ch, CURLOPT_FILE, $fp);
-	    @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-	    curl_exec($ch);
-	    curl_close($ch);
-	    fclose($fp);
-        error_reporting($iErrorReporting);
-	    return true;
+    @set_time_limit(0);
+
+    $fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
+    if($fp) {
+        $ch = curl_init($sourceFile);
+        @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+        curl_setopt($ch, CURLOPT_FILE, $fp);
+        @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_exec($ch);
+        curl_close($ch);
+        fclose($fp);
+        return true;
     } else {
-        error_reporting($iErrorReporting);
         return false;
     }
 }
 
-
-function osc_file_get_contents($url){
-    $iErrorReporting = error_reporting();
-    error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
-
+function osc_file_get_contents($url) {
     require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
-    
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' OSClass (v.'.osc_version().')');
-    if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1);
+
+    $ch = curl_init() ;
+    curl_setopt($ch, CURLOPT_URL, $url) ;
+    curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' OSClass (v.' . osc_version() . ')') ;
+    if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1) ;
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
     $data = curl_exec($ch);
     curl_close($ch);
-
-    error_reporting($iErrorReporting);
 
     return $data;
 }
@@ -741,34 +730,33 @@ function osc_zip_folder($archive_folder, $archive_name) {
  */
 function _zip_folder_ziparchive($archive_folder, $archive_name) {
 
-	$zip = new ZipArchive;
-	if ($zip -> open($archive_name, ZipArchive::CREATE) === TRUE) {
-		$dir = preg_replace('/[\/]{2,}/', '/', $archive_folder."/");
-   
-		$dirs = array($dir);
-		while (count($dirs)) {
-			$dir = current($dirs);
-			$zip -> addEmptyDir(str_replace(ABS_PATH, '', $dir));
+    $zip = new ZipArchive;
+    if ($zip -> open($archive_name, ZipArchive::CREATE) === TRUE) {
+        $dir = preg_replace('/[\/]{2,}/', '/', $archive_folder."/");
+
+        $dirs = array($dir);
+        while (count($dirs)) {
+            $dir = current($dirs);
+            $zip -> addEmptyDir(str_replace(ABS_PATH, '', $dir));
       
-			$dh = opendir($dir);
-			while (false !== ($_file = readdir($dh))) {
-				
-				if ($_file != '.' && $_file != '..') {
-					if (is_file($dir.$_file)) {
-						$zip -> addFile($dir.$_file, str_replace(ABS_PATH, '', $dir.$_file));
-					} elseif (is_dir($dir.$_file)) {
-						$dirs[] = $dir.$_file."/";
-					}
-				}
-			}
-			closedir($dh);
-			array_shift($dirs);
-		}   
-		$zip -> close();
-		return true;
-	} else {
-		return false;
-	}
+            $dh = opendir($dir);
+            while (false !== ($_file = readdir($dh))) {
+                if ($_file != '.' && $_file != '..') {
+                    if (is_file($dir.$_file)) {
+                        $zip -> addFile($dir.$_file, str_replace(ABS_PATH, '', $dir.$_file));
+                    } elseif (is_dir($dir.$_file)) {
+                        $dirs[] = $dir.$_file."/";
+                    }
+                }
+            }
+            closedir($dh);
+            array_shift($dirs);
+        }
+        $zip -> close();
+        return true;
+    } else {
+        return false;
+    }
 
 }
 
@@ -786,7 +774,7 @@ function _zip_folder_pclzip($archive_folder, $archive_name) {
 
     $zip = new PclZip($archive_name);
     if($zip) {
-		$dir = preg_replace('/[\/]{2,}/', '/', $archive_folder."/");
+        $dir = preg_replace('/[\/]{2,}/', '/', $archive_folder."/");
    
         $v_dir = osc_base_path();
         $v_remove = $v_dir;

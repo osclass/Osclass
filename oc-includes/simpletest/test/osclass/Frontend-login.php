@@ -35,7 +35,7 @@ class Frontend_login extends FrontendTest {
         $this->assertTrue( $this->selenium->isTextPresent("Log in"), "Do Logout frontend." );
 
        // recover password
-        $this->selenium->open( osc_base_url(true) );
+        $this->selenium->open( osc_base_url() );
         $this->selenium->click("login_open");
         $this->selenium->click("link=Forgot password?");
         $this->selenium->waitForPageToLoad("30000");

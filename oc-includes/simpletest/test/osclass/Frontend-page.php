@@ -27,12 +27,14 @@ class Frontend_page extends FrontendTest {
             $pageId =  $page['pk_i_id'];
 
             // go directly with url
-            $this->selenium->open(osc_base_url(true) . "?page=page&id=$pageId");
+            View::newInstance()->_exportVariableToView('page', $page);
+            $url_page = osc_static_page_url();
+            $this->selenium->open($url_page);
             $this->selenium->waitForPageToLoad("30000");
             $this->assertTrue( $this->selenium->isTextPresent("TITLE NEW PAGE") , "Visit page, directly from url.");
 
             // go through footer
-            $this->selenium->open(osc_base_url(true));
+            $this->selenium->open( osc_base_url() );
             $this->selenium->click("link=TITLE NEW PAGE");
             $this->selenium->waitForPageToLoad("30000");
             $this->assertTrue( $this->selenium->isTextPresent("TITLE NEW PAGE") , "Visit page, through footer link");

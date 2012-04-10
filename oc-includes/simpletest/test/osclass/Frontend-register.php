@@ -117,12 +117,13 @@ class Frontend_register extends FrontendTest {
 
         $user = User::newInstance()->findByEmail($this->_email);
         // goto wrong validation link
-        $url_validate = osc_base_url(true) . "?page=register&action=validate&id=".$user['pk_i_id']."&code=1231231";
+        $url_validate = osc_user_activate_url($user['pk_i_id'], '1231231');
         $this->selenium->open( $url_validate );
         $this->selenium->waitForPageToLoad("1000");
         $this->assertTrue( $this->selenium->isTextPresent('regexpi:The link is not valid anymore. Sorry for the inconvenience!'), 'Validate user. Go to wrong user validation link.');
         // goto correct validation link
-        $url_validate = osc_base_url(true) . "?page=register&action=validate&id=".$user['pk_i_id']."&code=".$user['s_secret'];
+        
+        $url_validate = osc_user_activate_url($user['pk_i_id'], $user['s_secret']);
         $this->selenium->open( $url_validate );
         $this->selenium->waitForPageToLoad("1000");
         $this->assertTrue( $this->selenium->isTextPresent('regexpi:Your account has been validated'), 'Validate user. Go to user validation link.');

@@ -118,28 +118,40 @@
                                             $enabledBackoffice      = ($enabledBackoffice != '' ? true : false);
                                             $languageName           = strip_tags($languageName);
                                             $languageName           = trim($languageName);
-                                            if( $languageName == '' ) {
-                                                osc_add_flash_error_message( _m('Language name can\'t be empty'), 'admin');
-                                                $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
-                                            }
+
                                             $languageShortName      = strip_tags($languageShortName);
                                             $languageShortName      = trim($languageShortName);
-                                            if ($languageShortName == '') {
-                                                osc_add_flash_error_message( _m('Language short name can\'t be empty'), 'admin');
-                                                $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
-                                            }
+
                                             $languageDescription    = strip_tags($languageDescription);
                                             $languageDescription    = trim($languageDescription);
-                                            if ($languageDescription == '') {
-                                                osc_add_flash_error_message( _m('Language description can\'t be empty'), 'admin');
-                                                $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
-                                            }
+
                                             $languageCurrencyFormat = strip_tags($languageCurrencyFormat);
                                             $languageCurrencyFormat = trim($languageCurrencyFormat);
                                             $languageDateFormat     = strip_tags($languageDateFormat);
                                             $languageDateFormat     = trim($languageDateFormat);
                                             $languageStopWords      = strip_tags($languageStopWords);
                                             $languageStopWords      = trim($languageStopWords);
+                                            
+                                            $msg = '';
+                                            if(!osc_validate_text($languageName)) {
+                                                $msg .= _m("Language name field is required")."<br/>";
+                                            }
+                                            if(!osc_validate_text($languageShortName)) {
+                                                $msg .= _m("Language short name field is required")."<br/>";
+                                            }
+                                            if(!osc_validate_text($languageDescription)) {
+                                                $msg .= _m("Language description field is required")."<br/>";
+                                            }
+                                            if(!osc_validate_text($languageCurrencyFormat)) {
+                                                $msg .= _m("Currency format field is required")."<br/>";
+                                            }
+                                            if(!osc_validate_int($languageNumDec)) {
+                                                $msg .= _m("Number of decimals has to be numeric only")."<br/>";
+                                            }
+                                            if($msg!='') {
+                                                osc_add_flash_error_message( $msg, 'admin');
+                                                $this->redirectTo(osc_admin_base_url(true) . '?page=languages&action=edit&id='.$languageCode);
+                                            }
 
                                             $array = array('b_enabled'         => $enabledWebstie
                                                           ,'b_enabled_bo'      => $enabledBackoffice

@@ -9,7 +9,7 @@ class Frontend_contactForm extends FrontendTest {
 
     function testContact()
     {
-        $this->selenium->open(osc_base_url(true));
+        $this->selenium->open( osc_contact_url() );
         $this->selenium->click("link=Contact");
         $this->selenium->waitForPageToLoad("30000");
         $this->selenium->type("subject", "subject");
