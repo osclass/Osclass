@@ -1376,24 +1376,24 @@ HTACCESS;
                                         
                                             
                                         $msg = '';
-                                        if(osc_validate_text($sPageTitle)) {
+                                        if(!osc_validate_text($sPageTitle)) {
                                             $msg .= _m("Page title field is required")."<br/>";
                                         }
-                                        if(osc_validate_text($sContactEmail)) {
+                                        if(!osc_validate_text($sContactEmail)) {
                                             $msg .= _m("Contact email field is required")."<br/>";
                                         }
-                                        if(osc_validate_int($sNumRssItems)) {
+                                        if(!osc_validate_int($sNumRssItems)) {
                                             $msg .= _m("Number of RSS items has to be numeric only")."<br/>";
                                         }
-                                        if(osc_validate_int($maxLatestItems)) {
+                                        if(!osc_validate_int($maxLatestItems)) {
                                             $msg .= _m("Max latest items has to be numeric only")."<br/>";
                                         }
-                                        if(osc_validate_int($numItemsSearch)) {
+                                        if(!osc_validate_int($numItemsSearch)) {
                                             $msg .= _m("Number of items on search has to be numeric only")."<br/>";
                                         }
                                         if($msg!='') {
                                             osc_add_flash_error_message( $msg, 'admin');
-                                            $this->redirectTo(osc_admin_base_url(true) . '?page=languages&action=edit&id='.$languageCode);
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings');
                                         }
 
                                         
