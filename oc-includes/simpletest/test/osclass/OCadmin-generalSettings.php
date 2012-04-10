@@ -66,6 +66,28 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
 
         // change values to some test-defined ones
+        $this->selenium->type('maxSizeKb'   , 'ads');
+        $this->selenium->type('dimThumbnail', 'bsg');
+        $this->selenium->type('dimPreview'  , 'cylon');
+        $this->selenium->type('dimNormal'   , 'adama');
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue($this->selenium->isTextPresent("Maximun size: this field has to be numeric only"), "Media tab JS, update.");
+        $this->assertTrue($this->selenium->isTextPresent("Thumbnail size: is not in the correct format"), "Media tab JS, update.");
+        $this->assertTrue($this->selenium->isTextPresent("Preview size: is not in the correct format"), "Media tab JS, update.");
+        $this->assertTrue($this->selenium->isTextPresent("Normal size: is not in the correct format"), "Media tab JS, update.");
+
+        $this->selenium->type('maxSizeKb'   , '');
+        $this->selenium->type('dimThumbnail', '');
+        $this->selenium->type('dimPreview'  , '');
+        $this->selenium->type('dimNormal'   , '');
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue($this->selenium->isTextPresent("Maximun size: this field is required"), "Media tab JS, update.");
+        $this->assertTrue($this->selenium->isTextPresent("Thumbnail size: this field is required"), "Media tab JS, update.");
+        $this->assertTrue($this->selenium->isTextPresent("Preview size: this field is required"), "Media tab JS, update.");
+        $this->assertTrue($this->selenium->isTextPresent("Normal size: this field is required"), "Media tab JS, update.");
+        
         $this->selenium->type('maxSizeKb'   , '500');
         $this->selenium->type('allowedExt'  , 'ext,deg,osc');
         $this->selenium->type('dimThumbnail', '10x10');
@@ -78,37 +100,12 @@ class OCadmin_generalSettings extends OCadminTest {
 
         $this->assertTrue($this->selenium->isTextPresent("Media config has been updated"), "Media tab, update.");
 
-        // change values to some test-defined ones
-        $this->selenium->type('maxSizeKb'   , 'ads');
-        $this->selenium->click("//input[@type='submit']");
-        sleep(4);
-        $this->assertTrue($this->selenium->isTextPresent("Maximun size: this field has to be numeric only"), "Media tab JS, update.");
-        $this->selenium->type('maxSizeKb'   , '500');
-        $this->selenium->type('dimThumbnail', 'bsg');
-        $this->selenium->click("//input[@type='submit']");
-        sleep(4);
-        $this->assertTrue($this->selenium->isTextPresent("Thumbnail size: is not in the correct format"), "Media tab JS, update.");
-        $this->selenium->type('dimThumbnail', '10x10');
-        $this->selenium->type('dimPreview'  , 'cylon');
-        $this->selenium->click("//input[@type='submit']");
-        sleep(4);
-        $this->assertTrue($this->selenium->isTextPresent("Preview size: is not in the correct format"), "Media tab JS, update.");
-        $this->selenium->type('dimPreview'  , '50x50');
-        $this->selenium->type('dimNormal'   , 'adama');
-        $this->selenium->click("//input[@type='submit']");
-        sleep(4);
-        $this->assertTrue($this->selenium->isTextPresent("Normal size: is not in the correct format"), "Media tab JS, update.");
-        $this->selenium->type('dimNormal'   , '100x100');
-        $this->selenium->click("//input[@type='submit']");
-
-        $this->assertTrue($this->selenium->isTextPresent("Media config has been updated"), "Media tab, update.");
-
         $this->assertEqual( $this->selenium->getValue("maxSizeKb")      , '500', 'Media tab, check maxSizeKb');
         $this->assertEqual( $this->selenium->getValue('allowedExt')     , 'ext,deg,osc', 'Media tab, check allowedExt ext,deg,osc');
         $this->assertEqual( $this->selenium->getValue('dimThumbnail')   , '10x10', 'Media tab, check dimThumnai 10x10');
         $this->assertEqual( $this->selenium->getValue('dimPreview')     , '50x50' , 'Media tab, check dimPreview 50x50');
         $this->assertEqual( $this->selenium->getValue('dimNormal')      , '100x100', 'Media tab, check dimNormal 100x100');
-        $this->assertEqual( $this->selenium->getValue('keep_original_image'), 'off', 'Media tab, check keep_original_image');
+        $this->assertEqual( $this->selenium->getValue('keep_original_image'), $keep_original_image=='off'?'on':'off', 'Media tab, check keep_original_image');
 
         $this->selenium->type('maxSizeKb'   , $maxSizeKb);
         $this->selenium->type('allowedExt'  , $allowedExt);
@@ -127,7 +124,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->assertEqual( $this->selenium->getValue('dimThumbnail')   , $dimThumbnail);
         $this->assertEqual( $this->selenium->getValue('dimPreview')     , $dimPreview);
         $this->assertEqual( $this->selenium->getValue('dimNormal')      , $dimNormal);
-        $this->assertEqual( $this->selenium->getValue('keep_original_image'), 'on');
+        $this->assertEqual( $this->selenium->getValue('keep_original_image'), $keep_original_image);
     }
     
     /*
