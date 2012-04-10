@@ -133,19 +133,19 @@
                                             $languageStopWords      = trim($languageStopWords);
                                             
                                             $msg = '';
-                                            if(osc_validate_text($languageName)) {
+                                            if(!osc_validate_text($languageName)) {
                                                 $msg .= _m("Language name field is required")."<br/>";
                                             }
-                                            if(osc_validate_text($languageShortName)) {
+                                            if(!osc_validate_text($languageShortName)) {
                                                 $msg .= _m("Language short name field is required")."<br/>";
                                             }
-                                            if(osc_validate_text($languageDescription)) {
+                                            if(!osc_validate_text($languageDescription)) {
                                                 $msg .= _m("Language description field is required")."<br/>";
                                             }
-                                            if(osc_validate_text($languageCurrencyFormat)) {
+                                            if(!osc_validate_text($languageCurrencyFormat)) {
                                                 $msg .= _m("Currency format field is required")."<br/>";
                                             }
-                                            if(osc_validate_int($languageNumDec)) {
+                                            if(!osc_validate_int($languageNumDec)) {
                                                 $msg .= _m("Number of decimals has to be numeric only")."<br/>";
                                             }
                                             if($msg!='') {
