@@ -59,7 +59,7 @@ abstract class FrontendTest extends WebTestCase {
         echo "< ".$this->selenium->getText('//*[@id="FlashMessage"]')." ><br>";
         
         $user = User::newInstance()->findByEmail($mail);
-        return $user['pk_i_id'];
+        return @$user['pk_i_id'];
     }
 
     /**
