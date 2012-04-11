@@ -8,15 +8,20 @@ ins {text-decoration: none;}
 del {text-decoration: line-through;}
 table {border-collapse: collapse;border-spacing: 0;}
 input:focus { outline:none; }
-
+.clear{
+    clear: both;
+}
 /* adding/overwriting our styles over jQuery UI CSS Theme - dashboard */
-.sortable_div .ui-widget-content {
-	min-height: 200px;
-	height: auto;
-	margin: 5px 5px 20px 5px;
+.float50per{
+    min-height: 200px;
+    height: auto;
+    margin: 5px 5px 20px 5px;
     width: 48%;
     display: inline-block;
     float: left;
+}
+.sortable_div .ui-widget-content {
+	
 }
 
 .sortable_div .ui-state-default {
