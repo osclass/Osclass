@@ -12,7 +12,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Logout.
      */
 
-    function atestCrontab()
+    function testCrontab()
     {
         $uSettings = new utilSettings();
         
@@ -46,7 +46,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Update all inputs and check if change has been saved, update old configuration and check again.
      * Logout
      */
-    function atestMediatab()
+    function testMediatab()
     {
         $uSettings = new utilSettings();
         
@@ -65,7 +65,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("link=Media");
         $this->selenium->waitForPageToLoad("10000");
 
-        // change values to someatest-defined ones
+        // change values to sometest-defined ones
         $this->selenium->type('maxSizeKb'   , 'ads');
         $this->selenium->type('dimThumbnail', 'bsg');
         $this->selenium->type('dimPreview'  , 'cylon');
@@ -133,7 +133,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * update configuration and check and set old configuration again and check.
      * Logout.
      */
-    function atestMailServer()
+    function testMailServer()
     {
         $uSettings = new utilSettings();
         
@@ -206,7 +206,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Set akismet, recaptcha, check modifications
      * Logout
      */
-    function atestSpamAndBots()
+    function testSpamAndBots()
     {
         $uSettings = new utilSettings();
         
@@ -263,54 +263,12 @@ class OCadmin_generalSettings extends OCadmintest {
     
     /*
      * Login oc-admin
-     * General Settings -> Permalinks
-     * Set rewrite, and check
-     * Logout
-     */
-    function atestPermalinks()
-    {
-        $uSettings = new utilSettings();
-
-        $pref = array();
-        $pref['rewrite_enabled'] = $uSettings->findValueByName('rewriteEnabled') ;
-        if($pref['rewrite_enabled'] == 1){ $pref['rewrite_enabled'] = 'on';} else { $pref['rewrite_enabled'] = 'off'; }
-
-        $this->loginWith();
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Settings");
-        $this->selenium->click("link=Permalinks");
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->assertEqual( $this->selenium->getValue('rewrite_enabled'), $pref['rewrite_enabled'] , 'Permalinks, check.' ) ;
-
-        $this->selenium->click("xpath=//input[@id='rewrite_enabled']");
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("10000");
-
-        if( $pref['rewrite_enabled'] == 'on' ) {
-            $this->assertEqual( $this->selenium->getValue('rewrite_enabled'), 'off','Permalinks, check.');
-        }else{
-            $this->assertEqual( $this->selenium->getValue('rewrite_enabled'), 'on' ,'Permalinks, check.');
-        }
-
-        $this->selenium->click("xpath=//input[@id='rewrite_enabled']");
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->assertEqual( $this->selenium->getValue('rewrite_enabled'), $pref['rewrite_enabled'] , 'Permalinks, check.') ;
-        
-        unset($pref);
-        unset($uSettings);
-    }
-    
-    /*
-     * Login oc-admin
      * GeneralSettings -> Comments
      * update settings, and check
      * Logout
      * 
      */
-    function atestComments()
+    function testComments()
     {
         $uSettings = new utilSettings();
         $pref = array();
@@ -428,7 +386,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * update settings, and check
      * Logout
      */
-    function atestGeneralSettings()
+    function testGeneralSettings()
     {
         $pref = $this->getPreferencesGeneralSettings();
         
@@ -538,7 +496,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Add & edit & delete locations 
      * Logout
      */
-    function atestLocationsGEO()
+    function testLocationsGEO()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -581,7 +539,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * delete country
      * Logout
      */
-    /*function atestLocationsNEW()
+    /*function testLocationsNEW()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -662,10 +620,10 @@ class OCadmin_generalSettings extends OCadmintest {
      * Login oc-admin
      * GeneralSettings -> locations 
      * add country/region/city twice
-     * edit country/region/cityatest location already exist
+     * edit country/region/citytest location already exist
      * Logout
      */
-    function atestLocationsNEWForceError()
+    function testLocationsNEWForceError()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -745,7 +703,7 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Add city twice" ) ;
 
-        //atest errors when edit countries, regions, cities
+        //test errors when edit countries, regions, cities
         
         // add another City
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
@@ -803,7 +761,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * edit & delete the currency
      * Logout
      */
-    function atestCurrency()
+    function testCurrency()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -859,7 +817,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Delete 
      * Logout
      */
-    function atestAddCurrencyTwice()
+    function testAddCurrencyTwice()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -1045,6 +1003,8 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->type("rewrite_user_change_email", "user/change/email");
         $this->selenium->type("rewrite_user_change_email_confirm", "user/change/email/confirm");
         $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->assertTrue( $this->selenium->isTextPresent("Permalinks structure updated") , "Disable permalinks" ) ;
         
         // Disable at the end of the tests
         $this->selenium->click("rewrite_enabled");
