@@ -332,6 +332,16 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->click("link=Settings");
         $this->selenium->click("xpath=(//a[text()='Comments'])[position()=2]");
         $this->selenium->waitForPageToLoad("10000");
+        
+        $this->selenium->type("num_moderate_comments","wrong");
+        $this->selenium->type("comments_per_page","test");
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        
+        $this->assertTrue( $this->selenium->isTextPresent("Moderated comments: this field has to be numeric only") , "Comments settings JS validator.");
+        $this->assertTrue( $this->selenium->isTextPresent("Comments per page: this field has to be numeric only") , "Comments settings JS validator.");
+        
+        
         $this->selenium->click("enabled_comments");
         $this->selenium->click("reg_user_post_comments");
         if( !$pref['moderate_comments'] == 'on' ) {
@@ -379,7 +389,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("Comments' settings have been updated") , "Can't update comments settings. ERROR");
+        $this->assertTrue( $this->selenium->isTextPresent("Comments' settings have been updated") , "Update comments settings. ERROR");
         
         $this->assertEqual( $this->selenium->getValue('enabled_comments')       ,  $pref['enabled_comments']         , "Comments settings, check.") ;
         $this->assertEqual( $this->selenium->getValue('reg_user_post_comments') ,  $pref['reg_user_post_comments']   , "Comments settings, check.") ;
@@ -404,6 +414,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $pref['weekStart']      = Preference::newInstance()->findValueByName('weekStart') ;
         $pref['num_rss_items']  = Preference::newInstance()->findValueByName('num_rss_items') ;
         $pref['tf']             = Preference::newInstance()->findValueByName('timeFormat') ;
+        $pref['default_results_per_page']  = Preference::newInstance()->findValueByName('defaultResultsPerPage@search') ;
         $pref['max_latest_items_at_home']  = Preference::newInstance()->findValueByName('maxLatestItems@home') ;
         $pref['contact_attachment'] = Preference::newInstance()->findValueByName('contact_attachment') ;
         if($pref['contact_attachment'] == 1){ $pref['contact_attachment'] = 'on';} else { $pref['contact_attachment'] = 'off'; }
@@ -427,13 +438,43 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->click("link=General");
         $this->selenium->waitForPageToLoad("10000");
 
+
+        $this->selenium->type("pageTitle"   ,"");
+        $this->selenium->type("contactEmail","");
+        $this->selenium->type("num_rss_items" , "");
+        $this->selenium->type("max_latest_items_at_home" , "");
+        $this->selenium->type("default_results_per_page" , "");
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        
+        $this->assertTrue( $this->selenium->isTextPresent("Page title: this field is required") , 'JS Validation');
+        $this->assertTrue( $this->selenium->isTextPresent("RSS shows: this field is required") , 'JS Validation');
+        $this->assertTrue( $this->selenium->isTextPresent("The latest items shows: this field is required") , 'JS Validation');
+        $this->assertTrue( $this->selenium->isTextPresent("The search page shows: this field is required") , 'JS Validation');
+        $this->assertTrue( $this->selenium->isTextPresent("Email: this field is required") , 'JS Validation');
+
+                
+        $this->selenium->type("pageTitle"   ,"test title");
+        $this->selenium->type("contactEmail","test email@.");
+        $this->selenium->type("num_rss_items" , "a");
+        $this->selenium->type("max_latest_items_at_home" , "b");
+        $this->selenium->type("default_results_per_page" , "c");
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        
+        $this->assertTrue( $this->selenium->isTextPresent("RSS shows: this field has to be numeric only") , 'JS Validation');
+        $this->assertTrue( $this->selenium->isTextPresent("The latest items shows: this field has to be numeric only") , 'JS Validation');
+        $this->assertTrue( $this->selenium->isTextPresent("The search page shows: this field has to be numeric only") , 'JS Validation');
+        $this->assertTrue( $this->selenium->isTextPresent("Invalid email address") , 'JS Validation');
+        
         $this->selenium->type("pageTitle"   ,"New title web");
         $this->selenium->type("contactEmail","foo@bar.com");
         $this->selenium->type("pageDesc"    ,"Description web");
         $this->selenium->select("currency_admin", "label=EUR");
         $this->selenium->select("weekStart"     , "label=Saturday");
-        $this->selenium->type("num_rss_items" , "60");
-        $this->selenium->type("max_latest_items_at_home" , "20");
+        $this->selenium->type("num_rss_items" , "61");
+        $this->selenium->type("max_latest_items_at_home" , "21");
+        $this->selenium->type("default_results_per_page" , "23");
         $this->selenium->click("m/d/Y");
         $this->selenium->click("H:i");
         $this->assertEqual( $this->selenium->getValue('enabled_attachment'), $pref['contact_attachment'] , 'Contact, check.') ;
@@ -448,9 +489,10 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->assertEqual( $this->selenium->getValue('pageDesc')      , "Description web"  , 'GeneralSettings, check.') ;
 //        $this->assertEqual( $this->selenium->getValue('language')      , 'en_US' ) ;
         $this->assertEqual( $this->selenium->getValue('currency')      , 'EUR'          , 'GeneralSettings, check.') ;
-        $this->assertEqual( $this->selenium->getValue('weekStart')     , '6'            , 'GeneralSettings, check.') ;
-        $this->assertEqual( $this->selenium->getValue('num_rss_items') , '60'           , 'GeneralSettings, check.') ;
-        $this->assertEqual( $this->selenium->getValue('max_latest_items_at_home')       , '20'  , 'GeneralSettings, check.' ) ;
+        $this->assertEqual( $this->selenium->getValue('weekStart')     , '6'            , 'GeneralSettings, INT.') ;
+        $this->assertEqual( $this->selenium->getValue('num_rss_items') , '61'           , 'GeneralSettings, INT.') ;
+        $this->assertEqual( $this->selenium->getValue('max_latest_items_at_home')       , '21'  , 'GeneralSettings, INT.' ) ;
+        $this->assertEqual( $this->selenium->getValue('default_results_per_page')       , '23'  , 'GeneralSettings, INT.' ) ;
         $this->assertEqual( $this->selenium->getValue('timeFormat')    , "H:i"          , 'GeneralSettings, check.') ;
 
         if( $pref['contact_attachment'] == 'on' ) {
@@ -469,6 +511,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->select("weekStart"     , "value=" . $pref['weekStart'] ) ;
         $this->selenium->type("num_rss_items" , $pref['num_rss_items'] ) ;
         $this->selenium->type("max_latest_items_at_home" , $pref['max_latest_items_at_home'] ) ;
+        $this->selenium->type("default_resutls_per_page" , $pref['default_results_per_page'] ) ;
         $this->selenium->click($pref['df']);
         $this->selenium->click($pref['tf']);
         $this->selenium->click("enabled_attachment");
@@ -483,6 +526,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->assertEqual( $this->selenium->getValue('currency')      , $pref['currency']       , 'GeneralSettings, check.') ;
         $this->assertEqual( $this->selenium->getValue('weekStart')     , $pref['weekStart']      , 'GeneralSettings, check.') ;
         $this->assertEqual( $this->selenium->getValue('num_rss_items') , $pref['num_rss_items']  , 'GeneralSettings, check.') ;
+        $this->assertEqual( $this->selenium->getValue('default_results_per_page') , $pref['default_results_per_page']  , 'GeneralSettings, check.') ;
         $this->assertEqual( $this->selenium->getValue('timeFormat')    , $pref['tf']             , 'GeneralSettings, check.') ;
         $this->assertEqual( $this->selenium->getValue('max_latest_items_at_home') , $pref['max_latest_items_at_home']  , 'GeneralSettings, check.') ;
         $this->assertEqual( $this->selenium->getValue('enabled_attachment'), $pref['contact_attachment'], 'Contact, check.' ) ;
@@ -625,6 +669,7 @@ class OCadmin_generalSettings extends OCadminTest {
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->waitForPageToLoad("4000");
         $this->selenium->click("link=Settings");
         $this->selenium->click("link=Locations");
         $this->selenium->waitForPageToLoad("10000");
@@ -637,7 +682,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->click("xpath=//div[@id='d_add_country']/div[2]/form/div/input[@type='submit']") ;
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new country") , "Can't add new country" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new country") , "Add new country" ) ;
 
         // add country again
 
@@ -654,7 +699,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->click("xpath=//div[@id='d_add_country']/div[2]/form/div/input[@type='submit']") ;
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Can add country twice" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Add country twice" ) ;
 
         // add Region
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
@@ -665,7 +710,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->click("xpath=//div[@id='d_add_region']/div[2]/form/div/input[@type='submit']") ;
         $this->selenium->waitForPageToLoad("10000") ;
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new region") , "Can't add new region" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new region") , "Add new region" ) ;
 
         // add Region again
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
@@ -676,7 +721,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->click("xpath=//div[@id='d_add_region']/div[2]/form/div/input[@type='submit']") ;
         $this->selenium->waitForPageToLoad("10000") ;
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Can add region twice" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Add region twice" ) ;
 
         // add City
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
@@ -687,7 +732,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->click("xpath=//div[@id='d_add_city']/div[2]/form/div/input[@type='submit']") ;
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new city") , "Can't add new city" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new city") , "Add new city" ) ;
 
         // add City again
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
@@ -698,7 +743,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->click("xpath=//div[@id='d_add_city']/div[2]/form/div/input[@type='submit']") ;
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Can add city twice" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Add city twice" ) ;
 
         // test errors when edit countries, regions, cities
         
@@ -711,7 +756,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->click("xpath=//div[@id='d_add_city']/div[2]/form/div/input[@type='submit']") ;
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new city") , "Can't add new city" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new city") , "Add new city" ) ;
         // edit the city and change the name to existing one
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
         $this->selenium->click("xpath=//div[@id='i_regions']/div[1]/div/a[text()='View more »']") ;
@@ -721,7 +766,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->click("xpath=//div[@id='d_edit_city']/div[2]/form/div/input[@type='submit']") ;
         $this->selenium->waitForPageToLoad("10000");
         
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Can change city name to existing one" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Change city name to existing one" ) ;
 
         // add another Region
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
@@ -732,7 +777,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->click("xpath=//div[@id='d_add_region']/div[2]/form/div/input[@type='submit']") ;
         $this->selenium->waitForPageToLoad("10000") ;
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new region") , "Can't add new region" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new region") , "Add new region" ) ;
 
         // edit the region and change the name to existing one
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
@@ -743,12 +788,12 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->click("xpath=//div[@id='d_edit_region']/div[2]/form/div/input[@type='submit']") ;
         $this->selenium->waitForPageToLoad("10000") ;
 
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Can change region name to existing one" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Change region name to existing one" ) ;
 
         // DELETE THE LOCATION
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div[1]/div/a[1]");
         $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete Country" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Delete Country" ) ;
 
     }
         
@@ -819,6 +864,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Settings");
+        $this->selenium->waitForPageToLoad("4000");
         $this->selenium->click("link=Currencies");
         $this->selenium->waitForPageToLoad("10000");
 
@@ -836,7 +882,8 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->assertTrue( $this->selenium->isTextPresent("Currency added") , "Add currency" ) ;
 
         // add the same currency again
-        // $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->waitForPageToLoad("4000");
         $this->selenium->click("link=Settings");
         $this->selenium->click("link=Currencies");
         $this->selenium->waitForPageToLoad("10000");
