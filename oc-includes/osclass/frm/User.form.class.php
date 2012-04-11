@@ -167,11 +167,6 @@
         // Code for form validation
         $("form[name=register]").validate({
             rules: {
-                s_name: {
-                    required: true,
-                    minlength: 3,
-                    maxlength: 50
-                },
                 s_email: {
                     required: true,
                     email: true
@@ -187,10 +182,6 @@
                 }
             },
             messages: {
-                s_name: {
-                    minlength: "<?php _e("Name: enter at least 3 characters"); ?>.",
-                    maxlength: "<?php _e("Name: no more than 50 characters"); ?>."
-                },
                 s_email: {
                     required: "<?php _e("Email: this field is required"); ?>.",
                     email: "<?php _e("Invalid email address"); ?>."
@@ -278,11 +269,6 @@ function checkForm() {
         // Code for form validation
         $("form[name=register]").validate({
             rules: {
-                s_name: {
-                    required: true,
-                    minlength: 3,
-                    maxlength: 50
-                },
                 s_email: {
                     required: true,
                     email: true
@@ -296,10 +282,6 @@ function checkForm() {
                 }
             },
             messages: {
-                s_name: {
-                    minlength: "<?php _e("Name: enter at least 3 characters"); ?>.",
-                    maxlength: "<?php _e("Name: no more than 50 characters"); ?>."
-                },
                 s_email: {
                     required: "<?php _e("Email: this field is required"); ?>.",
                     email: "<?php _e("Invalid email address"); ?>."
