@@ -1,9 +1,9 @@
 <?php
 require_once dirname(__FILE__).'/../../../../oc-load.php';
 
-//require_once('FrontendTest.php');
+//require_once('Frontendtest.php');
 
-class OCadmin_generalSettings extends OCadminTest {
+class OCadmin_generalSettings extends OCadmintest {
     
     /*
      * Login into oc-admin.
@@ -12,7 +12,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * Logout.
      */
 
-    function testCrontab()
+    function atestCrontab()
     {
         $uSettings = new utilSettings();
         
@@ -46,7 +46,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * Update all inputs and check if change has been saved, update old configuration and check again.
      * Logout
      */
-    function testMediatab()
+    function atestMediatab()
     {
         $uSettings = new utilSettings();
         
@@ -65,7 +65,7 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->selenium->click("link=Media");
         $this->selenium->waitForPageToLoad("10000");
 
-        // change values to some test-defined ones
+        // change values to someatest-defined ones
         $this->selenium->type('maxSizeKb'   , 'ads');
         $this->selenium->type('dimThumbnail', 'bsg');
         $this->selenium->type('dimPreview'  , 'cylon');
@@ -133,7 +133,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * update configuration and check and set old configuration again and check.
      * Logout.
      */
-    function testMailServer()
+    function atestMailServer()
     {
         $uSettings = new utilSettings();
         
@@ -206,7 +206,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * Set akismet, recaptcha, check modifications
      * Logout
      */
-    function testSpamAndBots()
+    function atestSpamAndBots()
     {
         $uSettings = new utilSettings();
         
@@ -267,7 +267,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * Set rewrite, and check
      * Logout
      */
-    function testPermalinks()
+    function atestPermalinks()
     {
         $uSettings = new utilSettings();
 
@@ -310,7 +310,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * Logout
      * 
      */
-    function testComments()
+    function atestComments()
     {
         $uSettings = new utilSettings();
         $pref = array();
@@ -428,7 +428,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * update settings, and check
      * Logout
      */
-    function testGeneralSettings()
+    function atestGeneralSettings()
     {
         $pref = $this->getPreferencesGeneralSettings();
         
@@ -538,7 +538,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * Add & edit & delete locations 
      * Logout
      */
-    function testLocationsGEO()
+    function atestLocationsGEO()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -581,7 +581,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * delete country
      * Logout
      */
-    /*function testLocationsNEW()
+    /*function atestLocationsNEW()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -662,10 +662,10 @@ class OCadmin_generalSettings extends OCadminTest {
      * Login oc-admin
      * GeneralSettings -> locations 
      * add country/region/city twice
-     * edit country/region/city test location already exist
+     * edit country/region/cityatest location already exist
      * Logout
      */
-    function testLocationsNEWForceError()
+    function atestLocationsNEWForceError()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -745,7 +745,7 @@ class OCadmin_generalSettings extends OCadminTest {
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Add city twice" ) ;
 
-        // test errors when edit countries, regions, cities
+        //atest errors when edit countries, regions, cities
         
         // add another City
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
@@ -803,7 +803,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * edit & delete the currency
      * Logout
      */
-    function testCurrency()
+    function atestCurrency()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -859,7 +859,7 @@ class OCadmin_generalSettings extends OCadminTest {
      * Delete 
      * Logout
      */
-    function testAddCurrencyTwice()
+    function atestAddCurrencyTwice()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -913,5 +913,156 @@ class OCadmin_generalSettings extends OCadminTest {
         $this->assertTrue( $this->selenium->isTextPresent("One currency has been deleted") , "Delete currency" ) ;
         $this->assertTrue( !$this->selenium->isTextPresent("Indian_Rupee") , "Delete currency" ) ;
     }
+
+    
+    
+    function testPermalinks()
+    {
+        $this->loginWith();
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Settings");
+        $this->selenium->waitForPageToLoad("4000");
+        $this->selenium->click("link=Permalinks");
+        $this->selenium->waitForPageToLoad("10000");
+        $value = $this->selenium->getValue('rewrite_enabled');
+        
+        // If they were off, enable it
+        if($value=='off') {
+            $this->selenium->click("rewrite_enabled");
+            $this->selenium->click("//input[@type='submit']");
+            $this->selenium->waitForPageToLoad("10000");
+            $this->assertTrue( $this->selenium->isTextPresent("Permalinks structure updated") , "Disable permalinks" ) ;
+        }
+        
+        $prefs = Preference::newInstance()->toArray();
+        $this->selenium->type("rewrite_item_url", "");
+        $this->selenium->type("rewrite_page_url", "");
+        $this->selenium->type("rewrite_cat_url", "");
+        $this->selenium->type("rewrite_search_url", "");
+        $this->selenium->type("rewrite_search_country", "");
+        $this->selenium->type("rewrite_search_region", "");
+        $this->selenium->type("rewrite_search_city", "");
+        $this->selenium->type("rewrite_search_city_area", "");
+        $this->selenium->type("rewrite_search_pattern", "");
+        $this->selenium->type("rewrite_search_category", "");
+        $this->selenium->type("rewrite_search_user", "");
+        $this->selenium->type("rewrite_contact", "");
+        $this->selenium->type("rewrite_feed", "");
+        $this->selenium->type("rewrite_language", "");
+        $this->selenium->type("rewrite_item_mark", "");
+        $this->selenium->type("rewrite_item_send_friend", "");
+        $this->selenium->type("rewrite_item_contact", "");
+        $this->selenium->type("rewrite_item_activate", "");
+        $this->selenium->type("rewrite_item_edit", "");
+        $this->selenium->type("rewrite_item_delete", "");
+        $this->selenium->type("rewrite_item_resource_delete", "");
+        $this->selenium->type("rewrite_user_login", "");
+        $this->selenium->type("rewrite_user_dashboard", "");
+        $this->selenium->type("rewrite_user_logout", "");
+        $this->selenium->type("rewrite_user_register", "");
+        $this->selenium->type("rewrite_user_activate", "");
+        $this->selenium->type("rewrite_user_activate_alert", "");
+        $this->selenium->type("rewrite_user_profile", "");
+        $this->selenium->type("rewrite_user_items", "");
+        $this->selenium->type("rewrite_user_alerts", "");
+        $this->selenium->type("rewrite_user_recover", "");
+        $this->selenium->type("rewrite_user_change_password", "");
+        $this->selenium->type("rewrite_user_change_email", "");
+        $this->selenium->type("rewrite_user_change_email_confirm", "");
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        
+        
+        $this->assertTrue( $this->selenium->isTextPresent("Item url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Page url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Categories url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Search url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Search country: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Search region: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Search city: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Search city area: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Search category: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Search pattern: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Search user: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Contact url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Feed url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Language url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Item mark url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Item send friend url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Item contact url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Activate item url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Edit item url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Delete item url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Delete item resource url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Login url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("User dashboard url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Logout url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("User register url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Activate user url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Activate alert url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("User profile url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("User items url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("User alerts url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Recover user url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Change password url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Change email url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Change email confirm url: this field is required") , "Empty permalink" ) ;
+
+        
+        $this->selenium->type("rewrite_item_url", "item/{ITEM_ID}/{ITEM_TITLE}");
+        $this->selenium->type("rewrite_page_url", "page/{PAGE_SLUG}");
+        $this->selenium->type("rewrite_cat_url", "{CATEGORIES}");
+        $this->selenium->type("rewrite_search_url", "search");
+        $this->selenium->type("rewrite_search_country", "country");
+        $this->selenium->type("rewrite_search_region", "region");
+        $this->selenium->type("rewrite_search_city", "city");
+        $this->selenium->type("rewrite_search_city_area", "cityarea");
+        $this->selenium->type("rewrite_search_pattern", "pattern");
+        $this->selenium->type("rewrite_search_category", "category");
+        $this->selenium->type("rewrite_search_user", "user");
+        $this->selenium->type("rewrite_contact", "contact");
+        $this->selenium->type("rewrite_feed", "feed");
+        $this->selenium->type("rewrite_language", "language");
+        $this->selenium->type("rewrite_item_mark", "item/mark");
+        $this->selenium->type("rewrite_item_send_friend", "item/send/friend");
+        $this->selenium->type("rewrite_item_contact", "item/contact");
+        $this->selenium->type("rewrite_item_activate", "item/new");
+        $this->selenium->type("rewrite_item_edit", "item/edit");
+        $this->selenium->type("rewrite_item_delete", "item/delete");
+        $this->selenium->type("rewrite_item_resource_delete", "item/resource/delete");
+        $this->selenium->type("rewrite_user_login", "user/login");
+        $this->selenium->type("rewrite_user_dashboard", "user/dashboard");
+        $this->selenium->type("rewrite_user_logout", "user/logout");
+        $this->selenium->type("rewrite_user_register", "user/register");
+        $this->selenium->type("rewrite_user_activate", "user/activate");
+        $this->selenium->type("rewrite_user_activate_alert", "user/activate/alert");
+        $this->selenium->type("rewrite_user_profile", "user/profile");
+        $this->selenium->type("rewrite_user_items", "user/items");
+        $this->selenium->type("rewrite_user_alerts", "user/alerts");
+        $this->selenium->type("rewrite_user_recover", "user/recover");
+        $this->selenium->type("rewrite_user_forgot", "user/forgot");
+        $this->selenium->type("rewrite_user_change_password", "user/change/pasword");
+        $this->selenium->type("rewrite_user_change_email", "user/change/email");
+        $this->selenium->type("rewrite_user_change_email_confirm", "user/change/email/confirm");
+        $this->selenium->click("//input[@type='submit']");
+        
+        // Disable at the end of the tests
+        $this->selenium->click("rewrite_enabled");
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->assertTrue( $this->selenium->isTextPresent("Friendly urls successfully deactivated") , "Disable permalinks" ) ;
+
+        
+        // return to previous state (before starting the tests)
+        if($value=='on') {
+            $this->selenium->click("rewrite_enabled");
+            $this->selenium->click("//input[@type='submit']");
+            $this->selenium->waitForPageToLoad("10000");
+            $this->assertTrue( $this->selenium->isTextPresent("Permalinks structure updated") , "Disable permalinks" ) ;
+        }
+
+        
+    }
+    
 }
 ?>
