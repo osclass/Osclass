@@ -16,8 +16,61 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $plugins        = __get('plugins') ;
+    $aPlugin        = __get('plugins') ;
     $active_plugins = osc_get_plugins() ;
+
+    $aData = array() ;
+    foreach($aPlugin as $plugin) {
+        $row   = array() ;
+        $pInfo = osc_plugin_get_info($plugin);
+
+        // prepare row 1
+        $installed = 0 ;
+        if( osc_plugin_is_installed($plugin) ) {
+            $installed = 1 ;
+        }
+        $enabled = 0 ;
+        if( osc_plugin_is_enabled($plugin) ) {
+            $enabled = 1 ;
+        }
+        // prepare row 2
+        $sUpdate = '' ;
+        if( osc_check_update(@$pInfo['plugin_update_uri'], @$pInfo['version']) ) {
+            $sUpdate = '<a href="' . osc_admin_base_url(true) . '?page=universe&amp;code=' . htmlentities($pInfo['plugin_update_uri']) . '">' . __("There's a new version available to update") . '</a>' ;
+        }
+        // prepare row 4
+        $sConfigure = '' ;
+        if( isset($active_plugins[$plugin . '_configure']) ) {
+            $sConfigure = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=admin&amp;plugin=' . $pInfo['filename'] . '">' . __('Configure') . '</a>' ;
+        }
+        // prepare row 5
+        $sEnable = '' ;
+        if( $installed ) {
+            if( $enabled ) {
+                $sEnable = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=disable&amp;plugin=' . $pInfo['filename'] . '">' . __('Disable') . '</a>' ;
+            } else {
+                $sEnable = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=enable&amp;plugin=' . $pInfo['filename'] . '">' . __('Enable') . '</a>' ;
+            }
+        }
+        // prepare row 6
+        $sInstall  = '' ;
+        if( $installed ) {
+            $delete_text = osc_esc_js("This action can not be undone. Uninstalling plugins may result in a permanent lost of data. Are you sure you want to continue?") ;
+
+            $sInstall = '<a onclick="javascript:return confirm(\'' . $delete_text . '\') ;" href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=uninstall&amp;plugin=' . $pInfo['filename'] . '">' . __('Uninstall') . '</a>' ;
+        } else {
+            $sInstall = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=install&amp;plugin=' . $pInfo['filename'] . '">' . __('Install') . '</a>' ;
+        }
+
+        $row[] = '<input type="hidden" name="installed" value="' . $installed . '" enabled="' . $enabled . '" />' . $pInfo['plugin_name'] . '<div>' . $sUpdate . '</div>' ;
+        $row[] = $pInfo['description'] ;
+        $row[] = $sConfigure ;
+        $row[] = $sEnable ;
+        $row[] = $sInstall ;
+
+        $aData[] = $row ;
+    }
+
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
@@ -29,22 +82,28 @@
         <script type="text/javascript">
             $(function() {
                 oTable = $('#datatables_list').dataTable({
-                    "bAutoWidth": false,
-                    "aaData": [
-                        <?php foreach($plugins as $p){ ?>
-                        <?php $p_info = osc_plugin_get_info($p); ?>
-                        <?php osc_plugin_is_installed($p) ? $installed = 1 : $installed = 0; ?>
-                        <?php osc_plugin_is_enabled($p) ? $enabled = 1 : $enabled = 0; ?>
-                            [
-                                "<input type='hidden' name='installed' value='<?php echo $installed ?>' enabled='<?php echo $enabled ?>' />" +
-                                "<?php echo addcslashes($p_info['plugin_name'], '"'); ?>&nbsp;<div><?php if(osc_check_update(@$p_info['plugin_update_uri'], @$p_info['version'])) { ?><a href='<?php echo osc_admin_base_url(true);?>?page=universe&code=<?php echo htmlentities($p_info['plugin_update_uri']); ?>'><?php _e("There's a new version available to update"); ?></a><?php }; ?></div>",
-                                "<?php echo addcslashes($p_info['description'], '"'); ?>",
-                                "<?php if(isset($active_plugins[$p.'_configure'])) { ?><a href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=admin&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Configure'); ?></a><?php }; ?>",
-                                "<?php if($installed) { if($enabled) { ?><a href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=disable&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Disable'); ?></a><?php } else { ?><a href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=enable&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Enable'); ?></a><?php }; };?>",
-                                "<?php if($installed) { ?><a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Uninstalling plugins may result in a permanent lost of data. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=uninstall&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Uninstall'); ?></a><?php } else { ?><a href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=install&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Install'); ?></a><?php }; ?>"
-                            ] <?php echo $p != end($plugins) ? ',' : ''; ?>
-                        <?php } ?>
-                    ],
+                    "sDom": "<'row'<'span6 length-menu'l><'span6 filter'>fr>t<'row'<'span6 info-results'i><'span6 paginate'p>>",
+                    "sPaginationType": "bootstrap",
+                    "bLengthChange": false,
+                    "bProcessing": true,
+                    "bServerSide": false,
+                    "bPaginate": true,
+                    "bFilter": false,
+                    "oLanguage": {
+                        "oPaginate": {
+                            "sNext" : "<?php echo osc_esc_html( __('Next') ) ; ?>",
+                            "sPrevious" : "<?php echo osc_esc_html( __('Previous') ) ; ?>"
+                        },
+                        "sEmptyTable" : "<?php echo osc_esc_html( __('No data available in table') ) ; ?>",
+                        "sInfo": "<?php echo osc_esc_html( sprintf( __('Showing %s to %s of %s entries'), '_START_', '_END_', '_TOTAL_') ) ; ?>",
+                        "sInfoEmpty": "<?php echo osc_esc_html( __('No entries to show') ) ; ?>",
+                        "sInfoFiltered": "<?php echo osc_esc_html( sprintf( __('(filtered from %s total entries)'), '_MAX_' ) ) ; ?>",
+                        "sLoadingRecords": "<?php echo osc_esc_html( __('Loading...') ) ; ?>",
+                        "sProcessing": "<?php echo osc_esc_html( __('Processing...') ) ; ?>",
+                        "sSearch": "<?php echo osc_esc_html( __('Search') ) ; ?>",
+                        "sZeroRecords": "<?php echo osc_esc_html( __('No matching records found') ) ; ?>"
+                    },
+                    "aaData": <?php echo json_encode($aData) ; ?>,
                     "aoColumns": [
                         {
                             "sTitle": "<?php echo osc_esc_html( __('Name') ) ; ?>"
@@ -65,6 +124,7 @@
                             "sWidth": "65px"
                         }
                     ],
+                    "aaSorting": [[4,'desc'], [3,'asc']],
                     "fnDrawCallback": function() {
                         $('input:hidden[name="installed"]').each(function() {
                             $(this).parent().parent().children().css('background', 'none') ;
