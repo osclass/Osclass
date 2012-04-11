@@ -62,11 +62,11 @@
                         },
                         dimPreview: {
                             required: "<?php _e("Preview size: this field is required"); ?>.",
-                            regexp: "<?php _e("Thumbnail size: is not in the correct format"); ?>."
+                            regexp: "<?php _e("Preview size: is not in the correct format"); ?>."
                         },
                         dimNormal: {
                             required: "<?php _e("Normal size: this field is required"); ?>.",
-                            regexp: "<?php _e("Thumbnail size: is not in the correct format"); ?>."
+                            regexp: "<?php _e("Normal size: is not in the correct format"); ?>."
                         },
                         maxSizeKb: {
                             required: "<?php _e("Maximun size: this field is required"); ?>.",
