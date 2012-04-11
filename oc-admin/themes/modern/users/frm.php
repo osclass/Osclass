@@ -77,7 +77,7 @@
                         <fieldset>
                             <h3><?php _e('Contact info') ; ?></h3>
                             <div class="input-line">
-                                <label><?php _e('Name') ; ?> <em><?php _e('(required)') ; ?></em></label>
+                                <label><?php _e('Name') ; ?></label>
                                 <div class="input large">
                                     <?php UserForm::name_text($user) ; ?>
                                 </div>
