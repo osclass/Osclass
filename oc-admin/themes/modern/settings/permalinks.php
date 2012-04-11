@@ -152,6 +152,10 @@
                             required: true,
                             minlength: 1
                         },
+                        rewrite_user_forgot: {
+                            required: true,
+                            minlength: 1
+                        },
                         rewrite_user_change_password: {
                             required: true,
                             minlength: 1
