@@ -732,21 +732,31 @@
     }
 
     /**
-     * Gets thumbnail url of current resource
-     *
-     * @return <type>
-     */
-    function osc_resource_thumbnail_url() {
-        return (string) osc_resource_path().osc_resource_id()."_thumbnail.".osc_resource_field("s_extension");
-    }
-
-    /**
      * Gets url of current resource
      *
      * @return string
      */
     function osc_resource_url() {
         return (string) osc_resource_path().osc_resource_id().".".osc_resource_field("s_extension");
+    }
+
+    /**
+     * Gets thumbnail url of current resource
+     *
+     * @return string
+     */
+    function osc_resource_thumbnail_url() {
+        return (string) osc_resource_path().osc_resource_id()."_thumbnail.".osc_resource_field("s_extension");
+    }
+
+    /**
+     * Gets preview url of current resource
+     *
+     * @since 2.3.7
+     * @return string
+     */
+    function osc_resource_preview_url() {
+        return (string) osc_resource_path().osc_resource_id()."_preview.".osc_resource_field("s_extension");
     }
 
     /**
@@ -820,7 +830,7 @@
      */
     function osc_count_item_resources() {
         if ( !View::newInstance()->_exists('resources') ) {
-            View::newInstance()->_exportVariableToView('resources', ItemResource::newInstance()->getAllResources( osc_item_id() ) ) ;
+            View::newInstance()->_exportVariableToView('resources', ItemResource::newInstance()->getAllResourcesFromItem( osc_item_id() ) ) ;
         }
         return osc_priv_count_item_resources() ;
     }
@@ -832,7 +842,7 @@
      */
     function osc_has_item_resources() {
         if ( !View::newInstance()->_exists('resources') ) {
-            View::newInstance()->_exportVariableToView('resources', ItemResource::newInstance()->getAllResources( osc_item_id() ) ) ;
+            View::newInstance()->_exportVariableToView('resources', ItemResource::newInstance()->getAllResourcesFromItem( osc_item_id() ) ) ;
         }
         return View::newInstance()->_next('resources') ;
     }
@@ -844,7 +854,7 @@
      */
     function osc_get_item_resources() {
         if ( !View::newInstance()->_exists('resources') ) {
-            View::newInstance()->_exportVariableToView('resources', ItemResource::newInstance()->getAllResources( osc_item_id() ) ) ;
+            View::newInstance()->_exportVariableToView('resources', ItemResource::newInstance()->getAllResourcesFromItem( osc_item_id() ) ) ;
         }
         return View::newInstance()->_get('resources') ;
     }

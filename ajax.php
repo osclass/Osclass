@@ -128,7 +128,13 @@
                         if($resource['fk_i_item_id']==$item) {
 
                             // Delete: file, db table entry
-                            osc_deleteResource($id);
+                            if(defined(OC_ADMIN)) {
+                                osc_deleteResource($id, true);
+                                Log::newInstance()->insertLog('ajax', 'deleteimage', $id, $id, 'admin', osc_logged_admin_id()) ;
+                            } else {
+                                osc_deleteResource($id, false);
+                                Log::newInstance()->insertLog('ajax', 'deleteimage', $id, $id, 'user', osc_logged_user_id()) ;
+                            }
                             ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $item, 's_name' => $code) );
 
                             $json['msg'] =  _m('The selected photo has been successfully deleted') ;

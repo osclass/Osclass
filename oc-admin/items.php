@@ -481,7 +481,8 @@
                                         $fkid = Params::getParam('fkid') ;
 
                                         // delete files
-                                        osc_deleteResource($id);
+                                        osc_deleteResource($id, true);
+                                        Log::newInstance()->insertLog('items', 'deleteResource', $id, $id, 'admin', osc_logged_admin_id()) ;
 
                                         ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name)) ;
                                         osc_add_flash_ok_message( _m('Resource deleted'), 'admin') ;

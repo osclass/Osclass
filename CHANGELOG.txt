@@ -1,4 +1,12 @@
-OSClass 2.3.5 2012-03-05
+OSClass 2.3.7 2012-04-11
+------------------------
+- Changed blog feed url
+- Fixed a js bug with quote marks in manage comments
+- Pagination bug in manage media
+- Added osc_resource_preview_url helper
+- Don't show duplicated items when "pics only" filter is selected in search
+
+OSClass 2.3.6 2012-03-05
 ------------------------
 - PHP Warning in user profile when the description was empty
 - Added missing helper: osc_reset_resources

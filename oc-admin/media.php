@@ -45,8 +45,10 @@
                                                 $ids = Params::getParam("id");
                                                 if($ids!='') {
                                                     foreach($ids as $id) {
-                                                        osc_deleteResource( $id );
+                                                        osc_deleteResource( $id , true);
                                                     }
+                                                    $log_ids = substr(implode(",",$ids),0, 250);
+                                                    Log::newInstance()->insertLog('media', 'delete bulk', $log_ids, $log_ids, 'admin', osc_logged_admin_id()) ;
                                                     $this->resourcesManager->deleteResourcesIds($ids);
                                                 }
                                                 osc_add_flash_ok_message( _m('Resource deleted'), 'admin') ;
@@ -59,8 +61,10 @@
                 case 'delete':          $ids = Params::getParam("id");
                                         if($ids!='') {
                                             foreach($ids as $id) {
-                                                osc_deleteResource( $id );
+                                                osc_deleteResource( $id , true);
                                             }
+                                            $log_ids = substr(implode(",",$ids),0, 250);
+                                            Log::newInstance()->insertLog('media', 'delete', $log_ids, $log_ids, 'admin', osc_logged_admin_id()) ;
                                             $this->resourcesManager->deleteResourcesIds($ids);
                                         }
                                         osc_add_flash_ok_message( _m('Resource deleted'), 'admin') ;

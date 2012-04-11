@@ -23,15 +23,28 @@
 /**
  * Remove resources from disk
  * @param <type> $id
+ * @param boolean $admin
  * @return boolean
  */
-function osc_deleteResource( $id ) {
+function osc_deleteResource( $id , $admin) {
     if( is_array( $id ) ){
         $id = $id[0];
     }
     $resource = ItemResource::newInstance()->findByPrimaryKey($id) ;
     if( !is_null($resource) ){
-        Log::newInstance()->insertLog('item', 'delete resource', $resource['pk_i_id'], $id, osc_is_admin_user_logged_in()?'admin':'user', osc_is_admin_user_logged_in() ? osc_logged_admin_id() : osc_logged_user_id()) ;
+        Log::newInstance()->insertLog('item', 'delete resource', $resource['pk_i_id'], $id, $admin?'admin':'user', $admin ? osc_logged_admin_id() : osc_logged_user_id()) ;
+        
+        $backtracel = '';
+        foreach(debug_backtrace() as $k=>$v){
+            if($v['function'] == "include" || $v['function'] == "include_once" || $v['function'] == "require_once" || $v['function'] == "require"){
+                $backtracel .= "#".$k." ".$v['function']."(".$v['args'][0].") called@ [".$v['file'].":".$v['line']."] / ";
+            }else{
+                $backtracel .= "#".$k." ".$v['function']." called@ [".$v['file'].":".$v['line']."] / ";
+            }
+        }
+        
+        Log::newInstance()->insertLog('item', 'delete resource backtrace', $resource['pk_i_id'], $backtracel, $admin?'admin':'user', $admin ? osc_logged_admin_id() : osc_logged_user_id()) ;
+
         @unlink(osc_base_path() . $resource['s_path'] .$resource['pk_i_id'].".".$resource['s_extension']);
         @unlink(osc_base_path() . $resource['s_path'] .$resource['pk_i_id']."_original.".$resource['s_extension']);
         @unlink(osc_base_path() . $resource['s_path'] .$resource['pk_i_id']."_thumbnail.".$resource['s_extension']);
