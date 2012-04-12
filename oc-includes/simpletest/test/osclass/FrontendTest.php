@@ -141,5 +141,13 @@ abstract class FrontendTest extends WebTestCase {
         $this->selenium->click("//button[text()='Publish']");
         $this->selenium->waitForPageToLoad("30000");
     }
+    
+    function _lastItemId()
+    {
+        // get last id from t_item.
+        $item   = Item::newInstance()->dao->query('select pk_i_id from '.DB_TABLE_PREFIX.'t_item order by pk_i_id DESC limit 0,1');
+        $aItem  = $item->result();
+        return $aItem[0]['pk_i_id'];
+    }
 }
 ?>
