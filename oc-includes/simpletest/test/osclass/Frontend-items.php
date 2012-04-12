@@ -72,9 +72,9 @@ class Frontend_items extends FrontendTest {
         $item = $aData[0];
         
         $uSettings = new utilSettings();
-        $old_enabled_users           = $uSettings->set_enabled_users(1);
+        $old_enabled_users              = $uSettings->set_enabled_users(1);
         $old_enabled_users_registration = $uSettings->set_enabled_user_registration(1);
-        $old_enabled_user_validation = $uSettings->set_enabled_user_validation(0);
+        $old_enabled_user_validation    = $uSettings->set_enabled_user_validation(0);
         
         $this->doRegisterUser();
         $this->loginWith();
@@ -112,9 +112,52 @@ class Frontend_items extends FrontendTest {
         $this->selenium->open( osc_item_edit_url('', '9999') );
         $this->assertTrue($this->selenium->isTextPresent("Sorry, we don't have any items with that ID"));
     }
+    
+    /*
+     * Add a item, and try to edit logged as user
+     */
+    function testEditUserItem1()
+    {
+        $this->logout();
+        // create new item
+        require dirname(__FILE__).'/ItemData.php';
+        $item = $aData[2];
+        
+        $uSettings = new utilSettings();
+        $items_wait_time                  = $uSettings->set_items_wait_time(0);
+        $set_selectable_parent_categories = $uSettings->set_selectable_parent_categories(1);
+        $bool_reg_user_post               = $uSettings->set_reg_user_post(0);
+        $bool_enabled_user_validation     = $uSettings->set_moderate_items(-1);
+        
+        $old_logged_user_item_validation = $uSettings->set_logged_user_item_validation(1);
+        $this->insertItem($item['catId'], $item['title'], 
+                                $item['description'], $item['price'],
+                                $item['regionId'], $item['cityId'], $item['cityArea'],
+                                $item['photo'], $item['contactName'], 
+                                $this->_email);
+        sleep(1);
+        $this->assertTrue($this->selenium->isTextPresent("Your item has been published"),"Items, insert item, no user, no validation.") ;
+        
+        $uSettings->set_items_wait_time($items_wait_time);
+        $uSettings->set_selectable_parent_categories($set_selectable_parent_categories);
+        $uSettings->set_reg_user_post($bool_reg_user_post);
+        $uSettings->set_moderate_items($bool_enabled_user_validation);
+        // get last id from t_item.
+        $item   = Item::newInstance()->dao->query('select pk_i_id from '.DB_TABLE_PREFIX.'t_item order by pk_i_id DESC limit 0,1');
+        $aItem = $item->result(); 
+        
+        // login and try to edit 
+        $this->loginWith();
+        
+        $this->selenium->open(osc_item_edit_url('', $aItem[0]['pk_i_id']));
+        $this->assertTrue($this->selenium->isTextPresent(""),"Sorry, we don't have any items with that ID") ;
+        
+        // remove all items 
+        Item::newInstance()->deleteByPrimaryKey($aItem[0]['pk_i_id']);
+    }
 
     /*
-     * 
+     * Activate item via 'My account' as registered user
      */
     function testActivate() // Activate
     {
@@ -129,6 +172,83 @@ class Frontend_items extends FrontendTest {
         $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue($this->selenium->isTextPresent("The item has been validated"), "Items, validate user item.");
     }
+    
+    /*
+     * Try to activate a item from other user, registered user
+     * Try to activate a item from other user, no registered user
+     * Try to activate a item, item user / with secret
+     */
+    function testActivate1()
+    {
+        $uSettings = new utilSettings();
+        $old_enabled_users              = $uSettings->set_enabled_users(1);
+        $old_enabled_users_registration = $uSettings->set_enabled_user_registration(1);
+        $old_enabled_user_validation    = $uSettings->set_enabled_user_validation(0);
+        $this->doRegisterUser();
+        $uSettings->set_logged_user_item_validation( $old_logged_user_item_validation );
+        $uSettings->set_enabled_users($old_enabled_users);
+        $uSettings->set_enabled_user_registration($old_enabled_users_registration);
+         
+        $itemId = $this->_insertItemToValidate();
+        
+        // 1
+        $this->loginWith();
+        $url = osc_item_activate_url('', $itemId);
+        $this->selenium->open($url);
+        sleep(1);
+        $this->assertTrue($this->selenium->isTextPresent("This item doesn't exist"), "Items, validate item from other user.");
+        // 2 
+        $this->logout();
+        $url = osc_item_activate_url('', $itemId);
+        $this->selenium->open($url);
+        sleep(1);
+        $this->assertTrue($this->selenium->isTextPresent("This item doesn't exist"), "Items, validate item from no user.");
+        // 3 
+        $item = Item::newInstance()->findByPrimaryKey($itemId);
+        $url = osc_item_activate_url($item['s_secret'], $itemId);
+        $this->selenium->open($url);
+        sleep(1);
+        $this->assertTrue($this->selenium->isTextPresent("The item has been validated"), "Items, validate item. (direct url)");
+        // remove all items 
+        Item::newInstance()->deleteByPrimaryKey($itemId);
+        
+    }
+    
+    /*
+     * private function, insert item which need validation
+     */
+    function _insertItemToValidate()
+    {
+        $this->logout();
+        require dirname(__FILE__).'/ItemData.php';
+        $item = $aData[3];
+        
+        $uSettings = new utilSettings();
+        $items_wait_time                  = $uSettings->set_items_wait_time(0);
+        $set_selectable_parent_categories = $uSettings->set_selectable_parent_categories(1);
+        $bool_reg_user_post               = $uSettings->set_reg_user_post(0);
+        $bool_enabled_user_validation     = $uSettings->set_moderate_items(2);
+        
+        $old_logged_user_item_validation = $uSettings->set_logged_user_item_validation(1);
+        $this->insertItem($item['catId'], $item['title'], 
+                                $item['description'], $item['price'],
+                                $item['regionId'], $item['cityId'], $item['cityArea'],
+                                $item['photo'], $item['contactName'], 
+                                $this->_email);
+        sleep(1);
+        $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address"),"Items, insert item, no user, with validation.") ;
+        
+        $uSettings->set_items_wait_time($items_wait_time);
+        $uSettings->set_selectable_parent_categories($set_selectable_parent_categories);
+        $uSettings->set_reg_user_post($bool_reg_user_post);
+        $uSettings->set_moderate_items($bool_enabled_user_validation);
+        
+        // get last id from t_item.
+        $item   = Item::newInstance()->dao->query('select pk_i_id from '.DB_TABLE_PREFIX.'t_item order by pk_i_id DESC limit 0,1');
+        $aItem  = $item->result();
+        return $aItem[0]['pk_i_id'];
+    }
+    
 
     /*
      * Register user

@@ -3,6 +3,15 @@ require_once dirname(__FILE__).'/../../../../oc-load.php';
 
 //require_once('FrontendTest.php');
 
+/*
+ *  ADD :
+ * The reCAPTCHA was not introduced correctly
+ * The email is not valid
+ * The password cannot be empty
+ */
+
+
+
 class Frontend_register extends FrontendTest {
 
     /*
@@ -12,9 +21,9 @@ class Frontend_register extends FrontendTest {
     {
         $uSettings = new utilSettings();
 
-        $old_enabled_users           = $uSettings->set_enabled_users(1);
+        $old_enabled_users              = $uSettings->set_enabled_users(1);
         $old_enabled_users_registration = $uSettings->set_enabled_user_registration(1);
-        $old_enabled_user_validation = $uSettings->set_enabled_user_validation(1);
+        $old_enabled_user_validation    = $uSettings->set_enabled_user_validation(1);
 
         $this->doRegisterUser();
         $this->assertTrue( $this->selenium->isTextPresent('The user has been created. An activation email has been sent'), 'Register new user with validation.');
@@ -78,6 +87,27 @@ class Frontend_register extends FrontendTest {
         unset($uSettings);
     }
 
+    
+   function testRegisterUserEmptyPasswords()
+    {
+        $uSettings = new utilSettings();
+
+        $old_enabled_users              = $uSettings->set_enabled_users(1);
+        $old_enabled_users_registration = $uSettings->set_enabled_user_registration(1);
+        $old_enabled_user_validation    = $uSettings->set_enabled_user_validation(0);
+
+        $this->doRegisterUser($this->_email, '', '');
+        // js validation
+        $this->assertTrue( $this->selenium->isTextPresent('regexpi:Password: this field is required.'), 'Register new user, empty passwords.');
+        $this->assertTrue( $this->selenium->isTextPresent('regexpi:Second password: this field is required.'), 'Register new user, empty passwords.');
+
+        $uSettings->set_enabled_users($old_enabled_users);
+        $uSettings->set_enabled_user_registration($old_enabled_users_registration);
+        $uSettings->set_enabled_user_validation($old_enabled_user_validation);
+
+        unset($uSettings);
+    }
+    
     /*
      * insert new  user, passwords don't match
      */
