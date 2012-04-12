@@ -773,6 +773,13 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->selenium->waitForPageToLoad("30000");
 
+        $this->selenium->type("pk_c_code", "");
+        $this->selenium->type("s_name", "");
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue( $this->selenium->isTextPresent("Currency code: this field is required") , "Add currency" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Name: this field is required") , "Add currency" ) ;
+        
         $this->selenium->type("pk_c_code", "INR");
         $this->selenium->type("s_name", "Indian Rupee");
         $this->selenium->type("s_description", "Indian Rupee र");
@@ -790,6 +797,12 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/small/a[text()='Edit']");
         $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->type("s_name", "");
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue( $this->selenium->isTextPresent("Name: this field is required") , "Add currency" ) ;
+        
 
         $this->selenium->type("s_name", "Indian_Rupee");
         $this->selenium->type("s_description", "Indian_Rupee र");
