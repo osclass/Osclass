@@ -66,17 +66,6 @@ if(in_array(Params::getParam('page'),array('stats'))){
 if(in_array(Params::getParam('page'),array('plugins')) && Params::getParam('action') == 'render'){
     $menuActive['xtramenu'] = 'current-menu-item';
 }
-/*
-
-
-
-
-
-if(in_array(Params::getParam('page'),array('cfields'))){
-    $menuActive['customfields'] = 'current-menu-item';
-}
-*/
-
 ?>
 <!-- menu -->
 <div class="left" id="left-side">
@@ -211,32 +200,3 @@ if(in_array(Params::getParam('page'),array('cfields'))){
     
 </div>
 <!-- /menu -->
-<script>
-    //load current views
-    var menus = {};
-    jQuery('.oscmenu > li').each(function(){
-        menus[$(this).attr('id')] = false;
-    });
-    //load current views
-    var menuStatus = $.cookie.get('menuStatus',true);
-    for (var i in menuStatus){
-        if(menuStatus[i] == true){
-            menus[i] = true;
-            jQuery('#'+i+' ul').show();
-        }
-    }
-    jQuery.cookie.set('menuStatus',menus,{json: true});
-
-    jQuery('.oscmenu h3 a[href="#"]').click(function(){
-        var menuStatus = $.cookie.get('menuStatus',true);
-        if(jQuery(this).parent().next().is(':visible')){
-            menuStatus[$(this).parents('li').attr('id')] = false;
-            jQuery(this).parent().next().slideUp();
-        } else {
-            menuStatus[$(this).parents('li').attr('id')] = true;
-            jQuery(this).parent().next().slideDown();
-        }
-        jQuery.cookie.set('menuStatus',menuStatus,{json: true});
-        return false;
-    });
-    </script>

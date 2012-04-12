@@ -46,6 +46,7 @@
                 <div class="main-page">
                     <!-- dashboard boxes -->
                     <div class="sortable_div">
+                        <div class="float50per">
                         <div class="latest-items ui-widget-content ui-corner-all">
                             <h3 class="ui-state-default"><?php _e('Items by category') ; ?></h3>
                             <div class="ui-state-body">
@@ -71,6 +72,9 @@
                                 <?php } ?>
                             </div>
                         </div>
+                        </div>
+                        <div class="float50per">
+
                         <div class="dashboard-statistics ui-widget-content ui-corner-all">
                             <h3 class="ui-state-default"><?php _e('Statistics'); ?></h3>
                             <div class="ui-state-body">
@@ -85,6 +89,8 @@
                                 </ul>
                             </div>
                         </div>
+                        </div>
+                        <div class="float50per">
                         <div class="latest-comments ui-widget-content ui-corner-all">
                             <h3 class="ui-state-default"><?php _e('Latest comments') ; ?></h3>
                             <div class="ui-state-body">
@@ -101,6 +107,8 @@
                                 <?php } ?>
                             </div>
                         </div>
+                        </div>
+                        <div class="float50per">
                         <div class="latest-news ui-widget-content ui-corner-all">
                             <h3 class="ui-state-default"><?php _e('Latest news from OSClass') ; ?></h3>
                             <div class="ui-state-body">
@@ -120,6 +128,7 @@
                                 <?php _e('Unable to fetch news from OSClass. Please try again later') ; ?>
                             <?php } ?>
                             </div>
+                        </div>
                         </div>
                         <div class="clear"></div>
                     </div>

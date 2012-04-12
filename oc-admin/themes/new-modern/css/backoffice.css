@@ -21,7 +21,6 @@ input:focus { outline:none; }
     float: left;
 }
 .sortable_div .ui-widget-content {
-	
 }
 
 .sortable_div .ui-state-default {
@@ -1054,13 +1053,15 @@ div.disabled .category_row {
     padding:5px !important;
 }
 .ui-dialog-titlebar,
-.ui-widget-header{
-    padding: .5em 1em .3em; position: relative;  
-    background:#dadada;
+.ui-widget-header,
+.ui-state-default{
+    padding: .5em 1em .3em; position: relative !important; 
+    background:#dadada !important;
 
-    border:none;
-    color: #222;
-    font-weight: bold;
+    border:none !important;
+    color: #222 !important;
+    font-weight: normal !important;
+    border-radius:5px !important;
 }
 .ui-widget-content{
     padding:10px !important;
