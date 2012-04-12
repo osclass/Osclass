@@ -72,6 +72,23 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->click("link=Users");
         $this->selenium->click("//a[@id='users_new']");
         $this->selenium->waitForPageToLoad("10000");
+        
+        
+        $this->selenium->type("s_email"         ,"");
+        $this->selenium->type("s_password"      ,"");
+        $this->selenium->type("s_password2"     ,"");
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue($this->selenium->isTextPresent("Email: this field is required"),"Add user. JS validation");
+        $this->assertTrue($this->selenium->isTextPresent("Password: this field is required"),"Add user. JS validation");
+        $this->assertTrue($this->selenium->isTextPresent("Second password: this field is required"),"Add user. JS validation");
+        
+        $this->selenium->type("s_password"      ,"bsg");
+        $this->selenium->type("s_password2"     ,"pegasus");
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue($this->selenium->isTextPresent("Password: enter at least 5 characters"), "Add user. JS validation");
+        $this->assertTrue($this->selenium->isTextPresent("Passwords don't match"), "Add user. JS validation");
 
         $this->selenium->type("s_email"         ,"test@mail.com");
         $this->selenium->type("s_password"      ,"password");
@@ -90,7 +107,7 @@ class OCadmin_users extends OCadminTest {
 
         $this->selenium->select("countryId"     , "label=Spain");
         $this->selenium->select("regionId"      , "label=Barcelona");
-        $this->selenium->select("cityId"        , "label=Sabadell");
+        $this->selenium->select("cityId"        , "label=Barcelona");
         $this->selenium->select("b_company"     , "label=User");
         
         $this->selenium->click("//input[@type='submit']");
@@ -119,8 +136,8 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->type("price", '11');
 
         $this->selenium->select("countryId", "label=Spain");
-        $this->selenium->select("regionId", "label=Barcelona");
-        $this->selenium->select("cityId", "label=Barcelona");
+        $this->selenium->type("region", "Barcelona");
+        $this->selenium->type("city", "Barcelona");
 
         $this->selenium->type('id=contactName', 'foobar');
         $this->selenium->type('id=contactEmail', 'foobar@mail.com');
@@ -222,6 +239,25 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->click("//table/tbody/tr/td[contains(.,'mail.com')]/div/div/a[text()='Edit']");
         $this->selenium->waitForPageToLoad("10000");
 
+        $this->selenium->type("s_email"         ,"");
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue($this->selenium->isTextPresent("Email: this field is required"),"Edit user. JS validation");
+        
+        $this->selenium->type("s_password", "bsg");
+        $this->selenium->type("s_password2", "bsg");
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue($this->selenium->isTextPresent("Password: enter at least 5 characters"),"Edit user. JS validation");
+        $this->assertTrue($this->selenium->isTextPresent("Second password: enter at least 5 characters"),"Edit user. JS validation");
+        
+        $this->selenium->type("s_password", "galactica");
+        $this->selenium->type("s_password2", "pegasus");
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue($this->selenium->isTextPresent("Passwords don't match"),"Edit user. JS validation");
+        
+        
         $this->selenium->type("s_email"         ,"newtest@mail.com");
         $this->selenium->type("s_password"      ,"newpassword");
         $this->selenium->type("s_password2"     ,"newpassword");
@@ -373,10 +409,10 @@ class OCadmin_users extends OCadminTest {
     private function checkWebsite_enabled_user_validation($bool)
     {
         $this->selenium->open( osc_register_account_url() );
-        $this->selenium->type('id=s_name', "carlos");
-        $this->selenium->type('id=s_password', "carlos");
-        $this->selenium->type('id=s_password2', "carlos");
-        $this->selenium->type('id=s_email', "carlos+testtest@osclass.org");
+        $this->selenium->type('id=s_name', "William Adama");
+        $this->selenium->type('id=s_password', "galactica");
+        $this->selenium->type('id=s_password2', "galactica");
+        $this->selenium->type('id=s_email', "testing+testb@osclass.org");
         $this->selenium->click("xpath=//button[text()='Create']");
         $this->selenium->waitForPageToLoad("10000");
 
@@ -386,7 +422,7 @@ class OCadmin_users extends OCadminTest {
             $this->assertTrue($this->selenium->isTextPresent('Your account has been created successfully'), "Validate user" );
         }
 
-        $user = User::newInstance()->findByEmail("carlos+testtest@osclass.org");
+        $user = User::newInstance()->findByEmail("testing+testb@osclass.org");
         User::newInstance()->deleteUser($user['pk_i_id']);
     }
 
