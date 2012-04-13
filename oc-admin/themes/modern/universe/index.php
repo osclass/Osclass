@@ -85,18 +85,23 @@
                 <br/>
                 <!-- boxes -->
                     <div class="sortable_div">
-                        <div class="latest-items ui-widget-content ui-corner-all">
-                            <h3 class="ui-state-default"><?php _e('Plugins') ; ?></h3>
-                            <div class="ui-state-body">
-                                <ul id="plugins_ul"></ul>
+                        <div class="float50per">
+                            <div class="latest-items ui-widget-content ui-corner-all">
+                                <h3 class="ui-state-default"><?php _e('Plugins') ; ?></h3>
+                                <div class="ui-state-body">
+                                    <ul id="plugins_ul"></ul>
+                                </div>
                             </div>
                         </div>
-                        <div class="dashboard-statistics ui-widget-content ui-corner-all">
-                            <h3 class="ui-state-default"><?php _e('Themes'); ?></h3>
-                            <div class="ui-state-body">
-                                <ul id="themes_ul"></ul>
+                        <div class="float50per">
+                            <div class="dashboard-statistics ui-widget-content ui-corner-all">
+                                <h3 class="ui-state-default"><?php _e('Themes'); ?></h3>
+                                <div class="ui-state-body">
+                                    <ul id="themes_ul"></ul>
+                                </div>
                             </div>
                         </div>
+                        <div style="clear"></div>
                     </div>
                 <!-- /boxes -->
             </div>
