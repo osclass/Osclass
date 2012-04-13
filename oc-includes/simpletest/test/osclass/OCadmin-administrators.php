@@ -45,20 +45,24 @@ class OCadmin_administrators extends OCadminTest {
         $this->selenium->click("link=Administrators");
         $this->selenium->click("//a[@id='administrators_new']");
         $this->selenium->waitForPageToLoad("10000");
-        $this->selenium->type("s_name","Real name user one");
-        $this->selenium->type("s_username","useradminone_");
-        $this->selenium->type("s_password", "useradminpass_");
+        $this->selenium->type("s_name","");
+        $this->selenium->type("s_username","");
+        $this->selenium->type("s_password", "");
+        $this->selenium->type("s_email", "");
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue($this->selenium->isTextPresent("Name: this field is required"),"Add aministrator existing username");
+        $this->assertTrue($this->selenium->isTextPresent("Username: this field is required"),"Add aministrator existing username");
+        $this->assertTrue($this->selenium->isTextPresent("Email: this field is required"),"Add aministrator existing username");
+        
         $this->selenium->type("s_email", "admin(at)mailcom");
         $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("30000");
-        $this->assertTrue($this->selenium->isTextPresent("Email invalid"),"Add administrator invalid email");
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Administrators");
-        $this->selenium->click("//a[@id='administrators_new']");
-        $this->selenium->waitForPageToLoad("10000");
+        sleep(4);
+        $this->assertTrue($this->selenium->isTextPresent("Invalid email address"),"Add aministrator existing username");
+        
         $this->selenium->type("s_name","Real name user one");
         $this->selenium->type("s_username","useradminone");
-        $this->selenium->type("s_password", "useradminpass");
+        $this->selenium->type("s_password", "useradminpass_");
         $this->selenium->type("s_email", "admin_@mail.com");
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
@@ -135,12 +139,23 @@ class OCadmin_administrators extends OCadminTest {
         $this->selenium->type("s_name","Real name user one NEW");
         $this->selenium->type("s_username","useradminoneNEW");
         $this->selenium->type("old_password", "useradminpassNEW");
-        $this->selenium->type("s_password"  , "useradminpass");
+        $this->selenium->type("s_password", "bsg");
+        $this->selenium->type("s_password2" , "useradminpassNEW");
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue($this->selenium->isTextPresent("Password: enter at least 5 characters"),"Edit administrator password");
+        
+        $this->selenium->type("s_password", "valkiria");
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue($this->selenium->isTextPresent("Passwords don't match"),"Edit administrator password");
+        
+        $this->selenium->type("s_password"  , "useradminpassNEW");
         $this->selenium->type("s_password2" , "useradminpassNEW");
         $this->selenium->type("s_email", "admin@mail.com");
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
-        $this->assertTrue($this->selenium->isTextPresent("The password couldn't be updated. Passwords don't match"),"Edit administrator password");
+        $this->assertTrue($this->selenium->isTextPresent("The admin has been updated"),"Edit administrator password");
     }
 
 

@@ -339,8 +339,8 @@ class OCadmin_items extends OCadminTest {
 
         $this->selenium->open(osc_item_url_ns( $item['pk_i_id'] ));
 
-        $this->selenium->type("authorName"      , "carlos");
-        $this->selenium->type("authorEmail"     , "carlos@osclass.org");
+        $this->selenium->type("authorName"      , "Test B user");
+        $this->selenium->type("authorEmail"     , "testing+testb@osclass.org");
         $this->selenium->type("title"           , "I like it");
         $this->selenium->type("body"            , "Can you provide more info please :)");
 
@@ -373,7 +373,7 @@ class OCadmin_items extends OCadminTest {
 
         // edit comment
         $this->selenium->type("s_title", "I like it updated");
-        $this->selenium->type("s_author_name", "carlos osclass");
+        $this->selenium->type("s_author_name", "Test user osclass");
         $this->selenium->type("s_body", "Can you provide more info please :) Regards");
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
