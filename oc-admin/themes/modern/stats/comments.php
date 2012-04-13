@@ -108,6 +108,7 @@
                     </div>
                 </div>
                 <!-- /comments statistics -->
+                <div class="clear"></div>
             </div>
             <!-- /right container -->
         </div>

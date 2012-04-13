@@ -22,7 +22,7 @@
         <a title="<?php _e('Visit website') ; ?>" href="<?php echo osc_base_url() ; ?>"><?php echo osc_page_title() ; ?></a>
     </div>
     <div class="user">
-        <p><?php _e('Hi') ; ?>, <a title="<?php _e('Your profile') ; ?>" href="<?php echo osc_admin_base_url(true) ; ?>?page=admins&action=edit"><?php echo osc_logged_admin_username() ; ?>!</a> &middot; <a title="<?php _e('Log Out') ; ?>" href="<?php echo osc_admin_base_url(true) ; ?>?action=logout"><?php _e('Sign out') ; ?></a></p>
+        <p><?php _e('Hi') ; ?>, <a title="<?php _e('Your profile') ; ?>" href="<?php echo osc_admin_base_url(true) ; ?>?page=admins&action=edit"><?php echo osc_logged_admin_username() ; ?>!</a> &nbsp;<a title="<?php _e('Dashboard') ; ?>" href="<?php echo osc_admin_base_url(false) ; ?>" class="splt-btn dashboard"><span><?php _e('Dashboar') ; ?></span></a><a title="<?php _e('Log Out') ; ?>" href="<?php echo osc_admin_base_url(true) ; ?>?action=logout" class="splt-btn logout"><span><?php _e('Sign out') ; ?></span></a></p>
     </div>
     <?php osc_run_hook('admin_header') ; ?>
 </div>
