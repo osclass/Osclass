@@ -23,6 +23,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
@@ -39,44 +40,17 @@
                 $btn_text = __('Add');
             }
         ?>
-        <script type="text/javascript">
-            function checkForm() {
-                if(document.getElementById('s_title').value == "") {
-                    alert("<?php  _e('You have to write a title.');?>");
-                    return false;
-                }
-
-                if(document.getElementById('s_body').value == "") {
-                    alert("<?php  _e('You have to write a comment.');?>");
-                    return false;
-                }
-
-                if(document.getElementById('s_author_name').value == "") {
-                    alert("<?php  _e('Author\'s name can not be empty.');?>");
-                    return false;
-                }
-
-                if(document.getElementById('s_author_email').value == "") {
-                    alert("<?php  _e('Author\'s email can not be empty.');?>");
-                    return false;
-                }
-
-                return true;
-            }
-        </script>
+        <?php CommentForm::js_validation(true); ?>
         <div id="content">
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-            <div id="right_column">
-                <div id="content_header" class="content_header">
-                    <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url('images/comments-icon2.png') ; ?>" title="" alt=""/>
-                    </div>
-                    <div id="content_header_arrow">&raquo; <?php _e($title); ?></div>
-                    <div style="clear: both;"></div>
-                </div>
+            <div id="right_column" class="right">
+                <div class="header_title">
+                    <h1 class="comments"><?php _e($title); ?></h1>
+                </div>                    
                 <?php osc_show_admin_flash_messages() ; ?>
                 <!-- add new page form -->
                 <div id="settings_form">
+                    <ul id="error_list"></ul>
                     <form name="comment_form" id="comment_form" action="<?php echo osc_admin_base_url(true); ?>" method="post" onSubmit="return checkForm()">
                         <input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
                         <input type="hidden" name="page" value="comments" />
@@ -93,11 +67,11 @@
                         </div>
 
                         <div class="FormElement">
-                            <div class="FormElementName"><?php _e('Title'); ?> <?php CommentForm::title_input_text($comment); ?>
+                            <div class="FormElementName"><label><?php _e('Title'); ?></label> <?php CommentForm::title_input_text($comment); ?>
                             </div>
                         </div>
                         <div class="FormElement">
-                            <div class="FormElementName"><?php _e('Author'); ?> <?php CommentForm::author_input_text($comment); ?>
+                            <div class="FormElementName"><label><?php _e('Author'); ?></label> <?php CommentForm::author_input_text($comment); ?>
                                 <?php if(isset($comment['fk_i_user_id']) && $comment['fk_i_user_id']!='') {
                                 _e("It's a registered user") ; ?>
                                 <a href="<?php echo osc_admin_base_url(true) ; ?>?page=users&action=edit&id=<?php echo $comment['fk_i_user_id'] ; ?>"><?php _e('Edit user') ; ?></a>
@@ -105,19 +79,19 @@
                             </div>
                         </div>
                         <div class="FormElement">
-                            <div class="FormElementName"><?php _e('Author\'s e-mail'); ?> <?php CommentForm::email_input_text($comment); ?>
+                            <div class="FormElementName"><label><?php _e('Author\'s e-mail'); ?></label> <?php CommentForm::email_input_text($comment); ?>
                             </div>
                         </div>
                         <div class="FormElement">
-                            <div class="FormElementName"><?php _e('Status'); ?>: <?php echo ( $comment['b_active'] ? __('ACTIVE') : __('INACTIVE') ) ; ?> ( <a href="<?php echo osc_admin_base_url( true ) ; ?>?page=comments&action=status&id=<?php echo $comment['pk_i_id'] ; ?>&value=<?php echo ( ( $comment['b_active'] == 1) ? 'INACTIVE' : 'ACTIVE' ) ; ?>"><?php echo ( ( $comment['b_active'] == 1 ) ? __('De-activate') : __('Activate') ) ; ?></a> )
+                            <div class="FormElementName"><label><?php _e('Status'); ?>:</label> <?php echo ( $comment['b_active'] ? __('ACTIVE') : __('INACTIVE') ) ; ?> ( <a href="<?php echo osc_admin_base_url( true ) ; ?>?page=comments&action=status&id=<?php echo $comment['pk_i_id'] ; ?>&value=<?php echo ( ( $comment['b_active'] == 1) ? 'INACTIVE' : 'ACTIVE' ) ; ?>"><?php echo ( ( $comment['b_active'] == 1 ) ? __('De-activate') : __('Activate') ) ; ?></a> )
                             </div>
                         </div>
                         <div class="FormElement">
-                            <div class="FormElementName"><?php _e('Status'); ?>: <?php echo ( $comment['b_enabled'] ? __('ENABLED') : __('DISABLED') ) ; ?> ( <a href="<?php echo osc_admin_base_url( true ) ; ?>?page=comments&action=status&id=<?php echo $comment['pk_i_id'] ; ?>&value=<?php echo ( ( $comment['b_enabled'] == 1) ? 'DISABLE' : 'ENABLE' ) ; ?>"><?php echo ( ( $comment['b_enabled'] == 1 ) ? __('Disable') : __('Enable') ) ; ?></a> )
+                            <div class="FormElementName"><label><?php _e('Status'); ?>:</label> <?php echo ( $comment['b_enabled'] ? __('ENABLED') : __('DISABLED') ) ; ?> ( <a href="<?php echo osc_admin_base_url( true ) ; ?>?page=comments&action=status&id=<?php echo $comment['pk_i_id'] ; ?>&value=<?php echo ( ( $comment['b_enabled'] == 1) ? 'DISABLE' : 'ENABLE' ) ; ?>"><?php echo ( ( $comment['b_enabled'] == 1 ) ? __('Disable') : __('Enable') ) ; ?></a> )
                             </div>
                         </div>
                         <div class="FormElement">
-                            <div class="FormElementName"><?php _e('Comment'); ?></div>
+                            <label><div class="FormElementName"><?php _e('Comment'); ?></div></label>
                             <div class="FormElementInput">
                                <?php CommentForm::body_input_textarea($comment); ?>
                             </div>
@@ -125,7 +99,7 @@
 
                         <div class="clear50"></div>
 
-                        <div class="FormElement">
+                        <div class="FormElement FormButtonsSubmit">
                             <div class="FormElementName"></div>
                             <div class="FormElementInput">
                                 <input class="formButton" type="button" onclick="window.location='<?php echo osc_admin_base_url(true);?>?page=comments';" value="<?php _e('Cancel'); ?>" />
@@ -134,7 +108,8 @@
                         </div>
                     </form>
                 </div>
-            </div>
+                <div style="clear: both;"></div>
+                </div>
         </div>
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>

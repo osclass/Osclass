@@ -25,10 +25,63 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <link rel="stylesheet" media="screen" type="text/css" href="<?php echo osc_current_admin_theme_js_url('colorpicker/css/colorpicker.css') ; ?>" />
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('colorpicker/js/colorpicker.js') ; ?>"></script>
         <script type="text/javascript">
-            $(document).ready(function() {
+            $(document).ready(function(){
+                // Code for form validation
+                $.validator.addMethod('regexp', function(value, element, param) {
+                    return this.optional(element) || value.match(param);
+                },
+                '<?php _e('Size is not in the correct format'); ?>');
+                
+                $("form[name=media_form]").validate({
+                    rules: {
+                        dimThumbnail: {
+                            required: true,
+                            regexp: /^[0-9]+x[0-9]+$/i
+                        },
+                        dimPreview: {
+                            required: true,
+                            regexp: /^[0-9]+x[0-9]+$/i
+                        },
+                        dimNormal: {
+                            required: true,
+                            regexp: /^[0-9]+x[0-9]+$/i
+                        },
+                        maxSizeKb: {
+                            required: true,
+                            digits: true
+                        }
+                    },
+                    messages: {
+                        dimThumbnail: {
+                            required: "<?php _e("Thumbnail size: this field is required"); ?>.",
+                            regexp: "<?php _e("Thumbnail size: is not in the correct format"); ?>."
+                        },
+                        dimPreview: {
+                            required: "<?php _e("Preview size: this field is required"); ?>.",
+                            regexp: "<?php _e("Preview size: is not in the correct format"); ?>."
+                        },
+                        dimNormal: {
+                            required: "<?php _e("Normal size: this field is required"); ?>.",
+                            regexp: "<?php _e("Normal size: is not in the correct format"); ?>."
+                        },
+                        maxSizeKb: {
+                            required: "<?php _e("Maximun size: this field is required"); ?>.",
+                            digits: "<?php _e("Maximun size: this field has to be numeric only"); ?>."
+                        }
+                    },
+                    wrapper: "li",
+                        errorLabelContainer: "#error_list",
+                        invalidHandler: function(form, validator) {
+                            $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+                        }
+                });
+
+
+
                 $('#colorpickerField').ColorPicker({
                     onSubmit: function(hsb, hex, rgb, el) { },
                     onChange: function (hsb, hex, rgb) {
@@ -87,7 +140,8 @@
                 <!-- media settings -->
                 <div class="settings media">
                     <!-- media form -->
-                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data">
+                    <ul id="error_list"></ul>
+                    <form name="media_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="page" value="settings" />
                         <input type="hidden" name="action" value="media_post" />
                         <fieldset>

@@ -20,8 +20,43 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
+    </head>
+    <body>
         <script type="text/javascript">
-            $(document).ready(function() {
+            $(document).ready(function(){
+                // Code for form validation
+                $("form[name=comments_form]").validate({
+                    rules: {
+                        num_moderate_comments: {
+                            required: true,
+                            digits: true
+                        },
+                        comments_per_page: {
+                            required: true,
+                            digits: true
+                        }
+                    },
+                    messages: {
+                        num_moderate_comments: {
+                            required: "<?php _e("Moderated comments: this field is required"); ?>.",
+                            digits: "<?php _e("Moderated comments: this field has to be numeric only"); ?>."
+                        },
+                        comments_per_page: {
+                            required: "<?php _e("Comments per page: this field is required"); ?>.",
+                            digits: "<?php _e("Comments per page: this field has to be numeric only"); ?>."
+                        }
+                    },
+                    wrapper: "li",
+                        errorLabelContainer: "#error_list",
+                        invalidHandler: function(form, validator) {
+                            $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+                        }
+                });
+
+
+
+
                 if( !$('input[name="moderate_comments"]').is(':checked') ) {
                     $('.comments_approved').css('display', 'none') ;
                 }
@@ -35,8 +70,6 @@
                 }) ;
             }) ;
         </script>
-    </head>
-    <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <!-- container -->
         <div id="content">
@@ -49,7 +82,8 @@
                 <?php osc_show_admin_flash_messages() ; ?>
                 <!-- settings form -->
                 <div class="settings comments">
-                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+                    <ul id="error_list"></ul>
+                    <form name="comments_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="settings" />
                         <input type="hidden" name="action" value="comments_post" />
                         <fieldset>
