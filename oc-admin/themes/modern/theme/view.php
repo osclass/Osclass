@@ -27,7 +27,7 @@
         <div id="content">
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
             <!-- right container -->
-            <div class="right">
+            <div class="right" id="right-side">
                 <div class="header_title">
                     <h1 class="plugins"><?php _e('Theme') ; ?></h1>
                 </div>

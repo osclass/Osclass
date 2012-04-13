@@ -150,6 +150,7 @@
                     </div>
                 </div>
                 <!-- /users statistics -->
+                <div class="clear"></div>
             </div>
             <!-- /right container -->
         </div>

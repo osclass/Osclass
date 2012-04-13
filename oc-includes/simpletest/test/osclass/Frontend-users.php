@@ -27,7 +27,105 @@ class Frontend_users extends FrontendTest {
     }
 
     /**
+     * - check empty list of items at dashboard user
+     */
+    function testEmptyDashboard()
+    {
+        $this->loginWith();
+        $url = osc_user_dashboard_url();
+        $this->selenium->open($url);
+        
+        $this->assertTrue( $this->selenium->isTextPresent('No items have been added yet'), 'User dashboard, without items.');
+    }
+    
+    /*
+     * - check empty list of items at dashboard user
+     */
+    function testEmptyManageItems()
+    {
+        $this->loginWith();
+        $url = osc_user_dashboard_url();
+        $this->selenium->open($url);
+        $this->selenium->open("xpath=//li[@class='opt_items]/a");
+        // click to manage items
+        $this->assertTrue( $this->selenium->isTextPresent('Your items + Post a new item'), 'User Manage Items');
+        $this->assertTrue( $this->selenium->isTextPresent('You don\'t have any items yet'), 'User Manage Items, without items');
+    }
+    
+    /*
+     * - check empty list of alert at dashboard user
+     */
+    function testEmptyAlerts()
+    {
+        $this->loginWith();
+        $url = osc_user_dashboard_url();
+        $this->selenium->open($url);
+        $this->selenium->open("xpath=//li[@class='opt_alerts]/a");
+        // click to manage items
+        $this->assertTrue( $this->selenium->isTextPresent('Your alerts'), 'User Manage Alerts');
+        $this->assertTrue( $this->selenium->isTextPresent('You do not have any alerts yet'), 'User Manage Alerts, without alerts');
+    }
+    
+    /*
+     * - add an item 
+     * - check dashboard user
+     * - check Manage items 
+     */
+    function testDashboardAndManageItems()
+    {
+        $this->loginWith();
+        // add item as registered user
+        require 'ItemData.php';
+        $item = $aData[0];
+        $this->insertItem($item['catId'], $item['title'], 
+                                $item['description'], $item['price'],
+                                $item['regionId'], $item['cityId'], $item['cityArea'],
+                                $item['photo'], $item['contactName'], 
+                                $this->_email);
+        // check dashboard
+        $this->selenium->open(osc_user_dashboard_url());
+        $this->selenium->getXpathCount("xpath=//div[@class='userItem']");
+        $this->assertTrue($count==1 , "Users Dashboard with one item");
+        // check manage items
+        $this->selenium->open("xpath=//li[@class='opt_items]/a");
+        $this->selenium->getXpathCount("xpath=//div[@class='item']");
+        $this->assertTrue($count==1 , "Users Dashboard with one item");
+        
+    }
+    
+    /*
+     * - add alert
+     * - check alerts
+     * - test delete/unsubscribe alert
+     */
+    function testAlerts_create()
+    {
+        $this->loginWith();
+        // add alert 
+        $this->_createAlert($this->_email);
+        $this->logout();
+    }
+    
+    // check alert
+    function testAlerts()
+    {
+        $this->loginWith();
+        $this->selenium->open( osc_user_profile_url() );
+        sleep(4);
+        $this->selenium->click("xpath=//li[@class='opt_alerts']/a");
+        $this->assertTrue( $this->selenium->isTextPresent('Your alerts'), 'User Manage Alerts with one alert');
+        sleep(10);
+        $this->selenium->getXpathCount("xpath=//div[@class='userItem']");
+        $this->assertTrue($count==1 , "Users Dashboard with one item");
+        sleep(10);
+        // delete
+        $this->selenium->click("xpath=//div[@class='userItem'][1]/div/a[text()='Delete this alert']");
+        $this->assertTrue( $this->selenium->isTextPresent('Unsubscribed correctly'), 'User Manage Alerts, delete alert');
+    }
+    
+    /*
      * Test user profile & public user profile.
+     * Add user info and check this info at public user profile
      */
     function testUsers_profile()
     {
