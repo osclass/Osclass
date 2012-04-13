@@ -225,8 +225,8 @@ class Frontend_search extends FrontendTest {
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
         $this->assertTrue($count == 4 , "Search by [ sCity Balsereny ].");
         
-        $searchCityArea = osc_search_url(array('sCityArea'  => 'city area test'));
-        echo $searchCityArea."<br>";
+        $searchCityArea = osc_search_url(array('sCityArea'  => 'city area test')); 
+        echo $searchCityArea."<br>"; 
         $this->selenium->open( $searchCityArea );
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
         $this->assertTrue($count == 2 , "Search by [ sCityArea city area test ].");
@@ -237,34 +237,11 @@ class Frontend_search extends FrontendTest {
      */
     function testCreateAlert()
     {
-        // search only items with picture
-        $this->selenium->open( osc_search_url() );
-        $this->selenium->click("bPic"); // only items with pictures
-        $this->selenium->click("xpath=//span/button[text()='Apply']");
-        $this->selenium->waitForPageToLoad("30000");
-        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
-        $this->assertTrue($count == 9 , "Search by [ Show only items with pictures ].");
+        $this->_createAlert('foobar@invalid_email');
         
-        // create alert invalid email
-        $this->selenium->click('alert_email');
-        $this->selenium->type('alert_email', 'foobar@invalid_email');
-        $this->selenium->click("xpath=//span/button[text()='Subscribe now!']");
-        // verify alert not created
-        $aAuxAlert = Alerts::newInstance()->findByEmail('foobar@invalid_email');
-        $this->assertTrue(count($aAuxAlert) == 0, 'Search - create alert');
+        $this->_createAlert($this->_email);
         
-        // create alert with valid email
-        $this->selenium->click('alert_email');
-        $this->selenium->type('alert_email', '');
-        $this->selenium->type('alert_email', $this->_email);
-        $this->selenium->click("xpath=//span/button[text()='Subscribe now!']");
-        // verify alert created
-        sleep(1);
-        $aAuxAlert = Alerts::newInstance()->findByEmail($this->_email);
-        $this->assertTrue(count($aAuxAlert) == 1, 'Search - create alert');
         Alerts::newInstance()->delete(array('s_email' => $this->_email));
-        
-        
     }
     
     /*
