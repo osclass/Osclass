@@ -12,7 +12,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Logout.
      */
 
-    function testCrontab()
+    function atestCrontab()
     {
         $uSettings = new utilSettings();
         
@@ -46,7 +46,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Update all inputs and check if change has been saved, update old configuration and check again.
      * Logout
      */
-    function testMediatab()
+    function atestMediatab()
     {
         $uSettings = new utilSettings();
         
@@ -133,7 +133,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * update configuration and check and set old configuration again and check.
      * Logout.
      */
-    function testMailServer()
+    function atestMailServer()
     {
         $uSettings = new utilSettings();
         
@@ -206,7 +206,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Set akismet, recaptcha, check modifications
      * Logout
      */
-    function testSpamAndBots()
+    function atestSpamAndBots()
     {
         $uSettings = new utilSettings();
         
@@ -268,7 +268,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Logout
      * 
      */
-    function testComments()
+    function atestComments()
     {
         $uSettings = new utilSettings();
         $pref = array();
@@ -386,7 +386,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * update settings, and check
      * Logout
      */
-    function testGeneralSettings()
+    function atestGeneralSettings()
     {
         $pref = $this->getPreferencesGeneralSettings();
         
@@ -539,7 +539,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * delete country
      * Logout
      */
-    /*function testLocationsNEW()
+    /*function atestLocationsNEW()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -623,7 +623,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * edit country/region/citytest location already exist
      * Logout
      */
-    function testLocationsNEWForceError()
+    function atestLocationsNEWForceError()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -761,7 +761,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * edit & delete the currency
      * Logout
      */
-    function testCurrency()
+    function atestCurrency()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -830,7 +830,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Delete 
      * Logout
      */
-    function testAddCurrencyTwice()
+    function atestAddCurrencyTwice()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -887,7 +887,7 @@ class OCadmin_generalSettings extends OCadmintest {
 
     
     
-    function testPermalinks()
+    function atestPermalinks()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
