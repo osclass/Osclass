@@ -510,7 +510,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->type("c_country"   , "AN" ) ;
         $this->selenium->type('c_manual'    , '0') ;
 
-        $this->selenium->click("xpath=//div[@id='d_add_country']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->click("xpath=//button/span[text()='Add']") ;
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new country") , "Can't add new country" );
@@ -519,13 +519,13 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div[1]/div/a[@class='edit']");
         $this->selenium->type("e_country"     , "Andorra_" ) ;
 
-        $this->selenium->click("xpath=//div[@id='d_edit_country']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->click("xpath=//button/span[text()='Edit']") ;
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been edited") , "Can't edit country name" );
         
         // delete country
-        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div[1]/div/a[1]");
+        $this->selenium->click("xpath=//a[@class='close'][1]");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete Country" ) ;
 
