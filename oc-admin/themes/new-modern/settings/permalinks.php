@@ -20,15 +20,316 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
+    </head>
+    <body>
         <script type="text/javascript">
+            $(document).ready(function(){
+                // Code for form validation
+                $("form[name=permalinks_form]").validate({
+                    rules: {
+                        rewrite_item_url: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_page_url: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_cat_url: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_search_url: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_search_country: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_search_region: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_search_city: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_search_city_area: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_search_category: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_search_user: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_search_pattern: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_contact: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_feed: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_language: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_item_mark: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_item_send_friend: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_item_contact: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_item_activate: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_item_edit: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_item_delete: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_item_resource_delete: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_user_login: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_user_dashboard: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_user_logout: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_user_register: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_user_activate: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_user_activate_alert: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_user_profile: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_user_items: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_user_alerts: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_user_recover: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_user_forgot: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_user_change_password: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_user_change_email: {
+                            required: true,
+                            minlength: 1
+                        },
+                        rewrite_user_change_email_confirm: {
+                            required: true,
+                            minlength: 1
+                        }
+                    },
+                    messages: {
+                        rewrite_item_url: {
+                            required: "<?php _e("Item url: this field is required"); ?>.",
+                            minlength: "<?php _e("Item url: this field is required"); ?>."
+                        },
+                        rewrite_page_url: {
+                            required: "<?php _e("Page url: this field is required"); ?>.",
+                            minlength: "<?php _e("Page url: this field is required"); ?>."
+                        },
+                        rewrite_cat_url: {
+                            required: "<?php _e("Categories url: this field is required"); ?>.",
+                            minlength: "<?php _e("Categories url: this field is required"); ?>."
+                        },
+                        rewrite_search_url: {
+                            required: "<?php _e("Search url: this field is required"); ?>.",
+                            minlength: "<?php _e("Search url: this field is required"); ?>."
+                        },
+                        rewrite_search_country: {
+                            required: "<?php _e("Search country: this field is required"); ?>.",
+                            minlength: "<?php _e("Search country: this field is required"); ?>."
+                        },
+                        rewrite_search_region: {
+                            required: "<?php _e("Search region: this field is required"); ?>.",
+                            minlength: "<?php _e("Search region: this field is required"); ?>."
+                        },
+                        rewrite_search_city: {
+                            required: "<?php _e("Search city: this field is required"); ?>.",
+                            minlength: "<?php _e("Search city: this field is required"); ?>."
+                        },
+                        rewrite_search_city_area: {
+                            required: "<?php _e("Search city area: this field is required"); ?>.",
+                            minlength: "<?php _e("Search city area: this field is required"); ?>."
+                        },
+                        rewrite_search_category: {
+                            required: "<?php _e("Search category: this field is required"); ?>.",
+                            minlength: "<?php _e("Search category: this field is required"); ?>."
+                        },
+                        rewrite_search_user: {
+                            required: "<?php _e("Search user: this field is required"); ?>.",
+                            minlength: "<?php _e("Search user: this field is required"); ?>."
+                        },
+                        rewrite_search_pattern: {
+                            required: "<?php _e("Search pattern: this field is required"); ?>.",
+                            minlength: "<?php _e("Search pattern: this field is required"); ?>."
+                        },
+                        rewrite_contact: {
+                            required: "<?php _e("Contact url: this field is required"); ?>.",
+                            minlength: "<?php _e("Contact url: this field is required"); ?>."
+                        },
+                        rewrite_feed: {
+                            required: "<?php _e("Feed url: this field is required"); ?>.",
+                            minlength: "<?php _e("Feed url: this field is required"); ?>."
+                        },
+                        rewrite_language: {
+                            required: "<?php _e("Language url: this field is required"); ?>.",
+                            minlength: "<?php _e("Language url: this field is required"); ?>."
+                        },
+                        rewrite_item_mark: {
+                            required: "<?php _e("Item mark url: this field is required"); ?>.",
+                            minlength: "<?php _e("Item mark url: this field is required"); ?>."
+                        },
+                        rewrite_item_send_friend: {
+                            required: "<?php _e("Item send friend url: this field is required"); ?>.",
+                            minlength: "<?php _e("Item send friend url: this field is required"); ?>."
+                        },
+                        rewrite_item_contact: {
+                            required: "<?php _e("Item contact url: this field is required"); ?>.",
+                            minlength: "<?php _e("Item contact url: this field is required"); ?>."
+                        },
+                        rewrite_item_new: {
+                            required: "<?php _e("New item url: this field is required"); ?>.",
+                            minlength: "<?php _e("New item url: this field is required"); ?>."
+                        },
+                        rewrite_item_activate: {
+                            required: "<?php _e("Activate item url: this field is required"); ?>.",
+                            minlength: "<?php _e("Activate item url: this field is required"); ?>."
+                        },
+                        rewrite_item_edit: {
+                            required: "<?php _e("Edit item url: this field is required"); ?>.",
+                            minlength: "<?php _e("Edit item url: this field is required"); ?>."
+                        },
+                        rewrite_item_delete: {
+                            required: "<?php _e("Delete item url: this field is required"); ?>.",
+                            minlength: "<?php _e("Delete item url: this field is required"); ?>."
+                        },
+                        rewrite_item_resource_delete: {
+                            required: "<?php _e("Delete item resource url: this field is required"); ?>.",
+                            minlength: "<?php _e("Delete item resource url: this field is required"); ?>."
+                        },
+                        rewrite_user_login: {
+                            required: "<?php _e("Login url: this field is required"); ?>.",
+                            minlength: "<?php _e("Login url: this field is required"); ?>."
+                        },
+                        rewrite_user_dashboard: {
+                            required: "<?php _e("User dashboard url: this field is required"); ?>.",
+                            minlength: "<?php _e("User dashboard url: this field is required"); ?>."
+                        },
+                        rewrite_user_logout: {
+                            required: "<?php _e("Logout url: this field is required"); ?>.",
+                            minlength: "<?php _e("Logout url: this field is required"); ?>."
+                        },
+                        rewrite_user_register: {
+                            required: "<?php _e("User register url: this field is required"); ?>.",
+                            minlength: "<?php _e("User register url: this field is required"); ?>."
+                        },
+                        rewrite_user_activate: {
+                            required: "<?php _e("Activate user url: this field is required"); ?>.",
+                            minlength: "<?php _e("Activate user url: this field is required"); ?>."
+                        },
+                        rewrite_user_activate_alert: {
+                            required: "<?php _e("Activate alert url: this field is required"); ?>.",
+                            minlength: "<?php _e("Activate aler url: this field is required"); ?>."
+                        },
+                        rewrite_user_profile: {
+                            required: "<?php _e("User profile url: this field is required"); ?>.",
+                            minlength: "<?php _e("User profile url: this field is required"); ?>."
+                        },
+                        rewrite_user_items: {
+                            required: "<?php _e("User items url: this field is required"); ?>.",
+                            minlength: "<?php _e("User items url: this field is required"); ?>."
+                        },
+                        rewrite_user_alerts: {
+                            required: "<?php _e("User alerts url: this field is required"); ?>.",
+                            minlength: "<?php _e("User alerts url: this field is required"); ?>."
+                        },
+                        rewrite_user_recover: {
+                            required: "<?php _e("Recover user url: this field is required"); ?>.",
+                            minlength: "<?php _e("Recover user url: this field is required"); ?>."
+                        },
+                        rewrite_user_forgot: {
+                            required: "<?php _e("User forgot url: this field is required"); ?>.",
+                            minlength: "<?php _e("User forgot url: this field is required"); ?>."
+                        },
+                        rewrite_user_change_password: {
+                            required: "<?php _e("Change password url: this field is required"); ?>.",
+                            minlength: "<?php _e("Change password url: this field is required"); ?>."
+                        },
+                        rewrite_user_change_email: {
+                            required: "<?php _e("Change email url: this field is required"); ?>.",
+                            minlength: "<?php _e("Change email url: this field is required"); ?>."
+                        },
+                        rewrite_user_change_email_confirm: {
+                            required: "<?php _e("Change email confirm url: this field is required"); ?>.",
+                            minlength: "<?php _e("Change email confirm url: this field is required"); ?>."
+                        }
+                    },
+                    wrapper: "li",
+                        errorLabelContainer: "#error_list",
+                        invalidHandler: function(form, validator) {
+                            $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+                        }
+                });
+            });
+
+
             $(function() {
                 $("#rewrite_enabled").click(function(){
                     $("#custom_rules").toggle();
                 });
             });
         </script>
-    </head>
-    <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <!-- container -->
         <div id="content">
@@ -41,7 +342,8 @@
                 <?php osc_show_admin_flash_messages() ; ?>
                 <!-- settings form -->
                 <div class="settings permalinks">
-                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+                    <ul id="error_list"></ul>
+                    <form name="permalinks_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="settings" />
                         <input type="hidden" name="action" value="permalinks_post" />
                         <fieldset>

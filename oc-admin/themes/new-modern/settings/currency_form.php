@@ -31,9 +31,44 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                // Code for form validation
+                $("form[name=currency_form]").validate({
+                    rules: {
+                        pk_c_code: {
+                            required: true,
+                            minlength: 3,
+                            maxlength: 3
+                        },
+                        s_name: {
+                            required: true,
+                            minlength: 1
+                        }
+                    },
+                    messages: {
+                        pk_c_code: {
+                            required: "<?php _e("Currency code: this field is required"); ?>.",
+                            minlength: "<?php _e("Currency code: this field is required"); ?>.",
+                            maxlength: "<?php _e("Currency code: this field is required"); ?>."
+                        },
+                        s_name: {
+                            required: "<?php _e("Name: this field is required"); ?>.",
+                            minlength: "<?php _e("Name: this field is required"); ?>."
+                        }
+                    },
+                    wrapper: "li",
+                        errorLabelContainer: "#error_list",
+                        invalidHandler: function(form, validator) {
+                            $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+                        }
+                });
+            });
+        </script>
         <!-- container -->
         <div id="content">
             <?php osc_current_admin_theme_path( 'include/backoffice_menu.php' ) ; ?>
@@ -45,7 +80,8 @@
                 <?php osc_show_admin_flash_messages() ; ?>
                 <!-- currency-form form -->
                 <div class="settings currency-form">
-                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+                    <ul id="error_list"></ul>
+                    <form name="currency_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="settings" />
                         <input type="hidden" name="action" value="currencies" />
                         <input type="hidden" name="type" value="<?php echo $typeForm ; ?>" />

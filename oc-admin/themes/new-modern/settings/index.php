@@ -26,10 +26,65 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <script type="text/javascript">
+            $(document).ready(function(){
+                // Code for form validation
+                $("form[name=settings_form]").validate({
+                    rules: {
+                        pageTitle: {
+                            required: true,
+                            minlength: 1
+                        },
+                        contactEmail: {
+                            required: true,
+                            email: true
+                        },
+                        num_rss_items: {
+                            required: true,
+                            digits: true
+                        },
+                        max_latest_items_at_home: {
+                            required: true,
+                            digits: true
+                        },
+                        default_results_per_page: {
+                            required: true,
+                            digits: true
+                        }
+                    },
+                    messages: {
+                        pageTitle: {
+                            required: "<?php _e("Page title: this field is required"); ?>.",
+                            minlength: "<?php _e("Page title: this field is required"); ?>."
+                        },
+                        contactEmail: {
+                            required: "<?php _e("Email: this field is required"); ?>.",
+                            email: "<?php _e("Invalid email address"); ?>."
+                        },
+                        num_rss_items: {
+                            required: "<?php _e("RSS shows: this field is required"); ?>.",
+                            digits: "<?php _e("RSS shows: this field has to be numeric only"); ?>."
+                        },
+                        max_latest_items_at_home: {
+                            required: "<?php _e("The latest items shows: this field is required"); ?>.",
+                            digits: "<?php _e("The latest items shows: this field has to be numeric only"); ?>."
+                        },
+                        default_results_per_page: {
+                            required: "<?php _e("The search page shows: this field is required"); ?>.",
+                            digits: "<?php _e("The search page shows: this field has to be numeric only"); ?>."
+                        }
+                    },
+                    wrapper: "li",
+                        errorLabelContainer: "#error_list",
+                        invalidHandler: function(form, validator) {
+                            $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+                        }
+                });
+            });
             
             function custom_date(date_format) {
                 $.getJSON(
@@ -71,7 +126,8 @@
                 <?php osc_show_admin_flash_messages() ; ?>
                 <!-- settings form -->
                 <div class="settings general">
-                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+                    <ul id="error_list"></ul>
+                    <form name="settings_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="settings" />
                         <input type="hidden" name="action" value="update" />
                         <fieldset>

@@ -1041,6 +1041,27 @@ div.disabled .category_row {
     font-size: 13px !important;
     color: #B94A48 !important;
 }
+.FormButtonsSubmit{
+    margin-left:150px;
+}
+.FormElement{
+    padding-bottom:10px;
+}
+.FormElement label{
+    float: left;
+    width: 150px;
+    padding-top: 4px;
+    margin-bottom: 4px;
+    cursor: pointer;
+}
+.locations_box{
+    background-color:#f2f2f2;
+    padding:20px;
+    border: solid 3px #E1E1E1;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+}
 /* JQUERY UI */
 .ui-widget-overlay{
     background-color:#000000;

@@ -65,7 +65,8 @@
                 <?php osc_show_admin_flash_messages() ; ?>
                 <!-- add user form -->
                 <div class="settings general">
-                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+                    <ul id="error_list"></ul>
+                    <form name="register" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="users" />
                         <input type="hidden" name="action" value="<?php echo $action_frm ; ?>"/>
                         <?php UserForm::primary_input_hidden($user) ; ?>
@@ -76,7 +77,7 @@
                         <fieldset>
                             <h3><?php _e('Contact info') ; ?></h3>
                             <div class="input-line">
-                                <label><?php _e('Name') ; ?> <em><?php _e('(required)') ; ?></em></label>
+                                <label><?php _e('Name') ; ?></label>
                                 <div class="input large">
                                     <?php UserForm::name_text($user) ; ?>
                                 </div>

@@ -18,8 +18,9 @@
 
     $aCountries = __get('aCountries');
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <script type="text/javascript">
             var base_url    = '<?php echo osc_admin_base_url(); ?>';
@@ -51,7 +52,7 @@
                 </div>
                 <?php osc_show_admin_flash_messages() ; ?>
                 <!-- settings form -->
-                <div id="settings_form" class="locations" style="border: 1px solid #ccc; background: #eee; min-height: 200px; ">
+                <div id="settings_form" class="locations locations_box">
                     <!-- Country -->
                     <div style="float:left; width: 33%;  margin-left:10px">
                         <div style="border-bottom: 1px dashed black; padding: 4px 4px 0px; width: 90%;" >
