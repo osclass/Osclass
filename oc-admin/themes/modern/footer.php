@@ -28,3 +28,52 @@
     <div id="footer_right">OSClass <?php echo OSCLASS_VERSION ; ?></div>
 </div>
 <!-- /footer -->
+<script>
+    //load current views
+    var menus = {};
+    jQuery('.oscmenu > li').each(function(){
+        menus[$(this).attr('id')] = false;
+    });
+    //load current views
+    var menuStatus = $.cookie.get('menuStatus',true);
+    for (var i in menuStatus){
+        if(menuStatus[i] == true){
+            menus[i] = true;
+            jQuery('#'+i+' ul').show();
+        }
+    }
+    checkSize();
+    jQuery.cookie.set('menuStatus',menus,{json: true});
+
+    jQuery('.oscmenu h3 a[href="#"]').click(function(){
+        var menuStatus = $.cookie.get('menuStatus',true);
+        if(jQuery(this).parent().next().is(':visible')){
+            menuStatus[$(this).parents('li').attr('id')] = false;
+            jQuery(this).parent().next().slideUp('normal',function(){
+                checkSize();
+            });
+        } else {
+            menuStatus[$(this).parents('li').attr('id')] = true;
+            jQuery(this).parent().next().slideDown('normal',function(){
+                checkSize();
+            });
+        }
+        jQuery.cookie.set('menuStatus',menuStatus,{json: true});
+        
+        return false;
+    });
+
+    function checkSize(){
+        var $right = $('#content .right');
+        var $left = $('#content .left');
+        if(!$right.data('height')){
+            $right.data('height',$right[0].offsetHeight);
+        }
+        console.log($left[0].offsetHeight);
+         console.log($right.data('height'));
+        /**/
+        if($left[0].offsetHeight > $right.data('height')){
+            $right.animate({'height':$left[0].offsetHeight});
+        }
+    }
+</script>

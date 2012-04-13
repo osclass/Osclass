@@ -27,7 +27,7 @@
             var tmp = value.split("@");
             $("input[name='e_country["+tmp[0]+"]']").val(tmp[1]);
         });
-
+        renderEditCountry();
         return false;
     }
 
@@ -40,6 +40,7 @@
         $("input[name=region_id]").val(id);
         $("input[name=e_region]").val(element.html());
 
+        renderEditRegion();
         return false;
     }
 
@@ -51,7 +52,7 @@
 
         $("input[name=city_id]").val(id);
         $("input[name=e_city]").val(element.html());
-
+        renderEditCity();
         return false;
     }
 
@@ -226,15 +227,113 @@
         });
 
         $("#b_new_country").click(function(){
-            $('#d_add_country').css('display','block') ;
-            $('#fade').css('display','block') ;
+            renderNewCountry();
         });
         $("#b_new_region").click(function(){
-            $('#d_add_region').css('display','block') ;
-            $('#fade').css('display','block') ;
+            renderAddRegion();
         });
         $("#b_new_city").click(function(){
-            $('#d_add_city').css('display','block') ;
-            $('#fade').css('display','block') ;
+            renderAddCity();
         });
     });
+
+    function renderNewCountry(){
+        var buttonsActions = {};
+        buttonsActions[addText] = function() { 
+            if(check_form_country()){
+                $('#d_add_country_form').submit();
+                $(this).dialog("close"); 
+            }
+        }
+        buttonsActions[cancelText] = function() { 
+            $(this).dialog("close"); 
+        }
+        $( "#d_add_country" ).dialog({
+            height: 280,
+            width: 400,
+            modal: true,
+            title: addNewCountryText,
+            buttons: buttonsActions
+        });
+    }
+    
+    function renderEditCountry(){
+        var buttonsActions = {};
+        buttonsActions[editText] = function() { 
+            $("#d_edit_country_form").submit(); 
+        }
+        buttonsActions[cancelText] = function() { 
+            $(this).dialog("close"); 
+        }
+        $( "#d_edit_country" ).dialog({
+            height: 210,
+            width: 400,
+            modal: true,
+            title: editNewCountryText,
+            buttons: buttonsActions
+        });
+    }
+    function renderAddRegion(){
+        var buttonsActions = {};
+        buttonsActions[addText] = function() { 
+            $("#d_add_region_form").submit(); 
+        }
+        buttonsActions[cancelText] = function() { 
+            $(this).dialog("close"); 
+        }
+        $( "#d_add_region" ).dialog({
+            height: 210,
+            width: 400,
+            modal: true,
+            title: addNewRegionText,
+            buttons: buttonsActions
+        });
+    }
+    function renderEditRegion(){
+        var buttonsActions = {};
+        buttonsActions[editText] = function() { 
+            $("#d_edit_region_form").submit(); 
+        }
+        buttonsActions[cancelText] = function() { 
+            $(this).dialog("close"); 
+        }
+        $( "#d_edit_region" ).dialog({
+            height: 210,
+            width: 400,
+            modal: true,
+            title: editNewRegionText,
+            buttons: buttonsActions
+        });
+    }
+    function renderAddCity(){
+        var buttonsActions = {};
+        buttonsActions[addText] = function() { 
+            $("#d_add_city_form").submit(); 
+        }
+        buttonsActions[cancelText] = function() { 
+            $(this).dialog("close"); 
+        }
+        $( "#d_add_city" ).dialog({
+            height: 210,
+            width: 400,
+            modal: true,
+            title: addNewCityText,
+            buttons: buttonsActions
+        });
+    }
+    function renderEditCity(){
+        var buttonsActions = {};
+        buttonsActions[editText] = function() { 
+            $("#d_edit_city_form").submit(); 
+        }
+        buttonsActions[cancelText] = function() { 
+            $(this).dialog("close"); 
+        }
+        $( "#d_edit_city" ).dialog({
+            height: 210,
+            width: 400,
+            modal: true,
+            title: editNewCityText,
+            buttons: buttonsActions
+        });
+    }

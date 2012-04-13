@@ -11,7 +11,7 @@
     margin-left: -20px;
     *zoom: 1;
 }
-
+/*
 .row:before, .row:after {
     display: table;
     content: "";
@@ -19,7 +19,7 @@
 
 .row:after {
     clear: both;
-}
+}*/
 
 [class*="span"] {
     float: left;

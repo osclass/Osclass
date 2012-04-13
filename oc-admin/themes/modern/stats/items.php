@@ -128,6 +128,7 @@
                     </div>
                 </div>
                 <!-- /items statistics -->
+                <div class="clear"></div>
             </div>
             <!-- /right container -->
         </div>
