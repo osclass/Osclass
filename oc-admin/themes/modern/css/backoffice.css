@@ -12,6 +12,9 @@ input:focus { outline:none; }
     clear: both;
 }
 /* adding/overwriting our styles over jQuery UI CSS Theme - dashboard */
+.row-action{
+    height:40px;
+}
 .float50per{
     min-height: 200px;
     height: auto;
