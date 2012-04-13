@@ -46,7 +46,8 @@ class Frontend_users extends FrontendTest {
         $this->loginWith();
         $url = osc_user_dashboard_url();
         $this->selenium->open($url);
-        $this->selenium->open("xpath=//li[@class='opt_items]/a");
+        $this->selenium->click("xpath=//li[@class='opt_items']/a");
+        sleep(1);
         // click to manage items
         $this->assertTrue( $this->selenium->isTextPresent('Your items + Post a new item'), 'User Manage Items');
         $this->assertTrue( $this->selenium->isTextPresent('You don\'t have any items yet'), 'User Manage Items, without items');
@@ -60,7 +61,8 @@ class Frontend_users extends FrontendTest {
         $this->loginWith();
         $url = osc_user_dashboard_url();
         $this->selenium->open($url);
-        $this->selenium->open("xpath=//li[@class='opt_alerts]/a");
+        $this->selenium->click("xpath=//li[@class='opt_alerts']/a");
+        sleep(5);
         // click to manage items
         $this->assertTrue( $this->selenium->isTextPresent('Your alerts'), 'User Manage Alerts');
         $this->assertTrue( $this->selenium->isTextPresent('You do not have any alerts yet'), 'User Manage Alerts, without alerts');
@@ -84,13 +86,15 @@ class Frontend_users extends FrontendTest {
                                 $this->_email);
         // check dashboard
         $this->selenium->open(osc_user_dashboard_url());
-        $this->selenium->getXpathCount("xpath=//div[@class='userItem']");
+        $count = 0;
+        $count = (int)$this->selenium->getXpathCount("//div[@id='main']/div[@class='userItem']");
         $this->assertTrue($count==1 , "Users Dashboard with one item");
         // check manage items
-        $this->selenium->open("xpath=//li[@class='opt_items]/a");
-        $this->selenium->getXpathCount("xpath=//div[@class='item']");
-        $this->assertTrue($count==1 , "Users Dashboard with one item");
-        
+        $this->selenium->click("xpath=//li[@class='opt_items']/a");
+        sleep(1);
+        $count = 0;
+        $count = (int)$this->selenium->getXpathCount("//div[@id='main']/div[@class='item']");
+        $this->assertTrue($count==1 , "Users Manage Items with one item");
     }
     
     /*
@@ -110,16 +114,19 @@ class Frontend_users extends FrontendTest {
     function testAlerts()
     {
         $this->loginWith();
-        $this->selenium->open( osc_user_profile_url() );
-        sleep(4);
+        $this->selenium->open( osc_user_dashboard_url() );
+
         $this->selenium->click("xpath=//li[@class='opt_alerts']/a");
+        sleep(1);
         $this->assertTrue( $this->selenium->isTextPresent('Your alerts'), 'User Manage Alerts with one alert');
-        sleep(10);
-        $this->selenium->getXpathCount("xpath=//div[@class='userItem']");
-        $this->assertTrue($count==1 , "Users Dashboard with one item");
-        sleep(10);
+
+        $count = 0;
+        $count = (int)$this->selenium->getXpathCount("//div[@id='main']/div[@class='userItem']");
+        $this->assertTrue( $count==1 , "Users Dashboard with one item");
+
         // delete
-        $this->selenium->click("xpath=//div[@class='userItem'][1]/div/a[text()='Delete this alert']");
+        $this->selenium->click("xpath=//div[@id='main']/div[@class='userItem'][1]/div/a[text()='Delete this alert']");
+        sleep(1);
         $this->assertTrue( $this->selenium->isTextPresent('Unsubscribed correctly'), 'User Manage Alerts, delete alert');
     }
     
