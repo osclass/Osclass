@@ -893,7 +893,33 @@ p.text {
     margin-left: 2px;
     margin-right: 5px;
 }
+.custom-field-frame label.checkbox,
+.settings label.checkbox{
+    float:left;
+}
+.languages label.checkbox,
+.comments label.checkbox{
+    float: none;
+}
+.users label.checkbox{
+    float: left;
+    clear: both;
+}
+.users .input-line,
+.users .actions{
+    clear:both;
+}
+.users .input{
+    float:left;
+    margin-left:0;
+}
 
+.users .input .inline{
+    float:left;
+}
+.widgets .input-line{
+    clear:both;
+}
 #advanced_fields, #advanced_fields_iframe {
     cursor: pointer;
     padding-left: 20px;
