@@ -1019,6 +1019,24 @@ div.disabled .category_row {
     padding-bottom: 5px;
 }
 /* /categories */
+/* table-backoffice-form */
+.table-backoffice-form{
+    margin-left:20px;
+}
+.table-backoffice-form .labeled{
+    width:190px;
+    padding-right:10px;
+    padding-bottom:15px;
+}
+.table-backoffice-form .help-box{
+    color: #555;
+    margin:5px 0;
+    width:278px;
+    font-size:12px;
+}
+.actions-permalinks{
+    margin-left:220px;
+}
 /* items */
 .show-filters {
     cursor: pointer;
