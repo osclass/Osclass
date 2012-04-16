@@ -113,7 +113,14 @@
                     $bool = false;
                     if($userId != '' && $userId == $user['pk_i_id']){$bool = true;}
                     if((isset($item["fk_i_user_id"]) && $item["fk_i_user_id"] == $user['pk_i_id'])){$bool = true;}
-                    echo '<option value="' . $user['pk_i_id'] . '"' . ( $bool ? 'selected="selected"' : '' ) . '>' . $user['s_name'] . '</option>' ;
+                    echo '<option value="' . $user['pk_i_id'] . '"' . ( $bool ? 'selected="selected"' : '' ) . '>';
+                    
+                    if( isset($user['s_name']) && !empty($user['s_name']) ) {
+                        echo $user['s_name'];
+                    } else {
+                        echo $user['s_email']; 
+                    }   
+                    echo '</option>' ;
                 }
             echo '</select>' ;
             return true ;

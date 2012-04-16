@@ -41,12 +41,14 @@
                 osc_reset_preferences() ;
             }
 
-            // if there are files from new version, go to upgrade page
-            if( get_class($this) != 'CAdminUpgrade' ) {
-                $config_version = str_replace('.', '', OSCLASS_VERSION);
-                $config_version = preg_replace('|-.*|', '', $config_version);
-                if( $config_version > Preference::newInstance()->get('version')) {
-                    $this->redirectTo(osc_admin_base_url(true) . '?page=upgrade');
+            $config_version = str_replace('.', '', OSCLASS_VERSION);
+            $config_version = preg_replace('|-.*|', '', $config_version);
+
+            if( $config_version > Preference::newInstance()->get('version') ) {
+                if(get_class($this) == 'CAdminTools') {
+                } else {
+                    if(get_class($this) != 'CAdminUpgrade' )
+                        $this->redirectTo(osc_admin_base_url(true) . '?page=upgrade');
                 }
             }
         }

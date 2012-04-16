@@ -272,7 +272,7 @@
                         </div>
                     </div>
                     <div class="input-line">
-                        <label><?php _e('Item user') ; ?></label>
+                        <label><?php _e('Item user name') ; ?></label>
                         <div class="input">
                             <input id="user" name="user" type="text" value=""/>
                             <input id="userId" name="userId" type="hidden" value=""/>

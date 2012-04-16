@@ -234,7 +234,7 @@
                     <table>
                         <tr>
                             <td><?php _e('Region'); ?>: </td>
-                            <td><input type="text" id="region" name="e_region" value="" /></td>
+                            <td><input type="text" id="e_region" name="e_region" value="" /></td>
                         </tr>
                     </table>
                 </form>
@@ -275,7 +275,7 @@
                     <table>
                         <tr>
                             <td><?php _e('City'); ?>: </td>
-                            <td><input type="text" id="region" name="e_city" value="" /></td>
+                            <td><input type="text" id="e_city" name="e_city" value="" /></td>
                         </tr>
                     </table>
                 </form>
