@@ -770,7 +770,7 @@ HTACCESS;
                                             if($cat_pos!==false && $id_pos>$cat_pos) {
                                                 $param_pos++;
                                             }
-                                            $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.*)', str_replace('{CATEGORY_SLUG}', '([^/]*)', str_replace('{CATEGORY_ID}', '([0-9]+)', $cat_url))).'$', 'index.php?page=search&sCategory=$'.$param_pos);
+                                            $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.+)', str_replace('{CATEGORY_SLUG}', '([^/]+)', str_replace('{CATEGORY_ID}', '([0-9]+)', $cat_url))).'$', 'index.php?page=search&sCategory=$'.$param_pos);
 
                                             //Write rule to DB
                                             $rewrite->setRules();
