@@ -510,7 +510,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->type("c_country"   , "AN" ) ;
         $this->selenium->type('c_manual'    , '0') ;
 
-        $this->selenium->click("xpath=//div[@id='d_add_country']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->click("xpath=//button/span[text()='Add']") ;
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new country") , "Can't add new country" );
@@ -519,102 +519,19 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div[1]/div/a[@class='edit']");
         $this->selenium->type("e_country"     , "Andorra_" ) ;
 
-        $this->selenium->click("xpath=//div[@id='d_edit_country']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->click("xpath=//button/span[text()='Edit']") ;
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been edited") , "Can't edit country name" );
         
         // delete country
-        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div[1]/div/a[1]");
+        $this->selenium->click("xpath=//a[@id='country_delete']");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete Country" ) ;
 
     }
 
-    /*
-     * Login oc-admin
-     * GeneralSettings -> locations 
-     * add country,region,city
-     * edit country/region/city
-     * delete country
-     * Logout
-     */
-    /*function testLocationsNEW()
-    {
-        $this->loginWith();
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Settings");
-        $this->selenium->click("link=Locations");
-        $this->selenium->waitForPageToLoad("10000");
-        // add Country
-        $this->selenium->click("xpath=//a[@id='b_new_country']");
 
-        $this->selenium->type("country", "ikea") ;
-        $this->selenium->type("c_country", "IK") ;
-
-        $this->selenium->click("xpath=//div[@id='d_add_country']/div[2]/form/div/input[@type='submit']") ;
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new country") , "Can't add new country" ) ;
-        // add Region
-        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
-        $this->selenium->click("xpath=//a[@id='b_new_region']") ;
-
-        $this->selenium->type("region", "Republica") ;
-
-        $this->selenium->click("xpath=//div[@id='d_add_region']/div[2]/form/div/input[@type='submit']") ;
-        $this->selenium->waitForPageToLoad("10000") ;
-
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new region") , "Can't add new region" ) ;
-
-        // add City
-        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
-        $this->selenium->click("xpath=//div[@id='i_regions']/div[1]/div/a[text()='View more »']") ;
-        $this->selenium->click("xpath=//a[@id='b_new_city']") ;
-
-        $this->selenium->type("city", "Mi casa") ;
-        $this->selenium->click("xpath=//div[@id='d_add_city']/div[2]/form/div/input[@type='submit']") ;
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new city") , "Can't add new city" ) ;
-
-        // edit country/region/city
-        // add City
-        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
-        $this->selenium->click("xpath=//div[@id='i_regions']/div[1]/div/a[text()='View more »']") ;
-        $this->selenium->click("xpath=//div[@id='i_cities']/div[1]/div/a[2]") ; // edit first city
-
-        $this->selenium->type("e_city", "Mi casa_") ;
-        $this->selenium->click("xpath=//div[@id='d_edit_city']/div[2]/form/div/input[@type='submit']") ;
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been edited") , "Can't edit city name" );
-
-        // edit Region
-        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
-        $this->selenium->click("xpath=//div[@id='i_regions']/div[1]/div[1]/a[2]") ; // edit first city
-
-        $this->selenium->type("e_region", "Republica_") ;
-
-        $this->selenium->click("xpath=//div[@id='d_edit_region']/div[2]/form/div/input[@type='submit']") ;
-        $this->selenium->waitForPageToLoad("10000") ;
-
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been edited") , "Can't edit region name" ) ;
-
-        // edit Country
-        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div[1]/div/a[@class='edit']");
-        $this->selenium->type("e_country"     , "ikea_" ) ;
-
-        $this->selenium->click("xpath=//div[@id='d_edit_country']/div[2]/form/div/input[@type='submit']") ;
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been edited") , "Can't edit country name" );
-
-        // DELETE THE LOCATION
-        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div[1]/div/a[1]");
-        $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete Country" ) ;
-    }*/
 
     /*
      * Login oc-admin
@@ -637,7 +554,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->type("country", "ikea") ;
         $this->selenium->type("c_country", "IK") ;
 
-        $this->selenium->click("xpath=//div[@id='d_add_country']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->click("xpath=//button/span[text()='Add']") ;
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new country") , "Add new country" ) ;
@@ -654,7 +571,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->type("country", "ikea") ;
         $this->selenium->type("c_country", "IK") ;
 
-        $this->selenium->click("xpath=//div[@id='d_add_country']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->click("xpath=//button/span[text()='Add']") ;
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Add country twice" ) ;
@@ -665,7 +582,7 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->selenium->type("region", "Republica") ;
 
-        $this->selenium->click("xpath=//div[@id='d_add_region']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->click("xpath=//button/span[text()='Add']") ;
         $this->selenium->waitForPageToLoad("10000") ;
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new region") , "Add new region" ) ;
@@ -676,7 +593,7 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->selenium->type("region", "Republica") ;
 
-        $this->selenium->click("xpath=//div[@id='d_add_region']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->click("xpath=//button/span[text()='Add']") ;
         $this->selenium->waitForPageToLoad("10000") ;
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Add region twice" ) ;
@@ -687,7 +604,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("xpath=//a[@id='b_new_city']") ;
 
         $this->selenium->type("city", "Mi casa") ;
-        $this->selenium->click("xpath=//div[@id='d_add_city']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->click("xpath=//button/span[text()='Add']") ;
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new city") , "Add new city" ) ;
@@ -698,7 +615,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("xpath=//a[@id='b_new_city']") ;
 
         $this->selenium->type("city", "Mi casa") ;
-        $this->selenium->click("xpath=//div[@id='d_add_city']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->click("xpath=//button/span[text()='Add']") ;
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Add city twice" ) ;
@@ -711,7 +628,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("xpath=//a[@id='b_new_city']") ;
 
         $this->selenium->type("city", "Mi casa_") ;
-        $this->selenium->click("xpath=//div[@id='d_add_city']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->click("xpath=//button/span[text()='Add']") ;
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new city") , "Add new city" ) ;
@@ -721,7 +638,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("xpath=//div[@id='i_cities']/div/div/a[text()='Mi casa_']") ; 
 
         $this->selenium->type("e_city", "Mi casa") ;
-        $this->selenium->click("xpath=//div[@id='d_edit_city']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->click("xpath=//button/span[text()='Edit']") ;
         $this->selenium->waitForPageToLoad("10000");
         
         $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Change city name to existing one" ) ;
@@ -732,7 +649,7 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->selenium->type("region", "Republica_") ;
 
-        $this->selenium->click("xpath=//div[@id='d_add_region']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->click("xpath=//button/span[text()='Add']") ;
         $this->selenium->waitForPageToLoad("10000") ;
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new region") , "Add new region" ) ;
@@ -740,16 +657,15 @@ class OCadmin_generalSettings extends OCadmintest {
         // edit the region and change the name to existing one
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
         $this->selenium->click("xpath=//div[@id='i_regions']/div/div/a[text()='Republica_']") ; 
-
         $this->selenium->type("e_region", "Republica") ;
 
-        $this->selenium->click("xpath=//div[@id='d_edit_region']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->click("xpath=//button/span[text()='Edit']") ;
         $this->selenium->waitForPageToLoad("10000") ;
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Change region name to existing one" ) ;
 
         // DELETE THE LOCATION
-        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div[1]/div/a[1]");
+        $this->selenium->click("xpath=//a[@id='country_delete'][1]");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Delete Country" ) ;
 
