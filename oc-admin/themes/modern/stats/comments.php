@@ -51,7 +51,7 @@
 
                 // Instantiate and draw our chart, passing in some options.
                 var chart = new google.visualization.LineChart(document.getElementById('placeholder')) ;
-                chart.draw(data, {width: 600, height: 300, vAxis: {maxValue: <?php echo ceil($max * 1.1) ; ?>}}) ;
+                chart.draw(data, {width: 400, height: 300, vAxis: {maxValue: <?php echo ceil($max * 1.1) ; ?>}}) ;
             }
         </script>
         <?php } ?>
@@ -69,42 +69,52 @@
                 <?php osc_show_admin_flash_messages() ; ?>
                 <!-- comments statistics -->
                 <div class="statistics">
-                    <div style="padding: 20px;">
-                        <p>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=comments&amp;type_stat=day"><?php _e('Last 10 days') ; ?></a>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=comments&amp;type_stat=week"><?php _e('Last 10 weeks') ; ?></a>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=comments&amp;type_stat=month"><?php _e('Last 10 months') ; ?></a>
-                        </p>
-                    </div>
-
-                    <div id="placeholder" style="width:600px;height:300px;margin:0 auto;padding-bottom: 45px;">
-                        <?php if( count($comments) == 0 ) {
-                            _e("There're no statistics yet") ;
-                        }
-                        ?>
-                    </div>
-                    <div>
-                        <h3><?php _e('Latest comments on the web') ; ?></h3>
-                        <?php if( count($latest_comments) > 0 ) { ?>
-                        <table border="0">
-                            <tr>
-                                <th>ID</th>
-                                <th><?php _e('Title') ; ?></th>
-                                <th><?php _e('Author') ; ?></th>
-                                <th><?php _e('Comment') ; ?></th>
-                            </tr>
-                            <?php foreach($latest_comments as $c) { ?>
-                            <tr>
-                                <td><a href="<?php echo osc_admin_base_url(true); ?>?page=comments&amp;action=comment_edit&amp;id=<?php echo $c['pk_i_id']; ?>"><?php echo $c['pk_i_id']; ?></a></td>
-                                <td><a href="<?php echo osc_admin_base_url(true); ?>?page=comments&amp;action=comment_edit&amp;id=<?php echo $c['pk_i_id']; ?>"><?php echo $c['s_title']; ?></a></td>
-                                <td><a href="<?php echo osc_admin_base_url(true); ?>?page=comments&amp;action=comment_edit&amp;id=<?php echo $c['pk_i_id']; ?>"><?php echo $c['s_author_name'] . " - " . $c['s_author_email']; ?></a></td>
-                                <td><a href="<?php echo osc_admin_base_url(true); ?>?page=comments&amp;action=comment_edit&amp;id=<?php echo $c['pk_i_id']; ?>"><?php echo $c['s_body']; ?></a></td>
-                            </tr>
-                            <?php }; ?>
-                        </table>
-                        <?php } else { ?>
-                            <p><?php _e("There're no statistics yet.") ; ?></p>
-                        <?php } ?>
+                <div class="actions-header">
+                    <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=comments&amp;type_stat=day"><?php _e('Last 10 days') ; ?></a>
+                    <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=comments&amp;type_stat=week"><?php _e('Last 10 weeks') ; ?></a>
+                    <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=comments&amp;type_stat=month"><?php _e('Last 10 months') ; ?></a>
+                </div>
+                    <div class="sortable_div">
+                        <div class="float50per">
+                        <div class="latest-items ui-widget-content ui-corner-all">
+                            <h3 class="ui-state-default"><?php _e('Comments') ?></h3>
+                            <div class="ui-state-body">
+                                <div id="placeholder" style="width:400px;height:300px;margin:0; margin:0 auto; padding-bottom: 45px;">
+                                     <?php if( count($comments) == 0 ) {
+                                        _e("There're no statistics yet") ;
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="float50per">
+                        <div class="latest-items ui-widget-content ui-corner-all">
+                            <h3 class="ui-state-default"><?php _e('Latest comments on the web') ; ?></h3>
+                            <div class="ui-state-body">
+                                <?php if( count($latest_comments) > 0 ) { ?>
+                                <table border="0">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th><?php _e('Title') ; ?></th>
+                                        <th><?php _e('Author') ; ?></th>
+                                        <th><?php _e('Comment') ; ?></th>
+                                    </tr>
+                                    <?php foreach($latest_comments as $c) { ?>
+                                    <tr>
+                                        <td><a href="<?php echo osc_admin_base_url(true); ?>?page=comments&amp;action=comment_edit&amp;id=<?php echo $c['pk_i_id']; ?>"><?php echo $c['pk_i_id']; ?></a></td>
+                                        <td><a href="<?php echo osc_admin_base_url(true); ?>?page=comments&amp;action=comment_edit&amp;id=<?php echo $c['pk_i_id']; ?>"><?php echo $c['s_title']; ?></a></td>
+                                        <td><a href="<?php echo osc_admin_base_url(true); ?>?page=comments&amp;action=comment_edit&amp;id=<?php echo $c['pk_i_id']; ?>"><?php echo $c['s_author_name'] . " - " . $c['s_author_email']; ?></a></td>
+                                        <td><a href="<?php echo osc_admin_base_url(true); ?>?page=comments&amp;action=comment_edit&amp;id=<?php echo $c['pk_i_id']; ?>"><?php echo $c['s_body']; ?></a></td>
+                                    </tr>
+                                    <?php }; ?>
+                                </table>
+                                <?php } else { ?>
+                                    <p><?php _e("There're no statistics yet.") ; ?></p>
+                                <?php } ?>
+                            </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- /comments statistics -->

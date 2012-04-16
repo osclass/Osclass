@@ -41,21 +41,22 @@
             // draws it.
             function drawChart() {
                 var data = new google.visualization.DataTable();
-                data.addColumn('string', '<?php _e('Date') ; ?>');
+
+                data.addColumn('string', '<?php _e('Date') ; ?>',0,1);
                 data.addColumn('number', '<?php _e('New users') ; ?>');
                 <?php $k = 0 ;
                 echo "data.addRows(" . count($users) . ");" ;
                 foreach($users as $date => $num) {
-                    echo "data.setValue(" . $k . ', 0, "' . $date . '");' ;
+                    echo "data.setValue(" . $k . ', 0, "'. $date . '");' ;
                     echo "data.setValue(" . $k . ", 1, " . $num . ");" ;
                     $k++ ;
                 }
                 ?>
 
                 // Instantiate and draw our chart, passing in some options.
-                var chart = new google.visualization.LineChart(document.getElementById('placeholder'));
-                chart.draw(data, {width: 600, height: 300, vAxis: {maxValue: <?php echo ceil($max * 1.1) ; ?>}});
-                
+                var chart = new google.visualization.AreaChart(document.getElementById('placeholder'));
+                chart.draw(data, {width: 400, height: 240, vAxis: {maxValue: <?php echo ceil($max * 1.1) ; ?>},legend: {position: 'none'},pointSize: 5});
+
                 var data_country = new google.visualization.DataTable();
                 data_country.addColumn('string', '<?php _e('Country') ; ?>');
                 data_country.addColumn('number', '<?php _e('Users per country') ; ?>');
@@ -96,36 +97,58 @@
                 <?php osc_show_admin_flash_messages() ; ?>
                 <!-- users statistics -->
                 <div class="statistics">
-                    <div style="padding: 20px;">
-                        <p>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=users&amp;type_stat=day"><?php _e('Last 10 days') ; ?></a>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=users&amp;type_stat=week"><?php _e('Last 10 weeks') ; ?></a>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=users&amp;type_stat=month"><?php _e('Last 10 months') ; ?></a>
-                        </p>
+                    <div class="actions-header">
+                        <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=users&amp;type_stat=day"><?php _e('Last 10 days') ; ?></a>
+                        <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=users&amp;type_stat=week"><?php _e('Last 10 weeks') ; ?></a>
+                        <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=users&amp;type_stat=month"><?php _e('Last 10 months') ; ?></a>
                     </div>
-                    <div id="placeholder" style="float:center; width:600px;height:300px;margin:0 auto;padding-bottom: 45px;">
-                        <?php if( count($users) == 0 ) {
-                            _e("There're no statistics yet") ;
-                        }
-                        ?>
-                    </div>
-                    <br/>
-                    <div id="by_country" style="float:left; width:400px;height:300px;margin:0 auto;padding-bottom: 45px;">
-                        <?php if( count($users_by_country) == 0 ) {
-                            _e("There're no statistics yet") ;
-                        }
-                        ?>
-                    </div>
-                    <br/>
-                    <div id="by_region" style="float:left;width:400px;height:300px;margin:0 auto;padding-bottom: 45px;">
-                        <?php if( count($users_by_region) == 0 ) {
-                            _e("There're no statistics yet") ;
-                        }
-                        ?>
-                    </div>
-                    <div id="latest" style="float:left;width:500px;padding-right:50px;">
-                        <h3><?php _e('Latest users on the web') ; ?></h3>
-                        <?php if( count($latest_users) > 0 ) { ?>
+
+                    <div class="sortable_div">
+                        <div class="float50per">
+                        <div class="latest-items ui-widget-content ui-corner-all">
+                            <h3 class="ui-state-default"><?php _e('New users'); ?></h3>
+                            <div class="ui-state-body">
+                                <div id="placeholder" style="width:400px;height:300px;margin:0; margin:0 auto; padding-bottom: 45px;">
+                                    <?php if( count($users) == 0 ) {
+                                        _e("There're no statistics yet") ;
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="float50per">
+                            <div class="latest-items ui-widget-content ui-corner-all">
+                                    <h3 class="ui-state-default"><?php _e('Users per country') ; ?></h3>
+                                    <div class="ui-state-body">
+                                    <div id="by_country" style="width:400px;height:300px;margin:0 auto;padding-bottom: 45px;">
+                                <?php if( count($users_by_country) == 0 ) {
+                                    _e("There're no statistics yet") ;
+                                }
+                                ?>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="float50per">
+                            <div class="latest-items ui-widget-content ui-corner-all">
+                                <h3 class="ui-state-default"><?php _e('Users per region') ; ?></h3>
+                                <div class="ui-state-body">
+                                <div id="by_region" style="width:400px;height:300px;margin:0 auto;padding-bottom: 45px;">
+                                    <?php if( count($users_by_region) == 0 ) {
+                                        _e("There're no statistics yet") ;
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="float50per">
+                            <div class="latest-items ui-widget-content ui-corner-all">
+                                <h3 class="ui-state-default"><?php _e('Latest users on the web') ; ?></h3>
+                                <div class="ui-state-body">
+                                <?php if( count($latest_users) > 0 ) { ?>
                         <table border="0">
                             <tr>
                                 <th>ID</th>
@@ -143,11 +166,22 @@
                         <?php } else { ?>
                             <p><?php _e("There're no statistics yet") ; ?></p>
                         <?php } ?>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="float50per">
+                            <div class="latest-items ui-widget-content ui-corner-all">
+                                <h3 class="ui-state-default"><?php _e('Avg. items per user') ; ?></h3>
+                                <div class="ui-state-body">
+                                <?php printf( __('%s items per user'), number_format($item, 2) ) ; ?>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="clear"></div>
                     </div>
-                    <div style="float:left;">
-                        <h3><?php _e('Avg. items per user') ; ?></h3>
-                        <?php printf( __('%s items per user'), number_format($item, 2) ) ; ?>
-                    </div>
+
                 </div>
                 <!-- /users statistics -->
                 <div class="clear"></div>
