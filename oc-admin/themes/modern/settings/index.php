@@ -216,7 +216,7 @@
                                         <input type="radio" name="df" id="df_custom" value="df_custom" <?php echo ( $custom_checked ? 'checked="checked"' : '' ) ; ?> />
                                         <input type="text" class="small" <?php echo ( $custom_checked ? 'value="' . osc_esc_html( osc_date_format() ) . '"' : '' ) ; ?> onkeyup="javascript:custom_date(this.value);"/><span id="custom_date"></span>
                                     </label>
-                                    <p class="help"><a href="http://php.net/date"><?php _e('Documentation on date and time formatting') ; ?></a></p>
+                                    <p class="help"><a href="http://php.net/date" target="_blank"><?php _e('Documentation on date and time formatting') ; ?></a></p>
                                     <input type="hidden" name="dateFormat" id="dateFormat" value="<?php echo osc_date_format() ; ?>" />
                                 </div>
                             </div>
@@ -247,7 +247,7 @@
                                         <input type="radio" name="tf" id="tf_custom" value="tf_custom" <?php echo ( $custom_checked ? 'checked="checked"' : '' ) ; ?> />
                                         <input type="text" class="small" <?php echo ( $custom_checked ? 'value="' . osc_esc_html( osc_time_format() ) . '"' : ''); ?> onkeyup="javascript:custom_time(this.value);"/><span id="custom_time"></span>
                                     </label>
-                                    <p class="help"><a href="http://php.net/date"><?php _e('Documentation on date and time formatting') ; ?></a></p>
+                                    <p class="help"><a href="http://php.net/date" target="_blank"><?php _e('Documentation on date and time formatting') ; ?></a></p>
                                     <input type="hidden" name="timeFormat" id="timeFormat" value="<?php echo osc_esc_html( osc_time_format() ) ; ?>" />
                                 </div>
                             </div>
@@ -288,7 +288,7 @@
                                 <div class="input">
                                     <label class="checkbox">
                                         <input type="checkbox" <?php echo ( osc_auto_cron() ? 'checked="true"' : '' ) ; ?> name="auto_cron" />
-                                        <p class="inline"><?php printf(__('Allow OSClass to run a built-in <a href="%s">cron</a> automatically without setting crontab'), 'http://en.wikipedia.org/wiki/Cron' ) ; ?></p>
+                                        <p class="inline"><?php printf(__('Allow OSClass to run a built-in <a href="%s" target="_blank">cron</a> automatically without setting crontab'), 'http://en.wikipedia.org/wiki/Cron' ) ; ?></p>
                                         <p class="help inline"><?php _e('It is <b>recommended</b> to have this option enabled, because some features require it.') ; ?></p>
                                     </label>
                                 </div>
