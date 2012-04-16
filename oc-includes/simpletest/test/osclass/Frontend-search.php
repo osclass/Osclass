@@ -237,7 +237,7 @@ class Frontend_search extends FrontendTest {
      */
     function testCreateAlert()
     {
-        $this->_createAlert('foobar@invalid_email');
+        $this->_createAlert('foobar@invalid_email', false);
         
         $this->_createAlert($this->_email);
         
