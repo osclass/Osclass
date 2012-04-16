@@ -142,7 +142,7 @@ abstract class FrontendTest extends WebTestCase {
         $this->selenium->waitForPageToLoad("30000");
     }
     
-    function _createAlert($email)
+    function _createAlert($email, $success = true)
     {
         // search only items with picture
         $this->selenium->open( osc_search_url() );
@@ -154,9 +154,13 @@ abstract class FrontendTest extends WebTestCase {
         $this->selenium->click('alert_email');
         $this->selenium->type('alert_email', $email);
         $this->selenium->click("xpath=//span/button[text()='Subscribe now!']");
-        // verify alert not created
+        // verify alert 
         $aAuxAlert = Alerts::newInstance()->findByEmail($email);
-        $this->assertTrue(count($aAuxAlert) == 0, 'Search - create alert');
+        if( $success ) {
+            $this->assertTrue(count($aAuxAlert) == 1, 'Search - create alert');
+        } else {
+            $this->assertTrue(count($aAuxAlert) == 0, 'Search - create alert');
+        }
     }
     
     function _lastItemId()
