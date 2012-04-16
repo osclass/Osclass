@@ -800,8 +800,6 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->assertTrue( $this->selenium->isTextPresent("One currency has been deleted") , "Delete currency" ) ;
         $this->assertTrue( !$this->selenium->isTextPresent("Indian_Rupee") , "Delete currency" ) ;
     }
-
-    
     
     function testPermalinks()
     {
@@ -940,7 +938,6 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("Friendly urls successfully deactivated") , "Disable permalinks" ) ;
-
         
         // return to previous state (before starting the tests)
         if($value=='on') {
@@ -948,9 +945,7 @@ class OCadmin_generalSettings extends OCadmintest {
             $this->selenium->click("//input[@type='submit']");
             $this->selenium->waitForPageToLoad("10000");
             $this->assertTrue( $this->selenium->isTextPresent("Permalinks structure updated") , "Disable permalinks" ) ;
-        }
-
-        
+        }   
     }
     
 }
