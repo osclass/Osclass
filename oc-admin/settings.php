@@ -94,11 +94,8 @@
                                         switch ($location_action) {
                                             case('add_country'):    // add country
                                                                     $countryCode = strtoupper(Params::getParam('c_country'));
-                                                                    $request = Params::getParam('country');
-                                                                    foreach($request as $k => $v) {
-                                                                        $countryName = $v;
-                                                                        break;
-                                                                    }
+                                                                    $countryName = Params::getParam('country');
+
                                                                     $exists = $mCountries->findByCode($countryCode);
                                                                     if(isset($exists['s_name'])) {
                                                                         osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
@@ -107,13 +104,9 @@
                                                                         $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country_code&term=' .
                                                                                                                  urlencode($countryCode) );
                                                                         $countries = json_decode($countries_json);
-                                                                        foreach($request as $k => $v) {
-                                                                            $data = array('pk_c_code'        => $countryCode,
-                                                                                        'fk_c_locale_code' => $k,
-                                                                                        's_name'           => $v);
-                                                                            $mCountries->insert($data);
-                                                                            CountryStats::newInstance()->setNumItems($countryCode, 0);
-                                                                        }
+                                                                        $mCountries->insert(array('pk_c_code' => $countryCode,
+                                                                                                  's_name' => $countryName));
+                                                                        CountryStats::newInstance()->setNumItems($countryCode, 0);
                                                                         if(isset($countries->error)) { // Country is not in our GEO database
                                                                             // We have no region for user-typed countries
                                                                         } else { // Country is in our GEO database, add regions and cities
@@ -175,16 +168,7 @@
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
                                             case('edit_country'):   // edit country
-                                                                    $countryCode = Params::getParam('country_code');
-                                                                    $request     = Params::getParam('e_country');
-                                                                    $ok          = true;
-
-                                                                    foreach($request as $k => $v) {
-                                                                        $result = $mCountries->updateLocale($countryCode, $k, $v) ;
-                                                                        if( $result === false ) {
-                                                                            $ok = false ;
-                                                                        }
-                                                                    }
+                                                                    $ok = $mCountries->update(array('s_name'=> Params::getParam('e_country')), array('pk_c_code' => Params::getParam('country_code')));
 
                                                                     if( $ok ) {
                                                                         osc_add_flash_ok_message(_m('Country has been edited'), 'admin');
@@ -354,7 +338,7 @@
                                             break;
                                         }
 
-                                        $aCountries = $mCountries->listAllAdmin();
+                                        $aCountries = $mCountries->listAll();
                                         $this->_exportVariableToView('aCountries', $aCountries);
 
                                         $this->doView('settings/locations.php');
