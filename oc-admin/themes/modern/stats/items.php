@@ -63,10 +63,10 @@
 
                 // Instantiate and draw our chart, passing in some options.
                 var chart = new google.visualization.LineChart(document.getElementById('placeholder'));
-                chart.draw(data, {width: 600, height: 300, vAxis: {maxValue: <?php echo ceil($max * 1.1) ; ?>}});
+                chart.draw(data, {width: 400, height: 300, vAxis: {maxValue: <?php echo ceil($max * 1.1) ; ?>}});
 
                 var chart2 = new google.visualization.ColumnChart(document.getElementById('placeholder_total'));
-                chart2.draw(data2, {width: 600, height: 300, vAxis: {maxValue: <?php echo ceil($max_views * 1.1) ;?>}});
+                chart2.draw(data2, {width: 400, height: 300, vAxis: {maxValue: <?php echo ceil($max_views * 1.1) ;?>}});
             }
         </script>
         <?php } ?>
@@ -84,47 +84,67 @@
                 <?php osc_show_admin_flash_messages() ; ?>
                 <!-- items statistics -->
                 <div class="statistics">
-                    <div style="padding: 20px;">
-                        <p>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=day"><?php _e('Last 10 days') ; ?></a>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=week"><?php _e('Last 10 weeks') ; ?></a>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=month"><?php _e('Last 10 months') ; ?></a>
-                        </p>
-                        <h3><?php _e('New items') ; ?></h3>
-                        <div id="placeholder" style="width:600px;height:300px;margin:0 auto;padding-bottom: 45px;">
-                            <?php if( count($items) == 0 ) {
-                                _e("There're no statistics yet") ;
-                            }
-                            ?>
+                <div class="actions-header">
+                    <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=day"><?php _e('Last 10 days') ; ?></a>
+                    <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=week"><?php _e('Last 10 weeks') ; ?></a>
+                    <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=month"><?php _e('Last 10 months') ; ?></a>
+                </div>
+                    <div class="sortable_div">
+                        <div class="float50per">
+                        <div class="latest-items ui-widget-content ui-corner-all">
+                            <h3 class="ui-state-default"><?php _e('New items'); ?></h3>
+                            <div class="ui-state-body">
+                                <div id="placeholder" style="width:400px;height:300px;margin:0; margin:0 auto; padding-bottom: 45px;">
+                                    <?php if( count($users) == 0 ) {
+                                        _e("There're no statistics yet") ;
+                                    }
+                                    ?>
+                                </div>
+                            </div>
                         </div>
-                        <h3><?php _e("Total number of items' views") ; ?></h3>
-                        <div id="placeholder_total" style="width:600px;height:300px;margin:0 auto;padding-bottom: 45px;">
-                            <?php if( count($reports) == 0 ) {
-                                _e("There're no statistics yet") ;
-                            }
-                            ?>
                         </div>
-                        <h3><?php _e('Latest items on the web') ; ?></h3>
-                        <?php if( count($latest_items) > 0 ) { ?>
-                        <table border="0">
-                            <tr>
-                                <th>ID</th>
-                                <th><?php _e('Title') ; ?></th>
-                                <th><?php _e('Author') ; ?></th>
-                                <th><?php _e('Status') ; ?></th>
-                            </tr>
-                            <?php foreach($latest_items as $i) { ?>
-                            <tr>
-                                <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo $i['pk_i_id']; ?></a></td>
-                                <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo $i['s_title']; ?></a></td>
-                                <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo $i['s_contact_email']; ?></a></td>
-                                <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo ($i['b_active'] == 1) ? __('Active') : __('Inactive') ; ?></a></td>
-                            </tr>
-                            <?php } ?>
-                        </table>
-                        <?php } else { ?>
-                            <p><?php _e("There're no statistics yet") ; ?></p>
-                        <?php } ?>
+                        <div class="float50per">
+                        <div class="latest-items ui-widget-content ui-corner-all">
+                            <h3 class="ui-state-default"><?php _e("Total number of items' views") ; ?></h3>
+                            <div class="ui-state-body">
+                                <div id="placeholder_total" style="width:400px;height:300px;margin:0; margin:0 auto; padding-bottom: 45px;">
+                                    <?php if( count($reports) == 0 ) {
+                                        _e("There're no statistics yet") ;
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+
+                        <div class="float50per">
+                        <div class="latest-items ui-widget-content ui-corner-all">
+                            <h3 class="ui-state-default"><?php _e('Latest items on the web') ; ?></h3>
+                            <div class="ui-state-body">
+                                <?php if( count($latest_items) > 0 ) { ?>
+                                <table border="0">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th><?php _e('Title') ; ?></th>
+                                        <th><?php _e('Author') ; ?></th>
+                                        <th><?php _e('Status') ; ?></th>
+                                    </tr>
+                                    <?php foreach($latest_items as $i) { ?>
+                                    <tr>
+                                        <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo $i['pk_i_id']; ?></a></td>
+                                        <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo $i['s_title']; ?></a></td>
+                                        <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo $i['s_contact_email']; ?></a></td>
+                                        <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo ($i['b_active'] == 1) ? __('Active') : __('Inactive') ; ?></a></td>
+                                    </tr>
+                                    <?php } ?>
+                                </table>
+                                <?php } else { ?>
+                                    <p><?php _e("There're no statistics yet") ; ?></p>
+                                <?php } ?>
+                            </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- /items statistics -->

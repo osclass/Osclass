@@ -196,6 +196,7 @@
                     <!-- /list fields -->
                 </div>
                 <!-- /custom fields -->
+                <div class="clear"></div>
             </div>
             <!-- /right container -->
         </div>
