@@ -16,14 +16,15 @@ input:focus { outline:none; }
     height:40px;
 }
 .float50per{
-    min-height: 200px;
     height: auto;
-    margin: 5px 5px 20px 5px;
-    width: 48%;
+    margin: 0px;
+    width: 50%;
     display: inline-block;
     float: left;
+    margin-bottom:10px;
 }
 .sortable_div .ui-widget-content {
+    margin:0 5px;
 }
 
 .sortable_div .ui-state-default {
@@ -1019,6 +1020,24 @@ div.disabled .category_row {
     padding-bottom: 5px;
 }
 /* /categories */
+/* table-backoffice-form */
+.table-backoffice-form{
+    margin-left:20px;
+}
+.table-backoffice-form .labeled{
+    width:190px;
+    padding-right:10px;
+    padding-bottom:15px;
+}
+.table-backoffice-form .help-box{
+    color: #555;
+    margin:5px 0;
+    width:278px;
+    font-size:12px;
+}
+.actions-permalinks{
+    margin-left:220px;
+}
 /* items */
 .show-filters {
     cursor: pointer;
@@ -1057,6 +1076,24 @@ div.disabled .category_row {
     margin-bottom: 4px;
     cursor: pointer;
 }
+.statistics .actions-header{
+    font-size:12px;
+    padding:0 10px 20px 10px;
+}
+.statistics .ui-state-body table{
+    width:100%;
+    border:solid 1px #eeeeee;
+    margin-top:10px;
+}
+.statistics .ui-state-body th{
+    border:solid 2px #DADADA;
+    background-color:#DADADA;
+}
+.statistics .ui-state-body td,
+.statistics .ui-state-body th{
+    border:solid 2px #DADADA;
+    padding:3px 10px;
+}
 .locations_box{
     background-color:#f2f2f2;
     padding:20px;
@@ -1064,6 +1101,9 @@ div.disabled .category_row {
     border-radius: 6px;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
+}
+.statistics .float50per{
+    min-width:440px;
 }
 /* JQUERY UI */
 .ui-widget-overlay{
@@ -1078,19 +1118,26 @@ div.disabled .category_row {
 }
 .ui-dialog-titlebar,
 .ui-widget-header,
-.ui-state-default{
+h3.ui-state-default{
     padding: .5em 1em .3em; position: relative !important; 
     background:#dadada !important;
 
     border:none !important;
     color: #222 !important;
     font-weight: normal !important;
-    border-radius:5px !important;
+    border-radius:0px !important;
+
+    margin-top: -10px !important;
+    margin-left:-10px !important;
+    width:100% !important;
+    padding: 8px 10px 0 !important;
 }
 .ui-widget-content{
     padding:10px !important;
 }
-
+.ui-dialog-title{
+    padding-bottom:10px;
+}
 
 .ui-dialog { position: absolute; padding: .2em; width: 300px; overflow: hidden; }
 .ui-dialog .ui-dialog-title { float: left; margin: .1em 16px .2em 0; }

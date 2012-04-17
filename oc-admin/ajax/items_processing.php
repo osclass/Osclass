@@ -196,6 +196,7 @@
             $count = 0;
             foreach ($this->items as $aRow)
             {
+                View::newInstance()->_exportVariableToView('item', $aRow);
                 $row     = array() ;
                 $options = array() ;
 
@@ -205,6 +206,7 @@
                     $title .= '...' ;
                 }
 
+                $options[] = '<a href="' . osc_item_url().'">' . __('View item') . '</a>' ;
                 $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View comments') . '</a>' ;
                 $options[] = '<a href="' . osc_admin_base_url(true) . '?page=media&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View media') . '</a>' ;
                 if( $aRow['b_active'] ) {
