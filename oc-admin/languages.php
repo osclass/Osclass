@@ -285,11 +285,14 @@
                                                 $default_lang = osc_language() ;
                                                 foreach( Params::getParam('id') as $code ) {
                                                     if( $default_lang != $code ) {
-                                                        $this->localeManager->deleteLocale($code) ;
-                                                        if( !osc_deleteDir(osc_translations_path() . $code) ) {
-                                                            osc_add_flash_error_message( sprintf( _m("Directory '%s' couldn't be removed"), $code), 'admin') ;
+                                                        if($this->localeManager->deleteLocale($code)) {
+                                                            if( !osc_deleteDir(osc_translations_path() . $code) ) {
+                                                                osc_add_flash_error_message( sprintf( _m("Directory '%s' couldn't be removed"), $code), 'admin') ;
+                                                            } else {
+                                                                osc_add_flash_ok_message( sprintf( _m('Directory "%s" has been successfully removed'), $code), 'admin');
+                                                            }
                                                         } else {
-                                                            osc_add_flash_ok_message( sprintf( _m('Directory "%s" has been successfully removed'), $code), 'admin');
+                                                            osc_add_flash_error_message( sprintf( _m("Directory '%s' couldn't be removed ;)"), $code), 'admin') ;
                                                         }
                                                     } else {
                                                         osc_add_flash_error_message( sprintf( _m("Directory '%s' couldn't be removed because it's the default language. Set another language as default first and try again"), $code), 'admin') ;

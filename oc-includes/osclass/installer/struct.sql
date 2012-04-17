@@ -23,12 +23,10 @@ CREATE TABLE /*TABLE_PREFIX*/t_locale (
 
 CREATE TABLE /*TABLE_PREFIX*/t_country (
     pk_c_code CHAR(2) NOT NULL,
-    fk_c_locale_code CHAR(5) NOT NULL,
     s_name VARCHAR(80) NOT NULL,
 
-        PRIMARY KEY (pk_c_code, fk_c_locale_code),
-        INDEX idx_s_name (s_name),
-        FOREIGN KEY (fk_c_locale_code) REFERENCES /*TABLE_PREFIX*/t_locale (pk_c_code) 
+        PRIMARY KEY (pk_c_code),
+        INDEX idx_s_name (s_name)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_currency (
