@@ -119,6 +119,44 @@
             $result = $this->dao->get() ;
             return $result->result();
         }
+        
+        
+        /**
+         *  Delete a country with its regions, cities,..
+         * 
+         *  @access public
+         *  @since 2.4
+         *  @param $pk
+         *  @return boolean
+         */
+        function deleteByPrimaryKey($pk) {
+            $mRegions = Region::NewInstance();
+            $aRegions = $mRegions->findByCountry($pk);
+            $mCities = City::newInstance();
+            $mCityAreas = CityArea::newInstance();
+            $result = true;
+            foreach($aRegions as $region) {
+                $aCities = $mCities->findByRegion($region['pk_i_id']);
+                foreach($aCities as $city) {
+                    $aCityAreas = $mCityAreas->findByCity($city['pk_i_id']);
+                    foreach($aCityAreas as $cityArea) {
+                        if(!$mCityAreas->delete(array('pk_i_id' => $cityArea['pk_i_id']))) {
+                            $result = false;
+                        };
+                    }
+                    if(!$mCities->delete(array('pk_i_id' => $city['pk_i_id']))) {
+                        $result = false;
+                    };
+                }
+                if(!$mRegions->delete(array('pk_i_id' => $region['pk_i_id']))) {
+                    $result = false;
+                };
+            }
+            if(!$this->delete(array('pk_c_code' => $pk))) {
+                $result = false;
+            }
+            return $result;
+        }
     }
 
     /* file end: ./oc-includes/osclass/model/Country.php */
