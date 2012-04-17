@@ -1053,13 +1053,28 @@ div.disabled .category_row {
 .table-backoffice-form .labeled{
     width:190px;
     padding-right:10px;
-    padding-bottom:15px;
 }
-.table-backoffice-form .help-box{
+.help-box{
     color: #555;
     margin:5px 0;
-    width:278px;
-    font-size:12px;
+    font-size:13px;
+}
+span.help-box{
+    padding-left: 5px;
+}
+.table-backoffice-form td{
+    padding-bottom:5px;
+}
+.table-backoffice-form .additional-options{
+    font-size:13px;
+    padding-left:15px;
+}
+.table-backoffice-form .additional-options input{
+    height:13px;
+    font-size:13px;
+}
+.table-backoffice-form .separate td{
+    padding-top:20px;
 }
 .actions-permalinks{
     margin-left:220px;
