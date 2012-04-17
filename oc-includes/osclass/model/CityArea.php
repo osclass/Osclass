@@ -93,6 +93,28 @@
 
             return $result->row() ;
         }
+        
+        /**
+         * Return city areas of a given city ID
+         * 
+         * @access public
+         * @since 2.4
+         * @param $cityId
+         * @return array
+         */
+        function findByCity($cityId) {
+            $this->dao->select($this->getFields()) ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where('fk_i_city_id', $cityId) ;
+
+            $result = $this->dao->get() ;
+
+            if( $result == false ) {
+                return array() ;
+            }
+
+            return $result->result();
+        }
     }
 
     /* file end: ./oc-includes/osclass/model/CityArea.php */
