@@ -202,7 +202,6 @@ CREATE TABLE %st_item_description_tmp (
             $comm->query( $sql );
         }
     }
-    osc_changeVersionTo(240) ;
 
     if( osc_version() < 234 ) {
         @unlink(osc_admin_base_path()."upgrade.php");
@@ -306,7 +305,6 @@ CREATE TABLE %st_item_description_tmp (
             convertAlert($weekly);
         }
         unset($aAlerts);
-
         
         // UPDATE COUNTRY PROCESS (remove fk_c_locale)
         $comm->query("CREATE TABLE ".DB_TABLE_PREFIX."t_country_aux (
