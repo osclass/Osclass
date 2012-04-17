@@ -59,8 +59,8 @@ class OCadmin_pages extends OCadminTest {
         $this->checkPageData('test_page_example', "cos's test", "cos's test");
         
         $this->editPage('test_page_example', "foo's test\'", "description's \ sto") ;
-        $this->checkPageData('new foo new', "foo's test\'", "description's \ sto") ;
-        $this->deletePage('new foo new') ;
+        $this->checkPageData('new-foo-new', "foo's test\'", "description's \ sto") ;
+        $this->deletePage('new-foo-new') ;
     }
 
     /*
@@ -200,7 +200,7 @@ class OCadmin_pages extends OCadminTest {
         
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
-
+        sleep(1);
         if( $this->selenium->isTextPresent("The page has been updated") ){
             $this->assertTrue("text present");
         } else {

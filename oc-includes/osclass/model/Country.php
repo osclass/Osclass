@@ -51,7 +51,7 @@
             parent::__construct();
             $this->setTableName('t_country') ;
             $this->setPrimaryKey('pk_c_code') ;
-            $this->setFields( array('pk_c_code', 'fk_c_locale_code', 's_name') ) ;
+            $this->setFields( array('pk_c_code', 's_name') ) ;
         }
 
         /**
@@ -64,17 +64,6 @@
          */
         public function findByCode($code)
         {
-            $this->dao->select('*') ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('pk_c_code', $code) ;
-            $this->dao->where('fk_c_locale_code', osc_current_user_locale()) ;
-            $result = $this->dao->get() ;
-            
-            $data = $result->row();
-            if(isset($data['s_name']) && $data['s_name']!=''){
-                return $data;
-            } 
-            
             $this->dao->select('*') ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('pk_c_code', $code) ;
@@ -108,68 +97,9 @@
          * @param type $language
          * @return array
          */
-        public function listAll($language = '') {
-            if($language=='') { $language = osc_current_user_locale(); }
-            $result = $this->dao->query(sprintf('SELECT * FROM (SELECT *, FIELD(fk_c_locale_code, \'%s\', \'%s\') as sorter FROM %st_country WHERE s_name != \'\' ORDER BY sorter DESC) dummytable GROUP BY pk_c_code ORDER BY s_name ASC',  $this->dao->connId->real_escape_string(osc_current_user_locale()), $this->dao->connId->real_escape_string($language), DB_TABLE_PREFIX));
+        public function listAll() {
+            $result = $this->dao->query(sprintf('SELECT * FROM %st_country ORDER BY s_name ASC', DB_TABLE_PREFIX));
             return $result->result();
-        }
-
-        /**
-         * List all countries for admin panel
-         * 
-         * @access public
-         * @since unknown
-         * @param type $language
-         * @return array
-         */
-        public function listAllAdmin($language = "")
-        {
-            if($language=='') { $language = osc_current_user_locale(); }
-            $result = $this->dao->query(sprintf('SELECT * FROM (SELECT *, FIELD(fk_c_locale_code, \'%s\', \'%s\') as sorter FROM %st_country WHERE s_name != \'\' ORDER BY sorter DESC) dummytable GROUP BY pk_c_code ORDER BY s_name ASC',$this->dao->connId->real_escape_string(osc_current_user_locale()), $this->dao->connId->real_escape_string($language), DB_TABLE_PREFIX));
-            $countries_temp = $result->result();
-            $countries = array();
-            foreach($countries_temp as $country) {
-                $this->dao->select();
-                $this->dao->from($this->tableName);
-                $this->dao->where('pk_c_code', $country['pk_c_code']);
-                $locales = $this->dao->get();
-                $locales = $locales->result();
-                foreach($locales as $locale) {
-                    $country['locales'][$locale['fk_c_locale_code']] = $locale['s_name'];
-                }
-                $countries[] = $country;
-            }
-            return $countries;
-        }
-
-        /**
-         * Update a country by its locale
-         * 
-         * @access public
-         * @since unknown
-         * @param type $code
-         * @param type $locale
-         * @param type $name
-         * @return array
-         */
-        public function updateLocale($code, $locale, $name)
-        {
-            $this->dao->select('*') ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('pk_c_code', addslashes($code)) ;
-            $this->dao->where('fk_c_locale_code', addslashes($locale)) ;
-            $this->dao->limit(1);
-            $result = $this->dao->get() ;
-            $country = $result->result();
-            if($country) {
-                return $this->dao->update($this->getTableName(), array('s_name' => $name), array('pk_c_code' => $code, 'fk_c_locale_code' => $locale));
-            } else {
-                return $this->insert( array(
-                    'pk_c_code'        => $code,
-                    'fk_c_locale_code' => $locale,
-                    's_name'           => $name,
-                ) ) ;
-            }
         }
 
         /**

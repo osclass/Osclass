@@ -39,14 +39,19 @@
                         <input type="hidden" name="page" value="settings" />
                         <input type="hidden" name="action" value="akismet_post" />
                         <fieldset>
-                            <h2><?php _e('Akismet') ; ?></h2>
-                            <p class="text">
-                                <?php _e("Akismet is a hosted web service that saves you time by automatically detecting comment and trackback spam. It's hosted on our servers, but we give you access to it through plugins and our API.") ; ?>
-                            </p>
-                            <div class="input-line">
-                                <label><?php _e('Akismet API Key') ; ?></label>
-                                <div class="input">
-                                    <input type="text" class="medium" name="akismetKey" value="<?php echo ( osc_akismet_key() ? osc_esc_html( osc_akismet_key() ) : '' ) ; ?>" />
+                            <table class="table-backoffice-form">
+                                <tr>
+                                    <td colspan="2"><h2><?php _e('Akismet') ; ?></h2></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <?php _e("Akismet is a hosted web service that saves you time by automatically detecting comment and trackback spam. It's hosted on our servers, but we give you access to it through plugins and our API.") ; ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="labeled"><?php _e('Akismet API Key') ; ?></td>
+                                    <td>
+                                        <input type="text" class="medium" name="akismetKey" value="<?php echo ( osc_akismet_key() ? osc_esc_html( osc_akismet_key() ) : '' ) ; ?>" />
                                         <?php
                                             $akismet_status = View::newInstance()->_get('akismet_status') ;
                                             $alert_msg      = '' ;
@@ -66,14 +71,18 @@
                                                 break;
                                             }
                                         ?>
-                                    <div class="alert alert-inline alert-<?php echo $alert_type ; ?>">
-                                        <p><?php echo $alert_msg ; ?></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="actions">
-                                <input type="submit" id="submit_akismet" value="<?php osc_esc_html( _e('Save changes') ) ; ?>" />
-                            </div>
+                                        <div class="alert alert-inline alert-<?php echo $alert_type ; ?>">
+                                            <p><?php echo $alert_msg ; ?></p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <input type="submit" id="submit_akismet" value="<?php osc_esc_html( _e('Save changes') ) ; ?>" />
+                                    </td>
+                                </tr>
+                            </table>
                         </fieldset>
                     </form>
                     <!-- /akismet -->
@@ -82,37 +91,51 @@
                         <input type="hidden" name="page" value="settings" />
                         <input type="hidden" name="action" value="recaptcha_post" />
                         <fieldset>
-                            <h2><?php _e('reCAPTCHA') ; ?></h2>
-                            <p class="text">
-                                <?php printf(__('reCAPTCHA helps prevent automated abuse of your site by using a CAPTCHA to ensure that only humans perform certain actions. <a href="%s" target="_blank">Get your key</a>'), 'http://www.google.com/recaptcha/whyrecaptcha') ; ?>
-                            </p>
-                            <div class="input-line">
-                                <label><?php _e('reCAPTCHA Public key') ; ?></label>
-                                <div class="input">
-                                    <input type="text" class="xxlarge" name="recaptchaPubKey" value="<?php echo (osc_recaptcha_public_key() ? osc_esc_html( osc_recaptcha_public_key() ) : ''); ?>" />
-                                </div>
-                            </div>
-                            <div class="input-line">
-                                <label><?php _e('reCAPTCHA Private key') ; ?></label>
-                                <div class="input">
-                                    <input type="text" class="xxlarge" name="recaptchaPrivKey" value="<?php echo (osc_recaptcha_private_key() ? osc_esc_html( osc_recaptcha_private_key() ) : ''); ?>" />
-                                </div>
-                            </div>
-                            <div class="actions">
-                                <input type="submit" id="submit_recaptcha" value="<?php osc_esc_html( _e('Save changes') ) ; ?>" />
-                            </div>
+                            <table class="table-backoffice-form">
+                                <tr>
+                                    <td colspan="2"><h2><?php _e('reCAPTCHA') ; ?></h2></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <?php printf(__('reCAPTCHA helps prevent automated abuse of your site by using a CAPTCHA to ensure that only humans perform certain actions. <a href="%s" target="_blank">Get your key</a>'), 'http://www.google.com/recaptcha/whyrecaptcha') ; ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="labeled"><?php _e('reCAPTCHA Public key') ; ?></td>
+                                    <td>
+                                        <input type="text" class="xxlarge" name="recaptchaPubKey" value="<?php echo (osc_recaptcha_public_key() ? osc_esc_html( osc_recaptcha_public_key() ) : ''); ?>" /
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?php _e('reCAPTCHA Private key') ; ?></td>
+                                    <td>
+                                        <input type="text" class="xxlarge" name="recaptchaPrivKey" value="<?php echo (osc_recaptcha_private_key() ? osc_esc_html( osc_recaptcha_private_key() ) : ''); ?>" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <input type="submit" id="submit_recaptcha" value="<?php osc_esc_html( _e('Save changes') ) ; ?>" />
+                                    </td>
+                                </tr>
+                            
                             <?php if( osc_recaptcha_public_key() != '' ) { ?>
-                            <p class="text">
-                                <?php _e('If you see the reCAPTCHA form below this text it means that you have entered correctly the public key') ; ?>
-                            </p>
-                            <div class="recaptcha">
+                            <tr>
+                                <td colspan="2">
+                                    <?php _e('If you see the reCAPTCHA form below this text it means that you have entered correctly the public key') ; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
                             <?php
                                     require_once( osc_lib_path() . 'recaptchalib.php' ) ;
                                     $publickey = osc_recaptcha_public_key() ;
                                     echo recaptcha_get_html($publickey, false) ;
                                 }
                             ?>
-                            </div>
+                                </td>
+                            </tr>
+                            </table>
                         </fieldset>
                     </form>
                     <!-- /recaptcha -->

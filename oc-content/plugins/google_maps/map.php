@@ -35,7 +35,6 @@
         function showAddress(address) {
             if (geocoder) {
                 geocoder.geocode( { 'address': address}, function(results, status) {
-                    console.log(status) ;
                     if (status == google.maps.GeocoderStatus.OK) {
                         map.setCenter(results[0].geometry.location);
                         var marker = new google.maps.Marker({

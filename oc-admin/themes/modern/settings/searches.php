@@ -64,52 +64,53 @@
                         <input type="hidden" name="page" value="settings" />
                         <input type="hidden" name="action" value="latestsearches_post" />
                         <fieldset>
-                            <div class="input-line">
-                                <label><?php _e('Latest searches') ; ?></label>
-                                <div class="input">
-                                    <label class="checkbox">
+                            <table class="table-backoffice-form">
+                                <tr>
+                                    <td class="labeled"><?php _e('Latest searches') ; ?></td>
+                                    <td>
                                         <input type="checkbox" <?php echo ( osc_save_latest_searches() ) ? 'checked="true"' : '' ; ?> name="save_latest_searches" />
-                                        <p class="inline"><?php _e('Save the last user searches') ; ?></p>
-                                        <p class="help"><?php _e('It may be useful to know what queries users do.') ?></p>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="input-line">
-                                <label><?php _e('How long are stored the queries') ; ?></label>
-                                <div class="input">
-                                    <label class="radio">
-                                        <input type="radio" name="purge_searches" value="hour" <?php echo ( ( osc_purge_latest_searches() == 'hour' ) ? 'checked="checked"' : '' ) ; ?> onclick="javascript:document.getElementById('customPurge').value = 'hour' ;" />
-                                        <?php _e('One hour') ; ?>
-                                    </label>
-                                    <label class="radio">
-                                        <input type="radio" name="purge_searches" value="day" <?php echo ( ( osc_purge_latest_searches() == 'day' ) ? 'checked="checked"' : '' ) ; ?> onclick="javascript:document.getElementById('customPurge').value = 'day' ;" />
-                                        <?php _e('One day') ; ?>
-                                    </label>
-                                    <label class="radio">
-                                        <input type="radio" name="purge_searches" value="week" <?php echo ( ( osc_purge_latest_searches() == 'week' ) ? 'checked="checked"' : '' ) ; ?> onclick="javascript:document.getElementById('customPurge').value = 'week' ;" />
-                                        <?php _e('One week') ; ?>
-                                    </label>
-                                    <label class="radio">
-                                        <input type="radio" name="purge_searches" value="forever" <?php echo ( ( osc_purge_latest_searches() == 'forever' ) ? 'checked="checked"' : '' ) ; ?> onclick="javascript:document.getElementById('customPurge').value = 'forever' ;" />
-                                        <?php _e('Forever') ; ?>
-                                    </label>
-                                    <label class="radio">
-                                        <input type="radio" name="purge_searches" value="1000" <?php echo ( ( osc_purge_latest_searches() == '1000' ) ? 'checked="checked"' : '' ) ; ?> onclick="javascript:document.getElementById('customPurge').value = '1000' ;" />
-                                        <?php _e('Store 1000 queries') ; ?>
-                                    </label>
-                                    <label class="radio">
-                                        <input type="radio" name="purge_searches" id="purge_searches" value="custom" <?php echo ( !in_array( osc_purge_latest_searches(), array('hour', 'day', 'week', 'forever', '1000') ) ? 'checked="checked"' : '' ) ; ?> />
-                                        <?php printf( __('Store %s queries'), '<input name="custom_queries" type="text" class="small" ' . ( !in_array( osc_purge_latest_searches(), array('hour', 'day', 'week', 'forever', '1000') ) ? 'value="' . osc_esc_html( osc_purge_latest_searches() ) . '"' : '') . ' onkeyup="javascript:document.getElementById(\'customPurge\').value = this.value;"/>' ) ; ?>
-                                        <p class="help">
-                                            <?php _e("This feature can generate a lot of data. It's recommended to purge this data periodically.") ; ?>
-                                        </p>
-                                    </label>
-                                    <input type="hidden" id="customPurge" name="customPurge" value="<?php echo osc_esc_html( osc_purge_latest_searches() ) ; ?>" />
-                                </div>
-                            </div>
-                            <div class="actions">
-                                <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
-                            </div>
+                                        <?php _e('Save the last user searches') ; ?>
+                                        <div class="help-box"><?php _e('It may be useful to know what queries users do.') ?></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="labeled"><?php _e('How long are stored the queries') ; ?></td>
+                                    <td>
+                                        <div>
+                                            <input type="radio" name="purge_searches" value="hour" <?php echo ( ( osc_purge_latest_searches() == 'hour' ) ? 'checked="checked"' : '' ) ; ?> onclick="javascript:document.getElementById('customPurge').value = 'hour' ;" />
+                                            <?php _e('One hour') ; ?>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="purge_searches" value="day" <?php echo ( ( osc_purge_latest_searches() == 'day' ) ? 'checked="checked"' : '' ) ; ?> onclick="javascript:document.getElementById('customPurge').value = 'day' ;" />
+                                            <?php _e('One day') ; ?>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="purge_searches" value="week" <?php echo ( ( osc_purge_latest_searches() == 'week' ) ? 'checked="checked"' : '' ) ; ?> onclick="javascript:document.getElementById('customPurge').value = 'week' ;" />
+                                            <?php _e('One week') ; ?>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="purge_searches" value="forever" <?php echo ( ( osc_purge_latest_searches() == 'forever' ) ? 'checked="checked"' : '' ) ; ?> onclick="javascript:document.getElementById('customPurge').value = 'forever' ;" />
+                                            <?php _e('Forever') ; ?>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="purge_searches" value="1000" <?php echo ( ( osc_purge_latest_searches() == '1000' ) ? 'checked="checked"' : '' ) ; ?> onclick="javascript:document.getElementById('customPurge').value = '1000' ;" />
+                                            <?php _e('Store 1000 queries') ; ?>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="purge_searches" id="purge_searches" value="custom" <?php echo ( !in_array( osc_purge_latest_searches(), array('hour', 'day', 'week', 'forever', '1000') ) ? 'checked="checked"' : '' ) ; ?> />
+                                            <?php printf( __('Store %s queries'), '<input name="custom_queries" type="text" class="small" ' . ( !in_array( osc_purge_latest_searches(), array('hour', 'day', 'week', 'forever', '1000') ) ? 'value="' . osc_esc_html( osc_purge_latest_searches() ) . '"' : '') . ' onkeyup="javascript:document.getElementById(\'customPurge\').value = this.value;"/>' ) ; ?>
+                                            <p class="help">
+                                                <?php _e("This feature can generate a lot of data. It's recommended to purge this data periodically.") ; ?>
+                                            </p>
+                                        </div>
+                                        <input type="hidden" id="customPurge" name="customPurge" value="<?php echo osc_esc_html( osc_purge_latest_searches() ) ; ?>" />
+                                    </td>
+                                </tr>
+                                <tr class="separate">
+                                    <td></td>
+                                    <td><input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" /></td>
+                                </tr>
+                            </table>
                         </fieldset>
                     </form>
                 </div>

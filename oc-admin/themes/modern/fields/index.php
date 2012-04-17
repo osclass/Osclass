@@ -101,7 +101,7 @@
                         context: document.body,
                         success: function(res){
                             var ret = eval( "(" + res + ")");
-                            console.log(ret);
+                            //console.log(ret);
                             if(ret.error==0) {
                                 var html = '';
                                 html += '<li id="list_'+ret.field_id+'" class="field_li even">';
@@ -196,6 +196,7 @@
                     <!-- /list fields -->
                 </div>
                 <!-- /custom fields -->
+                <div class="clear"></div>
             </div>
             <!-- /right container -->
         </div>
