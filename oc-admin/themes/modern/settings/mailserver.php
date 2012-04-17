@@ -75,72 +75,73 @@
                     <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="settings" />
                         <input type="hidden" name="action" value="mailserver_post" />
-                        <div class="input-line">
-                            <label><?php _e('Server type') ; ?></label>
-                            <div class="input">
-                                <select name="mailserver_type">
-                                    <option value="custom" <?php echo (osc_mailserver_type() == 'custom') ? 'selected="true"' : '' ; ?>><?php _e('Custom Server') ; ?></option>
-                                    <option value="gmail" <?php echo (osc_mailserver_type() == 'gmail') ? 'selected="true"' : '' ; ?>><?php _e('GMail Server') ; ?></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="input-line">
-                            <label><?php _e('Hostname') ; ?></label>
-                            <div class="input">
-                                <input type="text" class="medium" name="mailserver_host" value="<?php echo osc_esc_html( osc_mailserver_host() ) ; ?>" />
-                            </div>
-                        </div>
-                        <div class="input-line">
-                            <label><?php _e('Server port') ; ?></label>
-                            <div class="input">
-                                <input type="text" class="medium" name="mailserver_port" value="<?php echo osc_esc_html( osc_mailserver_port() ) ; ?>" />
-                            </div>
-                        </div>
-                        <div class="input-line">
-                            <label><?php _e('Username') ; ?></label>
-                            <div class="input">
-                                <input type="text" class="medium" name="mailserver_username" value="<?php echo osc_esc_html( osc_mailserver_username() ) ; ?>" />
-                            </div>
-                        </div>
-                        <div class="input-line">
-                            <label><?php _e('Password') ; ?></label>
-                            <div class="input">
-                                <input type="text" class="medium" name="mailserver_password" value="<?php echo osc_esc_html( osc_mailserver_password() ) ; ?>" />
-                            </div>
-                        </div>
-                        <div class="input-line">
-                            <label><?php _e('Encryption') ; ?></label>
-                            <div class="input">
-                                <input type="text" class="medium" name="mailserver_ssl" value="<?php echo osc_esc_html( osc_mailserver_ssl() ) ; ?>" />
-                                <p class="help-inline"><?php _e('Options: blank, ssl or tls') ; ?></p>
-                                <?php if( !@apache_mod_loaded('mod_ssl') ) { ?>
-                                <div class="alert alert-inline alert-warning">
-                                    <p><?php _e("Apache Module <b>mod_ssl</b> is not loaded") ; ?></p>
-                                </div>
-                                <?php } ?>
-                            </div>
-                        </div>
-                        <div class="input-line">
-                            <label><?php _e('SMTP') ; ?></label>
-                            <div class="input">
-                                <label class="checkbox">
+                        <table class="table-backoffice-form">
+                            <tr>
+                                <td class="labeled"><?php _e('Server type') ; ?></td>
+                                <td>
+                                    <select name="mailserver_type">
+                                        <option value="custom" <?php echo (osc_mailserver_type() == 'custom') ? 'selected="true"' : '' ; ?>><?php _e('Custom Server') ; ?></option>
+                                        <option value="gmail" <?php echo (osc_mailserver_type() == 'gmail') ? 'selected="true"' : '' ; ?>><?php _e('GMail Server') ; ?></option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><?php _e('Hostname') ; ?></td>
+                                <td>
+                                    <input type="text" class="medium" name="mailserver_host" value="<?php echo osc_esc_html( osc_mailserver_host() ) ; ?>" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><?php _e('Server port') ; ?></td>
+                                <td>
+                                    <input type="text" class="medium" name="mailserver_port" value="<?php echo osc_esc_html( osc_mailserver_port() ) ; ?>" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><?php _e('Username') ; ?></td>
+                                <td>
+                                    <input type="text" class="medium" name="mailserver_username" value="<?php echo osc_esc_html( osc_mailserver_username() ) ; ?>" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><?php _e('Password') ; ?></td>
+                                <td>
+                                    <input type="text" class="medium" name="mailserver_password" value="<?php echo osc_esc_html( osc_mailserver_password() ) ; ?>" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><?php _e('Encryption') ; ?></td>
+                                <td>
+                                    <input type="text" class="medium" name="mailserver_ssl" value="<?php echo osc_esc_html( osc_mailserver_ssl() ) ; ?>" />
+                                    <span class="help-box"><?php _e('Options: blank, ssl or tls') ; ?></span>
+                                    <?php if( !@apache_mod_loaded('mod_ssl') ) { ?>
+                                    <div class="alert alert-inline alert-warning">
+                                        <p><?php _e("Apache Module <b>mod_ssl</b> is not loaded") ; ?></p>
+                                    </div>
+                                    <?php } ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><?php _e('SMTP') ; ?></td>
+                                <td>
                                     <input type="checkbox" <?php echo ( osc_mailserver_auth() ? 'checked="true"' : '' ) ; ?> name="mailserver_auth" value="1" />
-                                    <p class="inline"><?php _e('SMTP authentication enabled') ; ?></p>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="input-line">
-                            <label><?php _e('POP') ; ?></label>
-                            <div class="input">
-                                <label class="checkbox">
+                                    <?php _e('SMTP authentication enabled') ; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><?php _e('POP') ; ?></td>
+                                <td>
                                     <input type="checkbox" <?php echo ( osc_mailserver_pop() ? 'checked="true"' : '' ) ; ?> name="mailserver_pop" value="1" />
-                                    <p class="inline"><?php _e('Use POP before SMTP') ; ?></p>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="actions">
-                            <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
-                        </div>
+                                    <?php _e('Use POP before SMTP') ; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
+                                </td>
+                            </tr>
+                        </table>
                     </form>
                     <!-- /configuration -->
                     <h2><?php _e('Help') ; ?></h2>

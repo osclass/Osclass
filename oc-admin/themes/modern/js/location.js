@@ -22,11 +22,7 @@
         $('#fade').css('display','block');
 
         $("input[name=country_code]").val(element.attr('code'));
-        var locales = element.attr('data').split("|");
-        $.each(locales, function(index, value) { 
-            var tmp = value.split("@");
-            $("input[name='e_country["+tmp[0]+"]']").val(tmp[1]);
-        });
+        $("input[name='e_country']").val(element.attr('data'));
         renderEditCountry();
         return false;
     }
