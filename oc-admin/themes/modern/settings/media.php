@@ -124,7 +124,6 @@
                     }
                 }) ;
             }) ;
-       // " // <----- " <------//////BORRAR console.log
 
         </script>
     </head>
