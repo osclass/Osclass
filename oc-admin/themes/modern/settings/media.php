@@ -124,6 +124,8 @@
                     }
                 }) ;
             }) ;
+       // " // <----- " <------//////BORRAR console.log
+
         </script>
     </head>
     <body>
@@ -145,58 +147,63 @@
                         <input type="hidden" name="page" value="settings" />
                         <input type="hidden" name="action" value="media_post" />
                         <fieldset>
-                            <h2><?php _e('Images sizes') ; ?></h2>
-                            <p class="text"><?php _e('The sizes listed below determine the maximum dimensions in pixels to use when uploading a image. Format: <b>Width</b> x <b>Height</b>.') ; ?></p>
-                            <div class="input-line">
-                                <label><?php _e('Thumbnail size') ; ?></label>
-                                <div class="input">
-                                    <input type="text" class="small" name="dimThumbnail" value="<?php echo osc_esc_html( osc_thumbnail_dimensions() ) ; ?>" />
-                                </div>
-                            </div>
-                            <div class="input-line">
-                                <label><?php _e('Preview size') ; ?></label>
-                                <div class="input">
-                                    <input type="text" class="small" name="dimPreview" value="<?php echo osc_esc_html( osc_preview_dimensions() ) ; ?>" />
-                                </div>
-                            </div>
-                            <div class="input-line">
-                                <label><?php _e('Normal size') ; ?></label>
-                                <div class="input">
-                                    <input type="text" class="small"  name="dimNormal" value="<?php echo osc_esc_html( osc_normal_dimensions() ) ; ?>" />
-                                </div>
-                            </div>
-                            <div class="input-line">
-                                <label><?php _e('Original image') ; ?></label>
-                                <div class="input">
-                                    <label class="checkbox">
+                            <table class="table-backoffice-form">
+                                <tbody>
+                                <tr>
+                                    <td colspan="2"><h2><?php _e('Images sizes') ; ?></h2></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><?php _e('The sizes listed below determine the maximum dimensions in pixels to use when uploading a image. Format: <b>Width</b> x <b>Height</b>.') ; ?></td>
+                                </tr>
+                                <tr>
+                                    <td class="labeled"><?php _e('Thumbnail size') ; ?></td>
+                                    <td>
+                                        <input type="text" class="small" name="dimThumbnail" value="<?php echo osc_esc_html( osc_thumbnail_dimensions() ) ; ?>" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?php _e('Preview size') ; ?></td>
+                                    <td>
+                                        <input type="text" class="small" name="dimPreview" value="<?php echo osc_esc_html( osc_preview_dimensions() ) ; ?>" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?php _e('Normal size') ; ?></td>
+                                    <td>
+                                        <input type="text" class="small"  name="dimNormal" value="<?php echo osc_esc_html( osc_normal_dimensions() ) ; ?>" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?php _e('Original image') ; ?></td>
+                                    <td>
                                         <input type="checkbox" name="keep_original_image" value="1" <?php echo ( osc_keep_original_image() ? 'checked' : '' ) ; ?>/>
                                         <?php _e('Keep original image, unaltered after uploading.') ; ?>
-                                        <p class="help-inline"><?php _e('It might ocuppy more space than usual.') ; ?></p>
-                                    </label>
-                                </div>
-                            </div>
-                            <h2><?php _e('Restrictions') ; ?></h2>
-                            <div class="input-line">
-                                <label><?php _e('Maximum size') ; ?></label>
-                                <div class="input">
-                                    <input type="text" class="medium" name="maxSizeKb" value="<?php echo osc_esc_html( osc_max_size_kb() ) ; ?>" />
-                                    <p class="help-inline"><?php _e('Size in KB') ; ?></p>
-                                    <div class="alert alert-inline alert-warning">
-                                        <p><?php printf( __('Maximum size PHP configuration allows: %d KB'), $maxPHPsize ) ; ?></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="input-line">
-                                <label><?php _e('Allowed formats') ; ?></label>
-                                <div class="input">
-                                    <input type="text" class="medium" name="allowedExt" value="<?php echo osc_esc_html( osc_allowed_extension() ) ; ?>" />
-                                    <p class="help-inline"><?php _e('For example: jpg, png, gif') ; ?></p>
-                                </div>
-                            </div>
-                            <div class="input-line">
-                                <label><?php _e('ImageMagick') ; ?></label>
-                                <div class="input">
-                                    <label class="checkbox">
+                                        <span class="help-box"><?php _e('It might ocuppy more space than usual.') ; ?></span>
+                                    </td>
+                                </tr>
+                                <tr class="separate">
+                                    <td colspan="2"><h2><?php _e('Restrictions') ; ?></h2></td>
+                                </tr>
+                                <tr>
+                                    <td><?php _e('Maximum size') ; ?></td>
+                                    <td>
+                                        <input type="text" class="medium" name="maxSizeKb" value="<?php echo osc_esc_html( osc_max_size_kb() ) ; ?>" />
+                                        <span class="help-box"><?php _e('Size in KB') ; ?></span>
+                                        <div class="alert alert-inline alert-warning">
+                                            <p><?php printf( __('Maximum size PHP configuration allows: %d KB'), $maxPHPsize ) ; ?></p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?php _e('Allowed formats') ; ?></td>
+                                    <td>
+                                        <input type="text" class="medium" name="allowedExt" value="<?php echo osc_esc_html( osc_allowed_extension() ) ; ?>" />
+                                        <span class="help-box"><?php _e('For example: jpg, png, gif') ; ?></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?php _e('ImageMagick') ; ?></td>
+                                    <td>
                                         <input type="checkbox" name="use_imagick" value="1" <?php echo ( osc_use_imagick() ? 'checked' : '' ) ; ?> <?php if( !$imagickLoaded ) echo 'disabled' ; ?>/>
                                         <?php _e('Use ImageMagick instead of GD library') ; ?>
                                         <?php if( !$imagickLoaded ) { ?>
@@ -204,50 +211,54 @@
                                             <p><?php _e('ImageMagick library is not loaded') ; ?></p>
                                         </div>
                                         <?php } ?>
-                                        <p class="help"><?php _e("It's faster and consume less resources than GD library.") ; ?></p>
-                                    </label>
-                                </div>
-                            </div>
-                            <h2><?php _e('Watermark') ; ?></h2>
-                            <div class="input-line">
-                                <label><?php _e('Watermark type'); ?></label>
-                                <div class="input">
-                                    <label class="radio">
-                                        <input type="radio" id="watermark_none" name="watermark_type" value="none" <?php echo ( ( !osc_is_watermark_image() && !osc_is_watermark_text() ) ? 'checked="checked"' : '' ) ; ?> />
-                                        <?php _e('None') ; ?>
-                                    </label>
-                                    <label class="radio">
-                                        <input type="radio" id="watermark_text" name="watermark_type" value="text" <?php echo ( osc_is_watermark_text() ? 'checked="checked"' : '' ) ; ?> <?php echo ( $freeType ? '' : 'disabled' ) ; ?> />
-                                        <?php _e('Text') ; ?>
-                                        <?php if( !$freeType ) { ?>
-                                        <div class="alert alert-inline alert-error">
-                                            <p><?php printf( __('Freetype library is required. How to <a target="_blank" href="%s">install/configure</a>') , 'http://www.php.net/manual/en/image.installation.php' ) ; ?></p>
+                                        <div class="help-box"><?php _e("It's faster and consume less resources than GD library.") ; ?></div>
+                                    </td>
+                                </tr>
+                                <tr class="separate">
+                                    <td colspan="2"><h2><?php _e('Watermark') ; ?></h2></td>
+                                </tr>
+                                <tr>
+                                    <td><?php _e('Watermark type'); ?></td>
+                                    <td>
+                                        <div>
+                                            <input type="radio" id="watermark_none" name="watermark_type" value="none" <?php echo ( ( !osc_is_watermark_image() && !osc_is_watermark_text() ) ? 'checked="checked"' : '' ) ; ?> />
+                                            <?php _e('None') ; ?>
                                         </div>
-                                        <?php } ?>
-                                    </label>
-                                    <label class="radio">
-                                        <input type="radio" id="watermark_image" name="watermark_type" value="image" <?php echo ( osc_is_watermark_image() ? 'checked="checked"' : '' ) ; ?> />
-                                        <?php _e('Image') ; ?>
-                                    </label>
-                                </div>
-                            </div>
-                            <div id="watermark_text_box" <?php echo ( osc_is_watermark_text() ? '' : 'style="display:none;"' ) ; ?>>
-                                <h3><?php _e('Watermark Text Settings') ; ?></h3>
-                                <div class="input-line">
-                                    <label><?php _e('Text') ; ?></label>
-                                    <div class="input">
+                                        <div>
+                                            <input type="radio" id="watermark_text" name="watermark_type" value="text" <?php echo ( osc_is_watermark_text() ? 'checked="checked"' : '' ) ; ?> <?php echo ( $freeType ? '' : 'disabled' ) ; ?> />
+                                            <?php _e('Text') ; ?>
+                                            <?php if( !$freeType ) { ?>
+                                            <div class="alert alert-inline alert-error">
+                                                <p><?php printf( __('Freetype library is required. How to <a target="_blank" href="%s">install/configure</a>') , 'http://www.php.net/manual/en/image.installation.php' ) ; ?></p>
+                                            </div>
+                                            <?php } ?>
+                                        </div>
+                                        <div>
+                                            <input type="radio" id="watermark_image" name="watermark_type" value="image" <?php echo ( osc_is_watermark_image() ? 'checked="checked"' : '' ) ; ?> />
+                                            <?php _e('Image') ; ?>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody id="watermark_text_box" class="table-backoffice-form" <?php echo ( osc_is_watermark_text() ? '' : 'style="display:none;"' ) ; ?>>
+                                <tr class="separate">
+                                    <td colspan="2"><h3><?php _e('Watermark Text Settings') ; ?></h3></td>
+                                </tr>
+                                <tr>
+                                    <td class="labeled"><?php _e('Text') ; ?></td>
+                                    <td>
                                         <input type="text" class="large" name="watermark_text" value="<?php echo osc_esc_html( osc_watermark_text() ) ; ?>" />
-                                    </div>
-                                </div>
-                                <div class="input-line">
-                                    <label><?php _e('Color') ; ?></label>
-                                    <div class="input">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="labeled"><?php _e('Color') ; ?></td>
+                                    <td>
                                         <input type="text" maxlength="6" id="colorpickerField" class="small" name="watermark_text_color" value="<?php echo osc_esc_html( osc_watermark_text_color() ) ; ?>" />
-                                    </div>
-                                </div>
-                                <div class="input-line">
-                                    <label><?php _e('Position') ; ?></label>
-                                    <div class="input">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="labeled"><?php _e('Position') ; ?></td>
+                                    <td>
                                         <select name="watermark_text_place" id="watermark_text_place">
                                             <option value="centre" <?php echo (osc_watermark_place() == 'centre') ? 'selected="true"' : '' ; ?>><?php _e('Centre') ; ?></option>
                                             <option value="tl" <?php echo (osc_watermark_place() == 'tl') ? 'selected="true"' : '' ; ?>><?php _e('Top Left') ; ?></option>
@@ -255,36 +266,42 @@
                                             <option value="bl" <?php echo (osc_watermark_place() == 'bl') ? 'selected="true"' : '' ; ?>><?php _e('Bottom Left') ; ?></option>
                                             <option value="br" <?php echo (osc_watermark_place() == 'br') ? 'selected="true"' : '' ; ?>><?php _e('Bottom Right') ; ?></option>
                                         </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="watermark_image_box" <?php echo ( osc_is_watermark_image() ? '' : 'style="display:none;"' ) ; ?>>
-                                <h3><?php _e('Watermark Image Settings') ; ?></h3>
-                                <div class="input-line">
-                                    <label><?php _e('Image'); ?></label>
-                                    <div class="input">
-                                        <label class="radio">
+                                    </td>
+                                </tr>
+                                </tbody>
+                                 <tbody id="watermark_image_box" class="table-backoffice-form" <?php echo ( osc_is_watermark_image() ? '' : 'style="display:none;"' ) ; ?>>
+                                    <tr class="separate">
+                                        <td colspan="2"><h3><?php _e('Watermark Image Settings') ; ?></h3></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled"><?php _e('Image'); ?></td>
+                                        <td>
                                             <input type="file" name="watermark_image"/>
-                                            <p class="help"><?php _e("OSClass doesn't check the watermark image size") ; ?></p>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="input-line">
-                                    <label><?php _e('Position') ; ?></label>
-                                    <div class="input">
-                                        <select name="watermark_image_place" id="watermark_image_place" >
-                                            <option value="centre" <?php echo (osc_watermark_place() == 'centre') ? 'selected="true"' : '' ; ?>><?php _e('Centre') ; ?></option>
-                                            <option value="tl" <?php echo (osc_watermark_place() == 'tl') ? 'selected="true"' : '' ; ?>><?php _e('Top Left') ; ?></option>
-                                            <option value="tr" <?php echo (osc_watermark_place() == 'tr') ? 'selected="true"' : '' ; ?>><?php _e('Top Right') ; ?></option>
-                                            <option value="bl" <?php echo (osc_watermark_place() == 'bl') ? 'selected="true"' : '' ; ?>><?php _e('Bottom Left') ; ?></option>
-                                            <option value="br" <?php echo (osc_watermark_place() == 'br') ? 'selected="true"' : '' ; ?>><?php _e('Bottom Right') ; ?></option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="actions">
-                                <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
-                            </div>
+                                            <div class="help-box"><?php _e("OSClass doesn't check the watermark image size") ; ?></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled"><?php _e('Position'); ?></td>
+                                        <td>
+                                            <select name="watermark_image_place" id="watermark_image_place" >
+                                                <option value="centre" <?php echo (osc_watermark_place() == 'centre') ? 'selected="true"' : '' ; ?>><?php _e('Centre') ; ?></option>
+                                                <option value="tl" <?php echo (osc_watermark_place() == 'tl') ? 'selected="true"' : '' ; ?>><?php _e('Top Left') ; ?></option>
+                                                <option value="tr" <?php echo (osc_watermark_place() == 'tr') ? 'selected="true"' : '' ; ?>><?php _e('Top Right') ; ?></option>
+                                                <option value="bl" <?php echo (osc_watermark_place() == 'bl') ? 'selected="true"' : '' ; ?>><?php _e('Bottom Left') ; ?></option>
+                                                <option value="br" <?php echo (osc_watermark_place() == 'br') ? 'selected="true"' : '' ; ?>><?php _e('Bottom Right') ; ?></option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody>
+                                <tr class="separate">
+                                    <td></td>
+                                    <td>
+                                        <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
                         </fieldset>
                     </form>
                     <!-- /media form -->
@@ -302,6 +319,7 @@
                             </div>
                         </fieldset>
                     </form>
+                    <div class="clear"></div>
                     <!-- /regenerate images -->
                 </div>
                 <!-- /media settings -->
