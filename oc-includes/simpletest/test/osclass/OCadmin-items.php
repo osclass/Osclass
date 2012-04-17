@@ -190,6 +190,7 @@ class OCadmin_items extends OCadminTest {
 
         $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/div/a[text()='View media']");
         $this->selenium->waitForPageToLoad("10000");
+        sleep(3); // time enough to load table data
 
         $this->assertTrue($this->selenium->isTextPresent("No data available in table"), "Show media when there aren't. ERROR");
     }
@@ -308,7 +309,8 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->click("link=Manage items");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->click("//table/tbody/tr/td[contains(.,'title_item')]/div/div/a[text()='Delete']");
+        $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'title_item')]");
+        $this->selenium->click("xpath=//table/tbody/tr/td[contains(.,'title_item')]/div/div/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The item has been deleted"), "Can't delete item. ERROR");
