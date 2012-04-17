@@ -1,4 +1,4 @@
-<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+<?php //if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -202,6 +202,7 @@ CREATE TABLE %st_item_description_tmp (
             $comm->query( $sql );
         }
     }
+    osc_changeVersionTo(240) ;
 
     if( osc_version() < 234 ) {
         @unlink(osc_admin_base_path()."upgrade.php");
@@ -305,7 +306,76 @@ CREATE TABLE %st_item_description_tmp (
             convertAlert($weekly);
         }
         unset($aAlerts);
-    } 
+
+        
+        // UPDATE COUNTRY PROCESS (remove fk_c_locale)
+        $comm->query("CREATE TABLE ".DB_TABLE_PREFIX."t_country_aux (
+    pk_c_code CHAR(2) NOT NULL,
+    s_name VARCHAR(80) NOT NULL,
+
+        PRIMARY KEY (pk_c_code),
+        INDEX idx_s_name (s_name)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';");
+        $rs = $comm->query("SELECT * FROM ".DB_TABLE_PREFIX."t_country WHERE fk_c_locale_code = '".osc_language()."'");
+        $countries = $rs->result();
+        foreach($countries as $c) {
+            $comm->insert(DB_TABLE_PREFIX."t_country_aux", array('pk_c_code' => $c['pk_c_code'], 's_name' => $c['s_name']));
+        }
+        $rs = $comm->query("SHOW CREATE TABLE ".DB_TABLE_PREFIX."t_city");
+        $rs = $rs->result();
+        foreach($rs[0] as $r) {
+            if(preg_match_all('|CONSTRAINT `([^`]+)` FOREIGN KEY \(`fk_c_country_code`\) REFERENCES `'.DB_TABLE_PREFIX.'t_country` \(`pk_c_code`\)|', $r, $matches)) {
+                foreach($matches[1] as $m) {
+                    $comm->query("ALTER TABLE  `".DB_TABLE_PREFIX."t_city` DROP FOREIGN KEY  `".$m."`");
+                }
+            }
+        }
+        $rs = $comm->query("SHOW CREATE TABLE ".DB_TABLE_PREFIX."t_region");
+        $rs = $rs->result();
+        foreach($rs[0] as $r) {
+            if(preg_match_all('|CONSTRAINT `([^`]+)` FOREIGN KEY \(`fk_c_country_code`\) REFERENCES `'.DB_TABLE_PREFIX.'t_country` \(`pk_c_code`\)|', $r, $matches)) {
+                foreach($matches[1] as $m) {
+                    $comm->query("ALTER TABLE  `".DB_TABLE_PREFIX."t_region` DROP FOREIGN KEY  `".$m."`");
+                }
+            }
+        }
+        $rs = $comm->query("SHOW CREATE TABLE ".DB_TABLE_PREFIX."t_country_stats");
+        $rs = $rs->result();
+        foreach($rs[0] as $r) {
+            if(preg_match_all('|CONSTRAINT `([^`]+)` FOREIGN KEY \(`fk_c_country_code`\) REFERENCES `'.DB_TABLE_PREFIX.'t_country` \(`pk_c_code`\)|', $r, $matches)) {
+                foreach($matches[1] as $m) {
+                    $comm->query("ALTER TABLE  `".DB_TABLE_PREFIX."t_country_stats` DROP FOREIGN KEY  `".$m."`");
+                }
+            }
+        }
+        $rs = $comm->query("SHOW CREATE TABLE ".DB_TABLE_PREFIX."t_item_location");
+        $rs = $rs->result();
+        foreach($rs[0] as $r) {
+            if(preg_match_all('|CONSTRAINT `([^`]+)` FOREIGN KEY \(`fk_c_country_code`\) REFERENCES `'.DB_TABLE_PREFIX.'t_country` \(`pk_c_code`\)|', $r, $matches)) {
+                foreach($matches[1] as $m) {
+                    $comm->query("ALTER TABLE  `".DB_TABLE_PREFIX."t_item_location` DROP FOREIGN KEY  `".$m."`");
+                }
+            }
+        }
+        $rs = $comm->query("SHOW CREATE TABLE ".DB_TABLE_PREFIX."t_user");
+        $rs = $rs->result();
+        foreach($rs[0] as $r) {
+            if(preg_match_all('|CONSTRAINT `([^`]+)` FOREIGN KEY \(`fk_c_country_code`\) REFERENCES `'.DB_TABLE_PREFIX.'t_country` \(`pk_c_code`\)|', $r, $matches)) {
+                foreach($matches[1] as $m) {
+                    $comm->query("ALTER TABLE  `".DB_TABLE_PREFIX."t_user` DROP FOREIGN KEY  `".$m."`");
+                }
+            }
+        }
+        $comm->query("DROP TABLE ".DB_TABLE_PREFIX."t_country");
+        $comm->query("RENAME TABLE  `".DB_TABLE_PREFIX."t_country_aux` TO  `".DB_TABLE_PREFIX."t_country`");
+        $comm->query("ALTER TABLE ".DB_TABLE_PREFIX."t_city ADD FOREIGN KEY (fk_c_country_code) REFERENCES ".DB_TABLE_PREFIX."t_country (pk_c_code)");
+        $comm->query("ALTER TABLE ".DB_TABLE_PREFIX."t_region ADD FOREIGN KEY (fk_c_country_code) REFERENCES ".DB_TABLE_PREFIX."t_country (pk_c_code)");
+        $comm->query("ALTER TABLE ".DB_TABLE_PREFIX."t_country_stats ADD FOREIGN KEY (fk_c_country_code) REFERENCES ".DB_TABLE_PREFIX."t_country (pk_c_code)");
+        $comm->query("ALTER TABLE ".DB_TABLE_PREFIX."t_item_location ADD FOREIGN KEY (fk_c_country_code) REFERENCES ".DB_TABLE_PREFIX."t_country (pk_c_code)");
+        $comm->query("ALTER TABLE ".DB_TABLE_PREFIX."t_user ADD FOREIGN KEY (fk_c_country_code) REFERENCES ".DB_TABLE_PREFIX."t_country (pk_c_code)");
+        
+    }
+    
         
     osc_changeVersionTo(240) ;
     
