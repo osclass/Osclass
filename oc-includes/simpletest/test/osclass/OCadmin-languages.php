@@ -51,7 +51,6 @@ class OCadmin_languages extends OCadminTest {
             $this->selenium->click("//input[@type='submit']");
             $this->selenium->waitForPageToLoad("10000");
             $this->assertTrue($this->selenium->isTextPresent("The language has been installed correctly"),"Upload new language lang_es_ES_2.0.zip");
-            $this->deleteLanguage();
         }
     }
     
@@ -197,13 +196,15 @@ class OCadmin_languages extends OCadminTest {
     }
 
     // We should not delete the language or we'll broke the installer with various locales
-    /*public function testDeleteLanguage()
+    public function testDeleteLanguage()
     {
         if($this->canUpload){
             $this->loginWith();
             $this->deleteLanguage();
+            // Re-insert language (needed by installation test)
+            $this->testInsertLanguage();
         }
-    }*/
+    }
     
     
     
