@@ -38,18 +38,21 @@
                         <input type="hidden" name="page" value="categories" />
                         <input type="hidden" name="action" value="settings_post" />
                         <fieldset>
-                            <div class="actions-nomargin">
-                                <div class="input">
-                                    <label class="checkbox">
+                            <table class="table-backoffice-form">
+                                <!-- settings -->
+                                <tr>
+                                    <td>
                                         <input type="checkbox" <?php echo ( osc_selectable_parent_categories() ? 'checked="true"' : '' ) ; ?> name="selectable_parent_categories" value="1" />
                                         <?php _e('Selectable parent categories') ; ?>
-                                    </label>
-                                    <p class="help-inline"><?php _e("Parent categories are selectable when you insert or edit an item") ; ?></p>
-                                </div>
-                            </div>
-                            <div class="actions-nomargin">
-                                <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
-                            </div>
+                                        <span class="help-box"><?php _e("Parent categories are selectable when you insert or edit an item") ; ?></span>
+                                    </td>
+                                </tr>
+                                <tr class="separate">
+                                    <td>
+                                        <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
+                                    </td>
+                                </tr>
+                            </table>
                         </fieldset>
                     </form>
                 </div>

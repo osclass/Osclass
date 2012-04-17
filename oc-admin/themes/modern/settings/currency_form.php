@@ -89,29 +89,34 @@
                         <input type="hidden" name="pk_c_code" value="<?php echo osc_esc_html($aCurrency['pk_c_code']) ; ?>" />
                         <?php } ?>
                         <fieldset>
-                            <div class="input-line">
-                                <label><?php _e('Currency Code') ; ?></label>
-                                <div class="input">
-                                    <input type="text" class="medium" name="pk_c_code" value="<?php echo osc_esc_html($aCurrency['pk_c_code']) ; ?>" <?php if( $typeForm == 'edit_post' ) echo 'disabled' ; ?>/>
-                                    <p class="help-inline"><?php _e('It should be a three-character code') ; ?></p>
-                                </div>
-                            </div>
-                            <div class="input-line">
-                                <label><?php _e('Name') ; ?></label>
-                                <div class="input">
-                                    <input type="text" class="medium" name="s_name" value="<?php echo osc_esc_html($aCurrency['s_name']) ; ?>" />
-                                </div>
-                            </div>
-                            <div class="input-line">
-                                <label><?php _e('Description') ; ?></label>
-                                <div class="input">
-                                    <input type="text" class="xlarge" name="s_description" value="<?php echo osc_esc_html($aCurrency['s_description']) ; ?>" />
-                                </div>
-                            </div>
-                            <div class="actions">
-                                <input type="submit" value="<?php echo $submit ; ?>" />
-                                <input type="button" onclick="location.href='<?php echo osc_admin_base_url(true) . '?page=settings&action=currencies' ; ?>'" value="<?php echo osc_esc_html( __('Cancel') ) ; ?>" />
-                            </div>
+                            <table class="table-backoffice-form">
+                                <tr>
+                                    <td class="labeled"><?php _e('Currency Code') ; ?></td>
+                                    <td>
+                                        <input type="text" class="medium" name="pk_c_code" value="<?php echo osc_esc_html($aCurrency['pk_c_code']) ; ?>" <?php if( $typeForm == 'edit_post' ) echo 'disabled' ; ?>/>
+                                        <span class="help-box"><?php _e('It should be a three-character code') ; ?></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?php _e('Name') ; ?></td>
+                                    <td>
+                                        <input type="text" class="medium" name="s_name" value="<?php echo osc_esc_html($aCurrency['s_name']) ; ?>" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?php _e('Description') ; ?></td>
+                                    <td>
+                                        <input type="text" class="xlarge" name="s_description" value="<?php echo osc_esc_html($aCurrency['s_description']) ; ?>" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?php _e('Description') ; ?></td>
+                                    <td>
+                                        <input type="submit" value="<?php echo $submit ; ?>" />
+                                        <input type="button" onclick="location.href='<?php echo osc_admin_base_url(true) . '?page=settings&action=currencies' ; ?>'" value="<?php echo osc_esc_html( __('Cancel') ) ; ?>" />
+                                    </td>
+                                </tr>
+                            </table>
                         </fieldset>
                     </form>
                 </div>
