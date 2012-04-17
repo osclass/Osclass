@@ -283,7 +283,7 @@ CREATE TABLE %st_item_description_tmp (
                 }
             }
         }
-        $url_location_stats = osc_base_url()."oc-admin/index.php?page=tools&action=locations";
+        $url_location_stats = osc_admin_base_url(true)."?page=tools&action=locations";
         $aMessages[] = '<p><b>'.__('You need to calculate locations stats, please go to admin panel, tools, recalculate location stats or click') .'  <a href="'.$url_location_stats.'">'.__('here').'</a></b></p>';
         
        
