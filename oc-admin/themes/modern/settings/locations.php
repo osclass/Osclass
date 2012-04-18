@@ -107,7 +107,7 @@
                     </div>
                     <!-- End region -->
                     <!-- City -->
-                    <div style="float:left; width: 33%; ">
+                    <div style="float:left; width: 32%; ">
                         <div style="border-bottom: 1px dashed black; padding: 4px 4px 0px; width: 90%;" >
                             <div style="float:left;">
                                 <h3>

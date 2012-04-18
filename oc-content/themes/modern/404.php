@@ -19,7 +19,6 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
     <head>
@@ -29,14 +28,10 @@
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
-        <div class="container">
-            <?php osc_current_web_theme_path('header.php') ; ?>
-            <div class="content error">
-                <h1><?php _e('Page not found', 'modern') ; ?></h1>
-            </div>
-            <?php osc_current_web_theme_path('footer.php') ; ?>
+        <?php osc_current_web_theme_path('header.php') ; ?>
+        <div class="content error">
+            <h1><?php _e('Page not found', 'modern') ; ?></h1>
         </div>
-        <?php osc_show_flash_message() ; ?>
-        <?php osc_run_hook('footer'); ?>
+        <?php osc_current_web_theme_path('footer.php') ; ?>
     </body>
 </html>
