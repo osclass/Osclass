@@ -18,7 +18,12 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
+
+    osc_show_flash_message() ;
 ?>
+<!-- container -->
+<div class="container">
+<!-- header -->
 <div id="header">
     <a id="logo" href="<?php echo osc_base_url() ; ?>"><strong><?php echo osc_page_title() ; ?></strong></a>
     <div id="user_menu">
@@ -77,4 +82,5 @@
         <div class="empty"></div>
     </div>
 </div>
+<!-- /header -->
 <?php osc_show_widgets('header') ; ?>

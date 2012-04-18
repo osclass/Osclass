@@ -98,17 +98,15 @@
         
         if (isset($message['msg']) && $message['msg'] != '') {
             echo '<div id="' . $id . '" class="' . $class . ' ' . $message['type'] . '">' ;
-                echo $message['msg'];
+            echo osc_apply_filter('flash_message_text', $message['msg']) ;
             echo '</div>' ;
-
-            Session::newInstance()->_dropMessage($section) ;
         } else if($message!='') {
             echo '<div id="' . $id . '" class="' . $class . '">' ;
-                echo $message;
+            echo osc_apply_filter('flash_message_text', $message) ;
             echo '</div>' ;
-
-            Session::newInstance()->_dropMessage($section) ;
         }
+
+        Session::newInstance()->_dropMessage($section) ;
     }
 
     /**
