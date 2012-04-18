@@ -19,7 +19,6 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 ?>
-
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 
 <title><?php echo meta_title() ; ?></title>
@@ -28,13 +27,17 @@
 <meta http-equiv="Cache-Control" content="no-cache" />
 <meta http-equiv="Expires" content="Fri, Jan 01 1970 00:00:00 GMT" />
 
-<link href="<?php echo osc_current_web_theme_url('combine.php?type=css&files=style.css,tabs.css') ; ?>" rel="stylesheet" type="text/css" />
+<link href="<?php echo osc_current_web_theme_url('style.css') ; ?>" rel="stylesheet" type="text/css" />
+<link href="<?php echo osc_current_web_theme_url('tabs.css') ; ?>" rel="stylesheet" type="text/css" />
 
-<script>
-    var fileDefaultText = '<?php _e('No file selected', 'modern') ; ?>';
-    var fileBtnText     = '<?php _e('Choose File', 'modern') ; ?>';
+<script type="text/javascript">
+    var fileDefaultText = '<?php echo osc_esc_js( __('No file selected', 'modern') ) ; ?>';
+    var fileBtnText     = '<?php echo osc_esc_js( __('Choose File', 'modern') ) ; ?>';
 </script>
-
-<script type="text/javascript" src="<?php echo osc_current_web_theme_url('combine.php?type=js&files=js/jquery.js,js/jquery-ui.js,js/jquery.uniform.js,js/global.js,js/tabber-minimized.js') ; ?>"></script>
+<script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.js') ; ?>"></script>
+<script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery-ui.js') ; ?>"></script>
+<script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.uniform.js') ; ?>"></script>
+<script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('tabber-minimized.js') ; ?>"></script>
+<script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('global.js') ; ?>"></script>
 
 <?php osc_run_hook('header') ; ?>
