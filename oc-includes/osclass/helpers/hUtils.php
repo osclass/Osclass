@@ -229,9 +229,10 @@
             return $ref;
         } else if(Session::newInstance()->_getReferer()!='') {
             return Session::newInstance()->_getReferer();
-        } else {
+        } else if(isset($_SERVER['HTTP_REFERER'])){
             return $_SERVER['HTTP_REFERER'];
         }
+        return '';
     }
 
 ?>
