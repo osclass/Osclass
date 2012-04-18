@@ -26,6 +26,7 @@
         <a title="<?php _e('Feedback') ; ?>" href="http://admin.osclass.org/feedback.php" target="_blank"><?php _e('Feedback') ; ?></a>
     </div>
     <div id="footer_right">OSClass <?php echo OSCLASS_VERSION ; ?></div>
+    <div class="clear"></div>
 </div>
 <!-- /footer -->
 <script>
