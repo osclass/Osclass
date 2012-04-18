@@ -38,6 +38,8 @@ abstract class FrontendTest extends WebTestCase {
         $date = date('YmdHmiu').".png";
         if(!$res) {
             echo "save capture image $date";
+            $cmd = "DISPLAY=:1 import -window root ".$date;
+            system($cmd);
             $this->selenium->captureScreenshot($date);
         }
         
