@@ -30,7 +30,7 @@
             $(document).ready(function(){
                 $("a[rel=image_group]").fancybox({
                     openEffect : 'none',
-                    closeEffect	: 'none',
+                    closeEffect : 'none',
                     nextEffect : 'fade',
                     prevEffect : 'fade',
                     loop : false,
