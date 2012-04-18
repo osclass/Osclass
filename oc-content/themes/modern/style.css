@@ -24,12 +24,56 @@ option.pad { margin-left:10px;}
 .content.home { border-top:1px solid #BBB; }
 
 /* Flash message */
-.FlashMessage { margin: 0; background:#F90; border-bottom:2px solid #F60; color:#FFF; font-size:18px; left:0; padding:20px 0; text-align: center; top:0; width:100%; }
+
+.FlashMessage {
+    font-size: 14px;
+    padding: 15px 0;
+    width: 100%;
+    top: 10px;
+    z-index: 999;
+    text-align: center;
+}
 .FlashMessage.ok { background:#9CDA9B; }
 .FlashMessage.info { background:#FFF78D; }
-.FlashMessage.warning { background:#F90; }
-.FlashMessage.error { background:#F90; }
-
+.FlashMessage.warning {
+    background-color: #FCF8E3;
+    border-bottom: solid 2px #FBEED5;
+    color: #C09853;
+}
+.FlashMessage.error {
+    background-color: #F2DEDE;
+    border-bottom: solid 2px #EED3D7;
+    color: #B94A48;
+}
+.FlashMessage.information,
+.FlashMessage.success {
+    background-color: #D9EDF7;
+    border-bottom: solid 2px #BCE8F1;
+    color: #3A87AD;
+}
+.FlashMessage .close {
+    position: absolute;
+    top: 14px;
+    right: 17px;
+    float: right;
+    font-size: 18px;
+    line-height: 18px;
+    color: white;
+    text-shadow:none;
+    text-decoration:none;
+    font-weight: bold;
+    cursor: pointer;
+}
+.FlashMessage.error .close {
+    color: #B94A48;
+}
+.FlashMessage.warning .close {
+    color: #C09853;
+}
+.FlashMessage.success .close,
+.FlashMessage.information .close {
+    color: #3A87AD;
+}
 /* Header */
 #header { border-bottom: 1px solid #BBB; clear:both; float:left; margin:25px 0 0 0; padding:0 0 30px 0; position: relative; width:960px; }
 #header #logo { color:#000; font:30px Georgia, Times, 'Times New Roman', serif; text-decoration:none; }

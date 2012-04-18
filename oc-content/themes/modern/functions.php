@@ -19,6 +19,23 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    if( !function_exists('add_close_button_fm') ) {
+        function add_close_button_fm($message){
+            return $message.'<a class="close">×</a>' ;
+        }
+        osc_add_filter('flash_message_text', 'add_close_button_fm') ;
+    }
+    if( !function_exists('add_close_button_action') ) {
+        function add_close_button_action(){
+            echo '<script type="text/javascript">';
+                echo '$(".FlashMessage .close").click(function(){';
+                    echo '$(this).parent().hide();';
+                echo '});';
+            echo '</script>';
+        }
+        osc_add_hook('footer', 'add_close_button_action') ;
+    }
+
     if( !function_exists('add_logo_header') ) {
         function add_logo_header() {
              $html = '<img border="0" alt="' . osc_page_title() . '" src="' . osc_current_web_theme_url('images/logo.jpg') . '">';
