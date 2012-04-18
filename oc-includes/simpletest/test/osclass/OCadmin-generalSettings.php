@@ -20,8 +20,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->assertTrue(!$this->selenium->isTextPresent('Log in'), "Login oc-admin.");
         
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Settings");
-        $this->selenium->click("link=General");
+        $this->selenium->click("//a[@id='settings_general']");
         $this->selenium->waitForPageToLoad("10000");
         
         $cron = $uSettings->findValueByName('auto_cron');
@@ -61,8 +60,7 @@ class OCadmin_generalSettings extends OCadmintest {
         if($keep_original_image == 1){ $keep_original_image = 'on';} else { $keep_original_image = 'off'; }
 
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Settings");
-        $this->selenium->click("link=Media");
+        $this->selenium->click("//a[@id='settings_media']");
         $this->selenium->waitForPageToLoad("10000");
 
         // change values to sometest-defined ones
