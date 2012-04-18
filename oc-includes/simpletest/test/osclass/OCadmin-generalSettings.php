@@ -148,8 +148,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->loginWith();
 
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Settings");
-        $this->selenium->click("link=Mail server");
+        $this->selenium->click("//a[@id='settings_mailserver']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->type('mailserver_type'     , 'custom');
@@ -215,8 +214,7 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Settings");
-        $this->selenium->click("link=Spam and bots");
+        $this->selenium->click("//a[@id='settings_spambots']");
         $this->selenium->waitForPageToLoad("10000");
         
         // AKISMET
@@ -285,8 +283,7 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Settings");
-        $this->selenium->click("xpath=(//a[text()='Comments'])[position()=2]");
+        $this->selenium->click("//a[@id='settings_comments']");
         $this->selenium->waitForPageToLoad("10000");
         
         $this->selenium->type("num_moderate_comments","wrong");
@@ -390,8 +387,7 @@ class OCadmin_generalSettings extends OCadmintest {
         
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Settings");
-        $this->selenium->click("link=General");
+        $this->selenium->click("//a[@id='settings_general']");
         $this->selenium->waitForPageToLoad("10000");
 
 
@@ -457,8 +453,7 @@ class OCadmin_generalSettings extends OCadmintest {
             $this->assertEqual( $this->selenium->getValue('enabled_attachment'), 'on', 'Contact, check.' ) ;
         }
 
-        $this->selenium->click("link=Settings");
-        $this->selenium->click("link=General");
+        $this->selenium->click("//a[@id='settings_general']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->type("pageTitle"   , $pref['pageTitle']);
         $this->selenium->type("contactEmail", $pref['contactEmail']);
@@ -498,8 +493,7 @@ class OCadmin_generalSettings extends OCadmintest {
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Settings");
-        $this->selenium->click("link=Locations");
+        $this->selenium->click("//a[@id='settings_locations']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("xpath=//a[@id='b_new_country']");
@@ -543,8 +537,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->waitForPageToLoad("4000");
-        $this->selenium->click("link=Settings");
-        $this->selenium->click("link=Locations");
+        $this->selenium->click("//a[@id='settings_locations']");
         $this->selenium->waitForPageToLoad("10000");
         // add Country
         $this->selenium->click("xpath=//a[@id='b_new_country']");
@@ -679,8 +672,7 @@ class OCadmin_generalSettings extends OCadmintest {
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Settings");
-        $this->selenium->click("link=Currencies");
+        $this->selenium->click("//a[@id='settings_currencies']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("link=Add");
@@ -705,8 +697,7 @@ class OCadmin_generalSettings extends OCadmintest {
 
         // edit
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Settings");
-        $this->selenium->click("link=Currencies");
+        $this->selenium->click("//a[@id='settings_currencies']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/small/a[text()='Edit']");
@@ -727,8 +718,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->assertTrue( $this->selenium->isTextPresent("Currency updated") , "Edit currency" ) ;
         // delete
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Settings");
-        $this->selenium->click("link=Currencies");
+        $this->selenium->click("//a[@id='settings_currencies']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/small/a[text()='Delete']");
@@ -748,9 +738,7 @@ class OCadmin_generalSettings extends OCadmintest {
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Settings");
-        $this->selenium->waitForPageToLoad("4000");
-        $this->selenium->click("link=Currencies");
+        $this->selenium->click("//a[@id='settings_currencies']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("link=Add");
@@ -769,8 +757,7 @@ class OCadmin_generalSettings extends OCadmintest {
         // add the same currency again
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->waitForPageToLoad("4000");
-        $this->selenium->click("link=Settings");
-        $this->selenium->click("link=Currencies");
+        $this->selenium->click("//a[@id='settings_currencies']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("link=Add");
@@ -788,8 +775,7 @@ class OCadmin_generalSettings extends OCadmintest {
 
          // delete
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Settings");
-        $this->selenium->click("link=Currencies");
+        $this->selenium->click("//a[@id='settings_currencies']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/small/a[text()='Delete']");
@@ -803,9 +789,7 @@ class OCadmin_generalSettings extends OCadmintest {
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Settings");
-        $this->selenium->waitForPageToLoad("4000");
-        $this->selenium->click("link=Permalinks");
+        $this->selenium->click("//a[@id='settings_permalinks']");
         $this->selenium->waitForPageToLoad("10000");
         $value = $this->selenium->getValue('rewrite_enabled');
         
