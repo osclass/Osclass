@@ -21,7 +21,7 @@
     <?php osc_run_hook('admin_footer') ; ?>
     <div id="footer_left">
         <?php _e('Thank you for using'); ?> <a href="http://osclass.org/" target="_blank">OSClass</a> -
-        <a title="<?php _e('Documentation'); ?>" href="http://wiki.osclass.org/" target="_blank"><?php _e('Documentation') ; ?></a> &middot;
+        <a title="<?php _e('Documentation'); ?>" href="http://doc.osclass.org/" target="_blank"><?php _e('Documentation') ; ?></a> &middot;
         <a title="<?php _e('Forums'); ?>" href="http://forums.osclass.org/" target="_blank"><?php _e('Forums') ; ?></a> &middot;
         <a title="<?php _e('Feedback') ; ?>" href="http://admin.osclass.org/feedback.php" target="_blank"><?php _e('Feedback') ; ?></a>
     </div>
