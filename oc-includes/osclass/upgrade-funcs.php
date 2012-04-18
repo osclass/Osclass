@@ -330,6 +330,8 @@ CREATE TABLE %st_item_description_tmp (
             $data = unserialize($data);
             // if search model, convert alert
             if(get_class($data) == 'Search') {
+                // get json 
+                $json = $data->toJson(true);
                 // insert new alert with json 
                 $aCondition = array(
                     's_email'       => $alert['s_email'],
@@ -342,7 +344,9 @@ CREATE TABLE %st_item_description_tmp (
                 if($alert['s_secret']!='') {
                     $aCondition['s_secret']     = $alert['s_secret']; 
                 }
-                
+                echo "---------------<br>";
+                echo $json;
+                echo "---------------<br>";
                 Alerts::newInstance()->update(array('s_search' => base64_encode($json)), $aCondition);
             }
         }
