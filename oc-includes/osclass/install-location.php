@@ -144,7 +144,6 @@ function location_international() {
     foreach($countries as $c) {
         $manager_country->insert(array(
             "pk_c_code"        => $c->id,
-            "fk_c_locale_code" => osc_current_admin_locale(),
             "s_name"           => $c->name
         )) ;
     }
@@ -210,7 +209,6 @@ function location_by_country() {
     foreach($countries as $c) {
         $manager_country->insert(array(
             "pk_c_code"        => $c->id,
-            "fk_c_locale_code" => osc_current_admin_locale(),
             "s_name"           => $c->name
         )) ;
     }
@@ -287,7 +285,6 @@ function location_by_region() {
     foreach($countries as $c) {
         $manager_country->insert(array(
             "pk_c_code"        => $c->id,
-            "fk_c_locale_code" => osc_current_admin_locale(),
             "s_name"           => $c->name
         )) ;
     }
@@ -361,7 +358,6 @@ function location_by_city() {
     foreach($countries as $c) {
         $manager_country->insert(array(
             "pk_c_code"        => $c->id,
-            "fk_c_locale_code" => osc_current_admin_locale(),
             "s_name"           => $c->name
         )) ;
     }
