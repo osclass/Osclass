@@ -162,7 +162,7 @@ if(in_array(Params::getParam('page'),array('plugins')) && Params::getParam('acti
     <li id="menu_universe" class="<?php echo $menuActive['universe']; ?>">
         <h3><a href="#" id="universe"><?php _e('Universe'); ?></a></h3>
         <ul>
-            <li><a href="<?php echo osc_admin_base_url(true); ?>?page=universe">&raquo; <?php _e('Universe'); ?></a></li>
+            <li><a href="<?php echo osc_admin_base_url(true); ?>?page=universe"><?php _e('Universe'); ?></a></li>
         </ul>
     </li>
     
