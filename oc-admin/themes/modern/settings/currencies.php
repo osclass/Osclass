@@ -55,7 +55,7 @@
                 } );
 
                 oTable = $('#datatables_list').dataTable({
-                    "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+                    "sDom": "<'row-action'<'row'<'span6'l><'span6'f>r>>t<'row'<'span6'i><'span6'p>>",
                     "sPaginationType": "bootstrap",
                     "bInfo": false,
                     "bFilter": false,

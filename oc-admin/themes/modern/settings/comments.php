@@ -87,58 +87,66 @@
                         <input type="hidden" name="page" value="settings" />
                         <input type="hidden" name="action" value="comments_post" />
                         <fieldset>
-                            <div class="input-line">
-                                <label><?php _e('Default comment settings') ; ?></label>
-                                <div class="input">
-                                    <label class="checkbox">
+                            <table class="table-backoffice-form">
+                                <tr>
+                                    <td class="labeled"><?php _e('Default comment settings') ; ?></td>
+                                    <td>
                                         <input type="checkbox" <?php echo ( osc_comments_enabled() ? 'checked="true"' : '' ) ; ?> name="enabled_comments" value="1" />
                                         <?php _e('Allow people to post comments on items') ; ?>
-                                    </label>
-                                    <label class="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
                                         <input type="checkbox" <?php echo ( osc_reg_user_post_comments() ? 'checked="true"' : '' ) ; ?> name="reg_user_post_comments" value="1" />
                                         <?php _e('Users must be registered and logged in to comment ') ; ?>
-                                    </label>
-                                    <label class="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
                                         <input type="checkbox" <?php echo ( ( osc_moderate_comments() == -1 ) ? '' : 'checked="true"' ) ; ?> name="moderate_comments" value="1" />
                                         <?php _e('A comment is held for moderation') ; ?>
-                                    </label>
-                                </div>
-                                <div class="input-line comments_approved">
-                                    <div class="input">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td class="additional-options">
                                         <?php printf( __('Before a comment appears, comment author must have %s previously approved comment'), '<input type="text" class="micro" name="num_moderate_comments" value="' . ( (osc_moderate_comments() == -1 ) ? '' : osc_esc_html( osc_moderate_comments() ) ) . '" />' ) ; ?>
-                                        <p class="help"><?php _e('If the value is zero an administrator must always approve the comment') ; ?></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="input-line">
-                                <label><?php _e('Other comment settings') ; ?></label>
-                                <div class="input">
-                                    <?php printf( __('Break comments into pages with %s comments per page'), '<input type="text" class="micro" name="comments_per_page" value="' . osc_esc_html( osc_comments_per_page() ) . '" />' ) ; ?>
-                                    <p class="help"><?php _e('If the value is zero all the comments are showed' ) ; ?></p>
-                                </div>
-                            </div>
-                            <h2><?php _e('Notifications') ; ?></h2>
-                            <div class="input-line">
-                                <label><?php _e('E-mail admin whenever') ?></label>
-                                <div class="input">
-                                    <label class="checkbox">
+                                        <div class="help-box"><?php _e('If the value is zero an administrator must always approve the comment') ; ?></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?php _e('Other comment settings') ; ?></td>
+                                    <td>
+                                        <?php printf( __('Break comments into pages with %s comments per page'), '<input type="text" class="micro" name="comments_per_page" value="' . osc_esc_html( osc_comments_per_page() ) . '" />' ) ; ?>
+                                        <div class="help-box"><?php _e('If the value is zero all the comments are showed' ) ; ?></div>
+                                    </td>
+                                </tr>
+                                <tr class="separate">
+                                    <td colspan="2"><h2><?php _e('Notifications') ; ?></h2></td>
+                                </tr>
+                                <tr>
+                                    <td><?php _e('E-mail admin whenever') ?></td>
+                                    <td>
                                         <input type="checkbox" <?php echo ( osc_notify_new_comment() ? 'checked="true"' : '' ) ; ?> name="notify_new_comment" value="1" />
                                         <?php _e("There is a new comment") ; ?>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="input-line">
-                                <label><?php _e('E-mail user whenever') ?></label>
-                                <div class="input">
-                                    <label class="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?php _e('E-mail user whenever') ?></td>
+                                    <td>
                                         <input type="checkbox" <?php echo ( osc_notify_new_comment_user() ? 'checked="true"' : '' ) ; ?> name="notify_new_comment_user" value="1" />
                                         <?php _e("There is a new comment in his item") ; ?>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="actions">
-                                <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
-                            </div>
+                                    </td>
+                                </tr>
+                                <tr class="separate">
+                                    <td></td>
+                                    <td>
+                                        <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
+                                    </td>
+                                </tr>
+                            </table>
                         </fieldset>
                     </form>
                 </div>

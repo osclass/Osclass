@@ -94,11 +94,8 @@
                                         switch ($location_action) {
                                             case('add_country'):    // add country
                                                                     $countryCode = strtoupper(Params::getParam('c_country'));
-                                                                    $request = Params::getParam('country');
-                                                                    foreach($request as $k => $v) {
-                                                                        $countryName = $v;
-                                                                        break;
-                                                                    }
+                                                                    $countryName = Params::getParam('country');
+
                                                                     $exists = $mCountries->findByCode($countryCode);
                                                                     if(isset($exists['s_name'])) {
                                                                         osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
@@ -107,13 +104,9 @@
                                                                         $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country_code&term=' .
                                                                                                                  urlencode($countryCode) );
                                                                         $countries = json_decode($countries_json);
-                                                                        foreach($request as $k => $v) {
-                                                                            $data = array('pk_c_code'        => $countryCode,
-                                                                                        'fk_c_locale_code' => $k,
-                                                                                        's_name'           => $v);
-                                                                            $mCountries->insert($data);
-                                                                            CountryStats::newInstance()->setNumItems($countryCode, 0);
-                                                                        }
+                                                                        $mCountries->insert(array('pk_c_code' => $countryCode,
+                                                                                                  's_name' => $countryName));
+                                                                        CountryStats::newInstance()->setNumItems($countryCode, 0);
                                                                         if(isset($countries->error)) { // Country is not in our GEO database
                                                                             // We have no region for user-typed countries
                                                                         } else { // Country is in our GEO database, add regions and cities
@@ -175,16 +168,7 @@
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
                                             case('edit_country'):   // edit country
-                                                                    $countryCode = Params::getParam('country_code');
-                                                                    $request     = Params::getParam('e_country');
-                                                                    $ok          = true;
-
-                                                                    foreach($request as $k => $v) {
-                                                                        $result = $mCountries->updateLocale($countryCode, $k, $v) ;
-                                                                        if( $result === false ) {
-                                                                            $ok = false ;
-                                                                        }
-                                                                    }
+                                                                    $ok = $mCountries->update(array('s_name'=> Params::getParam('e_country')), array('pk_c_code' => Params::getParam('country_code')));
 
                                                                     if( $ok ) {
                                                                         osc_add_flash_ok_message(_m('Country has been edited'), 'admin');
@@ -195,37 +179,28 @@
                                             break;
                                             case('delete_country'): // delete country
                                                                     $countryId = Params::getParam('id');
-
-                                                                    // HAS ITEMS?
-                                                                    $has_items = Item::newInstance()->listWhere('l.fk_c_country_code = \'%s\' LIMIT 1', $countryId);
-                                                                    if(!$has_items) {
-                                                                        $mRegions = new Region();
-                                                                        $mCities = new City();
-
-                                                                        $aCountries = $mCountries->findByCode($countryId);
-                                                                        $aRegions = $mRegions->findByCountry($aCountries['pk_c_code']);
-                                                                        foreach($aRegions as $region) {
-                                                                            // remove city_stats
-                                                                            CityStats::newInstance()->deleteByRegion($region['pk_i_id']) ;
-                                                                            $mCities->delete(array('fk_i_region_id' => $region['pk_i_id']));
-                                                                            // remove region_stats
-                                                                            RegionStats::newInstance()->delete( array('fk_i_region_id' => $region['pk_i_id']) ) ;
-                                                                            $mRegions->delete(array('pk_i_id' => $region['pk_i_id']));
-                                                                        }
-                                                                        //remove country stats
-                                                                        CountryStats::newInstance()->delete( array('fk_c_country_code' => $aCountries['pk_c_code'] ) ) ;
-                                                                        $mCountries->delete(array('pk_c_code' => $aCountries['pk_c_code']));
-                                                                    }
+                                                
+                                                                    Item::newInstance()->deleteByRegion($countryId);
+                                                                    $mRegions = new Region();
+                                                                    $mCities = new City();
 
                                                                     $aCountries = $mCountries->findByCode($countryId);
                                                                     $aRegions = $mRegions->findByCountry($aCountries['pk_c_code']);
                                                                     foreach($aRegions as $region) {
-                                                                        $mCities->delete(array('fk_i_region_id' => $region['pk_i_id']));
-                                                                        $mRegions->delete(array('pk_i_id' => $region['pk_i_id']));
+                                                                        // remove city_stats
+                                                                        CityStats::newInstance()->deleteByRegion($region['pk_i_id']) ;
+                                                                        // remove region_stats
+                                                                        RegionStats::newInstance()->delete( array('fk_i_region_id' => $region['pk_i_id']) ) ;
                                                                     }
-                                                                    $mCountries->delete(array('pk_c_code' => $aCountries['pk_c_code']));
+                                                                    //remove country stats
+                                                                    CountryStats::newInstance()->delete( array('fk_c_country_code' => $aCountries['pk_c_code'] ) ) ;
+                                                                    $ok = $mCountries->deleteByPrimaryKey($aCountries['pk_c_code']);
 
-                                                                    osc_add_flash_ok_message(sprintf(_m('%s has been deleted'), $aCountries['s_name']), 'admin');
+                                                                    if($ok) {
+                                                                        osc_add_flash_ok_message(sprintf(_m('%s has been deleted'), $aCountries['s_name']), 'admin');
+                                                                    } else {
+                                                                        osc_add_flash_error_message(sprintf(_m('There was a problem deleting %s'), $aCountries['s_name']), 'admin');
+                                                                    }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
                                             case('add_region'):     // add region
@@ -354,7 +329,7 @@
                                             break;
                                         }
 
-                                        $aCountries = $mCountries->listAllAdmin();
+                                        $aCountries = $mCountries->listAll();
                                         $this->_exportVariableToView('aCountries', $aCountries);
 
                                         $this->doView('settings/locations.php');
