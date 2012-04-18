@@ -105,7 +105,7 @@
                         <div class="space-left-10">
                             <p>If you have any questions that aren't addressed in this document, please look at the online resources:</p>
                             <dl class="space-left-25">
-                                <dt><a href="http://wiki.osclass.org/">OSClass Wiki</a></dt>
+                                <dt><a href="http://doc.osclass.org/">OSClass Wiki</a></dt>
                                 <dd>
                                     The wiki is where all information about OSClass is placed.
                                 </dd>
