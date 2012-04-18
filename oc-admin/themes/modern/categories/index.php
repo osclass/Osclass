@@ -322,6 +322,7 @@
                             <?php } ?>
                         </ul>
                     </div>
+                    <div class="clear"></div>
                 </div>
                 <!-- /categories form -->
             </div>
