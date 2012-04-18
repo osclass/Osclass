@@ -42,6 +42,7 @@
                                         
                                         
                                         $url_redirect = osc_get_http_referer();
+                                        $page_redirect = '';
                                         if(osc_rewrite_enabled()) {
                                             if($url_redirect!='') {
                                                 $request_uri = urldecode(preg_replace('@^' . osc_base_url() . '@', "", $url_redirect));
