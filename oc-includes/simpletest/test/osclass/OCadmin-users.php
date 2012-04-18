@@ -112,7 +112,7 @@ class OCadmin_users extends OCadminTest {
         
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
-
+        sleep(3);
         $this->assertTrue($this->selenium->isTextPresent("The user has been created successfully"),"Create user");
     }
 
@@ -167,8 +167,8 @@ class OCadmin_users extends OCadminTest {
         // check autofill locations when user add nen advert
         $this->selenium->open(osc_base_url(true) . '?page=item&action=item_add');
         $this->assertTrue( ($this->selenium->getSelectedLabel('id=countryId') == 'Spain'), 'Country auto fill');
-        $this->assertTrue( ($this->selenium->getValue('id=region')  == 'Barcelona'), 'Region auto fill');
-        $this->assertTrue( ($this->selenium->getValue('id=city')  == 'Barcelona'), 'City auto fill');
+        $this->assertTrue( ($this->selenium->getValue('@id=region')  == 'Barcelona'), 'Region auto fill');
+        $this->assertTrue( ($this->selenium->getValue('@id=city')  == 'Barcelona'), 'City auto fill');
         $this->assertTrue( ($this->selenium->getValue('id=cityArea') == 'city area'), 'City area auto fill');
         $this->assertTrue( ($this->selenium->getValue('id=address') == 'address user'), 'Address auto fill');
         // alerts
@@ -236,6 +236,7 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->click("link=Manage users");
         $this->selenium->waitForPageToLoad("10000");
 
+        $this->selenium->mouseOver("//table/tbody/tr/td[contains(.,'mail.com')]");
         $this->selenium->click("//table/tbody/tr/td[contains(.,'mail.com')]/div/div/a[text()='Edit']");
         $this->selenium->waitForPageToLoad("10000");
 
@@ -295,8 +296,11 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->click("link=Manage users");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->click("//table/tbody/tr/td[contains(.,'mail.com')]/div/div/a[text()='Delete']");
+        $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'mail.com')]");
+        sleep(1);
+        $this->selenium->click("xpath=//table/tbody/tr/td[contains(.,'mail.com')]/div/div/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
+        sleep(1);
 
         $this->assertTrue($this->selenium->isTextPresent("One user has been deleted"), "Delete user" ) ;
     }
