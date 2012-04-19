@@ -154,9 +154,6 @@
                 case('comment_edit_post'):  
                     
                                             $msg = '';
-                                            if(!osc_validate_text(Params::getParam('authorName'),1 , true)) {
-                                                $msg .= _m("Author's name is required")."<br/>";
-                                            }
                                             if(!osc_validate_email(Params::getParam('authorEmail'),true)) {
                                                 $msg .= _m('Email is not correct')."<br/>";
                                             }

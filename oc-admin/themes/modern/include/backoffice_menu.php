@@ -19,7 +19,20 @@
 <?php
 $menuActive = array(
     'items' => false,
-    'categories'=>false
+    'categories'=>false,
+    'pages'=>false,
+    'emails'=>false,
+    'customfields'=>false,
+    'appearance'=>false,
+    'plugins'=>false,
+    'languages'=>false,
+    'settings'=>false,
+    'tools'=>false,
+    'universe'=>false,
+    'users'=>false,
+    'administrators'=>false,
+    'stats'=>false,
+    'xtramenu'=>false
     );
 if(in_array(Params::getParam('page'),array('items','comments','media'))){
     $menuActive['items'] = 'current-menu-item';
@@ -162,7 +175,7 @@ if(in_array(Params::getParam('page'),array('plugins')) && Params::getParam('acti
     <li id="menu_universe" class="<?php echo $menuActive['universe']; ?>">
         <h3><a href="#" id="universe"><?php _e('Universe'); ?></a></h3>
         <ul>
-            <li><a href="<?php echo osc_admin_base_url(true); ?>?page=universe">&raquo; <?php _e('Universe'); ?></a></li>
+            <li><a href="<?php echo osc_admin_base_url(true); ?>?page=universe"><?php _e('Universe'); ?></a></li>
         </ul>
     </li>
     
