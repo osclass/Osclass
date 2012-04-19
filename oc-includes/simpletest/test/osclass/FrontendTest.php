@@ -44,10 +44,11 @@ abstract class FrontendTest extends WebTestCase {
         $date = $function."_".time().".png";
         $path = "/var/www/vm-test-osclass.office/subdomains/images_test/httpdocs/img/";
         $img  = $path.$date;
+        
         if(!$res) {
             $a = "<a target='_blank' href='http://images_test.vm-test-osclass.office/img/$date'>Image test failed</a>";
             $this->reporter->addFail($a);
-            $cmd = "DISPLAY=:1 import -window root ".$date;
+            $cmd = "DISPLAY=:1 import -window root ".$img;
             system($cmd);
             $this->selenium->captureScreenshot($date);
         }
