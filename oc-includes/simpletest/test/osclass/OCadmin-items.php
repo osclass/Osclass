@@ -419,14 +419,13 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->click("link=Items");
         $this->selenium->click("link=Manage media");
         $this->selenium->waitForPageToLoad("10000");
-        sleep(1);
-        
+        sleep(2);
         $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 2 of 2 entries"), "Inconsistent . ERROR" );
+        
         // only can delete resources
         $this->selenium->click("xpath=//a[@id='dt_link_delete']");
         $this->selenium->waitForPageToLoad("10000");
-        sleep(1);
-        
+        sleep(2);
         $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
         $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 1 of 1 entries"), "Can't delete media. ERROR" );
 
@@ -434,11 +433,10 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->click("link=Items");
         $this->selenium->click("link=Manage media");
         $this->selenium->waitForPageToLoad("10000");
-        sleep(1);
 
         $this->selenium->click("xpath=//a[@id='dt_link_delete']");
         $this->selenium->waitForPageToLoad("10000");
-        sleep(1);
+        sleep(2);
         $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
         $this->assertTrue($this->selenium->isTextPresent("No entries to show"), "Can't delete media. ERROR" );
 
