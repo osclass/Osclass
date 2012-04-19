@@ -462,7 +462,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->select("weekStart"     , "value=" . $pref['weekStart'] ) ;
         $this->selenium->type("num_rss_items" , $pref['num_rss_items'] ) ;
         $this->selenium->type("max_latest_items_at_home" , $pref['max_latest_items_at_home'] ) ;
-        $this->selenium->type("default_resutls_per_page" , $pref['default_results_per_page'] ) ;
+        $this->selenium->type("default_results_per_page" , $pref['default_results_per_page'] ) ;
         $this->selenium->click($pref['df']);
         $this->selenium->click($pref['tf']);
         $this->selenium->click("enabled_attachment");
@@ -553,8 +553,7 @@ class OCadmin_generalSettings extends OCadmintest {
         // add country again
 
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Settings");
-        $this->selenium->click("link=Locations");
+        $this->selenium->click("//a[@id='settings_locations']");
         $this->selenium->waitForPageToLoad("10000");
         // add Country
         $this->selenium->click("xpath=//a[@id='b_new_country']");
@@ -567,6 +566,9 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Add country twice" ) ;
 
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_locations']");
+        $this->selenium->waitForPageToLoad("10000");
         // add Region
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
         $this->selenium->click("xpath=//a[@id='b_new_region']") ;
@@ -578,6 +580,9 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new region") , "Add new region" ) ;
 
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_locations']");
+        $this->selenium->waitForPageToLoad("10000");
         // add Region again
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
         $this->selenium->click("xpath=//a[@id='b_new_region']") ;
@@ -589,6 +594,9 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Add region twice" ) ;
 
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_locations']");
+        $this->selenium->waitForPageToLoad("10000");
         // add City
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
         $this->selenium->click("xpath=//div[@id='i_regions']/div[1]/div/a[text()='View more »']") ;
@@ -600,6 +608,9 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new city") , "Add new city" ) ;
 
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_locations']");
+        $this->selenium->waitForPageToLoad("10000");
         // add City again
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
         $this->selenium->click("xpath=//div[@id='i_regions']/div[1]/div/a[text()='View more »']") ;
@@ -613,6 +624,9 @@ class OCadmin_generalSettings extends OCadmintest {
 
         //test errors when edit countries, regions, cities
         
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_locations']");
+        $this->selenium->waitForPageToLoad("10000");
         // add another City
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
         $this->selenium->click("xpath=//div[@id='i_regions']/div[1]/div/a[text()='View more »']") ;
@@ -623,6 +637,10 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new city") , "Add new city" ) ;
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_locations']");
+        $this->selenium->waitForPageToLoad("10000");
         // edit the city and change the name to existing one
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
         $this->selenium->click("xpath=//div[@id='i_regions']/div[1]/div/a[text()='View more »']") ;
@@ -634,6 +652,9 @@ class OCadmin_generalSettings extends OCadmintest {
         
         $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Change city name to existing one" ) ;
 
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_locations']");
+        $this->selenium->waitForPageToLoad("10000");
         // add another Region
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
         $this->selenium->click("xpath=//a[@id='b_new_region']") ;
@@ -645,6 +666,9 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new region") , "Add new region" ) ;
 
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_locations']");
+        $this->selenium->waitForPageToLoad("10000");
         // edit the region and change the name to existing one
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
         $this->selenium->click("xpath=//div[@id='i_regions']/div/div/a[text()='Republica_']") ; 
@@ -655,6 +679,9 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Change region name to existing one" ) ;
 
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_locations']");
+        $this->selenium->waitForPageToLoad("10000");
         // DELETE THE LOCATION
         $this->selenium->click("xpath=//a[@id='country_delete'][1]");
         $this->selenium->waitForPageToLoad("10000");
