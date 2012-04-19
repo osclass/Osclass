@@ -99,18 +99,12 @@
                 authorEmail: {
                     required: true,
                     email: true
-                },
-                authorName: {
-                    required: true
                 }
             },
             messages: {
                 authorEmail: {
                     required: "<?php _e("Email: this field is required"); ?>.",
                     email: "<?php _e("Invalid email address"); ?>."
-                },
-                authorName: {
-                    required: "<?php _e("Name: this field is required"); ?>."
                 },
                 body: {
                     required: "<?php _e("Comment: this field is required"); ?>.",

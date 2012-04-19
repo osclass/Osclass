@@ -18,28 +18,29 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
-$address = '';
-if(osc_user_address()!='') {
-    if(osc_user_city_area()!='') {
-        $address = osc_user_address().", ".osc_user_city_area();
+
+    $address = '';
+    if(osc_user_address()!='') {
+        if(osc_user_city_area()!='') {
+            $address = osc_user_address().", ".osc_user_city_area();
+        } else {
+            $address = osc_user_address();
+        }
     } else {
-        $address = osc_user_address();
+        $address = osc_user_city_area();
     }
-} else {
-    $address = osc_user_city_area();
-}
-$location_array = array();
-if(trim(osc_user_city()." ".osc_user_zip())!='') {
-    $location_array[] = trim(osc_user_city()." ".osc_user_zip());
-}
-if(osc_user_region()!='') {
-    $location_array[] = osc_user_region();
-}
-if(osc_user_country()!='') {
-    $location_array[] = osc_user_country();
-}
-$location = implode(", ", $location_array);
-unset($location_array);
+    $location_array = array();
+    if(trim(osc_user_city()." ".osc_user_zip())!='') {
+        $location_array[] = trim(osc_user_city()." ".osc_user_zip());
+    }
+    if(osc_user_region()!='') {
+        $location_array[] = osc_user_region();
+    }
+    if(osc_user_country()!='') {
+        $location_array[] = osc_user_country();
+    }
+    $location = implode(", ", $location_array);
+    unset($location_array);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">

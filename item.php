@@ -379,7 +379,7 @@
                         case 2:  $msg = _m('Your comment has been approved') ;
                                  osc_add_flash_ok_message($msg) ;
                         break ;
-                        case 3:  $msg = _m('Please fill the required fields (name, email)') ;
+                        case 3:  $msg = _m('Please fill the required fields (email)') ;
                                  osc_add_flash_warning_message($msg) ;
                         break ;
                         case 4:  $msg = _m('Please type a comment') ;
