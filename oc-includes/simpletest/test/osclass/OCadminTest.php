@@ -45,21 +45,27 @@ abstract class OCadminTest extends WebTestCase {
         Admin::newInstance()->delete(array('s_email' => $this->_email));
     }
 
-    
     function assert($expectation, $compare, $message = '%s')
     {
         $res = parent::assert( $expectation, $compare, $message = '%s' );
-        $date = date('YmdHmiu').".png";
+        
+        $bt = debug_backtrace();
+        $function = $bt[2]['function'];
+
+        $date = $function."_".time().".png";
+        $path = "/var/www/vm-test-osclass.office/subdomains/images_test/httpdocs/img/";
+        $img  = $path.$date;
+        
         if(!$res) {
-            echo "save capture image $date";
-            $cmd = "DISPLAY=:1 import -window root ".$date;
+            $a = "<a target='_blank' href='http://images_test.vm-test-osclass.office/img/$date'>Image test failed</a>";
+            $this->reporter->addFail($a);
+            $cmd = "DISPLAY=:1 import -window root ".$img;
             system($cmd);
             $this->selenium->captureScreenshot($date);
         }
         
         return $res;
     }
-
     
     /*
      * Do login at oc-admin
