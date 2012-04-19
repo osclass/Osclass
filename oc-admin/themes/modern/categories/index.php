@@ -35,6 +35,20 @@
             ul.sortable > li > ul {
                 margin-left: 20px;
             }
+            .footest .category_div {
+                opacity: 0.8;
+            }
+            .list-categories li {
+                opacity: 1 !important;
+            }
+            .category_div {
+                background: #ffffff;
+            }
+            .alert-custom {
+                 background-color: #FDF5D9;
+                border-bottom: 1px solid #EEDC94;
+                color: #404040;
+            }
         </style>
         <script type="text/javascript">
             $(function() {
@@ -56,6 +70,11 @@
                     toleranceElement: '> div',
                     create: function(event, ui) {
                         list_original = $('.sortable').nestedSortable('serialize') ;
+                    },
+                    start: function(event, ui) { 
+                        console.log('Over ...');
+                        $(ui.helper).addClass('footest');
+                        $(ui.helper).prepend("<div style='opacity: 1 !important; padding:5px;' class='alert-custom'><?php _e('Note: You need to expand the category if you want to make it a subcategory.'); ?></div>");
                     },
                     stop: function(event, ui) { 
                         var list = '' ;
@@ -322,6 +341,7 @@
                             <?php } ?>
                         </ul>
                     </div>
+                    <div class="clear"></div>
                 </div>
                 <!-- /categories form -->
             </div>

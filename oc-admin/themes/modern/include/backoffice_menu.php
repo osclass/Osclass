@@ -19,7 +19,20 @@
 <?php
 $menuActive = array(
     'items' => false,
-    'categories'=>false
+    'categories'=>false,
+    'pages'=>false,
+    'emails'=>false,
+    'customfields'=>false,
+    'appearance'=>false,
+    'plugins'=>false,
+    'languages'=>false,
+    'settings'=>false,
+    'tools'=>false,
+    'universe'=>false,
+    'users'=>false,
+    'administrators'=>false,
+    'stats'=>false,
+    'xtramenu'=>false
     );
 if(in_array(Params::getParam('page'),array('items','comments','media'))){
     $menuActive['items'] = 'current-menu-item';
