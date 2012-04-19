@@ -74,7 +74,7 @@
                     start: function(event, ui) { 
                         console.log('Over ...');
                         $(ui.helper).addClass('footest');
-                        $(ui.helper).prepend("<div style='opacity: 1 !important; padding:5px;' class='alert-custom'><?php _e('Note: You need to expand the category if you want make it as subcategory.'); ?></div>");
+                        $(ui.helper).prepend("<div style='opacity: 1 !important; padding:5px;' class='alert-custom'><?php _e('Note: You need to expand the category if you want to make it a subcategory.'); ?></div>");
                     },
                     stop: function(event, ui) { 
                         var list = '' ;

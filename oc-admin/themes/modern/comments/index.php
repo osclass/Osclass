@@ -37,6 +37,10 @@
         $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) . '\')" href="' . osc_admin_base_url(true) . '?page=comments&amp;action=delete&amp;id=' . $comment['pk_i_id'] .'" id="dt_link_delete">' . __('Delete') . '</a>' ;
 
         $row[] = '<input type="checkbox" name="id[]" value="' . $comment['pk_i_id']  . '" />' ;
+        if( empty($comment['s_author_name']) ) {
+            $user = User::newInstance()->findByPrimaryKey( $comment['fk_i_user_id'] );
+            $comment['s_author_name'] = $user['s_email'];
+        }
         $row[] = $comment['s_author_name'] . ' (<a target="_blank" href="' . osc_item_url_ns( $comment['fk_i_item_id'] ) . '">' . $comment['s_title'] . '</a>)<div class="datatables_quick_edit" style="display:none;">' . implode(' &middot; ', $options) . '</div>' ;
         $row[] = $comment['s_body'] ;
         $row[] = $comment['dt_pub_date'] ;
