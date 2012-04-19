@@ -111,7 +111,12 @@ class MyReporter extends SimpleReporter {
         $talker_text = $body;
         $body .= "<br/>";
         $body .= $this->fails;
-        mail("testing@osclass.org", $subject." _mail_", $body);
+        
+        
+        $cabeceras  = 'MIME-Version: 1.0' . "\r\n";
+        $cabeceras .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+        
+        mail("testing@osclass.org", $subject." _mail_", $body, $cabeceras);
         
         require(dirname(__FILE__)."/config_test.php");
         if($talker_room!='' && $talker_token!='') {
