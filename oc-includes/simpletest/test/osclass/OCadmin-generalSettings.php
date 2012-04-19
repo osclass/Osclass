@@ -532,7 +532,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * edit country/region/citytest location already exist
      * Logout
      */
-    function atestLocationsNEWForceError()
+    function testLocationsNEWForceError()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
