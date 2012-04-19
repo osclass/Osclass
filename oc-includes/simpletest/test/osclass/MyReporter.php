@@ -22,6 +22,13 @@ class MyReporter extends SimpleReporter {
         $this->fails = "";
     }
 
+    /*
+     * append to $fail string
+     */
+    function addFail($str)
+    {
+        $this->fails .= $str;
+    }
     /**
      *    Paints the top of the web page setting the
      *    title to the name of the starting test.
