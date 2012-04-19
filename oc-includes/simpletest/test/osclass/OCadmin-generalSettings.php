@@ -12,7 +12,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Logout.
      */
 
-    function atestCrontab()
+    function testCrontab()
     {
         $uSettings = new utilSettings();
         
@@ -45,7 +45,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Update all inputs and check if change has been saved, update old configuration and check again.
      * Logout
      */
-    function atestMediatab()
+    function testMediatab()
     {
         $uSettings = new utilSettings();
         
@@ -131,7 +131,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * update configuration and check and set old configuration again and check.
      * Logout.
      */
-    function atestMailServer()
+    function testMailServer()
     {
         $uSettings = new utilSettings();
         
@@ -203,7 +203,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Set akismet, recaptcha, check modifications
      * Logout
      */
-    function atestSpamAndBots()
+    function testSpamAndBots()
     {
         $uSettings = new utilSettings();
         
@@ -264,7 +264,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Logout
      * 
      */
-    function atestComments()
+    function testComments()
     {
         $uSettings = new utilSettings();
         $pref = array();
@@ -381,7 +381,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * update settings, and check
      * Logout
      */
-    function atestGeneralSettings()
+    function testGeneralSettings()
     {
         $pref = $this->getPreferencesGeneralSettings();
         
@@ -668,7 +668,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * edit & delete the currency
      * Logout
      */
-    function atestCurrency()
+    function testCurrency()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -734,7 +734,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Delete 
      * Logout
      */
-    function atestAddCurrencyTwice()
+    function testAddCurrencyTwice()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -785,7 +785,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->assertTrue( !$this->selenium->isTextPresent("Indian_Rupee") , "Delete currency" ) ;
     }
     
-    function atestPermalinks()
+    function testPermalinks()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
