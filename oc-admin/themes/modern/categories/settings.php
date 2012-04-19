@@ -31,7 +31,7 @@
                 <div class="header_title">
                     <h1 class="categories"><?php _e('Categories Settings') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- categories form -->
                 <div class="categories settings">
                     <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">

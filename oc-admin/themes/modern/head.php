@@ -16,22 +16,14 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-     function osc_show_admin_flash_messages() {
-        $msg = osc_get_flash_message('admin') ;
-        if( $msg != '' ) {
-            $output = <<<FLASHMESSAGE
-            <!-- flash message -->
-            <div class="alert alert-{$msg['type']}">
-                <a class="close" href="#">×</a>
-                <p>{$msg['msg']}</p>
-            </div>
-            <!-- /flash message -->
-FLASHMESSAGE;
-            echo $output ;
+    if( !function_exists('add_close_button_fm_admin') ) {
+        function add_close_button_fm_admin($message) {
+            return '<a href="#" class="close">×</a><p>' . $message . '</p>' ;
         }
-     }
-?>
 
+        osc_add_filter('flash_message_text', 'add_close_button_fm_admin') ;
+    }
+?>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title><?php _e('OSClass Admin Panel'); ?></title>
 

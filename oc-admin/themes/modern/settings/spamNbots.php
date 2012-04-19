@@ -31,7 +31,7 @@
                 <div class="header_title">
                     <h1 class="settings"><?php _e('Spam and bots Settings') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
 				<!-- settings form -->
                 <div class="settings spambots">
                     <!-- akismet -->
@@ -71,7 +71,7 @@
                                                 break;
                                             }
                                         ?>
-                                        <div class="alert alert-inline alert-<?php echo $alert_type ; ?>">
+                                        <div class="FlashMessage FlashMessage-inline <?php echo $alert_type ; ?>">
                                             <p><?php echo $alert_msg ; ?></p>
                                         </div>
                                     </td>

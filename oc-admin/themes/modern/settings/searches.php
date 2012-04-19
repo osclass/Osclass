@@ -56,7 +56,7 @@
                 <div class="header_title">
                     <h1 class="settings"><?php _e('Last searches Settings') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- latest searches form -->
                 <div class="settings latest-searches">
                     <ul id="error_list"></ul>

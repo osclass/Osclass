@@ -41,7 +41,7 @@
                 <div class="header_title">
                     <h1 class="dashboard"><?php _e('Dashboard') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- dashboard -->
                 <div class="main-page">
                     <!-- dashboard boxes -->

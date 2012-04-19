@@ -88,7 +88,7 @@
                 <div class="header_title">
                     <h1 class="pages"><?php _e('Emails & alerts') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- datatables emails -->
                 <div class="datatables emails">
                     <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatables_list"></table>

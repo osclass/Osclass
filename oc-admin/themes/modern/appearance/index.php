@@ -46,7 +46,7 @@
                     <input type="button" value="<?php echo osc_esc_html( __('Add new theme') ) ; ?>" onclick="window.location.href='<?php echo osc_admin_base_url(true) ; ?>?page=appearance&amp;action=add'" />
                     <h1 class="themes"><?php _e('Appearance') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- themes list -->
                 <div class="appearance">
                     <h2><?php _e('Current theme') ; ?></h2>

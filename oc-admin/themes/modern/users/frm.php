@@ -62,7 +62,7 @@
                 <div class="header_title">
                     <h1 class="users"><?php echo $title ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- add user form -->
                 <div class="settings general">
                     <ul id="error_list"></ul>

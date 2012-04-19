@@ -64,7 +64,7 @@
                 <div class="header_title">
                     <h1 class="plugins"><?php _e('Plugin configuration') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- plugin configuration -->
                 <div class="plugin-configuration">
                     <form id="frm3" action="<?php echo osc_admin_base_url(true);?>?page=plugins" method="post">

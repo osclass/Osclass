@@ -127,7 +127,7 @@
                 <div class="header_title">
                     <h1 class="comments"><?php _e('Manage Comments') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- datatables comments -->
                 <form class="comments datatables" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                     <input type="hidden" name="page" value="comments" />

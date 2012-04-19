@@ -276,14 +276,14 @@
                     <input type="button" value="<?php echo osc_esc_html( __('Add new category') ) ; ?>" onclick="window.location.href='<?php echo osc_admin_base_url(true) ; ?>?page=categories&amp;action=add_post_default'" />
                     <h1 class="categories"><?php _e('Categories') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
-                <div class="jsMessage alert alert-info" style="display: none;">
+                <?php osc_show_flash_message('admin') ; ?>
+                <div class="jsMessage FlashMessage info" style="display: none;">
                     <a class="close" href="#">×</a>
                     <p></p>
                 </div>
                 <!-- categories form -->
                 <div class="categories">
-                    <div class="alert alert-info">
+                    <div class="FlashMessage info">
                         <p class="info"><?php _e('Drag&drop the categories to reorder them the way you like. Click on edit link to edit the category') ; ?></p>
                     </div>
                     <div class="list-categories">

@@ -157,10 +157,10 @@
                 <div class="header_title">
                     <h1 class="plugins"><?php _e('Plugins') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <?php if( Params::getParam('error') != '' ) { ?>
                     <!-- flash message -->
-                    <div class="alert alert-error">
+                    <div class="FlashMessage error">
                         <a class="close" href="#">×</a>
                         <p>
                             <?php _e("Plugin couldn't be installed because it triggered a <strong>fatal error</strong>") ; ?>
