@@ -19,7 +19,9 @@ class MyReporter extends SimpleReporter {
     function __construct($character_set = 'ISO-8859-1') {
         parent::__construct();
         $this->character_set = $character_set;
-        $this->fails = "";
+//        $this->fails = "";
+        $this->fails  = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">";
+        $this->fails .= "<html>\n<head>\n<title>$test_name</title><style type=\"text/css\"> ".$this->getCss() . "\n</style>\n</head><body>\n";
     }
 
     /*
@@ -83,6 +85,8 @@ class MyReporter extends SimpleReporter {
      *    @access public
      */
     function paintFooter($test_name) {
+        
+        // add end </html>
         global $test_str;
         
         $colour = ($this->getFailCount() + $this->getExceptionCount() > 0 ? "red" : "green");
@@ -110,6 +114,8 @@ class MyReporter extends SimpleReporter {
         $body .= "*" . $this->getExceptionCount() . "* exceptions.\r\n\r";
         $talker_text = $body;
         $body .= "<br/>";
+        
+        $this->fails .= "</body></html>";
         $body .= $this->fails;
         
         
