@@ -19,9 +19,18 @@ class MyReporter extends SimpleReporter {
     function __construct($character_set = 'ISO-8859-1') {
         parent::__construct();
         $this->character_set = $character_set;
-        $this->fails = "";
+//        $this->fails = "";
+        $this->fails  = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">";
+        $this->fails .= "<html>\n<head>\n<title>$test_name</title><style type=\"text/css\"> ".$this->getCss() . "\n</style>\n</head><body>\n";
     }
 
+    /*
+     * append to $fail string
+     */
+    function addFail($str)
+    {
+        $this->fails .= $str;
+    }
     /**
      *    Paints the top of the web page setting the
      *    title to the name of the starting test.
@@ -76,6 +85,8 @@ class MyReporter extends SimpleReporter {
      *    @access public
      */
     function paintFooter($test_name) {
+        
+        // add end </html>
         global $test_str;
         
         $colour = ($this->getFailCount() + $this->getExceptionCount() > 0 ? "red" : "green");
@@ -103,8 +114,15 @@ class MyReporter extends SimpleReporter {
         $body .= "*" . $this->getExceptionCount() . "* exceptions.\r\n\r";
         $talker_text = $body;
         $body .= "<br/>";
+        
+        $this->fails .= "</body></html>";
         $body .= $this->fails;
-        mail("testing@osclass.org", $subject." _mail_", $body);
+        
+        
+        $cabeceras  = 'MIME-Version: 1.0' . "\r\n";
+        $cabeceras .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+        
+        mail("testing@osclass.org", $subject." _mail_", $body, $cabeceras);
         
         require(dirname(__FILE__)."/config_test.php");
         if($talker_room!='' && $talker_token!='') {
