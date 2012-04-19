@@ -44,6 +44,22 @@ abstract class OCadminTest extends WebTestCase {
         $this->selenium->stop();
         Admin::newInstance()->delete(array('s_email' => $this->_email));
     }
+
+    
+    function assert($expectation, $compare, $message = '%s')
+    {
+        $res = parent::assert( $expectation, $compare, $message = '%s' );
+        $date = date('YmdHmiu').".png";
+        if(!$res) {
+            echo "save capture image $date";
+            $cmd = "DISPLAY=:1 import -window root ".$date;
+            system($cmd);
+            $this->selenium->captureScreenshot($date);
+        }
+        
+        return $res;
+    }
+
     
     /*
      * Do login at oc-admin

@@ -31,6 +31,20 @@ abstract class FrontendTest extends WebTestCase {
     {
         $this->selenium->stop();
     }
+    
+    function assert($expectation, $compare, $message = '%s')
+    {
+        $res = parent::assert( $expectation, $compare, $message = '%s' );
+        $date = date('YmdHmiu').".png";
+        if(!$res) {
+            echo "save capture image $date";
+            $cmd = "DISPLAY=:1 import -window root ".$date;
+            system($cmd);
+            $this->selenium->captureScreenshot($date);
+        }
+        
+        return $res;
+    }
 
     /**
      * Do register if exist 'Register for a free account' link
