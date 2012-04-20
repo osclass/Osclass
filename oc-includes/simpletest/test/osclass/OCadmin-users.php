@@ -380,6 +380,7 @@ class OCadmin_users extends OCadminTest {
         $this->checkWebsite_enabled_user_registration(0);
         Preference::newInstance()->replace('enabled_user_registration', '1',"osclass", 'INTEGER') ;
         $this->checkWebsite_enabled_user_registration(1);
+        osc_reset_preferences();
     }
 
     /*
