@@ -905,7 +905,7 @@
             $this->sql = $this->dao->_getSelect() ;
             // reset dao attributes
             $this->dao->_resetSelect() ;
-            error_log($this->sql);
+            
             return $this->sql;
         }
 
