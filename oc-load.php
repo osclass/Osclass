@@ -19,7 +19,6 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 define('OSCLASS_VERSION', '2.4-dev') ;
 
 if( !defined('ABS_PATH') ) {
@@ -203,4 +202,5 @@ function osc_meta_generator() {
 osc_add_hook("header", "osc_show_maintenance");
 osc_add_hook("header", "osc_meta_generator");
 
+/* file end: ./oc-load.php */
 ?>

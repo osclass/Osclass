@@ -19,13 +19,14 @@
 
     class CWebContact extends BaseModel
     {
-
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             switch($this->action) {
                 case('contact_post'):   //contact_post
                                         $yourName = Params::getParam('yourName') ;
@@ -76,7 +77,7 @@
                                                 $this->redirectTo( osc_contact_url() );
                                             }
 
-                                            if(!move_uploaded_file($tmpName, $path)){
+                                            if(!move_uploaded_file($tmpName, $path)) {
                                                 unset($path) ;
                                             }
                                         }
@@ -97,7 +98,8 @@
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_run_hook("before_html");
             osc_current_web_theme_path($file) ;
             Session::newInstance()->_clearVariables();
@@ -105,4 +107,5 @@
         }
     }
 
+    /* file end: ./contact.php */
 ?>

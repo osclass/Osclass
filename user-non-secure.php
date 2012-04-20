@@ -19,8 +19,8 @@
 
     class CWebUserNonSecure extends BaseModel
     {
-
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
             if( !osc_users_enabled() && ($this->action != 'activate_alert' && $this->action != 'unsub_alert') ) {
                 osc_add_flash_error_message( _m('Users not enabled') ) ;
@@ -29,7 +29,8 @@
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             switch( $this->action ) {
                 case 'change_email_confirm':    //change email confirm
                                                 if ( Params::getParam('userId') && Params::getParam('code') ) {
@@ -129,8 +130,7 @@
                     osc_run_hook('hook_email_contact_user', Params::getParam('id'), Params::getParam('yourEmail'), Params::getParam('yourName'), Params::getParam('phoneNumber'), Params::getParam('message'));
 
                     $this->redirectTo( osc_user_public_profile_url( ) );
-                    break;
-
+                break;
                 default:
                     $this->redirectTo( osc_user_login_url() );
                 break;
@@ -138,7 +138,8 @@
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_run_hook("before_html");
             osc_current_web_theme_path($file) ;
             Session::newInstance()->_clearVariables();
@@ -146,4 +147,5 @@
         }
     }
 
+    /* file end: ./user-non-secure.php */
 ?>

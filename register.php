@@ -123,4 +123,5 @@
         }
     }
 
+    /* file end: ./register.php */
 ?>
