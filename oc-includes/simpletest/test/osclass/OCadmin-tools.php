@@ -10,7 +10,7 @@ class OCadmin_tools extends OCadminTest {
      * Import sql
      * Remove imported data
      */
-    function testImportData()
+    function atestImportData()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -36,7 +36,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Import bad file. 
      */
-    function testImportDataFail()
+    function atestImportDataFail()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -53,7 +53,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Backup database
      */
-    function testBackupSql()
+    function atestBackupSql()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -73,7 +73,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Backup oclass
      */
-    function testBackupZip()
+    function atestBackupZip()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -90,7 +90,7 @@ class OCadmin_tools extends OCadminTest {
     }
     
     
-    function testMaintenance()
+    function atestMaintenance()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -163,8 +163,8 @@ class OCadmin_tools extends OCadminTest {
         
         $cities = CityStats::newInstance()->listCities(null, ">=");
         foreach($cities as $c) {
-            if($c['city_name']=="Terrasa") {
-                $this->assertTrue(($c['items']==4), "Terrasa items (should be 4, ".$c['items']." found)");
+            if($c['city_name']=="Terrassa") {
+                $this->assertTrue(($c['items']==4), "Terrassa items (should be 4, ".$c['items']." found)");
             } else if($c['city_name']=="Balsareny") {
                 $this->assertTrue(($c['items']==4), "Balsareny items (should be 4, ".$c['items']." found)");
             } else if($c['city_name']=="Alameda del Valle") {
