@@ -123,6 +123,7 @@ class OCadmin_tools extends OCadminTest {
     {
         
         $this->loginWith();
+        $this->removeLoadedItems(false);
         $this->loadItems();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='tools_location']");
@@ -209,7 +210,7 @@ class OCadmin_tools extends OCadminTest {
         unset($uSettings);
     }
     
-    function removeLoadedItems()
+    function removeLoadedItems($check = true)
     {
             $this->selenium->open( osc_admin_base_url(true) );
             $this->selenium->click("link=Items");
@@ -223,7 +224,9 @@ class OCadmin_tools extends OCadminTest {
             $this->selenium->click("//input[@id='bulk_apply']");
             $this->selenium->waitForPageToLoad("10000");
 
-            $this->assertTrue($this->selenium->isTextPresent("items have been deleted"), "Can't delete item. ERROR");
+            if($check) {
+                $this->assertTrue($this->selenium->isTextPresent("items have been deleted"), "Can't delete item. ERROR");
+            }
     }
     
     public function insertItem($cat, $title, $description, $price, $regionId, $cityId, $cityArea, $aPhotos, $user, $email , $logged = 0)
