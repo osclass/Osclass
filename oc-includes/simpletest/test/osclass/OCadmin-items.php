@@ -337,6 +337,7 @@ class OCadmin_items extends OCadminTest {
             Preference::newInstance()->update(array('s_value' => 0)
                                              ,array('s_name'  => 'moderate_comments'));
         }
+        osc_reset_preferences();
         // insert comment from frontend
 
         $this->selenium->open(osc_item_url_ns( $item['pk_i_id'] ));
@@ -405,6 +406,7 @@ class OCadmin_items extends OCadminTest {
                                          ,array('s_name'  => 'enabled_comments'));
         Preference::newInstance()->update(array('s_value' => $moderate_comments)
                                          ,array('s_name'  => 'moderate_comments'));
+        osc_reset_preferences();
     }
 
     private function insertItemAndMedia()
@@ -517,6 +519,7 @@ class OCadmin_items extends OCadminTest {
             $res = $mItem->deleteByPrimaryKey($item['pk_i_id']);
             $this->assertTrue($res, 'Item deleted ok');
         }
+        osc_reset_preferences();
     }
 
     private function post_item_website(){
@@ -640,6 +643,7 @@ class OCadmin_items extends OCadminTest {
         $this->loginWebsite();
         // force validation
         Preference::newInstance()->replace('moderate_items', '0',"osclass", 'INTEGER') ;
+        osc_reset_preferences();
         // add new item
         $this->post_item_website();
 
@@ -660,6 +664,7 @@ class OCadmin_items extends OCadminTest {
         // loginWebsite
         $this->loginWebsite();
         Preference::newInstance()->replace('moderate_items', '-1',"osclass", 'INTEGER') ;
+        osc_reset_preferences();
         if($sec == 0){
             $this->post_item_website();
             $this->assertTrue($this->selenium->isTextPresent("Your item has been published"),"Cannot insert item. ERROR" );
@@ -683,6 +688,7 @@ class OCadmin_items extends OCadminTest {
         // loginWebsite
         $this->loginWebsite();
         Preference::newInstance()->replace('moderate_items', '-1',"osclass", 'INTEGER') ;
+        osc_reset_preferences();
 
         $this->post_item_website();
         // ir a search
@@ -713,6 +719,7 @@ class OCadmin_items extends OCadminTest {
         // loginWebsite
         $this->loginWebsite();
         Preference::newInstance()->replace('moderate_items', '-1',"osclass", 'INTEGER') ;
+        osc_reset_preferences();
         // check item_post()
         $this->selenium->open( osc_item_post_url() );
         $exist_input_price = $this->selenium->isElementPresent("xpath=//input[@id='price']") ;
@@ -852,11 +859,13 @@ class OCadmin_items extends OCadminTest {
         $this->assertEqual( Preference::newInstance()->findValueByName('moderate_items'), $pref['num_moderate_items'] ) ;
 
         unset($pref);
+        osc_reset_preferences();
 
     }
 
     private function getPreferencesItems()
     {
+        osc_reset_preferences();
         $pref = array();
         $pref['enabled_recaptcha_items']        = Preference::newInstance()->findValueByName('enabled_recaptcha_items') ;
         $pref['enabled_item_validation']        = Preference::newInstance()->findValueByName('enabled_item_validation') ;
