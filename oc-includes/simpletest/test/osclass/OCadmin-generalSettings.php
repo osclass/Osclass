@@ -38,6 +38,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->assertEqual($cron, $this->selenium->getValue("auto_cron"), "Cron tab, check values/ preference values.");
         
         unset($uSettings);
+        osc_reset_preferences();
     }
     
     /*
@@ -123,6 +124,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->assertEqual( $this->selenium->getValue('dimPreview')     , $dimPreview);
         $this->assertEqual( $this->selenium->getValue('dimNormal')      , $dimNormal);
         $this->assertEqual( $this->selenium->getValue('keep_original_image'), $keep_original_image);
+        osc_reset_preferences();
     }
     
     /*
@@ -195,6 +197,7 @@ class OCadmin_generalSettings extends OCadmintest {
         
         unset($pref);
         unset($uSettings);
+        osc_reset_preferences();
     }
     
     /*
@@ -255,6 +258,7 @@ class OCadmin_generalSettings extends OCadmintest {
         
         unset($pref);
         unset($uSettings);
+        osc_reset_preferences();
     }
     
     /*
@@ -352,6 +356,7 @@ class OCadmin_generalSettings extends OCadmintest {
         
         unset($pref);
         unset($uSettings);
+        osc_reset_preferences();
     }
     
     private function getPreferencesGeneralSettings()
@@ -373,6 +378,7 @@ class OCadmin_generalSettings extends OCadmintest {
         if($pref['contact_attachment'] == 1){ $pref['contact_attachment'] = 'on';} else { $pref['contact_attachment'] = 'off'; }
         unset($uSettings);  
         return $pref;
+        osc_reset_preferences();
     }
     
     /*
@@ -481,6 +487,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->assertEqual( $this->selenium->getValue('timeFormat')    , $pref['tf']             , 'GeneralSettings, check.') ;
         $this->assertEqual( $this->selenium->getValue('max_latest_items_at_home') , $pref['max_latest_items_at_home']  , 'GeneralSettings, check.') ;
         $this->assertEqual( $this->selenium->getValue('enabled_attachment'), $pref['contact_attachment'], 'Contact, check.' ) ;
+        osc_reset_preferences();
     }
 
     /*
@@ -520,7 +527,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("xpath=//a[@id='country_delete']");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete Country" ) ;
-
+        osc_reset_preferences();
     }
 
 
@@ -687,6 +694,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Delete Country" ) ;
 
+        osc_reset_preferences();
     }
         
     /*
@@ -753,6 +761,7 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->assertTrue( $this->selenium->isTextPresent("One currency has been deleted") , "Delete currency" ) ;
         $this->assertTrue( !$this->selenium->isTextPresent("Indian_Rupee") , "Delete currency" ) ;
+        osc_reset_preferences();
     }
 
     /*
@@ -810,6 +819,7 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->assertTrue( $this->selenium->isTextPresent("One currency has been deleted") , "Delete currency" ) ;
         $this->assertTrue( !$this->selenium->isTextPresent("Indian_Rupee") , "Delete currency" ) ;
+        osc_reset_preferences();
     }
     
     function testPermalinks()
@@ -955,6 +965,7 @@ class OCadmin_generalSettings extends OCadmintest {
             $this->selenium->waitForPageToLoad("10000");
             $this->assertTrue( $this->selenium->isTextPresent("Permalinks structure updated") , "Disable permalinks" ) ;
         }   
+        osc_reset_preferences();
     }
     
 }
