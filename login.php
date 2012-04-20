@@ -24,7 +24,7 @@
             parent::__construct() ;
             if( !osc_users_enabled() ) {
                 osc_add_flash_error_message( _m('Users not enabled') ) ;
-                $this->redirectTo(osc_base_url(true));
+                $this->redirectTo(osc_base_url());
             }
         }
 

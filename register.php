@@ -25,12 +25,12 @@
 
             if( !osc_users_enabled() ) {
                 osc_add_flash_error_message( _m('Users not enabled') ) ;
-                $this->redirectTo( osc_base_url(true) ) ;
+                $this->redirectTo( osc_base_url() ) ;
             }
 
             if( !osc_user_registration_enabled() ) {
                 osc_add_flash_error_message( _m('User registration is not enabled') ) ;
-                $this->redirectTo( osc_base_url(true) ) ;
+                $this->redirectTo( osc_base_url() ) ;
             }
         }
 
