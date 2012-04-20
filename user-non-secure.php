@@ -34,7 +34,6 @@
             switch( $this->action ) {
                 case 'change_email_confirm':    //change email confirm
                                                 if ( Params::getParam('userId') && Params::getParam('code') ) {
-
                                                     $userManager = new User() ;
                                                     $user = $userManager->findByPrimaryKey( Params::getParam('userId') ) ;
 
@@ -82,22 +81,21 @@
                     $email = Params::getParam('email');
                     $secret = Params::getParam('secret');
                     if($email!='' && $secret!='') {
-                        Alerts::newInstance()->delete(array('s_email' => $email, 'S_secret' => $secret));
+                        Alerts::newInstance()->delete(array('s_email' => $email, 's_secret' => $secret));
                         osc_add_flash_ok_message(_m('Unsubscribed correctly'));
                     } else {
                         osc_add_flash_error_message(_m('Ops! There was a problem trying to unsubscribe you. Please contact the administrator'));
                     }
                     $this->redirectTo(osc_base_url());
-
                 break;
                 case 'pub_profile':
                     $userID = Params::getParam('id') ;
 
                     $user = User::newInstance()->findByPrimaryKey( $userID ) ;
-                    // user doesn't exist
+                    // user doesn't exist, show 404 error
                     if( !$user ) {
-                        osc_add_flash_error_message( _m("There is no user with such id") ) ;
-                        $this->redirectTo(osc_base_url());
+                        $this->do404() ;
+                        return ;
                     }
 
                     View::newInstance()->_exportVariableToView( 'user', $user ) ;
@@ -126,7 +124,7 @@
                             return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                         }
                     }
-                    
+
                     osc_run_hook('hook_email_contact_user', Params::getParam('id'), Params::getParam('yourEmail'), Params::getParam('yourName'), Params::getParam('phoneNumber'), Params::getParam('message'));
 
                     $this->redirectTo( osc_user_public_profile_url( ) );
