@@ -31,6 +31,7 @@
             $this->action = Params::getParam('action') ;
             $this->ajax   = false ;
             $this->time   = list($sm, $ss) = explode(' ', microtime()) ;
+            WebThemes::newInstance() ;
             osc_run_hook( 'init' ) ;
         }
 
