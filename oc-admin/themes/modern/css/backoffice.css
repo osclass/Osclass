@@ -810,7 +810,9 @@ p.text {
 .current-theme:after {
     clear: both ;
 }*/
-
+.current-theme{
+    height:140px;
+}
 .current-theme h3 {
     margin-top: 0px;
 }
