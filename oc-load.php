@@ -179,7 +179,11 @@ define('__OSC_LOADED__', true);
 
 Plugins::init() ;
 
-Rewrite::newInstance()->init();
+// init Rewrite class only iif it's the frontend
+if( !OC_ADMIN ) {
+    Rewrite::newInstance()->init();
+}
+
 // Moved from BaseModel, since we need some session magic on index.php ;)
 Session::newInstance()->session_start() ;
 
