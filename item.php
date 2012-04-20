@@ -23,7 +23,8 @@
         private $user;
         private $userId;
 
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
             $this->itemManager = Item::newInstance();
 
@@ -38,7 +39,8 @@
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             //calling the view...
 
             $locales = OSCLocale::newInstance()->listAllEnabled() ;
@@ -436,55 +438,54 @@
                      $this->redirectTo( osc_item_url() );
                 break;
                 default:
-                    if( Params::getParam('id') == ''){
-                        $this->redirectTo(osc_base_url());
+                    // if there isn't ID, show an error 404
+                    if( Params::getParam('id') == '') {
+                        $this->do404() ;
+                        return ;
                     }
 
                     if( Params::getParam('lang') != '' ) {
-                        Session::newInstance()->_set('userLocale', Params::getParam('lang'));
-                    };
+                        Session::newInstance()->_set('userLocale', Params::getParam('lang')) ;
+                    }
 
                     $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
-                    // if item doesn't exist redirect to base url
-                    if( count($item) == 0 ){
-                        osc_add_flash_error_message( _m('This item doesn\'t exist') );
-                        $this->redirectTo( osc_base_url(true) );
-                    }else{
-                        if ($item['b_active'] != 1) {
-                            if( $this->userId == $item['fk_i_user_id'] ) {
-                                osc_add_flash_error_message( _m('The item hasn\'t been validated. Please validate it in order to show it to the rest of users') );
-                            } else {
-                                osc_add_flash_error_message( _m('This item hasn\'t been validated') );
-                                $this->redirectTo( osc_base_url(true) );
-                            }
-                        } else if ($item['b_enabled'] == 0) {
-                            osc_add_flash_error_message( _m('The item has been suspended') );
+                    // if item doesn't exist show an error 404
+                    if( count($item) == 0 ) {
+                        $this->do404() ;
+                        return ;
+                    }
+
+                    if ($item['b_active'] != 1) {
+                        if( $this->userId == $item['fk_i_user_id'] ) {
+                            osc_add_flash_warning_message( _m("The item hasn't been validated. Please validate it in order to show it to the rest of users") );
+                        } else {
+                            osc_add_flash_warning_message( _m("This item hasn't been validated") );
                             $this->redirectTo( osc_base_url(true) );
                         }
-                        $mStats = new ItemStats();
-                        $mStats->increase('i_num_views', $item['pk_i_id']);
-
-                        foreach($item['locale'] as $k => $v) {
-                            $item['locale'][$k]['s_title'] = osc_apply_filter('item_title',$v['s_title']);
-                            $item['locale'][$k]['s_description'] = nl2br(osc_apply_filter('item_description',$v['s_description']));
-                        }
-
-                        $this->_exportVariableToView('item', $item);//array($item)) ;
-
-                        osc_run_hook('show_item', $item) ;
-
-                        $this->doView('item.php') ;
+                    } else if ($item['b_enabled'] == 0) {
+                        osc_add_flash_warning_message( _m('The item has been suspended') );
+                        $this->redirectTo( osc_base_url(true) );
                     }
-                break;
+                    $mStats = new ItemStats();
+                    $mStats->increase('i_num_views', $item['pk_i_id']);
 
-                case('dashboard'):      //dashboard...
+                    foreach($item['locale'] as $k => $v) {
+                        $item['locale'][$k]['s_title'] = osc_apply_filter('item_title',$v['s_title']);
+                        $item['locale'][$k]['s_description'] = nl2br(osc_apply_filter('item_description',$v['s_description']));
+                    }
 
+                    $this->_exportVariableToView('item', $item);
+
+                    osc_run_hook('show_item', $item) ;
+
+                    $this->doView('item.php') ;
                 break;
             }
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_run_hook("before_html");
             osc_current_web_theme_path($file) ;
             Session::newInstance()->_clearVariables();
@@ -492,4 +493,5 @@
         }
     }
 
+    /* file end: ./item.php */
 ?>
