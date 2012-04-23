@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OSClass 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-23 11:06+0100\n"
+"POT-Creation-Date: 2012-04-23 13:38+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
 "Language-Team: OSClass <info@osclass.org>\n"
@@ -951,14 +951,14 @@ msgstr ""
 #: /var/www/osclass-git/oc-admin/settings.php:244
 #: /var/www/osclass-git/oc-admin/settings.php:288
 #: /var/www/osclass-git/oc-admin/settings.php:309
-#: /var/www/osclass-git/oc-admin/settings.php:1483
-#: /var/www/osclass-git/oc-admin/settings.php:1563
+#: /var/www/osclass-git/oc-admin/settings.php:1480
+#: /var/www/osclass-git/oc-admin/settings.php:1560
 #, php-format
 msgid "%s already was in the database"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:162
-#: /var/www/osclass-git/oc-admin/settings.php:1527
+#: /var/www/osclass-git/oc-admin/settings.php:1524
 #, php-format
 msgid "%s has been added as a new country"
 msgstr ""
@@ -1129,50 +1129,50 @@ msgstr ""
 msgid "Re-generation complete"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1341
+#: /var/www/osclass-git/oc-admin/settings.php:1340
 msgid "Page title field is required"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1344
+#: /var/www/osclass-git/oc-admin/settings.php:1343
 msgid "Contact email field is required"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1347
+#: /var/www/osclass-git/oc-admin/settings.php:1346
 msgid "Number of RSS items has to be numeric only"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1350
+#: /var/www/osclass-git/oc-admin/settings.php:1349
 msgid "Max latest items has to be numeric only"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1353
+#: /var/www/osclass-git/oc-admin/settings.php:1352
 msgid "Number of items on search has to be numeric only"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1388
+#: /var/www/osclass-git/oc-admin/settings.php:1385
 msgid "Number of items in the RSS must be integer"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1396
+#: /var/www/osclass-git/oc-admin/settings.php:1393
 msgid "Number of recent items displayed at home must be integer"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1412
-#: /var/www/osclass-git/oc-admin/settings.php:1414
+#: /var/www/osclass-git/oc-admin/settings.php:1409
+#: /var/www/osclass-git/oc-admin/settings.php:1411
 msgid "General settings have been updated"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1443
+#: /var/www/osclass-git/oc-admin/settings.php:1440
 msgid "Last search settings have been updated"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1476
-#: /var/www/osclass-git/oc-admin/settings.php:1556
+#: /var/www/osclass-git/oc-admin/settings.php:1473
+#: /var/www/osclass-git/oc-admin/settings.php:1553
 #, php-format
 msgid "%s cannot be added"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1593
+#: /var/www/osclass-git/oc-admin/settings.php:1590
 #, php-format
 msgid "%s has been added as a region of %s"
 msgstr ""
