@@ -65,15 +65,14 @@
                                             osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=images');
                                         }
-                                        
+
                                         $preferences = Preference::newInstance()->toArray() ;
 
                                         $wat = new Watermark();
                                         $aResources = ItemResource::newInstance()->getAllResources();
                                         foreach($aResources as $resource) {
-                                            
                                             osc_run_hook('regenerate_image', $resource);
-                                            
+
                                             $path = osc_content_path() . 'uploads/' ;
                                             // comprobar que no haya original
                                             $img_original = $path . $resource['pk_i_id']. "_original*";
@@ -92,7 +91,7 @@
                                                     $image_tmp = $aImages[0] ;
                                                 }
                                             }
-                                            
+
                                             // extension
                                             preg_match('/\.(.*)$/', $image_tmp, $matches) ;
                                             if( isset($matches[1]) ) {
@@ -166,9 +165,9 @@
                                             osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=locations') ;
                                         }
-                                        
+
                                         $workToDo = LocationsTmp::newInstance()->count() ;
-                                        
+
                                         if( $workToDo > 0 ) {
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=locations') ;
                                             break;
@@ -186,11 +185,11 @@
                                                 } unset($aCitiesRegion) ;
                                             } unset($aRegionsCountry);
                                         } unset($aCountry) ;
-                                        
+
                                         $workToDo = LocationsTmp::newInstance()->count() ;
-                                        
+
                                         Preference::newInstance()->replace('location_todo', $workToDo ) ;
-                                        
+
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=locations' ) ;
                 break;
                 case('upgrade'):
