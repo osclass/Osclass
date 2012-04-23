@@ -179,6 +179,7 @@
                             </div>
                         </fieldset>
                     </form>
+                    <div class="clear"></div>
                 </div>
                 <!-- /item form -->
             </div>
