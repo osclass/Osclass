@@ -96,7 +96,7 @@ function get_requirements( ) {
         $array['File <code>config.php</code> is writable'] = array(
             'requirement' => __('File <code>config.php</code> is writable'), 
             'fn' => $config_writable, 
-            'solution' => sprintf(__('Root folder has to be writable, i.e.: <code>chmod a+w %s</code>'), ABS_PATH));
+            'solution' => sprintf(__('File <code>config.php</code> has to be writable, i.e.: <code>chmod a+w %sconfig.php</code>'), ABS_PATH));
     } else {
         if (is_writable(ABS_PATH) ) {
             $root_writable = true;
@@ -104,7 +104,7 @@ function get_requirements( ) {
         $array['Root directory is writable'] = array(
             'requirement' => __('Root directory is writable'), 
             'fn' => $root_writable, 
-            'solution' => sprintf(__('File <code>config.php</code> has to be writable, i.e.: <code>chmod a+w %sconfig.php</code>'), ABS_PATH));
+            'solution' => sprintf(__('Root folder has to be writable, i.e.: <code>chmod a+w %s</code>'), ABS_PATH));
 
         if( file_exists(ABS_PATH . 'config-sample.php') ) {
             $config_sample = true;
