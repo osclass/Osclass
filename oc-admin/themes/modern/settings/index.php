@@ -209,7 +209,7 @@
                                             <?php } ?>
                                         <div>
                                         <input type="radio" name="df" id="df_custom" value="df_custom" <?php echo ( $custom_checked ? 'checked="checked"' : '' ) ; ?> />
-                                        <input type="text" class="small" <?php echo ( $custom_checked ? 'value="' . osc_esc_html( osc_date_format() ) . '"' : '' ) ; ?> onkeyup="javascript:custom_date(this.value);"/><span id="custom_date"></span>
+                                        <input type="text" class="small" <?php echo ( $custom_checked ? 'value="' . osc_esc_html( osc_date_format() ) . '"' : '' ) ; ?> onchange="javascript:document.getElementById('dateFormat').value = this.value ;" onkeyup="javascript:custom_date(this.value);"/><span id="custom_date"></span>
                                         </div>
                                         <div class="help-box"><a href="http://php.net/date" target="_blank"><?php _e('Documentation on date and time formatting') ; ?></a></div>
                                         <input type="hidden" name="dateFormat" id="dateFormat" value="<?php echo osc_date_format() ; ?>" />
@@ -240,7 +240,7 @@
                                         <?php } ?>
                                         <div>
                                         <input type="radio" name="tf" id="tf_custom" value="tf_custom" <?php echo ( $custom_checked ? 'checked="checked"' : '' ) ; ?> />
-                                        <input type="text" class="small" <?php echo ( $custom_checked ? 'value="' . osc_esc_html( osc_time_format() ) . '"' : ''); ?> onkeyup="javascript:custom_time(this.value);"/><span id="custom_time"></span>
+                                        <input type="text" class="small" <?php echo ( $custom_checked ? 'value="' . osc_esc_html( osc_time_format() ) . '"' : ''); ?> onchange="javascript:document.getElementById('timeFormat').value = this.value ;" onkeyup="javascript:custom_time(this.value);"/><span id="custom_time"></span>
                                         </div>
                                         <div class="help-box"><a href="http://php.net/date" target="_blank"><?php _e('Documentation on date and time formatting') ; ?></a></div>
                                         <input type="hidden" name="timeFormat" id="timeFormat" value="<?php echo osc_esc_html( osc_time_format() ) ; ?>" />
