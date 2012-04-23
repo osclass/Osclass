@@ -76,5 +76,21 @@ abstract class OCadminTest extends MyWebTestCase {
         $this->selenium->click('link=Sign out');
         $this->selenium->waitForPageToLoad(10000);
     }
+    
+    function _lastItemId()
+    {
+        // get last id from t_item.
+        $item   = Item::newInstance()->dao->query('select pk_i_id from '.DB_TABLE_PREFIX.'t_item order by pk_i_id DESC limit 0,1');
+        $aItem  = $item->result();
+        return $aItem[0]['pk_i_id'];
+    }
+    
+    function _lastItem()
+    {
+        // get last id from t_item.
+        $item   = Item::newInstance()->dao->query('select * from '.DB_TABLE_PREFIX.'t_item order by pk_i_id DESC limit 0,1');
+        $aItem  = $item->result();
+        return $aItem[0];
+    }
 }
 ?>

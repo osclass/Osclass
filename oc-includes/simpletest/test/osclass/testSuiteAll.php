@@ -124,6 +124,9 @@ class AllTests extends TestSuite {
         if(isset($tests['admin'])) {
             require_once(dirname(__FILE__).'/../../../../oc-load.php');
             
+            if(isset($tests['admin']['categories']) || $tests['admin']=='') {
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-categories.php');    // OK
+            }
             if(isset($tests['admin']['settings']) || $tests['admin']=='') {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-generalSettings.php');    // OK
             }
