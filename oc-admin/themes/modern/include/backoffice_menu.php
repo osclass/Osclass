@@ -28,7 +28,6 @@ $menuActive = array(
     'languages'=>false,
     'settings'=>false,
     'tools'=>false,
-    'universe'=>false,
     'users'=>false,
     'administrators'=>false,
     'stats'=>false,
@@ -63,9 +62,6 @@ if(in_array(Params::getParam('page'),array('settings'))){
 }
 if(in_array(Params::getParam('page'),array('tools'))){
     $menuActive['tools'] = 'current-menu-item';
-}
-if(in_array(Params::getParam('page'),array('universe'))){
-    $menuActive['universe'] = 'current-menu-item';
 }
 if(in_array(Params::getParam('page'),array('users'))){
     $menuActive['users'] = 'current-menu-item';
@@ -172,13 +168,6 @@ if(in_array(Params::getParam('page'),array('plugins')) && Params::getParam('acti
             <li><a id="tools_maintenance" href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=maintenance"><?php _e('Maintenance mode') ; ?></a></li>
         </ul>
     </li>
-    <li id="menu_universe" class="<?php echo $menuActive['universe']; ?>">
-        <h3><a href="#" id="universe"><?php _e('Universe'); ?></a></h3>
-        <ul>
-            <li><a href="<?php echo osc_admin_base_url(true); ?>?page=universe"><?php _e('Universe'); ?></a></li>
-        </ul>
-    </li>
-    
 
     <li id="menu_users" class="<?php echo $menuActive['users']; ?>">
         <h3><a  id="users" href="#"><?php _e('Users') ; ?></a></h3>

@@ -216,13 +216,6 @@
                                    </td>
                                 </tr>
                                 <tr>
-                                    <td><?php _e('External sources'); ?></td>
-                                    <td>
-                                        <input type="checkbox" id="market_external_sources" name="market_external_sources" value="1" <?php if(osc_market_external_sources()==1) {echo "checked";}; ?>/>
-                                        <?php _e('Allow download packages from external sources'); ?>
-                                   </td>
-                                </tr>
-                                <tr>
                                     <td><?php _e('Time format') ; ?></td>
                                     <td>
                                         <?php
