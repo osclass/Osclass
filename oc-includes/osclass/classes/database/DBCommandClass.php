@@ -1376,6 +1376,10 @@
             $ok = true;
             $error_queries = array();
             foreach($queries as $query) {
+                // hack for 2.4
+                if( stripos($query, 'country ADD PRIMARY KEY') ) {
+                   continue ;
+                }
                 $res = $this->query($query);
                 if(!$res) {
                     $ok = false;
