@@ -32,6 +32,10 @@
                 osc_add_flash_error_message( _m('User registration is not enabled') ) ;
                 $this->redirectTo( osc_base_url() ) ;
             }
+
+            if( osc_is_web_user_logged_in() ) {
+                $this->redirectTo( osc_base_url() ) ;
+            }
         }
 
         function doModel()
