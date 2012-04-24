@@ -45,7 +45,7 @@
                 background: #ffffff;
             }
             .alert-custom {
-                 background-color: #FDF5D9;
+                background-color: #FDF5D9;
                 border-bottom: 1px solid #EEDC94;
                 color: #404040;
             }
@@ -72,7 +72,6 @@
                         list_original = $('.sortable').nestedSortable('serialize') ;
                     },
                     start: function(event, ui) { 
-                        console.log('Over ...');
                         $(ui.helper).addClass('footest');
                         $(ui.helper).prepend("<div style='opacity: 1 !important; padding:5px;' class='alert-custom'><?php _e('Note: You need to expand the category if you want to make it a subcategory.'); ?></div>");
                     },
@@ -83,16 +82,16 @@
                         var l = array_list.length ;
                         for(var k = 0; k < l; k++ ) {
                             if( array_list[k].item_id == $(ui.item).find('div').attr('category_id') ) {
-                                if(array_list[k].parent_id=='root') {
-                                    $(ui.item).find('.toggle').show() ;
-                                } else {
-                                    $(ui.item).find('.toggle').hide() ;
+                                if( array_list[k].parent_id == 'root' ) {
+                                    $(ui.item).closest('.toggle').show() ;
                                 }
                                 break ;
                             }
                         }
+                        if( !$(ui.item).parent().hasClass('sortable') ) {
+                            $(ui.item).parent().addClass('subcategory') ;
+                        }
                         if(list_original != list) {
-                            $(".jsMessage").hide() ;
                             $.ajax({
                                 url: "<?php echo osc_admin_base_url(true) . "?page=ajax&action=categories_order&" ; ?>" + list,
                                 context: document.body,
@@ -108,7 +107,7 @@
                                         message += ret.ok ;
                                     }
 
-                                    $(".jsMessage").fadeIn("fast") ;
+                                    $(".jsMessage").show() ;
                                     $(".jsMessage p").html(message) ;
                                 },
                                 error: function(){
@@ -125,7 +124,7 @@
                 
                 $(".toggle").bind("click", function(e) {
                     var list = $(this).parent().parent().parent().parent().find('ul');
-                    var li   = $(this).parent().parent().parent().parent().parent();
+                    var li   = $(this).closest('li');
                     if( $(this).attr('status') == 'collapsed' ) {
                         $(li).removeClass('no-nest');
                         $(list).show();
@@ -165,7 +164,6 @@
                 if( answer ) {
                     var url  = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=delete_category&id=' + id ;
 
-                    $(".jsMessage").hide() ;
                     $.ajax({
                         url: url,
                         context: document.body,
@@ -184,11 +182,11 @@
                                 $('#list_'+id).remove() ;
                             }
 
-                            $(".jsMessage").fadeIn("fast") ;
+                            $(".jsMessage").show() ;
                             $(".jsMessage p").html(message) ;
                         },
                         error: function() {
-                            $(".jsMessage").fadeIn("fast") ;
+                            $(".jsMessage").show() ;
                             $(".jsMessage p").attr('class', '') ;
                             $(".jsMessage p").html("<?php _e('Ajax error, try again.') ; ?>") ;
                         }
@@ -249,15 +247,11 @@
                             $(".jsMessage p").attr('class', 'ok') ;
                         }
 
-                        // hide jsMessage
-                        $(".jsMessage").hide() ;
-                        $(".jsMessage").fadeIn("fast");
+                        $(".jsMessage").show();
                         $(".jsMessage p").html(message);
                     },
                     error: function(){
-                        // hide jsMessage
-                        $(".jsMessage").hide() ;
-                        $(".jsMessage").fadeIn("fast") ;
+                        $(".jsMessage").show() ;
                         $(".jsMessage p").attr('class', '') ;
                         $(".jsMessage p").html("<?php _e('Ajax error, try again.') ; ?>") ;
                     }
@@ -276,14 +270,14 @@
                     <input type="button" value="<?php echo osc_esc_html( __('Add new category') ) ; ?>" onclick="window.location.href='<?php echo osc_admin_base_url(true) ; ?>?page=categories&amp;action=add_post_default'" />
                     <h1 class="categories"><?php _e('Categories') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
-                <div class="jsMessage alert alert-info" style="display: none;">
-                    <a class="close" href="#">×</a>
+                <?php osc_show_flash_message('admin') ; ?>
+                <div class="jsMessage FlashMessage info" style="display: none;">
+                    <a class="close" href="javascript://">×</a>
                     <p></p>
                 </div>
                 <!-- categories form -->
                 <div class="categories">
-                    <div class="alert alert-info">
+                    <div class="FlashMessage info">
                         <p class="info"><?php _e('Drag&drop the categories to reorder them the way you like. Click on edit link to edit the category') ; ?></p>
                     </div>
                     <div class="list-categories">
@@ -314,13 +308,13 @@
                                     <div class="edit content_list_<?php echo $category['pk_i_id'] ; ?>"></div>
                                 </div>
                                 <?php if($has_subcategories) { ?>
-                                    <ul class=" subcategories-<?php echo $category['pk_i_id'] ; ?>" style="display: none;">
+                                    <ul class="subcategory subcategories-<?php echo $category['pk_i_id'] ; ?>" style="display: none;">
                                     <?php foreach($category['categories'] as $category) {?>
                                         <li id="list_<?php echo $category['pk_i_id'] ; ?>" class="category_li <?php echo ( $category['b_enabled'] == 1 ? 'enabled' : 'disabled' ) ; ?>" >
                                             <div class="category_div <?php echo ( $category['b_enabled'] == 1 ? 'enabled' : 'disabled' ) ; ?>" category_id="<?php echo $category['pk_i_id'] ; ?>" >
                                                 <div class="category_row">
                                                     <div class="name-cat" id="<?php echo "quick_edit_" . $category['pk_i_id'] ; ?>">
-                                                        <span class="toggle" status="expanded" style="display:none;">-</span>
+                                                        <span class="toggle" status="expanded">-</span>
                                                         <span class="name"><?php echo $category['s_name'] ; ?></span>
                                                     </div>
                                                     <div class="actions-cat">

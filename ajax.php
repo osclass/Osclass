@@ -24,49 +24,44 @@
 
     class CWebAjax extends BaseModel
     {
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
             $this->ajax = true ;
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             //specific things for this class
             switch ($this->action)
             {
                 case 'bulk_actions':
                 break;
-                
                 case 'regions': //Return regions given a countryId
                     $regions = Region::newInstance()->findByCountry(Params::getParam("countryId"));
                     echo json_encode($regions);
-                    break;
-                
+                break;
                 case 'cities': //Returns cities given a regionId
                     $cities = City::newInstance()->findByRegion(Params::getParam("regionId"));
                     echo json_encode($cities);
-                    break;
-                
+                break;
                 case 'location': // This is the autocomplete AJAX
                     $cities = City::newInstance()->ajax(Params::getParam("term"));
                     echo json_encode($cities);
-                    break;
-                    
+                break;
                 case 'location_countries': // This is the autocomplete AJAX
                     $countries = Country::newInstance()->ajax(Params::getParam("term"));
                     echo json_encode($countries);
-                    break;
-                    
+                break;
                 case 'location_regions': // This is the autocomplete AJAX
                     $regions = Region::newInstance()->ajax(Params::getParam("term"), Params::getParam("country"));
                     echo json_encode($regions);
-                    break;
-                    
+                break;
                 case 'location_cities': // This is the autocomplete AJAX
                     $cities = City::newInstance()->ajax(Params::getParam("term"), Params::getParam("region"));
                     echo json_encode($cities);
-                    break;
-                    
+                break;
                 case 'delete_image': // Delete images via AJAX
                     $id     = Params::getParam('id') ;
                     $item   = Params::getParam('item') ;
@@ -95,7 +90,7 @@
                     // Check if the item exists
                     if(count($aItem) == 0) {
                         $json['success'] = false;
-                        $json['msg'] = _m('The item doesn\'t exist');
+                        $json['msg'] = _m("The item doesn't exist");
                         echo json_encode($json);
                         return false;
                     }
@@ -104,7 +99,7 @@
                         // Check if the item belong to the user
                         if($userId != null && $userId != $aItem['fk_i_user_id']) {
                             $json['success'] = false;
-                            $json['msg'] = _m('The item doesn\'t belong to you');
+                            $json['msg'] = _m("The item doesn't belong to you");
                             echo json_encode($json);
                             return false;
                         }
@@ -112,7 +107,7 @@
                         // Check if the secret passphrase match with the item
                         if($userId == null && $aItem['fk_i_user_id']==null && $secret != $aItem['s_secret']) {
                             $json['success'] = false;
-                            $json['msg'] = _m('The item doesn\'t belong to you');
+                            $json['msg'] = _m("The item doesn't belong to you");
                             echo json_encode($json);
                             return false;
                         }
@@ -122,11 +117,9 @@
                     $result = ItemResource::newInstance()->existResource($id, $code) ;
 
                     if ($result > 0) {
-                        
                         $resource = ItemResource::newInstance()->findByPrimaryKey($id);
-                        
-                        if($resource['fk_i_item_id']==$item) {
 
+                        if($resource['fk_i_item_id']==$item) {
                             // Delete: file, db table entry
                             if(defined(OC_ADMIN)) {
                                 osc_deleteResource($id, true);
@@ -150,21 +143,17 @@
 
                     echo json_encode($json);
                     return true;
-                    break;
-                    
+                break;
                 case 'alerts': // Allow to register to an alert given (not sure it's used on admin)
                     $alert = Params::getParam("alert");
                     $email = Params::getParam("email");
                     $userid = Params::getParam("userid");
-                    
+
                     if($alert!='' && $email!='') {
-
                         if( preg_match("/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$email) ) {
-
                             $secret = osc_genRandomPassword();
-                            
+
                             if( Alerts::newInstance()->createAlert($userid, $email, $alert, $secret) ) {
-                                
                                 if( (int)$userid > 0 ) {
                                     $user = User::newInstance()->findByPrimaryKey($userid);
                                     if($user['b_active']==1 && $user['b_enabled']==1) {
@@ -176,7 +165,6 @@
                                         return false;
                                     }
                                 } else {
-                                    
                                     osc_run_hook('hook_email_alert_validation', $alert, $email, $secret);
                                 }
 
@@ -238,20 +226,21 @@
                 break;
                 default:
                     echo json_encode(array('error' => __('no action defined')));
-                    break;
+                break;
             }
             // clear all keep variables into session
             Session::newInstance()->_dropKeepForm();
             Session::newInstance()->_clearVariables();
-
         }
         
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_run_hook("before_html");
             osc_current_web_theme_path($file) ;
             osc_run_hook("after_html");
         }
     }
 
+    /* file end: ./ajax.php */
 ?>

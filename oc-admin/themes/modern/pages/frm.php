@@ -70,7 +70,7 @@
                 <div class="header_title">
                     <h1 class="pages"><?php echo $title ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- page form -->
                 <div class="pages-form">
                     <form action="<?php echo osc_admin_base_url(true); ?>" method="post">

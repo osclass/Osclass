@@ -19,28 +19,28 @@
 
     class CWebLogin extends BaseModel
     {
-
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
             if( !osc_users_enabled() ) {
                 osc_add_flash_error_message( _m('Users not enabled') ) ;
-                $this->redirectTo(osc_base_url(true));
+                $this->redirectTo(osc_base_url());
             }
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             switch( $this->action ) {
                 case('login_post'):     //post execution for the login
                                         if(!osc_users_enabled()) {
                                             osc_add_flash_error_message(_m('Users are not enabled'));
                                             $this->redirectTo(osc_base_url());
                                         }
-                    
+
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $user = User::newInstance()->findByEmail( Params::getParam('email') ) ;
-                                        
-                                        
+
                                         $url_redirect = osc_get_http_referer();
                                         $page_redirect = '';
                                         if(osc_rewrite_enabled()) {
@@ -67,7 +67,7 @@
                                         }
 
                                         if (!$user) {
-                                            osc_add_flash_error_message(_m('The user doesn\'t exist')) ;
+                                            osc_add_flash_error_message(_m("The user doesn't exist")) ;
                                             $this->redirectTo(osc_user_login_url());
                                         }
 
@@ -80,7 +80,7 @@
                                         $logged = $uActions->bootstrap_login($user['pk_i_id']) ;
                                         
                                         if($logged==0) {
-                                            osc_add_flash_error_message(_m('The user doesn\'t exist')) ;
+                                            osc_add_flash_error_message(_m("The user doesn't exist")) ;
                                         } else if($logged==1) {
                                             osc_add_flash_error_message(_m('The user has not been validated yet'));
                                         } else if($logged==2) {
@@ -146,7 +146,6 @@
                                                      break;
                                         }
                 break ;
-
                 case('forgot'):         //form to recover the password (in this case we have the form in /gui/)
                                         $user = User::newInstance()->findByIdPasswordSecret(Params::getParam('userId'), Params::getParam('code'));
                                         if($user) {
@@ -175,7 +174,7 @@
                                                 osc_add_flash_ok_message( _m('The password has been changed'));
                                                 $this->redirectTo(osc_user_login_url());
                                             } else {
-                                                osc_add_flash_error_message( _m('Error, the password don\'t match')) ;
+                                                osc_add_flash_error_message( _m("Error, the password don't match")) ;
                                                 $this->redirectTo(osc_forgot_user_password_confirm_url(Params::getParam('userId'), Params::getParam('code')));
                                             }
                                         } else {
@@ -183,7 +182,6 @@
                                         }
                                         $this->redirectTo( osc_base_url() ) ;
                 break;
-
                 default:                //login
                                         Session::newInstance()->_setReferer(osc_get_http_referer());
                                         if( osc_logged_user_id() != '') {
@@ -191,15 +189,16 @@
                                         }
                                         $this->doView( 'user-login.php' ) ;
             }
-
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_run_hook("before_html");
             osc_current_web_theme_path($file) ;
             osc_run_hook("after_html");
         }
     }
 
+    /* file end: ./login.php */
 ?>

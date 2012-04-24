@@ -55,7 +55,7 @@
                 } );
 
                 oTable = $('#datatables_list').dataTable({
-                    "sDom": "<'row-action'<'row'<'span6'l><'span6'f>r>>t<'row'<'span6'i><'span6'p>>",
+                    "sDom": "",
                     "sPaginationType": "bootstrap",
                     "bInfo": false,
                     "bFilter": false,
@@ -94,7 +94,7 @@
                 <div class="header_title">
                     <h1 class="currencies"><?php _e('Currencies') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- datatables currencies -->
                 <form class="settings currencies datatables" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                     <input type="hidden" name="page" value="settings" />
@@ -107,7 +107,7 @@
                                     <select id="bulk_actions" class="display">
                                         <option value=""><?php _e('Bulk actions') ; ?></option>
                                         <option value="delete_all"><?php _e('Delete') ; ?></option>
-                                    </select> <input type="button" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>">
+                                    </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>">
                                 </label>
                             </div>
                         </div>

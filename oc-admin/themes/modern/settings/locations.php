@@ -50,7 +50,7 @@
                 <div class="header_title">
                     <h1 class="settings"><?php _e('Locations') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- settings form -->
                 <div id="settings_form" class="locations locations_box">
                     <!-- Country -->

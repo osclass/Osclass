@@ -101,7 +101,6 @@
                         context: document.body,
                         success: function(res){
                             var ret = eval( "(" + res + ")");
-                            //console.log(ret);
                             if(ret.error==0) {
                                 var html = '';
                                 html += '<li id="list_'+ret.field_id+'" class="field_li even">';
@@ -161,8 +160,8 @@
                     <input id="add-button" type="button" value="<?php echo osc_esc_html( __('Add new field') ) ; ?>" />
                     <h1 class="categories"><?php _e('Custom fields') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
-                <div class="jsMessage alert alert-ok" style="display: none;">
+                <?php osc_show_flash_message('admin') ; ?>
+                <div class="jsMessage FlashMessage ok" style="display: none;">
                     <a class="close" href="#">×</a>
                     <p></p>
                 </div>

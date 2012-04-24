@@ -64,7 +64,7 @@
                 <div class="header_title">
                     <h1 class="items"><?php echo $title ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- item form -->
                 <div class="items">
                     <ul id="error_list"></ul>
@@ -179,6 +179,7 @@
                             </div>
                         </fieldset>
                     </form>
+                    <div class="clear"></div>
                 </div>
                 <!-- /item form -->
             </div>

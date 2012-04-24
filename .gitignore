@@ -13,10 +13,14 @@ config.php
 oc-includes/osclass/t/config.php
 
 # oc-content
-oc-content/debug.log
+oc-content/debug*.log
 oc-content/queries.log
 oc-content/explain_queries.log
 oc-content/uploads/*
+
+#themes
+oc-content/themes/*
+!oc-content/themes/modern/
 
 # Others
 .htaccess

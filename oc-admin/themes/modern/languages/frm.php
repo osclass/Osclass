@@ -35,7 +35,7 @@
                 <div class="header_title">
                     <h1 class="languages"><?php _e('Edit language') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- language form -->
                 <div class="languages">
                     <ul id="error_list"></ul>

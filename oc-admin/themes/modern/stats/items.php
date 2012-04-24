@@ -81,7 +81,7 @@
                 <div class="header_title">
                     <h1 class="settings"><?php _e('Items Statistics') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- items statistics -->
                 <div class="statistics">
                 <div class="actions-header">

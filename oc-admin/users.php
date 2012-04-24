@@ -146,7 +146,7 @@
                                         if($iUpdated==0) {
                                             $msg = _m('No user has been selected') ;
                                         } else {
-                                            $msg = sprintf( _n('Activation email sent to one user', 'Activation email sent to %s users', $iUpdated), $iUpdated ) ;
+                                            $msg = sprintf( _mn('Activation email sent to one user', 'Activation email sent to %s users', $iUpdated), $iUpdated ) ;
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin') ;
@@ -168,7 +168,7 @@
                                         if( $iUpdated == 0 ) {
                                             $msg = _m('No user has been activated') ;
                                         } else {
-                                            $msg = sprintf( _n('One user has been activated', '%s users have been activated', $iUpdated), $iUpdated ) ;
+                                            $msg = sprintf( _mn('One user has been activated', '%s users have been activated', $iUpdated), $iUpdated ) ;
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin') ;
@@ -190,7 +190,7 @@
                                         if( $iUpdated == 0 ) {
                                             $msg = _m('No user has been deactivated') ;
                                         } else {
-                                            $msg = sprintf( _n('One user has been deactivated', '%s users have been deactivated', $iUpdated), $iUpdated ); 
+                                            $msg = sprintf( _mn('One user has been deactivated', '%s users have been deactivated', $iUpdated), $iUpdated ); 
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin') ;
@@ -212,7 +212,7 @@
                                         if( $iUpdated == 0 ) {
                                             $msg = _m('No user has been enabled') ;
                                         } else {
-                                            $msg = sprintf( _n('One user has been enabled', '%s users have been enabled', $iUpdated), $iUpdated ) ;
+                                            $msg = sprintf( _mn('One user has been enabled', '%s users have been enabled', $iUpdated), $iUpdated ) ;
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin') ;
@@ -234,7 +234,7 @@
                                         if( $iUpdated == 0 ) {
                                             $msg = _m('No user has been disabled') ;
                                         } else {
-                                            $msg = sprintf( _n('One user has been disabled', '%s users have been disabled', $iUpdated), $iUpdated ) ;
+                                            $msg = sprintf( _mn('One user has been disabled', '%s users have been disabled', $iUpdated), $iUpdated ) ;
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin') ;
@@ -258,7 +258,7 @@
                                         if( $iDeleted == 0 ) {
                                             $msg = _m('No user has been deleted') ;
                                         } else {
-                                            $msg = sprintf( _n('One user has been deleted', '%s users have been deleted', $iDeleted), $iDeleted ) ;
+                                            $msg = sprintf( _mn('One user has been deleted', '%s users have been deleted', $iDeleted), $iDeleted ) ;
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin') ;

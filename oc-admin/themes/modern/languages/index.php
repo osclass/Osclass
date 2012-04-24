@@ -122,7 +122,7 @@
                 <div class="header_title">
                     <h1 class="languages"><?php _e('Languages') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- datatables languages -->
                 <form class="settings languages datatables" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                     <input type="hidden" name="page" value="languages" />

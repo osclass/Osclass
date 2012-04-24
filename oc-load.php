@@ -19,8 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-define('OSCLASS_VERSION', '2.4-dev') ;
+define('OSCLASS_VERSION', '2.4.0') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -182,7 +181,11 @@ define('__OSC_LOADED__', true);
 
 Plugins::init() ;
 
-Rewrite::newInstance()->init();
+// init Rewrite class only iif it's the frontend
+if( !OC_ADMIN ) {
+    Rewrite::newInstance()->init();
+}
+
 // Moved from BaseModel, since we need some session magic on index.php ;)
 Session::newInstance()->session_start() ;
 
@@ -205,4 +208,5 @@ function osc_meta_generator() {
 osc_add_hook("header", "osc_show_maintenance");
 osc_add_hook("header", "osc_meta_generator");
 
+/* file end: ./oc-load.php */
 ?>

@@ -44,8 +44,8 @@ $(document).ready(function() {
         jQuery('#accordion *').css('zoom', '1');
     }
 
-    // close alert messages
-    $(".alert .close").bind("click", function(e) {
+    // close FlashMessage messages
+    $(".FlashMessage .close").bind("click", function(e) {
        $(this).parent().fadeOut('slow') ;
     }) ;
 }) ;

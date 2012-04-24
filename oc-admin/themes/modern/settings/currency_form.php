@@ -77,7 +77,7 @@
                 <div class="header_title">
                     <h1 class="currencies"><?php echo $title ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- currency-form form -->
                 <div class="settings currency-form">
                     <ul id="error_list"></ul>

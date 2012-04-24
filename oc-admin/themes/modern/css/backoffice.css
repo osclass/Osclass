@@ -454,8 +454,8 @@ table.table{
     text-decoration: underline;
 }
 /* /footer */
-/* alert messages */
-.alert {
+/* FlashMessage messages */
+.FlashMessage {
     padding: 6px 35px 6px 14px;
     margin-bottom: 18px;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
@@ -466,58 +466,49 @@ table.table{
     border-radius: 4px;
 }
 
-.alert, .alert-heading {
+.FlashMessage {
     color: #c09853;
 }
 
-.alert .close {
+.FlashMessage .close {
     position: relative;
     top: -2px;
     right: -21px;
     line-height: 18px;
 }
 
-.alert-ok {
+.FlashMessage.ok {
     background-color: #dff0d8;
     border-color: #d6e9c6;
-}
-
-.alert-ok, .alert-ok .alert-heading {
     color: #468847;
 }
 
-.alert-danger, .alert-error {
+.FlashMessage.error {
     background-color: #f2dede;
     border-color: #eed3d7;
-}
-
-.alert-danger, .alert-error, .alert-danger .alert-heading, .alert-error .alert-heading {
     color: #b94a48;
 }
 
-.alert-info {
+.FlashMessage.info {
     background-color: #d9edf7;
     border-color: #bce8f1;
-}
-
-.alert-info, .alert-info .alert-heading {
     color: #3a87ad;
 }
 
-.alert-block {
+.FlashMessage-block {
     padding-top: 14px;
     padding-bottom: 14px;
 }
 
-.alert-block p {
+.FlashMessage-block p {
     margin: 2px 0;
 }
 
-.alert-block > p, .alert-block > ul {
+.FlashMessage-block > p, .FlashMessage-block > ul {
     margin-bottom: 0;
 }
 
-.alert-block p + p {
+.FlashMessage-block p + p {
     margin-top: 5px;
 }
 
@@ -539,7 +530,7 @@ table.table{
     filter: alpha(opacity=40);
     cursor: pointer;
 }
-/* /alert messages */
+/* /FlashMessage messages */
 /* form */
 input, textarea, select {
     padding: 3px;
@@ -777,7 +768,7 @@ input[type="submit"]:focus, input[type="button"]:focus {
     max-height: 300px;
     background-color: #F0F0F0;
 }
-.alert pre {
+.FlashMessage pre {
     margin: 10px 10px 5px 25px;
     overflow: auto;
     font-weight: bold;
@@ -788,7 +779,7 @@ p.text {
     font-size: 14px;
 }
 
-.alert-inline {
+.FlashMessage-inline {
     display: inline-block;
     margin-left: 10px;
     padding: 4px 15px;
@@ -819,7 +810,9 @@ p.text {
 .current-theme:after {
     clear: both ;
 }*/
-
+.current-theme{
+    height:140px;
+}
 .current-theme h3 {
     margin-top: 0px;
 }
@@ -1029,6 +1022,10 @@ div.disabled .category_row {
 */
 .toggle {
     cursor: pointer;
+}
+
+.subcategory .toggle {
+    display: none;
 }
 
 .name-cat {

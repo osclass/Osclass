@@ -48,8 +48,7 @@
                                         $notifyNewCommentUser = (($notifyNewCommentUser != '') ? true : false);
                                         $regUserPostComments  = Params::getParam('reg_user_post_comments');
                                         $regUserPostComments  = (($regUserPostComments != '') ? true : false);
-                                        
-                                        
+
                                         $msg = '';
                                         if(!osc_validate_int(Params::getParam("num_moderate_comments"))) {
                                             $msg .= _m("Number of moderate comments has to be numeric only")."<br/>";
@@ -61,7 +60,6 @@
                                             osc_add_flash_error_message( $msg, 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=comments');
                                         }
-
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledComments)
                                                                                       ,array('s_name' => 'enabled_comments'));
@@ -83,7 +81,7 @@
                                                                                       ,array('s_name' => 'reg_user_post_comments'));
 
                                         if($iUpdated > 0) {
-                                            osc_add_flash_ok_message( _m('Comments\' settings have been updated'), 'admin');
+                                            osc_add_flash_ok_message( _m("Comments' settings have been updated"), 'admin');
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=comments');
                 break;
@@ -164,7 +162,6 @@
                                                                         osc_add_flash_ok_message(sprintf(_m('%s has been added as a new country'), $countryName), 'admin');
                                                                     }                                                
 
-
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
                                             case('edit_country'):   // edit country
@@ -179,7 +176,7 @@
                                             break;
                                             case('delete_country'): // delete country
                                                                     $countryId = Params::getParam('id');
-                                                
+
                                                                     Item::newInstance()->deleteByRegion($countryId);
                                                                     $mRegions = new Region();
                                                                     $mCities = new City();
@@ -258,7 +255,7 @@
                                                                     if($regionId != '') {
                                                                         Item::newInstance()->deleteByRegion($regionId);
                                                                         $aRegion = $mRegion->findByPrimaryKey($regionId);
-                                                                        
+
                                                                         // remove city_stats
                                                                         CityStats::newInstance()->deleteByRegion($regionId) ;
                                                                         $mCities->delete(array('fk_i_region_id' => $regionId));
@@ -412,9 +409,6 @@ HTACCESS;
                                                                                  ,array('s_name' => 'rewrite_search_url'));
                                             }
 
-                                            
-                                            
-                                            
                                             if(!osc_validate_text(Params::getParam('rewrite_search_country'))) {
                                                 $errors += 1;
                                             } else {
@@ -456,11 +450,8 @@ HTACCESS;
                                             } else {
                                                 Preference::newInstance()->update(array('s_value' => Params::getParam('rewrite_search_pattern'))
                                                                                  ,array('s_name' => 'rewrite_search_pattern'));
-                                            }                                            
-                                            
+                                            }
 
-                                            
-                                            
                                             $rewrite_contact = substr(str_replace('//', '/', Params::getParam('rewrite_contact').'/'), 0, -1);
                                             if(!osc_validate_text($rewrite_contact)) {
                                                 $errors += 1;
@@ -636,12 +627,13 @@ HTACCESS;
                                                 Preference::newInstance()->update(array('s_value' => $rewrite_user_change_email_confirm)
                                                                                  ,array('s_name' => 'rewrite_user_change_email_confirm'));
                                             }
-                                            
+
                                             osc_reset_preferences();
-                                            
+
                                             $rewrite = Rewrite::newInstance();
+                                            osc_run_hook("before_rewrite_rules", &$rewrite);
                                             $rewrite->clearRules();
-                                            
+
                                             /*****************************
                                              ********* Add rules *********
                                              *****************************/
@@ -689,7 +681,6 @@ HTACCESS;
                                             $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url.'\?comments-page=([0-9al]*)'))).'$', 'index.php?page=item&id=$'.($param_pos+2).'&lang=$1_$2&comments-page=$'.$comments_pos);
                                             $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url))).'$', 'index.php?page=item&id=$'.$param_pos);
                                             $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'.str_replace('{CATEGORIES}', '(.*)', str_replace('{ITEM_TITLE}', '(.*)', str_replace('{ITEM_ID}', '([0-9]+)', $item_url))).'$', 'index.php?page=item&id=$'.($param_pos+2).'&lang=$1_$2');
-
 
                                             // User rules
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_login').'/?$', 'index.php?page=login');
@@ -746,11 +737,15 @@ HTACCESS;
                                                 $param_pos++;
                                             }
                                             $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.+)', str_replace('{CATEGORY_SLUG}', '([^/]+)', str_replace('{CATEGORY_ID}', '([0-9]+)', $cat_url))).'$', 'index.php?page=search&sCategory=$'.$param_pos);
+                                            
+                                            
+                                            osc_run_hook("after_rewrite_rules", &$rewrite);
+                                            
 
                                             //Write rule to DB
                                             $rewrite->setRules();
 
-                                            $msg_error = '<br/>'._m('No fields could be left empty.')." ".sprintf(_n('One field was not updated', '%s fields were not updated', $errors), $errors);
+                                            $msg_error = '<br/>'._m('No fields could be left empty.')." ".sprintf(_mn('One field was not updated', '%s fields were not updated', $errors), $errors);
                                             switch($status) {
                                                 case 1:
                                                     $msg  = _m("Permalinks structure updated") ;
@@ -784,16 +779,13 @@ HTACCESS;
                                                     $msg  = _m("File <b>.htaccess</b> couldn't be filled with the right content.") ;
                                                     $msg .= " " ;
                                                     $msg .= _m("Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file or experience some problems with the urls, please deactivate <em>friendly urls</em> option.") ;
-                                                    $msg .= "</p><pre>" . htmlentities($htaccess) . '</pre><p>' ;                                            
+                                                    $msg .= "</p><pre>" . htmlentities($htaccess) . '</pre><p>' ;
                                                     if($errors>0) {
                                                         $msg .= $msg_error;
                                                     }
                                                     osc_add_flash_error_message($msg, 'admin') ;
                                                 break;
                                             }
-                                            
-                                            
-                                            
                                         } else {
                                             Preference::newInstance()->update(array('s_value' => '0')
                                                                              ,array('s_name'  => 'rewriteEnabled')) ;
@@ -1236,9 +1228,8 @@ HTACCESS;
                                         $wat = new Watermark();
                                         $aResources = ItemResource::newInstance()->getAllResources();
                                         foreach($aResources as $resource) {
-                                            
                                             osc_run_hook('regenerate_image', $resource);
-                                            
+
                                             $path = osc_content_path() . 'uploads/' ;
                                             // comprobar que no haya original
                                             $img_original = $path . $resource['pk_i_id']. "_original*";
@@ -1257,7 +1248,7 @@ HTACCESS;
                                                     $image_tmp = $aImages[0] ;
                                                 }
                                             }
-                                            
+
                                             // extension
                                             preg_match('/\.(.*)$/', $image_tmp, $matches) ;
                                             if( isset($matches[1]) ) {
@@ -1330,7 +1321,6 @@ HTACCESS;
                                         $numItemsSearch    = Params::getParam('default_results_per_page') ;
                                         $contactAttachment = Params::getParam('enabled_attachment') ;
                                         $bAutoCron         = Params::getParam('auto_cron') ;
-                                        $bMarketSources = Params::getParam('market_external_sources')==1?1:0;
 
                                         // preparing parameters
                                         $sPageTitle        = strip_tags($sPageTitle) ;
@@ -1392,8 +1382,6 @@ HTACCESS;
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'timeFormat')) ;
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimezone)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'timezone'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $bMarketSources)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'marketAllowExternalSources'));
                                         if(is_int($sNumRssItems)) {
                                             $iUpdated += Preference::newInstance()->update(array('s_value'   => $sNumRssItems)
                                                                                           ,array('s_section' => 'osclass', 's_name' => 'num_rss_items')) ;

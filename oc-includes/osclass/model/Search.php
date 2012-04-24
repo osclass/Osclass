@@ -905,7 +905,7 @@
             $this->sql = $this->dao->_getSelect() ;
             // reset dao attributes
             $this->dao->_resetSelect() ;
-            error_log($this->sql);
+            
             return $this->sql;
         }
 
@@ -1304,10 +1304,6 @@
         
         public function setJsonAlert($aData)
         {
-//            echo "<pre>";
-//            print_r($aData);
-//            echo "</pre>";
-
             $this->priceRange($aData['price_min'], $aData['price_max'] );
 
             $this->categories   = $aData['aCategories'];

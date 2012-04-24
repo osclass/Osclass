@@ -46,7 +46,7 @@
                     <input type="button" value="<?php echo osc_esc_html( __('Add new theme') ) ; ?>" onclick="window.location.href='<?php echo osc_admin_base_url(true) ; ?>?page=appearance&amp;action=add'" />
                     <h1 class="themes"><?php _e('Appearance') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- themes list -->
                 <div class="appearance">
                     <h2><?php _e('Current theme') ; ?></h2>
@@ -79,9 +79,6 @@
                             <div class="theme-actions">
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=activate&amp;theme=<?php echo $theme ; ?>"><?php _e('Activate') ; ?></a> &middot;
                                 <a target="_blank" href="<?php echo osc_base_url(true) ; ?>?theme=<?php echo $theme ; ?>"><?php _e('Preview') ; ?></a>
-                                <?php if(osc_check_update(@$info['theme_update_uri'], @$info['version'])) { ?>
-                                <div id="available_theme_update"><a href='<?php echo osc_admin_base_url(true);?>?page=universe&code=<?php echo htmlentities($info['theme_update_uri']); ?>'><?php _e("There's a new version available to update"); ?></a></div>
-                                <?php }; ?>
                             </div>
                         </div>
                         <?php } ?>

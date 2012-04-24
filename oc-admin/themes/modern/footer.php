@@ -40,7 +40,7 @@
             }
             /**/
             if($left[0].offsetHeight > $right.data('height')){
-                $right.animate({'height':$left[0].offsetHeight});
+                $right.animate({'min-height':$left[0].offsetHeight});
             }
         }
 

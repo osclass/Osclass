@@ -19,17 +19,18 @@
 
     class CWebUser extends WebSecBaseModel
     {
-
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
             if( !osc_users_enabled() ) {
                 osc_add_flash_error_message( _m('Users not enabled') ) ;
-                $this->redirectTo(osc_base_url(true));
+                $this->redirectTo(osc_base_url());
             }
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             switch( $this->action ) {
                 case('dashboard'):      //dashboard...
                                         $max_items = (Params::getParam('max_items')!='')?Params::getParam('max_items'):5;
@@ -134,29 +135,29 @@
                                                 $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId') ) ;
 
                                                 if( (Params::getParam('password', false, false) == '') || (Params::getParam('new_password', false, false) == '') || (Params::getParam('new_password2', false, false) == '') ) {
-                                                    osc_add_flash_warning_message( _m('Password cannot be blank')) ;
+                                                    osc_add_flash_warning_message( _m('Password cannot be blank') ) ;
                                                     $this->redirectTo( osc_change_user_password_url() ) ;
                                                 }
 
                                                 if( $user['s_password'] != sha1( Params::getParam('password', false, false) ) ) {
-                                                    osc_add_flash_error_message( _m('Current password doesn\'t match')) ;
+                                                    osc_add_flash_error_message( _m("Current password doesn't match") ) ;
                                                     $this->redirectTo( osc_change_user_password_url() ) ;
                                                 }
 
                                                 if( !Params::getParam('new_password', false, false) ) {
-                                                    osc_add_flash_error_message( _m('Passwords can\'t be empty')) ;
+                                                    osc_add_flash_error_message( _m("Passwords can't be empty") ) ;
                                                     $this->redirectTo( osc_change_user_password_url() ) ;
                                                 }
 
                                                 if( Params::getParam('new_password', false, false) != Params::getParam('new_password2', false, false) ) {
-                                                    osc_add_flash_error_message( _m('Passwords don\'t match'));
+                                                    osc_add_flash_error_message( _m("Passwords don't match") ) ;
                                                     $this->redirectTo( osc_change_user_password_url() ) ;
                                                 }
 
                                                 User::newInstance()->update(array( 's_password' => sha1( Params::getParam ('new_password', false, false) ) )
                                                                            ,array( 'pk_i_id' => Session::newInstance()->_get('userId') ) ) ;
 
-                                                osc_add_flash_ok_message( _m('Password has been changed')) ;
+                                                osc_add_flash_ok_message( _m('Password has been changed') ) ;
                                                 $this->redirectTo( osc_user_profile_url() ) ;
                 break;
                 case 'items':                   // view items user
@@ -173,7 +174,6 @@
                                                 $this->_exportVariableToView('list_page', $page);
 
                                                 $this->doView('user-items.php');
-
                 break;
                 case 'activate_alert':
                     $email  = Params::getParam('email');
@@ -190,7 +190,7 @@
                         osc_add_flash_error_message(_m('Ops! There was a problem trying to activate alert. Please contact the administrator'));
                     }
 
-                    $this->redirectTo( osc_base_url(true) );
+                    $this->redirectTo( osc_base_url() );
                 break;
                 case 'unsub_alert':
                     $email  = Params::getParam('email');
@@ -203,8 +203,6 @@
                     }
                     $this->redirectTo(osc_user_alerts_url());
                 break;
-
-
                 case 'deleteResource':
                     $id   = Params::getParam('id') ;
                     $name = Params::getParam('name') ;
@@ -215,7 +213,6 @@
 
                     if ($resource && $item) {
                         if($resource['fk_i_item_id']==$fkid && $item['fk_i_user_id']==  osc_logged_user_id()) {
-
                             // Delete: file, db table entry
                             osc_deleteResource($id, false);
                             Log::newInstance()->insertLog('user', 'deleteResource', $id, $id, 'user', osc_logged_user_id()) ;
@@ -228,15 +225,15 @@
                     } else {
                         osc_add_flash_error_message(_m("The selected photo couldn't be deleted"));
                     }
-                    
+
                     $this->redirectTo( osc_base_url(true) . "?page=item&action=item_edit&id=" . $fkid );
                 break;
-
             }
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_run_hook("before_html");
             osc_current_web_theme_path($file) ;
             Session::newInstance()->_clearVariables();
@@ -244,4 +241,5 @@
         }
     }
 
+    /* file end: ./user.php */
 ?>

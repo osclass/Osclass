@@ -31,7 +31,7 @@
                 <div class="header_title">
                     <h1 class="items"><?php _e('Category stats') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <div id="category_stats_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
                         <p>
