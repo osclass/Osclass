@@ -12,7 +12,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Logout.
      */
 
-    function testCrontab()
+    function atestCrontab()
     {
         $uSettings = new utilSettings();
         
@@ -46,7 +46,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Update all inputs and check if change has been saved, update old configuration and check again.
      * Logout
      */
-    function testMediatab()
+    function atestMediatab()
     {
         $uSettings = new utilSettings();
         
@@ -133,7 +133,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * update configuration and check and set old configuration again and check.
      * Logout.
      */
-    function testMailServer()
+    function atestMailServer()
     {
         $uSettings = new utilSettings();
         
@@ -206,7 +206,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Set akismet, recaptcha, check modifications
      * Logout
      */
-    function testSpamAndBots()
+    function atestSpamAndBots()
     {
         $uSettings = new utilSettings();
         
@@ -268,7 +268,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Logout
      * 
      */
-    function testComments()
+    function atestComments()
     {
         $uSettings = new utilSettings();
         $pref = array();
@@ -387,7 +387,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * update settings, and check
      * Logout
      */
-    function testGeneralSettings()
+    function atestGeneralSettings()
     {
         $pref = $this->getPreferencesGeneralSettings();
         
@@ -496,7 +496,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Add & edit & delete locations 
      * Logout
      */
-    function testLocationsGEO()
+    function atestLocationsGEO()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -539,7 +539,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * edit country/region/citytest location already exist
      * Logout
      */
-    function testLocationsNEWForceError()
+    function atestLocationsNEWForceError()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -761,6 +761,68 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->assertTrue( $this->selenium->isTextPresent("One currency has been deleted") , "Delete currency" ) ;
         $this->assertTrue( !$this->selenium->isTextPresent("Indian_Rupee") , "Delete currency" ) ;
+        
+        
+        // BULK DELETE
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_currencies']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->click("link=Add");
+
+        $this->selenium->waitForPageToLoad("30000");
+
+        $this->selenium->type("pk_c_code", "");
+        $this->selenium->type("s_name", "");
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue( $this->selenium->isTextPresent("Currency code: this field is required") , "Add currency" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Name: this field is required") , "Add currency" ) ;
+        
+        $this->selenium->type("pk_c_code", "INR");
+        $this->selenium->type("s_name", "Indian Rupee");
+        $this->selenium->type("s_description", "Indian Rupee र");
+
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("Currency added") , "Add currency" ) ;
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_currencies']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->click("link=Add");
+
+        $this->selenium->waitForPageToLoad("30000");
+
+        $this->selenium->type("pk_c_code", "");
+        $this->selenium->type("s_name", "");
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue( $this->selenium->isTextPresent("Currency code: this field is required") , "Add currency" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Name: this field is required") , "Add currency" ) ;
+        
+        $this->selenium->type("pk_c_code", "AUD");
+        $this->selenium->type("s_name", "Australian dolar");
+        $this->selenium->type("s_description", "Australian dolar");
+
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("Currency added") , "Add currency" ) ;
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_currencies']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->click("//table/tbody/tr/td[@value='INR']");
+        $this->selenium->click("//table/tbody/tr/td[@value='AUD']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("One currency has been deleted") , "Delete currency" ) ;
+        $this->assertTrue( !$this->selenium->isTextPresent("Indian_Rupee") , "Delete currency" ) ;
+        
         osc_reset_preferences();
     }
 
@@ -770,7 +832,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Delete 
      * Logout
      */
-    function testAddCurrencyTwice()
+    function atestAddCurrencyTwice()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -822,7 +884,7 @@ class OCadmin_generalSettings extends OCadmintest {
         osc_reset_preferences();
     }
     
-    function testPermalinks()
+    function atestPermalinks()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
