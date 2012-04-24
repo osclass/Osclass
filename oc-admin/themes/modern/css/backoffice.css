@@ -1024,6 +1024,10 @@ div.disabled .category_row {
     cursor: pointer;
 }
 
+.subcategory .toggle {
+    display: none;
+}
+
 .name-cat {
     /*float: left;*/
     padding-right:300px;
