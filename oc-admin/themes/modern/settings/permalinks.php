@@ -322,6 +322,15 @@
                         }
                 });
             });
+            
+            function showhide() {
+                $("#inner_rules").toggle();
+                if($("#show_hide a").html()=='<?php _e('Show rules'); ?>') {
+                    $("#show_hide a").html('<?php _e('Hide rules'); ?>');
+                } else {
+                    $("#show_hide a").html('<?php _e('Show rules'); ?>')
+                }
+            }
 
 
             $(function() {
@@ -358,308 +367,310 @@
                                     <?php _e('Enable friendly urls') ; ?>
                                 </label>
                             </div>
-
+                            
                             <div id="custom_rules" <?php if( !osc_rewrite_enabled() ) { echo 'style="display:none;"'; } ?>>
-                                <h2><?php _e('Rewrite rules') ; ?></h2>
-                                <table class="table-backoffice-form">
-                                <tr>
-                                    <td class="labeled"><label for="rewrite_item_url"><?php _e('Item URL') ; ?></label></td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_item_url" id="rewrite_item_url" value="<?php echo osc_get_preference('rewrite_item_url'); ?>" />
-                                        <div class="help-box"><?php echo sprintf(__('Accepted keywords: %s'), '{ITEM_ID},{ITEM_TITLE},{CATEGORIES}') ; ?></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_page_url"><?php _e('Page URL:'); ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_page_url" id="rewrite_page_url" value="<?php echo osc_get_preference('rewrite_page_url'); ?>" />
-                                        <div class="help-box"><?php echo sprintf(__('Accepted keywords: %s'), '{PAGE_ID}, {PAGE_SLUG}') ; ?></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_cat_url"><?php _e('Category URL:') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_cat_url" id="rewrite_cat_url" value="<?php echo osc_get_preference('rewrite_cat_url'); ?>" />
-                                        <div class="help-box">
-                                            <?php echo sprintf(__('Accepted keywords: %s'), '{CATEGORY_ID},{CATEGORY_NAME},{CATEGORIES}') ; ?>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_search_url"><?php _e('Search URL:'); ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_search_url" id="rewrite_search_url" value="<?php echo osc_get_preference('rewrite_search_url'); ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_search_country"><?php _e('Search keyword country') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_search_country" id="rewrite_search_country" value="<?php echo osc_get_preference('rewrite_search_country'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_search_region"><?php _e('Search keyword region') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_search_region" id="rewrite_search_region" value="<?php echo osc_get_preference('rewrite_search_region'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_search_city"><?php _e('Search keyword city') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_search_city" id="rewrite_search_city" value="<?php echo osc_get_preference('rewrite_search_city'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_search_city_area"><?php _e('Search keyword city area') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_search_city_area" id="rewrite_search_city_area" value="<?php echo osc_get_preference('rewrite_search_city_area'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_search_category"><?php _e('Search keyword category') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_search_category" id="rewrite_search_category" value="<?php echo osc_get_preference('rewrite_search_category'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_search_user"><?php _e('Search keyword user') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_search_user" id="rewrite_search_user" value="<?php echo osc_get_preference('rewrite_search_user'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_search_pattern"><?php _e('Search keyword pattern') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_search_pattern" id="rewrite_search_pattern" value="<?php echo osc_get_preference('rewrite_search_pattern'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_contact"><?php _e('Contact') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_contact" id="rewrite_contact" value="<?php echo osc_get_preference('rewrite_contact'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_feed"><?php _e('Feed') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_feed" id="rewrite_feed" value="<?php echo osc_get_preference('rewrite_feed'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_language"><?php _e('Language') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_language" id="rewrite_language" value="<?php echo osc_get_preference('rewrite_language'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_item_mark"><?php _e('Item mark') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_item_mark" id="rewrite_item_mark" value="<?php echo osc_get_preference('rewrite_item_mark'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_item_send_friend"><?php _e('Item send friend') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_item_send_friend" id="rewrite_item_send_friend" value="<?php echo osc_get_preference('rewrite_item_send_friend'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_item_contact"><?php _e('Item contact') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_item_contact" id="rewrite_item_contact" value="<?php echo osc_get_preference('rewrite_item_contact'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_item_new"><?php _e('Item new') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_item_new" id="rewrite_item_new" value="<?php echo osc_get_preference('rewrite_item_new'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_item_activate"><?php _e('Item activate') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_item_activate" id="rewrite_item_activate" value="<?php echo osc_get_preference('rewrite_item_activate'); ?>"/>    </td>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_item_edit"><?php _e('Item edit') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_item_edit" id="rewrite_item_edit" value="<?php echo osc_get_preference('rewrite_item_edit'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_item_delete"><?php _e('Item delete') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_item_delete" id="rewrite_item_delete" value="<?php echo osc_get_preference('rewrite_item_delete'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_item_resource_delete"><?php _e('Item resource delete') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_item_resource_delete" id="rewrite_item_resource_delete" value="<?php echo osc_get_preference('rewrite_item_resource_delete'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_user_login"><?php _e('User login') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_user_login" id="rewrite_user_login" value="<?php echo osc_get_preference('rewrite_user_login'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_user_dashboard"><?php _e('User dashboard') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_user_dashboard" id="rewrite_user_dashboard" value="<?php echo osc_get_preference('rewrite_user_dashboard'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_user_logout"><?php _e('User logout') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_user_logout" id="rewrite_user_logout" value="<?php echo osc_get_preference('rewrite_user_logout'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_user_register"><?php _e('User register') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_user_register" id="rewrite_user_register" value="<?php echo osc_get_preference('rewrite_user_register'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_user_activate"><?php _e('User activate') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_user_activate" id="rewrite_user_activate" value="<?php echo osc_get_preference('rewrite_user_activate'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_user_activate_alert"><?php _e('User activate alert') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_user_activate_alert" id="rewrite_user_activate_alert" value="<?php echo osc_get_preference('rewrite_user_activate_alert'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_user_profile"><?php _e('User profile') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_user_profile" id="rewrite_user_profile" value="<?php echo osc_get_preference('rewrite_user_profile'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_user_items"><?php _e('User items') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_user_items" id="rewrite_user_items" value="<?php echo osc_get_preference('rewrite_user_items'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_user_alerts"><?php _e('User alerts') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_user_alerts" id="rewrite_user_alerts" value="<?php echo osc_get_preference('rewrite_user_alerts'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_user_recover"><?php _e('User recover') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_user_recover" id="rewrite_user_recover" value="<?php echo osc_get_preference('rewrite_user_recover'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_user_forgot"><?php _e('User forgot') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_user_forgot" id="rewrite_user_forgot" value="<?php echo osc_get_preference('rewrite_user_forgot'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_user_change_password"><?php _e('User change password') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_user_change_password" id="rewrite_user_change_password" value="<?php echo osc_get_preference('rewrite_user_change_password'); ?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_user_change_email"><?php _e('User change email') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_user_change_email" id="rewrite_user_change_email" value="<?php echo osc_get_preference('rewrite_user_change_email'); ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled">
-                                        <label for="rewrite_user_change_email_confirm"><?php _e('User change email confirm') ; ?></label>
-                                    </td>
-                                    <td>
-                                        <input class="xlarge" type="text" name="rewrite_user_change_email_confirm" id="rewrite_user_change_email_confirm" value="<?php echo osc_get_preference('rewrite_user_change_email_confirm'); ?>"/>
-                                    </td>
-                                </tr>
-                                </table>
+                                <div id="show_hide" ><a href="#" onclick="javascript:showhide();"><?php _e('Show rules'); ?></a></div>
+                                <div id="inner_rules" style="display:none;">
+                                    <h2><?php _e('Rewrite rules') ; ?></h2>
+                                    <table class="table-backoffice-form">
+                                    <tr>
+                                        <td class="labeled"><label for="rewrite_item_url"><?php _e('Item URL') ; ?></label></td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_item_url" id="rewrite_item_url" value="<?php echo osc_get_preference('rewrite_item_url'); ?>" />
+                                            <div class="help-box"><?php echo sprintf(__('Accepted keywords: %s'), '{ITEM_ID},{ITEM_TITLE},{CATEGORIES}') ; ?></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_page_url"><?php _e('Page URL:'); ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_page_url" id="rewrite_page_url" value="<?php echo osc_get_preference('rewrite_page_url'); ?>" />
+                                            <div class="help-box"><?php echo sprintf(__('Accepted keywords: %s'), '{PAGE_ID}, {PAGE_SLUG}') ; ?></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_cat_url"><?php _e('Category URL:') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_cat_url" id="rewrite_cat_url" value="<?php echo osc_get_preference('rewrite_cat_url'); ?>" />
+                                            <div class="help-box">
+                                                <?php echo sprintf(__('Accepted keywords: %s'), '{CATEGORY_ID},{CATEGORY_NAME},{CATEGORIES}') ; ?>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_search_url"><?php _e('Search URL:'); ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_search_url" id="rewrite_search_url" value="<?php echo osc_get_preference('rewrite_search_url'); ?>" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_search_country"><?php _e('Search keyword country') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_search_country" id="rewrite_search_country" value="<?php echo osc_get_preference('rewrite_search_country'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_search_region"><?php _e('Search keyword region') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_search_region" id="rewrite_search_region" value="<?php echo osc_get_preference('rewrite_search_region'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_search_city"><?php _e('Search keyword city') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_search_city" id="rewrite_search_city" value="<?php echo osc_get_preference('rewrite_search_city'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_search_city_area"><?php _e('Search keyword city area') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_search_city_area" id="rewrite_search_city_area" value="<?php echo osc_get_preference('rewrite_search_city_area'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_search_category"><?php _e('Search keyword category') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_search_category" id="rewrite_search_category" value="<?php echo osc_get_preference('rewrite_search_category'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_search_user"><?php _e('Search keyword user') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_search_user" id="rewrite_search_user" value="<?php echo osc_get_preference('rewrite_search_user'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_search_pattern"><?php _e('Search keyword pattern') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_search_pattern" id="rewrite_search_pattern" value="<?php echo osc_get_preference('rewrite_search_pattern'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_contact"><?php _e('Contact') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_contact" id="rewrite_contact" value="<?php echo osc_get_preference('rewrite_contact'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_feed"><?php _e('Feed') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_feed" id="rewrite_feed" value="<?php echo osc_get_preference('rewrite_feed'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_language"><?php _e('Language') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_language" id="rewrite_language" value="<?php echo osc_get_preference('rewrite_language'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_item_mark"><?php _e('Item mark') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_item_mark" id="rewrite_item_mark" value="<?php echo osc_get_preference('rewrite_item_mark'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_item_send_friend"><?php _e('Item send friend') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_item_send_friend" id="rewrite_item_send_friend" value="<?php echo osc_get_preference('rewrite_item_send_friend'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_item_contact"><?php _e('Item contact') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_item_contact" id="rewrite_item_contact" value="<?php echo osc_get_preference('rewrite_item_contact'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_item_new"><?php _e('Item new') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_item_new" id="rewrite_item_new" value="<?php echo osc_get_preference('rewrite_item_new'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_item_activate"><?php _e('Item activate') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_item_activate" id="rewrite_item_activate" value="<?php echo osc_get_preference('rewrite_item_activate'); ?>"/>    </td>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_item_edit"><?php _e('Item edit') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_item_edit" id="rewrite_item_edit" value="<?php echo osc_get_preference('rewrite_item_edit'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_item_delete"><?php _e('Item delete') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_item_delete" id="rewrite_item_delete" value="<?php echo osc_get_preference('rewrite_item_delete'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_item_resource_delete"><?php _e('Item resource delete') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_item_resource_delete" id="rewrite_item_resource_delete" value="<?php echo osc_get_preference('rewrite_item_resource_delete'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_user_login"><?php _e('User login') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_user_login" id="rewrite_user_login" value="<?php echo osc_get_preference('rewrite_user_login'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_user_dashboard"><?php _e('User dashboard') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_user_dashboard" id="rewrite_user_dashboard" value="<?php echo osc_get_preference('rewrite_user_dashboard'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_user_logout"><?php _e('User logout') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_user_logout" id="rewrite_user_logout" value="<?php echo osc_get_preference('rewrite_user_logout'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_user_register"><?php _e('User register') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_user_register" id="rewrite_user_register" value="<?php echo osc_get_preference('rewrite_user_register'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_user_activate"><?php _e('User activate') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_user_activate" id="rewrite_user_activate" value="<?php echo osc_get_preference('rewrite_user_activate'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_user_activate_alert"><?php _e('User activate alert') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_user_activate_alert" id="rewrite_user_activate_alert" value="<?php echo osc_get_preference('rewrite_user_activate_alert'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_user_profile"><?php _e('User profile') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_user_profile" id="rewrite_user_profile" value="<?php echo osc_get_preference('rewrite_user_profile'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_user_items"><?php _e('User items') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_user_items" id="rewrite_user_items" value="<?php echo osc_get_preference('rewrite_user_items'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_user_alerts"><?php _e('User alerts') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_user_alerts" id="rewrite_user_alerts" value="<?php echo osc_get_preference('rewrite_user_alerts'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_user_recover"><?php _e('User recover') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_user_recover" id="rewrite_user_recover" value="<?php echo osc_get_preference('rewrite_user_recover'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_user_forgot"><?php _e('User forgot') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_user_forgot" id="rewrite_user_forgot" value="<?php echo osc_get_preference('rewrite_user_forgot'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_user_change_password"><?php _e('User change password') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_user_change_password" id="rewrite_user_change_password" value="<?php echo osc_get_preference('rewrite_user_change_password'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_user_change_email"><?php _e('User change email') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_user_change_email" id="rewrite_user_change_email" value="<?php echo osc_get_preference('rewrite_user_change_email'); ?>" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="labeled">
+                                            <label for="rewrite_user_change_email_confirm"><?php _e('User change email confirm') ; ?></label>
+                                        </td>
+                                        <td>
+                                            <input class="xlarge" type="text" name="rewrite_user_change_email_confirm" id="rewrite_user_change_email_confirm" value="<?php echo osc_get_preference('rewrite_user_change_email_confirm'); ?>"/>
+                                        </td>
+                                    </tr>
+                                    </table>
                                 </div>
-                                <div class="actions actions-permalinks">
-                                    <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
-                                </div>
-                                </fieldset>
-
+                            </div>
+                            <div class="actions actions-permalinks">
+                                <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
+                            </div>
+                            </fieldset>
                     </form>
                     
                     <h2><?php _e('Useful information') ; ?></h2>
