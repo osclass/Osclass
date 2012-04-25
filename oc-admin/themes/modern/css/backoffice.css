@@ -1206,7 +1206,7 @@ span.help-box{
 .ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 3px; bottom: 3px; }
 .ui-draggable .ui-dialog-titlebar { cursor: move; }
 
-.main-page .ui-dialog{
+.sortable_div .ui-dialog{
     width:auto;
     position: relative;
     margin-right:10px;

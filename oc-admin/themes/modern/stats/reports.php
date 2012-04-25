@@ -84,8 +84,8 @@
 
                     <div class="sortable_div">
                         <div class="float50per">
-                        <div class="latest-items ui-widget-content ui-corner-all">
-                            <h3 class="ui-state-default"><?php _e('Total number of reports'); ?></h3>
+                        <div class="latest-items ui-dialog ui-corner-all">
+                            <h3 class="ui-dialog-titlebar"><?php _e('Total number of reports'); ?></h3>
                             <div class="ui-state-body">
                                 <div id="placeholder" style="width:400px;height:300px;margin:0; margin:0 auto; padding-bottom: 45px;">
                                     <?php if( count($reports) == 0 ) {
