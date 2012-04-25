@@ -83,13 +83,17 @@
                     require_once osc_admin_base_path() . 'ajax/items_processing.php';
                     $items_processing = new ItemsProcessingAjax(Params::getParamsAsArray("get"));
                     break;
-                case 'users': // Return items (use external file oc-admin/ajax/item_processing.php)
+                case 'users': // Return users (use external file oc-admin/ajax/users_processing.php)
                     require_once osc_admin_base_path() . 'ajax/users_processing.php';
                     $users_processing = new UsersProcessingAjax(Params::getParamsAsArray("get"));
                     break;
-                case 'media': // Return items (use external file oc-admin/ajax/media_processing.php)
+                case 'media': // Return media (use external file oc-admin/ajax/media_processing.php)
                     require_once osc_admin_base_path() . 'ajax/media_processing.php';
                     $media_processing = new MediaProcessingAjax(Params::getParamsAsArray("get"));
+                    break;
+                case 'comments': // Return comments (use external file oc-admin/ajax/comments_processing.php)
+                    require_once osc_admin_base_path() . 'ajax/comments_processing.php';
+                    $comments_processing = new CommentsProcessingAjax(Params::getParamsAsArray("get"));
                     break;
                 case 'categories_order': // Save the order of the categories
                     $aIds        = Params::getParam('list') ;

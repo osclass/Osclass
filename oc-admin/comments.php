@@ -188,13 +188,7 @@
                                             osc_run_hook( 'delete_comment', Params::getParam('id') ) ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
                 break ;
-                default:                    if( Params::getParam('id') != '' ) {
-                                                $comments = $this->itemCommentManager->getAllComments( Params::getParam('id') ) ;
-                                            } else {
-                                                $comments = $this->itemCommentManager->getAllComments( ) ;
-                                            }
-
-                                            $this->_exportVariableToView('comments', $comments) ;
+                default:
                                             $this->doView('comments/index.php') ;
                 break ;
             }
