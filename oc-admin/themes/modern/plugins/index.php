@@ -62,7 +62,7 @@
             $sInstall = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=install&amp;plugin=' . $pInfo['filename'] . '">' . __('Install') . '</a>' ;
         }
 
-        $row[] = '<input type="hidden" name="installed" value="' . $installed . '" enabled="' . $enabled . '" />' . $pInfo['plugin_name'] . 'div' . $sUpdate . '</div>';
+        $row[] = '<input type="hidden" name="installed" value="' . $installed . '" enabled="' . $enabled . '" />' . $pInfo['plugin_name'] . '<div>' . $sUpdate . '</div>';
         $row[] = $pInfo['description'] ;
         $row[] = $sConfigure ;
         $row[] = $sEnable ;
