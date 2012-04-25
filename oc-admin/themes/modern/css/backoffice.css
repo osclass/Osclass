@@ -455,8 +455,10 @@ table.table{
 }
 /* /footer */
 /* FlashMessage messages */
-.FlashMessage {
+.FlashMessage,
+#error_list{
     padding: 6px 35px 6px 14px;
+    margin:0;
     margin-bottom: 18px;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
     background-color: #fcf8e3;
@@ -466,7 +468,8 @@ table.table{
     border-radius: 4px;
 }
 
-.FlashMessage {
+.FlashMessage,
+#error_list{
     color: #c09853;
 }
 
@@ -483,7 +486,8 @@ table.table{
     color: #468847;
 }
 
-.FlashMessage.error {
+.FlashMessage.error,
+#error_list{
     background-color: #f2dede;
     border-color: #eed3d7;
     color: #b94a48;
@@ -529,6 +533,10 @@ table.table{
     opacity: 0.4;
     filter: alpha(opacity=40);
     cursor: pointer;
+}
+#error_list{
+    list-style:none;
+    display: none;
 }
 /* /FlashMessage messages */
 /* form */
@@ -1154,19 +1162,18 @@ span.help-box{
     padding-top:20px;
 }
 /* JQUERY UI */
+
 .ui-widget-overlay{
     background-color:#000000;
     background:#000000;
     opacity:0.7;
 }
-.ui-widget-content {
-    border: 5px solid #dadada;
-    border-radius: 8px;
+.ui-dialog{
+    border: 5px solid #dadada !important;
+    border-radius: 8px !important;
     padding:5px !important;
 }
-.ui-dialog-titlebar,
-.ui-widget-header,
-h3.ui-state-default{
+.ui-dialog-titlebar{
     padding: .5em 1em .3em; position: relative !important; 
     background:#dadada !important;
 
@@ -1180,7 +1187,7 @@ h3.ui-state-default{
     width:100% !important;
     padding: 8px 10px 0 !important;
 }
-.ui-widget-content{
+.ui-dialog-content{
     padding:10px !important;
 }
 .ui-dialog-title{
@@ -1198,3 +1205,25 @@ h3.ui-state-default{
 .ui-dialog .ui-dialog-buttonpane button { margin: .5em .4em .5em 0; cursor: pointer; }
 .ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 3px; bottom: 3px; }
 .ui-draggable .ui-dialog-titlebar { cursor: move; }
+
+.sortable_div .ui-dialog{
+    width:auto;
+    position: relative;
+    margin-right:10px;
+}
+h3.ui-dialog-titlebar{
+    padding:10px !important;
+    font-weight:normal;
+}
+
+/* Plugin */
+#plugin-hook .row{clear: both; float: left; margin-bottom: 10px; width: 100%;}
+#plugin-hook .row label {float: left; line-height: 24px; margin-right: 10px; width: 190px; }
+#plugin-hook .row input[type="radio"] {
+    border: 1px solid #BBBBBB;
+    padding: 7px 7px 6px;
+    width: 30px;
+}
+#plugin-hook .has-slider{
+    padding-left:180px; 
+}
