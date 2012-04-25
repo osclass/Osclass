@@ -47,8 +47,8 @@
                     <!-- dashboard boxes -->
                     <div class="sortable_div">
                         <div class="float50per">
-                        <div class="latest-items ui-widget-content ui-corner-all">
-                            <h3 class="ui-state-default"><?php _e('Items by category') ; ?></h3>
+                        <div class="latest-items ui-dialog ui-corner-all">
+                            <h3 class="ui-dialog-titlebar"><?php _e('Items by category') ; ?></h3>
                             <div class="ui-state-body">
                                 <?php if( !empty($numItemsPerCategory) ) { ?>
                                 <ul>
@@ -75,8 +75,8 @@
                         </div>
                         <div class="float50per">
 
-                        <div class="dashboard-statistics ui-widget-content ui-corner-all">
-                            <h3 class="ui-state-default"><?php _e('Statistics'); ?></h3>
+                        <div class="dashboard-statistics ui-dialog ui-corner-all">
+                            <h3 class="ui-dialog-titlebar"><?php _e('Statistics'); ?></h3>
                             <div class="ui-state-body">
                                 <ul>
                                     <li><?php printf( __('Number of items: %d'), (int) $numItems ) ; ?></li>
@@ -91,8 +91,8 @@
                         </div>
                         </div>
                         <div class="float50per">
-                        <div class="latest-comments ui-widget-content ui-corner-all">
-                            <h3 class="ui-state-default"><?php _e('Latest comments') ; ?></h3>
+                        <div class="latest-comments ui-dialog ui-corner-all">
+                            <h3 class="ui-dialog-titlebar"><?php _e('Latest comments') ; ?></h3>
                             <div class="ui-state-body">
                                 <?php if (count($comments) > 0) { ?>
                                 <ul>
@@ -109,8 +109,8 @@
                         </div>
                         </div>
                         <div class="float50per">
-                        <div class="latest-news ui-widget-content ui-corner-all">
-                            <h3 class="ui-state-default"><?php _e('Latest news from OSClass') ; ?></h3>
+                        <div class="latest-news ui-dialog ui-corner-all">
+                            <h3 class="ui-dialog-titlebar"><?php _e('Latest news from OSClass') ; ?></h3>
                             <div class="ui-state-body">
                             <?php if( is_array($newsList) ) { ?>
                                 <ul>
