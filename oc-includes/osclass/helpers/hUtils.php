@@ -121,7 +121,10 @@
      * @param string $date
      * @return string
      */
-    function osc_format_date($date) {
+    function osc_format_date($date, $dateformat = null) {
+        if($dateformat==null) {
+            $dateformat = osc_date_format();
+        }
         
         $month = array('', __('January'), __('February'), __('March'), __('April'), __('May'), __('June'), __('July'), __('August'), __('September'), __('October'), __('November'), __('December'));
         $month_short = array('', __('Jan'), __('Feb'), __('Mar'), __('Apr'), __('May'), __('Jun'), __('Jul'), __('Aug'), __('Sep'), __('Oct'), __('Nov'), __('Dec'));
@@ -131,7 +134,6 @@
 
         
         $time = strtotime($date);
-        $dateformat = osc_date_format();
         $dateformat = preg_replace('|(?<!\\\)F|', osc_escape_string($month[date('n', $time)]), $dateformat);
         $dateformat = preg_replace('|(?<!\\\)M|', osc_escape_string($month_short[date('n', $time)]), $dateformat);
         $dateformat = preg_replace('|(?<!\\\)l|', osc_escape_string($day[date('N', $time)]), $dateformat);
