@@ -636,7 +636,7 @@
                     break;
                     
                 /*******************************
-                 ** COMPLETE UNIVERSE PROCESS **
+                 ** COMPLETE MARKET PROCESS **
                  *******************************/
                 case 'market': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
                     $code = Params::getParam('code');
