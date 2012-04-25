@@ -1154,6 +1154,7 @@ span.help-box{
     padding-top:20px;
 }
 /* JQUERY UI */
+/*
 .ui-widget-overlay{
     background-color:#000000;
     background:#000000;
@@ -1185,7 +1186,7 @@ h3.ui-state-default{
 }
 .ui-dialog-title{
     padding-bottom:10px;
-}
+}*/
 
 .ui-dialog { position: absolute; padding: .2em; width: 300px; overflow: hidden; }
 .ui-dialog .ui-dialog-title { float: left; margin: .1em 16px .2em 0; }
@@ -1198,3 +1199,16 @@ h3.ui-state-default{
 .ui-dialog .ui-dialog-buttonpane button { margin: .5em .4em .5em 0; cursor: pointer; }
 .ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 3px; bottom: 3px; }
 .ui-draggable .ui-dialog-titlebar { cursor: move; }
+
+
+/* Plugin */
+#plugin-hook .row{clear: both; float: left; margin-bottom: 10px; width: 100%;}
+#plugin-hook .row label {float: left; line-height: 24px; margin-right: 10px; width: 190px; }
+#plugin-hook .row input[type="radio"] {
+    border: 1px solid #BBBBBB;
+    padding: 7px 7px 6px;
+    width: 30px;
+}
+#plugin-hook .has-slider{
+    padding-left:180px; 
+}
