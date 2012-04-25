@@ -22,6 +22,12 @@ oc-content/uploads/*
 oc-content/themes/*
 !oc-content/themes/modern/
 
+#plugins
+oc-content/plugins/*
+!oc-content/plugins/index.php
+!oc-content/plugins/google_analytics/
+!oc-content/plugins/google_maps/
+
 # Others
 .htaccess
 dist
