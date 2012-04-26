@@ -68,6 +68,28 @@
 
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
                 break;
+                case 'delete':
+                    if( defined('DEMO') ) {
+                        osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                        $this->redirectTo(osc_admin_base_url(true) . '?page=appearance');
+                    }
+                    $theme = Params::getParam('webtheme');
+                    if($theme!='') {
+                        if($theme!=  osc_current_web_theme()) {
+                            if(osc_deleteDir(osc_content_path()."themes/".$theme."/")) {
+                                osc_add_flash_ok_message(_m("Theme removed successfully"), "admin");
+                            } else {
+                                osc_add_flash_error_message(_m("There was a problem removing the theme"), "admin");
+                            }
+                        } else {
+                            osc_add_flash_error_message(_m("Current theme can not be deleted"), "admin");
+                        }
+                    } else {
+                        osc_add_flash_error_message(_m("No theme selected"), "admin");
+                    }
+                    
+                    $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
+                break;
                 case 'widgets':
                     $info = WebThemes::newInstance()->loadThemeInfo(osc_theme());
 
