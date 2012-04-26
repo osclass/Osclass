@@ -117,7 +117,7 @@
                                     <td><?php _e('Other comment settings') ; ?></td>
                                     <td>
                                         <?php printf( __('Break comments into pages with %s comments per page'), '<input type="text" class="micro" name="comments_per_page" value="' . osc_esc_html( osc_comments_per_page() ) . '" />' ) ; ?>
-                                        <div class="help-box"><?php _e('If the value is zero all the comments are showed' ) ; ?></div>
+                                        <div class="help-box"><?php _e('If the value is zero all the comments are shown' ) ; ?></div>
                                     </td>
                                 </tr>
                                 <tr class="separate">
