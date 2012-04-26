@@ -194,13 +194,13 @@ class Frontend_items extends FrontendTest {
         $url = osc_item_activate_url('', $itemId);
         $this->selenium->open($url);
         sleep(1);
-        $this->assertTrue($this->selenium->isTextPresent("This item doesn't exist"), "Items, validate item from other user.");
+        $this->assertTrue($this->selenium->isTextPresent("Page not found"), "Items, validate item from other user.");
         // 2 
         $this->logout();
         $url = osc_item_activate_url('', $itemId);
         $this->selenium->open($url);
         sleep(1);
-        $this->assertTrue($this->selenium->isTextPresent("This item doesn't exist"), "Items, validate item from no user.");
+        $this->assertTrue($this->selenium->isTextPresent("Page not found"), "Items, validate item from no user.");
         // 3 
         $item = Item::newInstance()->findByPrimaryKey($itemId);
         $url = osc_item_activate_url($item['s_secret'], $itemId);
