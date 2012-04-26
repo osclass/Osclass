@@ -53,13 +53,12 @@
                 <?php osc_show_flash_message('admin') ; ?>
                 <!-- add admin form -->
                 <div class="settings general">
-                    <ul id="error_list"></ul>
+                    <ul id="error_list" style="display: none;"></ul>
                     <form name="admin_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
                         <input type="hidden" name="page" value="admins" />
                         <?php AdminForm::primary_input_hidden($admin); ?>
                         <?php AdminForm::js_validation(); ?>
-                        
                         <fieldset>
                             <div class="input-line">
                                 <label><?php _e('Name <em>(required)</em>') ; ?></label>

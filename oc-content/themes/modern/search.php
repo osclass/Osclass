@@ -68,6 +68,7 @@
                         $(this).find('ul.sub>li>input').each(function(){
                             $(this).hide();
                             var id = $(this).attr('id');
+                            id = id+'_';
                             if( $(this).is(':checked') ){
                                 var aux = $('<div class="chbx checked"><span></span></div>').attr('id', id);
                                 $(this).before(aux);
@@ -77,23 +78,18 @@
                             }
                         });
 
+                        var input = $(this).find('input.parent');
+                        $(input).hide();
+                        var id = $(input).attr('id');
+                        id = id+'_';
                         if(totalInputSub == totalInputSubChecked) {
-                            var input = $(this).find('input.parent');
-                            $(input).hide();
-                            var id = $(input).attr('id');
                             var aux = $('<div class="chbx checked"><span></span></div>').attr('id', id);
                             $(input).before(aux);
                         }else if(totalInputSubChecked == 0) {
                             // no input checked
-                            var input = $(this).find('input.parent');
-                            $(input).hide();
-                            var id = $(input).attr('id');
                             var aux = $('<div class="chbx"><span></span></div>').attr('id', id);
                             $(input).before(aux);
                         }else if(totalInputSubChecked < totalInputSub) {
-                            var input = $(this).find('input.parent');
-                            $(input).hide();
-                            var id = $(input).attr('id');
                             var aux = $('<div class="chbx semi-checked"><span></span></div>').attr('id', id);
                             $(input).before();
                         }
@@ -111,48 +107,69 @@
                         }
                     });
                     
+                    $('li input:checkbox').change( function(){
+                        var id = $(this).attr('id');
+                        $(this).click();
+                        $('#'+id+'_').click();
+                    });
+                    
                     $('div.chbx').click( function() {
-                        var isChecked = $(this).hasClass('checked');
+                        
+                        var isChecked       = $(this).hasClass('checked');
+                        var isSemiChecked   = $(this).hasClass('semi-checked');
                         
                         if(isChecked) {
                             $(this).removeClass('checked');
+                            $(this).next('input').attr('checked', false);
+                        } else if(isSemiChecked) {
+                            $(this).removeClass('semi-checked');
                             $(this).next('input').attr('checked', false);
                         } else {
                             $(this).addClass('checked');
                             $(this).next('input').attr('checked', true);
                         }
-                        // parent category
+                        
+                        // there are subcategories ?
                         if($(this).parent().find('ul.sub').size()>0) {
                             if(isChecked){
                                 $(this).parent().find('ul.sub>li>div.chbx').removeClass('checked');
                                 $(this).parent().find('ul.sub>li>input').attr('checked', false);
+                            } else if(isSemiChecked){
+                                // if semi-checked -> check-all
+                                $(this).parent().find('ul.sub>li>div.chbx').removeClass('checked');
+                                $(this).parent().find('ul.sub>li>input').attr('checked', false);
+                                $(this).removeClass('semi-checked');
                             } else {
                                 $(this).parent().find('ul.sub>li>div.chbx').addClass('checked');
                                 $(this).parent().find('ul.sub>li>input').attr('checked', true);
                             }
                         } else {
-                            // is subcategory checkbox
-                            var parentLi = $(this).parent().parent().parent();
+                            // is subcategory checkbox or is category parent without subcategories
+                            var parentLi = $(this).closest('li.parent');
                             
-                            var totalInputSub           = $(parentLi).find('ul.sub>li>input').size();
-                            var totalInputSubChecked    = $(parentLi).find('ul.sub>li>input:checked').size();
-                                                        
-                            var input    = $(parentLi).find('input.parent');
-                            var divInput = $(parentLi).find('div.chbx').first();
-                            
-                            $(input).attr('checked', false);
-                            $(divInput).removeClass('checked');
-                            $(divInput).removeClass('semi-checked');
-                            $(divInput).addClass('fuck');
-                            
-                            if(totalInputSub == totalInputSubChecked) {    
-                                $(divInput).addClass('checked');
-                                $(input).attr('checked', true);
-                            }else if(totalInputSubChecked == 0) {
-                                // no input checked;
-                            }else if(totalInputSubChecked < totalInputSub) {
-                                $(divInput).addClass('semi-checked');
-                            }   
+                            // subcategory
+                            if($(parentLi).find('ul.sub').size() > 0) {
+                                var totalInputSub           = $(parentLi).find('ul.sub>li>input').size();
+                                var totalInputSubChecked    = $(parentLi).find('ul.sub>li>input:checked').size();
+
+                                var input    = $(parentLi).find('input.parent');
+                                var divInput = $(parentLi).find('div.chbx').first();
+
+                                $(input).attr('checked', false);
+                                $(divInput).removeClass('checked');
+                                $(divInput).removeClass('semi-checked');
+
+                                if(totalInputSub == totalInputSubChecked) {    
+                                    $(divInput).addClass('checked');
+                                    $(input).attr('checked', true);
+                                }else if(totalInputSubChecked == 0) {
+                                    // no input checked;
+                                }else if(totalInputSubChecked < totalInputSub) {
+                                    $(divInput).addClass('semi-checked');
+                                }   
+                            } else {
+                                // parent category 
+                            }
                         }
                     });
                 });

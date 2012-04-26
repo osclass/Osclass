@@ -48,14 +48,11 @@
                         }
                     },
                     wrapper: "li",
-                        errorLabelContainer: "#error_list",
-                        invalidHandler: function(form, validator) {
-                            $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
-                        }
+                    errorLabelContainer: "#error_list",
+                    invalidHandler: function(form, validator) {
+                        $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+                    }
                 });
-
-
-
 
                 if( !$('input[name="moderate_comments"]').is(':checked') ) {
                     $('.comments_approved').css('display', 'none') ;
@@ -82,7 +79,7 @@
                 <?php osc_show_flash_message('admin') ; ?>
                 <!-- settings form -->
                 <div class="settings comments">
-                    <ul id="error_list"></ul>
+                    <ul id="error_list" style="display: none;"></ul>
                     <form name="comments_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="settings" />
                         <input type="hidden" name="action" value="comments_post" />

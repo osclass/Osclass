@@ -150,7 +150,7 @@
                 case 'item_edit':   // edit item
                                     $secret = Params::getParam('secret');
                                     $id     = Params::getParam('id');
-                                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
+                                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", addslashes($id), addslashes($secret), addslashes($this->userId));
                                     if (count($item) == 1) {
                                         $item     = Item::newInstance()->findByPrimaryKey($id);
 
@@ -178,7 +178,7 @@
                     // recoger el secret y el
                     $secret = Params::getParam('secret');
                     $id     = Params::getParam('id');
-                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
+                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", addslashes($id), addslashes($secret), addslashes($this->userId)) ;
 
                     if (count($item) == 1) {
                         $this->_exportVariableToView('item', $item[0]) ;
@@ -223,20 +223,27 @@
                 case 'activate':
                     $secret = Params::getParam('secret');
                     $id     = Params::getParam('id');
-                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s') OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
+                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s') OR (i.fk_i_user_id = '%d'))", addslashes($id), addslashes($secret), addslashes($this->userId)) ;
+
+                    // item doesn't exist
+                    if( count($item) == 0 ) {
+                        $this->do404() ;
+                        return ;
+                    }
+
                     View::newInstance()->_exportVariableToView('item', $item[0]);
-                    if ($item[0]['b_active']==0) {
+                    if( $item[0]['b_active'] == 0 ) {
                         // ACTIVETE ITEM
                         $mItems = new ItemActions(false) ;
                         $success = $mItems->activate( $item[0]['pk_i_id'], $item[0]['s_secret'] );
 
-                        if( $success ){
+                        if( $success ) {
                             osc_add_flash_ok_message( _m('The item has been validated') ) ;
                         }else{
                             osc_add_flash_error_message( _m("The item can't be validated") ) ;
                         }
-                    }else{
-                        osc_add_flash_error_message( _m('The item has already been validated') );
+                    } else {
+                        osc_add_flash_warning_message( _m('The item has already been validated') ) ;
                     }
 
                     $this->redirectTo( osc_item_url( ) );
@@ -244,7 +251,7 @@
                 case 'item_delete':
                     $secret = Params::getParam('secret');
                     $id     = Params::getParam('id');
-                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s') OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
+                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s') OR (i.fk_i_user_id = '%d'))", addslashes($id), addslashes($secret), addslashes($this->userId)) ;
                     if (count($item) == 1) {
                         $mItems = new ItemActions(false);
                         $success = $mItems->delete($item[0]['s_secret'], $item[0]['pk_i_id']);
@@ -378,7 +385,7 @@
                         case 2:  $msg = _m('Your comment has been approved') ;
                                  osc_add_flash_ok_message($msg) ;
                         break ;
-                        case 3:  $msg = _m('Please fill the required fields (email)') ;
+                        case 3:  $msg = _m('Please fill the required field (email)') ;
                                  osc_add_flash_warning_message($msg) ;
                         break ;
                         case 4:  $msg = _m('Please type a comment') ;
