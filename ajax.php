@@ -48,6 +48,9 @@
                 break;
                 case 'location': // This is the autocomplete AJAX
                     $cities = City::newInstance()->ajax(Params::getParam("term"));
+                    foreach($cities as $k => $city) {
+                        $cities[$k]['label'] = $city['label']." (".$city['region'].")";
+                    }
                     echo json_encode($cities);
                 break;
                 case 'location_countries': // This is the autocomplete AJAX
