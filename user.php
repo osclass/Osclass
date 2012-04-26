@@ -81,14 +81,15 @@
                                         foreach($aAlerts as $k => $a) {
                                             $json               = base64_decode($a['s_search']) ;
                                             $array_conditions   = (array)json_decode($json);
-
-                                            $search = Search::newInstance();
+                                            
+//                                            $search = Search::newInstance();
+                                            $search = new Search();
                                             $search->setJsonAlert($array_conditions);
                                             $search->limit(0, 3) ;
                                             
                                             $aAlerts[$k]['items'] = $search->doSearch() ;
                                         }
-
+                                            
                                         $this->_exportVariableToView('alerts', $aAlerts) ;
                                         View::newInstance()->_reset('alerts') ;
                                         $this->_exportVariableToView('user', $user) ;
