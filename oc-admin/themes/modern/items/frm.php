@@ -67,7 +67,7 @@
                 <?php osc_show_flash_message('admin') ; ?>
                 <!-- item form -->
                 <div class="items">
-                    <ul id="error_list"></ul>
+                    <ul id="error_list" style="display: none;"></ul>
                     <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="page" value="items" />
                         <?php if( $new_item ) { ?>

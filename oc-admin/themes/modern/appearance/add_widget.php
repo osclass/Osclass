@@ -94,7 +94,7 @@
                 <?php osc_show_flash_message('admin') ; ?>
                 <!-- add widgets form -->
                 <div class="widgets">
-                    <ul id="error_list"></ul>
+                    <ul id="error_list" style="display: none;"></ul>
                     <form name="widget_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="action" value="<?php echo ( $edit ? 'edit_widget_post' : 'add_widget_post' ) ; ?>" />
                         <input type="hidden" name="page" value="appearance" />

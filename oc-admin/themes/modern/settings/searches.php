@@ -41,10 +41,10 @@
                         }
                     },
                     wrapper: "li",
-                        errorLabelContainer: "#error_list",
-                        invalidHandler: function(form, validator) {
-                            $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
-                        }
+                    errorLabelContainer: "#error_list",
+                    invalidHandler: function(form, validator) {
+                        $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+                    }
                 });
             }) ;
         </script>
@@ -59,7 +59,7 @@
                 <?php osc_show_flash_message('admin') ; ?>
                 <!-- latest searches form -->
                 <div class="settings latest-searches">
-                    <ul id="error_list"></ul>
+                    <ul id="error_list" style="display: none;"></ul>
                     <form name="searches_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="settings" />
                         <input type="hidden" name="action" value="latestsearches_post" />

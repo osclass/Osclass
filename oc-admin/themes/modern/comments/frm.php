@@ -18,7 +18,6 @@
 
     $comment = __get('comment') ;
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
@@ -45,17 +44,16 @@
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
             <div id="right_column" class="right">
                 <div class="header_title">
-                    <h1 class="comments"><?php _e($title); ?></h1>
+                    <h1 class="comments"><?php echo $title ; ?></h1>
                 </div>                    
                 <?php osc_show_flash_message('admin') ; ?>
                 <!-- add new page form -->
                 <div id="settings_form">
-                    <ul id="error_list"></ul>
+                    <ul id="error_list" style="display: none;"></ul>
                     <form name="comment_form" id="comment_form" action="<?php echo osc_admin_base_url(true); ?>" method="post" onSubmit="return checkForm()">
                         <input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
                         <input type="hidden" name="page" value="comments" />
                         <?php CommentForm::primary_input_hidden($comment); ?>
-
                         <div class="FormElement">
                             <div class="FormElementName">
                                 <?php _e('Edit a comment on item:'); ?>

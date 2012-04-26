@@ -99,6 +99,21 @@ body {
 	font-size: 14px;
     background-color:#f2f2f2;
 }
+
+#error_list {
+    background-color: #f2dede;
+    color: #b94a48;
+    list-style: none;
+    padding: 6px 35px 6px 14px;
+    margin: 0px;
+    margin-bottom: 18px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    border: 1px solid #eed3d7;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
 /* header */
 #header {
     background-color: #e1e1e1;
