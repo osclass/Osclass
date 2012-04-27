@@ -54,7 +54,7 @@
             <!-- right container -->
             <div class="right">
                 <div class="header_title">
-                    <h1 class="settings"><?php _e('Last searches Settings') ; ?></h1>
+                    <h1 class="settings"><?php _e('Latest searches Settings') ; ?></h1>
                 </div>
                 <?php osc_show_flash_message('admin') ; ?>
                 <!-- latest searches form -->
@@ -69,7 +69,7 @@
                                     <td class="labeled"><?php _e('Latest searches') ; ?></td>
                                     <td>
                                         <input type="checkbox" <?php echo ( osc_save_latest_searches() ) ? 'checked="true"' : '' ; ?> name="save_latest_searches" />
-                                        <?php _e('Save the last user searches') ; ?>
+                                        <?php _e('Save the latest user searches') ; ?>
                                         <div class="help-box"><?php _e('It may be useful to know what queries users do.') ?></div>
                                     </td>
                                 </tr>
