@@ -8,7 +8,7 @@ require_once(dirname(__FILE__).'/../../web_tester.php');
 define( 'ABS_PATH', dirname( dirname( dirname( dirname( dirname(__FILE__) ) ) ) ) . '/' ) ;
 require_once dirname( dirname( dirname( dirname(__FILE__) ) ) )  . '/osclass/helpers/hErrors.php';
 
-class InstallerTest extends WebTestCase {
+class InstallerTest extends MyWebTestCase {
 
     protected $selenium;
     protected $can_continue;
