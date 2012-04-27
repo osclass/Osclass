@@ -70,8 +70,8 @@
                             digits: "<?php _e("RSS shows: this field has to be numeric only"); ?>."
                         },
                         max_latest_items_at_home: {
-                            required: "<?php _e("The latest items shows: this field is required"); ?>.",
-                            digits: "<?php _e("The latest items shows: this field has to be numeric only"); ?>."
+                            required: "<?php _e("The latest items show: this field is required"); ?>.",
+                            digits: "<?php _e("The latest items show: this field has to be numeric only"); ?>."
                         },
                         default_results_per_page: {
                             required: "<?php _e("The search page shows: this field is required"); ?>.",
@@ -247,7 +247,7 @@
                                    </td>
                                 </tr>
                                 <tr>
-                                    <td><?php _e('The latest items shows') ; ?></td>
+                                    <td><?php _e('The latest items show') ; ?></td>
                                     <td>
                                         <input type="text" class="mini" name="max_latest_items_at_home" value="<?php echo osc_esc_html(osc_max_latest_items_at_home()) ; ?>" />
                                         <?php _e('items at most') ; ?>
@@ -267,7 +267,7 @@
                                     <td class="labeled"><?php _e('Attachments') ; ?></td>
                                     <td>
                                         <input type="checkbox" <?php echo ( osc_contact_attachment() ? 'checked="true"' : '' ) ; ?> name="enabled_attachment" value="1" />
-                                        <?php _e('Allow people to attach a file in the contact form') ; ?></td>
+                                        <?php _e('Allow people to attach a file to the contact form') ; ?></td>
                                 </tr>
                                 <tr class="separate">
                                     <td colspan="2"><h2><?php _e('Contact Settings') ; ?></h2></td>

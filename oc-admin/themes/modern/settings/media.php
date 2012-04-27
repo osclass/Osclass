@@ -175,7 +175,7 @@
                                     <td>
                                         <input type="checkbox" name="keep_original_image" value="1" <?php echo ( osc_keep_original_image() ? 'checked' : '' ) ; ?>/>
                                         <?php _e('Keep original image, unaltered after uploading.') ; ?>
-                                        <span class="help-box"><?php _e('It might ocuppy more space than usual.') ; ?></span>
+                                        <span class="help-box"><?php _e('It might occupy more space than usual.') ; ?></span>
                                     </td>
                                 </tr>
                                 <tr class="separate">
@@ -208,7 +208,7 @@
                                             <p><?php _e('ImageMagick library is not loaded') ; ?></p>
                                         </div>
                                         <?php } ?>
-                                        <div class="help-box"><?php _e("It's faster and consume less resources than GD library.") ; ?></div>
+                                        <div class="help-box"><?php _e("It's faster and consumes less resources than GD library.") ; ?></div>
                                     </td>
                                 </tr>
                                 <tr class="separate">
