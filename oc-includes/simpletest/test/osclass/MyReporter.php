@@ -21,7 +21,7 @@ class MyReporter extends SimpleReporter {
         $this->character_set = $character_set;
 //        $this->fails = "";
         $this->fails  = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">";
-        $this->fails .= "<html>\n<head>\n<title>$test_name</title><style type=\"text/css\"> ".$this->getCss() . "\n</style>\n</head><body>\n";
+        $this->fails .= "<html>\n<head>\n<title></title><style type=\"text/css\"> ".$this->getCss() . "\n</style>\n</head><body>\n";
     }
 
     /*
