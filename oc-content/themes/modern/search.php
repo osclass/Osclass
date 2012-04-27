@@ -107,7 +107,7 @@
                         }
                     });
                     
-                    $('li input:checkbox').change( function(){
+                    $("li input[name='sCategory[]']").change( function(){
                         var id = $(this).attr('id');
                         $(this).click();
                         $('#'+id+'_').click();
