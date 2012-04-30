@@ -169,7 +169,7 @@
             $themes = array();
             $dir    = opendir( $this->path );
             while ($file = readdir($dir)) {
-                if (preg_match('/^[a-z0-9_]+$/i', $file)) {
+                if (preg_match('/^[a-zA-Z0-9_]+$/', $file)) {
                     $themes[] = $file;
                 }
             }
@@ -188,14 +188,71 @@
             if( !file_exists($path) ) {
                 return false;
             }
-            require_once $path;
 
+            // NEW CODE FOR THEME INFO
+            $s_info = file_get_contents($path);
+            $info   = array();
+            if( preg_match('|Theme Name:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
+                $info['name'] = trim($match[1]);
+            } else {
+                $info['name'] = "";
+            }
+
+            if( preg_match('|Theme URI:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
+                $info['theme_uri'] = trim($match[1]);
+            } else {
+                $info['theme_uri'] = "";
+            }
+
+            if( preg_match('|Theme update URI:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
+                $info['theme_update_uri'] = trim($match[1]);
+            } else {
+                $info['theme_update_uri'] = "";
+            }
+
+            if( preg_match('|Description:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
+                $info['description'] = trim($match[1]);
+            } else {
+                $info['description'] = "";
+            }
+
+            if( preg_match('|Version:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
+                $info['version'] = trim($match[1]);
+            } else {
+                $info['version'] = "";
+            }
+
+            if( preg_match('|Author:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
+                $info['author_name'] = trim($match[1]);
+            } else {
+                $info['author_name'] = "";
+            }
+
+            if( preg_match('|Author URI:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
+                $info['author_url'] = trim($match[1]);
+            } else {
+                $info['author_url'] = "";
+            }
+
+            if( preg_match('|Widgets:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
+                $info['locations'] = explode(",", str_replace(" ", "", $match[1]));
+            } else {
+                $info['locations'] = array();
+            }
+            $info['filename'] = $path;
+            $info['int_name'] = $theme;
+
+            if($info['name']!='') {
+                return $info;
+            }
+            
+            // OLD CODE INFO
+            require_once $path;
             $fxName = $theme . '_theme_info';
             if (!function_exists($fxName)) {
                 return false;
             }
             $result = call_user_func($fxName);
-
             $result['int_name'] = $theme;
 
             return $result;
