@@ -407,7 +407,7 @@ class OCadmin_generalSettings extends OCadmintest {
         
         $this->assertTrue( $this->selenium->isTextPresent("Page title: this field is required") , 'JS Validation');
         $this->assertTrue( $this->selenium->isTextPresent("RSS shows: this field is required") , 'JS Validation');
-        $this->assertTrue( $this->selenium->isTextPresent("The latest items shows: this field is required") , 'JS Validation');
+        $this->assertTrue( $this->selenium->isTextPresent("The latest items show: this field is required") , 'JS Validation');
         $this->assertTrue( $this->selenium->isTextPresent("The search page shows: this field is required") , 'JS Validation');
         $this->assertTrue( $this->selenium->isTextPresent("Email: this field is required") , 'JS Validation');
 
@@ -421,7 +421,7 @@ class OCadmin_generalSettings extends OCadmintest {
         sleep(4);
         
         $this->assertTrue( $this->selenium->isTextPresent("RSS shows: this field has to be numeric only") , 'JS Validation');
-        $this->assertTrue( $this->selenium->isTextPresent("The latest items shows: this field has to be numeric only") , 'JS Validation');
+        $this->assertTrue( $this->selenium->isTextPresent("The latest items show: this field has to be numeric only") , 'JS Validation');
         $this->assertTrue( $this->selenium->isTextPresent("The search page shows: this field has to be numeric only") , 'JS Validation');
         $this->assertTrue( $this->selenium->isTextPresent("Invalid email address") , 'JS Validation');
         
