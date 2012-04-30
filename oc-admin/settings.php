@@ -631,7 +631,7 @@ HTACCESS;
                                             osc_reset_preferences();
 
                                             $rewrite = Rewrite::newInstance();
-                                            osc_run_hook("before_rewrite_rules", &$rewrite);
+                                            osc_run_hook("before_rewrite_rules", array(&$rewrite));
                                             $rewrite->clearRules();
 
                                             /*****************************
@@ -737,10 +737,8 @@ HTACCESS;
                                                 $param_pos++;
                                             }
                                             $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.+)', str_replace('{CATEGORY_SLUG}', '([^/]+)', str_replace('{CATEGORY_ID}', '([0-9]+)', $cat_url))).'$', 'index.php?page=search&sCategory=$'.$param_pos);
-                                            
-                                            
-                                            osc_run_hook("after_rewrite_rules", &$rewrite);
-                                            
+
+                                            osc_run_hook("after_rewrite_rules", array(&$rewrite));
 
                                             //Write rule to DB
                                             $rewrite->setRules();
