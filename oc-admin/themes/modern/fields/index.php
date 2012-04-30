@@ -17,7 +17,6 @@
      */
 
     $fields     = __get('fields') ;
-    $last       = end($fields) ; $last_id = $last['pk_i_id'] ;
     $categories = __get('categories') ;
     $selected   = __get('default_selected') ;
 ?>
@@ -110,7 +109,7 @@
                                         html += '</div>';
                                         html += '<div class="actions-edit-cfield">';
                                             html += '<a onclick="show_iframe(\'content_list_'+ret.field_id+'\',\''+ret.field_id+'\');"><?php _e('Edit') ; ?></a>';
-                                             html += '&middot;';
+                                            html += ' &middot; ';
                                             html += '<a onclick="delete_field(\''+ret.field_id+'\');"><?php _e('Delete') ; ?></a>';
                                         html += '</div>';
                                     html += '</div>';

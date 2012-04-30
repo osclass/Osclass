@@ -73,7 +73,7 @@
                         <br/>
                         <?php } ?>
                         <p>
-                            <?php _e('You can recalculate your locations stats. This is useful if you upgrade from versions below osclass 2.4'); ?>.
+                            <?php _e('You can recalculate your locations stats. This is useful if you upgrade from versions below OSClass 2.4'); ?>.
                         </p>
                         <br/>
                         <form action="<?php echo osc_admin_base_url(true); ?>" method="post">

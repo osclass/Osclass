@@ -76,8 +76,8 @@
                 </div>
                     <div class="sortable_div">
                         <div class="float50per">
-                        <div class="latest-items ui-widget-content ui-corner-all">
-                            <h3 class="ui-state-default"><?php _e('Comments') ?></h3>
+                        <div class="latest-items ui-dialog ui-corner-all">
+                            <h3 class="ui-dialog-titlebar"><?php _e('Comments') ?></h3>
                             <div class="ui-state-body">
                                 <div id="placeholder" style="width:400px;height:300px;margin:0; margin:0 auto; padding-bottom: 45px;">
                                      <?php if( count($comments) == 0 ) {
@@ -89,8 +89,8 @@
                         </div>
                         </div>
                         <div class="float50per">
-                        <div class="latest-items ui-widget-content ui-corner-all">
-                            <h3 class="ui-state-default"><?php _e('Latest comments on the web') ; ?></h3>
+                        <div class="latest-items ui-dialog ui-corner-all">
+                            <h3 class="ui-dialog-titlebar"><?php _e('Latest comments on the web') ; ?></h3>
                             <div class="ui-state-body">
                                 <?php if( count($latest_comments) > 0 ) { ?>
                                 <table border="0">

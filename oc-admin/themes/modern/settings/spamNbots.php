@@ -122,7 +122,7 @@
                             <?php if( osc_recaptcha_public_key() != '' ) { ?>
                             <tr>
                                 <td colspan="2">
-                                    <?php _e('If you see the reCAPTCHA form below this text it means that you have entered correctly the public key') ; ?>
+                                    <?php _e('If you see the reCAPTCHA form below this text it means that you have correctly entered the public key') ; ?>
                                 </td>
                             </tr>
                             <tr>
