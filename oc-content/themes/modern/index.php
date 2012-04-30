@@ -7,6 +7,6 @@ Version: 2.3
 Author: OSClass team
 Author URI: http://www.osclass.org/
 Widgets: header,footer
-Plugin update URI: 
+Theme update URI: 
 */
 ?>
