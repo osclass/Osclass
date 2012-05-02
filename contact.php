@@ -19,13 +19,14 @@
 
     class CWebContact extends BaseModel
     {
-
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             switch($this->action) {
                 case('contact_post'):   //contact_post
                                         $yourName = Params::getParam('yourName') ;
@@ -73,10 +74,10 @@
 
                                             if(!is_writable(osc_content_path() . 'uploads/')) {
                                                 osc_add_flash_error_message( _m('There has been some errors sending the message')) ;
-                                                $this->redirectTo( osc_base_url() );
+                                                $this->redirectTo( osc_contact_url() );
                                             }
 
-                                            if(!move_uploaded_file($tmpName, $path)){
+                                            if(!move_uploaded_file($tmpName, $path)) {
                                                 unset($path) ;
                                             }
                                         }
@@ -89,7 +90,7 @@
 
                                         osc_add_flash_ok_message( _m('Your e-mail has been sent properly. Thank your for contacting us!') ) ;
 
-                                        $this->redirectTo( osc_base_url() ) ;
+                                        $this->redirectTo( osc_contact_url() ) ;
                 break;
                 default:                //contact
                                         $this->doView('contact.php') ;
@@ -97,7 +98,8 @@
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_run_hook("before_html");
             osc_current_web_theme_path($file) ;
             Session::newInstance()->_clearVariables();
@@ -105,4 +107,5 @@
         }
     }
 
+    /* file end: ./contact.php */
 ?>

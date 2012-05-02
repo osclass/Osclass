@@ -22,19 +22,19 @@
 
     class Plugins
     {
-
-        private static $hooks;
+        private static $hooks ;
 
         function __construct() {}
 
-        static function runHook($hook) {
+        static function runHook($hook)
+        {
             $args = func_get_args();
             array_shift($args);
-            if(isset(Plugins::$hooks[$hook])) {
+            if(isset(self::$hooks[$hook])) {
                 for($priority = 0;$priority<=10;$priority++) {
-                    if(isset(Plugins::$hooks[$hook][$priority]) && is_array(Plugins::$hooks[$hook][$priority])) {
-                        foreach(Plugins::$hooks[$hook][$priority] as $fxName) {
-                            if(function_exists($fxName)) {
+                    if(isset(self::$hooks[$hook][$priority]) && is_array(self::$hooks[$hook][$priority])) {
+                        foreach(self::$hooks[$hook][$priority] as $fxName) {
+                            if(is_callable($fxName)) {
                                 call_user_func_array($fxName, $args);
                             }
                         }
@@ -43,12 +43,13 @@
             }
         }
 
-        static function applyFilter($hook, $content) {
-            if(isset(Plugins::$hooks[$hook])) {
+        static function applyFilter($hook, $content)
+        {
+            if(isset(self::$hooks[$hook])) {
                 for($priority = 0;$priority<=10;$priority++) {
-                    if(isset(Plugins::$hooks[$hook][$priority]) && is_array(Plugins::$hooks[$hook][$priority])) {
-                        foreach(Plugins::$hooks[$hook][$priority] as $fxName) {
-                            if(function_exists($fxName)) {
+                    if(isset(self::$hooks[$hook][$priority]) && is_array(self::$hooks[$hook][$priority])) {
+                        foreach(self::$hooks[$hook][$priority] as $fxName) {
+                            if(is_callable($fxName)) {
                                 $content = call_user_func($fxName, $content);
                             }
                         }
@@ -58,27 +59,26 @@
             return $content;
         }
 
-        static function isInstalled($plugin) {
-            $p_installed = Plugins::listInstalled();
-            foreach($p_installed as $p) {
-                if($p==$plugin) {
-                    return true;
-                }
+        static function isInstalled($plugin)
+        {
+            if( in_array($plugin, self::listInstalled()) ) {
+                return true ;
             }
-            return false;
+
+            return false ;
         }
 
-        static function isEnabled($plugin) {
-            $p_installed = Plugins::listEnabled();
-            foreach($p_installed as $p) {
-                if($p==$plugin) {
-                    return true;
-                }
+        static function isEnabled($plugin)
+        {
+            if( in_array($plugin, self::listEnabled()) ) {
+                return true ;
             }
-            return false;
+
+            return false ;
         }
 
-        static function listAll() {
+        static function listAll()
+        {
             $plugins = array();
             $pluginsPath = osc_plugins_path();
             $dir = opendir($pluginsPath);
@@ -97,7 +97,8 @@
             return $plugins;
         }
 
-        static function loadActive() {
+        static function loadActive()
+        {
             $data['s_value'] = osc_active_plugins() ;
             $plugins_list = unserialize($data['s_value']);
             if(is_array($plugins_list)) {
@@ -111,236 +112,261 @@
             }
         }
 
-        static function listInstalled() {
+        static function listInstalled()
+        {
             $p_array = array();
-            try {
-                $data['s_value'] = osc_installed_plugins() ;
-                $plugins_list = unserialize($data['s_value']) ;
-                if(is_array($plugins_list)) {
-                    foreach($plugins_list as $plugin_name) {
-                        $p_array[] = $plugin_name;
-                    }
+
+            $data['s_value'] = osc_installed_plugins() ;
+            $plugins_list    = unserialize($data['s_value']) ;
+            if( is_array($plugins_list) ) {
+                foreach($plugins_list as $plugin_name) {
+                    $p_array[] = $plugin_name ;
                 }
-            } catch (Exception $e) {
-                echo $e->getMessage();
             }
+
             return $p_array;
         }
 
-        static function listEnabled() {
-            $p_array = array();
-            try {
-                $data['s_value'] = osc_active_plugins() ;
-                $plugins_list = unserialize($data['s_value']) ;
-                if(is_array($plugins_list)) {
-                    foreach($plugins_list as $plugin_name) {
-                        $p_array[] = $plugin_name;
-                    }
+        static function listEnabled()
+        {
+            $p_array = array() ;
+
+            $data['s_value'] = osc_active_plugins() ;
+            $plugins_list = unserialize($data['s_value']) ;
+            if( is_array($plugins_list) ) {
+                foreach($plugins_list as $plugin_name) {
+                    $p_array[] = $plugin_name;
                 }
-            } catch (Exception $e) {
-                echo $e->getMessage();
             }
+
             return $p_array;
         }
 
+        static function findByUpdateURI($uri) {
+            $plugins = Plugins::listAll();
+            foreach($plugins as $p) {
+                $info = Plugins::getInfo($p);
+                if($info['plugin_update_uri']==$uri) {
+                    return $p;
+                }
+            }
+            return false;
+        }
 
-        static function resource($path) {
+        static function resource($path)
+        {
             $fullPath = osc_plugins_path() . $path;
             return file_exists($fullPath) ? $fullPath : false;
         }
 
-
-        static function activate($path) {
-            try {
-                $data['s_value'] = osc_active_plugins() ;
-                $plugins_list = unserialize($data['s_value']);
-                $found_it = false;
-                if(is_array($plugins_list)) {
-                    foreach($plugins_list as $plugin_name) {
-                        // Check if the plugin is already installed
-                        if($plugin_name==$path) {
-                            $found_it = true;
-                            break;
-                        }
-                    }
-                }
-                if(!$found_it) {
-                    $plugins_list[] = $path;
-                    $data['s_value'] = serialize($plugins_list);
-                    $condition = array( 's_section' => 'osclass', 's_name' => 'active_plugins');
-                    Preference::newInstance()->update($data, $condition);
-                    unset($condition);
-                    unset($data);
-                    Plugins::reload();
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (Exception $e) {
-                echo $e->getMessage();
-            }
-        }
-
-
-        static function register($path, $function) {
+        static function register($path, $function)
+        {
             $path = str_replace(osc_plugins_path(), '', $path);
-            Plugins::addHook('install_'.$path, $function);
+            self::addHook('install_' . $path, $function);
         }
 
-        static function deactivate($path)
+        static function install($path)
         {
-            try {
-                $data['s_value'] = osc_active_plugins() ;
-                $plugins_list = unserialize($data['s_value']);
+            $data['s_value'] = osc_installed_plugins() ;
+            $plugins_list    = unserialize($data['s_value']) ;
 
-                $path = str_replace(osc_plugins_path(), '', $path);
-                if(is_array($plugins_list)) {
-                    foreach($plugins_list as $key=>$value){
-                        if($value==$path){
-                            unset($plugins_list[$key]);
-                        }
-                    }
-                    $data['s_value'] = serialize($plugins_list);
-                    $condition = array( 's_section' => 'osclass', 's_name' => 'active_plugins') ;
-                    Preference::newInstance()->update($data, $condition) ;
-                    unset($condition);
-                    unset($data);
-                    Plugins::reload();
+            if( is_array($plugins_list) ) {
+                // check if the plugin is already installed
+                if( in_array($path, $plugins_list) ) {
+                    return array('error_code' => 'error_installed') ;
                 }
-            } catch (Exception $e) {
-                echo $e->getMessage();
             }
-        }
 
-        static function install($path) 
-        {
-            try {
-                $data['s_value'] = osc_installed_plugins() ;
-                $plugins_list = unserialize($data['s_value']);
-                $found_it = false;
-                if(is_array($plugins_list)) {
-                    foreach($plugins_list as $plugin_name) {
-                        // Check if the plugin is already installed
-                        if($plugin_name==$path) {
-                            $found_it = true;
-                            break;
-                        }
-                    }
-                }
-                Plugins::activate($path);
-                if(!$found_it) {
-                    $plugins_list[] = $path;
-                    $data['s_value'] = serialize($plugins_list);
-                    $condition = array( 's_section' => 'osclass', 's_name' => 'installed_plugins');
-                    Preference::newInstance()->update($data, $condition);
-                    unset($condition);
-                    unset($data);
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (Exception $e) {
-                echo $e->getMessage();
+            if( !file_exists(osc_plugins_path() . $path) ) {
+                return array('error_code' => 'error_file') ;
             }
+
+            // check if there are spaces when you include the plugin
+            ob_start() ;
+            include_once( osc_plugins_path() . $path ) ;
+
+            if ( ob_get_length() > 0 ) {
+                return array('error_code' => 'error_output', 'output' => ob_get_clean()) ;
+            }
+            ob_end_clean() ;
+
+            try {
+                self::runHook('install_' . $path) ;
+            } catch(Exception $e) {
+                return array('error_code' => 'custom_error' ,'msg' => $e->getMessage()) ;
+            }
+
+            if( !self::activate($path) ) {
+                return array('error_code' => '') ;
+            }
+
+            $plugins_list[]  = $path ;
+            $data['s_value'] = serialize($plugins_list) ;
+            $condition = array( 's_section' => 'osclass', 's_name' => 'installed_plugins') ;
+            Preference::newInstance()->update($data, $condition) ;
+
+            return true ;
         }
 
         static function uninstall($path)
         {
-            try {
-                $data['s_value'] = osc_installed_plugins() ;
-                $plugins_list = unserialize($data['s_value']);
-                Plugins::deactivate($path);
+            $data['s_value'] = osc_installed_plugins() ;
+            $plugins_list    = unserialize($data['s_value']) ;
 
-                $path = str_replace(osc_plugins_path(), '', $path);
-                if(is_array($plugins_list)) {
-                    foreach($plugins_list as $key=>$value){
-                        if($value==$path){
-                            unset($plugins_list[$key]);
-                        }
-                    }
-                    $data['s_value'] = serialize($plugins_list);
-                    $condition = array( 's_section' => 'osclass', 's_name' => 'installed_plugins') ;
-                    Preference::newInstance()->update($data, $condition) ;
-                    unset($condition);
-                    unset($data);
-                    $plugin = Plugins::getInfo($path);
-                    Plugins::cleanCategoryFromPlugin($plugin['short_name']);
-                }
-            } catch (Exception $e) {
-                echo $e->getMessage();
+            $path = str_replace(osc_plugins_path(), '', $path);
+            if( !is_array($plugins_list) ) {
+                return false ;
             }
+
+            if( !self::deactivate($path) ) {
+                return false ;
+            }
+
+            self::runHook($path . '_uninstall') ;
+
+            foreach($plugins_list as $k => $v) {
+                if($v == $path) {
+                    unset($plugins_list[$k]) ;
+                }
+            }
+
+            $data['s_value'] = serialize($plugins_list) ;
+            $condition = array( 's_section' => 'osclass', 's_name' => 'installed_plugins') ;
+            Preference::newInstance()->update($data, $condition) ;
+
+            $plugin = self::getInfo($path) ;
+            self::cleanCategoryFromPlugin($plugin['short_name']) ;
+            return true ;
         }
-        
-        static function isThisCategory($name, $id) {
+
+        static function activate($path)
+        {
+            $data['s_value'] = osc_active_plugins() ;
+            $plugins_list    = unserialize($data['s_value']);
+
+            if( is_array($plugins_list) ) {
+                // check if the plugin is already active
+                if( in_array($path, $plugins_list) ) {
+                    return false ;
+                }
+            }
+
+            self::runHook($path . '_enable') ;
+
+            $plugins_list[]  = $path ;
+            $data['s_value'] = serialize($plugins_list) ;
+            $condition = array( 's_section' => 'osclass', 's_name' => 'active_plugins') ;
+            Preference::newInstance()->update($data, $condition) ;
+
+            self::reload() ;
+            return true ;
+        }
+
+        static function deactivate($path)
+        {
+            $data['s_value'] = osc_active_plugins() ;
+            $plugins_list = unserialize($data['s_value']);
+
+            $path = str_replace(osc_plugins_path(), '', $path) ;
+            // check if there is some plugin enabled
+            if( !is_array($plugins_list) ) {
+                return false ;
+            }
+
+            // remove $path from the active plugins list
+            foreach($plugins_list as $k => $v) {
+                if($v == $path) {
+                    unset($plugins_list[$k]) ;
+                }
+            }
+
+            self::runHook($path . '_disable') ;
+
+            // update t_preference field for active plugins
+            $data['s_value'] = serialize($plugins_list) ;
+            $condition = array( 's_section' => 'osclass', 's_name' => 'active_plugins') ;
+            Preference::newInstance()->update($data, $condition) ;
+
+            self::reload() ;
+            return true ;
+        }
+
+        static function isThisCategory($name, $id)
+        {
             return PluginCategory::newInstance()->isThisCategory($name, $id);
         }
 
-        static function getInfo($plugin) {
+        static function getInfo($plugin)
+        {
             $s_info = file_get_contents(osc_plugins_path() . $plugin);
-            $info = array();
-            if(preg_match('|Plugin Name:([^\\r\\t\\n]*)|i', $s_info, $match)) {
+            $info   = array();
+            if( preg_match('|Plugin Name:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
                 $info['plugin_name'] = trim($match[1]);
-            } else { $info['plugin_name'] = $plugin; };
+            } else {
+                $info['plugin_name'] = $plugin;
+            }
 
-            if(preg_match('|Plugin URI:([^\\r\\t\\n]*)|i', $s_info, $match)) {
+            if( preg_match('|Plugin URI:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
                 $info['plugin_uri'] = trim($match[1]);
-            } else { $info['plugin_uri'] = ""; };
+            } else {
+                $info['plugin_uri'] = "";
+            }
 
-            if(preg_match('|Plugin update URI:([^\\r\\t\\n]*)|i', $s_info, $match)) {
+            if( preg_match('|Plugin update URI:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
                 $info['plugin_update_uri'] = trim($match[1]);
-            } else { $info['plugin_update_uri'] = ""; };
+            } else {
+                $info['plugin_update_uri'] = "";
+            }
 
-            if(preg_match('|Description:([^\\r\\t\\n]*)|i', $s_info, $match)) {
+            if( preg_match('|Description:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
                 $info['description'] = trim($match[1]);
-            } else { $info['description'] = ""; };
+            } else {
+                $info['description'] = "";
+            }
 
-            if(preg_match('|Version:([^\\r\\t\\n]*)|i', $s_info, $match)) {
+            if( preg_match('|Version:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
                 $info['version'] = trim($match[1]);
-            } else { $info['version'] = ""; };
+            } else {
+                $info['version'] = "";
+            }
 
-            if(preg_match('|Author:([^\\r\\t\\n]*)|i', $s_info, $match)) {
+            if( preg_match('|Author:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
                 $info['author'] = trim($match[1]);
-            } else { $info['author'] = ""; };
+            } else {
+                $info['author'] = "";
+            }
 
-            if(preg_match('|Author URI:([^\\r\\t\\n]*)|i', $s_info, $match)) {
+            if( preg_match('|Author URI:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
                 $info['author_uri'] = trim($match[1]);
-            } else { $info['author_uri'] = ""; };
+            } else {
+                $info['author_uri'] = "";
+            }
 
-            if(preg_match('|Short Name:([^\\r\\t\\n]*)|i', $s_info, $match)) {
+            if( preg_match('|Short Name:([^\\r\\t\\n]*)|i', $s_info, $match) ) {
                 $info['short_name'] = trim($match[1]);
-            } else { $info['short_name'] = $info['plugin_name']; };
+            } else {
+                $info['short_name'] = $info['plugin_name'];
+            }
 
             $info['filename'] = $plugin;
 
             return $info;
         }
 
-
         static function checkUpdate($plugin) {
             $info = Plugins::getInfo($plugin);
-            if($info['plugin_update_uri']!="") {
-                if(false===($str=@osc_file_get_contents($info['plugin_update_uri']))) {
-                    return false;
-                } else {
-                    if(preg_match('|\?\(([^\)]+)|', preg_replace('/,\s*([\]}])/m', '$1', $str), $data)) {
-                        $json = json_decode($data[1] , true);
-                        if($json['version']>$info['version']) {
-                            return true;
-                        }
-                    }
-                }
-            }
-            return false;
+            return osc_check_update($info['plugin_update_uri'], $info['version']);
         }
 
 
-        static function configureView($path) {
+        static function configureView($path)
+        {
             $plugin = str_replace(osc_plugins_path(), '', $path);
             if(stripos($plugin, ".php")===FALSE) {
                 $plugins_list = unserialize(osc_active_plugins());
                 if(is_array($plugins_list)) {
                     foreach($plugins_list as $p){
-                        $data = Plugins::getInfo($p);
+                        $data = self::getInfo($p);
                         if($plugin == $data['plugin_name']) {
                             $plugin = $p ;
                             break ;
@@ -352,13 +378,15 @@
             exit;
         }
 
-        static function cleanCategoryFromPlugin($plugin) {
+        static function cleanCategoryFromPlugin($plugin)
+        {
             $dao_pluginCategory = new PluginCategory() ;
             $dao_pluginCategory->delete(array('s_plugin_name' => $plugin)) ;
             unset($dao_pluginCategory) ;
         }
 
-        static function addToCategoryPlugin($categories, $plugin) {
+        static function addToCategoryPlugin($categories, $plugin)
+        {
             $dao_pluginCategory = new PluginCategory() ;
             $dao_category = new Category() ;
             if(!empty($categories)) {
@@ -377,7 +405,7 @@
                             foreach( $subs as $sub) {
                                 $cats[] = $sub['pk_i_id'];
                             }
-                            Plugins::addToCategoryPlugin($cats, $plugin) ;
+                            self::addToCategoryPlugin($cats, $plugin) ;
                         }
                     }
                 }
@@ -386,44 +414,56 @@
             unset($dao_category) ;
         }
 
-
         // Add a hook
-        static function addHook($hook, $function, $priority = 5) {
+        static function addHook($hook, $function, $priority = 5)
+        {
             $hook         = preg_replace('|/+|', '/', str_replace('\\', '/', $hook)) ;
             $plugin_path  = str_replace('\\', '/', osc_plugins_path()) ;
             $hook         = str_replace($plugin_path, '', $hook) ;
             $found_plugin = false;
-            if(isset(Plugins::$hooks[$hook])) {
-                if(is_array(Plugins::$hooks[$hook])) {
-                    foreach(Plugins::$hooks[$hook] as $fxName) {
-                        if($fxName==$function) {
-                            $found_plugin = true;
-                            break;
+            if(isset(self::$hooks[$hook])) {
+                for($_priority = 0;$_priority<=10;$_priority++) {
+                    if(isset(self::$hooks[$hook][$_priority])) {
+                        foreach(self::$hooks[$hook][$_priority] as $fxName) {
+                            if($fxName==$function) {
+                                $found_plugin = true;
+                                break;
+                            }
                         }
                     }
                 }
             }
-            if(!$found_plugin) { Plugins::$hooks[$hook][$priority][] = $function; }
+            if(!$found_plugin) { self::$hooks[$hook][$priority][] = $function; }
         }
 
-        static function removeHook($hook, $function) {
-            unset(Plugins::$hooks[$hook][$function]);
+        static function removeHook($hook, $function)
+        {
+            for($priority = 0;$priority<=10;$priority++) {
+                if(isset(self::$hooks[$hook][$priority])) {
+                    foreach(self::$hooks[$hook][$priority] as $k => $v) {
+                        if($v==$function) {
+                            unset(self::$hooks[$hook][$priority][$k]);
+                        }
+                    }
+                }
+            }
         }
 
-        static function getActive() {
-            return Plugins::$hooks;
+        static function getActive()
+        {
+            return self::$hooks;
         }
 
-        static function reload() {
+        static function reload()
+        {
             Preference::newInstance()->toArray();
-            Plugins::init();
+            self::init();
         }
 
-        static function init() {
-            Plugins::loadActive();
+        static function init()
+        {
+            self::loadActive();
         }
-
-
     }
 
 ?>

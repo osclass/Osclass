@@ -3,7 +3,7 @@
         switch(Params::getParam("action_specific")) {
             case('upload_logo'):
                 $package = Params::getFiles("logo");
-
+                
                 if ($package['error'] == UPLOAD_ERR_OK) {
                     if( move_uploaded_file($package['tmp_name'], WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ){
                         osc_add_flash_ok_message( _m('The logo image has been uploaded correctly'), 'admin');

@@ -33,6 +33,7 @@
         private $language ;
         private $tree ;
         private $categories ;
+        private $categoriesEnabled ;
         private $relation ;
         private $empty_tree ;
 
@@ -90,23 +91,15 @@
                 $this->dao->where( $where ) ;
             }
 
-            // TODO: Can it be done without subquery?
-            // create subquery
             $this->dao->select() ;
             $this->dao->from( sprintf( '%s as a', $this->getTableName() ) ) ;
-            $this->dao->join( sprintf( '%st_category_description as b', $this->getTablePrefix() ), 'a.pk_i_id = b.fk_i_category_id', 'INNER' ) ;
+            $this->dao->join( sprintf( '%st_category_description as b', $this->getTablePrefix() ), 'a.pk_i_id = b.fk_i_category_id', 'LEFT' ) ;
+            $this->dao->join( sprintf( '%st_category_stats as c', $this->getTablePrefix() ), 'a.pk_i_id = c.fk_i_category_id', 'LEFT' ) ;
             $this->dao->where( "b.s_name != ''" ) ;
-            $this->dao->orderBy( 'a.i_position', 'DESC' ) ;
-            $subquery = $this->dao->_getSelect() ;
-            $this->dao->_resetSelect() ;
-
-            $this->dao->select() ;
-            $this->dao->from( sprintf( '(%s) dummytable', $subquery ) ) ;
-            $this->dao->join( sprintf( '%st_category_stats as c', $this->getTablePrefix() ), 'dummytable.pk_i_id = c.fk_i_category_id', 'LEFT' ) ;
             $this->dao->groupBy( 'pk_i_id' ) ;
             $this->dao->orderBy( 'i_position', 'ASC' ) ;
             $rs = $this->dao->get() ;
-
+            
             if( $rs === false ) {
                 return array() ;
             }
@@ -127,13 +120,31 @@
          */
         public function listEnabled() 
         {
-            $sql = 'SELECT * FROM (';
-            $sql .= 'SELECT a.*, b.*, c.i_num_items, FIELD(fk_c_locale_code, \''.$this->dao->connId->real_escape_string(osc_current_user_locale()).'\') as locale_order FROM '.$this->getTableName().' as a INNER JOIN '.DB_TABLE_PREFIX.'t_category_description as b ON a.pk_i_id = b.fk_i_category_id ';
-            $sql .= 'LEFT JOIN '.DB_TABLE_PREFIX.'t_category_stats as c ON a.pk_i_id = c.fk_i_category_id ';
-            $sql .= 'WHERE b.s_name != \'\' AND a.b_enabled = 1 ORDER BY locale_order DESC';
-            $sql .= ') as dummytable GROUP BY pk_i_id ORDER BY i_position ASC';
-            $result = $this->dao->query($sql);
-            return $result->result();
+            $this->dao->select( sprintf("a.*, b.*, c.i_num_items, FIELD(fk_c_locale_code, '%s') as locale_order", $this->dao->connId->real_escape_string(osc_current_user_locale()) ) ) ;
+            $this->dao->from( $this->getTableName().' as a' ) ;
+            $this->dao->join(DB_TABLE_PREFIX.'t_category_description as b', 'a.pk_i_id = b.fk_i_category_id', 'INNER') ;
+            $this->dao->join(DB_TABLE_PREFIX.'t_category_stats  as c ', 'a.pk_i_id = c.fk_i_category_id', 'LEFT') ;
+            $this->dao->where("b.s_name != ''") ;
+            $this->dao->where("a.b_enabled = 1") ;
+            $this->dao->orderBy('locale_order', 'DESC') ;
+            $subquery = $this->dao->_getSelect() ;
+            $this->dao->_resetSelect() ;
+            
+            $this->dao->select();
+            $this->dao->from( sprintf( '(%s) dummytable', $subquery ) ) ; // $subselect.'  dummytable') ;
+            $this->dao->groupBy('pk_i_id') ;
+            $this->dao->orderBy('i_position', 'ASC') ;
+            $rs = $this->dao->get() ;
+            
+            if( $rs === false ) {
+                return array() ;
+            }
+
+            if( $rs->numRows() == 0 ) {
+                return array() ;
+            }
+            
+            return $rs->result();
         }
 
         /**
@@ -150,7 +161,13 @@
                 return $this->tree;
             }
             $this->empty_tree = $empty;
-            $categories = $this->listEnabled();
+            // if listEnabled has been called before, don't redo the query
+            if($this->categoriesEnabled) {
+                $categories = $this->categoriesEnabled;
+            } else {
+                $this->categoriesEnabled = $this->listEnabled();
+                $categories              = $this->categoriesEnabled;
+            }
             $this->categories = array();
             $this->relation = array();
             foreach($categories as $c) {
@@ -545,7 +562,25 @@
             //UPDATE for category
             $res = $this->dao->update($this->getTableName(), $fields, array('pk_i_id' => $pk)) ;
             if($res >= 0) {
+                // update dt_expiration (tablel t_item) using category.i_expiration_days 
+                if($fields['i_expiration_days'] > 0) {
+                    $update_dt_expiration = sprintf('update %st_item as a 
+                        left join %st_category  as b on b.pk_i_id = a.fk_i_category_id
+                        set a.dt_expiration = date_add(a.dt_pub_date, INTERVAL b.i_expiration_days DAY) 
+                        where a.fk_i_category_id = %d ', DB_TABLE_PREFIX, DB_TABLE_PREFIX, $pk );
+                    
+                    $this->dao->query($update_dt_expiration);
+                // update dt_expiration (table t_item) using the max date value
+                } else if( $fields['i_expiration_days'] == 0) {
+                    $update_dt_expiration = sprintf("update %st_item as a 
+                        set a.dt_expiration = '9999-12-31 23:59:59'
+                        where a.fk_i_category_id = %s", DB_TABLE_PREFIX, $pk );
+                    
+                    $this->dao->query($update_dt_expiration);
+                }
+                 
                 $affectedRows = $res;
+                
                 foreach ($aFieldsDescription as $k => $fieldsDescription) {
                     //UPDATE for description of categories
                     $fieldsDescription['fk_i_category_id'] = $pk;

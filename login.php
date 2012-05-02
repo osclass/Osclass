@@ -19,32 +19,33 @@
 
     class CWebLogin extends BaseModel
     {
-
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
             if( !osc_users_enabled() ) {
                 osc_add_flash_error_message( _m('Users not enabled') ) ;
-                $this->redirectTo(osc_base_url(true));
+                $this->redirectTo(osc_base_url());
             }
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             switch( $this->action ) {
                 case('login_post'):     //post execution for the login
                                         if(!osc_users_enabled()) {
                                             osc_add_flash_error_message(_m('Users are not enabled'));
                                             $this->redirectTo(osc_base_url());
                                         }
-                    
+
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $user = User::newInstance()->findByEmail( Params::getParam('email') ) ;
-                                        
-                                        $url_redirect = osc_user_dashboard_url();
+
+                                        $url_redirect = osc_get_http_referer();
                                         $page_redirect = '';
                                         if(osc_rewrite_enabled()) {
-                                            if(isset($_SERVER['HTTP_REFERER'])) {
-                                                $request_uri = urldecode(preg_replace('@^' . osc_base_url() . '@', "", $_SERVER['HTTP_REFERER']));
+                                            if($url_redirect!='') {
+                                                $request_uri = urldecode(preg_replace('@^' . osc_base_url() . '@', "", $url_redirect));
                                                 $tmp_ar = explode("?", $request_uri);
                                                 $request_uri = $tmp_ar[0];
                                                 $rules = Rewrite::newInstance()->listRules();
@@ -58,27 +59,19 @@
                                                     }
                                                 }
                                             }
-                                        } else if(preg_match('|[\?&]page=([^&]+)|', $_SERVER['HTTP_REFERER'].'&', $match)) {
+                                        } else if(preg_match('|[\?&]page=([^&]+)|', $url_redirect.'&', $match)) {
                                             $page_redirect = $match[1];
                                         }
-                                        
-                                        if(Params::getParam('http_referer')!='') {
-                                            Session::newInstance()->_setReferer(Params::getParam('http_referer'));
-                                            $url_redirect = Params::getParam('http_referer');
-                                        } else if(Session::newInstance()->_getReferer()!='') {
-                                            Session::newInstance()->_setReferer(Session::newInstance()->_getReferer());
-                                            $url_redirect = Session::newInstance()->_getReferer();
-                                        } else if($page_redirect!='' && $page_redirect!='login') {
-                                            Session::newInstance()->_setReferer($_SERVER['HTTP_REFERER']);
-                                            $url_redirect = $_SERVER['HTTP_REFERER'];
+                                        if($page_redirect=='' || $page_redirect=='login' || $url_redirect=='') {
+                                            $url_redirect = osc_user_dashboard_url();
                                         }
 
                                         if (!$user) {
-                                            osc_add_flash_error_message(_m('The username doesn\'t exist')) ;
+                                            osc_add_flash_error_message(_m("The user doesn't exist")) ;
                                             $this->redirectTo(osc_user_login_url());
                                         }
 
-                                        if ( $user["s_password"] != sha1( Params::getParam('password') ) ) {
+                                        if ( $user["s_password"] != sha1( Params::getParam('password', false, false) ) ) {
                                             osc_add_flash_error_message( _m('The password is incorrect')) ;
                                             $this->redirectTo(osc_user_login_url());
                                         }
@@ -87,7 +80,7 @@
                                         $logged = $uActions->bootstrap_login($user['pk_i_id']) ;
                                         
                                         if($logged==0) {
-                                            osc_add_flash_error_message(_m('The username doesn\'t exist')) ;
+                                            osc_add_flash_error_message(_m("The user doesn't exist")) ;
                                         } else if($logged==1) {
                                             osc_add_flash_error_message(_m('The user has not been validated yet'));
                                         } else if($logged==2) {
@@ -153,7 +146,6 @@
                                                      break;
                                         }
                 break ;
-
                 case('forgot'):         //form to recover the password (in this case we have the form in /gui/)
                                         $user = User::newInstance()->findByIdPasswordSecret(Params::getParam('userId'), Params::getParam('code'));
                                         if($user) {
@@ -164,25 +156,25 @@
                                         }
                 break;
                 case('forgot_post'):
-                                        if( (Params::getParam('new_password') == '') || (Params::getParam('new_password2') == '') ) {
+                                        if( (Params::getParam('new_password', false, false) == '') || (Params::getParam('new_password2', false, false) == '') ) {
                                             osc_add_flash_warning_message( _m('Password cannot be blank')) ;
                                             $this->redirectTo(osc_forgot_user_password_confirm_url(Params::getParam('userId'), Params::getParam('code')));
                                         }
 
                                         $user = User::newInstance()->findByIdPasswordSecret(Params::getParam('userId'), Params::getParam('code'));
                                         if($user['b_enabled'] == 1) {
-                                            if(Params::getParam('new_password')==Params::getParam('new_password2')) {
+                                            if(Params::getParam('new_password', false, false)==Params::getParam('new_password2', false, false)) {
                                                 User::newInstance()->update(
                                                     array('s_pass_code' => osc_genRandomPassword(50)
                                                         , 's_pass_date' => date('Y-m-d H:i:s', 0)
                                                         , 's_pass_ip' => $_SERVER['REMOTE_ADDR']
-                                                        , 's_password' => sha1(Params::getParam('new_password'))
+                                                        , 's_password' => sha1(Params::getParam('new_password', false, false))
                                                     ), array('pk_i_id' => $user['pk_i_id'])
                                                 );
                                                 osc_add_flash_ok_message( _m('The password has been changed'));
                                                 $this->redirectTo(osc_user_login_url());
                                             } else {
-                                                osc_add_flash_error_message( _m('Error, the password don\'t match')) ;
+                                                osc_add_flash_error_message( _m("Error, the password don't match")) ;
                                                 $this->redirectTo(osc_forgot_user_password_confirm_url(Params::getParam('userId'), Params::getParam('code')));
                                             }
                                         } else {
@@ -190,22 +182,23 @@
                                         }
                                         $this->redirectTo( osc_base_url() ) ;
                 break;
-
                 default:                //login
+                                        Session::newInstance()->_setReferer(osc_get_http_referer());
                                         if( osc_logged_user_id() != '') {
                                             $this->redirectTo(osc_user_dashboard_url());
                                         }
                                         $this->doView( 'user-login.php' ) ;
             }
-
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_run_hook("before_html");
             osc_current_web_theme_path($file) ;
             osc_run_hook("after_html");
         }
     }
 
+    /* file end: ./login.php */
 ?>

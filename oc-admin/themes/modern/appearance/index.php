@@ -18,17 +18,12 @@
 
     //getting variables for this view
     $themes = __get("themes") ;
-    $info = __get("info") ;
+    $info   = __get("info") ;
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <div id="update_version" style="display:none;"></div>
         <script type="text/javascript">
             $(function() {
                 // Here we include specific jQuery, jQuery UI and Datatables functions.
@@ -39,78 +34,61 @@
                 });
             });
         </script>
+    </head>
+    <body>
+        <?php osc_current_admin_theme_path('header.php') ; ?>
+        <!-- container -->
         <div id="content">
-            <div id="separator"></div>
-            <?php osc_current_admin_theme_path('include/backoffice_menu.php') ; ?>
-            <div id="right_column">
-                <?php /* this is header for right side. */ ?>
-                <div id="content_header" class="content_header">
-                    <div style="float: left;">
-                        <img src="<?php echo  osc_current_admin_theme_url('images/themes-icon.png') ; ?>" title="" alt=""/>
-                    </div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Appearance') ; ?></div>
-                    <a href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance&action=add" id="button_open"><?php _e('Add a new theme') ; ?></a>
-                    <div style="clear: both;"></div>
+            <?php osc_current_admin_theme_path( 'include/backoffice_menu.php' ) ; ?>
+            <!-- right container -->
+            <div class="right">
+                <div class="header_title">
+                    <input type="button" value="<?php echo osc_esc_html( __('Add new theme') ) ; ?>" onclick="window.location.href='<?php echo osc_admin_base_url(true) ; ?>?page=appearance&amp;action=add'" />
+                    <h1 class="themes"><?php _e('Appearance') ; ?></h1>
                 </div>
-
                 <?php osc_show_flash_message('admin') ; ?>
-
-                <!-- list themes -->
-                <div id="content_separator"></div>
-                <div id="list_themes_div" style="border: 1px solid #ccc; background: #eee;">
-                    <div style="padding: 20px;">
-
-                        <div id="current_theme"><?php _e('Current theme'); ?></div>
-                        <div id="current_theme_pic">
-                            <img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo osc_theme() ; ?>/screenshot.png" style="width: 280px; height: auto;" title="" alt="" />
+                <!-- themes list -->
+                <div class="appearance">
+                    <h2><?php _e('Current theme') ; ?></h2>
+                    <div class="current-theme">
+                        <img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo osc_theme() ; ?>/screenshot.png" title="<?php echo $info['name'] ; ?>" alt="<?php echo $info['name'] ; ?>" />
+                        <div class="theme-info">
+                            <h3><?php echo $info['name'] ; ?> <?php echo $info['version']; ?> <?php _e('by') ; ?> <a target="_blank" href="<?php echo $info['author_url'] ; ?>"><?php echo $info['author_name'] ; ?></a></h3>
                         </div>
-                        <div id="current_theme_info">
-                            <strong><?php echo $info['name']; ?> <?php echo $info['version']; ?>. <?php _e('Author'); ?> <a target="_blank" href="<?php echo $info['author_url']; ?>"><?php echo $info['author_name']; ?></a></strong>
-                        </div>
-                        <div id="current_theme_desc"><?php echo $info['description']; ?></div>
-
-                        <div id="content_separator"></div>
-                        <div id="current_theme"><?php _e('Available themes'); ?></div>
-
-                        <?php $i = 1; $colnums = 2; $c = 1; ?>
-
-                        <div>
-                            <?php foreach($themes as $theme) { ?>
-                                <?php if( $theme != osc_theme() ) { ?>
-                                    <?php $info = WebThemes::newInstance()->loadThemeInfo($theme); ?>
-                                    <center>
-                                        <div style="width: 49%; float: left; padding-top: 10px; padding-bottom: 20px; <?php if($c == 1) { ?> border-right: 1px solid #ccc;<?php } ?>">
-                                            <div id="available_theme_info">
-                                                <strong><?php echo $info['name']; ?> <?php echo $info['version']; ?> by <a href="<?php echo $info['author_url']; ?>"><?php echo $info['author_name']; ?></a></strong>
-                                            </div>
-                                            <div id="available_theme_actions">
-                                                <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&action=activate&theme=<?php echo $theme ; ?>"><?php _e('Activate') ; ?></a> |
-                                                <a target="_blank" href="<?php echo osc_base_url(true) ; ?>?theme=<?php echo $theme ; ?>"><?php _e('Preview') ; ?></a>
-                                            </div>
-                                            <div id="available_theme_pic">
-                                                <img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo $theme ; ?>/screenshot.png" style="width: 280px; height: auto;" title="" alt="" />
-                                            </div>
-                                            <div id="available_theme_desc"><?php echo $info['description'] ; ?></div>
-                                            <div style="clear: both;"></div>
-                                        </div>
-                                    </center>
-                                    <?php $c == $colnums ? $c = 1 : $c++; ?>
-                                <?php } ?>
-                            <?php } ?>
-
-                            <?php if ($i == $colnums) echo '<div style="clear:both;"></div>'; $i = 1; if ($i != $colnums) $i++; ?>
-                            <div style="clear:both;"></div>
+                        <div class="theme-description">
+                            <?php echo $info['description'] ; ?>
                         </div>
                     </div>
-                </div> <!-- end of list themes -->
-
-                <div style="clear: both;"></div>
-
-            </div> <!-- end of right column -->
-            
-         <div style="clear: both;"></div>
-
-    </div> <!-- end of container -->
-    <?php osc_current_admin_theme_path('footer.php') ; ?>
+                    <h2><?php _e('Available themes') ; ?></h2>
+                    <div class="available-theme">
+                        <?php foreach($themes as $theme) { ?>
+                        <?php
+                                if( $theme == osc_theme() ) {
+                                    continue;
+                                }
+                                $info = WebThemes::newInstance()->loadThemeInfo($theme) ;
+                        ?>
+                        <div class="theme">
+                            <img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo $theme ; ?>/screenshot.png" title="<?php echo $info['name'] ; ?>" alt="<?php echo $info['name'] ; ?>" />
+                            <div class="theme-info">
+                                <h3><?php echo $info['name'] ; ?> <?php echo $info['version']; ?> <?php _e('by') ; ?> <a target="_blank" href="<?php echo $info['author_url'] ; ?>"><?php echo $info['author_name'] ; ?></a></h3>
+                            </div>
+                            <div class="theme-description">
+                                <?php echo $info['description'] ; ?>
+                            </div>
+                            <div class="theme-actions">
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=activate&amp;theme=<?php echo $theme ; ?>"><?php _e('Activate') ; ?></a> &middot;
+                                <a target="_blank" href="<?php echo osc_base_url(true) ; ?>?theme=<?php echo $theme ; ?>"><?php _e('Preview') ; ?></a>
+                            </div>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+                <!-- /themes list -->
+            </div>
+            <!-- /right container -->
+        </div>
+        <!-- /container -->
+        <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>

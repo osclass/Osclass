@@ -1,3 +1,20 @@
+OSClass 2.4.0 2012-05-02
+------------------------
+- Admin layout redesign
+- Better performance in search queries
+- Install OSClass in your language
+- Customize permalinks
+- Recalculate category and location stats
+- New alert system. Now the alerts are saved in a JSON format
+- Two more options in custom fields: url and checkbox
+- AJAX in plugins
+- Internationalization of date and time strings
+- Throw Exceptions while installing a plugin and show the error message
+- Bug fixed: generate images from original and not normal
+- Fixed some minor bugs
+- [ Modern theme ] Some enhancements in search filters: nicer checkbox and show the region of the city in the city filter
+- [ Modern theme ] New flash messages design
+
 OSClass 2.3.7 2012-04-11
 ------------------------
 - Changed blog feed url

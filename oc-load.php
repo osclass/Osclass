@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '2.3.7') ;
+define('OSCLASS_VERSION', '2.4.0') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -101,6 +101,7 @@ require_once LIB_PATH . 'osclass/core/Cookie.php';
 require_once LIB_PATH . 'osclass/core/Session.php';
 require_once LIB_PATH . 'osclass/core/View.php';
 require_once LIB_PATH . 'osclass/core/BaseModel.php';
+require_once LIB_PATH . 'osclass/core/AdminBaseModel.php';
 require_once LIB_PATH . 'osclass/core/SecBaseModel.php';
 require_once LIB_PATH . 'osclass/core/WebSecBaseModel.php';
 require_once LIB_PATH . 'osclass/core/AdminSecBaseModel.php';
@@ -123,6 +124,7 @@ require_once LIB_PATH . 'osclass/model/Cron.php';
 require_once LIB_PATH . 'osclass/model/Category.php';
 require_once LIB_PATH . 'osclass/model/CategoryStats.php';
 require_once LIB_PATH . 'osclass/model/City.php';
+require_once LIB_PATH . 'osclass/model/CityArea.php';
 require_once LIB_PATH . 'osclass/model/Country.php';
 require_once LIB_PATH . 'osclass/model/Currency.php';
 require_once LIB_PATH . 'osclass/model/OSCLocale.php';
@@ -142,6 +144,12 @@ require_once LIB_PATH . 'osclass/model/LatestSearches.php';
 require_once LIB_PATH . 'osclass/model/SiteInfo.php';
 require_once LIB_PATH . 'osclass/model/Field.php';
 require_once LIB_PATH . 'osclass/model/Log.php';
+require_once LIB_PATH . 'osclass/model/CountryStats.php';
+require_once LIB_PATH . 'osclass/model/RegionStats.php';
+require_once LIB_PATH . 'osclass/model/CityStats.php';
+
+require_once LIB_PATH . 'osclass/model/LocationsTmp.php';
+
 require_once LIB_PATH . 'osclass/classes/Cache.php';
 require_once LIB_PATH . 'osclass/classes/ImageResizer.php';
 require_once LIB_PATH . 'osclass/classes/RSSFeed.php';
@@ -163,6 +171,7 @@ require_once LIB_PATH . 'osclass/frm/Language.form.class.php';
 require_once LIB_PATH . 'osclass/frm/SendFriend.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Alert.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Field.form.class.php';
+require_once LIB_PATH . 'osclass/frm/Admin.form.class.php';
 
 require_once LIB_PATH . 'osclass/functions.php';
 
@@ -170,7 +179,11 @@ define('__OSC_LOADED__', true);
 
 Plugins::init() ;
 
-Rewrite::newInstance()->init();
+// init Rewrite class only iif it's the frontend
+if( !OC_ADMIN ) {
+    Rewrite::newInstance()->init();
+}
+
 // Moved from BaseModel, since we need some session magic on index.php ;)
 Session::newInstance()->session_start() ;
 
@@ -193,4 +206,5 @@ function osc_meta_generator() {
 osc_add_hook("header", "osc_show_maintenance");
 osc_add_hook("header", "osc_meta_generator");
 
+/* file end: ./oc-load.php */
 ?>

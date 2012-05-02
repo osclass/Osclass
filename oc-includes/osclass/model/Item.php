@@ -79,7 +79,8 @@
                 'b_active',
                 'b_spam',
                 's_secret',
-                'b_show_email'
+                'b_show_email',
+                'd_expiration'
             );
             $this->setFields($array_fields) ;
         }
@@ -264,8 +265,8 @@
         {
             $this->dao->select('count(*) as total') ;
             $this->dao->from($this->getTableName().' i') ;
-            $this->dao->join(DB_TABLE_PREFIX.'t_category c', 'c.pk_i_id = i.fk_i_category_id') ;
             if(!is_null($categoryId)) {
+                $this->dao->join(DB_TABLE_PREFIX.'t_category c', 'c.pk_i_id = i.fk_i_category_id') ;
                 $this->dao->where('i.fk_i_category_id', $categoryId) ;
             }
             
@@ -277,6 +278,12 @@
                     break;
                     case 'INACTIVE':   
                         $this->dao->where('b_active', 0);
+                    break;
+                    case 'ENABLE':  
+                        $this->dao->where('b_enabled', 1);
+                    break;
+                    case 'DISABLED':   
+                        $this->dao->where('b_enabled', 0);
                     break;
                     case 'SPAM':   
                         $this->dao->where('b_spam', 1);
@@ -294,12 +301,13 @@
         {
             $this->dao->select( 'COUNT(*) AS total' ) ;
             $this->dao->from( $this->getTableName() ) ;
-            $this->dao->where( 'fk_i_category_id', $category['pk_i_id'] ) ;
+            $this->dao->where( 'fk_i_category_id', (int)$category['pk_i_id'] ) ;
             $this->dao->where( 'b_enabled', $enabled ) ;
             $this->dao->where( 'b_active', $active ) ;
-            if( $category['i_expiration_days'] != 0 ) {
-                $this->dao->where( '( b_premium = 1 OR ( DATEDIFF(\'' . date('Y-m-d H:i:s') .'\', dt_pub_date) < ' . $category['i_expiration_days'] . ' ) )' ) ;
-            }
+            $this->dao->where( 'b_spam', 0 ) ;
+            
+            $this->dao->where( '( b_premium = 1 || dt_expiration >= \'' . date('Y-m-d H:i:s') .'\' )' ) ;
+            
             $result = $this->dao->get() ;
 
             if( $result == false ) {
@@ -511,6 +519,46 @@
         }        
         
         /**
+         * Update dt_expiration field, using $i_expiration_days 
+         * 
+         * @param type $i_expiration_days 
+         * @return string new date expiration, false if error occurs
+         */
+        public function updateExpirationDate($id, $i_expiration_days) 
+        {
+            if($i_expiration_days > 0) {
+                $sql =  sprintf("UPDATE %s SET dt_expiration = ", $this->getTableName());
+                $sql .= sprintf(' date_add(%s.dt_pub_date, INTERVAL %d DAY) ', $this->getTableName(), $i_expiration_days) ;
+                $sql .= sprintf(' WHERE pk_i_id = %d', $id);
+            } else {
+                $sql = sprintf("UPDATE %s SET dt_expiration = '9999-12-31 23:59:59'  WHERE pk_i_id = %d", $this->getTableName(), $id);
+            }
+            
+            $result = $this->dao->query($sql);
+            
+            if($result && $result>0) {
+                $this->dao->select('dt_expiration');
+                $this->dao->from($this->getTableName());
+                $this->dao->where('pk_i_id', (int)$id );
+                $result = $this->dao->get();
+                
+                if($result && $result->result()>0) {
+                    $_item = $result->row();
+                    return $_item['dt_expiration'];
+                }
+                return false;
+            }
+            return false;
+        }
+            
+        public function enableByCategory($enable, $aIds)
+        {
+            $sql  = sprintf('UPDATE %st_item SET b_enabled = %d WHERE ', DB_TABLE_PREFIX, $enable );
+            $sql .= sprintf('%st_item.fk_i_category_id IN (%s)', DB_TABLE_PREFIX, implode(',', $aIds) );
+            
+            return $this->dao->query($sql);
+        }
+        /**
          * Return meta fields for a given item
          *
          * @access public
@@ -543,16 +591,21 @@
          * @return bool
          */
         public function deleteByPrimaryKey($id)
-        {
-            osc_run_hook('delete_item', $id) ;
+        {             
             $item = $this->findByPrimaryKey($id) ;
 
             if ( is_null($item) ) {
                 return false ;
             }
 
-            if( $item['b_active'] == 1 ) {
+            if( $item['b_active'] == 1 && $item['b_enabled']==1 && $item['b_spam']==0 && !osc_isExpired($item['dt_expiration'])) {
+                if($item['fk_i_user_id']!=null) {
+                    User::newInstance()->decreaseNumItems($item['fk_i_user_id']);
+                }
                 CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']) ;
+                CountryStats::newInstance()->decreaseNumItems($item['fk_c_country_code']);
+                RegionStats::newInstance()->decreaseNumItems($item['fk_i_region_id']);
+                CityStats::newInstance()->decreaseNumItems($item['fk_i_city_id']);
             }
 
             $this->dao->delete(DB_TABLE_PREFIX.'t_item_description', "fk_i_item_id = $id") ;
@@ -561,8 +614,77 @@
             $this->dao->delete(DB_TABLE_PREFIX.'t_item_location', "fk_i_item_id = $id") ;
             $this->dao->delete(DB_TABLE_PREFIX.'t_item_stats'   , "fk_i_item_id = $id") ;
             $this->dao->delete(DB_TABLE_PREFIX.'t_item_meta'    , "fk_i_item_id = $id") ;
-            $res = parent::deleteByPrimaryKey($id) ;
-            return $res ;
+            
+            osc_run_hook('delete_item', $id) ;
+            
+            $res = parent::deleteByPrimaryKey($id);
+            return $res ;  
+        }
+        
+        /**
+         * Delete by city
+         *
+         * @access public
+         * @since unknown
+         * @param int $cityId city id
+         * @return bool
+         */
+        public function deleteByCity($cityId)
+        {
+            $this->dao->select('fk_i_item_id');
+            $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
+            $this->dao->where('fk_i_city_id', $cityId) ;
+            $result = $this->dao->get() ;
+            $items  = $result->result() ;
+            $arows = 0;
+            foreach($items as $i) {
+                $arows += $this->deleteByPrimaryKey($i['fk_i_item_id']);
+            }
+            return $arows;
+        }
+        
+        /**
+         * Delete by region
+         *
+         * @access public
+         * @since unknown
+         * @param int $regionId region id
+         * @return bool
+         */
+        public function deleteByRegion($regionId)
+        {
+            $this->dao->select('fk_i_item_id');
+            $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
+            $this->dao->where('fk_i_region_id', $regionId) ;
+            $result = $this->dao->get() ;
+            $items  = $result->result() ;
+            $arows = 0;
+            foreach($items as $i) {
+                $arows += $this->deleteByPrimaryKey($i['fk_i_item_id']);
+            }
+            return $arows;
+        }
+        
+        /**
+         * Delete by country
+         *
+         * @access public
+         * @since unknown
+         * @param int $countryId country id
+         * @return bool
+         */
+        public function deleteByCountry($countryId)
+        {
+            $this->dao->select('fk_i_item_id');
+            $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
+            $this->dao->where('fk_c_country_code', $countryId) ;
+            $result = $this->dao->get() ;
+            $items  = $result->result() ;
+            $arows = 0;
+            foreach($items as $i) {
+                $arows += $this->deleteByPrimaryKey($i['fk_i_item_id']);
+            }
+            return $arows;
         }
         
         /**
@@ -622,7 +744,7 @@
          */
         public function extendCategoryName($items)
         {
-            if(defined('OC_ADMIN')) {
+            if( OC_ADMIN ) {
                 $prefLocale = osc_current_admin_locale();
             } else {
                 $prefLocale = osc_current_user_locale();
@@ -643,7 +765,11 @@
                     $item['s_category_name'] = $item['locale'][$prefLocale]['s_category_name'];
                 } else {
                     $data = current($item['locale']);
-                    $item['s_category_name'] = $data['s_category_name'];
+                    if( isset($data['s_category_name']) ) {
+                        $item['s_category_name'] = $data['s_category_name'];
+                    } else {
+                        $item['s_category_name'] = '';
+                    }
                     unset($data);
                 }
                 $results[] = $item;
@@ -661,17 +787,18 @@
          */
         public function extendData($items)
         {
-            if(defined('OC_ADMIN')) {
+            if( OC_ADMIN ) {
                 $prefLocale = osc_current_admin_locale();
             } else {
                 $prefLocale = osc_current_user_locale();
             }
 
             $results = array();
+            
             foreach ($items as $item) {
                 $this->dao->select() ;
                 $this->dao->from(DB_TABLE_PREFIX.'t_item_description') ;
-                $this->dao->where('fk_i_item_id', $item['pk_i_id']) ;
+                $this->dao->where(DB_TABLE_PREFIX.'t_item_description.fk_i_item_id', $item['pk_i_id']) ;
                 
                 $result = $this->dao->get() ;
                 $descriptions = $result->result() ;
@@ -691,6 +818,23 @@
                     $item['s_description'] = $data['s_description'];
                     unset($data);
                 }
+
+                // populate locations and category_name
+                $this->dao->select(DB_TABLE_PREFIX.'t_item_location.*, '.DB_TABLE_PREFIX.'t_item_stats.*, cd.s_name as s_category_name') ;
+                $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
+                $this->dao->from(DB_TABLE_PREFIX.'t_category_description as cd') ;
+                $this->dao->from(DB_TABLE_PREFIX.'t_item_stats') ;
+                $this->dao->where(DB_TABLE_PREFIX.'t_item_location.fk_i_item_id', $item['pk_i_id']) ;
+                $this->dao->where(DB_TABLE_PREFIX.'t_item_stats.fk_i_item_id', $item['pk_i_id']) ;
+                $this->dao->where('cd.fk_i_category_id', $item['fk_i_category_id']) ;
+                
+                $result = $this->dao->get() ;
+                $extraFields = $result->row() ;
+                
+                foreach($extraFields as $key => $value) {
+                    $item[$key] = $value;
+                }
+                
                 $results[] = $item;
             }
             return $results;

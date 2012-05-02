@@ -21,16 +21,58 @@
     {
         var $mSearch ;
         
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
 
             $this->mSearch = Search::newInstance();
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             osc_run_hook('before_search');
-            $mCategories = new Category() ;
+            $mCategories = Category::newInstance() ;
+
+            if(osc_rewrite_enabled()) {
+                // IF rewrite is not enabled, skip this part, preg_match is always time&resources consuming task
+                $p_sParams = "/".Params::getParam('sParams', false, false);
+                if(preg_match_all('|\/([^,]+),([^\/]*)|', $p_sParams, $m)) {
+                    $l = count($m[0]);
+                    for($k = 0;$k<$l;$k++) {
+                        switch($m[1][$k]) {
+                            case osc_get_preference('rewrite_search_country'):
+                                $m[1][$k] = 'sCountry';
+                                break;
+                            case osc_get_preference('rewrite_search_region'):
+                                $m[1][$k] = 'sRegion';
+                                break;
+                            case osc_get_preference('rewrite_search_city'):
+                                $m[1][$k] = 'sCity';
+                                break;
+                            case osc_get_preference('rewrite_search_city_area'):
+                                $m[1][$k] = 'sCityArea';
+                                break;
+                            case osc_get_preference('rewrite_search_category'):
+                                $m[1][$k] = 'sCategory';
+                                break;
+                            case osc_get_preference('rewrite_search_user'):
+                                $m[1][$k] = 'sUser';
+                                break;
+                            case osc_get_preference('rewrite_search_pattern'):
+                                $m[1][$k] = 'sPattern';
+                                break;
+                            default :
+                                break;
+                        }
+                        $_REQUEST[$m[1][$k]] = $m[2][$k];
+                        $_GET[$m[1][$k]] = $m[2][$k];
+                        unset($_REQUEST['sParams']);
+                        unset($_GET['sParams']);
+                        unset($_POST['sParams']);
+                    }
+                }
+            }
 
             ////////////////////////////////
             //GETTING AND FIXING SENT DATA//
@@ -80,9 +122,17 @@
                 }
             }
 
+            $p_sUser      = Params::getParam('sUser');
+            if(!is_array($p_sUser)) {
+                if($p_sUser == '') {
+                    $p_sUser = '';
+                } else {
+                    $p_sUser = explode(",", $p_sUser);
+                }
+            } 
+
             $p_sPattern   = strip_tags(Params::getParam('sPattern'));
-            $p_sUser      = strip_tags(Params::getParam('sUser'));
-            
+
             // ADD TO THE LIST OF LAST SEARCHES
             if(osc_save_latest_searches()) {
                 if(trim($p_sPattern)!='') {
@@ -98,9 +148,11 @@
 
             //WE CAN ONLY USE THE FIELDS RETURNED BY Search::getAllowedColumnsForSorting()
             $p_sOrder     = Params::getParam('sOrder');
+
             if(!in_array($p_sOrder, Search::getAllowedColumnsForSorting())) {
                 $p_sOrder = osc_default_order_field_at_search() ;
             }
+            $old_order = $p_sOrder;
 
             //ONLY 0 ( => 'asc' ), 1 ( => 'desc' ) AS ALLOWED VALUES
             $p_iOrderType = Params::getParam('iOrderType');
@@ -137,6 +189,7 @@
 
             //FILTERING CATEGORY
             $bAllCategoriesChecked = false ;
+
             if(count($p_sCategory) > 0) {
                 foreach($p_sCategory as $category) {
                     $this->mSearch->addCategory($category);
@@ -171,15 +224,25 @@
 
             // FILTERING PATTERN
             if($p_sPattern != '') {
-                $this->mSearch->addTable(sprintf('%st_item_description as d', DB_TABLE_PREFIX));
-                $this->mSearch->addConditions(sprintf("d.fk_i_item_id = %st_item.pk_i_id", DB_TABLE_PREFIX));
-                $this->mSearch->addConditions(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $p_sPattern));
+                $this->mSearch->addPattern($p_sPattern);
                 $osc_request['sPattern'] = $p_sPattern;
+            } else {
+                // hardcoded - if there isn't a search pattern, order by dt_pub_date desc
+                if($p_sOrder == 'relevance') {
+                    $p_sOrder = 'dt_pub_date';
+                    foreach($allowedTypesForSorting as $k => $v) {
+                        if($p_iOrderType=='desc') {
+                            $orderType = $k;
+                            break;
+                        }
+                    }
+                    $p_iOrderType = $orderType;
+                }
             }
 
             // FILTERING USER
             if($p_sUser != '') {
-                $this->mSearch->fromUser(explode(",", $p_sUser));
+                $this->mSearch->fromUser($p_sUser);
             }
 
             // FILTERING IF WE ONLY WANT ITEMS WITH PICS
@@ -191,7 +254,7 @@
             $this->mSearch->priceRange($p_sPriceMin, $p_sPriceMax);
 
             //ORDERING THE SEARCH RESULTS
-            $this->mSearch->order($p_sOrder, $allowedTypesForSorting[$p_iOrderType]) ;
+            $this->mSearch->order( $p_sOrder, $allowedTypesForSorting[$p_iOrderType]) ;
 
             //SET PAGE
             $this->mSearch->page($p_iPage, $p_iPageSize);
@@ -200,9 +263,9 @@
 
             if(!Params::existParam('sFeed')) {
                 // RETRIEVE ITEMS AND TOTAL
-                $aItems = $this->mSearch->doSearch();
+                $aItems      = $this->mSearch->doSearch();
                 $iTotalItems = $this->mSearch->count();
-                
+
                 $iStart    = $p_iPage * $p_iPageSize ;
                 $iEnd      = min(($p_iPage+1) * $p_iPageSize, $iTotalItems) ;
                 $iNumPages = ceil($iTotalItems / $p_iPageSize) ;
@@ -214,8 +277,11 @@
                 $this->_exportVariableToView('search_start', $iStart) ;
                 $this->_exportVariableToView('search_end', $iEnd) ;
                 $this->_exportVariableToView('search_category', $p_sCategory) ;
+                // hardcoded - non pattern and order by relevance
+                $p_sOrder = $old_order;
                 $this->_exportVariableToView('search_order_type', $p_iOrderType) ;
                 $this->_exportVariableToView('search_order', $p_sOrder) ;
+
                 $this->_exportVariableToView('search_pattern', $p_sPattern) ;
                 $this->_exportVariableToView('search_from_user', $p_sUser) ;
                 $this->_exportVariableToView('search_total_pages', $iNumPages) ;
@@ -229,8 +295,12 @@
                 $this->_exportVariableToView('items', $aItems) ;
                 $this->_exportVariableToView('search_show_as', $p_sShowAs) ;
                 $this->_exportVariableToView('search', $this->mSearch) ;
-                $this->_exportVariableToView('search_alert', base64_encode(serialize($this->mSearch))) ;
-                
+
+                // json
+                $json = $this->mSearch->toJson();
+
+                $this->_exportVariableToView('search_alert', base64_encode($json)) ;
+
                 //calling the view...
                 $this->doView('search.php') ;
 
@@ -239,12 +309,12 @@
                 // RETRIEVE ITEMS AND TOTAL
                 $iTotalItems = $this->mSearch->count();
                 $aItems = $this->mSearch->doSearch();
-                
+
                 $this->_exportVariableToView('items', $aItems) ;
                 if($p_sFeed=='' || $p_sFeed=='rss') {
                     // FEED REQUESTED!
                     header('Content-type: text/xml; charset=utf-8');
-                    
+
                     $feed = new RSSFeed;
                     $feed->setTitle(__('Latest items added') . ' - ' . osc_page_title());
                     $feed->setLink(osc_base_url());
@@ -252,7 +322,6 @@
 
                     if(osc_count_items()>0) {
                         while(osc_has_items()) {
-                            
                             if(osc_count_item_resources() > 0){
                                 osc_has_item_resources();
                                 $feed->addItem(array(
@@ -284,13 +353,14 @@
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_run_hook("before_html");
             osc_current_web_theme_path($file) ;
             Session::newInstance()->_clearVariables();
             osc_run_hook("after_html");
         }
-
     }
 
+    /* file end: ./search.php */
 ?>

@@ -85,23 +85,20 @@
             parent::generic_textarea("body", $commentBody);
         }
 
-        static public function js_validation() {
+        static public function js_validation($admin = false) {
 ?>
 <script type="text/javascript">
     $(document).ready(function(){
         // Code for form validation
         $("form[name=comment_form]").validate({
             rules: {
-                message: {
+                body: {
                     required: true,
                     minlength: 1
                 },
                 authorEmail: {
                     required: true,
                     email: true
-                },
-                authorName: {
-                    required: true
                 }
             },
             messages: {
@@ -109,19 +106,23 @@
                     required: "<?php _e("Email: this field is required"); ?>.",
                     email: "<?php _e("Invalid email address"); ?>."
                 },
-                authorName: {
-                    required: "<?php _e("Name: this field is required"); ?>."
-                },
-                message: {
-                    required: "<?php _e("Message: this field is required"); ?>.",
-                    minlength: "<?php _e("Message: this field is required"); ?>."
+                body: {
+                    required: "<?php _e("Comment: this field is required"); ?>.",
+                    minlength: "<?php _e("Comment: this field is required"); ?>."
                 }
             },
-            errorLabelContainer: "#comment_error_list",
             wrapper: "li",
-            invalidHandler: function(form, validator) {
-                $('html,body').animate({ scrollTop: $('h2').offset().top }, { duration: 250, easing: 'swing'});
-            }
+            <?php if($admin) { ?>
+                errorLabelContainer: "#error_list",
+                invalidHandler: function(form, validator) {
+                    $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+                }
+            <?php } else { ?>
+                errorLabelContainer: "#comment_error_list",
+                invalidHandler: function(form, validator) {
+                    $('html,body').animate({ scrollTop: $('h2').offset().top }, { duration: 250, easing: 'swing'});
+                }
+            <?php }; ?>
         });
     });
 </script>

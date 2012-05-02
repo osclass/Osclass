@@ -89,6 +89,31 @@
          * Find an user by its primary key
          *
          * @access public
+         * @since 2.3.2
+         * @param string $term
+         * @return array
+         */
+        public function ajax($query = '') 
+        {
+            $this->dao->select('pk_i_id as id, s_name as label, s_name as value') ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->like('s_name', $query, 'after') ;
+            $this->dao->limit(0, 10);
+
+            $result = $this->dao->get() ;
+            
+            if( $result == false ) {
+                return array() ;
+            }
+
+            return $result->result() ;
+        }
+
+                
+        /**
+         * Find an user by its primary key
+         *
+         * @access public
          * @since unknown
          * @param int $id
          * @param string $locale
@@ -288,13 +313,7 @@
                 's_info'            => $info
             );
             
-            $res = $this->dao->insert(DB_TABLE_PREFIX.'t_user_description', $array_set) ;
-            
-            if($res) {
-                return true;
-            } else {
-                return false;
-            }
+            return $this->dao->insert(DB_TABLE_PREFIX.'t_user_description', $array_set) ;
         }
         
         /**
@@ -321,14 +340,13 @@
                 'fk_c_locale_code'  => $locale,
                 'fk_i_user_id'      => $id
             );
-            $result = $this->dao->update(DB_TABLE_PREFIX.'t_user_description', array('s_info'    => $info), $array_where) ;
-            return $result;
+            return $this->dao->update(DB_TABLE_PREFIX.'t_user_description', array('s_info'    => $info), $array_where) ;
         }
         
         /**
          * Check if a description exists
          * 
-         * @access public
+         * @access private
          * @since unknown
          * @param array $conditions
          * @return bool
@@ -348,16 +366,67 @@
             }
             
             return (bool) $result;
-        } 
+        }
         
         
+        /**
+         * Return list of users
+         * 
+         * @access public
+         * @since 2.4
+         * @param int $start
+         * @param int $end
+         * @param string $order_column
+         * @param string $order_direction
+         * @parma string $name
+         * @return array
+         */
+        public function search($start = 0, $end = 10, $order_column = 'pk_i_id', $order_direction = 'DESC', $name = '')
+        {
+            // SET data, so we always return a valid object
+            $users = array() ;
+            $users['rows']          = 0 ;
+            $users['total_results'] = 0 ;
+            $users['users']         = array() ;
+
+            $this->dao->select('SQL_CALC_FOUND_ROWS *') ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->orderBy($order_column, $order_direction) ;
+            $this->dao->limit($start, $end) ;
+            if( $name != '' ) {
+                $this->dao->like('s_name', $name) ;
+            }
+            $rs = $this->dao->get() ;
+
+            if( !$rs ) {
+                return $users ;
+            }
+
+            $users['users'] = $rs->result() ;
+
+            $rsRows = $this->dao->query('SELECT FOUND_ROWS() as total') ;
+            $data   = $rsRows->row() ;
+            if( $data['total'] ) {
+                $users['total_results'] = $data['total'] ;
+            }
+
+            $rsTotal = $this->dao->query('SELECT COUNT(*) as total FROM '.$this->getTableName()) ;
+            $data   = $rsTotal->row() ;
+            if( $data['total'] ) {
+                $users['rows'] = $data['total'] ;
+            }
+
+            return $users ;
+        }
+
         /**
          * Return number of users
          * 
          * @since 2.3.6
          * @return int
          */
-        public function countUsers($condition = 'b_enabled = 1 AND b_active = 1') {
+        public function countUsers($condition = 'b_enabled = 1 AND b_active = 1')
+        {
             $this->dao->select("COUNT(*) as i_total") ;
             $this->dao->from(DB_TABLE_PREFIX.'t_user');
             $this->dao->where($condition) ;
@@ -371,7 +440,42 @@
             $row = $result->row() ;
             return $row['i_total'];
         }
+
+        /**
+         * Increase number of items, given a user id
+         *
+         * @access public
+         * @since unknown
+         * @param int $id user id 
+         * @return int number of affected rows, id error occurred return false
+         */
+        public function increaseNumItems($id) 
+        {
+            if(!is_numeric($id)) {
+                return false;
+            }
+            
+            $sql = sprintf('UPDATE %s SET i_items = i_items + 1 WHERE pk_i_id = %d', $this->getTableName(), $id);
+            return $this->dao->query($sql);
+        }
         
+        /**
+         * Decrease number of items, given a user id
+         * 
+         * @access public
+         * @since unknown
+         * @param int $id user id 
+         * @return int number of affected rows, id error occurred return false
+         */
+        public function decreaseNumItems($id)
+        {
+            if(!is_numeric($id)) {
+                return false;
+            }
+            
+            $sql = sprintf('UPDATE %s SET i_items = i_items - 1 WHERE pk_i_id = %d', $this->getTableName(), $id);
+            return $this->dao->query($sql);
+        }
     }
 
     /* file end: ./oc-includes/osclass/model/User.php */

@@ -147,13 +147,7 @@
 
         public function setNumItems($categoryID, $numItems)
         {
-            $result = $this->insert( array('fk_i_category_id' => $categoryID, 'i_num_items' => $numItems) ) ;
-
-            if( $this->dao->getErrorLevel() == '1062' ) {
-                $result = $this->update( array('i_num_items' => $numItems), array('fk_i_category_id' => $categoryID) ) ;
-            }
-
-            return $result ;
+            return $this->dao->query("INSERT INTO ".$this->getTableName()." (fk_i_category_id, i_num_items) VALUES ($categoryID, $numItems) ON DUPLICATE KEY UPDATE i_num_items = ".$numItems) ;
         }
 
         /**

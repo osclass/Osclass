@@ -46,103 +46,132 @@
                     $cities = City::newInstance()->ajax(Params::getParam("term"));
                     echo json_encode($cities);
                     break;
-                case 'alerts': // Allow to register to an alert given (not sure it's used on admin)
-                    $alert = Params::getParam("alert");
-                    $email = Params::getParam("email");
-                    $userid = Params::getParam("userid");
-                    if ($alert != '' && $email != '') {
-                        Alerts::newInstance()->insert(array('fk_i_user_id' => $userid, 's_email' => $email, 's_search' => $alert, 'e_type' => 'DAILY'));
-                        echo "1";
-                        return true;
+                case 'userajax': // This is the autocomplete AJAX
+                    $users = User::newInstance()->ajax(Params::getParam("term"));
+                    if(count($users)==0) {
+                        echo json_encode(array(0 => array('id'=> '', 'label' => __('No results'), 'value' => __('No results')) ));
+                    } else {
+                        echo json_encode($users);
                     }
-                    echo '0';
                     break;
-                case 'runhook': //Run hooks
-                    $hook = Params::getParam("hook");
-                    switch ($hook) {
+                case 'date_format':
+                    echo json_encode(array('format' => Params::getParam('format'), 'str_formatted' => osc_format_date(date(Params::getParam('format')))));
+                    break;
+                case 'runhook': // run hooks
+                    $hook = Params::getParam('hook');
+
+                    if($hook == '') {
+                        echo json_encode(array('error' => 'hook parameter not defined')) ;
+                        break;
+                    }
+
+                    switch($hook) {
                         case 'item_form':
-                            $catId = Params::getParam("catId");
-                            if ($catId != '') {
-                                osc_run_hook("item_form", $catId);
-                            } else {
-                                osc_run_hook("item_form");
-                            }
-                            break;
+                            osc_run_hook('item_form', Params::getParam('catId'));
+                        break;
                         case 'item_edit':
-                            $catId = Params::getParam("catId");
+                            $catId  = Params::getParam("catId");
                             $itemId = Params::getParam("itemId");
                             osc_run_hook("item_edit", $catId, $itemId);
-                            break;
+                        break;
                         default:
-                            if ($hook == '') {
-                                return false;
-                            } else {
-                                osc_run_hook($hook);
-                            }
-                            break;
+                            osc_run_hook('ajax_admin_' . $hook);
+                        break;
                     }
-                    break;
+                break;
                 case 'items': // Return items (use external file oc-admin/ajax/item_processing.php)
                     require_once osc_admin_base_path() . 'ajax/items_processing.php';
                     $items_processing = new ItemsProcessingAjax(Params::getParamsAsArray("get"));
+                    break;
+                case 'users': // Return items (use external file oc-admin/ajax/item_processing.php)
+                    require_once osc_admin_base_path() . 'ajax/users_processing.php';
+                    $users_processing = new UsersProcessingAjax(Params::getParamsAsArray("get"));
                     break;
                 case 'media': // Return items (use external file oc-admin/ajax/media_processing.php)
                     require_once osc_admin_base_path() . 'ajax/media_processing.php';
                     $media_processing = new MediaProcessingAjax(Params::getParamsAsArray("get"));
                     break;
                 case 'categories_order': // Save the order of the categories
-                    $aIds = Params::getParam('list');
-                    $orderParent = 0;
-                    $orderSub = 0;
-                    $catParent = 0;
+                    $aIds        = Params::getParam('list') ;
+                    $orderParent = 0 ;
+                    $orderSub    = 0 ;
+                    $catParent   = 0 ;
+                    $error       = 0 ;
 
-                    $catManager = Category::newInstance();
-
-                    foreach ($aIds as $id => $parent) {
-                        if ($parent == 'root') {
-                            $res = $catManager->updateOrder($id, $orderParent);
-                            if (is_bool($res) && !$res) {
-                                $error = 1;
+                    $catManager = Category::newInstance() ;
+                    $aRecountCat = array();
+                    
+                    foreach($aIds as $id => $parent) {
+                        if( $parent == 'root' ) {
+                            $res = $catManager->updateOrder($id, $orderParent) ;
+                            if( is_bool($res) && !$res ) {
+                                $error = 1 ;
                             }
+                            
+                            // find category
+                            $auxCategory = Category::newInstance()->findByPrimaryKey($id);
+                            
                             // set parent category 
-                            $conditions = array('pk_i_id' => $id);
-                            $array['fk_i_parent_id'] = NULL;
-                            $res = $catManager->update($array, $conditions);
-                            if (is_bool($res) && !$res) {
-                                $error = 1;
+                            $conditions = array('pk_i_id' => $id) ;
+                            $array['fk_i_parent_id'] = NULL ;
+                            $res = $catManager->update($array, $conditions) ;
+                            if( is_bool($res) && !$res ) {
+                                $error = 1 ;
+                            } else if($res==1) { // updated ok
+                                $parentId = $auxCategory['fk_i_parent_id'];
+                                if($parentId) {
+                                    // update parent category stats
+                                    array_push($aRecountCat, $id);
+                                    array_push($aRecountCat, $parentId);
+                                }
+                                
                             }
-                            $orderParent++;
+                            $orderParent++ ;
                         } else {
-                            if ($parent != $catParent) {
-                                $catParent = $parent;
-                                $orderSub = 0;
+                            if( $parent != $catParent ) {
+                                $catParent = $parent ;
+                                $orderSub  = 0 ;
                             }
-                            
-                            $res = $catManager->updateOrder($id, $orderSub);
-                            if (is_bool($res) && !$res ) {
-                                $error = 1;
+
+                            $res = $catManager->updateOrder($id, $orderSub) ;
+                            if( is_bool($res) && !$res ) {
+                                $error = 1 ;
                             }
 
                             // set parent category 
-                            $conditions = array('pk_i_id' => $id);
-                            $array['fk_i_parent_id'] = $catParent;
+                            $auxCategory = Category::newInstance()->findByPrimaryKey($id);
+                            $auxCategoryP = Category::newInstance()->findByPrimaryKey($catParent);
                             
-                            $res = $catManager->update($array, $conditions);
-                            if (is_bool($res) && !$res) {
-                                $error = 1;
+                            $conditions = array('pk_i_id' => $id) ;
+                            $array['fk_i_parent_id'] = $catParent ;
+
+                            $res = $catManager->update($array, $conditions) ;
+                            if( is_bool($res) && !$res ) {
+                                $error = 1 ;
+                            } else if($res==1) { // updated ok
+                                // update category parent
+                                $prevParentId = $auxCategory['fk_i_parent_id'];
+                                $parentId = $auxCategoryP['pk_i_id'];
+                                array_push($aRecountCat, $prevParentId);
+                                array_push($aRecountCat, $parentId);
                             }
-                            $orderSub++;
+                            $orderSub++ ;
                         }
                     }
 
-                    if($error) {
+                    // update category stats
+                    foreach($aRecountCat as $rId) {
+                        osc_update_cat_stats_id($rId);
+                    }
+                    
+                    if( $error ) {
                         $result = array( 'error' => __("Some error ocurred") ) ;
                     } else {
-                        $result = array( 'ok' => __("Order saved") ) ;
+                        $result = array( 'ok' => __("Order saved")) ;
                     }
+
                     echo json_encode($result) ;
-                    
-                    break;
+                break ;
                 case 'category_edit_iframe':
                     $this->_exportVariableToView( 'category', Category::newInstance()->findByPrimaryKey( Params::getParam("id") ) ) ;
                     $this->_exportVariableToView( 'languages', OSCLocale::newInstance()->listAllEnabled() ) ;
@@ -167,8 +196,18 @@
                         Field::newInstance()->cleanCategoriesFromField(Params::getParam("id"));
                         // no error... continue updating fields
                         if($error == 0) {
-                            $slug = Params::getParam("field_slug") != '' ? Params::getParam("field_slug") : Params::getParam("id");
-                            $slug = preg_replace('|([-]+)|', '-', preg_replace('|[^a-z0-9_-]|', '-', strtolower($slug)));
+                            $slug = Params::getParam("field_slug") != '' ? Params::getParam("field_slug") : Params::getParam("s_name");
+                            $slug_tmp = $slug = preg_replace('|([-]+)|', '-', preg_replace('|[^a-z0-9_-]|', '-', strtolower($slug)));
+                            $slug_k = 0;
+                            while(true) {
+                                $field = Field::newInstance()->findBySlug($slug);
+                                if(!$field || $field['pk_i_id']==Params::getParam("id")) {
+                                    break;
+                                } else {
+                                    $slug_k++;
+                                    $slug = $slug_tmp."_".$slug_k;
+                                }
+                            }
                             $res = Field::newInstance()->update(array('s_name' => Params::getParam("s_name"), 'e_type' => Params::getParam("field_type"), 's_slug' => $slug, 'b_required' => Params::getParam("field_required") == "1" ? 1 : 0, 's_options' => Params::getParam('s_options')), array('pk_i_id' => Params::getParam("id")));
                             if(is_bool($res) && !$res) {
                                 $error = 1;
@@ -196,7 +235,7 @@
                     if($error) {
                         $result = array( 'error' => $message) ;
                     } else {
-                        $result = array( 'ok' => __("Saved") , 'text' => Params::getParam("s_name")) ;
+                        $result = array( 'ok' => __("Saved") , 'text' => Params::getParam("s_name"), 'field_id' => $field['pk_i_id']) ;
                     }
                     
                     echo json_encode($result) ;
@@ -224,6 +263,27 @@
                     echo json_encode($result) ;
 
                     break;
+                case 'add_field':
+                    $s_name = __('NEW custom field');
+                    $slug_tmp = $slug = preg_replace('|([-]+)|', '-', preg_replace('|[^a-z0-9_-]|', '-', strtolower($s_name)));
+                    $slug_k = 0;
+                    while(true) {
+                        $field = Field::newInstance()->findBySlug($slug);
+                        if(!$field || $field['pk_i_id']==Params::getParam("id")) {
+                            break;
+                        } else {
+                            $slug_k++;
+                            $slug = $slug_tmp."_".$slug_k;
+                        }
+                    }
+                    $fieldManager = Field::newInstance();
+                    $result = $fieldManager->insertField($s_name, 'TEXT', $slug, 0, '', array()) ;
+                    if($result) {
+                        echo json_encode(array('error' => 0, 'field_id' => $fieldManager->dao->insertedId(), 'field_name' => $s_name));
+                    } else {
+                        echo json_encode(array('error' => 1));
+                    }
+                    break;
                 case 'enable_category':
                     $id       = strip_tags( Params::getParam('id') ) ;
                     $enabled  = (Params::getParam('enabled') != '') ? Params::getParam('enabled') : 0 ;
@@ -247,10 +307,14 @@
 
                         $subCategories = $mCategory->findSubcategories( $id ) ;
 
+                        $aIds = array($id);
                         $aUpdated[] = array('id' => $id) ;
                         foreach( $subCategories as $subcategory ) {
+                            $aIds[]     = $subcategory['pk_i_id'];
                             $aUpdated[] = array( 'id' => $subcategory['pk_i_id'] ) ;
                         }
+                        
+                        Item::newInstance()->enableByCategory($enabled, $aIds);
 
                         if( $enabled ) {
                             $result = array(
@@ -360,37 +424,49 @@
                     
                     break;
                 case 'custom': // Execute via AJAX custom file
-                    $ajaxfile = Params::getParam("ajaxfile");
-                    if ($ajaxfile != '') {
-                        require_once osc_admin_base_path() . $ajaxfile;
-                    } else {
-                        echo json_encode(array('error' => __('no action defined')));
+                    $ajaxFile = Params::getParam("ajaxfile");
+
+                    if($ajaxFile == '') {
+                        echo json_encode(array('error' => 'no action defined'));
+                        break ;
                     }
-                    break;
+
+                    // valid file?
+                    if( stripos($ajaxFile, '../') !== false ) {
+                        echo json_encode(array('error' => 'no valid ajaxFile'));
+                        break ;
+                    }
+
+                    if( !file_exists(osc_plugins_path() . $ajaxFile) ) {
+                        echo json_encode(array('error' => "ajaxFile doesn't exist"));
+                        break;
+                    }
+
+                    require_once osc_plugins_path() . $ajaxFile ;
+                break;
                 case 'test_mail':
-                    $title = __('Test email').", ".osc_page_title();
-                    $body  = __("Test email")."<br><br>".osc_page_title();
+                    $title = sprintf( __('Test email, %s'), osc_page_title() ) ;
+                    $body  = __("Test email") . "<br><br>" . osc_page_title() ;
 
                     $emailParams = array(
-                                'subject'  => $title
-                                ,'to'       => osc_contact_email()
-                                ,'to_name'  => 'admin'
-                                ,'body'     => $body
-                                ,'alt_body' => $body
+                        'subject'  => $title,
+                        'to'       => osc_contact_email(),
+                        'to_name'  => 'admin',
+                        'body'     => $body,
+                        'alt_body' => $body
                     ) ;
 
-                    $array = array();
+                    $array = array() ;
                     if( osc_sendMail($emailParams) ) {
-                        $array = array('status' => '1', 'html' => __('Email sent successfully'));
+                        $array = array('status' => '1', 'html' => __('Email sent successfully') ) ;
                     } else {
-                        $array = array('status' => '0', 'html' => __('An error has occurred while sending email'));
+                        $array = array('status' => '0', 'html' => __('An error has occurred while sending email') ) ;
                     }
-                    echo json_encode($array);
+                    echo json_encode($array) ;
                     break;
                 case 'order_pages':
                     $order = Params::getParam("order");
                     $id    = Params::getParam("id");
-                    $count = osc_count_static_pages();
                     if($order != '' && $id != '') {
                         $mPages = Page::newInstance();
                         $actual_page  = $mPages->findByPrimaryKey($id);
@@ -401,63 +477,47 @@
                         $new_order = $actual_order;
 
                         if($order == 'up') {
-                            if($actual_order > 0) {
-                                $new_order = $actual_order-1;
-                            }
+                            $page = $mPages->findPrevPage($actual_order);
                         } else if($order == 'down') {
-                            if($actual_order != ($count-1)) {
-                                $new_order = $actual_order+1;
-                            }
+                            $page = $mPages->findNextPage($actual_order);
+                        }
+                        if(isset($page['i_order'])) {
+                            $mPages->update(array('i_order' => $page['i_order']), array('pk_i_id' => $id));
+                            $mPages->update(array('i_order' => $actual_order), array('pk_i_id' => $page['pk_i_id']));
                         }
                         
-                        if($new_order != $actual_order) {
-                            $auxpage = $mPages->findByOrder($new_order);
-
-                            $array      = array('i_order' => $actual_order );
-                            $conditions = array('pk_i_id' => $auxpage['pk_i_id']);
-                            $mPages->update($array, $conditions);
-
-                            $array      = array('i_order' => $new_order );
-                            $conditions = array('pk_i_id' => $id);
-                            $mPages->update($array, $conditions);
-
-                        }
                         // TO BE IMPROVED
                         // json for datatables
-                        $prefLocale = osc_current_admin_locale();
-                        $aPages = $mPages->listAll(0);
-                        $json = "[";
-                        foreach($aPages as $key => $page) {
+                        $prefLocale = osc_current_user_locale() ;
+                        $this->_exportVariableToView( 'pages', $mPages->listAll(0) ) ;
+                        $o_json = array() ;
+                        while( osc_has_static_pages() ) {
+                            $row  = array() ;
+                            $page = osc_static_page();
 
-                            $body = array();
-                            
-                            if(isset($page['locale'][$prefLocale]) && !empty($page['locale'][$prefLocale]['s_title'])) {
-                                $body = $page['locale'][$prefLocale];
+                            $content = array() ;
+                            if( isset($page['locale'][$prefLocale]) && !empty($page['locale'][$prefLocale]['s_title']) ) {
+                                $content = $page['locale'][$prefLocale] ;
                             } else {
-                                $body = current($page['locale']);
+                                $content = current($page['locale']) ;
                             }
-                            $p_body =  str_replace("'", "\'", trim(strip_tags($body['s_title']), "\x22\x27"));
 
-                            $json .= "[\"<input type='checkbox' name='id[]' value='". $page['pk_i_id'] ."' />\",";
-                            $json .= "\"".osc_esc_html($page['s_internal_name'])."<div id='datatables_quick_edit'>";
-                            $json .= "<a href='". osc_static_page_url() ."'>". __('View page') ."</a> | ";
-                            $json .= "<a href='". osc_admin_base_url(true) ."?page=pages&action=edit&id=". $page['pk_i_id'] ."'>";
-                            $json .= __('Edit') ."</a>";
-                            if(!$page['b_indelible']) {
-                                $json .= " | ";
-                                $json .= "<a onclick=\\\"javascript:return confirm('";
-                                $json .= __('This action can\\\\\'t be undone. Are you sure you want to continue?') ."')\\\" ";
-                                $json .= " href='". osc_admin_base_url(true) ."?page=pages&action=delete&id=". $page['pk_i_id'] ."'>";
-                                $json .= __('Delete') ."</a>";
+                            $options   = array() ;
+                            $options[] = '<a href="' . osc_static_page_url() . '">' . __('View page') . '</a>' ;
+                            $options[] = '<a href="' . osc_admin_base_url(true) . '?page=pages&amp;action=edit&amp;id=' . osc_static_page_id() . '">' . __('Edit') . '</a>' ;
+                            if( !$page['b_indelible'] ) {
+                                $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js("This action can't be undone. Are you sure you want to continue?") . '\')" href="' . osc_admin_base_url(true) . '?page=pages&amp;action=delete&amp;id=' . osc_static_page_id() . '">' . __('Delete') . '</a>' ;
                             }
-                            $json .= "</div>\",";
-                            $json .= "\"".$p_body."\",";
-                            $json .= "\"<img id='up' onclick='order_up(". $page['pk_i_id'] .");' style='cursor:pointer;width:15;height:15px;' src='". osc_current_admin_theme_url('images/arrow_up.png') ."'/> <br/> <img id='down' onclick='order_down(". $page['pk_i_id'] .");' style='cursor:pointer;width:15;height:15px;' src='". osc_current_admin_theme_url('images/arrow_down.png')."'/>\"]";
 
-                            if( $key != count($aPages)-1 ){ $json .= ','; } else { $json .= ''; }
+                            $row[] = '<input type="checkbox" name="id[]"" value="' . osc_static_page_id() . '"" />' ;
+                            $row[] = $page['s_internal_name'] . '<div id="datatables_quick_edit" style="display: none;">' . implode(' &middot; ', $options) . '</div>' ;
+                            $row[] = $content['s_title'] ;
+                            $row[] = osc_static_page_order() . ' <img id="up" onclick="order_up(' . osc_static_page_id() . ');" style="cursor:pointer; width:15px; height:15px;" src="' . osc_current_admin_theme_url('images/arrow_up.png') . '"/> <br/><img id="down" onclick="order_down(' . osc_static_page_id() . ');" style="cursor:pointer; width:15px; height:15px; margin-left: 10px;" src="' . osc_current_admin_theme_url('images/arrow_down.png') .'"/>' ;
+
+                            $o_json[] = $row ;
                         }
-                        $json .= "]";
-                        echo $json;
+
+                        echo json_encode($o_json) ;
                     }
 
                     break;
@@ -468,7 +528,6 @@
                 case 'upgrade': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
                     $message = "";
                     $error = 0;
-                    $remove_error_msg = "";
                     $sql_error_msg = "";
                     $rm_errors = 0;
                     $perms = osc_save_permissions();
@@ -514,20 +573,6 @@
                                     closedir($handle);
 
                                     if ($fail == 0) { // Everything is OK, continue
-                                        /**********************
-                                         **** REMOVE FILES ****
-                                         **********************/
-                                        if (file_exists(ABS_PATH . 'oc-temp/remove.list')) {
-                                            $lines = file(ABS_PATH . 'oc-temp/remove.list', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-                                            foreach ($lines as $line_num => $r_file) {
-                                                $unlink = @unlink(ABS_PATH . $r_file);
-                                                if (!$unlink) {
-                                                    $remove_error_msg .= sprintf(__('Error removing file: %s'), $r_file) . "<br/>";
-                                                }
-                                            }
-                                        }
-                                        // Removing files is not important for the rest of the proccess
-                                        // We will inform the user of the problems but the upgrade could continue
                                         /************************
                                          *** UPGRADE DATABASE ***
                                          ************************/
@@ -607,12 +652,6 @@
                         $error = 1; // Missing download URL
                     }
 
-                    if ($remove_error_msg != '') {
-                        if ($error == 0) {
-                            $message .= "<br /><br />" . __('We had some errors removing files, those are not super-sensitive errors, so we continued upgrading your installation. Please remove the following files (you already have OSClass upgraded, but to ensure maximun performance)');
-                        }
-                    }
-
                     if ($error == 5) {
                         $message .= "<br /><br />" . __('We had some errors upgrading your database. The follwing queries failed') . implode("<br />", $sql_error_msg);
                     }
@@ -620,6 +659,48 @@
 
                     foreach ($perms as $k => $v) {
                         @chmod($k, $v);
+                    }
+                    break;
+                    
+                case 'location_stats':
+                    $workToDo = LocationsTmp::newInstance()->count() ;
+                    if( $workToDo > 0 ) {
+                        // there are wotk to do
+                        $aLocations = LocationsTmp::newInstance()->getLocations(1000) ;
+                        foreach($aLocations as $location) {
+                            $id     = $location['id_location'];
+                            $type   = $location['e_type'];
+                            $data   = 0; 
+                            // update locations stats
+                            switch ( $type ) {
+                                case 'COUNTRY':
+                                    $numItems = CountryStats::newInstance()->calculateNumItems( $id ) ;
+                                    $data = CountryStats::newInstance()->setNumItems($id, $numItems) ;
+                                    unset($numItems) ;
+                                break;
+                                case 'REGION' :
+                                    $numItems = RegionStats::newInstance()->calculateNumItems( $id ) ;
+                                    $data = RegionStats::newInstance()->setNumItems($id, $numItems) ;
+                                    unset($numItems) ;
+                                break;
+                                case 'CITY' :
+                                    $numItems = CityStats::newInstance()->calculateNumItems( $id ) ;
+                                    $data = CityStats::newInstance()->setNumItems($id, $numItems) ;
+                                    unset($numItems) ;
+                                break;
+                                default:
+                                break;
+                            }
+                            if($data >= 0) {
+                                LocationsTmp::newInstance()->delete(array('e_type' => $location['e_type'], 'id_location' => $location['id_location']) ) ;
+                            }
+                        }
+                        $array['status']  = 'more';
+                        $array['pending'] = $workToDo = LocationsTmp::newInstance()->count() ;
+                        echo json_encode($array);
+                    } else {
+                        $array['status']  = 'done';
+                        echo json_encode($array);
                     }
                     break;
                 default:

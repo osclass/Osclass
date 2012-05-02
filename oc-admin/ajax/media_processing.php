@@ -19,116 +19,139 @@
      
      class MediaProcessingAjax
      {
-        private $items;
-        private $result;
-        private $toJSON;
-        private $toDatatables;
+        private $media ;
+        private $result ;
+        private $toJSON ;
 
-        private $limit;
-        private $start;
-        private $total;
-        private $search;
-        private $order_by = array();
-        private $stat;
-        private $extraCols = 0;
-        private $sExtraCol = array();
+        private $resourceID = null ;
+        private $limit ;
+        private $start ;
+        private $total ;
+        private $total_filtered ;
+        private $order_by = array() ;
 
-        private $column_names  = 
-            array(  0=> 'r.pk_i_id',
-                    1=> 'r.pk_i_id',
-                    2=> 'r.pk_i_id',
-                    3=> 'r.fk_i_item_id',
-                    4=> 'c.dt_pub_date');
-
+        private $column_names  = array(
+            0 => 'r.pk_i_id',
+            1 => 'r.pk_i_id',
+            2 => 'r.pk_i_id',
+            3 => 'r.fk_i_item_id',
+            4 => 'c.dt_pub_date'
+        ) ;
 
         /* For Datatables */
-        private $sOutput = null;
         private $sEcho = null;
-        private $filters = array();
+        private $_get ;
 
-        private $_get;
-
-        function __construct($params) {
-
-            $this->_get = $params;
-            $this->getDBParams();
+        function __construct($params)
+        {
+            $this->_get = $params ;
+            $this->getDBParams() ;
             
-            $this->result = ItemResource::newInstance()->getResources(Params::getParam('resourceId'), $this->_get['iDisplayStart'], $this->_get['iDisplayLength'], isset($this->order_by['column_name'])?$this->order_by['column_name']:'pk_i_id', isset($this->order_by['type'])?$this->order_by['type']:'desc');
-            
-            $this->filtered_total = ItemResource::newInstance()->countResources(Params::getParam('resourceId'));
-            $this->total = ItemResource::newInstance()->countResources('');
+            $this->media          = ItemResource::newInstance()->getResources($this->resourceID, $this->start, $this->limit, ( $this->order_by['column_name'] ? $this->order_by['column_name'] : 'pk_i_id' ), ( $this->order_by['type'] ? $this->order_by['type'] : 'desc' ) ) ;
+            $this->total          = ItemResource::newInstance()->countResources() ;
+            if( $this->resourceID == null ) {
+                $this->total_filtered = $this->total ;
+            } else {
+                $this->total_filtered = ItemResource::newInstance()->countResources( $this->resourceID ) ;
+            }
 
-            $this->toDatatablesFormat();
-            $this->dumpToDatatables();
+            $this->toDatatablesFormat() ;
+            $this->dumpToDatatables() ;
         }
 
-        function __destruct() {
-            unset($this->_get);
+        function __destruct()
+        {
+            unset($this->_get) ;
         }
 
-        private function getDBParams() {
-            
-            foreach($this->_get as $k=>$v) {
-                if($k == 'iDisplayStart') $this->start = intval($v);
-                if($k == 'iDisplayLength') $this->limit = intval($v);
-                if($k == 'sEcho') $this->sEcho = intval($v);
+        private function getDBParams()
+        {
+            foreach($this->_get as $k => $v) {
+                if( ( $k == 'resourceId' ) && !empty($v) ) {
+                    $this->resourceID = intval($v) ;
+                }
+                if( $k == 'iDisplayStart' ) {
+                    $this->start = intval($v) ;
+                }
+                if( $k == 'iDisplayLength' ) {
+                    $this->limit = intval($v) ;
+                }
+                if( $k == 'sEcho' ) {
+                    $this->sEcho = intval($v) ;
+                }
 
                 /* for sorting */
-                if($k == 'iSortCol_0') {
-                    $this->order_by['column_name'] = $this->column_names[$v];
+                if( $k == 'iSortCol_0' ) {
+                    $this->order_by['column_name'] = $this->column_names[$v] ;
                 }
-                if($k == 'sSortDir_0') $this->order_by['type'] = $v;
+                if( $k == 'sSortDir_0' ) {
+                    $this->order_by['type'] = $v ;
+                }
             }
         }
 
         /* START - format functions */
-        private function toDatatablesFormat() {
-            $this->sOutput = '{';
-            $this->sOutput .= '"iTotalRecords": '.($this->total).', ';
-            $this->sOutput .= '"iTotalDisplayRecords": '.($this->filtered_total).', ';
-            $this->sOutput .= '"iExtraCols": '.($this->extraCols).', ';
+        private function toDatatablesFormat()
+        {
+            $this->result['iTotalRecords']        = $this->total_filtered ;
+            $this->result['iTotalDisplayRecords'] = $this->total ;
+            $this->result['sEcho']                = $this->sEcho ;
+            $this->result['aaData']               = array() ;
 
-            $this->sOutput .= '"sExtraCols": [';
-            $this->sOutput .= '], ';
-
-            $this->sOutput .= '"aaData": [ ';
-
-            if(count($this->result)>0) {
-                $count = 0;
-                foreach ($this->result as $r) {
-                    $this->sOutput .= "[";
-                    $this->sOutput .= "\"<input type='checkbox' name='id[]' value='".$r['pk_i_id']."' />\",";
-                    $this->sOutput .= "\"<div id='media_list_pic'><img src='".osc_apply_filter('resource_path', osc_base_url().$r['s_path']).$r['pk_i_id']."_thumbnail.".$r['s_extension']."' style='max-width: 60px; max-height: 60px;' /></div> <div id='media_list_filename'>".$r['s_content_type']."\",";
-                    $this->sOutput .= "\"<a onclick='javascript:return confirm(\'".__('This action can not be undone. Are you sure you want to continue?')."\')\' href='".osc_admin_base_url(true)."?page=media&action=delete&amp;id[]=".$r['pk_i_id']."' id='dt_link_delete'>".__('Delete')."</a>\",";
-                    $this->sOutput .= "\"<a target='_blank' href='".osc_item_url_ns($r['fk_i_item_id'])."'>item #".$r['fk_i_item_id']."</a>\",";
-					$this->sOutput .= "\"".$r['dt_pub_date']."\"";
-                    if(end($this->result) == $r) {
-                        $this->sOutput .= "]";
-
-                    } else {
-                        $this->sOutput .= "],";
-                    }
-                }
+            if( count($this->media) == 0 ) {
+                return ;
             }
-            $this->sOutput .= ']}';
 
+            $count = 0 ;
+            foreach($this->media as $aRow) {
+                $row = array() ;
+
+                $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" />' ;
+                $row[] = '<div id="media_list_pic"><img src="' . osc_apply_filter('resource_path', osc_base_url() . $aRow['s_path']) . $aRow['pk_i_id'] . '_thumbnail.' . $aRow['s_extension'] . '" style="max-width: 60px; max-height: 60px;" /></div> <div id="media_list_filename">' . $aRow['s_content_type'] ;
+                $row[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js( __('This action can not be undone. Are you sure you want to continue?') ) . '\')" href="' . osc_admin_base_url(true) . '?page=media&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '" id="dt_link_delete">' . __('Delete') . '</a>' ;
+                $row[] = '<a target="_blank" href="' . osc_item_url_ns($aRow['fk_i_item_id']) . '">item #' . $aRow['fk_i_item_id'] . '</a>' ;
+                $row[] = $aRow['dt_pub_date'] ;
+
+                $count++ ;
+                $this->result['aaData'][] = $row ;
+            }
         }
 
-        private function toJSON($result) {
-            $this->toJSON = json_encode($result);
+        /**
+         * Set toJson variable with the JSON representation of $result
+         * 
+         * @access private
+         * @since unknown
+         * @param array $result
+         */
+        private function toJSON($result)
+        {
+            $this->toJSON = json_encode($result) ;
         }
-        /* END - format functions */
 
-        /* START - dump results */
-        private function dumpResult() {
-            $this->toJSON($this->result);
-            echo $this->toJSON();
+        /**
+         * Dump $result to JSON and echo the result
+         * 
+         * @access private
+         * @since unknown 
+         */
+        private function dumpResult()
+        {
+            $this->toJSON($this->result) ;
+            echo $this->toJSON ;
         }
 
-        private function dumpToDatatables() {
-            echo str_replace("\'", "'", $this->sOutput);
+        /**
+         * Dump $result
+         * 
+         * @access private
+         * @since unknown 
+         */
+        private function dumpToDatatables()
+        {
+            $this->dumpResult() ;
         }
-        /* END - dump results */
      }
-     
+
+     /* file end: ./oc-admin/ajax/media_processing.php */
 ?>

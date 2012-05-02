@@ -16,345 +16,373 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $users      = __get("users");
-    $stat       = __get("stat") ;
-    $categories = __get("categories");
-    $countries  = __get("countries");
-    $regions    = __get("regions");
-    $cities     = __get("cities");
-    
-?>
+    $users      = __get('users') ;
+    $stat       = __get('stat') ;
+    $categories = __get('categories') ;
+    $countries  = __get('countries') ;
+    $regions    = __get('regions') ;
+    $cities     = __get('cities') ;
 
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <div id="update_version" style="display:none;"></div>
-        <script type="text/javascript">
-            $(document).ready(function(){
-                if (typeof $.uniform != 'undefined') {
-                    $('textarea, button,select, input:file').uniform();
-                }
-            });
-        </script>
-        <style>
-            fieldset {
-                width: 100px;
-            }
-            fieldset label{
-               width: 100px;
-               display: inline-block;
-            }
-            .row {
-               height: 32px;
-            }
-            .row > label {
-                width: 100px;
-                padding-top: 10px;
-                display: inline-block;
-            }
-            fieldset div.selector {
-                width: 70px;
-            }
-            fieldset div.selector span{
-                width: 40px;
-            }
-            #uniform-select_range{
-                width: 70px;
-            }
-            #uniform-select_range span{
-                width: 40px;
-            }
-       </style>
-        <?php ItemForm::location_javascript('admin'); ?>
+        <link href="<?php echo osc_current_admin_theme_styles_url('datatables.css') ; ?>" rel="stylesheet" type="text/css" />
+        <!-- datatables js -->
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.dataTables.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.pagination.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.extend.js') ; ?>"></script>
         <script type="text/javascript">
             $(function() {
-                oTable = new osc_datatable();
-                oTable.fnInit({
-                    'idTable'       : 'datatables_list',
-                    "sAjaxSource": "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=items<?php if(Params::getParam('catId') != ""):?>&catId=<?php echo Params::getParam('catId');?><?php endif; ?>",
-                    'iDisplayLength': '10',
-                    'iColumns'      : '8',
-                    'oLanguage'     : {
-                            "sInfo":         "<?php _e('Showing _START_ to _END_ of _TOTAL_ entries') ; ?>"
-                            ,"sZeroRecords":  "<?php _e('No matching records found') ; ?>"
-                            ,"sInfoFiltered": "(<?php _e('filtered from _MAX_ total entries') ; ?>)"
-                            ,"oPaginate": {
-                                        "sFirst":    "<?php _e('First') ; ?>",
-                                        "sPrevious": "<?php _e('Previous') ; ?>",
-                                        "sNext":     "<?php _e('Next') ; ?>",
-                                        "sLast":     "<?php _e('Last') ; ?>"
-                                    }
+                oTable = $('#datatables_list').dataTable({
+                    "sAjaxSource": "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=items<?php if( Params::getParam('catId') != '' ) { ?>&catId=<?php echo Params::getParam('catId') ; } ?>",
+                    "fnServerParams": function ( aoData ) {
+                        if( $('input[name="sSearch"]').val() ) {
+                            aoData.push({
+                                "name": "sSearch",
+                                "value": $('input[name="sSearch"]').val()
+                            }) ;
+                        }
+                        if( $('input[name="pk_i_id"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_itemIdValue",
+                                "value": $('input[name="pk_i_id"]').val()
+                            }) ;
+                        }
+                        if( $('select[name="userId"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_userIdValue",
+                                "value": $('select[name="userId"]').val()
+                            }) ;
+                        }
+                        if( $('select[name="countryId"]').val() ) {
+
+                            aoData.push({
+                                "name": "fCol_countryId",
+                                "value": $('select[name="countryId"]').val()
+                            }) ;
+                        }
+                        if( $('input[name="country"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_country",
+                                "value": $('input[name="country"]').val()
+                            }) ;
+                        }
+                        if( $('select[name="regionId"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_regionId",
+                                "value": $('select[name="regionId"]').val()
+                            }) ;
+                        }
+                        if( $('input[name="region"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_region",
+                                "value": $('input[name="region"]').val()
+                            }) ;
+                        }
+                        if( $('select[name="cityId"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_cityId",
+                                "value": $('select[name="cityId"]').val()
+                            }) ;
+                        }
+                        if( $('input[name="city"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_city",
+                                "value": $('input[name="city"]').val()
+                            }) ;
+                        }
+                        if( $('select[name="catId"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_catId",
+                                "value": $('select[name="catId"]').val()
+                            }) ;
+                        }
+                        // status filters
+                        if( $('select[name="b_premium"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_bPremium",
+                                "value": $('select[name="b_premium"]').val()
+                            }) ;
+                        }
+                        if( $('select[name="b_active"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_bActive",
+                                "value": $('select[name="b_active"]').val()
+                            }) ;
+                        }
+                        if( $('select[name="b_enabled"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_bEnabled",
+                                "value": $('select[name="b_enabled"]').val()
+                            }) ;
+                        }
+                        if( $('select[name="b_spam"]').val() ) {
+                            aoData.push({
+                                "name": "fCol_bSpam",
+                                "value": $('select[name="b_spam"]').val()
+                            }) ;
+                        }
+                    },
+                    "iDisplayLength": "25",
+                    "sDom": "<'row-action'<'row'<'span6 length-menu'l><'span6 filter'>fr>>t<'row'<'span6 info-results'i><'span6 paginate'p>>",
+                    "sPaginationType": "bootstrap",
+                    "bLengthChange": false,
+                    "bProcessing": true,
+                    "bServerSide":true,
+                    "bPaginate": true,
+                    "bFilter": false,
+                    "oLanguage": {
+                        "oPaginate": {
+                            "sNext" : "<?php echo osc_esc_html( __('Next') ) ; ?>",
+                            "sPrevious" : "<?php echo osc_esc_html( __('Previous') ) ; ?>"
+                        },
+                        "sEmptyTable" : "<?php echo osc_esc_html( __('No data available in table') ) ; ?>",
+                        "sInfo": "<?php echo osc_esc_html( sprintf( __('Showing %s to %s of %s entries'), '_START_', '_END_', '_TOTAL_') ) ; ?>",
+                        "sInfoEmpty": "<?php echo osc_esc_html( __('No entries to show') ) ; ?>",
+                        "sInfoFiltered": "<?php echo osc_esc_html( sprintf( __('(filtered from %s total entries)'), '_MAX_' ) ) ; ?>",
+                        "sLoadingRecords": "<?php echo osc_esc_html( __('Loading...') ) ; ?>",
+                        "sProcessing": "<?php echo osc_esc_html( __('Processing...') ) ; ?>",
+                        "sSearch": "<?php echo osc_esc_html( __('Search by name') ) ; ?>",
+                        "sZeroRecords": "<?php echo osc_esc_html( __('No matching records found') ) ; ?>"
                     },
                     "aoColumns": [
                         {
-                            "sTitle": "<div style='width:10px;'><input id='check_all' type='checkbox' /></div>"
-                            ,"bSortable": false
-                            ,"sClass": "center"
-                            ,"sWidth": "10px"
-                            ,"bSearchable": false
+                            "sTitle": '<input id="check_all" type="checkbox" />',
+                            "sWidth": "10px",
+                            "bSearchable": false,
+                            "bSortable": false
+                        },
+                        {
+                            "sTitle": "<?php echo osc_esc_html( __('Title') ) ; ?>",
+                            "sWidth": "25%",
+                            "bSortable": false
+                        },
+                        {
+                            "sTitle": "<?php echo osc_esc_html( __('User') ) ; ?>",
+                            "sWidth": "80px",
+                            "bSortable": false
+                        },
+                        {
+                            "sTitle": "<?php echo osc_esc_html( __('Category') ) ; ?>",
+                            "bSortable": false
+                        },
+                        {
+                            "sTitle": "<?php echo osc_esc_html( __('County') ) ; ?>",
+                            "bSortable": false
+                        },
+                        {
+                            "sTitle": "<?php echo osc_esc_html( __('Region') ) ; ?>",
+                            "bSortable": false
+                        },
+                        {
+                            "sTitle": "<?php echo osc_esc_html( __('City') ) ; ?>",
+                            "bSortable": false
+                        },
+                        {
+                            "sTitle": "<?php echo osc_esc_html( __('Date') ) ; ?>",
+                            "sWidth": "125px",
+                            "bSearchable": false,
+                            "bSortable": true,
+                            "defaultSortable" : true
                         }
-                        ,{
-                            "sTitle": "<?php _e('Title') ; ?>"
-                            ,"sWidth": "25%"
-                            ,"bSortable": true
-                        }
-                        ,{
-                            "sTitle": "<?php _e('User') ; ?>"
-                            ,"bSortable": true
-                            ,"sWidth": "10%"
-                        }
-                        ,{
-                            "sTitle": "<?php _e('Category') ; ?>"
-                            ,"sWidth": "15%"
-                            ,"bSortable": true
-                        }
-                        ,{
-                            "sTitle": "<?php _e('County') ; ?>"
-                            ,"sWidth": "10%"
-                            ,"bSortable": true
-                        }
-                        ,{
-                            "sTitle": "<?php _e('Region') ; ?>"
-                            ,"sWidth": "10%"
-                            ,"bSortable": true
-                        }
-                        ,{
-                            "sTitle": "<?php _e('City') ; ?>"
-                            ,"sWidth": "10%"
-                            ,"bSortable": true
-                        }
-                        ,{
-                            "sTitle": "<?php _e('Date') ; ?>"
-                            ,"sWidth": "100px"
-                            ,"bSearchable": false
-                            ,"bSortable": true
-                            ,"defaultSortable" : true
-                        }
-                    ]
+                    ],
+                    "aaSorting": [[7,'desc']]
                 });
-            });
-            
-            $('#datatables_list tr').live('mouseover', function(event) {
-                $('#datatable_wrapper', this).show();
-                $('#datatables_quick_edit', this).show();
-            });
 
-            $('#datatables_list tr').live('mouseleave', function(event) {
-                $('#datatable_wrapper', this).hide();
-                $('#datatables_quick_edit', this).hide();
-            });
+                $('#datatables_list tr').live('mouseover', function(event) {
+                    $('.datatable_wrapper', this).show();
+                });
 
-            $('#show_filter').live('mouseover', function(event) {
-                $(this).css('color', 'black');
+                $('#datatables_list tr').live('mouseleave', function(event) {
+                    $('.datatable_wrapper', this).hide();
+                });
 
-            });
+                $('.length-menu').append( $("#bulk_actions") ) ;
+                $('.filter').append( $("#add_item_button") ) ;
 
-            $('#show_filter').live('mouseleave', function(event) {
-                $(this).css('color', '#555555');
-            });
-            
-            function show_filters(){
-                div_filter = this;
-                $('#TableToolsLinks').toggle(function(){
-                    if( $('#show_filter strong').html() == '+ <?php _e('Show filters')?>' ){
-                        $('#show_filter strong').html('- <?php _e('Show filters')?>');
+                $('input[name="apply-filters"]').bind('click', function() {
+                    oTable.fnDraw() ;
+                });
+                $('input[name="findById"]').bind('click', function() {
+                    oTable.fnDraw() ;
+                });
+
+                $('.show-filters').bind('click', function() {
+                    if( $(this).attr('data-showed') == 'true' ) {
+                        $(this).html('+ <?php _e('Show filters') ; ?>') ;
+                        $(this).attr('data-showed', 'false') ;
                     } else {
-                        $('#show_filter strong').html('+ <?php _e('Show filters')?>');
+                        $(this).html('- <?php _e('Hide filters') ; ?>') ;
+                        $(this).attr('data-showed', 'true') ;
                     }
+                    $('.items-filters').toggle() ;
+                }) ;
+            }) ;
+        </script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
+        <!-- /datatables js -->
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
+        <?php ItemForm::location_javascript_new('admin') ; ?>
+        <script type="text/javascript">
+            // autocomplete users
+            $(document).ready(function(){
+                $('#user').attr( "autocomplete", "off" );
+                $('#user').live('keyup.autocomplete', function(){
+                    $('#userId').val('');
+                    $( this ).autocomplete({
+                        source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax&term="+$('#user').val(),
+                        minLength: 0,
+                        select: function( event, ui ) {
+                            if(ui.item.id=='') 
+                                return false;
+                            $('#userId').val(ui.item.id);
+                        }
+                    });
                 });
-            }
-            
+            });
             
         </script>
-        
+        <style>
+            .ui-autocomplete-loading {
+                background: white url("<?php echo osc_current_admin_theme_url('images/loading.gif'); ?>") right center no-repeat;
+            }
+        </style>
+
+    </head>
+    <body>
+        <?php osc_current_admin_theme_path('header.php') ; ?>
+        <!-- container -->
         <div id="content">
-            <div id="separator"></div>
-
-            <?php osc_current_admin_theme_path('include/backoffice_menu.php') ; ?>
-            
-            <div id="right_column">
-                <div id="content_header" class="content_header">
-                    <div style="float: left;">
-                        <img src="<?php echo  osc_current_admin_theme_url('images/new-folder-icon.png') ; ?>" title="" alt=""/>
-                    </div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Manage items'); ?></div>
-                    <div style="clear: both;"></div>
+            <?php osc_current_admin_theme_path( 'include/backoffice_menu.php' ) ; ?>
+            <!-- right container -->
+            <div class="right">
+                <div class="header_title">
+                    <h1 class="items"><?php _e('Manage Items') ; ?></h1>
                 </div>
-
-                <div id="content_separator"></div>
                 <?php osc_show_flash_message('admin') ; ?>
-                <div>
-                    <form id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>?page=items" method="post">
-                        <input type="hidden" name="action" value="bulk_actions" />
-                        <div style="clear:both;"></div>
-                        <div id="show_filter" style="color:#555555; cursor: pointer;margin-top:10px;border-bottom:1px #444444 solid;" onclick="show_filters();"> <strong>+ <?php _e('Show filters')?></strong> </div>
-                        <div id="TableToolsLinks" style="display:none;">
-                            <div style="float:left;">
-                                <div class="row">
-                                    <label><?php _e('Search') ; ?></label>
-                                    <input id="sSearch" type="text" name="sSearch"/><span style="padding-left:1em;">*(<?php _e('Title and Description'); ?>)</span>
-                                </div>
-                                <div class="row">
-                                    <label><?php _e('Item posted by'); ?></label>
-                                    <?php
-                                        array_unshift($users, array('pk_i_id' => 'NULL', 's_name' => __('Non-registered user')) );
-                                        UserForm::user_select($users);
-                                    ?>
-                                </div>
-                                <div class="row">
-                                    <label><?php _e('Country'); ?></label>
-                                    <?php $item = array(); $item["countryId"] = "";ItemForm::country_select($countries, $item ) ; ?>
-                                </div>
-                                <div class="row">
-                                    <label><?php _e('Region'); ?></label>
-                                    <?php ItemForm::region_select($regions, null) ; ?>
-                                </div>
-                                <div class="row">
-                                    <label><?php _e('City'); ?></label>
-                                    <?php ItemForm::city_select($cities, null) ; ?>
-                                </div>
-
-                                <div class="row">
-                                    <label for="catId"><?php _e('Category') ?>:</label>
-                                    <?php ItemForm::category_select($categories, null, null, true); ?>
-                                </div>
-                            </div>
-                            <div class="" style="float:left;">
-                                <fieldset>
-                                    <strong><?php _e('Status') ?></strong>
-                                    <br/>
-                                    <label for="b_premium"><?php _e('Premium') ?></label>
-                                    <select id="b_premium" name="b_premium" style="opacity: 0;">
-                                        <option value=""><?php _e('ALL'); ?></option>
-                                        <option value="1"><?php _e('ON'); ?></option>
-                                        <option value="0"><?php _e('OFF'); ?></option>
-                                    </select>
-                                    <br/>
-                                    <label for="b_active"><?php _e('Active') ?></label>
-                                    <select id="b_active" name="b_active" style="opacity: 0;">
-                                        <option value=""><?php _e('ALL'); ?></option>
-                                        <option value="1"><?php _e('ON'); ?></option>
-                                        <option value="0"><?php _e('OFF'); ?></option>
-                                    </select>
-                                    <br/>
-                                    <label for="b_enabled"><?php _e('Enabled') ?></label>
-                                    <select id="b_enabled" name="b_enabled" style="opacity: 0;">
-                                        <option value=""><?php _e('ALL'); ?></option>
-                                        <option value="1"><?php _e('ON'); ?></option>
-                                        <option value="0"><?php _e('OFF'); ?></option>
-                                    </select>
-                                    <br/>
-                                    <label for="b_spam"><?php _e('Spam') ?></label>
-                                    <select id="b_spam" name="b_spam" style="opacity: 0;">
-                                        <option value=""><?php _e('ALL'); ?></option>
-                                        <option value="1"><?php _e('ON'); ?></option>
-                                        <option value="0"><?php _e('OFF'); ?></option>
-                                    </select>
-                                </fieldset>
-                            </div>
-                            <div class="" style="float:left;">
-                                <fieldset>
-                                    <strong><?php _e('Mark as') ?></strong>
-                                    <br/>
-                                    <label for="i_num_spam"><?php _e('Spam') ?></label>
-                                    <select id="i_num_spam" name="i_num_spam" style="opacity: 0;">
-                                        <option value="">-</option>
-                                        <option value="1"><?php _e('ON'); ?></option>
-                                    </select>
-                                    <br/>
-                                    <label for="i_num_bad_classified"><?php _e('Misclassified') ?></label>
-                                    <select id="i_num_bad_classified" name="i_num_bad_classified" style="opacity: 0;">
-                                        <option value="">-</option>
-                                        <option value="1"><?php _e('ON'); ?></option>
-                                    </select>
-                                    <br/>
-                                    <label for="i_num_repeated"><?php _e('Duplicated') ?></label>
-                                    <select id="i_num_repeated" name="i_num_repeated" style="opacity: 0;">
-                                        <option value="">-</option>
-                                        <option value="1"><?php _e('ON'); ?></option>
-                                    </select>
-                                    <br/>
-                                    <label for="i_num_offensive"><?php _e('Offensive') ?></label>
-                                    <select id="i_num_offensive" name="i_num_offensive" style="opacity: 0;">
-                                        <option value="">-</option>
-                                        <option value="1"><?php _e('ON'); ?></option>
-                                    </select>
-                                    <br/>
-                                    <label for="i_num_expired"><?php _e('Expired') ?></label>
-                                    <select id="i_num_expired" name="i_num_expired" style="opacity: 0;">
-                                        <option value="">-</option>
-                                        <option value="1"><?php _e('ON'); ?></option>
-                                    </select>
-                                </fieldset>
-                            </div>
-                            <div style="clear:both;"></div>
-                            <div>
-                                <div style="float:left;width:70px;padding-top:10px;"><button type="button" onclick="oTable.applyFilters();"><?php _e('Apply') ; ?></button></div>
-                                <div style="float:left;width:140px;padding-top:10px;padding-left:10px;"><button type="button" onclick="window.location.href='<?php echo osc_admin_base_url(true);?>?page=items'"><?php _e('Reset filters') ; ?></button></div>
-                            </div>
-                            <div style="padding-top:10px;border-bottom:1px gray solid;clear:both;"></div>
+                <!-- items filters -->
+                <h3 class="show-filters" data-showed="false">+ <?php _e('Show filters') ; ?></h3>
+                <div class="items-filters" style="display: none;">
+                    <div class="input-line">
+                        <label><?php _e('Search') ; ?></label>
+                        <div class="input">
+                            <input type="text" class="xlarge" name="sSearch" value="" />
                         </div>
-
-                        <div class="top" style="margin-top:10px;">
-                            <div style="float:left;"><?php _e('Show') ; ?>
-                                <select class="display" id="select_range">
-                                    <option value="10">10</option>
-                                    <option value="15">15</option>
-                                    <option value="20">20</option>
-                                    <option value="100">100</option>
-                                </select> <?php _e('entries') ; ?>
-                            </div>
-                            <div id="TableToolsToolbar">
-                                <select id="bulk_actions" name="bulk_actions" class="display">
-                                    <option value=""><?php _e('Bulk actions'); ?></option>
-                                    <option value="delete_all"><?php _e('Delete') ?></option>
-                                    <option value="activate_all"><?php _e('Activate') ?></option>
-                                    <option value="deactivate_all"><?php _e('Deactivate') ?></option>
-                                    <option value="enable_all"><?php _e('Enable') ?></option>
-                                    <option value="disable_all"><?php _e('Disable') ?></option>
-                                    <option value="premium_all"><?php _e('Mark as premium') ?></option>spam_all
-                                    <option value="depremium_all"><?php _e('Unmark as premium') ?></option>
-                                    <option value="spam_all"><?php _e('Mark as spam') ?></option>
-                                    <option value="despam_all"><?php _e('Unmark as spam') ?></option>
-                                </select>
-                                &nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ?></button>
-                            </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Item user name') ; ?></label>
+                        <div class="input">
+                            <input id="user" name="user" type="text" value=""/>
+                            <input id="userId" name="userId" type="hidden" value=""/>
                         </div>
-                        <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list"></table>
-                    </form>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Country') ; ?></label>
+                        <div class="input">
+                            <?php ItemForm::country_text(); ?>
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Region') ; ?></label>
+                        <div class="input">
+                            <?php ItemForm::region_text(); ?>
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('City') ; ?></label>
+                        <div class="input">
+                            <?php ItemForm::city_text(); ?>
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Category') ; ?></label>
+                        <div class="input">
+                            <?php ItemForm::category_select($categories, null, null, true) ; ?>
+                        </div>
+                    </div>
+                    
+                    <strong><?php _e('Status') ?></strong>
+                    
+                    <div class="input-line">
+                        <label><?php _e('Premium') ; ?></label>
+                        <div class="input">
+                            <select id="b_premium" name="b_premium">
+                                <option value=""><?php _e('ALL'); ?></option>
+                                <option value="1"><?php _e('ON'); ?></option>
+                                <option value="0"><?php _e('OFF'); ?></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Active') ; ?></label>
+                        <div class="input">
+                            <select id="b_active" name="b_active">
+                                <option value=""><?php _e('ALL'); ?></option>
+                                <option value="1"><?php _e('ON'); ?></option>
+                                <option value="0"><?php _e('OFF'); ?></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Enabled') ; ?></label>
+                        <div class="input">
+                            <select id="b_enabled" name="b_enabled">
+                                <option value=""><?php _e('ALL'); ?></option>
+                                <option value="1"><?php _e('ON'); ?></option>
+                                <option value="0"><?php _e('OFF'); ?></option>
+                            </select>    
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <label><?php _e('Spam') ; ?></label>
+                        <div class="input">
+                            <select id="b_spam" name="b_spam">
+                                <option value=""><?php _e('ALL'); ?></option>
+                                <option value="1"><?php _e('ON'); ?></option>
+                                <option value="0"><?php _e('OFF'); ?></option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="actions">
+                        <input type="button" name="apply-filters" value="<?php echo osc_esc_html( __('Apply filters') ) ; ?>" />
+                    </div>
                 </div>
-
-            </div> <!-- end of right column -->
-            <script>
-                $('#check_all').live('change',
-                    function(){
-                        if( $(this).attr('checked') ){
-                            $('#'+oTable._idTable+" input").each(function(){
-                                $(this).attr('checked','checked');
-                            });
-                        } else {
-                            $('#'+oTable._idTable+" input").each(function(){
-                                $(this).attr('checked','');
-                            });
-                        }
-                    }
-                );
-
-                $('#sSearch').bind('keypress', function(e) {
-                    if(e.keyCode==13){
-                        oTable.applyFilters();
-                        return false;
-                    }
-                });
-            </script>
-            <div style="clear: both;"></div>
-
-        </div> <!-- end of container -->
-
+                <!-- /items filters -->
+                <!-- datatables items -->
+                <form class="items datatables" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+                    <input type="hidden" name="page" value="items" />
+                    <input type="hidden" name="action" value="bulk_actions" />
+                    <div id="bulk_actions">
+                        <label>
+                            <select id="bulk_actions" name="bulk_actions" class="display">
+                                <option value=""><?php _e('Bulk actions') ; ?></option>
+                                <option value="delete_all"><?php _e('Delete') ; ?></option>
+                                <option value="activate_all"><?php _e('Activate') ; ?></option>
+                                <option value="deactivate_all"><?php _e('Deactivate') ; ?></option>
+                                <option value="disable_all"><?php _e('Block') ; ?></option>
+                                <option value="enable_all"><?php _e('Unblock') ; ?></option>
+                                <option value="premium_all"><?php _e('Mark as premium') ; ?></option>
+                                <option value="depremium_all"><?php _e('Unmark as premium') ; ?></option>
+                                <option value="spam_all"><?php _e('Mark as spam') ; ?></option>
+                                <option value="despam_all"><?php _e('Unmark as spam') ; ?></option>
+                            </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>">
+                        </label>
+                    </div>
+                    <div id="add_item_button">
+                        <input type="text" class="medium" name="pk_i_id" value="" />
+                        <input type="button" name="findById" value="<?php echo osc_esc_html( __('Find by Item id') ) ; ?>" />
+                        <a href="<?php echo osc_admin_base_url(true) ; ?>?page=items&amp;action=post" class="btn" id="button_open"><?php _e('Add item') ; ?></a>
+                    </div>
+                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatables_list"></table>
+                </form>
+                <!-- /datatables items -->
+            </div>
+            <!-- /right container -->
+        </div>
+        <!-- /container -->
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>

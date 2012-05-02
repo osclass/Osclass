@@ -390,6 +390,15 @@
     }
 
     /**
+     * Gets json response when checking if there is available a new version
+     *
+     * @return string
+     */
+    function osc_update_core_json() {
+        return (getPreference('update_core_json')) ;
+    }
+
+    /**
      * Gets current version
      *
      * @return int
@@ -524,6 +533,24 @@
         return(getPreference('recaptchaPrivKey')) ;
     }
 
+    /**
+     * Gets OSClass' market URL
+     *
+     * @return string 
+     */
+    function osc_market_url($code = '') {
+        return(getPreference('marketURL')."?code=".$code) ;
+    }
+    
+    /**
+     * Gets if third party sources are allowed to install new plugins and themes
+     *
+     * @return int 
+     */
+    function osc_market_external_sources() {
+        return(getBoolPreference('marketAllowExternalSources')) ;
+    }
+    
     /**
      * Gets recaptcha public key
      *

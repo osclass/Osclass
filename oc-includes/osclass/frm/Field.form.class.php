@@ -38,6 +38,10 @@
             return true ;
         }
 
+        static public function required_checkbox($field = null) {
+            parent::generic_input_checkbox('field_required', 1, ($field!=null && isset($field['b_required']) && $field['b_required']==1)?true:false);
+        }
+        
         static public function type_select($field = null) {
             ?>
             <select name="field_type" id="field_type">
@@ -45,6 +49,8 @@
                 <option value="TEXTAREA" <?php if($field['e_type']=="TEXTAREA") { echo 'selected="selected"';};?>>TEXTAREA</option>
                 <option value="DROPDOWN" <?php if($field['e_type']=="DROPDOWN") { echo 'selected="selected"';};?>>DROPDOWN</option>
                 <option value="RADIO" <?php if($field['e_type']=="RADIO") { echo 'selected="selected"';};?>>RADIO</option>
+                <option value="CHECKBOX" <?php if($field['e_type']=="CHECKBOX") { echo 'selected="selected"';};?>>CHECKBOX</option>
+                <option value="URL" <?php if($field['e_type']=="URL") { echo 'selected="selected"';};?>>URL</option>
             </select>
             <?php
             return true;
@@ -56,10 +62,11 @@
                     $field['s_value'] = Session::newInstance()->_getForm('meta_'.$field['pk_i_id']);
                 }
 
-                echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                 if($field['e_type']=="TEXTAREA") {
+                    echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                     echo '<textarea id="meta_' . $field['s_slug'] . '" name="meta['.$field['pk_i_id'].']" rows="10">' . ((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '</textarea>' ;
                 } else if($field['e_type']=="DROPDOWN") {
+                    echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                     if(isset($field) && isset($field['s_options'])) {
                         $options = explode(",", $field['s_options']);
                         if(count($options)>0) {
@@ -71,6 +78,7 @@
                         }
                     }
                 } else if($field['e_type']=="RADIO") {
+                    echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                     if(isset($field) && isset($field['s_options'])) {
                         $options = explode(",", $field['s_options']);
                         if(count($options)>0) {
@@ -81,7 +89,11 @@
                             echo '</ul>';
                         }
                     }
+                } else if($field['e_type']=="CHECKBOX") {
+                    echo '<input type="checkbox" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] .'" value="1" ' . ((isset($field) && isset($field["s_value"]) && $field["s_value"]==1) ? "checked" : "") . '>';
+                    echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                 } else {
+                    echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                     echo '<input id="meta_'.$field['s_slug'].'" type="text" name="meta['.$field['pk_i_id'].']" value="' . osc_esc_html((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '" ' ;
                     echo '/>' ;
                 }

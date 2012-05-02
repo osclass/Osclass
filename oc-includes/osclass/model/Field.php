@@ -223,14 +223,27 @@
          * @param array $categories 
          */
         public function insertField($name, $type, $slug, $required, $options, $categories = null) {
+            if($slug=='') {
+                $slug = preg_replace('|([-]+)|', '-', preg_replace('|[^a-z0-9_-]|', '-', strtolower($name)));
+            }
+            $slug_tmp = $slug;
+            $slug_k = 0;
+            while(true) {
+                if(!$this->findBySlug($slug)) {
+                    break;
+                } else {
+                    $slug_k++;
+                    $slug = $slug_tmp."_".$slug_k;
+                }
+            }
             $this->dao->insert($this->getTableName(), array("s_name" => $name, "e_type" =>$type, "b_required" => $required, "s_slug" => $slug, 's_options' => $options));
             $id = $this->dao->insertedId();
-            if($slug=='') {
-                $this->dao->update($this->getTableName(), array('s_slug' => $id), array('pk_i_id' => $id));
-            }
+            $return = true;
             foreach($categories as $c) {
-                $this->dao->insert(sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_category_id' => $c, 'fk_i_field_id' =>$id));
+                $result = $this->dao->insert(sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_category_id' => $c, 'fk_i_field_id' =>$id));
+                if(!$result) { $return = false; };
             }
+            return $return;
         }
         
         
@@ -245,14 +258,16 @@
          */
         public function insertCategories($id, $categories = null) {
             if($categories!=null) {
+                $return = true;
                 foreach($categories as $c) {
-                    $res = $this->dao->insert(sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_category_id' => $c, 'fk_i_field_id' =>$id));
-                    if(!$res) {
-                        return $res;
+                    $result = $this->dao->insert(sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_category_id' => $c, 'fk_i_field_id' =>$id));
+                    if(!$result) {
+                        $return = false;
                     }
                 }
-                return true;
+                return $return;
             }
+            return false;
         }
         
         /**

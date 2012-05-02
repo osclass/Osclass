@@ -16,16 +16,66 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 ?>
-        
-<div style="clear: both;"></div>
+<!-- footer -->
 <div id="footer">
-    <?php osc_run_hook('admin_footer'); ?>
+    <?php osc_run_hook('admin_footer') ; ?>
     <div id="footer_left">
-        <?php _e('Thank you for using'); ?> <a href="http://osclass.org/" target="_blank"><?php _e('OSClass'); ?></a> |
-        <a title="<?php _e('Documentation'); ?>" href="http://wiki.osclass.org/" target="_blank"><?php _e('Documentation'); ?></a> |
-        <a title="<?php _e('Forums'); ?>" href="http://forums.osclass.org" target="_blank"><?php _e('Forums'); ?></a>
+        <?php _e('Thank you for using'); ?> <a href="http://osclass.org/" target="_blank">OSClass</a> -
+        <a title="<?php _e('Documentation'); ?>" href="http://doc.osclass.org/" target="_blank"><?php _e('Documentation') ; ?></a> &middot;
+        <a title="<?php _e('Forums'); ?>" href="http://forums.osclass.org/" target="_blank"><?php _e('Forums') ; ?></a> &middot;
+        <a title="<?php _e('Feedback') ; ?>" href="http://admin.osclass.org/feedback.php" target="_blank"><?php _e('Feedback') ; ?></a>
     </div>
-    <div id="footer_right">
-        <?php _e('OSClass'); ?> <?php echo OSCLASS_VERSION; ?>
-    </div>
+    <div id="footer_right">OSClass <?php echo OSCLASS_VERSION ; ?></div>
+    <div class="clear"></div>
 </div>
+<!-- /footer -->
+<script>
+    $(document).ready(function() {
+
+         function checkSize(){
+            var $right = $('#content .right');
+            var $left = $('#content .left');
+            if(!$right.data('height')){
+                $right.data('height',$right[0].offsetHeight);
+            }
+            /**/
+            if($left[0].offsetHeight > $right.data('height')){
+                $right.animate({'min-height':$left[0].offsetHeight});
+            }
+        }
+
+        //load current views
+        var menus = {};
+        jQuery('.oscmenu > li').each(function(){
+            menus[$(this).attr('id')] = false;
+        });
+        //load current views
+        var menuStatus = $.cookie.get('menuStatus',true);
+        for (var i in menuStatus){
+            if(menuStatus[i] == true){
+                menus[i] = true;
+                jQuery('#'+i+' ul').show();
+            }
+        }
+        checkSize();
+        jQuery.cookie.set('menuStatus',menus,{json: true});
+
+        jQuery('.oscmenu h3 a[href="#"]').click(function(){
+            var menuStatus = $.cookie.get('menuStatus',true);
+            if(jQuery(this).parent().next().is(':visible')){
+                menuStatus[$(this).parents('li').attr('id')] = false;
+                jQuery(this).parent().next().slideUp('normal',function(){
+                    checkSize();
+                });
+            } else {
+                menuStatus[$(this).parents('li').attr('id')] = true;
+                jQuery(this).parent().next().slideDown('normal',function(){
+                    checkSize();
+                });
+            }
+            jQuery.cookie.set('menuStatus',menuStatus,{json: true});
+
+            return false;
+        });
+    });
+</script>

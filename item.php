@@ -23,28 +23,30 @@
         private $user;
         private $userId;
 
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
             $this->itemManager = Item::newInstance();
 
             // here allways userId == ''
-            if( osc_is_web_user_logged_in() ){
+            if( osc_is_web_user_logged_in() ) {
                 $this->userId = osc_logged_user_id();
                 $this->user = User::newInstance()->findByPrimaryKey($this->userId);
-            }else{
+            } else {
                 $this->userId = null;
                 $this->user = null;
             }
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             //calling the view...
 
             $locales = OSCLocale::newInstance()->listAllEnabled() ;
             $this->_exportVariableToView('locales', $locales) ;
 
-            switch( $this->action ){
+            switch( $this->action ) {
                 case 'item_add': // post
                     if( osc_reg_user_post() && $this->user == null ) {
                         osc_add_flash_warning_message( _m('Only registered users are allowed to post items') ) ;
@@ -74,8 +76,7 @@
                     if($form==0 || $form==$keepForm) {
                         Session::newInstance()->_dropKeepForm();
                     }
-                    
-                    
+
                     if( Session::newInstance()->_getForm('countryId') != "" ) {
                         $countryId  = Session::newInstance()->_getForm('countryId') ;
                         $regions    = Region::newInstance()->findByCountry($countryId) ; 
@@ -86,20 +87,19 @@
                             $this->_exportVariableToView('cities', $cities ) ;
                         }
                     }
-                    
+
                     $this->_exportVariableToView('user', $this->user) ;
-                    
+
                     osc_run_hook('post_item');
 
                     $this->doView('item-post.php');
-                    break;
-
+                break;
                 case 'item_add_post': //post_item
                     if( osc_reg_user_post() && $this->user == null ) {
                         osc_add_flash_warning_message( _m('Only registered users are allowed to post items') ) ;
                         $this->redirectTo( osc_base_url(true) ) ;
                     }
-                    
+
                     $mItems = new ItemActions(false);
                     // prepare data for ADD ITEM
                     $mItems->prepareData(true);
@@ -107,7 +107,7 @@
                     foreach( $mItems->data as $key => $value ) {
                         Session::newInstance()->_setForm($key,$value);
                     }
-                    
+
                     $meta = Params::getParam('meta');
                     if(is_array($meta)) {
                         foreach( $meta as $key => $value ) {
@@ -115,10 +115,10 @@
                             Session::newInstance()->_keepForm('meta_'.$key);
                         }
                     }
-                    
+
                     if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
                         if(!osc_check_recaptcha()) {
-                            osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;
+                            osc_add_flash_error_message( _m('The Recaptcha code is wrong') ) ;
                             $this->redirectTo( osc_item_post_url() );
                             return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                         }
@@ -131,13 +131,13 @@
                         $this->redirectTo( osc_item_post_url() );
                     } else {
                         Session::newInstance()->_dropkeepForm('meta_'.$key);
-                        
+
                         if($success==1) {
-                            osc_add_flash_ok_message( _m('Check your inbox to verify your email address')) ;
+                            osc_add_flash_ok_message( _m('Check your inbox to verify your email address') ) ;
                         } else {
-                            osc_add_flash_ok_message( _m('Your item has been published')) ;
+                            osc_add_flash_ok_message( _m('Your item has been published') ) ;
                         }
-                        
+
                         $itemId         = Params::getParam('itemId');
                         $item           = $this->itemManager->findByPrimaryKey($itemId);
 
@@ -150,7 +150,7 @@
                 case 'item_edit':   // edit item
                                     $secret = Params::getParam('secret');
                                     $id     = Params::getParam('id');
-                                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
+                                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", addslashes($id), addslashes($secret), addslashes($this->userId));
                                     if (count($item) == 1) {
                                         $item     = Item::newInstance()->findByPrimaryKey($id);
 
@@ -166,7 +166,7 @@
                                         $this->doView('item-edit.php');
                                     } else {
                                         // add a flash message [ITEM NO EXISTE]
-                                        osc_add_flash_error_message( _m('Sorry, we don\'t have any items with that ID')) ;
+                                        osc_add_flash_error_message( _m("Sorry, we don't have any items with that ID") ) ;
                                         if($this->user != null) {
                                             $this->redirectTo( osc_user_list_items_url() );
                                         } else {
@@ -178,12 +178,11 @@
                     // recoger el secret y el
                     $secret = Params::getParam('secret');
                     $id     = Params::getParam('id');
-                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
+                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", addslashes($id), addslashes($secret), addslashes($this->userId)) ;
 
                     if (count($item) == 1) {
-
                         $this->_exportVariableToView('item', $item[0]) ;
-                        
+
                         $mItems = new ItemActions(false);
                         // prepare data for ADD ITEM
                         $mItems->prepareData(false);
@@ -199,7 +198,7 @@
                                 Session::newInstance()->_keepForm('meta_'.$key);
                             }
                         }
-                    
+
                         if( (osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field") ) {
                             if( !osc_check_recaptcha() ) {
                                 osc_add_flash_error_message( _m('The Recaptcha code is wrong') ) ;
@@ -207,13 +206,13 @@
                                 return false ; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                             }
                         }
-                        
+
                         $success = $mItems->edit();
 
                         osc_run_hook('edited_item', Item::newInstance()->findByPrimaryKey($id));
                         
                         if($success==1){
-                            osc_add_flash_ok_message( _m('Great! We\'ve just updated your item')) ;
+                            osc_add_flash_ok_message( _m("Great! We've just updated your item") ) ;
                             $this->redirectTo( osc_base_url(true) . "?page=item&id=$id" ) ;
                         } else {
                             osc_add_flash_error_message( $success) ;
@@ -224,20 +223,27 @@
                 case 'activate':
                     $secret = Params::getParam('secret');
                     $id     = Params::getParam('id');
-                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s') OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
+                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s') OR (i.fk_i_user_id = '%d'))", addslashes($id), addslashes($secret), addslashes($this->userId)) ;
+
+                    // item doesn't exist
+                    if( count($item) == 0 ) {
+                        $this->do404() ;
+                        return ;
+                    }
+
                     View::newInstance()->_exportVariableToView('item', $item[0]);
-                    if ($item[0]['b_active']==0) {
+                    if( $item[0]['b_active'] == 0 ) {
                         // ACTIVETE ITEM
                         $mItems = new ItemActions(false) ;
                         $success = $mItems->activate( $item[0]['pk_i_id'], $item[0]['s_secret'] );
 
-                        if( $success ){
+                        if( $success ) {
                             osc_add_flash_ok_message( _m('The item has been validated') ) ;
                         }else{
-                            osc_add_flash_error_message( _m('The item can\'t be validated') ) ;
+                            osc_add_flash_error_message( _m("The item can't be validated") ) ;
                         }
-                    }else{
-                        osc_add_flash_error_message( _m('The item has already been validated') );
+                    } else {
+                        osc_add_flash_warning_message( _m('The item has already been validated') ) ;
                     }
 
                     $this->redirectTo( osc_item_url( ) );
@@ -245,14 +251,14 @@
                 case 'item_delete':
                     $secret = Params::getParam('secret');
                     $id     = Params::getParam('id');
-                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s') OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
+                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s') OR (i.fk_i_user_id = '%d'))", addslashes($id), addslashes($secret), addslashes($this->userId)) ;
                     if (count($item) == 1) {
                         $mItems = new ItemActions(false);
                         $success = $mItems->delete($item[0]['s_secret'], $item[0]['pk_i_id']);
                         if($success) {
                             osc_add_flash_ok_message( _m('Your item has been deleted') ) ;
                         } else {
-                            osc_add_flash_error_message( _m('The item you are trying to delete couldn\'t be deleted') ) ;
+                            osc_add_flash_error_message( _m("The item you are trying to delete couldn't be deleted") ) ;
                         }
                         if($this->user!=null) {
                             $this->redirectTo(osc_user_list_items_url());
@@ -260,7 +266,7 @@
                             $this->redirectTo( osc_base_url() ) ;
                         }
                     }else{
-                        osc_add_flash_error_message( _m('The item you are trying to delete couldn\'t be deleted') ) ;
+                        osc_add_flash_error_message( _m("The item you are trying to delete couldn't be deleted") ) ;
                         $this->redirectTo( osc_base_url() ) ;
                     }
                 break;
@@ -274,7 +280,7 @@
                     View::newInstance()->_exportVariableToView('item', $item);
                     $mItem->mark($id, $as) ;
 
-                    osc_add_flash_ok_message( _m('Thanks! That\'s very helpful') ) ;
+                    osc_add_flash_ok_message( _m("Thanks! That's very helpful") ) ;
                     $this->redirectTo( osc_item_url( ) );
                 break;
                 case 'send_friend':
@@ -287,7 +293,7 @@
                 case 'send_friend_post':
                     $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
                     $this->_exportVariableToView('item', $item) ;
-                    
+
                     Session::newInstance()->_setForm("yourEmail",   Params::getParam('yourEmail'));
                     Session::newInstance()->_setForm("yourName",    Params::getParam('yourName'));
                     Session::newInstance()->_setForm("friendName", Params::getParam('friendName'));
@@ -296,16 +302,16 @@
 
                     if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
                         if(!osc_check_recaptcha()) {
-                            osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;
+                            osc_add_flash_error_message( _m('The Recaptcha code is wrong') ) ;
                             $this->redirectTo(osc_item_send_friend_url() );
                             return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                         }
                     }
-                    
+
                     $mItem = new ItemActions(false);
                     $success = $mItem->send_friend();
 
-                    if($success){
+                    if($success) {
                         Session::newInstance()->_clearVariables();
                         $this->redirectTo( osc_item_url() );
                     } else {
@@ -315,20 +321,20 @@
                 case 'contact':
                     $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
                     if( empty($item) ){
-                        osc_add_flash_error_message( _m('This item doesn\'t exist') );
+                        osc_add_flash_error_message( _m("This item doesn't exist") );
                         $this->redirectTo( osc_base_url(true) );
                     } else {
                         $this->_exportVariableToView('item', $item) ;
-                        
+
                         if( osc_item_is_expired () ) {
-                            osc_add_flash_error_message( _m('We\'re sorry, but the item has expired. You can\'t contact the seller')) ;
+                            osc_add_flash_error_message( _m("We're sorry, but the item has expired. You can't contact the seller") ) ;
                             $this->redirectTo( osc_item_url() );
                         }
 
                         if( osc_reg_user_can_contact() && osc_is_web_user_logged_in() || !osc_reg_user_can_contact() ){
                             $this->doView('item-contact.php');
                         } else {
-                            osc_add_flash_error_message( _m('You can\'t contact the seller, only registered users can')) ;
+                            osc_add_flash_error_message( _m("You can't contact the seller, only registered users can") ) ;
                             $this->redirectTo( osc_item_url() );
                         }
                     }
@@ -338,7 +344,7 @@
                     $this->_exportVariableToView('item', $item) ;
                     if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
                         if(!osc_check_recaptcha()) {
-                            osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;                    
+                            osc_add_flash_error_message( _m('The Recaptcha code is wrong') ) ;
                             Session::newInstance()->_setForm("yourEmail",   Params::getParam('yourEmail'));
                             Session::newInstance()->_setForm("yourName",    Params::getParam('yourName'));
                             Session::newInstance()->_setForm("phoneNumber", Params::getParam('phoneNumber'));
@@ -348,16 +354,9 @@
                         }
                     }
 
-                    $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
-
-                    if($category['i_expiration_days'] > 0) {
-                        $item_date = strtotime($item['dt_pub_date'])+($category['i_expiration_days']*(24*3600)) ;
-                        $date = time();
-                        if($item_date < $date && $item['b_premium']!=1) {
-                            // The item is expired, we can not contact the seller
-                            osc_add_flash_error_message( _m('We\'re sorry, but the item has expired. You can\'t contact the seller')) ;
-                            $this->redirectTo(osc_item_url( ));
-                        }
+                    if( osc_isExpired($item['dt_expiration']) ) {
+                        osc_add_flash_error_message( _m("We're sorry, but the item has expired. You can't contact the seller") ) ;
+                        $this->redirectTo(osc_item_url());
                     }
 
                     $mItem = new ItemActions(false);
@@ -367,7 +366,7 @@
                     if(is_string($result)){
                         osc_add_flash_error_message( $result ) ;
                     } else {
-                        osc_add_flash_ok_message( _m('We\'ve just sent an e-mail to the seller')) ;
+                        osc_add_flash_ok_message( _m("We've just sent an e-mail to the seller") ) ;
                     }
                     
                     $this->redirectTo( osc_item_url( ) );
@@ -386,7 +385,7 @@
                         case 2:  $msg = _m('Your comment has been approved') ;
                                  osc_add_flash_ok_message($msg) ;
                         break ;
-                        case 3:  $msg = _m('Please fill the required fields (name, email)') ;
+                        case 3:  $msg = _m('Please fill the required field (email)') ;
                                  osc_add_flash_warning_message($msg) ;
                         break ;
                         case 4:  $msg = _m('Please type a comment') ;
@@ -409,14 +408,14 @@
                     $item = Item::newInstance()->findByPrimaryKey($itemId);
 
                     if( count($item) == 0 ) {
-                        osc_add_flash_error_message( _m('This item doesn\'t exist') );
+                        osc_add_flash_error_message( _m("This item doesn't exist") );
                         $this->redirectTo( osc_base_url(true) );
                     }
 
                     View::newInstance()->_exportVariableToView('item', $item);
 
                     if($this->userId == null) {
-                        osc_add_flash_error_message(_m('You must be logged in to delete a comment'));
+                        osc_add_flash_error_message(_m('You must be logged in to delete a comment') );
                         $this->redirectTo( osc_item_url() );
                     }
 
@@ -424,7 +423,7 @@
                     $aComment = $commentManager->findByPrimaryKey($commentId);
 
                     if( count($aComment) == 0 ) {
-                        osc_add_flash_error_message( _m('The comment doesn\'t exist') );
+                        osc_add_flash_error_message( _m("The comment doesn't exist") );
                         $this->redirectTo( osc_item_url() );
                     }
 
@@ -443,55 +442,54 @@
                      $this->redirectTo( osc_item_url() );
                 break;
                 default:
-                    if( Params::getParam('id') == ''){
-                        $this->redirectTo(osc_base_url());
+                    // if there isn't ID, show an error 404
+                    if( Params::getParam('id') == '') {
+                        $this->do404() ;
+                        return ;
                     }
 
                     if( Params::getParam('lang') != '' ) {
-                        Session::newInstance()->_set('userLocale', Params::getParam('lang'));
-                    };
+                        Session::newInstance()->_set('userLocale', Params::getParam('lang')) ;
+                    }
 
                     $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
-                    // if item doesn't exist redirect to base url
-                    if( count($item) == 0 ){
-                        osc_add_flash_error_message( _m('This item doesn\'t exist') );
-                        $this->redirectTo( osc_base_url(true) );
-                    }else{
-                        if ($item['b_active'] != 1) {
-                            if( $this->userId == $item['fk_i_user_id'] ) {
-                                osc_add_flash_error_message( _m('The item hasn\'t been validated. Please validate it in order to show it to the rest of users') );
-                            } else {
-                                osc_add_flash_error_message( _m('This item hasn\'t been validated') );
-                                $this->redirectTo( osc_base_url(true) );
-                            }
-                        } else if ($item['b_enabled'] == 0) {
-                            osc_add_flash_error_message( _m('The item has been suspended') );
+                    // if item doesn't exist show an error 404
+                    if( count($item) == 0 ) {
+                        $this->do404() ;
+                        return ;
+                    }
+
+                    if ($item['b_active'] != 1) {
+                        if( $this->userId == $item['fk_i_user_id'] ) {
+                            osc_add_flash_warning_message( _m("The item hasn't been validated. Please validate it in order to show it to the rest of users") );
+                        } else {
+                            osc_add_flash_warning_message( _m("This item hasn't been validated") );
                             $this->redirectTo( osc_base_url(true) );
                         }
-                        $mStats = new ItemStats();
-                        $mStats->increase('i_num_views', $item['pk_i_id']);
-
-                        foreach($item['locale'] as $k => $v) {
-                            $item['locale'][$k]['s_title'] = osc_apply_filter('item_title',$v['s_title']);
-                            $item['locale'][$k]['s_description'] = nl2br(osc_apply_filter('item_description',$v['s_description']));
-                        }
-
-                        $this->_exportVariableToView('items', array($item)) ;
-
-                        osc_run_hook('show_item', $item) ;
-
-                        $this->doView('item.php') ;
+                    } else if ($item['b_enabled'] == 0) {
+                        osc_add_flash_warning_message( _m('The item has been suspended') );
+                        $this->redirectTo( osc_base_url(true) );
                     }
-                break;
+                    $mStats = new ItemStats();
+                    $mStats->increase('i_num_views', $item['pk_i_id']);
 
-                case('dashboard'):      //dashboard...
+                    foreach($item['locale'] as $k => $v) {
+                        $item['locale'][$k]['s_title'] = osc_apply_filter('item_title',$v['s_title']);
+                        $item['locale'][$k]['s_description'] = nl2br(osc_apply_filter('item_description',$v['s_description']));
+                    }
 
+                    $this->_exportVariableToView('item', $item);
+
+                    osc_run_hook('show_item', $item) ;
+
+                    $this->doView('item.php') ;
                 break;
             }
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_run_hook("before_html");
             osc_current_web_theme_path($file) ;
             Session::newInstance()->_clearVariables();
@@ -499,4 +497,5 @@
         }
     }
 
+    /* file end: ./item.php */
 ?>

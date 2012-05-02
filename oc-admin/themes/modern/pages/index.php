@@ -16,26 +16,49 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $pages = __get("pages");
-    $prefLocale = __get("prefLocale");
-    $last = end($pages); $last_id = $last['pk_i_id'];
+    $prefLocale = osc_current_user_locale() ;
 
+    $aData = array() ;
+    while( osc_has_static_pages() ) {
+        $row  = array() ;
+        $page = osc_static_page();
+
+        $content = array() ;
+        $page = osc_static_page() ;
+        if( isset($page['locale'][$prefLocale]) && !empty($page['locale'][$prefLocale]['s_title']) ) {
+            $content = $page['locale'][$prefLocale] ;
+        } else {
+            $content = current($page['locale']) ;
+        }
+
+        $options   = array() ;
+        $options[] = '<a href="' . osc_static_page_url() . '">' . __('View page') . '</a>' ;
+        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=pages&amp;action=edit&amp;id=' . osc_static_page_id() . '">' . __('Edit') . '</a>' ;
+        if( !$page['b_indelible'] ) {
+            $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js("This action can't be undone. Are you sure you want to continue?") . '\')" href="' . osc_admin_base_url(true) . '?page=pages&amp;action=delete&amp;id=' . osc_static_page_id() . '">' . __('Delete') . '</a>' ;
+        }
+
+        $row[] = '<input type="checkbox" name="id[]"" value="' . osc_static_page_id() . '"" />' ;
+        $row[] = $page['s_internal_name'] . '<div id="datatables_quick_edit" style="display: none;">' . implode(' &middot; ', $options) . '</div>' ;
+        $row[] = $content['s_title'] ;
+        $row[] = osc_static_page_order() . ' <img id="up" onclick="order_up(' . osc_static_page_id() . ');" style="cursor:pointer; width:15px; height:15px;" src="' . osc_current_admin_theme_url('images/arrow_up.png') . '"/> <br/><img id="down" onclick="order_down(' . osc_static_page_id() . ');" style="cursor:pointer; width:15px; height:15px; margin-left: 10px;" src="' . osc_current_admin_theme_url('images/arrow_down.png') .'"/>' ;
+        $aData[] = $row ;
+    }
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <div id="update_version" style="display:none;"></div>
+        <link href="<?php echo osc_current_admin_theme_styles_url('datatables.css') ; ?>" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.dataTables.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.pagination.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.extend.js') ; ?>"></script>
         <script type="text/javascript">
             function order_up(id) {
-                $('#datatables_list_processing').show();
+                $('#datatables_list_processing').show() ;
                 $.ajax({
                     url: "<?php echo osc_admin_base_url(true)?>?page=ajax&action=order_pages&id="+id+"&order=up",
-                    success: function(res){
+                    success: function(res) {
                         oTable.fnClearTable();
                         json = eval( '(' + res + ')') ;
                         oTable.fnAddData(json);
@@ -62,159 +85,115 @@
                     }
                 });
             }
-            
-            $(function() {
-                $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings ) {
-                    var anRows = [];
-                    for ( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ ){
-                        var nRow = oSettings.aoData[ oSettings.aiDisplay[i] ].nTr;
-                        anRows.push( nRow );
-                    }
-                    return anRows;
-                };
 
-                sSearchName = "<?php _e('Search'); ?>...";
+            $(function() {
                 oTable = $('#datatables_list').dataTable({
-                    "bAutoWidth": false,
-                    "sDom": '<"top"fl>rt<"bottom"ip<"clear">',
+                    "sDom": "<'row-action'<'row'<'span6 length-menu'l><'span6 filter'>fr>>t<'row'<'span6 info-results'i><'span6 paginate'p>>",
+                    "sPaginationType": "bootstrap",
+                    "bLengthChange": false,
+                    "bProcessing": true,
+                    "bServerSide":false,
+                    "bPaginate": true,
+                    "bFilter": true,
                     "oLanguage": {
-                        "sProcessing":   "<?php _e('Processing'); ?>...",
-                        "sLengthMenu":   "<?php _e('Show _MENU_ entries'); ?>",
-                        "sZeroRecords":  "<?php _e('No matching records found'); ?>",
-                        "sInfo":         "<?php _e('Showing _START_ to _END_ of _TOTAL_ entries'); ?>",
-                        "sInfoEmpty":    "<?php _e('Showing 0 to 0 of 0 entries'); ?>",
-                        "sInfoFiltered": "(<?php _e('filtered from _MAX_ total entries'); ?>)",
-                        "sInfoPostFix":  "",
-                        "sSearch":       "<?php _e('Search'); ?>:",
-                        "sUrl":          "",
                         "oPaginate": {
-                                        "sFirst":    "<?php _e('First'); ?>",
-                                        "sPrevious": "<?php _e('Previous'); ?>",
-                                        "sNext":     "<?php _e('Next'); ?>",
-                                        "sLast":     "<?php _e('Last'); ?>"
-                                     },
-                        "sLengthMenu": '<div style="float:left;"><?php _e('Show'); ?> <select class="display" id="select_range">'+
-                                       '<option value="10">10</option>'+
-                                       '<option value="15">15</option>'+
-                                       '<option value="20">20</option>'+
-                                       '<option value="100">100</option>'+
-                                       '</select> <?php _e('entries'); ?>',
-                        "sSearch": '<span class="ui-icon ui-icon-search" style="display: inline-block;"></span>'
-                     },
-                    "sPaginationType": "full_numbers",
-                    "aaData": [
-                        <?php if(osc_count_static_pages()>0) {
-                        while(osc_has_static_pages()) { ?>
-                        <?php
-                            $body = array();
-                            $page = osc_static_page();
-                            if(isset($page['locale'][$prefLocale]) && !empty($page['locale'][$prefLocale]['s_title'])) {
-                                $body = $page['locale'][$prefLocale];
-                            } else {
-                                $body = current($page['locale']);
-                            }
-                            $p_body = addslashes(trim(strip_tags($body['s_title'])));
-                        ?>
-                                  [
-                                    "<input type='checkbox' name='id[]' value='<?php echo osc_static_page_id(); ?>' />",
-                                    "<?php echo addslashes(osc_esc_html($page['s_internal_name'])); ?><div id='datatables_quick_edit'>" +
-                                    "<a href='<?php echo osc_static_page_url(); ?>'>" +
-                                    "<?php _e('View page'); ?></a> | " +
-                                    "<a href='<?php echo osc_admin_base_url(true); ?>?page=pages&action=edit&id=<?php echo osc_static_page_id(); ?>'>" +
-                                    "<?php _e('Edit'); ?></a><?php if(!$page['b_indelible']) { ?> | " +
-                                    "<a onclick=\"javascript:return confirm('" +
-                                    "<?php _e('This action can\\\\\'t be undone. Are you sure you want to continue?'); ?>')\"" +
-                                    "href='<?php echo osc_admin_base_url(true); ?>?page=pages&action=delete&id=<?php echo osc_static_page_id(); ?>'>" +
-                                    "<?php _e('Delete'); ?></a><?php }; ?></div>",
-                                    '<?php echo $p_body; ?>',
-                                    "<img id='up' onclick='order_up(<?php echo osc_static_page_id(); ?>);' style='cursor:pointer;width:15;height:15px;' src='<?php echo osc_current_admin_theme_url('images/arrow_up.png');?>'/> <br/><img id='down' onclick='order_down(<?php echo osc_static_page_id(); ?>);' style='cursor:pointer;width:15;height:15px;' src='<?php echo osc_current_admin_theme_url('images/arrow_down.png');?>'/>"
-                                  ] <?php echo $last_id != osc_static_page_id() ? ',' : ''; ?>
-                        <?php };}; ?>
-                              ],
-                    "aoColumns": [
-                        {"sTitle": "<div style='margin-left: 8px;'><input id='check_all' type='checkbox' /></div>",
-                         "bSortable": false,
-                         "sClass": "center",
-                         "sWidth": "10px",
-                         "bSearchable": false
-                         },
-                        {"sTitle": "<?php _e('Name'); ?>",
-                         "bSortable": false,
-                         "sWidth": "30%"
+                            "sNext" : "<?php echo osc_esc_html( __('Next') ) ; ?>",
+                            "sPrevious" : "<?php echo osc_esc_html( __('Previous') ) ; ?>"
                         },
-                        {"sTitle": "<?php _e('Description'); ?>",
+                        "sEmptyTable" : "<?php echo osc_esc_html( __('No data available in table') ) ; ?>",
+                        "sInfo": "<?php echo osc_esc_html( sprintf( __('Showing %s to %s of %s entries'), '_START_', '_END_', '_TOTAL_') ) ; ?>",
+                        "sInfoEmpty": "<?php echo osc_esc_html( __('No entries to show') ) ; ?>",
+                        "sInfoFiltered": "<?php echo osc_esc_html( sprintf( __('(filtered from %s total entries)'), '_MAX_' ) ) ; ?>",
+                        "sLoadingRecords": "<?php echo osc_esc_html( __('Loading...') ) ; ?>",
+                        "sProcessing": "<?php echo osc_esc_html( __('Processing...') ) ; ?>",
+                        "sSearch": "<?php echo osc_esc_html( __('Search') ) ; ?>",
+                        "sZeroRecords": "<?php echo osc_esc_html( __('No matching records found') ) ; ?>"
+                    },
+                    "aaData": <?php echo json_encode($aData) ; ?>,
+                    "aoColumns": [
+                        {
+                            "sTitle": '<input id="check_all" type="checkbox" />',
+                            "bSortable": false,
+                            "sWidth": "10px",
+                            "bSearchable": false
+                        },
+                        {
+                            "sTitle": "<?php echo osc_esc_html( __('Internal name') ) ; ?>",
+                            "bSortable": false,
+                            "sWidth": "30%"
+                        },
+                        {
+                            "sTitle": "<?php echo osc_esc_html( __('Title') ) ; ?>",
                             "bSortable": false
                         },
-                        {"sTitle": "Order",
-                         "bSortable": false,
-                         "sWidth": "30px"
+                        {
+                            "sTitle": "<?php echo osc_esc_html( __('Order') ) ; ?>",
+                            "bSortable": false,
+                            "sWidth": "30px"
                         }
-                    ]
+                    ],
+                    "aaSorting": [[3,'asc']]
+                });
+
+                $('.length-menu').append( $("#bulk_actions") ) ;
+                $('.filter').append( $("#add_page_button") ) ;
+
+                $('.datatables tr').live('mouseover', function(event) {
+                    $('#datatables_quick_edit', this).show();
+                });
+
+                $('.datatables tr').live('mouseleave', function(event) {
+                    $('#datatables_quick_edit', this).hide();
+                });
+
+                $('#up').live('mouseover', function(event) {
+                    $(this).attr('src', '<?php echo osc_current_admin_theme_url('images/arrow_up_dark.png');?>');
+                });
+                $('#down').live('mouseover', function(event) {
+                    $(this).attr('src', '<?php echo osc_current_admin_theme_url('images/arrow_down_dark.png');?>');
+                });
+                $('#up').live('mouseleave', function(event) {
+                    $(this).attr('src', '<?php echo osc_current_admin_theme_url('images/arrow_up.png');?>');
+                });
+                $('#down').live('mouseleave', function(event) {
+                    $(this).attr('src', '<?php echo osc_current_admin_theme_url('images/arrow_down.png');?>');
                 });
             });
         </script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_url('js/datatables.post_init.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
+    </head>
+    <body>
+        <?php osc_current_admin_theme_path('header.php') ; ?>
+        <!-- container -->
         <div id="content">
-            <div id="separator"></div>
-
-            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-
-            <div id="right_column">
-                <div id="content_header" class="content_header">
-                    <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url('images/pages-icon.png') ; ?>" alt="" title=""/></div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Pages') ; ?></div>
-                    <a href="<?php echo osc_admin_base_url(true); ?>?page=pages&action=add" id="button_open"><?php _e('Create page') ; ?></a>
-                    <div style="clear: both;"></div>
+            <?php osc_current_admin_theme_path( 'include/backoffice_menu.php' ) ; ?>
+            <!-- right container -->
+            <div class="right">
+                <div class="header_title">
+                    <h1 class="pages"><?php _e('Pages') ; ?></h1>
                 </div>
-
-                <div id="content_separator"></div>
                 <?php osc_show_flash_message('admin') ; ?>
-
-                <div id="TableToolsToolbar">
-                    <select id="bulk_actions" class="display">
-                        <option value=""><?php _e('Bulk actions') ; ?></option>
-                        <option value="delete_all"><?php _e('Delete') ; ?></option>
-                    </select>
-                    &nbsp;
-                    <button id="bulk_apply" class="display"><?php _e('Apply') ; ?></button>
-                </div>
-
-                
-
-                <form id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>?page=pages" method="post">
-                    <input type="hidden" name="action" value="delete" />
-                    <div id="datatables_list_processing" class="dataTables_processing" style="display:none;z-index:3;"><?php _e('Processing'); ?>...</div>
-                    <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list"></table>
-                    <br />
+                <!-- datatables pages -->
+                <form class="pages datatables" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+                    <input type="hidden" name="page" value="pages" />
+                    <div id="bulk_actions">
+                        <label>
+                            <select name="action" id="action" class="display">
+                                <option value=""><?php _e('Bulk actions') ; ?></option>
+                                <option value="delete"><?php _e('Delete') ; ?></option>
+                            </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>">
+                        </label>
+                    </div>
+                    <div id="add_page_button">
+                        <a href="<?php echo osc_admin_base_url(true); ?>?page=pages&amp;action=add" class="btn"><?php _e('Create page') ; ?></a>
+                    </div>
+                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatables_list"></table>
                 </form>
-                <div style="clear: both;"></div>
-            </div> <!-- end of right column -->
-            <script type="text/javascript">
-                $(document).ready(function() {
-                    $('#datatables_list tr').live('mouseover', function(event) {
-                        $('#datatables_quick_edit', this).show();
-                    });
-
-                    $('#datatables_list tr').live('mouseleave', function(event) {
-                        $('#datatables_quick_edit', this).hide();
-                    });
-
-                    $('#up').live('mouseover', function(event) {
-                        $(this).attr('src', '<?php echo osc_current_admin_theme_url('images/arrow_up_dark.png');?>');
-                    });
-                    $('#down').live('mouseover', function(event) {
-                        $(this).attr('src', '<?php echo osc_current_admin_theme_url('images/arrow_down_dark.png');?>');
-                    });
-                    $('#up').live('mouseleave', function(event) {
-                        $(this).attr('src', '<?php echo osc_current_admin_theme_url('images/arrow_up.png');?>');
-                    });
-                    $('#down').live('mouseleave', function(event) {
-                        $(this).attr('src', '<?php echo osc_current_admin_theme_url('images/arrow_down.png');?>');
-                    });
-	        });
-            </script>
-            <div style="clear: both;"></div>
-        </div> <!-- end of container -->
+                <!-- /datatables pages -->
+            </div>
+            <!-- /right container -->
+        </div>
+        <!-- /container -->
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>

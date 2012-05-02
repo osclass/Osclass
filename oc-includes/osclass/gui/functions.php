@@ -19,6 +19,25 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    if( !OC_ADMIN ) {
+        if( !function_exists('add_close_button_fm') ) {
+            function add_close_button_fm($message){
+                return $message.'<a class="close">×</a>' ;
+            }
+            osc_add_filter('flash_message_text', 'add_close_button_fm') ;
+        }
+        if( !function_exists('add_close_button_action') ) {
+            function add_close_button_action(){
+                echo '<script type="text/javascript">';
+                    echo '$(".FlashMessage .close").click(function(){';
+                        echo '$(this).parent().hide();';
+                    echo '});';
+                echo '</script>';
+            }
+            osc_add_hook('footer', 'add_close_button_action') ;
+        }
+    }
+
     if( !function_exists('add_logo_header') ) {
         function add_logo_header() {
              $html = '<img border="0" alt="' . osc_page_title() . '" src="' . osc_current_web_theme_url('images/logo.jpg') . '">';
@@ -46,169 +65,5 @@
 
         osc_add_hook('admin_menu', 'modern_admin_menu');
     }
-
-    if( !function_exists('meta_title') ) {
-        function meta_title( ) {
-            $location = Rewrite::newInstance()->get_location();
-            $section  = Rewrite::newInstance()->get_section();
-
-            switch ($location) {
-                case ('item'):
-                    switch ($section) {
-                        case 'item_add':    $text = __('Publish an item', 'modern') . ' - ' . osc_page_title(); break;
-                        case 'item_edit':   $text = __('Edit your item', 'modern') . ' - ' . osc_page_title(); break;
-                        case 'send_friend': $text = __('Send to a friend', 'modern') . ' - ' . osc_item_title() . ' - ' . osc_page_title(); break;
-                        case 'contact':     $text = __('Contact seller', 'modern') . ' - ' . osc_item_title() . ' - ' . osc_page_title(); break;
-                        default:            $text = osc_item_title() . ' - ' . osc_page_title(); break;
-                    }
-                break;
-                case('page'):
-                    $text = osc_static_page_title() . ' - ' . osc_page_title();
-                break;
-                case('error'):
-                    $text = __('Error', 'modern') . ' - ' . osc_page_title();
-                break;
-                case('search'):
-                    $region   = Params::getParam('sRegion');
-                    $city     = Params::getParam('sCity');
-                    $pattern  = Params::getParam('sPattern');
-                    $category = osc_search_category_id();
-                    $category = ((count($category) == 1) ? $category[0] : '');
-                    $s_page   = '';
-                    $i_page   = Params::getParam('iPage');
-
-                    if($i_page != '' && $i_page > 0) {
-                        $s_page = __('page', 'modern') . ' ' . ($i_page + 1) . ' - ';
-                    }
-
-                    $b_show_all = ($region == '' && $city == '' & $pattern == '' && $category == '');
-                    $b_category = ($category != '');
-                    $b_pattern  = ($pattern != '');
-                    $b_city     = ($city != '');
-                    $b_region   = ($region != '');
-
-                    if($b_show_all) {
-                        $text = __('Show all items', 'modern') . ' - ' . $s_page . osc_page_title();
-                    }
-
-                    $result = '';
-                    if($b_pattern) {
-                        $result .= $pattern . ' &raquo; ';
-                    }
-
-                    if($b_category) {
-                        $list        = array();
-                        $aCategories = Category::newInstance()->toRootTree($category);
-                        if(count($aCategories) > 0) {
-                            foreach ($aCategories as $single) {
-                                $list[] = $single['s_name'];
-                            }
-                            $result .= implode(' &raquo; ', $list) . ' &raquo; ';
-                        }
-                    }
-
-                    if($b_city) {
-                        $result .= $city . ' &raquo; ';
-                    }
-
-                    if($b_region) {
-                        $result .= $region . ' &raquo; ';
-                    }
-
-                    $result = preg_replace('|\s?&raquo;\s$|', '', $result);
-
-                    if($result == '') {
-                        $result = __('Search', 'modern');
-                    }
-
-                    $text = $result . ' - ' . $s_page . osc_page_title();
-                break;
-                case('login'):
-                    switch ($section) {
-                        case('recover'): $text = __('Recover your password', 'modern') . ' - ' . osc_page_title();
-                        default:         $text = __('Login', 'modern') . ' - ' . osc_page_title();
-                    }
-                break;
-                case('register'):
-                    $text = __('Create a new account', 'modern') . ' - ' . osc_page_title();
-                break;
-                case('user'):
-                    switch ($section) {
-                        case('dashboard'):       $text = __('Dashboard', 'modern') . ' - ' . osc_page_title(); break;
-                        case('items'):           $text = __('Manage my items', 'modern') . ' - ' . osc_page_title(); break;
-                        case('alerts'):          $text = __('Manage my alerts', 'modern') . ' - ' . osc_page_title(); break;
-                        case('profile'):         $text = __('Update my profile', 'modern') . ' - ' . osc_page_title(); break;
-                        case('change_email'):    $text = __('Change my email', 'modern') . ' - ' . osc_page_title(); break;
-                        case('change_password'): $text = __('Change my password', 'modern') . ' - ' . osc_page_title(); break;
-                        case('forgot'):          $text = __('Recover my password', 'modern') . ' - ' . osc_page_title(); break;
-                        default:                 $text = osc_page_title(); break;
-                    }
-                break;
-                case('contact'):
-                    $text = __('Contact','modern') . ' - ' . osc_page_title();
-                break;
-                default:
-                    $text = osc_page_title();
-                break;
-            }
-            
-            $text = str_replace('"', "'", $text);
-            return ($text);
-         }
-     }
-
-     if( !function_exists('meta_description') ) {
-         function meta_description( ) {
-            $location = Rewrite::newInstance()->get_location();
-            $section  = Rewrite::newInstance()->get_section();
-            $text     = '';
-
-            switch ($location) {
-                case ('item'):
-                    switch ($section) {
-                        case 'item_add':    $text = ''; break;
-                        case 'item_edit':   $text = ''; break;
-                        case 'send_friend': $text = ''; break;
-                        case 'contact':     $text = ''; break;
-                        default:
-                            $text = osc_item_category() . ', ' . osc_highlight(strip_tags(osc_item_description()), 140) . '..., ' . osc_item_category();
-                            break;
-                    }
-                break;
-                case('page'):
-                    $text = osc_highlight(strip_tags(osc_static_page_text()), 140);
-                break;
-                case('search'):
-                    $result = '';
-
-                    if(osc_count_items() == 0) {
-                        $text = '';
-                    }
-
-                    if(osc_has_items ()) {
-                        $result = osc_item_category() . ', ' . osc_highlight(strip_tags(osc_item_description()), 140) . '..., ' . osc_item_category();
-                    }
-
-                    osc_reset_items();
-                    $text = $result;
-                case(''): // home
-                    $result = '';
-
-                    if(osc_count_latest_items() == 0) {
-                        $text = '';
-                    }
-
-                    if(osc_has_latest_items()) {
-                        $result = osc_item_category() . ', ' . osc_highlight(strip_tags(osc_item_description()), 140) . '..., ' . osc_item_category();
-                    }
-
-                    osc_reset_items();
-                    $text = $result;
-                break;
-            }
-            
-            $text = str_replace('"', "'", $text);
-            return ($text);
-         }
-     }
+    
 ?>

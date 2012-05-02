@@ -20,7 +20,7 @@
      */
 
     define('ABS_PATH', dirname(dirname($_SERVER['SCRIPT_FILENAME'])) . '/');
-    define('OC_ADMIN', 'true');
+    define('OC_ADMIN', true) ;
 
     require_once ABS_PATH . 'oc-load.php' ;
 
@@ -28,8 +28,6 @@
         define('__OSC_MAINTENANCE__', true);
     }
 
-    WebThemes::newInstance();
-    
     switch( Params::getParam('page') )
     {
         case('items'):      require_once(osc_admin_base_path() . 'items.php') ;
@@ -100,10 +98,15 @@
                             $do = new CAdminCFields() ;
                             $do->doModel() ;
         break;
+        case('upgrade'):    require_once(osc_admin_base_path() . 'upgrade.php') ;
+                            $do = new CAdminUpgrade() ;
+                            $do->doModel() ;
+        break;
         default:            //login of oc-admin
                             require_once(osc_admin_base_path() . 'main.php') ;
                             $do = new CAdminMain() ;
                             $do->doModel() ;
     }
 
+    /* file end: ./oc-admin/index.php */
 ?>

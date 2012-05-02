@@ -80,6 +80,91 @@
             parent::generic_input_checkbox("b_enabled_bo", "1", ($locale["b_enabled_bo"] == 1) ? true : false) ;
             return true ;
         }
+        static public function js_validation($admin = false) {
+?>
+<script type="text/javascript">
+    $(document).ready(function(){
+        // Code for form validation
+        $("form[name=language_form]").validate({
+            rules: {
+                s_name: {
+                    required: true,
+                    minlength: 1
+                },
+                s_short_name: {
+                    required: true,
+                    minlength: 1
+                },
+                s_description: {
+                    required: true,
+                    minlength: 1
+                },
+                s_currency_format: {
+                    required: true,
+                    minlength: 1
+                },
+                i_num_dec: {
+                    required: true,
+                    digits:true
+                },
+                s_dec_point: {
+                    required: true,
+                    minlength: 1
+                },
+                s_thousand_sep: {
+                    required: true,
+                    minlength: 1
+                },
+                s_date_format: {
+                    required: true,
+                    minlength: 1
+                }
+            },
+            messages: {
+                s_name: {
+                    required: "<?php _e("Name: this field is required"); ?>.",
+                    minlength: "<?php _e("Name: this field is required"); ?>."
+                },
+                s_short_name: {
+                    required: "<?php _e("Short name: this field is required"); ?>.",
+                    minlength: "<?php _e("Short name: this field is required"); ?>."
+                },
+                s_description: {
+                    required: "<?php _e("Description: this field is required"); ?>.",
+                    minlength: "<?php _e("Description: this field is required"); ?>."
+                },
+                s_currency_format: {
+                    required: "<?php _e("Currency format: this field is required"); ?>.",
+                    minlength: "<?php _e("Currency format: this field is required"); ?>."
+                },
+                i_num_dec: {
+                    required: "<?php _e("Number of decimals: this field is required"); ?>.",
+                    digits: "<?php _e("Number of decimals: this field has to be numeric only"); ?>."
+                },
+                s_dec_point: {
+                    required: "<?php _e("Decimal point: this field is required"); ?>.",
+                    minlength: "<?php _e("Decimal point: this field is required"); ?>."
+                },
+                s_thousand_sep: {
+                    required: "<?php _e("Thousand separator: this field is required"); ?>.",
+                    minlength: "<?php _e("Thousand separator: this field is required"); ?>."
+                },
+                s_date_format: {
+                    required: "<?php _e("Date format: this field is required"); ?>.",
+                    minlength: "<?php _e("Date format: this field is required"); ?>."
+                }
+            },
+            wrapper: "li",
+            errorLabelContainer: "#error_list",
+            invalidHandler: function(form, validator) {
+                $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+            }
+        });
+    });
+</script>
+<?php 
+        }
+        
     }
 
 ?>

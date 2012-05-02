@@ -5,7 +5,7 @@
   But do not hide them in the print stylesheet!
   --------------------------------------------------*/
 .tabberlive .tabbertabhide {
-	display:none;
+    display:none;
 }
 
 /*--------------------------------------------------
@@ -16,7 +16,7 @@
 }
 
 .tabberlive {
-	margin-top:1em;
+    margin-top:1em;
 }
 
 /*--------------------------------------------------
@@ -25,27 +25,27 @@
   --------------------------------------------------*/
 ul.tabbernav
 {
-	margin:0;
-	padding: 3px 0;
-	border-bottom: 1px solid #DFDFDF;
+    margin:0;
+    padding: 3px 0;
+    border-bottom: 1px solid #DFDFDF;
 }
 
 ul.tabbernav li
 {
-	list-style: none;
-	margin: 0;
-	display: inline;
+    list-style: none;
+    margin: 0;
+    display: inline;
 }
 
 ul.tabbernav li a
 {
-	padding: 3px 0.5em;
-	margin-left: 3px;
-	border:1px solid #DFDFDF;
-	border-bottom: none;
-	background: #F1F1F1;
-	text-decoration: none;
-	color:#999999;
+    padding: 3px 0.5em;
+    margin-left: 3px;
+    border:1px solid #DFDFDF;
+    border-bottom: none;
+    background: #F1F1F1;
+    text-decoration: none;
+    color:#999999;
 }
 
 /*
@@ -55,23 +55,23 @@ ul.tabbernav li a:visited { color: #D54E21; }
 
 ul.tabbernav li a:hover
 {
-	color: #D54E21;
+    color: #D54E21;
 }
 
 /**/
 ul.tabbernav li.tabberactive a
 {
-	color: #333333;
-	background-color: #E3EEF7;
-	border-bottom: 1px solid #E3EEF7;
+    color: #333333;
+    background-color: #E3EEF7;
+    border-bottom: 1px solid #E3EEF7;
 }
 
 /**/
 ul.tabbernav li.tabberactive a:hover
 {
-	color: #333333;
-	background: #E3EEF7;
-	border-bottom: 1px solid #E3EEF7;
+    color: #333333;
+    background: #E3EEF7;
+    border-bottom: 1px solid #E3EEF7;
 }
 
 /*--------------------------------------------------
@@ -79,28 +79,28 @@ ul.tabbernav li.tabberactive a:hover
   Add style only after the tabber interface is set up (.tabberlive)
   --------------------------------------------------*/
 .tabberlive .tabbertab {
-	padding:10px;
-	border:1px solid #DFDFDF;
-	border-top:0;
-	background-color:#E3EEF7;
-	
-	/* If you don't want the tab size changing whenever a tab is changed
-	you can set a fixed height */
-	
-	/* height:200px; */
-	
-	/* If you set a fix height set overflow to auto and you will get a
-	scrollbar when necessary */
-	
-	/* overflow:auto; */
+    padding:10px;
+    border:1px solid #DFDFDF;
+    border-top:0;
+    background-color:#E3EEF7;
+
+    /* If you don't want the tab size changing whenever a tab is changed
+    you can set a fixed height */
+
+    /* height:200px; */
+
+    /* If you set a fix height set overflow to auto and you will get a
+    scrollbar when necessary */
+
+    /* overflow:auto; */
 }
 
 /* If desired, hide the heading since a heading is provided by the tab */
 .tabberlive .tabbertab h2 {
-	display:none;
+    display:none;
 }
 .tabberlive .tabbertab h3 {
-	display:none;
+    display:none;
 }
 
 /* Example of using an ID to set different styles for the tabs on the page */
@@ -109,6 +109,6 @@ ul.tabbernav li.tabberactive a:hover
 .tabberlive#tab2 {
 }
 .tabberlive#tab2 .tabbertab {
-	height:200px;
-	overflow:auto;
+    height:200px;
+    overflow:auto;
 }
