@@ -1,3 +1,39 @@
+OSClass 2.4.0 2012-05-02
+------------------------
+- Admin layout redesign
+- Better performance in search queries
+- Install OSClass in your language
+- Customize permalinks
+- Recalculate category and location stats
+- New alert system. Now the alerts are saved in a JSON format
+- Two more options in custom fields: url and checkbox
+- AJAX in plugins
+- Internationalization of date and time strings
+- Throw Exceptions while installing a plugin and show the error message
+- Bug fixed: generate images from original and not normal
+- Fixed some minor bugs
+- [ Modern theme ] Some enhancements in search filters: nicer checkbox and show the region of the city in the city filter
+- [ Modern theme ] New flash messages design
+
+OSClass 2.3.7 2012-04-11
+------------------------
+- Changed blog feed url
+- Fixed a js bug with quote marks in manage comments
+- Pagination bug in manage media
+- Added osc_resource_preview_url helper
+- Don't show duplicated items when "pics only" filter is selected in search
+
+OSClass 2.3.6 2012-03-05
+------------------------
+- PHP Warning in user profile when the description was empty
+- Added missing helper: osc_reset_resources
+- Contact publisher is working OK now
+- Database errors during the installation are caught correctly. Now if you don't set well the database configuration, it warns you
+- Fixed redirect after wrong reCAPTCHA code after posting an item
+- We've removed PHP warnings from HTMLPurifier library
+- Default currency is selected in item forms
+- We've added more checks in image deletion
+
 OSClass 2.3.5 2012-01-16
 ------------------------
 - Escape quotes in attr values of input tags using a new helper: osc_esc_html
