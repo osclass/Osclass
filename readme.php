@@ -10,8 +10,6 @@
         return $protocol . '://' . $_SERVER['HTTP_HOST'] . osc_getRelativeWebURL();
     }
 ?>
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xml:lang="en-US">
     <head>
@@ -28,7 +26,7 @@
                             <img src="oc-includes/images/osclass-logo.png" alt="OSClass" title="OSClass"/>
                         </a>
                         <br/>
-                        Version 2.3.7
+                        Version 2.4
                     </h1>
                 </div>
                 <div id="content">
@@ -105,7 +103,7 @@
                         <div class="space-left-10">
                             <p>If you have any questions that aren't addressed in this document, please look at the online resources:</p>
                             <dl class="space-left-25">
-                                <dt><a href="http://wiki.osclass.org/">OSClass Wiki</a></dt>
+                                <dt><a href="http://doc.osclass.org/">OSClass Wiki</a></dt>
                                 <dd>
                                     The wiki is where all information about OSClass is placed.
                                 </dd>

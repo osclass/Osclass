@@ -16,31 +16,14 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $email = __get("email");
-
-    if(isset($email['pk_i_id'])) {
-        //editing...
-        $edit = true ;
-        $title = __("Edit email/alert") ;
-        $action_frm = "edit_post";
-        $btn_text = __("Update");
-    } else {
-        //adding...
-        $edit = false ;
-        $title = __("Add an email/alert");
-        $action_frm = "add_post";
-        $btn_text = __('Add');
-    }
+    $email   = __get("email") ;
+    $locales = OSCLocale::newInstance()->listAllEnabled() ;
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <div id="update_version" style="display:none;"></div>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('tiny_mce/tiny_mce.js') ; ?>"></script>
         <script type="text/javascript">
             tinyMCE.init({
                 mode : "textareas",
@@ -58,49 +41,54 @@
                 theme_advanced_buttons1_add : "media"
             });
         </script>
+        <link href="<?php echo osc_current_admin_theme_styles_url('tabs.css') ; ?>" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('tabber-minimized.js') ; ?>"></script>
+        <script type="text/javascript">
+            document.write('<style type="text/css">.tabber{ display:none ; }</style>');
+        </script>
+    </head>
+    <body>
+        <?php osc_current_admin_theme_path('header.php') ; ?>
+        <!-- container -->
         <div id="content">
-            <div id="separator"></div>
-            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-            <div id="right_column">
-                <div id="content_header" class="content_header">
-                    <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url('images/pages-icon.png') ; ?>" title="" alt=""/>
-                    </div>
-                    <div id="content_header_arrow">&raquo; <?php _e($title); ?></div>
-                    <div style="clear: both;"></div>
+            <?php osc_current_admin_theme_path( 'include/backoffice_menu.php' ) ; ?>
+            <!-- right container -->
+            <div class="right">
+                <div class="header_title">
+                    <h1 class="pages"><?php _e('Edit email template') ; ?></h1>
                 </div>
-                <div id="content_separator"></div>
                 <?php osc_show_flash_message('admin') ; ?>
-                <!-- add new page form -->
-                <div id="settings_form">
-                    <form name="emails_form" id="emails_form" action="<?php echo osc_admin_base_url(true); ?>?page=emails" method="post">
-                        <input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
-                        <?php PageForm::primary_input_hidden($email); ?>
-                        <div class="FormElement">
-                            <div class="FormElementName">
-                                <?php _e('Internal name (name to easily identify this email/alert)'); ?>
+                <!-- edit email template -->
+                <div class="emails">
+                    <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
+                        <input type="hidden" name="page" value="emails" />
+                        <input type="hidden" name="action" value="edit_post" />
+                        <?php PageForm::primary_input_hidden($email) ; ?>
+                        <fieldset>
+                            <div class="input-line">
+                                <label><?php _e('Internal name') ; ?></label>
+                                <div class="input medium">
+                                    <?php PageForm::internal_name_input_text($email) ; ?>
+                                    <p class="help-inline"><?php _e('Used to identify the email template') ; ?></p>
+                                </div>
                             </div>
-                            <div class="FormElementInput">
-                               <?php PageForm::internal_name_input_text($email); ?>
+                            <div class="input-line">
+                                <label></label>
+                                <div class="input">
+                                    <?php PageForm::multilanguage_name_description($locales, $email) ; ?>
+                                </div>
                             </div>
-                        </div>
-                        <div class="clear50"></div>
-                        <?php
-                            $locales = OSCLocale::newInstance()->listAllEnabled();
-                            PageForm::multilanguage_name_description($locales, $email);
-                        ?>
-                        <div class="FormElement">
-                            <div class="FormElementName"></div>
-                            <div class="FormElementInput">
-                                <button class="formButton" type="button" onclick="window.location='<?php echo osc_admin_base_url(true); ?>?page=emails';" ><?php _e('Cancel'); ?></button>
-                                <button class="formButton" type="submit"><?php echo $btn_text; ?></button>
+                            <div class="actions">
+                                <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
                             </div>
-                        </div>
+                        </fieldset>
                     </form>
                 </div>
+                <!-- /edit email template -->
             </div>
-            <div style="clear: both;"></div>
-        </div> <!-- end of container -->
+            <!-- /right container -->
+        </div>
+        <!-- /container -->
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>

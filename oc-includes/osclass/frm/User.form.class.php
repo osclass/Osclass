@@ -28,117 +28,95 @@
 
         static public function name_text($user = null) {
             parent::generic_input_text("s_name", isset($user['s_name'])? $user['s_name'] : '', null, false);
-            return true ;
         }
 
         static public function email_login_text($user = null) {
             parent::generic_input_text("email", isset($user['s_email'])? $user['s_email'] : '', null, false);
-            return true ;
         }
 
         static public function password_login_text($user = null) {
             parent::generic_password("password", '', null, false);
-            return true ;
         }
 
         static public function rememberme_login_checkbox($user = null) {
             parent::generic_input_checkbox("remember", '1', false);
-            return true ;
         }
 
         static public function old_password_text($user = null) {
             parent::generic_password("old_password", '', null, false);
-            return true ;
         }
 
         static public function password_text($user = null) {
             parent::generic_password("s_password", '', null, false);
-            return true ;
         }
 
         static public function check_password_text($user = null) {
             parent::generic_password("s_password2", '', null, false);
-            return true ;
         }
 
         static public function email_text($user = null) {
             parent::generic_input_text("s_email", isset($user['s_email'])? $user['s_email'] : '', null, false);
-            return true ;
         }
 
         static public function website_text($user = null) {
             parent::generic_input_text("s_website", isset($user['s_website'])? $user['s_website'] : '', null, false);
-            return true ;
         }
 
         static public function mobile_text($user = null) {
             parent::generic_input_text("s_phone_mobile", isset($user['s_phone_mobile'])? $user['s_phone_mobile'] : '', null, false);
-            return true ;
         }
 
         static public function phone_land_text($user = null) {
             parent::generic_input_text("s_phone_land", isset($user['s_phone_land'])? $user['s_phone_land'] : '', null, false);
-            return true ;
         }
 
         static public function info_textarea($name, $locale = 'en_US', $value = '') {
             parent::generic_textarea($name . '[' . $locale . ']', $value) ;
-            return true ;
         }
 
         static public function multilanguage_info($locales, $user = null) {
             $num_locales = count($locales);
             if($num_locales > 1) { echo '<div class="tabber">'; }
-                foreach($locales as $locale) {
-                    if($num_locales>1) { echo '<div class="tabbertab">'; };
-                        if($num_locales > 1) { echo '<h2>' . $locale['s_name'] . '</h2>'; };
-                        echo '<div class="description">';
-                            echo '<div><label for="description">' . __('User Description') . '</label></div>';
-                            $info = '';
-                            if( is_array($user) ) {
-                                if( isset($user['locale'][$locale['pk_c_code']])) {
-                                    if(isset($user['locale'][$locale['pk_c_code']]['s_info'])) {
-                                        $info = $user['locale'][$locale['pk_c_code']]['s_info'];
-                                    }
-                                }
+            foreach($locales as $locale) {
+                if($num_locales>1) { echo '<div class="tabbertab">'; };
+                    if($num_locales > 1) { echo '<h2>' . $locale['s_name'] . '</h2>'; }
+                    $info = '';
+                    if( is_array($user) ) {
+                        if( isset($user['locale'][$locale['pk_c_code']])) {
+                            if(isset($user['locale'][$locale['pk_c_code']]['s_info'])) {
+                                $info = $user['locale'][$locale['pk_c_code']]['s_info'];
                             }
-                            self::info_textarea('s_info', $locale['pk_c_code'], $info);
-                        echo '</div>';
-                    if($num_locales>1) { echo '</div>'; };
-                 }
-             if($num_locales>1) { echo '</div>'; };
+                        }
+                    }
+                    self::info_textarea('s_info', $locale['pk_c_code'], $info);
+                if($num_locales>1) { echo '</div>'; };
+            }
+            if($num_locales>1) { echo '</div>'; };
         }
 
         static public function country_select($countries, $user = null) {
             if( count($countries) >= 1 ) {
                 parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select a country...'), (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : null) ;
-                return true ;
 //            } else if ( count($countries) == 1 ) {
 //                parent::generic_input_hidden('countryId', (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
 //                echo '<span>' .$countries[0]['s_name'] . '</span>';
-//                return false ;
             } else {
                 parent::generic_input_text('country', (isset($user['s_country'])) ? $user['s_country'] : null) ;
-                return true ;
             }
         }
 
         static public function country_text($user = null) {
             parent::generic_input_text('country', (isset($user['s_country'])) ? $user['s_country'] : null) ;
-            return true ;
         }
 
         static public function region_select($regions, $user = null) {
             if( count($regions) >= 1 ) {
                 parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select a region...'), (isset($user['fk_i_region_id'])) ? $user['fk_i_region_id'] : null) ;
-                return true ;
 //            } else if ( count($regions) == 1 ) {
 //                parent::generic_input_hidden('countryId', (isset($user['fk_i_region_id'])) ? $user['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
 //                echo '<span>' .$regions[0]['s_name'] . '</span>';
-//                return false ;
             } else {
                 parent::generic_input_text('region', (isset($user['s_region'])) ? $user['s_region'] : null) ;
-                return true ;
             }
         }
 
@@ -149,30 +127,24 @@
         static public function city_select($cities, $user = null) {
             if( count($cities) >= 1 ) {
                 parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select a city...'), (isset($user['fk_i_city_id'])) ? $user['fk_i_city_id'] : null) ;
-                return true ;
 //            } else if ( count($cities) == 1 ) {
 //                parent::generic_input_hidden('cityId', (isset($user['fk_i_city_id'])) ? $user['fk_i_city_id'] : null) ;
 //                echo '<span>' .$cities[0]['s_name'] . '</span>';
-//                return false ;
             } else {
                 parent::generic_input_text('city', (isset($user['s_city'])) ? $user['s_city'] : null) ;
-                return true ;
             }
         }
 
         static public function city_text($user = null) {
             parent::generic_input_text('city', (isset($user['s_city'])) ? $user['s_city'] : null) ;
-            return true ;
         }
 
         static public function city_area_text($user = null) {
             parent::generic_input_text('cityArea', (isset($user['s_city_area'])) ? $user['s_city_area'] : null) ;
-            return true ;
         }
 
         static public function address_text($user = null) {
             parent::generic_input_text('address', (isset($user['s_address'])) ? $user['s_address'] : null) ;
-            return true ;
         }
 
         static public function is_company_select($user = null) {
@@ -182,7 +154,6 @@
             ) ;
 
             parent::generic_select( 'b_company', $options, 'i_value', 's_text', null, (isset($user['b_company'])) ? $user['b_company'] : null ) ;
-            return true ;
         }
         
         static public function user_select($users){
@@ -196,11 +167,6 @@
         // Code for form validation
         $("form[name=register]").validate({
             rules: {
-                s_name: {
-                    required: true,
-                    minlength: 3,
-                    maxlength: 50
-                },
                 s_email: {
                     required: true,
                     email: true
@@ -216,10 +182,6 @@
                 }
             },
             messages: {
-                s_name: {
-                    minlength: "<?php _e("Name: enter at least 3 characters"); ?>.",
-                    maxlength: "<?php _e("Name: no more than 50 characters"); ?>."
-                },
                 s_email: {
                     required: "<?php _e("Email: this field is required"); ?>.",
                     email: "<?php _e("Invalid email address"); ?>."
@@ -229,6 +191,8 @@
                     minlength: "<?php _e("Password: enter at least 5 characters"); ?>."
                 },
                 s_password2: {
+                    required: "<?php _e("Second password: this field is required"); ?>.",
+                    minlength: "<?php _e("Second password: enter at least 5 characters"); ?>.",
                     equalTo: "<?php _e("Passwords don't match"); ?>."
                 }
             },
@@ -246,7 +210,6 @@
         static public function js_validation_old() {
 ?>
 <script type="text/javascript">
-
 $(document).ready(function(){
     $('#s_name').focus(function(){
         $('#s_name').css('border', '');
@@ -266,8 +229,6 @@ $(document).ready(function(){
         $('#password-error').css('display', 'none');
     });
 });
-
-
 
 function checkForm() {
     var num_errors = 0;
@@ -299,55 +260,49 @@ function checkForm() {
 }
 </script>
 <?php
-
         }
 
         static public function js_validation_edit() {
 ?>
 <script type="text/javascript">
-
-$(document).ready(function(){
-    $('#s_name').focus(function(){
-        $('#s_name').css('border', '');
+    $(document).ready(function(){
+        // Code for form validation
+        $("form[name=register]").validate({
+            rules: {
+                s_email: {
+                    required: true,
+                    email: true
+                },
+                s_password: {
+                    minlength: 5
+                },
+                s_password2: {
+                    minlength: 5,
+                    equalTo: "#s_password"
+                }
+            },
+            messages: {
+                s_email: {
+                    required: "<?php _e("Email: this field is required"); ?>.",
+                    email: "<?php _e("Invalid email address"); ?>."
+                },
+                s_password: {
+                    minlength: "<?php _e("Password: enter at least 5 characters"); ?>."
+                },
+                s_password2: {
+                    minlength: "<?php _e("Second password: enter at least 5 characters"); ?>.",
+                    equalTo: "<?php _e("Passwords don't match"); ?>."
+                }
+            },
+            errorLabelContainer: "#error_list",
+            wrapper: "li",
+            invalidHandler: function(form, validator) {
+                $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+            }
+        });
     });
-
-    $('#s_email').focus(function(){
-        $('#s_email').css('border', '');
-    });
-
-    $('#s_password').focus(function(){
-        $('#s_password').css('border', '');
-        $('#password-error').css('display', 'none');
-    });
-
-    $('#s_password2').focus(function(){
-        $('#s_password2').css('border', '');
-        $('#password-error').css('display', 'none');
-    });
-});
-
-function checkForm() {
-    var num_errors = 0;
-    if( $('#s_name').val() == '' ) {
-        $('#s_name').css('border', '1px solid red');
-        num_errors = num_errors + 1;
-    }
-    if( $('#s_email').val() == '' ) {
-        $('#s_email').css('border', '1px solid red');
-        num_errors = num_errors + 1;
-    }
-    if( $('#s_password').val() != $('#s_password2').val() ) {
-        $('#password-error').css('display', 'block');
-        num_errors = num_errors + 1;
-    }
-    if(num_errors > 0) {
-        return false;
-    }
-
-    return true;
-}
 </script>
-<?php
+<?php 
         }
 
         static public function location_javascript($path = 'front') {
@@ -473,11 +428,10 @@ function checkForm() {
         }
 
     });
-
 </script>
     <?php
         }
-
     }
 
+    /* file end: ./oc-includes/osclass/frm/User.form.class.php */
 ?>

@@ -20,6 +20,23 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+/**
+ * check if the item is expired 
+ */
+function osc_isExpired($dt_expiration) {
+    $now       = date("Ymdhis");
+    
+    $dt_expiration = str_replace(' ', '', $dt_expiration);
+    $dt_expiration = str_replace('-', '', $dt_expiration);
+    $dt_expiration = str_replace(':', '', $dt_expiration);
+
+    if ($dt_expiration > $now) { 
+        return false;
+    } else {
+        return true;
+    }
+}
 /**
  * Remove resources from disk
  * @param <type> $id
@@ -323,93 +340,93 @@ function osc_sendMail($params) {
 
 function osc_mailBeauty($text, $params) {
 
-	$text = str_ireplace($params[0], $params[1], $text) ;
-	$kwords = array('{WEB_URL}', '{WEB_TITLE}', '{CURRENT_DATE}', '{HOUR}') ;
-	$rwords = array(osc_base_url(), osc_page_title(), date('Y-m-d H:i:s'), date('H:i')) ;
-	$text = str_ireplace($kwords, $rwords, $text) ;
+    $text = str_ireplace($params[0], $params[1], $text) ;
+    $kwords = array('{WEB_URL}', '{WEB_TITLE}', '{CURRENT_DATE}', '{HOUR}') ;
+    $rwords = array(osc_base_url(), osc_page_title(), date('Y-m-d H:i:s'), date('H:i')) ;
+    $text = str_ireplace($kwords, $rwords, $text) ;
     
-	return $text ;
+    return $text ;
 }
 
 
 function osc_copy($source, $dest, $options=array('folderPermission'=>0755,'filePermission'=>0755)) {
-	$result =true;
-	if (is_file($source)) {
-		if ($dest[strlen($dest)-1]=='/') {
-			if (!file_exists($dest)) {
-				cmfcDirectory::makeAll($dest,$options['folderPermission'],true);
-			}
-			$__dest=$dest."/".basename($source);
-		} else {
-			$__dest=$dest;
-		}
-		if(function_exists('copy')) {
+    $result =true;
+    if (is_file($source)) {
+        if ($dest[strlen($dest)-1]=='/') {
+            if (!file_exists($dest)) {
+                cmfcDirectory::makeAll($dest,$options['folderPermission'],true);
+            }
+            $__dest=$dest."/".basename($source);
+        } else {
+            $__dest=$dest;
+        }
+        if(function_exists('copy')) {
             $result = @copy($source, $__dest);
-		} else {
-			$result=osc_copyemz($source, $__dest);
-		}
-		@chmod($__dest,$options['filePermission']);
+        } else {
+            $result=osc_copyemz($source, $__dest);
+        }
+        @chmod($__dest,$options['filePermission']);
 
-	} elseif(is_dir($source)) {
-		if ($dest[strlen($dest)-1]=='/') {
-			if ($source[strlen($source)-1]=='/') {
-				//Copy only contents
-			} else {
-				//Change parent itself and its contents
-				$dest=$dest.basename($source);
-				@mkdir($dest);
-				@chmod($dest,$options['filePermission']);
-			}
-		} else {
-			if ($source[strlen($source)-1]=='/') {
-				//Copy parent directory with new name and all its content
-				@mkdir($dest,$options['folderPermission']);
-				@chmod($dest,$options['filePermission']);
-			} else {
-				//Copy parent directory with new name and all its content
-				@mkdir($dest,$options['folderPermission']);
-				@chmod($dest,$options['filePermission']);
-			}
-		}
+    } elseif(is_dir($source)) {
+        if ($dest[strlen($dest)-1]=='/') {
+            if ($source[strlen($source)-1]=='/') {
+                //Copy only contents
+            } else {
+                //Change parent itself and its contents
+                $dest=$dest.basename($source);
+                @mkdir($dest);
+                @chmod($dest,$options['filePermission']);
+            }
+        } else {
+            if ($source[strlen($source)-1]=='/') {
+                //Copy parent directory with new name and all its content
+                @mkdir($dest,$options['folderPermission']);
+                @chmod($dest,$options['filePermission']);
+            } else {
+                //Copy parent directory with new name and all its content
+                @mkdir($dest,$options['folderPermission']);
+                @chmod($dest,$options['filePermission']);
+            }
+        }
 
-		$dirHandle=opendir($source);
-		$result = true;
-		while($file=readdir($dirHandle)) {
-			if($file!="." && $file!="..") {
-				if(!is_dir($source."/".$file)) {
-					$__dest=$dest."/".$file;
-				} else {
-					$__dest=$dest."/".$file;
-				}
-				//echo "$source/$file ||| $__dest<br />";
-				$data = osc_copy($source."/".$file, $__dest, $options);
-				if($data==false) {
-				    $result = false;
-				}
-			}
-		}
-		closedir($dirHandle);
+        $dirHandle=opendir($source);
+        $result = true;
+        while($file=readdir($dirHandle)) {
+            if($file!="." && $file!="..") {
+                if(!is_dir($source."/".$file)) {
+                    $__dest=$dest."/".$file;
+                } else {
+                    $__dest=$dest."/".$file;
+                }
+                //echo "$source/$file ||| $__dest<br />";
+                $data = osc_copy($source."/".$file, $__dest, $options);
+                if($data==false) {
+                    $result = false;
+                }
+            }
+        }
+        closedir($dirHandle);
 
-	} else {
-		$result=true;
-	}
-	return $result;
+    } else {
+        $result=true;
+    }
+    return $result;
 }
 
 
 
 function osc_copyemz($file1,$file2){
-	$contentx =@file_get_contents($file1);
-	$openedfile = fopen($file2, "w");
-	fwrite($openedfile, $contentx);
-	fclose($openedfile);
-	if ($contentx === FALSE) {
-		$status=false;
-	} else {
-		$status=true;
-	}
+    $contentx =@file_get_contents($file1);
+    $openedfile = fopen($file2, "w");
+    fwrite($openedfile, $contentx);
+    fclose($openedfile);
+    if ($contentx === FALSE) {
+        $status=false;
+    } else {
+        $status=true;
+    }
                    
-	return $status;
+    return $status;
 } 
 
 /**
@@ -478,47 +495,37 @@ function osc_dbdump($path, $file) {
 }
 
 function osc_downloadFile($sourceFile, $downloadedFile) {
-    $iErrorReporting = error_reporting();
-    error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
-
     require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
 
-	@set_time_limit(0);
-	ini_set('display_errors',true);
-			
-	$fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
-	if($fp) {
-	    $ch = curl_init($sourceFile);
-	    @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
-	    curl_setopt($ch, CURLOPT_FILE, $fp);
-	    @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-	    curl_exec($ch);
-	    curl_close($ch);
-	    fclose($fp);
-        error_reporting($iErrorReporting);
-	    return true;
+    @set_time_limit(0);
+
+    $fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
+    if($fp) {
+        $ch = curl_init($sourceFile);
+        @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+        curl_setopt($ch, CURLOPT_FILE, $fp);
+        @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_exec($ch);
+        curl_close($ch);
+        fclose($fp);
+        return true;
     } else {
-        error_reporting($iErrorReporting);
         return false;
     }
 }
 
-
-function osc_file_get_contents($url){
-    $iErrorReporting = error_reporting();
-    error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
-
+function osc_file_get_contents($url) {
     require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
-    
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1);
+
+    $ch = curl_init() ;
+    curl_setopt($ch, CURLOPT_URL, $url) ;
+    curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' OSClass (v.' . osc_version() . ')') ;
+    if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1) ;
+    @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
     $data = curl_exec($ch);
     curl_close($ch);
-
-    error_reporting($iErrorReporting);
 
     return $data;
 }
@@ -723,34 +730,33 @@ function osc_zip_folder($archive_folder, $archive_name) {
  */
 function _zip_folder_ziparchive($archive_folder, $archive_name) {
 
-	$zip = new ZipArchive;
-	if ($zip -> open($archive_name, ZipArchive::CREATE) === TRUE) {
-		$dir = preg_replace('/[\/]{2,}/', '/', $archive_folder."/");
-   
-		$dirs = array($dir);
-		while (count($dirs)) {
-			$dir = current($dirs);
-			$zip -> addEmptyDir(str_replace(ABS_PATH, '', $dir));
+    $zip = new ZipArchive;
+    if ($zip -> open($archive_name, ZipArchive::CREATE) === TRUE) {
+        $dir = preg_replace('/[\/]{2,}/', '/', $archive_folder."/");
+
+        $dirs = array($dir);
+        while (count($dirs)) {
+            $dir = current($dirs);
+            $zip -> addEmptyDir(str_replace(ABS_PATH, '', $dir));
       
-			$dh = opendir($dir);
-			while (false !== ($_file = readdir($dh))) {
-				
-				if ($_file != '.' && $_file != '..') {
-					if (is_file($dir.$_file)) {
-						$zip -> addFile($dir.$_file, str_replace(ABS_PATH, '', $dir.$_file));
-					} elseif (is_dir($dir.$_file)) {
-						$dirs[] = $dir.$_file."/";
-					}
-				}
-			}
-			closedir($dh);
-			array_shift($dirs);
-		}   
-		$zip -> close();
-		return true;
-	} else {
-		return false;
-	}
+            $dh = opendir($dir);
+            while (false !== ($_file = readdir($dh))) {
+                if ($_file != '.' && $_file != '..') {
+                    if (is_file($dir.$_file)) {
+                        $zip -> addFile($dir.$_file, str_replace(ABS_PATH, '', $dir.$_file));
+                    } elseif (is_dir($dir.$_file)) {
+                        $dirs[] = $dir.$_file."/";
+                    }
+                }
+            }
+            closedir($dh);
+            array_shift($dirs);
+        }
+        $zip -> close();
+        return true;
+    } else {
+        return false;
+    }
 
 }
 
@@ -768,7 +774,7 @@ function _zip_folder_pclzip($archive_folder, $archive_name) {
 
     $zip = new PclZip($archive_name);
     if($zip) {
-		$dir = preg_replace('/[\/]{2,}/', '/', $archive_folder."/");
+        $dir = preg_replace('/[\/]{2,}/', '/', $archive_folder."/");
    
         $v_dir = osc_base_path();
         $v_remove = $v_dir;
@@ -847,32 +853,32 @@ function osc_change_permissions( $dir = ABS_PATH ) {
     clearstatcache();
     if ($dh = opendir($dir)) {
         while (($file = readdir($dh)) !== false) {
-            if($file!="." && $file!="..") {
+            if($file!="." && $file!=".." && substr($file,0,1)!="." ) {
                 if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
                     if(!is_writable(str_replace("//", "/", $dir . "/" . $file))) {
                         $res = @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
                     }
-                    if(!$res) { return false; };
+                    if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
                     if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/themes")) {
                         if($file=="modern" || $file=="index.php") {
                             $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                            if(!$res) { return false; };
+                            if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/plugins")) {
                         if($file=="google_maps" || $file=="google_analytics" || $file=="index.php") {
                             $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                            if(!$res) { return false; };
+                            if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/languages")) {
                         if($file=="en_US" || $file=="index.php") {
                             $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                            if(!$res) { return false; };
+                            if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/downloads")) {
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/uploads")) {
                     } else {
-                        $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                        if(!$res) { return false; };
+                        $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file)); 
+                        if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
                     }
                 } else {
                     if(!is_writable(str_replace("//", "/", $dir . "/" . $file))) {
@@ -887,7 +893,6 @@ function osc_change_permissions( $dir = ABS_PATH ) {
     }
     return true;
 }
-
 
 function osc_save_permissions( $dir = ABS_PATH ) {
     $perms = array();
@@ -935,7 +940,119 @@ function rglob($pattern, $flags = 0, $path = '') {
     return $files;
 }
 
-    
 
+/**
+ * Check if a package could be update or not
+ *
+ * @param string $update_uri
+ * @since 2.4
+ * @return boolean
+ */
+function osc_check_update($update_uri, $version = null) {
+    if($update_uri!="" && $version!=null) {
+
+        if(stripos("http://", $update_uri)===FALSE) {
+            // OSCLASS OFFICIAL REPOSITORY
+            $uri = osc_market_url($update_uri);
+        } else {
+            // THIRD PARTY REPOSITORY
+            if(!osc_market_external_sources()) {
+                return false;
+            }
+            $uri = $update_uri;
+        }
+
+        if(false===($json=@osc_file_get_contents($uri))) {
+            return false;
+        } else {
+            $data = json_decode($json , true);
+            if(isset($data['s_version']) && $data['s_version']>$version) {
+                return true;
+            }
+        }
+    }
+    return false;
+}    
+
+/**
+ * Update category stats
+ *
+ * @param string $update_uri
+ * @return boolean
+ */
+function osc_update_cat_stats() {
+    $categoryTotal = array() ;
+    $categoryTree  = array() ;
+    $aCategories   = Category::newInstance()->listAll(false) ;
+
+    // append root categories and get the number of items of each category
+    foreach($aCategories as $category) {
+        $total     = Item::newInstance()->numItems($category, true, true) ;
+        $category += array('category' => array()) ;
+        if( is_null($category['fk_i_parent_id']) ) {
+            $categoryTree += array($category['pk_i_id'] => $category) ;
+        }
+
+        $categoryTotal += array($category['pk_i_id'] => $total) ;
+    }
+
+    // append childs to root categories
+    foreach($aCategories as $category) {
+        if( !is_null($category['fk_i_parent_id']) ) {
+            $categoryTree[$category['fk_i_parent_id']]['category'][] = $category ;
+        }
+    }
+
+    // sum the result of the subcategories and set in the parent category
+    foreach($categoryTree as $category) {
+        if( count( $category['category'] ) > 0 ) {
+            foreach($category['category'] as $subcategory) {
+                $categoryTotal[$category['pk_i_id']] += $categoryTotal[$subcategory['pk_i_id']] ;
+            }
+        }
+    }
+
+    $sql = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_category_stats (fk_i_category_id, i_num_items) VALUES ';
+    $aValues = array();
+    foreach($categoryTotal as $k => $v) {
+        array_push($aValues, "($k, $v)" );
+    }
+    $sql .= implode(',', $aValues);
+    $result = CategoryStats::newInstance()->dao->query($sql);
+}
+
+/**
+ * Recount items for a given a category id
+ * 
+ * @param int $id 
+ */
+function osc_update_cat_stats_id($id)
+{
+    // get sub categorias
+    if( !Category::newInstance()->isRoot($id) ) {
+        $auxCat = Category::newInstance()->findRootCategory($id);
+        $id = $auxCat['pk_i_id']; 
+    }
+    
+    $aCategories    = Category::newInstance()->findSubcategories($id);
+    $categoryTotal  = 0;
+    
+    if( count($aCategories) > 0 ) {
+        // sumar items de la categoría
+        foreach($aCategories as $category) {
+            $total     = Item::newInstance()->numItems($category, true, true) ;
+            $categoryTotal += $total;
+        }
+        $categoryTotal += Item::newInstance()->numItems(Category::newInstance()->findByPrimaryKey($id), true, true) ;
+    } else {
+        $category  = Category::newInstance()->findByPrimaryKey($id);
+        $total     = Item::newInstance()->numItems($category, true, true) ;
+        $categoryTotal += $total;
+    }
+    
+    $sql = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_category_stats (fk_i_category_id, i_num_items) VALUES ';
+    $sql .= " (".$id.", ".$categoryTotal.")";
+    $result = CategoryStats::newInstance()->dao->query($sql);
+}
 
 ?>

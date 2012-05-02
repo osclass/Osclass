@@ -25,7 +25,8 @@
         //specific for this class
         private $fieldManager ;
 
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
 
             //specific things for this class
@@ -33,52 +34,36 @@
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             parent::doModel() ;
 
             //specific things for this class
-            switch ($this->action)
-            {
-
-                case 'add_post':
-                    if(Params::getParam('field_name')!='') {
-                        $field = $this->fieldManager->findByName(Params::getParam('field_name'));
-                        if(!isset($field['pk_i_id'])) {
-                            $slug = preg_replace('|([-]+)|', '-', preg_replace('|[^a-z0-9_-]|', '-', strtolower(Params::getParam("field_slug"))));
-                            $this->fieldManager->insertField(Params::getParam("field_name"), Params::getParam("field_type_new"), $slug, Params::getParam("field_required")=="1"?1:0, Params::getParam('field_options'), Params::getParam('categories'));
-                            osc_add_flash_ok_message(_m("New custom field added"), "admin");
-                        } else {
-                            osc_add_flash_error_message(_m("Sorry, you already have one field with that name"), "admin");
-                        }
-                    } else {
-                        osc_add_flash_error_message(_m("Name can not be empty"), "admin");
-                    }
-                    $this->redirectTo(osc_admin_base_url(true)."?page=cfields");
-                    break;
-                
+            switch( $this->action ) {
                 default:
-
-                    $categories = Category::newInstance()->toTreeAll();
-                    $selected = array();
+                    $categories = Category::newInstance()->toTreeAll() ;
+                    $selected   = array() ;
                     foreach($categories as $c) {
-                        $selected[] = $c['pk_i_id'];
+                        $selected[] = $c['pk_i_id'] ;
                         foreach($c['categories'] as $cc) {
-                            $selected[] = $cc['pk_i_id'];
+                            $selected[] = $cc['pk_i_id'] ;
                         }
                     }
-                    $this->_exportVariableToView("categories", $categories);
-                    $this->_exportVariableToView("default_selected", $selected);
-                    $this->_exportVariableToView("fields", $this->fieldManager->listAll());
-                    $this->doView("fields/index.php");
-
+                    $this->_exportVariableToView('categories', $categories) ;
+                    $this->_exportVariableToView('default_selected', $selected) ;
+                    $this->_exportVariableToView('fields', $this->fieldManager->listAll()) ;
+                    $this->doView("fields/index.php") ;
+                break ;
             }
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_current_admin_theme_path($file) ;
             Session::newInstance()->_clearVariables();
         }
     }
 
+    /* file end: ./oc-admin/custom_fields.php */
 ?>

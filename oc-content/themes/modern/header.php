@@ -18,7 +18,12 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
+
+    osc_show_flash_message() ;
 ?>
+<!-- container -->
+<div class="container">
+<!-- header -->
 <div id="header">
     <a id="logo" href="<?php echo osc_base_url() ; ?>"><strong><?php echo osc_page_title() ; ?></strong></a>
     <div id="user_menu">
@@ -41,9 +46,9 @@
                             <fieldset>
                                 <input type="hidden" name="page" value="login" />
                                 <input type="hidden" name="action" value="login_post" />
-                                <label for="email"><?php _e('E-mail', 'modern') ; ?></label>
-                                <?php UserForm::email_login_text() ; ?>
-                                <label for="password"><?php _e('Password', 'modern') ; ?></label>
+                                <label for="email"><?php _e('E-mail', 'modern') ; ?></label><br/>
+                                <?php UserForm::email_login_text() ; ?><br/>
+                                <label for="password"><?php _e('Password', 'modern') ; ?></label><br/>
                                 <?php UserForm::password_login_text() ; ?>
                                 <p class="checkbox"><?php UserForm::rememberme_login_checkbox();?> <label for="rememberMe"><?php _e('Remember me', 'modern') ; ?></label></p>
                                 <button type="submit"><?php _e('Log in', 'modern') ; ?></button>
@@ -77,4 +82,5 @@
         <div class="empty"></div>
     </div>
 </div>
+<!-- /header -->
 <?php osc_show_widgets('header') ; ?>

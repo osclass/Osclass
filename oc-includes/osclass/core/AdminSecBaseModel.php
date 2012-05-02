@@ -22,15 +22,44 @@
 
     class AdminSecBaseModel extends SecBaseModel
     {
-	    function __construct() {
-		    parent::__construct() ;
-	    }
+        function __construct()
+        {
+            parent::__construct() ;
+            osc_run_hook( 'init_admin' ) ;
 
-	    function isLogged() {
+            // check if exist a new version each day
+            if( (time() - osc_last_version_check()) > (24 * 3600) ) {
+                $data = osc_file_get_contents('http://osclass.org/latest_version.php?callback=?') ;
+                $data = preg_replace('|^\?\((.*?)\);$|', '$01', $data) ;
+                $json = json_decode($data) ;
+                if( $json->version > osc_version() ) {
+                    osc_set_preference( 'update_core_json', $data ) ;
+                } else {
+                    osc_set_preference( 'update_core_json', '' ) ;
+                }
+                osc_set_preference( 'last_version_check', time() ) ;
+                osc_reset_preferences() ;
+            }
+
+            $config_version = str_replace('.', '', OSCLASS_VERSION);
+            $config_version = preg_replace('|-.*|', '', $config_version);
+
+            if( $config_version > Preference::newInstance()->get('version') ) {
+                if(get_class($this) == 'CAdminTools') {
+                } else {
+                    if(get_class($this) != 'CAdminUpgrade' )
+                        $this->redirectTo(osc_admin_base_url(true) . '?page=upgrade');
+                }
+            }
+        }
+
+        function isLogged()
+        {
             return osc_is_admin_user_logged_in() ;
-	    }
-        
-        function logout() {
+        }
+
+        function logout()
+        {
             //destroying session
             Session::newInstance()->session_destroy() ;
             Session::newInstance()->_drop('adminId') ;
@@ -45,10 +74,14 @@
             Cookie::newInstance()->set() ;
         }
 
-	    function showAuthFailPage() {
+        function showAuthFailPage()
+        {
+            // juanramon: we add here de init_admin hook becuase if not, it's not called
+            osc_run_hook( 'init_admin' ) ;
             require osc_admin_base_path() . 'gui/login.php' ;
             exit ;
         }
     }
 
+    /* file end: ./oc-includes/osclass/core/AdminSecBaseModel.php */
 ?>

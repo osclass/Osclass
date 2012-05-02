@@ -18,111 +18,107 @@
 
     $aLocale = __get('aLocale') ;
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
-        <div id="update_version" style="display:none;"></div>
+        <?php LanguageForm::js_validation(); ?>
+        <!-- container -->
         <div id="content">
-            <div id="separator"></div>
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-            <div id="right_column">
-                <div id="content_header" class="content_header">
-                    <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url('images/icon-language.png') ; ?>" title="" alt="" />
-                    </div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Edit'); ?></div>
-                    <div style="clear: both;"></div>
+            <!-- right container -->
+            <div class="right">
+                <div class="header_title">
+                    <h1 class="languages"><?php _e('Edit language') ; ?></h1>
                 </div>
-                <div id="content_separator"></div>
-                <!-- add edit language form -->
-                <div id="settings_form">
-                    <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
+                <?php osc_show_flash_message('admin') ; ?>
+                <!-- language form -->
+                <div class="languages">
+                    <ul id="error_list" style="display: none;"></ul>
+                    <form name="language_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="languages" />
                         <input type="hidden" name="action" value="edit_post" />
-                        <?php LanguageForm::primary_input_hidden($aLocale); ?>
-                        <div class="FormElement">
-                            <div class="FormElementName"><?php _e('Name'); ?></div>
-                            <div class="FormElementInput">
-                            <?php LanguageForm::name_input_text($aLocale) ; ?>
+                        <?php LanguageForm::primary_input_hidden($aLocale) ; ?>
+                        <fieldset>
+                            <div class="input-line">
+                                <label><?php _e('Name') ; ?></label>
+                                <div class="input medium">
+                                    <?php LanguageForm::name_input_text($aLocale) ; ?>
+                                </div>
                             </div>
-                        </div>
-                        <div class="FormElement">
-                            <div class="FormElementName"><?php _e('Short name'); ?></div>
-                            <div class="FormElementInput">
-                            <?php LanguageForm::short_name_input_text($aLocale) ; ?>
+                            <div class="input-line">
+                                <label><?php _e('Short name') ; ?></label>
+                                <div class="input medium">
+                                    <?php LanguageForm::short_name_input_text($aLocale) ; ?>
+                                </div>
                             </div>
-                        </div>
-                        <div class="FormElement">
-                            <div class="FormElementName"><?php _e('Description'); ?></div>
-                            <div class="FormElementInput">
-                            <?php LanguageForm::description_input_text($aLocale) ; ?>
+                            <div class="input-line">
+                                <label><?php _e('Description') ; ?></label>
+                                <div class="input large">
+                                    <?php LanguageForm::description_input_text($aLocale) ; ?>
+                                </div>
                             </div>
-                        </div>
-                        <div class="FormElement">
-                            <div class="FormElementName"><?php _e('Currency format'); ?></div>
-                            <div class="FormElementInput">
-                            <?php LanguageForm::currency_format_input_text($aLocale) ; ?>
+                            <div class="input-line">
+                                <label><?php _e('Currency format') ; ?></label>
+                                <div class="input large">
+                                    <?php LanguageForm::currency_format_input_text($aLocale) ; ?>
+                                </div>
                             </div>
-                        </div>
-                        <div class="FormElement">
-                            <div class="FormElementName"><?php _e('Number of decimals'); ?></div>
-                            <div class="FormElementInput">
-                            <?php LanguageForm::num_dec_input_text($aLocale) ; ?>
+                            <div class="input-line">
+                                <label><?php _e('Number of decimals') ; ?></label>
+                                <div class="input micro">
+                                    <?php LanguageForm::num_dec_input_text($aLocale) ; ?>
+                                </div>
                             </div>
-                        </div>
-                        <div class="FormElement">
-                            <div class="FormElementName"><?php _e('Decimal point'); ?></div>
-                            <div class="FormElementInput">
-                            <?php LanguageForm::dec_point_input_text($aLocale) ; ?>
+                            <div class="input-line">
+                                <label><?php _e('Decimal point') ; ?></label>
+                                <div class="input micro">
+                                    <?php LanguageForm::dec_point_input_text($aLocale) ; ?>
+                                </div>
                             </div>
-                        </div>
-                        <div class="FormElement">
-                            <div class="FormElementName"><?php _e('Thousands separator'); ?></div>
-                            <div class="FormElementInput">
-                            <?php LanguageForm::thousands_sep_input_text($aLocale) ; ?>
+                            <div class="input-line">
+                                <label><?php _e('Thousands separator') ; ?></label>
+                                <div class="input micro">
+                                    <?php LanguageForm::thousands_sep_input_text($aLocale) ; ?>
+                                </div>
                             </div>
-                        </div>
-                        <div class="FormElement">
-                            <div class="FormElementName"><?php _e('Date format'); ?></div>
-                            <div class="FormElementInput">
-                            <?php LanguageForm::date_format_input_text($aLocale) ; ?>
+                            <div class="input-line">
+                                <label><?php _e('Date format') ; ?></label>
+                                <div class="input small">
+                                    <?php LanguageForm::date_format_input_text($aLocale) ; ?>
+                                </div>
                             </div>
-                        </div>
-                        <div class="FormElement">
-                            <div class="FormElementName"><?php _e('Stopwords'); ?></div>
-                            <div class="FormElementInput">
-                            <?php LanguageForm::description_textarea($aLocale); ?>
+                            <div class="input-line">
+                                <label><?php _e('Stopwords') ; ?></label>
+                                <div class="input">
+                                    <?php LanguageForm::description_textarea($aLocale) ; ?>
+                                </div>
                             </div>
-                        </div>
-                        <div class="FormElement">
-                            <div class="FormElementName"></div>
-                            <div class="FormElementInput">
-                            <?php LanguageForm::enabled_input_checkbox($aLocale); ?>&nbsp;<label for="b_enabled"><?php _e('Enabled for the public website'); ?></label>
+                            <div class="input-line">
+                                <div class="input">
+                                    <label class="checkbox">
+                                        <?php LanguageForm::enabled_input_checkbox($aLocale); ?> <?php _e('Enabled for the public website') ; ?>
+                                    </label>
+                                    <label class="checkbox">
+                                        <?php LanguageForm::enabled_bo_input_checkbox($aLocale); ?> <?php _e('Enabled for the backoffice (oc-admin)'); ?>
+                                    </label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="FormElement">
-                            <div class="FormElementName"></div>
-                            <div class="FormElementInput">
-                            <?php LanguageForm::enabled_bo_input_checkbox($aLocale); ?>&nbsp;<label for="b_enabled_bo"><?php _e('Enabled for the backoffice (oc-admin)'); ?></label>
+                            <div class="actions">
+                                <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
                             </div>
-                        </div>
-                        <div class="FormElement">
-                            <div class="FormElementName"></div>
-                            <div class="FormElementInput">
-                                <button class="formButton" type="button" onclick="window.location='<?php echo osc_admin_base_url(true); ?>?page=languages';" ><?php _e('Cancel'); ?></button>
-                                <button class="formButton" type="submit"><?php _e('Update'); ?></button>
-                            </div>
-                        </div>
+                        </fieldset>
                     </form>
                 </div>
+                <!-- /language form -->
             </div>
-            <div style="clear: both;"></div>
-        </div> <!-- end of container -->
+            <!-- /right container -->
+        </div>
+        <!-- /container -->
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>

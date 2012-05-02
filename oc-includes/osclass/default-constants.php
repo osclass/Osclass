@@ -24,6 +24,10 @@
         define('MULTISITE', 0);
     }
 
+    if( !defined('OC_ADMIN') ) {
+        define('OC_ADMIN', false) ;
+    }
+
     if( !defined('LIB_PATH') ) {
         define('LIB_PATH', ABS_PATH . 'oc-includes/') ;
     }
@@ -71,5 +75,5 @@
     if ( function_exists('memory_get_usage') && ( (int) @ini_get('memory_limit') < abs(intval(OSC_MEMORY_LIMIT)) ) ) {
         @ini_set('memory_limit', OSC_MEMORY_LIMIT) ;
     }
-
+    
 ?>

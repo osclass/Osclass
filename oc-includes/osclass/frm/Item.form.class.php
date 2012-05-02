@@ -113,7 +113,14 @@
                     $bool = false;
                     if($userId != '' && $userId == $user['pk_i_id']){$bool = true;}
                     if((isset($item["fk_i_user_id"]) && $item["fk_i_user_id"] == $user['pk_i_id'])){$bool = true;}
-                    echo '<option value="' . $user['pk_i_id'] . '"' . ( $bool ? 'selected="selected"' : '' ) . '>' . $user['s_name'] . '</option>' ;
+                    echo '<option value="' . $user['pk_i_id'] . '"' . ( $bool ? 'selected="selected"' : '' ) . '>';
+                    
+                    if( isset($user['s_name']) && !empty($user['s_name']) ) {
+                        echo $user['s_name'];
+                    } else {
+                        echo $user['s_email']; 
+                    }   
+                    echo '</option>' ;
                 }
             echo '</select>' ;
             return true ;
@@ -249,9 +256,9 @@
             if( count($regions) >= 1 ) {
                 if( Session::newInstance()->_getForm('regionId') != "" ) {
                     $item['fk_i_region_id'] = Session::newInstance()->_getForm('regionId');
-                    if( Session::newInstance()->_getForm('countryId') != "" ) {
-                        $regions = Region::newInstance()->findByCountry(Session::newInstance()->_getForm('countryId')) ;
-                    }
+                }
+                if( Session::newInstance()->_getForm('countryId') != "" ) {
+                    $regions = Region::newInstance()->findByCountry(Session::newInstance()->_getForm('countryId')) ;
                 }
                 parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select a region...'), (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : null) ;
                 return true ;
@@ -275,9 +282,9 @@
             if( count($cities) >= 1 ) {
                 if( Session::newInstance()->_getForm('cityId') != "" ) {
                     $item['fk_i_city_id'] = Session::newInstance()->_getForm('cityId');
-                    if( Session::newInstance()->_getForm('regionId') != "" ) {
-                        $cities = City::newInstance()->findByRegion( Session::newInstance()->_getForm('regionId') ) ;
-                    }
+                }
+                if( Session::newInstance()->_getForm('regionId') != "" ) {
+                    $cities = City::newInstance()->findByRegion( Session::newInstance()->_getForm('regionId') ) ;
                 }
                 parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select a city...'), (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : null) ;
                 return true ;
@@ -518,7 +525,7 @@
     
     function delete_image(id, item_id,name, secret) {
         //alert(id + " - "+ item_id + " - "+name+" - "+secret);
-        var result = confirm('<?php _e('This action can\\\'t be undone. Are you sure you want to continue?'); ?>');
+        var result = confirm('<?php echo osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) ; ?>');
         if(result) {
             $.ajax({
                 type: "POST",
@@ -805,7 +812,7 @@
     
     function delete_image(id, item_id,name, secret) {
         //alert(id + " - "+ item_id + " - "+name+" - "+secret);
-        var result = confirm('<?php _e('This action can\\\'t be undone. Are you sure you want to continue?'); ?>');
+        var result = confirm('<?php echo osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) ; ?>');
         if(result) {
             $.ajax({
                 type: "POST",

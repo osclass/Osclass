@@ -22,12 +22,8 @@
         $('#fade').css('display','block');
 
         $("input[name=country_code]").val(element.attr('code'));
-        var locales = element.attr('data').split("|");
-        $.each(locales, function(index, value) { 
-            var tmp = value.split("@");
-            $("input[name='e_country["+tmp[0]+"]']").val(tmp[1]);
-        });
-
+        $("input[name='e_country']").val(element.attr('data'));
+        renderEditCountry();
         return false;
     }
 
@@ -40,6 +36,7 @@
         $("input[name=region_id]").val(id);
         $("input[name=e_region]").val(element.html());
 
+        renderEditRegion();
         return false;
     }
 
@@ -51,7 +48,7 @@
 
         $("input[name=city_id]").val(id);
         $("input[name=e_city]").val(element.html());
-
+        renderEditCity();
         return false;
     }
 
@@ -69,8 +66,8 @@
                     var more_region = $('<div>').css('float','right');
                     var link = $('<a>');
 
-                    s_country.append('<a class="close" href="' + base_url + 'index.php?page=settings&action=locations&type=delete_region&id=' + val.pk_i_id + '"><img src="' + base_url + 'images/close.png" alt="' + s_close + '" title="' + s_close + '" /></a>');
-                    s_country.append('<a href="javascript:void(0);" class="edit" onclick="edit_region($(this), ' + val.pk_i_id + ');" style="padding-right: 15px;">' + val.s_name + '</a>');
+                    s_country.append('<a id="region_delete" class="close" onclick="javascript:return confirm(\'This action can not be undone. Items with this location associated will be deleted. Are you sure you want to continue?\');" href="' + base_url + 'index.php?page=settings&action=locations&type=delete_region&id=' + val.pk_i_id + '"><img src="' + base_url + 'images/close.png" alt="' + s_close + '" title="' + s_close + '" /></a>');
+                    s_country.append('<a id="region_edit" href="javascript:void(0);" class="edit" onclick="edit_region($(this), ' + val.pk_i_id + ');" style="padding-right: 15px;">' + val.s_name + '</a>');
                     link.attr('href', 'javascript:void(0)');
                     link.click(function(){
                         show_city(val.pk_i_id);
@@ -101,8 +98,8 @@
                     var container = $('<div>').css('padding','4px').css('width','90%');
                     var s_region = $('<div>').css('float','left');
 
-                    s_region.append('<a class="close" href="' + base_url + 'index.php?page=settings&action=locations&type=delete_city&id=' + val.pk_i_id + '"><img src="' + base_url + 'images/close.png" alt="' + s_close + '" title="' + s_close + '" /></a>');
-                    s_region.append('<a href="javascript:void(0);" class="edit" onclick="edit_city($(this), ' + val.pk_i_id + ');" style="padding-right: 15px;">' + val.s_name + '</a>');
+                    s_region.append('<a id="city_delete" class="close" onclick="javascript:return confirm(\'This action can not be undone. Items with this location associated will be deleted. Are you sure you want to continue?\');"  href="' + base_url + 'index.php?page=settings&action=locations&type=delete_city&id=' + val.pk_i_id + '"><img src="' + base_url + 'images/close.png" alt="' + s_close + '" title="' + s_close + '" /></a>');
+                    s_region.append('<a id="city_edit" href="javascript:void(0);" class="edit" onclick="edit_city($(this), ' + val.pk_i_id + ');" style="padding-right: 15px;">' + val.s_name + '</a>');
                     container.append(s_region);
                     div_regions.append(container);
                     div_regions.append(clear);
@@ -226,15 +223,113 @@
         });
 
         $("#b_new_country").click(function(){
-            $('#d_add_country').css('display','block') ;
-            $('#fade').css('display','block') ;
+            renderNewCountry();
         });
         $("#b_new_region").click(function(){
-            $('#d_add_region').css('display','block') ;
-            $('#fade').css('display','block') ;
+            renderAddRegion();
         });
         $("#b_new_city").click(function(){
-            $('#d_add_city').css('display','block') ;
-            $('#fade').css('display','block') ;
+            renderAddCity();
         });
     });
+
+    function renderNewCountry(){
+        var buttonsActions = {};
+        buttonsActions[addText] = function() { 
+            if(check_form_country()){
+                $('#d_add_country_form').submit();
+                $(this).dialog("close"); 
+            }
+        }
+        buttonsActions[cancelText] = function() { 
+            $(this).dialog("close"); 
+        }
+        $( "#d_add_country" ).dialog({
+            height: 280,
+            width: 400,
+            modal: true,
+            title: addNewCountryText,
+            buttons: buttonsActions
+        });
+    }
+    
+    function renderEditCountry(){
+        var buttonsActions = {};
+        buttonsActions[editText] = function() { 
+            $("#d_edit_country_form").submit(); 
+        }
+        buttonsActions[cancelText] = function() { 
+            $(this).dialog("close"); 
+        }
+        $( "#d_edit_country" ).dialog({
+            height: 210,
+            width: 400,
+            modal: true,
+            title: editNewCountryText,
+            buttons: buttonsActions
+        });
+    }
+    function renderAddRegion(){
+        var buttonsActions = {};
+        buttonsActions[addText] = function() { 
+            $("#d_add_region_form").submit(); 
+        }
+        buttonsActions[cancelText] = function() { 
+            $(this).dialog("close"); 
+        }
+        $( "#d_add_region" ).dialog({
+            height: 210,
+            width: 400,
+            modal: true,
+            title: addNewRegionText,
+            buttons: buttonsActions
+        });
+    }
+    function renderEditRegion(){
+        var buttonsActions = {};
+        buttonsActions[editText] = function() { 
+            $("#d_edit_region_form").submit(); 
+        }
+        buttonsActions[cancelText] = function() { 
+            $(this).dialog("close"); 
+        }
+        $( "#d_edit_region" ).dialog({
+            height: 210,
+            width: 400,
+            modal: true,
+            title: editNewRegionText,
+            buttons: buttonsActions
+        });
+    }
+    function renderAddCity(){
+        var buttonsActions = {};
+        buttonsActions[addText] = function() { 
+            $("#d_add_city_form").submit(); 
+        }
+        buttonsActions[cancelText] = function() { 
+            $(this).dialog("close"); 
+        }
+        $( "#d_add_city" ).dialog({
+            height: 210,
+            width: 400,
+            modal: true,
+            title: addNewCityText,
+            buttons: buttonsActions
+        });
+    }
+    function renderEditCity(){
+        var buttonsActions = {};
+        buttonsActions[editText] = function() { 
+            $("#d_edit_city_form").submit(); 
+        }
+        buttonsActions[cancelText] = function() { 
+            $(this).dialog("close"); 
+        }
+        $( "#d_edit_city" ).dialog({
+            height: 210,
+            width: 400,
+            modal: true,
+            title: editNewCityText,
+            buttons: buttonsActions
+        });
+    }

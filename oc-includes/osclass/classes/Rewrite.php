@@ -28,6 +28,7 @@
         private $uri;
         private $location;
         private $section;
+        private $http_referer;
 
         public function __construct()
         {
@@ -36,6 +37,7 @@
             $this->uri = '';
             $this->location = '';
             $this->section = '';
+            $this->http_referer = '';
             //parent::__construct() ;
         }
 
@@ -93,7 +95,11 @@
         {
             // $_SERVER is not supported by Params Class... we should fix that
             if(isset($_SERVER['REQUEST_URI'])) {
-                $request_uri = urldecode(preg_replace('@^' . REL_WEB_URL . '@', "", $_SERVER['REQUEST_URI']));
+                if(preg_match('|[\?&]{1}http_referer=(.*)$|', urldecode($_SERVER['REQUEST_URI']), $ref_match)) {
+                    $this->http_referer = $ref_match[1];
+                    $_SERVER['REQUEST_URI'] = preg_replace('|[\?&]{1}http_referer=(.*)$|', "", urldecode($_SERVER['REQUEST_URI']));
+                }
+                $request_uri = preg_replace('@^' . REL_WEB_URL . '@', "", urldecode($_SERVER['REQUEST_URI']));
                 if(osc_rewrite_enabled()) {
                     $this->extractParams($request_uri);
                     $tmp_ar = explode("?", $request_uri);
@@ -170,6 +176,12 @@
         {
             return $this->section;
         }
+        
+        public function get_http_referer()
+        {
+            return $this->http_referer;
+        }
+        
     }
 
 ?>

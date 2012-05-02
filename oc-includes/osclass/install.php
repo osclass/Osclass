@@ -43,9 +43,40 @@ require_once LIB_PATH . 'osclass/helpers/hErrors.php';
 require_once LIB_PATH . 'osclass/helpers/hLocale.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php';
 require_once LIB_PATH . 'osclass/helpers/hSearch.php';
+require_once LIB_PATH . 'osclass/helpers/hTranslations.php';
+require_once LIB_PATH . 'osclass/helpers/hSanitize.php';
 require_once LIB_PATH . 'osclass/default-constants.php';
 require_once LIB_PATH . 'osclass/install-functions.php';
 require_once LIB_PATH . 'osclass/utils.php';
+require_once LIB_PATH . 'osclass/core/Translation.php';
+require_once LIB_PATH . 'osclass/plugins.php';
+require_once LIB_PATH . 'osclass/locales.php';
+
+
+Session::newInstance()->session_start() ;
+
+$locales = osc_listLocales();
+
+if(Params::getParam('install_locale')!='') {
+    Session::newInstance()->_set('userLocale', Params::getParam('install_locale')) ;
+    Session::newInstance()->_set('adminLocale', Params::getParam('install_locale')) ;
+}
+
+if(Session::newInstance()->_get('adminLocale')!='' && key_exists(Session::newInstance()->_get('adminLocale'), $locales)) {
+    $current_locale = Session::newInstance()->_get('adminLocale');
+} else if(isset($locales['en_US'])) {
+    $current_locale = 'en_US';
+} else {
+    $current_locale = key($locales);
+}
+
+Session::newInstance()->_set('userLocale', $current_locale);
+Session::newInstance()->_set('adminLocale', $current_locale);
+
+
+$translation = new Translation(true);
+
+
 
 $step = Params::getParam('step');
 if( !is_numeric($step) ) {
@@ -53,7 +84,7 @@ if( !is_numeric($step) ) {
 }
 
 if( is_osclass_installed( ) ) {
-    $message = 'You appear to have already installed OSClass. To reinstall please clear your old database tables first.' ;
+    $message = __('You appear to have already installed OSClass. To reinstall please clear your old database tables first.');
     osc_die('OSClass &raquo; Error', $message) ;
 }
 
@@ -85,10 +116,10 @@ switch( $step ) {
         if( Params::getParam('result') != '' ) {
             $error = Params::getParam('result');
         }
-        $password = Params::getParam('password');
+        $password = Params::getParam('password', false, false);
         break;
     case 5:
-        $password = Params::getParam('password');
+        $password = Params::getParam('password', false, false);
         break;
     default:
         break;
@@ -99,7 +130,7 @@ switch( $step ) {
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xml:lang="en-US">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>OSClass Installation</title>
+        <title><?php _e('OSClass Installation'); ?></title>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/jquery.js" type="text/javascript"></script>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/jquery-ui.js" type="text/javascript"></script>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/vtip/vtip.js" type="text/javascript"></script>
@@ -127,50 +158,60 @@ switch( $step ) {
                 </div>
                 <div id="content">
                 <?php if($step == 1) { ?>
-                    <h2 class="target">Welcome</h2>
+                    <h2 class="target"><?php _e('Welcome');?></h2>
                     <form action="install.php" method="POST">
                         <div class="form-table">
+                            <?php if( count($locales) > 1 ) { ?>
+                                <div>
+                                    <label><?php _e('Choose language') ; ?></label>
+                                    <select name="install_locale" id="install_locale" onChange="window.location.href='?install_locale='+document.getElementById(this.id).value">
+                                        <?php foreach($locales as $k => $locale) {?>
+                                        <option value="<?php echo $k ; ?>" <?php if( $k == $current_locale ) { echo 'selected="selected"' ; } ?>><?php echo $locale['name'] ; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            <?php } ?>
                             <?php if($error) { ?>
-                            <p>Check the next requirements:</p>
+                            <p><?php _e('Check the next requirements:');?></p>
                             <div class="requirements_help">
-                                <p><b>Requirements help:</b></p>
+                                <p><b><?php _e('Requirements help:'); ?></b></p>
                                 <ul>
-                                <?php $solve_requirements = get_solution_requirements(); foreach($requirements as $k => $v) { ?>
-                                    <?php  if(!$v && $solve_requirements[$k] != ''){ ?>
-                                    <li><?php echo $solve_requirements[$k]; ?></li>
+                                <?php foreach($requirements as $k => $v) { ?>
+                                    <?php  if(!$v['fn'] && $v['solution'] != ''){ ?>
+                                    <li><?php echo $v['solution']; ?></li>
                                     <?php } ?>
                                 <?php } ?>
-                                    <li><a href="http://forums.osclass.org/">Need more help?</a></li>
+                                    <li><a href="http://forums.osclass.org/"><?php _e('Need more help?');?></a></li>
                                 </ul>
                             </div>
                             <?php } else { ?>
-                            <p>All right! All the requirements have met:</p>
+                            <p><?php _e('All right! All the requirements have met:');?></p>
                             <?php } ?>
                             <ul>
                             <?php foreach($requirements as $k => $v) { ?>
-                                <li><?php echo $k; ?> <img src="<?php echo get_absolute_url(); ?>oc-includes/images/<?php echo $v ? 'tick.png' : 'cross.png'; ?>" alt="" title="" /></li>
+                                <li><?php echo $v['requirement']; ?> <img src="<?php echo get_absolute_url(); ?>oc-includes/images/<?php echo $v['fn'] ? 'tick.png' : 'cross.png'; ?>" alt="" title="" /></li>
                             <?php } ?>
                             </ul>
                             <div class="more-stats">
                                 <input type="checkbox" name="ping_engines" id="ping_engines" checked="checked" value="1"/>
                                 <label for="ping_engines">
-                                    Allow my site to appear in search engines like Google.
+                                    <?php _e('Allow my site to appear in search engines like Google.');?>
                                 </label>
                                 <br/>
                                 <input type="checkbox" name="save_stats" id="save_stats" checked="checked" value="1"/>
                                 <input type="hidden" name="step" value="2" />
                                 <label for="save_stats">
-                                    Help make OSClass better by automatically sending usage statistics and crash reports to OSClass.
+                                    <?php _e('Help make OSClass better by automatically sending usage statistics and crash reports to OSClass.');?>
                                 </label>
                             </div>
                         </div>
                         <?php if($error) { ?>
                         <p class="margin20">
-                            <input type="button" class="button" onclick="document.location = 'install.php?step=1'" value="Try again" />
+                            <input type="button" class="button" onclick="document.location = 'install.php?step=1'" value="<?php _e('Try again');?>" />
                         </p>
                         <?php } else { ?>
                         <p class="margin20">
-                            <input type="submit" class="button" value="Run the install" />
+                            <input type="submit" class="button" value="<?php _e('Run the install');?>" />
                         </p>
                     <?php } ?>
                     </form>
@@ -196,13 +237,13 @@ switch( $step ) {
                 <div id="footer">
                     <ul>
                         <li>
-                            <a href="<?php echo get_absolute_url(); ?>readme.php" target="_blank">Readme</a>
+                            <a href="<?php echo get_absolute_url(); ?>readme.php" target="_blank"><?php _e('Readme'); ?></a>
                         </li>
                         <li>
-                            <a href="http://admin.osclass.org/feedback.php" target="_blank">Feedback</a>
+                            <a href="http://admin.osclass.org/feedback.php" target="_blank"><?php _e('Feedback'); ?></a>
                         </li>
                         <li>
-                            <a href="http://forums.osclass.org/index.php" target="_blank">Forums</a>
+                            <a href="http://forums.osclass.org/index.php" target="_blank"><?php _e('Forums');?></a>
                         </li>
                     </ul>
                 </div>

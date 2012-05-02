@@ -195,8 +195,32 @@
     function osc_plugin_configure_url($plugin) {
         return osc_admin_base_url(true).'?page=plugins&action=configure&plugin='.$plugin;
     }
-    
-    
+
+    /**
+     * Gets the ajax url
+     *
+     * @param string $hook
+     * @param array $params
+     * @return string
+     */
+    function osc_ajax_hook_url($hook = '', $params = array()) {
+        $url = osc_base_url(true) . '?page=ajax&action=runhook' ;
+
+        if( $hook != '' ) {
+            $url .= '&hook=' . $hook ;
+        }
+
+        if( is_array($params) ) {
+            $url_params = array() ;
+            foreach($params as $k => $v) {
+                $url_params[] = sprintf('%s=%s', $k, $v) ;
+            }
+            $url .= implode('&', $url_params) ;
+        }
+
+        return $url ;
+    }
+
     /**
      * Gets the path for ajax
      *

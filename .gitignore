@@ -13,10 +13,20 @@ config.php
 oc-includes/osclass/t/config.php
 
 # oc-content
-oc-content/debug.log
+oc-content/debug*.log
 oc-content/queries.log
 oc-content/explain_queries.log
 oc-content/uploads/*
+
+#themes
+oc-content/themes/*
+!oc-content/themes/modern/
+
+#plugins
+oc-content/plugins/*
+!oc-content/plugins/index.php
+!oc-content/plugins/google_analytics/ 
+!oc-content/plugins/google_maps/
 
 # Others
 .htaccess

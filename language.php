@@ -19,13 +19,14 @@
 
     class CWebLanguage extends BaseModel
     {
-
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
         }
 
         // business layer...
-        function doModel() {
+        function doModel()
+        {
             $locale = Params::getParam('locale');
 
             if(preg_match('/.{2}_.{2}/', $locale)) {
@@ -46,4 +47,5 @@
         function doView($file) { }
     }
 
+    /* file end: ./language.php */
 ?>

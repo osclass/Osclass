@@ -1148,12 +1148,13 @@
                             $struct_queries[] = "ALTER TABLE ".$table." CHANGE COLUMN ".$tbl_field['Field']." ".$normal_fields[strtolower($tbl_field['Field'])];
                         }
                     }
+                    error_log(" --- ".$normal_fields[strtolower($tbl_field['Field'])]);
                     
                     // Have we changed the default value? [with quotes]
                     if(preg_match("| DEFAULT\s+'(.*)'|i", $normal_fields[strtolower($tbl_field['Field'])], $default_match)) {
                         // alter column only if default value has been changed
                         if($tbl_field['Default'] != $default_match[1]) {
-                            $struct_queries[] = "ALTER TABLE ".$table." ALTER COLUMN ".$tbl_field['Field']." SET DEFAULT ".$default_match[1];
+                            $struct_queries[] = "ALTER TABLE ".$table." ALTER COLUMN ".$tbl_field['Field']." SET DEFAULT '".$default_match[1]."'";
                         }
                     // Have we changed the default value? [without quotes]    
                     } else if(preg_match("| DEFAULT\s+(.*)|i", $normal_fields[strtolower($tbl_field['Field'])], $default_match)) {
@@ -1187,22 +1188,32 @@
          * @param type $tbl_indexes
          * @param type $indexes 
          */
-        private function createNewIndex($tbl_indexes, &$indexes)
+        private function createNewIndex($tbl_indexes, &$indexes, $table, &$struct_queries)
         {
             if($tbl_indexes) {
                 unset($indexes_array);
                 foreach($tbl_indexes as $tbl_index) {
                     $indexes_array[$tbl_index['Key_name']]['columns'][] = array('fieldname' => $tbl_index['Column_name'], 'subpart' => $tbl_index['Sub_part']);
                     $indexes_array[$tbl_index['Key_name']]['unique'] = ($tbl_index['Non_unique'] == 0)?true:false;
+                    $indexes_array[$tbl_index['Key_name']]['index_type'] = $tbl_index['Index_type'] ;
                 }
+                
                 foreach($indexes_array as $k => $v) {
                     $string = '';
                     if ($k=='PRIMARY') {
                         $string .= 'PRIMARY KEY ';
                     } else if($v['unique']) {
                         $string .= 'UNIQUE KEY ';
+                    } else if($v['index_type'] == 'FULLTEXT') {  // FULLTEXT INDEX MUST HAVE KEY_NAME
+                        $string .= 'FULLTEXT '.$k.' ';
                     } else {
-                        $string .= 'INDEX ';
+                        $sujeto = "abcdef";
+                        $patrón = '/^def/';
+                        if( ( count($v['columns']) == 1 && $v['columns'][0]['fieldname'] !=  $k ) || ( preg_match('/^idx/', $k, $coincidencias) > 0 ) ) {
+                            $string .= 'INDEX '.$k.' ';
+                        } else {
+                            $string .= 'INDEX ';
+                        }
                     }
 
                     $columns = '';
@@ -1210,13 +1221,15 @@
                     foreach ($v['columns'] as $column) {
                         if ($columns != '') $columns .= ', ';
                         // Add the field to the column list string
-                        $columns .= $column['fieldname'];
+                        $columns .= "".$column['fieldname']."";
                         if ($column['subpart'] != '') {
                             $columns .= '('.$column['subpart'].')';
                         }
                     }
+                    
                     // Add the column list to the index create string
                     $string .= '('.$columns.')';
+                    
                     $var_index = array_search($string, $indexes);
                     if (!($var_index===false)) {
                         unset($indexes[$var_index]);
@@ -1226,6 +1239,11 @@
                             unset($indexes[$var_index]);
                         }
                     }
+                }
+                
+                // alter table
+                foreach($indexes as $v ) {
+                    $struct_queries[] = "ALTER TABLE ".$table." ADD ".$v;
                 }
             }   
         }
@@ -1238,21 +1256,34 @@
          * @param array $struct_queries
          * @param array $constrains
          */
-        private function createForeignKey($tbl_constraint, $table, $struct_queries, $constrains)
+        private function createForeignKey($tbl_constraint, $table, &$struct_queries, $constrains)
         {
-            $constrainsDB  = array();
-            if(preg_match_all("| FOREIGN KEY\s+(.*)\s+REFERENCES\s+(.*),?\n|i", $tbl_constraint['Create Table'], $default_match)) {
+            $constrainsDB  = $foreignRepited =  array();
+            if(preg_match_all("| CONSTRAINT\s+(.*)\s+FOREIGN KEY\s+(.*)\s+REFERENCES\s+(.*),?\n|i", $tbl_constraint['Create Table'], $default_match)) {
 
-                $aTables = $default_match[1];
-                $aRefere = $default_match[2];
+                $aKeyName = $default_match[1];
+                $aTables = $default_match[2];
+                $aRefere = $default_match[3];
                 foreach($aTables as $index => $value) {
                     $_refere = str_replace('`', '', $aRefere[$index]);
+                    $_keyName = str_replace('`', '', $aKeyName[$index]);
                     $_refere = str_replace(',', '', $_refere);
                     $_value  = str_replace('`', '', $value);
+                    if( in_array($_refere, $constrainsDB) ) {
+                        $foreignRepited[] = $_keyName;
+                    }
                     $constrainsDB[$_value] = $_refere;
                 }
             }
 
+            $delete_foreign = array();
+            if( count($foreignRepited) > 0 ) {
+                foreach( $foreignRepited as $_key ) {
+                    echo "ALTER TABLE ".$table." DROP FOREIGN KEY ".$_key ."<br>";
+                    $struct_queries[] = "ALTER TABLE ".$table." DROP FOREIGN KEY ".$_key ;
+                }
+            }
+            
             $keys = array_keys($constrainsDB);
             foreach($constrains as $k => $v ) {
                 if( in_array($k, $keys) && $constrainsDB[$k] == $v ) {
@@ -1260,11 +1291,12 @@
                 } else {
                     // alter table
                     $index = 'FOREIGN KEY '.$k.' REFERENCES '.$v;
+                    
                     $struct_queries[] = "ALTER TABLE ".$table." ADD ".$index;
                 }
             }
         }
-        
+
         /**
          * Given some queries, it will check against the installed database if the information is the same
          * 
@@ -1292,6 +1324,7 @@
         */
         function updateDB($queries = '')
         {
+            error_log(' ----- START updateDB ----- ');
             if(!is_array($queries)) {
                 $queries = explode(";", $queries);
             }
@@ -1306,6 +1339,7 @@
             $tables = $result->result();
             foreach($tables as $v) {
                 $table = current($v);
+                error_log(' ---- ' . $table);
                 if( $this->existTableIntoStruct($table, $struct_queries) ) {
                     $lastTable = NULL;
                     $normal_fields = $indexes = $constrains = array();
@@ -1313,43 +1347,54 @@
                     if($fields) {
                         // classify fields (into sql file)
                         $this->classifyFieldsSql($fields, $normal_fields, $indexes, $constrains, $lastTable) ;
-                        
                         // Take fields from the DB (now into database)
                         $result = $this->query('DESCRIBE '.$table);
                         $tbl_fields = $result->result();
                         // compare and create alter statments
                         $this->createAlterTable($tbl_fields, $table, $normal_fields, $struct_queries) ;
-                        
                         // Go for the index part
                         $result = $this->query("SHOW INDEX FROM ".$table);
                         $tbl_indexes = $result->result() ;
                         // compare table index and struct.sql index for the same table, and only add the new ones
-                        $this->createNewIndex($tbl_indexes, $indexes) ;
-                        
+                        $this->createNewIndex($tbl_indexes, $indexes, $table, $struct_queries) ;
                         // show create table TABLE_NAME constrains
                         $result = $this->query("SHOW CREATE TABLE ".$table);
                         $tbl_constraint = $result->row();
                         // create foreign keys
                         $this->createForeignKey($tbl_constraint, $table, $struct_queries, $constrains) ;
-                        
-                        
                         // No need to create the table, so we delete it SQL
                         unset($struct_queries[strtolower($table)]);
+                        error_log(' --- struct_queries ---');
+                        foreach($struct_queries as $q) {
+                            error_log(' --- ' . $q );
+                        }
                     }
                 }
-            }            
-            
+            }        
+         
             $queries = array_merge($struct_queries, $data_queries);
             $ok = true;
             $error_queries = array();
             foreach($queries as $query) {
+                // hack for 2.4
+                if( stripos($query, 'country ADD PRIMARY KEY') ) {
+                   continue ;
+                }
                 $res = $this->query($query);
                 if(!$res) {
                     $ok = false;
                     $error_queries[] = $query;
                 }
             }
-
+            if(!empty($error_queries)) {
+                error_log(' --- error_queries ---');
+                foreach($struct_queries as $q) {
+                    error_log(' --- ' . $q );
+                }
+            }
+            
+            error_log(' ----- END updateDB ----- ');
+            
             return array($ok, $queries, $error_queries);
         }
 

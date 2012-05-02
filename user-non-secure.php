@@ -19,21 +19,21 @@
 
     class CWebUserNonSecure extends BaseModel
     {
-
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
             if( !osc_users_enabled() && ($this->action != 'activate_alert' && $this->action != 'unsub_alert') ) {
                 osc_add_flash_error_message( _m('Users not enabled') ) ;
-                $this->redirectTo(osc_base_url(true));
+                $this->redirectTo(osc_base_url());
             }
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             switch( $this->action ) {
                 case 'change_email_confirm':    //change email confirm
                                                 if ( Params::getParam('userId') && Params::getParam('code') ) {
-
                                                     $userManager = new User() ;
                                                     $user = $userManager->findByPrimaryKey( Params::getParam('userId') ) ;
 
@@ -75,32 +75,39 @@
                         osc_add_flash_error_message(_m('Ops! There was a problem trying to activate alert. Please contact the administrator'));
                     }
 
-                    $this->redirectTo( osc_base_url(true) );
+                    $this->redirectTo( osc_base_url() );
                 break;
                 case 'unsub_alert':
                     $email = Params::getParam('email');
                     $secret = Params::getParam('secret');
                     if($email!='' && $secret!='') {
-                        Alerts::newInstance()->delete(array('s_email' => $email, 'S_secret' => $secret));
+                        Alerts::newInstance()->delete(array('s_email' => $email, 's_secret' => $secret));
                         osc_add_flash_ok_message(_m('Unsubscribed correctly'));
                     } else {
                         osc_add_flash_error_message(_m('Ops! There was a problem trying to unsubscribe you. Please contact the administrator'));
                     }
                     $this->redirectTo(osc_base_url());
-
                 break;
                 case 'pub_profile':
                     $userID = Params::getParam('id') ;
 
                     $user = User::newInstance()->findByPrimaryKey( $userID ) ;
-                    // user doesn't exist
+                    // user doesn't exist, show 404 error
                     if( !$user ) {
-                        $this->redirectTo(osc_base_url());
+                        $this->do404() ;
+                        return ;
                     }
 
                     View::newInstance()->_exportVariableToView( 'user', $user ) ;
-                    $items = Item::newInstance()->findByUserIDEnabled( $user['pk_i_id'], 0, 3 ) ;
+                    $mSearch = Search::newInstance();
+                    $mSearch->fromUser($userID);
+                    
+                    $items = $mSearch->doSearch();
+                    $count = $mSearch->count();
+                    
                     View::newInstance()->_exportVariableToView( 'items', $items ) ;
+                    View::newInstance()->_exportVariableToView( 'search_total_items', $count ) ;
+                    
                     $this->doView('user-public-profile.php') ;
                 break;
                 case 'contact_post':
@@ -117,12 +124,11 @@
                             return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                         }
                     }
-                    
+
                     osc_run_hook('hook_email_contact_user', Params::getParam('id'), Params::getParam('yourEmail'), Params::getParam('yourName'), Params::getParam('phoneNumber'), Params::getParam('message'));
 
                     $this->redirectTo( osc_user_public_profile_url( ) );
-                    break;
-
+                break;
                 default:
                     $this->redirectTo( osc_user_login_url() );
                 break;
@@ -130,7 +136,8 @@
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_run_hook("before_html");
             osc_current_web_theme_path($file) ;
             Session::newInstance()->_clearVariables();
@@ -138,4 +145,5 @@
         }
     }
 
+    /* file end: ./user-non-secure.php */
 ?>

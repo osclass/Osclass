@@ -19,13 +19,14 @@
 
     class CAdminAppearance extends AdminSecBaseModel
     {
-
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             parent::doModel() ;
             //specific things for this class
             switch ($this->action) {
@@ -93,6 +94,12 @@
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
                 break;
                 case 'edit_widget_post':
+                    
+                    if(!osc_validate_text(Params::getParam("description"))) {
+                        osc_add_flash_error_message( _m('Description field is required'), 'admin');
+                        $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
+                    }
+                    
                     $res = Widget::newInstance()->update(
                         array(
                             's_description' => Params::getParam('description')
@@ -109,6 +116,12 @@
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
                     break;
                 case 'add_widget_post':
+                    
+                    if(!osc_validate_text(Params::getParam("description"))) {
+                        osc_add_flash_error_message( _m('Description field is required'), 'admin');
+                        $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
+                    }
+                    
                     Widget::newInstance()->insert(
                         array(
                             's_location' => Params::getParam('location')
@@ -142,10 +155,12 @@
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_current_admin_theme_path($file) ;
-            Session::newInstance()->_clearVariables();
+            Session::newInstance()->_clearVariables() ;
         }
     }
 
+    /* file end: ./oc-admin/appearance.php */
 ?>
