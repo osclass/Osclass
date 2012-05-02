@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Modern theme 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-23 13:38+0100\n"
+"POT-Creation-Date: 2012-05-02 20:30+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
 "Language-Team: OSClass <info@osclass.org>\n"
@@ -444,48 +444,48 @@ msgstr ""
 msgid "See all offers"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:169
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:186
 msgid "Search results"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:172
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:189
 msgid "Sort by"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:191
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:208
 #, php-format
 msgid "There are no results matching \"%s\""
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:210
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:227
 msgid "Your search"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:223
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:240
 msgid "Show only"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:228
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:245
 msgid "Show only items with pictures"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:236
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:253
 msgid "Min"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:238
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:255
 msgid "Max"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:277
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:294
 msgid "Apply"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:294
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:311
 msgid "Selected"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:295
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:312
 msgid "Nothing selected, input was"
 msgstr ""
 
@@ -527,6 +527,10 @@ msgstr ""
 #: /var/www/osclass-git/oc-content/themes/modern/user-dashboard.php:49
 #: /var/www/osclass-git/oc-content/themes/modern/user-items.php:49
 msgid "Publication date"
+msgstr ""
+
+#: /var/www/osclass-git/oc-content/themes/modern/user-alerts.php:57
+msgid "Items"
 msgstr ""
 
 #: /var/www/osclass-git/oc-content/themes/modern/user-change_email.php:39

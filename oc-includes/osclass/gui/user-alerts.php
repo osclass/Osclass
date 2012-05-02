@@ -52,6 +52,10 @@
                                 </div>
                                 <br />
                             <?php } ?>
+                            <?php if(osc_count_items() == 0) { ?>
+                                    <br />
+                                    0 <?php _e('Items', 'modern'); ?>
+                            <?php } ?>
                             </div>
                         </div>
                         <br />
