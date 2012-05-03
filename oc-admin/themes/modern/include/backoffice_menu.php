@@ -28,6 +28,7 @@ $menuActive = array(
     'languages'=>false,
     'settings'=>false,
     'tools'=>false,
+    'market'=>false,
     'users'=>false,
     'administrators'=>false,
     'stats'=>false,
@@ -62,6 +63,9 @@ if(in_array(Params::getParam('page'),array('settings'))){
 }
 if(in_array(Params::getParam('page'),array('tools'))){
     $menuActive['tools'] = 'current-menu-item';
+}
+if(in_array(Params::getPAram('page'),array('market'))) {
+    $menuActive['market'] = 'current-menu-item';
 }
 if(in_array(Params::getParam('page'),array('users'))){
     $menuActive['users'] = 'current-menu-item';
@@ -166,6 +170,12 @@ if(in_array(Params::getParam('page'),array('plugins')) && Params::getParam('acti
             <li><a id="tools_location" href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=locations"><?php _e('Location stats') ; ?></a></li>
             <li><a id="tools_category" href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=category"><?php _e('Category stats') ; ?></a></li>
             <li><a id="tools_maintenance" href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=maintenance"><?php _e('Maintenance mode') ; ?></a></li>
+        </ul>
+    </li>
+    <li id="menu_market" class="<?php echo $menuActive['market']; ?>">
+        <h3><a href="#" id="market"><?php _e('Market'); ?></a></h3>
+        <ul>
+            <li><a href="<?php echo osc_admin_base_url(true); ?>?page=market"><?php _e('Market'); ?></a></li>
         </ul>
     </li>
 

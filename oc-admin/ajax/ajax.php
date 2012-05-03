@@ -83,13 +83,17 @@
                     require_once osc_admin_base_path() . 'ajax/items_processing.php';
                     $items_processing = new ItemsProcessingAjax(Params::getParamsAsArray("get"));
                     break;
-                case 'users': // Return items (use external file oc-admin/ajax/item_processing.php)
+                case 'users': // Return users (use external file oc-admin/ajax/users_processing.php)
                     require_once osc_admin_base_path() . 'ajax/users_processing.php';
                     $users_processing = new UsersProcessingAjax(Params::getParamsAsArray("get"));
                     break;
-                case 'media': // Return items (use external file oc-admin/ajax/media_processing.php)
+                case 'media': // Return media (use external file oc-admin/ajax/media_processing.php)
                     require_once osc_admin_base_path() . 'ajax/media_processing.php';
                     $media_processing = new MediaProcessingAjax(Params::getParamsAsArray("get"));
+                    break;
+                case 'comments': // Return comments (use external file oc-admin/ajax/comments_processing.php)
+                    require_once osc_admin_base_path() . 'ajax/comments_processing.php';
+                    $comments_processing = new CommentsProcessingAjax(Params::getParamsAsArray("get"));
                     break;
                 case 'categories_order': // Save the order of the categories
                     $aIds        = Params::getParam('list') ;
@@ -660,6 +664,184 @@
                     foreach ($perms as $k => $v) {
                         @chmod($k, $v);
                     }
+                    break;
+                    
+                /*******************************
+                 ** COMPLETE MARKET PROCESS **
+                 *******************************/
+                case 'market': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
+                    $code = Params::getParam('code');
+                    $plugin = false;
+                    $re_enable = false;
+                    $message = "";
+                    $error = 0;
+                    $data = array();
+
+                    /************************
+                     *** CHECK VALID CODE ***
+                     ************************/
+                    if ($code != '') {
+
+                        if(stripos("http://", $code)===FALSE) {
+                            // OSCLASS OFFICIAL REPOSITORY
+                            $data = json_decode(osc_file_get_contents(osc_market_url($code)), true);
+                        } else {
+                            // THIRD PARTY REPOSITORY
+                            if(osc_market_external_sources()) {
+                                $data = json_decode(osc_file_get_contents($code), true);
+                            } else {
+                                echo json_encode(array('error' => 8, 'error_msg' => __('No external sources are allowed')));
+                                break;
+                            }
+                        }
+                        /***********************
+                         **** DOWNLOAD FILE ****
+                         ***********************/
+                        if( isset($data['s_slug']) && isset($data['s_source_file']) && isset($data['e_type'])) {
+
+                            if($data['e_type']=='THEME') {
+                                $folder = 'themes/';
+                            } else if($data['e_type']=='LANGUAGE') {
+                                $folder = 'languages/';
+                            } else { // PLUGINS
+                                $folder = 'plugins/';
+                                $plugin = Plugins::findByUpdateURI($data['s_slug']);
+                                if($plugin!=false) {
+                                    if(Plugins::isEnabled($plugin)) {
+                                        Plugins::runHook($plugin.'_disable') ;
+                                        Plugins::deactivate($plugin);
+                                        $re_enable = true;
+                                    }
+                                }
+                            }
+
+                            $tmp      = explode("/", $data['s_slug']) ;
+                            $filename = end($tmp) ;
+                            error_log('Source file: ' . $data['s_source_file']) ;
+                            error_log('Filename: ' . $filename) ;
+                            $result   = osc_downloadFile($data['s_source_file'], $filename) ;
+                            
+                            if ($result) { // Everything is OK, continue
+                                /**********************
+                                 ***** UNZIP FILE *****
+                                 **********************/
+                                @mkdir(ABS_PATH . 'oc-temp', 0777);
+                                $res = osc_unzip_file(osc_content_path() . 'downloads/' . $filename, osc_content_path() . 'downloads/oc-temp/');
+                                if ($res == 1) { // Everything is OK, continue
+                                    /**********************
+                                     ***** COPY FILES *****
+                                     **********************/
+                                    $fail = -1;
+                                    if ($handle = opendir(osc_content_path() . 'downloads/oc-temp')) {
+                                        $fail = 0;
+                                        while (false !== ($_file = readdir($handle))) {
+                                            if ($_file != '.' && $_file != '..') {
+                                                $copyprocess = osc_copy(osc_content_path() . "downloads/oc-temp/" . $_file, ABS_PATH . "oc-content/" . $folder . $_file);
+                                                if ($copyprocess == false) {
+                                                    $fail = 1;
+                                                };
+                                            }
+                                        }
+                                        closedir($handle);
+
+                                        // Additional actions is not important for the rest of the proccess
+                                        // We will inform the user of the problems but the upgrade could continue
+                                        /****************************
+                                         ** REMOVE TEMPORARY FILES **
+                                         ****************************/
+                                        $path = osc_content_path() . 'downloads/oc-temp';
+                                        $rm_errors = 0;
+                                        $dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::CHILD_FIRST);
+                                        for ($dir->rewind(); $dir->valid(); $dir->next()) {
+                                            if ($dir->isDir()) {
+                                                if ($dir->getFilename() != '.' && $dir->getFilename() != '..') {
+                                                    if (!rmdir($dir->getPathname())) {
+                                                        $rm_errors++;
+                                                    }
+                                                }
+                                            } else {
+                                                if (!unlink($dir->getPathname())) {
+                                                    $rm_errors++;
+                                                }
+                                            }
+                                        }
+                                            
+                                        if (!rmdir($path)) {
+                                            $rm_errors++;
+                                        }
+                                            
+                                        if ($fail == 0) { // Everything is OK, continue
+                                            if($data['e_type']!='THEME' && $data['e_type']!='LANGUAGE') {
+                                                if($plugin!=false && $re_enable) {
+                                                    $enabled = Plugins::activate($plugin);
+                                                    if($enabled) {
+                                                        Plugins::runHook($plugin.'_enable') ;
+                                                    }
+                                                }
+                                            }
+
+                                            if ($rm_errors == 0) {
+                                                $message = __('Everything was OK!');
+                                                $error = 0;
+                                            } else {
+                                                $message = __('Almost everything was OK! but there were some errors removing temporary files. Please, remove manually the "oc-temp" folder');
+                                                $error = 6; // Some errors removing files
+                                            }
+                                        } else {
+                                            $message = __('Problems copying files. Maybe permissions are not correct');
+                                            $error = 4; // Problems copying files. Maybe permissions are not correct
+                                        }
+                                    } else {
+                                        $message = __('Nothing to copy');
+                                        $error = 99; // Nothing to copy. THIS SHOULD NEVER HAPPENS, means we dont update any file!
+                                    }
+                                } else {
+                                    $message = __('Unzip failed');
+                                    $error = 3; // Unzip failed
+                                }
+                            } else {
+                                $message = __('Download failed');
+                                $error = 2; // Download failed
+                            }
+                        } else {
+                            $message = __('Input code not valid');
+                            $error = 7; // Input code not valid
+                        }
+                    } else {
+                        $message = __('Missing download URL');
+                        $error = 1; // Missing download URL
+                    }
+
+
+                    echo json_encode(array('error' => $error, 'message' => $message, 'data' => $data));
+
+                    break;
+                case 'check_market': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
+                    $code = Params::getParam('code');
+                    $data = array();
+                    /************************
+                     *** CHECK VALID CODE ***
+                     ************************/
+                    if ($code != '') {
+                        if(stripos("http://", $code)===FALSE) {
+                            // OSCLASS OFFICIAL REPOSITORY
+                            $data = json_decode(osc_file_get_contents(osc_market_url($code)), true);
+                        } else {
+                            // THIRD PARTY REPOSITORY
+                            if(osc_market_external_sources()) {
+                                $data = json_decode(osc_file_get_contents($code), true);
+                            } else {
+                                echo json_encode(array('error' => 3, 'error_msg' => __('No external sources are allowed')));
+                                break;
+                            }
+                        }
+                        if( !isset($data['s_source_file']) || !isset($data['s_slug']) || !isset($data['e_type'])) {
+                            $data = array('error' => 2, 'error_msg' => __('Not a valid code'));
+                        }
+                    } else {
+                        $data = array('error' => 1, 'error_msg' => __('No code was sumitted'));
+                    }
+                    echo json_encode($data);
                     break;
                     
                 case 'location_stats':
