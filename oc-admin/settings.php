@@ -631,7 +631,7 @@ HTACCESS;
                                             osc_reset_preferences();
 
                                             $rewrite = Rewrite::newInstance();
-                                            osc_run_hook("before_rewrite_rules", &$rewrite);
+                                            osc_run_hook("before_rewrite_rules", array(&$rewrite));
                                             $rewrite->clearRules();
 
                                             /*****************************
@@ -737,10 +737,8 @@ HTACCESS;
                                                 $param_pos++;
                                             }
                                             $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.+)', str_replace('{CATEGORY_SLUG}', '([^/]+)', str_replace('{CATEGORY_ID}', '([0-9]+)', $cat_url))).'$', 'index.php?page=search&sCategory=$'.$param_pos);
-                                            
-                                            
-                                            osc_run_hook("after_rewrite_rules", &$rewrite);
-                                            
+
+                                            osc_run_hook("after_rewrite_rules", array(&$rewrite));
 
                                             //Write rule to DB
                                             $rewrite->setRules();
@@ -1321,6 +1319,7 @@ HTACCESS;
                                         $numItemsSearch    = Params::getParam('default_results_per_page') ;
                                         $contactAttachment = Params::getParam('enabled_attachment') ;
                                         $bAutoCron         = Params::getParam('auto_cron') ;
+                                        $bMarketSources    = Params::getParam('market_external_sources')==1?1:0;
 
                                         // preparing parameters
                                         $sPageTitle        = strip_tags($sPageTitle) ;
@@ -1382,6 +1381,8 @@ HTACCESS;
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'timeFormat')) ;
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimezone)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'timezone'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $bMarketSources)
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'marketAllowExternalSources'));
                                         if(is_int($sNumRssItems)) {
                                             $iUpdated += Preference::newInstance()->update(array('s_value'   => $sNumRssItems)
                                                                                           ,array('s_section' => 'osclass', 's_name' => 'num_rss_items')) ;

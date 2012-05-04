@@ -17,27 +17,27 @@
      */
 
     set_time_limit(0);
-    
+
     error_log(' ------- START upgrade-funcs ------- ');
-    
+
     if(!defined('ABS_PATH')) {
         define('ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/');
     }
 
     require_once ABS_PATH . 'oc-load.php';
     require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
-    
+
     if( !defined('AUTO_UPGRADE') ) {
         if(file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
             $sql  = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
-            
+
             $conn = DBConnectionClass::newInstance();
             $c_db = $conn->getOsclassDb() ;
             $comm = new DBCommandClass( $c_db ) ;
-            
+
             $error_queries = $comm->updateDB( str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ) ;   
         }
-        
+
         if( Params::getParam('skipdb') == '' ){
             if(!$error_queries[0]) {
                 $skip_db_link = osc_admin_base_url(true) . "?page=upgrade&action=upgrade-funcs&skipdb=true";
@@ -69,7 +69,7 @@
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'reg_user_post_comments', '0', 'BOOLEAN')", DB_TABLE_PREFIX));
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'reg_user_can_contact', '0', 'BOOLEAN')", DB_TABLE_PREFIX));
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'allow_report_osclass', '1', 'BOOLEAN')", DB_TABLE_PREFIX));
-        
+
         // populate b_active/b_enabled (t_item_comment)
         $result   = $comm->query(sprintf("SELECT * FROM %st_item_comment", DB_TABLE_PREFIX));
         $comments = $result->result();
@@ -78,7 +78,7 @@
                                               ,array('pk_i_id'  => $comment['pk_i_id']));
         }
         unset($comments);
-        
+
         // populate b_active/b_enabled (t_item)
         $result  = $comm->query(sprintf("SELECT * FROM %st_item", DB_TABLE_PREFIX));
         $items   = $result->result();
@@ -87,7 +87,7 @@
                                        ,array('pk_i_id'  => $item['pk_i_id']));
         }
         unset($items); 
-        
+
         // populate i_items/i_comments/b_active/b_enabled (t_user)
         $users = User::newInstance()->listAll();
         foreach($users as $user) {
@@ -112,7 +112,6 @@
         $comm->query(sprintf("INSERT INTO %st_pages_description (fk_i_pages_id, fk_c_locale_code, s_title, s_text) VALUES (%d, 'en_US', 'Please validate your alert', '<p>Hi {USER_NAME},</p>\n<p>Please validate your alert registration by clicking on the following link: {VALIDATION_LINK}</p>\n<p>Thank you!</p>\n<p>Regards,</p>\n<p>{WEB_TITLE}</p>')", DB_TABLE_PREFIX, $comm->insertedId()));
         $comm->query(sprintf("INSERT INTO %st_pages (s_internal_name, b_indelible, dt_pub_date) VALUES ('email_comment_validated', 1, '%s' )", DB_TABLE_PREFIX, date('Y-m-d H:i:s')));
         $comm->query(sprintf("INSERT INTO %st_pages_description (fk_i_pages_id, fk_c_locale_code, s_title, s_text) VALUES (%d, 'en_US', '{WEB_TITLE} - Your comment has been approved', '<p>Hi {COMMENT_AUTHOR},</p>\n<p>Your comment has been approved on the following item: {ITEM_URL}</p>\n<p>Regards,</p>\n<p>{WEB_TITLE}</p>')", DB_TABLE_PREFIX, $comm->insertedId()));
-        
     }
 
     if(osc_version() < 220) {
@@ -136,7 +135,7 @@ CREATE TABLE %st_item_description_tmp (
         FOREIGN KEY (fk_i_item_id) REFERENCES %st_item (pk_i_id),
         FOREIGN KEY (fk_c_locale_code) REFERENCES %st_locale (pk_c_code)
 ) ENGINE=MyISAM DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
-        
+
         $result = $comm->query(sprintf("SELECT * FROM %st_item_description", DB_TABLE_PREFIX) );
         $descriptions = $result->result();
         foreach($descriptions as $d) {
@@ -146,7 +145,7 @@ CREATE TABLE %st_item_description_tmp (
         $comm->query(sprintf("RENAME TABLE `%st_item_description` TO `%st_item_description_old`", DB_TABLE_PREFIX, DB_TABLE_PREFIX));
         $comm->query(sprintf("RENAME TABLE `%st_item_description_tmp` TO `%st_item_description`", DB_TABLE_PREFIX, DB_TABLE_PREFIX));
         $comm->query(sprintf("ALTER TABLE %st_item_description ADD FULLTEXT s_description (s_description, s_title);", DB_TABLE_PREFIX));
-        
+
         // remove old tables if have the same number of rows 
         $nItemDesc      = $comm->query(sprintf('SELECT count(*) as total FROM %st_item_description', DB_TABLE_PREFIX));
         $nItemDesc      = $nItemDesc->row();
@@ -156,7 +155,7 @@ CREATE TABLE %st_item_description_tmp (
         if( $nItemDesc['total'] == $nItemDescOld['total'] ) {
             $comm->query(sprintf('DROP TABLE %st_item_description_old' ,DB_TABLE_PREFIX) );
         }
-        
+
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'installed_plugins', '%s', 'STRING')", DB_TABLE_PREFIX, osc_get_preference('active_plugins')));
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'mailserver_pop', '', 'STRING')", DB_TABLE_PREFIX));
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'use_imagick', '0', 'BOOLEAN')", DB_TABLE_PREFIX));
@@ -209,18 +208,20 @@ CREATE TABLE %st_item_description_tmp (
         @unlink(osc_admin_base_path()."upgrade-plugin.php");
     }
 
+    osc_changeVersionTo(237) ;
+
     if( osc_version() < 240 ) {
         // We no longer use s_what column in /*TABLE_PREFIX*/t_item_description
         $comm->query( sprintf('ALTER TABLE %st_item_description DROP COLUMN s_what', DB_TABLE_PREFIX) ) ;
 
         @unlink(osc_admin_base_path()."/themes/modern/tools/images.php");
-        
+
         // NEW REWRITE
         // Uncomment the unlink line prior to release
         //@unlink(osc_base_path()."generate_rules.php");
-        osc_set_preference('rewrite_item_url', 'item/{ITEM_ID}/{ITEM_TITLE}');
+        osc_set_preference('rewrite_item_url', '{CATEGORIES}/{ITEM_TITLE}_{ITEM_ID}');
         osc_set_preference('rewrite_cat_url', '{CATEGORIES}/');
-        osc_set_preference('rewrite_page_url', 'page/{PAGE_SLUG}');
+        osc_set_preference('rewrite_page_url', '{PAGE_SLUG}-p{PAGE_ID}');
         osc_set_preference('rewrite_search_url', 'search/');
         osc_set_preference('rewrite_search_country', 'country');
         osc_set_preference('rewrite_search_region', 'region');
@@ -257,13 +258,13 @@ CREATE TABLE %st_item_description_tmp (
 
         osc_set_preference('last_version_check', time());
         osc_set_preference('update_core_json', '');
-        
+
         $update_dt_expiration = sprintf('update %st_item as a 
                     left join %st_category  as b on b.pk_i_id = a.fk_i_category_id
                     set a.dt_expiration = date_add(a.dt_pub_date, INTERVAL b.i_expiration_days DAY) 
                     where b.i_expiration_days > 0', DB_TABLE_PREFIX, DB_TABLE_PREFIX );
         $comm->query( $update_dt_expiration ) ;
-      
+
         // we need populate location table stats
         $rs = $comm->query( sprintf('SELECT pk_c_code FROM %st_country', DB_TABLE_PREFIX) );
         $aCountry = $rs->result();
@@ -275,7 +276,7 @@ CREATE TABLE %st_item_description_tmp (
             foreach($aRegion as $region) {
                 // insert into region_stats with i_num_items = 0
                 $comm->query( sprintf('INSERT INTO %st_region_stats (fk_i_region_id, i_num_items) VALUES (%s, 0)', DB_TABLE_PREFIX, $region['pk_i_id']) ) ;
-                $rs = $comm->query( sprintf('SELECT pk_i_id FROM %st_city WHERE fk_i_region_id = %s', DB_TABLE_PREFIX, $region['pk_i_id']) ); 
+                $rs = $comm->query( sprintf('SELECT pk_i_id FROM %st_city WHERE fk_i_region_id = %s', DB_TABLE_PREFIX, $region['pk_i_id']) );
                 $aCity = $rs->result();
                 foreach($aCity as $city) {
                     // insert into city_stats with i_num_items = 0
@@ -285,15 +286,14 @@ CREATE TABLE %st_item_description_tmp (
         }
         $url_location_stats = osc_admin_base_url(true)."?page=tools&action=locations";
         $aMessages[] = '<p><b>'.__('You need to calculate locations stats, please go to admin panel, tools, recalculate location stats or click') .'  <a href="'.$url_location_stats.'">'.__('here').'</a></b></p>';
-        
-       
+
         // update t_alerts - Search object serialized to json
         $aAlerts = Alerts::newInstance()->findByType('HOURLY');
         foreach($aAlerts as $hourly) {
             convertAlert($hourly);
         }
         unset($aAlerts);
-        
+
         $aAlerts = Alerts::newInstance()->findByType('DAILY');
         foreach($aAlerts as $daily) {
             convertAlert($daily);
@@ -305,7 +305,7 @@ CREATE TABLE %st_item_description_tmp (
             convertAlert($weekly);
         }
         unset($aAlerts);
-        
+
         // UPDATE COUNTRY PROCESS (remove fk_c_locale)
         $comm->query("CREATE TABLE ".DB_TABLE_PREFIX."t_country_aux (
     pk_c_code CHAR(2) NOT NULL,
@@ -371,12 +371,10 @@ CREATE TABLE %st_item_description_tmp (
         $comm->query("ALTER TABLE ".DB_TABLE_PREFIX."t_country_stats ADD FOREIGN KEY (fk_c_country_code) REFERENCES ".DB_TABLE_PREFIX."t_country (pk_c_code)");
         $comm->query("ALTER TABLE ".DB_TABLE_PREFIX."t_item_location ADD FOREIGN KEY (fk_c_country_code) REFERENCES ".DB_TABLE_PREFIX."t_country (pk_c_code)");
         $comm->query("ALTER TABLE ".DB_TABLE_PREFIX."t_user ADD FOREIGN KEY (fk_c_country_code) REFERENCES ".DB_TABLE_PREFIX."t_country (pk_c_code)");
-        
     }
-    
-        
+
     osc_changeVersionTo(240) ;
-    
+
     echo '<div style="border: 1px solid rgb(204, 204, 204); background: none repeat scroll 0% 0% rgb(238, 238, 238);"> <div style="padding: 20px;">';
     echo '<p>'.__('OSClass &raquo; Updated correctly').'</p>' ;
     echo '<p>'.__('OSClass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
@@ -384,7 +382,7 @@ CREATE TABLE %st_item_description_tmp (
         echo "<p>".$msg."</p>";
     }
     echo "</div></div>";
-    
+
     /**
      * Convert alerts < 2.4, updating s_search with json encoded to based64.
      *
@@ -416,4 +414,5 @@ CREATE TABLE %st_item_description_tmp (
             }
         }
     }
+
 ?>

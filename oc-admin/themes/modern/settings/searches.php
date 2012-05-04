@@ -30,13 +30,11 @@
                 $("form[name=searches_form]").validate({
                     rules: {
                         custom_queries: {
-                            required: true,
                             digits: true
                         }
                     },
                     messages: {
                         custom_queries: {
-                            required: "<?php _e("Custom number: this field is required"); ?>.",
                             digits: "<?php _e("Custom number: this field has to be numeric only"); ?>."
                         }
                     },

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OSClass 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-27 01:01+0100\n"
+"POT-Creation-Date: 2012-05-02 20:29+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
 "Language-Team: OSClass <info@osclass.org>\n"
@@ -445,43 +445,51 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/admins/index.php:52
 #: /var/www/osclass-git/oc-admin/themes/modern/comments/index.php:71
+#: /var/www/osclass-git/oc-admin/themes/modern/emails/index.php:58
 msgid "Next"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/admins/index.php:53
 #: /var/www/osclass-git/oc-admin/themes/modern/comments/index.php:72
+#: /var/www/osclass-git/oc-admin/themes/modern/emails/index.php:59
 msgid "Previous"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/admins/index.php:55
 #: /var/www/osclass-git/oc-admin/themes/modern/comments/index.php:74
+#: /var/www/osclass-git/oc-admin/themes/modern/emails/index.php:61
 msgid "No data available in table"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/admins/index.php:56
 #: /var/www/osclass-git/oc-admin/themes/modern/comments/index.php:75
+#: /var/www/osclass-git/oc-admin/themes/modern/emails/index.php:62
 #, php-format
 msgid "Showing %s to %s of %s entries"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/admins/index.php:57
 #: /var/www/osclass-git/oc-admin/themes/modern/comments/index.php:76
+#: /var/www/osclass-git/oc-admin/themes/modern/emails/index.php:63
 msgid "No entries to show"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/admins/index.php:58
 #: /var/www/osclass-git/oc-admin/themes/modern/comments/index.php:77
+#: /var/www/osclass-git/oc-admin/themes/modern/emails/index.php:64
 #, php-format
 msgid "(filtered from %s total entries)"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/admins/index.php:59
 #: /var/www/osclass-git/oc-admin/themes/modern/comments/index.php:78
+#: /var/www/osclass-git/oc-admin/themes/modern/emails/index.php:65
 msgid "Loading..."
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/admins/index.php:60
 #: /var/www/osclass-git/oc-admin/themes/modern/comments/index.php:79
+#: /var/www/osclass-git/oc-admin/themes/modern/emails/index.php:66
 msgid "Processing..."
 msgstr ""
 
@@ -492,11 +500,12 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/admins/index.php:62
 #: /var/www/osclass-git/oc-admin/themes/modern/comments/index.php:81
+#: /var/www/osclass-git/oc-admin/themes/modern/emails/index.php:68
 msgid "No matching records found"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/admins/index.php:76
-#: /var/www/osclass-git/oc-admin/themes/modern/emails/index.php:61
+#: /var/www/osclass-git/oc-admin/themes/modern/emails/index.php:75
 #: /var/www/osclass-git/oc-admin/themes/modern/fields/iframe.php:32
 msgid "Name"
 msgstr ""
@@ -718,7 +727,7 @@ msgid "View"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/comments/frm.php:68
-#: /var/www/osclass-git/oc-admin/themes/modern/emails/index.php:65
+#: /var/www/osclass-git/oc-admin/themes/modern/emails/index.php:79
 msgid "Title"
 msgstr ""
 
@@ -793,7 +802,11 @@ msgstr ""
 msgid "Used to identify the email template"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/themes/modern/emails/index.php:89
+#: /var/www/osclass-git/oc-admin/themes/modern/emails/index.php:67
+msgid "Search by name"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/themes/modern/emails/index.php:103
 msgid "Emails & alerts"
 msgstr ""
 
@@ -842,7 +855,7 @@ msgid "Only alphanumeric characters are allowed [a-z0-9_-]"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/fields/index.php:51
-msgid "WARNING: This will also delete the information related to this field. This action cann not be undone. Are you sure you want to continue?"
+msgid "WARNING: This will also delete the information related to this field. This action cannot be undone. Are you sure you want to continue?"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/fields/index.php:123
@@ -1136,11 +1149,6 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/items/frm.php:166
 msgid "Address"
-msgstr ""
-
-#: /var/www/osclass-git/oc-admin/themes/modern/items/index.php:147
-#: /var/www/osclass-git/oc-admin/themes/modern/media/index.php:51
-msgid "Search by name"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/items/index.php:172
@@ -2545,60 +2553,56 @@ msgstr ""
 msgid "It exists <em>.htaccess</em> file. Below you can see the content of the file:"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:39
-msgid "Custom number: this field is required"
-msgstr ""
-
-#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:40
+#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:38
 msgid "Custom number: this field has to be numeric only"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:57
+#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:55
 msgid "Latest searches Settings"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:69
+#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:67
 msgid "Latest searches"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:72
+#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:70
 msgid "Save the latest user searches"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:73
+#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:71
 msgid "It may be useful to know what queries users do."
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:77
+#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:75
 msgid "How long are stored the queries"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:81
+#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:79
 msgid "One hour"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:85
+#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:83
 msgid "One day"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:89
+#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:87
 msgid "One week"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:93
+#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:91
 msgid "Forever"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:97
+#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:95
 msgid "Store 1000 queries"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:101
+#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:99
 #, php-format
 msgid "Store %s queries"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:103
+#: /var/www/osclass-git/oc-admin/themes/modern/settings/searches.php:101
 msgid "This feature can generate a lot of data. It's recommended to purge this data periodically."
 msgstr ""
 
@@ -2986,7 +2990,7 @@ msgstr ""
 msgid "Users Settings"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/themes/modern/users/settings.php:46
+#: /var/www/osclass-git/oc-admin/themes/modern/users/settings.php:45
 msgid "Users enabled"
 msgstr ""
 
@@ -2994,15 +2998,15 @@ msgstr ""
 msgid "Anyone can register"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/themes/modern/users/settings.php:54
+#: /var/www/osclass-git/oc-admin/themes/modern/users/settings.php:55
 msgid "Users need to validate their account"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/themes/modern/users/settings.php:59
+#: /var/www/osclass-git/oc-admin/themes/modern/users/settings.php:58
 msgid "Admin notifications"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/themes/modern/users/settings.php:63
+#: /var/www/osclass-git/oc-admin/themes/modern/users/settings.php:60
 msgid "When a new user is registered"
 msgstr ""
 
@@ -3450,43 +3454,43 @@ msgstr ""
 msgid "Welcome"
 msgstr ""
 
-#: /var/www/osclass-git/oc-includes/osclass/install.php:165
-msgid "Check the next requirements:"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/install.php:167
-msgid "Requirements help:"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/install.php:174
-msgid "Need more help?"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/install.php:178
-msgid "All right! All the requirements have met:"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/install.php:188
-msgid "Allow my site to appear in search engines like Google."
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/install.php:194
-msgid "Help make OSClass better by automatically sending usage statistics and crash reports to OSClass."
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/install.php:198
+#: /var/www/osclass-git/oc-includes/osclass/install.php:166
 msgid "Choose language"
 msgstr ""
 
-#: /var/www/osclass-git/oc-includes/osclass/install.php:209
+#: /var/www/osclass-git/oc-includes/osclass/install.php:175
+msgid "Check the next requirements:"
+msgstr ""
+
+#: /var/www/osclass-git/oc-includes/osclass/install.php:177
+msgid "Requirements help:"
+msgstr ""
+
+#: /var/www/osclass-git/oc-includes/osclass/install.php:184
+msgid "Need more help?"
+msgstr ""
+
+#: /var/www/osclass-git/oc-includes/osclass/install.php:188
+msgid "All right! All the requirements have met:"
+msgstr ""
+
+#: /var/www/osclass-git/oc-includes/osclass/install.php:198
+msgid "Allow my site to appear in search engines like Google."
+msgstr ""
+
+#: /var/www/osclass-git/oc-includes/osclass/install.php:204
+msgid "Help make OSClass better by automatically sending usage statistics and crash reports to OSClass."
+msgstr ""
+
+#: /var/www/osclass-git/oc-includes/osclass/install.php:210
 msgid "Try again"
 msgstr ""
 
-#: /var/www/osclass-git/oc-includes/osclass/install.php:213
+#: /var/www/osclass-git/oc-includes/osclass/install.php:214
 msgid "Run the install"
 msgstr ""
 
-#: /var/www/osclass-git/oc-includes/osclass/install.php:239
+#: /var/www/osclass-git/oc-includes/osclass/install.php:240
 msgid "Readme"
 msgstr ""
 
@@ -3520,19 +3524,19 @@ msgstr ""
 msgid "These errors could be false-positive errors. If you're sure that is the case, you could <a href=\"%s\">continue with the upgrade</a>, or <a href=\"http://forums.osclass.org/\">ask in our forums</a>."
 msgstr ""
 
-#: /var/www/osclass-git/oc-includes/osclass/upgrade-funcs.php:287
+#: /var/www/osclass-git/oc-includes/osclass/upgrade-funcs.php:286
 msgid "You need to calculate locations stats, please go to admin panel, tools, recalculate location stats or click"
 msgstr ""
 
-#: /var/www/osclass-git/oc-includes/osclass/upgrade-funcs.php:287
+#: /var/www/osclass-git/oc-includes/osclass/upgrade-funcs.php:286
 msgid "here"
 msgstr ""
 
-#: /var/www/osclass-git/oc-includes/osclass/upgrade-funcs.php:381
+#: /var/www/osclass-git/oc-includes/osclass/upgrade-funcs.php:377
 msgid "OSClass &raquo; Updated correctly"
 msgstr ""
 
-#: /var/www/osclass-git/oc-includes/osclass/upgrade-funcs.php:382
+#: /var/www/osclass-git/oc-includes/osclass/upgrade-funcs.php:378
 msgid "OSClass has been updated successfully. <a href=\"http://forums.osclass.org/\">Need more help?</a>"
 msgstr ""
 
@@ -3574,7 +3578,7 @@ msgid "Comment: this field is required"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/frm/Item.form.class.php:53
-#: /var/www/osclass-git/oc-includes/osclass/gui/inc.search.php:65
+#: /var/www/osclass-git/oc-includes/osclass/helpers/hCategories.php:244
 msgid "Select a category"
 msgstr ""
 
@@ -3746,438 +3750,6 @@ msgstr ""
 msgid "Second password: enter at least 5 characters"
 msgstr ""
 
-#: /var/www/osclass-git/oc-includes/osclass/gui/404.php:33
-msgid "Page not found"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/alert-form.php:6
-msgid "You have sucessfully subscribed to the alert"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/alert-form.php:8
-msgid "There was a problem with the alert"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/alert-form.php:39
-msgid "Subscribe to this search"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/alert-form.php:55
-msgid "Subscribe now"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/contact.php:34
-msgid "Contact us"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/contact.php:40
-msgid "Subject"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/contact.php:41
-msgid "Message"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/contact.php:42
-msgid "Your name"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/contact.php:43
-msgid "Your e-mail address"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/contact.php:45
-msgid "Send"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/footer.php:32
-msgid "This website is proudly using the <a title=\"OSClass web\" href=\"http://osclass.org/\">classifieds scripts</a> software <strong>OSClass</strong>"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/functions.php:60
-msgid "Modern theme"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/functions.php:62
-msgid "Settings theme"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/header.php:34
-#, php-format
-msgid "Hi %s"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/header.php:35
-msgid "My account"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/header.php:36
-msgid "Logout"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/header.php:43
-msgid "Register for a free account"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/header.php:56
-msgid "Forgot password?"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/header.php:79
-msgid "Publish your ad for free"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/inc.search.php:22
-msgid "ie. PHP Programmer"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item-contact.php:42
-msgid "To (seller)"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item-contact.php:51
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:223
-msgid "Phone number"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item-contact.php:54
-msgid "Send message"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item-edit.php:76
-msgid "Update your item"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item-edit.php:85
-#: /var/www/osclass-git/oc-includes/osclass/gui/item-post.php:83
-msgid "General Information"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item-post.php:112
-msgid "Item Location"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item-post.php:126
-msgid "City Area"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item-post.php:137
-msgid "Seller's information"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item-post.php:150
-msgid "Show e-mail on the item page"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item-post.php:163
-msgid "Publish"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item-send-friend.php:49
-msgid "Your friend's name"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item-send-friend.php:50
-msgid "Your friend's e-mail address"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:61
-msgid "Mark as"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:63
-msgid "spam"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:64
-msgid "misclassified"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:65
-msgid "duplicated"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:66
-msgid "expired"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:67
-msgid "offensive"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:75
-msgid "Published date"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:76
-msgid "Modified date"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:110
-msgid "Share"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:118
-msgid "Avoid scams by acting locally or paying with PayPal"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:119
-msgid "Never pay with Western Union, Moneygram or other anonymous payment services"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:120
-msgid "Don't buy or sell outside of your country. Don't accept cashier cheques from outside your country"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:121
-msgid "This site is never involved in any transaction, and does not handle payments, shipping, guarantee transactions, provide escrow services, or offer \"buyer protection\" or \"seller certification\""
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:138
-msgid "Delete your comment"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:150
-msgid "Leave your comment (spam and offensive messages will be removed)"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:159
-msgid "Your e-mail"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:190
-msgid "The item is expired. You cannot contact the publisher."
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:194
-msgid "It's your own item, you cannot contact the publisher."
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:198
-msgid "You must login or register a new free account in order to contact the advertiser"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:214
-msgid "Tel"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/item.php:238
-msgid "Enter the words above"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/main.php:79
-msgid "Latest Items"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/main.php:81
-msgid "No Latest Items"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/main.php:111
-msgid "See all offers"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/search.php:169
-msgid "Search results"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/search.php:172
-msgid "Sort by"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/search.php:191
-#, php-format
-msgid "There are no results matching \"%s\""
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/search.php:210
-msgid "Your search"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/search.php:223
-msgid "Show only"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/search.php:228
-msgid "Show only items with pictures"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/search.php:236
-msgid "Min"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/search.php:238
-msgid "Max"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/search.php:294
-msgid "Selected"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/search.php:295
-msgid "Nothing selected, input was"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/search_gallery.php:41
-#: /var/www/osclass-git/oc-includes/osclass/gui/search_list.php:41
-msgid "Sponsored ad"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-alerts.php:32
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-change_email.php:33
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-change_password.php:33
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-dashboard.php:33
-msgid "User account manager"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-alerts.php:37
-msgid "Your alerts"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-alerts.php:39
-msgid "You do not have any alerts yet"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-alerts.php:43
-msgid "Alert"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-alerts.php:43
-msgid "Delete this alert"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-alerts.php:49
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-dashboard.php:49
-msgid "Publication date"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-change_email.php:39
-msgid "Change your e-mail"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-change_email.php:45
-msgid "Current e-mail"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-change_email.php:49
-msgid "New e-mail"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-change_password.php:53
-msgid "Repeat new password"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-dashboard.php:39
-#, php-format
-msgid "Items from %s"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-dashboard.php:41
-msgid "No items have been added yet"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-items.php:39
-msgid "Your items"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-items.php:39
-msgid "Post a new item"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-items.php:41
-msgid "You don't have any items yet"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-login.php:33
-msgid "Access to your account"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-profile.php:41
-msgid "Update your profile"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-profile.php:55
-msgid "Modify e-mail"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-profile.php:55
-msgid "Modify password"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-public-profile.php:56
-#, php-format
-msgid "%s's profile"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-public-profile.php:62
-msgid "Profile"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-public-profile.php:64
-msgid "Full name"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-public-profile.php:68
-msgid "User Description"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-public-profile.php:72
-msgid "Latest items"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-recover.php:40
-msgid "Send me a new password"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-register.php:35
-msgid "Register an account for free"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-register.php:44
-msgid "Re-type password"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/user-register.php:51
-msgid "Create"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/admin/admin_settings.php:37
-msgid "The preferred size of the logo is 600x100"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/admin/admin_settings.php:39
-msgid "Note: Uploading another logo will overwrite current logo"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/admin/admin_settings.php:46
-msgid "Logo image"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/admin/admin_settings.php:58
-msgid "Remove logo"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/admin/admin_settings.php:62
-msgid "Has not uploaded any logo image"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/admin/admin_settings.php:72
-#, php-format
-msgid "The images folder %s is not writable on your server"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/admin/admin_settings.php:73
-msgid "OSClass can't upload logo image from the administration panel"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/admin/admin_settings.php:74
-msgid "Please make the mentioned images folder writable"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/admin/admin_settings.php:79
-msgid "To make a directory writable under UNIX execute this command from the shell"
-msgstr ""
-
 #: /var/www/osclass-git/oc-includes/osclass/helpers/hItems.php:1025
 msgid "Check with seller"
 msgstr ""
@@ -4341,6 +3913,14 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/helpers/hUtils.php:172
 msgid "Manage your alerts"
+msgstr ""
+
+#: /var/www/osclass-git/oc-includes/osclass/helpers/hUtils.php:173
+msgid "My account"
+msgstr ""
+
+#: /var/www/osclass-git/oc-includes/osclass/helpers/hUtils.php:174
+msgid "Logout"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/installer/categories.php:4

@@ -479,7 +479,7 @@
         if(!osc_rewrite_enabled ()) {
             $url = osc_base_url(true) . "?page=item&action=mark&as=spam&id=" . osc_item_id() ;
         } else {
-            $url = osc_base_url() . "item/mark/spam/" . osc_item_id() ;
+            $url = osc_base_url() . osc_get_preference('rewrite_item_mark') . "/spam/" . osc_item_id() ;
         }
 
         return (string) $url;
@@ -494,7 +494,7 @@
         if(!osc_rewrite_enabled ()) {
             $url = osc_base_url(true) . "?page=item&action=mark&as=badcat&id=" . osc_item_id() ;
         } else {
-            $url = osc_base_url() . "item/mark/badcat/" . osc_item_id() ;
+            $url = osc_base_url() . osc_get_preference('rewrite_item_mark') . "/badcat/" . osc_item_id() ;
         }
 
         return (string) $url;
@@ -509,7 +509,7 @@
         if(!osc_rewrite_enabled ()) {
             $url = osc_base_url(true) . "?page=item&action=mark&as=repeated&id=" . osc_item_id() ;
         } else {
-            $url = osc_base_url() . "item/mark/repeated/" . osc_item_id() ;
+            $url = osc_base_url() . osc_get_preference('rewrite_item_mark') . "/repeated/" . osc_item_id() ;
         }
 
         return (string) $url;
@@ -524,7 +524,7 @@
         if(!osc_rewrite_enabled ()) {
             $url = osc_base_url(true) . "?page=item&action=mark&as=offensive&id=" . osc_item_id() ;
         } else {
-            $url = osc_base_url() . "item/mark/offensive/" . osc_item_id() ;
+            $url = osc_base_url() . osc_get_preference('rewrite_item_mark') . "/offensive/" . osc_item_id() ;
         }
 
         return (string) $url;
@@ -539,7 +539,7 @@
         if(!osc_rewrite_enabled ()) {
             $url = osc_base_url(true) . "?page=item&action=mark&as=expired&id=" . osc_item_id() ;
         } else {
-            $url = osc_base_url() . "item/mark/expired/" . osc_item_id() ;
+            $url = osc_base_url() . osc_get_preference('rewrite_item_mark') . "/expired/" . osc_item_id() ;
         }
 
         return (string) $url;

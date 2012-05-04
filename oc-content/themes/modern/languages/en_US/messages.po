@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OSClass 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-27 01:01+0100\n"
+"POT-Creation-Date: 2012-05-02 20:30+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
 "Language-Team: OSClass <info@osclass.org>\n"
@@ -355,8 +355,8 @@ msgstr ""
 #: /var/www/osclass-git/oc-admin/plugins.php:114
 #: /var/www/osclass-git/oc-admin/plugins.php:128
 #: /var/www/osclass-git/oc-admin/plugins.php:142
-#: /var/www/osclass-git/oc-admin/settings.php:1013
-#: /var/www/osclass-git/oc-admin/settings.php:1224
+#: /var/www/osclass-git/oc-admin/settings.php:1011
+#: /var/www/osclass-git/oc-admin/settings.php:1222
 msgid "This action cannot be done because is a demo site"
 msgstr ""
 
@@ -951,14 +951,14 @@ msgstr ""
 #: /var/www/osclass-git/oc-admin/settings.php:244
 #: /var/www/osclass-git/oc-admin/settings.php:288
 #: /var/www/osclass-git/oc-admin/settings.php:309
-#: /var/www/osclass-git/oc-admin/settings.php:1485
-#: /var/www/osclass-git/oc-admin/settings.php:1565
+#: /var/www/osclass-git/oc-admin/settings.php:1483
+#: /var/www/osclass-git/oc-admin/settings.php:1563
 #, php-format
 msgid "%s already was in the database"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:162
-#: /var/www/osclass-git/oc-admin/settings.php:1529
+#: /var/www/osclass-git/oc-admin/settings.php:1527
 #, php-format
 msgid "%s has been added as a new country"
 msgstr ""
@@ -999,180 +999,180 @@ msgstr ""
 msgid "%s has been added as a new city"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:748
+#: /var/www/osclass-git/oc-admin/settings.php:746
 msgid "No fields could be left empty."
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:748
+#: /var/www/osclass-git/oc-admin/settings.php:746
 #, php-format
 msgid "One field was not updated"
 msgid_plural "%s fields were not updated"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:751
+#: /var/www/osclass-git/oc-admin/settings.php:749
 msgid "Permalinks structure updated"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:760
+#: /var/www/osclass-git/oc-admin/settings.php:758
 msgid "Permalinks structure updated."
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:762
+#: /var/www/osclass-git/oc-admin/settings.php:760
 msgid "However, we can't check if Apache module <b>mod_rewrite</b> is loaded. If you experience some problems with the urls, you should deactivate <em>friendly urls</em>"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:769
-#: /var/www/osclass-git/oc-admin/settings.php:779
+#: /var/www/osclass-git/oc-admin/settings.php:767
+#: /var/www/osclass-git/oc-admin/settings.php:777
 msgid "File <b>.htaccess</b> couldn't be filled with the right content."
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:771
+#: /var/www/osclass-git/oc-admin/settings.php:769
 msgid "Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file, please deactivate <em>friendly urls</em> option."
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:781
+#: /var/www/osclass-git/oc-admin/settings.php:779
 msgid "Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file or experience some problems with the urls, please deactivate <em>friendly urls</em> option."
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:795
+#: /var/www/osclass-git/oc-admin/settings.php:793
 msgid "Friendly urls successfully deactivated"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:824
+#: /var/www/osclass-git/oc-admin/settings.php:822
 msgid "Your Akismet key has been cleared"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:826
+#: /var/www/osclass-git/oc-admin/settings.php:824
 msgid "Your Akismet key has been updated"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:842
+#: /var/www/osclass-git/oc-admin/settings.php:840
 msgid "Your reCAPTCHA key has been cleared"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:844
+#: /var/www/osclass-git/oc-admin/settings.php:842
 msgid "Your reCAPTCHA key has been updated"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:875
+#: /var/www/osclass-git/oc-admin/settings.php:873
 msgid "The currency code is not in the correct format"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:888
+#: /var/www/osclass-git/oc-admin/settings.php:886
 msgid "Currency added"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:890
+#: /var/www/osclass-git/oc-admin/settings.php:888
 msgid "Currency couldn't be added"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:900
-#: /var/www/osclass-git/oc-admin/settings.php:907
+#: /var/www/osclass-git/oc-admin/settings.php:898
+#: /var/www/osclass-git/oc-admin/settings.php:905
 #, php-format
 msgid "The currency code '%s' doesn't exist"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:928
+#: /var/www/osclass-git/oc-admin/settings.php:926
 msgid "Error: the currency code is not in the correct format"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:941
+#: /var/www/osclass-git/oc-admin/settings.php:939
 msgid "Currency updated"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:943
+#: /var/www/osclass-git/oc-admin/settings.php:941
 msgid "No changes were made"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:963
+#: /var/www/osclass-git/oc-admin/settings.php:961
 #, php-format
 msgid "%s could not be deleted because it has items associated"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:965
+#: /var/www/osclass-git/oc-admin/settings.php:963
 #, php-format
 msgid "%s could not be deleted because it's the default currency"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:973
+#: /var/www/osclass-git/oc-admin/settings.php:971
 msgid "No currencies have been deleted"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:977
+#: /var/www/osclass-git/oc-admin/settings.php:975
 msgid "One currency has been deleted"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:981
+#: /var/www/osclass-git/oc-admin/settings.php:979
 #, php-format
 msgid "%s currencies have been deleted"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1030
+#: /var/www/osclass-git/oc-admin/settings.php:1028
 msgid "Mail server type is incorrect"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1052
+#: /var/www/osclass-git/oc-admin/settings.php:1050
 msgid "Mail server configuration has changed"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1173
+#: /var/www/osclass-git/oc-admin/settings.php:1171
 #, php-format
 msgid "You cannot set a maximum size file higher than the one that allows PHP configuration: <b>%d KB</b>"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1207
+#: /var/www/osclass-git/oc-admin/settings.php:1205
 msgid "Media config has been updated"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1305
+#: /var/www/osclass-git/oc-admin/settings.php:1303
 msgid "Re-generation complete"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1345
+#: /var/www/osclass-git/oc-admin/settings.php:1343
 msgid "Page title field is required"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1348
+#: /var/www/osclass-git/oc-admin/settings.php:1346
 msgid "Contact email field is required"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1351
+#: /var/www/osclass-git/oc-admin/settings.php:1349
 msgid "Number of RSS items has to be numeric only"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1354
+#: /var/www/osclass-git/oc-admin/settings.php:1352
 msgid "Max latest items has to be numeric only"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1357
+#: /var/www/osclass-git/oc-admin/settings.php:1355
 msgid "Number of items on search has to be numeric only"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1390
+#: /var/www/osclass-git/oc-admin/settings.php:1388
 msgid "Number of items in the RSS must be integer"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1398
+#: /var/www/osclass-git/oc-admin/settings.php:1396
 msgid "Number of recent items displayed at home must be integer"
 msgstr ""
 
+#: /var/www/osclass-git/oc-admin/settings.php:1412
 #: /var/www/osclass-git/oc-admin/settings.php:1414
-#: /var/www/osclass-git/oc-admin/settings.php:1416
 msgid "General settings have been updated"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1445
+#: /var/www/osclass-git/oc-admin/settings.php:1443
 msgid "Last search settings have been updated"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1478
-#: /var/www/osclass-git/oc-admin/settings.php:1558
+#: /var/www/osclass-git/oc-admin/settings.php:1476
+#: /var/www/osclass-git/oc-admin/settings.php:1556
 #, php-format
 msgid "%s cannot be added"
 msgstr ""
 
-#: /var/www/osclass-git/oc-admin/settings.php:1595
+#: /var/www/osclass-git/oc-admin/settings.php:1593
 #, php-format
 msgid "%s has been added as a region of %s"
 msgstr ""
@@ -1362,47 +1362,47 @@ msgid "We tried to sent you an e-mail, but it failed. Please, contact the admini
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:64
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:260
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:259
 msgid "Image with incorrect extension."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:67
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:263
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:262
 msgid "Images too big. Max. size "
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:78
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:275
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:274
 msgid "Title too short."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:79
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:276
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:275
 msgid "Title too long."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:91
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:288
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:287
 msgid "Description too short."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:92
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:289
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:288
 msgid "Description too long."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:97
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:294
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:293
 msgid "Category invalid."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:98
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:295
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:294
 msgid "Price must be number."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:99
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:296
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:295
 msgid "Price too long."
 msgstr ""
 
@@ -1415,52 +1415,52 @@ msgid "Email invalid."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:102
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:297
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:296
 msgid "Country too short."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:103
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:298
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:297
 msgid "Country too long."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:104
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:299
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:298
 msgid "Region too short."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:105
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:300
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:299
 msgid "Region too long."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:106
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:301
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:300
 msgid "City too short."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:107
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:302
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:301
 msgid "City too long."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:108
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:303
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:302
 msgid "Municipality too short."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:109
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:304
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:303
 msgid "Municipality too long."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:110
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:305
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:304
 msgid "Address too short."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:111
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:306
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:305
 msgid "Address too long."
 msgstr ""
 
@@ -1468,8 +1468,8 @@ msgstr ""
 msgid "Too fast. You should wait a little to publish your ad."
 msgstr ""
 
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:126
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:320
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:125
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:319
 #, php-format
 msgid "%s field is required."
 msgstr ""
@@ -1479,28 +1479,11 @@ msgstr ""
 msgid "We just send your message to %s"
 msgstr ""
 
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:1202
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:1198
 msgid "One of the files you tried to upload exceeds the maximum size"
 msgstr ""
 
-#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:1245
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:1241
 msgid "The file you tried to upload does not have an allowed extension"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/admin/admin_settings.php:9
-msgid "The logo image has been uploaded correctly"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/admin/admin_settings.php:11
-#: /var/www/osclass-git/oc-includes/osclass/gui/admin/admin_settings.php:14
-msgid "An error has occurred, please try again"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/admin/admin_settings.php:20
-msgid "The logo image has been removed"
-msgstr ""
-
-#: /var/www/osclass-git/oc-includes/osclass/gui/admin/admin_settings.php:22
-msgid "Image not found"
 msgstr ""
 

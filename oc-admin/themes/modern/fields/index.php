@@ -48,7 +48,7 @@
             }
 
             function delete_field(id){
-                var answer = confirm('<?php echo osc_esc_js( __('WARNING: This will also delete the information related to this field. This action cann not be undone. Are you sure you want to continue?') ) ; ?>') ;
+                var answer = confirm('<?php echo osc_esc_js( __('WARNING: This will also delete the information related to this field. This action cannot be undone. Are you sure you want to continue?') ) ; ?>') ;
                 if( answer ) {
                     var url  = '<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=delete_field&id=' + id ;
                     $.ajax({
