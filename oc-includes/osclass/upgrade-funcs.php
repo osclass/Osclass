@@ -208,6 +208,8 @@ CREATE TABLE %st_item_description_tmp (
         @unlink(osc_admin_base_path()."upgrade-plugin.php");
     }
 
+    osc_changeVersionTo(237) ;
+
     if( osc_version() < 240 ) {
         // We no longer use s_what column in /*TABLE_PREFIX*/t_item_description
         $comm->query( sprintf('ALTER TABLE %st_item_description DROP COLUMN s_what', DB_TABLE_PREFIX) ) ;
