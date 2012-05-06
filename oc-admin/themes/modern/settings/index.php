@@ -270,7 +270,7 @@
                                         <?php _e('Allow people to attach a file to the contact form') ; ?></td>
                                 </tr>
                                 <tr class="separate">
-                                    <td colspan="2"><h2><?php _e('Contact Settings') ; ?></h2></td>
+                                    <td colspan="2"><h2><?php _e('Cron Settings') ; ?></h2></td>
                                 </tr>
                                 <tr>
                                     <td class="labeled"><?php _e('Automatic cron process') ; ?></td>
