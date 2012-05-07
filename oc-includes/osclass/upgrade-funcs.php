@@ -314,7 +314,7 @@ CREATE TABLE %st_item_description_tmp (
         PRIMARY KEY (pk_c_code),
         INDEX idx_s_name (s_name)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';");
-        $rs = $comm->query("SELECT * FROM ".DB_TABLE_PREFIX."t_country WHERE fk_c_locale_code = '".osc_language()."'");
+        $rs = $comm->query("SELECT * FROM ".DB_TABLE_PREFIX."t_country GROUP BY pk_c_code");
         $countries = $rs->result();
         foreach($countries as $c) {
             $comm->insert(DB_TABLE_PREFIX."t_country_aux", array('pk_c_code' => $c['pk_c_code'], 's_name' => $c['s_name']));
