@@ -169,7 +169,7 @@
                             "bSortable": false
                         },
                         {
-                            "sTitle": "<?php echo osc_esc_html( __('County') ) ; ?>",
+                            "sTitle": "<?php echo osc_esc_html( __('Country') ) ; ?>",
                             "bSortable": false
                         },
                         {
