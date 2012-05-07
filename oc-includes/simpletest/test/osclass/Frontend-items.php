@@ -52,6 +52,74 @@ class Frontend_items extends FrontendTest {
          * Remove all items inserted previously
          */
         $aItem = Item::newInstance()->listAll('s_contact_email = '.$this->_email." AND fk_i_user IS NULL");
+        print_r($aItem);
+        foreach($aItem as $item){
+            $url = osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] );
+            $this->selenium->open( $url );
+            $this->assertTrue($this->selenium->isTextPresent("Your item has been deleted"), "Delete item.");
+        }
+    }
+    
+    /*
+     * - create user and add one item
+     * - user not logged insert one item with previous user email
+     * - show FM -> An user exists with that email, if it is you, please log-in
+     */
+    function testItems_useExistingEmail()
+    {
+        require dirname(__FILE__).'/ItemData.php';
+        $item = $aData[0];
+        
+        $uSettings = new utilSettings();
+        $old_enabled_users              = $uSettings->set_enabled_users(1);
+        $old_enabled_users_registration = $uSettings->set_enabled_user_registration(1);
+        $old_enabled_user_validation    = $uSettings->set_enabled_user_validation(0);
+        
+        $this->doRegisterUser();
+        $this->loginWith();
+        
+        $old_logged_user_item_validation = $uSettings->set_logged_user_item_validation(1);
+        $this->insertItem($item['catId'], $item['title'], 
+                                $item['description'], $item['price'],
+                                $item['regionId'], $item['cityId'], $item['cityArea'],
+                                $item['photo'], $item['contactName'], 
+                                $this->_email);
+        $this->assertTrue($this->selenium->isTextPresent("Your item has been published"),"insert ad error ") ;
+        
+        $uSettings->set_logged_user_item_validation( $old_logged_user_item_validation );
+        $uSettings->set_enabled_users($old_enabled_users);
+        $uSettings->set_enabled_user_registration($old_enabled_users_registration);
+        $uSettings->set_enabled_user_validation($old_enabled_user_validation);
+        
+        // try to insert an item with existing user email
+        $this->logout();
+        
+        $item = $aData[2];
+        
+        $uSettings = new utilSettings();
+        $items_wait_time                  = $uSettings->set_items_wait_time(0);
+        $set_selectable_parent_categories = $uSettings->set_selectable_parent_categories(1);
+        $bool_reg_user_post               = $uSettings->set_reg_user_post(0);
+        $bool_enabled_user_validation     = $uSettings->set_moderate_items(-1);
+        
+        $old_logged_user_item_validation = $uSettings->set_logged_user_item_validation(1);
+        $this->insertItem($item['catId'], $item['title'], 
+                                $item['description'], $item['price'],
+                                $item['regionId'], $item['cityId'], $item['cityArea'],
+                                $item['photo'], $item['contactName'], 
+                                $this->_email);
+        sleep(1);
+        $this->assertTrue($this->selenium->isTextPresent("An user exists with that email, if it is you, please log-in"),"Items, insert item, using existing user email.") ;
+        
+        $uSettings->set_items_wait_time($items_wait_time);
+        $uSettings->set_selectable_parent_categories($set_selectable_parent_categories);
+        $uSettings->set_reg_user_post($bool_reg_user_post);
+        $uSettings->set_moderate_items($bool_enabled_user_validation);
+        
+        /*
+         * Remove all items inserted previously
+         */
+        $aItem = Item::newInstance()->listAll();
         foreach($aItem as $item){
             $url = osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] );
             $this->selenium->open( $url );
@@ -104,6 +172,9 @@ class Frontend_items extends FrontendTest {
         unset($uSettings);
     }
     
+   
+    
+    
     /*
      * Try to edit a item with bad id_item
      */
@@ -121,7 +192,15 @@ class Frontend_items extends FrontendTest {
         $this->logout();
         // create new item
         require dirname(__FILE__).'/ItemData.php';
-        $item = $aData[2];
+        $item = array(
+            "catId"         => 'Cars',
+            'title'         => '2000 Ford Focus',
+            'description'   => '2000 Ford Focus ZX3 Hatchback 2D Good Condition Clean Great Car Mileage: 175000 Passed BMV Emissions Clear Title Call me or Text if interested- Crystal 219',
+            'price'         => '101',
+            'regionId'      => 'Barcelona'  ,'cityId'        => 'Terrassa',
+            'cityArea'      => ''           ,'address'       => '',
+            'photo'         => array(),'contactName'   => 'contact ad 1','contactEmail'  => 'new@email.com'
+        );
         
         $uSettings = new utilSettings();
         $items_wait_time                  = $uSettings->set_items_wait_time(0);
@@ -134,7 +213,7 @@ class Frontend_items extends FrontendTest {
                                 $item['description'], $item['price'],
                                 $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'], 
-                                $this->_email);
+                                $item['contactEmail']);
         sleep(1);
         $this->assertTrue($this->selenium->isTextPresent("Your item has been published"),"Items, insert item, no user, no validation.") ;
         
@@ -345,7 +424,7 @@ class Frontend_items extends FrontendTest {
                                 $item['description'], $item['price'],
                                 $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'], 
-                                $this->_email);
+                                'test@force.com');
         sleep(1);
         $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address"),"Items, insert item, no user, with validation.") ;
         
