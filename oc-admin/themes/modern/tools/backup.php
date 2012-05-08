@@ -58,14 +58,16 @@
                                 <input type="text" class="xxlarge" id="backup_dir" name="bck_dir" value="<?php echo osc_base_path() ; ?>" />
                             </p>
                             <p class="text">
-                                <?php _e("This is the folder in which your backups will be created. We recommend that you choose a non-public path. For more information, please refer to OSClass' documentation.") ; ?>
+                                <?php _e("This is the folder in which your backups will be created. We recommend that you choose a non-public path.") ; ?>
                             </p>
                             <h3><?php _e('Back up database (.sql)') ; ?></h3>
+                            <p class="text"><?php _e('Save a copy of your listings, users and information'); ?></p>
                             <p class="text">
                                 <input type="button" id="backup_sql" onclick="javascript:submitForm(this.form, 'sql');" value="<?php echo osc_esc_html( __('Backup (store on server)') ) ; ?>" >
                                 <input type="button" id="backup_sql_file" onclick="javascript:submitForm(this.form, 'sql_file');" value="<?php echo osc_esc_html( __('Backup (download file)') ) ; ?>" >
                             </p>
                             <h3><?php _e('Back up OSClass installation') ; ?></h3>
+                            <p class="text"><?php _e('Save a copy of all your files (themes, plugins, media files,...)'); ?></p>
                             <p class="text">
                                 <input type="button" id="backup_zip" onclick="javascript:submitForm(this.form, 'zip');" value="<?php echo osc_esc_html( __('Backup (store on server)') ) ; ?>" >
                                 <!--<input type="button" onclick="javascript:submitForm(this.form, 'zip_file');" value="<?php echo osc_esc_html( __('Backup (download file)') ) ; ?>" >-->
