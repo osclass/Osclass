@@ -22,7 +22,7 @@
     function modern_theme_info() {
         return array(
              'name'        => 'OSClass Modern Theme'
-            ,'version'     => '2.3'
+            ,'version'     => '2.4'
             ,'description' => 'This is the OSClass modern theme'
             ,'author_name' => 'OSClass Team'
             ,'author_url'  => 'http://osclass.org'
