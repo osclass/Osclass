@@ -98,7 +98,7 @@
          * @return array
          */
         public function listAll() {
-            $result = $this->dao->query(sprintf('SELECT * FROM %st_country ORDER BY s_name ASC', DB_TABLE_PREFIX));
+            $result = $this->dao->query(sprintf('SELECT * FROM %s ORDER BY s_name ASC', $this->getTableName()));
             return $result->result();
         }
 
