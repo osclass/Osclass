@@ -1556,7 +1556,7 @@ HTACCESS;
             foreach($regions as $r) {
                 $exists = $manager_region->findByName($r->name, $r->country_code);
                 if(isset($exists['s_name'])) {
-                    osc_add_flash_error_message(sprintf(_m('%s already was in the database'), $c_exists['s_name']), 'admin');
+                    osc_add_flash_error_message(sprintf(_m('%s already was in the database'), $exists['s_name']), 'admin');
                     return false;
                 }
                 $manager_region->insert(array(
