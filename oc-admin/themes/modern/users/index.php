@@ -28,8 +28,8 @@
             $(function() {
                 oTable = $('#datatables_list').dataTable({
                     "sAjaxSource": "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=users",
-                    "iDisplayLength": "10",
-                    "iColumns"      : "5",
+                    "iDisplayLength": 10,
+                    "iColumns"      : 5,
                     "sDom": "<'row-action'<'row'<'span6 length-menu'l><'span6 filter'>fr>>t<'row'<'span6 info-results'i><'span6 paginate'p>>",
                     "sPaginationType": "bootstrap",
                     "bLengthChange": false,
