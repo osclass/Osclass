@@ -81,7 +81,7 @@
                                 &middot;
                                 <a target="_blank" href="<?php echo osc_base_url(true) ; ?>?theme=<?php echo $theme ; ?>"><?php _e('Preview') ; ?></a>
                                 &middot;
-                                <a onclick="javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=delete&amp;webtheme=<?php echo $theme ; ?>"><?php _e('Delete') ; ?></a>
+                                <a onclick="javascript:return confirm('<?php echo osc_esc_js(__('This action can not be undone. Are you sure you want to continue?','modern')); ?>')" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=delete&amp;webtheme=<?php echo $theme ; ?>"><?php _e('Delete') ; ?></a>
                                 <?php if(osc_check_update(@$info['theme_update_uri'], @$info['version'])) { ?>
                                     <div id="available_theme_update"><a href='<?php echo osc_admin_base_url(true);?>?page=market&code=<?php echo htmlentities($info['theme_update_uri']); ?>'><?php _e("There's a new version available to update"); ?></a></div>
                                 <?php }; ?>
