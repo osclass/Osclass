@@ -131,7 +131,7 @@
                     <!-- Form add country -->
         <div id="d_add_country" class="lightbox_country location" style="display:none;">
             <div style="padding: 14px;">
-                <form action="<?php echo osc_admin_base_url(true); ?>" method="POST" accept-charset="utf-8" id="d_add_country_form">
+                <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_add_country_form">
                     <div><small id="c_code_error" style="display: none;"><?php _e('Country code should have two characters'); ?></small></div>
                     <input type="hidden" name="page" value="settings" />
                     <input type="hidden" name="action" value="locations" />
