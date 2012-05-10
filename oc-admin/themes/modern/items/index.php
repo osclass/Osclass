@@ -259,7 +259,7 @@
             <!-- right container -->
             <div class="right">
                 <div class="header_title">
-                    <h1 class="items"><?php _e('Manage Items') ; ?></h1>
+                    <h1 class="items"><?php _e('Manage listings') ; ?></h1>
                 </div>
                 <?php osc_show_flash_message('admin') ; ?>
                 <!-- items filters -->
@@ -272,7 +272,7 @@
                         </div>
                     </div>
                     <div class="input-line">
-                        <label><?php _e('Item user name') ; ?></label>
+                        <label><?php _e('Listing user name') ; ?></label>
                         <div class="input">
                             <input id="user" name="user" type="text" value=""/>
                             <input id="userId" name="userId" type="hidden" value=""/>
@@ -373,8 +373,8 @@
                     </div>
                     <div id="add_item_button">
                         <input type="text" class="medium" name="pk_i_id" value="" />
-                        <input type="button" name="findById" value="<?php echo osc_esc_html( __('Find by Item id') ) ; ?>" />
-                        <a href="<?php echo osc_admin_base_url(true) ; ?>?page=items&amp;action=post" class="btn" id="button_open"><?php _e('Add item') ; ?></a>
+                        <input type="button" name="findById" value="<?php echo osc_esc_html( __('Find by listing id') ) ; ?>" />
+                        <a href="<?php echo osc_admin_base_url(true) ; ?>?page=items&amp;action=post" class="btn" id="button_open"><?php _e('Add listing') ; ?></a>
                     </div>
                     <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatables_list"></table>
                 </form>

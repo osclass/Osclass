@@ -38,7 +38,7 @@
                         <input type="hidden" name="action" value="send_friend_post" />
                         <input type="hidden" name="page" value="item" />
                         <input type="hidden" name="id" value="<?php echo osc_item_id(); ?>" />
-                        <label><?php _e('Item', 'modern'); ?>: <a href="<?php echo osc_item_url( ); ?>"><?php echo osc_item_title(); ?></a></label><br/>
+                        <label><?php _e('Listing', 'modern'); ?>: <a href="<?php echo osc_item_url( ); ?>"><?php echo osc_item_title(); ?></a></label><br/>
                         <?php if(osc_is_web_user_logged_in()) { ?>
                             <input type="hidden" name="yourName" value="<?php echo osc_logged_user_name(); ?>" />
                             <input type="hidden" name="yourEmail" value="<?php echo osc_logged_user_email();?>" />

@@ -875,10 +875,6 @@
                     $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
                 }
                 $this->_priceRange();
-
-//                if ($this->withPattern ) {
-//                    $this->dao->where(DB_TABLE_PREFIX.'t_item.pk_i_id IN ('.$subSelect.')');
-//                }
                 
                 // PLUGINS TABLES !!
                 if( !empty($this->tables) ) {

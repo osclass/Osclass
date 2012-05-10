@@ -36,9 +36,9 @@
                 <?php echo osc_private_user_menu() ; ?>
             </div>
             <div id="main">
-                <h2><?php echo sprintf(__('Items from %s', 'modern') ,osc_logged_user_name()); ?></h2>
+                <h2><?php echo sprintf(__('Listings from %s', 'modern') ,osc_logged_user_name()); ?></h2>
                 <?php if(osc_count_items() == 0) { ?>
-                    <h3><?php _e('No items have been added yet', 'modern'); ?></h3>
+                    <h3><?php _e('No listings have been added yet', 'modern'); ?></h3>
                 <?php } else { ?>
                     <?php while(osc_has_items()) { ?>
                         <div class="userItem" >
@@ -48,9 +48,8 @@
                             <div class="userItemData" >
                             <?php _e('Publication date', 'modern') ; ?>: <?php echo osc_format_date(osc_item_pub_date()) ; ?><br />
                                     <?php if( osc_price_enabled_at_items() ) { _e('Price', 'modern') ; ?>: <?php echo osc_format_price(osc_item_price()); } ?>
-                                    </p>
                                     <p class="options">
-                                        <strong><a href="<?php echo osc_item_url(); ?>"><?php _e('View item', 'modern'); ?></a></strong>
+                                        <strong><a href="<?php echo osc_item_url(); ?>"><?php _e('View listing', 'modern'); ?></a></strong>
                                         <span>|</span>
                                         <a href="<?php echo osc_item_edit_url(); ?>"><?php _e('Edit', 'modern'); ?></a>
                                         <?php if(osc_item_is_inactive()) {?>
