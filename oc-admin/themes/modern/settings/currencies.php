@@ -108,7 +108,7 @@
                                     <select id="bulk_actions" class="display">
                                         <option value=""><?php _e('Bulk actions') ; ?></option>
                                         <option value="delete_all"><?php _e('Delete') ; ?></option>
-                                    </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>">
+                                    </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
                                 </label>
                             </div>
                         </div>
