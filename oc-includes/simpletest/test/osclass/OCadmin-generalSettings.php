@@ -12,7 +12,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Logout.
      */
 
-    function atestCrontab()
+    function testCrontab()
     {
         $uSettings = new utilSettings();
         
@@ -46,7 +46,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Update all inputs and check if change has been saved, update old configuration and check again.
      * Logout
      */
-    function atestMediatab()
+    function testMediatab()
     {
         $uSettings = new utilSettings();
         
@@ -160,7 +160,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * update configuration and check and set old configuration again and check.
      * Logout.
      */
-    function atestMailServer()
+    function testMailServer()
     {
         $uSettings = new utilSettings();
         
@@ -233,7 +233,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Set akismet, recaptcha, check modifications
      * Logout
      */
-    function atestSpamAndBots()
+    function testSpamAndBots()
     {
         $uSettings = new utilSettings();
         
@@ -295,7 +295,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Logout
      * 
      */
-    function atestComments()
+    function testComments()
     {
         $uSettings = new utilSettings();
         $pref = array();
@@ -414,7 +414,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * update settings, and check
      * Logout
      */
-    function atestGeneralSettings()
+    function testGeneralSettings()
     {
         $pref = $this->getPreferencesGeneralSettings();
         
@@ -423,7 +423,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("//a[@id='settings_general']");
         $this->selenium->waitForPageToLoad("10000");
 
-        /*
+        
         $this->selenium->type("pageTitle"   ,"");
         $this->selenium->type("contactEmail","");
         $this->selenium->type("num_rss_items" , "");
@@ -515,11 +515,18 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->assertEqual( $this->selenium->getValue('max_latest_items_at_home') , $pref['max_latest_items_at_home']  , 'GeneralSettings, check.') ;
         $this->assertEqual( $this->selenium->getValue('enabled_attachment'), $pref['contact_attachment'], 'Contact, check.' ) ;
         
-        */
         
         
-        $this->selenium->click("//input[@id='df_custom']");
-        $this->selenium->type("df_custom_text", "asdfghjklñLKJHGFDSAPOIUYTREWQqwewertyuiozxcvbnm,.MNBVCXZ");
+        
+        for($k=0;$k<20;$k++) {
+            $custom_date = $this->generateCustomDate();
+            $this->selenium->click("//input[@id='df_custom']");
+            $this->selenium->type("df_custom_text", $custom_date);
+            $this->selenium->keyUp("df_custom_text", "a");
+            $date = trim(date($custom_date));
+            sleep(2);
+            $this->assertTrue( $this->selenium->isTextPresent("Preview: ".$date) , "Custom date failed with this string : '".$custom_date."' check: '".date($custom_date)."'" ) ;
+        }
         
         osc_reset_preferences();
     }
@@ -530,7 +537,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Add & edit & delete locations 
      * Logout
      */
-    function atestLocationsGEO()
+    function testLocationsGEO()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -573,7 +580,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * edit country/region/citytest location already exist
      * Logout
      */
-    function atestLocationsNEWForceError()
+    function testLocationsNEWForceError()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -737,7 +744,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * edit & delete the currency
      * Logout
      */
-    function atestCurrency()
+    function testCurrency()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -867,7 +874,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Delete 
      * Logout
      */
-    function atestAddCurrencyTwice()
+    function testAddCurrencyTwice()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -919,7 +926,7 @@ class OCadmin_generalSettings extends OCadmintest {
         osc_reset_preferences();
     }
     
-    function atestPermalinks()
+    function testPermalinks()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -1073,7 +1080,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Logout.
      */
 
-    function atestLastSearches()
+    function testLastSearches()
     {
         $uSettings = new utilSettings();
         
@@ -1166,7 +1173,15 @@ class OCadmin_generalSettings extends OCadmintest {
         osc_reset_preferences();
     }
     
-    
+    function generateCustomDate() {
+        $str = ":_-/dDjlNSwzWFmMntLoyYaABgGhHiseIOPTZ";
+        $l = strlen($str);
+        $date = '';
+        for($i=0;$i<10;$i++) {
+            $date .= substr($str, rand(0, $l), 1);
+        }
+        return $date;
+    }
     
 }
 ?>
