@@ -137,10 +137,10 @@
                     <input type="hidden" name="action" value="locations" />
                     <input type="hidden" name="type" value="add_country" />
                     <input type="hidden" name="c_manual" value="1" />
-                    <label><?php _e('Country code'); ?>: </label><br/>
-                    <input type="text" id="c_country" name="c_country" value="" /><br/>
+                    <label><?php _e('Country code'); ?>: </label><br />
+                    <input type="text" id="c_country" name="c_country" value="" /><br />
                     <p>
-                        <label><?php _e('Country'); ?>: </label><br/>
+                        <label><?php _e('Country'); ?>: </label><br />
                         <input type="text" id="country" name="country" value="" />
                     </p>
                 </form>
@@ -150,13 +150,13 @@
         <!-- Form edit country -->
         <div id="d_edit_country" class="lightbox_country location" style="display:none;">
             <div style="padding: 14px;">
-                <form action="<?php echo osc_admin_base_url(true); ?>" method="POST" accept-charset="utf-8" id="d_edit_country_form">
+                <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_edit_country_form">
                     <input type="hidden" name="page" value="settings" />
                     <input type="hidden" name="action" value="locations" />
                     <input type="hidden" name="type" value="edit_country" />
                     <input type="hidden" name="country_code" value="" />
                     <p>
-                        <label><?php _e('Country'); ?>: </label><br/>
+                        <label><?php _e('Country'); ?>: </label><br />
                         <input type="text" id="e_country" name="e_country" value="" />
                     </p>
                 </form>
@@ -167,7 +167,7 @@
         <!-- Form add region -->
         <div id="d_add_region" class="lightbox_country location" style="display:none;">
             <div style="padding: 14px;">
-                <form action="<?php echo osc_admin_base_url(true); ?>" method="POST" accept-charset="utf-8" id="d_add_region_form">
+                <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_add_region_form">
                     <input type="hidden" name="page" value="settings" />
                     <input type="hidden" name="action" value="locations" />
                     <input type="hidden" name="type" value="add_region" />
@@ -188,7 +188,7 @@
         <!-- Form edit region -->
         <div id="d_edit_region" class="lightbox_country location" style="display:none;">
             <div style="padding: 14px;">
-                <form action="<?php echo osc_admin_base_url(true); ?>" method="POST" accept-charset="utf-8" id="d_edit_region_form">
+                <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_edit_region_form">
                     <input type="hidden" name="page" value="settings" />
                     <input type="hidden" name="action" value="locations" />
                     <input type="hidden" name="type" value="edit_region" />
@@ -207,7 +207,7 @@
         <!-- Form edit city -->
         <div id="d_add_city" class="lightbox_country location" style="display:none;">
             <div style="padding: 14px;">
-                <form action="<?php echo osc_admin_base_url(true); ?>" method="POST" accept-charset="utf-8" id="d_add_city_form">
+                <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_add_city_form">
                     <input type="hidden" name="page" value="settings" />
                     <input type="hidden" name="action" value="locations" />
                     <input type="hidden" name="type" value="add_city" />
@@ -229,7 +229,7 @@
         <!-- Form edit city -->
         <div id="d_edit_city" class="lightbox_country location" style="display:none;">
             <div style="padding: 14px;">
-                <form action="<?php echo osc_admin_base_url(true); ?>" method="POST" accept-charset="utf-8" id="d_edit_city_form">
+                <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_edit_city_form">
                     <input type="hidden" name="page" value="settings" />
                     <input type="hidden" name="action" value="locations" />
                     <input type="hidden" name="type" value="edit_city" />
