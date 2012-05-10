@@ -46,12 +46,12 @@ class OCadmin_generalSettings extends OCadmintest {
      * Update all inputs and check if change has been saved, update old configuration and check again.
      * Logout
      */
-    function testMediatab()
+    function atestMediatab()
     {
         $uSettings = new utilSettings();
         
         $this->loginWith();
-        /*
+        
         $maxSizeKb      = $uSettings->findValueByName('maxSizeKb');
         $allowedExt     = $uSettings->findValueByName('allowedExt');
         $dimThumbnail   = $uSettings->findValueByName('dimThumbnail');
@@ -125,7 +125,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->assertEqual( $this->selenium->getValue('dimNormal')      , $dimNormal);
         $this->assertEqual( $this->selenium->getValue('keep_original_image'), $keep_original_image);
         
-        */
+        
         
         
         $this->selenium->open( osc_admin_base_url(true) );
@@ -423,7 +423,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("//a[@id='settings_general']");
         $this->selenium->waitForPageToLoad("10000");
 
-
+        /*
         $this->selenium->type("pageTitle"   ,"");
         $this->selenium->type("contactEmail","");
         $this->selenium->type("num_rss_items" , "");
@@ -514,6 +514,13 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->assertEqual( $this->selenium->getValue('timeFormat')    , $pref['tf']             , 'GeneralSettings, check.') ;
         $this->assertEqual( $this->selenium->getValue('max_latest_items_at_home') , $pref['max_latest_items_at_home']  , 'GeneralSettings, check.') ;
         $this->assertEqual( $this->selenium->getValue('enabled_attachment'), $pref['contact_attachment'], 'Contact, check.' ) ;
+        
+        */
+        
+        
+        $this->selenium->click("//input[@id='df_custom']");
+        $this->selenium->type("df_custom_text", "asdfghjklñLKJHGFDSAPOIUYTREWQqwewertyuiozxcvbnm,.MNBVCXZ");
+        
         osc_reset_preferences();
     }
 
