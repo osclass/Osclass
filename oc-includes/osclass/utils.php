@@ -341,8 +341,8 @@ function osc_sendMail($params) {
 function osc_mailBeauty($text, $params) {
 
     $text = str_ireplace($params[0], $params[1], $text) ;
-    $kwords = array('{WEB_URL}', '{WEB_TITLE}', '{CURRENT_DATE}', '{HOUR}') ;
-    $rwords = array(osc_base_url(), osc_page_title(), date('Y-m-d H:i:s'), date('H:i')) ;
+    $kwords = array('{WEB_URL}', '{WEB_TITLE}', '{CURRENT_DATE}', '{HOUR}', '{IP}') ;
+    $rwords = array(osc_base_url(), osc_page_title(), date('Y-m-d H:i:s'), date('H:i'), $_SERVER['REMOTE_ADDR']) ;
     $text = str_ireplace($kwords, $rwords, $text) ;
     
     return $text ;
@@ -1018,6 +1018,40 @@ function osc_update_cat_stats() {
         array_push($aValues, "($k, $v)" );
     }
     $sql .= implode(',', $aValues);
+    $result = CategoryStats::newInstance()->dao->query($sql);
+}
+
+/**
+ * Recount items for a given a category id
+ * 
+ * @param int $id 
+ */
+function osc_update_cat_stats_id($id)
+{
+    // get sub categorias
+    if( !Category::newInstance()->isRoot($id) ) {
+        $auxCat = Category::newInstance()->findRootCategory($id);
+        $id = $auxCat['pk_i_id']; 
+    }
+    
+    $aCategories    = Category::newInstance()->findSubcategories($id);
+    $categoryTotal  = 0;
+    
+    if( count($aCategories) > 0 ) {
+        // sumar items de la categoría
+        foreach($aCategories as $category) {
+            $total     = Item::newInstance()->numItems($category, true, true) ;
+            $categoryTotal += $total;
+        }
+        $categoryTotal += Item::newInstance()->numItems(Category::newInstance()->findByPrimaryKey($id), true, true) ;
+    } else {
+        $category  = Category::newInstance()->findByPrimaryKey($id);
+        $total     = Item::newInstance()->numItems($category, true, true) ;
+        $categoryTotal += $total;
+    }
+    
+    $sql = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_category_stats (fk_i_category_id, i_num_items) VALUES ';
+    $sql .= " (".$id.", ".$categoryTotal.")";
     $result = CategoryStats::newInstance()->dao->query($sql);
 }
 

@@ -907,6 +907,20 @@
     }
     
     /**
+     * Get if the user is on custom page
+     * 
+     * @return boolean
+     */
+    function osc_is_custom_page($file = null) {
+        if(Rewrite::newInstance()->get_location()=='custom') {
+            if($file==null || Params::getParam('file')==$file) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
      * Get location
      *
      * @return string

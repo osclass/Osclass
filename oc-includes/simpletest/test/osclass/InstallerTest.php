@@ -3,12 +3,13 @@ require_once dirname(__FILE__).'/../../../Selenium.php';
 
 require_once(dirname(__FILE__).'/../../simpletest.php');
 require_once(dirname(__FILE__).'/../../web_tester.php');
+require_once(dirname(__FILE__).'/MyWebTestCase.php');
 
 // LOAD OSCLASS
 define( 'ABS_PATH', dirname( dirname( dirname( dirname( dirname(__FILE__) ) ) ) ) . '/' ) ;
 require_once dirname( dirname( dirname( dirname(__FILE__) ) ) )  . '/osclass/helpers/hErrors.php';
 
-class InstallerTest extends WebTestCase {
+class InstallerTest extends MyWebTestCase {
 
     protected $selenium;
     protected $can_continue;

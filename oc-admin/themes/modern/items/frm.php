@@ -64,10 +64,10 @@
                 <div class="header_title">
                     <h1 class="items"><?php echo $title ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- item form -->
                 <div class="items">
-                    <ul id="error_list"></ul>
+                    <ul id="error_list" style="display: none;"></ul>
                     <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="page" value="items" />
                         <?php if( $new_item ) { ?>
@@ -179,6 +179,7 @@
                             </div>
                         </fieldset>
                     </form>
+                    <div class="clear"></div>
                 </div>
                 <!-- /item form -->
             </div>

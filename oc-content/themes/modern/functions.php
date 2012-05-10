@@ -19,21 +19,23 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    if( !function_exists('add_close_button_fm') ) {
-        function add_close_button_fm($message){
-            return $message.'<a class="close">×</a>' ;
+    if( !OC_ADMIN ) {
+        if( !function_exists('add_close_button_fm') ) {
+            function add_close_button_fm($message){
+                return $message.'<a class="close">×</a>' ;
+            }
+            osc_add_filter('flash_message_text', 'add_close_button_fm') ;
         }
-        osc_add_filter('flash_message_text', 'add_close_button_fm') ;
-    }
-    if( !function_exists('add_close_button_action') ) {
-        function add_close_button_action(){
-            echo '<script type="text/javascript">';
-                echo '$(".FlashMessage .close").click(function(){';
-                    echo '$(this).parent().hide();';
-                echo '});';
-            echo '</script>';
+        if( !function_exists('add_close_button_action') ) {
+            function add_close_button_action(){
+                echo '<script type="text/javascript">';
+                    echo '$(".FlashMessage .close").click(function(){';
+                        echo '$(this).parent().hide();';
+                    echo '});';
+                echo '</script>';
+            }
+            osc_add_hook('footer', 'add_close_button_action') ;
         }
-        osc_add_hook('footer', 'add_close_button_action') ;
     }
 
     if( !function_exists('add_logo_header') ) {

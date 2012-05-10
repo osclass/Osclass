@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: OSClass 2.3\n"
+"Project-Id-Version: OSClass 2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-24 15:51+0100\n"
+"POT-Creation-Date: 2012-05-02 20:30+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
 "Language-Team: OSClass <info@osclass.org>\n"
@@ -14,1344 +14,1476 @@ msgstr ""
 "X-Poedit-KeywordsList: _m;_mn:1,2\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-Country: UNITED STATES\n"
-"X-Poedit-SearchPath-0: /Users/juanramon/htdocs/osclass-git\n"
+"Plural-Forms: nplurals=2; plural=n !=1;\n"
+"X-Poedit-SearchPath-0: /var/www/osclass-git\n"
 
-#: /Users/juanramon/htdocs/osclass-git/ajax.php:88
+#: /var/www/osclass-git/ajax.php:86
 msgid "The selected photo couldn't be deleted, the url doesn't exist"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/ajax.php:98
+#: /var/www/osclass-git/ajax.php:96
 msgid "The item doesn't exist"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/ajax.php:106
-#: /Users/juanramon/htdocs/osclass-git/ajax.php:114
+#: /var/www/osclass-git/ajax.php:105
+#: /var/www/osclass-git/ajax.php:113
 msgid "The item doesn't belong to you"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/ajax.php:127
+#: /var/www/osclass-git/ajax.php:136
+#: /var/www/osclass-git/user.php:222
 msgid "The selected photo has been successfully deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/ajax.php:130
+#: /var/www/osclass-git/ajax.php:139
+#: /var/www/osclass-git/user.php:224
+msgid "The selected photo does not belong to you"
+msgstr ""
+
+#: /var/www/osclass-git/ajax.php:143
+#: /var/www/osclass-git/user.php:227
 msgid "The selected photo couldn't be deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/contact.php:38
-#: /Users/juanramon/htdocs/osclass-git/item.php:121
-#: /Users/juanramon/htdocs/osclass-git/item.php:205
-#: /Users/juanramon/htdocs/osclass-git/item.php:299
-#: /Users/juanramon/htdocs/osclass-git/item.php:341
-#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:114
+#: /var/www/osclass-git/contact.php:39
+#: /var/www/osclass-git/item.php:121
+#: /var/www/osclass-git/item.php:204
+#: /var/www/osclass-git/item.php:305
+#: /var/www/osclass-git/item.php:347
+#: /var/www/osclass-git/user-non-secure.php:118
 msgid "The Recaptcha code is wrong"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/contact.php:49
+#: /var/www/osclass-git/contact.php:50
 msgid "You have to introduce a correct e-mail"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/contact.php:75
+#: /var/www/osclass-git/contact.php:76
 msgid "There has been some errors sending the message"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/contact.php:90
+#: /var/www/osclass-git/contact.php:91
 msgid "Your e-mail has been sent properly. Thank your for contacting us!"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:50
-#: /Users/juanramon/htdocs/osclass-git/item.php:99
+#: /var/www/osclass-git/item.php:52
+#: /var/www/osclass-git/item.php:99
 msgid "Only registered users are allowed to post items"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:136
+#: /var/www/osclass-git/item.php:136
 msgid "Check your inbox to verify your email address"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:138
+#: /var/www/osclass-git/item.php:138
 msgid "Your item has been published"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:169
+#: /var/www/osclass-git/item.php:169
 msgid "Sorry, we don't have any items with that ID"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:216
+#: /var/www/osclass-git/item.php:215
 msgid "Great! We've just updated your item"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:235
+#: /var/www/osclass-git/item.php:241
 msgid "The item has been validated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:237
+#: /var/www/osclass-git/item.php:243
 msgid "The item can't be validated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:240
+#: /var/www/osclass-git/item.php:246
 msgid "The item has already been validated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:253
+#: /var/www/osclass-git/item.php:259
 msgid "Your item has been deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:255
-#: /Users/juanramon/htdocs/osclass-git/item.php:263
+#: /var/www/osclass-git/item.php:261
+#: /var/www/osclass-git/item.php:269
 msgid "The item you are trying to delete couldn't be deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:277
+#: /var/www/osclass-git/item.php:283
 msgid "Thanks! That's very helpful"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:318
-#: /Users/juanramon/htdocs/osclass-git/item.php:412
-#: /Users/juanramon/htdocs/osclass-git/item.php:457
+#: /var/www/osclass-git/item.php:324
+#: /var/www/osclass-git/item.php:411
 msgid "This item doesn't exist"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:324
-#: /Users/juanramon/htdocs/osclass-git/item.php:358
+#: /var/www/osclass-git/item.php:330
+#: /var/www/osclass-git/item.php:358
 msgid "We're sorry, but the item has expired. You can't contact the seller"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:331
+#: /var/www/osclass-git/item.php:337
 msgid "You can't contact the seller, only registered users can"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:370
+#: /var/www/osclass-git/item.php:369
 msgid "We've just sent an e-mail to the seller"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:380
+#: /var/www/osclass-git/item.php:379
 msgid "Sorry, we could not save your comment. Try again later"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:383
+#: /var/www/osclass-git/item.php:382
 msgid "Your comment is awaiting moderation"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:386
+#: /var/www/osclass-git/item.php:385
 msgid "Your comment has been approved"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:389
-msgid "Please fill the required fields (name, email)"
+#: /var/www/osclass-git/item.php:388
+msgid "Please fill the required field (email)"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:392
+#: /var/www/osclass-git/item.php:391
 msgid "Please type a comment"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:395
+#: /var/www/osclass-git/item.php:394
 msgid "Your comment has been marked as spam"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:419
+#: /var/www/osclass-git/item.php:418
 msgid "You must be logged in to delete a comment"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:427
+#: /var/www/osclass-git/item.php:426
 msgid "The comment doesn't exist"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:432
+#: /var/www/osclass-git/item.php:431
 msgid "The comment is not active, you cannot delete it"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:437
+#: /var/www/osclass-git/item.php:436
 msgid "The comment was not added by you, you cannot delete it"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:442
+#: /var/www/osclass-git/item.php:441
 msgid "The comment has been deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:462
+#: /var/www/osclass-git/item.php:464
 msgid "The item hasn't been validated. Please validate it in order to show it to the rest of users"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:464
+#: /var/www/osclass-git/item.php:466
 msgid "This item hasn't been validated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:468
+#: /var/www/osclass-git/item.php:470
 msgid "The item has been suspended"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:26
-#: /Users/juanramon/htdocs/osclass-git/register.php:27
-#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:26
+#: /var/www/osclass-git/login.php:26
+#: /var/www/osclass-git/register.php:27
+#: /var/www/osclass-git/user-non-secure.php:26
+#: /var/www/osclass-git/user.php:26
 msgid "Users not enabled"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:36
-#: /Users/juanramon/htdocs/osclass-git/register.php:45
+#: /var/www/osclass-git/login.php:37
+#: /var/www/osclass-git/register.php:49
 msgid "Users are not enabled"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:61
-#: /Users/juanramon/htdocs/osclass-git/login.php:74
-msgid "The username doesn't exist"
+#: /var/www/osclass-git/login.php:70
+#: /var/www/osclass-git/login.php:83
+msgid "The user doesn't exist"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:66
+#: /var/www/osclass-git/login.php:75
 msgid "The password is incorrect"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:76
+#: /var/www/osclass-git/login.php:85
 msgid "The user has not been validated yet"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:78
+#: /var/www/osclass-git/login.php:87
 msgid "The user has been suspended"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:100
+#: /var/www/osclass-git/login.php:110
 msgid "This should never happens"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:117
+#: /var/www/osclass-git/login.php:127
 msgid "Invalid email address"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:126
+#: /var/www/osclass-git/login.php:136
 msgid "We have sent you an email with the instructions to reset your password"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:130
+#: /var/www/osclass-git/login.php:140
 msgid "We were not able to identify you given the information provided"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:134
+#: /var/www/osclass-git/login.php:144
 msgid "The recaptcha code is wrong"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:145
-#: /Users/juanramon/htdocs/osclass-git/login.php:172
-#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:55
-#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:59
+#: /var/www/osclass-git/login.php:154
+#: /var/www/osclass-git/login.php:181
+#: /var/www/osclass-git/user-non-secure.php:55
+#: /var/www/osclass-git/user-non-secure.php:59
 msgid "Sorry, the link is not valid"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:151
+#: /var/www/osclass-git/login.php:160
+#: /var/www/osclass-git/user.php:139
 msgid "Password cannot be blank"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:165
+#: /var/www/osclass-git/login.php:174
 msgid "The password has been changed"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:168
+#: /var/www/osclass-git/login.php:177
 msgid "Error, the password don't match"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/register.php:32
+#: /var/www/osclass-git/register.php:32
 msgid "User registration is not enabled"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/register.php:56
+#: /var/www/osclass-git/register.php:60
 msgid "The user has been created. An activation email has been sent"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/register.php:59
+#: /var/www/osclass-git/register.php:63
 msgid "Your account has been created successfully"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/register.php:62
+#: /var/www/osclass-git/register.php:66
+#: /var/www/osclass-git/user.php:127
 msgid "The specified e-mail is already in use"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/register.php:65
+#: /var/www/osclass-git/register.php:69
 msgid "The reCAPTCHA was not introduced correctly"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/register.php:68
+#: /var/www/osclass-git/register.php:72
 msgid "The email is not valid"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/register.php:71
+#: /var/www/osclass-git/register.php:75
 msgid "The password cannot be empty"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/register.php:74
+#: /var/www/osclass-git/register.php:78
+#: /var/www/osclass-git/user.php:154
 msgid "Passwords don't match"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/register.php:86
+#: /var/www/osclass-git/register.php:90
 msgid "The link is not valid anymore. Sorry for the inconvenience!"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/register.php:91
+#: /var/www/osclass-git/register.php:95
 msgid "Your account has already been validated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/register.php:111
+#: /var/www/osclass-git/register.php:115
 msgid "Your account has been validated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:52
+#: /var/www/osclass-git/user-non-secure.php:52
 msgid "Your email has been changed successfully"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:73
+#: /var/www/osclass-git/user-non-secure.php:73
+#: /var/www/osclass-git/user.php:189
 msgid "Alert activated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:75
+#: /var/www/osclass-git/user-non-secure.php:75
+#: /var/www/osclass-git/user.php:191
 msgid "Ops! There was a problem trying to activate alert. Please contact the administrator"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:85
+#: /var/www/osclass-git/user-non-secure.php:85
+#: /var/www/osclass-git/user.php:201
 msgid "Unsubscribed correctly"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:87
+#: /var/www/osclass-git/user-non-secure.php:87
+#: /var/www/osclass-git/user.php:203
 msgid "Ops! There was a problem trying to unsubscribe you. Please contact the administrator"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user.php:72
+#: /var/www/osclass-git/user.php:75
 msgid "Your profile has been updated successfully"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user.php:94
+#: /var/www/osclass-git/user.php:103
 msgid "The specified e-mail is not valid"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user.php:135
+#: /var/www/osclass-git/user.php:144
 msgid "Current password doesn't match"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user.php:140
+#: /var/www/osclass-git/user.php:149
 msgid "Passwords can't be empty"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user.php:152
+#: /var/www/osclass-git/user.php:161
 msgid "Password has been changed"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:47
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:127
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:221
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:37
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/login.php:77
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/plugins.php:44
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:531
+#: /var/www/osclass-git/oc-admin/admins.php:47
+#: /var/www/osclass-git/oc-admin/admins.php:129
+#: /var/www/osclass-git/oc-admin/admins.php:222
+#: /var/www/osclass-git/oc-admin/appearance.php:38
+#: /var/www/osclass-git/oc-admin/login.php:92
+#: /var/www/osclass-git/oc-admin/plugins.php:44
+#: /var/www/osclass-git/oc-admin/plugins.php:79
+#: /var/www/osclass-git/oc-admin/plugins.php:114
+#: /var/www/osclass-git/oc-admin/plugins.php:128
+#: /var/www/osclass-git/oc-admin/plugins.php:142
+#: /var/www/osclass-git/oc-admin/settings.php:1011
+#: /var/www/osclass-git/oc-admin/settings.php:1222
 msgid "This action cannot be done because is a demo site"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:68
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:156
+#: /var/www/osclass-git/oc-admin/admins.php:68
+#: /var/www/osclass-git/oc-admin/admins.php:157
 msgid "Email invalid"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:72
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:160
+#: /var/www/osclass-git/oc-admin/admins.php:72
+#: /var/www/osclass-git/oc-admin/admins.php:161
 msgid "Username invalid"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:76
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:164
-msgid "Real Name invalid"
+#: /var/www/osclass-git/oc-admin/admins.php:76
+#: /var/www/osclass-git/oc-admin/admins.php:165
+msgid "Name invalid"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:80
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:194
+#: /var/www/osclass-git/oc-admin/admins.php:80
+#: /var/www/osclass-git/oc-admin/admins.php:195
 msgid "Password invalid"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:85
+#: /var/www/osclass-git/oc-admin/admins.php:85
 msgid "Email already in use"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:90
+#: /var/www/osclass-git/oc-admin/admins.php:90
 msgid "Username already in use"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:102
+#: /var/www/osclass-git/oc-admin/admins.php:104
 msgid "The admin has been added"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:104
+#: /var/www/osclass-git/oc-admin/admins.php:106
 msgid "There have been an error adding a new admin"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:119
+#: /var/www/osclass-git/oc-admin/admins.php:121
 msgid "There is no admin admin with this id"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:171
+#: /var/www/osclass-git/oc-admin/admins.php:172
 msgid "This admin doesn't exist"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:177
+#: /var/www/osclass-git/oc-admin/admins.php:178
 msgid "Existing email"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:184
+#: /var/www/osclass-git/oc-admin/admins.php:185
 msgid "Existing username"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:202
+#: /var/www/osclass-git/oc-admin/admins.php:203
 msgid "The password couldn't be updated. Passwords don't match"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:215
+#: /var/www/osclass-git/oc-admin/admins.php:216
 msgid "The admin has been updated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:229
+#: /var/www/osclass-git/oc-admin/admins.php:230
 msgid "The admin id isn't in the correct format"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:235
+#: /var/www/osclass-git/oc-admin/admins.php:236
 msgid "The operation hasn't been completed. You're trying to remove yourself!"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:242
+#: /var/www/osclass-git/oc-admin/admins.php:243
 msgid "The admin has been deleted correctly"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:244
+#: /var/www/osclass-git/oc-admin/admins.php:245
 msgid "The admin couldn't be deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:49
+#: /var/www/osclass-git/oc-admin/appearance.php:50
 msgid "The theme folder is not writable"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:52
+#: /var/www/osclass-git/oc-admin/appearance.php:53
 msgid "The theme has been installed correctly"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:55
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:63
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/plugins.php:61
+#: /var/www/osclass-git/oc-admin/appearance.php:56
+#: /var/www/osclass-git/oc-admin/languages.php:64
+#: /var/www/osclass-git/oc-admin/plugins.php:62
 msgid "The zip file is not valid"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:58
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:66
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/plugins.php:64
+#: /var/www/osclass-git/oc-admin/appearance.php:59
+#: /var/www/osclass-git/oc-admin/languages.php:67
+#: /var/www/osclass-git/oc-admin/plugins.php:65
 msgid "No file was uploaded"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:63
+#: /var/www/osclass-git/oc-admin/appearance.php:64
 msgid "There was a problem adding the theme"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:92
+#: /var/www/osclass-git/oc-admin/appearance.php:93
 msgid "Widget removed correctly"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:105
+#: /var/www/osclass-git/oc-admin/appearance.php:99
+#: /var/www/osclass-git/oc-admin/appearance.php:121
+msgid "Description field is required"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/appearance.php:112
 msgid "Widget updated correctly"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:107
+#: /var/www/osclass-git/oc-admin/appearance.php:114
 msgid "Widget cannot be updated correctly"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:120
+#: /var/www/osclass-git/oc-admin/appearance.php:133
 msgid "Widget added correctly"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:128
+#: /var/www/osclass-git/oc-admin/appearance.php:141
 msgid "Theme activated correctly"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/categories.php:73
+#: /var/www/osclass-git/oc-admin/categories.php:78
 msgid "Categories' settings have been updated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/comments.php:54
+#: /var/www/osclass-git/oc-admin/comments.php:54
 msgid "The comments have been deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/comments.php:67
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/comments.php:90
+#: /var/www/osclass-git/oc-admin/comments.php:67
+#: /var/www/osclass-git/oc-admin/comments.php:90
 msgid "The comments have been approved"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/comments.php:77
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/comments.php:100
+#: /var/www/osclass-git/oc-admin/comments.php:77
+#: /var/www/osclass-git/oc-admin/comments.php:100
 msgid "The comments have been disapproved"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/comments.php:123
+#: /var/www/osclass-git/oc-admin/comments.php:123
 msgid "The comment has been approved"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/comments.php:130
+#: /var/www/osclass-git/oc-admin/comments.php:130
 msgid "The comment has been disapproved"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/comments.php:137
+#: /var/www/osclass-git/oc-admin/comments.php:137
 msgid "The comment has been enabled"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/comments.php:144
+#: /var/www/osclass-git/oc-admin/comments.php:144
 msgid "The comment has been disabled"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/comments.php:167
+#: /var/www/osclass-git/oc-admin/comments.php:158
+msgid "Email is not correct"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/comments.php:161
+msgid "Comment is required"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/comments.php:183
 msgid "Great! We just updated your comment"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/comments.php:171
+#: /var/www/osclass-git/oc-admin/comments.php:187
 msgid "The comment have been deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/custom_fields.php:49
-msgid "New custom field added"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/custom_fields.php:51
-msgid "Sorry, you already have one field with that name"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/custom_fields.php:54
-msgid "Name can not be empty"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/emails.php:72
+#: /var/www/osclass-git/oc-admin/emails.php:73
 msgid "The email/alert has been updated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/emails.php:75
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:81
+#: /var/www/osclass-git/oc-admin/emails.php:76
+#: /var/www/osclass-git/oc-admin/pages.php:84
 msgid "You can't repeat internal name"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/emails.php:77
+#: /var/www/osclass-git/oc-admin/emails.php:78
 msgid "The email couldn't be updated, at least one title should not be empty"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:60
+#: /var/www/osclass-git/oc-admin/items.php:56
 #, php-format
 msgid "%d item has been enabled"
 msgid_plural "%d items have been enabled"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:63
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:83
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:103
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:123
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:139
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:155
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:173
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:191
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:327
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:355
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:381
-#, php-format
-msgid "Error: %s"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:80
+#: /var/www/osclass-git/oc-admin/items.php:68
 #, php-format
 msgid "%d item has been disabled"
 msgid_plural "%d items have been disabled"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:100
+#: /var/www/osclass-git/oc-admin/items.php:80
 #, php-format
 msgid "%d item has been activated"
 msgid_plural "%d items have been activated"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:120
+#: /var/www/osclass-git/oc-admin/items.php:92
 #, php-format
 msgid "%d item has been deactivated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:136
+#: /var/www/osclass-git/oc-admin/items.php:104
 #, php-format
 msgid "%d item has been marked as premium"
 msgid_plural "%d items have been marked as premium"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:152
+#: /var/www/osclass-git/oc-admin/items.php:116
 #, php-format
 msgid "%d change has been made"
 msgid_plural "%d changes have been made"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:170
+#: /var/www/osclass-git/oc-admin/items.php:128
 #, php-format
 msgid "%d item has been marked as spam"
 msgid_plural "%d items have been marked as spam"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:188
+#: /var/www/osclass-git/oc-admin/items.php:140
 #, php-format
 msgid "%d change have been made"
 msgid_plural "%d changes have been made"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:209
+#: /var/www/osclass-git/oc-admin/items.php:159
 #, php-format
 msgid "%d item has been deleted"
 msgid_plural "%d items have been deleted"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:211
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:233
-msgid "The item couldn't be deleted"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:231
+#: /var/www/osclass-git/oc-admin/items.php:178
 msgid "The item has been deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:260
+#: /var/www/osclass-git/oc-admin/items.php:180
+msgid "The item couldn't be deleted"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/items.php:208
 msgid "The item has been activated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:277
+#: /var/www/osclass-git/oc-admin/items.php:210
+#: /var/www/osclass-git/oc-admin/items.php:222
+#: /var/www/osclass-git/oc-admin/items.php:232
+#: /var/www/osclass-git/oc-admin/items.php:242
+#: /var/www/osclass-git/oc-admin/items.php:270
+#: /var/www/osclass-git/oc-admin/items.php:295
+#: /var/www/osclass-git/oc-admin/items.php:385
+msgid "Some error has occurred"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/items.php:212
+msgid "The item cannot be activated, because it is blocked"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/items.php:220
 msgid "The item has been deactivated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:294
+#: /var/www/osclass-git/oc-admin/items.php:230
 msgid "The item has been enabled"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:311
+#: /var/www/osclass-git/oc-admin/items.php:240
 msgid "The item has been disabled"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:353
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:379
+#: /var/www/osclass-git/oc-admin/items.php:268
+#: /var/www/osclass-git/oc-admin/items.php:293
 msgid "Changes have been applied"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:403
+#: /var/www/osclass-git/oc-admin/items.php:318
 msgid "The item has been unmarked as"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:405
+#: /var/www/osclass-git/oc-admin/items.php:320
 msgid "The item hasn't been unmarked as"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:465
+#: /var/www/osclass-git/oc-admin/items.php:367
 msgid "Changes saved correctly"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:481
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/media.php:52
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/media.php:66
+#: /var/www/osclass-git/oc-admin/items.php:387
+#: /var/www/osclass-git/oc-admin/media.php:54
+#: /var/www/osclass-git/oc-admin/media.php:71
 msgid "Resource deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:515
+#: /var/www/osclass-git/oc-admin/items.php:423
 msgid "A new item has been added"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:587
+#: /var/www/osclass-git/oc-admin/items.php:466
+msgid "Wait time has to be numeric only"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/items.php:469
+msgid "Number of moderated items has to be numeric only"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/items.php:472
+msgid "Images per item has to be numeric only"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/items.php:514
 msgid "Items' settings have been updated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:52
+#: /var/www/osclass-git/oc-admin/languages.php:53
 msgid "The translation folder is not writable"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:56
+#: /var/www/osclass-git/oc-admin/languages.php:57
 msgid "The language has been installed correctly"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:59
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:71
+#: /var/www/osclass-git/oc-admin/languages.php:60
+#: /var/www/osclass-git/oc-admin/languages.php:72
 msgid "There was a problem adding the language"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:81
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:113
+#: /var/www/osclass-git/oc-admin/languages.php:82
+#: /var/www/osclass-git/oc-admin/languages.php:114
 msgid "Language id isn't in the correct format"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:88
+#: /var/www/osclass-git/oc-admin/languages.php:89
 msgid "Language id doesn't exist"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:121
-msgid "Language name can't be empty"
+#: /var/www/osclass-git/oc-admin/languages.php:137
+msgid "Language name field is required"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:127
-msgid "Language short name can't be empty"
+#: /var/www/osclass-git/oc-admin/languages.php:140
+msgid "Language short name field is required"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:133
-msgid "Language description can't be empty"
+#: /var/www/osclass-git/oc-admin/languages.php:143
+msgid "Language description field is required"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:157
+#: /var/www/osclass-git/oc-admin/languages.php:146
+msgid "Currency format field is required"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/languages.php:149
+msgid "Number of decimals has to be numeric only"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/languages.php:170
 #, php-format
 msgid "%s has been updated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:168
-msgid "The language can't be disabled because it's the default language. You can change modify it in General Settings"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:170
-msgid "The language has been enabled for the public website"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:170
-msgid "The language has been disabled for the public website"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:175
-msgid "The language has been enabled for the backoffice (oc-admin)"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:175
-msgid "The language has been disabled for the backoffice (oc-admin)"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:182
-msgid "There was a problem updating the language. The language id was lost"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:186
+#: /var/www/osclass-git/oc-admin/languages.php:175
 msgid "Selected languages have been enabled for the website"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:195
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:215
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:230
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:245
-msgid "There was a problem updating the languages. The language ids were lost"
+#: /var/www/osclass-git/oc-admin/languages.php:182
+#: /var/www/osclass-git/oc-admin/languages.php:205
+#: /var/www/osclass-git/oc-admin/languages.php:237
+#: /var/www/osclass-git/oc-admin/languages.php:260
+msgid "The language ids aren't in the correct format"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:200
+#: /var/www/osclass-git/oc-admin/languages.php:197
 msgid "Selected languages have been disabled for the website"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:208
-msgid "The language can't be disabled because it's the default language. You can change the default language under General Settings in order to disable it"
+#: /var/www/osclass-git/oc-admin/languages.php:211
+#: /var/www/osclass-git/oc-admin/languages.php:266
+#, php-format
+msgid "%s can't be disabled because is the default language"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:220
+#: /var/www/osclass-git/oc-admin/languages.php:230
 msgid "Selected languages have been enabled for the backoffice (oc-admin)"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:235
+#: /var/www/osclass-git/oc-admin/languages.php:252
 msgid "Selected languages have been disabled for the backoffice (oc-admin)"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:257
+#: /var/www/osclass-git/oc-admin/languages.php:290
 #, php-format
-msgid "Directory \"%s\" couldn't be removed"
+msgid "Directory '%s' couldn't be removed"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:259
+#: /var/www/osclass-git/oc-admin/languages.php:292
 #, php-format
 msgid "Directory \"%s\" has been successfully removed"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:262
+#: /var/www/osclass-git/oc-admin/languages.php:295
 #, php-format
-msgid "Directory \"%s\" couldn't be removed because it's the default language. Set another language as default first and try again"
+msgid "Directory '%s' couldn't be removed ;)"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/login.php:66
-msgid "That username does not exist"
+#: /var/www/osclass-git/oc-admin/languages.php:298
+#, php-format
+msgid "Directory '%s' couldn't be removed because it's the default language. Set another language as default first and try again"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/login.php:104
+#: /var/www/osclass-git/oc-admin/login.php:40
+msgid "The username field is empty"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/login.php:45
+msgid "The password field is empty"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/login.php:53
+#, php-format
+msgid "Sorry, incorrect username. <a href=\"%s\">Have you lost your password?</a>"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/login.php:58
+#, php-format
+msgid "Sorry, incorrect password. <a href=\"%s\">Have you lost your password?</a>"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/login.php:119
 msgid "A new password has been sent to your e-mail"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:55
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:104
+#: /var/www/osclass-git/oc-admin/pages.php:58
+#: /var/www/osclass-git/oc-admin/pages.php:110
 msgid "You have to set a different internal name"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:78
+#: /var/www/osclass-git/oc-admin/pages.php:81
 msgid "The page has been updated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:83
+#: /var/www/osclass-git/oc-admin/pages.php:86
 msgid "The page couldn't be updated, at least one title should not be empty"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:99
+#: /var/www/osclass-git/oc-admin/pages.php:105
 msgid "You have to set an internal name"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:124
+#: /var/www/osclass-git/oc-admin/pages.php:130
 msgid "The page has been added"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:126
+#: /var/www/osclass-git/oc-admin/pages.php:132
 msgid "The page couldn't be added, at least one title should not be empty"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:129
+#: /var/www/osclass-git/oc-admin/pages.php:135
 msgid "Oops! That internal name is already in use. We can't made the changes"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:159
+#: /var/www/osclass-git/oc-admin/pages.php:165
 msgid "One page can't be deleted because it is indelible"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:161
-msgid "pages couldn't be deleted because are indelible"
+#: /var/www/osclass-git/oc-admin/pages.php:167
+#, php-format
+msgid "%s pages couldn't be deleted because are indelible"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:166
+#: /var/www/osclass-git/oc-admin/pages.php:172
 msgid "One page couldn't be deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:168
-msgid "pages couldn't be deleted"
+#: /var/www/osclass-git/oc-admin/pages.php:174
+#, php-format
+msgid "%s pages couldn't be deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:173
+#: /var/www/osclass-git/oc-admin/pages.php:179
 msgid "One page has been deleted correctly"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:175
-msgid "pages have been deleted correctly"
+#: /var/www/osclass-git/oc-admin/pages.php:181
+#, php-format
+msgid "%s pages have been deleted correctly"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/plugins.php:55
+#: /var/www/osclass-git/oc-admin/plugins.php:56
 msgid "The plugin folder is not writable"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/plugins.php:58
+#: /var/www/osclass-git/oc-admin/plugins.php:59
 msgid "The plugin has been uploaded correctly"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/plugins.php:69
+#: /var/www/osclass-git/oc-admin/plugins.php:70
 msgid "There was a problem adding the plugin"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/plugins.php:87
+#: /var/www/osclass-git/oc-admin/plugins.php:91
+#, php-format
+msgid "The plugin generated %d characters of <strong>unexpected output</strong> during the installation"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/plugins.php:94
+msgid "Plugin is already installed"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/plugins.php:97
+msgid "Plugin couldn't be installed because their files are missing"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/plugins.php:100
+#, php-format
+msgid "Plugin couldn't be installed because of: %s"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/plugins.php:103
+msgid "Plugin couldn't be installed"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/plugins.php:107
 msgid "Plugin installed"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/plugins.php:89
-msgid "Error: Plugin already installed"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/plugins.php:101
+#: /var/www/osclass-git/oc-admin/plugins.php:119
 msgid "Plugin uninstalled"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/plugins.php:114
+#: /var/www/osclass-git/oc-admin/plugins.php:121
+msgid "Plugin couldn't be uninstalled"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/plugins.php:133
 msgid "Plugin enabled"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/plugins.php:116
-msgid "Error: Plugin already enabled"
+#: /var/www/osclass-git/oc-admin/plugins.php:135
+msgid "Plugin is already enabled"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/plugins.php:128
+#: /var/www/osclass-git/oc-admin/plugins.php:147
 msgid "Plugin disabled"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/plugins.php:204
+#: /var/www/osclass-git/oc-admin/plugins.php:149
+msgid "Plugin is already disabled"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/plugins.php:223
 msgid "No plugin selected"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/plugins.php:207
+#: /var/www/osclass-git/oc-admin/plugins.php:226
 msgid "Configuration was saved"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/plugins.php:227
-#, php-format
-msgid "There was a fatal error and the plugin was not installed.<br />Error: \"%s\" Line: %s<br/>File: %s"
+#: /var/www/osclass-git/oc-admin/settings.php:54
+msgid "Number of moderate comments has to be numeric only"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:71
+#: /var/www/osclass-git/oc-admin/settings.php:57
+msgid "Comments per page has to be numeric only"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:84
 msgid "Comments' settings have been updated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:89
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:214
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:237
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:274
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:295
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:839
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:918
+#: /var/www/osclass-git/oc-admin/settings.php:99
+#: /var/www/osclass-git/oc-admin/settings.php:221
+#: /var/www/osclass-git/oc-admin/settings.php:244
+#: /var/www/osclass-git/oc-admin/settings.php:288
+#: /var/www/osclass-git/oc-admin/settings.php:309
+#: /var/www/osclass-git/oc-admin/settings.php:1483
+#: /var/www/osclass-git/oc-admin/settings.php:1563
 #, php-format
 msgid "%s already was in the database"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:151
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:883
+#: /var/www/osclass-git/oc-admin/settings.php:162
+#: /var/www/osclass-git/oc-admin/settings.php:1527
 #, php-format
 msgid "%s has been added as a new country"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:170
+#: /var/www/osclass-git/oc-admin/settings.php:171
 msgid "Country has been edited"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:172
+#: /var/www/osclass-git/oc-admin/settings.php:173
 msgid "There were some problems editing the country"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:192
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:254
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:307
+#: /var/www/osclass-git/oc-admin/settings.php:197
+#: /var/www/osclass-git/oc-admin/settings.php:266
+#: /var/www/osclass-git/oc-admin/settings.php:323
 #, php-format
 msgid "%s has been deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:194
+#: /var/www/osclass-git/oc-admin/settings.php:199
 #, php-format
-msgid "%s can not be deleted, some items are located in it"
+msgid "There was a problem deleting %s"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:211
+#: /var/www/osclass-git/oc-admin/settings.php:218
 #, php-format
 msgid "%s has been added as a new region"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:233
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:292
+#: /var/www/osclass-git/oc-admin/settings.php:240
+#: /var/www/osclass-git/oc-admin/settings.php:306
 #, php-format
 msgid "%s has been edited"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:271
+#: /var/www/osclass-git/oc-admin/settings.php:285
 #, php-format
 msgid "%s has been added as a new city"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:397
-msgid "Akismet and reCAPTCHA have been updated"
+#: /var/www/osclass-git/oc-admin/settings.php:746
+msgid "No fields could be left empty."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:420
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:443
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:469
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:487
+#: /var/www/osclass-git/oc-admin/settings.php:746
+#, php-format
+msgid "One field was not updated"
+msgid_plural "%s fields were not updated"
+msgstr[0] ""
+msgstr[1] ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:749
+msgid "Permalinks structure updated"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:758
+msgid "Permalinks structure updated."
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:760
+msgid "However, we can't check if Apache module <b>mod_rewrite</b> is loaded. If you experience some problems with the urls, you should deactivate <em>friendly urls</em>"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:767
+#: /var/www/osclass-git/oc-admin/settings.php:777
+msgid "File <b>.htaccess</b> couldn't be filled with the right content."
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:769
+msgid "Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file, please deactivate <em>friendly urls</em> option."
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:779
+msgid "Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file or experience some problems with the urls, please deactivate <em>friendly urls</em> option."
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:793
+msgid "Friendly urls successfully deactivated"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:822
+msgid "Your Akismet key has been cleared"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:824
+msgid "Your Akismet key has been updated"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:840
+msgid "Your reCAPTCHA key has been cleared"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:842
+msgid "Your reCAPTCHA key has been updated"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:873
+msgid "The currency code is not in the correct format"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:886
+msgid "Currency added"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:888
+msgid "Currency couldn't be added"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:898
+#: /var/www/osclass-git/oc-admin/settings.php:905
+#, php-format
+msgid "The currency code '%s' doesn't exist"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:926
 msgid "Error: the currency code is not in the correct format"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:431
-msgid "New currency has been added"
+#: /var/www/osclass-git/oc-admin/settings.php:939
+msgid "Currency updated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:433
-msgid "Error: currency couldn't be added"
+#: /var/www/osclass-git/oc-admin/settings.php:941
+msgid "No changes were made"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:450
-msgid "Error: the currency doesn't exist"
+#: /var/www/osclass-git/oc-admin/settings.php:961
+#, php-format
+msgid "%s could not be deleted because it has items associated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:478
-msgid "Currency has been updated"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:497
+#: /var/www/osclass-git/oc-admin/settings.php:963
 #, php-format
 msgid "%s could not be deleted because it's the default currency"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:503
+#: /var/www/osclass-git/oc-admin/settings.php:971
 msgid "No currencies have been deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:506
+#: /var/www/osclass-git/oc-admin/settings.php:975
 msgid "One currency has been deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:509
-#, php-format
-msgid "%s could not be deleted because this currency still in use"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:512
+#: /var/www/osclass-git/oc-admin/settings.php:979
 #, php-format
 msgid "%s currencies have been deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:548
+#: /var/www/osclass-git/oc-admin/settings.php:1028
 msgid "Mail server type is incorrect"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:570
+#: /var/www/osclass-git/oc-admin/settings.php:1050
 msgid "Mail server configuration has changed"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:664
+#: /var/www/osclass-git/oc-admin/settings.php:1171
+#, php-format
+msgid "You cannot set a maximum size file higher than the one that allows PHP configuration: <b>%d KB</b>"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:1205
 msgid "Media config has been updated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:682
-msgid "Contact configuration has been updated"
+#: /var/www/osclass-git/oc-admin/settings.php:1303
+msgid "Re-generation complete"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:699
-msgid "Cron config has been updated"
+#: /var/www/osclass-git/oc-admin/settings.php:1343
+msgid "Page title field is required"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:759
+#: /var/www/osclass-git/oc-admin/settings.php:1346
+msgid "Contact email field is required"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:1349
+msgid "Number of RSS items has to be numeric only"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:1352
+msgid "Max latest items has to be numeric only"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:1355
+msgid "Number of items on search has to be numeric only"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/settings.php:1388
 msgid "Number of items in the RSS must be integer"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:767
+#: /var/www/osclass-git/oc-admin/settings.php:1396
 msgid "Number of recent items displayed at home must be integer"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:778
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:780
+#: /var/www/osclass-git/oc-admin/settings.php:1412
+#: /var/www/osclass-git/oc-admin/settings.php:1414
 msgid "General settings have been updated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:801
-msgid "Settings have been updated"
+#: /var/www/osclass-git/oc-admin/settings.php:1443
+msgid "Last search settings have been updated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:832
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:911
+#: /var/www/osclass-git/oc-admin/settings.php:1476
+#: /var/www/osclass-git/oc-admin/settings.php:1556
 #, php-format
 msgid "%s cannot be added"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:948
+#: /var/www/osclass-git/oc-admin/settings.php:1593
 #, php-format
 msgid "%s has been added as a region of %s"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:49
+#: /var/www/osclass-git/oc-admin/tools.php:52
 msgid "Import complete"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:51
+#: /var/www/osclass-git/oc-admin/tools.php:54
 msgid "There was a problem importing data to the database"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:147
-msgid "Re-generation complete"
+#: /var/www/osclass-git/oc-admin/tools.php:159
+msgid "Recount category stats has been successful"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:172
+#: /var/www/osclass-git/oc-admin/tools.php:217
+#: /var/www/osclass-git/oc-admin/tools.php:246
 msgid "Path is empty"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:175
+#: /var/www/osclass-git/oc-admin/tools.php:220
+#: /var/www/osclass-git/oc-admin/tools.php:249
 #, php-format
 msgid "Could not connect with the database. Error: %s"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:178
+#: /var/www/osclass-git/oc-admin/tools.php:223
+#: /var/www/osclass-git/oc-admin/tools.php:255
+msgid "There are no tables to back up"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/tools.php:226
+#: /var/www/osclass-git/oc-admin/tools.php:258
+msgid "The folder is not writable"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/tools.php:229
+#: /var/www/osclass-git/oc-admin/tools.php:261
+msgid "Backup has been done properly"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/tools.php:252
 #, php-format
 msgid "Could not select the database. Error: %s"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:181
-msgid "There are no tables to back up"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:184
-msgid "The folder is not writable"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:187
-msgid "Backup has been done properly"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:210
+#: /var/www/osclass-git/oc-admin/tools.php:287
+#: /var/www/osclass-git/oc-admin/tools.php:323
 msgid "Archiving successful!"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:213
+#: /var/www/osclass-git/oc-admin/tools.php:301
+#: /var/www/osclass-git/oc-admin/tools.php:326
 msgid "Error, the zip file was not created at the specified directory"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:231
+#: /var/www/osclass-git/oc-admin/tools.php:344
 msgid "Maintenance mode is ON"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:233
+#: /var/www/osclass-git/oc-admin/tools.php:346
 msgid "There was an error creating .maintenance file, please create it manually at the root folder"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:240
+#: /var/www/osclass-git/oc-admin/tools.php:353
 msgid "Maintenance mode is OFF"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:242
+#: /var/www/osclass-git/oc-admin/tools.php:355
 msgid "There was an error removing .maintenance file, please remove it manually from the root folder"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:71
+#: /var/www/osclass-git/oc-admin/users.php:72
 msgid "The user has been created. We've sent an activation e-mail"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:73
+#: /var/www/osclass-git/oc-admin/users.php:74
 msgid "The user has been created successfully"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:75
+#: /var/www/osclass-git/oc-admin/users.php:76
 msgid "Sorry, but that e-mail is already in use"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:79
+#: /var/www/osclass-git/oc-admin/users.php:80
 msgid "Sorry, the password cannot be empty"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:81
+#: /var/www/osclass-git/oc-admin/users.php:82
 msgid "Sorry, passwords don't match"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:123
+#: /var/www/osclass-git/oc-admin/users.php:124
 msgid "The user has been updated and activated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:125
+#: /var/www/osclass-git/oc-admin/users.php:126
 msgid "The user has been updated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:136
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:161
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:186
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:211
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:235
+#: /var/www/osclass-git/oc-admin/users.php:138
+#: /var/www/osclass-git/oc-admin/users.php:160
+#: /var/www/osclass-git/oc-admin/users.php:182
+#: /var/www/osclass-git/oc-admin/users.php:204
+#: /var/www/osclass-git/oc-admin/users.php:226
+#: /var/www/osclass-git/oc-admin/users.php:247
 msgid "User id isn't in the correct format"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:145
+#: /var/www/osclass-git/oc-admin/users.php:147
+msgid "No user has been selected"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/users.php:149
+#, php-format
+msgid "Activation email sent to one user"
+msgid_plural "Activation email sent to %s users"
+msgstr[0] ""
+msgstr[1] ""
+
+#: /var/www/osclass-git/oc-admin/users.php:169
 msgid "No user has been activated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:147
-msgid "One user has been activated"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:149
+#: /var/www/osclass-git/oc-admin/users.php:171
 #, php-format
-msgid "%s users have been activated"
-msgstr ""
+msgid "One user has been activated"
+msgid_plural "%s users have been activated"
+msgstr[0] ""
+msgstr[1] ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:170
+#: /var/www/osclass-git/oc-admin/users.php:191
 msgid "No user has been deactivated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:172
-msgid "One user has been deactivated"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:174
+#: /var/www/osclass-git/oc-admin/users.php:193
 #, php-format
-msgid "%s users have been deactivated"
-msgstr ""
+msgid "One user has been deactivated"
+msgid_plural "%s users have been deactivated"
+msgstr[0] ""
+msgstr[1] ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:195
+#: /var/www/osclass-git/oc-admin/users.php:213
 msgid "No user has been enabled"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:197
-msgid "One user has been enabled"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:199
+#: /var/www/osclass-git/oc-admin/users.php:215
 #, php-format
-msgid "%s users have been enabled"
-msgstr ""
+msgid "One user has been enabled"
+msgid_plural "%s users have been enabled"
+msgstr[0] ""
+msgstr[1] ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:220
+#: /var/www/osclass-git/oc-admin/users.php:235
 msgid "No user has been disabled"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:222
-msgid "One user has been disabled"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:224
+#: /var/www/osclass-git/oc-admin/users.php:237
 #, php-format
-msgid "%s users have been disabled"
-msgstr ""
+msgid "One user has been disabled"
+msgid_plural "%s users have been disabled"
+msgstr[0] ""
+msgstr[1] ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:247
+#: /var/www/osclass-git/oc-admin/users.php:259
 msgid "No user has been deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:249
-msgid "One user has been deleted"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:251
+#: /var/www/osclass-git/oc-admin/users.php:261
 #, php-format
-msgid "%s users have been deleted"
-msgstr ""
+msgid "One user has been deleted"
+msgid_plural "%s users have been deleted"
+msgstr[0] ""
+msgstr[1] ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:282
+#: /var/www/osclass-git/oc-admin/users.php:299
 msgid "Users' settings have been updated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:121
-msgid "INACTIVE"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:125
-msgid "DISABLED"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/admin/admin_settings.php:9
-msgid "The logo image has been uploaded correctly"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/admin/admin_settings.php:11
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/admin/admin_settings.php:14
-msgid "An error has occurred, please try again"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/admin/admin_settings.php:20
-msgid "The logo image has been removed"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/admin/admin_settings.php:22
-msgid "Image not found"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/emails.php:364
+#: /var/www/osclass-git/oc-includes/osclass/emails.php:362
 msgid "We have sent you an e-mail. Follow the instructions to validate the changes"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/emails.php:366
+#: /var/www/osclass-git/oc-includes/osclass/emails.php:364
 msgid "We tried to sent you an e-mail, but it failed. Please, contact the administrator"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:76
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:263
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:64
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:259
 msgid "Image with incorrect extension."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:79
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:266
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:67
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:262
 msgid "Images too big. Max. size "
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:90
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:278
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:78
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:274
 msgid "Title too short."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:91
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:279
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:79
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:275
 msgid "Title too long."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:103
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:291
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:91
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:287
 msgid "Description too short."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:104
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:292
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:92
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:288
 msgid "Description too long."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:109
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:297
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:97
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:293
 msgid "Category invalid."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:110
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:298
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:98
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:294
 msgid "Price must be number."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:111
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:299
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:99
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:295
 msgid "Price too long."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:112
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:100
 msgid "Name too long."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:113
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:101
 msgid "Email invalid."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:114
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:300
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:102
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:296
 msgid "Country too short."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:115
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:301
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:103
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:297
 msgid "Country too long."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:116
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:302
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:104
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:298
 msgid "Region too short."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:117
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:303
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:105
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:299
 msgid "Region too long."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:118
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:304
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:106
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:300
 msgid "City too short."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:119
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:305
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:107
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:301
 msgid "City too long."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:120
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:306
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:108
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:302
 msgid "Municipality too short."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:121
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:307
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:109
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:303
 msgid "Municipality too long."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:122
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:308
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:110
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:304
 msgid "Address too short."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:123
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:309
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:111
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:305
 msgid "Address too long."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:124
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:112
 msgid "Too fast. You should wait a little to publish your ad."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:134
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:319
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:125
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:319
 #, php-format
 msgid "%s field is required."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:556
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:796
 #, php-format
 msgid "We just send your message to %s"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:961
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:1198
 msgid "One of the files you tried to upload exceeds the maximum size"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:1004
+#: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:1241
 msgid "The file you tried to upload does not have an allowed extension"
 msgstr ""
 

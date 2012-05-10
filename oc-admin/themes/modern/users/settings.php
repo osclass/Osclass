@@ -31,42 +31,41 @@
                 <div class="header_title">
                     <h1 class="settings"><?php _e('Users Settings') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- users settings form -->
                 <div class="settings users">
                     <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="users" />
                         <input type="hidden" name="action" value="settings_post" />
                         <fieldset>
-                            <div class="input-line">
-                                <label><?php _e('Settings') ; ?></label>
-                                <div class="input">
-                                    <label class="checkbox">
-                                        <input type="checkbox" name="enabled_users" <?php echo ( osc_users_enabled() ? 'checked="checked"' : '' ) ; ?> value="1" />
-                                        <p class="inline"><?php _e('Users enabled') ; ?></p>
-                                    </label>
-                                    <label class="checkbox">
-                                        <input type="checkbox" name="enabled_user_registration" <?php echo ( osc_user_registration_enabled() ? 'checked="checked"' : '' ) ; ?> value="1" />
-                                        <p class="inline"><?php _e('Anyone can register') ; ?></p>
-                                    </label>
-                                    <label class="checkbox">
-                                        <input type="checkbox" name="enabled_user_validation" <?php echo ( osc_user_validation_enabled() ? 'checked="checked"' : '' ) ; ?> value="1" />
-                                        <p class="inline"><?php _e('Users need to validate their account') ; ?></p>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="input-line">
-                                <label><?php _e('Admin notifications') ; ?></label>
-                                <div class="input">
-                                    <label class="checkbox">
-                                        <input type="checkbox" name="notify_new_user" <?php echo ( osc_notify_new_user() ? 'checked="checked"' : '' ) ; ?> value="1" />
-                                        <p class="inline"><?php _e('When a new user is registered') ; ?></p>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="actions">
-                                <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
-                            </div>
+                            <table class="table-backoffice-form">
+                                <tr>
+                                    <td class="labeled"><?php _e('Settings') ; ?></td>
+                                    <td><input type="checkbox" name="enabled_users" <?php echo ( osc_users_enabled() ? 'checked="checked"' : '' ) ; ?> value="1" />
+                                        <?php _e('Users enabled') ; ?></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input type="checkbox" name="enabled_user_registration" <?php echo ( osc_user_registration_enabled() ? 'checked="checked"' : '' ) ; ?> value="1" />
+                                        <?php _e('Anyone can register') ; ?></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input type="checkbox" name="enabled_user_validation" <?php echo ( osc_user_validation_enabled() ? 'checked="checked"' : '' ) ; ?> value="1" />
+                                        <?php _e('Users need to validate their account') ; ?></td>
+                                </tr>
+                                <tr>
+                                    <td class="labeled"><?php _e('Admin notifications') ; ?></td>
+                                    <td><input type="checkbox" name="notify_new_user" <?php echo ( osc_notify_new_user() ? 'checked="checked"' : '' ) ; ?> value="1" />
+                                        <?php _e('When a new user is registered') ; ?></td>
+                                </tr>
+                                <tr class="separate">
+                                    <td></td>
+                                    <td>
+                                        <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
+                                    </td>
+                                </tr>
+                            </table>
                         </fieldset>
                     </form>
                 </div>

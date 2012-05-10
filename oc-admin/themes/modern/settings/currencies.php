@@ -55,7 +55,7 @@
                 } );
 
                 oTable = $('#datatables_list').dataTable({
-                    "sDom": "<'row-action'<'row'<'span6'l><'span6'f>r>>t<'row'<'span6'i><'span6'p>>",
+                    "sDom": "",
                     "sPaginationType": "bootstrap",
                     "bInfo": false,
                     "bFilter": false,
@@ -94,12 +94,13 @@
                 <div class="header_title">
                     <h1 class="currencies"><?php _e('Currencies') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- datatables currencies -->
                 <form class="settings currencies datatables" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                     <input type="hidden" name="page" value="settings" />
                     <input type="hidden" name="action" value="currencies" />
                     <input type="hidden" name="type" value="delete" />
+                    <div class="row-action">
                     <div class="row">
                         <div class="span6">
                             <div id="example_length" class="dataTables_length">
@@ -107,7 +108,7 @@
                                     <select id="bulk_actions" class="display">
                                         <option value=""><?php _e('Bulk actions') ; ?></option>
                                         <option value="delete_all"><?php _e('Delete') ; ?></option>
-                                    </select> <input type="button" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>">
+                                    </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>">
                                 </label>
                             </div>
                         </div>
@@ -116,6 +117,7 @@
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&amp;action=currencies&amp;type=add" class="btn" id="button_open"><?php _e('Add') ; ?></a>
                             </div>
                         </div>
+                    </div>
                     </div>
                     <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatables_list"></table>
                 </form>

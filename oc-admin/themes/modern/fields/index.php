@@ -17,7 +17,6 @@
      */
 
     $fields     = __get('fields') ;
-    $last       = end($fields) ; $last_id = $last['pk_i_id'] ;
     $categories = __get('categories') ;
     $selected   = __get('default_selected') ;
 ?>
@@ -49,7 +48,7 @@
             }
 
             function delete_field(id){
-                var answer = confirm('<?php echo osc_esc_js( __('WARNING: This will also delete the information related to this field. This action cann not be undone. Are you sure you want to continue?') ) ; ?>') ;
+                var answer = confirm('<?php echo osc_esc_js( __('WARNING: This will also delete the information related to this field. This action cannot be undone. Are you sure you want to continue?') ) ; ?>') ;
                 if( answer ) {
                     var url  = '<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=delete_field&id=' + id ;
                     $.ajax({
@@ -101,7 +100,6 @@
                         context: document.body,
                         success: function(res){
                             var ret = eval( "(" + res + ")");
-                            //console.log(ret);
                             if(ret.error==0) {
                                 var html = '';
                                 html += '<li id="list_'+ret.field_id+'" class="field_li even">';
@@ -111,7 +109,7 @@
                                         html += '</div>';
                                         html += '<div class="actions-edit-cfield">';
                                             html += '<a onclick="show_iframe(\'content_list_'+ret.field_id+'\',\''+ret.field_id+'\');"><?php _e('Edit') ; ?></a>';
-                                             html += '&middot;';
+                                            html += ' &middot; ';
                                             html += '<a onclick="delete_field(\''+ret.field_id+'\');"><?php _e('Delete') ; ?></a>';
                                         html += '</div>';
                                     html += '</div>';
@@ -161,8 +159,8 @@
                     <input id="add-button" type="button" value="<?php echo osc_esc_html( __('Add new field') ) ; ?>" />
                     <h1 class="categories"><?php _e('Custom fields') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
-                <div class="jsMessage alert alert-ok" style="display: none;">
+                <?php osc_show_flash_message('admin') ; ?>
+                <div class="jsMessage FlashMessage ok" style="display: none;">
                     <a class="close" href="#">×</a>
                     <p></p>
                 </div>

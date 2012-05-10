@@ -1259,7 +1259,6 @@
         private function createForeignKey($tbl_constraint, $table, &$struct_queries, $constrains)
         {
             $constrainsDB  = $foreignRepited =  array();
-//            if(preg_match_all("| FOREIGN KEY\s+(.*)\s+REFERENCES\s+(.*),?\n|i", $tbl_constraint['Create Table'], $default_match)) {
             if(preg_match_all("| CONSTRAINT\s+(.*)\s+FOREIGN KEY\s+(.*)\s+REFERENCES\s+(.*),?\n|i", $tbl_constraint['Create Table'], $default_match)) {
 
                 $aKeyName = $default_match[1];
@@ -1276,11 +1275,7 @@
                     $constrainsDB[$_value] = $_refere;
                 }
             }
-            
-//            echo "extra foreign keys<br>" ;
-//            echo "<pre>";
-//            print_r( $foreignRepited ) ;
-//            echo "</pre>";
+
             $delete_foreign = array();
             if( count($foreignRepited) > 0 ) {
                 foreach( $foreignRepited as $_key ) {
@@ -1381,6 +1376,10 @@
             $ok = true;
             $error_queries = array();
             foreach($queries as $query) {
+                // hack for 2.4
+                if( stripos($query, 'country ADD PRIMARY KEY') ) {
+                   continue ;
+                }
                 $res = $this->query($query);
                 if(!$res) {
                     $ok = false;

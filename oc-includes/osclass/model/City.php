@@ -77,11 +77,12 @@
          */
         function ajax($query, $regionId = null)
         {
-            $this->dao->select('pk_i_id as id, s_name as label, s_name as value') ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->like('s_name', $query, 'after') ;
+            $this->dao->select('a.pk_i_id as id, a.s_name as label, a.s_name as value, aux.s_name as region') ;
+            $this->dao->from($this->getTableName().' as a') ;
+            $this->dao->join(Region::newInstance()->getTableName().' as aux', 'aux.pk_i_id = a.fk_i_region_id', 'LEFT');
+            $this->dao->like('a.s_name', $query, 'after') ;
             if( $regionId != null ) {
-                $this->dao->where('fk_i_region_id', $regionId) ;
+                $this->dao->where('a.fk_i_region_id', $regionId) ;
             }
 
             $result = $this->dao->get() ;

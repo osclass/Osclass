@@ -31,7 +31,7 @@
                 <div class="header_title">
                     <h1 class="plugins"><?php _e('Theme') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- theme files -->
                 <div class="theme-files">
                     <?php require __get('file') ; ?>

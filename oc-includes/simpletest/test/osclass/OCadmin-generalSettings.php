@@ -407,7 +407,7 @@ class OCadmin_generalSettings extends OCadmintest {
         
         $this->assertTrue( $this->selenium->isTextPresent("Page title: this field is required") , 'JS Validation');
         $this->assertTrue( $this->selenium->isTextPresent("RSS shows: this field is required") , 'JS Validation');
-        $this->assertTrue( $this->selenium->isTextPresent("The latest items shows: this field is required") , 'JS Validation');
+        $this->assertTrue( $this->selenium->isTextPresent("The latest items show: this field is required") , 'JS Validation');
         $this->assertTrue( $this->selenium->isTextPresent("The search page shows: this field is required") , 'JS Validation');
         $this->assertTrue( $this->selenium->isTextPresent("Email: this field is required") , 'JS Validation');
 
@@ -421,7 +421,7 @@ class OCadmin_generalSettings extends OCadmintest {
         sleep(4);
         
         $this->assertTrue( $this->selenium->isTextPresent("RSS shows: this field has to be numeric only") , 'JS Validation');
-        $this->assertTrue( $this->selenium->isTextPresent("The latest items shows: this field has to be numeric only") , 'JS Validation');
+        $this->assertTrue( $this->selenium->isTextPresent("The latest items show: this field has to be numeric only") , 'JS Validation');
         $this->assertTrue( $this->selenium->isTextPresent("The search page shows: this field has to be numeric only") , 'JS Validation');
         $this->assertTrue( $this->selenium->isTextPresent("Invalid email address") , 'JS Validation');
         
@@ -761,6 +761,69 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->assertTrue( $this->selenium->isTextPresent("One currency has been deleted") , "Delete currency" ) ;
         $this->assertTrue( !$this->selenium->isTextPresent("Indian_Rupee") , "Delete currency" ) ;
+        
+        
+        // BULK DELETE
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_currencies']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->click("link=Add");
+
+        $this->selenium->waitForPageToLoad("30000");
+
+        $this->selenium->type("pk_c_code", "");
+        $this->selenium->type("s_name", "");
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue( $this->selenium->isTextPresent("Currency code: this field is required") , "Add currency" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Name: this field is required") , "Add currency" ) ;
+        
+        $this->selenium->type("pk_c_code", "INR");
+        $this->selenium->type("s_name", "Indian Rupee");
+        $this->selenium->type("s_description", "Indian Rupee र");
+
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("Currency added") , "Add currency" ) ;
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_currencies']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->click("link=Add");
+
+        $this->selenium->waitForPageToLoad("30000");
+
+        $this->selenium->type("pk_c_code", "");
+        $this->selenium->type("s_name", "");
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue( $this->selenium->isTextPresent("Currency code: this field is required") , "Add currency" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Name: this field is required") , "Add currency" ) ;
+        
+        $this->selenium->type("pk_c_code", "AUD");
+        $this->selenium->type("s_name", "Australian dolar");
+        $this->selenium->type("s_description", "Australian dolar");
+
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("Currency added") , "Add currency" ) ;
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_currencies']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->click("//table/tbody/tr/td/input[@value='INR']");
+        $this->selenium->click("//table/tbody/tr/td/input[@value='AUD']");
+        $this->selenium->select("bulk_Actions", "label=Delete" ) ;
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("2 currencies have been deleted") , "BULK delete currency" ) ;
+        
         osc_reset_preferences();
     }
 

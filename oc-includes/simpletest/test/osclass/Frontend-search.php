@@ -149,7 +149,7 @@ class Frontend_search extends FrontendTest {
     function testSPatternCombi4()
     {
         $this->selenium->open( osc_base_url(true) . "?page=search" );
-        $this->selenium->click("xpath=//div[@id='cat2']"); // deselect category 2 (vehicles)
+        $this->selenium->click("xpath=//div[@id='cat2_']"); // deselect category 2 (vehicles)
         $this->selenium->click("xpath=//span/button[text()='Apply']");
         $this->selenium->waitForPageToLoad("30000");
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
@@ -163,7 +163,7 @@ class Frontend_search extends FrontendTest {
     function testSPatternCombi5()
     {
         $this->selenium->open( osc_search_url() );
-        $this->selenium->click("bPic"); // only items with pictures
+        $this->selenium->click("xpath=//input[@id='withPicture']"); // only items with pictures
         $this->selenium->click("xpath=//span/button[text()='Apply']");
         $this->selenium->waitForPageToLoad("30000");
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');

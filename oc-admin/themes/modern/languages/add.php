@@ -31,11 +31,11 @@
                 <div class="header_title">
                     <h1 class="languages"><?php _e('Add a language') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- add language form -->
                 <div class="languages">
                 <?php if( is_writable( osc_translations_path() ) ) { ?>
-                    <div class="alert alert-info">
+                    <div class="FlashMessage info">
                         <p class="info"><?php printf( __('Download more languages at %s'), '<a href="https://sourceforge.net/projects/osclass/files/Languages/" target="_blank">Sourceforge</a>') ; ?></p>
                     </div>
                     <form action="<?php echo osc_admin_base_url(true) ; ?>" method="POST" enctype="multipart/form-data">
@@ -50,7 +50,7 @@
                         </div>
                     </form>
                 <?php } else { ?>
-                    <div class="alert alert-error">
+                    <div class="FlashMessage error">
                         <a class="close" href="#">×</a>
                         <p><?php _e('Cannot install a new language') ; ?></p>
                     </div>

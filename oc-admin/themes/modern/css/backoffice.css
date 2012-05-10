@@ -99,6 +99,21 @@ body {
 	font-size: 14px;
     background-color:#f2f2f2;
 }
+
+#error_list {
+    background-color: #f2dede;
+    color: #b94a48;
+    list-style: none;
+    padding: 6px 35px 6px 14px;
+    margin: 0px;
+    margin-bottom: 18px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    border: 1px solid #eed3d7;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
 /* header */
 #header {
     background-color: #e1e1e1;
@@ -454,9 +469,11 @@ table.table{
     text-decoration: underline;
 }
 /* /footer */
-/* alert messages */
-.alert {
+/* FlashMessage messages */
+.FlashMessage,
+#error_list{
     padding: 6px 35px 6px 14px;
+    margin:0;
     margin-bottom: 18px;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
     background-color: #fcf8e3;
@@ -466,58 +483,51 @@ table.table{
     border-radius: 4px;
 }
 
-.alert, .alert-heading {
+.FlashMessage,
+#error_list{
     color: #c09853;
 }
 
-.alert .close {
+.FlashMessage .close {
     position: relative;
     top: -2px;
     right: -21px;
     line-height: 18px;
 }
 
-.alert-ok {
+.FlashMessage.ok {
     background-color: #dff0d8;
     border-color: #d6e9c6;
-}
-
-.alert-ok, .alert-ok .alert-heading {
     color: #468847;
 }
 
-.alert-danger, .alert-error {
+.FlashMessage.error,
+#error_list{
     background-color: #f2dede;
     border-color: #eed3d7;
-}
-
-.alert-danger, .alert-error, .alert-danger .alert-heading, .alert-error .alert-heading {
     color: #b94a48;
 }
 
-.alert-info {
+.FlashMessage.info {
     background-color: #d9edf7;
     border-color: #bce8f1;
-}
-
-.alert-info, .alert-info .alert-heading {
     color: #3a87ad;
 }
 
-.alert-block {
+.FlashMessage-block {
     padding-top: 14px;
     padding-bottom: 14px;
 }
 
-.alert-block p {
+.FlashMessage-block p {
     margin: 2px 0;
 }
 
-.alert-block > p, .alert-block > ul {
+.FlashMessage-block > p, .FlashMessage-block > ul {
     margin-bottom: 0;
 }
 
-.alert-block p + p {
+.FlashMessage-block p + p {
     margin-top: 5px;
 }
 
@@ -539,7 +549,11 @@ table.table{
     filter: alpha(opacity=40);
     cursor: pointer;
 }
-/* /alert messages */
+#error_list{
+    list-style:none;
+    display: none;
+}
+/* /FlashMessage messages */
 /* form */
 input, textarea, select {
     padding: 3px;
@@ -777,7 +791,7 @@ input[type="submit"]:focus, input[type="button"]:focus {
     max-height: 300px;
     background-color: #F0F0F0;
 }
-.alert pre {
+.FlashMessage pre {
     margin: 10px 10px 5px 25px;
     overflow: auto;
     font-weight: bold;
@@ -788,7 +802,7 @@ p.text {
     font-size: 14px;
 }
 
-.alert-inline {
+.FlashMessage-inline {
     display: inline-block;
     margin-left: 10px;
     padding: 4px 15px;
@@ -819,7 +833,9 @@ p.text {
 .current-theme:after {
     clear: both ;
 }*/
-
+.current-theme{
+    height:140px;
+}
 .current-theme h3 {
     margin-top: 0px;
 }
@@ -1031,6 +1047,10 @@ div.disabled .category_row {
     cursor: pointer;
 }
 
+.subcategory .toggle {
+    display: none;
+}
+
 .name-cat {
     /*float: left;*/
     padding-right:300px;
@@ -1157,19 +1177,18 @@ span.help-box{
     padding-top:20px;
 }
 /* JQUERY UI */
+
 .ui-widget-overlay{
     background-color:#000000;
     background:#000000;
     opacity:0.7;
 }
-.ui-widget-content {
-    border: 5px solid #dadada;
-    border-radius: 8px;
+.ui-dialog{
+    border: 5px solid #dadada !important;
+    border-radius: 8px !important;
     padding:5px !important;
 }
-.ui-dialog-titlebar,
-.ui-widget-header,
-h3.ui-state-default{
+.ui-dialog-titlebar{
     padding: .5em 1em .3em; position: relative !important; 
     background:#dadada !important;
 
@@ -1183,7 +1202,7 @@ h3.ui-state-default{
     width:100% !important;
     padding: 8px 10px 0 !important;
 }
-.ui-widget-content{
+.ui-dialog-content{
     padding:10px !important;
 }
 .ui-dialog-title{
@@ -1201,3 +1220,25 @@ h3.ui-state-default{
 .ui-dialog .ui-dialog-buttonpane button { margin: .5em .4em .5em 0; cursor: pointer; }
 .ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 3px; bottom: 3px; }
 .ui-draggable .ui-dialog-titlebar { cursor: move; }
+
+.sortable_div .ui-dialog{
+    width:auto;
+    position: relative;
+    margin-right:10px;
+}
+h3.ui-dialog-titlebar{
+    padding:10px !important;
+    font-weight:normal;
+}
+
+/* Plugin */
+#plugin-hook .row{clear: both; float: left; margin-bottom: 10px; width: 100%;}
+#plugin-hook .row label {float: left; line-height: 24px; margin-right: 10px; width: 190px; }
+#plugin-hook .row input[type="radio"] {
+    border: 1px solid #BBBBBB;
+    padding: 7px 7px 6px;
+    width: 30px;
+}
+#plugin-hook .has-slider{
+    padding-left:180px; 
+}

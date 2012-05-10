@@ -525,7 +525,7 @@
     
     function delete_image(id, item_id,name, secret) {
         //alert(id + " - "+ item_id + " - "+name+" - "+secret);
-        var result = confirm('<?php _e('This action can\\\'t be undone. Are you sure you want to continue?'); ?>');
+        var result = confirm('<?php echo osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) ; ?>');
         if(result) {
             $.ajax({
                 type: "POST",
@@ -812,7 +812,7 @@
     
     function delete_image(id, item_id,name, secret) {
         //alert(id + " - "+ item_id + " - "+name+" - "+secret);
-        var result = confirm('<?php _e('This action can\\\'t be undone. Are you sure you want to continue?'); ?>');
+        var result = confirm('<?php echo osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) ; ?>');
         if(result) {
             $.ajax({
                 type: "POST",

@@ -34,7 +34,7 @@
                 <div class="header_title">
                     <h1 class="widgets"><?php _e('Widgets') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- widgets list -->
                 <div class="widgets">
                     <h3><?php echo $info['name'] ; ?> <?php echo $info['version'] ; ?> <?php _e('by') ; ?> <a href="<?php echo $info['author_url'] ; ?>"><?php echo $info['author_name'] ; ?></a></h3>

@@ -57,7 +57,7 @@
                 <div class="header_title">
                     <h1 class="pages"><?php _e('Edit email template') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- edit email template -->
                 <div class="emails">
                     <form action="<?php echo osc_admin_base_url(true); ?>" method="post">

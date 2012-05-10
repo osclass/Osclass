@@ -125,7 +125,7 @@
                             }) ;
                         }
                     },
-                    "iDisplayLength": "25",
+                    "iDisplayLength": 25,
                     "sDom": "<'row-action'<'row'<'span6 length-menu'l><'span6 filter'>fr>>t<'row'<'span6 info-results'i><'span6 paginate'p>>",
                     "sPaginationType": "bootstrap",
                     "bLengthChange": false,
@@ -169,7 +169,7 @@
                             "bSortable": false
                         },
                         {
-                            "sTitle": "<?php echo osc_esc_html( __('County') ) ; ?>",
+                            "sTitle": "<?php echo osc_esc_html( __('Country') ) ; ?>",
                             "bSortable": false
                         },
                         {
@@ -261,7 +261,7 @@
                 <div class="header_title">
                     <h1 class="items"><?php _e('Manage Items') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- items filters -->
                 <h3 class="show-filters" data-showed="false">+ <?php _e('Show filters') ; ?></h3>
                 <div class="items-filters" style="display: none;">

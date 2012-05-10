@@ -48,14 +48,11 @@
                         }
                     },
                     wrapper: "li",
-                        errorLabelContainer: "#error_list",
-                        invalidHandler: function(form, validator) {
-                            $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
-                        }
+                    errorLabelContainer: "#error_list",
+                    invalidHandler: function(form, validator) {
+                        $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+                    }
                 });
-
-
-
 
                 if( !$('input[name="moderate_comments"]').is(':checked') ) {
                     $('.comments_approved').css('display', 'none') ;
@@ -79,10 +76,10 @@
                 <div class="header_title">
                     <h1 class="settings"><?php _e('Comments Settings') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- settings form -->
                 <div class="settings comments">
-                    <ul id="error_list"></ul>
+                    <ul id="error_list" style="display: none;"></ul>
                     <form name="comments_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="settings" />
                         <input type="hidden" name="action" value="comments_post" />
@@ -99,7 +96,7 @@
                                     <td></td>
                                     <td>
                                         <input type="checkbox" <?php echo ( osc_reg_user_post_comments() ? 'checked="true"' : '' ) ; ?> name="reg_user_post_comments" value="1" />
-                                        <?php _e('Users must be registered and logged in to comment ') ; ?>
+                                        <?php _e('Users must be registered and logged in to comment') ; ?>
                                     </td>
                                 </tr>
                                 <tr>
@@ -120,7 +117,7 @@
                                     <td><?php _e('Other comment settings') ; ?></td>
                                     <td>
                                         <?php printf( __('Break comments into pages with %s comments per page'), '<input type="text" class="micro" name="comments_per_page" value="' . osc_esc_html( osc_comments_per_page() ) . '" />' ) ; ?>
-                                        <div class="help-box"><?php _e('If the value is zero all the comments are showed' ) ; ?></div>
+                                        <div class="help-box"><?php _e('If the value is zero all the comments are shown' ) ; ?></div>
                                     </td>
                                 </tr>
                                 <tr class="separate">

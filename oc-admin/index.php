@@ -28,8 +28,6 @@
         define('__OSC_MAINTENANCE__', true);
     }
 
-    WebThemes::newInstance();
-
     switch( Params::getParam('page') )
     {
         case('items'):      require_once(osc_admin_base_path() . 'items.php') ;
@@ -92,10 +90,6 @@
                             $do = new CAdminTools() ;
                             $do->doModel() ;
         break;
-        case('universe'):   require_once(osc_admin_base_path() . 'universe.php') ;
-                            $do = new CAdminUniverse() ;
-                            $do->doModel() ;
-        break;
         case('stats'):      require_once(osc_admin_base_path() . 'stats.php') ;
                             $do = new CAdminStats() ;
                             $do->doModel() ;
@@ -106,6 +100,10 @@
         break;
         case('upgrade'):    require_once(osc_admin_base_path() . 'upgrade.php') ;
                             $do = new CAdminUpgrade() ;
+                            $do->doModel() ;
+        break;
+        case('market'):   require_once(osc_admin_base_path() . 'market.php') ;
+                            $do = new CAdminMarket() ;
                             $do->doModel() ;
         break;
         default:            //login of oc-admin

@@ -27,24 +27,34 @@
         <script type="text/javascript">
             $(document).ready(function(){
                 // Code for form validation
+                
+                $.validator.addMethod('customrule', function(value, element) {
+                    if($('input:radio[name=purge_searches]:checked').val()=='custom') {
+                        if($("#custom_queries").val()=='') {
+                            return false;
+                        }
+                    }
+                    return true;
+                });
+                
                 $("form[name=searches_form]").validate({
                     rules: {
                         custom_queries: {
-                            required: true,
-                            digits: true
+                            digits: true,
+                            customrule: true
                         }
                     },
                     messages: {
                         custom_queries: {
-                            required: "<?php _e("Custom number: this field is required"); ?>.",
-                            digits: "<?php _e("Custom number: this field has to be numeric only"); ?>."
+                            digits: "<?php _e("Custom number: this field has to be numeric only"); ?>.",
+                            customrule: "<?php _e("Custom number: this field could not be left empty"); ?>."
                         }
                     },
                     wrapper: "li",
-                        errorLabelContainer: "#error_list",
-                        invalidHandler: function(form, validator) {
-                            $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
-                        }
+                    errorLabelContainer: "#error_list",
+                    invalidHandler: function(form, validator) {
+                        $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+                    }
                 });
             }) ;
         </script>
@@ -54,12 +64,12 @@
             <!-- right container -->
             <div class="right">
                 <div class="header_title">
-                    <h1 class="settings"><?php _e('Last searches Settings') ; ?></h1>
+                    <h1 class="settings"><?php _e('Latest searches Settings') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- latest searches form -->
                 <div class="settings latest-searches">
-                    <ul id="error_list"></ul>
+                    <ul id="error_list" style="display: none;"></ul>
                     <form name="searches_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="settings" />
                         <input type="hidden" name="action" value="latestsearches_post" />
@@ -69,7 +79,7 @@
                                     <td class="labeled"><?php _e('Latest searches') ; ?></td>
                                     <td>
                                         <input type="checkbox" <?php echo ( osc_save_latest_searches() ) ? 'checked="true"' : '' ; ?> name="save_latest_searches" />
-                                        <?php _e('Save the last user searches') ; ?>
+                                        <?php _e('Save the latest user searches') ; ?>
                                         <div class="help-box"><?php _e('It may be useful to know what queries users do.') ?></div>
                                     </td>
                                 </tr>
@@ -98,7 +108,7 @@
                                         </div>
                                         <div>
                                             <input type="radio" name="purge_searches" id="purge_searches" value="custom" <?php echo ( !in_array( osc_purge_latest_searches(), array('hour', 'day', 'week', 'forever', '1000') ) ? 'checked="checked"' : '' ) ; ?> />
-                                            <?php printf( __('Store %s queries'), '<input name="custom_queries" type="text" class="small" ' . ( !in_array( osc_purge_latest_searches(), array('hour', 'day', 'week', 'forever', '1000') ) ? 'value="' . osc_esc_html( osc_purge_latest_searches() ) . '"' : '') . ' onkeyup="javascript:document.getElementById(\'customPurge\').value = this.value;"/>' ) ; ?>
+                                            <?php printf( __('Store %s queries'), '<input name="custom_queries" id="custom_queries" type="text" class="small" ' . ( !in_array( osc_purge_latest_searches(), array('hour', 'day', 'week', 'forever', '1000') ) ? 'value="' . osc_esc_html( osc_purge_latest_searches() ) . '"' : '') . ' onkeyup="javascript:document.getElementById(\'customPurge\').value = this.value;"/>' ) ; ?>
                                             <p class="help">
                                                 <?php _e("This feature can generate a lot of data. It's recommended to purge this data periodically.") ; ?>
                                             </p>

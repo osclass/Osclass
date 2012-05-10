@@ -28,8 +28,8 @@
             $(function() {
                 oTable = $('#datatables_list').dataTable({
                     "sAjaxSource": "<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=media&resourceId=<?php echo Params::getParam('id') ; ?>",
-                    "iDisplayLength": "10",
-                    "iColumns"      : "5",
+                    "iDisplayLength": 10,
+                    "iColumns"      : 5,
                     "sDom": "<'row-action'<'row'<'span6 length-menu'l><'span6 filter'>fr>>t<'row'<'span6 info-results'i><'span6 paginate'p>>",
                     "sPaginationType": "bootstrap",
                     "bLengthChange": false,
@@ -102,7 +102,7 @@
                 <div class="header_title">
                     <h1 class="media"><?php _e('Manage Media') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- datatables media -->
                 <form class="settings users datatables" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                     <input type="hidden" name="page" value="media" />

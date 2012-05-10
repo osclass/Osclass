@@ -33,7 +33,7 @@
                 <div class="header_title">
                     <h1 class="tools"><?php _e('Maintenance') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- tools maintenance -->
                 <div class="tools maintenance">
                     <p class="text">

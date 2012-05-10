@@ -47,9 +47,9 @@
                             $('#testMail_message p').html(data.html) ;
                             $('#testMail_message').css('display', 'block') ;
                             if( data.status == 1 ) {
-                                $('#testMail_message').addClass('alert-ok');
+                                $('#testMail_message').addClass('ok');
                             } else {
-                                $('#testMail_message').addClass('alert-error');
+                                $('#testMail_message').addClass('error');
                             }
                         }
                     }) ;
@@ -67,7 +67,7 @@
                 <div class="header_title">
                     <h1 class="settings"><?php _e('Mail Settings') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- mail-server form -->
                 <div class="settings mail-server">
                     <h2><?php _e('Configuration') ; ?></h2>
@@ -115,7 +115,7 @@
                                     <input type="text" class="medium" name="mailserver_ssl" value="<?php echo osc_esc_html( osc_mailserver_ssl() ) ; ?>" />
                                     <span class="help-box"><?php _e('Options: blank, ssl or tls') ; ?></span>
                                     <?php if( !@apache_mod_loaded('mod_ssl') ) { ?>
-                                    <div class="alert alert-inline alert-warning">
+                                    <div class="FlashMessage FlashMessage-inline warning">
                                         <p><?php _e("Apache Module <b>mod_ssl</b> is not loaded") ; ?></p>
                                     </div>
                                     <?php } ?>
@@ -147,7 +147,7 @@
                     <h2><?php _e('Help') ; ?></h2>
                     <p class="text"><?php printf( __('Send an e-mail to </code>%s</code> to test mail server configuration'), osc_contact_email() ) ; ?> <input id="testMail" type="button" value="<?php echo osc_esc_html( __('Send e-mail') ) ; ?>" /></p>
                     <!-- test email -->
-                    <div id="testMail_message" class="alert" style="display:none;">
+                    <div id="testMail_message" class="FlashMessage" style="display:none;">
                         <a class="close" href="#">×</a>
                         <p></p>
                     </div>

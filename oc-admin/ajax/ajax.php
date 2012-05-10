@@ -55,7 +55,7 @@
                     }
                     break;
                 case 'date_format':
-                    echo json_encode(array('format' => Params::getParam('format'), 'str_formatted' => date(Params::getParam('format'))));
+                    echo json_encode(array('format' => Params::getParam('format'), 'str_formatted' => osc_format_date(date('Y-m-d H:i:s'),Params::getParam('format'))));
                     break;
                 case 'runhook': // run hooks
                     $hook = Params::getParam('hook');
@@ -83,13 +83,17 @@
                     require_once osc_admin_base_path() . 'ajax/items_processing.php';
                     $items_processing = new ItemsProcessingAjax(Params::getParamsAsArray("get"));
                     break;
-                case 'users': // Return items (use external file oc-admin/ajax/item_processing.php)
+                case 'users': // Return users (use external file oc-admin/ajax/users_processing.php)
                     require_once osc_admin_base_path() . 'ajax/users_processing.php';
                     $users_processing = new UsersProcessingAjax(Params::getParamsAsArray("get"));
                     break;
-                case 'media': // Return items (use external file oc-admin/ajax/media_processing.php)
+                case 'media': // Return media (use external file oc-admin/ajax/media_processing.php)
                     require_once osc_admin_base_path() . 'ajax/media_processing.php';
                     $media_processing = new MediaProcessingAjax(Params::getParamsAsArray("get"));
+                    break;
+                case 'comments': // Return comments (use external file oc-admin/ajax/comments_processing.php)
+                    require_once osc_admin_base_path() . 'ajax/comments_processing.php';
+                    $comments_processing = new CommentsProcessingAjax(Params::getParamsAsArray("get"));
                     break;
                 case 'categories_order': // Save the order of the categories
                     $aIds        = Params::getParam('list') ;
@@ -99,19 +103,32 @@
                     $error       = 0 ;
 
                     $catManager = Category::newInstance() ;
-
+                    $aRecountCat = array();
+                    
                     foreach($aIds as $id => $parent) {
                         if( $parent == 'root' ) {
                             $res = $catManager->updateOrder($id, $orderParent) ;
                             if( is_bool($res) && !$res ) {
                                 $error = 1 ;
                             }
+                            
+                            // find category
+                            $auxCategory = Category::newInstance()->findByPrimaryKey($id);
+                            
                             // set parent category 
                             $conditions = array('pk_i_id' => $id) ;
                             $array['fk_i_parent_id'] = NULL ;
                             $res = $catManager->update($array, $conditions) ;
                             if( is_bool($res) && !$res ) {
                                 $error = 1 ;
+                            } else if($res==1) { // updated ok
+                                $parentId = $auxCategory['fk_i_parent_id'];
+                                if($parentId) {
+                                    // update parent category stats
+                                    array_push($aRecountCat, $id);
+                                    array_push($aRecountCat, $parentId);
+                                }
+                                
                             }
                             $orderParent++ ;
                         } else {
@@ -126,21 +143,35 @@
                             }
 
                             // set parent category 
+                            $auxCategory = Category::newInstance()->findByPrimaryKey($id);
+                            $auxCategoryP = Category::newInstance()->findByPrimaryKey($catParent);
+                            
                             $conditions = array('pk_i_id' => $id) ;
                             $array['fk_i_parent_id'] = $catParent ;
 
                             $res = $catManager->update($array, $conditions) ;
                             if( is_bool($res) && !$res ) {
                                 $error = 1 ;
+                            } else if($res==1) { // updated ok
+                                // update category parent
+                                $prevParentId = $auxCategory['fk_i_parent_id'];
+                                $parentId = $auxCategoryP['pk_i_id'];
+                                array_push($aRecountCat, $prevParentId);
+                                array_push($aRecountCat, $parentId);
                             }
                             $orderSub++ ;
                         }
                     }
 
+                    // update category stats
+                    foreach($aRecountCat as $rId) {
+                        osc_update_cat_stats_id($rId);
+                    }
+                    
                     if( $error ) {
                         $result = array( 'error' => __("Some error ocurred") ) ;
                     } else {
-                        $result = array( 'ok' => __("Order saved") ) ;
+                        $result = array( 'ok' => __("Order saved")) ;
                     }
 
                     echo json_encode($result) ;
@@ -636,9 +667,9 @@
                     break;
                     
                 /*******************************
-                 ** COMPLETE UNIVERSE PROCESS **
+                 ** COMPLETE MARKET PROCESS **
                  *******************************/
-                case 'universe': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
+                case 'market': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
                     $code = Params::getParam('code');
                     $plugin = false;
                     $re_enable = false;
@@ -785,7 +816,7 @@
                     echo json_encode(array('error' => $error, 'message' => $message, 'data' => $data));
 
                     break;
-                case 'check_universe': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
+                case 'check_market': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
                     $code = Params::getParam('code');
                     $data = array();
                     /************************

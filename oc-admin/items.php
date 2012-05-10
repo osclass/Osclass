@@ -209,7 +209,7 @@
                                                 } else if ( !$success ){
                                                     osc_add_flash_error_message( _m('Some error has occurred'), 'admin');
                                                 } else {
-                                                    osc_add_flash_error_message( _m('The item cannot be activated, because is blocked'), 'admin');
+                                                    osc_add_flash_error_message( _m('The item cannot be activated, because it is blocked'), 'admin');
                                                 }
 
                                                 break;
@@ -466,7 +466,7 @@
                                             $msg .= _m("Wait time has to be numeric only")."<br/>";
                                         }
                                         if(!osc_validate_int(Params::getParam("num_moderate_items"))) {
-                                            $msg .= _m("Number of moderateditems has to be numeric only")."<br/>";
+                                            $msg .= _m("Number of moderated items has to be numeric only")."<br/>";
                                         }
                                         if(!osc_validate_int($numImagesItems)) {
                                             $msg .= _m("Images per item has to be numeric only")."<br/>";

@@ -35,10 +35,10 @@
                 <div class="header_title">
                     <h1 class="languages"><?php _e('Edit language') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- language form -->
                 <div class="languages">
-                    <ul id="error_list"></ul>
+                    <ul id="error_list" style="display: none;"></ul>
                     <form name="language_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="languages" />
                         <input type="hidden" name="action" value="edit_post" />

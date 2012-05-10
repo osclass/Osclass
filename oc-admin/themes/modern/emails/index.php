@@ -53,6 +53,20 @@
                     "bProcessing": false,
                     "bLengthChange": false,
                     "aaData": <?php echo json_encode($aData) ; ?>,
+                    "oLanguage": {
+                        "oPaginate": {
+                            "sNext" : "<?php echo osc_esc_html( __('Next') ) ; ?>",
+                            "sPrevious" : "<?php echo osc_esc_html( __('Previous') ) ; ?>"
+                        },
+                        "sEmptyTable" : "<?php echo osc_esc_html( __('No data available in table') ) ; ?>",
+                        "sInfo": "<?php echo osc_esc_html( sprintf( __('Showing %s to %s of %s entries'), '_START_', '_END_', '_TOTAL_') ) ; ?>",
+                        "sInfoEmpty": "<?php echo osc_esc_html( __('No entries to show') ) ; ?>",
+                        "sInfoFiltered": "<?php echo osc_esc_html( sprintf( __('(filtered from %s total entries)'), '_MAX_' ) ) ; ?>",
+                        "sLoadingRecords": "<?php echo osc_esc_html( __('Loading...') ) ; ?>",
+                        "sProcessing": "<?php echo osc_esc_html( __('Processing...') ) ; ?>",
+                        "sSearch": "<?php echo osc_esc_html( __('Search by name') ) ; ?>",
+                        "sZeroRecords": "<?php echo osc_esc_html( __('No matching records found') ) ; ?>"
+                    },
                     "aoColumns": [
                         {
                             "sTitle": "id"
@@ -88,7 +102,7 @@
                 <div class="header_title">
                     <h1 class="pages"><?php _e('Emails & alerts') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- datatables emails -->
                 <div class="datatables emails">
                     <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatables_list"></table>

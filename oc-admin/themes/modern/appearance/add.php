@@ -31,11 +31,11 @@
                 <div class="header_title">
                     <h1 class="themes"><?php _e('Add new theme') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- add themes form -->
                 <div class="appearance">
                 <?php if( is_writable( osc_themes_path() ) ) { ?>
-                    <div class="alert alert-info">
+                    <div class="FlashMessage info">
                         <p class="info"><?php printf( __('Download more themes at %s'), '<a href="https://sourceforge.net/projects/osclass/files/Themes/" target="_blank">Sourceforge</a>') ; ?></p>
                     </div>
                     <form action="<?php echo osc_admin_base_url(true) ; ?>" method="POST" enctype="multipart/form-data">
@@ -50,12 +50,12 @@
                         </div>
                     </form>
                 <?php } else { ?>
-                    <div class="alert alert-error">
+                    <div class="FlashMessage error">
                         <a class="close" href="#">×</a>
                         <p><?php _e('Cannot install a new theme') ; ?></p>
                     </div>
                     <p class="text">
-                        <?php _e('The theme folder is not writable on your server and you cannot upload thmes from the administration panel. Please make the translation folder writable') ; ?>
+                        <?php _e('The theme folder is not writable on your server and you cannot upload themes from the administration panel. Please make the theme folder writable') ; ?>
                     </p>
                     <p class="text">
                         <?php _e('To make the directory writable under UNIX execute this command from the shell:') ; ?>

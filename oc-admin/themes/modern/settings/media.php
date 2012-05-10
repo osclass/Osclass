@@ -34,7 +34,7 @@
                 $.validator.addMethod('regexp', function(value, element, param) {
                     return this.optional(element) || value.match(param);
                 },
-                '<?php _e('Size is not in the correct format'); ?>');
+                '<?php echo osc_esc_js( __('Size is not in the correct format') ); ?>');
                 
                 $("form[name=media_form]").validate({
                     rules: {
@@ -74,13 +74,11 @@
                         }
                     },
                     wrapper: "li",
-                        errorLabelContainer: "#error_list",
-                        invalidHandler: function(form, validator) {
-                            $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
-                        }
+                    errorLabelContainer: "#error_list",
+                    invalidHandler: function(form, validator) {
+                        $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+                    }
                 });
-
-
 
                 $('#colorpickerField').ColorPicker({
                     onSubmit: function(hsb, hex, rgb, el) { },
@@ -137,11 +135,11 @@
                 <div class="header_title">
                     <h1 class="media"><?php _e('Media Settings') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- media settings -->
                 <div class="settings media">
                     <!-- media form -->
-                    <ul id="error_list"></ul>
+                    <ul id="error_list" style="display: none;"></ul>
                     <form name="media_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="page" value="settings" />
                         <input type="hidden" name="action" value="media_post" />
@@ -177,7 +175,7 @@
                                     <td>
                                         <input type="checkbox" name="keep_original_image" value="1" <?php echo ( osc_keep_original_image() ? 'checked' : '' ) ; ?>/>
                                         <?php _e('Keep original image, unaltered after uploading.') ; ?>
-                                        <span class="help-box"><?php _e('It might ocuppy more space than usual.') ; ?></span>
+                                        <span class="help-box"><?php _e('It might occupy more space than usual.') ; ?></span>
                                     </td>
                                 </tr>
                                 <tr class="separate">
@@ -188,7 +186,7 @@
                                     <td>
                                         <input type="text" class="medium" name="maxSizeKb" value="<?php echo osc_esc_html( osc_max_size_kb() ) ; ?>" />
                                         <span class="help-box"><?php _e('Size in KB') ; ?></span>
-                                        <div class="alert alert-inline alert-warning">
+                                        <div class="FlashMessage FlashMessage-inline warning">
                                             <p><?php printf( __('Maximum size PHP configuration allows: %d KB'), $maxPHPsize ) ; ?></p>
                                         </div>
                                     </td>
@@ -206,11 +204,11 @@
                                         <input type="checkbox" name="use_imagick" value="1" <?php echo ( osc_use_imagick() ? 'checked' : '' ) ; ?> <?php if( !$imagickLoaded ) echo 'disabled' ; ?>/>
                                         <?php _e('Use ImageMagick instead of GD library') ; ?>
                                         <?php if( !$imagickLoaded ) { ?>
-                                        <div class="alert alert-inline alert-error">
+                                        <div class="FlashMessage FlashMessage-inline error">
                                             <p><?php _e('ImageMagick library is not loaded') ; ?></p>
                                         </div>
                                         <?php } ?>
-                                        <div class="help-box"><?php _e("It's faster and consume less resources than GD library.") ; ?></div>
+                                        <div class="help-box"><?php _e("It's faster and consumes less resources than GD library.") ; ?></div>
                                     </td>
                                 </tr>
                                 <tr class="separate">
@@ -227,7 +225,7 @@
                                             <input type="radio" id="watermark_text" name="watermark_type" value="text" <?php echo ( osc_is_watermark_text() ? 'checked="checked"' : '' ) ; ?> <?php echo ( $freeType ? '' : 'disabled' ) ; ?> />
                                             <?php _e('Text') ; ?>
                                             <?php if( !$freeType ) { ?>
-                                            <div class="alert alert-inline alert-error">
+                                            <div class="FlashMessage FlashMessage-inline error">
                                                 <p><?php printf( __('Freetype library is required. How to <a target="_blank" href="%s">install/configure</a>') , 'http://www.php.net/manual/en/image.installation.php' ) ; ?></p>
                                             </div>
                                             <?php } ?>

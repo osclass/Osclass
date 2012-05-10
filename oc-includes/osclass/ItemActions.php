@@ -111,7 +111,6 @@
                 ((!osc_validate_max($aItem['address'], 100)) ? _m("Address too long.") . PHP_EOL : '' ) .
                 ((((time() - Session::newInstance()->_get('last_submit_item')) < osc_items_wait_time()) && !$this->is_admin) ? _m("Too fast. You should wait a little to publish your ad.") . PHP_EOL : '' );
 
-            
             $_meta = Field::newInstance()->findByCategory($aItem['catId']);
             $meta = Params::getParam("meta");
             foreach($_meta as $_m) {
@@ -141,7 +140,7 @@
                 } else {
                     $aItem['currency'] = NULL;
                 }
-                
+
                 $this->manager->insert(array(
                     'fk_i_user_id'          => $aItem['userId'],
                     'dt_pub_date'           => date('Y-m-d H:i:s'),
@@ -183,7 +182,7 @@
 //                if($aItem['countryId']==''){
 //                    $aItem['countryId'] = Country::newInstance();
 //                }
-                
+
                 $location = array(
                     'fk_i_item_id'      => $itemId,
                     'fk_c_country_code' => $aItem['countryId'],
@@ -356,28 +355,29 @@
                 } else {
                     $aItem['userId']      = NULL;
                 }
-                
+
                 if($aItem['price']!='') {
                     $aItem['currency'] = $aItem['currency'];
                 } else {
                     $aItem['currency'] = NULL;
                 }
-                
-                $result = $this->manager->update (
-                                        array(
-                                            'fk_i_user_id'          => $aItem['userId']
-                                            ,'s_contact_name'       => $aItem['contactName']
-                                            ,'s_contact_email'      => $aItem['contactEmail']
-                                            ,'dt_mod_date'          => date('Y-m-d H:i:s')
-                                            ,'fk_i_category_id'     => $aItem['catId']
-                                            ,'i_price'              => $aItem['price']
-                                            ,'fk_c_currency_code'   => $aItem['currency']
-                                        )
-                                        ,array(
-                                            'pk_i_id'   => $aItem['idItem']
-                                            ,'s_secret' => $aItem['secret']
-                                    )
+
+                $aUpdate = array(
+                    'dt_mod_date'         => date('Y-m-d H:i:s')
+                    ,'fk_i_category_id'   => $aItem['catId']
+                    ,'i_price'            => $aItem['price']
+                    ,'fk_c_currency_code' => $aItem['currency']
                 ) ;
+
+                // only can change the user if you're an admin
+                if( $this->is_admin ) {
+                    $aUpdate['fk_i_user_id']    = $aItem['userId'] ;
+                    $aUpdate['s_contact_name']  = $aItem['contactName'] ;
+                    $aUpdate['s_contact_email'] = $aItem['contactEmail'] ;
+                }
+
+                $result = $this->manager->update( $aUpdate, array('pk_i_id'  => $aItem['idItem'],
+                                                                  's_secret' => $aItem['secret'] ) ) ;
                 // UPDATE title and description locales
                 $this->insertItemLocales( 'EDIT', $aItem['title'], $aItem['description'], $aItem['idItem'] );
                 // UPLOAD item resources
@@ -393,10 +393,10 @@
                         $mField->replace($aItem['idItem'], $k, $v);
                     }
                 }
-                
+
                 $oldIsExpired = osc_isExpired($old_item['dt_expiration']);
                 $newIsExpired = $oldIsExpired;
-                
+
                 $dt_expiration = $old_item['dt_expiration'];
                 // recalculate dt_expiration t_item
                 if( $result==1 && $old_item['fk_i_category_id'] != $aItem['catId'] ) {
@@ -406,19 +406,19 @@
                     $dt_expiration = Item::newInstance()->updateExpirationDate($aItem['idItem'], $i_expiration_days);
                     $newIsExpired = osc_isExpired($dt_expiration);
                 }
-                
+
                 // Recalculate stats related with items
                 $this->_updateStats($result, $old_item, $oldIsExpired, $old_item_location, $aItem, $newIsExpired, $location);
-                
+
                 unset($old_item) ;
-                
+
                 osc_run_hook('item_edit_post', $aItem['catId'], $aItem['idItem']);
                 return $result;
             }
 
             return 0;
-        }           
-     
+        }
+
         /**
          * Increment or decrement stats related with items. 
          *
@@ -492,7 +492,7 @@
                 // if($oldIsExpired && $newIsExpired) { }
             } 
         }
-        
+
         /**
          * Activates an item.
          * Set s_enabled value to 1, for a given item id
@@ -510,7 +510,7 @@
                 $item = $this->manager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' ", $secret, $id);
                 $aWhere = array('s_secret' => $secret, 'pk_i_id' => $id);
             }
-            
+
             if($item[0]['b_enabled']==1 && $item[0]['b_active']==0) {
                 
                 $result = $this->manager->update(
@@ -525,7 +525,7 @@
                     if($item[0]['b_spam']==0 && !osc_isExpired($item[0]['dt_expiration'])) {
                         $this->_increaseStats($item[0]);
                     }
-                    
+
                     return true;
                 }
                 return false;
@@ -533,7 +533,7 @@
                 return -1;
             }
         }
-        
+
         /**
          * Deactivates an item
          * Set s_active value to 0, for a given item id
@@ -611,7 +611,7 @@
             }
             return false;
         }
-        
+
         /**
          * Set premium value depending on $on, for a given item id
          *
@@ -625,7 +625,7 @@
             if($on) {
                 $value = 1;
             }
-            
+
             $result = $this->manager->update(
                 array('b_premium' => (int)$value)
                 ,array('pk_i_id' => $id)
@@ -641,7 +641,7 @@
             }
             return false;
         }
-     
+
         /**
          * Set spam value depending on $on, for a given item id
          *
@@ -663,7 +663,7 @@
                     ,array('pk_i_id' => $id)
                 );
             }
-            
+
             // updated corretcly
             if($result == 1) {
                 if($on) {
@@ -671,18 +671,18 @@
                 } else {
                     osc_run_hook("item_spam_off", $id);
                 }
-                
+
                 if($item['b_active']==1 && $item['b_enabled']==1 && !osc_isExpired($item['dt_expiration']) && $item['b_spam']==0) {
                     $this->_decreaseStats($item);
                 } else if($item['b_active']==1 && $item['b_enabled']==1 && !osc_isExpired($item['dt_expiration']) && $item['b_spam']==1) {
                     $this->_increaseStats($item);
                 }
-                
+
                 return true;
             }
             return false;
         }
-        
+
         /**
          * Private function for increment stats.
          * tables: t_user/t_category_stats/t_country_stats/t_region_stats/t_city_stats
@@ -699,7 +699,7 @@
             RegionStats::newInstance()->increaseNumItems($item['fk_i_region_id']);
             CityStats::newInstance()->increaseNumItems($item['fk_i_city_id']);
         }
-        
+
         /**
          * Private function for decrease stats.
          * tables: t_user/t_category_stats/t_country_stats/t_region_stats/t_city_stats
@@ -716,7 +716,7 @@
             RegionStats::newInstance()->decreaseNumItems($item['fk_i_region_id']);
             CityStats::newInstance()->decreaseNumItems($item['fk_i_city_id']);
         }
-        
+
         /**
          * Delete an item, given s_secret and item id.
          *
@@ -788,7 +788,7 @@
             $item       = $aItem['item'];
             $s_title    = $aItem['s_title'];
             View::newInstance()->_exportVariableToView('item', $item);
-            
+
             osc_run_hook('hook_email_send_friend', $aItem);
             $item_url   = osc_item_url();
             $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
@@ -801,7 +801,7 @@
         {
             $flash_error = '';
             $aItem = $this->prepareDataForFunction( 'contact' );
-            
+
             // check parameters
             if( !osc_validate_email($aItem['yourEmail'], true) ){
                 $flash_error .= __("Invalid email address") . PHP_EOL;
@@ -990,20 +990,20 @@
         {
             $aItem = array();
 
-            if( $is_add ) {   // ADD
-                
-                $userId = null;
-                if($this->is_admin){
-                    if(Params::getParam('userId') != '') {
-                        $userId = Params::getParam('userId');
-                    }
-                }else{
-                    $userId = Session::newInstance()->_get('userId');
-                    if($userId == ''){
-                        $userId = NULL;
-                    }
+            // prepare user
+            $userId = null ;
+            if( $this->is_admin ) {
+                if( Params::getParam('userId') != '' ) {
+                    $userId = Params::getParam('userId');
                 }
+            } else {
+                $userId = Session::newInstance()->_get('userId');
+                if( $userId == '' ) {
+                    $userId = NULL ;
+                }
+            }
 
+            if( $is_add ) {   // ADD
                 if($this->is_admin) {
                     $active = 'ACTIVE';
                 } else {
@@ -1033,7 +1033,6 @@
                     }
                 }
 
-
                 if ($userId != null) {
                     $data = User::newInstance()->findByPrimaryKey($userId);
                     $aItem['contactName']   = $data['s_name'];
@@ -1045,16 +1044,13 @@
                     $aItem['contactEmail']  = Params::getParam('contactEmail');
                 }
 
-
                 $aItem['active']        = $active;
                 $aItem['userId']        = $userId;
-
             } else {          // EDIT
                 $aItem['secret']    = Params::getParam('secret');
                 $aItem['idItem']    = Params::getParam('id');
 
-                $userId = Params::getParam('userId');
-                if ($userId != null) {
+                if( $userId != null ) {
                     $data = User::newInstance()->findByPrimaryKey($userId);
                     $aItem['contactName']   = $data['s_name'];
                     $aItem['contactEmail']  = $data['s_email'];
@@ -1116,10 +1112,10 @@
                     }
                 }
             }
-            
+
             $aItem['regionId']      = $regionId ;
             $aItem['regionName']    = $regionName;
-            
+
             if( $aItem['cityId'] != '' ) {
                 if( intval($aItem['cityId']) ) {
                     $city = City::newInstance()->findByPrimaryKey($aItem['cityId']);
@@ -1262,7 +1258,7 @@
                         if ($error == UPLOAD_ERR_OK) {
 
                             $numImages++;
-                            
+
                             $tmpName = $aResources['tmp_name'][$key] ;
                             $itemResourceManager->insert(array(
                                 'fk_i_item_id' => $itemId

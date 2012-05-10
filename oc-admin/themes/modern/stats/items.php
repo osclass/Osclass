@@ -81,7 +81,7 @@
                 <div class="header_title">
                     <h1 class="settings"><?php _e('Items Statistics') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- items statistics -->
                 <div class="statistics">
                 <div class="actions-header">
@@ -91,8 +91,8 @@
                 </div>
                     <div class="sortable_div">
                         <div class="float50per">
-                        <div class="latest-items ui-widget-content ui-corner-all">
-                            <h3 class="ui-state-default"><?php _e('New items'); ?></h3>
+                        <div class="latest-items ui-dialog ui-corner-all">
+                            <h3 class="ui-dialog-titlebar"><?php _e('New items'); ?></h3>
                             <div class="ui-state-body">
                                 <div id="placeholder" style="width:400px;height:300px;margin:0; margin:0 auto; padding-bottom: 45px;">
                                     <?php if( count($users) == 0 ) {
@@ -104,8 +104,8 @@
                         </div>
                         </div>
                         <div class="float50per">
-                        <div class="latest-items ui-widget-content ui-corner-all">
-                            <h3 class="ui-state-default"><?php _e("Total number of items' views") ; ?></h3>
+                        <div class="latest-items ui-dialog ui-corner-all">
+                            <h3 class="ui-dialog-titlebar"><?php _e("Total number of items' views") ; ?></h3>
                             <div class="ui-state-body">
                                 <div id="placeholder_total" style="width:400px;height:300px;margin:0; margin:0 auto; padding-bottom: 45px;">
                                     <?php if( count($reports) == 0 ) {
@@ -119,8 +119,8 @@
 
 
                         <div class="float50per">
-                        <div class="latest-items ui-widget-content ui-corner-all">
-                            <h3 class="ui-state-default"><?php _e('Latest items on the web') ; ?></h3>
+                        <div class="latest-items ui-dialog ui-corner-all">
+                            <h3 class="ui-dialog-titlebar"><?php _e('Latest items on the web') ; ?></h3>
                             <div class="ui-state-body">
                                 <?php if( count($latest_items) > 0 ) { ?>
                                 <table border="0">

@@ -36,7 +36,7 @@
         // prepare row 2
         $sUpdate = '' ;
         if( osc_check_update(@$pInfo['plugin_update_uri'], @$pInfo['version']) ) {
-            $sUpdate = '<a href="' . osc_admin_base_url(true) . '?page=universe&amp;code=' . htmlentities($pInfo['plugin_update_uri']) . '">' . __("There's a new version available to update") . '</a>' ;
+            $sUpdate = '<a href="' . osc_admin_base_url(true) . '?page=market&amp;code=' . htmlentities($pInfo['plugin_update_uri']) . '">' . __("There's a new version available to update") . '</a>' ;
         }
         // prepare row 4
         $sConfigure = '' ;
@@ -55,14 +55,14 @@
         // prepare row 6
         $sInstall  = '' ;
         if( $installed ) {
-            $delete_text = osc_esc_js("This action can not be undone. Uninstalling plugins may result in a permanent lost of data. Are you sure you want to continue?") ;
+            $delete_text = osc_esc_js( __("This action can not be undone. Uninstalling plugins may result in a permanent lost of data. Are you sure you want to continue?") ) ;
 
             $sInstall = '<a onclick="javascript:return confirm(\'' . $delete_text . '\') ;" href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=uninstall&amp;plugin=' . $pInfo['filename'] . '">' . __('Uninstall') . '</a>' ;
         } else {
             $sInstall = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=install&amp;plugin=' . $pInfo['filename'] . '">' . __('Install') . '</a>' ;
         }
 
-        $row[] = '<input type="hidden" name="installed" value="' . $installed . '" enabled="' . $enabled . '" />' . $pInfo['plugin_name'] . '<div>' . $sUpdate . '</div>' ;
+        $row[] = '<input type="hidden" name="installed" value="' . $installed . '" enabled="' . $enabled . '" />' . $pInfo['plugin_name'] . '<div>' . $sUpdate . '</div>';
         $row[] = $pInfo['description'] ;
         $row[] = $sConfigure ;
         $row[] = $sEnable ;
@@ -157,10 +157,10 @@
                 <div class="header_title">
                     <h1 class="plugins"><?php _e('Plugins') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <?php if( Params::getParam('error') != '' ) { ?>
                     <!-- flash message -->
-                    <div class="alert alert-error">
+                    <div class="FlashMessage error">
                         <a class="close" href="#">×</a>
                         <p>
                             <?php _e("Plugin couldn't be installed because it triggered a <strong>fatal error</strong>") ; ?>

@@ -96,7 +96,7 @@ function get_requirements( ) {
         $array['File <code>config.php</code> is writable'] = array(
             'requirement' => __('File <code>config.php</code> is writable'), 
             'fn' => $config_writable, 
-            'solution' => sprintf(__('Root folder has to be writable, i.e.: <code>chmod a+w %s</code>'), ABS_PATH));
+            'solution' => sprintf(__('File <code>config.php</code> has to be writable, i.e.: <code>chmod a+w %sconfig.php</code>'), ABS_PATH));
     } else {
         if (is_writable(ABS_PATH) ) {
             $root_writable = true;
@@ -104,7 +104,7 @@ function get_requirements( ) {
         $array['Root directory is writable'] = array(
             'requirement' => __('Root directory is writable'), 
             'fn' => $root_writable, 
-            'solution' => sprintf(__('File <code>config.php</code> has to be writable, i.e.: <code>chmod a+w %sconfig.php</code>'), ABS_PATH));
+            'solution' => sprintf(__('Root folder has to be writable, i.e.: <code>chmod a+w %s</code>'), ABS_PATH));
 
         if( file_exists(ABS_PATH . 'config-sample.php') ) {
             $config_sample = true;
@@ -189,7 +189,7 @@ function oc_install( ) {
 
         if( $error_num > 0 ) {
             if( reportToOsclass() ) {
-                LogOsclassInstaller::instance()->error(sprintf(__('Cannot connect to database. Error number: %s') , $error_num ), __FILE__."::".__LINE__) ;
+                LogOsclassInstaller::instance()->error(sprintf(__('Cannot connect to the database. Error number: %s') , $error_num ), __FILE__."::".__LINE__) ;
             }
 
             switch ($error_num) {
@@ -201,7 +201,7 @@ function oc_install( ) {
                 break;
                 case 2005:  return array('error' => __('Cannot resolve MySQL host. Check if the host is correct.')) ;
                 break;
-                default:    return array('error' => sprintf(__('Cannot connect to database. Error number: %s.')), $error_num) ;
+                default:    return array('error' => sprintf(__('Cannot connect to the database. Error number: %s')), $error_num) ;
                 break;
             }
         }
@@ -238,7 +238,7 @@ function oc_install( ) {
 
     if( $error_num > 0 ) {
         if( reportToOsclass() ) {
-            LogOsclassInstaller::instance()->error(sprintf(__('Cannot connect to database. Error number: %s'), $error_num) , __FILE__."::".__LINE__) ;
+            LogOsclassInstaller::instance()->error(sprintf(__('Cannot connect to the database. Error number: %s'), $error_num) , __FILE__."::".__LINE__) ;
         }
 
         switch( $error_num ) {
@@ -250,7 +250,7 @@ function oc_install( ) {
             break ;
             case 2005:  return array('error' => __('Cannot resolve MySQL host. Check if the host is correct.')) ;
             break ;
-            default:    return array('error' => sprintf(__('Cannot connect to database. Error number: %s'), $error_num)) ;
+            default:    return array('error' => sprintf(__('Cannot connect to the database. Error number: %s'), $error_num)) ;
             break ;
         }
     }
@@ -266,10 +266,10 @@ function oc_install( ) {
     } else {
         if( !file_exists(ABS_PATH . 'config-sample.php') ) {
             if( reportToOsclass() ) {
-                LogOsclassInstaller::instance()->error(__('It doesn\'t exist config-sample.php. Check if you have everything well decompressed.') , __FILE__."::".__LINE__) ;
+                LogOsclassInstaller::instance()->error(__("config-sample.php doesn't exist. Check if you have everything well decompressed.") , __FILE__."::".__LINE__) ;
             }
 
-            return array('error' => __('It doesn\'t exist config-sample.php. Check if you have everything well decompressed.'));
+            return array('error' => __("config-sample.php doesn't exist. Check if you have everything well decompressed."));
         }
         if( !is_writable(ABS_PATH) ) {
             if( reportToOsclass() ) {
@@ -807,7 +807,7 @@ function display_categories($error, $password) {
             }, 2500);
         </script>
         <div class="error-location">
-            <?php _e('The location selected could not been installed'); ?>
+            <?php _e('The selected location could not been installed'); ?>
         </div>
         <?php } ?>
         <div class="select-categories">
@@ -892,7 +892,7 @@ function display_finish($password) {
 ?>
 <h2 class="target"><?php _e('Congratulations!');?></h2>
 <p class="space-left-10"><?php _e('OSClass has been installed. Were you expecting more steps? Sorry to disappoint.');?></p>
-<p class="space-left-10"><?php echo sprintf(__('An e-mail with the password for oc-admin has sent to: %s'), $data['s_email']);?></p>
+<p class="space-left-10"><?php echo sprintf(__('An e-mail with the password for oc-admin has been sent to: %s'), $data['s_email']);?></p>
 <div style="clear:both;"></div>
 <div class="form-table finish">
     <table>

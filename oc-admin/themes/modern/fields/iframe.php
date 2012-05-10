@@ -101,14 +101,14 @@
 
         $('select[name="field_type"]').change(function() {
             if( $(this).attr('value') == 'DROPDOWN' || $(this).attr('value') == 'RADIO' ) {
-                $('#div_field_options_iframe').show() ;
+                $('#div_field_options').show() ;
             } else {
-                $('#div_field_options_iframe').hide() ;
+                $('#div_field_options').hide() ;
             }
         }) ;
 
         if( $("select[name='field_type']").attr('value') == 'TEXT' || $("select[name='field_type']").attr('value') == 'TEXTAREA' || $("select[name='field_type']").attr('value') == 'CHECKBOX' || $("select[name='field_type_new']").attr('value') == 'URL' ) {
-            $('#div_field_options_iframe').hide() ;
+            $('#div_field_options').hide() ;
         }
 
         $('#edit-custom-field-frame form').submit(function() {

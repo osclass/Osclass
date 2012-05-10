@@ -31,11 +31,11 @@
                 <div class="header_title">
                     <h1 class="plugins"><?php _e('Add a plugin') ; ?></h1>
                 </div>
-                <?php osc_show_admin_flash_messages() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
                 <!-- add plugin form -->
                 <div class="plugins">
                 <?php if( is_writable( osc_plugins_path() ) ) { ?>
-                    <div class="alert alert-info">
+                    <div class="FlashMessage info">
                         <p class="info"><?php printf( __('Download more plugins at %s'), '<a href="https://sourceforge.net/projects/osclass/files/Plugins/" target="_blank">Sourceforge</a>') ; ?></p>
                     </div>
                     <form action="<?php echo osc_admin_base_url(true) ; ?>" method="POST" enctype="multipart/form-data">
@@ -50,7 +50,7 @@
                         </div>
                     </form>
                 <?php } else { ?>
-                    <div class="alert alert-error">
+                    <div class="FlashMessage error">
                         <a class="close" href="#">×</a>
                         <p><?php _e('Cannot install a new plugin') ; ?></p>
                     </div>
