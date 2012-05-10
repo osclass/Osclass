@@ -491,6 +491,11 @@
                         $item['locale'][$k]['s_description'] = nl2br(osc_apply_filter('item_description',$v['s_description']));
                     }
 
+                    if( $item['fk_i_user_id'] != '' ) {
+                        $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
+                        $this->_exportVariableToView('user', $user);
+                    }
+                    
                     $this->_exportVariableToView('item', $item);
 
                     osc_run_hook('show_item', $item) ;
