@@ -242,7 +242,7 @@
                                 <ul>
                                     <li>
                                         <input type="checkbox" name="bPic" id="withPicture" value="1" <?php echo (osc_search_has_pic() ? 'checked' : ''); ?> />
-                                        <label for="withPicture"><?php _e('Show only items with pictures', 'modern') ; ?></label>
+                                        <label for="withPicture"><?php _e('Show only listings with pictures', 'modern') ; ?></label>
                                     </li>
                                 </ul>
                             </div>

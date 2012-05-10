@@ -93,7 +93,7 @@
                     // Check if the item exists
                     if(count($aItem) == 0) {
                         $json['success'] = false;
-                        $json['msg'] = _m("The item doesn't exist");
+                        $json['msg'] = _m("The listing doesn't exist");
                         echo json_encode($json);
                         return false;
                     }
@@ -102,7 +102,7 @@
                         // Check if the item belong to the user
                         if($userId != null && $userId != $aItem['fk_i_user_id']) {
                             $json['success'] = false;
-                            $json['msg'] = _m("The item doesn't belong to you");
+                            $json['msg'] = _m("The listing doesn't belong to you");
                             echo json_encode($json);
                             return false;
                         }
@@ -110,7 +110,7 @@
                         // Check if the secret passphrase match with the item
                         if($userId == null && $aItem['fk_i_user_id']==null && $secret != $aItem['s_secret']) {
                             $json['success'] = false;
-                            $json['msg'] = _m("The item doesn't belong to you");
+                            $json['msg'] = _m("The listing doesn't belong to you");
                             echo json_encode($json);
                             return false;
                         }

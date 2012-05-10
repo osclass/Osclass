@@ -76,9 +76,9 @@
                     <?php } ?>
                </div>
                <div class="latest_ads">
-                    <h1><strong><?php _e('Latest Items', 'modern') ; ?></strong></h1>
+                    <h1><strong><?php _e('Latest Listings', 'modern') ; ?></strong></h1>
                     <?php if( osc_count_latest_items() == 0) { ?>
-                        <p class="empty"><?php _e('No Latest Items', 'modern') ; ?></p>
+                        <p class="empty"><?php _e('No Latest Listings', 'modern') ; ?></p>
                     <?php } else { ?>
                         <table border="0" cellspacing="0">
                              <tbody>

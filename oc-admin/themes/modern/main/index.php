@@ -48,19 +48,19 @@
                     <div class="sortable_div">
                         <div class="float50per">
                         <div class="latest-items ui-dialog ui-corner-all">
-                            <h3 class="ui-dialog-titlebar"><?php _e('Items by category') ; ?></h3>
+                            <h3 class="ui-dialog-titlebar"><?php _e('Listings by category') ; ?></h3>
                             <div class="ui-state-body">
                                 <?php if( !empty($numItemsPerCategory) ) { ?>
                                 <ul>
                                     <?php foreach($numItemsPerCategory as $c) { ?>
                                     <li>
                                         <a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;catId=<?php echo $c['pk_i_id'] ; ?>"><?php echo $c['s_name'] ; ?></a>
-                                        <?php echo "(" . $c['i_num_items'] . "&nbsp;" . ( ( $c['i_num_items'] == 1 ) ? __('Item') : __('Items') ) . ")" ; ?>
+                                        <?php echo "(" . $c['i_num_items'] . "&nbsp;" . ( ( $c['i_num_items'] == 1 ) ? __('Listing') : __('Listings') ) . ")" ; ?>
                                         <ul>
                                         <?php foreach($c['categories'] as $subc) {?>
                                             <li>
                                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;catId=<?php echo $subc['pk_i_id'];?>"><?php echo $subc['s_name'] ; ?></a>
-                                                <?php echo "(" . $subc['i_num_items'] . " " . ( ( $subc['i_num_items'] == 1 ) ? __('Item') : __('Items') ) . ")" ; ?>
+                                                <?php echo "(" . $subc['i_num_items'] . " " . ( ( $subc['i_num_items'] == 1 ) ? __('Listing') : __('Listings') ) . ")" ; ?>
                                             </li>
                                         <?php }?>
                                         </ul>
@@ -68,7 +68,7 @@
                                     <?php }?>
                                 </ul>
                                 <?php } else { ?>
-                                    <?php _e("There aren't any uploaded items yet") ; ?>
+                                    <?php _e("There aren't any uploaded listing yet") ; ?>
                                 <?php } ?>
                             </div>
                         </div>
@@ -79,13 +79,13 @@
                             <h3 class="ui-dialog-titlebar"><?php _e('Statistics'); ?></h3>
                             <div class="ui-state-body">
                                 <ul>
-                                    <li><?php printf( __('Number of items: %d'), (int) $numItems ) ; ?></li>
+                                    <li><?php printf( __('Number of listings: %d'), (int) $numItems ) ; ?></li>
                                     <li><?php printf( __('Number of public users: %d'), (int) $numUsers ) ; ?></li>
                                     <li><?php printf( __('Number of administrators: %d'), $numAdmins ) ; ?></li>
                                     
-                                    <li><?php printf( __('Number of items marked as spam: %d'), $numItemsSpam) ; ?></li>
-                                    <li><?php printf( __('Number of items marked as blocked: %d'), $numItemsBlock) ; ?></li>
-                                    <li><?php printf( __('Number of items marked as inactive: %d'), $numItemsInactive ) ; ?></li>
+                                    <li><?php printf( __('Number of listings marked as spam: %d'), $numItemsSpam) ; ?></li>
+                                    <li><?php printf( __('Number of listings marked as blocked: %d'), $numItemsBlock) ; ?></li>
+                                    <li><?php printf( __('Number of listings marked as inactive: %d'), $numItemsInactive ) ; ?></li>
                                 </ul>
                             </div>
                         </div>
@@ -98,7 +98,7 @@
                                 <ul>
                                     <?php foreach($comments as $c) { ?>
                                     <li>
-                                        <strong><?php echo $c['s_author_name'] ; ?></strong> <?php _e('Commented on item') ; ?> <em><a title="<?php echo $c['s_body'] ; ?>" target='_blank' href='<?php echo osc_base_url(true) . '?page=item&amp;id=' . $c['fk_i_item_id'] ; ?>' id='dt_link'><?php echo $c['s_title'] ; ?></a></em>
+                                        <strong><?php echo $c['s_author_name'] ; ?></strong> <?php _e('Commented on listing') ; ?> <em><a title="<?php echo $c['s_body'] ; ?>" target='_blank' href='<?php echo osc_base_url(true) . '?page=item&amp;id=' . $c['fk_i_item_id'] ; ?>' id='dt_link'><?php echo $c['s_title'] ; ?></a></em>
                                     </li>
                                     <?php } ?>
                                 </ul>

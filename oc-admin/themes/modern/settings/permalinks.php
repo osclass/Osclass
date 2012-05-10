@@ -171,8 +171,8 @@
                     },
                     messages: {
                         rewrite_item_url: {
-                            required: "<?php _e("Item url: this field is required"); ?>.",
-                            minlength: "<?php _e("Item url: this field is required"); ?>."
+                            required: "<?php _e("Listings url: this field is required"); ?>.",
+                            minlength: "<?php _e("Listings url: this field is required"); ?>."
                         },
                         rewrite_page_url: {
                             required: "<?php _e("Page url: this field is required"); ?>.",
@@ -227,36 +227,36 @@
                             minlength: "<?php _e("Language url: this field is required"); ?>."
                         },
                         rewrite_item_mark: {
-                            required: "<?php _e("Item mark url: this field is required"); ?>.",
-                            minlength: "<?php _e("Item mark url: this field is required"); ?>."
+                            required: "<?php _e("Listing mark url: this field is required"); ?>.",
+                            minlength: "<?php _e("Listing mark url: this field is required"); ?>."
                         },
                         rewrite_item_send_friend: {
-                            required: "<?php _e("Item send friend url: this field is required"); ?>.",
-                            minlength: "<?php _e("Item send friend url: this field is required"); ?>."
+                            required: "<?php _e("Listing send friend url: this field is required"); ?>.",
+                            minlength: "<?php _e("Listing send friend url: this field is required"); ?>."
                         },
                         rewrite_item_contact: {
-                            required: "<?php _e("Item contact url: this field is required"); ?>.",
-                            minlength: "<?php _e("Item contact url: this field is required"); ?>."
+                            required: "<?php _e("Listing contact url: this field is required"); ?>.",
+                            minlength: "<?php _e("Listing contact url: this field is required"); ?>."
                         },
                         rewrite_item_new: {
-                            required: "<?php _e("New item url: this field is required"); ?>.",
-                            minlength: "<?php _e("New item url: this field is required"); ?>."
+                            required: "<?php _e("New listing url: this field is required"); ?>.",
+                            minlength: "<?php _e("New listing url: this field is required"); ?>."
                         },
                         rewrite_item_activate: {
-                            required: "<?php _e("Activate item url: this field is required"); ?>.",
-                            minlength: "<?php _e("Activate item url: this field is required"); ?>."
+                            required: "<?php _e("Activate listing url: this field is required"); ?>.",
+                            minlength: "<?php _e("Activate listing url: this field is required"); ?>."
                         },
                         rewrite_item_edit: {
-                            required: "<?php _e("Edit item url: this field is required"); ?>.",
-                            minlength: "<?php _e("Edit item url: this field is required"); ?>."
+                            required: "<?php _e("Edit listing url: this field is required"); ?>.",
+                            minlength: "<?php _e("Edit listing url: this field is required"); ?>."
                         },
                         rewrite_item_delete: {
-                            required: "<?php _e("Delete item url: this field is required"); ?>.",
-                            minlength: "<?php _e("Delete item url: this field is required"); ?>."
+                            required: "<?php _e("Delete listing url: this field is required"); ?>.",
+                            minlength: "<?php _e("Delete listing url: this field is required"); ?>."
                         },
                         rewrite_item_resource_delete: {
-                            required: "<?php _e("Delete item resource url: this field is required"); ?>.",
-                            minlength: "<?php _e("Delete item resource url: this field is required"); ?>."
+                            required: "<?php _e("Delete listing resource url: this field is required"); ?>.",
+                            minlength: "<?php _e("Delete listing resource url: this field is required"); ?>."
                         },
                         rewrite_user_login: {
                             required: "<?php _e("Login url: this field is required"); ?>.",
@@ -287,8 +287,8 @@
                             minlength: "<?php _e("User profile url: this field is required"); ?>."
                         },
                         rewrite_user_items: {
-                            required: "<?php _e("User items url: this field is required"); ?>.",
-                            minlength: "<?php _e("User items url: this field is required"); ?>."
+                            required: "<?php _e("User listings url: this field is required"); ?>.",
+                            minlength: "<?php _e("User listings url: this field is required"); ?>."
                         },
                         rewrite_user_alerts: {
                             required: "<?php _e("User alerts url: this field is required"); ?>.",
@@ -373,7 +373,7 @@
                                     <h2><?php _e('Rewrite rules') ; ?></h2>
                                     <table class="table-backoffice-form">
                                     <tr>
-                                        <td class="labeled"><label for="rewrite_item_url"><?php _e('Item URL') ; ?></label></td>
+                                        <td class="labeled"><label for="rewrite_item_url"><?php _e('Listing URL') ; ?></label></td>
                                         <td>
                                             <input class="xlarge" type="text" name="rewrite_item_url" id="rewrite_item_url" value="<?php echo osc_get_preference('rewrite_item_url'); ?>" />
                                             <div class="help-box"><?php echo sprintf(__('Accepted keywords: %s'), '{ITEM_ID},{ITEM_TITLE},{CATEGORIES}') ; ?></div>
@@ -489,7 +489,7 @@
                                     </tr>
                                     <tr>
                                         <td class="labeled">
-                                            <label for="rewrite_item_mark"><?php _e('Item mark') ; ?></label>
+                                            <label for="rewrite_item_mark"><?php _e('Listing mark') ; ?></label>
                                         </td>
                                         <td>
                                             <input class="xlarge" type="text" name="rewrite_item_mark" id="rewrite_item_mark" value="<?php echo osc_get_preference('rewrite_item_mark'); ?>"/>
@@ -497,7 +497,7 @@
                                     </tr>
                                     <tr>
                                         <td class="labeled">
-                                            <label for="rewrite_item_send_friend"><?php _e('Item send friend') ; ?></label>
+                                            <label for="rewrite_item_send_friend"><?php _e('Listing send friend') ; ?></label>
                                         </td>
                                         <td>
                                             <input class="xlarge" type="text" name="rewrite_item_send_friend" id="rewrite_item_send_friend" value="<?php echo osc_get_preference('rewrite_item_send_friend'); ?>"/>
@@ -505,7 +505,7 @@
                                     </tr>
                                     <tr>
                                         <td class="labeled">
-                                            <label for="rewrite_item_contact"><?php _e('Item contact') ; ?></label>
+                                            <label for="rewrite_item_contact"><?php _e('Listing contact') ; ?></label>
                                         </td>
                                         <td>
                                             <input class="xlarge" type="text" name="rewrite_item_contact" id="rewrite_item_contact" value="<?php echo osc_get_preference('rewrite_item_contact'); ?>"/>
@@ -513,7 +513,7 @@
                                     </tr>
                                     <tr>
                                         <td class="labeled">
-                                            <label for="rewrite_item_new"><?php _e('Item new') ; ?></label>
+                                            <label for="rewrite_item_new"><?php _e('Listing new') ; ?></label>
                                         </td>
                                         <td>
                                             <input class="xlarge" type="text" name="rewrite_item_new" id="rewrite_item_new" value="<?php echo osc_get_preference('rewrite_item_new'); ?>"/>
@@ -521,15 +521,15 @@
                                     </tr>
                                     <tr>
                                         <td class="labeled">
-                                            <label for="rewrite_item_activate"><?php _e('Item activate') ; ?></label>
+                                            <label for="rewrite_item_activate"><?php _e('Listing activate') ; ?></label>
                                         </td>
                                         <td>
-                                            <input class="xlarge" type="text" name="rewrite_item_activate" id="rewrite_item_activate" value="<?php echo osc_get_preference('rewrite_item_activate'); ?>"/>    </td>
+                                            <input class="xlarge" type="text" name="rewrite_item_activate" id="rewrite_item_activate" value="<?php echo osc_get_preference('rewrite_item_activate'); ?>"/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="labeled">
-                                            <label for="rewrite_item_edit"><?php _e('Item edit') ; ?></label>
+                                            <label for="rewrite_item_edit"><?php _e('Listing edit') ; ?></label>
                                         </td>
                                         <td>
                                             <input class="xlarge" type="text" name="rewrite_item_edit" id="rewrite_item_edit" value="<?php echo osc_get_preference('rewrite_item_edit'); ?>"/>
@@ -537,7 +537,7 @@
                                     </tr>
                                     <tr>
                                         <td class="labeled">
-                                            <label for="rewrite_item_delete"><?php _e('Item delete') ; ?></label>
+                                            <label for="rewrite_item_delete"><?php _e('Listing delete') ; ?></label>
                                         </td>
                                         <td>
                                             <input class="xlarge" type="text" name="rewrite_item_delete" id="rewrite_item_delete" value="<?php echo osc_get_preference('rewrite_item_delete'); ?>"/>
@@ -545,7 +545,7 @@
                                     </tr>
                                     <tr>
                                         <td class="labeled">
-                                            <label for="rewrite_item_resource_delete"><?php _e('Item resource delete') ; ?></label>
+                                            <label for="rewrite_item_resource_delete"><?php _e('Listing resource delete') ; ?></label>
                                         </td>
                                         <td>
                                             <input class="xlarge" type="text" name="rewrite_item_resource_delete" id="rewrite_item_resource_delete" value="<?php echo osc_get_preference('rewrite_item_resource_delete'); ?>"/>
@@ -609,7 +609,7 @@
                                     </tr>
                                     <tr>
                                         <td class="labeled">
-                                            <label for="rewrite_user_items"><?php _e('User items') ; ?></label>
+                                            <label for="rewrite_user_items"><?php _e('User listings') ; ?></label>
                                         </td>
                                         <td>
                                             <input class="xlarge" type="text" name="rewrite_user_items" id="rewrite_user_items" value="<?php echo osc_get_preference('rewrite_user_items'); ?>"/>

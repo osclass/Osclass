@@ -89,7 +89,7 @@
                                     <td class="labeled"><?php _e('Default comment settings') ; ?></td>
                                     <td>
                                         <input type="checkbox" <?php echo ( osc_comments_enabled() ? 'checked="true"' : '' ) ; ?> name="enabled_comments" value="1" />
-                                        <?php _e('Allow people to post comments on items') ; ?>
+                                        <?php _e('Allow people to post comments on listings') ; ?>
                                     </td>
                                 </tr>
                                 <tr>
@@ -134,7 +134,7 @@
                                     <td><?php _e('E-mail user whenever') ?></td>
                                     <td>
                                         <input type="checkbox" <?php echo ( osc_notify_new_comment_user() ? 'checked="true"' : '' ) ; ?> name="notify_new_comment_user" value="1" />
-                                        <?php _e("There is a new comment in his item") ; ?>
+                                        <?php _e("There is a new comment in his listing") ; ?>
                                     </td>
                                 </tr>
                                 <tr class="separate">
