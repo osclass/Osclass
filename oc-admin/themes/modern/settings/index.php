@@ -216,7 +216,7 @@
                                             <?php } ?>
                                         <div>
                                         <input type="radio" name="df" id="df_custom" value="df_custom" <?php echo ( $custom_checked ? 'checked="checked"' : '' ) ; ?> />
-                                        <input type="text" class="small" <?php echo ( $custom_checked ? 'value="' . osc_esc_html( osc_date_format() ) . '"' : '' ) ; ?> onchange="javascript:document.getElementById('dateFormat').value = this.value ;" onkeyup="javascript:custom_date(this.value);"/><span id="custom_date"></span>
+                                        <input type="text" name="df_custom_text" id="df_custom_text" class="small" <?php echo ( $custom_checked ? 'value="' . osc_esc_html( osc_date_format() ) . '"' : '' ) ; ?> onchange="javascript:document.getElementById('dateFormat').value = this.value ;" onkeyup="javascript:custom_date(this.value);"/><span id="custom_date"></span>
                                         </div>
                                         <div class="help-box"><a href="http://php.net/date" target="_blank"><?php _e('Documentation on date and time formatting') ; ?></a></div>
                                         <input type="hidden" name="dateFormat" id="dateFormat" value="<?php echo osc_date_format() ; ?>" />
