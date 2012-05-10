@@ -226,7 +226,8 @@
                         
                         if($success==1){
                             osc_add_flash_ok_message( _m("Great! We've just updated your item") ) ;
-                            $this->redirectTo( osc_base_url(true) . "?page=item&id=$id" ) ;
+                            View::newInstance()->_exportVariableToView("item", Item::newInstance()->findByPrimaryKey($id));
+                            $this->redirectTo(osc_item_url() ) ;
                         } else {
                             osc_add_flash_error_message( $success) ;
                             $this->redirectTo( osc_item_edit_url($secret) ) ;
