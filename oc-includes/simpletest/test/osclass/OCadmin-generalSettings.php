@@ -124,6 +124,33 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->assertEqual( $this->selenium->getValue('dimPreview')     , $dimPreview);
         $this->assertEqual( $this->selenium->getValue('dimNormal')      , $dimNormal);
         $this->assertEqual( $this->selenium->getValue('keep_original_image'), $keep_original_image);
+        
+        
+        
+        
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_media']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("//input[@id='watermark_image']");
+        sleep(4);
+        $this->selenium->type("//input[@name='watermark_image']", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/img_test1.gif"));
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue($this->selenium->isTextPresent("Media config has been updated"), "Media tab, update.");
+        
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_media']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("//input[@id='watermark_image']");
+        sleep(4);
+        $this->selenium->type("//input[@name='watermark_image']", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/img_test2.gif"));
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue($this->selenium->isTextPresent("Media config has been updated"), "Media tab, update.");
+        
+
         osc_reset_preferences();
     }
     
@@ -396,7 +423,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("//a[@id='settings_general']");
         $this->selenium->waitForPageToLoad("10000");
 
-
+        
         $this->selenium->type("pageTitle"   ,"");
         $this->selenium->type("contactEmail","");
         $this->selenium->type("num_rss_items" , "");
@@ -487,6 +514,20 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->assertEqual( $this->selenium->getValue('timeFormat')    , $pref['tf']             , 'GeneralSettings, check.') ;
         $this->assertEqual( $this->selenium->getValue('max_latest_items_at_home') , $pref['max_latest_items_at_home']  , 'GeneralSettings, check.') ;
         $this->assertEqual( $this->selenium->getValue('enabled_attachment'), $pref['contact_attachment'], 'Contact, check.' ) ;
+        
+        
+        
+        
+        for($k=0;$k<20;$k++) {
+            $custom_date = $this->generateCustomDate();
+            $this->selenium->click("//input[@id='df_custom']");
+            $this->selenium->type("df_custom_text", $custom_date);
+            $this->selenium->keyUp("df_custom_text", "a");
+            $date = trim(date($custom_date));
+            sleep(2);
+            $this->assertTrue( $this->selenium->isTextPresent("Preview: ".$date) , "Custom date failed with this string : '".$custom_date."' check: '".date($custom_date)."'" ) ;
+        }
+        
         osc_reset_preferences();
     }
 
@@ -1132,7 +1173,15 @@ class OCadmin_generalSettings extends OCadmintest {
         osc_reset_preferences();
     }
     
-    
+    function generateCustomDate() {
+        $str = ":_-/dDjlNSwzWFmMntLoyYaABgGhHiseIOPTZ";
+        $l = strlen($str);
+        $date = '';
+        for($i=0;$i<10;$i++) {
+            $date .= substr($str, rand(0, $l), 1);
+        }
+        return $date;
+    }
     
 }
 ?>
