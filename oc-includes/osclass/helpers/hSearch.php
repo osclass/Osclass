@@ -286,7 +286,7 @@
      */
     function osc_search_show_all_url( ) {
         if(osc_rewrite_enabled ()) {
-            return osc_base_url() . 'search/';
+            return osc_base_url().osc_get_preference('rewrite_search_url');
         } else {
             return osc_base_url(true) . '?page=search';
         }
@@ -302,6 +302,7 @@
         if(osc_rewrite_enabled()) {
             $url = osc_base_url().osc_get_preference('rewrite_search_url');
             if($params!=null) {
+                $url .= "/";
                 foreach($params as $k => $v) {
                     switch($k) {
                         case 'sCountry':
