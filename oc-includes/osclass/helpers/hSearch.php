@@ -329,7 +329,9 @@
                         default:
                             break;
                     }
-                    $url .= $k.",".$v."/";
+                    if($k!='page') {
+                        $url .= $k.",".$v."/";
+                    }
                 }
             }
         } else {
