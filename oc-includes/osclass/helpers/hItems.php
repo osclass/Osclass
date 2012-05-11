@@ -1207,17 +1207,17 @@
      * @param params This could be a string or and array
      * Examples: 
      *  Only one keyword
-     *  osc_query_custom_items("keyword=value1,value2,value3,...")
+     *  osc_query_item("keyword=value1,value2,value3,...")
      *  
      *  Multiple keywords
-     *  osc_query_custom_items(array(
+     *  osc_query_item(array(
      *      'keyword1' => 'value1,value2',
      *      'keyword2' => 'value3,value4'
      *  ))
      * 
      * Real live examples:
-     *  osc_query_custom_items('category_name=cars,houses');
-     *  osc_query_custom_items(array(
+     *  osc_query_item('category_name=cars,houses');
+     *  osc_query_item(array(
      *      'category_name' => 'cars,houses',
      *      'city' => 'Madrid'
      *  ))
@@ -1244,7 +1244,7 @@
      * 
      * @since 3.0
      */
-    function osc_query_custom_items($params = null) {
+    function osc_query_item($params = null) {
         $mSearch = Search::newInstance();
         if($params==null) {
             $params = array();
