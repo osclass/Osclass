@@ -205,40 +205,50 @@
                 if($title != $aRow['s_title']) {
                     $title .= '...' ;
                 }
-
-                $options[] = '<a href="' . osc_item_url().'">' . __('View item') . '</a>' ;
-                $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View comments') . '</a>' ;
-                $options[] = '<a href="' . osc_admin_base_url(true) . '?page=media&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View media') . '</a>' ;
+                
+                // only show if there are data
+                if( ItemComment::newInstance()->totalComments( $aRow['pk_i_id'] ) > 0 ) {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View comments') . '</a>' ;
+                }
+                if( ItemResource::newInstance()->countResources( $aRow['pk_i_id'] ) > 0 ) {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=media&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View media') . '</a>' ;
+                }
+                
+                $options_more = array();
                 if( $aRow['b_active'] ) {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') .'</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') .'</a>' ;
                 } else {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=ACTIVE">' . __('Activate') .'</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=ACTIVE">' . __('Activate') .'</a>' ;
                 }
                 if( $aRow['b_enabled'] ) {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=DISABLE">' . __('Block') .'</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=DISABLE">' . __('Block') .'</a>' ;
                 } else {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=ENABLE">' . __('Unblock') .'</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=ENABLE">' . __('Unblock') .'</a>' ;
                 }
                 if( $aRow['b_premium'] ) {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $aRow['pk_i_id'] . '&amp;value=0">' . __('Unmark as premium') .'</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $aRow['pk_i_id'] . '&amp;value=0">' . __('Unmark as premium') .'</a>' ;
                 } else {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $aRow['pk_i_id'] . '&amp;value=1">' . __('Mark as premium') .'</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $aRow['pk_i_id'] . '&amp;value=1">' . __('Mark as premium') .'</a>' ;
                 }
                 if( $aRow['b_spam'] ) {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $aRow['pk_i_id'] . '&amp;value=0">' . __('Unmark as spam') .'</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $aRow['pk_i_id'] . '&amp;value=0">' . __('Unmark as spam') .'</a>' ;
                 } else {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $aRow['pk_i_id'] . '&amp;value=1">' . __('Mark as spam') .'</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $aRow['pk_i_id'] . '&amp;value=1">' . __('Mark as spam') .'</a>' ;
                 }
+                $moreActions = "<div class='moreAction'><a>" . __('More actions') . '</a><div> '. implode(' &middot; ', $options_more). "</div></div>" ;
+                
+                
                 $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=item_edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>' ;
                 $onclick_delete = 'onclick="javascript:return confirm(\'' . osc_esc_js( __('This action can not be undone. Are you sure you want to continue?') ) . '\')"' ;
                 $options[] = '<a ' . $onclick_delete . ' href="' . osc_admin_base_url(true) . '?page=items&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
+                
                 foreach($this->stat as $k => $s) {
                     $options[] = '<a ' .$onclick_delete . ' href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;stat=' . $k . '&amp;id=' . $aRow['pk_i_id'] . '">' . sprintf( __('Clear %s'), $k ) . '</a>' ;
                 }
  
                 // fill a row
                 $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" />' ;
-                $row[] = $title . ' <div class="datatable_wrapper" style="display: none;"><div class="datatables_quick_edit" style="position: absolute;" >' . implode(' &middot; ', $options) . '</div></div>' ;
+                $row[] = '<a href="' . osc_item_url().'">' . $title . '</a> <div class="datatable_wrapper" style="display: none;"><div class="datatables_quick_edit" style="position: absolute;" >' . implode(' &middot; ', $options) . ' &middot; ' . $moreActions .'</div></div>' ;
                 $row[] = $aRow['s_user_name'] ;
                 $row[] = $aRow['s_category_name'] ;
                 $row[] = $aRow['s_country'] ;

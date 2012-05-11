@@ -53,7 +53,7 @@
                                                             $numSuccess++;
                                                         }
                                                     }
-                                                    osc_add_flash_ok_message( sprintf(_mn('%d item has been enabled', '%d items have been enabled',$numSuccess), $numSuccess), 'admin') ;
+                                                    osc_add_flash_ok_message( sprintf(_mn('%d listing has been enabled', '%d listings have been enabled',$numSuccess), $numSuccess), 'admin') ;
                                                 }
                                             break;
                                             case 'disable_all':
@@ -65,7 +65,7 @@
                                                             $numSuccess++;
                                                         }
                                                     }
-                                                    osc_add_flash_ok_message( sprintf(_mn('%d item has been disabled', '%d items have been disabled',$numSuccess),$numSuccess), 'admin') ;
+                                                    osc_add_flash_ok_message( sprintf(_mn('%d listing has been disabled', '%d listings have been disabled',$numSuccess),$numSuccess), 'admin') ;
                                                 }
                                             break;
                                             case 'activate_all':
@@ -77,7 +77,7 @@
                                                             $numSuccess++;
                                                         }
                                                     }
-                                                    osc_add_flash_ok_message( sprintf(_mn('%d item has been activated','%d items have been activated',$numSuccess), $numSuccess), 'admin') ;
+                                                    osc_add_flash_ok_message( sprintf(_mn('%d listing has been activated','%d listings have been activated',$numSuccess), $numSuccess), 'admin') ;
                                                 }
                                             break;
                                             case 'deactivate_all':
@@ -89,7 +89,7 @@
                                                             $numSuccess++;
                                                         }
                                                     }
-                                                    osc_add_flash_ok_message( sprintf(_m('%d item has been deactivated', '%d items have been deactivated',$numSuccess), $numSuccess), 'admin') ;
+                                                    osc_add_flash_ok_message( sprintf(_m('%d listing has been deactivated', '%d listings have been deactivated',$numSuccess), $numSuccess), 'admin') ;
                                                 }
                                             break;
                                             case 'premium_all':
@@ -101,7 +101,7 @@
                                                             $numSuccess++;
                                                         }
                                                     }
-                                                    osc_add_flash_ok_message( sprintf(_mn('%d item has been marked as premium','%d items have been marked as premium', $numSuccess), $numSuccess), 'admin') ;
+                                                    osc_add_flash_ok_message( sprintf(_mn('%d listing has been marked as premium','%d listings have been marked as premium', $numSuccess), $numSuccess), 'admin') ;
                                                 }
                                             break;
                                             case 'depremium_all':
@@ -125,7 +125,7 @@
                                                             $numSuccess++;
                                                         }
                                                     }
-                                                    osc_add_flash_ok_message( sprintf(_mn('%d item has been marked as spam', '%d items have been marked as spam',$numSuccess),$numSuccess), 'admin') ;
+                                                    osc_add_flash_ok_message( sprintf(_mn('%d listing has been marked as spam', '%d listings have been marked as spam',$numSuccess),$numSuccess), 'admin') ;
                                                 }
                                             break;
                                             case 'despam_all':
@@ -156,7 +156,7 @@
                                                         }
                                                     }
                                                 }
-                                                osc_add_flash_ok_message( sprintf(_mn('%d item has been deleted', '%d items have been deleted', $numSuccess), $numSuccess), 'admin') ;
+                                                osc_add_flash_ok_message( sprintf(_mn('%d listing has been deleted', '%d listings have been deleted', $numSuccess), $numSuccess), 'admin') ;
                                                 $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                             break;
                                         }
@@ -175,9 +175,9 @@
                                         }
 
                                         if( $success ) {
-                                            osc_add_flash_ok_message( _m('The item has been deleted'), 'admin') ;
+                                            osc_add_flash_ok_message( _m('The listing has been deleted'), 'admin') ;
                                         } else {
-                                            osc_add_flash_error_message( _m('The item couldn\'t be deleted'), 'admin') ;
+                                            osc_add_flash_error_message( _m("The listing couldn't be deleted"), 'admin') ;
                                         }
 
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
@@ -205,11 +205,11 @@
 
                                                 $success = $mItems->activate( $id ) ;
                                                 if( $success && $success > 0 ) {
-                                                    osc_add_flash_ok_message( _m('The item has been activated'), 'admin');
+                                                    osc_add_flash_ok_message( _m('The listing has been activated'), 'admin');
                                                 } else if ( !$success ){
                                                     osc_add_flash_error_message( _m('Some error has occurred'), 'admin');
                                                 } else {
-                                                    osc_add_flash_error_message( _m('The item cannot be activated, because it is blocked'), 'admin');
+                                                    osc_add_flash_error_message( _m('The listing cannot be activated, because it is blocked'), 'admin');
                                                 }
 
                                                 break;
@@ -217,7 +217,7 @@
 
                                                 $success = $mItems->deactivate( $id ) ;
                                                 if( $success && $success > 0 ) {
-                                                    osc_add_flash_ok_message( _m('The item has been deactivated'), 'admin');
+                                                    osc_add_flash_ok_message( _m('The listing has been deactivated'), 'admin');
                                                 } else {
                                                     osc_add_flash_error_message( _m('Some error has occurred'), 'admin');
                                                 }
@@ -227,7 +227,7 @@
 
                                                 $success = $mItems->enable( $id ) ;
                                                 if( $success && $success > 0 ) {
-                                                    osc_add_flash_ok_message( _m('The item has been enabled'), 'admin');
+                                                    osc_add_flash_ok_message( _m('The listing has been enabled'), 'admin');
                                                 } else {
                                                     osc_add_flash_error_message( _m('Some error has occurred'), 'admin');
                                                 }
@@ -237,7 +237,7 @@
 
                                                 $success = $mItems->disable( $id ) ;
                                                 if( $success && $success > 0 ) {
-                                                    osc_add_flash_ok_message( _m('The item has been disabled'), 'admin');
+                                                    osc_add_flash_ok_message( _m('The listing has been disabled'), 'admin');
                                                 } else {
                                                     osc_add_flash_error_message( _m('Some error has occurred'), 'admin');
                                                 }
@@ -315,9 +315,9 @@
                                         $success = $this->itemManager->clearStat($id , $stat ) ;
 
                                         if($success) {
-                                            osc_add_flash_ok_message( _m('The item has been unmarked as')." $stat", 'admin') ;
+                                            osc_add_flash_ok_message( _m('The listing has been unmarked as')." $stat", 'admin') ;
                                         } else {
-                                            osc_add_flash_error_message( _m('The item hasn\'t been unmarked as')." $stat", 'admin') ;
+                                            osc_add_flash_error_message( _m("The listing hasn't been unmarked as")." $stat", 'admin') ;
                                         }
 
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items&stat=".$stat ) ;
@@ -420,7 +420,7 @@
                                         
                                         if( $success==1 || $success==2 ) {
                                             Session::newInstance()->_clearVariables();
-                                            osc_add_flash_ok_message( _m('A new item has been added'), 'admin') ;
+                                            osc_add_flash_ok_message( _m('A new listing has been added'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         } else {
                                             osc_add_flash_error_message( $success, 'admin') ;
@@ -466,10 +466,10 @@
                                             $msg .= _m("Wait time has to be numeric only")."<br/>";
                                         }
                                         if(!osc_validate_int(Params::getParam("num_moderate_items"))) {
-                                            $msg .= _m("Number of moderated items has to be numeric only")."<br/>";
+                                            $msg .= _m("Number of moderated listings has to be numeric only")."<br/>";
                                         }
                                         if(!osc_validate_int($numImagesItems)) {
-                                            $msg .= _m("Images per item has to be numeric only")."<br/>";
+                                            $msg .= _m("Images per listing has to be numeric only")."<br/>";
                                         }
                                         if($msg!='') {
                                             osc_add_flash_error_message( $msg, 'admin');
@@ -511,7 +511,7 @@
                                                                                       ,array('s_name'  => 'item_attachment'));
 
                                         if($iUpdated > 0) {
-                                            osc_add_flash_ok_message( _m('Items\' settings have been updated'), 'admin');
+                                            osc_add_flash_ok_message( _m("Listings' settings have been updated"), 'admin');
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=items&action=settings');
                 break;

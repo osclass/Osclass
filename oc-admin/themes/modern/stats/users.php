@@ -172,9 +172,9 @@
 
                         <div class="float50per">
                             <div class="latest-items ui-dialog ui-corner-all">
-                                <h3 class="ui-dialog-titlebar"><?php _e('Avg. items per user') ; ?></h3>
+                                <h3 class="ui-dialog-titlebar"><?php _e('Avg. listings per user') ; ?></h3>
                                 <div class="ui-state-body">
-                                <?php printf( __('%s items per user'), number_format($item, 2) ) ; ?>
+                                <?php printf( __('%s listings per user'), number_format($item, 2) ) ; ?>
                             </div>
                         </div>
                         </div>
