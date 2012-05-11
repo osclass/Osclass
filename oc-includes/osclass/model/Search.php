@@ -283,8 +283,6 @@
                 } else {
                     $this->order_column = sprintf("$table.$o_c", DB_TABLE_PREFIX);
                 }
-            } else {
-                $this->order_column = sprintf("$o_c", DB_TABLE_PREFIX);
             }
             $this->order_direction = $o_d;
         }
@@ -297,10 +295,10 @@
          * @param int $l_i
          * @param int $t_p_p results per page
          */
-        public function limit($l_i = 0, $r_p_p = 10) 
+        public function limit($l_i = 0, $r_p_p = null) 
         {
             $this->limit_init = $l_i;
-            $this->results_per_page = $r_p_p;
+            if($r_p_p!=null) { $this->results_per_page = $r_p_p; };
         }
 
         /**
