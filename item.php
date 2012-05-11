@@ -49,7 +49,7 @@
             switch( $this->action ) {
                 case 'item_add': // post
                     if( osc_reg_user_post() && $this->user == null ) {
-                        osc_add_flash_warning_message( _m('Only registered users are allowed to post items') ) ;
+                        osc_add_flash_warning_message( _m('Only registered users are allowed to post listings') ) ;
                         $this->redirectTo(osc_user_login_url()) ;
                     }
 
@@ -96,7 +96,7 @@
                 break;
                 case 'item_add_post': //post_item
                     if( osc_reg_user_post() && $this->user == null ) {
-                        osc_add_flash_warning_message( _m('Only registered users are allowed to post items') ) ;
+                        osc_add_flash_warning_message( _m('Only registered users are allowed to post listings') ) ;
                         $this->redirectTo( osc_base_url(true) ) ;
                     }
                     
@@ -148,7 +148,7 @@
                         if($success==1) {
                             osc_add_flash_ok_message( _m('Check your inbox to verify your email address') ) ;
                         } else {
-                            osc_add_flash_ok_message( _m('Your item has been published') ) ;
+                            osc_add_flash_ok_message( _m('Your listing has been published') ) ;
                         }
 
                         $itemId         = Params::getParam('itemId');
@@ -179,7 +179,7 @@
                                         $this->doView('item-edit.php');
                                     } else {
                                         // add a flash message [ITEM NO EXISTE]
-                                        osc_add_flash_error_message( _m("Sorry, we don't have any items with that ID") ) ;
+                                        osc_add_flash_error_message( _m("Sorry, we don't have any listings with that ID") ) ;
                                         if($this->user != null) {
                                             $this->redirectTo( osc_user_list_items_url() );
                                         } else {
@@ -224,10 +224,10 @@
 
                         osc_run_hook('edited_item', Item::newInstance()->findByPrimaryKey($id));
                         
-                        if($success==1){
-                            osc_add_flash_ok_message( _m("Great! We've just updated your item") ) ;
+                        if($success==1) {
+                            osc_add_flash_ok_message( _m("Great! We've just updated your listings") ) ;
                             View::newInstance()->_exportVariableToView("item", Item::newInstance()->findByPrimaryKey($id));
-                            $this->redirectTo(osc_item_url() ) ;
+                            $this->redirectTo( osc_item_url() ) ;
                         } else {
                             osc_add_flash_error_message( $success) ;
                             $this->redirectTo( osc_item_edit_url($secret) ) ;
@@ -252,12 +252,12 @@
                         $success = $mItems->activate( $item[0]['pk_i_id'], $item[0]['s_secret'] );
 
                         if( $success ) {
-                            osc_add_flash_ok_message( _m('The item has been validated') ) ;
+                            osc_add_flash_ok_message( _m('The listing has been validated') ) ;
                         }else{
-                            osc_add_flash_error_message( _m("The item can't be validated") ) ;
+                            osc_add_flash_error_message( _m("The listing can't be validated") ) ;
                         }
                     } else {
-                        osc_add_flash_warning_message( _m('The item has already been validated') ) ;
+                        osc_add_flash_warning_message( _m('The listing has already been validated') ) ;
                     }
 
                     $this->redirectTo( osc_item_url( ) );
@@ -270,9 +270,9 @@
                         $mItems = new ItemActions(false);
                         $success = $mItems->delete($item[0]['s_secret'], $item[0]['pk_i_id']);
                         if($success) {
-                            osc_add_flash_ok_message( _m('Your item has been deleted') ) ;
+                            osc_add_flash_ok_message( _m('Your listing has been deleted') ) ;
                         } else {
-                            osc_add_flash_error_message( _m("The item you are trying to delete couldn't be deleted") ) ;
+                            osc_add_flash_error_message( _m("The listing you are trying to delete couldn't be deleted") ) ;
                         }
                         if($this->user!=null) {
                             $this->redirectTo(osc_user_list_items_url());
@@ -280,7 +280,7 @@
                             $this->redirectTo( osc_base_url() ) ;
                         }
                     }else{
-                        osc_add_flash_error_message( _m("The item you are trying to delete couldn't be deleted") ) ;
+                        osc_add_flash_error_message( _m("The listing you are trying to delete couldn't be deleted") ) ;
                         $this->redirectTo( osc_base_url() ) ;
                     }
                 break;
@@ -335,13 +335,13 @@
                 case 'contact':
                     $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
                     if( empty($item) ){
-                        osc_add_flash_error_message( _m("This item doesn't exist") );
+                        osc_add_flash_error_message( _m("This listing doesn't exist") );
                         $this->redirectTo( osc_base_url(true) );
                     } else {
                         $this->_exportVariableToView('item', $item) ;
 
                         if( osc_item_is_expired () ) {
-                            osc_add_flash_error_message( _m("We're sorry, but the item has expired. You can't contact the seller") ) ;
+                            osc_add_flash_error_message( _m("We're sorry, but the listing has expired. You can't contact the seller") ) ;
                             $this->redirectTo( osc_item_url() );
                         }
 
@@ -369,7 +369,7 @@
                     }
 
                     if( osc_isExpired($item['dt_expiration']) ) {
-                        osc_add_flash_error_message( _m("We're sorry, but the item has expired. You can't contact the seller") ) ;
+                        osc_add_flash_error_message( _m("We're sorry, but the listing has expired. You can't contact the seller") ) ;
                         $this->redirectTo(osc_item_url());
                     }
 
@@ -422,7 +422,7 @@
                     $item = Item::newInstance()->findByPrimaryKey($itemId);
 
                     if( count($item) == 0 ) {
-                        osc_add_flash_error_message( _m("This item doesn't exist") );
+                        osc_add_flash_error_message( _m("This listing doesn't exist") );
                         $this->redirectTo( osc_base_url(true) );
                     }
 
@@ -475,13 +475,13 @@
 
                     if ($item['b_active'] != 1) {
                         if( $this->userId == $item['fk_i_user_id'] ) {
-                            osc_add_flash_warning_message( _m("The item hasn't been validated. Please validate it in order to show it to the rest of users") );
+                            osc_add_flash_warning_message( _m("The listing hasn't been validated. Please validate it in order to show it to the rest of users") );
                         } else {
-                            osc_add_flash_warning_message( _m("This item hasn't been validated") );
+                            osc_add_flash_warning_message( _m("This listing hasn't been validated") );
                             $this->redirectTo( osc_base_url(true) );
                         }
                     } else if ($item['b_enabled'] == 0) {
-                        osc_add_flash_warning_message( _m('The item has been suspended') );
+                        osc_add_flash_warning_message( _m('The listing has been suspended') );
                         $this->redirectTo( osc_base_url(true) );
                     }
                     $mStats = new ItemStats();

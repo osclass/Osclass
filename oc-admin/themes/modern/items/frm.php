@@ -19,11 +19,11 @@
     $new_item = __get('new_item') ;
 
     if( $new_item ) {
-        $title  = __('New item') ;
-        $button = __('Add new item') ;
+        $title  = __('New listing') ;
+        $button = __('Add new listing') ;
     } else {
-        $title  = __('Edit item') ;
-        $button = __('Update item') ;
+        $title  = __('Edit listing') ;
+        $button = __('Update listing') ;
     }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

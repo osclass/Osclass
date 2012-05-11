@@ -160,7 +160,7 @@
             }
             
             function delete_category(id){
-                var answer = confirm('<?php echo osc_esc_js( __('WARNING: This will also delete the items under that category. This action cann not be undone. Are you sure you want to continue?') ) ; ?>');
+                var answer = confirm('<?php echo osc_esc_js( __('WARNING: This will also delete the listings under that category. This action cann not be undone. Are you sure you want to continue?') ) ; ?>');
                 if( answer ) {
                     var url  = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=delete_category&id=' + id ;
 

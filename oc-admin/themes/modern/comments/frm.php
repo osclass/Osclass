@@ -56,7 +56,7 @@
                         <?php CommentForm::primary_input_hidden($comment); ?>
                         <div class="FormElement">
                             <div class="FormElementName">
-                                <?php _e('Edit a comment on item:'); ?>
+                                <?php _e('Edit a comment on a listing:'); ?>
                                 <?php $item = Item::newInstance()->findByPrimaryKey($comment['fk_i_item_id']) ; ?>
                                 <b><?php echo $item['s_title'] ; ?></b>
                                 ( <a href="<?php echo osc_item_url_ns( $comment['fk_i_item_id'] ) ; ?>" target="_blank"><?php _e('View') ; ?></a> |

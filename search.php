@@ -316,9 +316,9 @@
                     header('Content-type: text/xml; charset=utf-8');
 
                     $feed = new RSSFeed;
-                    $feed->setTitle(__('Latest items added') . ' - ' . osc_page_title());
+                    $feed->setTitle(__('Latest listings added') . ' - ' . osc_page_title());
                     $feed->setLink(osc_base_url());
-                    $feed->setDescription(__('Latest items added in') . ' ' . osc_page_title());
+                    $feed->setDescription(__('Latest listings added in') . ' ' . osc_page_title());
 
                     if(osc_count_items()>0) {
                         while(osc_has_items()) {
