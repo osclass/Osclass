@@ -17,9 +17,9 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
      
-     class MediaProcessingAjax
+     class CommentsProcessingAjax
      {
-        private $media ;
+        private $comments ;
         private $result ;
         private $toJSON ;
 
@@ -31,13 +31,12 @@
         private $order_by = array() ;
 
         private $column_names  = array(
-            0 => 'r.pk_i_id',
-            1 => 'r.pk_i_id',
-            2 => 'r.pk_i_id',
-            3 => 'r.fk_i_item_id',
-            4 => 'c.dt_pub_date'
+            0 => 'c.pk_i_id',
+            1 => 'c.s_author_name',
+            2 => 'c.s_body',
+            3 => 'c.dt_pub_date'
         ) ;
-
+        
         /* For Datatables */
         private $sEcho = null;
         private $_get ;
@@ -47,12 +46,12 @@
             $this->_get = $params ;
             $this->getDBParams() ;
             
-            $this->media          = ItemResource::newInstance()->getResources($this->resourceID, $this->start, $this->limit, ( $this->order_by['column_name'] ? $this->order_by['column_name'] : 'pk_i_id' ), ( $this->order_by['type'] ? $this->order_by['type'] : 'desc' ) ) ;
-            $this->total          = ItemResource::newInstance()->countResources() ;
+            $this->comments       = ItemComment::newInstance()->search($this->resourceID, $this->start, $this->limit, ( $this->order_by['column_name'] ? $this->order_by['column_name'] : 'pk_i_id' ), ( $this->order_by['type'] ? $this->order_by['type'] : 'desc' ) ) ;
+            $this->total          = ItemComment::newInstance()->count() ;
             if( $this->resourceID == null ) {
                 $this->total_filtered = $this->total ;
             } else {
-                $this->total_filtered = ItemResource::newInstance()->countResources( $this->resourceID ) ;
+                $this->total_filtered = ItemResource::newInstance()->count( $this->resourceID ) ;
             }
 
             $this->toDatatablesFormat() ;
@@ -93,24 +92,42 @@
         /* START - format functions */
         private function toDatatablesFormat()
         {
-            $this->result['iTotalRecords']        = $this->total ;
-            $this->result['iTotalDisplayRecords'] = $this->total_filtered ;
+            $this->result['iTotalRecords']        = $this->total_filtered ;
+            $this->result['iTotalDisplayRecords'] = $this->total ;
             $this->result['sEcho']                = $this->sEcho ;
             $this->result['aaData']               = array() ;
 
-            if( count($this->media) == 0 ) {
+            if( count($this->comments) == 0 ) {
                 return ;
             }
 
             $count = 0 ;
-            foreach($this->media as $aRow) {
+            foreach($this->comments as $comment) {
                 $row = array() ;
 
-                $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" />' ;
-                $row[] = '<div id="media_list_pic"><img src="' . osc_apply_filter('resource_path', osc_base_url() . $aRow['s_path']) . $aRow['pk_i_id'] . '_thumbnail.' . $aRow['s_extension'] . '" style="max-width: 60px; max-height: 60px;" /></div> <div id="media_list_filename">' . $aRow['s_content_type'] ;
-                $row[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js( __('This action can not be undone. Are you sure you want to continue?') ) . '\')" href="' . osc_admin_base_url(true) . '?page=media&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '" id="dt_link_delete">' . __('Delete') . '</a>' ;
-                $row[] = '<a target="_blank" href="' . osc_item_url_ns($aRow['fk_i_item_id']) . '">item #' . $aRow['fk_i_item_id'] . '</a>' ;
-                $row[] = $aRow['dt_pub_date'] ;
+                $options = array() ;
+                $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=comment_edit&amp;id=' . $comment['pk_i_id'] . '" id="dt_link_edit">' . __('Edit') . '</a>' ;
+                if( $comment['b_active'] ) {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') . '</a>' ;
+                } else {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] .'&amp;value=ACTIVE">' . __('Activate') . '</a>' ;
+                }
+                if( $comment['b_enabled'] ) {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=DISABLE">' . __('Unblock') . '</a>' ;
+                } else {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=ENABLE">' . __('Block') . '</a>' ;
+                }
+                $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) . '\')" href="' . osc_admin_base_url(true) . '?page=comments&amp;action=delete&amp;id=' . $comment['pk_i_id'] .'" id="dt_link_delete">' . __('Delete') . '</a>' ;
+
+                $row[] = '<input type="checkbox" name="id[]" value="' . $comment['pk_i_id']  . '" />' ;
+                if( empty($comment['s_author_name']) ) {
+                    $user = User::newInstance()->findByPrimaryKey( $comment['fk_i_user_id'] );
+                    $comment['s_author_name'] = $user['s_email'];
+                }
+                $row[] = $comment['s_author_name'] . ' (<a target="_blank" href="' . osc_item_url_ns( $comment['fk_i_item_id'] ) . '">' . $comment['s_title'] . '</a>)<div class="datatables_quick_edit" style="display:none;">' . implode(' &middot; ', $options) . '</div>' ;
+                $row[] = $comment['s_body'] ;
+                $row[] = $comment['dt_pub_date'] ;
+
 
                 $count++ ;
                 $this->result['aaData'][] = $row ;

@@ -301,6 +301,69 @@
             }
             return $results;
         }
+        
+        /**
+         * Return comments on command
+         * 
+         * @access public
+         * @since 2.4
+         * @param int item's ID or null
+         * @param int start
+         * @param int limit
+         * @param string order by
+         * @param string order
+         * @return array
+         */
+        public function search($itemId = null, $start = 0, $limit = 10, $order_by = 'c.pk_i_id', $order = 'DESC') {
+            $this->dao->select('c.*') ;
+            $this->dao->from($this->getTableName().' c') ;
+            $this->dao->from(DB_TABLE_PREFIX.'t_item i') ;
+            
+            $conditions = array() ;
+            if(is_null($itemId)) {
+                $conditions = 'c.fk_i_item_id = i.pk_i_id';
+            } else {
+                $conditions = array(
+                    'i.pk_i_id'      => $itemId,
+                    'c.fk_i_item_id' => $itemId
+                );
+            }
+            
+            $this->dao->where($conditions) ;
+            $this->dao->orderBy($order_by, $order) ;
+            $this->dao->limit($start, $limit);
+            $aux = $this->dao->get() ;
+            return $aux->result() ;
+        }
+        
+        /**
+         * Count the number of comments
+         * 
+         * @param int item's ID or null
+         * @return int
+         */
+        public function count($itemId = null) {
+            $this->dao->select('COUNT(*) AS numrows') ;
+            $this->dao->from($this->getTableName().' c') ;
+            $this->dao->from(DB_TABLE_PREFIX.'t_item i') ;
+            
+            $conditions = array() ;
+            if(is_null($itemId)) {
+                $conditions = 'c.fk_i_item_id = i.pk_i_id';
+            } else {
+                $conditions = array(
+                    'i.pk_i_id'      => $itemId,
+                    'c.fk_i_item_id' => $itemId
+                );
+            }
+            
+            $this->dao->where($conditions) ;
+            $aux = $this->dao->get() ;
+            $row = $aux->row();
+            return $row['numrows'];
+        }
+        
+        
     }
 
     /* file end: ./oc-includes/osclass/model/ItemComment.php */

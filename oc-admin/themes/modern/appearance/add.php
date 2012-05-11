@@ -55,7 +55,7 @@
                         <p><?php _e('Cannot install a new theme') ; ?></p>
                     </div>
                     <p class="text">
-                        <?php _e('The theme folder is not writable on your server and you cannot upload themes from the administration panel. Please make the translation folder writable') ; ?>
+                        <?php _e('The theme folder is not writable on your server and you cannot upload themes from the administration panel. Please make the theme folder writable') ; ?>
                     </p>
                     <p class="text">
                         <?php _e('To make the directory writable under UNIX execute this command from the shell:') ; ?>

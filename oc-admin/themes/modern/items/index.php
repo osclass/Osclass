@@ -125,7 +125,7 @@
                             }) ;
                         }
                     },
-                    "iDisplayLength": "25",
+                    "iDisplayLength": 25,
                     "sDom": "<'row-action'<'row'<'span6 length-menu'l><'span6 filter'>fr>>t<'row'<'span6 info-results'i><'span6 paginate'p>>",
                     "sPaginationType": "bootstrap",
                     "bLengthChange": false,
@@ -169,7 +169,7 @@
                             "bSortable": false
                         },
                         {
-                            "sTitle": "<?php echo osc_esc_html( __('County') ) ; ?>",
+                            "sTitle": "<?php echo osc_esc_html( __('Country') ) ; ?>",
                             "bSortable": false
                         },
                         {

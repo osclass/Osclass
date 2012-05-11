@@ -23,7 +23,7 @@
 ?>
 
 <script type="text/javascript">
-    var sQuery = '<?php echo $sQuery; ?>' ;
+    var sQuery = '<?php echo osc_esc_js( $sQuery ); ?>' ;
 
     $(document).ready(function(){
         if($('input[name=sPattern]').val() == sQuery) {

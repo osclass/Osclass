@@ -99,7 +99,7 @@
                         osc_add_flash_warning_message( _m('Only registered users are allowed to post items') ) ;
                         $this->redirectTo( osc_base_url(true) ) ;
                     }
-
+                    
                     $mItems = new ItemActions(false);
                     // prepare data for ADD ITEM
                     $mItems->prepareData(true);
@@ -123,6 +123,19 @@
                             return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                         }
                     }
+
+                    if(!osc_is_web_user_logged_in()) {
+                        $user = User::newInstance()->findByEmail($mItems->data['contactEmail']);
+                        // The user exists but it's not logged
+                        if(isset($user['pk_i_id'])) {
+                            foreach( $mItems->data as $key => $value ) {
+                                Session::newInstance()->_keepForm($key);
+                            }
+                            osc_add_flash_error_message( _m('An user exists with that email, if it is you, please log-in'));
+                            $this->redirectTo(osc_user_login_url());
+                        }
+                    }
+
                     // POST ITEM ( ADD ITEM )
                     $success = $mItems->add();
 
@@ -478,6 +491,11 @@
                         $item['locale'][$k]['s_description'] = nl2br(osc_apply_filter('item_description',$v['s_description']));
                     }
 
+                    if( $item['fk_i_user_id'] != '' ) {
+                        $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
+                        $this->_exportVariableToView('user', $user);
+                    }
+                    
                     $this->_exportVariableToView('item', $item);
 
                     osc_run_hook('show_item', $item) ;
