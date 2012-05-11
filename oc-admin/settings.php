@@ -649,7 +649,8 @@ HTACCESS;
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_language').'/(.*?)/?$', 'index.php?page=language&locale=$1');
 
                                             // Search rules
-                                            $rewrite->addRule('^'.$search_url.'(.*)$', 'index.php?page=search&sParams=$1');
+                                            $rewrite->addRule('^'.$search_url.'$', 'index.php?page=search');
+                                            $rewrite->addRule('^'.$search_url.'/(.*)$', 'index.php?page=search&sParams=$1');
 
                                             // Item rules
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_item_mark').'/(.*?)/([0-9]+)/?$', 'index.php?page=item&action=mark&as=$1&id=$2');
