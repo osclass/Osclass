@@ -15,38 +15,6 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-
-    $comments = __get('comments') ;
-
-    $aData = array() ;
-    foreach($comments as $comment) {
-        $row = array() ;
-
-        $options = array() ;
-        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=comment_edit&amp;id=' . $comment['pk_i_id'] . '" id="dt_link_edit">' . __('Edit') . '</a>' ;
-        if( $comment['b_active'] ) {
-            $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') . '</a>' ;
-        } else {
-            $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] .'&amp;value=ACTIVE">' . __('Activate') . '</a>' ;
-        }
-        if( $comment['b_enabled'] ) {
-            $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=DISABLE">' . __('Unblock') . '</a>' ;
-        } else {
-            $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=ENABLE">' . __('Block') . '</a>' ;
-        }
-        $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) . '\')" href="' . osc_admin_base_url(true) . '?page=comments&amp;action=delete&amp;id=' . $comment['pk_i_id'] .'" id="dt_link_delete">' . __('Delete') . '</a>' ;
-
-        $row[] = '<input type="checkbox" name="id[]" value="' . $comment['pk_i_id']  . '" />' ;
-        if( empty($comment['s_author_name']) ) {
-            $user = User::newInstance()->findByPrimaryKey( $comment['fk_i_user_id'] );
-            $comment['s_author_name'] = $user['s_email'];
-        }
-        $row[] = $comment['s_author_name'] . ' (<a target="_blank" href="' . osc_item_url_ns( $comment['fk_i_item_id'] ) . '">' . $comment['s_title'] . '</a>)<div class="datatables_quick_edit" style="display:none;">' . implode(' &middot; ', $options) . '</div>' ;
-        $row[] = $comment['s_body'] ;
-        $row[] = $comment['dt_pub_date'] ;
-
-        $aData[] = $row ;
-    }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
@@ -59,11 +27,14 @@
         <script type="text/javascript">
             $(function() {
                 oTable = $('#datatables_list').dataTable({
+                    "sAjaxSource": "<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=comments&resourceId=<?php echo Params::getParam('id') ; ?>",
+                    "iDisplayLength": "10",
+                    "iColumns"      : "5",
                     "sDom": "<'row-action'<'row'<'span6 length-menu'l><'span6 filter'>fr>>t<'row'<'span6 info-results'i><'span6 paginate'p>>",
                     "sPaginationType": "bootstrap",
                     "bLengthChange": false,
                     "bProcessing": true,
-                    "bServerSide":false,
+                    "bServerSide":true,
                     "bPaginate": true,
                     "bFilter": false,
                     "oLanguage": {
@@ -77,10 +48,9 @@
                         "sInfoFiltered": "<?php echo osc_esc_html( sprintf( __('(filtered from %s total entries)'), '_MAX_' ) ) ; ?>",
                         "sLoadingRecords": "<?php echo osc_esc_html( __('Loading...') ) ; ?>",
                         "sProcessing": "<?php echo osc_esc_html( __('Processing...') ) ; ?>",
-                        "sSearch": "<?php echo osc_esc_html( __('Search') ) ; ?>",
+                        "sSearch": "<?php echo osc_esc_html( __('Search by name') ) ; ?>",
                         "sZeroRecords": "<?php echo osc_esc_html( __('No matching records found') ) ; ?>"
                     },
-                    "aaData": <?php echo json_encode($aData) ; ?>,
                     "aoColumns": [
                         {
                             "sTitle": "<input id='check_all' type='checkbox' />",
@@ -102,7 +72,7 @@
                             "bSearchable": false
                         }
                     ]
-                });
+                }) ;
 
                 $('#datatables_list tr').live('mouseover', function(event) {
                     $('.datatables_quick_edit', this).show();
@@ -113,7 +83,7 @@
                 });
 
                 $('.length-menu').append( $("#bulk_actions") ) ;
-            });
+            }) ;
         </script>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
     </head>

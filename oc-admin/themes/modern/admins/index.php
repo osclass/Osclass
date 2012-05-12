@@ -22,7 +22,7 @@
     foreach($admins as $admin) {
         $row = array() ;
         $row[] = '<input type="checkbox" name="id[]" value="' . $admin['pk_i_id'] . '" />' ;
-        $row[] = $admin['s_username'] . ' <div id="datatables_quick_edit"><a href="' . osc_admin_base_url(true) . '?page=admins&action=edit&amp;id='  . $admin['pk_i_id'] . '">' . __('Edit') . '</a> &middot; <a onclick="javascript:return confirm(\'' . osc_esc_js("This action can't be undone. Are you sure you want to continue?") . '\');" href="' . osc_admin_base_url(true) . '?page=admins&action=delete&amp;id[]=' . $admin['pk_i_id'] . '">' . __('Delete') . '</a></div>' ;
+        $row[] = $admin['s_username'] . ' <div id="datatables_quick_edit"><a href="' . osc_admin_base_url(true) . '?page=admins&action=edit&amp;id='  . $admin['pk_i_id'] . '">' . __('Edit') . '</a> &middot; <a onclick="javascript:return confirm(\'' . osc_esc_js(__('This action cannot be undone. Are you sure you want to continue?')) . '\');" href="' . osc_admin_base_url(true) . '?page=admins&action=delete&amp;id[]=' . $admin['pk_i_id'] . '">' . __('Delete') . '</a></div>' ;
         $row[] = $admin['s_name'] ;
         $row[] = $admin['s_email'] ;
 
@@ -106,7 +106,7 @@
                             <select name="action" id="action" class="display">
                                 <option value=""><?php _e('Bulk actions') ; ?></option>
                                 <option value="delete"><?php _e('Delete') ; ?></option>
-                            </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>">
+                            </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
                         </label>
                     </div>
                     <div id="add_admin_button">

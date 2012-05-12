@@ -96,7 +96,7 @@
                                     <td></td>
                                     <td>
                                         <input type="checkbox" <?php echo ( osc_reg_user_post_comments() ? 'checked="true"' : '' ) ; ?> name="reg_user_post_comments" value="1" />
-                                        <?php _e('Users must be registered and logged in to comment ') ; ?>
+                                        <?php _e('Users must be registered and logged in to comment') ; ?>
                                     </td>
                                 </tr>
                                 <tr>

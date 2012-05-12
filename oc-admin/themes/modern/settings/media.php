@@ -34,7 +34,7 @@
                 $.validator.addMethod('regexp', function(value, element, param) {
                     return this.optional(element) || value.match(param);
                 },
-                '<?php _e('Size is not in the correct format'); ?>');
+                '<?php echo osc_esc_js( __('Size is not in the correct format') ); ?>');
                 
                 $("form[name=media_form]").validate({
                     rules: {
