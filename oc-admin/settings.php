@@ -1199,21 +1199,11 @@ HTACCESS;
                                                 array('s_value' => $use_imagick),
                                                 array('s_name'  => 'use_imagick')
                                         ) ;
-
-                                        $msg = '' ;
-                                        if( $iUpdated > 0 ) {
-                                            $msg .= _m('Media config has been updated') ;
-                                        }
-
+                                        
                                         if( $error != '' ) {
-                                            $msg .= '</p><p>' . $error ;
-                                        }
-
-                                        switch( $status ) {
-                                            case('ok'):         osc_add_flash_ok_message($msg, 'admin') ;
-                                            break ;
-                                            case('warning'):    osc_add_flash_warning_message($msg, 'admin') ;
-                                            break ;
+                                            osc_add_flash_warning_message($error, 'admin') ;
+                                        } else {
+                                            osc_add_flash_ok_message(_m('Media config has been updated'), 'admin') ;
                                         }
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media') ;
@@ -1319,6 +1309,7 @@ HTACCESS;
                                         $numItemsSearch    = Params::getParam('default_results_per_page') ;
                                         $contactAttachment = Params::getParam('enabled_attachment') ;
                                         $bAutoCron         = Params::getParam('auto_cron') ;
+                                        $bMarketSources    = Params::getParam('market_external_sources')==1?1:0;
 
                                         // preparing parameters
                                         $sPageTitle        = strip_tags($sPageTitle) ;
@@ -1380,6 +1371,8 @@ HTACCESS;
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'timeFormat')) ;
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimezone)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'timezone'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $bMarketSources)
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'marketAllowExternalSources'));
                                         if(is_int($sNumRssItems)) {
                                             $iUpdated += Preference::newInstance()->update(array('s_value'   => $sNumRssItems)
                                                                                           ,array('s_section' => 'osclass', 's_name' => 'num_rss_items')) ;
@@ -1434,14 +1427,20 @@ HTACCESS;
                                                     array('s_name'  => 'save_latest_searches')
                                             ) ;
                                         }
+                                        
+                                        if(Params::getParam('customPurge')=='') {
+                                            osc_add_flash_error_message(_m('Custom number could not be left empty'), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=latestsearches') ;
+                                        } else {
 
-                                        Preference::newInstance()->update(
-                                                array('s_value' => Params::getParam('customPurge')),
-                                                array('s_name'  => 'purge_latest_searches')
-                                        ) ;
+                                            Preference::newInstance()->update(
+                                                    array('s_value' => Params::getParam('customPurge')),
+                                                    array('s_name'  => 'purge_latest_searches')
+                                            ) ;
 
-                                        osc_add_flash_ok_message( _m('Last search settings have been updated'), 'admin') ;
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=latestsearches') ;
+                                            osc_add_flash_ok_message( _m('Last search settings have been updated'), 'admin') ;
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=latestsearches') ;
+                                        }
                 break;
                 default:                // calling the view
                                         $aLanguages = OSCLocale::newInstance()->listAllEnabled() ;
@@ -1560,7 +1559,7 @@ HTACCESS;
             foreach($regions as $r) {
                 $exists = $manager_region->findByName($r->name, $r->country_code);
                 if(isset($exists['s_name'])) {
-                    osc_add_flash_error_message(sprintf(_m('%s already was in the database'), $c_exists['s_name']), 'admin');
+                    osc_add_flash_error_message(sprintf(_m('%s already was in the database'), $exists['s_name']), 'admin');
                     return false;
                 }
                 $manager_region->insert(array(

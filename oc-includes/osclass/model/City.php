@@ -79,7 +79,7 @@
         {
             $this->dao->select('a.pk_i_id as id, a.s_name as label, a.s_name as value, aux.s_name as region') ;
             $this->dao->from($this->getTableName().' as a') ;
-            $this->dao->join(DB_TABLE_PREFIX.'t_region as aux', 'aux.pk_i_id = a.fk_i_region_id', 'LEFT');
+            $this->dao->join(Region::newInstance()->getTableName().' as aux', 'aux.pk_i_id = a.fk_i_region_id', 'LEFT');
             $this->dao->like('a.s_name', $query, 'after') ;
             if( $regionId != null ) {
                 $this->dao->where('a.fk_i_region_id', $regionId) ;

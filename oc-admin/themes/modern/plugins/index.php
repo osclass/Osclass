@@ -33,6 +33,11 @@
         if( osc_plugin_is_enabled($plugin) ) {
             $enabled = 1 ;
         }
+        // prepare row 2
+        $sUpdate = '' ;
+        if( osc_check_update(@$pInfo['plugin_update_uri'], @$pInfo['version']) ) {
+            $sUpdate = '<a href="' . osc_admin_base_url(true) . '?page=market&amp;code=' . htmlentities($pInfo['plugin_update_uri']) . '">' . __("There's a new version available to update") . '</a>' ;
+        }
         // prepare row 4
         $sConfigure = '' ;
         if( isset($active_plugins[$plugin . '_configure']) ) {
@@ -50,14 +55,14 @@
         // prepare row 6
         $sInstall  = '' ;
         if( $installed ) {
-            $delete_text = osc_esc_js("This action can not be undone. Uninstalling plugins may result in a permanent lost of data. Are you sure you want to continue?") ;
+            $delete_text = osc_esc_js( __("This action can not be undone. Uninstalling plugins may result in a permanent lost of data. Are you sure you want to continue?","modern") ) ;
 
             $sInstall = '<a onclick="javascript:return confirm(\'' . $delete_text . '\') ;" href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=uninstall&amp;plugin=' . $pInfo['filename'] . '">' . __('Uninstall') . '</a>' ;
         } else {
             $sInstall = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=install&amp;plugin=' . $pInfo['filename'] . '">' . __('Install') . '</a>' ;
         }
 
-        $row[] = '<input type="hidden" name="installed" value="' . $installed . '" enabled="' . $enabled . '" />' . $pInfo['plugin_name'] ;
+        $row[] = '<input type="hidden" name="installed" value="' . $installed . '" enabled="' . $enabled . '" />' . $pInfo['plugin_name'] . '<div>' . $sUpdate . '</div>';
         $row[] = $pInfo['description'] ;
         $row[] = $sConfigure ;
         $row[] = $sEnable ;
