@@ -18,7 +18,7 @@ class OCadmin_stats extends OCadminTest {
         $this->selenium->click("link=Statistics");
         $this->selenium->click("//a[@id='stats_items']");
         $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue($this->selenium->isTextPresent("Items Statistics"),"Items users");
+        $this->assertTrue($this->selenium->isTextPresent("Listings Statistics"),"Items users");
         
         $this->selenium->click("link=Statistics");
         $this->selenium->click("//a[@id='stats_comments']");
