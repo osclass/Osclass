@@ -225,7 +225,7 @@ class OCadmin_tools extends OCadminTest {
             $this->selenium->waitForPageToLoad("10000");
 
             if($check) {
-                $this->assertTrue($this->selenium->isTextPresent("items have been deleted"), "Can't delete item. ERROR");
+                $this->assertTrue($this->selenium->isTextPresent("listings have been deleted"), "Can't delete item. ERROR");
             }
     }
     
@@ -265,7 +265,7 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
         
-        $this->assertTrue($this->selenium->isTextPresent("A new item has been added"), "Can't insert a new item. ERROR");
+        $this->assertTrue($this->selenium->isTextPresent("A new listing has been added"), "Can't insert a new item. ERROR");
     }    
     
 }
