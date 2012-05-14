@@ -1174,7 +1174,7 @@ class OCadmin_generalSettings extends OCadmintest {
     }
     
     function generateCustomDate() {
-        $str = ":_-/dDjlNSwzWFmMntLoyYaABgGhHiseIOPTZ";
+        $str = ":_-/dDjlNSwzWFmMntLoyYaABgGhHieIOPTZ";
         $l = strlen($str);
         $date = '';
         for($i=0;$i<10;$i++) {

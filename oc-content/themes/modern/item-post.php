@@ -73,7 +73,7 @@
     <body>
         <?php osc_current_web_theme_path('header.php') ; ?>
         <div class="content add_item">
-            <h1><strong><?php _e('Publish an item', 'modern'); ?></strong></h1>
+            <h1><strong><?php _e('Publish an listing', 'modern'); ?></strong></h1>
             <ul id="error_list"></ul>
             <form name="item" action="<?php echo osc_base_url(true);?>" method="post" enctype="multipart/form-data">
                 <fieldset>
@@ -109,7 +109,7 @@
                     <?php } ?>
                 
                     <div class="box location">
-                        <h2><?php _e('Item Location', 'modern'); ?></h2>
+                        <h2><?php _e('Listing Location', 'modern'); ?></h2>
                         <div class="row">
                             <label for="countryId"><?php _e('Country', 'modern'); ?></label>
                             <?php ItemForm::country_select(osc_get_countries(), osc_user()) ; ?>
@@ -134,7 +134,7 @@
                     <!-- seller info -->
                     <?php if(!osc_is_web_user_logged_in() ) { ?>
                     <div class="box seller_info">
-                        <h2><?php _e('Seller\'s information', 'modern'); ?></h2>
+                        <h2><?php _e("Seller's information", 'modern'); ?></h2>
                         <div class="row">
                             <label for="contactName"><?php _e('Name', 'modern'); ?></label>
                             <?php ItemForm::contact_name_text() ; ?>
@@ -147,7 +147,7 @@
                             <div style="width: 120px;text-align: right;float:left;">
                                 <?php ItemForm::show_email_checkbox() ; ?>
                             </div>
-                            <label for="showEmail" style="width: 250px;"><?php _e('Show e-mail on the item page', 'modern'); ?></label>
+                            <label for="showEmail" style="width: 250px;"><?php _e('Show e-mail on the listing page', 'modern'); ?></label>
                         </div>
                     </div>
                     <?php }; ?>

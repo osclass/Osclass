@@ -69,7 +69,7 @@
                     </ul>
                 </div>
                 <div id="description" class="latest_ads">
-                    <h2><?php _e('Latest items'); ?></h2>
+                    <h2><?php _e('Latest listings'); ?></h2>
                     <table border="0" cellspacing="0">
                         <tbody>
                             <?php $class = "even" ; ?>

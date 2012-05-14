@@ -649,7 +649,8 @@ HTACCESS;
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_language').'/(.*?)/?$', 'index.php?page=language&locale=$1');
 
                                             // Search rules
-                                            $rewrite->addRule('^'.$search_url.'(.*)$', 'index.php?page=search&sParams=$1');
+                                            $rewrite->addRule('^'.$search_url.'$', 'index.php?page=search');
+                                            $rewrite->addRule('^'.$search_url.'/(.*)$', 'index.php?page=search&sParams=$1');
 
                                             // Item rules
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_item_mark').'/(.*?)/([0-9]+)/?$', 'index.php?page=item&action=mark&as=$1&id=$2');
@@ -958,7 +959,7 @@ HTACCESS;
 
                                                                     // foreign key error
                                                                     if( Currency::newInstance()->getErrorLevel() == '1451' ) {
-                                                                        $msg_current .= sprintf('</p><p>' . _m("%s could not be deleted because it has items associated"), $currencyCode) ;
+                                                                        $msg_current .= sprintf('</p><p>' . _m("%s could not be deleted because it has listings associated"), $currencyCode) ;
                                                                     } else if( $currencyCode == osc_currency() ) {
                                                                         $msg_current .= sprintf('</p><p>' . _m("%s could not be deleted because it's the default currency"), $currencyCode) ;
                                                                     }
@@ -1337,13 +1338,13 @@ HTACCESS;
                                             $msg .= _m("Contact email field is required")."<br/>";
                                         }
                                         if(!osc_validate_int($sNumRssItems)) {
-                                            $msg .= _m("Number of RSS items has to be numeric only")."<br/>";
+                                            $msg .= _m("Number of RSS listings has to be numeric only")."<br/>";
                                         }
                                         if(!osc_validate_int($maxLatestItems)) {
-                                            $msg .= _m("Max latest items has to be numeric only")."<br/>";
+                                            $msg .= _m("Max latest listings has to be numeric only")."<br/>";
                                         }
                                         if(!osc_validate_int($numItemsSearch)) {
-                                            $msg .= _m("Number of items on search has to be numeric only")."<br/>";
+                                            $msg .= _m("Number of listings on search has to be numeric only")."<br/>";
                                         }
                                         if($msg!='') {
                                             osc_add_flash_error_message( $msg, 'admin');
@@ -1378,7 +1379,7 @@ HTACCESS;
                                                                                           ,array('s_section' => 'osclass', 's_name' => 'num_rss_items')) ;
                                         } else {
                                             if($error != '') $error .= "</p><p>";
-                                            $error .= _m('Number of items in the RSS must be integer') ;
+                                            $error .= _m('Number of listings in the RSS must be integer') ;
                                         }
 
                                         if(is_int($maxLatestItems)) {
@@ -1386,7 +1387,7 @@ HTACCESS;
                                                                                           ,array('s_section' => 'osclass', 's_name' => 'maxLatestItems@home')) ;
                                         } else {
                                             if($error != '') $error .= "</p><p>";
-                                            $error .= _m('Number of recent items displayed at home must be integer') ;
+                                            $error .= _m('Number of recent listings displayed at home must be integer') ;
                                         }
 
                                         $iUpdated += Preference::newInstance()->update(

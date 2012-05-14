@@ -43,7 +43,7 @@
             <!-- right container -->
             <div class="right">
                 <div class="header_title">
-                    <h1 class="settings"><?php _e('Items Settings') ; ?></h1>
+                    <h1 class="settings"><?php _e('Listing Settings') ; ?></h1>
                 </div>
                 <?php osc_show_flash_message('admin') ; ?>
                 <!-- settings items -->
@@ -60,13 +60,13 @@
                                     </td>
                                     <td>
                                         <input type="checkbox" <?php echo ( osc_reg_user_post() ? 'checked="true"' : '') ; ?> name="reg_user_post" value="1" />
-                                        <?php _e('Only logged in users can post items') ; ?>
+                                        <?php _e('Only logged in users can post listings') ; ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td class="additional-options">
-                                        <?php printf( __('An user has to wait %s seconds between each item added'), '<input type="text" class="micro" name="items_wait_time" value="' . osc_items_wait_time() . '" />') ; ?>
+                                        <?php printf( __('An user has to wait %s seconds between each listing added'), '<input type="text" class="micro" name="items_wait_time" value="' . osc_items_wait_time() . '" />') ; ?>
                                         <span class="help-box">
                                             <?php _e('If the value is zero, there is no waiting') ; ?>
                                         </span>
@@ -76,15 +76,15 @@
                                     <td></td>
                                     <td>
                                         <input type="checkbox" <?php echo ( ( osc_moderate_items() == -1 ) ? '' : 'checked="true"' ) ; ?> name="moderate_items" value="1" />
-                                        <?php _e('Users have to validate their items') ; ?>
+                                        <?php _e('Users have to validate their listings') ; ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td class="additional-options">
-                                        <?php printf( __("After %s validated items the user doesn't longer need to validate the items"), '<input type="text" class="micro" name="num_moderate_items" value="' . ( ( osc_moderate_items() == -1 ) ? '' : osc_moderate_items() ) . '" />') ; ?>
+                                        <?php printf( __("After %s validated listings the user doesn't longer need to validate the listings"), '<input type="text" class="micro" name="num_moderate_items" value="' . ( ( osc_moderate_items() == -1 ) ? '' : osc_moderate_items() ) . '" />') ; ?>
                                         <span class="help-box">
-                                            <?php _e('If the value is zero, it means that each item must be validated') ; ?>
+                                            <?php _e('If the value is zero, it means that each listing must be validated') ; ?>
                                         </span>
                                     </td>
                                 </tr>
@@ -92,14 +92,14 @@
                                     <td></td>
                                     <td>
                                         <input type="checkbox" <?php echo ( osc_logged_user_item_validation() ? 'checked="true"' : '' ) ; ?> name="logged_user_item_validation" value="1" <?php echo ( ( osc_moderate_items() != -1 ) ? '' : 'disabled') ; ?> />
-                                        <?php _e("Logged in users don't need to validate their items") ; ?>
+                                        <?php _e("Logged in users don't need to validate their listings") ; ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td>
                                         <input type="checkbox" <?php echo ( ( osc_recaptcha_items_enabled() == '0' ) ? '' : 'checked="true"' ) ; ?> name="enabled_recaptcha_items" value="1" />
-                                        <?php _e('Show reCAPTCHA in add/edit item form') ; ?>
+                                        <?php _e('Show reCAPTCHA in add/edit listing form') ; ?>
                                         <span class="help-box"><?php _e('<strong>Remember</strong> that you must configure reCAPTCHA first') ; ?></span>
                                     </td>
                                 </tr>
@@ -129,7 +129,7 @@
                                     </td>
                                     <td>
                                         <input type="checkbox" <?php echo ( osc_notify_new_item() ? 'checked="true"' : '') ; ?> name="notify_new_item" value="1" />
-                                        <?php _e('Notify admin when a new item is added') ; ?>
+                                        <?php _e('Notify admin when a new listing is added') ; ?>
                                     </td>
                                 </tr>
                                 <tr>
@@ -143,7 +143,7 @@
                                     <td></td>
                                     <td>
                                         <input type="checkbox" <?php echo ( osc_notify_contact_friends() ? 'checked="true"' : '' ) ; ?> name="notify_contact_friends" value="1" />
-                                        <?php _e('Send a copy to admin of the share item e-mail') ; ?>
+                                        <?php _e('Send a copy to admin of the share listing e-mail') ; ?>
                                     </td>
                                 </tr>
                                 <!-- /notifications -->
@@ -167,7 +167,7 @@
                                 <tr>
                                     <td></td>
                                     <td class="additional-options">
-                                        <?php printf( __('Attach %s images per item'), '<input type="text" class="micro" name="numImages@items" value="' . osc_max_images_per_item() . '" />' ) ; ?>
+                                        <?php printf( __('Attach %s images per listing'), '<input type="text" class="micro" name="numImages@items" value="' . osc_max_images_per_item() . '" />' ) ; ?>
                                         <span class="help-box"><?php _e('If the value is zero, it means unlimited number of images') ; ?></span>
                                     </td>
                                 </tr>

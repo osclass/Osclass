@@ -45,8 +45,8 @@ function meta_title( ) {
     switch ($location) {
         case ('item'):
             switch ($section) {
-                case 'item_add':    $text = __('Publish an item') . ' - ' . osc_page_title(); break;
-                case 'item_edit':   $text = __('Edit your item') . ' - ' . osc_page_title(); break;
+                case 'item_add':    $text = __('Publish an listing') . ' - ' . osc_page_title(); break;
+                case 'item_edit':   $text = __('Edit your listing') . ' - ' . osc_page_title(); break;
                 case 'send_friend': $text = __('Send to a friend') . ' - ' . osc_item_title() . ' - ' . osc_page_title(); break;
                 case 'contact':     $text = __('Contact seller') . ' - ' . osc_item_title() . ' - ' . osc_page_title(); break;
                 default:            $text = osc_item_title() . ' - ' . osc_page_title(); break;
@@ -78,7 +78,7 @@ function meta_title( ) {
             $b_region   = ($region != '');
 
             if($b_show_all) {
-                $text = __('Show all items') . ' - ' . $s_page . osc_page_title();
+                $text = __('Show all listings') . ' - ' . $s_page . osc_page_title();
             }
 
             $result = '';
@@ -125,7 +125,7 @@ function meta_title( ) {
         case('user'):
             switch ($section) {
                 case('dashboard'):       $text = __('Dashboard') . ' - ' . osc_page_title(); break;
-                case('items'):           $text = __('Manage my items') . ' - ' . osc_page_title(); break;
+                case('items'):           $text = __('Manage my listings') . ' - ' . osc_page_title(); break;
                 case('alerts'):          $text = __('Manage my alerts') . ' - ' . osc_page_title(); break;
                 case('profile'):         $text = __('Update my profile') . ' - ' . osc_page_title(); break;
                 case('change_email'):    $text = __('Change my email') . ' - ' . osc_page_title(); break;

@@ -1176,6 +1176,19 @@ span.help-box{
     clear: both;
     padding-top:20px;
 }
+
+.moreAction {
+    display:inline-block;
+}
+.moreAction div{
+    padding-left: 3px;
+    display:none;
+}
+.moreAction:hover div{
+    
+    display:inline-block;
+}
+
 /* JQUERY UI */
 
 .ui-widget-overlay{
