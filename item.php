@@ -179,7 +179,7 @@
                                         $this->doView('item-edit.php');
                                     } else {
                                         // add a flash message [ITEM NO EXISTE]
-                                        osc_add_flash_error_message( _m("Sorry, we don't have any listings with that ID") ) ;
+                                        osc_add_flash_error_message( _m("Sorry, we don't have any listing with that ID") ) ;
                                         if($this->user != null) {
                                             $this->redirectTo( osc_user_list_items_url() );
                                         } else {
