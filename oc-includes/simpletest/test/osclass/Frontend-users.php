@@ -35,7 +35,7 @@ class Frontend_users extends FrontendTest {
         $url = osc_user_dashboard_url();
         $this->selenium->open($url);
         
-        $this->assertTrue( $this->selenium->isTextPresent('No items have been added yet'), 'User dashboard, without items.');
+        $this->assertTrue( $this->selenium->isTextPresent('No listings have been added yet'), 'User dashboard, without items.');
     }
     
     /*
