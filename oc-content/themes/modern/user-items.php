@@ -36,7 +36,7 @@
                 <?php echo osc_private_user_menu() ; ?>
             </div>
             <div id="main">
-                <h2><?php _e('Your listings', 'modern'); ?> <a href="<?php echo osc_item_post_url() ; ?>">+ <?php _e('Post a new listings', 'modern'); ?></a></h2>
+                <h2><?php _e('Your listings', 'modern'); ?> <a href="<?php echo osc_item_post_url() ; ?>">+ <?php _e('Post a new listing', 'modern'); ?></a></h2>
                 <?php if(osc_count_items() == 0) { ?>
                     <h3><?php _e("You don't have any listings yet", 'modern'); ?></h3>
                 <?php } else { ?>
