@@ -49,8 +49,8 @@ class Frontend_users extends FrontendTest {
         $this->selenium->click("xpath=//li[@class='opt_items']/a");
         sleep(1);
         // click to manage items
-        $this->assertTrue( $this->selenium->isTextPresent('Your items + Post a new item'), 'User Manage Items');
-        $this->assertTrue( $this->selenium->isTextPresent('You don\'t have any items yet'), 'User Manage Items, without items');
+        $this->assertTrue( $this->selenium->isTextPresent('Your listings + Post a new listing'), 'User Manage Items');
+        $this->assertTrue( $this->selenium->isTextPresent('You don\'t have any listings yet'), 'User Manage Items, without items');
     }
     
     /*

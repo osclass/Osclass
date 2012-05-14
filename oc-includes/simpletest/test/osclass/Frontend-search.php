@@ -35,7 +35,7 @@ class Frontend_search extends FrontendTest {
                                 $this->_email);
             
             // ------
-            $this->assertTrue($this->selenium->isTextPresent("Your item has been published","Insert item.") );
+            $this->assertTrue($this->selenium->isTextPresent("Your listing has been published","Insert item.") );
         }
         
         $uSettings->set_reg_user_post( $old_reg_user_port );
@@ -190,7 +190,7 @@ class Frontend_search extends FrontendTest {
                                 $item['regionId'], $item['cityId'], $item['cityArea'], 
                                 $item['photo'], $item['contactName'], 
                                 $this->_email);
-            $this->assertTrue($this->selenium->isTextPresent("Your item has been published", "Insert item.") );
+            $this->assertTrue($this->selenium->isTextPresent("Your listing has been published", "Insert item.") );
         }
         
         $uSettings->set_enabled_user_validation( $old_enable_user_val );
@@ -292,7 +292,7 @@ class Frontend_search extends FrontendTest {
             $url = osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] );
             echo $url."<br>";
             $this->selenium->open( $url );
-            $this->assertTrue($this->selenium->isTextPresent("Your item has been deleted"), "Delete item.");
+            $this->assertTrue($this->selenium->isTextPresent("Your listing has been deleted"), "Delete item.");
         }
     }
     
