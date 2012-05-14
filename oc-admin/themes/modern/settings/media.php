@@ -294,7 +294,7 @@
                                 <tr class="separate">
                                     <td></td>
                                     <td>
-                                        <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
+                                        <input id="save_changes" type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
                                     </td>
                                 </tr>
                             </tbody>
@@ -312,7 +312,7 @@
                                 <?php _e("You can regenerate your different image dimensions. If you have changed the dimension of thumbnails, preview or normal images, you might want to regenerate your images.") ; ?>
                             </p>
                             <div class="actions-nomargin">
-                                <input type="submit" value="<?php echo osc_esc_html( __('Regenerate') ) ; ?>" />
+                                <input id="regenerate" type="submit" value="<?php echo osc_esc_html( __('Regenerate') ) ; ?>" />
                             </div>
                         </fieldset>
                     </form>
