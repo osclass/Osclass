@@ -26,7 +26,7 @@ class Frontend_items extends FrontendTest {
                                 $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'], 
                                 $this->_email);
-        $this->assertTrue($this->selenium->isTextPresent("Your item has been published"),"Items, insert item, no user, no validation.") ;
+        $this->assertTrue($this->selenium->isTextPresent("Your listing has been published"),"Items, insert item, no user, no validation.") ;
         
         $uSettings->set_moderate_items(111);
         $this->insertItem($item['catId'], $item['title'], 
@@ -40,7 +40,7 @@ class Frontend_items extends FrontendTest {
         $this->selenium->open( osc_base_url() );
         $this->selenium->click("link=Publish your ad for free");
         $this->selenium->waitForPageToLoad("30000");
-        $this->assertTrue($this->selenium->isTextPresent("Only registered users are allowed to post items"), "Items, insert item, no user, can't publish");
+        $this->assertTrue($this->selenium->isTextPresent("Only registered users are allowed to post listings"), "Items, insert item, no user, can't publish");
         
         $uSettings->set_items_wait_time($items_wait_time);
         $uSettings->set_selectable_parent_categories($set_selectable_parent_categories);
@@ -52,11 +52,10 @@ class Frontend_items extends FrontendTest {
          * Remove all items inserted previously
          */
         $aItem = Item::newInstance()->listAll('s_contact_email = '.$this->_email." AND fk_i_user IS NULL");
-        print_r($aItem);
         foreach($aItem as $item){
             $url = osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] );
             $this->selenium->open( $url );
-            $this->assertTrue($this->selenium->isTextPresent("Your item has been deleted"), "Delete item.");
+            $this->assertTrue($this->selenium->isTextPresent("Your listing has been deleted"), "Delete item.");
         }
     }
     
@@ -84,7 +83,7 @@ class Frontend_items extends FrontendTest {
                                 $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'], 
                                 $this->_email);
-        $this->assertTrue($this->selenium->isTextPresent("Your item has been published"),"insert ad error ") ;
+        $this->assertTrue($this->selenium->isTextPresent("Your listing has been published"),"insert ad error ") ;
         
         $uSettings->set_logged_user_item_validation( $old_logged_user_item_validation );
         $uSettings->set_enabled_users($old_enabled_users);
@@ -123,7 +122,7 @@ class Frontend_items extends FrontendTest {
         foreach($aItem as $item){
             $url = osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] );
             $this->selenium->open( $url );
-            $this->assertTrue($this->selenium->isTextPresent("Your item has been deleted"), "Delete item.");
+            $this->assertTrue($this->selenium->isTextPresent("Your listing has been deleted"), "Delete item.");
         }
     }
     
@@ -154,7 +153,7 @@ class Frontend_items extends FrontendTest {
                                 $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'], 
                                 $this->_email);
-        $this->assertTrue($this->selenium->isTextPresent("Your item has been published"),"insert ad error ") ;
+        $this->assertTrue($this->selenium->isTextPresent("Your listing has been published"),"insert ad error ") ;
         
         $uSettings->set_logged_user_item_validation(0);
         $this->insertItem($item['catId'], $item['title'], 
@@ -181,7 +180,7 @@ class Frontend_items extends FrontendTest {
     function testEditUserItemBadId()
     {
         $this->selenium->open( osc_item_edit_url('', '9999') );
-        $this->assertTrue($this->selenium->isTextPresent("Sorry, we don't have any items with that ID"));
+        $this->assertTrue($this->selenium->isTextPresent("Sorry, we don't have any listing with that ID"));
     }
     
     /*
@@ -215,7 +214,7 @@ class Frontend_items extends FrontendTest {
                                 $item['photo'], $item['contactName'], 
                                 $item['contactEmail']);
         sleep(1);
-        $this->assertTrue($this->selenium->isTextPresent("Your item has been published"),"Items, insert item, no user, no validation.") ;
+        $this->assertTrue($this->selenium->isTextPresent("Your listing has been published"),"Items, insert item, no user, no validation.") ;
         
         $uSettings->set_items_wait_time($items_wait_time);
         $uSettings->set_selectable_parent_categories($set_selectable_parent_categories);
@@ -227,7 +226,7 @@ class Frontend_items extends FrontendTest {
         $this->loginWith();
         
         $this->selenium->open(osc_item_edit_url('', $itemId));
-        $this->assertTrue($this->selenium->isTextPresent(""),"Sorry, we don't have any items with that ID") ;
+        $this->assertTrue($this->selenium->isTextPresent(""),"Sorry, we don't have any listing with that ID") ;
         
         // remove item
         Item::newInstance()->deleteByPrimaryKey($itemId);
@@ -243,11 +242,11 @@ class Frontend_items extends FrontendTest {
         $this->selenium->open( osc_base_url() );
         $this->selenium->click("link=My account");
         $this->selenium->waitForPageToLoad("30000");
-        $this->selenium->click("xpath=//ul/li/a[text()='Manage your items']");
+        $this->selenium->click("xpath=//ul/li/a[text()='Manage your listings']");
         $this->selenium->waitForPageToLoad("30000");
         $this->selenium->click("xpath=//div[@class='item']/p/a[text()='Activate']");
         $this->selenium->waitForPageToLoad("30000");
-        $this->assertTrue($this->selenium->isTextPresent("The item has been validated"), "Items, validate user item.");
+        $this->assertTrue($this->selenium->isTextPresent("The listing has been validated"), "Items, validate user item.");
     }
     
     /*
@@ -285,7 +284,7 @@ class Frontend_items extends FrontendTest {
         $url = osc_item_activate_url($item['s_secret'], $itemId);
         $this->selenium->open($url);
         sleep(1);
-        $this->assertTrue($this->selenium->isTextPresent("The item has been validated"), "Items, validate item. (direct url)");
+        $this->assertTrue($this->selenium->isTextPresent("The listing has been validated"), "Items, validate item. (direct url)");
         // remove all items 
         Item::newInstance()->deleteByPrimaryKey($itemId);
         
@@ -307,7 +306,7 @@ class Frontend_items extends FrontendTest {
         $this->selenium->open( osc_base_url() );
         $this->selenium->click("link=My account");
         $this->selenium->waitForPageToLoad("30000");
-        $this->selenium->click("xpath=//ul/li/a[text()='Manage your items']");
+        $this->selenium->click("xpath=//ul/li/a[text()='Manage your listings']");
         $this->selenium->waitForPageToLoad("30000");
         // edit first item
         $this->selenium->click("xpath=//div[@class='item'][1]/p[@class='options']/strong/a[text()='Edit']");
@@ -327,13 +326,13 @@ class Frontend_items extends FrontendTest {
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("3000");
         
-        $this->assertTrue(  $this->selenium->isTextPresent("Great! We've just updated your item"), 'Items, edit first item, with validation.' );
+        $this->assertTrue(  $this->selenium->isTextPresent("Great! We've just updated your listing"), 'Items, edit first item, with validation.' );
         
         $old_moderate_items = $uSettings->set_moderate_items(-1);
         $this->selenium->open( osc_base_url(true) );
         $this->selenium->click("link=My account");
         $this->selenium->waitForPageToLoad("30000");
-        $this->selenium->click("xpath=//ul/li/a[text()='Manage your items']");
+        $this->selenium->click("xpath=//ul/li/a[text()='Manage your listings']");
         $this->selenium->waitForPageToLoad("30000");
         // edit first item
         $this->selenium->click("xpath=//div[@class='item'][1]/p[@class='options']/strong/a[text()='Edit']");
@@ -353,7 +352,7 @@ class Frontend_items extends FrontendTest {
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("3000");
         
-        $this->assertTrue( $this->selenium->isTextPresent("Great! We've just updated your item") ,"Items, edit first item, without validation." );
+        $this->assertTrue( $this->selenium->isTextPresent("Great! We've just updated your listing") ,"Items, edit first item, without validation." );
         
         $uSettings->set_moderate_items($old_moderate_items);
         
@@ -370,7 +369,7 @@ class Frontend_items extends FrontendTest {
         $url = osc_item_delete_url('', $itemId);
         
         $this->selenium->open($url);
-        $this->assertTrue( $this->selenium->isTextPresent("The item you are trying to delete couldn't be deleted") ,"Items, delete item without secret." );
+        $this->assertTrue( $this->selenium->isTextPresent("The listing you are trying to delete couldn't be deleted") ,"Items, delete item without secret." );
     }
     
     function testDeleteItem()
@@ -381,7 +380,7 @@ class Frontend_items extends FrontendTest {
         $this->selenium->click("link=My account");
         $this->selenium->waitForPageToLoad("30000");
 
-        $this->selenium->click("xpath=//ul/li/a[text()='Manage your items']");
+        $this->selenium->click("xpath=//ul/li/a[text()='Manage your listings']");
         $this->selenium->waitForPageToLoad("30000");
 
         $numItems = $this->selenium->getXpathCount("//div[@class='item']/p/a[text()='Delete']");
@@ -390,7 +389,7 @@ class Frontend_items extends FrontendTest {
             // delete first item
             $this->selenium->click("xpath=//div[@class='item']/p/a[text()='Delete']");
             $this->selenium->waitForPageToLoad("30000");
-            $this->assertTrue($this->selenium->isTextPresent("Your item has been deleted"), "Can't delete item. ERROR ");
+            $this->assertTrue($this->selenium->isTextPresent("Your listing has been deleted"), "Can't delete listing. ERROR ");
             
             $numItems = $this->selenium->getXpathCount("//div[@class='item']/p/a[text()='Delete']");
             
@@ -398,7 +397,7 @@ class Frontend_items extends FrontendTest {
             $this->selenium->click("link=My account");
             $this->selenium->waitForPageToLoad("30000");
 
-            $this->selenium->click("xpath=//ul/li/a[text()='Manage your items']");
+            $this->selenium->click("xpath=//ul/li/a[text()='Manage your listings']");
             $this->selenium->waitForPageToLoad("30000");
         }
         $this->removeUserByMail();

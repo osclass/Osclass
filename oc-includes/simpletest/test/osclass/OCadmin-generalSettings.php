@@ -69,7 +69,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->type('dimThumbnail', 'bsg');
         $this->selenium->type('dimPreview'  , 'cylon');
         $this->selenium->type('dimNormal'   , 'adama');
-        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->click("//input[@id='save_changes']");
         sleep(4);
         $this->assertTrue($this->selenium->isTextPresent("Maximun size: this field has to be numeric only"), "Media tab JS, update.");
         $this->assertTrue($this->selenium->isTextPresent("Thumbnail size: is not in the correct format"), "Media tab JS, update.");
@@ -80,7 +80,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->type('dimThumbnail', '');
         $this->selenium->type('dimPreview'  , '');
         $this->selenium->type('dimNormal'   , '');
-        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->click("//input[@id='save_changes']");
         sleep(4);
         $this->assertTrue($this->selenium->isTextPresent("Maximun size: this field is required"), "Media tab JS, update.");
         $this->assertTrue($this->selenium->isTextPresent("Thumbnail size: this field is required"), "Media tab JS, update.");
@@ -88,13 +88,19 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->assertTrue($this->selenium->isTextPresent("Normal size: this field is required"), "Media tab JS, update.");
         
         $this->selenium->type('maxSizeKb'   , '500');
+        $this->selenium->keyUp("maxSizeKb", "0");
         $this->selenium->type('allowedExt'  , 'ext,deg,osc');
+        $this->selenium->keyUp("allowedExt", "c");
         $this->selenium->type('dimThumbnail', '10x10');
+        $this->selenium->keyUp("dimThumbnail", "0");
         $this->selenium->type('dimPreview'  , '50x50');
+        $this->selenium->keyUp("dimPreview", "0");
         $this->selenium->type('dimNormal'   , '100x100');
+        $this->selenium->keyUp("dimNormal", "0");
         $this->selenium->click('keep_original_image');
-
-        $this->selenium->click("//input[@type='submit']");
+        sleep(2);
+        
+        $this->selenium->click("//input[@id='save_changes']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("Media config has been updated"), "Media tab, update.");
@@ -113,7 +119,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->type('dimNormal'   , $dimNormal);
         $this->selenium->click('keep_original_image');
 
-        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->click("//input[@id='save_changes']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("Media config has been updated"), "Media tab, update.");
@@ -134,7 +140,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("//input[@id='watermark_image']");
         sleep(4);
         $this->selenium->type("//input[@name='watermark_image']", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/img_test1.gif"));
-        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->click("//input[@id='save_changes']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("Media config has been updated"), "Media tab, update.");
@@ -145,7 +151,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("//input[@id='watermark_image']");
         sleep(4);
         $this->selenium->type("//input[@name='watermark_image']", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/img_test2.gif"));
-        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->click("//input[@id='save_changes']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("Media config has been updated"), "Media tab, update.");
@@ -434,7 +440,7 @@ class OCadmin_generalSettings extends OCadmintest {
         
         $this->assertTrue( $this->selenium->isTextPresent("Page title: this field is required") , 'JS Validation');
         $this->assertTrue( $this->selenium->isTextPresent("RSS shows: this field is required") , 'JS Validation');
-        $this->assertTrue( $this->selenium->isTextPresent("The latest items show: this field is required") , 'JS Validation');
+        $this->assertTrue( $this->selenium->isTextPresent("The latest listings show: this field is required") , 'JS Validation');
         $this->assertTrue( $this->selenium->isTextPresent("The search page shows: this field is required") , 'JS Validation');
         $this->assertTrue( $this->selenium->isTextPresent("Email: this field is required") , 'JS Validation');
 
@@ -448,7 +454,7 @@ class OCadmin_generalSettings extends OCadmintest {
         sleep(4);
         
         $this->assertTrue( $this->selenium->isTextPresent("RSS shows: this field has to be numeric only") , 'JS Validation');
-        $this->assertTrue( $this->selenium->isTextPresent("The latest items show: this field has to be numeric only") , 'JS Validation');
+        $this->assertTrue( $this->selenium->isTextPresent("The latest listings show: this field has to be numeric only") , 'JS Validation');
         $this->assertTrue( $this->selenium->isTextPresent("The search page shows: this field has to be numeric only") , 'JS Validation');
         $this->assertTrue( $this->selenium->isTextPresent("Invalid email address") , 'JS Validation');
         
@@ -981,7 +987,7 @@ class OCadmin_generalSettings extends OCadmintest {
         sleep(4);
         
         
-        $this->assertTrue( $this->selenium->isTextPresent("Item url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Listings url: this field is required") , "Empty permalink" ) ;
         $this->assertTrue( $this->selenium->isTextPresent("Page url: this field is required") , "Empty permalink" ) ;
         $this->assertTrue( $this->selenium->isTextPresent("Categories url: this field is required") , "Empty permalink" ) ;
         $this->assertTrue( $this->selenium->isTextPresent("Search url: this field is required") , "Empty permalink" ) ;
@@ -995,13 +1001,13 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->assertTrue( $this->selenium->isTextPresent("Contact url: this field is required") , "Empty permalink" ) ;
         $this->assertTrue( $this->selenium->isTextPresent("Feed url: this field is required") , "Empty permalink" ) ;
         $this->assertTrue( $this->selenium->isTextPresent("Language url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Item mark url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Item send friend url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Item contact url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Activate item url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Edit item url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Delete item url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Delete item resource url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Listing mark url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Listing send friend url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Listing contact url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Activate listing url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Edit listing url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Delete listing url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Delete listing resource url: this field is required") , "Empty permalink" ) ;
         $this->assertTrue( $this->selenium->isTextPresent("Login url: this field is required") , "Empty permalink" ) ;
         $this->assertTrue( $this->selenium->isTextPresent("User dashboard url: this field is required") , "Empty permalink" ) ;
         $this->assertTrue( $this->selenium->isTextPresent("Logout url: this field is required") , "Empty permalink" ) ;
@@ -1009,7 +1015,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->assertTrue( $this->selenium->isTextPresent("Activate user url: this field is required") , "Empty permalink" ) ;
         $this->assertTrue( $this->selenium->isTextPresent("Activate alert url: this field is required") , "Empty permalink" ) ;
         $this->assertTrue( $this->selenium->isTextPresent("User profile url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("User items url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("User listings url: this field is required") , "Empty permalink" ) ;
         $this->assertTrue( $this->selenium->isTextPresent("User alerts url: this field is required") , "Empty permalink" ) ;
         $this->assertTrue( $this->selenium->isTextPresent("Recover user url: this field is required") , "Empty permalink" ) ;
         $this->assertTrue( $this->selenium->isTextPresent("Change password url: this field is required") , "Empty permalink" ) ;

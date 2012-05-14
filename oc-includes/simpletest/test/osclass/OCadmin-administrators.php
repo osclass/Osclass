@@ -10,8 +10,7 @@ class OCadmin_administrators extends OCadminTest {
     {
         $this->loginWith() ;
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Administrators");
-        $this->selenium->click("//a[@id='administrators_new']");
+        $this->selenium->click("//a[@id='users_administrators_new']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->type("s_name","Real name user one");
         $this->selenium->type("s_username","useradminone");
@@ -26,8 +25,7 @@ class OCadmin_administrators extends OCadminTest {
     {
         $this->loginWith() ;
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Administrators");
-        $this->selenium->click("//a[@id='administrators_new']");
+        $this->selenium->click("//a[@id='users_administrators_new']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->type("s_name","Real name user one");
         $this->selenium->type("s_username","useradminone");
@@ -42,8 +40,7 @@ class OCadmin_administrators extends OCadminTest {
     {
         $this->loginWith() ;
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Administrators");
-        $this->selenium->click("//a[@id='administrators_new']");
+        $this->selenium->click("//a[@id='users_administrators_new']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->type("s_name","");
         $this->selenium->type("s_username","");
@@ -73,8 +70,7 @@ class OCadmin_administrators extends OCadminTest {
     {
         $this->loginWith() ;
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Administrators");
-        $this->selenium->click("link=Your Profile");
+        $this->selenium->click("//a[@id='users_administrators_profile']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->type("s_name","Administrator updated");
         $this->selenium->type("s_username","adminUpdated");
@@ -82,8 +78,7 @@ class OCadmin_administrators extends OCadminTest {
         $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue($this->selenium->isTextPresent("The admin has been updated"),"Edit administrator's profile");
 
-        $this->selenium->click("link=Administrators");
-        $this->selenium->click("link=Your Profile");
+        $this->selenium->click("//a[@id='users_administrators_profile']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->type("s_name","Administrator");
         $this->selenium->type("s_username","adminnewtest");
@@ -96,8 +91,7 @@ class OCadmin_administrators extends OCadminTest {
     {
         $this->loginWith() ;
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Administrators");
-        $this->selenium->click("link=Manage administrators");
+        $this->selenium->click("//a[@id='users_administrators_manage']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'useradminone')]");
         $this->selenium->click("//table/tbody/tr[contains(.,'useradminone')]/td/div/a[text()='Edit']");
@@ -112,8 +106,7 @@ class OCadmin_administrators extends OCadminTest {
         $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue($this->selenium->isTextPresent("The admin has been updated"),"Edit administrator (other)");
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Administrators");
-        $this->selenium->click("link=Manage administrators");
+        $this->selenium->click("//a[@id='users_administrators_manage']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'useradminone')]");
         $this->selenium->click("//table/tbody/tr[contains(.,'useradminone')]/td/div/a[text()='Edit']");
@@ -130,8 +123,7 @@ class OCadmin_administrators extends OCadminTest {
     {
         $this->loginWith() ;
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Administrators");
-        $this->selenium->click("link=Manage administrators");
+        $this->selenium->click("//a[@id='users_administrators_manage']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'useradminone')]");
         $this->selenium->click("//table/tbody/tr[contains(.,'useradminone')]/td/div/a[text()='Edit']");
@@ -163,8 +155,7 @@ class OCadmin_administrators extends OCadminTest {
     {
         $this->loginWith() ;
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Administrators");
-        $this->selenium->click("link=Manage administrators");
+        $this->selenium->click("//a[@id='users_administrators_manage']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//table/tbody/tr/td[contains(.,'useradminone')]/div/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");

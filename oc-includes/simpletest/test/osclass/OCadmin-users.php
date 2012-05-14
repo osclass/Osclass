@@ -69,7 +69,6 @@ class OCadmin_users extends OCadminTest {
     private function insertUser()
     {
         $this->selenium->open( osc_admin_base_url(true) ) ;
-        $this->selenium->click("link=Users");
         $this->selenium->click("//a[@id='users_new']");
         $this->selenium->waitForPageToLoad("10000");
         
@@ -292,8 +291,7 @@ class OCadmin_users extends OCadminTest {
     private function deleteUser()
     {
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Users");
-        $this->selenium->click("link=Manage users");
+        $this->selenium->click("//a[@id='users_manage']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'mail.com')]");
@@ -319,8 +317,7 @@ class OCadmin_users extends OCadminTest {
         if($pref['enabled_user_registration'] == 1){ $pref['enabled_user_registration'] = 'on';} else { $pref['enabled_user_registration'] = 'off'; }
 
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("xpath=//a[text()='Users']");
-        $this->selenium->click("xpath=//li[3]/a[text()='Settings']");
+        $this->selenium->click("//a[@id='users_settings']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("enabled_users");

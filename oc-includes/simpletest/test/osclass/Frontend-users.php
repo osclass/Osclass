@@ -35,7 +35,7 @@ class Frontend_users extends FrontendTest {
         $url = osc_user_dashboard_url();
         $this->selenium->open($url);
         
-        $this->assertTrue( $this->selenium->isTextPresent('No items have been added yet'), 'User dashboard, without items.');
+        $this->assertTrue( $this->selenium->isTextPresent('No listings have been added yet'), 'User dashboard, without items.');
     }
     
     /*
@@ -49,8 +49,8 @@ class Frontend_users extends FrontendTest {
         $this->selenium->click("xpath=//li[@class='opt_items']/a");
         sleep(1);
         // click to manage items
-        $this->assertTrue( $this->selenium->isTextPresent('Your items + Post a new item'), 'User Manage Items');
-        $this->assertTrue( $this->selenium->isTextPresent('You don\'t have any items yet'), 'User Manage Items, without items');
+        $this->assertTrue( $this->selenium->isTextPresent('Your listings + Post a new listing'), 'User Manage Items');
+        $this->assertTrue( $this->selenium->isTextPresent('You don\'t have any listings yet'), 'User Manage Items, without items');
     }
     
     /*
