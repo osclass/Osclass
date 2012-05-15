@@ -156,6 +156,15 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->assertTrue($this->selenium->isTextPresent("Media config has been updated"), "Media tab, update.");
         
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_media']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("//input[@id='watermark_none']");
+        $this->selenium->click("//input[@id='save_changes']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue($this->selenium->isTextPresent("Media config has been updated"), "Media tab, update.");
+        
 
         osc_reset_preferences();
     }
