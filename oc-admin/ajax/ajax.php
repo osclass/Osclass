@@ -510,7 +510,7 @@
                             $options[] = '<a href="' . osc_static_page_url() . '">' . __('View page') . '</a>' ;
                             $options[] = '<a href="' . osc_admin_base_url(true) . '?page=pages&amp;action=edit&amp;id=' . osc_static_page_id() . '">' . __('Edit') . '</a>' ;
                             if( !$page['b_indelible'] ) {
-                                $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js("This action can't be undone. Are you sure you want to continue?") . '\')" href="' . osc_admin_base_url(true) . '?page=pages&amp;action=delete&amp;id=' . osc_static_page_id() . '">' . __('Delete') . '</a>' ;
+                                $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js(__("This action can't be undone. Are you sure you want to continue?")) . '\')" href="' . osc_admin_base_url(true) . '?page=pages&amp;action=delete&amp;id=' . osc_static_page_id() . '">' . __('Delete') . '</a>' ;
                             }
 
                             $row[] = '<input type="checkbox" name="id[]"" value="' . osc_static_page_id() . '"" />' ;
