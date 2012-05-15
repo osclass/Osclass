@@ -165,7 +165,7 @@
                         <p>
                             <?php _e("Plugin couldn't be installed because it triggered a <strong>fatal error</strong>") ; ?>
                         </p>
-                        <iframe style="border:0;" width="100%" height="80px" src="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=error_plugin&amp;plugin=<?php echo Params::getParam('error') ; ?>"></iframe>
+                        <iframe style="border:0;" width="100%" height="80" src="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=error_plugin&amp;plugin=<?php echo Params::getParam('error') ; ?>"></iframe>
                     </div>
                     <!-- /flash message -->
                 <?php } ?>

@@ -1341,7 +1341,7 @@ HTACCESS;
                                             $msg .= _m("Contact email field is required")."<br/>";
                                         }
                                         if(!osc_validate_int($sNumRssItems)) {
-                                            $msg .= _m("Number of RSS listings has to be numeric only")."<br/>";
+                                            $msg .= _m("Number of listings in the RSS has to be numeric only")."<br/>";
                                         }
                                         if(!osc_validate_int($maxLatestItems)) {
                                             $msg .= _m("Max latest listings has to be numeric only")."<br/>";

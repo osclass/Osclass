@@ -38,7 +38,7 @@
                     <div class="FlashMessage info">
                         <p class="info"><?php printf( __('Download more themes at %s'), '<a href="https://sourceforge.net/projects/osclass/files/Themes/" target="_blank">Sourceforge</a>') ; ?></p>
                     </div>
-                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="POST" enctype="multipart/form-data">
+                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="action" value="add_post" />
                         <input type="hidden" name="page" value="appearance" />
                         <div class="actions-nomargin">
