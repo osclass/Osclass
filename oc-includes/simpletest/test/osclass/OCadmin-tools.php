@@ -213,8 +213,7 @@ class OCadmin_tools extends OCadminTest {
     function removeLoadedItems($check = true)
     {
             $this->selenium->open( osc_admin_base_url(true) );
-            $this->selenium->click("link=Items");
-            $this->selenium->click("link=Manage items");
+            $this->selenium->click("//a[@id='items_manage']");
             $this->selenium->waitForPageToLoad("10000");
             
             $this->selenium->click("check_all");
