@@ -38,7 +38,7 @@
                         if(data.status=='done') {
                         }else{
                             var pending = data.pending;
-                            var all = <?php echo $all;?>;
+                            var all = <?php echo osc_esc_js($all);?>;
                             var percent = parseInt( ((all-pending)*100) / all );
                             $('span#percent').html(percent);
                             ajax_();

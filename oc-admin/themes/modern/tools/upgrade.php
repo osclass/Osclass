@@ -87,7 +87,7 @@
                 <?php } else { ?>
                     <p class="text">
                         <?php _e('Your OSClass installation can not be auto-upgraded. Files and folders need to be writable. You could apply write permissions via SSH with the command "chmod -R a+w *" (without quotes) or via a FTP client, it depends on the program so we can not provide more information. You could also upgrade OSClass downloading the upgrade package, unzip it and replace the files on your server with the ones on the package.') ; ?>
-                    </lp>
+                    </p>
                 <?php } ?>
                     <div id="steps_div">
                         <div id="steps">

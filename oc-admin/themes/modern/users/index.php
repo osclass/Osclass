@@ -117,7 +117,7 @@
                                 <option value="disable"><?php _e('Unblock') ; ?></option>
                                 <option value="delete"><?php _e('Delete') ; ?></option>
                                 <option value="resend_activation"><?php _e('Resend activation') ; ?></option>
-                            </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>">
+                            </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
                         </label>
                     </div>
                     <div id="add_user_button">
