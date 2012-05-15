@@ -44,7 +44,7 @@
                                     <td>
                                         <input type="checkbox" <?php echo ( osc_selectable_parent_categories() ? 'checked="true"' : '' ) ; ?> name="selectable_parent_categories" value="1" />
                                         <?php _e('Selectable parent categories') ; ?>
-                                        <span class="help-box"><?php _e("Parent categories are selectable when you insert or edit an listing") ; ?></span>
+                                        <span class="help-box"><?php _e("Parent categories are selectable when you insert or edit a listing") ; ?></span>
                                     </td>
                                 </tr>
                                 <tr class="separate">
