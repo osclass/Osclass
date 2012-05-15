@@ -175,7 +175,7 @@
                                 }
                             ?>
                             <div class="actions">
-                                <input type="submit" name="submit" value="<?php echo $button ; ?>">
+                                <input type="submit" name="submit" value="<?php echo osc_esc_html($button); ?>" />
                             </div>
                         </fieldset>
                     </form>
