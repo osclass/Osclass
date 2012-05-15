@@ -729,7 +729,7 @@ function display_target() {
             </div>
             <div id="region-div" style="display:none;">
                 <div id="region-info" class="space-left-10">
-                    <a href="javascript://" onclick="$('#region-box').attr('style', '');$('#region-info').attr('style', 'display:none');$('#t_location').focus();"><?php _e('Click here if you want to specify region/regions or city/cities'); ?></a>
+                    <a href="javascript:void(0);" onclick="$('#region-box').attr('style', '');$('#region-info').attr('style', 'display:none');$('#t_location').focus();"><?php _e('Click here if you want to specify region/regions or city/cities'); ?></a>
                 </div>
                 <div id="region-box"  class="space-left-60" style="display:none;">
                     <div id="radio-target">
