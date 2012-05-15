@@ -39,6 +39,6 @@
 <!-- /global js -->
 
 <script type="text/javascript">
-    var fileDefaultText = '<?php echo osc_esc_js( __('No file selected', 'modern') ) ; ?>';
-    var fileBtnText     = '<?php echo osc_esc_js( __('Choose File', 'modern') ) ; ?>';
+    var fileDefaultText = '<?php echo osc_esc_js( __('No file selected') ) ; ?>';
+    var fileBtnText     = '<?php echo osc_esc_js( __('Choose File') ) ; ?>';
 </script>

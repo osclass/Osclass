@@ -103,7 +103,7 @@
                                 <tr>
                                     <td class="labeled"><?php _e('reCAPTCHA Public key') ; ?></td>
                                     <td>
-                                        <input type="text" class="xxlarge" name="recaptchaPubKey" value="<?php echo (osc_recaptcha_public_key() ? osc_esc_html( osc_recaptcha_public_key() ) : ''); ?>" /
+                                        <input type="text" class="xxlarge" name="recaptchaPubKey" value="<?php echo (osc_recaptcha_public_key() ? osc_esc_html( osc_recaptcha_public_key() ) : ''); ?>" />
                                     </td>
                                 </tr>
                                 <tr>
