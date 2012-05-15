@@ -139,7 +139,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//input[@id='watermark_image']");
         sleep(4);
-        $this->selenium->type("//input[@name='watermark_image']", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/img_test1.gif"));
+        $this->selenium->type("//input[@name='watermark_image']", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/img_test1.png"));
         $this->selenium->click("//input[@id='save_changes']");
         $this->selenium->waitForPageToLoad("10000");
 
@@ -150,11 +150,33 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//input[@id='watermark_image']");
         sleep(4);
-        $this->selenium->type("//input[@name='watermark_image']", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/img_test2.gif"));
+        $this->selenium->type("//input[@name='watermark_image']", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/img_test2.png"));
         $this->selenium->click("//input[@id='save_changes']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("Media config has been updated"), "Media tab, update.");
+        
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_media']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("//input[@id='watermark_image']");
+        sleep(4);
+        $this->selenium->type("//input[@name='watermark_image']", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/img_test1.gif"));
+        $this->selenium->click("//input[@id='save_changes']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue($this->selenium->isTextPresent("The watermark image has to be a .PNG file"), "Media tab, update.");
+        
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_media']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("//input[@id='watermark_image']");
+        sleep(4);
+        $this->selenium->type("//input[@name='watermark_image']", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/logo.jpg"));
+        $this->selenium->click("//input[@id='save_changes']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue($this->selenium->isTextPresent("The watermark image has to be a .PNG file"), "Media tab, update.");
         
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='settings_media']");
