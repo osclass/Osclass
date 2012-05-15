@@ -409,25 +409,25 @@ class OCadmin_items extends OCadminTest {
         $this->loginWith();
 
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='items_manage']");
+        $this->selenium->click("//a[@id='items_media']");
         $this->selenium->waitForPageToLoad("10000");
-        sleep(2);
+        sleep(20);
         $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 2 of 2 entries"), "Inconsistent . ERROR" );
         
         // only can delete resources
         $this->selenium->click("xpath=//a[@id='dt_link_delete']");
         $this->selenium->waitForPageToLoad("10000");
-        sleep(2);
+        sleep(20);
         $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
         $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 1 of 1 entries"), "Can't delete media. ERROR" );
 
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='items_manage']");
+        $this->selenium->click("//a[@id='items_media']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("xpath=//a[@id='dt_link_delete']");
         $this->selenium->waitForPageToLoad("10000");
-        sleep(2);
+        sleep(20);
         $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
         $this->assertTrue($this->selenium->isTextPresent("No entries to show"), "Can't delete media. ERROR" );
 
@@ -547,7 +547,7 @@ class OCadmin_items extends OCadminTest {
             $this->selenium->waitForPageToLoad("30000");
             $this->selenium->click("xpath=//a[text()='Publish your ad for free']");
             $this->selenium->waitForPageToLoad("30000");
-            $this->assertTrue($this->selenium->isTextPresent("Only registered users are allowed to post items"),"No user can post a item. ERROR" ) ;
+            $this->assertTrue($this->selenium->isTextPresent("Only registered users are allowed to post listings"),"No user can post a item. ERROR" ) ;
         } else if($bool == 1 && $loginUser) {
             $this->post_item_website();
             $this->assertTrue($this->selenium->isTextPresent("Your listing has been published") || $this->selenium->isTextPresent('Check your inbox to verify your email address'),"User cannot post an item. ERROR" ) ;
