@@ -1113,19 +1113,22 @@ HTACCESS;
                                             case 'image':
                                                 // upload image & move to path
                                                 if( $_FILES['watermark_image']['error'] == UPLOAD_ERR_OK ) {
-                                                    $tmpName = $_FILES['watermark_image']['tmp_name'] ;
-                                                    $path    = osc_content_path() . 'uploads/watermark.png' ;
-                                                    if( move_uploaded_file($tmpName, $path) ){
-                                                        $iUpdated += Preference::newInstance()->update(
-                                                                array('s_value' => $path),
-                                                                array('s_name'  => 'watermark_image')
-                                                        ) ;
+                                                    if($_FILES['watermark_image']['type']=='image/png') {
+                                                        $tmpName = $_FILES['watermark_image']['tmp_name'] ;
+                                                        $path    = osc_content_path() . 'uploads/watermark.png' ;
+                                                        if( move_uploaded_file($tmpName, $path) ){
+                                                            $iUpdated += Preference::newInstance()->update(
+                                                                    array('s_value' => $path),
+                                                                    array('s_name'  => 'watermark_image')
+                                                            ) ;
+                                                        } else {
+                                                            $error .= _m('There was a problem uploading the watermark image')."<br />";
+                                                        }
                                                     } else {
-                                                        $iUpdated += Preference::newInstance()->update(
-                                                                array('s_value' => ''),
-                                                                array('s_name'  => 'watermark_image')
-                                                        ) ;
+                                                        $error .= _m('The watermark image has to be a .PNG file')."<br />";
                                                     }
+                                                } else {
+                                                    $error .= _m('There was a problem uploading the watermark image')."<br />";
                                                 }
                                                 $iUpdated += Preference::newInstance()->update(
                                                         array('s_value' => ''),
@@ -1169,7 +1172,7 @@ HTACCESS;
                                             $status    = 'warning' ;
                                             $maxSizeKb = $upload_mb ;
                                             // flash message text warning
-                                            $error     = sprintf( _m("You cannot set a maximum size file higher than the one that allows PHP configuration: <b>%d KB</b>"), $upload_mb ) ;
+                                            $error     .= sprintf( _m("You cannot set a maximum size file higher than the one that allows PHP configuration: <b>%d KB</b>"), $upload_mb ) ;
                                         }
 
                                         $iUpdated += Preference::newInstance()->update(
