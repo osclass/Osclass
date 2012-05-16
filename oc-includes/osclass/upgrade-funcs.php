@@ -383,6 +383,17 @@ CREATE TABLE %st_item_description_tmp (
 
     
     osc_changeVersionTo(241) ;
+    
+    
+    
+    if(osc_version()<300) {
+        $comm->query(sprintf("ALTER TABLE  `%st_admin` ADD  `b_moderator` TINYINT( 1 ) NOT NULL", DB_TABLE_PREFIX));
+    }
+    
+    osc_changeVersionTo(300);
+    
+    
+    
 
     echo '<div style="border: 1px solid rgb(204, 204, 204); background: none repeat scroll 0% 0% rgb(238, 238, 238);"> <div style="padding: 20px;">';
     echo '<p>'.__('OSClass &raquo; Updated correctly').'</p>' ;
