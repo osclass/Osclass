@@ -109,7 +109,7 @@ class OCadmin_administrators extends OCadminTest {
         $this->selenium->type("s_password"  , "useradminpassNEW");
         $this->selenium->type("s_password2" , "useradminpassNEW");
         $this->selenium->type("s_email", "admin@mail.com");
-        $this->selenium->type("b_moderator", "label='Moderator'");
+        $this->selenium->select("b_moderator", "label=Moderator");
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue($this->selenium->isTextPresent("The admin has been updated"),"Edit administrator (other)");
@@ -127,7 +127,7 @@ class OCadmin_administrators extends OCadminTest {
         $this->selenium->type("s_email", "newadmin@mail.com");
         $this->selenium->type("s_password"  , "");
         $this->selenium->type("s_password2" , "");
-        $this->selenium->type("b_moderator", "label='Moderator'");
+        $this->selenium->select("b_moderator", "label=Moderator");
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue($this->selenium->isTextPresent("The admin has been updated"),"Edit administrator (other 2)");
@@ -148,7 +148,7 @@ class OCadmin_administrators extends OCadminTest {
         $this->selenium->type("old_password", "useradminpassNEW");
         $this->selenium->type("s_password", "bsg");
         $this->selenium->type("s_password2" , "useradminpassNEW");
-        $this->selenium->type("b_moderator", "label='Moderator'");
+        $this->selenium->select("b_moderator", "label=Moderator");
         $this->selenium->click("//input[@type='submit']");
         sleep(4);
         $this->assertTrue($this->selenium->isTextPresent("Password: enter at least 5 characters"),"Edit administrator password");
@@ -161,7 +161,7 @@ class OCadmin_administrators extends OCadminTest {
         $this->selenium->type("s_password"  , "useradminpassNEW");
         $this->selenium->type("s_password2" , "useradminpassNEW");
         $this->selenium->type("s_email", "admin@mail.com");
-        $this->selenium->type("b_moderator", "label='Moderator'");
+        $this->selenium->select("b_moderator", "label=Moderator");
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue($this->selenium->isTextPresent("The admin has been updated"),"Edit administrator password");
@@ -173,13 +173,13 @@ class OCadmin_administrators extends OCadminTest {
         $this->logout();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->waitForPageToLoad(10000);
-        $this->selenium->type('user', "admin@mail.com");
+        $this->selenium->type('user', "useradminoneNEW");
         $this->selenium->type('password', "useradminpassNEW");
         $this->selenium->click('submit');
         $this->selenium->waitForPageToLoad(1000);
         $this->assertTrue($this->selenium->isTextPresent("Dashboard"),"Moderator access");
 
-        /*$this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='items_manage']");
         $this->selenium->waitForPageToLoad(10000);
         $this->assertTrue($this->selenium->isTextPresent("No data available in table"),"Moderator access");
@@ -232,12 +232,12 @@ class OCadmin_administrators extends OCadminTest {
         
         $this->selenium->open( osc_admin_base_url(true)."?page=appearance" );
         $this->selenium->waitForPageToLoad(10000);
-        $this->assertTrue($this->selenium->isTextPresent("You don't have enough permissions"),"Moderator access");*/
+        $this->assertTrue($this->selenium->isTextPresent("You don't have enough permissions"),"Moderator access");
         
     }
 
 
-    function atestDeleteAdministrator()
+    function testDeleteAdministrator()
     {
         $this->loginWith() ;
         $this->selenium->open( osc_admin_base_url(true) );
