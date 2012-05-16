@@ -628,7 +628,7 @@
                                             <label for="rewrite_user_recover"><?php _e('User recover') ; ?></label>
                                         </td>
                                         <td>
-                                            <input class="xlarge" type="text" name="rewrite_user_recover" id="rewrite_user_recover" value="<?php echo osc_get_preference('rewrite_user_recover'); ?>" >
+                                            <input class="xlarge" type="text" name="rewrite_user_recover" id="rewrite_user_recover" value="<?php echo osc_get_preference('rewrite_user_recover'); ?>" />
                                         </td>
                                     </tr>
                                     <tr>

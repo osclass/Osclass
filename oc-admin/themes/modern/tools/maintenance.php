@@ -43,7 +43,7 @@
                         <?php printf( __('Maintenance mode is: <strong>%s</strong>'), ($maintenance ? __('ON') : __('OFF') ) ) ; ?>
                     </p>
                     <div class="action-nomargin">
-                        <input type="button" value="<?php echo ( $maintenance ? osc_esc_html( __('Disable maintenance mode') ) : osc_esc_html( __('Enable maintenance mode') ) ) ; ?>" onclick="window.location.href='<?php echo osc_admin_base_url(true) ; ?>?page=tools&amp;action=maintenance&amp;mode=<?php echo ( $maintenance ? 'off' : 'on' ) ; ?>';" >
+                        <input type="button" value="<?php echo ( $maintenance ? osc_esc_html( __('Disable maintenance mode') ) : osc_esc_html( __('Enable maintenance mode') ) ) ; ?>" onclick="window.location.href='<?php echo osc_admin_base_url(true) ; ?>?page=tools&amp;action=maintenance&amp;mode=<?php echo ( $maintenance ? 'off' : 'on' ) ; ?>';" />
                     </div>
                 </div>
                 <!-- /tools maintenance -->

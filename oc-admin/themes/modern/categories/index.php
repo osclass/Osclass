@@ -272,7 +272,7 @@
                 </div>
                 <?php osc_show_flash_message('admin') ; ?>
                 <div class="jsMessage FlashMessage info" style="display: none;">
-                    <a class="close" href="javascript:void();">×</a>
+                    <a class="close" href="javascript:void(0);">×</a>
                     <p></p>
                 </div>
                 <!-- categories form -->

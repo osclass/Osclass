@@ -37,6 +37,13 @@
         function doModel()
         {
             parent::doModel() ;
+            
+            
+            if(osc_is_moderator() && ((Params::getParam('id')!='' && Params::getParam('id')!=osc_logged_admin_id()) || ($this->action!='edit' && $this->action!='edit_post'))) {
+                $this->action = '';
+                osc_add_flash_error_message(_m("You don't have enough permissions"), "admin");
+                $this->redirectTo(osc_admin_base_url()) ;
+            }
 
             switch($this->action) {
                 case('add'):        // callin add view
@@ -52,6 +59,7 @@
                                     $sName     = Params::getParam('s_name') ;
                                     $sEmail    = Params::getParam('s_email') ;
                                     $sUserName = Params::getParam('s_username') ;
+                                    $bModerator = Params::getParam('b_moderator')==0?0:1;
 
                                     // cleaning parameters
                                     $sPassword = strip_tags($sPassword) ;
@@ -92,10 +100,11 @@
                                     }
 
                                     $array = array(
-                                        's_password' =>  sha1($sPassword),
-                                        's_name'     =>  $sName,
-                                        's_email'    =>  $sEmail,
-                                        's_username' =>  $sUserName
+                                        's_password'    =>  sha1($sPassword),
+                                        's_name'        =>  $sName,
+                                        's_email'       =>  $sEmail,
+                                        's_username'    =>  $sUserName,
+                                        'b_moderator'   =>  $bModerator
                                     ) ;
 
                                     $isInserted = $this->adminManager->insert($array) ;
@@ -139,6 +148,7 @@
                                     $sName        = Params::getParam('s_name') ;
                                     $sEmail       = Params::getParam('s_email') ;
                                     $sUserName    = Params::getParam('s_username') ;
+                                    $bModerator   = Params::getParam('b_moderator')==0?0:1;
 
                                     // cleaning parameters
                                     $sPassword   = strip_tags($sPassword) ;
@@ -206,6 +216,10 @@
                                         }
                                     }
 
+                                    if($adminId!=osc_logged_admin_id()) {
+                                        $array['b_moderator'] = $bModerator;
+                                    }
+                                    
                                     $array['s_name']     = Params::getParam('s_name') ;
                                     $array['s_username'] = $sUserName ;
                                     $array['s_email']    = $sEmail ;

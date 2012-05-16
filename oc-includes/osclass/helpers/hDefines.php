@@ -939,5 +939,17 @@
     }
 
 
+    /**
+     * Check is an admin is a super admin or only a moderator
+     * 
+     * @return boolean
+     */
+    function osc_is_moderator() {
+        $admin = Admin::newInstance()->findByPrimaryKey(osc_logged_admin_id());
+        if(isset($admin['b_moderator']) && $admin['b_moderator']==0) {
+            return false;
+        }
+        return true;
+    }
 
 ?>

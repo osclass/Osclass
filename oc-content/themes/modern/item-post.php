@@ -73,7 +73,7 @@
     <body>
         <?php osc_current_web_theme_path('header.php') ; ?>
         <div class="content add_item">
-            <h1><strong><?php _e('Publish an listing', 'modern'); ?></strong></h1>
+            <h1><strong><?php _e('Publish a listing', 'modern'); ?></strong></h1>
             <ul id="error_list"></ul>
             <form name="item" action="<?php echo osc_base_url(true);?>" method="post" enctype="multipart/form-data">
                 <fieldset>

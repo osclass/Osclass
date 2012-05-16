@@ -78,6 +78,15 @@
                                     <?php AdminForm::email_text($admin) ; ?>
                                 </div>
                             </div>
+                            <?php if(!$admin_edit || ($admin_edit && Params::getParam('id')!= osc_logged_admin_id() && Params::getParam('id')!='')) { ?>
+                                <div class="input-line">
+                                    <label><?php _e('Admin type <em>(required)</em>') ; ?></label>
+                                    <div class="input">
+                                        <?php AdminForm::type_select($admin) ; ?>
+                                        <p class="help-inline"><em><?php _e('Administrators have full control over all aspects of your installation, while moderators are only allowed to moderate listing, comments and media files') ; ?></em></p>
+                                    </div>
+                                </div>
+                            <?php }; ?>
                             <?php if($admin_edit) { ?>
                                 <div class="input-line">
                                     <label><?php _e('Current password') ; ?></label>
