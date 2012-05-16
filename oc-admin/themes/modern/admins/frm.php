@@ -87,7 +87,7 @@
                                     </div>
                                 </div>
                             <?php }; ?>
-                            <?php if($admin_edit) { ?>
+                            <?php if($admin_edit && osc_logged_admin_id()==$admin['pk_i_id']) { ?>
                                 <div class="input-line">
                                     <label><?php _e('Current password') ; ?></label>
                                     <div class="input">
