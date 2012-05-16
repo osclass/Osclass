@@ -134,7 +134,7 @@
                             <option value="enable_bo_selected"><?php _e('Enable (oc-admin)') ; ?></option>
                             <option value="disable_bo_selected"><?php _e('Disable (oc-admin)') ; ?></option>
                             <option value="delete"><?php _e('Delete') ?></option>
-                        </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>">
+                        </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
                     </div>
                     <div id="add_language_button">
                         <a href="<?php echo osc_admin_base_url(true) ; ?>?page=languages&amp;action=add" class="btn" id="button_open"><?php _e('Add language') ; ?></a>
