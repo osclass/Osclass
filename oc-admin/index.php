@@ -28,7 +28,14 @@
         define('__OSC_MAINTENANCE__', true);
     }
 
-    switch( Params::getParam('page') )
+    $page = Params::getParam('page');
+    
+    if(osc_is_moderator() && $page!='items' && $page!='comments' && $page!='media' && $page!='login' && $page!='admins' && $page!='' && $page!='ajax') {
+        $page = '';
+        osc_add_flash_error_message(_m("You don't have enough permissions"), "admin");
+    }
+    
+    switch( $page )
     {
         case('items'):      require_once(osc_admin_base_path() . 'items.php') ;
                             $do = new CAdminItems() ;

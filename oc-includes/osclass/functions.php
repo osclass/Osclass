@@ -45,7 +45,7 @@ function meta_title( ) {
     switch ($location) {
         case ('item'):
             switch ($section) {
-                case 'item_add':    $text = __('Publish an listing') . ' - ' . osc_page_title(); break;
+                case 'item_add':    $text = __('Publish a listing') . ' - ' . osc_page_title(); break;
                 case 'item_edit':   $text = __('Edit your listing') . ' - ' . osc_page_title(); break;
                 case 'send_friend': $text = __('Send to a friend') . ' - ' . osc_item_title() . ' - ' . osc_page_title(); break;
                 case 'contact':     $text = __('Contact seller') . ' - ' . osc_item_title() . ' - ' . osc_page_title(); break;

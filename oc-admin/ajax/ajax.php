@@ -30,6 +30,16 @@
         //Business Layer...
         function doModel()
         {
+            
+            if(osc_is_moderator() 
+                && $this->action!='items'
+                && $this->action!='media'
+                && $this->action!='comments'
+                && $this->action!='custom'
+                ) {
+                $this->action = 'error_permissions';
+            }
+            
             //specific things for this class
             switch ($this->action) {
                 case 'bulk_actions':
@@ -884,6 +894,9 @@
                         $array['status']  = 'done';
                         echo json_encode($array);
                     }
+                    break;
+                case 'error_permissions':
+                    echo json_encode(array('error' => __("You don't have enough permissions")));
                     break;
                 default:
                     echo json_encode(array('error' => __('no action defined')));

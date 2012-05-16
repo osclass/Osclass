@@ -55,7 +55,7 @@
             parent::__construct();
             $this->setTableName('t_admin') ;
             $this->setPrimaryKey('pk_i_id') ;
-            $this->setFields( array('pk_i_id', 's_name', 's_username', 's_password', 's_email', 's_secret') ) ;
+            $this->setFields( array('pk_i_id', 's_name', 's_username', 's_password', 's_email', 's_secret', 'b_moderator') ) ;
         }
 
         /**

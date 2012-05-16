@@ -159,12 +159,12 @@ switch( $step ) {
                 <div id="content">
                 <?php if($step == 1) { ?>
                     <h2 class="target"><?php _e('Welcome');?></h2>
-                    <form action="install.php" method="POST">
+                    <form action="install.php" method="post">
                         <div class="form-table">
                             <?php if( count($locales) > 1 ) { ?>
                                 <div>
                                     <label><?php _e('Choose language') ; ?></label>
-                                    <select name="install_locale" id="install_locale" onChange="window.location.href='?install_locale='+document.getElementById(this.id).value">
+                                    <select name="install_locale" id="install_locale" onchange="window.location.href='?install_locale='+document.getElementById(this.id).value">
                                         <?php foreach($locales as $k => $locale) {?>
                                         <option value="<?php echo $k ; ?>" <?php if( $k == $current_locale ) { echo 'selected="selected"' ; } ?>><?php echo $locale['name'] ; ?></option>
                                         <?php } ?>
