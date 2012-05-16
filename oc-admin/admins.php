@@ -217,11 +217,13 @@
                                             }
                                         }
                                     } else {
-                                        if( $sPassword!='' && $sPassword == $sPassword2) {
-                                            $array['s_password'] = sha1($sPassword) ;
-                                        } else {
-                                            osc_add_flash_warning_message( _m("The password couldn't be updated. Passwords don't match"), 'admin') ;
-                                            $this->redirectTo(osc_admin_base_url(true) . '?page=admins&action=edit&id=' . $adminId) ;
+                                        if( $sPassword!='') {
+                                            if($sPassword == $sPassword2) {
+                                                $array['s_password'] = sha1($sPassword) ;
+                                            } else {
+                                                osc_add_flash_warning_message( _m("The password couldn't be updated. Passwords don't match"), 'admin') ;
+                                                $this->redirectTo(osc_admin_base_url(true) . '?page=admins&action=edit&id=' . $adminId) ;
+                                            }
                                         }
                                     }
 
