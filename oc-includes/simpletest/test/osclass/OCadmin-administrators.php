@@ -106,7 +106,6 @@ class OCadmin_administrators extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent("Administrators have full control"), "Edit your profile, CHANGE TYPE");
         $this->selenium->type("s_name","Real name user one NEW");
         $this->selenium->type("s_username","useradminoneNEW");
-        $this->selenium->type("old_password", "useradminpass");
         $this->selenium->type("s_password"  , "useradminpassNEW");
         $this->selenium->type("s_password2" , "useradminpassNEW");
         $this->selenium->type("s_email", "admin@mail.com");
@@ -126,6 +125,8 @@ class OCadmin_administrators extends OCadminTest {
         $this->selenium->type("s_name","Real name user one NEW");
         $this->selenium->type("s_username","useradminoneNEW");
         $this->selenium->type("s_email", "newadmin@mail.com");
+        $this->selenium->type("s_password"  , "");
+        $this->selenium->type("s_password2" , "");
         $this->selenium->type("b_moderator", "label='Moderator'");
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
@@ -231,12 +232,12 @@ class OCadmin_administrators extends OCadminTest {
         
         $this->selenium->open( osc_admin_base_url(true)."?page=appearance" );
         $this->selenium->waitForPageToLoad(10000);
-        $this->assertTrue($this->selenium->isTextPresent("You don't have enough permissions"),"Moderator access");
+        $this->assertTrue($this->selenium->isTextPresent("You don't have enough permissions"),"Moderator access");*/
         
     }
 
 
-    function testDeleteAdministrator()
+    function atestDeleteAdministrator()
     {
         $this->loginWith() ;
         $this->selenium->open( osc_admin_base_url(true) );
@@ -244,7 +245,7 @@ class OCadmin_administrators extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//table/tbody/tr/td[contains(.,'useradminone')]/div/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue($this->selenium->isTextPresent("The admin has been deleted correctly"),"Delete administrator");*/
+        $this->assertTrue($this->selenium->isTextPresent("The admin has been deleted correctly"),"Delete administrator");
     }
 }
 ?>
