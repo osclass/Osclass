@@ -273,9 +273,9 @@
                                     <tr>
                                         <td class="labeled"><?php _e('Image'); ?></td>
                                         <td>
-                                            <input type="file" name="watermark_image"/>
+                                            <input type="file" name="watermark_image" />
                                             <?php if(osc_is_watermark_image()!='') { ?>
-                                                <div class="help-box"><img width="100px" src="<?php echo osc_base_url()."oc-content/uploads/watermark.png" ?>" /></div>
+                                                <div class="help-box"><img width="100" src="<?php echo osc_base_url()."oc-content/uploads/watermark.png" ?>" /></div>
                                             <?php }; ?>
                                             <div class="help-box"><?php _e("It has to be a .PNG image") ; ?></div>
                                             <div class="help-box"><?php _e("OSClass doesn't check the watermark image size") ; ?></div>
