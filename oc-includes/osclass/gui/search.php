@@ -308,8 +308,8 @@
                         minLength: 2,
                         select: function( event, ui ) {
                             log( ui.item ?
-                                "<?php osc_esc_js(_e('Selected', 'modern')); ?>: " + ui.item.value + " aka " + ui.item.id :
-                                "<?php osc_esc_js(_e('Nothing selected, input was', 'modern')); ?> " + this.value );
+                                "<?php echo osc_esc_js(__('Selected', 'modern')); ?>: " + ui.item.value + " aka " + ui.item.id :
+                                "<?php echo osc_esc_js(__('Nothing selected, input was', 'modern')); ?> " + this.value );
                         }
                     });
                 });
