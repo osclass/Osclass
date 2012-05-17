@@ -106,7 +106,7 @@
                             <div class="input-line">
                                 <label><?php _e('Description (only for internal purposes)') ; ?></label>
                                 <div class="input">
-                                    <input type="text" class="large" name="description" value="<?php if( $edit ) { echo osc_esc_html($widget['s_description']) ; } ?>"/>
+                                    <input type="text" class="large" name="description" value="<?php if( $edit ) { echo osc_esc_html($widget['s_description']) ; } ?>" />
                                 </div>
                             </div>
                             <div class="input-line">
