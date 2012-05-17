@@ -45,6 +45,13 @@
                     if(Params::getParam("id")=='') {
                         $this->redirectTo(osc_admin_base_url(true)."?page=emails");
                     }
+
+                    $form     = count(Session::newInstance()->_getForm());
+                    $keepForm = count(Session::newInstance()->_getKeepForm());
+                    if($form == 0 || $form == $keepForm) {
+                        Session::newInstance()->_dropKeepForm();
+                    }
+                    
                     $this->_exportVariableToView("email", $this->emailManager->findByPrimaryKey(Params::getParam("id")));
                     $this->doView("emails/frm.php");
                     break;
@@ -61,6 +68,10 @@
                             $aFieldsDescription[$m[1]][$m[2]] = $v;
                         }
                     }
+                    
+                    Session::newInstance()->_setForm('s_internal_name',$s_internal_name);
+                    Session::newInstance()->_setForm('aFieldsDescription',$aFieldsDescription);
+                    
                     if($not_empty) {
                         foreach($aFieldsDescription as $k => $_data) {
                             $this->emailManager->updateDescription($id, $k, $_data['s_title'], $_data['s_text']);
@@ -70,6 +81,7 @@
                             if(!$this->emailManager->isIndelible($id)) {
                                 $this->emailManager->updateInternalName($id, $s_internal_name);
                             }
+                            Session::newInstance()->_clearVariables();
                             osc_add_flash_ok_message( _m('The email/alert has been updated'), 'admin' );
                             $this->redirectTo(osc_admin_base_url(true)."?page=emails");
                         }
@@ -77,7 +89,7 @@
                     } else {
                         osc_add_flash_error_message( _m('The email couldn\'t be updated, at least one title should not be empty'), 'admin') ;
                     }
-                    $this->redirectTo(osc_admin_base_url(true)."?page=emails?action=edit&id=" . $id);
+                    $this->redirectTo(osc_admin_base_url(true)."?page=emails&action=edit&id=" . $id);
                     break;
                 default:
                     $this->_exportVariableToView("prefLocale", osc_current_admin_locale());
