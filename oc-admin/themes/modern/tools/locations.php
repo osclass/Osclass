@@ -70,12 +70,12 @@
                         <p>
                             <span id="percent">0</span> % <?php _e("Complete"); ?>
                         </p>
-                        <br/>
+                        <br />
                         <?php } ?>
                         <p>
                             <?php _e('You can recalculate your locations stats. This is useful if you upgrade from versions below OSClass 2.4'); ?>.
                         </p>
-                        <br/>
+                        <br />
                         <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
                             <input type="hidden" name="action" value="locations_post" />
                             <input type="hidden" name="page" value="tools" />
