@@ -145,7 +145,7 @@ switch( $step ) {
             <div id="container">
                 <div id="header" class="installation">
                     <h1 id="logo">
-                        <img src="<?php echo get_absolute_url(); ?>oc-includes/images/osclass-logo.png" alt="OSClass" title="OSClass"/>
+                        <img src="<?php echo get_absolute_url(); ?>oc-includes/images/osclass-logo.png" alt="OSClass" title="OSClass" />
                     </h1>
                     <?php if(in_array($step, array(2,3,4))) { ?>
                     <ul id="nav">
@@ -193,12 +193,12 @@ switch( $step ) {
                             <?php } ?>
                             </ul>
                             <div class="more-stats">
-                                <input type="checkbox" name="ping_engines" id="ping_engines" checked="checked" value="1"/>
+                                <input type="checkbox" name="ping_engines" id="ping_engines" checked="checked" value="1" />
                                 <label for="ping_engines">
                                     <?php _e('Allow my site to appear in search engines like Google.');?>
                                 </label>
-                                <br/>
-                                <input type="checkbox" name="save_stats" id="save_stats" checked="checked" value="1"/>
+                                <br />
+                                <input type="checkbox" name="save_stats" id="save_stats" checked="checked" value="1" />
                                 <input type="hidden" name="step" value="2" />
                                 <label for="save_stats">
                                     <?php _e('Help make OSClass better by automatically sending usage statistics and crash reports to OSClass.');?>
