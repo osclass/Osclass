@@ -79,7 +79,7 @@
                         });
 
                         var input = $(this).find('input.parent');
-//                        $(input).hide();
+                        $(input).hide();
                         var id = $(input).attr('id');
                         id = id+'_';
                         if(totalInputSub == totalInputSubChecked) {
