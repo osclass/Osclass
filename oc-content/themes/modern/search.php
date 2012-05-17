@@ -216,7 +216,7 @@
             </div>
             <div id="sidebar">
                 <div class="filters">
-                    <form action="<?php echo osc_base_url(true); ?>" method="get" onSubmit="return checkEmptyCategories()">
+                    <form action="<?php echo osc_base_url(true); ?>" method="get" onSubmit="return doSearch()">
                         <input type="hidden" name="page" value="search" />
                         <input type="hidden" name="sOrder" value="<?php echo osc_search_order(); ?>" />
                         <input type="hidden" name="iOrderType" value="<?php $allowedTypesForSorting = Search::getAllowedTypesForSorting() ; echo $allowedTypesForSorting[osc_search_order_type()]; ?>" />
@@ -227,6 +227,7 @@
                             <h3><strong><?php _e('Your search', 'modern'); ?></strong></h3>
                             <div class="row one_input">
                                 <input type="text" name="sPattern"  id="query" value="<?php echo osc_search_pattern() ; ?>" />
+                                <div id="search-example"></div>
                             </div>
                             <h3><strong><?php _e('Location', 'modern') ; ?></strong></h3>
                             <div class="row one_input">
