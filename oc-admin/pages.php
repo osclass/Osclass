@@ -45,6 +45,13 @@
                     if(Params::getParam("id")=='') {
                         $this->redirectTo(osc_admin_base_url(true)."?page=pages");
                     }
+                    
+                    $form     = count(Session::newInstance()->_getForm());
+                    $keepForm = count(Session::newInstance()->_getKeepForm());
+                    if($form == 0 || $form == $keepForm) {
+                        Session::newInstance()->_dropKeepForm();
+                    }
+
                     $this->_exportVariableToView("page", $this->pageManager->findByPrimaryKey(Params::getParam("id")));
                     $this->doView("pages/frm.php");
                     break;
@@ -69,6 +76,9 @@
                         }
                     }
 
+                    Session::newInstance()->_setForm('s_internal_name',$s_internal_name);
+                    Session::newInstance()->_setForm('aFieldsDescription',$aFieldsDescription);
+                    
                     if($not_empty) {
                         foreach($aFieldsDescription as $k => $_data) {
                             $this->pageManager->updateDescription($id, $k, $_data['s_title'], $_data['s_text']);
@@ -78,6 +88,7 @@
                             if(!$this->pageManager->isIndelible($id)) {
                                 $this->pageManager->updateInternalName($id, $s_internal_name);
                             }
+                            Session::newInstance()->_clearVariables();
                             osc_add_flash_ok_message(_m('The page has been updated'), 'admin');
                             $this->redirectTo(osc_admin_base_url(true)."?page=pages");
                         }
@@ -85,20 +96,21 @@
                     } else {
                         osc_add_flash_error_message(_m("The page couldn't be updated, at least one title should not be empty"), 'admin') ;
                     }
-                    $this->redirectTo(osc_admin_base_url(true)."?page=pages?action=edit&id=" . $id);
+                    $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=edit&id=" . $id);
                     break;
                 case 'add':
+
+                    $form     = count(Session::newInstance()->_getForm());
+                    $keepForm = count(Session::newInstance()->_getKeepForm());
+                    if($form == 0 || $form == $keepForm) {
+                        Session::newInstance()->_dropKeepForm();
+                    }
+
                     $this->_exportVariableToView("page", array());
                     $this->doView("pages/frm.php");
                     break;
                 case 'add_post':
-                    // setForm just in case the form fails
-                    foreach (Params::getParamsAsArray('', false) as $k => $v) {
-                        Session::newInstance()->_setForm($k, $v);
-                    }
-
                     $s_internal_name = Params::getParam("s_internal_name");
-                    // sanitize internal name
                     $s_internal_name = osc_sanitizeString($s_internal_name) ;
 
                     if($s_internal_name=='') {
@@ -112,29 +124,37 @@
                     }
 
                     $page = $this->pageManager->findByInternalName($s_internal_name);
-                    if(!isset($page['pk_i_id'])) {
-                        $aFields = array('s_internal_name' => $s_internal_name, 'b_indelible' => '0');
-                        $aFieldsDescription = array();
-                        $postParams = Params::getParamsAsArray('', false);
-                        $not_empty = false;
-                        foreach ($postParams as $k => $v) {
-                            if(preg_match('|(.+?)#(.+)|', $k, $m)) {
-                                if($m[2]=='s_title' && $v!='') {
-                                    $not_empty = true;
-                                }
-                                $aFieldsDescription[$m[1]][$m[2]] = $v;
+                    
+                    $aFields = array('s_internal_name' => $s_internal_name, 'b_indelible' => '0');
+                    $aFieldsDescription = array();
+                    $postParams = Params::getParamsAsArray('', false);
+                    $not_empty = false;
+                    foreach ($postParams as $k => $v) {
+                        if(preg_match('|(.+?)#(.+)|', $k, $m)) {
+                            if($m[2]=='s_title' && $v!='') {
+                                $not_empty = true;
                             }
+                            $aFieldsDescription[$m[1]][$m[2]] = $v;
                         }
+                    }
+                    
+                    Session::newInstance()->_setForm('s_internal_name',$s_internal_name);
+                    Session::newInstance()->_setForm('aFieldsDescription',$aFieldsDescription);
+                    
+                    
+                    if(!isset($page['pk_i_id'])) {
                         if($not_empty) {
                             $result = $this->pageManager->insert($aFields, $aFieldsDescription) ;
+                            Session::newInstance()->_clearVariables();
                             osc_add_flash_ok_message(_m('The page has been added'), 'admin') ;
+                            $this->redirectTo(osc_admin_base_url(true)."?page=pages");
                         } else {
                             osc_add_flash_error_message(_m("The page couldn't be added, at least one title should not be empty"), 'admin') ;
                         }
                     } else {
                         osc_add_flash_error_message(_m("Oops! That internal name is already in use. We can't made the changes"), 'admin') ;
                     }
-                    $this->redirectTo(osc_admin_base_url(true)."?page=pages");
+                    $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=add");
                     break;
                 case 'delete':
                     $id = Params::getParam("id");
