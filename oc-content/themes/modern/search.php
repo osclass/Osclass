@@ -79,12 +79,22 @@
                         });
 
                         var input = $(this).find('input.parent');
-                        $(input).hide();
+//                        $(input).hide();
                         var id = $(input).attr('id');
                         id = id+'_';
                         if(totalInputSub == totalInputSubChecked) {
-                            var aux = $('<div class="chbx checked"><span></span></div>').attr('id', id);
-                            $(input).before(aux);
+                            if(totalInputSub == 0) {
+                                if( $(this).find("input[name='sCategory[]']:checked").size() > 0) {    
+                                    var aux = $('<div class="chbx checked"><span></span></div>').attr('id', id);   
+                                    $(input).before(aux);
+                                } else {
+                                    var aux = $('<div class="chbx"><span></span></div>').attr('id', id);   
+                                    $(input).before(aux);
+                                }
+                            } else {
+                                var aux = $('<div class="chbx checked"><span></span></div>').attr('id', id);
+                                $(input).before(aux);
+                            }
                         }else if(totalInputSubChecked == 0) {
                             // no input checked
                             var aux = $('<div class="chbx"><span></span></div>').attr('id', id);
