@@ -249,6 +249,18 @@
             </div>
             <!-- /right container -->
         </div>
+        <?php if(Params::getParam('country')!='' && Params::getParam('country_code')!='') { ?>
+            <script type="text/javascript">
+                <?php if(Params::getParam('country')!='' && Params::getParam('country_code')!='') { ?>
+                    show_region('<?php echo Params::getParam('country_code'); ?>', '<?php echo addslashes(Params::getParam('country')); ?>');
+                    function hook_load_cities() {
+                    <?php if(Params::getParam('region')!='') { ?>
+                        show_city(<?php echo Params::getParam('region'); ?>);
+                    <?php }; ?>
+                    };
+                <?php }; ?>
+            </script>
+        <?php }; ?>
         <!-- /container -->
         <div id="fade" class="black_overlay"></div>
         <?php osc_current_admin_theme_path('footer.php') ; ?>

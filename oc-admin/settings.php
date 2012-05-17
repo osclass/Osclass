@@ -207,6 +207,7 @@
                                                                         $mRegions    = new Region();
                                                                         $regionName  = Params::getParam('region');
                                                                         $countryCode = Params::getParam('country_c_parent');
+                                                                        $country     = Country::newInstance()->findByCode($countryCode);
 
                                                                         $exists = $mRegions->findByName($regionName, $countryCode);
                                                                         if(!isset($exists['s_name'])) {
@@ -222,15 +223,17 @@
                                                                                                              $regionName), 'admin');
                                                                         }
                                                                     }
-                                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$countryCode."&country=".@$country['s_name']);
                                             break;
                                             case('edit_region'):    // edit region
                                                                     $mRegions  = new Region();
                                                                     $newRegion = Params::getParam('e_region');
                                                                     $regionId  = Params::getParam('region_id');
                                                                     $exists = $mRegions->findByName($newRegion);
-                                                                    if(!$exists['pk_i_id'] || $exists['pk_i_id']==$regionId) {
+                                                                    if(!isset($exists['pk_i_id']) || $exists['pk_i_id']==$regionId) {
                                                                         if($regionId != '') {
+                                                                            $aRegion = $mRegions->findByPrimaryKey($regionId);
+                                                                            $country     = Country::newInstance()->findByCode($aRegion['fk_c_country_code']);
                                                                             $mRegions->update(array('s_name' => $newRegion)
                                                                                              ,array('pk_i_id' => $regionId));
                                                                             ItemLocation::newInstance()->update(
@@ -244,7 +247,7 @@
                                                                         osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
                                                                                                             $newRegion), 'admin');
                                                                     }
-                                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']);
                                             break;
                                             case('delete_region'):  // delete region
                                                                     $mRegion  = new Region();
@@ -255,6 +258,7 @@
                                                                     if($regionId != '') {
                                                                         Item::newInstance()->deleteByRegion($regionId);
                                                                         $aRegion = $mRegion->findByPrimaryKey($regionId);
+                                                                        $country = Country::newInstance()->findByCode($aRegion['fk_c_country_code']);
 
                                                                         // remove city_stats
                                                                         CityStats::newInstance()->deleteByRegion($regionId) ;
@@ -266,15 +270,18 @@
                                                                         osc_add_flash_ok_message(sprintf(_m('%s has been deleted'),
                                                                                 $aRegion['s_name']), 'admin');
                                                                     }
-                                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']);
                                             break;
                                             case('add_city'):       // add city
+                                                                    $mRegion  = new Region();
                                                                     $mCities     = new City();
                                                                     $regionId    = Params::getParam('region_parent');
                                                                     $countryCode = Params::getParam('country_c_parent');
                                                                     $newCity     = Params::getParam('city');
 
                                                                     $exists = $mCities->findByName($newCity, $regionId);
+                                                                    $region = $mRegion->findByPrimaryKey($regionId);
+                                                                    $country = Country::newInstance()->findByCode($region['fk_c_country_code']);
                                                                     if(!isset($exists['s_name'])) {
                                                                         $mCities->insert(array('fk_i_region_id'    => $regionId
                                                                                               ,'s_name'            => $newCity
@@ -288,15 +295,19 @@
                                                                         osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
                                                                                                          $newCity), 'admin');
                                                                     }
-                                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']."&region=".$regionId);
                                             break;
                                             case('edit_city'):      // edit city
+                                                                    $mRegion  = new Region();
                                                                     $mCities = new City();
                                                                     $newCity = Params::getParam('e_city');
                                                                     $cityId  = Params::getParam('city_id');
 
                                                                     $exists = $mCities->findByName($newCity);
                                                                     if(!isset($exists['pk_i_id']) || $exists['pk_i_id']==$cityId) {
+                                                                        $city = $mCities->findByPrimaryKey($cityId);
+                                                                        $region = $mRegion->findByPrimaryKey($city['fk_i_region_id']);
+                                                                        $country = Country::newInstance()->findByCode($region['fk_c_country_code']);
                                                                         $mCities->update(array('s_name' => $newCity)
                                                                                         ,array('pk_i_id' => $cityId));
                                                                         ItemLocation::newInstance()->update(
@@ -309,20 +320,23 @@
                                                                         osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
                                                                                                          $newCity), 'admin');
                                                                     }
-                                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']."&region=".@$region['pk_i_id']);
                                             break;
                                             case('delete_city'):    // delete city
+                                                                    $mRegion  = new Region();
                                                                     $mCities = new City();
                                                                     $cityId  = Params::getParam('id');
                                                                     Item::newInstance()->deleteByCity($cityId);
                                                                     $aCity   = $mCities->findByPrimaryKey($cityId);
                                                                     // remove region_stats
+                                                                    $region = $mRegion->findByPrimaryKey($aCity['fk_i_region_id']);
+                                                                    $country = Country::newInstance()->findByCode($region['fk_c_country_code']);
                                                                     CityStats::newInstance()->delete( array('fk_i_city_id' => $cityId) ) ;
                                                                     $mCities->delete(array('pk_i_id' => $cityId));
 
                                                                     osc_add_flash_ok_message(sprintf(_m('%s has been deleted'),
                                                                                                      $aCity['s_name']), 'admin');
-                                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']."&region=".@$region['pk_i_id']);
                                             break;
                                         }
 
