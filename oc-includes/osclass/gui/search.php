@@ -216,12 +216,12 @@
             </div>
             <div id="sidebar">
                 <div class="filters">
-                    <form action="<?php echo osc_base_url(true); ?>" method="get" onSubmit="return checkEmptyCategories()">
+                    <form action="<?php echo osc_base_url(true); ?>" method="get" onsubmit="return checkEmptyCategories()">
                         <input type="hidden" name="page" value="search" />
                         <input type="hidden" name="sOrder" value="<?php echo osc_search_order(); ?>" />
                         <input type="hidden" name="iOrderType" value="<?php $allowedTypesForSorting = Search::getAllowedTypesForSorting() ; echo $allowedTypesForSorting[osc_search_order_type()]; ?>" />
                         <?php foreach(osc_search_user() as $userId) { ?>
-                        <input type="hidden" name="sUser[]" value="<?php echo $userId; ?>"/>
+                        <input type="hidden" name="sUser[]" value="<?php echo $userId; ?>" />
                         <?php } ?>
                         <fieldset class="box location">
                             <h3><strong><?php _e('Your search', 'modern'); ?></strong></h3>
@@ -308,8 +308,8 @@
                         minLength: 2,
                         select: function( event, ui ) {
                             log( ui.item ?
-                                "<?php _e('Selected', 'modern'); ?>: " + ui.item.value + " aka " + ui.item.id :
-                                "<?php _e('Nothing selected, input was', 'modern'); ?> " + this.value );
+                                "<?php osc_esc_js(_e('Selected', 'modern')); ?>: " + ui.item.value + " aka " + ui.item.id :
+                                "<?php osc_esc_js(_e('Nothing selected, input was', 'modern')); ?> " + this.value );
                         }
                     });
                 });
