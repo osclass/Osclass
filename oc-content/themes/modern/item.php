@@ -86,7 +86,7 @@
                     <p><?php echo osc_item_description() ; ?></p>
                     <div id="custom_fields">
                         <?php if( osc_count_item_meta() >= 1 ) { ?>
-                            <br/>
+                            <br />
                             <div class="meta_list">
                                 <?php while ( osc_has_item_meta() ) { ?>
                                     <?php if(osc_item_meta_value()!='') { ?>
