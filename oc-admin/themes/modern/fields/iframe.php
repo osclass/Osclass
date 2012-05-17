@@ -85,8 +85,8 @@
                 </div>
             </div>
             <div class="actions-cfield">
-                <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>">
-                <input type="button" value="<?php echo osc_esc_html( __('Cancel') ) ; ?>" onclick="$('#edit-custom-field-frame').remove() ;">
+                <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
+                <input type="button" value="<?php echo osc_esc_html( __('Cancel') ) ; ?>" onclick="$('#edit-custom-field-frame').remove() ;" />
             </div>
         </fieldset>
     </form>
