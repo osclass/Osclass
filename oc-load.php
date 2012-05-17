@@ -87,6 +87,7 @@ require_once LIB_PATH . 'osclass/helpers/hUsers.php';
 require_once LIB_PATH . 'osclass/helpers/hItems.php';
 require_once LIB_PATH . 'osclass/helpers/hSearch.php';
 require_once LIB_PATH . 'osclass/helpers/hUtils.php';
+
 require_once LIB_PATH . 'osclass/helpers/hCategories.php';
 require_once LIB_PATH . 'osclass/helpers/hTranslations.php';
 require_once LIB_PATH . 'osclass/helpers/hSecurity.php';
@@ -158,6 +159,7 @@ require_once LIB_PATH . 'osclass/classes/Pagination.php';
 require_once LIB_PATH . 'osclass/classes/Watermark.php';
 require_once LIB_PATH . 'osclass/classes/Rewrite.php';
 require_once LIB_PATH . 'osclass/classes/Stats.php';
+require_once LIB_PATH . 'osclass/classes/AdminMenu.php';
 require_once LIB_PATH . 'osclass/alerts.php';
 
 require_once LIB_PATH . 'osclass/frm/Form.form.class.php';
@@ -174,6 +176,7 @@ require_once LIB_PATH . 'osclass/frm/Field.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Admin.form.class.php';
 
 require_once LIB_PATH . 'osclass/functions.php';
+require_once LIB_PATH . 'osclass/helpers/hMenuAdmin.php';
 
 define('__OSC_LOADED__', true);
 
