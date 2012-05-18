@@ -59,7 +59,7 @@
                                 steps.innerHTML += data+"<br/>" ;
                             });
                         <?php } else { ?>
-                            steps.innerHTML += '<input type="button" value="<?php _e('Upgrade') ; ?>" onclick="window.location.href=\'<?php echo osc_admin_base_url(true); ?>?page=tools&action=upgrade&confirm=true\';">' ;
+                            steps.innerHTML += '<input type="button" value="<?php _e('Upgrade') ; ?>" onclick="window.location.href=\'<?php echo osc_admin_base_url(true); ?>?page=tools&action=upgrade&confirm=true\';" />' ;
                         <?php } ?>
                     }
                 });
