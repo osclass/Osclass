@@ -70,7 +70,7 @@
             </form>
             
         </div>
-        <p id="backtoblog"><a href="<?php echo osc_base_url() ; ?>" title="<?php echo osc_esc_html( printf( __('Back to %s'), osc_page_title() )) ; ?>">&larr; <?php printf( __('Back to %s'), osc_page_title() ) ; ?></a></p>
+        <p id="backtoblog"><a href="<?php echo osc_base_url() ; ?>" title="<?php echo osc_esc_html( sprintf( __('Back to %s'), osc_page_title() )) ; ?>">&larr; <?php printf( __('Back to %s'), osc_page_title() ) ; ?></a></p>
         <script type="text/javascript">
             $(function(){
                 function placeholder(input_form) {
