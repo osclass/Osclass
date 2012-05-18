@@ -604,3 +604,11 @@ div.uploader input { opacity: 0; filter: alpha(opacity:0); position: absolute; t
     padding: 8px;
     vertical-align: top;
 }
+#search-example{
+    padding-left:10px;
+    padding-bottom:10px;
+    color:#ff0000;
+}
+.filters #search-example{
+    padding:5px 0;
+}
