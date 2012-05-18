@@ -25,6 +25,9 @@
         function __construct()
         {
             parent::__construct() ;
+            // init admin menu
+            AdminMenu::newInstance()->init();
+            
             osc_run_hook( 'init_admin' ) ;
 
             // check if exist a new version each day
