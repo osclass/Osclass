@@ -31,12 +31,12 @@
                 //editing...
                 $title = __("Edit comment") ;
                 $action_frm = "comment_edit_post";
-                $btn_text = __("Save");
+                $btn_text = osc_esc_html( __("Save"));
             } else {
                 //adding...
                 $title = __("Add a comment");
                 $action_frm = "add_comment_post";
-                $btn_text = __('Add');
+                $btn_text = osc_esc_html( __('Add'));
             }
         ?>
         <?php CommentForm::js_validation(true); ?>
@@ -100,7 +100,7 @@
                         <div class="FormElement FormButtonsSubmit">
                             <div class="FormElementName"></div>
                             <div class="FormElementInput">
-                                <input class="formButton" type="button" onclick="window.location='<?php echo osc_admin_base_url(true);?>?page=comments';" value="<?php _e('Cancel'); ?>" />
+                                <input class="formButton" type="button" onclick="window.location='<?php echo osc_admin_base_url(true);?>?page=comments';" value="<?php echo osc_esc_html( __('Cancel')); ?>" />
                                 <input class="formButton" type="submit" value="<?php echo $btn_text; ?>" />
                             </div>
                         </div>
