@@ -35,7 +35,6 @@ class Frontend_search extends FrontendTest {
                                 $this->_email);
             
             // ------
-            sleep(4);
             $this->assertTrue($this->selenium->isTextPresent("Your listing has been published","Insert item.") );
         }
         
