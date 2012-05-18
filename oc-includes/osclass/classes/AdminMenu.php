@@ -109,7 +109,7 @@
             $this->add_submenu( 'users', __('Add new administrator'), osc_admin_base_url(true) .'?page=admins&action=add', 'users_administrators_new') ;
             $this->add_submenu( 'users', __('Manage users'), osc_admin_base_url(true) .'?page=users', 'users_manage') ;
             $this->add_submenu( 'users', __('Add new user'), osc_admin_base_url(true) .'?page=users&action=create', 'users_new') ;
-            $this->add_submenu( 'users', __('User settings'), osc_admin_base_url(true) .'?page=admins&action=settings', 'users_settings') ;
+            $this->add_submenu( 'users', __('User settings'), osc_admin_base_url(true) .'?page=users&action=settings', 'users_settings') ;
             $this->add_submenu( 'users', __('Your Profile'), osc_admin_base_url(true) .'?page=admins&action=edit', 'users_administrators_profile') ;
             
             $this->aPages_action['stats'] = array('stats');
