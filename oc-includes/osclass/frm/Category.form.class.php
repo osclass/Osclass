@@ -69,7 +69,7 @@
 
                 foreach($categories as $c) {
                     echo '<li>' ;
-                    echo $d_string . '<input type="checkbox" name="categories[]" value="' . $c['pk_i_id'] . '" onclick="javascript:checkCat(\'' . $c['pk_i_id'] . '\', this.checked) ;" ' . ( in_array($c['pk_i_id'], $selected) ? 'checked' : '' ) . '>' . ( ( $depth == 0 ) ? '<span>' : '' ) . $c['s_name'] . ( ( $depth == 0 ) ? '</span>' : '' ) . '</input>';
+                    echo $d_string . '<input type="checkbox" name="categories[]" value="' . $c['pk_i_id'] . '" onclick="javascript:checkCat(\'' . $c['pk_i_id'] . '\', this.checked) ;" ' . ( in_array($c['pk_i_id'], $selected) ? 'checked="checked"' : '' ) . ' />' . ( ( $depth == 0 ) ? '<span>' : '' ) . $c['s_name'] . ( ( $depth == 0 ) ? '</span>' : '' );
                     CategoryForm::categories_tree($c['categories'], $selected, $depth + 1) ;
                     echo '</li>' ;
                 }

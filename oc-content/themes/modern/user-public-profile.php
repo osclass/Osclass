@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div id="main">
-                <br/>
+                <br />
                 <div id="description">
                 <h2><?php _e('Profile'); ?></h2>
                     <ul id="user_data">
