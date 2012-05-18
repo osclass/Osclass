@@ -57,20 +57,20 @@
                     },
                     messages: {
                         dimThumbnail: {
-                            required: "<?php _e("Thumbnail size: this field is required"); ?>.",
-                            regexp: "<?php _e("Thumbnail size: is not in the correct format"); ?>."
+                            required: "<?php osc_esc_js( __("Thumbnail size: this field is required")); ?>.",
+                            regexp: "<?php osc_esc_js( __("Thumbnail size: is not in the correct format")); ?>."
                         },
                         dimPreview: {
-                            required: "<?php _e("Preview size: this field is required"); ?>.",
-                            regexp: "<?php _e("Preview size: is not in the correct format"); ?>."
+                            required: "<?php osc_esc_js( __("Preview size: this field is required")); ?>.",
+                            regexp: "<?php osc_esc_js( __("Preview size: is not in the correct format")); ?>."
                         },
                         dimNormal: {
-                            required: "<?php _e("Normal size: this field is required"); ?>.",
-                            regexp: "<?php _e("Normal size: is not in the correct format"); ?>."
+                            required: "<?php osc_esc_js( __("Normal size: this field is required")); ?>.",
+                            regexp: "<?php osc_esc_js( __("Normal size: is not in the correct format")); ?>."
                         },
                         maxSizeKb: {
-                            required: "<?php _e("Maximun size: this field is required"); ?>.",
-                            digits: "<?php _e("Maximun size: this field has to be numeric only"); ?>."
+                            required: "<?php osc_esc_js( __("Maximun size: this field is required")); ?>.",
+                            digits: "<?php osc_esc_js( __("Maximun size: this field has to be numeric only")); ?>."
                         }
                     },
                     wrapper: "li",
@@ -173,7 +173,7 @@
                                 <tr>
                                     <td><?php _e('Original image') ; ?></td>
                                     <td>
-                                        <input type="checkbox" name="keep_original_image" value="1" <?php echo ( osc_keep_original_image() ? 'checked' : '' ) ; ?>/>
+                                        <input type="checkbox" name="keep_original_image" value="1" <?php echo ( osc_keep_original_image() ? 'checked="checked"' : '' ) ; ?>/>
                                         <?php _e('Keep original image, unaltered after uploading.') ; ?>
                                         <span class="help-box"><?php _e('It might occupy more space than usual.') ; ?></span>
                                     </td>
@@ -201,7 +201,7 @@
                                 <tr>
                                     <td><?php _e('ImageMagick') ; ?></td>
                                     <td>
-                                        <input type="checkbox" name="use_imagick" value="1" <?php echo ( osc_use_imagick() ? 'checked' : '' ) ; ?> <?php if( !$imagickLoaded ) echo 'disabled' ; ?>/>
+                                        <input type="checkbox" name="use_imagick" value="1" <?php echo ( osc_use_imagick()?'checked="checked"':'' ); ?> <?php if( !$imagickLoaded ) echo 'disabled="disabled"'; ?> />
                                         <?php _e('Use ImageMagick instead of GD library') ; ?>
                                         <?php if( !$imagickLoaded ) { ?>
                                         <div class="FlashMessage FlashMessage-inline error">
@@ -218,11 +218,11 @@
                                     <td><?php _e('Watermark type'); ?></td>
                                     <td>
                                         <div>
-                                            <input type="radio" id="watermark_none" name="watermark_type" value="none" <?php echo ( ( !osc_is_watermark_image() && !osc_is_watermark_text() ) ? 'checked="checked"' : '' ) ; ?> />
+                                            <input type="radio" id="watermark_none" name="watermark_type" value="none" <?php echo ( ( !osc_is_watermark_image() && !osc_is_watermark_text() ) ? 'checked="checked"' : '' ); ?> />
                                             <?php _e('None') ; ?>
                                         </div>
                                         <div>
-                                            <input type="radio" id="watermark_text" name="watermark_type" value="text" <?php echo ( osc_is_watermark_text() ? 'checked="checked"' : '' ) ; ?> <?php echo ( $freeType ? '' : 'disabled' ) ; ?> />
+                                            <input type="radio" id="watermark_text" name="watermark_type" value="text" <?php echo ( osc_is_watermark_text() ? 'checked="checked"' : '' ) ; ?> <?php echo ( $freeType ? '' : 'disabled="disabled"' ); ?> />
                                             <?php _e('Text') ; ?>
                                             <?php if( !$freeType ) { ?>
                                             <div class="FlashMessage FlashMessage-inline error">
