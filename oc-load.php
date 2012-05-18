@@ -178,7 +178,7 @@ require_once LIB_PATH . 'osclass/frm/Field.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Admin.form.class.php';
 
 require_once LIB_PATH . 'osclass/functions.php';
-require_once LIB_PATH . 'osclass/helpers/hMenuAdmin.php';
+require_once LIB_PATH . 'osclass/helpers/hAdminMenu.php';
 
 define('__OSC_LOADED__', true);
 

@@ -99,7 +99,7 @@
     }
     
     /**
-     * Add menu with id $id_menu, and $array information
+     * Add menu entry
      * 
      * @param type $array
      * @param type $id_menu 
@@ -113,9 +113,9 @@
      * Remove menu section with id $id_menu
      * @param type $id_menu 
      */
-    function osc_remove_admin_menu_page($id_menu)
+    function osc_remove_admin_menu_page($menu_id)
     {
-        AdminMenu::newInstance()->remove_menu( $id_menu ) ;
+        AdminMenu::newInstance()->remove_menu( $menu_id ) ;
     }
     
     /**
@@ -134,9 +134,9 @@
      * @param type $id_menu
      * @param type $id_submenu 
      */
-    function osc_remove_admin_submenu_page( $id_menu, $id_submenu )
+    function osc_remove_admin_submenu_page( $menu_id, $submenu_id )
     {
-        AdminMenu::newInstance()->remove_submenu( $id_menu, $id_submenu ) ;
+        AdminMenu::newInstance()->remove_submenu( $menu_id, $submenu_id ) ;
     }
     
     /**
