@@ -42,7 +42,7 @@
                             <input type="hidden" name="action" value="category_post" />
                             <input type="hidden" name="page" value="tools" />
 
-                            <input id="button_save" type="submit" value="<?php _e('Calculate category stats'); ?>" />
+                            <input id="button_save" type="submit" value="<?php echo osc_esc_html( __('Calculate category stats')); ?>" />
                         </form>
                     </div>
                 </div>
