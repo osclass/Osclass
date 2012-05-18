@@ -41,25 +41,25 @@
                 var steps = document.getElementById('steps') ;
                 var version = <?php echo osc_version() ; ?> ;
                 var fileToUnzip = '';
-                steps.innerHTML += "<?php printf( __('Checking for updates (Current version %s)'), osc_version() ) ; ?>" ;
+                steps.innerHTML += "<?php echo osc_esc_js( sprintf( __('Checking for updates (Current version %s)'), osc_version() )) ; ?>" ;
 
                 $.getJSON("http://www.osclass.org/latest_version.php?callback=?", function(data) {
                     if(data.version <= version) {
-                        steps.innerHTML += "<?php _e('Congratulations! Your OSClass installation is up to date!') ; ?>";
+                        steps.innerHTML += "<?php echo osc_esc_js( __('Congratulations! Your OSClass installation is up to date!')) ; ?>";
                     } else {
-                        steps.innerHTML += "<?php _e('New version to update:') ; ?> " + data.version + "<br/>" ;
+                        steps.innerHTML += "<?php echo osc_esc_js( __('New version to update:')) ; ?> " + data.version + "<br/>" ;
                         <?php if(Params::getParam('confirm')=='true') {?>
-                            steps.innerHTML += "<img id=\"loading_image\" src=\"<?php echo osc_current_admin_theme_url('images/loading.gif') ; ?>\" /><?php _e('Upgrading your OSClass installation (this could take a while): ', 'admin') ; ?>" ;
+                            steps.innerHTML += "<img id=\"loading_image\" src=\"<?php echo osc_current_admin_theme_url('images/loading.gif') ; ?>\" /><?php echo osc_esc_js( __('Upgrading your OSClass installation (this could take a while): ', 'admin')) ; ?>" ;
 
                             var tempAr = data.url.split('/') ;
                             fileToUnzip = tempAr.pop() ;
                             $.get('<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=upgrade' , function(data) {
                                 var loading_image = document.getElementById('loading_image') ;
                                 loading_image.style.display = "none" ;
-                                steps.innerHTML += data+"<br/>" ;
+                                steps.innerHTML += data+"<br />" ;
                             });
                         <?php } else { ?>
-                            steps.innerHTML += '<input type="button" value="<?php _e('Upgrade') ; ?>" onclick="window.location.href=\'<?php echo osc_admin_base_url(true); ?>?page=tools&action=upgrade&confirm=true\';" />' ;
+                            steps.innerHTML += '<input type="button" value="<?php echo osc_esc_html( __('Upgrade')) ; ?>" onclick="window.location.href=\'<?php echo osc_admin_base_url(true); ?>?page=tools&action=upgrade&confirm=true\';" />' ;
                         <?php } ?>
                     }
                 });
