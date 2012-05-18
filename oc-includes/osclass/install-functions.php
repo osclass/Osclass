@@ -757,7 +757,7 @@ function display_target() {
         <a href="#" class="button" onclick="validate_form();">Next</a>
     </p>
     <div id="skip-location-d" style="display:none;">
-        <label for="skip-location" style="padding-left: 12px;"><input id="skip-location" name="skip-location" type="checkbox"/><?php _e('Continue installation process and insert countries later'); ?></label>
+        <label for="skip-location" style="padding-left: 12px;"><input id="skip-location" name="skip-location" type="checkbox" /><?php _e('Continue installation process and insert countries later'); ?></label>
     </div>
     <div class="clear"></div>
 </form>
@@ -829,7 +829,7 @@ function display_categories($error, $password) {
                             <?php if (isset($categories[$i]) && is_array($categories[$i])) {?>
                             <div class="cat-title">
                                 <label for="category-<?php echo $categories[$i]['pk_i_id']?>">
-                                    <input id="category-<?php echo $categories[$i]['pk_i_id']?>" class="left" type="checkbox" name="categories[]" value="<?php echo $categories[$i]['pk_i_id']?>" onclick="javascript:check_cat('<?php echo $categories[$i]['pk_i_id']?>', this.checked);"/>
+                                    <input id="category-<?php echo $categories[$i]['pk_i_id']?>" class="left" type="checkbox" name="categories[]" value="<?php echo $categories[$i]['pk_i_id']?>" onclick="javascript:check_cat('<?php echo $categories[$i]['pk_i_id']?>', this.checked);" />
                                     <span><?php echo $categories[$i]['s_name']?></span>
                                 </label>
                             </div>
@@ -837,7 +837,7 @@ function display_categories($error, $password) {
                                 <?php foreach($categories[$i]['categories'] as $sc) { ?>
                                 <div id="category" class="space">
                                     <label for="category-<?php echo $sc['pk_i_id']?>" class="space">
-                                        <input id="category-<?php echo $sc['pk_i_id']?>" type="checkbox" name="categories[]" value="<?php echo $sc['pk_i_id']?>" onclick="javascript:check('category-<?php echo $categories[$i]['pk_i_id']?>')"/>
+                                        <input id="category-<?php echo $sc['pk_i_id']?>" type="checkbox" name="categories[]" value="<?php echo $sc['pk_i_id']?>" onclick="javascript:check('category-<?php echo $categories[$i]['pk_i_id']?>')" />
                                         <?php echo $sc['s_name']; ?>
                                     </label>
                                 </div>
@@ -852,7 +852,7 @@ function display_categories($error, $password) {
     </div>
     <div class="clear"></div>
     <p class="margin20">
-        <input type="submit" class="button" name="submit" value="Next"/>
+        <input type="submit" class="button" name="submit" value="Next" />
     </p>
     <div class="clear"></div>
 </form>
