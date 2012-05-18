@@ -119,9 +119,9 @@ abstract class FrontendTest extends MyWebTestCase {
         $this->selenium->select("currency", "label=Euro €");
         $this->selenium->select("countryId", "label=Spain");
         $this->selenium->type('id=region', $regionId);
-        $this->selenium->click('id=ui-active-menuitem');
+//        $this->selenium->click('id=ui-active-menuitem');
         $this->selenium->type('id=city', $cityId);
-        $this->selenium->click('id=ui-active-menuitem');
+//        $this->selenium->click('id=ui-active-menuitem');
         if($cityArea==NULL) {
             $this->selenium->type("cityArea", "my area");
         } else {
@@ -136,7 +136,8 @@ abstract class FrontendTest extends MyWebTestCase {
                 $this->selenium->click("link=Add new photo");
                 $this->selenium->type("//div[@id='p-0']/div/input", LIB_PATH."simpletest/test/osclass/".$aPhotos[$k]);
             }
-        }
+        } 
+        
         $this->selenium->type("contactName" , $user);
         $this->selenium->type("contactEmail", $email);
 
