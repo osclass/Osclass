@@ -166,7 +166,7 @@ switch( $step ) {
                                     <label><?php _e('Choose language') ; ?></label>
                                     <select name="install_locale" id="install_locale" onchange="window.location.href='?install_locale='+document.getElementById(this.id).value">
                                         <?php foreach($locales as $k => $locale) {?>
-                                        <option value="<?php echo $k ; ?>" <?php if( $k == $current_locale ) { echo 'selected="selected"' ; } ?>><?php echo $locale['name'] ; ?></option>
+                                        <option value="<?php echo osc_esc_html($k) ; ?>" <?php if( $k == $current_locale ) { echo 'selected="selected"' ; } ?>><?php echo $locale['name'] ; ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -207,11 +207,11 @@ switch( $step ) {
                         </div>
                         <?php if($error) { ?>
                         <p class="margin20">
-                            <input type="button" class="button" onclick="document.location = 'install.php?step=1'" value="<?php _e('Try again');?>" />
+                            <input type="button" class="button" onclick="document.location = 'install.php?step=1'" value="<?php echo osc_esc_html( __('Try again'));?>" />
                         </p>
                         <?php } else { ?>
                         <p class="margin20">
-                            <input type="submit" class="button" value="<?php _e('Run the install');?>" />
+                            <input type="submit" class="button" value="<?php echo osc_esc_html( __('Run the install'));?>" />
                         </p>
                     <?php } ?>
                     </form>
