@@ -797,7 +797,7 @@ function display_categories($error, $password) {
 
 <?php } ?>
 <form id="category_form" action="install.php?step=5" method="post">
-    <input type="hidden" name="password" value="<?php echo $password;?>" />
+    <input type="hidden" name="password" value="<?php echo osc_esc_html( $password ) ; ?>" />
     <h2 class="target"><?php _e('Categories'); ?></h2>
     <div class="form-table">
         <?php if(Params::getParam('error_location') == 1) { ?>
