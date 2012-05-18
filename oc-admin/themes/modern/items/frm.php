@@ -80,7 +80,7 @@
                         <fieldset>
                             <h3><?php _e('User') ; ?></h3>
                             <div class="input-line">
-                                <label><?php _e('Item posted by') ; ?></label>
+                                <label><?php _e('Listing posted by') ; ?></label>
                                 <div class="input">
                                     <?php ItemForm::user_select(null, null, __('Non-registered user')) ; ?>
                                 </div>
