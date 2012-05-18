@@ -59,7 +59,7 @@
                                         <?php _e('Settings') ; ?>
                                     </td>
                                     <td>
-                                        <input type="checkbox" <?php echo ( osc_reg_user_post() ? 'checked="true"' : '') ; ?> name="reg_user_post" value="1" />
+                                        <input type="checkbox" <?php echo ( osc_reg_user_post() ? 'checked="checked"' : '') ; ?> name="reg_user_post" value="1" />
                                         <?php _e('Only logged in users can post listings') ; ?>
                                     </td>
                                 </tr>
@@ -75,7 +75,7 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <input type="checkbox" <?php echo ( ( osc_moderate_items() == -1 ) ? '' : 'checked="true"' ) ; ?> name="moderate_items" value="1" />
+                                        <input type="checkbox" <?php echo ( ( osc_moderate_items() == -1 ) ? '' : 'checked="checked"' ) ; ?> name="moderate_items" value="1" />
                                         <?php _e('Users have to validate their listings') ; ?>
                                     </td>
                                 </tr>
@@ -91,14 +91,14 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <input type="checkbox" <?php echo ( osc_logged_user_item_validation() ? 'checked="true"' : '' ) ; ?> name="logged_user_item_validation" value="1" <?php echo ( ( osc_moderate_items() != -1 ) ? '' : 'disabled') ; ?> />
+                                        <input type="checkbox" <?php echo ( osc_logged_user_item_validation() ? 'checked="checked"' : '' ) ; ?> name="logged_user_item_validation" value="1" <?php echo ( ( osc_moderate_items() != -1 ) ? '' : 'disabled="disabled"') ; ?> />
                                         <?php _e("Logged in users don't need to validate their listings") ; ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <input type="checkbox" <?php echo ( ( osc_recaptcha_items_enabled() == '0' ) ? '' : 'checked="true"' ) ; ?> name="enabled_recaptcha_items" value="1" />
+                                        <input type="checkbox" <?php echo ( ( osc_recaptcha_items_enabled() == '0' ) ? '' : 'checked="checked"' ) ; ?> name="enabled_recaptcha_items" value="1" />
                                         <?php _e('Show reCAPTCHA in add/edit listing form') ; ?>
                                         <span class="help-box"><?php _e('<strong>Remember</strong> that you must configure reCAPTCHA first') ; ?></span>
                                     </td>
@@ -110,14 +110,14 @@
                                         <?php _e('Contact publisher') ; ?>
                                     </td>
                                     <td>
-                                        <input type="checkbox" <?php echo ( osc_reg_user_can_contact() ? 'checked="true"' : '' ) ; ?> name="reg_user_can_contact" value="1" />
+                                        <input type="checkbox" <?php echo ( osc_reg_user_can_contact() ? 'checked="checked"' : '' ) ; ?> name="reg_user_can_contact" value="1" />
                                         <?php _e('Only allow registered users to contact publisher') ; ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <input type="checkbox" <?php echo ( osc_item_attachment() ? 'checked="true"' : '' ) ; ?> name="item_attachment" value="1" />
+                                        <input type="checkbox" <?php echo ( osc_item_attachment() ? 'checked="checked"' : '' ) ; ?> name="item_attachment" value="1" />
                                         <?php _e('Allow attach files in contact publisher form') ; ?>
                                     </td>
                                 </tr>
@@ -128,21 +128,21 @@
                                         <?php _e('Notifications') ; ?>
                                     </td>
                                     <td>
-                                        <input type="checkbox" <?php echo ( osc_notify_new_item() ? 'checked="true"' : '') ; ?> name="notify_new_item" value="1" />
+                                        <input type="checkbox" <?php echo ( osc_notify_new_item() ? 'checked="checked"' : '') ; ?> name="notify_new_item" value="1" />
                                         <?php _e('Notify admin when a new listing is added') ; ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <input type="checkbox" <?php echo ( osc_notify_contact_item() ? 'checked="true"' : '' ) ; ?> name="notify_contact_item" value="1" />
+                                        <input type="checkbox" <?php echo ( osc_notify_contact_item() ? 'checked="checked"' : '' ) ; ?> name="notify_contact_item" value="1" />
                                         <?php _e('Send a copy to admin of the contact publisher e-mail') ; ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <input type="checkbox" <?php echo ( osc_notify_contact_friends() ? 'checked="true"' : '' ) ; ?> name="notify_contact_friends" value="1" />
+                                        <input type="checkbox" <?php echo ( osc_notify_contact_friends() ? 'checked="checked"' : '' ) ; ?> name="notify_contact_friends" value="1" />
                                         <?php _e('Send a copy to admin of the share listing e-mail') ; ?>
                                     </td>
                                 </tr>
@@ -153,14 +153,14 @@
                                         <?php _e('Optional fields') ; ?>
                                     </td>
                                     <td>
-                                        <input type="checkbox" <?php echo ( osc_price_enabled_at_items() ? 'checked="true"' : '' ) ; ?> name="enableField#f_price@items" value="1"  />
+                                        <input type="checkbox" <?php echo ( osc_price_enabled_at_items() ? 'checked="checked"' : '' ) ; ?> name="enableField#f_price@items" value="1"  />
                                         <?php _e('Price') ; ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <input type="checkbox" <?php echo ( osc_images_enabled_at_items() ? 'checked="true"' : '' ) ; ?> name="enableField#images@items" value="1" />
+                                        <input type="checkbox" <?php echo ( osc_images_enabled_at_items() ? 'checked="checked"' : '' ) ; ?> name="enableField#images@items" value="1" />
                                         <?php _e('Attach images') ; ?>
                                     </td>
                                 </tr>
