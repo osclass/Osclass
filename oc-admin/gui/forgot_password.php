@@ -37,8 +37,8 @@
             <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" >
                 <input type="hidden" name="page" value="login" />
                 <input type="hidden" name="action" value="forgot_post" />
-                <input type="hidden" name="adminId" value="<?php echo Params::getParam('adminId'); ?>" />
-                <input type="hidden" name="code" value="<?php echo Params::getParam('code'); ?>" />
+                <input type="hidden" name="adminId" value="<?php echo Params::getParam('adminId', true); ?>" />
+                <input type="hidden" name="code" value="<?php echo Params::getParam('code', true); ?>" />
                     <p>
                         <label for="new_password">
                             <span><?php _e('New pasword') ; ?></span>
@@ -52,7 +52,7 @@
                         </label>
                     </p>
                     <p class="submit">
-                        <input type="submit" name="submit" id="submit" value="<?php _e('Change password') ; ?>" tabindex="100" />
+                        <input type="submit" name="submit" id="submit" value="<?php echo osc_esc_html( __('Change password')); ?>" tabindex="100" />
                     </p>
             </form>
             <p id="nav">
