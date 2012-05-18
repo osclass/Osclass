@@ -80,7 +80,7 @@
                             <input type="hidden" name="action" value="locations_post" />
                             <input type="hidden" name="page" value="tools" />
 
-                            <input id="button_save" type="submit" value="<?php _e('Calculate locations stats'); ?>" />
+                            <input id="button_save" type="submit" value="<?php echo osc_esc_html( __('Calculate locations stats')); ?>" />
                         </form>
                     </div>
                 </div>
