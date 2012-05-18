@@ -124,14 +124,14 @@
                             <tr>
                                 <td><?php _e('SMTP') ; ?></td>
                                 <td>
-                                    <input type="checkbox" <?php echo ( osc_mailserver_auth() ? 'checked="true"' : '' ) ; ?> name="mailserver_auth" value="1" />
+                                    <input type="checkbox" <?php echo ( osc_mailserver_auth() ? 'checked="checked"' : '' ) ; ?> name="mailserver_auth" value="1" />
                                     <?php _e('SMTP authentication enabled') ; ?>
                                 </td>
                             </tr>
                             <tr>
                                 <td><?php _e('POP') ; ?></td>
                                 <td>
-                                    <input type="checkbox" <?php echo ( osc_mailserver_pop() ? 'checked="true"' : '' ) ; ?> name="mailserver_pop" value="1" />
+                                    <input type="checkbox" <?php echo ( osc_mailserver_pop() ? 'checked="checked"' : '' ) ; ?> name="mailserver_pop" value="1" />
                                     <?php _e('Use POP before SMTP') ; ?>
                                 </td>
                             </tr>
