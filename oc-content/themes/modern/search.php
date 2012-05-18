@@ -49,7 +49,6 @@
                     border-radius:2px;
                     -moz-border-radius:2px;
                     -webkit-border-radius:2px;
-
                 }
                 .chbx.checked{
                     background-image:url('<?php echo osc_current_web_theme_url('images/checkmark.png'); ?>');
