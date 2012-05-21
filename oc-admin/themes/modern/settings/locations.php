@@ -28,7 +28,7 @@
             var s_view_more = '<?php echo osc_esc_js(_e('View more')); ?>';
             var addText = '<?php echo osc_esc_js(_e('Add')); ?>';
             var cancelText = '<?php echo osc_esc_js(_e('Cancel')); ?>';
-            var editText = '<?php echoosc_esc_js(_e('Edit')); ?>';
+            var editText = '<?php echo osc_esc_js(_e('Edit')); ?>';
             var editNewCountryText = '<?php echo osc_esc_js(__('Edit country')) ; ?>';
             var addNewCountryText = '<?php echo osc_esc_js(__('Add new country')) ; ?>';
             var editNewRegionText = '<?php echo osc_esc_js(__('Edit region')) ; ?>';
