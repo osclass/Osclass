@@ -180,9 +180,9 @@
                                             <?php echo $field['s_name'] ; ?>
                                         </div>
                                         <div class="actions-edit-cfield">
-                                            <a onclick="show_iframe('content_list_<?php echo $field['pk_i_id'] ; ?>','<?php echo $field['pk_i_id'] ; ?>');"><?php _e('Edit') ; ?></a>
+                                            <a onclick="javascript:show_iframe('content_list_<?php echo $field['pk_i_id'] ; ?>','<?php echo $field['pk_i_id'] ; ?>');"><?php _e('Edit') ; ?></a>
                                              &middot;
-                                            <a onclick="delete_field('<?php echo $field['pk_i_id'] ; ?>');"><?php _e('Delete') ; ?></a>
+                                            <a onclick="javascript:delete_field('<?php echo $field['pk_i_id'] ; ?>');"><?php _e('Delete') ; ?></a>
                                         </div>
                                     </div>
                                     <div class="edit content_list_<?php echo $field['pk_i_id'] ; ?>"></div>

@@ -63,8 +63,8 @@
                 <table class="preset-categories">
                     <tr>
                         <td>
-                            <a href="javascript:void() ;" onclick="checkAll('cat_tree', true) ; return false ;"><?php _e('Check all') ; ?></a> &middot;
-                            <a href="javascript:void() ;" onclick="checkAll('cat_tree', false) ; return false ;"><?php _e('Uncheck all') ; ?></a>
+                            <a href="javascript:void(0);" onclick="checkAll('cat_tree', true) ; return false ;"><?php _e('Check all') ; ?></a> &middot;
+                            <a href="javascript:void(0);" onclick="checkAll('cat_tree', false) ; return false ;"><?php _e('Uncheck all') ; ?></a>
                         </td>
                         <td>
                             <ul id="cat_tree">
@@ -85,8 +85,8 @@
                 </div>
             </div>
             <div class="actions-cfield">
-                <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>">
-                <input type="button" value="<?php echo osc_esc_html( __('Cancel') ) ; ?>" onclick="$('#edit-custom-field-frame').remove() ;">
+                <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
+                <input type="button" value="<?php echo osc_esc_html( __('Cancel') ) ; ?>" onclick="$('#edit-custom-field-frame').remove() ;" />
             </div>
         </fieldset>
     </form>
@@ -122,7 +122,7 @@
                   
                     var message = "";
                     if(ret.error) {
-                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/cross.png');?>"/>';
+                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/cross.png');?>" />';
                         message += ret.error; 
 
                     }
@@ -130,7 +130,7 @@
                         $('#settings_form').fadeOut('fast', function(){
                             $('#settings_form').remove();
                         });
-                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/tick.png');?>"/>';
+                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/tick.png');?>" />';
                         message += ret.ok ;
                         $('#quick_edit_'+ret.field_id).html(ret.text);
                     }

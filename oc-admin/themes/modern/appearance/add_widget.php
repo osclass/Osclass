@@ -99,14 +99,14 @@
                         <input type="hidden" name="action" value="<?php echo ( $edit ? 'edit_widget_post' : 'add_widget_post' ) ; ?>" />
                         <input type="hidden" name="page" value="appearance" />
                         <?php if( $edit) { ?>
-                        <input type="hidden" name="id" value="<?php echo Params::getParam('id') ; ?>" />
+                        <input type="hidden" name="id" value="<?php echo Params::getParam('id', true) ; ?>" />
                         <?php } ?>
-                        <input type="hidden" name="location" value="<?php echo Params::getParam('location') ; ?>" />
+                        <input type="hidden" name="location" value="<?php echo Params::getParam('location', true) ; ?>" />
                         <fieldset>
                             <div class="input-line">
                                 <label><?php _e('Description (only for internal purposes)') ; ?></label>
                                 <div class="input">
-                                    <input type="text" class="large" name="description" value="<?php if( $edit ) { echo osc_esc_html($widget['s_description']) ; } ?>"/>
+                                    <input type="text" class="large" name="description" value="<?php if( $edit ) { echo osc_esc_html($widget['s_description']) ; } ?>" />
                                 </div>
                             </div>
                             <div class="input-line">

@@ -33,7 +33,7 @@
             <?php if(is_writable( WebThemes::newInstance()->getCurrentThemePath() ."images/") )  { ?>
 
             <p style="border-bottom: 1px black solid;padding-bottom: 10px;">
-                <img style="padding-right: 10px;"src="<?php echo osc_current_admin_theme_url('images/info-icon.png') ; ?>"/>
+                <img style="padding-right: 10px;" src="<?php echo osc_current_admin_theme_url('images/info-icon.png') ; ?>" />
                 <?php _e('The preferred size of the logo is 600x100','modern'); ?>.
                 <?php if(file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) { ?>
                 <strong><?php _e('Note: Uploading another logo will overwrite current logo','modern'); ?>.</strong>
@@ -46,16 +46,16 @@
                     <label for="package"><?php _e('Logo image','modern'); ?> (png,gif,jpg)</label>
                     <input type="file" name="logo" id="package" />
                 </p>
-                <input id="button_save" type="submit" value="<?php _e('Upload','modern'); ?>" />
+                <input id="button_save" type="submit" value="<?php echo osc_esc_html( __('Upload','modern')); ?>" />
             </form>
             <div>
                 <?php if(file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) {?>
                 <p>
-                    Preview:<br>
+                    Preview:<br />
                     <img border="0" alt="<?php echo osc_page_title(); ?>" src="<?php echo osc_current_web_theme_url('images/logo.jpg');?>"/>
                     <form action="<?php echo osc_admin_render_theme_url('oc-content/themes/modern/admin/admin_settings.php');?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="action_specific" value="remove" />
-                        <input id="button_remove" type="submit" value="<?php _e('Remove logo','modern'); ?>" />
+                        <input id="button_remove" type="submit" value="<?php echo osc_esc_html( __('Remove logo','modern')); ?>" />
                     </form>
                 </p>
                 <?php } else { ?>

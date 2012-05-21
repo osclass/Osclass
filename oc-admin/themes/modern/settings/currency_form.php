@@ -51,15 +51,15 @@
                         }
                     },
                     messages: {
-                        pk_c_code: {
-                            required: "<?php _e("Currency code: this field is required"); ?>.",
-                            minlength: "<?php _e("Currency code: this field is required"); ?>.",
-                            maxlength: "<?php _e("Currency code: this field is required"); ?>."
-                        },
-                        s_name: {
-                            required: "<?php _e("Name: this field is required"); ?>.",
-                            minlength: "<?php _e("Name: this field is required"); ?>."
-                        }
+			pk_c_code: {
+				required: "<?php echo osc_esc_js( __('Currency code: this field is required')); ?>.",
+				minlength: "<?php echo osc_esc_js( __('Currency code: this field is required')); ?>.",
+				maxlength: "<?php echo osc_esc_js( __('Currency code: this field is required')); ?>."
+			},
+			s_name: {
+				required: "<?php echo osc_esc_js( __('Name: this field is required')); ?>.",
+				minlength: "<?php echo osc_esc_js( __('Name: this field is required')); ?>."
+			}
                     },
                     wrapper: "li",
                     errorLabelContainer: "#error_list",
@@ -93,7 +93,7 @@
                                 <tr>
                                     <td class="labeled"><?php _e('Currency Code') ; ?></td>
                                     <td>
-                                        <input type="text" class="medium" name="pk_c_code" value="<?php echo osc_esc_html($aCurrency['pk_c_code']) ; ?>" <?php if( $typeForm == 'edit_post' ) echo 'disabled' ; ?>/>
+                                        <input type="text" class="medium" name="pk_c_code" value="<?php echo osc_esc_html($aCurrency['pk_c_code']) ; ?>" <?php if( $typeForm == 'edit_post' ) echo 'disabled="disabled"' ; ?> />
                                         <span class="help-box"><?php _e('It should be a three-character code') ; ?></span>
                                     </td>
                                 </tr>

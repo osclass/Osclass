@@ -41,58 +41,77 @@
         $aMenu = $adminMenu->get_array_menu() ;
         
         $url_actual = '?'.$_SERVER['QUERY_STRING'];
+        if(preg_match('/(^.*action=\w+)/', $url_actual, $matches)) {
+            $url_actual = $matches[1] ;
+        } else if(preg_match('/(^.*page=\w+)/', $url_actual, $matches)) {
+            $url_actual = $matches[1] ;
+        } else if($url_actual == '?') {
+            $url_actual = '';
+        }
+        
+        $is_moderator = osc_is_moderator();
         
         $sMenu = '<!-- menu -->'.PHP_EOL ;
         $sMenu .= '<div class="left" id="left-side">'.PHP_EOL ;
         $sMenu .= '<ul class="oscmenu">'.PHP_EOL ;
         foreach($aMenu as $key => $value) {
             
-            $aMenu_actions = array();
-            $url = str_replace(osc_admin_base_url(true), '', $value[1] ) ;
-            $url = str_replace(osc_admin_base_url(), '', $value[1] ) ;
-            array_push($aMenu_actions, $url);
-            
-            $sSubmenu = "";
-            if( array_key_exists('sub', $value) ) {
-                // submenu
-                $aSubmenu = $value['sub'] ;
-                if($aSubmenu) {
-                    $sSubmenu .= "<ul>".PHP_EOL;
-                    foreach($aSubmenu as $aSub) {
-                        // hardcoded
-                        $url = str_replace(osc_admin_base_url(true), '', $aSub[1] ) ;
-                        array_push($aMenu_actions, $url);
-                        
-                        $sSubmenu .= '<li><a id="'.$aSub[2].'" href="'.$aSub[1].'">'.$aSub[0].'</a></li>'.PHP_EOL ;
+            $credential = $value[3];
+            $sSubmenu   = "";
+            if(!$is_moderator || $is_moderator && $credential == 'moderator') { // show
+                $aMenu_actions = array();
+                $url = str_replace(osc_admin_base_url(true), '', $value[1] ) ;
+                $url = str_replace(osc_admin_base_url(), '', $value[1] ) ;
+                array_push($aMenu_actions, $url);
+
+                if( array_key_exists('sub', $value) ) {
+                    // submenu
+                    $aSubmenu = $value['sub'] ;
+                    if($aSubmenu) {
+                        $sSubmenu .= "<ul>".PHP_EOL;
+                        foreach($aSubmenu as $aSub) {
+                            $credential_sub = $aSub[4];
+                            if(!$is_moderator || $is_moderator && $credential_sub == 'moderator') { // show
+                                // hardcoded
+                                $url = str_replace(osc_admin_base_url(true), '', $aSub[1] ) ;
+                                array_push($aMenu_actions, $url);
+
+                                $sSubmenu .= '<li><a id="'.$aSub[2].'" href="'.$aSub[1].'">'.$aSub[0].'</a></li>'.PHP_EOL ;
+                            }   
+                        }
+                        $sSubmenu .= "</ul>".PHP_EOL;
                     }
-                    $sSubmenu .= "</ul>".PHP_EOL;
                 }
+
+                $class = '';
+                if(in_array($url_actual , $aMenu_actions)) {
+                    $class = 'current-menu-item';
+                    $something_selected = true;
+                }
+
+                $sMenu .= '<li id="menu_'.$value[2].'" class="'.$class.'">'.PHP_EOL ;
+                $sMenu .= '<h3><a id="'.$value[2].'" href="'.$value[1].'">'.$value[0].'</a></h3>'.PHP_EOL ;
+                $sMenu .= $sSubmenu;
             }
+                
             
-            $class = '';
-            if(in_array($url_actual , $aMenu_actions)) {
-                $class = 'current-menu-item';
-                $something_selected = true;
-            }
-            
-            $sMenu .= '<li id="menu_'.$value[2].'" class="'.$class.'">'.PHP_EOL ;
-            $sMenu .= '<h3><a id="'.$value[2].'" href="'.$value[1].'">'.$value[0].'</a></h3>'.PHP_EOL ;
-            $sMenu .= $sSubmenu;
         }
-        $class = '';
-        if(!$something_selected) $class = 'current-menu-item';
-        $sMenu .= '<li id="menu_personal" class="'.$class.'">'.PHP_EOL ;
-        
-        // Remove hook admin_menu when osclass 4.0 be released
-        // hack, compatibility with menu plugins.
-        ob_start(); 
-        osc_run_hook('admin_menu') ;
-        $plugins_out = ob_get_contents();
-        ob_end_clean();
-        // -----------------------------------------------------
-        
-        $sMenu .= $plugins_out.PHP_EOL;
-        $sMenu .= '</li>'.PHP_EOL ;
+        if(!$is_moderator) {
+            $class = '';
+            if(!$something_selected) $class = 'current-menu-item';
+            $sMenu .= '<li id="menu_personal" class="'.$class.'">'.PHP_EOL ;
+
+            // Remove hook admin_menu when osclass 4.0 be released
+            // hack, compatibility with menu plugins.
+            ob_start(); 
+            osc_run_hook('admin_menu') ;
+            $plugins_out = ob_get_contents();
+            ob_end_clean();
+            // -----------------------------------------------------
+
+            $sMenu .= $plugins_out.PHP_EOL;
+            $sMenu .= '</li>'.PHP_EOL ;
+        }
         $sMenu .= '</ul></div>'.PHP_EOL ;
         $sMenu .= '<!-- menu end -->'.PHP_EOL ;
         echo $sMenu;
