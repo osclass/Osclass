@@ -111,7 +111,7 @@
                                 <option value="deactivate_all"><?php _e('Deactivate') ; ?></option>
                                 <option value="enable_all"><?php _e('Block') ; ?></option>
                                 <option value="disable_all"><?php _e('Unblock') ; ?></option>
-                            </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>">
+                            </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
                         </label>
                     </div>
                     <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatables_list"></table>

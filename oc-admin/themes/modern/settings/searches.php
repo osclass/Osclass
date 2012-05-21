@@ -46,8 +46,8 @@
                     },
                     messages: {
                         custom_queries: {
-                            digits: "<?php _e("Custom number: this field has to be numeric only"); ?>.",
-                            customrule: "<?php _e("Custom number: this field could not be left empty"); ?>."
+                            digits: "<?php echo osc_esc_js(__('Custom number: this field has to be numeric only')); ?>.",
+                            customrule: "<?php echo osc_esc_js(__('Custom number: this field could not be left empty')); ?>."
                         }
                     },
                     wrapper: "li",
@@ -78,7 +78,7 @@
                                 <tr>
                                     <td class="labeled"><?php _e('Latest searches') ; ?></td>
                                     <td>
-                                        <input type="checkbox" <?php echo ( osc_save_latest_searches() ) ? 'checked="true"' : '' ; ?> name="save_latest_searches" />
+                                        <input type="checkbox" <?php echo ( osc_save_latest_searches() ) ? 'checked="checked"' : '' ; ?> name="save_latest_searches" />
                                         <?php _e('Save the latest user searches') ; ?>
                                         <div class="help-box"><?php _e('It may be useful to know what queries users do.') ?></div>
                                     </td>
@@ -108,7 +108,7 @@
                                         </div>
                                         <div>
                                             <input type="radio" name="purge_searches" id="purge_searches" value="custom" <?php echo ( !in_array( osc_purge_latest_searches(), array('hour', 'day', 'week', 'forever', '1000') ) ? 'checked="checked"' : '' ) ; ?> />
-                                            <?php printf( __('Store %s queries'), '<input name="custom_queries" id="custom_queries" type="text" class="small" ' . ( !in_array( osc_purge_latest_searches(), array('hour', 'day', 'week', 'forever', '1000') ) ? 'value="' . osc_esc_html( osc_purge_latest_searches() ) . '"' : '') . ' onkeyup="javascript:document.getElementById(\'customPurge\').value = this.value;"/>' ) ; ?>
+                                            <?php printf( __('Store %s queries'), '<input name="custom_queries" id="custom_queries" type="text" class="small" ' . ( !in_array( osc_purge_latest_searches(), array('hour', 'day', 'week', 'forever', '1000') ) ? 'value="' . osc_esc_html( osc_purge_latest_searches() ) . '"' : '') . ' onkeyup="javascript:document.getElementById(\'customPurge\').value = this.value;" />' ) ; ?>
                                             <p class="help">
                                                 <?php _e("This feature can generate a lot of data. It's recommended to purge this data periodically.") ; ?>
                                             </p>

@@ -69,8 +69,8 @@
                 <div class="plugin-configuration">
                     <form id="frm3" action="<?php echo osc_admin_base_url(true);?>?page=plugins" method="post">
                         <input type="hidden" name="action" value="configure_post" />
-                        <input type="hidden" name="plugin" value="<?php echo $plugin_data['filename']; ?>" />
-                        <input type="hidden" name="plugin_short_name" value="<?php echo $plugin_data['short_name']; ?>" />
+                        <input type="hidden" name="plugin" value="<?php echo osc_esc_html($plugin_data['filename']); ?>" />
+                        <input type="hidden" name="plugin_short_name" value="<?php echo osc_esc_html($plugin_data['short_name']); ?>" />
                         <h2><?php  echo $plugin_data['plugin_name'] ; ?></h2>
                         <p class="text"><?php echo $plugin_data['description'] ; ?></p>
                         <p class="text">

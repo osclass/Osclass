@@ -84,13 +84,13 @@
                         if(count($options)>0) {
                             echo '<ul>';
                             foreach($options as $key => $option) {
-                                echo '<li><input type="radio" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '_'.$key.'" value="'.osc_esc_html($option).'" '.($field['s_value']==$option?'checked':'').'/><label for="meta_' . $field['s_slug'] . '_'.$key.'">'.$option.'</label></li>';
+                                echo '<li><input type="radio" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '_'.$key.'" value="'.osc_esc_html($option).'" '.($field['s_value']==$option?'checked="checked"':'').' /><label for="meta_' . $field['s_slug'] . '_'.$key.'">'.$option.'</label></li>';
                             }
                             echo '</ul>';
                         }
                     }
                 } else if($field['e_type']=="CHECKBOX") {
-                    echo '<input type="checkbox" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] .'" value="1" ' . ((isset($field) && isset($field["s_value"]) && $field["s_value"]==1) ? "checked" : "") . '>';
+                    echo '<input type="checkbox" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] .'" value="1" ' . ((isset($field) && isset($field["s_value"]) && $field["s_value"]==1) ?'checked="checked"':'') . ' />';
                     echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                 } else {
                     echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';

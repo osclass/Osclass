@@ -79,7 +79,7 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <input type="submit" id="submit_akismet" value="<?php osc_esc_html( _e('Save changes') ) ; ?>" />
+                                        <input type="submit" id="submit_akismet" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
                                     </td>
                                 </tr>
                             </table>
@@ -115,7 +115,7 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <input type="submit" id="submit_recaptcha" value="<?php osc_esc_html( _e('Save changes') ) ; ?>" />
+                                        <input type="submit" id="submit_recaptcha" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
                                     </td>
                                 </tr>
                             

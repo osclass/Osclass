@@ -37,12 +37,12 @@
                         <p>
                             <?php _e('You can recalculate your category stats.'); ?>
                         </p>
-                        <br/>
+                        <br />
                         <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
                             <input type="hidden" name="action" value="category_post" />
                             <input type="hidden" name="page" value="tools" />
 
-                            <input id="button_save" type="submit" value="<?php _e('Calculate category stats'); ?>" />
+                            <input id="button_save" type="submit" value="<?php echo osc_esc_html( __('Calculate category stats')); ?>" />
                         </form>
                     </div>
                 </div>

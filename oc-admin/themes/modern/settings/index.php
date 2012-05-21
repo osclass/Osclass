@@ -181,7 +181,7 @@
                                 <?php /* <tr>
                                     <td><?php _e('External sources'); ?></td>
                                     <td>
-                                        <input type="checkbox" id="market_external_sources" name="market_external_sources" value="1" <?php if(osc_market_external_sources()==1) {echo "checked";}; ?>/>
+                                        <input type="checkbox" id="market_external_sources" name="market_external_sources" value="1" <?php if(osc_market_external_sources()==1) {echo 'checked="checked"';}; ?> />
                                         <?php _e('Allow download packages from external sources'); ?>
                                    </td>
                                 </tr> */ ?>
@@ -273,7 +273,7 @@
                                 <tr>
                                     <td class="labeled"><?php _e('Attachments') ; ?></td>
                                     <td>
-                                        <input type="checkbox" <?php echo ( osc_contact_attachment() ? 'checked="true"' : '' ) ; ?> name="enabled_attachment" value="1" />
+                                        <input type="checkbox" <?php echo ( osc_contact_attachment() ? 'checked="checked"' : '' ) ; ?> name="enabled_attachment" value="1" />
                                         <?php _e('Allow people to attach a file to the contact form') ; ?></td>
                                 </tr>
                                 <tr class="separate">
@@ -282,7 +282,7 @@
                                 <tr>
                                     <td class="labeled"><?php _e('Automatic cron process') ; ?></td>
                                     <td>
-                                        <input type="checkbox" <?php echo ( osc_auto_cron() ? 'checked="true"' : '' ) ; ?> name="auto_cron" />
+                                        <input type="checkbox" <?php echo ( osc_auto_cron() ? 'checked="checked"' : '' ) ; ?> name="auto_cron" />
                                         <?php printf(__('Allow OSClass to run a built-in <a href="%s" target="_blank">cron</a> automatically without setting crontab'), 'http://en.wikipedia.org/wiki/Cron' ) ; ?>
                                         <span class="help-box"><?php _e('It is <b>recommended</b> to have this option enabled, because some features require it.') ; ?></span>
                                     </td>

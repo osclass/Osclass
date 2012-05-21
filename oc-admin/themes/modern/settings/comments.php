@@ -88,21 +88,21 @@
                                 <tr>
                                     <td class="labeled"><?php _e('Default comment settings') ; ?></td>
                                     <td>
-                                        <input type="checkbox" <?php echo ( osc_comments_enabled() ? 'checked="true"' : '' ) ; ?> name="enabled_comments" value="1" />
+                                        <input type="checkbox" <?php echo ( osc_comments_enabled() ? 'checked="checked"' : '' ) ; ?> name="enabled_comments" value="1" />
                                         <?php _e('Allow people to post comments on listings') ; ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <input type="checkbox" <?php echo ( osc_reg_user_post_comments() ? 'checked="true"' : '' ) ; ?> name="reg_user_post_comments" value="1" />
+                                        <input type="checkbox" <?php echo ( osc_reg_user_post_comments() ? 'checked="checked"' : '' ) ; ?> name="reg_user_post_comments" value="1" />
                                         <?php _e('Users must be registered and logged in to comment') ; ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <input type="checkbox" <?php echo ( ( osc_moderate_comments() == -1 ) ? '' : 'checked="true"' ) ; ?> name="moderate_comments" value="1" />
+                                        <input type="checkbox" <?php echo ( ( osc_moderate_comments() == -1 ) ? '' : 'checked="checked"' ) ; ?> name="moderate_comments" value="1" />
                                         <?php _e('A comment is held for moderation') ; ?>
                                     </td>
                                 </tr>
@@ -126,14 +126,14 @@
                                 <tr>
                                     <td><?php _e('E-mail admin whenever') ?></td>
                                     <td>
-                                        <input type="checkbox" <?php echo ( osc_notify_new_comment() ? 'checked="true"' : '' ) ; ?> name="notify_new_comment" value="1" />
+                                        <input type="checkbox" <?php echo ( osc_notify_new_comment() ? 'checked="checked"' : '' ) ; ?> name="notify_new_comment" value="1" />
                                         <?php _e("There is a new comment") ; ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><?php _e('E-mail user whenever') ?></td>
                                     <td>
-                                        <input type="checkbox" <?php echo ( osc_notify_new_comment_user() ? 'checked="true"' : '' ) ; ?> name="notify_new_comment_user" value="1" />
+                                        <input type="checkbox" <?php echo ( osc_notify_new_comment_user() ? 'checked="checked"' : '' ) ; ?> name="notify_new_comment_user" value="1" />
                                         <?php _e("There is a new comment in his listing") ; ?>
                                     </td>
                                 </tr>
