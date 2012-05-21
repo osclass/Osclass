@@ -301,7 +301,7 @@ function osc_sendMail($params) {
         $mail->Password = ( isset($params['password']) ) ? $params['password'] : osc_mailserver_password() ;
         $mail->Host = ( isset($params['host']) ) ? $params['host'] : osc_mailserver_host() ;
         $mail->Port = ( isset($params['port']) ) ? $params['port'] : osc_mailserver_port() ;
-        $mail->From = ( isset($params['from']) ) ? $params['from'] : osc_contact_email() ;
+        $mail->From = ( isset($params['from']) ) ? $params['from'] : 'osclass@' . osc_get_domain() ;
         $mail->FromName = ( isset($params['from_name']) ) ? $params['from_name'] : osc_page_title() ;
         $mail->Subject = ( isset($params['subject']) ) ? $params['subject'] : '' ;
         $mail->Body = ( isset($params['body']) ) ? $params['body'] : '' ;
