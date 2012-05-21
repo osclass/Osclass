@@ -347,7 +347,7 @@ function osc_mailBeauty($text, $params) {
         '{WEB_LINK}' ,
         '{CURRENT_DATE}',
         '{HOUR}',
-        '{IP}'
+        '{IP_ADDRESS}'
     );
     $rwords = array(
         osc_base_url(),
