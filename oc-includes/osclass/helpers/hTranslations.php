@@ -42,7 +42,7 @@
             return $key;
         }
         $string = $gt->translate($key);
-        return $string;//osc_apply_filter('gettext', $string);
+        return osc_apply_filter('gettext', $string);
     }
 
     /**
