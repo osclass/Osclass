@@ -57,20 +57,20 @@
                     },
                     messages: {
                         dimThumbnail: {
-                            required: "<?php osc_esc_js( __("Thumbnail size: this field is required")); ?>.",
-                            regexp: "<?php osc_esc_js( __("Thumbnail size: is not in the correct format")); ?>."
+                            required: "<?php echo osc_esc_js( __("Thumbnail size: this field is required")); ?>",
+                            regexp: "<?php echo osc_esc_js( __("Thumbnail size: is not in the correct format")); ?>"
                         },
                         dimPreview: {
-                            required: "<?php osc_esc_js( __("Preview size: this field is required")); ?>.",
-                            regexp: "<?php osc_esc_js( __("Preview size: is not in the correct format")); ?>."
+                            required: "<?php echo osc_esc_js( __("Preview size: this field is required")); ?>",
+                            regexp: "<?php echo osc_esc_js( __("Preview size: is not in the correct format")); ?>"
                         },
                         dimNormal: {
-                            required: "<?php osc_esc_js( __("Normal size: this field is required")); ?>.",
-                            regexp: "<?php osc_esc_js( __("Normal size: is not in the correct format")); ?>."
+                            required: "<?php echo osc_esc_js( __("Normal size: this field is required")); ?>",
+                            regexp: "<?php echo osc_esc_js( __("Normal size: is not in the correct format")); ?>"
                         },
                         maxSizeKb: {
-                            required: "<?php osc_esc_js( __("Maximun size: this field is required")); ?>.",
-                            digits: "<?php osc_esc_js( __("Maximun size: this field has to be numeric only")); ?>."
+                            required: "<?php echo osc_esc_js( __("Maximun size: this field is required")); ?>",
+                            digits: "<?php echo osc_esc_js( __("Maximun size: this field has to be numeric only")); ?>"
                         }
                     },
                     wrapper: "li",
