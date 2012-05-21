@@ -67,6 +67,19 @@
                     }
                 }
             }
+            $().ready(function(){
+                $("#price").blur(function(event) {
+                    var price = $("#price").attr("value");
+                    while(price.indexOf('<?php echo osc_esc_js(osc_locale_thousands_sep());  ?>')!=-1) {
+                        price = price.replace('<?php echo osc_esc_js(osc_locale_thousands_sep());  ?>', '');
+                    }
+                    var tmp = price.split('<?php echo osc_esc_js(osc_locale_dec_point())?>');
+                    if(tmp.length>2) {
+                        price = tmp[0]+'<?php echo osc_esc_js(osc_locale_dec_point())?>'+tmp[1];
+                    }
+                    $("#price").attr("value", price);
+                });
+            });
         </script>
         <!-- end only item-post.php -->
     </head>
