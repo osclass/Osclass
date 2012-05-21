@@ -341,8 +341,22 @@ function osc_sendMail($params) {
 function osc_mailBeauty($text, $params) {
 
     $text = str_ireplace($params[0], $params[1], $text) ;
-    $kwords = array('{WEB_URL}', '{WEB_TITLE}', '{CURRENT_DATE}', '{HOUR}', '{IP}') ;
-    $rwords = array(osc_base_url(), osc_page_title(), date('Y-m-d H:i:s'), date('H:i'), $_SERVER['REMOTE_ADDR']) ;
+    $kwords = array(
+        '{WEB_URL}',
+        '{WEB_TITLE}',
+        '{WEB_LINK}' ,
+        '{CURRENT_DATE}',
+        '{HOUR}',
+        '{IP_ADDRESS}'
+    );
+    $rwords = array(
+        osc_base_url(),
+        osc_page_title(),
+        '<a href="' . osc_base_url() . '">' . osc_page_title() . '</a>',
+        date('Y-m-d H:i:s'),
+        date('H:i'),
+        $_SERVER['REMOTE_ADDR']
+    );
     $text = str_ireplace($kwords, $rwords, $text) ;
     
     return $text ;
