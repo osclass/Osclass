@@ -17,8 +17,8 @@ class AllAdminTests extends TestSuite {
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-pages.php');              // OK MAYBE NEED TO TEST MULTI-LOCALE ...
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-plugins.php');            // OK - TAKE CARE OF FILES (oc-content/plugins should be writable)
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-appearance.php');         // OK
-        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-items.php');     // necesita limpiar código     
-
+        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-items.php');     // necesita limpiar código    
+        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin_moderator.php');     // necesita limpiar código    
         
         // TO DO
         //$this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-customfields.php');    // NOT FINISHED LOT OF FAILS
