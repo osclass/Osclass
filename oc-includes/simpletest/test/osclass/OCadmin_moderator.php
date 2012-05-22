@@ -42,6 +42,10 @@ class OCadmin_moderator extends OCadminTest {
         $this->selenium->waitForPageToLoad("2000");
         $this->assertTrue($this->selenium->isTextPresent("You don't have enough permissions"), "Don't have enough permissions" ) ;
         
+        $this->selenium->open(osc_admin_base_url(true).'?page=items&action=settings');
+        $this->selenium->waitForPageToLoad("2000");
+        $this->assertTrue($this->selenium->isTextPresent("You don't have enough permissions"), "Don't have enough permissions" ) ;
+        
         // remove user testmoderator!
         Admin::newInstance()->delete(array('s_username' => 'testmoderator') );
     }
