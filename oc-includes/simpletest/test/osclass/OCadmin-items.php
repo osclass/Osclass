@@ -155,6 +155,7 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->type("description[en_US]", "description test description test description test");
         $this->selenium->type("price", "12".osc_locale_thousands_sep()."34".osc_locale_thousands_sep()."56".osc_locale_dec_point()."78".osc_locale_dec_point()."90");
         $this->selenium->fireEvent("price", "blur");
+        sleep(2);
         $this->assertTrue($this->selenium->getValue("price")=="123456".osc_locale_dec_point()."78", "Check price correction input");
         $this->selenium->type("price", "11");
         $this->selenium->select("currency", "label=Euro €");
