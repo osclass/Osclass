@@ -81,7 +81,6 @@ class OCadmin_items extends OCadminTest {
             User::newInstance()->deleteUser($user['pk_i_id']);
         }
 
-        echo "insert new user for testing<br>";
         $input['s_secret']          = osc_genRandomPassword() ;
         $input['dt_reg_date']       = date('Y-m-d H:i:s');
         $input['s_name']            = "Carlos";
@@ -154,6 +153,9 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->select("catId", "label=regexp:\\s*Cars");
         $this->selenium->type("title[en_US]", "title item");
         $this->selenium->type("description[en_US]", "description test description test description test");
+        $this->selenium->type("price", "12".osc_locale_thousands_sep()."34".osc_locale_thousands_sep()."56".osc_locale_dec_point()."78".osc_locale_dec_point()."90");
+        $this->selenium->fireEvent("price", "blur");
+        $this->assertTrue($this->selenium->getValue("price")=="123456".osc_locale_dec_point()."78", "Check price correction input");
         $this->selenium->type("price", "11");
         $this->selenium->select("currency", "label=Euro €");
 

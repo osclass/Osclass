@@ -115,6 +115,9 @@ abstract class FrontendTest extends MyWebTestCase {
         $this->selenium->select("catId", "label=regexp:\\s*$cat");
         $this->selenium->type("title[en_US]", $title);
         $this->selenium->type("description[en_US]", $description);
+        $this->selenium->type("price", "12".osc_locale_thousands_sep()."34".osc_locale_thousands_sep()."56".osc_locale_dec_point()."78".osc_locale_dec_point()."90");
+        $this->selenium->fireEvent("price", "blur");
+        $this->assertTrue($this->selenium->getValue("price")=="123456".osc_locale_dec_point()."78", "Check price correction input");
         $this->selenium->type("price", $price);
         $this->selenium->select("currency", "label=Euro €");
         $this->selenium->select("countryId", "label=Spain");
