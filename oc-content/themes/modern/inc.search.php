@@ -23,7 +23,7 @@
 ?>
 
 <script type="text/javascript">
-    var sQuery = '<?php echo $sQuery; ?>' ;
+    var sQuery = '<?php echo osc_esc_js( $sQuery ); ?>' ;
 
     $(document).ready(function(){
         if($('input[name=sPattern]').val() == sQuery) {
@@ -45,16 +45,6 @@
             $('input[name=sPattern]').css('background','');
         })
     });
-    function doSearch() {
-        if($('input[name=sPattern]').val() == sQuery){
-            return false;
-        }
-        if($('input[name=sPattern]').val().length < 3) {
-            $('input[name=sPattern]').css('background', '#FFC6C6');
-            return false;
-        }
-        return true;
-    }
 </script>
 
 <form action="<?php echo osc_base_url(true) ; ?>" method="get" class="search" onsubmit="javascript:return doSearch();">
@@ -66,4 +56,5 @@
         <?php  } ?>
         <button type="submit"><?php _e('Search', 'modern') ; ?></button>
     </fieldset>
+    <div id="search-example"></div>
 </form>

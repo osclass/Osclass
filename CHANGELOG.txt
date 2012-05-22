@@ -1,3 +1,15 @@
+OSClass 2.4.1 2012-05-22
+------------------------
+- Fixed creation of search pagination url
+- Watermark image should be a PNG
+- Fixed bug in item > settings
+- Show the correct values in the footer of datatables
+- Upgrade is fixed when you came from versions with the country in multiple languages
+- Use osc_esc_js in javascript localization
+- Add currency button is clickable now
+- Fixed javascript error in custom fields
+- Corrected multiple typos in strings
+
 OSClass 2.4.0 2012-05-02
 ------------------------
 - Admin layout redesign

@@ -649,7 +649,8 @@ HTACCESS;
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_language').'/(.*?)/?$', 'index.php?page=language&locale=$1');
 
                                             // Search rules
-                                            $rewrite->addRule('^'.$search_url.'(.*)$', 'index.php?page=search&sParams=$1');
+                                            $rewrite->addRule('^'.$search_url.'$', 'index.php?page=search');
+                                            $rewrite->addRule('^'.$search_url.'/(.*)$', 'index.php?page=search&sParams=$1');
 
                                             // Item rules
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_item_mark').'/(.*?)/([0-9]+)/?$', 'index.php?page=item&action=mark&as=$1&id=$2');
@@ -1112,19 +1113,22 @@ HTACCESS;
                                             case 'image':
                                                 // upload image & move to path
                                                 if( $_FILES['watermark_image']['error'] == UPLOAD_ERR_OK ) {
-                                                    $tmpName = $_FILES['watermark_image']['tmp_name'] ;
-                                                    $path    = osc_content_path() . 'uploads/watermark.png' ;
-                                                    if( move_uploaded_file($tmpName, $path) ){
-                                                        $iUpdated += Preference::newInstance()->update(
-                                                                array('s_value' => $path),
-                                                                array('s_name'  => 'watermark_image')
-                                                        ) ;
+                                                    if($_FILES['watermark_image']['type']=='image/png') {
+                                                        $tmpName = $_FILES['watermark_image']['tmp_name'] ;
+                                                        $path    = osc_content_path() . 'uploads/watermark.png' ;
+                                                        if( move_uploaded_file($tmpName, $path) ){
+                                                            $iUpdated += Preference::newInstance()->update(
+                                                                    array('s_value' => $path),
+                                                                    array('s_name'  => 'watermark_image')
+                                                            ) ;
+                                                        } else {
+                                                            $error .= _m('There was a problem uploading the watermark image')."<br />";
+                                                        }
                                                     } else {
-                                                        $iUpdated += Preference::newInstance()->update(
-                                                                array('s_value' => ''),
-                                                                array('s_name'  => 'watermark_image')
-                                                        ) ;
+                                                        $error .= _m('The watermark image has to be a .PNG file')."<br />";
                                                     }
+                                                } else {
+                                                    $error .= _m('There was a problem uploading the watermark image')."<br />";
                                                 }
                                                 $iUpdated += Preference::newInstance()->update(
                                                         array('s_value' => ''),
@@ -1168,7 +1172,7 @@ HTACCESS;
                                             $status    = 'warning' ;
                                             $maxSizeKb = $upload_mb ;
                                             // flash message text warning
-                                            $error     = sprintf( _m("You cannot set a maximum size file higher than the one that allows PHP configuration: <b>%d KB</b>"), $upload_mb ) ;
+                                            $error     .= sprintf( _m("You cannot set a maximum size file higher than the one that allows PHP configuration: <b>%d KB</b>"), $upload_mb ) ;
                                         }
 
                                         $iUpdated += Preference::newInstance()->update(
@@ -1199,21 +1203,11 @@ HTACCESS;
                                                 array('s_value' => $use_imagick),
                                                 array('s_name'  => 'use_imagick')
                                         ) ;
-
-                                        $msg = '' ;
-                                        if( $iUpdated > 0 ) {
-                                            $msg .= _m('Media config has been updated') ;
-                                        }
-
+                                        
                                         if( $error != '' ) {
-                                            $msg .= '</p><p>' . $error ;
-                                        }
-
-                                        switch( $status ) {
-                                            case('ok'):         osc_add_flash_ok_message($msg, 'admin') ;
-                                            break ;
-                                            case('warning'):    osc_add_flash_warning_message($msg, 'admin') ;
-                                            break ;
+                                            osc_add_flash_warning_message($error, 'admin') ;
+                                        } else {
+                                            osc_add_flash_ok_message(_m('Media config has been updated'), 'admin') ;
                                         }
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media') ;
@@ -1434,14 +1428,20 @@ HTACCESS;
                                                     array('s_name'  => 'save_latest_searches')
                                             ) ;
                                         }
+                                        
+                                        if(Params::getParam('customPurge')=='') {
+                                            osc_add_flash_error_message(_m('Custom number could not be left empty'), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=latestsearches') ;
+                                        } else {
 
-                                        Preference::newInstance()->update(
-                                                array('s_value' => Params::getParam('customPurge')),
-                                                array('s_name'  => 'purge_latest_searches')
-                                        ) ;
+                                            Preference::newInstance()->update(
+                                                    array('s_value' => Params::getParam('customPurge')),
+                                                    array('s_name'  => 'purge_latest_searches')
+                                            ) ;
 
-                                        osc_add_flash_ok_message( _m('Last search settings have been updated'), 'admin') ;
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=latestsearches') ;
+                                            osc_add_flash_ok_message( _m('Last search settings have been updated'), 'admin') ;
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=latestsearches') ;
+                                        }
                 break;
                 default:                // calling the view
                                         $aLanguages = OSCLocale::newInstance()->listAllEnabled() ;
@@ -1560,7 +1560,7 @@ HTACCESS;
             foreach($regions as $r) {
                 $exists = $manager_region->findByName($r->name, $r->country_code);
                 if(isset($exists['s_name'])) {
-                    osc_add_flash_error_message(sprintf(_m('%s already was in the database'), $c_exists['s_name']), 'admin');
+                    osc_add_flash_error_message(sprintf(_m('%s already was in the database'), $exists['s_name']), 'admin');
                     return false;
                 }
                 $manager_region->insert(array(

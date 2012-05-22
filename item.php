@@ -213,7 +213,8 @@
                         
                         if($success==1){
                             osc_add_flash_ok_message( _m("Great! We've just updated your item") ) ;
-                            $this->redirectTo( osc_base_url(true) . "?page=item&id=$id" ) ;
+                            View::newInstance()->_exportVariableToView("item", Item::newInstance()->findByPrimaryKey($id));
+                            $this->redirectTo(osc_item_url() ) ;
                         } else {
                             osc_add_flash_error_message( $success) ;
                             $this->redirectTo( osc_item_edit_url($secret) ) ;
@@ -478,6 +479,11 @@
                         $item['locale'][$k]['s_description'] = nl2br(osc_apply_filter('item_description',$v['s_description']));
                     }
 
+                    if( $item['fk_i_user_id'] != '' ) {
+                        $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
+                        $this->_exportVariableToView('user', $user);
+                    }
+                    
                     $this->_exportVariableToView('item', $item);
 
                     osc_run_hook('show_item', $item) ;

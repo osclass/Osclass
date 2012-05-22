@@ -314,7 +314,7 @@ CREATE TABLE %st_item_description_tmp (
         PRIMARY KEY (pk_c_code),
         INDEX idx_s_name (s_name)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';");
-        $rs = $comm->query("SELECT * FROM ".DB_TABLE_PREFIX."t_country WHERE fk_c_locale_code = '".osc_language()."'");
+        $rs = $comm->query("SELECT * FROM ".DB_TABLE_PREFIX."t_country GROUP BY pk_c_code");
         $countries = $rs->result();
         foreach($countries as $c) {
             $comm->insert(DB_TABLE_PREFIX."t_country_aux", array('pk_c_code' => $c['pk_c_code'], 's_name' => $c['s_name']));
@@ -373,7 +373,11 @@ CREATE TABLE %st_item_description_tmp (
         $comm->query("ALTER TABLE ".DB_TABLE_PREFIX."t_user ADD FOREIGN KEY (fk_c_country_code) REFERENCES ".DB_TABLE_PREFIX."t_country (pk_c_code)");
     }
 
-    osc_changeVersionTo(240) ;
+    if(osc_version() < 241) {
+        $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'use_imagick', '0', 'BOOLEAN')", DB_TABLE_PREFIX));
+    }
+
+    osc_changeVersionTo(241) ;
 
     echo '<div style="border: 1px solid rgb(204, 204, 204); background: none repeat scroll 0% 0% rgb(238, 238, 238);"> <div style="padding: 20px;">';
     echo '<p>'.__('OSClass &raquo; Updated correctly').'</p>' ;

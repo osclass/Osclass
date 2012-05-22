@@ -465,7 +465,7 @@
                                         if(!osc_validate_int(Params::getParam("items_wait_time"))) {
                                             $msg .= _m("Wait time has to be numeric only")."<br/>";
                                         }
-                                        if(!osc_validate_int(Params::getParam("num_moderate_items"))) {
+                                        if(Params::getParam("num_moderate_items")!='' && !osc_validate_int(Params::getParam("num_moderate_items"))) {
                                             $msg .= _m("Number of moderated items has to be numeric only")."<br/>";
                                         }
                                         if(!osc_validate_int($numImagesItems)) {

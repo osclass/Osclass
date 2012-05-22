@@ -93,8 +93,8 @@
         /* START - format functions */
         private function toDatatablesFormat()
         {
-            $this->result['iTotalRecords']        = $this->total_filtered ;
-            $this->result['iTotalDisplayRecords'] = $this->total ;
+            $this->result['iTotalRecords']        = $this->total ;
+            $this->result['iTotalDisplayRecords'] = $this->total_filtered ;
             $this->result['sEcho']                = $this->sEcho ;
             $this->result['aaData']               = array() ;
 

@@ -98,7 +98,7 @@ function basic_info() {
     $body .= '<li>'.sprintf(__('password: %s'), $password).'</li>';
     $body .= '</ul>' ;
     $body .= __('Regards,')."<br/>";
-    $body .= __('The <a href=\'http://osclass.org/\'>OSClass</a> team') ;
+    $body .= __('The <a href="http://osclass.org/">OSClass</a> team') ;
 
     $sitename = strtolower( $_SERVER['SERVER_NAME'] ) ;
     if ( substr( $sitename, 0, 4 ) == 'www.' ) {

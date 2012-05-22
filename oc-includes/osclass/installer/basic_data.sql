@@ -4,7 +4,7 @@ INSERT INTO /*TABLE_PREFIX*/t_currency (pk_c_code, s_name, s_description, b_enab
     ('EUR', 'European Union euro', 'Euro €', true);
 
 INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
-    ('osclass', 'version', 240, 'INTEGER')
+    ('osclass', 'version', 241, 'INTEGER')
     ,('osclass', 'theme', 'modern', 'STRING')
     ,('osclass', 'admin_language', 'en_US', 'STRING')
     ,('osclass', 'language', 'en_US', 'STRING')
@@ -41,6 +41,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'enabled_user_registration', '1', 'BOOLEAN')
     ,('osclass', 'enabled_users','1', 'BOOLEAN')
     ,('osclass', 'enabled_comments', '1', 'BOOLEAN')
+    ,('osclass', 'use_imagick', '0', 'BOOLEAN')
     ,('osclass', 'mailserver_host', 'localhost', 'STRING')
     ,('osclass', 'mailserver_port', '', 'INTEGER')
     ,('osclass', 'mailserver_username', '', 'STRING')
