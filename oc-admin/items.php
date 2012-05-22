@@ -38,6 +38,11 @@
         {
             parent::doModel() ;
 
+            if(osc_is_moderator() && ($this->action=='settings' || $this->action=='settings_post')) {
+                osc_add_flash_error_message(_m("You don't have enough permissions"), "admin");
+                $this->redirectTo(osc_admin_base_url()) ;
+            }
+            
             //specific things for this class
             switch ($this->action)
             {
