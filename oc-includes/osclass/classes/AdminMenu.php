@@ -24,12 +24,10 @@
     {
         private static $instance ;
         private $aMenu ;
-        public $aPages_action;
 
         public function __construct()
         {
             $this->aMenu         = array() ;
-            $this->aPages_action = array() ; 
         }
 
         public static function newInstance()
@@ -41,12 +39,10 @@
         }
 
         /**
-         * Create 
-         * syntax menu -> array( $)
+         *  Initialize menu representation.
          */
         public function init()
         {
-            
             
             $this->add_menu( __('Dashboard'), osc_admin_base_url(), 'dash', 'moderator');
             
