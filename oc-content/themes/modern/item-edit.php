@@ -67,7 +67,7 @@
                     }
                 }
             }
-            <?php if(osc_locale_thousands_sep()!='' && osc_locale_dec_point() != '') { ?>
+            <?php if(osc_locale_thousands_sep()!='' || osc_locale_dec_point() != '') { ?>
             $().ready(function(){
                 $("#price").blur(function(event) {
                     var price = $("#price").attr("value");
