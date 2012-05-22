@@ -379,6 +379,8 @@ CREATE TABLE %st_item_description_tmp (
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'use_imagick', '0', 'BOOLEAN')", DB_TABLE_PREFIX));
     }
 
+    osc_changeVersionTo(241) ;
+
     osc_changeVersionTo(300);
 
     echo '<div style="border: 1px solid rgb(204, 204, 204); background: none repeat scroll 0% 0% rgb(238, 238, 238);"> <div style="padding: 20px;">';
