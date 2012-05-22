@@ -105,7 +105,9 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->type("address"         ,"address user");
 
         $this->selenium->select("countryId"     , "label=Spain");
+        sleep(1);
         $this->selenium->select("regionId"      , "label=Barcelona");
+        sleep(1);
         $this->selenium->select("cityId"        , "label=Barcelona");
         $this->selenium->select("b_company"     , "label=User");
         
