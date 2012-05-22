@@ -92,7 +92,7 @@
                                     <label><?php _e('Current password') ; ?></label>
                                     <div class="input">
                                         <?php AdminForm::old_password_text($admin) ; ?>
-                                        <p class="help-inline"><em><?php _e('If you would like to change the password type a new one. Otherwise leave this blank') ; ?></em></p>
+                                        <p class="help-inline"><em><?php _e('If you would like to change the password type your current one. Otherwise leave this blank') ; ?></em></p>
                                     </div>
                                 </div>
                             <?php }; ?>
