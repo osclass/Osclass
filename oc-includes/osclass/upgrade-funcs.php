@@ -373,15 +373,10 @@ CREATE TABLE %st_item_description_tmp (
         $comm->query("ALTER TABLE ".DB_TABLE_PREFIX."t_user ADD FOREIGN KEY (fk_c_country_code) REFERENCES ".DB_TABLE_PREFIX."t_country (pk_c_code)");
     }
 
-    osc_changeVersionTo(240) ;
-    
-    
-    
     if(osc_version() < 241) {
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'use_imagick', '0', 'BOOLEAN')", DB_TABLE_PREFIX));
     }
 
-    
     osc_changeVersionTo(241) ;
 
     echo '<div style="border: 1px solid rgb(204, 204, 204); background: none repeat scroll 0% 0% rgb(238, 238, 238);"> <div style="padding: 20px;">';
