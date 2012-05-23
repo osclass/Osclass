@@ -32,19 +32,14 @@
         {
             switch($this->action) {
                 case('logout'):     // unset only the required parameters in Session
-                                    Session::newInstance()->_drop('adminId') ;
-                                    Session::newInstance()->_drop('adminUserName') ;
-                                    Session::newInstance()->_drop('adminName') ;
-                                    Session::newInstance()->_drop('adminEmail') ;
-                                    Session::newInstance()->_drop('adminLocale') ;
-
-                                    Cookie::newInstance()->pop('oc_adminId') ;
-                                    Cookie::newInstance()->pop('oc_adminSecret') ;
-                                    Cookie::newInstance()->pop('oc_adminLocale') ;
-                                    Cookie::newInstance()->set() ;
+                                    $this->logout();
 
                                     $this->redirectTo( osc_admin_base_url(true) ) ;
-                break;
+                    break;
+                case('login'):
+                                    osc_run_hook( 'init_admin' ) ;
+                                    require osc_admin_base_path() . 'gui/login.php' ;
+                    break;
                 default:            //default dashboard page (main page at oc-admin)
                                     $this->_exportVariableToView( "numUsers", User::newInstance()->count() ) ;
                                     $this->_exportVariableToView( "numAdmins", Admin::newInstance()->count() ) ;

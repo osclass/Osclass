@@ -68,6 +68,7 @@
                 $sMenu .= '<li id="menu_'.$value[2].'" class="'.$class.'">'.PHP_EOL ;
                 $sMenu .= '<h3><a id="'.$value[2].'" href="'.$value[1].'">'.$value[0].'</a></h3>'.PHP_EOL ;
                 $sMenu .= $sSubmenu;
+                $sMenu .= '</li>'.PHP_EOL ;
             }
                 
             
