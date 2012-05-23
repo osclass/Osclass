@@ -232,7 +232,7 @@ function osc_draw_admin_toolbar()
     osc_run_hook('add_admin_toolbar_menus') ;
     $adminToolbar->render() ;
 }
-osc_add_hook('admin_footer', 'osc_draw_admin_toolbar');
+//osc_add_hook('admin_footer', 'osc_draw_admin_toolbar');
 
 /**
  * Add webtitle with link to frontend 
