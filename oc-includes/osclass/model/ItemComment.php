@@ -1,4 +1,4 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+    <?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
 
     /*
      *      OSCLass – software for creating and publishing online classified
@@ -363,8 +363,25 @@
             return $row['numrows'];
         }
         
+        public function countAll($aConditions) 
+        {
+            $this->dao->select('count(pk_i_id) as total') ;
+            $this->dao->from($this->getTableName()) ;
+            
+            $this->dao->where($aConditions) ;
+            $this->dao->groupBy('fk_i_item_id') ;
+            $result = $this->dao->get() ;
+            
+            if( $result == false ) { 
+                return false;
+            } else if($result->numRows() === 0) {
+                return 0;
+            } else {
+                $total = $result->row();
+                return $total['total'];
+            }
+        }
         
     }
-
     /* file end: ./oc-includes/osclass/model/ItemComment.php */
 ?>
