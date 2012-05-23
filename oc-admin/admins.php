@@ -29,6 +29,13 @@
         {
             parent::__construct() ;
 
+            if( $this->isModerator() ) {
+                if( (Params::getParam('id') != '') && (Params::getParam('id') != osc_logged_admin_id()) ) {
+                    osc_add_flash_error_message(_m("You don't have enough permissions"), 'admin');
+                    $this->redirectTo(osc_admin_base_url());
+                }
+            }
+
             //specific things for this class
             $this->adminManager = Admin::newInstance() ;
         }
@@ -37,13 +44,6 @@
         function doModel()
         {
             parent::doModel() ;
-            
-            
-            if(osc_is_moderator() && ((Params::getParam('id')!='' && Params::getParam('id')!=osc_logged_admin_id()) || ($this->action!='edit' && $this->action!='edit_post'))) {
-                $this->action = '';
-                osc_add_flash_error_message(_m("You don't have enough permissions"), "admin");
-                $this->redirectTo(osc_admin_base_url()) ;
-            }
 
             switch($this->action) {
                 case('add'):        // callin add view
