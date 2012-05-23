@@ -9,7 +9,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Create a new user
      */
-    function testUserInsert()
+    function atestUserInsert()
     {
         $this->loginWith() ;
         $this->insertUser() ;
@@ -20,7 +20,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Create a new user
      */
-    function testUserInsertbyLink()
+    function atestUserInsertbyLink()
     {
         $this->loginWith() ;
         $this->insertUserByLink() ;
@@ -31,7 +31,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Edit an user
      */
-    public function testUserEdit()
+    public function atestUserEdit()
     {
         $this->loginWith() ;
         $this->insertUser() ;
@@ -43,7 +43,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Validations
      */
-    public function testExtraValidations()
+    public function atestExtraValidations()
     {
         $this->loginWith() ;
         $this->insertUser() ;
@@ -56,7 +56,17 @@ class OCadmin_users extends OCadminTest {
     /*
      * Test settings (users enabled, validation,...)
      */
-    public function testSettings()
+    public function atestSettings()
+    {
+        $this->loginWith() ;
+        $this->settings();
+        flush();
+    }
+
+    /*
+     * Test bulk actions
+     */
+    public function testBulkActions()
     {
         $this->loginWith() ;
         $this->settings();
