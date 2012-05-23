@@ -188,7 +188,20 @@
                             "defaultSortable" : true
                         }
                     ],
-                    "aaSorting": [[7,'desc']]
+                    "aaSorting": [[7,'desc']],
+                    "fnDrawCallback": function() {
+                        $('input[name="id[]"]').each(function() {
+                            if( $(this).attr("blocked") == '1' ) {
+                                if( $(this).attr("active") == '1' ) {
+                                    $(this).parent().parent().css('background-color', '#EDFFDF') ;
+                                } else {
+                                    $(this).parent().parent().css('background-color', '#FFFFDF') ;
+                                }
+                            } else {
+                                $(this).parent().parent().css('background-color', '#FFF0DF') ;
+                            }
+                        }) ;
+                    }
                 });
 
                 $('#datatables_list tr').live('mouseover', function(event) {

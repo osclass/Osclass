@@ -115,13 +115,17 @@ abstract class FrontendTest extends MyWebTestCase {
         $this->selenium->select("catId", "label=regexp:\\s*$cat");
         $this->selenium->type("title[en_US]", $title);
         $this->selenium->type("description[en_US]", $description);
+        $this->selenium->type("price", "12".osc_locale_thousands_sep()."34".osc_locale_thousands_sep()."56".osc_locale_dec_point()."78".osc_locale_dec_point()."90");
+        $this->selenium->fireEvent("price", "blur");
+        sleep(2);
+        $this->assertTrue($this->selenium->getValue("price")=="123456".osc_locale_dec_point()."78", "Check price correction input");
         $this->selenium->type("price", $price);
         $this->selenium->select("currency", "label=Euro €");
         $this->selenium->select("countryId", "label=Spain");
         $this->selenium->type('id=region', $regionId);
-        $this->selenium->click('id=ui-active-menuitem');
+//        $this->selenium->click('id=ui-active-menuitem');
         $this->selenium->type('id=city', $cityId);
-        $this->selenium->click('id=ui-active-menuitem');
+//        $this->selenium->click('id=ui-active-menuitem');
         if($cityArea==NULL) {
             $this->selenium->type("cityArea", "my area");
         } else {
@@ -136,7 +140,8 @@ abstract class FrontendTest extends MyWebTestCase {
                 $this->selenium->click("link=Add new photo");
                 $this->selenium->type("//div[@id='p-0']/div/input", LIB_PATH."simpletest/test/osclass/".$aPhotos[$k]);
             }
-        }
+        } 
+        
         $this->selenium->type("contactName" , $user);
         $this->selenium->type("contactEmail", $email);
 
@@ -156,10 +161,9 @@ abstract class FrontendTest extends MyWebTestCase {
         $this->selenium->click('alert_email');
         $this->selenium->type('alert_email', $email);
         $this->selenium->click("xpath=//span/button[text()='Subscribe now!']");
-        sleep(1);
+        sleep(3);
         // verify alert 
         $aAuxAlert = Alerts::newInstance()->findByEmail($email);
-        
         if( $success ) {
             $this->assertTrue(count($aAuxAlert) == 1, 'Search - create alert');
         } else {

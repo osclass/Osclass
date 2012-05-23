@@ -122,9 +122,9 @@ function recaptcha_get_html ($pubkey, $error = null, $use_ssl = false)
         return '<script type="text/javascript" src="'. $server . '/challenge?k=' . $pubkey . $errorpart . '"></script>
 
   <noscript>
-      <iframe src="'. $server . '/noscript?k=' . $pubkey . $errorpart . '" height="300" width="500" frameborder="0"></iframe><br/>
+      <iframe src="'. $server . '/noscript?k=' . $pubkey . $errorpart . '" height="300" width="500" frameborder="0"></iframe><br />
       <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
-      <input type="hidden" name="recaptcha_response_field" value="manual_challenge"/>
+      <input type="hidden" name="recaptcha_response_field" value="manual_challenge" />
   </noscript>';
 }
 
@@ -268,8 +268,8 @@ function recaptcha_mailhide_html($pubkey, $privkey, $email) {
   $emailparts = _recaptcha_mailhide_email_parts ($email);
   $url = recaptcha_mailhide_url ($pubkey, $privkey, $email);
   
-  return htmlentities($emailparts[0]) . "<a href='" . htmlentities ($url) .
-    "' onclick=\"window.open('" . htmlentities ($url) . "', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;\" title=\"Reveal this e-mail address\">...</a>@" . htmlentities ($emailparts [1]);
+  return htmlentities($emailparts[0], ENT_COMPACT, "UTF-8") . "<a href='" . htmlentities ($url, ENT_COMPACT, "UTF-8") .
+    "' onclick=\"window.open('" . htmlentities ($url, ENT_COMPACT, "UTF-8") . "', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;\" title=\"Reveal this e-mail address\">...</a>@" . htmlentities ($emailparts [1], ENT_COMPACT, "UTF-8");
 
 }
 

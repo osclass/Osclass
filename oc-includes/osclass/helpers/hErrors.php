@@ -49,7 +49,7 @@
 
     function osc_get_absolute_url() {
         $protocol = ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ) ? 'https' : 'http';
-        return $protocol . '://' . $_SERVER['HTTP_HOST'] . preg_replace('/((oc-admin)|(oc-includes)|([a-z]+\.php)).*/i', '', $_SERVER['REQUEST_URI']);
+        return $protocol . '://' . $_SERVER['HTTP_HOST'] . preg_replace('/((oc-admin)|(oc-includes)|([a-z]+\.php)|(\?.*)).*/i', '', $_SERVER['REQUEST_URI']);
     }
 
 ?>

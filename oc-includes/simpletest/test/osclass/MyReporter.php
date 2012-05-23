@@ -19,9 +19,12 @@ class MyReporter extends SimpleReporter {
     function __construct($character_set = 'ISO-8859-1') {
         parent::__construct();
         $this->character_set = $character_set;
-//        $this->fails = "";
-        $this->fails  = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">";
-        $this->fails .= "<html>\n<head>\n<title></title><style type=\"text/css\"> ".$this->getCss() . "\n</style>\n</head><body>\n";
+        if(PHP_SAPI==='cli') {
+            $this->fails = "";
+        } else {
+            $this->fails  = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">";
+            $this->fails .= "<html>\n<head>\n<title></title><style type=\"text/css\"> ".$this->getCss() . "\n</style>\n</head><body>\n";
+        }
     }
 
     /*
@@ -38,17 +41,22 @@ class MyReporter extends SimpleReporter {
      *    @access public
      */
     function paintHeader($test_name) {
-        $this->sendNoCacheHeaders();
-        print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">";
-        print "<html>\n<head>\n<title>$test_name</title>\n";
-        print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=" .
-                $this->character_set . "\">\n";
-        print "<style type=\"text/css\">\n";
-        print $this->getCss() . "\n";
-        print "</style>\n";
-        print "</head>\n<body>\n";
-        print "<h1>$test_name</h1>\n";
-        flush();
+        if(PHP_SAPI==='cli') {
+            print "** START TEST ** ".$test_name. " ** START TEST **".PHP_EOL;
+            flush();
+        } else {
+            $this->sendNoCacheHeaders();
+            print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">";
+            print "<html>\n<head>\n<title>$test_name</title>\n";
+            print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=" .
+                    $this->character_set . "\">\n";
+            print "<style type=\"text/css\">\n";
+            print $this->getCss() . "\n";
+            print "</style>\n";
+            print "</head>\n<body>\n";
+            print "<h1>$test_name</h1>\n";
+            flush();
+        }
     }
 
     /**
@@ -89,18 +97,26 @@ class MyReporter extends SimpleReporter {
         // add end </html>
         global $test_str;
         
-        $colour = ($this->getFailCount() + $this->getExceptionCount() > 0 ? "red" : "green");
-        print "<div style=\"";
-        print "padding: 8px; margin-top: 1em; background-color: $colour; color: white;";
-        print "\">";
-        print "[$test_name]<br>";
-        print $this->getTestCaseProgress() . "/" . $this->getTestCaseCount();
-        print " test cases complete:\n";
-        print "<strong>" . $this->getPassCount() . "</strong> passes, ";
-        print "<strong>" . $this->getFailCount() . "</strong> fails and ";
-        print "<strong>" . $this->getExceptionCount() . "</strong> exceptions.";
-        print "</div>\n";
-        print "</body>\n</html>\n";
+        if(PHP_SAPI==='cli') {
+            print " * * *  REPORTER  * * * ".PHP_EOL;
+            print "[".$test_name."] ".$this->getTestCaseProgress() . "/" . $this->getTestCaseCount().PHP_EOL;
+            print $this->getPassCount()." ~~ PASSES".PHP_EOL;
+            print $this->getFailCount()." ## FAILS".PHP_EOL;
+            print $this->getExceptionCount()." %% EXCEPTIONS".PHP_EOL;
+        } else {
+            $colour = ($this->getFailCount() + $this->getExceptionCount() > 0 ? "red" : "green");
+            print "<div style=\"";
+            print "padding: 8px; margin-top: 1em; background-color: $colour; color: white;";
+            print "\">";
+            print "[$test_name]<br>";
+            print $this->getTestCaseProgress() . "/" . $this->getTestCaseCount();
+            print " test cases complete:\n";
+            print "<strong>" . $this->getPassCount() . "</strong> passes, ";
+            print "<strong>" . $this->getFailCount() . "</strong> fails and ";
+            print "<strong>" . $this->getExceptionCount() . "</strong> exceptions.";
+            print "</div>\n";
+            print "</body>\n</html>\n";
+        };
         
         if($this->fails!='') {
             $subject = '[ERROR] Test results';
@@ -149,26 +165,48 @@ class MyReporter extends SimpleReporter {
         $fail .= " -&gt; " . $this->htmlEntities($message);
         $fail .= "<br />\n";
         $this->fails .= $fail;
-        print $fail;
+        if(PHP_SAPI==='cli') {
+            array_shift($breadcrumb);
+            $failcli = implode(" > ", $breadcrumb);
+            $failcli .= " > " . $this->htmlEntities($message);
+            print "## FAIL ## ".$failcli.PHP_EOL;
+            flush();
+        } else {
+            print $fail;
+        }
     }
 
     function  paintPass($message) {
         parent::paintPass($message);
-        print "<span class=\"pass\">Pass</span>: ";
-        $message = preg_replace('/(at\s\[)/', 'at <br>         [', $this->htmlEntities($message));
-        print " -&gt; " . $message . "<br />\n";
-        flush();
+        if(PHP_SAPI==='cli') {
+            print "~~ PASS ~~ ".$this->htmlEntities($message).PHP_EOL;
+            flush();
+        } else {
+            print "<span class=\"pass\">Pass</span>: ";
+            $message = preg_replace('/(at\s\[)/', 'at <br>         [', $this->htmlEntities($message));
+            print " -&gt; " . $message . "<br />\n";
+            flush();
+        }
     }
 
     function  paintCaseStart($test_name) {
         parent::paintCaseStart($test_name);
-        print "<h2>$test_name</h2>";
+        if(PHP_SAPI==='cli') {
+            print " * * [$test_name] * * ".PHP_EOL;
+        } else {
+            print "<h2>$test_name</h2>";
+        }
         flush();
     }
 
     function  paintMethodStart($test_name) {
         parent::paintMethodStart($test_name);
-        print "<h4>$test_name</h4>";
+        if(PHP_SAPI==='cli') {
+            print " * $test_name * ".PHP_EOL;
+        } else {
+            print "<h4>$test_name</h4>";
+        }
+        flush();
     }
     /**
      *    Paints a PHP error.
@@ -177,11 +215,17 @@ class MyReporter extends SimpleReporter {
      */
     function paintError($message) {
         parent::paintError($message);
-        print "<span class=\"fail\">Exception</span>: ";
-        $breadcrumb = $this->getTestList();
-        array_shift($breadcrumb);
-        print implode(" -&gt; ", $breadcrumb);
-        print " -&gt; <strong>" . $this->htmlEntities($message) . "</strong><br />\n";
+        if(PHP_SAPI==='cli') {
+            $breadcrumb = $this->getTestList();
+            array_shift($breadcrumb);
+            print "%% EXCEPTION %% ".implode(" > ", $breadcrumb)." > ".$this->htmlEntities($message).PHP_EOL;
+        } else {
+            print "<span class=\"fail\">Exception</span>: ";
+            $breadcrumb = $this->getTestList();
+            array_shift($breadcrumb);
+            print implode(" -&gt; ", $breadcrumb);
+            print " -&gt; <strong>" . $this->htmlEntities($message) . "</strong><br />\n";
+        }
     }
 
     /**
@@ -191,15 +235,25 @@ class MyReporter extends SimpleReporter {
      */
     function paintException($exception) {
         parent::paintException($exception);
-        print "<span class=\"fail\">Exception</span>: ";
-        $breadcrumb = $this->getTestList();
-        array_shift($breadcrumb);
-        print implode(" -&gt; ", $breadcrumb);
-        $message = 'Unexpected exception of type [' . get_class($exception) .
-                '] with message ['. $exception->getMessage() .
-                '] in ['. $exception->getFile() .
-                ' line ' . $exception->getLine() . ']';
-        print " -&gt; <strong>" . $this->htmlEntities($message) . "</strong><br />\n";
+        if(PHP_SAPI==='cli') {
+            $breadcrumb = $this->getTestList();
+            array_shift($breadcrumb);
+            $message = 'Unexpected exception of type [' . get_class($exception) .
+                    '] with message ['. $exception->getMessage() .
+                    '] in ['. $exception->getFile() .
+                    ' line ' . $exception->getLine() . ']';
+            print "%% EXCEPTION %% ".implode(" > ", $breadcrumb)." > ".$this->htmlEntities($message).PHP_EOL;
+        } else {
+            print "<span class=\"fail\">Exception</span>: ";
+            $breadcrumb = $this->getTestList();
+            array_shift($breadcrumb);
+            print implode(" -&gt; ", $breadcrumb);
+            $message = 'Unexpected exception of type [' . get_class($exception) .
+                    '] with message ['. $exception->getMessage() .
+                    '] in ['. $exception->getFile() .
+                    ' line ' . $exception->getLine() . ']';
+            print " -&gt; <strong>" . $this->htmlEntities($message) . "</strong><br />\n";
+        }
     }
 
     /**
@@ -209,11 +263,17 @@ class MyReporter extends SimpleReporter {
      */
     function paintSkip($message) {
         parent::paintSkip($message);
-        print "<span class=\"pass\">Skipped</span>: ";
-        $breadcrumb = $this->getTestList();
-        array_shift($breadcrumb);
-        print implode(" -&gt; ", $breadcrumb);
-        print " -&gt; " . $this->htmlEntities($message) . "<br />\n";
+        if(PHP_SAPI==='cli') {
+            $breadcrumb = $this->getTestList();
+            array_shift($breadcrumb);
+            print "%% SKKIPED %% ".implode(" > ", $breadcrumb)." > ".$this->htmlEntities($message).PHP_EOL;
+        } else {
+            print "<span class=\"pass\">Skipped</span>: ";
+            $breadcrumb = $this->getTestList();
+            array_shift($breadcrumb);
+            print implode(" -&gt; ", $breadcrumb);
+            print " -&gt; " . $this->htmlEntities($message) . "<br />\n";
+        }
     }
 
     /**

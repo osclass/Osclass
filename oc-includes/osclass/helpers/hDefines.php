@@ -952,4 +952,11 @@
         return true;
     }
 
+    function osc_get_domain() {
+        $result = parse_url( osc_base_url() );
+
+        return $result['host'];
+    }
+
+    /* file end: ./oc-includes/osclass/helpers/hDefines.php */
 ?>

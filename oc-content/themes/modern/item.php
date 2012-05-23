@@ -86,7 +86,7 @@
                     <p><?php echo osc_item_description() ; ?></p>
                     <div id="custom_fields">
                         <?php if( osc_count_item_meta() >= 1 ) { ?>
-                            <br/>
+                            <br />
                             <div class="meta_list">
                                 <?php while ( osc_has_item_meta() ) { ?>
                                     <?php if(osc_item_meta_value()!='') { ?>
@@ -152,7 +152,7 @@
                                 <input type="hidden" name="page" value="item" />
                                 <input type="hidden" name="id" value="<?php echo osc_item_id() ; ?>" />
                                 <?php if(osc_is_web_user_logged_in()) { ?>
-                                    <input type="hidden" name="authorName" value="<?php echo osc_logged_user_name(); ?>" />
+                                    <input type="hidden" name="authorName" value="<?php echo osc_esc_html( osc_logged_user_name() ); ?>" />
                                     <input type="hidden" name="authorEmail" value="<?php echo osc_logged_user_email();?>" />
                                 <?php } else { ?>
                                     <label for="authorName"><?php _e('Your name', 'modern') ; ?>:</label> <?php CommentForm::author_input_text(); ?><br />
@@ -174,9 +174,9 @@
                         <?php for ( $i = 0; osc_has_item_resources() ; $i++ ) { ?>
                         <a href="<?php echo osc_resource_url(); ?>" rel="image_group" title="<?php _e('Image', 'modern'); ?> <?php echo $i+1;?> / <?php echo osc_count_item_resources();?>">
                             <?php if( $i == 0 ) { ?>
-                            <img src="<?php echo osc_resource_url(); ?>" width="315" alt="<?php echo osc_item_title(); ?>" title="<?php echo osc_item_title(); ?>"/>
+                            <img src="<?php echo osc_resource_url(); ?>" width="315" alt="<?php echo osc_item_title(); ?>" title="<?php echo osc_item_title(); ?>" />
                             <?php } else { ?>
-                                <img src="<?php echo osc_resource_thumbnail_url(); ?>" width="75" alt="<?php echo osc_item_title(); ?>" title="<?php echo osc_item_title(); ?>"/>
+                                <img src="<?php echo osc_resource_thumbnail_url(); ?>" width="75" alt="<?php echo osc_item_title(); ?>" title="<?php echo osc_item_title(); ?>" />
                             <?php } ?>
                         </a>
                         <?php } ?>

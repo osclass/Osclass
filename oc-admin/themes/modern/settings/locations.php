@@ -24,11 +24,11 @@
     <head>
         <script type="text/javascript">
             var base_url    = '<?php echo osc_admin_base_url(); ?>';
-            var s_close     = '<?php osc_esc_js(_e('Close')); ?>';
-            var s_view_more = '<?php osc_esc_js(_e('View more')); ?>';
-            var addText = '<?php osc_esc_js(_e('Add')); ?>';
-            var cancelText = '<?php osc_esc_js(_e('Cancel')); ?>';
-            var editText = '<?php osc_esc_js(_e('Edit')); ?>';
+            var s_close     = '<?php echo osc_esc_js(_e('Close')); ?>';
+            var s_view_more = '<?php echo osc_esc_js(_e('View more')); ?>';
+            var addText = '<?php echo osc_esc_js(_e('Add')); ?>';
+            var cancelText = '<?php echo osc_esc_js(_e('Cancel')); ?>';
+            var editText = '<?php echo osc_esc_js(_e('Edit')); ?>';
             var editNewCountryText = '<?php echo osc_esc_js(__('Edit country')) ; ?>';
             var addNewCountryText = '<?php echo osc_esc_js(__('Add new country')) ; ?>';
             var editNewRegionText = '<?php echo osc_esc_js(__('Edit region')) ; ?>';
@@ -249,6 +249,18 @@
             </div>
             <!-- /right container -->
         </div>
+        <?php if(Params::getParam('country')!='' && Params::getParam('country_code')!='') { ?>
+            <script type="text/javascript">
+                <?php if(Params::getParam('country')!='' && Params::getParam('country_code')!='') { ?>
+                    show_region('<?php echo Params::getParam('country_code'); ?>', '<?php echo addslashes(Params::getParam('country')); ?>');
+                    function hook_load_cities() {
+                    <?php if(Params::getParam('region')!='') { ?>
+                        show_city(<?php echo Params::getParam('region'); ?>);
+                    <?php }; ?>
+                    };
+                <?php }; ?>
+            </script>
+        <?php }; ?>
         <!-- /container -->
         <div id="fade" class="black_overlay"></div>
         <?php osc_current_admin_theme_path('footer.php') ; ?>

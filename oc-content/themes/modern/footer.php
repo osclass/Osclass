@@ -20,6 +20,7 @@
      */
 
     osc_show_widgets('footer');
+    $sQuery = osc_esc_js(__("ie. PHP Programmer", 'modern'));
 ?>
 <!-- footer -->
 <div id="footer">
@@ -35,4 +36,15 @@
 <!-- /footer -->
 </div>
 <!-- /container -->
+<script type="text/javascript">
+    var sQuery = '<?php echo $sQuery ; ?>' ;
+    function doSearch() {
+        if($('input[name=sPattern]').val() == sQuery || ( $('input[name=sPattern]').val() != '' && $('input[name=sPattern]').val().length < 3 ) ) {
+            $('input[name=sPattern]').css('background', '#FFC6C6');
+            $('#search-example').text('<?php echo osc_esc_js( __('Your search must be at least three characters long','avisame') ) ; ?>')
+            return false;
+        }
+        return true;
+    }
+</script>
 <?php osc_run_hook('footer') ; ?>

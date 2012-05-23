@@ -326,17 +326,17 @@
                                 osc_has_item_resources();
                                 $feed->addItem(array(
                                     'title' => osc_item_title(),
-                                    'link' => htmlentities( osc_item_url() ),
+                                    'link' => htmlentities( osc_item_url(), ENT_COMPACT, "UTF-8" ),
                                     'description' => osc_item_description(),
                                     'dt_pub_date' => osc_item_pub_date(),
-                                    'image'     => array(  'url'    => htmlentities(osc_resource_thumbnail_url()),
+                                    'image'     => array(  'url'    => htmlentities(osc_resource_thumbnail_url(), ENT_COMPACT, "UTF-8"),
                                                            'title'  => osc_item_title(),
-                                                           'link'   => htmlentities( osc_item_url() ) )
+                                                           'link'   => htmlentities( osc_item_url() , ENT_COMPACT, "UTF-8") )
                                 ));
                             } else {
                                 $feed->addItem(array(
                                     'title' => osc_item_title(),
-                                    'link' => htmlentities( osc_item_url() ),
+                                    'link' => htmlentities( osc_item_url() , ENT_COMPACT, "UTF-8"),
                                     'description' => osc_item_description(),
                                     'dt_pub_date' => osc_item_pub_date()
                                 ));

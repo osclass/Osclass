@@ -68,7 +68,7 @@
                     <ul id="error_list" style="display: none;"></ul>
                     <form name="register" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="users" />
-                        <input type="hidden" name="action" value="<?php echo $action_frm ; ?>"/>
+                        <input type="hidden" name="action" value="<?php echo $action_frm ; ?>" />
                         <?php UserForm::primary_input_hidden($user) ; ?>
                         <?php if( $edit ) { ?>
                             <input type="hidden" name="b_enabled" value="<?php echo $user['b_enabled'] ; ?>" />

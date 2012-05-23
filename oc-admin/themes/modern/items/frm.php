@@ -46,7 +46,26 @@
                 } else {
                     $("#contact_info").hide() ;
                 }
-            }) ;
+
+                <?php if(osc_locale_thousands_sep()!='' || osc_locale_dec_point() != '') { ?>
+                $("#price").blur(function(event) {
+                    var price = $("#price").attr("value");
+                    <?php if(osc_locale_thousands_sep()!='') { ?>
+                    while(price.indexOf('<?php echo osc_esc_js(osc_locale_thousands_sep());  ?>')!=-1) {
+                        price = price.replace('<?php echo osc_esc_js(osc_locale_thousands_sep());  ?>', '');
+                    }
+                    <?php }; ?>
+                    <?php if(osc_locale_dec_point()!='') { ?>
+                    var tmp = price.split('<?php echo osc_esc_js(osc_locale_dec_point())?>');
+                    if(tmp.length>2) {
+                        price = tmp[0]+'<?php echo osc_esc_js(osc_locale_dec_point())?>'+tmp[1];
+                    }
+                    <?php }; ?>
+                    $("#price").attr("value", price);
+                });
+                <?php }; ?>
+            });
+            
         </script>
         <?php ItemForm::location_javascript_new('admin') ; ?>
         <?php if( osc_images_enabled_at_items() ) ItemForm::photos_javascript() ; ?>
@@ -80,7 +99,7 @@
                         <fieldset>
                             <h3><?php _e('User') ; ?></h3>
                             <div class="input-line">
-                                <label><?php _e('Item posted by') ; ?></label>
+                                <label><?php _e('Listing posted by') ; ?></label>
                                 <div class="input">
                                     <?php ItemForm::user_select(null, null, __('Non-registered user')) ; ?>
                                 </div>

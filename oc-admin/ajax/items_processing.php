@@ -247,7 +247,7 @@
                 }
  
                 // fill a row
-                $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" />' ;
+                $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>' ;
                 $row[] = '<a href="' . osc_item_url().'">' . $title . '</a> <div class="datatable_wrapper" style="display: none;"><div class="datatables_quick_edit" style="position: absolute;" >' . implode(' &middot; ', $options) . ' &middot; ' . $moreActions .'</div></div>' ;
                 $row[] = $aRow['s_user_name'] ;
                 $row[] = $aRow['s_category_name'] ;
