@@ -215,7 +215,7 @@
                                         if( $iUpdated == 0 ) {
                                             $msg = _m('No user has been enabled') ;
                                         } else {
-                                            $msg = sprintf( _mn('One user has been enabled', '%s users have been unblocked', $iUpdated), $iUpdated ) ;
+                                            $msg = sprintf( _mn('One user has been unblocked', '%s users have been unblocked', $iUpdated), $iUpdated ) ;
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin') ;
@@ -238,7 +238,7 @@
                                         if( $iUpdated == 0 ) {
                                             $msg = _m('No user has been disabled') ;
                                         } else {
-                                            $msg = sprintf( _mn('One user has been disabled', '%s users have been blocked', $iUpdated), $iUpdated ) ;
+                                            $msg = sprintf( _mn('One user has been blocked', '%s users have been blocked', $iUpdated), $iUpdated ) ;
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin') ;
