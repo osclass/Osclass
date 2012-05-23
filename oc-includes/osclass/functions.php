@@ -203,21 +203,95 @@ function meta_description( ) {
     return (osc_apply_filter('meta_description_filter', $text)) ;
 }
 
-/*
- * Fill admin toolbar
+/**
+ * Instantiate the admin toolbar object.
+ *
+ * @since 3.0
+ * @access private
+ * @return bool
  */
-function mytheme_admin_bar_render() {
-    $adminToolbar = AdminToolbar::newInstance();
+function _osc_admin_toolbar_init() 
+{
+    error_log('hook init_admin -> _osc_admin_toolbar_init ');
+    $adminToolbar = AdminToolbar::newInstance() ;
     
-    // we can add a submenu item too
-    $wp_admin_bar->add_menu( array(
-        'parent' => 'new-content',
-        'id' => 'new_media',
-        'title' => __('Media'),
-        'href' => admin_url( 'media-new.php')
-    ) );
+    $adminToolbar->init() ;
+    $adminToolbar->add_menus() ;
+    return true;
 }
 // and we hook our function via
-add_action( 'wp_before_admin_bar_render', 'mytheme_admin_bar_render' );
+osc_add_hook( 'init_admin', '_osc_admin_toolbar_init') ;
 
+/**
+ * Draws admin toolbar
+ */
+function osc_draw_admin_toolbar() 
+{
+    $adminToolbar = AdminToolbar::newInstance() ;
+
+    // run hook for adding 
+    osc_run_hook('add_admin_toolbar_menus') ;
+    error_log('draw en admin_footer');
+    $adminToolbar->render() ;
+}
+osc_add_hook('admin_footer', 'osc_draw_admin_toolbar');
+
+/**
+ * Add webtitle with link to frontend 
+ */
+function osc_admin_toolbar_menu()
+{
+    AdminToolbar::newInstance()->add_menu( array(
+                'id'        => 'home',
+                'title'     => '<span class="">'.  osc_page_title() .'</span>',
+                'href'      => osc_base_url(),
+                'meta'      => array('class' => 'user-profile')
+            ) );
+}
+// and we hook our function via
+osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_menu') ;
+
+/**
+ * Add logout link
+ */
+function osc_admin_toolbar_logout()
+{   
+    AdminToolbar::newInstance()->add_menu( array(
+                'id'        => 'logout',
+                'title'     => '<span class="">LOGOUT</span>',
+                'href'      => osc_admin_base_url(true) . '?action=logout'
+            ) );
+}
+// and we hook our function via
+osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_logout') ;
+
+function osc_admin_toolbar_comments()
+{   
+    $total = ItemComment::newInstance()->countAll( array('b_active' => 0) );
+    $title = '<i class="circle circle-green">'.$total.'</i>'.__('New comments');
+    
+    AdminToolbar::newInstance()->add_menu( 
+            array('id'    => 'comments',
+                  'title' => $title,
+                  'href'  => osc_admin_base_url(true) . "?page=comments",
+                  'meta'  => array('class' => 'action-btn action-btn-black')
+            ) );
+}
+// and we hook our function via
+osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_comments') ;
+
+function osc_admin_toolbar_spam()
+{   
+    $total = Item::newInstance()->countByMarkas( 'spam' );
+    $title = '<i class="circle circle-gray">'.$total.'</i>'.__('Spam');
+    
+    AdminToolbar::newInstance()->add_menu( 
+            array('id'    => 'spam',
+                  'title' => $title,
+                  'href'  => osc_admin_base_url(true) . "?page=items",
+                  'meta'  => array('class' => 'action-btn action-btn-black')
+            ) );
+}
+// and we hook our function via
+osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_spam') ;
 ?>
