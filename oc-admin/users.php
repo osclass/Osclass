@@ -144,12 +144,11 @@
                                         }
 
                                         if($iUpdated==0) {
-                                            $msg = _m('No user has been selected') ;
+                                            osc_add_flash_error_message(_m('No user has been selected'), 'admin');
                                         } else {
-                                            $msg = sprintf( _mn('Activation email sent to one user', 'Activation email sent to %s users', $iUpdated), $iUpdated ) ;
+                                            osc_add_flash_ok_message(sprintf( _mn('Activation email sent to one user', 'Activation email sent to %s users', $iUpdated), $iUpdated ), 'admin');
                                         }
 
-                                        osc_add_flash_ok_message($msg, 'admin') ;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                 break ;
                 case('activate'):       //activate
