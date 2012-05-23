@@ -25,6 +25,15 @@
         function __construct()
         {
             parent::__construct() ;
+
+            // check if is moderator and can enter to this page
+            if( $this->isModerator() ) {
+                if( !in_array($this->page, array('items', 'comments', 'media', 'login', 'admins', 'ajax', '')) ) {
+                    osc_add_flash_error_message(_m("You don't have enough permissions"), 'admin');
+                    $this->redirectTo(osc_admin_base_url());
+                }
+            }
+
             // init admin menu
             AdminMenu::newInstance()->init();
             
@@ -59,6 +68,11 @@
         function isLogged()
         {
             return osc_is_admin_user_logged_in() ;
+        }
+
+        function isModerator()
+        {
+            return osc_is_moderator();
         }
 
         function logout()

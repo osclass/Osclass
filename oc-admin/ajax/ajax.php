@@ -25,21 +25,16 @@
         {
             parent::__construct();
             $this->ajax = true ;
+            if( $this->isModerator() ) {
+                if( !in_array($this->action, array('items', 'media', 'comments', 'custom')) ) {
+                    $this->action = 'error_permissions';
+                }
+            }
         }
 
         //Business Layer...
         function doModel()
         {
-            
-            if(osc_is_moderator() 
-                && $this->action!='items'
-                && $this->action!='media'
-                && $this->action!='comments'
-                && $this->action!='custom'
-                ) {
-                $this->action = 'error_permissions';
-            }
-            
             //specific things for this class
             switch ($this->action) {
                 case 'bulk_actions':
