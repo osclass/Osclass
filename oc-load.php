@@ -160,6 +160,7 @@ require_once LIB_PATH . 'osclass/classes/Watermark.php';
 require_once LIB_PATH . 'osclass/classes/Rewrite.php';
 require_once LIB_PATH . 'osclass/classes/Stats.php';
 require_once LIB_PATH . 'osclass/classes/AdminMenu.php';
+require_once LIB_PATH . 'osclass/classes/AdminToolbar.php';
 require_once LIB_PATH . 'osclass/alerts.php';
 
 require_once LIB_PATH . 'osclass/frm/Form.form.class.php';

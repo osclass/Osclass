@@ -203,5 +203,21 @@ function meta_description( ) {
     return (osc_apply_filter('meta_description_filter', $text)) ;
 }
 
+/*
+ * Fill admin toolbar
+ */
+function mytheme_admin_bar_render() {
+    $adminToolbar = AdminToolbar::newInstance();
+    
+    // we can add a submenu item too
+    $wp_admin_bar->add_menu( array(
+        'parent' => 'new-content',
+        'id' => 'new_media',
+        'title' => __('Media'),
+        'href' => admin_url( 'media-new.php')
+    ) );
+}
+// and we hook our function via
+add_action( 'wp_before_admin_bar_render', 'mytheme_admin_bar_render' );
 
 ?>
