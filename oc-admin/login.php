@@ -33,14 +33,14 @@
             switch( $this->action ) {
                 case('login_post'):     //post execution for the login
                                         if( Params::getParam('user') == '' ) {
-                                            osc_add_flash_error_message( _m('The username field is empty'), 'admin') ;
                                             $this->logout();
+                                            osc_add_flash_error_message( _m('The username field is empty'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url() ) ;
                                         }
 
                                         if( Params::getParam('password', false, false) == '' ) {
-                                            osc_add_flash_error_message( _m('The password field is empty'), 'admin') ;
                                             $this->logout();
+                                            osc_add_flash_error_message( _m('The password field is empty'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url() ) ;
                                         }
 
@@ -48,14 +48,14 @@
                                         $admin = Admin::newInstance()->findByUsername( Params::getParam('user') ) ;
 
                                         if( !$admin ) {
-                                            osc_add_flash_error_message( sprintf(_m('Sorry, incorrect username. <a href="%s">Have you lost your password?</a>'), osc_admin_base_url(true) . '?page=login&amp;action=recover' ), 'admin') ;
                                             $this->logout();
+                                            osc_add_flash_error_message( sprintf(_m('Sorry, incorrect username. <a href="%s">Have you lost your password?</a>'), osc_admin_base_url(true) . '?page=login&amp;action=recover' ), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url() ) ;
                                         }
 
                                         if( $admin["s_password"] !== sha1( Params::getParam('password', false, false) ) ) {
-                                            osc_add_flash_error_message( sprintf(_m('Sorry, incorrect password. <a href="%s">Have you lost your password?</a>'), osc_admin_base_url(true) . '?page=login&amp;action=recover' ), 'admin') ;
                                             $this->logout();
+                                            osc_add_flash_error_message( sprintf(_m('Sorry, incorrect password. <a href="%s">Have you lost your password?</a>'), osc_admin_base_url(true) . '?page=login&amp;action=recover' ), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url() ) ;
                                         }
 
@@ -161,7 +161,6 @@
         function logout()
         {
             //destroying session
-            Session::newInstance()->session_destroy() ;
             Session::newInstance()->_drop('adminId') ;
             Session::newInstance()->_drop('adminUserName') ;
             Session::newInstance()->_drop('adminName') ;
