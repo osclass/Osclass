@@ -558,6 +558,49 @@
             
             return $this->dao->query($sql);
         }
+        
+        /**
+         * Return the number of items marked as $type
+         *
+         * @param string $type spam, repeated, bad_classified, offensive, expired
+         * @return int
+         */
+        public function countByMarkas( $type )
+        {
+            $this->dao->select('count(*) as total') ;
+            $this->dao->from($this->getTableName().' i') ;
+            $this->dao->from(DB_TABLE_PREFIX.'t_item_stats s') ;
+            
+            $this->dao->where( 'i.pk_i_id = s.fk_i_item_id' ) ;
+            // i_num_spam, i_num_repeated, i_num_bad_classified, i_num_offensive, i_num_expired  
+            if (!is_null($type)) {
+                switch ($type) {
+                    case 'spam':  
+                        $this->dao->where('s.i_num_spam > 0 AND i.b_spam = 0');
+                    break;
+                    case 'repeated':   
+                        $this->dao->where('s.i_num_repeated > 0');
+                    break;
+                    case 'bad_classified':  
+                        $this->dao->where('s.i_num_bad_classified > 0');
+                    break;
+                    case 'offensive':   
+                        $this->dao->where('s.i_num_offensive > 0');
+                    break;
+                    case 'expired':   
+                        $this->dao->where('s.i_num_expired > 0');
+                    break;
+                    default:
+                }   
+            } else {
+                return 0;
+            }
+
+            $result = $this->dao->get() ;
+            $total_ads = $result->row() ;
+            return $total_ads['total'];
+        }
+        
         /**
          * Return meta fields for a given item
          *
