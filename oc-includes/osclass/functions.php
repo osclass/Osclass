@@ -212,7 +212,6 @@ function meta_description( ) {
  */
 function _osc_admin_toolbar_init() 
 {
-    error_log('hook init_admin -> _osc_admin_toolbar_init ');
     $adminToolbar = AdminToolbar::newInstance() ;
     
     $adminToolbar->init() ;
@@ -231,7 +230,6 @@ function osc_draw_admin_toolbar()
 
     // run hook for adding 
     osc_run_hook('add_admin_toolbar_menus') ;
-    error_log('draw en admin_footer');
     $adminToolbar->render() ;
 }
 osc_add_hook('admin_footer', 'osc_draw_admin_toolbar');

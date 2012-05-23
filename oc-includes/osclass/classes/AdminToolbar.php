@@ -41,7 +41,6 @@
         
         function add_menus()
         {
-            error_log('adding menus -- toolbar ') ;
             // User related, aligned right.
             osc_add_hook( 'admin_bar_menu', 'osc_admin_toolbar_menu'    , 0 );
             osc_add_hook( 'admin_bar_menu', 'osc_admin_toolbar_comments', 0 );
