@@ -113,8 +113,8 @@
                                 <option value=""><?php _e('Bulk Actions') ; ?></option>
                                 <option value="activate"><?php _e('Activate') ; ?></option>
                                 <option value="deactivate"><?php _e('Deactivate') ; ?></option>
-                                <option value="enable"><?php _e('Unblock') ; ?></option>
-                                <option value="disable"><?php _e('Block') ; ?></option>
+                                <option value="enable"><?php _e('Block') ; ?></option>
+                                <option value="disable"><?php _e('Unblock') ; ?></option>
                                 <option value="delete"><?php _e('Delete') ; ?></option>
                                 <?php if( osc_user_validation_enabled() ) { ?>
                                     <option value="resend_activation"><?php _e('Resend activation') ; ?></option>

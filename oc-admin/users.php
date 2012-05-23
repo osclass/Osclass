@@ -136,7 +136,6 @@
                                         $userId   = Params::getParam('id');
                                         if(!is_array($userId)) {
                                             osc_add_flash_error_message( _m("User id isn't in the correct format"), 'admin') ;
-                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                                         }
 
                                         $userActions = new UserActions(true) ;
@@ -158,7 +157,6 @@
                                         $userId   = Params::getParam('id') ;
                                         if( !is_array($userId) ) {
                                             osc_add_flash_error_message( _m("User id isn't in the correct format"), 'admin') ;
-                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                                         }
 
                                         $userActions = new UserActions(true) ;
@@ -181,7 +179,6 @@
                                         $userId   = Params::getParam('id') ;
                                         if( !is_array($userId) ) {
                                             osc_add_flash_error_message( _m("User id isn't in the correct format"), 'admin') ;
-                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                                         }
 
                                         $userActions = new UserActions(true) ;
@@ -204,7 +201,6 @@
                                         $userId   = Params::getParam('id') ;
                                         if( !is_array($userId) ) {
                                             osc_add_flash_error_message(_m("User id isn't in the correct format"), 'admin') ;
-                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                                         }
 
                                         $userActions = new UserActions(true) ;
@@ -215,7 +211,7 @@
                                         if( $iUpdated == 0 ) {
                                             $msg = _m('No user has been enabled') ;
                                         } else {
-                                            $msg = sprintf( _mn('One user has been enabled', '%s users have been unblocked', $iUpdated), $iUpdated ) ;
+                                            $msg = sprintf( _mn('One user has been enabled', '%s users have been enabled', $iUpdated), $iUpdated ) ;
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin') ;
@@ -227,7 +223,6 @@
                                         $userId   = Params::getParam('id') ;
                                         if( !is_array($userId) ) {
                                             osc_add_flash_error_message( _m("User id isn't in the correct format"), 'admin') ;
-                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                                         }
 
                                         $userActions = new UserActions(true) ;
@@ -238,7 +233,7 @@
                                         if( $iUpdated == 0 ) {
                                             $msg = _m('No user has been disabled') ;
                                         } else {
-                                            $msg = sprintf( _mn('One user has been disabled', '%s users have been blocked', $iUpdated), $iUpdated ) ;
+                                            $msg = sprintf( _mn('One user has been disabled', '%s users have been disabled', $iUpdated), $iUpdated ) ;
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin') ;
@@ -249,7 +244,6 @@
                                         $userId   = Params::getParam('id') ;
                                         if( !is_array($userId) ) {
                                             osc_add_flash_error_message( _m("User id isn't in the correct format"), 'admin') ;
-                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                                         }
 
                                         foreach($userId as $id) {
