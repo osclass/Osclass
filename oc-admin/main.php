@@ -35,7 +35,11 @@
                                     $this->logout();
 
                                     $this->redirectTo( osc_admin_base_url(true) ) ;
-                break;
+                    break;
+                case('login'):
+                                    osc_run_hook( 'init_admin' ) ;
+                                    require osc_admin_base_path() . 'gui/login.php' ;
+                    break;
                 default:            //default dashboard page (main page at oc-admin)
                                     $this->_exportVariableToView( "numUsers", User::newInstance()->count() ) ;
                                     $this->_exportVariableToView( "numAdmins", Admin::newInstance()->count() ) ;
