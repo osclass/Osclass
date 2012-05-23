@@ -78,7 +78,12 @@
             if( count($this->nodes) > 0) {
                 echo "<div id='header'>" ;
                 foreach( $this->nodes as $value ) {
-                    echo "<a id='osc_toolbar_".$value->id."' href='".$value->href."'>".$value->title."</a>";
+                    $meta = "";
+                    if( isset($value->meta) ) {
+                        foreach($value->meta as $k => $v)
+                            $meta .= $k."='".$v."' " ; 
+                    }
+                    echo "<a id='osc_toolbar_".$value->id."' $meta href='".$value->href."'>".$value->title."</a>";
                 }
                 echo "</div>" ;
             }
