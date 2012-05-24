@@ -46,7 +46,7 @@
             osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_comments', 0 );
             osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_spam'    , 0 );
             
-//            osc_add_hook( 'admin_bar_menu', 'osc_admin_toolbar_logout'  , 0 );
+            osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_logout'  , 0 );
             
             osc_run_hook( 'add_admin_toolbar_menus' );
         }
@@ -76,16 +76,16 @@
         public function render()
         {
             if( count($this->nodes) > 0) {
-                echo "<div id='header'>" ;
+                echo '<div id="header"><div class="header-wrapper">' ;
                 foreach( $this->nodes as $value ) {
                     $meta = "";
                     if( isset($value->meta) ) {
                         foreach($value->meta as $k => $v)
-                            $meta .= $k."='".$v."' " ; 
+                            $meta .= $k.'="'.$v.'" ' ; 
                     }
-                    echo "<a id='osc_toolbar_".$value->id."' $meta href='".$value->href."'>".$value->title."</a>";
+                    echo '<a id="osc_toolbar_'.$value->id.'" '.$meta.' href="'.$value->href.'">'.$value->title.'</a>';
                 }
-                echo "</div>" ;
+                echo '</div></div>' ;
             }
         }
     }

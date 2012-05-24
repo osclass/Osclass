@@ -60,6 +60,7 @@
                         foreach($aSubmenu as $aSub) {
                             $credential_sub = $aSub[4];
                             if(!$is_moderator || $is_moderator && $credential_sub == 'moderator') { // show
+
                                 $sSubmenu .= '<li><a id="'.$aSub[2].'" href="'.$aSub[1].'">'.$aSub[0].'</a></li>'.PHP_EOL ;
                             }   
                         }
@@ -80,7 +81,7 @@
                 }
 
                 $sMenu .= '<li id="menu_'.$value[2].'" class="'.$class.'">'.PHP_EOL ;
-                $sMenu .= '<h3><a id="'.$value[2].'" href="'.$value[1].'">'.$value[0].'</a></h3>'.PHP_EOL ;
+                $sMenu .= '<h3><a id="'.$value[2].'" href="'.$value[1].'"><div class="ico ico-48 ico-'.$value[2].'"></div>'.$value[0].'</a></h3>'.PHP_EOL ;
                 $sMenu .= $sSubmenu;
                 $sMenu .= '</li>'.PHP_EOL ;
             }

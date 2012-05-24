@@ -20,7 +20,6 @@
     </head>
 
 <body>
-    <div id="header">
         <?php AdminToolbar::newInstance()->render() ;?>
         <?php osc_run_hook('admin_header') ; ?>
     </div>
