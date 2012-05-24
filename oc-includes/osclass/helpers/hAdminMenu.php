@@ -65,7 +65,9 @@
                             }   
                         }
                         // hardcoded plugins/themes under menu plugins 
-                        if($key == 'plugins') {
+                        if($key == 'plugins' && !$is_moderator) {
+                            // preprocess plugin_out, remove all tags unless 
+                            // <li> tags
                             $sSubmenu .= $plugins_out;
                         }
                         
@@ -95,22 +97,6 @@
                 
             
         }
-//        if(!$is_moderator) {
-//            $class = '';
-//            if(!$something_selected) $class = 'current';
-//            $sMenu .= '<li id="menu_personal" class="'.$class.'">'.PHP_EOL ;
-//
-//            // Remove hook admin_menu when osclass 4.0 be released
-//            // hack, compatibility with menu plugins.
-//            ob_start(); 
-//            osc_run_hook('admin_menu') ;
-//            $plugins_out = ob_get_contents();
-//            ob_end_clean();
-//            // -----------------------------------------------------
-//
-//            $sMenu .= $plugins_out.PHP_EOL;
-//            $sMenu .= '</li>'.PHP_EOL ;
-//        }
         $sMenu .= '</ul>'. PHP_EOL;
         
         $sMenu .= '<div id="show-more">'.PHP_EOL ;
@@ -161,7 +147,7 @@
                             }   
                         }
                         
-                        if($key == 'plugins') {
+                        if($key == 'plugins' && !$is_moderator) {
                             $sSubmenu .= $plugins_out;
                         }
                         
@@ -183,22 +169,7 @@
                 
             
         }
-//        if(!$is_moderator) {
-//            $class = '';
-//            if(!$something_selected) $class = 'current-menu-item';
-//            $sMenu .= '<li id="menu_personal" class="'.$class.'">'.PHP_EOL ;
-//
-//            // Remove hook admin_menu when osclass 4.0 be released
-//            // hack, compatibility with menu plugins.
-//            ob_start(); 
-//            osc_run_hook('admin_menu') ;
-//            $plugins_out = ob_get_contents();
-//            ob_end_clean();
-//            // -----------------------------------------------------
-//
-//            $sMenu .= $plugins_out.PHP_EOL;
-//            $sMenu .= '</li>'.PHP_EOL ;
-//        }
+        
         $sMenu .= '</ul>'. PHP_EOL; 
         $sMenu .= '</div>'.PHP_EOL ;
         $sMenu .= '<!-- menu end -->'.PHP_EOL ;
