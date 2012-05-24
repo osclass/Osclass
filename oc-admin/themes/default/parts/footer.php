@@ -7,7 +7,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="<?php echo osc_current_admin_theme_js_url('jquery.min.js') ; ?>"></script>
-    <script>
+        <script>
     $(function(){
         $('#sidebar ul.oscmenu > li > ul').each(function(){
             var $submenu = $(this);
@@ -28,13 +28,37 @@
         });
         $('#hidden-menus > li').live('mouseenter',function(){
             var $submenu = $(this).find('ul');
-            console.log($submenu.height());
-            console.log($submenu);
             $(this).addClass('hover');
                         $submenu.css('top',($submenu.height()*-1)).css('margin-top','-22px');
 
         }).live('mouseleave',function(){
             $(this).removeClass('hover')
+        });
+         //Row actions
+        $('.table .actions').each(function(){
+            var $actions = $(this);
+            var $rowActions = $('#table-row-actions');
+            $(this).parents('tr').mouseenter(function(){
+                var $containterOffset = $('.table-hast-actions').offset();
+                $thisOffset = $(this).offset();
+                $rowActions.empty().append($actions.clone()).css({
+                    width:$(this).width()-85,
+                    top:($thisOffset.top-$containterOffset.top)+$(this).height()
+                }).show();
+            });
+        });
+        $('.table-hast-actions').mouseleave(function(event){
+            $('#table-row-actions').hide();
+        })
+        //Close help
+        $('#help-box .ico-close').click(function(){
+            $('#help-box').hide();
+        });
+        $('#content-head .ico-help').click(function(){
+            $('#help-box').fadeIn();
+        });
+        $('#table-row-actions .show-more').live('click',function(){
+            $(this).addClass('hover');
         });
     });
     $(window).resize(function(){
@@ -57,22 +81,6 @@
            $('#show-more').show(); 
         }
     }
-    //Row actions
-    $('.table .actions').each(function(){
-        var $actions = $(this);
-        var $rowActions = $('#table-row-actions');
-        var $containterOffset = $('.table-hast-actions').offset();
-        $(this).parents('tr').mouseenter(function(){
-            $thisOffset = $(this).offset();
-            $rowActions.empty().append($actions.clone()).css({
-                width:$(this).width()-85,
-                top:($thisOffset.top-$containterOffset.top)+$(this).height()
-            }).show();
-        });
-    });
-     $('.table-hast-actions').mouseleave(function(event){
-        $('#table-row-actions').hide();
-    })
     </script>
   </body>
 </html>

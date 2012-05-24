@@ -41,17 +41,45 @@
 .circle-green{
 	.submit-color;
 }
-.btn-icon-black{
+.btn{
 	float:left;
-	background-color: @color-gray-hardblack;
+	background-color: @color-gray-light;
 	height:32px;
 	width:32px;
-	border:solid 1px @color-gray-dim;
+	border:solid 1px @color-gray-soft;
 	.rounded-corners;
 	text-decoration:none;
 }
-.btn-icon-black:hover{
+.btn:hover{
+	background-color: @color-gray-dim;
+	border-color:@color-gray-dim;
+}
+.btn-black{
+	background-color: @color-gray-hardblack;
+	border:solid 1px @color-gray-dim;
+}
+.btn-black:hover{
 	background-color: @color-black;
+}
+.btn-dim{
+	background-color:@color-gray-dim;
+	border-color:@color-gray-dim;
+}
+.btn-dim:hover{
+	background-color:@color-gray-hardblack;
+	border-color:@color-gray-hardblack;
+}
+.btn-green{
+	background-color: @color-green;
+	border:solid 1px @color-green-dark;
+}
+.btn-green:hover{
+	background-color: @color-green-hover;
+	border:solid 1px @color-green-dark;
+}
+.btn-mini{
+	height:20px;
+	width:20px;
 }
 .float-left{
 	.float-l;
