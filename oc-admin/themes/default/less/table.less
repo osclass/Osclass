@@ -36,32 +36,59 @@ table {
 	vertical-align: bottom;
 }
 .table-hast-actions tbody td{
-	padding-bottom:18px;
+	padding-bottom:22px;
 }
-.actions{
-	display:block;
+#table-row-actions{
+	display:none;
 	position: absolute;
 	top:0;left:0px;
+	margin-top:-22px;
+	*margin-top:-21px;
+	font-size:13px;
+	line-height:13px;
+	height:22px;
 	display:none;
 	background-color:@color-gray-light;
 	border:solid 1px @color-gray-soft;
-	border-bottom:0;
 	z-index:2;
 	padding:0px 42px;
 	text-align:left;
 }
-.table .hover .actions{
-	display:block;
-}
-.table-row-actions{
-	margin-left:-7px;
-	top:-1px;
-	position: absolute;
-	width:100%;
-	height:100%;
-	background:red;
-}
 .col-bulkactions{
 	width:20px;
-	text-align:center;
+	opacity:1 !important;
+	text-align:center !important;
+}
+.table-hast-actions{
+	position:relative;
+}
+.table div.actions{
+	display: none;
+}
+.status-spam,
+.status-spam td{
+	background:@status-spam;
+	border-color:@status-spam-border;
+}
+.status-block,
+.status-block td{
+	background:@status-block;
+	/*border-color:@status-block-border;*/
+}
+.status-block td{
+	opacity:0.4;
+	/*border-color:@status-block-border;*/
+}
+.status-activate,
+.status-activate td{
+	background:@status-activate;
+	/*border-color:@status-activate-border;*/
+}
+.status-premium,
+.status-premium td{
+	background:@status-premium;
+	/*border-color:@status-premium-border;*/
+}
+.even{
+	background:#F9F9F9;
 }
