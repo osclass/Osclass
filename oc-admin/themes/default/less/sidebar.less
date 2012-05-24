@@ -5,6 +5,7 @@
 }
 #sidebar h3 .ico{
 	margin-left:	     16px;
+	*margin-left:		 0px;
 }
 #sidebar h3{
 	margin:		 		 0px;
@@ -45,7 +46,7 @@
 	#hidden-menus{
 		position: 			 absolute;
 		list-style: 	     none;
-		padding:			 10px;
+		padding:			 10px 0;
 		width:				 150px;
 		left:				 70px;
 		top:				 -1px;
@@ -64,8 +65,15 @@
 		border-bottom:   none;
 		list-style:		 0px;
 		position: 		 relative;
-		padding:   		 2px 10px;
-		font-weight:	 bold;
+	}
+	#sidebar .oscmenu li li a{
+		display:		 block;
+		padding:   		 2px 15px;
+		color:			 @color-gray-hardblack;
+
+	}
+	#sidebar .oscmenu li li a:hover{
+		background:		 @color-gray-light;
 	}
 	#sidebar .oscmenu li.hover ul{
 		display:	     block;
@@ -76,17 +84,9 @@
 		position: 		 absolute;
 		top:			 50%;
 		left:			 -10px;
+		padding:		 0px;
 		margin-top:		 -10px;
 		background: 	 url('../images/arrow.png');
-	}
-	#show-more .arrow{
-		height:			 10px;
-		width:			 20px;
-		position: 		 absolute;
-		top:			 100%;
-		left:			 /*70px*/40px;
-		margin-top:		 -0px;
-		background: 	 url('../images/arrow2.png');
 	}
 #submenu-sidebar{
 	position: 			 fixed;
@@ -129,7 +129,7 @@
 		display: 		     block;
 		position: 			 absolute;
 		list-style: 	     none;
-		padding:			 10px;
+		padding:			 10px 0;
 		width:				 150px;
 		left:				 /*-4px*/-11px;
 		margin-top:	     	 -15px;
@@ -147,7 +147,24 @@
 		border-bottom:   none;
 		list-style:		 0px;
 		position: 		 relative;
-		padding:   		 2px 10px;
-		font-weight:	 bold;
 		float:none;
+	}
+	#hidden-menus ul li a{
+		display:		 block;
+		padding:   		 2px 15px;
+		color:			 @color-gray-hardblack;
+
+	}
+	#hidden-menus .hover ul li a:hover{
+		background:		 @color-gray-light;
+	}
+	#show-more ul li.arrow{
+		height:			 10px;
+		width:			 20px;
+		position: 		 absolute;
+		top:			 100%;
+		left:			 40px;
+		padding:         0px;
+		margin-top:		 0px;
+		background: 	 url('../images/arrow2.png');
 	}

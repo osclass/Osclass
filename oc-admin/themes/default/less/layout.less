@@ -2,16 +2,19 @@ body{
 	margin:			  0px;
 	padding:		  0px;
 	font-family:	  Arial, "Helvetica Neue", Helvetica, Verdana, sans-serif;
+	min-height:		  600px;
+	min-width:	      800px;
 }
 #header{
 	position:		  fixed;
 	top:   			  0px;
 	left:   		  0px;
-	height:           32px;
-	padding:		  9px 0;
+	height:           34px;
+	padding:		  8px 0;
 	width:            100%;
 	background-color: @color-gray-black;
 	z-index: 		  1;
+	min-width:	      800px;
 }
 #content{
 	position: 		  relative;
@@ -28,5 +31,5 @@ body{
 	border-right:	  solid 1px @color-gray-soft;
 	background-color: @color-gray-light;
 	overflow: 		  visible;
-	z-index: 		  1;
+	z-index: 		  3;
 }

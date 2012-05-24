@@ -8,25 +8,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery.min.js"></script>
     <script>
-    /*$(function(){
-    	$('#sidebar ul.oscmenu > li > ul').each(function(){
-    		var $submenu = $(this);
-    		var $submenuTemp;
-    		$submenu.parent().mouseenter(function(event){
-    			event.stopPropagation();
-    			_top = this.offsetTop+50-$('#sidebar').scrollTop();
-    			console.log(' ====== '+_top);
-    			$submenuSidebar = $('#submenu-sidebar').empty().css({top:_top}).show();
-	    		$submenuTemp = $submenu.clone().appendTo($submenuSidebar);
-	    	});
-    	});
-    	$('#content').hover(function() {
-			$('#submenu-sidebar').hide();
-		});
- 		$('#submenu-sidebar').mouseenter(function(event){
-			$('#submenu-sidebar').show();
- 		});
-    });*/
     $(function(){
         $('#sidebar ul.oscmenu > li > ul').each(function(){
             var $submenu = $(this);
@@ -77,27 +58,21 @@
         }
     }
     //Row actions
-    $('.table-row-actions .actions').each(function(){
+    $('.table .actions').each(function(){
         var $actions = $(this);
+        var $rowActions = $('#table-row-actions');
+        var $containterOffset = $('.table-hast-actions').offset();
         $(this).parents('tr').mouseenter(function(){
-            $actions.css('width',$(this).width()-85);
+            $thisOffset = $(this).offset();
+            $rowActions.empty().append($actions.clone()).css({
+                width:$(this).width()-85,
+                top:($thisOffset.top-$containterOffset.top)+$(this).height()
+            }).show();
         });
     });
-    $('tr').hover(function(){
-        $(this).addClass('hover');
-    },function(){
-        $(this).removeClass('hover');
-    });
-    /*
-    $('.table-row-actions').each(function(){
-        $actions = $(this)
-        $(this).parents('tr:first').hover(function(){
-            $actions.css('width',$(this).width()-85).show();
-        },function(){
-            $actions.hide();
-        });
-    });*/
-    //$('.table tr td:last-child, .table tr th:last-child').addClass('table-last')
+     $('.table-hast-actions').mouseleave(function(event){
+        $('#table-row-actions').hide();
+    })
     </script>
   </body>
 </html>
