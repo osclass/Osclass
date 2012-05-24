@@ -278,6 +278,17 @@
     }
 
     /**
+     * Gets currency symbol of an item
+     *
+     * @since 3.0
+     * @return string
+     */
+    function osc_item_currency_symbol() {
+        $aCurrency = Currency::newInstance()->findBycode(osc_item_currency());
+        return $aCurrency['s_description'];
+    }
+
+    /**
      * Gets contact name of current item
      *
      * @return string
@@ -1024,12 +1035,12 @@
     function osc_format_price($price) {
         if ($price == null) return osc_apply_filter ('item_price_null', __('Check with seller') ) ;
         if ($price == 0) return osc_apply_filter ('item_price_zero', __('Free') ) ;
-        
+
         $price = $price/1000000;
 
         $currencyFormat = osc_locale_currency_format();
         $currencyFormat = str_replace('{NUMBER}', number_format($price, osc_locale_num_dec(), osc_locale_dec_point(), osc_locale_thousands_sep()), $currencyFormat);
-        $currencyFormat = str_replace('{CURRENCY}', osc_item_currency(), $currencyFormat);
+        $currencyFormat = str_replace('{CURRENCY}', osc_item_currency_symbol(), $currencyFormat);
         return osc_apply_filter('item_price', $currencyFormat ) ;
     }
 
