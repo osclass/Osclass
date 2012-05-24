@@ -182,6 +182,66 @@ class OCadmin_tools extends OCadminTest {
     
     
     /*
+     * Test if the http_referer functionality is working on admin
+     */
+    function testHTTPReferer()
+    {
+        $this->HTTPReferer( osc_admin_base_url(true)."?page=items" , "Manage listings");
+        $this->HTTPReferer( osc_admin_base_url(true)."?page=stats&action=comments" , "Comments Statistics");
+    }
+    
+    function HTTPReferer($url, $text) 
+    {
+        
+        // CORRECT LOGIN
+        $this->logout();
+        $this->selenium->open( $url );
+        $this->selenium->waitForPageToLoad(10000);
+        $this->selenium->type('user', $this->_adminUser);
+        $this->selenium->type('password', $this->_password);
+        $this->selenium->click('submit');
+        $this->selenium->waitForPageToLoad(1000);
+        $this->assertTrue($this->selenium->isTextPresent($text), "HTTP REFERER CORRECT");
+        
+        // INCORRECT LOGIN (ONE TIME)
+        $this->logout();
+        $this->selenium->open( $url );
+        $this->selenium->waitForPageToLoad(10000);
+        $this->selenium->type('user', $this->_adminUser);
+        $this->selenium->type('password', $this->_password."a");
+        $this->selenium->click('submit');
+        $this->selenium->waitForPageToLoad(1000);
+        $this->assertTrue($this->selenium->isTextPresent("Sorry, incorrect password."), "HTTP REFERER INCORRECT ONE TIME");
+        $this->selenium->type('user', $this->_adminUser);
+        $this->selenium->type('password', $this->_password);
+        $this->selenium->click('submit');
+        $this->selenium->waitForPageToLoad(1000);
+        $this->assertTrue($this->selenium->isTextPresent($text), "HTTP REFERER INCORRECT ONE TIME");
+        
+        // INCORRECT LOGIN (TWICE)
+        $this->logout();
+        $this->selenium->open( $url );
+        $this->selenium->waitForPageToLoad(10000);
+        $this->selenium->type('user', $this->_adminUser);
+        $this->selenium->type('password', $this->_password."a");
+        $this->selenium->click('submit');
+        $this->selenium->waitForPageToLoad(1000);
+        $this->assertTrue($this->selenium->isTextPresent("Sorry, incorrect password."), "HTTP REFERER INCORRECT TWICE");
+        $this->selenium->type('user', $this->_adminUser);
+        $this->selenium->type('password', $this->_password."ab");
+        $this->selenium->click('submit');
+        $this->selenium->waitForPageToLoad(1000);
+        $this->assertTrue($this->selenium->isTextPresent("Sorry, incorrect password."), "HTTP REFERER INCORRECT TWICE");
+        $this->selenium->type('user', $this->_adminUser);
+        $this->selenium->type('password', $this->_password);
+        $this->selenium->click('submit');
+        $this->selenium->waitForPageToLoad(1000);
+        $this->assertTrue($this->selenium->isTextPresent($text), "HTTP REFERER INCORRECT TWICE");
+
+    }
+    
+    
+    /*
      * Load items for test propouse.
      */
     function loadItems()
