@@ -72,8 +72,11 @@
         define('OSC_MEMORY_LIMIT', '32M') ;
     }
 
-    if ( function_exists('memory_get_usage') && ( (int) @ini_get('memory_limit') < abs(intval(OSC_MEMORY_LIMIT)) ) ) {
+    if( function_exists('memory_get_usage') && ( (int) @ini_get('memory_limit') < abs(intval(OSC_MEMORY_LIMIT)) ) ) {
         @ini_set('memory_limit', OSC_MEMORY_LIMIT) ;
     }
-    
+
+    if( !defined('CLI') ) {
+        define('CLI', false);
+    }
 ?>

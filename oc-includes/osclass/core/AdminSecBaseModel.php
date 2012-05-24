@@ -93,10 +93,9 @@
 
         function showAuthFailPage()
         {
-            // juanramon: we add here de init_admin hook becuase if not, it's not called
-            osc_run_hook( 'init_admin' ) ;
-            require osc_admin_base_path() . 'gui/login.php' ;
-            exit ;
+            Session::newInstance()->session_start();
+            Session::newInstance()->_setReferer(WEB_PATH . str_replace(REL_WEB_URL, '', @$_SERVER['REQUEST_URI']));
+            $this->redirectTo( osc_admin_base_url()."?page=login" ) ;
         }
     }
 

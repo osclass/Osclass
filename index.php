@@ -19,10 +19,23 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    define('ABS_PATH', dirname($_SERVER['SCRIPT_FILENAME']) . '/');
+    if( !array_key_exists('HTTP_HOST', $_SERVER) ) {
+        define('CLI', true);
+        define('ABS_PATH', rtrim($_SERVER['PWD'], "/") . '/' .dirname(str_replace($_SERVER['PWD'], '', $_SERVER['SCRIPT_FILENAME'])) . '/');
+    } else {
+        define('ABS_PATH', dirname($_SERVER['SCRIPT_FILENAME']) . '/');
+    }
 
     require_once ABS_PATH . 'oc-load.php' ;
-    
+
+    if( CLI ) {
+        $cli_params = getopt('p:');
+        Params::setParam('page', $cli_params['p']);
+        if( !in_array(Params::getParam('page'), array('cron')) ) {
+            exit(1);
+        }
+    }
+
     if( file_exists(ABS_PATH . '.maintenance') ) {
         if(!osc_is_admin_user_logged_in()) {
             require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
