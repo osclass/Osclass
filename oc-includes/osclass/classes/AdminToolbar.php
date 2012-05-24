@@ -42,11 +42,11 @@
         function add_menus()
         {
             // User related, aligned right.
-            osc_add_hook( 'admin_bar_menu', 'osc_admin_toolbar_menu'    , 0 );
-            osc_add_hook( 'admin_bar_menu', 'osc_admin_toolbar_comments', 0 );
-            osc_add_hook( 'admin_bar_menu', 'osc_admin_toolbar_spam'    , 0 );
+            osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_menu'    , 0 );
+            osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_comments', 0 );
+            osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_spam'    , 0 );
             
-            osc_add_hook( 'admin_bar_menu', 'osc_admin_toolbar_logout'  , 0 );
+//            osc_add_hook( 'admin_bar_menu', 'osc_admin_toolbar_logout'  , 0 );
             
             osc_run_hook( 'add_admin_toolbar_menus' );
         }
