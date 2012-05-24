@@ -29,6 +29,82 @@
     /**
      * Draws menu with sections and subsections
      */
+    function osc_draw_admin_menu_new() 
+    {
+        $something_selected = false;
+        $adminMenu          = AdminMenu::newInstance() ;
+        $aMenu              = $adminMenu->get_array_menu() ;
+        $current_menu_id    = osc_current_menu();
+        $is_moderator       = osc_is_moderator();
+        
+        $sMenu = '<!-- menu -->'.PHP_EOL ;
+        $sMenu .= '<div id="sidebar" style="height: 332px;">'.PHP_EOL ;
+        $sMenu .= '<ul class="oscmenu">'.PHP_EOL ;
+        foreach($aMenu as $key => $value) {
+            $sSubmenu   = "";
+            $credential = $value[3];
+            if(!$is_moderator || $is_moderator && $credential == 'moderator') { // show
+                if( array_key_exists('sub', $value) ) {
+                    // submenu
+                    $aSubmenu = $value['sub'] ;
+                    if($aSubmenu) {
+                        $sSubmenu .= "<ul>".PHP_EOL;
+                        foreach($aSubmenu as $aSub) {
+                            $credential_sub = $aSub[4];
+                            if(!$is_moderator || $is_moderator && $credential_sub == 'moderator') { // show
+                                $sSubmenu .= '<li><a id="'.$aSub[2].'" href="'.$aSub[1].'">'.$aSub[0].'</a></li>'.PHP_EOL ;
+                            }   
+                        }
+                        $sSubmenu .= "</ul>".PHP_EOL;
+                    }
+                }
+
+                $class = '';
+                if($current_menu_id ==  $value[2]) {
+                    $class = 'current';
+                    $something_selected = true;
+                }
+
+                $sMenu .= '<li id="menu_'.$value[2].'" class="'.$class.'">'.PHP_EOL ;
+                $sMenu .= '<h3><a id="'.$value[2].'" href="'.$value[1].'">'.$value[0].'</a></h3>'.PHP_EOL ;
+                $sMenu .= $sSubmenu;
+                $sMenu .= '</li>'.PHP_EOL ;
+            }
+                
+            
+        }
+        if(!$is_moderator) {
+            $class = '';
+            if(!$something_selected) $class = 'current';
+            $sMenu .= '<li id="menu_personal" class="'.$class.'">'.PHP_EOL ;
+
+            // Remove hook admin_menu when osclass 4.0 be released
+            // hack, compatibility with menu plugins.
+            ob_start(); 
+            osc_run_hook('admin_menu') ;
+            $plugins_out = ob_get_contents();
+            ob_end_clean();
+            // -----------------------------------------------------
+
+            $sMenu .= $plugins_out.PHP_EOL;
+            $sMenu .= '</li>'.PHP_EOL ;
+        }
+        $sMenu .= '</ul>'. PHP_EOL;
+        
+        $sMenu .= '<div id="show-more">'.PHP_EOL ;
+	$sMenu .= '<h3><a id="stats" href="#"><div class="ico ico-48 ico-more"></div>Show more</a></h3>'.PHP_EOL ;
+	$sMenu .= '<ul id="hidden-menus">'.PHP_EOL ;
+	$sMenu .= '</ul>'.PHP_EOL ;
+        $sMenu .= '</div>'.PHP_EOL ;
+        
+        $sMenu .= '</div>'.PHP_EOL ;
+        $sMenu .= '<!-- menu end -->'.PHP_EOL ;
+        echo $sMenu;
+    }
+    
+    /**
+     * Draws menu with sections and subsections
+     */
     function osc_draw_admin_menu() 
     {
         $something_selected = false;
@@ -38,7 +114,7 @@
         $is_moderator       = osc_is_moderator();
         
         $sMenu = '<!-- menu -->'.PHP_EOL ;
-        $sMenu .= '<div class="left" id="left-side">'.PHP_EOL ;
+        $sMenu = '<div id="left-side" class="left">'.PHP_EOL ;
         $sMenu .= '<ul class="oscmenu">'.PHP_EOL ;
         foreach($aMenu as $key => $value) {
             $sSubmenu   = "";
@@ -89,7 +165,8 @@
             $sMenu .= $plugins_out.PHP_EOL;
             $sMenu .= '</li>'.PHP_EOL ;
         }
-        $sMenu .= '</ul></div>'.PHP_EOL ;
+        $sMenu .= '</ul>'. PHP_EOL; 
+        $sMenu .= '</div>'.PHP_EOL ;
         $sMenu .= '<!-- menu end -->'.PHP_EOL ;
         echo $sMenu;
     }
