@@ -79,9 +79,16 @@
                     $class = 'current';
                     $something_selected = true;
                 }
-
+                
+                $icon = '';
+                if(isset($value[4])) {
+                    $icon = '<div class="ico ico-48" style="background-image:url(\''.$value[4].'\');">';
+                } else {
+                    $icon = '<div class="ico ico-48 ico-'.$value[2].'">';
+                }
+                
                 $sMenu .= '<li id="menu_'.$value[2].'" class="'.$class.'">'.PHP_EOL ;
-                $sMenu .= '<h3><a id="'.$value[2].'" href="'.$value[1].'"><div class="ico ico-48 ico-'.$value[2].'"></div>'.$value[0].'</a></h3>'.PHP_EOL ;
+                $sMenu .= '<h3><a id="'.$value[2].'" href="'.$value[1].'">'.$icon.'</div>'.$value[0].'</a></h3>'.PHP_EOL ;
                 $sMenu .= $sSubmenu;
                 $sMenu .= '</li>'.PHP_EOL ;
             }
