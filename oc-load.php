@@ -183,7 +183,7 @@ define('__OSC_LOADED__', true);
 
 Plugins::init() ;
 
-// init Rewrite class only iif it's the frontend
+// init Rewrite class only if it's the frontend
 if( !OC_ADMIN ) {
     Rewrite::newInstance()->init();
 }
