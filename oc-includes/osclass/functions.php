@@ -247,7 +247,7 @@ function osc_admin_toolbar_menu()
             ) );
 }
 // and we hook our function via
-osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_menu') ;
+//osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_menu') ;
 
 /**
  * Add logout link
@@ -261,7 +261,7 @@ function osc_admin_toolbar_logout()
             ) );
 }
 // and we hook our function via
-osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_logout') ;
+//osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_logout') ;
 
 function osc_admin_toolbar_comments()
 {   
@@ -276,7 +276,7 @@ function osc_admin_toolbar_comments()
             ) );
 }
 // and we hook our function via
-osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_comments') ;
+//osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_comments') ;
 
 function osc_admin_toolbar_spam()
 {   
@@ -291,5 +291,5 @@ function osc_admin_toolbar_spam()
             ) );
 }
 // and we hook our function via
-osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_spam') ;
+//osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_spam') ;
 ?>
