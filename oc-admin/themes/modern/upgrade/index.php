@@ -56,9 +56,9 @@
                     </div>
                     <div id="tohide">
                         <p>
-                            <?php _e('You have uploaded a new version of OSClass, you need to upgrade OSClass for a correct functioning'); ?>
+                            <?php _e('You have uploaded a new version of OSClass, we need to perform some changes to finish the process'); ?>
                         </p>
-                        <a class="button" href="<?php echo osc_admin_base_url(true); ?>?page=upgrade&confirm=true"><?php _e('Upgrade now'); ?></a>
+                        <a class="button" href="<?php echo osc_admin_base_url(true); ?>?page=upgrade&confirm=true"><?php _e('Continue the process'); ?></a>
                     </div>
                 </div>
             </div>
