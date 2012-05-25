@@ -484,8 +484,18 @@
                         osc_add_flash_warning_message( _m('The listing has been suspended') );
                         $this->redirectTo( osc_base_url(true) );
                     }
-                    $mStats = new ItemStats();
-                    $mStats->increase('i_num_views', $item['pk_i_id']);
+                    
+                    if(!osc_is_admin_user_logged_in()) {
+                        require_once LIB_PATH . 'osclass/user-agents.php';
+                        foreach($user_agents as $ua) {
+                            print_r($_SERVER['HTTP_USER_AGENT']);
+                            if(preg_match('|'.$ua.'|', @$_SERVER['HTTP_USER_AGENT'])) {
+                                $mStats = new ItemStats();
+                                $mStats->increase('i_num_views', $item['pk_i_id']);
+                                break;
+                            }
+                        }
+                    }
 
                     foreach($item['locale'] as $k => $v) {
                         $item['locale'][$k]['s_title'] = osc_apply_filter('item_title',$v['s_title']);
