@@ -26,10 +26,12 @@
     </div>
     <?php osc_run_hook('admin_header') ; ?>
 </div>
-<?php if ( ($json = osc_update_core_json()) != '' ) { ?>
+<?php if(Params::getParam('page')!='upgrade') {
+if ( ($json = osc_update_core_json()) != '' ) { ?>
 <?php $json = json_decode($json) ; ?>
 <div id="update_core">
     <?php printf(__('OSClass %s is available!'), $json->s_name) ; ?> <a href="<?php echo osc_admin_base_url(true) ; ?>?page=tools&action=upgrade"><?php _e('Please upgrade now') ; ?></a>
 </div>
-<?php } ?>
+<?php };
+}; ?>
 <!-- /header -->
