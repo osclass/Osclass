@@ -6,7 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-
+        <script src="<?php echo osc_current_admin_theme_js_url('jquery.min.js') ; ?>"></script>
+        <script src="<?php echo osc_current_admin_theme_js_url('ui.js') ; ?>"></script>
         <!-- styles
         ================================================== -->
         <link href="<?php echo osc_current_admin_theme_styles_url('main.css'); ?>" rel="stylesheet">
