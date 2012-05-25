@@ -1,3 +1,6 @@
+.clear{
+	clear:both;
+}
 .action-btn{
 	padding:9px 10px;
 	background-color: @color-gray-soft;
@@ -86,4 +89,57 @@
 }
 .float-right{
 	.float-r;
+}
+/* Selectmenu
+----------------------------------*/
+.select-box{
+    z-index:0;
+    position: relative;
+    display:inline-block;
+}
+.select-box-trigger{
+	background-color: @color-gray-light;
+	height:32px;
+	width:32px;
+	border:solid 1px @color-gray-soft;
+	.rounded-corners;
+	text-decoration:none;
+
+    height: 16px;
+    padding:7px 45px 5px 12px;
+
+    font-size: 13px;
+    color:@color-gray-black;
+    overflow: visible;
+    display: block;
+
+    .rounded-corners;
+    width:auto;
+}
+.select-box select{
+    position:absolute;
+    left:0px;
+    top:0px;
+    width:100%;
+    height:30px;
+    -webkit-appearance:none;
+    z-index:3;
+
+}
+.select-box-icon{
+    z-index:0;
+    position: absolute;
+    right:13px;
+    top:1px;
+    right:0px;
+    
+	height:29px;
+	width:32px;
+	border-left:solid 1px @color-gray-soft;
+	text-decoration:none;
+    display: block;
+}
+.select-box-icon .ico{
+	margin-top:5px;
+	margin-left:5px;
 }
