@@ -131,6 +131,7 @@ class OCadmin_languages extends OCadminTest {
             $this->selenium->waitForPageToLoad("10000");
             $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Spanish')]");
             $this->selenium->click("//table/tbody/tr/td[contains(.,'Spanish')]/div/div/a[text()='Edit']");
+            $this->selenium->waitForPageToLoad("10000");
             
             // TEST JS VALIDATION
             $this->selenium->type("s_name","");
@@ -157,6 +158,7 @@ class OCadmin_languages extends OCadminTest {
             $this->selenium->waitForPageToLoad("10000");
             $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Spanish')]");
             $this->selenium->click("//table/tbody/tr/td[contains(.,'Spanish')]/div/div/a[text()='Edit']");
+            $this->selenium->waitForPageToLoad("10000");
             $this->selenium->type("s_name","Spanish upadated");
             $this->selenium->type("s_short_name","Spanish upadated");
             $this->selenium->type("s_description","Spanish translation updated");
