@@ -41,6 +41,9 @@ $(function(){
         $('#table-row-actions').hide();
     })
     //Close help
+    $('#FlashMessage .ico-close').live('click',function(){
+        $('#FlashMessage').hide();
+    });
     $('#help-box .ico-close').click(function(){
         $('#help-box').hide();
     });
@@ -58,6 +61,10 @@ $(function(){
 	$(window).resize(function(){
 	    resetLayout();
 	}).resize();
+
+    $('#FlashMessage:not(:empty)').show('fast',function(){
+        //$(this).hide('slow');
+    });
 });
 
 function selectUi(thatSelect){

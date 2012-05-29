@@ -76,7 +76,7 @@
     <div class="grid-row grid-50">
         <div class="row-wrapper">
             <div class="widget-box">
-                <div class="widget-box-title"><h3><?php _e('Statistics'); ?> <select class="widget-box-selector"><option>New items</option><option>New comments</option></select></h3></div>
+                <div class="widget-box-title"><h3><?php _e('Statistics'); ?> <select class="widget-box-selector select-box-big input-medium"><option>New items</option><option>New comments</option></select></h3></div>
                 <div class="widget-box-content">
                     <table class="table" cellpadding="0" cellspacing="0">
                         <tbody>
