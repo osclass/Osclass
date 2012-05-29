@@ -60,11 +60,14 @@
                         foreach($aSubmenu as $aSub) {
                             $credential_sub = $aSub[4];
                             if(!$is_moderator || $is_moderator && $credential_sub == 'moderator') { // show
+
                                 $sSubmenu .= '<li><a id="'.$aSub[2].'" href="'.$aSub[1].'">'.$aSub[0].'</a></li>'.PHP_EOL ;
                             }   
                         }
                         // hardcoded plugins/themes under menu plugins 
-                        if($key == 'plugins') {
+                        if($key == 'plugins' && !$is_moderator) {
+                            // preprocess plugin_out, remove all tags unless 
+                            // <li> tags
                             $sSubmenu .= $plugins_out;
                         }
                         
@@ -78,31 +81,22 @@
                     $class = 'current';
                     $something_selected = true;
                 }
-
+                
+                $icon = '';
+                if(isset($value[4])) {
+                    $icon = '<div class="ico ico-48" style="background-image:url(\''.$value[4].'\');">';
+                } else {
+                    $icon = '<div class="ico ico-48 ico-'.$value[2].'">';
+                }
+                
                 $sMenu .= '<li id="menu_'.$value[2].'" class="'.$class.'">'.PHP_EOL ;
-                $sMenu .= '<h3><a id="'.$value[2].'" href="'.$value[1].'">'.$value[0].'</a></h3>'.PHP_EOL ;
+                $sMenu .= '<h3><a id="'.$value[2].'" href="'.$value[1].'">'.$icon.'</div>'.$value[0].'</a></h3>'.PHP_EOL ;
                 $sMenu .= $sSubmenu;
                 $sMenu .= '</li>'.PHP_EOL ;
             }
                 
             
         }
-//        if(!$is_moderator) {
-//            $class = '';
-//            if(!$something_selected) $class = 'current';
-//            $sMenu .= '<li id="menu_personal" class="'.$class.'">'.PHP_EOL ;
-//
-//            // Remove hook admin_menu when osclass 4.0 be released
-//            // hack, compatibility with menu plugins.
-//            ob_start(); 
-//            osc_run_hook('admin_menu') ;
-//            $plugins_out = ob_get_contents();
-//            ob_end_clean();
-//            // -----------------------------------------------------
-//
-//            $sMenu .= $plugins_out.PHP_EOL;
-//            $sMenu .= '</li>'.PHP_EOL ;
-//        }
         $sMenu .= '</ul>'. PHP_EOL;
         
         $sMenu .= '<div id="show-more">'.PHP_EOL ;
@@ -153,7 +147,7 @@
                             }   
                         }
                         
-                        if($key == 'plugins') {
+                        if($key == 'plugins' && !$is_moderator) {
                             $sSubmenu .= $plugins_out;
                         }
                         
@@ -175,22 +169,7 @@
                 
             
         }
-//        if(!$is_moderator) {
-//            $class = '';
-//            if(!$something_selected) $class = 'current-menu-item';
-//            $sMenu .= '<li id="menu_personal" class="'.$class.'">'.PHP_EOL ;
-//
-//            // Remove hook admin_menu when osclass 4.0 be released
-//            // hack, compatibility with menu plugins.
-//            ob_start(); 
-//            osc_run_hook('admin_menu') ;
-//            $plugins_out = ob_get_contents();
-//            ob_end_clean();
-//            // -----------------------------------------------------
-//
-//            $sMenu .= $plugins_out.PHP_EOL;
-//            $sMenu .= '</li>'.PHP_EOL ;
-//        }
+        
         $sMenu .= '</ul>'. PHP_EOL; 
         $sMenu .= '</div>'.PHP_EOL ;
         $sMenu .= '<!-- menu end -->'.PHP_EOL ;

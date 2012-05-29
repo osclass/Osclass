@@ -19,11 +19,9 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    define('ABS_PATH', dirname($_SERVER['SCRIPT_FILENAME']) . '/');
     if( !array_key_exists('HTTP_HOST', $_SERVER) ) {
         define('CLI', true);
-        define('ABS_PATH', rtrim($_SERVER['PWD'], "/") . '/' .dirname(str_replace($_SERVER['PWD'], '', $_SERVER['SCRIPT_FILENAME'])) . '/');
-    } else {
-        define('ABS_PATH', dirname($_SERVER['SCRIPT_FILENAME']) . '/');
     }
 
     require_once ABS_PATH . 'oc-load.php' ;
@@ -60,6 +58,10 @@
         Cookie::newInstance()->set() ;
     }
 
+    if(osc_is_web_user_logged_in()) {
+        User::newInstance()->lastAccess(osc_logged_user_id(), date('Y-m-d H:i:s'), $_SERVER['REMOTE_ADDR'], 3600);
+    }
+    
     switch( Params::getParam('page') )
     {
         case ('cron'):      // cron system

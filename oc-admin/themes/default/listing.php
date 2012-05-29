@@ -1,13 +1,20 @@
 <?php include 'parts/header.php'; ?>
-<div id="content-head"><h1>Listing</h1></div>
+<div id="content-head">
+	<h1>Listing
+		<a hreg="#" class="btn ico ico-engine float-right"></a>
+		<a hreg="#" class="btn ico ico-help float-right"></a>
+		<a hreg="#" class="btn btn-green ico ico-add-white float-right">Add</a>
+	</h1>
+</div>
 <div id="help-box">
+	<a href="#" class="btn ico btn-mini ico-close">x</a>
 	<h3>What does a red highlight mean?</h3>
 <p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
 Red highlight means that the listing has been marked as spam.</p>
 </div>
 <div id="content-page">
 <!-- -->
-<h2>Manage listings</h2>
+<h2 class="reder-title">Manage listings</h2>
 <div class="table-hast-actions">
 <table class="table" cellpadding="0" cellspacing="0">
 	<thead>
@@ -25,7 +32,7 @@ Red highlight means that the listing has been marked as spam.</p>
 	<tbody>
 		<tr>
 			<td class="col-bulkactions"><input type="checkbox"/></td>
-			<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit<div class="actions">aa</div></td>
+			<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit<div class="actions"><ul><li><a href="#">Edit</a></li><li><a href="#">Detelet</a></li><li class="show-more"><a href="#">Show more...</a><ul><li><a href="#">Action 1</a></li><li><a href="#">Action 2</a></li></ul></li></ul></div></td>
 			<td>Lukas</td>
 			<td>Houses - Apartments for Rent</td>
 			<td>Spain</td>
@@ -35,7 +42,7 @@ Red highlight means that the listing has been marked as spam.</p>
 		</tr>
 		<tr class="even status-spam">
 			<td class="col-bulkactions"><input type="checkbox"/></td>
-			<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit<div class="actions">aa</div></td>
+			<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit<div class="actions">bbbbb</div></td>
 			<td>Lukas</td>
 			<td>Houses - Apartments for Rent</td>
 			<td>Spain</td>
@@ -45,7 +52,7 @@ Red highlight means that the listing has been marked as spam.</p>
 		</tr>
 		<tr class="status-premium">
 			<td class="col-bulkactions"><input type="checkbox"/></td>
-			<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit<div class="actions">aa</div></td>
+			<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit<div class="actions">cccc</div></td>
 			<td>Lukas</td>
 			<td>Houses - Apartments for Rent</td>
 			<td>Spain</td>
@@ -55,7 +62,7 @@ Red highlight means that the listing has been marked as spam.</p>
 		</tr>
 		<tr class="even status-activate">
 			<td class="col-bulkactions"><input type="checkbox"/></td>
-			<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit<div class="actions">aa</div></td>
+			<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit<div class="actions">dddd</div></td>
 			<td>Lukas</td>
 			<td>Houses - Apartments for Rent</td>
 			<td>Spain</td>

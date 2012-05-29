@@ -256,8 +256,9 @@ function osc_admin_toolbar_logout()
 {   
     AdminToolbar::newInstance()->add_menu( array(
                 'id'        => 'logout',
-                'title'     => '<span class="">LOGOUT</span>',
-                'href'      => osc_admin_base_url(true) . '?action=logout'
+                'title'     => __('Logout'),
+                'href'      => osc_admin_base_url(true) . '?action=logout',
+                'meta'      => array('class' => 'btn btn-dim ico ico-power float-right')
             ) );
 }
 // and we hook our function via
