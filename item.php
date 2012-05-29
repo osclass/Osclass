@@ -488,7 +488,6 @@
                     if(!osc_is_admin_user_logged_in()) {
                         require_once LIB_PATH . 'osclass/user-agents.php';
                         foreach($user_agents as $ua) {
-                            print_r($_SERVER['HTTP_USER_AGENT']);
                             if(preg_match('|'.$ua.'|', @$_SERVER['HTTP_USER_AGENT'])) {
                                 $mStats = new ItemStats();
                                 $mStats->increase('i_num_views', $item['pk_i_id']);
