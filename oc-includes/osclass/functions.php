@@ -258,7 +258,7 @@ function osc_admin_toolbar_logout()
                 'id'        => 'logout',
                 'title'     => __('Logout'),
                 'href'      => osc_admin_base_url(true) . '?action=logout',
-                'meta'      => array('class' => 'btn btn-dim ico ico-power float-right')
+                'meta'      => array('class' => 'btn btn-dim ico ico-32 ico-power float-right')
             ) );
 }
 // and we hook our function via

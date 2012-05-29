@@ -52,6 +52,7 @@ $(function(){
     });
     $('#table-row-actions .show-more').live('click',function(){
         $(this).addClass('hover');
+        return false;
     });
     //Selects
 	$('select').each(function(){

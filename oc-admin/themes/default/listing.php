@@ -1,9 +1,9 @@
 <?php include 'parts/header.php'; ?>
 <div id="content-head">
 	<h1>Listing
-		<a hreg="#" class="btn ico ico-engine float-right"></a>
-		<a hreg="#" class="btn ico ico-help float-right"></a>
-		<a hreg="#" class="btn btn-green ico ico-add-white float-right">Add</a>
+		<a href="#" class="btn ico ico-32 ico-engine float-right"></a>
+		<a href="#" class="btn ico ico-32ico-help float-right"></a>
+		<a href="#" class="btn btn-green ico-32 ico ico-add-white float-right">Add</a>
 	</h1>
 </div>
 <div id="help-box">
