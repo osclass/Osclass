@@ -77,6 +77,12 @@
                         <fieldset>
                             <h3><?php _e('Contact info') ; ?></h3>
                             <div class="input-line">
+                                <label><?php _e('Last access') ; ?></label>
+                                <div class="input large">
+                                    <?php echo sprintf(__("%s on %s"), $user['s_access_ip'], $user['dt_access_date']);?>
+                                </div>
+                            </div>
+                            <div class="input-line">
                                 <label><?php _e('Name') ; ?></label>
                                 <div class="input large">
                                     <?php UserForm::name_text($user) ; ?>

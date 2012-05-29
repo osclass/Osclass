@@ -1,28 +1,42 @@
 .ico{
 	background-image:url('../images/split.png');
 }
+.ico{
+	text-indent:-99999px;
+	background-repeat:no-repeat;
+}
 .ico-48{
 	width:48px;
 	height:48px;
 	display:block;
+}
+.ico-20{
+	width:20px;
+	height:20px;
 }
 .ico-32{
 	width:32px;
 	height:32px;
 	display:block;
 }
-.ico-dashboard{
+.ico-dashboard,
+.ico-dash{
 	background-position:-48px 0px;
 }
 	.current .ico-dashboard,
-	li.hover .ico-dashboard{
+	li.hover .ico-dashboard,
+	.current .ico-dash,
+	li.hover .ico-dash{
 		background-position:0px 0px;
 	}
-.ico-listing{
+.ico-listing,
+.ico-items{
 	background-position:-144px 0px;
 }
 	.current .ico-listing,
-	li.hover .ico-listing{
+	li.hover .ico-listing,
+	.current .ico-items,
+	li.hover .ico-items{
 		background-position:-96px 0px;
 	}
 .ico-categories{
@@ -74,11 +88,14 @@
 	li.hover .ico-users{
 		background-position:-0px -192px;
 	}
-.ico-statistics{
+.ico-statistics,
+.ico-stats{
 	background-position:-144px -192px;
 }
 	.current .ico-statistics,
-	li.hover .ico-statistics{
+	li.hover .ico-statistics,
+	.current .ico-stats,
+	li.hover .ico-stats{
 		background-position:-96px -192px;
 	}
 .ico-more{
@@ -91,30 +108,45 @@
 .ico-engine{
 	background-position:0px -288px;
 }
+	.ico-engine:hover,
 	.ico-engine-white{
 		background-position:-32px -288px;
 	}
 .ico-search{
 	background-position:-64px -288px;
 }
+	.ico-search:hover,
 	.ico-search-white{
 		background-position:-96px -288px;
 	}
 .ico-help{
 	background-position:-0px -320px;
 }
+	.ico-help:hover,
 	.ico-help-white{
 		background-position:-32px -320px;
 	}
 .ico-add{
 	background-position:-64px -320px;
 }
+	.ico-add:hover,
 	.ico-add-white{
 		background-position:-96px -320px;
 	}
 .ico-power{
 	background-position:-0px -352px;
 }
+	.ico-power:hover,
 	.ico-power-white{
-		background-position:-34px -352px;
+		background-position:-32px -352px;
 	}
+.ico-close{
+	background-position:-152px -288px;
+	float:right !important;
+}
+.ico-close:hover{
+	background-position:-172px -288px;
+}
+.ico-drop-down{
+    background-position: -152px -308px;
+}

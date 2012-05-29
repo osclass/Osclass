@@ -380,6 +380,14 @@ CREATE TABLE %st_item_description_tmp (
     }
 
     osc_changeVersionTo(241) ;
+    
+    
+    if(osc_version() < 300) {
+        $comm->query(sprintf("ALTER TABLE %st_user DROP s_pass_answer", DB_TABLE_PREFIX));
+        $comm->query(sprintf("ALTER TABLE %st_user DROP s_pass_question", DB_TABLE_PREFIX));
+        $comm->query(sprintf("ALTER TABLE %st_user ADD COLUMN dt_access_date DATETIME NOT NULL DEFAULT  '0000-00-00 00:00:00'", DB_TABLE_PREFIX));
+        $comm->query(sprintf("ALTER TABLE %st_user ADD COLUMN s_access_ip VARCHAR(15) NULL", DB_TABLE_PREFIX));
+    }
 
     osc_changeVersionTo(300);
 

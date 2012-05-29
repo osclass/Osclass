@@ -8,7 +8,7 @@ table {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
-	border:1px solid #dddddd;
+	border:1px solid @color-gray-soft;
 	border-right:0;
 	font-size:12px;
 }
@@ -19,13 +19,14 @@ table {
 	vertical-align: top;
 	border-left:0px;
 	border-top:0;
-	border: 1px solid #dddddd;
+	border: 1px solid @color-gray-soft;
 	border-bottom:0;
 	border-left:0;
 	position: relative;
 }
 .table thead th,
-.table thead td {
+.table thead td,
+.table-first-row td {
 	border-top:0;
 }
 .table th {
@@ -36,7 +37,7 @@ table {
 	vertical-align: bottom;
 }
 .table-hast-actions tbody td{
-	padding-bottom:22px;
+	padding-bottom:25px;
 }
 #table-row-actions{
 	display:none;
@@ -53,6 +54,42 @@ table {
 	z-index:2;
 	padding:0px 42px;
 	text-align:left;
+}
+#table-row-actions ul{
+	list-style:none; margin:0;
+	padding:0;
+	margin-top:4px;
+}
+#table-row-actions li{
+	float:left;
+	margin-right:10px;
+}
+#table-row-actions li a{
+	float:left;
+}
+#table-row-actions li ul{
+	float:left;
+	margin:0;
+}
+#table-row-actions a{
+	color:#018BE3;
+	text-decoration:none;
+}
+#table-row-actions .show-more ul{
+	display:none;
+}
+
+#table-row-actions .hover a{
+	display:none;
+}
+#table-row-actions .hover ul a{
+	display:block;
+}
+#table-row-actions .hover ul{
+	display:block;
+}
+#table-row-actions a:hover{
+	text-decoration:underline;
 }
 .col-bulkactions{
 	width:20px;
@@ -91,4 +128,7 @@ table {
 }
 .even{
 	background:#F9F9F9;
+}
+td.children-cat{
+	padding-left:20px;
 }
