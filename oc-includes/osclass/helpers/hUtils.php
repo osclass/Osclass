@@ -208,7 +208,7 @@
             $txt = mb_substr($txt, 0, $len, 'utf-8') . "..." ;
         }
         
-        $query = osc_search_pattern() . " " . osc_search_city() ;
+        $query = osc_search_pattern();
         $query = trim(preg_replace('/\s+/', ' ', $query)) ;
         
         $aQuery = explode(' ', $query) ;
