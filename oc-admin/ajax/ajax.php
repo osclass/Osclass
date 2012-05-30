@@ -87,6 +87,8 @@
                 case 'items': // Return items (use external file oc-admin/ajax/item_processing.php)
                     require_once osc_admin_base_path() . 'ajax/items_processing.php';
                     $items_processing = new ItemsProcessingAjax(Params::getParamsAsArray("get"));
+                    // HACK DELETE ON 3.0
+                    $items_processing->dumpToDatatables();
                     break;
                 case 'users': // Return users (use external file oc-admin/ajax/users_processing.php)
                     require_once osc_admin_base_path() . 'ajax/users_processing.php';
