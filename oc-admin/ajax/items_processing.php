@@ -78,11 +78,12 @@
 
         function __construct($params)
         {
-//            print_r($params);
             $this->mSearch = new Search(true) ;
             
             $this->_get = $params ;
+            
             $this->getDBParams() ;
+            
 
             $this->mSearch->limit($this->start, $this->limit) ;
             // only some fields can be ordered
@@ -111,17 +112,32 @@
 
         private function getDBParams()
         {
+            // default values
+            if( !isset($this->_get['iDisplayStart']) ) {
+                $this->_get['iDisplayStart'] = 0 ;
+            }
+            if( !isset($this->_get['iDisplayLength']) ) {
+                $this->_get['iDisplayLength'] = 20 ;
+            }
+            if( !isset($this->_get['iSortCol_0']) ) {
+                $this->_get['iSortCol_0'] = 7 ;
+            }
+            if( !isset($this->_get['sSortDir_0']) ) {
+                $this->_get['sSortDir_0'] = 0 ;
+            }
+            if( !isset($this->_get['iPage']) ) {
+                $this->_get['iPage'] = 0 ;
+            }
+            
+            // get & set values
             foreach($this->_get as $k => $v) {
-                if( $k == 'iDisplayStart' ) {
-                    $this->start = intval($v) ;
-                }
-                if( $k == 'iDisplayLength' ) {
-                    $this->limit = intval($v) ;
-                }
                 if( $k == 'sEcho' ) {
                     $this->sEcho = intval($v) ;
                 }
-
+                if( $k == 'iPage' ) {
+                    $this->iPage = intval($v) ;
+                }
+                
                 /* for sorting */
                 if( $k == 'iSortCol_0' ) {
                     $this->order_by['column_name'] = $this->column_names[$v] ;
@@ -178,6 +194,10 @@
                     $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_spam = '.$v);
                 }
             }
+            // set start and limit using iPage param
+//            $this->iPage*
+            $this->start = intval($v) ;
+            $this->limit = intval($v) ;
         }
 
         /* START - format functions */
@@ -344,12 +364,12 @@
  
                 // fill a row
                 $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>' ;
-                $row[] = '<a href="' . osc_item_url().'">' . $title . '</a>'. $actions  ;
-                $row[] = $aRow['s_user_name'] ;
-                $row[] = $aRow['s_category_name'] ;
-                $row[] = $aRow['s_country'] ;
-                $row[] = $aRow['s_region'] ;
-                $row[] = $aRow['s_city'] ;
+                $row[] = '<a href="' . osc_item_url().'">' . utf8_decode( $title ). '</a>'. $actions  ;
+                $row[] = utf8_decode( $aRow['s_user_name'] ) ;
+                $row[] = utf8_decode( $aRow['s_category_name'] ) ;
+                $row[] = utf8_decode( $aRow['s_country'] ) ;
+                $row[] = utf8_decode( $aRow['s_region'] ) ;
+                $row[] = utf8_decode( $aRow['s_city'] ) ;
                 $row[] = $aRow['dt_pub_date'] ;
 
                 $count++ ;

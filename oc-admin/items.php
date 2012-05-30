@@ -533,13 +533,6 @@
                                         if( count($regions) > 0 ) {
                                             $cities = City::newInstance()->findByRegion($regions[0]['pk_i_id']) ;
                                         }
-                                        // default values
-                                        Params::setParam('iDisplayStart', '0') ;
-                                        Params::setParam('iDisplayLength', '20') ;
-                                        
-                                        Params::setParam('iSortCol_0', '7') ;
-                                        Params::setParam('sSortDir_0', '0') ;
-//                                        Params::setParam('', '') ;
                                         
                                         // -----------------------------------------------------
                                         require_once osc_admin_base_path() . 'ajax/items_processing.php';
@@ -548,12 +541,13 @@
                                         $this->_exportVariableToView('aItems', $aData) ;
                                         
                                         
-                                        //preparing variables for the view
-                                        
+                                        //preparing variables for the view                
                                         $this->_exportVariableToView("users", User::newInstance()->listAll());
                                         $this->_exportVariableToView("catId", $catId) ;
                                         $this->_exportVariableToView("stat", Params::getParam('stat')) ;
-
+                                        // hack ItemForm
+                                        $this->_exportVariableToView("item", null) ;
+                                        
                                         $this->_exportVariableToView("countries", $countries);
                                         $this->_exportVariableToView("regions", $regions);
                                         $this->_exportVariableToView("cities", $cities);

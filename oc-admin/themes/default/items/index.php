@@ -18,7 +18,9 @@
 
     //customize Head
     function customHead() { ?>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery-ui.js') ; ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
+        
         <?php ItemForm::location_javascript_new('admin') ; ?>
         <script type="text/javascript">
             // autocomplete users
@@ -41,6 +43,7 @@
         </script>
         <style>
             .ui-autocomplete-loading {
+                display: block;
                 background: white url("<?php echo osc_current_admin_theme_url('images/loading.gif'); ?>") right center no-repeat;
             }
         </style>
@@ -75,11 +78,8 @@ Red highlight means that the listing has been marked as spam.</p>
 <div id="content-page">
 <!-- -->
 <h2 class="reder-title">Manage listings</h2>
-<form>
-    <input type="hidden" name="iDisplayStart" value="" />
-    <input type="hidden" name="iDisplayLength" value="20" />
-    
-<!--     for sorting -->
+<form method="get" action="<?php echo osc_admin_base_url(true); ?>">
+    <input type="hidden" name="page" value="items" />
     <input type="hidden" name="iSortCol_0" value="7" />
     <input type="hidden" name="sSortDir_0" value="0" />
 
@@ -87,8 +87,37 @@ Red highlight means that the listing has been marked as spam.</p>
 <!--    <input type="hidden" name="" value="" />
     <input type="hidden" name="" value="" />-->
     <div class="table-hast-actions_">
+        <div class="form-row">
+            <div class="form-label">
+                <?php _e('Listing user name') ; ?>
+            </div>
+            <div class="form-controls">
+                <input class="input-small" type="text" name="sSearch" id="sSearch" value="<?php echo osc_esc_html(Params::getParam('sSearch')); ?>" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-label"></div>
+            <div class="form-controls">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-label"></div>
+            <div class="form-controls">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-label"></div>
+            <div class="form-controls">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-label"></div>
+            <div class="form-controls">
+            </div>
+        </div>
+                <input type="text" class="input-small" name="default_results_per_page" value="<?php echo osc_esc_html(osc_default_results_per_page_at_search()); ?>" />
         <p>
-            pattern <input type="text" name="sSearch" id="sSearch" value="" />
+            pattern 
         </p>
         <p>
             <div class="input-line">
@@ -166,7 +195,7 @@ Red highlight means that the listing has been marked as spam.</p>
                 </div>
             </div>
         </p>
-        <input type="button" name="apply-filters" value="<?php echo osc_esc_html( __('Apply filters') ) ; ?>" />
+        <input type="submit" value="<?php echo osc_esc_html( __('Apply filters') ) ; ?>" class="btn btn-submit" />
     </div>
 </form>
 <div class="table-hast-actions">
@@ -199,7 +228,28 @@ Red highlight means that the listing has been marked as spam.</p>
         <?php endforeach;?>
 	</tbody>
     </table>
-<div id="table-row-actions"></div> <!-- used for table actions -->
+<div id="table-row-actions">    
+
+</div> <!-- used for table actions -->
+<?php 
+    $pageActual = 0 ;
+    if( Params::getParam('iPage') != '' ) {
+        $pageActual = Params::getParam('iPage') ;
+    }
+    
+    $urlActual = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+    $urlActual = preg_replace('/&iPage=(\d)+/', '', $urlActual) ;
+    
+    $params = array('total'    => ceil($aData['iTotalDisplayRecords']/25)
+                   ,'selected' => $pageActual
+                   ,'url'      => $urlActual.'&iPage={PAGE}'
+                   ,'sides'    => 9
+        );
+    $pagination = new Pagination($params);
+    $aux = $pagination->doPagination();
+    
+    echo $aux;
+?>
 <!-- -->
 </div>
 </div>

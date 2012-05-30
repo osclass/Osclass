@@ -290,6 +290,7 @@
     }
     
     function osc_current_menu() {
+        $menu_id            = '';
         $current_menu       = 'dash';
         $something_selected = false;
         $aMenu = AdminMenu::newInstance()->get_array_menu() ;
