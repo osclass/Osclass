@@ -78,6 +78,7 @@
 
         function __construct($params)
         {
+//            print_r($params);
             $this->mSearch = new Search(true) ;
             
             $this->_get = $params ;
@@ -101,8 +102,6 @@
             $this->total_filtered = $this->mSearch->countAll();
             $this->total = $this->mSearch->count() ;
 
-            $this->toDatatablesFormat() ;
-            $this->dumpToDatatables() ;
         }
 
         function __destruct()
@@ -262,6 +261,104 @@
 
             return ;
         }
+        
+        /**
+         * new Design - return array
+         * @return type 
+         */
+        private function toArrayFormat() {
+            $this->result['iTotalRecords']        = $this->total_filtered ;
+            $this->result['iTotalDisplayRecords'] = $this->total ;
+            $this->result['sEcho']                = $this->sEcho ;
+            $this->result['sColumns']             = $this->sColumns ;
+            $this->result['aaData']               = array() ;
+
+            if( count($this->items) == 0 ) {
+                return ;
+            }
+
+            $count = 0;
+            foreach ($this->items as $aRow)
+            {
+                View::newInstance()->_exportVariableToView('item', $aRow);
+                $row     = array() ;
+                $options = array() ;
+                // -- prepare data --
+                // prepare item title
+                $title = mb_substr($aRow['s_title'], 0, 30, 'utf-8') ;
+                if($title != $aRow['s_title']) {
+                    $title .= '...' ;
+                }
+                // show more options
+                $options_more = array();
+//                'onClick="alert(\'foo\');'
+                if( $aRow['b_active'] ) {
+                    $options_more[] = '<a onClick="alert(\'foo\');" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') .'</a>' ;
+                } else {
+                    $options_more[] = '<a onClick="alert(\'foo\');" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=ACTIVE">' . __('Activate') .'</a>' ;
+                }
+                if( $aRow['b_enabled'] ) {
+                    $options_more[] = '<a onClick="alert(\'foo\');" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=DISABLE">' . __('Block') .'</a>' ;
+                } else {
+                    $options_more[] = '<a onClick="alert(\'foo\');" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=ENABLE">' . __('Unblock') .'</a>' ;
+                }
+                if( $aRow['b_premium'] ) {
+                    $options_more[] = '<a onClick="alert(\'foo\');" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $aRow['pk_i_id'] . '&amp;value=0">' . __('Unmark as premium') .'</a>' ;
+                } else {
+                    $options_more[] = '<a onClick="alert(\'foo\');" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $aRow['pk_i_id'] . '&amp;value=1">' . __('Mark as premium') .'</a>' ;
+                }
+                if( $aRow['b_spam'] ) {
+                    $options_more[] = '<a onClick="alert(\'foo\');" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $aRow['pk_i_id'] . '&amp;value=0">' . __('Unmark as spam') .'</a>' ;
+                } else {
+                    $options_more[] = '<a onClick="alert(\'foo\');" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $aRow['pk_i_id'] . '&amp;value=1">' . __('Mark as spam') .'</a>' ;
+                }
+                
+                // general options
+                $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=item_edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>' ;
+                $onclick_delete = 'onclick="javascript:return confirm(\'' . osc_esc_js( __('This action can not be undone. Are you sure you want to continue?') ) . '\')"' ;
+                $options[] = '<a ' . $onclick_delete . ' href="' . osc_admin_base_url(true) . '?page=items&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
+                
+                // only show if there are data
+                if( ItemComment::newInstance()->totalComments( $aRow['pk_i_id'] ) > 0 ) {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View comments') . '</a>' ;
+                }
+                if( ItemResource::newInstance()->countResources( $aRow['pk_i_id'] ) > 0 ) {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=media&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View media') . '</a>' ;
+                }
+                
+                // more actions
+                $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL ;
+                foreach( $options_more as $actual ) { 
+                    $moreOptions .= '<li>'.$actual."</li>".PHP_EOL;
+                }
+                $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL ;
+                
+                // create list of actions
+                $auxOptions = '<ul>'.PHP_EOL ;
+                foreach( $options as $actual ) {
+                    $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
+                }
+                $auxOptions  .= $moreOptions ;
+                $auxOptions  .= '</ul>'.PHP_EOL ;
+                
+                $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
+ 
+                // fill a row
+                $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>' ;
+                $row[] = '<a href="' . osc_item_url().'">' . $title . '</a>'. $actions  ;
+                $row[] = $aRow['s_user_name'] ;
+                $row[] = $aRow['s_category_name'] ;
+                $row[] = $aRow['s_country'] ;
+                $row[] = $aRow['s_region'] ;
+                $row[] = $aRow['s_city'] ;
+                $row[] = $aRow['dt_pub_date'] ;
+
+                $count++ ;
+                $this->result['aaData'][] = $row ;
+            }
+
+            return ;
+        }
 
         /**
          * Set toJson variable with the JSON representation of $result
@@ -286,6 +383,18 @@
             $this->toJSON($this->result) ;
             echo $this->toJSON ;
         }
+        
+        /**
+         * Dump $result to JSON and return the result
+         * 
+         * @access private
+         * @since unknown 
+         */
+        public function result()
+        {
+            $this->toArrayFormat();
+            return $this->result;
+        }
 
         /**
          * Dump $result
@@ -293,8 +402,9 @@
          * @access private
          * @since unknown 
          */
-        private function dumpToDatatables()
+        public function dumpToDatatables()
         {
+            $this->toDatatablesFormat() ;
             $this->dumpResult() ;
         }
      }
