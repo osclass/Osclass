@@ -76,7 +76,7 @@
         public function render()
         {
             if( count($this->nodes) > 0) {
-                echo '<div id="header"><div class="header-wrapper">' ;
+                echo '<div id="header" class="navbar"><div class="header-wrapper">' ;
                 foreach( $this->nodes as $value ) {
                     $meta = "";
                     if( isset($value->meta) ) {

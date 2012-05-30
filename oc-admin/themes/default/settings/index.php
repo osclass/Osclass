@@ -121,171 +121,175 @@
 </div>
 <?php osc_show_flash_message('admin') ; ?>
 <div id="content-page">
-    <!-- settings form -->
-    <div id="general-settings">
-        <h2 class="reder-title"><?php _e('General Settings') ; ?></h2>
-                    <ul id="error_list" style="display: none;"></ul>
-                    <form name="settings_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-                        <input type="hidden" name="page" value="settings" />
-                        <input type="hidden" name="action" value="update" />
-                        <fieldset>
-                            <div class="form-horizontal">
-    <div class="form-row">
-        <div class="form-label"><?php _e('Page title') ; ?></div>
-        <div class="form-controls"><input type="text" class="xlarge" name="pageTitle" value="<?php echo osc_esc_html( osc_page_title() ); ?>" /></div>
-    </div>
-    <div class="form-row">
-        <div class="form-label"><?php _e('Page description') ; ?></div>
-        <div class="form-controls"><input type="text" class="xlarge" name="pageDesc" value="<?php echo osc_esc_html( osc_page_description() ); ?>" /></div></div>
-    <div class="form-row">
-        <div class="form-label"><?php _e('Admin e-mail') ; ?></div>
-        <div class="form-controls"><input type="text" class="large" name="contactEmail" value="<?php echo osc_esc_html( osc_contact_email() ) ; ?>" /></div></div>
-    <div class="form-row">
-        <div class="form-label"><?php _e('Default language'); ?></div>
-        <div class="form-controls">
-            <select name="language">
-            <?php foreach( $aLanguages as $lang ) { ?>
-            <option value="<?php echo $lang['pk_c_code'] ; ?>" <?php echo ((osc_language() == $lang['pk_c_code']) ? 'selected="selected"' : '') ; ?>><?php echo $lang['s_name'] ; ?></option>
-            <?php } ?>
-            </select>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-label"><?php _e('Default currency') ; ?></div>
-        <div class="form-controls">
-            <select name="currency" id="currency_admin">
-            <?php foreach($aCurrencies as $currency) { ?>
-            <option value="<?php echo osc_esc_html($currency['pk_c_code']); ?>" <?php echo ((osc_currency() == $currency['pk_c_code']) ? 'selected="selected"' : ''); ?>><?php echo $currency['pk_c_code'] ?></option>
-            <?php } ?>
-            </select>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-label"><?php _e('Week starts on') ; ?></div>
-        <div class="form-controls">
-            <select name="weekStart" id="weekStart">
-            <option value="0" <?php if(osc_week_starts_at() == '0') { ?>selected="selected"<?php } ?>><?php _e('Sunday') ; ?></option>
-            <option value="1" <?php if(osc_week_starts_at() == '1') { ?>selected="selected"<?php } ?>><?php _e('Monday') ; ?></option>
-            <option value="2" <?php if(osc_week_starts_at() == '2') { ?>selected="selected"<?php } ?>><?php _e('Tuesday') ; ?></option>
-            <option value="3" <?php if(osc_week_starts_at() == '3') { ?>selected="selected"<?php } ?>><?php _e('Wednesday') ; ?></option>
-            <option value="4" <?php if(osc_week_starts_at() == '4') { ?>selected="selected"<?php } ?>><?php _e('Thursday') ; ?></option>
-            <option value="5" <?php if(osc_week_starts_at() == '5') { ?>selected="selected"<?php } ?>><?php _e('Friday') ; ?></option>
-            <option value="6" <?php if(osc_week_starts_at() == '6') { ?>selected="selected"<?php } ?>><?php _e('Saturday') ; ?></option>
-            </select>
-        </div>
-    </div>
-    <?php /* <div class="form-row">
-        <div class="form-label"><?php _e('External sources'); ?></div>
-        <div class="form-controls">
-    <input type="checkbox" id="market_external_sources" name="market_external_sources" value="1" <?php if(osc_market_external_sources()==1) {echo 'checked="checked"';}; ?> />
-    <?php _e('Allow download packages from external sources'); ?>
-    </div></div> */ ?>
-    <div class="form-row">
-        <div class="form-label"><?php _e('Timezone') ; ?></div>
-        <div class="form-controls">
-            <?php require osc_lib_path() . 'osclass/timezones.php' ; ?>
-            <select name="timezone" id="timezone">
-            <?php $selected_tz = osc_timezone() ; ?>
-            <option value="" selected="selected"><?php _e('Select a timezone...') ; ?></option>
-            <?php foreach ($timezone as $tz) { ?>
-            <option value="<?php echo $tz ; ?>" <?php if($selected_tz == $tz) { ?> selected="selected" <?php } ?>><?php echo $tz; ?></option>
-            <?php } ?>
-            </select>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-label"><?php _e('Date & time format'); ?></div>
-        <div class="form-controls">
-            <table class="table-small">
-                <tr>
-                    <td>
-                        <?php
-                        $custom_checked = true ;
-                        foreach( $dateFormats as $df ) {
-                        $checked = false ;
-                        if( $df == osc_date_format() ) {
-                        $custom_checked = false ;
-                        $checked        = true ;
-                        } ?>
-                        <div>
-                            <input type="radio" name="df" id="<?php echo $df ; ?>" value="<?php echo $df ; ?>" <?php echo ( $checked ? 'checked="checked"' : '' ) ; ?> onclick="javascript:document.getElementById('dateFormat').value = '<?php echo $df ; ?>' ;" />
-                            <?php echo date($df) ; ?>
+    <div class="grid-system">
+        <div class="grid-row grid-first-row grid-100">
+            <div class="row-wrapper">
+                    <!-- settings form -->
+                    <div id="general-settings">
+                        <h2 class="render-title"><?php _e('General Settings') ; ?></h2>
+                                    <ul id="error_list" style="display: none;"></ul>
+                                    <form name="settings_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+                                        <input type="hidden" name="page" value="settings" />
+                                        <input type="hidden" name="action" value="update" />
+                                        <fieldset>
+                                            <div class="form-horizontal">
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Page title') ; ?></div>
+                        <div class="form-controls"><input type="text" class="xlarge" name="pageTitle" value="<?php echo osc_esc_html( osc_page_title() ); ?>" /></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Page description') ; ?></div>
+                        <div class="form-controls"><input type="text" class="xlarge" name="pageDesc" value="<?php echo osc_esc_html( osc_page_description() ); ?>" /></div></div>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Admin e-mail') ; ?></div>
+                        <div class="form-controls"><input type="text" class="large" name="contactEmail" value="<?php echo osc_esc_html( osc_contact_email() ) ; ?>" /></div></div>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Default language'); ?></div>
+                        <div class="form-controls">
+                            <select name="language">
+                            <?php foreach( $aLanguages as $lang ) { ?>
+                            <option value="<?php echo $lang['pk_c_code'] ; ?>" <?php echo ((osc_language() == $lang['pk_c_code']) ? 'selected="selected"' : '') ; ?>><?php echo $lang['s_name'] ; ?></option>
+                            <?php } ?>
+                            </select>
                         </div>
-                        <?php } ?>
-                            <input type="radio" name="df" id="df_custom" value="df_custom" <?php echo ( $custom_checked ? 'checked="checked"' : '' ) ; ?> />
-                            <input type="text" name="df_custom_text" id="df_custom_text" class="input-medium" <?php echo ( $custom_checked ? 'value="' . osc_esc_html( osc_date_format() ) . '"' : '' ) ; ?> onchange="javascript:document.getElementById('dateFormat').value = this.value ;" onkeyup="javascript:custom_date(this.value);" /><span id="custom_date"></span>
-                            <input type="hidden" name="dateFormat" id="dateFormat" value="<?php echo osc_date_format() ; ?>" />
-                    </td>
-                    <td>
-                        <?php
-                        $custom_checked = true ;
-                        foreach( $timeFormats as $tf ) {
-                        $checked = false ;
-                        if( $tf == osc_time_format() ) {
-                        $custom_checked = false ;
-                        $checked        = true ;
-                        }
-                        ?>
-                        <div>
-                            <input type="radio" name="tf" id="<?php echo $tf ; ?>" value="<?php echo $tf; ?>" <?php echo ( $checked ? 'checked="checked"' : '' ) ; ?> onclick="javascript:document.getElementById('timeFormat').value = '<?php echo $tf ; ?>' ;" />
-                            <?php echo date($tf) ; ?>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Default currency') ; ?></div>
+                        <div class="form-controls">
+                            <select name="currency" id="currency_admin">
+                            <?php foreach($aCurrencies as $currency) { ?>
+                            <option value="<?php echo osc_esc_html($currency['pk_c_code']); ?>" <?php echo ((osc_currency() == $currency['pk_c_code']) ? 'selected="selected"' : ''); ?>><?php echo $currency['pk_c_code'] ?></option>
+                            <?php } ?>
+                            </select>
                         </div>
-                        <?php } ?>
-                        <input type="radio" name="tf" id="tf_custom" value="tf_custom" <?php echo ( $custom_checked ? 'checked="checked"' : '' ) ; ?> />
-                        <input type="text" class="input-medium" <?php echo ( $custom_checked ? 'value="' . osc_esc_html( osc_time_format() ) . '"' : ''); ?> onchange="javascript:document.getElementById('timeFormat').value = this.value ;" onkeyup="javascript:custom_time(this.value);" /><span id="custom_time"></span>
-                        <input type="hidden" name="timeFormat" id="timeFormat" value="<?php echo osc_esc_html( osc_time_format() ) ; ?>" />
-                    </td>
-                </tr>
-            </table>
-            <div class="help-box"><a href="http://php.net/date" target="_blank"><?php _e('Documentation on date and time formatting') ; ?></a></div>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-label"><?php _e('RSS shows') ; ?></div>
-        <div class="form-controls">
-            <input type="text" class="input-small" name="num_rss_items" value="<?php echo osc_esc_html(osc_num_rss_items()); ?>" />
-            <?php _e('listings at most') ; ?>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-label"><?php _e('The latest listings show') ; ?></div>
-        <div class="form-controls">
-            <input type="text" class="input-small" name="max_latest_items_at_home" value="<?php echo osc_esc_html(osc_max_latest_items_at_home()) ; ?>" />
-            <?php _e('Listings at most') ; ?>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-label"><?php _e('The search page shows') ; ?></div>
-        <div class="form-controls">
-            <input type="text" class="input-small" name="default_results_per_page" value="<?php echo osc_esc_html(osc_default_results_per_page_at_search()); ?>" />
-            <?php _e('listings at most') ; ?>
-        </div>
-    </div>
-    <h2 class="reder-title separate-top"><?php _e('Contact Settings') ; ?></h2>
-    <div class="form-row">
-        <div class="form-label"><?php _e('Attachments') ; ?></div>
-        <div class="form-controls">
-            <div class="form-label-checkbox"><input type="checkbox" <?php echo ( osc_contact_attachment() ? 'checked="checked"' : '' ) ; ?> name="enabled_attachment" value="1" />
-            <?php _e('Allow people to attach a file to the contact form') ; ?></div>
-        </div>
-    </div>
-    <h2 class="reder-title separate-top"><?php _e('Cron Settings') ; ?></h2>
-    <div class="form-row">
-        <div class="form-label"><?php _e('Automatic cron process') ; ?></div>
-        <div class="form-controls">
-            <div class="form-label-checkbox"><input type="checkbox" <?php echo ( osc_auto_cron() ? 'checked="checked"' : '' ) ; ?> name="auto_cron" />
-            <?php printf(__('Allow OSClass to run a built-in <a href="%s" target="_blank">cron</a> automatically without setting crontab'), 'http://en.wikipedia.org/wiki/Cron' ) ; ?></div>
-            <span class="help-box"><?php _e('It is <b>recommended</b> to have this option enabled, because some features require it.') ; ?></span>
-        </div>
-    </div>
-    <div class="form-actions">
-        <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" class="btn btn-submit" />
-    </div>
-</div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Week starts on') ; ?></div>
+                        <div class="form-controls">
+                            <select name="weekStart" id="weekStart">
+                            <option value="0" <?php if(osc_week_starts_at() == '0') { ?>selected="selected"<?php } ?>><?php _e('Sunday') ; ?></option>
+                            <option value="1" <?php if(osc_week_starts_at() == '1') { ?>selected="selected"<?php } ?>><?php _e('Monday') ; ?></option>
+                            <option value="2" <?php if(osc_week_starts_at() == '2') { ?>selected="selected"<?php } ?>><?php _e('Tuesday') ; ?></option>
+                            <option value="3" <?php if(osc_week_starts_at() == '3') { ?>selected="selected"<?php } ?>><?php _e('Wednesday') ; ?></option>
+                            <option value="4" <?php if(osc_week_starts_at() == '4') { ?>selected="selected"<?php } ?>><?php _e('Thursday') ; ?></option>
+                            <option value="5" <?php if(osc_week_starts_at() == '5') { ?>selected="selected"<?php } ?>><?php _e('Friday') ; ?></option>
+                            <option value="6" <?php if(osc_week_starts_at() == '6') { ?>selected="selected"<?php } ?>><?php _e('Saturday') ; ?></option>
+                            </select>
+                        </div>
+                    </div>
+                    <?php /* <div class="form-row">
+                        <div class="form-label"><?php _e('External sources'); ?></div>
+                        <div class="form-controls">
+                    <input type="checkbox" id="market_external_sources" name="market_external_sources" value="1" <?php if(osc_market_external_sources()==1) {echo 'checked="checked"';}; ?> />
+                    <?php _e('Allow download packages from external sources'); ?>
+                    </div></div> */ ?>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Timezone') ; ?></div>
+                        <div class="form-controls">
+                            <?php require osc_lib_path() . 'osclass/timezones.php' ; ?>
+                            <select name="timezone" id="timezone">
+                            <?php $selected_tz = osc_timezone() ; ?>
+                            <option value="" selected="selected"><?php _e('Select a timezone...') ; ?></option>
+                            <?php foreach ($timezone as $tz) { ?>
+                            <option value="<?php echo $tz ; ?>" <?php if($selected_tz == $tz) { ?> selected="selected" <?php } ?>><?php echo $tz; ?></option>
+                            <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Date & time format'); ?></div>
+                        <div class="form-controls">
+                            <table class="table-small">
+                                <tr>
+                                    <td>
+                                        <?php
+                                        $custom_checked = true ;
+                                        foreach( $dateFormats as $df ) {
+                                        $checked = false ;
+                                        if( $df == osc_date_format() ) {
+                                        $custom_checked = false ;
+                                        $checked        = true ;
+                                        } ?>
+                                        <div>
+                                            <input type="radio" name="df" id="<?php echo $df ; ?>" value="<?php echo $df ; ?>" <?php echo ( $checked ? 'checked="checked"' : '' ) ; ?> onclick="javascript:document.getElementById('dateFormat').value = '<?php echo $df ; ?>' ;" />
+                                            <?php echo date($df) ; ?>
+                                        </div>
+                                        <?php } ?>
+                                            <input type="radio" name="df" id="df_custom" value="df_custom" <?php echo ( $custom_checked ? 'checked="checked"' : '' ) ; ?> />
+                                            <input type="text" name="df_custom_text" id="df_custom_text" class="input-medium" <?php echo ( $custom_checked ? 'value="' . osc_esc_html( osc_date_format() ) . '"' : '' ) ; ?> onchange="javascript:document.getElementById('dateFormat').value = this.value ;" onkeyup="javascript:custom_date(this.value);" /><span id="custom_date"></span>
+                                            <input type="hidden" name="dateFormat" id="dateFormat" value="<?php echo osc_date_format() ; ?>" />
+                                    </td>
+                                    <td>
+                                        <?php
+                                        $custom_checked = true ;
+                                        foreach( $timeFormats as $tf ) {
+                                        $checked = false ;
+                                        if( $tf == osc_time_format() ) {
+                                        $custom_checked = false ;
+                                        $checked        = true ;
+                                        }
+                                        ?>
+                                        <div>
+                                            <input type="radio" name="tf" id="<?php echo $tf ; ?>" value="<?php echo $tf; ?>" <?php echo ( $checked ? 'checked="checked"' : '' ) ; ?> onclick="javascript:document.getElementById('timeFormat').value = '<?php echo $tf ; ?>' ;" />
+                                            <?php echo date($tf) ; ?>
+                                        </div>
+                                        <?php } ?>
+                                        <input type="radio" name="tf" id="tf_custom" value="tf_custom" <?php echo ( $custom_checked ? 'checked="checked"' : '' ) ; ?> />
+                                        <input type="text" class="input-medium" <?php echo ( $custom_checked ? 'value="' . osc_esc_html( osc_time_format() ) . '"' : ''); ?> onchange="javascript:document.getElementById('timeFormat').value = this.value ;" onkeyup="javascript:custom_time(this.value);" /><span id="custom_time"></span>
+                                        <input type="hidden" name="timeFormat" id="timeFormat" value="<?php echo osc_esc_html( osc_time_format() ) ; ?>" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="help-box"><a href="http://php.net/date" target="_blank"><?php _e('Documentation on date and time formatting') ; ?></a></div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('RSS shows') ; ?></div>
+                        <div class="form-controls">
+                            <input type="text" class="input-small" name="num_rss_items" value="<?php echo osc_esc_html(osc_num_rss_items()); ?>" />
+                            <?php _e('listings at most') ; ?>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('The latest listings show') ; ?></div>
+                        <div class="form-controls">
+                            <input type="text" class="input-small" name="max_latest_items_at_home" value="<?php echo osc_esc_html(osc_max_latest_items_at_home()) ; ?>" />
+                            <?php _e('Listings at most') ; ?>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('The search page shows') ; ?></div>
+                        <div class="form-controls">
+                            <input type="text" class="input-small" name="default_results_per_page" value="<?php echo osc_esc_html(osc_default_results_per_page_at_search()); ?>" />
+                            <?php _e('listings at most') ; ?>
+                        </div>
+                    </div>
+                    <h2 class="render-title separate-top"><?php _e('Contact Settings') ; ?></h2>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Attachments') ; ?></div>
+                        <div class="form-controls">
+                            <div class="form-label-checkbox"><input type="checkbox" <?php echo ( osc_contact_attachment() ? 'checked="checked"' : '' ) ; ?> name="enabled_attachment" value="1" />
+                            <?php _e('Allow people to attach a file to the contact form') ; ?></div>
+                        </div>
+                    </div>
+                    <h2 class="render-title separate-top"><?php _e('Cron Settings') ; ?></h2>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Automatic cron process') ; ?></div>
+                        <div class="form-controls">
+                            <div class="form-label-checkbox"><input type="checkbox" <?php echo ( osc_auto_cron() ? 'checked="checked"' : '' ) ; ?> name="auto_cron" />
+                            <?php printf(__('Allow OSClass to run a built-in <a href="%s" target="_blank">cron</a> automatically without setting crontab'), 'http://en.wikipedia.org/wiki/Cron' ) ; ?></div>
+                            <span class="help-box"><?php _e('It is <b>recommended</b> to have this option enabled, because some features require it.') ; ?></span>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" class="btn btn-submit" />
+                    </div>
+                </div>
                         </fieldset>
                     </form>
                 </div>
                 <!-- /settings form -->
+            </div></div></div>
 </div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
                 

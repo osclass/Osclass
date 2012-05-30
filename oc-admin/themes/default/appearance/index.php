@@ -45,11 +45,14 @@
 </div>
 <?php osc_show_flash_message('admin') ; ?>
 <div id="content-page">
+    <div class="grid-system">
+        <div class="grid-row grid-first-row grid-100">
+            <div class="row-wrapper">
     <form id="market-quick-search" class="quick-search"><input type="text" name="sPattern" placeholder="<?php _e('Search Themes'); ?>" class="input-text float-left"/><input type="Submit" value="Seach" class="btn ico ico-32 ico-search float-left"/><a href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance&amp;action=add" class="btn btn-green float-right"><?php _e('Add new theme'); ?></a></form>
                 <!-- right container -->
                 <!-- themes list -->
                 <div class="appearance">
-                    <h2 class="reder-title"><?php _e('Current theme') ; ?></h2>
+                    <h2 class="render-title"><?php _e('Current theme') ; ?></h2>
                     <div class="current-theme">
                         <div class="theme">
                             <img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo osc_theme() ; ?>/screenshot.png" title="<?php echo $info['name'] ; ?>" alt="<?php echo $info['name'] ; ?>" />
@@ -62,7 +65,7 @@
                             <div class="clear"></div>
                         </div>
                     </div>
-                    <h2 class="reder-title"><?php _e('Available themes') ; ?></h2>
+                    <h2 class="render-title"><?php _e('Available themes') ; ?></h2>
                     <div class="available-theme">
                         <?php foreach($themes as $theme) { ?>
                         <?php
@@ -95,6 +98,7 @@
                 </div>
                 <!-- /themes list -->
             <!-- /right container -->
+        </div></div></div>
 </div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
 
