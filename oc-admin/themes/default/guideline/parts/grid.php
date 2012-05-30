@@ -1,9 +1,14 @@
 <div id="#guideline-grid">
     <!-- Explain -->
     <div class="grid-system">
-        <div class="grid-row grid-first-row grid-30">
+        <div class="grid-row grid-100 no-bottom-margin">
             <div class="row-wrapper">
                 <h2 class="render-title">Grid</h2>
+            </div>
+        </div>
+
+        <div class="grid-row grid-first-row grid-30">
+            <div class="row-wrapper">
                 <p>The default grid system provided is a 100%-wide, split into 5% intervals. Starts from 5% and is increased by 5% till 95%.</p>
                 <p>5 %, 10 %, 15 %, 20 %, 25 %, 30 %, 35 %, 40 %, 45 %, 50 %, 55 %, 60 %, 65 %, 70 %, 75 %, 80 %, 85 %, 90 %, 95%</p>
                 <p>You can combine all columns as your own</p>

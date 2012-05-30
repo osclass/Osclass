@@ -26,14 +26,18 @@
     $numItemsPerCategory = __get("numItemsPerCategory") ;
     $newsList            = __get("newsList") ;
     $comments            = __get("comments") ;
-?>
 
+    osc_add_filter('render-wrapper','render_offset');
+    function render_offset(){
+        return 'row-offset';
+    }
+    osc_add_hook('admin_page_header','customPageHeader');
+    function customPageHeader(){ ?>
+        <h1 class="dashboard"><?php _e('Dashboard') ; ?></h1>
+    <?php
+    }
+?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<div id="content-head">
-    <h1 class="dashboard"><?php _e('Dashboard') ; ?></h1>
-</div>
-<?php osc_show_flash_message('admin') ; ?>
-<div id="content-page">
 <div id="dashboard">
 <div class="grid-system">
     <div class="grid-row grid-first-row grid-50">
@@ -149,7 +153,6 @@
         </div>
     </div>
     <div class="clear"></div>
-</div>
 </div>
 </div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

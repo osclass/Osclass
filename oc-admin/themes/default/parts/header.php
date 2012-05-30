@@ -28,3 +28,11 @@
     <div id="content">
         <?php osc_current_admin_theme_path( 'parts/sidebar.php' ) ; ?>
         <div id="content-render">
+            <div id="content-head">
+                <?php osc_run_hook('admin_page_header'); ?>
+            </div>
+            <?php osc_show_flash_message('admin') ; ?>
+            <div id="content-page">
+                <div class="grid-system">
+                    <div class="grid-row grid-first-row grid-100">
+                        <div class="row-wrapper <?php echo osc_apply_filter('render-wrapper',''); ?>">

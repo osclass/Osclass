@@ -37,19 +37,16 @@
         <?php
     }
     osc_add_hook('admin_header','customHead');
-?>
 
+    osc_add_hook('admin_page_header','customPageHeader');
+    function customPageHeader(){ ?>
+        <h1 class="dashboard"><?php _e('Appearance') ; ?></h1>
+    <?php
+    }
+?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<div id="content-head">
-    <h1><?php _e('Appearance') ; ?></h1>
-</div>
-<?php osc_show_flash_message('admin') ; ?>
-<div id="content-page">
-    <div class="grid-system">
-        <div class="grid-row grid-first-row grid-100">
-            <div class="row-wrapper">
+<div id="appearance-page">
     <form id="market-quick-search" class="quick-search"><input type="text" name="sPattern" placeholder="<?php _e('Search Themes'); ?>" class="input-text float-left"/><input type="Submit" value="Seach" class="btn ico ico-32 ico-search float-left"/><a href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance&amp;action=add" class="btn btn-green float-right"><?php _e('Add new theme'); ?></a></form>
-                <!-- right container -->
                 <!-- themes list -->
                 <div class="appearance">
                     <h2 class="render-title"><?php _e('Current theme') ; ?></h2>
@@ -97,34 +94,5 @@
                     </div>
                 </div>
                 <!-- /themes list -->
-            <!-- /right container -->
-        </div></div></div>
 </div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
-
-
-<?php
-    /**
-     * OSClass – software for creating and publishing online classified advertising platforms
-     *
-     * Copyright (C) 2010 OSCLASS
-     *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
-     *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
-     *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
-     */
-
-    
-
-    
-
-
-?>
-

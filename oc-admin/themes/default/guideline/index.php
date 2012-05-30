@@ -35,6 +35,7 @@
 			</div>
             <?php include "parts/menu.php"; ?>
 			<div id="content-page">
+                    <?php include 'parts/layout.php'; ?>
                     <?php include "parts/grid.php"; ?>
 			</div>
     	</div><!-- #content-render -->

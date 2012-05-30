@@ -113,18 +113,19 @@
         <?php
     }
     osc_add_hook('admin_header','customHead');
-?>
 
+    function render_offset(){
+        return 'row-offset';
+    }
+    osc_add_hook('admin_page_header','customPageHeader');
+    function customPageHeader(){ ?>
+        <h1 class="dashboard"><?php _e('General Settings') ; ?></h1>
+    <?php
+    }
+?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<div id="content-head">
-    <h1 class="dashboard"><?php _e('General Settings') ; ?></h1>
-</div>
-<?php osc_show_flash_message('admin') ; ?>
-<div id="content-page">
-    <div class="grid-system">
-        <div class="grid-row grid-first-row grid-100">
-            <div class="row-wrapper">
-                    <!-- settings form -->
+<div id="general-setting">
+    <!-- settings form -->
                     <div id="general-settings">
                         <h2 class="render-title"><?php _e('General Settings') ; ?></h2>
                                     <ul id="error_list" style="display: none;"></ul>
@@ -289,7 +290,5 @@
                     </form>
                 </div>
                 <!-- /settings form -->
-            </div></div></div>
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
-                
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                
