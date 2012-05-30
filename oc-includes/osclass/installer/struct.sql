@@ -133,7 +133,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     i_items INT(10) UNSIGNED NULL DEFAULT 0,
     i_comments INT(10) UNSIGNED NULL DEFAULT 0,
     dt_access_date DATETIME NOT NULL DEFAULT  '0000-00-00 00:00:00',
-    s_access_ip VARCHAR(15) NULL,
+    s_access_ip VARCHAR(15) NOT NULL DEFAULT '',
 
         PRIMARY KEY (pk_i_id),
         UNIQUE KEY (s_email),
