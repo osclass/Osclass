@@ -210,7 +210,15 @@ function osc_search_footer_links() {
     $categoryID = '';
     if( osc_search_category_id() ) {
         $categoryID = osc_search_category_id();
-        $categoryID = current($categoryID);
+
+        if( Category::newInstance()->isRoot( $categoryID ) ) {
+            var_dump('end');
+            $cat = Category::newInstance()->findSubcategories($categoryID);
+            $categoryID = array();
+            foreach($cat as $c) {
+                $categoryID[] = $c['pk_i_id'];
+            }
+        }
     }
 
     if( osc_search_city() != '' ) {
@@ -232,11 +240,11 @@ function osc_search_footer_links() {
     $comm->select('COUNT(*) AS total');
     $comm->from(DB_TABLE_PREFIX . 't_item as i');
     $comm->from(DB_TABLE_PREFIX . 't_item_location as l');
+    if( $categoryID != '' ) {
+        $comm->whereIn('i.fk_i_category_id', $categoryID);
+    }
     $comm->where('i.pk_i_id = l.fk_i_item_id');
     $comm->where('i.b_enabled = 1');
-    if( $categoryID != '' ) {
-        $comm->where('i.fk_i_category_id', $categoryID);
-    }
     $comm->where('l.fk_i_region_id IS NOT NULL');
     $comm->where('l.fk_i_city_id IS NOT NULL');
     if( $regionID != '' ) {
