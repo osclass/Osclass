@@ -50,8 +50,8 @@ $(function(){
     $('#content-head .ico-help').click(function(){
         $('#help-box').fadeIn();
     });
-    $('#table-row-actions .show-more').live('click',function(){
-        $(this).addClass('hover');
+    $('#table-row-actions .show-more-trigger').live('click',function(){
+        $(this).parent().addClass('hover');
         return false;
     });
     //Selects

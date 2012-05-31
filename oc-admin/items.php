@@ -149,7 +149,7 @@
                                                 $id = Params::getParam('id') ;
                                                 $success = false;
 
-                                                if( $id != '' ) {
+                                                if($id) {
                                                     $numSuccess = 0;
                                                     foreach($id as $i) {
                                                         if ($i) {
@@ -160,12 +160,11 @@
                                                             }
                                                         }
                                                     }
+                                                    osc_add_flash_ok_message( sprintf(_mn('%d listing has been deleted', '%d listings have been deleted', $numSuccess), $numSuccess), 'admin') ;
                                                 }
-                                                osc_add_flash_ok_message( sprintf(_mn('%d listing has been deleted', '%d listings have been deleted', $numSuccess), $numSuccess), 'admin') ;
-                                                $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                             break;
                                         }
-                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                                        $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'delete':          //delete
                                         $id      = Params::getParam('id') ;
@@ -184,8 +183,8 @@
                                         } else {
                                             osc_add_flash_error_message( _m("The listing couldn't be deleted"), 'admin') ;
                                         }
-
-                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                                        
+                                        $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'status':          //status
                                         $id = Params::getParam('id') ;
@@ -250,7 +249,7 @@
                                                 break;
                                         }
                                       
-                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                                        $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'status_premium':  //status premium
                                         $id = Params::getParam('id') ;
@@ -275,7 +274,7 @@
                                             osc_add_flash_error_message( _m('Some error has occurred'), 'admin');
                                         }
                                         
-                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                                        $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'status_spam':  //status spam
                                         $id = Params::getParam('id') ;
@@ -300,7 +299,7 @@
                                             osc_add_flash_error_message( _m('Some error has occurred'), 'admin');
                                         }  
                                         
-                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                                        $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'clear_stat':
                                         $id     = Params::getParam('id') ;
@@ -535,6 +534,10 @@
                                         }
                                         
                                         // -----------------------------------------------------
+                                        // set default iDisplayLength 
+                                        if( Params::getParam('iDisplayLength') == '' ) {
+                                            Params::setParam('iDisplayLength', 50 ) ;
+                                        }
                                         require_once osc_admin_base_path() . 'ajax/items_processing.php';
                                         $items_processing = new ItemsProcessingAjax(Params::getParamsAsArray("get"));
                                         $aData = $items_processing->result() ;

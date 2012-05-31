@@ -117,7 +117,7 @@
                 $this->_get['iDisplayStart'] = 0 ;
             }
             if( !isset($this->_get['iDisplayLength']) ) {
-                $this->_get['iDisplayLength'] = 20 ;
+                $this->_get['iDisplayLength'] = 5 ;
             }
             if( !isset($this->_get['iSortCol_0']) ) {
                 $this->_get['iSortCol_0'] = 7 ;
@@ -131,9 +131,6 @@
             
             // get & set values
             foreach($this->_get as $k => $v) {
-                if( $k == 'sEcho' ) {
-                    $this->sEcho = intval($v) ;
-                }
                 if( $k == 'iPage' ) {
                     $this->iPage = intval($v) ;
                 }
@@ -155,56 +152,67 @@
                 if( $k == 'fCol_userIdValue' ) {
                     $this->mSearch->fromUser($v);
                 }
-                if( $k == 'fCol_itemIdValue' ) {
+                if( $k == 'itemIdValue' ) {
                     $this->mSearch->addItemId($v);
                 }
-                if( $k == 'fCol_countryId' ) {
+                
+                // si hay id mejor ...
+                if( $k == 'countryId' ) {
                     $this->mSearch->addCountry($v);
                 }
-                if( $k == 'fCol_regionId' ) {
+                if( $k == 'regionId' ) {
                     $this->mSearch->addRegion($v);
                 }
-                if( $k == 'fCol_cityId' ) {
+                if( $k == 'cityId' ) {
                     $this->mSearch->addCity($v);
                 }
                 
-                if( $k == 'fCol_country' ) {
+                if( $k == 'country' ) {
                     $this->mSearch->addCountry($v);
                 }
-                if( $k == 'fCol_region' ) {
+                if( $k == 'region' ) {
                     $this->mSearch->addRegion($v);
                 }
-                if( $k == 'fCol_city' ) {
+                
+                if( $k == 'city' ) {
                     $this->mSearch->addCity($v);
                 }
                 
-                if( $k == 'fCol_catId' ) {
+                if( $k == 'catId' ) {
                     $this->mSearch->addCategory($v);
                 }
-                if( $k == 'fCol_bPremium' ) {
-                    $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_premium = '.$v);
+                if( $k == 'b_premium' ) {
+                    if($v != '') {
+                        $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_premium = '.$v);
+                    }
                 }
-                if( $k == 'fCol_bActive' ) {
-                    $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_active = '.$v);
+                if( $k == 'b_active' ) {
+                    if($v != '') {
+                        $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_active = '.$v);
+                    }
                 }
-                if( $k == 'fCol_bEnabled' ) {
-                    $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_enabled = '.$v);
+                if( $k == 'b_enabled' ) {
+                    if($v != '') {
+                        $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_enabled = '.$v);
+                    }
                 }
-                if( $k == 'fCol_bSpam' ) {
-                    $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_spam = '.$v);
+                if( $k == 'b_spam' ) {
+                    if($v != '') {
+                        $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_spam = '.$v);
+                    }
                 }
             }
             // set start and limit using iPage param
-//            $this->iPage*
-            $this->start = intval($v) ;
-            $this->limit = intval($v) ;
+            $start = $this->_get['iPage'] * $this->_get['iDisplayLength'];
+            
+            $this->start = intval( $starts ) ;
+            $this->limit = intval( $this->_get['iDisplayLength'] ) ;
         }
 
         /* START - format functions */
         private function toDatatablesFormat() {
             $this->result['iTotalRecords']        = $this->total_filtered ;
             $this->result['iTotalDisplayRecords'] = $this->total ;
-            $this->result['sEcho']                = $this->sEcho ;
             $this->result['sColumns']             = $this->sColumns ;
             $this->result['aaData']               = array() ;
 
@@ -289,8 +297,8 @@
         private function toArrayFormat() {
             $this->result['iTotalRecords']        = $this->total_filtered ;
             $this->result['iTotalDisplayRecords'] = $this->total ;
-            $this->result['sEcho']                = $this->sEcho ;
             $this->result['sColumns']             = $this->sColumns ;
+            $this->result['iDisplayLength']       = $this->_get['iDisplayLength'];
             $this->result['aaData']               = array() ;
 
             if( count($this->items) == 0 ) {
@@ -346,7 +354,7 @@
                 }
                 
                 // more actions
-                $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL ;
+                $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL ;
                 foreach( $options_more as $actual ) { 
                     $moreOptions .= '<li>'.$actual."</li>".PHP_EOL;
                 }
