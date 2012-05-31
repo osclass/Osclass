@@ -211,9 +211,8 @@ function osc_search_footer_links() {
     if( osc_search_category_id() ) {
         $categoryID = osc_search_category_id();
 
-        if( Category::newInstance()->isRoot( $categoryID ) ) {
-            var_dump('end');
-            $cat = Category::newInstance()->findSubcategories($categoryID);
+        if( Category::newInstance()->isRoot( current($categoryID) ) ) {
+            $cat = Category::newInstance()->findSubcategories(current($categoryID));
             $categoryID = array();
             foreach($cat as $c) {
                 $categoryID[] = $c['pk_i_id'];
