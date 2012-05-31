@@ -205,7 +205,7 @@
             // set start and limit using iPage param
             $start = $this->_get['iPage'] * $this->_get['iDisplayLength'];
             
-            $this->start = intval( $starts ) ;
+            $this->start = intval( $start ) ;
             $this->limit = intval( $this->_get['iDisplayLength'] ) ;
         }
 
@@ -299,6 +299,9 @@
             $this->result['iTotalDisplayRecords'] = $this->total ;
             $this->result['sColumns']             = $this->sColumns ;
             $this->result['iDisplayLength']       = $this->_get['iDisplayLength'];
+            error_log('iTotalRecords ' . $this->result['iTotalRecords']);
+            error_log('iTotalDisplayRecords ' . $this->result['iTotalDisplayRecords']);
+            error_log('iDisplayLength ' . $this->result['iDisplayLength']);
             $this->result['aaData']               = array() ;
 
             if( count($this->items) == 0 ) {
