@@ -33,18 +33,21 @@
         <script type="text/javascript">
             // autocomplete users
             $(document).ready(function(){
-                $('#user').attr( "autocomplete", "off" );
-                $('#user').live('keyup.autocomplete', function(){
-                    $('#userId').val('');
-                    $( this ).autocomplete({
-                        source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax&term="+$('#user').val(),
-                        minLength: 0,
-                        select: function( event, ui ) {
-                            if(ui.item.id=='') 
-                                return false;
-                            $('#userId').val(ui.item.id);
-                        }
-                    });
+                $( '#user' ).autocomplete({
+                    source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax&term="+$('#user').val(),
+                    minLength: 0,
+                    select: function( event, ui ) {
+                        if(ui.item.id=='') 
+                            return false;
+                        $('#userId').val(ui.item.id);
+                        console.log('id seteada' + ui.item.id) ;
+                    },
+                    search: function() {
+                        $('#userId').val('');
+                    },
+                    focus: function (event, ui) {
+                        return false;
+                    }                        
                 });
                 
                 // show filters
@@ -52,9 +55,6 @@
                 $('#show-filters-button').click(function(){
                     filters.toggle();
                 });
-                
-                
-                
             });
             
         </script>
@@ -96,6 +96,8 @@
     <input type="hidden" name="sSortDir_0" value="0" />
     <input type="hidden" name="iDisplayLength" value="<?php echo $iDisplayLength;?>" />
     
+    <a class="btn btn-submit float-right" href="<?php echo osc_admin_base_url(true).'?page=items'; ?>"><?php _e('Reset filters') ; ?></a>
+    
     <input id="show-filters" type="submit" value="<?php echo osc_esc_html( __('Apply filters') ) ; ?>" class="btn btn-submit float-right" />
     
     <input id="show-filters-button" type="button" value="<?php _e('Show filters')?>" class="btn btn-large float-right" />
@@ -123,8 +125,8 @@
                             <?php _e('Listing user name') ; ?>
                         </div>
                         <div class="form-controls">
-                            <input id="user" name="user" type="text" value="" />
-                            <input id="userId" name="userId" type="hidden" value="" />
+                            <input id="user" name="user" type="text" value="<?php echo osc_esc_html(Params::getParam('user')); ?>" />
+                            <input id="userId" name="userId" type="hidden" value="<?php echo osc_esc_html(Params::getParam('userId')); ?>" />
                         </div>
                     </div>
                 </div>
