@@ -142,9 +142,7 @@
                     $attrs['href'] = str_replace('{PAGE}', $p, str_replace(urlencode('{PAGE}'), $p, $this->url));
                 }
                 if( $p == $this->selected ) {
-                    unset($attrs['href']);
-                    $attrs['class'] = $this->class_selected;
-                    $links[] = $this->createSpanTag($p, $attrs);
+                    $links[] = $this->createSpanTag($p, array('class' => $this->class_selected));
                 } else {
                     $attrs['class'] = $this->class_non_selected;
                     $links[] = $this->createATag($p, $attrs);
