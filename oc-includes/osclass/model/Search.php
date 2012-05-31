@@ -943,14 +943,12 @@
         {   
             $sql = $this->_makeSQL(false) ;
             $result = $this->dao->query($sql);
-            error_log($sql);
+
             if($count) {
                 $sql = $this->_makeSQL(true) ;
                 $datatmp  = $this->dao->query( $sql ) ;
                 $this->total_results = $datatmp->numRows() ;
-                error_log($this->total_results);
             } else {
-                
                 $this->total_results = 0;                
             }
             

@@ -533,23 +533,21 @@
                                             $cities = City::newInstance()->findByRegion($regions[0]['pk_i_id']) ;
                                         }
                                         
-                                        // -----------------------------------------------------
                                         // set default iDisplayLength 
                                         if( Params::getParam('iDisplayLength') == '' ) {
-                                            Params::setParam('iDisplayLength', 50 ) ;
+                                            Params::setParam('iDisplayLength', 10 ) ;
                                         }
+                                        $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
+                                        
                                         require_once osc_admin_base_path() . 'ajax/items_processing.php';
                                         $items_processing = new ItemsProcessingAjax(Params::getParamsAsArray("get"));
                                         $aData = $items_processing->result() ;
                                         $this->_exportVariableToView('aItems', $aData) ;
                                         
-                                        
                                         //preparing variables for the view                
                                         $this->_exportVariableToView("users", User::newInstance()->listAll());
                                         $this->_exportVariableToView("catId", $catId) ;
                                         $this->_exportVariableToView("stat", Params::getParam('stat')) ;
-                                        // hack ItemForm
-                                        $this->_exportVariableToView("item", null) ;
                                         
                                         $this->_exportVariableToView("countries", $countries);
                                         $this->_exportVariableToView("regions", $regions);
