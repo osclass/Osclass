@@ -665,4 +665,11 @@
         return osc_field(osc_latest_search(), 'i_total', '');
     }
 
+    function osc_get_canonical() {
+        if( View::newInstance()->_exists('canonical') ) {
+            return View::newInstance()->_get('canonical');
+        }
+        return '';
+    }
+
 ?>
