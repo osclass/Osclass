@@ -97,6 +97,7 @@
             $this->dao->select('pk_i_id as id, s_name as label, s_name as value') ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->like('s_name', $query, 'after') ;
+            $this->dao->orLike('s_email', $query, 'after') ;
             $this->dao->limit(0, 10);
 
             $result = $this->dao->get() ;
