@@ -16,20 +16,19 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
         <h1><?php _e('Manage listing') ; ?>
 		<a hreg="#" class="btn ico ico-32 ico-engine float-right"></a>
 		<a hreg="#" class="btn ico ico-32 ico-help float-right"></a>
-		<a hreg="#" class="btn btn-green ico ico-32 ico-add-white float-right">Add</a>
+		<a hreg="#" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
 	</h1>
 <?php
     }
+    osc_add_hook('admin_page_header','customPageHeader');
     //customize Head
     function customHead() { ?>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery-ui.js') ; ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
-        
         <?php ItemForm::location_javascript_new('admin') ; ?>
         <script type="text/javascript">
             // autocomplete users
@@ -54,6 +53,8 @@
                     filters.toggle();
                 });
                 
+                
+                
             });
             
         </script>
@@ -74,13 +75,15 @@
     $regions    = __get('regions') ;
     $cities     = __get('cities') ;
 
+    $iDisplayLength = __get('iDisplayLength');
+    
     $aData      = __get('aItems') ;
 
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 
 <div id="help-box">
-    <a href="#" class="btn ico btn-mini ico-close">x</a>
+    <a href="#" class="btn ico ico-20 ico-close">x</a>
     <h3>What does a red highlight mean?</h3>
     <p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
     Red highlight means that the listing has been marked as spam.</p>
@@ -91,7 +94,7 @@
     <input type="hidden" name="page" value="items" />
     <input type="hidden" name="iSortCol_0" value="7" />
     <input type="hidden" name="sSortDir_0" value="0" />
-    
+    <input type="hidden" name="iDisplayLength" value="<?php echo $iDisplayLength;?>" />
     
     <input id="show-filters" type="submit" value="<?php echo osc_esc_html( __('Apply filters') ) ; ?>" class="btn btn-submit float-right" />
     
@@ -140,7 +143,7 @@
                             <?php _e('Category') ; ?>
                         </div>
                         <div class="form-controls">
-                            <?php ItemForm::category_select($categories, null, null, true) ; ?>
+                            <?php ManageItemsForm::category_select($categories, null, null, true) ; ?>
                         </div>
                     </div>
                     
@@ -149,7 +152,7 @@
                             <?php _e('Country') ; ?>
                         </div>
                         <div class="form-controls">
-                            <?php ItemForm::country_text(); ?>
+                            <?php ManageItemsForm::country_text(); ?>
                         </div>
                     </div>
                     
@@ -158,7 +161,7 @@
                             <?php _e('Region') ; ?>
                         </div>
                         <div class="form-controls">
-                            <?php ItemForm::region_text(); ?>
+                            <?php ManageItemsForm::region_text(); ?>
                         </div>
                     </div>
                     
@@ -167,7 +170,7 @@
                             <?php _e('City') ; ?>
                         </div>
                         <div class="form-controls">
-                            <?php ItemForm::city_text(); ?>
+                            <?php ManageItemsForm::city_text(); ?>
                         </div>
                     </div>
                 </div>
@@ -184,9 +187,9 @@
                         </div>
                         <div class="form-controls">
                             <select id="b_premium" name="b_premium">
-                                <option value=""><?php _e('ALL'); ?></option>
-                                <option value="1"><?php _e('ON'); ?></option>
-                                <option value="0"><?php _e('OFF'); ?></option>
+                                <option value="" <?php echo ( (Params::getParam('b_premium') == '') ? 'selected="selected"' : '' )?>><?php _e('ALL'); ?></option>
+                                <option value="1" <?php echo ( (Params::getParam('b_premium') == '1') ? 'selected="selected"' : '' )?>><?php _e('ON'); ?></option>
+                                <option value="0" <?php echo ( (Params::getParam('b_premium') == '0') ? 'selected="selected"' : '' )?>><?php _e('OFF'); ?></option>
                             </select>
                         </div>
                     </div>
@@ -197,22 +200,22 @@
                         </div>
                         <div class="form-controls">
                             <select id="b_active" name="b_active">
-                                <option value=""><?php _e('ALL'); ?></option>
-                                <option value="1"><?php _e('ON'); ?></option>
-                                <option value="0"><?php _e('OFF'); ?></option>
+                                <option value="" <?php echo ( (Params::getParam('b_active') == '') ? 'selected="selected"' : '' )?>><?php _e('ALL'); ?></option>
+                                <option value="1" <?php echo ( (Params::getParam('b_active') == '1') ? 'selected="selected"' : '' )?>><?php _e('ON'); ?></option>
+                                <option value="0" <?php echo ( (Params::getParam('b_active') == '0') ? 'selected="selected"' : '' )?>><?php _e('OFF'); ?></option>
                             </select>
                         </div>
                     </div>
                     
                     <div class="form-row">
                         <div class="form-label">
-                            <?php _e('Enabled') ; ?>
+                            <?php _e('Block') ; ?>
                         </div>
                         <div class="form-controls">
                             <select id="b_enabled" name="b_enabled">
-                                <option value=""><?php _e('ALL'); ?></option>
-                                <option value="1"><?php _e('ON'); ?></option>
-                                <option value="0"><?php _e('OFF'); ?></option>
+                                <option value="" <?php echo ( (Params::getParam('b_enabled') == '') ? 'selected="selected"' : '' )?>><?php _e('ALL'); ?></option>
+                                <option value="1" <?php echo ( (Params::getParam('b_enabled') == '1') ? 'selected="selected"' : '' )?>><?php _e('ON'); ?></option>
+                                <option value="0" <?php echo ( (Params::getParam('b_enabled') == '0') ? 'selected="selected"' : '' )?>><?php _e('OFF'); ?></option>
                             </select>   
                         </div>
                     </div>
@@ -223,9 +226,9 @@
                         </div>
                         <div class="form-controls">
                             <select id="b_spam" name="b_spam">
-                                <option value=""><?php _e('ALL'); ?></option>
-                                <option value="1"><?php _e('ON'); ?></option>
-                                <option value="0"><?php _e('OFF'); ?></option>
+                                <option value="" <?php echo ( (Params::getParam('b_spam') == '') ? 'selected="selected"' : '' )?>><?php _e('ALL'); ?></option>
+                                <option value="1" <?php echo ( (Params::getParam('b_spam') == '1') ? 'selected="selected"' : '' )?>><?php _e('ON'); ?></option>
+                                <option value="0" <?php echo ( (Params::getParam('b_spam') == '0') ? 'selected="selected"' : '' )?>><?php _e('OFF'); ?></option>
                             </select>
                         </div>
                     </div>
@@ -235,7 +238,7 @@
         <div class="clear"></div>
     </div>
 </form>
-<?php //    print_r( $aData ) ; ?>
+
 <form class="items datatables" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
     <input type="hidden" name="page" value="items" />
     <input type="hidden" name="action" value="bulk_actions" />
@@ -260,14 +263,14 @@
         <table class="table" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
-                    <th class="col-bulkactions"><input type="checkbox"/></th>
-                    <th>Title</th>
-                    <th>User</th>
-                    <th>Category</th>
-                    <th>Country</th>
-                    <th>Region</th>
-                    <th>City</th>
-                    <th>Date</th>
+                    <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
+                    <th><?php echo __('Title') ; ?></th>
+                    <th><?php echo __('User') ; ?></th>
+                    <th><?php echo __('Category') ; ?></th>
+                    <th><?php echo __('Country') ; ?></th>
+                    <th><?php echo __('Region') ; ?></th>
+                    <th><?php echo __('City') ; ?></th>
+                    <th><?php echo __('Date') ; ?></th>
                 </tr>
             </thead>
             <tbody>
