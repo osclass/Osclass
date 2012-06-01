@@ -55,7 +55,7 @@
                 $this->total_filtered = ItemResource::newInstance()->countResources( $this->resourceID ) ;
             }
 
-            $this->toDatatablesFormat() ;
+            
             $this->dumpToDatatables() ;
         }
 
@@ -117,6 +117,33 @@
             }
         }
 
+        /* START - format functions */
+        private function toArrayFormat()
+        {
+            $this->result['iTotalRecords']        = $this->total ;
+            $this->result['iTotalDisplayRecords'] = $this->total_filtered ;
+            $this->result['iDisplayLength']       = $this->_get['iDisplayLength'];
+            $this->result['aaData']               = array() ;
+
+            if( count($this->media) == 0 ) {
+                return ;
+            }
+
+            $count = 0 ;
+            foreach($this->media as $aRow) {
+                $row = array() ;
+
+                $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" />' ;
+                $row[] = '<div id="media_list_pic"><img src="' . osc_apply_filter('resource_path', osc_base_url() . $aRow['s_path']) . $aRow['pk_i_id'] . '_thumbnail.' . $aRow['s_extension'] . '" style="max-width: 60px; max-height: 60px;" /></div> <div id="media_list_filename">' . $aRow['s_content_type'] ;
+                $row[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js( __('This action can not be undone. Are you sure you want to continue?') ) . '\')" href="' . osc_admin_base_url(true) . '?page=media&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '" id="dt_link_delete">' . __('Delete') . '</a>' ;
+                $row[] = '<a target="_blank" href="' . osc_item_url_ns($aRow['fk_i_item_id']) . '">item #' . $aRow['fk_i_item_id'] . '</a>' ;
+                $row[] = $aRow['dt_pub_date'] ;
+
+                $count++ ;
+                $this->result['aaData'][] = $row ;
+            }
+        }
+        
         /**
          * Set toJson variable with the JSON representation of $result
          * 
@@ -147,9 +174,22 @@
          * @access private
          * @since unknown 
          */
-        private function dumpToDatatables()
+        public function dumpToDatatables()
         {
+            $this->toDatatablesFormat() ;
             $this->dumpResult() ;
+        }
+        
+        /**
+         * Dump $result to JSON and return the result
+         * 
+         * @access private
+         * @since unknown 
+         */
+        public function result()
+        {
+            $this->toArrayFormat();
+            return $this->result;
         }
      }
 

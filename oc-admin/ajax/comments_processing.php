@@ -53,9 +53,6 @@
             } else {
                 $this->total_filtered = ItemResource::newInstance()->count( $this->resourceID ) ;
             }
-
-            $this->toDatatablesFormat() ;
-            $this->dumpToDatatables() ;
         }
 
         function __destruct()
@@ -134,6 +131,69 @@
             }
         }
 
+        private function toArrayFormat()
+        {
+            $this->result['iTotalRecords']        = $this->total_filtered ;
+            $this->result['iTotalDisplayRecords'] = $this->total ;
+            $this->result['iDisplayLength']       = $this->_get['iDisplayLength'];
+            $this->result['aaData']               = array() ;
+
+            if( count($this->comments) == 0 ) {
+                return ;
+            }
+
+            $count = 0 ;
+            foreach($this->comments as $comment) {
+                $row = array() ;
+                $options = array() ;
+                $options_more = array() ;
+
+                if( $comment['b_active'] ) {
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') . '</a>' ;
+                } else {
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] .'&amp;value=ACTIVE">' . __('Activate') . '</a>' ;
+                }
+                if( $comment['b_enabled'] ) {
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=DISABLE">' . __('Unblock') . '</a>' ;
+                } else {
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=ENABLE">' . __('Block') . '</a>' ;
+                }
+                
+                $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=comment_edit&amp;id=' . $comment['pk_i_id'] . '" id="dt_link_edit">' . __('Edit') . '</a>' ;
+                $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) . '\')" href="' . osc_admin_base_url(true) . '?page=comments&amp;action=delete&amp;id=' . $comment['pk_i_id'] .'" id="dt_link_delete">' . __('Delete') . '</a>' ;
+
+                // more actions
+                $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL ;
+                foreach( $options_more as $actual ) { 
+                    $moreOptions .= '<li>'.$actual."</li>".PHP_EOL;
+                }
+                $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL ;
+                
+                // create list of actions
+                $auxOptions = '<ul>'.PHP_EOL ;
+                foreach( $options as $actual ) {
+                    $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
+                }
+                $auxOptions  .= $moreOptions ;
+                $auxOptions  .= '</ul>'.PHP_EOL ;
+                
+                $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
+                
+                $row[] = '<input type="checkbox" name="id[]" value="' . $comment['pk_i_id']  . '" />' ;
+                if( empty($comment['s_author_name']) ) {
+                    $user = User::newInstance()->findByPrimaryKey( $comment['fk_i_user_id'] );
+                    $comment['s_author_name'] = $user['s_email'];
+                }
+                $row[] = $comment['s_author_name'] . ' (<a target="_blank" href="' . osc_item_url( $comment['fk_i_item_id'] ) . '">' . $comment['s_title'] . '</a>)'. $actions  ;
+                $row[] = $comment['s_body'] ;
+                $row[] = $comment['dt_pub_date'] ;
+
+
+                $count++ ;
+                $this->result['aaData'][] = $row ;
+            }
+        }
+        
         /**
          * Set toJson variable with the JSON representation of $result
          * 
@@ -164,9 +224,22 @@
          * @access private
          * @since unknown 
          */
-        private function dumpToDatatables()
+        public function dumpToDatatables()
         {
+            $this->toDatatablesFormat() ;
             $this->dumpResult() ;
+        }
+        
+        /**
+         * Dump $result to JSON and return the result
+         * 
+         * @access private
+         * @since unknown 
+         */
+        public function result()
+        {
+            $this->toArrayFormat();
+            return $this->result;
         }
      }
 
