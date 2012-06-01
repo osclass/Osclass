@@ -137,7 +137,6 @@ $(document).ready(function(){
     }
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<!--      FERNANDO       -->
 <!--los input tienen una class para el tamaño ...-->
 <div id="general-settings">
     <ul id="error_list" style="display: none;"></ul>
@@ -150,15 +149,15 @@ $(document).ready(function(){
                 <div class="form-row">
                     <p><?php _e('The sizes listed below determine the maximum dimensions in pixels to use when uploading a image. Format: <b>Width</b> x <b>Height</b>.') ; ?></p>
                     <div class="form-label"><?php _e('Thumbnail size') ; ?></div>
-                    <div class="form-controls"><input type="text" class="" name="dimThumbnail" value="<?php echo osc_esc_html( osc_thumbnail_dimensions() ); ?>" /></div>
+                    <div class="form-controls"><input type="text" class="input-medium" name="dimThumbnail" value="<?php echo osc_esc_html( osc_thumbnail_dimensions() ); ?>" /></div>
                 </div>
                 <div class="form-row">
                     <div class="form-label"><?php _e('Preview size') ; ?></div>
-                    <div class="form-controls"><input type="text" class="" name="dimPreview" value="<?php echo osc_esc_html( osc_preview_dimensions() ) ; ?>" /></div>
+                    <div class="form-controls"><input type="text" class="input-medium" name="dimPreview" value="<?php echo osc_esc_html( osc_preview_dimensions() ) ; ?>" /></div>
                 </div>
                 <div class="form-row">
                     <div class="form-label"><?php _e('Normal size') ; ?></div>
-                    <div class="form-controls"><input type="text" class=""  name="dimNormal" value="<?php echo osc_esc_html( osc_normal_dimensions() ) ; ?>" /></div>
+                    <div class="form-controls"><input type="text" class="input-medium"  name="dimNormal" value="<?php echo osc_esc_html( osc_normal_dimensions() ) ; ?>" /></div>
                 </div>
                 <div class="form-row">
                     <div class="form-label"><?php _e('Normal size') ; ?></div>
@@ -176,10 +175,9 @@ $(document).ready(function(){
                 <div class="form-row">
                     <div class="form-label"><?php _e('Maximum size') ; ?></div>
                     <div class="form-controls">
-                        <input type="text" class="" name="maxSizeKb" value="<?php echo osc_esc_html( osc_max_size_kb() ) ; ?>" />
+                        <input type="text" class="input-medium" name="maxSizeKb" value="<?php echo osc_esc_html( osc_max_size_kb() ) ; ?>" />
                         <span class="help-box"><?php _e('Size in KB') ; ?></span>
-<!--      FERNANDO       -->
-                        <div class="FlashMessage FlashMessage-inline warning">
+                        <div class="flashmessage flashmessage-warning flashmessage-inline">
                             <p><?php printf( __('Maximum size PHP configuration allows: %d KB'), $maxPHPsize ) ; ?></p>
                         </div>
                     </div>
@@ -188,7 +186,7 @@ $(document).ready(function(){
                 <div class="form-row">
                     <div class="form-label"><?php _e('Allowed formats') ; ?></div>
                     <div class="form-controls">
-                        <input type="text" class="" name="allowedExt" value="<?php echo osc_esc_html( osc_allowed_extension() ) ; ?>" />
+                        <input type="text" class="input-medium" name="allowedExt" value="<?php echo osc_esc_html( osc_allowed_extension() ) ; ?>" />
                         <span class="help-box"><?php _e('For example: jpg, png, gif') ; ?></span>
                     </div>
                 </div>
@@ -201,7 +199,7 @@ $(document).ready(function(){
                             <label for="use_imagick"><?php _e('Use ImageMagick instead of GD library') ; ?></label>
                         </div>
                         <?php if( !$imagickLoaded ) { ?>
-                        <div class="FlashMessage FlashMessage-inline error">
+                        <div class="flashmessage flashmessage-error flashmessage-inline">
                             <p><?php _e('ImageMagick library is not loaded') ; ?></p>
                         </div>
                         <?php } ?>
@@ -222,7 +220,7 @@ $(document).ready(function(){
                             <input type="radio" id="watermark_text" name="watermark_type" value="text" <?php echo ( osc_is_watermark_text() ? 'checked="checked"' : '' ) ; ?> <?php echo ( $freeType ? '' : 'disabled="disabled"' ); ?> />
                             <label for="watermark_text"><?php _e('Text') ; ?></label>
                             <?php if( !$freeType ) { ?>
-                            <div class="FlashMessage FlashMessage-inline error">
+                            <div class="flashmessage flashmessage-inline error">
                                 <p><?php printf( __('Freetype library is required. How to <a target="_blank" href="%s">install/configure</a>') , 'http://www.php.net/manual/en/image.installation.php' ) ; ?></p>
                             </div>
                             <?php } ?>
@@ -237,12 +235,14 @@ $(document).ready(function(){
                 <h2 class="render-title"><?php _e('Regenerate images') ; ?></h2>
 
                 <div class="form-row">
-                    <p class="">
+                    <div class="form-controls">
+                    <p>    
                         <?php _e("You can regenerate your different image dimensions. If you have changed the dimension of thumbnails, preview or normal images, you might want to regenerate your images.") ; ?>
                     </p>
                     <a class="btn" href="<?php echo osc_admin_base_url(true) . '?page=settings&action=images_post'; ?>"><?php  _e('Regenerate') ; ?></a>
+                    </div>
                 </div>
-                
+                <div class="clear"></div>
                 <div class="form-actions">
                     <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" class="btn btn-submit" />
                 </div>
