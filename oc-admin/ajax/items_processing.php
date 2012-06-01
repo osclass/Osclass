@@ -149,10 +149,10 @@
                 }
 
                 // filters
-                if( $k == 'fCol_userIdValue' ) {
+                if( $k == 'userId' ) {
                     $this->mSearch->fromUser($v);
                 }
-                if( $k == 'itemIdValue' ) {
+                if( $k == 'itemId' ) {
                     $this->mSearch->addItemId($v);
                 }
                 
@@ -299,9 +299,9 @@
             $this->result['iTotalDisplayRecords'] = $this->total ;
             $this->result['sColumns']             = $this->sColumns ;
             $this->result['iDisplayLength']       = $this->_get['iDisplayLength'];
-            error_log('iTotalRecords ' . $this->result['iTotalRecords']);
-            error_log('iTotalDisplayRecords ' . $this->result['iTotalDisplayRecords']);
-            error_log('iDisplayLength ' . $this->result['iDisplayLength']);
+//            error_log('iTotalRecords ' . $this->result['iTotalRecords']);
+//            error_log('iTotalDisplayRecords ' . $this->result['iTotalDisplayRecords']);
+//            error_log('iDisplayLength ' . $this->result['iDisplayLength']);
             $this->result['aaData']               = array() ;
 
             if( count($this->items) == 0 ) {
