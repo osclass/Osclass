@@ -37,7 +37,7 @@
                 <div class="header_title">
                     <h1 class="tools"><?php _e('Backup') ; ?></h1>
                 </div>
-                <div class="FlashMessage error">
+                <div class="flashmessage error">
                     <a class="close" href="#">×</a>
                     <p>
                         <?php echo sprintf(__('Warning: Backup process could take up some time and space. Please, be aware that the process could fail, <a href="%s">know the reasons</a>.'), "http://doc.osclass.org/Reasons_why_the_backup_could_fail") ; ?>

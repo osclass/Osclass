@@ -160,7 +160,7 @@
                 <?php osc_show_flash_message('admin') ; ?>
                 <?php if( Params::getParam('error') != '' ) { ?>
                     <!-- flash message -->
-                    <div class="FlashMessage error">
+                    <div class="flashmessage error">
                         <a class="close" href="#">×</a>
                         <p>
                             <?php _e("Plugin couldn't be installed because it triggered a <strong>fatal error</strong>") ; ?>

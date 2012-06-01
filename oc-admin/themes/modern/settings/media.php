@@ -186,7 +186,7 @@
                                     <td>
                                         <input type="text" class="medium" name="maxSizeKb" value="<?php echo osc_esc_html( osc_max_size_kb() ) ; ?>" />
                                         <span class="help-box"><?php _e('Size in KB') ; ?></span>
-                                        <div class="FlashMessage FlashMessage-inline warning">
+                                        <div class="flashmessage flashmessage-inline warning">
                                             <p><?php printf( __('Maximum size PHP configuration allows: %d KB'), $maxPHPsize ) ; ?></p>
                                         </div>
                                     </td>
@@ -204,7 +204,7 @@
                                         <input type="checkbox" name="use_imagick" value="1" <?php echo ( osc_use_imagick()?'checked="checked"':'' ); ?> <?php if( !$imagickLoaded ) echo 'disabled="disabled"'; ?> />
                                         <?php _e('Use ImageMagick instead of GD library') ; ?>
                                         <?php if( !$imagickLoaded ) { ?>
-                                        <div class="FlashMessage FlashMessage-inline error">
+                                        <div class="flashmessage flashmessage-inline error">
                                             <p><?php _e('ImageMagick library is not loaded') ; ?></p>
                                         </div>
                                         <?php } ?>
@@ -225,7 +225,7 @@
                                             <input type="radio" id="watermark_text" name="watermark_type" value="text" <?php echo ( osc_is_watermark_text() ? 'checked="checked"' : '' ) ; ?> <?php echo ( $freeType ? '' : 'disabled="disabled"' ); ?> />
                                             <?php _e('Text') ; ?>
                                             <?php if( !$freeType ) { ?>
-                                            <div class="FlashMessage FlashMessage-inline error">
+                                            <div class="flashmessage flashmessage-inline error">
                                                 <p><?php printf( __('Freetype library is required. How to <a target="_blank" href="%s">install/configure</a>') , 'http://www.php.net/manual/en/image.installation.php' ) ; ?></p>
                                             </div>
                                             <?php } ?>

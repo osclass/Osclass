@@ -25,7 +25,7 @@ option.pad { margin-left:10px;}
 
 /* Flash message */
 
-.FlashMessage {
+.flashmessage {
     font-size: 14px;
     padding: 15px 0;
     width: 100%;
@@ -33,23 +33,23 @@ option.pad { margin-left:10px;}
     z-index: 999;
     text-align: center;
 }
-.FlashMessage.warning {
+.flashmessage.warning {
     background-color: #FCF8E3;
     border-bottom: solid 2px #FBEED5;
     color: #C09853;
 }
-.FlashMessage.error {
+.flashmessage.error {
     background-color: #F2DEDE;
     border-bottom: solid 2px #EED3D7;
     color: #B94A48;
 }
-.FlashMessage.info,
-.FlashMessage.ok {
+.flashmessage.info,
+.flashmessage.ok {
     background-color: #D9EDF7;
     border-bottom: solid 2px #BCE8F1;
     color: #3A87AD;
 }
-.FlashMessage .close {
+.flashmessage .ico-close {
     position: absolute;
     top: 14px;
     right: 17px;
@@ -62,14 +62,14 @@ option.pad { margin-left:10px;}
     font-weight: bold;
     cursor: pointer;
 }
-.FlashMessage.error .close {
+.flashmessage.error .close {
     color: #B94A48;
 }
-.FlashMessage.warning .close {
+.flashmessage.warning .close {
     color: #C09853;
 }
-.FlashMessage.success .close,
-.FlashMessage.information .close {
+.flashmessage.success .close,
+.flashmessage.information .close {
     color: #3A87AD;
 }
 /* Header */
