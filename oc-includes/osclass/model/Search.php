@@ -947,7 +947,12 @@
             if($count) {
                 $sql = $this->_makeSQL(true) ;
                 $datatmp  = $this->dao->query( $sql ) ;
-                $this->total_results = $datatmp->numRows() ;
+
+                if( $datatmp == false ) {
+                    $this->total_results = 0;
+                } else {
+                    $this->total_results = $datatmp->numRows();
+                }
             } else {
                 $this->total_results = 0;                
             }
