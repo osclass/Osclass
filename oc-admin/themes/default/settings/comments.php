@@ -15,13 +15,6 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-
-    $dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y') ;
-    $timeFormats = array('g:i a', 'g:i A', 'H:i') ;
-
-    $aLanguages  = __get('aLanguages') ;
-    $aCurrencies = __get('aCurrencies') ;
-
     //customize Head
     function customHead(){
         echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.validate.min.js').'"></script>';
