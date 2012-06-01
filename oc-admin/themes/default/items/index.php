@@ -20,42 +20,44 @@
         <h1><?php _e('Manage listing') ; ?>
 		<a hreg="#" class="btn ico ico-32 ico-engine float-right"></a>
 		<a hreg="#" class="btn ico ico-32 ico-help float-right"></a>
-		<a hreg="#" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
+		<a hreg="<?php echo osc_admin_base_url(true) . '?page=items&action=post' ; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
 	</h1>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
     //customize Head
     function customHead() { ?>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery-ui.js') ; ?>"></script>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <?php ItemForm::location_javascript_new('admin') ; ?>
         <script type="text/javascript">
             // autocomplete users
             $(document).ready(function(){
-                $( '#user' ).autocomplete({
+                $('#user').attr( "autocomplete", "off" );
+                
+                $('#user').autocomplete({
                     source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax&term="+$('#user').val(),
                     minLength: 0,
                     select: function( event, ui ) {
                         if(ui.item.id=='') 
                             return false;
                         $('#userId').val(ui.item.id);
-                        console.log('id seteada' + ui.item.id) ;
                     },
                     search: function() {
                         $('#userId').val('');
+                        return false;
                     },
                     focus: function (event, ui) {
                         return false;
                     }                        
                 });
-                
+
                 // show filters
                 var filters = $('#show-filters-div').hide();
                 $('#show-filters-button').click(function(){
                     filters.toggle();
                 });
             });
+           
             
         </script>
         <style>
