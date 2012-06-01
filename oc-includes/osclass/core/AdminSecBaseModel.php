@@ -94,7 +94,7 @@
         function showAuthFailPage()
         {
             Session::newInstance()->session_start();
-            Session::newInstance()->_setReferer(WEB_PATH . str_replace(REL_WEB_URL, '', @$_SERVER['REQUEST_URI']));
+            Session::newInstance()->_setReferer(rtrim(osc_base_url(), "/") . @$_SERVER['REQUEST_URI']);
             $this->redirectTo( osc_admin_base_url(true)."?page=login" ) ;
         }
     }
