@@ -50,7 +50,7 @@ function osc_sanitizeString($string) {
     $string = preg_replace('/&.+?;/', '', $string);
     $string = str_replace('.', '-', $string);
     $string = preg_replace('/\s+/', '-', $string);
-    $string = preg_replace('|[\p{Ps}\p{Pe}\p{Pi}\p{Pf}\p{Po}\p{S}\p{Z}\p{C}]+|u', '', $string);
+    $string = preg_replace('|[\p{Ps}\p{Pe}\p{Pi}\p{Pf}\p{Po}\p{S}\p{Z}\p{C}\p{No}]+|u', '', $string);
     $string = preg_replace('/-+/', '-', $string);
     $string = trim($string, '-');
 

@@ -514,7 +514,7 @@
                     $itemURI = str_replace(osc_base_url(), '', osc_item_url());
                     $URI = preg_replace('|^/|', '', $_SERVER['REQUEST_URI']);
                     if( $itemURI != $URI ) {
-                        $this->redirectTo($itemURI);
+                        $this->redirectTo(osc_base_url() . $itemURI);
                     }
 
                     $this->doView('item.php') ;
