@@ -41,8 +41,8 @@ $(function(){
         $('#table-row-actions').hide();
     })
     //Close help
-    $('#FlashMessage .ico-close').live('click',function(){
-        $('#FlashMessage').hide();
+    $('#flashmessage .ico-close').live('click',function(){
+        $('#flashmessage').hide();
     });
     $('#help-box .ico-close').click(function(){
         $('#help-box').hide();
@@ -63,7 +63,7 @@ $(function(){
 	    resetLayout();
 	}).resize();
 
-    $('#FlashMessage:not(:empty)').show('fast',function(){
+    $('#flashmessage:not(:empty)').show('fast',function(){
         //$(this).hide('slow');
     });
 });
