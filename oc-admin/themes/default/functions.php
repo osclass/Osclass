@@ -10,7 +10,7 @@ function printLocaleTabs($locales = null){
     echo '</ul></div>';
 	};
 }
-function printLocaleTitle($locales = null){
+function printLocaleTitle($locales = null,$item = null){
 	if($locales==null) { $locales = osc_get_locales(); }
 	if($item==null) { $item = osc_item(); }
     $num_locales = count($locales);
@@ -28,7 +28,7 @@ function printLocaleTitle($locales = null){
 	    echo '</div>';
     }
 }
-function printLocaleDescription($locales = null){
+function printLocaleDescription($locales = null,$item = null){
 	if($locales==null) { $locales = osc_get_locales(); }
 	if($item==null) { $item = osc_item(); }
     $num_locales = count($locales);
@@ -58,14 +58,14 @@ function jsLoacaleSelector(){
 		locales.current = '<?php echo osc_esc_js($locales[0]['pk_c_code']); ?>';
 		locales.codes = new Array(<?php echo join(',',$codes); ?>);
 
-		locales.string = '[name*="'+locales.codes.join('"],[name*="')+'"]';
+		locales.string = '[name*="'+locales.codes.join('"],[name*="')+'"],.'+locales.codes.join(',.');
 		$(function(){
 			$('#language-tab li a').click(function(){
 				$('#language-tab li').removeClass('ui-state-active').removeClass('ui-tabs-selected');
 				$(this).parent().addClass('ui-tabs-selected ui-state-active');
 				var currentLocale = $(this).attr('href').replace('#','');
 			    $(locales.string).parent().hide();
-			    $('[name*="'+currentLocale+'"]').parent().show();
+			    $('[name*="'+currentLocale+'"], .'+currentLocale).parent().show();
 			    locales.current = currentLocale;
 			    return false;
 			}).triggerHandler('click');
@@ -74,7 +74,7 @@ function jsLoacaleSelector(){
 			$('.tabber:hidden').show();
 			$('.tabber h2').remove();
 			$(locales.string).parent().hide();
-			$('[name*="'+locales.current+'"]').parent().show();
+			$('[name*="'+locales.current+'"],.'+locales.current).parent().show();
 		}
 	</script>
 	<?php
