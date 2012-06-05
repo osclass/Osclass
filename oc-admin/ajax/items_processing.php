@@ -32,6 +32,7 @@
         private $order_by = array() ;
         private $stat = array() ;
         private $filters = array() ;
+        private $withFilters = false;
         private $column_names  = array(
             0 => 'dt_pub_date',
             1 => 's_title',
@@ -83,7 +84,6 @@
             $this->_get = $params ;
             
             $this->getDBParams() ;
-            
 
             $this->mSearch->limit($this->start, $this->limit) ;
             // only some fields can be ordered
@@ -95,14 +95,12 @@
             if( $this->search ) {
                 $this->mSearch->addPattern($this->search);
             }
-
+            
             // do Search
             $list_items = $this->mSearch->doSearch(true) ;
-
-            $this->items = Item::newInstance()->extendCategoryName( $list_items ); 
+            $this->items = Item::newInstance()->extendCategoryName( $list_items );
             $this->total_filtered = $this->mSearch->countAll();
             $this->total = $this->mSearch->count() ;
-
         }
 
         function __destruct()
@@ -110,6 +108,11 @@
             unset($this->_get) ;
         }
 
+        public function filters()
+        {
+            return $this->withFilters;
+        }
+        
         private function getDBParams()
         {
             // default values
@@ -120,10 +123,11 @@
                 $this->_get['iDisplayLength'] = 5 ;
             }
             if( !isset($this->_get['iSortCol_0']) ) {
-                $this->_get['iSortCol_0'] = 7 ;
+                $this->order_by['column_name'] = $this->column_names[7] ;
+                $this->order_by['table_name']  = $this->tables_columns[7] ;
             }
             if( !isset($this->_get['sSortDir_0']) ) {
-                $this->_get['sSortDir_0'] = 0 ;
+                $this->order_by['type'] = 0 ;
             }
             if( !isset($this->_get['iPage']) ) {
                 $this->_get['iPage'] = 0 ;
@@ -136,71 +140,84 @@
                 }
                 
                 /* for sorting */
-                if( $k == 'iSortCol_0' ) {
+                if( $k == 'iSortCol_0' && $v != '') {
                     $this->order_by['column_name'] = $this->column_names[$v] ;
                     $this->order_by['table_name']  = $this->tables_columns[$v] ;
                 }
-                if( $k == 'sSortDir_0' ) {
+                if( $k == 'sSortDir_0' && $v != '') {
                     $this->order_by['type'] = $v ;
                 }
 
-                if( $k == 'sSearch' ) {
+                if( $k == 'sSearch' && $v != '') {
                     $this->search = $v;
+                    $this->withFilters = true;
                 }
 
                 // filters
-                if( $k == 'userId' ) {
-                    $this->mSearch->fromUser($v);
+                if( $k == 'userId' && $v != '') {
+                        $this->mSearch->fromUser($v);
+                        $this->withFilters = true;
                 }
-                if( $k == 'itemId' ) {
+                if( $k == 'itemId' && $v != '') {
                     $this->mSearch->addItemId($v);
+                    $this->withFilters = true;
                 }
                 
                 // si hay id mejor ...
-                if( $k == 'countryId' ) {
+                if( $k == 'countryId' && $v != '') {
                     $this->mSearch->addCountry($v);
+                    $this->withFilters = true;
                 }
-                if( $k == 'regionId' ) {
+                if( $k == 'regionId' && $v != '') {
                     $this->mSearch->addRegion($v);
+                    $this->withFilters = true;
                 }
-                if( $k == 'cityId' ) {
+                if( $k == 'cityId' && $v != '') {
                     $this->mSearch->addCity($v);
+                    $this->withFilters = true;
                 }
                 
-                if( $k == 'country' ) {
+                if( $k == 'country' && $v != '') {
                     $this->mSearch->addCountry($v);
+                    $this->withFilters = true;
                 }
-                if( $k == 'region' ) {
+                if( $k == 'region' && $v != '') {
                     $this->mSearch->addRegion($v);
+                    $this->withFilters = true;
                 }
                 
-                if( $k == 'city' ) {
+                if( $k == 'city' && $v != '') {
                     $this->mSearch->addCity($v);
+                    $this->withFilters = true;
                 }
                 
-                if( $k == 'catId' ) {
+                if( $k == 'catId' && $v != '') {
                     $this->mSearch->addCategory($v);
+                    $this->withFilters = true;
                 }
-                if( $k == 'b_premium' ) {
-                    if($v != '') {
-                        $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_premium = '.$v);
-                    }
+                if( $k == 'b_premium' && $v != '') {
+                    $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_premium = '.$v);
+                    $this->withFilters = true;
                 }
-                if( $k == 'b_active' ) {
-                    if($v != '') {
-                        $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_active = '.$v);
-                    }
+                if( $k == 'b_active' && $v != '') {
+                    $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_active = '.$v);
+                    $this->withFilters = true;
                 }
-                if( $k == 'b_enabled' ) {
-                    if($v != '') {
-                        $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_enabled = '.$v);
-                    }
+                if( $k == 'b_enabled' && $v != '') {
+                    $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_enabled = '.$v);
+                    $this->withFilters = true;
                 }
-                if( $k == 'b_spam' ) {
-                    if($v != '') {
-                        $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_spam = '.$v);
-                    }
+                if( $k == 'b_spam' && $v != '') {
+                    $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_spam = '.$v);
+                    $this->withFilters = true;
                 }
+                
+                // marked as
+                if($k == 'spam') $this->stat['spam'] = true;
+                if($k == 'duplicated') $this->stat['duplicated'] = true;
+                if($k == 'offensive') $this->stat['offensive'] = true;
+                if($k == 'bad') $this->stat['bad'] = true;
+                if($k == 'expired') $this->stat['expired'] = true;
             }
             // set start and limit using iPage param
             $start = $this->_get['iPage'] * $this->_get['iDisplayLength'];
@@ -299,9 +316,6 @@
             $this->result['iTotalDisplayRecords'] = $this->total ;
             $this->result['sColumns']             = $this->sColumns ;
             $this->result['iDisplayLength']       = $this->_get['iDisplayLength'];
-//            error_log('iTotalRecords ' . $this->result['iTotalRecords']);
-//            error_log('iTotalDisplayRecords ' . $this->result['iTotalDisplayRecords']);
-//            error_log('iDisplayLength ' . $this->result['iDisplayLength']);
             $this->result['aaData']               = array() ;
 
             if( count($this->items) == 0 ) {
