@@ -49,7 +49,7 @@
     <form id="market-quick-search" class="quick-search"><input type="text" name="sPattern" placeholder="<?php _e('Search Themes'); ?>" class="input-text float-left"/><input type="Submit" value="Seach" class="btn ico ico-32 ico-search float-left"/><a href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance&amp;action=add" class="btn btn-green float-right"><?php _e('Add new theme'); ?></a></form>
                 <!-- themes list -->
                 <div class="appearance">
-                    <div id="tabs" class="ui-osc-tabs">
+                    <div id="tabs" class="ui-osc-tabs ui-tabs-right">
                         <ul>
                             <li><a href="#market"><?php _e('Add new theme'); ?></a></li>
                             <li><a href="#available-themes"><?php _e('Available themes') ; ?></a></li>
