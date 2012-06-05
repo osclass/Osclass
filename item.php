@@ -512,7 +512,8 @@
 
                     // redirect to the correct url just in case it has changed
                     $itemURI = str_replace(osc_base_url(), '', osc_item_url());
-                    $URI = preg_replace('|^/|', '', $_SERVER['REQUEST_URI']);
+                    $URI = str_replace(REL_WEB_URL, '', $_SERVER['REQUEST_URI']);
+                    $URI = preg_replace('|^/|', '', $URI);
                     if( $itemURI != $URI ) {
                         $this->redirectTo(osc_base_url() . $itemURI);
                     }
