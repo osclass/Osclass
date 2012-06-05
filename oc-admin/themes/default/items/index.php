@@ -32,23 +32,37 @@
         <script type="text/javascript">
             // autocomplete users
             $(document).ready(function(){
-                $('#user').attr( "autocomplete", "off" );
+
+                $('#filter-select').change( function () {
+                    var option = $(this).find('option:selected').attr('value') ;
+                    // clean values
+                    $('#fPattern,#fUser,#fItemId').attr('value', '');
+                    if(option == 'oPattern') {
+                        $('#fPattern').removeClass('hide');
+                        $('#fUser, #fItemId').addClass('hide');
+                    } else if(option == 'oUser'){
+                        $('#fUser').removeClass('hide');
+                        $('#fPattern, #fItemId').addClass('hide');
+                    } else {   
+                        $('#fItemId').removeClass('hide');
+                        $('#fPattern, #fUser').addClass('hide');
+                    }
+                });
                 
-                $('#user').autocomplete({
-                    source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax&term="+$('#user').val(),
+                $('input[name="user"]').attr( "autocomplete", "off" );
+                $('#user,#fUser').autocomplete({
+                    source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax"+$('input[name="user"]').val(), // &term=
                     minLength: 0,
                     select: function( event, ui ) {
                         if(ui.item.id=='') 
                             return false;
                         $('#userId').val(ui.item.id);
+                        $('#fUserId').val(ui.item.id);
                     },
                     search: function() {
                         $('#userId').val('');
-                        return false;
-                    },
-                    focus: function (event, ui) {
-                        return false;
-                    }                        
+                        $('#fUserId').val('');
+                    }
                 });
 
                 // show filters
@@ -61,6 +75,18 @@
                     $('#display-filters').dialog({modal:true,width:'700px',title:'<?php echo osc_esc_js( __('Filters') ) ; ?>'});
                     return false;
                 });
+                
+                // check_all bulkactions
+                $("#check_all").change(function(){
+                    var isChecked = $(this+':checked').length;
+                    $('.col-bulkactions input').each( function() {
+                        if( isChecked == 1 ) {
+                            this.checked = true;
+                        } else {
+                            this.checked = false;
+                        }
+                    });
+                });
             });
            
             
@@ -69,6 +95,9 @@
             .ui-autocomplete-loading {
                 display: block;
                 background: white url("<?php echo osc_current_admin_theme_url('images/loading.gif'); ?>") right center no-repeat;
+            }
+            .hide {
+                display: none !important;
             }
         </style>
         <?php
@@ -81,11 +110,11 @@
     $countries  = __get('countries') ;
     $regions    = __get('regions') ;
     $cities     = __get('cities') ;
+    $withFilters= __get('withFilters') ;
 
     $iDisplayLength = __get('iDisplayLength');
     
     $aData      = __get('aItems') ;
-
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 
@@ -96,7 +125,6 @@
     Red highlight means that the listing has been marked as spam.</p>
 </div>
 <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" style="display:none">
-        
     <input type="hidden" name="page" value="items" />
     <input type="hidden" name="iSortCol_0" value="7" />
     <input type="hidden" name="sSortDir_0" value="0" />
@@ -190,8 +218,8 @@
                     <div class="form-controls">
                         <select id="b_enabled" name="b_enabled">
                             <option value="" <?php echo ( (Params::getParam('b_enabled') == '') ? 'selected="selected"' : '' )?>><?php _e('ALL'); ?></option>
-                            <option value="1" <?php echo ( (Params::getParam('b_enabled') == '1') ? 'selected="selected"' : '' )?>><?php _e('ON'); ?></option>
-                            <option value="0" <?php echo ( (Params::getParam('b_enabled') == '0') ? 'selected="selected"' : '' )?>><?php _e('OFF'); ?></option>
+                            <option value="0" <?php echo ( (Params::getParam('b_enabled') == '0') ? 'selected="selected"' : '' )?>><?php _e('ON'); ?></option>
+                            <option value="1" <?php echo ( (Params::getParam('b_enabled') == '1') ? 'selected="selected"' : '' )?>><?php _e('OFF'); ?></option>
                         </select>   
                     </div>
                 </div>
@@ -228,16 +256,42 @@
 </form>
 <h2 class="render-title"><?php _e('Manage listing') ; ?></h2>
 <div style="position:relative;">
-    
     <div id="listing-toolbar">
         <div class="float-right">
-            <a href="#" class="btn" id="btn-display-filters"><?php _e('Show filters') ; ?></a>
-            <select class="select-box-extra select-box-input">
-                <option value=""><?php _e('User') ; ?></option>
-                <option value=""><?php _e('Pattern') ; ?></option>
-            </select>
-            <input type="text" name="sPattern" class="input-text input-actions input-has-select"/>
-            <input type="submit" class="btn submit-right" value="<?php echo osc_esc_html( __('Find') ) ; ?>">
+            <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="shortcut-filters">
+                <input type="hidden" name="page" value="items" />
+                <input type="hidden" name="iSortCol_0" value="7" />
+                <input type="hidden" name="sSortDir_0" value="0" />
+                <input type="hidden" name="iDisplayLength" value="<?php echo $iDisplayLength;?>" />
+                <?php if($withFilters) { ?>
+                <a class="btn" href="<?php echo osc_admin_base_url(true).'?page=items'; ?>"><?php _e('Reset filters') ; ?></a>
+                <?php } ?>
+                <a href="#" class="btn <?php if($withFilters) { echo 'btn-red'; } ?>" id="btn-display-filters"><?php _e('Show filters') ; ?></a>
+
+                <?php $opt = "oPattern"; if(Params::getParam('shortcut-filter') != '') { $opt = Params::getParam('shortcut-filter'); } ?>
+                <?php $classPattern = 'hide'; $classUser = 'hide'; $classItemId = 'hide'; ?>
+                <?php if($opt == 'oUser') { $classUser = ''; } ?>
+                <?php if($opt == 'oPattern') { $classPattern = ''; } ?>
+                <?php if($opt == 'oItemId') { $classItemId = ''; } ?>
+                <select id="filter-select" name="shortcut-filter" class="select-box-extra select-box-input">
+                    <option value="oPattern" <?php if($opt == 'oPattern'){ echo 'selected="selected"'; } ?>><?php _e('Pattern') ; ?></option>
+                    <option value="oUser" <?php if($opt == 'oUser'){ echo 'selected="selected"'; } ?>><?php _e('User') ; ?></option>
+                    <option value="oItemId" <?php if($opt == 'oItemId'){ echo 'selected="selected"'; } ?>><?php _e('Item id') ; ?></option>
+                </select><input 
+                    id="fPattern" type="text" name="sSearch"
+                    value="<?php echo osc_esc_html(Params::getParam('sSearch')); ?>" 
+                    class="input-text input-actions input-has-select <?php echo $classPattern; ?>"/><input 
+                    id="fUser" name="user" type="text" 
+                    class="fUser input-text input-actions input-has-select <?php echo $classUser; ?>" 
+                    value="<?php echo osc_esc_html(Params::getParam('user')); ?>" /><input 
+                    id="fUserId" name="userId" type="hidden" 
+                    value="<?php echo osc_esc_html(Params::getParam('userId')); ?>" /><input 
+                    id="fItemId" type="text" name="itemId" 
+                    value="<?php echo osc_esc_html(Params::getParam('itemId')); ?>" 
+                    class="input-text input-actions input-has-select <?php echo $classItemId; ?>"/>
+
+                <input type="submit" class="btn submit-right" value="<?php echo osc_esc_html( __('Find') ) ; ?>">
+            </form>
         </div>
     </div>
     
@@ -257,7 +311,8 @@
                     <option value="depremium_all"><?php _e('Unmark as premium') ; ?></option>
                     <option value="spam_all"><?php _e('Mark as spam') ; ?></option>
                     <option value="despam_all"><?php _e('Unmark as spam') ; ?></option>
-                </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                    <?php $onclick_bulkactions= 'onclick="javascript:return confirm(\'' . osc_esc_js( __('You are doing bulk actions. Are you sure you want to continue?') ) . '\')"' ; ?>
+                </select> <input type="submit" <?php echo $onclick_bulkactions; ?> id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
             </label>
         </div>
         <div class="table-hast-actions">
@@ -275,6 +330,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                <?php if(count($aData['aaData'])>0) : ?>
                 <?php foreach( $aData['aaData'] as $array) : ?>
                     <tr>
                     <?php foreach($array as $key => $value) : ?>
@@ -288,6 +344,13 @@
                     <?php endforeach; ?>
                     </tr>
                 <?php endforeach;?>
+                <?php else : ?>
+                    <tr>
+                        <td colspan="8" style="text-align: center;">
+                        <p><?php _e('No data available in table') ; ?></p>
+                        </td>
+                    </tr>
+                <?php endif; ?>
                 </tbody>
             </table>
             <div id="table-row-actions"></div> <!-- used for table actions -->
