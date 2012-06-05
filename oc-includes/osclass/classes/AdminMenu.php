@@ -48,6 +48,7 @@
             
             $this->add_menu( __('Listing'), '#', 'items', 'moderator') ; 
             $this->add_submenu( 'items', __('Manage Listings'), osc_admin_base_url(true).'?page=items', 'items_manage', 'moderator') ;
+            $this->add_submenu( 'items', __('Reported Listings'), osc_admin_base_url(true).'?page=items&action=items_reported', 'items_reported', 'moderator') ;
             $this->add_submenu( 'items', __('Add new'), osc_admin_base_url(true).'?page=items&action=post', 'items_new', 'moderator') ;
             $this->add_submenu( 'items', __('Comments'), osc_admin_base_url(true).'?page=comments', 'items_comments', 'moderator') ;
             $this->add_submenu( 'items', __('Manage media'), osc_admin_base_url(true).'?page=media', 'items_media', 'moderator') ;
