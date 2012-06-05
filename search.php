@@ -45,8 +45,7 @@
                 if( osc_get_preference('seo_url_search_prefix') != '' ) {
                     $this->uri = str_replace( osc_get_preference('seo_url_search_prefix') . '/', '', $this->uri);
                 }
-                $this->uri = preg_replace('|.*/[^0-9]|', '', $this->uri);
-
+                $this->uri = preg_replace('|(.*/)?(.*?(/[0-9])?)|', '$02', $this->uri);
                 // get page if it's set in the url
                 $param_page = preg_split('|/|', $this->uri);
                 if( count($param_page) == 2 ) {
