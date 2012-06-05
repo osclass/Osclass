@@ -28,7 +28,6 @@
             parent::__construct() ;
             $this->mSearch = Search::newInstance();
             $this->uri = preg_replace('|^' . REL_WEB_URL . '|', '', $_SERVER['REQUEST_URI']);
-            $this->uri = preg_replace('|^/|', '', $this->uri);
 
             $this->nice_url = false;
             if( !stripos($_SERVER['REQUEST_URI'], 'search') && osc_rewrite_enabled() ) {
