@@ -1,36 +1,41 @@
 <?php
-function printLocaleTabs($locales = null){
-	if($locales==null) { $locales = osc_get_locales(); }
+function printLocaleTabs($locales = null)
+{
+    if($locales==null) { $locales = osc_get_locales(); }
     $num_locales = count($locales);
     if($num_locales>1) {
     echo '<div id="language-tab" class="ui-osc-tabs ui-tabs ui-widget ui-widget-content ui-corner-all"><ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">';
-	    foreach($locales as $locale) {
-	    	echo '<li class="ui-state-default ui-corner-top"><a href="#'.$locale['pk_c_code'].'">'.$locale['s_name'].'</a></li>';
-	    }
+        foreach($locales as $locale) {
+            echo '<li class="ui-state-default ui-corner-top"><a href="#'.$locale['pk_c_code'].'">'.$locale['s_name'].'</a></li>';
+        }
     echo '</ul></div>';
-	};
+    };
 }
-function printLocaleTitle($locales = null,$item = null){
-	if($locales==null) { $locales = osc_get_locales(); }
-	if($item==null) { $item = osc_item(); }
+
+function printLocaleTitle($locales = null,$item = null)
+{
+    if($locales==null) { $locales = osc_get_locales(); }
+    if($item==null) { $item = osc_item(); }
     $num_locales = count($locales);
     foreach($locales as $locale) {
     	echo '<div class="input-has-placeholder input-title-wide"><label for="title">' . __('Enter title here') . ' *</label>';
     	$title = (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_title'])) ? $item['locale'][$locale['pk_c_code']]['s_title'] : '' ;
-	    if( Session::newInstance()->_getForm('title') != "" ) {
-	        $title_ = Session::newInstance()->_getForm('title');
-	        if( $title_[$locale['pk_c_code']] != "" ){
-	            $title = $title_[$locale['pk_c_code']];
-	        }
-	    }
-	   	$name = 'title'. '[' . $locale['pk_c_code'] . ']';
-	    echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($title, ENT_COMPAT, "UTF-8")) . '"  />' ;
-	    echo '</div>';
+        if( Session::newInstance()->_getForm('title') != "" ) {
+            $title_ = Session::newInstance()->_getForm('title');
+            if( $title_[$locale['pk_c_code']] != "" ){
+                $title = $title_[$locale['pk_c_code']];
+            }
+        }
+        $name = 'title'. '[' . $locale['pk_c_code'] . ']';
+        echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($title, ENT_COMPAT, "UTF-8")) . '"  />' ;
+        echo '</div>';
     }
 }
-function printLocaleDescription($locales = null,$item = null){
-	if($locales==null) { $locales = osc_get_locales(); }
-	if($item==null) { $item = osc_item(); }
+
+function printLocaleDescription($locales = null,$item = null)
+{
+    if($locales==null) { $locales = osc_get_locales(); }
+    if($item==null) { $item = osc_item(); }
     $num_locales = count($locales);
     foreach($locales as $locale) {
 	   	$name = 'description'. '[' . $locale['pk_c_code'] . ']';
@@ -46,12 +51,14 @@ function printLocaleDescription($locales = null,$item = null){
         echo '<textarea id="' . $name . '" name="' . $name . '" rows="10">' . $description . '</textarea></div>' ;
     }
 }
-function jsLoacaleSelector(){
-	$locales = osc_get_locales();
-	$codes = array();
+
+function jsLoacaleSelector()
+{
+    $locales = osc_get_locales();
+    $codes = array();
     foreach($locales as $locale) {
-		$codes[] = '\''.osc_esc_js($locale['pk_c_code']).'\'';
-	}
+        $codes[] = '\''.osc_esc_js($locale['pk_c_code']).'\'';
+    }
 	?>
 	<script type="text/javascript">
 		var locales = new Object;
@@ -79,6 +86,7 @@ function jsLoacaleSelector(){
 	</script>
 	<?php
 }
+
 osc_add_hook('admin_header','jsLoacaleSelector');
 /*
 foreach($locales as $locale) {
