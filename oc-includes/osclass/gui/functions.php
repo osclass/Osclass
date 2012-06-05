@@ -29,7 +29,7 @@
         if( !function_exists('add_close_button_action') ) {
             function add_close_button_action(){
                 echo '<script type="text/javascript">';
-                    echo '$(".FlashMessage .close").click(function(){';
+                    echo '$(".flashmessage .ico-close").click(function(){';
                         echo '$(this).parent().hide();';
                     echo '});';
                 echo '</script>';

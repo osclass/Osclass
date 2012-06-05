@@ -160,7 +160,7 @@
                     <h1 class="categories"><?php _e('Custom fields') ; ?></h1>
                 </div>
                 <?php osc_show_flash_message('admin') ; ?>
-                <div class="jsMessage FlashMessage ok" style="display: none;">
+                <div class="jsMessage flashmessage ok" style="display: none;">
                     <a class="close" href="#">×</a>
                     <p></p>
                 </div>

@@ -35,7 +35,7 @@
                 <!-- add language form -->
                 <div class="languages">
                 <?php if( is_writable( osc_translations_path() ) ) { ?>
-                    <div class="FlashMessage info">
+                    <div class="flashmessage info">
                         <p class="info"><?php printf( __('Download more languages at %s'), '<a href="https://sourceforge.net/projects/osclass/files/Languages/" target="_blank">Sourceforge</a>') ; ?></p>
                     </div>
                     <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data">
@@ -50,7 +50,7 @@
                         </div>
                     </form>
                 <?php } else { ?>
-                    <div class="FlashMessage error">
+                    <div class="flashmessage error">
                         <a class="close" href="#">×</a>
                         <p><?php _e('Cannot install a new language') ; ?></p>
                     </div>
