@@ -519,7 +519,16 @@
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=items&action=settings');
                 break;
-
+                case('items_reported'):     // show reported listings
+                                        require_once osc_admin_base_path() . 'ajax/items_processing.php';
+                                        $params = Params::getParamsAsArray("get") ;
+                                        $items_processing = new ItemsProcessingAjax( $params );
+                                        $aData = $items_processing->result() ;
+                                    
+                                        $this->_exportVariableToView('aItems', $aData) ;
+                                        //calling the view...
+                                        $this->doView('items/reported.php') ;
+                break;
                 default:                //default
                                         $catId = Params::getParam('catId') ;
                     
@@ -540,9 +549,29 @@
                                         $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
                                         
                                         require_once osc_admin_base_path() . 'ajax/items_processing.php';
-                                        $items_processing = new ItemsProcessingAjax(Params::getParamsAsArray("get"));
+                                        $params = Params::getParamsAsArray("get") ;
+                                        $items_processing = new ItemsProcessingAjax( $params );
                                         $aData = $items_processing->result() ;
+                                        
+                                        if(count($aData['aaData']) == 0) {
+                                            $total = (int)$aData['iTotalDisplayRecords'];
+                                            $page  = (int)Params::getParam('iPage');
+                                            
+                                            $maxPage = ( $total / (int)$aData['iDisplayLength'] ) -1 ;
+                                            
+                                            if($page > 0) {
+                                                $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+                                                $page = $page-1;
+                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
+                                                
+                                                $this->redirectTo($url) ;
+                                            }
+                                        }
+                                        
                                         $this->_exportVariableToView('aItems', $aData) ;
+                                        
+                                        // there are filters activated
+                                        $this->_exportVariableToView('withFilters', $items_processing->filters() ) ;
                                         
                                         //preparing variables for the view                
                                         $this->_exportVariableToView("users", User::newInstance()->listAll());
