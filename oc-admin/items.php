@@ -335,6 +335,29 @@
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         }
 
+                                        if( $item['b_active'] ) {
+                                            $actions[] = '<a class="btn btn-green float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $item['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') .'</a>' ;
+                                        } else {
+                                            $actions[] = '<a class="btn btn-red float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $item['pk_i_id'] . '&amp;value=ACTIVE">' . __('Activate') .'</a>' ;
+                                        }
+                                        if( $item['b_enabled'] ) {
+                                            $actions[] = '<a class="btn btn-green float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $item['pk_i_id'] . '&amp;value=DISABLE">' . __('Block') .'</a>' ;
+                                        } else {
+                                            $actions[] = '<a class="btn btn-red float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $item['pk_i_id'] . '&amp;value=ENABLE">' . __('Unblock') .'</a>' ;
+                                        }
+                                        if( $item['b_premium'] ) {
+                                            $actions[] = '<a class="btn float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $item['pk_i_id'] . '&amp;value=0">' . __('Unmark as premium') .'</a>' ;
+                                        } else {
+                                            $actions[] = '<a class="btn float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $item['pk_i_id'] . '&amp;value=1">' . __('Mark as premium') .'</a>' ;
+                                        }
+                                        if( $item['b_spam'] ) {
+                                            $actions[] = '<a class="btn float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $item['pk_i_id'] . '&amp;value=0">' . __('Unmark as spam') .'</a>' ;
+                                        } else {
+                                            $actions[] = '<a class="btn float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $item['pk_i_id'] . '&amp;value=1">' . __('Mark as spam') .'</a>' ;
+                                        }
+                                        
+                                        $this->_exportVariableToView("actions", $actions);
+                                        
                                         $form     = count(Session::newInstance()->_getForm());
                                         $keepForm = count(Session::newInstance()->_getKeepForm());
                                         
@@ -342,6 +365,22 @@
                                             Session::newInstance()->_dropKeepForm();
                                         }
 
+                                        // save referer if belongs to manage items 
+                                        // redirect only if ManageItems or ReportedListngs
+                                        if( isset($_SERVER['HTTP_REFERER']) ) {
+                                            $referer = $_SERVER['HTTP_REFERER'] ;
+                                            if(preg_match('/page=items/', $referer) ) {
+                                                if(preg_match("/action=([\p{L}|_|-]+)/u", $referer, $matches)) {
+                                                    if( $matches[1] == 'items_reported' ) {
+                                                        Session::newInstance()->_set( 'osc_admin_referer', $referer );
+                                                    }
+                                                } else {
+                                                    // no actions - Manage Listings
+                                                    Session::newInstance()->_set( 'osc_admin_referer', $referer );
+                                                }
+                                            }
+                                        }
+                                        
                                         $this->_exportVariableToView("item", $item);
                                         $this->_exportVariableToView("new_item", FALSE);
 
@@ -367,9 +406,14 @@
                                         $success = $mItems->edit();
                                         
                                         if($success==1){
-                                            Session::newInstance()->_clearVariables();
                                             osc_add_flash_ok_message( _m('Changes saved correctly'), 'admin') ;
-                                            $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                                            $url = osc_admin_base_url(true) . "?page=items" ;
+                                            // if Referer is saved that means referer is ManageListings or ReportListings
+                                            if(Session::newInstance()->_get('osc_admin_referer')!='') {
+                                                $url = Session::newInstance()->_get('osc_admin_referer');
+                                            }
+                                            Session::newInstance()->_clearVariables();
+                                            $this->redirectTo( $url ) ;
                                         } else {
                                             osc_add_flash_error_message( $success , 'admin');
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items&action=item_edit&id=" . Params::getParam('id') );

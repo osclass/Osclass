@@ -74,20 +74,22 @@
         </script>
         <?php ItemForm::location_javascript_new('admin') ; ?>
         <?php if( osc_images_enabled_at_items() ) ItemForm::photos_javascript() ; ?>
+        <style>
+            #item-action-list {
+                padding-bottom: 1em;
+                height: 15px;
+            }
+            #item-action-list li{
+                display: inline;
+                list-style-type: none;
+            }
+        </style>
         <?php
     }
     osc_add_hook('admin_header','customHead');
     
-    $users      = __get('users') ;
-    $stat       = __get('stat') ;
-    $categories = __get('categories') ;
-    $countries  = __get('countries') ;
-    $regions    = __get('regions') ;
-    $cities     = __get('cities') ;
-
-    $iDisplayLength = __get('iDisplayLength');
-    
-    $aData      = __get('aItems') ;
+    $new_item   = __get('new_item') ;
+    $actions    = __get('actions') ;
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="help-box">
@@ -95,6 +97,16 @@
 <h2 class="render-title"><?php echo customText('title') ; ?></h2>
 <div id="item-form">
         <ul id="error_list"></ul>
+        <?php if( !$new_item ) { ?>
+        <ul id="item-action-list">
+            <?php foreach($actions as $aux) { ?>
+            <li>
+                <?php echo $aux; ?>
+            </li>
+            <?php } ?>
+        </ul>
+        <div class="clear"></div>
+        <?php } ?>
         <?php printLocaleTabs(); ?>
         <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data">
             <input type="hidden" name="page" value="items" />
