@@ -71,7 +71,7 @@
                                                 break;
                                             }
                                         ?>
-                                        <div class="FlashMessage FlashMessage-inline <?php echo $alert_type ; ?>">
+                                        <div class="flashmessage flashmessage-inline <?php echo $alert_type ; ?>">
                                             <p><?php echo $alert_msg ; ?></p>
                                         </div>
                                     </td>

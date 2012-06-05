@@ -1,4 +1,5 @@
 <?php
+
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -16,6 +17,7 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
     osc_current_admin_theme_path( 'functions.php' ) ;
+    $new_item = __get('new_item') ;
     function customText($return = 'title'){
         $new_item = __get('new_item') ;
         $text = array();

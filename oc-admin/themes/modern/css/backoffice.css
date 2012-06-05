@@ -469,8 +469,9 @@ table.table{
     text-decoration: underline;
 }
 /* /footer */
-/* FlashMessage messages */
-.FlashMessage,
+/* flashmessage messages */
+.flashmessage,
+.flashmessage,
 #error_list{
     padding: 6px 35px 6px 14px;
     margin:0;
@@ -483,55 +484,69 @@ table.table{
     border-radius: 4px;
 }
 
-.FlashMessage,
+.flashmessage,
+.flashmessage,
 #error_list{
     color: #c09853;
 }
 
-.FlashMessage .close {
+.flashmessage .ico-close,
+.flashmessage .ico-close,
+.flashmessage .ico-close,
+.flashmessage .ico-close {
     position: relative;
     top: -2px;
     right: -21px;
     line-height: 18px;
 }
 
-.FlashMessage.ok {
+.flashmessage.ok,
+.flashmessage-ok{
     background-color: #dff0d8;
     border-color: #d6e9c6;
     color: #468847;
 }
 
-.FlashMessage.error,
+.flashmessage.error,
+.flashmessage-error,
 #error_list{
     background-color: #f2dede;
     border-color: #eed3d7;
     color: #b94a48;
 }
 
-.FlashMessage.info {
+.flashmessage.info,
+.flashmessage-info {
     background-color: #d9edf7;
     border-color: #bce8f1;
     color: #3a87ad;
 }
 
-.FlashMessage-block {
+.flashmessage-block,
+.flashmessage-block {
     padding-top: 14px;
     padding-bottom: 14px;
 }
 
-.FlashMessage-block p {
+.flashmessage-block p,
+.flashmessage-block p {
     margin: 2px 0;
 }
 
-.FlashMessage-block > p, .FlashMessage-block > ul {
+.flashmessage-block > p,
+.flashmessage-block > ul,
+.flashmessage-block > p,
+.flashmessage-block > ul {
     margin-bottom: 0;
 }
 
-.FlashMessage-block p + p {
+.flashmessage-block p + p,
+.flashmessage-block p + p {
     margin-top: 5px;
 }
 
-.close {
+.close,
+.ico-close {
     float: right;
     font-size: 20px;
     font-weight: bold;
@@ -542,7 +557,8 @@ table.table{
     filter: alpha(opacity=20);
 }
 
-.close:hover {
+.close:hover,
+.ico-close:hover {
     color: #000000;
     text-decoration: none;
     opacity: 0.4;
@@ -553,7 +569,7 @@ table.table{
     list-style:none;
     display: none;
 }
-/* /FlashMessage messages */
+/* /flashmessage messages */
 /* form */
 input, textarea, select {
     padding: 3px;
@@ -791,7 +807,7 @@ input[type="submit"]:focus, input[type="button"]:focus {
     max-height: 300px;
     background-color: #F0F0F0;
 }
-.FlashMessage pre {
+.flashmessage pre {
     margin: 10px 10px 5px 25px;
     overflow: auto;
     font-weight: bold;
@@ -802,7 +818,7 @@ p.text {
     font-size: 14px;
 }
 
-.FlashMessage-inline {
+.flashmessage-inline {
     display: inline-block;
     margin-left: 10px;
     padding: 4px 15px;
