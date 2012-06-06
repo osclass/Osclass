@@ -563,12 +563,17 @@
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=items&action=settings');
                 break;
-                case('items_reported'):     // show reported listings
+                case('items_reported'): // show reported listings
+                                        $p_iPage      = 1;
+                                        if( !is_numeric(Params::getParam('iPage')) || Params::getParam('iPage') < 1 ) {
+                                            Params::setParam('iPage', $p_iPage );
+                                        }    
+                    
                                         require_once osc_admin_base_path() . 'ajax/items_processing.php';
                                         $params = Params::getParamsAsArray("get") ;
                                         $items_processing = new ItemsProcessingAjax( $params );
-                                        $aData = $items_processing->result() ;
-                                    
+                                        $aData = $items_processing->reported_listings( $params ) ;
+//                                        print_r($aData['aaData']) ;
                                         $this->_exportVariableToView('aItems', $aData) ;
                                         //calling the view...
                                         $this->doView('items/reported.php') ;
@@ -592,10 +597,15 @@
                                         }
                                         $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
                                         
+                                        $p_iPage      = 1;
+                                        if( !is_numeric(Params::getParam('iPage')) || Params::getParam('iPage') < 1 ) {
+                                            Params::setParam('iPage', $p_iPage );
+                                        }
+                                        
                                         require_once osc_admin_base_path() . 'ajax/items_processing.php';
                                         $params = Params::getParamsAsArray("get") ;
                                         $items_processing = new ItemsProcessingAjax( $params );
-                                        $aData = $items_processing->result() ;
+                                        $aData = $items_processing->listings( $params ) ;
                                         
                                         if(count($aData['aaData']) == 0) {
                                             $total = (int)$aData['iTotalDisplayRecords'];
