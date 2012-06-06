@@ -4,8 +4,6 @@
         <meta charset="utf-8">
         <title><?php _e('OSClass Admin Panel'); ?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="">
         <script src="<?php echo osc_current_admin_theme_js_url('jquery.min.js') ; ?>"></script>
         <script src="<?php echo osc_current_admin_theme_js_url('jquery-ui-1.8.20.min.js') ; ?>"></script>
         <script src="<?php echo osc_current_admin_theme_js_url('ui-osc.js') ; ?>"></script>
