@@ -1313,21 +1313,22 @@ HTACCESS;
                 break;
                 case('update'):         // update index view
                                         $iUpdated          = 0 ;
-                                        $sPageTitle        = Params::getParam('pageTitle') ;
-                                        $sPageDesc         = Params::getParam('pageDesc') ;
-                                        $sContactEmail     = Params::getParam('contactEmail') ;
-                                        $sLanguage         = Params::getParam('language') ;
-                                        $sDateFormat       = Params::getParam('dateFormat') ;
-                                        $sCurrency         = Params::getParam('currency') ;
-                                        $sWeekStart        = Params::getParam('weekStart') ;
-                                        $sTimeFormat       = Params::getParam('timeFormat') ;
-                                        $sTimezone         = Params::getParam('timezone') ;
-                                        $sNumRssItems      = Params::getParam('num_rss_items') ;
-                                        $maxLatestItems    = Params::getParam('max_latest_items_at_home') ;
-                                        $numItemsSearch    = Params::getParam('default_results_per_page') ;
-                                        $contactAttachment = Params::getParam('enabled_attachment') ;
-                                        $bAutoCron         = Params::getParam('auto_cron') ;
-                                        $bMarketSources    = Params::getParam('market_external_sources')==1?1:0;
+                                        $sPageTitle        = Params::getParam('pageTitle');
+                                        $sPageDesc         = Params::getParam('pageDesc');
+                                        $sContactEmail     = Params::getParam('contactEmail');
+                                        $sLanguage         = Params::getParam('language');
+                                        $sDateFormat       = Params::getParam('dateFormat');
+                                        $sCurrency         = Params::getParam('currency');
+                                        $sWeekStart        = Params::getParam('weekStart');
+                                        $sTimeFormat       = Params::getParam('timeFormat');
+                                        $sTimezone         = Params::getParam('timezone');
+                                        $sNumRssItems      = Params::getParam('num_rss_items');
+                                        $maxLatestItems    = Params::getParam('max_latest_items_at_home');
+                                        $numItemsSearch    = Params::getParam('default_results_per_page');
+                                        $contactAttachment = Params::getParam('enabled_attachment');
+                                        $selectableParent  = Params::getParam('selectable_parent_categories');
+                                        $bAutoCron         = Params::getParam('auto_cron');
+                                        $bMarketSources    = Params::getParam('market_external_sources') == 1 ? 1 : 0;
 
                                         // preparing parameters
                                         $sPageTitle        = strip_tags($sPageTitle) ;
@@ -1345,8 +1346,6 @@ HTACCESS;
                                         $bAutoCron         = ($bAutoCron != '' ? true : false) ;
                                         $error = "";
 
-                                        
-                                            
                                         $msg = '';
                                         if(!osc_validate_text($sPageTitle)) {
                                             $msg .= _m("Page title field is required")."<br/>";
@@ -1368,43 +1367,66 @@ HTACCESS;
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=settings');
                                         }
 
-                                        
-                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageTitle)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'pageTitle')) ;
-                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageDesc)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'pageDesc')) ;
+                                        $iUpdated += Preference::newInstance()->update(
+                                            array('s_value'   => $sPageTitle),
+                                            array('s_section' => 'osclass', 's_name' => 'pageTitle')
+                                        );
+                                        $iUpdated += Preference::newInstance()->update(
+                                            array('s_value'   => $sPageDesc),
+                                            array('s_section' => 'osclass', 's_name' => 'pageDesc')
+                                        );
                                         if( !defined('DEMO') ) {
-                                            $iUpdated += Preference::newInstance()->update(array('s_value'   => $sContactEmail)
-                                                                                          ,array('s_section' => 'osclass', 's_name' => 'contactEmail')) ;
+                                            $iUpdated += Preference::newInstance()->update(
+                                                array('s_value'   => $sContactEmail),
+                                                array('s_section' => 'osclass', 's_name' => 'contactEmail')
+                                            );
                                         }
-                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $sLanguage)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'language')) ;
-                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $sDateFormat)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'dateFormat')) ;
-                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $sCurrency)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'currency')) ;
-                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $sWeekStart)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'weekStart')) ;
-                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimeFormat)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'timeFormat')) ;
-                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimezone)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'timezone'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $bMarketSources)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'marketAllowExternalSources'));
+                                        $iUpdated += Preference::newInstance()->update(
+                                            array('s_value'   => $sLanguage),
+                                            array('s_section' => 'osclass', 's_name' => 'language')
+                                        );
+                                        $iUpdated += Preference::newInstance()->update(
+                                            array('s_value'   => $sDateFormat),
+                                            array('s_section' => 'osclass', 's_name' => 'dateFormat')
+                                        );
+                                        $iUpdated += Preference::newInstance()->update(
+                                            array('s_value'   => $sCurrency),
+                                            array('s_section' => 'osclass', 's_name' => 'currency')
+                                        );
+                                        $iUpdated += Preference::newInstance()->update(
+                                            array('s_value'   => $sWeekStart),
+                                            array('s_section' => 'osclass', 's_name' => 'weekStart')
+                                        );
+                                        $iUpdated += Preference::newInstance()->update(
+                                            array('s_value'   => $sTimeFormat),
+                                            array('s_section' => 'osclass', 's_name' => 'timeFormat')
+                                        );
+                                        $iUpdated += Preference::newInstance()->update(
+                                            array('s_value'   => $sTimezone),
+                                            array('s_section' => 'osclass', 's_name' => 'timezone')
+                                        );
+                                        $iUpdated += Preference::newInstance()->update(
+                                            array('s_value'   => $bMarketSources),
+                                            array('s_section' => 'osclass', 's_name' => 'marketAllowExternalSources')
+                                        );
                                         if(is_int($sNumRssItems)) {
-                                            $iUpdated += Preference::newInstance()->update(array('s_value'   => $sNumRssItems)
-                                                                                          ,array('s_section' => 'osclass', 's_name' => 'num_rss_items')) ;
+                                            $iUpdated += Preference::newInstance()->update(
+                                                array('s_value'   => $sNumRssItems),
+                                                array('s_section' => 'osclass', 's_name' => 'num_rss_items')
+                                            );
                                         } else {
                                             if($error != '') $error .= "</p><p>";
-                                            $error .= _m('Number of listings in the RSS must be integer') ;
+                                            $error .= _m('Number of listings in the RSS must be integer');
                                         }
 
                                         if(is_int($maxLatestItems)) {
-                                            $iUpdated += Preference::newInstance()->update(array('s_value'   => $maxLatestItems)
-                                                                                          ,array('s_section' => 'osclass', 's_name' => 'maxLatestItems@home')) ;
+                                            $iUpdated += Preference::newInstance()->update(
+                                                array('s_value'   => $maxLatestItems),
+                                                array('s_section' => 'osclass', 's_name' => 'maxLatestItems@home')
+                                            );
                                         } else {
                                             if($error != '') $error .= "</p><p>";
-                                            $error .= _m('Number of recent listings displayed at home must be integer') ;
+                                            $error .= _m('Number of recent listings displayed at home must be integer');
                                         }
 
                                         $iUpdated += Preference::newInstance()->update(
@@ -1412,23 +1434,30 @@ HTACCESS;
                                                 array('s_section' => 'osclass',
                                                       's_name'    => 'defaultResultsPerPage@search')
                                         );
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $contactAttachment)
-                                                                                      ,array('s_name'  => 'contact_attachment')) ;
-
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $bAutoCron)
-                                                                                      ,array('s_name' => 'auto_cron')) ;
+                                        $iUpdated += Preference::newInstance()->update(
+                                            array('s_value' => $contactAttachment),
+                                            array('s_name'  => 'contact_attachment')
+                                        );
+                                        $iUpdated += Preference::newInstance()->update(
+                                            array('s_value' => $bAutoCron),
+                                            array('s_name' => 'auto_cron')
+                                        );
+                                        $iUpdated += Preference::newInstance()->update(
+                                            array('s_value' => $selectableParent),
+                                            array('s_name'  => 'selectable_parent_categories')
+                                        );
 
                                         if( $iUpdated > 0 ) {
                                             if( $error != '' ) {
-                                                osc_add_flash_error_message( $error . "</p><p>" . _m('General settings have been updated'), 'admin') ;
+                                                osc_add_flash_error_message( $error . "</p><p>" . _m('General settings have been updated'), 'admin');
                                             } else {
-                                                osc_add_flash_ok_message( _m('General settings have been updated'), 'admin') ;
+                                                osc_add_flash_ok_message( _m('General settings have been updated'), 'admin');
                                             }
                                         } else if($error != '') {
-                                            osc_add_flash_error_message( $error , 'admin') ;
+                                            osc_add_flash_error_message( $error , 'admin');
                                         }
 
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings') ;
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings');
                 break;
                 case('latestsearches'):       //calling the comments settings view
                                         $this->doView('settings/searches.php');
