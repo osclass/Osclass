@@ -126,7 +126,6 @@
     
     $sort       = Params::getParam('sort');
     $direction  = Params::getParam('direction');
-    error_log('---> '.$sort. "   ".$direction);
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 
