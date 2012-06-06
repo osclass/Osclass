@@ -256,6 +256,13 @@
                 });
             });
             
+            function delete_alert() {
+                if($("#bulk_actions option:selected").attr("value")=='delete_all') {
+                    return confirm('<?php echo osc_esc_js(__("This action can not be undone, are you sure you want to continue?")); ?>')
+                }
+                return true;
+            }
+            
         </script>
         <style>
             .ui-autocomplete-loading {
@@ -381,7 +388,7 @@
                                 <option value="depremium_all"><?php _e('Unmark as premium') ; ?></option>
                                 <option value="spam_all"><?php _e('Mark as spam') ; ?></option>
                                 <option value="despam_all"><?php _e('Unmark as spam') ; ?></option>
-                            </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                            </select> <input type="submit" id="bulk_apply" onclick="javascript:return delete_alert();" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
                         </label>
                     </div>
                     <div id="add_item_button">
