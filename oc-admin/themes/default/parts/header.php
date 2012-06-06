@@ -29,7 +29,7 @@
     </div>
 
     <div id="content">
-        <?php osc_current_admin_theme_path( 'parts/sidebar.php' ) ; ?>
+        <?php osc_draw_admin_menu(); ?>
         <div id="content-render">
             <div id="content-head">
                 <?php osc_run_hook('admin_page_header'); ?>
