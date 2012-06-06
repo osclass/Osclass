@@ -669,11 +669,11 @@
                                             
                                             $maxPage = ( $total / (int)$aData['iDisplayLength'] ) -1 ;
                                             
-                                            if($page > 0) {
+                                            if($page > 1) {
                                                 $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
                                                 $page = $page-1;
                                                 $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
-                                                
+                                                error_log($url);
                                                 $this->redirectTo($url) ;
                                             }
                                         }
