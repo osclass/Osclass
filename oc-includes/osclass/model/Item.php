@@ -863,13 +863,25 @@
                 }
 
                 // populate locations and category_name
-                $this->dao->select(DB_TABLE_PREFIX.'t_item_location.*, '.DB_TABLE_PREFIX.'t_item_stats.*, cd.s_name as s_category_name') ;
+                $this->dao->select(DB_TABLE_PREFIX.'t_item_location.*, cd.s_name as s_category_name') ;
+                // select sum item_stats
+                $this->dao->select('SUM(`s`.`i_num_views`) as `i_num_views`' );
+                $this->dao->select('SUM(`s`.`i_num_spam`) as `i_num_spam`' );
+                $this->dao->select('SUM(`s`.`i_num_bad_classified`) as `i_num_bad_classified`' );
+                $this->dao->select('SUM(`s`.`i_num_repeated`) as `i_num_repeated`' );
+                $this->dao->select('SUM(`s`.`i_num_offensive`) as `i_num_offensive`' );
+                $this->dao->select('SUM(`s`.`i_num_expired`) as `i_num_expired` ' );
+                $this->dao->select('SUM(`s`.`i_num_premium_views`) as `i_num_premium_views` ' );
+                
                 $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
                 $this->dao->from(DB_TABLE_PREFIX.'t_category_description as cd') ;
-                $this->dao->from(DB_TABLE_PREFIX.'t_item_stats') ;
+                $this->dao->from(DB_TABLE_PREFIX.'t_item_stats as s') ;
                 $this->dao->where(DB_TABLE_PREFIX.'t_item_location.fk_i_item_id', $item['pk_i_id']) ;
-                $this->dao->where(DB_TABLE_PREFIX.'t_item_stats.fk_i_item_id', $item['pk_i_id']) ;
+//                $this->dao->where(DB_TABLE_PREFIX.'t_item_stats.fk_i_item_id', $item['pk_i_id']) ;
+                $this->dao->where('s.fk_i_item_id', $item['pk_i_id']) ;
                 $this->dao->where('cd.fk_i_category_id', $item['fk_i_category_id']) ;
+                // group by item_id
+                $this->dao->groupBy('fk_i_item_id') ;
                 
                 $result = $this->dao->get() ;
                 $extraFields = $result->row() ;
