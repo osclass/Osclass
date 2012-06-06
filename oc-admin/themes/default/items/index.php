@@ -18,9 +18,9 @@
 
     function customPageHeader(){ ?>
         <h1><?php _e('Manage listing') ; ?>
-            <a hreg="#" class="btn ico ico-32 ico-engine float-right"></a>
-            <a hreg="#" class="btn ico ico-32 ico-help float-right"></a>
-            <a hreg="<?php echo osc_admin_base_url(true) . '?page=items&action=post' ; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
+            <a href="#" class="btn ico ico-32 ico-engine float-right"></a>
+            <a href="#" class="btn ico ico-32 ico-help float-right"></a>
+            <a href="<?php echo osc_admin_base_url(true) . '?page=items&action=post' ; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
 	</h1>
 <?php
     }
