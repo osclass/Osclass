@@ -80,27 +80,6 @@
         function __construct($params)
         {
             $this->mSearch = new Search(true) ;
-            
-//            $this->_get = $params ;
-//            
-//            $this->getDBParams() ;
-//
-//            $this->mSearch->limit($this->start, $this->limit) ;
-//            // only some fields can be ordered
-//            $this->mSearch->order($this->order_by['column_name'], $this->order_by['type'], $this->order_by['table_name'] ) ;
-//            
-//            if( Params::getParam('catId') != '' ) {
-//                $this->mSearch->addCategory( Params::getParam('catId') ) ;
-//            }
-//            if( $this->search ) {
-//                $this->mSearch->addPattern($this->search);
-//            }
-//            
-//            // do Search
-//            $list_items = $this->mSearch->doSearch(true) ;
-//            $this->items = Item::newInstance()->extendCategoryName( $list_items );
-//            $this->total_filtered = $this->mSearch->countAll();
-//            $this->total = $this->mSearch->count() ;
         }
 
         function __destruct()
@@ -121,33 +100,47 @@
             $this->getDBParams() ;
 
             $this->mSearch->limit($this->start, $this->limit) ;
-            
             // only some fields can be ordered
-            $sort = Params::getParam('sort') ;
-            if( $sort != '' ) {
-                $this->mSearch->order( $sort, 'DESC' ) ;
-            } else {
-                $this->mSearch->order($this->order_by['column_name'], $this->order_by['type'], $this->order_by['table_name'] ) ;
+            $direction  = Params::getParam('direction') ;
+            $arrayDirection = array('desc', 'asc');
+            if( !in_array($direction, $arrayDirection) ) {
+                Params::setParam('direction', 'desc') ;
+                $direction = 'desc'; 
             }
             
-            if( Params::getParam('catId') != '' ) {
-                $this->mSearch->addCategory( Params::getParam('catId') ) ;
+            $sort       = Params::getParam('sort') ;
+            $arraySortColumns = array(
+                'spam'  => 'i_num_spam',
+                'bad'   => 'i_num_bad_classified',
+                'rep'   => 'i_num_repeated',
+                'off'   => 'i_num_offensive',
+                'exp'   => 'i_num_expired',
+                'date'  => 'dt_pub_date'
+                );
+            // column sort
+            if( !key_exists($sort, $arraySortColumns) ) {
+                $sort       = 'dt_pub_date' ;
+            } else {
+                $sort = $arraySortColumns[$sort];
             }
-            if( $this->search ) {
-                $this->mSearch->addPattern($this->search) ;
-            }
+            
+            $this->mSearch->order( $sort, $direction ) ;
+            
+//            if( Params::getParam('catId') != '' ) {
+//                $this->mSearch->addCategory( Params::getParam('catId') ) ;
+//            }
+//            if( $this->search ) {
+//                $this->mSearch->addPattern($this->search) ;
+//            }
             
             $this->mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
-            
             $this->mSearch->addField('SUM(s.`i_num_spam`) as i_num_spam');
             $this->mSearch->addField('SUM(s.`i_num_bad_classified`) as i_num_bad_classified');
             $this->mSearch->addField('SUM(s.`i_num_repeated`) as i_num_repeated');
             $this->mSearch->addField('SUM(s.`i_num_offensive`) as i_num_offensive');
             $this->mSearch->addField('SUM(s.`i_num_expired`) as i_num_expired');
-
             $this->mSearch->addConditions(sprintf(" %st_item.pk_i_id ", DB_TABLE_PREFIX));
             $this->mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
-            
             $this->mSearch->addGroupBy(sprintf(" %st_item.pk_i_id ", DB_TABLE_PREFIX)) ;
             // do Search
             $list_items = $this->mSearch->doSearch(true) ;
@@ -156,7 +149,6 @@
             $this->total = $this->mSearch->count() ;
             
             $this->toArrayFormatReported() ;
-//            print_r($this->result);
             return $this->result;
         }
         
@@ -169,10 +161,26 @@
             $this->_get = $params ;
             
             $this->getDBParams() ;
-
+                
             $this->mSearch->limit($this->start, $this->limit) ;
+            
+            $direction  = Params::getParam('direction') ;
+            $arrayDirection = array('desc', 'asc');
+            if( !in_array($direction, $arrayDirection) ) {
+                Params::setParam('direction', 'desc') ;
+                $direction = 'desc'; 
+            }
+            
+            // column sort
+            $sort       = Params::getParam('sort') ;
+            $arraySortColumns = array('date'  => 'dt_pub_date');
+            if( !key_exists($sort, $arraySortColumns) ) {
+                $sort       = 'dt_pub_date' ;
+            } else {
+                $sort = $arraySortColumns[$sort];
+            }
             // only some fields can be ordered
-            $this->mSearch->order($this->order_by['column_name'], $this->order_by['type'], $this->order_by['table_name'] ) ;
+            $this->mSearch->order( $sort, $direction ) ;
             
             if( Params::getParam('catId') != '' ) {
                 $this->mSearch->addCategory( Params::getParam('catId') ) ;
@@ -206,13 +214,7 @@
             if( !isset($this->_get['iDisplayLength']) ) {
                 $this->_get['iDisplayLength'] = 10 ;
             }
-            if( !isset($this->_get['iSortCol_0']) ) {
-                $this->order_by['column_name'] = $this->column_names[7] ;
-                $this->order_by['table_name']  = $this->tables_columns[7] ;
-            }
-            if( !isset($this->_get['sSortDir_0']) ) {
-                $this->order_by['type'] = 0 ;
-            }
+            
             if( !isset($this->_get['iPage']) ) {
                 $this->_get['iPage'] = 1 ;
             }
@@ -222,15 +224,6 @@
                 if( $k == 'iPage' ) {
                     $this->iPage = intval($v) ;
                 }
-                
-                /* for sorting */
-                if( $k == 'iSortCol_0' && $v != '') {
-                    $this->order_by['column_name'] = $this->column_names[$v] ;
-                    $this->order_by['table_name']  = $this->tables_columns[$v] ;
-                }
-                if( $k == 'sSortDir_0' && $v != '') {
-                    $this->order_by['type'] = $v ;
-                }
 
                 if( $k == 'sSearch' && $v != '') {
                     $this->search = $v;
@@ -239,8 +232,8 @@
 
                 // filters
                 if( $k == 'userId' && $v != '') {
-                        $this->mSearch->fromUser($v);
-                        $this->withFilters = true;
+                    $this->mSearch->fromUser($v);
+                    $this->withFilters = true;
                 }
                 if( $k == 'itemId' && $v != '') {
                     $this->mSearch->addItemId($v);
@@ -295,13 +288,6 @@
                     $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_spam = '.$v);
                     $this->withFilters = true;
                 }
-                
-                // marked as
-                if($k == 'spam') $this->stat['spam'] = true;
-                if($k == 'duplicated') $this->stat['duplicated'] = true;
-                if($k == 'offensive') $this->stat['offensive'] = true;
-                if($k == 'bad') $this->stat['bad'] = true;
-                if($k == 'expired') $this->stat['expired'] = true;
             }
             // set start and limit using iPage param
             $start = ($this->_get['iPage']-1) * $this->_get['iDisplayLength'];
