@@ -99,6 +99,12 @@
             .hide {
                 display: none !important;
             }
+            table.table thead .sorting_desc {
+                background: url("<?php echo osc_current_admin_theme_url('images/sort_desc.png'); ?>") no-repeat scroll right center transparent;
+            }
+            table.table thead .sorting_asc {
+                background: url("<?php echo osc_current_admin_theme_url('images/sort_asc.png'); ?>") no-repeat scroll right center transparent;
+            }
         </style>
         <?php
     }
@@ -115,6 +121,12 @@
     $iDisplayLength = __get('iDisplayLength');
     
     $aData      = __get('aItems') ;
+    
+    $url_date   = __get('url_date') ;
+    
+    $sort       = Params::getParam('sort');
+    $direction  = Params::getParam('direction');
+    error_log('---> '.$sort. "   ".$direction);
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 
@@ -326,7 +338,9 @@
                         <th><?php _e('Country') ; ?></th>
                         <th><?php _e('Region') ; ?></th>
                         <th><?php _e('City') ; ?></th>
-                        <th><?php _e('Date') ; ?></th>
+                        <th class="<?php if($sort=='date'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
+                            <a href="<?php echo $url_date; ?>"><?php _e('Date') ; ?></a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
