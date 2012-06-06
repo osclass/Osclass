@@ -271,8 +271,6 @@
         <div class="float-right">
             <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="shortcut-filters">
                 <input type="hidden" name="page" value="items" />
-                <input type="hidden" name="iSortCol_0" value="7" />
-                <input type="hidden" name="sSortDir_0" value="0" />
                 <input type="hidden" name="iDisplayLength" value="<?php echo $iDisplayLength;?>" />
                 <?php if($withFilters) { ?>
                 <a class="btn" href="<?php echo osc_admin_base_url(true).'?page=items'; ?>"><?php _e('Reset filters') ; ?></a>
@@ -306,9 +304,10 @@
         </div>
     </div>
     
-    <form class="items datatables" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
         <input type="hidden" name="page" value="items" />
         <input type="hidden" name="action" value="bulk_actions" />
+        
         <div id="bulk-actions">
             <label>
                 <select id="bulk_actions" name="bulk_actions" class="select-box-extra">
