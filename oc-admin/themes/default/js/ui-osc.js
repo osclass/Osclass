@@ -41,8 +41,8 @@ $(function(){
         $('#table-row-actions').hide();
     })
     //Close help
-    $('#flashmessage .ico-close').live('click',function(){
-        $('#flashmessage').hide();
+    $('.flashmessage .ico-close').live('click',function(){
+        $(this).parents('.flashmessage').hide();
     });
     $('#help-box .ico-close').click(function(){
         $('#help-box').hide();
@@ -66,8 +66,11 @@ $(function(){
     $('#flashmessage:not(:empty)').show('fast',function(){
         //$(this).hide('slow');
     });
+    oscTab();
 });
-
+function oscTab(callback){
+    $(".osc-tab").tabs();
+}
 function selectUi(thatSelect){
     var uiSelect = $('<a href="#" class="select-box-trigger"></a>');
     var uiSelectIcon = $('<span class="select-box-icon"><div class="ico ico-20 ico-drop-down"></div></span>');
