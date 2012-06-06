@@ -359,7 +359,7 @@
 </div>
 <div class="has-pagination">
 <?php 
-    $pageActual = 0 ;
+    $pageActual = 1 ;
     if( Params::getParam('iPage') != '' ) {
         $pageActual = Params::getParam('iPage') ;
     }

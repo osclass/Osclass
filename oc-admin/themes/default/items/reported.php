@@ -91,11 +91,11 @@
                         <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
                         <th><?php _e('Title') ; ?></th>
                         <th><?php _e('User') ; ?></th>
-                        <th><?php _e('Spam') ; ?></th>
-                        <th><?php _e('misclassified') ; ?></th>
-                        <th><?php _e('duplicated') ; ?></th>
-                        <th><?php _e('expired') ; ?></th>
-                        <th><?php _e('offensive') ; ?></th>
+                        <th id="sSpam"><?php _e('Spam') ; ?></th>
+                        <th id="sMiss"><?php _e('misclassified') ; ?></th>
+                        <th id="sDup"><?php _e('duplicated') ; ?></th>
+                        <th id="sExp"><?php _e('expired') ; ?></th>
+                        <th id="sOff"><?php _e('offensive') ; ?></th>
                         <th><?php _e('Date') ; ?></th>
                     </tr>
                 </thead>
@@ -127,24 +127,26 @@
         </div>
     </form>
 </div>
+
+<div class="has-pagination">
 <?php 
-    $pageActual = 0 ;
+    $pageActual = 1 ;
     if( Params::getParam('iPage') != '' ) {
         $pageActual = Params::getParam('iPage') ;
     }
     
     $urlActual = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
     $urlActual = preg_replace('/&iPage=(\d)+/', '', $urlActual) ;
-    
-    $params = array('total'    => ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength'])
+    $pageTotal = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
+    $params = array('total'    => $pageTotal
                    ,'selected' => $pageActual
                    ,'url'      => $urlActual.'&iPage={PAGE}'
-                   ,'sides'    => 9
+                   ,'sides'    => 5
         );
     $pagination = new Pagination($params);
     $aux = $pagination->doPagination();
     
     echo $aux;
 ?>
-    
+</div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
