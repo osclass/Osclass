@@ -459,12 +459,12 @@
  
                 // fill a row
                 $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>' ;
-                $row[] = '<a href="' . osc_item_url().'">' . utf8_decode( $title ). '</a>'. $actions  ;
-                $row[] = utf8_decode( $aRow['s_user_name'] ) ;
-                $row[] = utf8_decode( $aRow['s_category_name'] ) ;
-                $row[] = utf8_decode( $aRow['s_country'] ) ;
-                $row[] = utf8_decode( $aRow['s_region'] ) ;
-                $row[] = utf8_decode( $aRow['s_city'] ) ;
+                $row[] = '<a href="' . osc_item_url().'">' . $title. '</a>'. $actions  ;
+                $row[] = $aRow['s_user_name'] ;
+                $row[] = $aRow['s_category_name'] ;
+                $row[] = $aRow['s_country'] ;
+                $row[] = $aRow['s_region'] ;
+                $row[] = $aRow['s_city'] ;
                 $row[] = $aRow['dt_pub_date'] ;
 
                 $count++ ;
@@ -555,8 +555,8 @@
 // print_r($aRow);
                 // fill a row
                 $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>' ;
-                $row[] = '<a href="' . osc_item_url().'">' . utf8_decode( $title ). '</a>'. $actions  ;
-                $row[] = utf8_decode( $aRow['s_user_name'] ) ;
+                $row[] = '<a href="' . osc_item_url().'">' . $title . '</a>'. $actions  ;
+                $row[] = $aRow['s_user_name'] ;
                 $row[] = $aRow['i_num_spam'] ;
                 $row[] = $aRow['i_num_bad_classified'] ;
                 $row[] = $aRow['i_num_repeated'] ;
