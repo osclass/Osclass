@@ -18,7 +18,7 @@
     $categories = __get('categories') ;
     function customPageHeader(){ ?>
         <h1>Categories
-            <a hreg="<?php echo osc_admin_base_url(true) ; ?>?page=categories&amp;action=add_post_default" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
+            <a href="<?php echo osc_admin_base_url(true) ; ?>?page=categories&amp;action=add_post_default" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
     </h1>
 <?php
     }
@@ -313,11 +313,6 @@ function drawCategory($category,$isSubcategory = false){
 
             <!-- right container -->
             <div class="right">
-                <?php osc_show_flash_message('admin') ; ?>
-                <div class="jsMessage flashmessage info" style="display: none;">
-                    <a class="btn ico btn-mini ico-close">×</a>
-                    <p></p>
-                </div>
                 <!-- categories form -->
                 <div class="categories">
                     <div class="flashmessage info">

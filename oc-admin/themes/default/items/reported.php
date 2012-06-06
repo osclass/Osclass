@@ -18,7 +18,7 @@
 
     function customPageHeader(){ ?>
         <h1><?php _e('Reported listings') ; ?>
-            <a hreg="#" class="btn ico ico-32 ico-help float-right"></a>
+            <a href="#" class="btn ico ico-32 ico-help float-right"></a>
 	</h1>
 <?php
     }

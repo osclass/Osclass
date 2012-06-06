@@ -46,7 +46,7 @@
             <div class="form-vertical">
                     <div class="form-actions">
                         <input type="submit" class="btn btn-submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
-                        <input type="button" class="btn btn-submit" onclick="$('.iframe-category').remove() ;" value="<?php echo osc_esc_html( __('Cancel') ) ; ?>" />
+                        <input type="button" class="btn btn-red" onclick="$('.iframe-category').remove() ;" value="<?php echo osc_esc_html( __('Cancel') ) ; ?>" />
                     </div>
             </div>
         </fieldset>
