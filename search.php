@@ -27,7 +27,7 @@
         {
             parent::__construct() ;
             $this->mSearch = Search::newInstance();
-            $this->uri = preg_replace('|^/|', '', $_SERVER['REQUEST_URI']);
+            $this->uri = preg_replace('|^' . REL_WEB_URL . '|', '', $_SERVER['REQUEST_URI']);
 
             $this->nice_url = false;
             if( !stripos($_SERVER['REQUEST_URI'], 'search') && osc_rewrite_enabled() ) {
@@ -41,26 +41,28 @@
                     $redirectURL = preg_replace('|/$|', '', $redirectURL);
                     $this->redirectTo($redirectURL);
                 }
+                $search_uri = preg_replace('|/[0-9]+$|', '', $this->uri);
+                $this->_exportVariableToView('search_uri', $search_uri);
 
+                // remove seo_url_search_prefix
                 if( osc_get_preference('seo_url_search_prefix') != '' ) {
                     $this->uri = str_replace( osc_get_preference('seo_url_search_prefix') . '/', '', $this->uri);
                 }
-                $this->uri = preg_replace('|(.*/)?(.*?(/[0-9])?)|', '$02', $this->uri);
+
                 // get page if it's set in the url
-                $param_page = preg_split('|/|', $this->uri);
-                if( count($param_page) == 2 ) {
-                    Params::setParam('iPage', $param_page[1]);
+                $iPage = preg_replace('|.*/([0-9]+)$|', '$01', $this->uri);
+                if( $iPage > 0 ) {
+                    Params::setParam('iPage', $iPage);
                     // redirect without number of pages
-                    if( $param_page[1] == 1 ) {
-                        $this->redirectTo(osc_base_url() . $param_page[0]);
+                    if( $iPage == 1 ) {
+                        $this->redirectTo(osc_base_url() . $search_uri);
                     }
                 }
-                $this->_exportVariableToView('search_uri', $param_page[0]) ;
                 if( Params::getParam('iPage') > 1 ) {
                     $this->_exportVariableToView('canonical', osc_base_url() . $param_page[0]) ;
                 }
 
-                $params = preg_split('|_|', $param_page[0]);
+                $params = preg_split('|_|', preg_replace('|.*?/|', '', $search_uri));
                 if( preg_match('|r([0-9]+)$|', $params[0], $r) ) {
                     $region = Region::newInstance()->findByPrimaryKey($r[1]);
                     Params::setParam('sRegion', $region['pk_i_id']);

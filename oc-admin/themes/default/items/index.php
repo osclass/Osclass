@@ -18,9 +18,9 @@
 
     function customPageHeader(){ ?>
         <h1><?php _e('Manage listing') ; ?>
-            <a hreg="#" class="btn ico ico-32 ico-engine float-right"></a>
-            <a hreg="#" class="btn ico ico-32 ico-help float-right"></a>
-            <a hreg="<?php echo osc_admin_base_url(true) . '?page=items&action=post' ; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
+            <a href="#" class="btn ico ico-32 ico-engine float-right"></a>
+            <a href="#" class="btn ico ico-32 ico-help float-right"></a>
+            <a href="<?php echo osc_admin_base_url(true) . '?page=items&action=post' ; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
 	</h1>
 <?php
     }
@@ -99,6 +99,12 @@
             .hide {
                 display: none !important;
             }
+            table.table thead .sorting_desc {
+                background: url("<?php echo osc_current_admin_theme_url('images/sort_desc.png'); ?>") no-repeat scroll right center transparent;
+            }
+            table.table thead .sorting_asc {
+                background: url("<?php echo osc_current_admin_theme_url('images/sort_asc.png'); ?>") no-repeat scroll right center transparent;
+            }
         </style>
         <?php
     }
@@ -115,6 +121,11 @@
     $iDisplayLength = __get('iDisplayLength');
     
     $aData      = __get('aItems') ;
+    
+    $url_date   = __get('url_date') ;
+    
+    $sort       = Params::getParam('sort');
+    $direction  = Params::getParam('direction');
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 
@@ -326,7 +337,9 @@
                         <th><?php _e('Country') ; ?></th>
                         <th><?php _e('Region') ; ?></th>
                         <th><?php _e('City') ; ?></th>
-                        <th><?php _e('Date') ; ?></th>
+                        <th class="<?php if($sort=='date'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
+                            <a href="<?php echo $url_date; ?>"><?php _e('Date') ; ?></a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -359,7 +372,7 @@
 </div>
 <div class="has-pagination">
 <?php 
-    $pageActual = 0 ;
+    $pageActual = 1 ;
     if( Params::getParam('iPage') != '' ) {
         $pageActual = Params::getParam('iPage') ;
     }

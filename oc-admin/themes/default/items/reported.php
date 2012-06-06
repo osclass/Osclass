@@ -41,11 +41,28 @@
                 });
             });
         </script>
+        <style>
+            table.table thead .sorting_desc {
+                background: url("<?php echo osc_current_admin_theme_url('images/sort_desc.png'); ?>") no-repeat scroll right center transparent;
+            }
+            table.table thead .sorting_asc {
+                background: url("<?php echo osc_current_admin_theme_url('images/sort_asc.png'); ?>") no-repeat scroll right center transparent;
+            }
+        </style>
         <?php
     }
     osc_add_hook('admin_header','customHead');
     
     $aData      = __get('aItems') ;
+    $url_spam   = __get('url_spam') ;
+    $url_bad    = __get('url_bad') ;
+    $url_rep    = __get('url_rep') ;
+    $url_off    = __get('url_off') ;
+    $url_exp    = __get('url_exp') ;
+    $url_date   = __get('url_date') ;
+    
+    $sort       = Params::getParam('sort');
+    $direction  = Params::getParam('direction');
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 
@@ -91,12 +108,24 @@
                         <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
                         <th><?php _e('Title') ; ?></th>
                         <th><?php _e('User') ; ?></th>
-                        <th><?php _e('Spam') ; ?></th>
-                        <th><?php _e('misclassified') ; ?></th>
-                        <th><?php _e('duplicated') ; ?></th>
-                        <th><?php _e('expired') ; ?></th>
-                        <th><?php _e('offensive') ; ?></th>
-                        <th><?php _e('Date') ; ?></th>
+                        <th class="<?php if($sort=='spam'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
+                            <a href="<?php echo $url_spam; ?>"><?php _e('Spam') ; ?></a>
+                        </th>
+                        <th class="<?php if($sort=='bad'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
+                            <a href="<?php echo $url_bad; ?>"><?php _e('misclassified') ; ?>
+                        </th>
+                        <th class="<?php if($sort=='rep'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
+                            <a href="<?php echo $url_rep; ?>"><?php _e('duplicated') ; ?>
+                        </th>
+                        <th class="<?php if($sort=='exp'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
+                            <a href="<?php echo $url_exp; ?>"><?php _e('expired') ; ?>
+                        </th>
+                        <th class="<?php if($sort=='off'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
+                            <a href="<?php echo $url_off; ?>"><?php _e('offensive') ; ?>
+                        </th>
+                        <th class="<?php if($sort=='date'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
+                            <a href="<?php echo $url_date; ?>"><?php _e('Date') ; ?>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -116,7 +145,7 @@
                 <?php endforeach;?>
                 <?php else : ?>
                     <tr>
-                        <td colspan="8" style="text-align: center;">
+                        <td colspan="9" style="text-align: center;">
                         <p><?php _e('No data available in table') ; ?></p>
                         </td>
                     </tr>
@@ -127,24 +156,26 @@
         </div>
     </form>
 </div>
+
+<div class="has-pagination">
 <?php 
-    $pageActual = 0 ;
+    $pageActual = 1 ;
     if( Params::getParam('iPage') != '' ) {
         $pageActual = Params::getParam('iPage') ;
     }
     
     $urlActual = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
     $urlActual = preg_replace('/&iPage=(\d)+/', '', $urlActual) ;
-    
-    $params = array('total'    => ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength'])
+    $pageTotal = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
+    $params = array('total'    => $pageTotal
                    ,'selected' => $pageActual
                    ,'url'      => $urlActual.'&iPage={PAGE}'
-                   ,'sides'    => 9
+                   ,'sides'    => 5
         );
     $pagination = new Pagination($params);
     $aux = $pagination->doPagination();
     
     echo $aux;
 ?>
-    
+</div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

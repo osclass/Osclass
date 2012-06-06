@@ -162,13 +162,15 @@
                 <div class="well ui-rounded-corners">
                     <h3 class="label">User</h3>
                     <?php ItemForm::user_select(null, null, __('Non-registered user')) ; ?>
-                    <div class="input-has-placeholder input-separate-top">
-                        <label><?php _e('Name') ; ?></label>
-                        <?php ItemForm::contact_name_text() ; ?>
-                    </div>
-                    <div class="input-has-placeholder input-separate-top">
-                        <label><?php _e('E-mail') ; ?></label>
-                        <?php ItemForm::contact_email_text() ; ?>
+                    <div id="contact_info">
+                        <div class="input-has-placeholder input-separate-top">
+                            <label><?php _e('Name') ; ?></label>
+                            <?php ItemForm::contact_name_text() ; ?>
+                        </div>
+                        <div class="input-has-placeholder input-separate-top">
+                            <label><?php _e('E-mail') ; ?></label>
+                            <?php ItemForm::contact_email_text() ; ?>
+                        </div>
                     </div>
                 </div>
 

@@ -563,12 +563,59 @@
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=items&action=settings');
                 break;
-                case('items_reported'):     // show reported listings
+                case('items_reported'): // show reported listings
+                                        $p_iPage      = 1;
+                                        if( !is_numeric(Params::getParam('iPage')) || Params::getParam('iPage') < 1 ) {
+                                            Params::setParam('iPage', $p_iPage );
+                                        }
+                                        if( Params::getParam('sort') == '') {
+                                            Params::setParam('sort', 'date') ;
+                                        }
+                                        $sort = Params::getParam('sort');
+                                        if( Params::getParam('direction') == '') {
+                                            Params::setParam('direction', 'desc');
+                                        }
+                                        $direction = Params::getParam('direction');
                                         require_once osc_admin_base_path() . 'ajax/items_processing.php';
                                         $params = Params::getParamsAsArray("get") ;
                                         $items_processing = new ItemsProcessingAjax( $params );
-                                        $aData = $items_processing->result() ;
-                                    
+                                        $aData = $items_processing->reported_listings( $params ) ;
+
+                                        $url_base = osc_admin_base_url(true).'?page=items&action=items_reported' ;
+                                        $arg_spam   = '&sort=spam'; $arg_bad    = '&sort=bad';
+                                        $arg_rep    = '&sort=rep';  $arg_off    = '&sort=off';
+                                        $arg_exp    = '&sort=exp';  $arg_date   = '&sort=date';
+
+                                        switch ($sort) {
+                                            case('spam'):
+                                                if($direction == 'desc' || $direction == '') $arg_spam .= '&direction=asc';
+                                                break;
+                                            case('bad'):
+                                                if($direction == 'desc' || $direction == '') $arg_bad .= '&direction=asc';
+                                                break;
+                                            case('rep'):
+                                                if($direction == 'desc' || $direction == '') $arg_rep .= '&direction=asc';
+                                                break;
+                                            case('off'):
+                                                if($direction == 'desc' || $direction == '') $arg_off .= '&direction=asc';
+                                                break;
+                                            case('exp'):
+                                                if($direction == 'desc' || $direction == '') $arg_exp .= '&direction=asc';
+                                                break;
+                                            case('date'):
+                                                if($direction == 'desc' || $direction == '') $arg_date .= '&direction=asc';
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        
+                                        $this->_exportVariableToView('url_spam', $url_base.$arg_spam) ;
+                                        $this->_exportVariableToView('url_bad', $url_base.$arg_bad) ;
+                                        $this->_exportVariableToView('url_rep', $url_base.$arg_rep) ;
+                                        $this->_exportVariableToView('url_off', $url_base.$arg_off) ;
+                                        $this->_exportVariableToView('url_exp', $url_base.$arg_exp) ;
+                                        $this->_exportVariableToView('url_date', $url_base.$arg_date) ;
+                                        
                                         $this->_exportVariableToView('aItems', $aData) ;
                                         //calling the view...
                                         $this->doView('items/reported.php') ;
@@ -592,10 +639,29 @@
                                         }
                                         $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
                                         
+                                        $p_iPage      = 1;
+                                        if( !is_numeric(Params::getParam('iPage')) || Params::getParam('iPage') < 1 ) {
+                                            Params::setParam('iPage', $p_iPage );
+                                        }
+                                        // Table header order by related
+                                        if( Params::getParam('sort') == '') {
+                                            Params::setParam('sort', 'date') ;
+                                        }
+                                        if( Params::getParam('direction') == '') {
+                                            Params::setParam('direction', 'desc');
+                                        }
+                                        
+                                        $arg_date = '&sort=date';
+                                        if(Params::getParam('sort') == 'date') {
+                                            if(Params::getParam('direction') == 'desc') $arg_date .= '&direction=asc';
+                                        }
+                                        $this->_exportVariableToView('url_date', osc_admin_base_url(true).'?page=items'.$arg_date) ;
+                                        // -- Table header order by related
+                                        
                                         require_once osc_admin_base_path() . 'ajax/items_processing.php';
                                         $params = Params::getParamsAsArray("get") ;
                                         $items_processing = new ItemsProcessingAjax( $params );
-                                        $aData = $items_processing->result() ;
+                                        $aData = $items_processing->listings( $params ) ;
                                         
                                         if(count($aData['aaData']) == 0) {
                                             $total = (int)$aData['iTotalDisplayRecords'];
