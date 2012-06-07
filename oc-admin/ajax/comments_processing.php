@@ -46,6 +46,10 @@
             $this->_get = $params ;
             $this->getDBParams() ;
             
+            // force ORDER BY
+            $this->order_by['column_name'] = $this->column_names[3] ;
+            $this->order_by['type'] = 'desc' ;
+            
             $this->comments       = ItemComment::newInstance()->search($this->resourceID, $this->start, $this->limit, ( $this->order_by['column_name'] ? $this->order_by['column_name'] : 'pk_i_id' ), ( $this->order_by['type'] ? $this->order_by['type'] : 'desc' ) ) ;
             $this->total          = ItemComment::newInstance()->count() ;
             if( $this->resourceID == null ) {
@@ -62,6 +66,14 @@
 
         private function getDBParams()
         {
+            $p_iPage      = 1;
+            if( !is_numeric(Params::getParam('iPage')) || Params::getParam('iPage') < 1 ) {
+                Params::setParam('iPage', $p_iPage );
+                $this->iPage = $p_iPage ;
+            } else {
+                $this->iPage = Params::getParam('iPage') ;
+            }
+            
             foreach($this->_get as $k => $v) {
                 if( ( $k == 'resourceId' ) && !empty($v) ) {
                     $this->resourceID = intval($v) ;
@@ -75,15 +87,13 @@
                 if( $k == 'sEcho' ) {
                     $this->sEcho = intval($v) ;
                 }
-
-                /* for sorting */
-                if( $k == 'iSortCol_0' ) {
-                    $this->order_by['column_name'] = $this->column_names[$v] ;
-                }
-                if( $k == 'sSortDir_0' ) {
-                    $this->order_by['type'] = $v ;
-                }
             }
+            
+            // set start and limit using iPage param
+            $start = ((int)Params::getParam('iPage')-1) * $this->_get['iDisplayLength'];
+            
+            $this->start = intval( $start ) ;
+            $this->limit = intval( $this->_get['iDisplayLength'] ) ;
         }
 
         /* START - format functions */
