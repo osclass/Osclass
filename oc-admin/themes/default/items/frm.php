@@ -201,22 +201,4 @@
             </div>
             </form>
 </div>
-<script type="text/javascript">
-$('.input-has-placeholder input:not([type="hidden"])').each(function(){
-    var placeHolder = $(this).prev();
-    var input = $(this);
-    input.focus(function(){
-        placeHolder.hide();
-    }).blur(function(){
-        if(input.val() == ''){
-            placeHolder.show();
-        }else{
-            placeHolder.hide();
-        }
-    }).triggerHandler('blur');
-    placeHolder.click(function(){
-        input.focus();
-    });
-});
-</script>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

@@ -126,14 +126,14 @@
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="general-setting">
     <!-- settings form -->
-                    <div id="general-settings">
-                        <h2 class="render-title"><?php _e('General Settings') ; ?></h2>
-                                    <ul id="error_list" style="display: none;"></ul>
-                                    <form name="settings_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-                                        <input type="hidden" name="page" value="settings" />
-                                        <input type="hidden" name="action" value="update" />
-                                        <fieldset>
-                                            <div class="form-horizontal">
+    <div id="general-settings">
+        <h2 class="render-title"><?php _e('General Settings') ; ?></h2>
+            <ul id="error_list" style="display: none;"></ul>
+            <form name="settings_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+                <input type="hidden" name="page" value="settings" />
+                <input type="hidden" name="action" value="update" />
+                <fieldset>
+                    <div class="form-horizontal">
                     <div class="form-row">
                         <div class="form-label"><?php _e('Page title') ; ?></div>
                         <div class="form-controls"><input type="text" class="xlarge" name="pageTitle" value="<?php echo osc_esc_html( osc_page_title() ); ?>" /></div>

@@ -3,6 +3,11 @@ $(function(){
         var $submenu = $(this);
         $submenu.parent().hover(function(){
             $submenu.css('margin-top',((80-$submenu.height())/2)-10);
+        },function(){
+        });
+    });
+    $('#sidebar ul.oscmenu > li').each(function(){
+        $(this).hover(function(){
             $(this).addClass('hover');
         },function(){
             $(this).removeClass('hover');
@@ -20,11 +25,10 @@ $(function(){
         var $submenu = $(this).find('ul');
         $(this).addClass('hover');
                     $submenu.css('top',($submenu.height()*-1)).css('margin-top','-22px');
-
     }).live('mouseleave',function(){
         $(this).removeClass('hover')
     });
-     //Row actions
+    //Row actions
     $('.table .actions').each(function(){
         var $actions = $(this);
         var $rowActions = $('#table-row-actions');
@@ -41,8 +45,8 @@ $(function(){
         $('#table-row-actions').hide();
     })
     //Close help
-    $('#flashmessage .ico-close').live('click',function(){
-        $('#flashmessage').hide();
+    $('.flashmessage .ico-close').live('click',function(){
+        $(this).parents('.flashmessage').hide();
     });
     $('#help-box .ico-close').click(function(){
         $('#help-box').hide();
@@ -66,8 +70,27 @@ $(function(){
     $('#flashmessage:not(:empty)').show('fast',function(){
         //$(this).hide('slow');
     });
+    $('.input-has-placeholder input:not([type="hidden"])').each(function(){
+        var placeHolder = $(this).prev();
+        var input = $(this);
+        input.focus(function(){
+            placeHolder.hide();
+        }).blur(function(){
+            if(input.val() == ''){
+                placeHolder.show();
+            }else{
+                placeHolder.hide();
+            }
+        }).triggerHandler('blur');
+        placeHolder.click(function(){
+            input.focus();
+        });
+    });
+    oscTab();
 });
-
+function oscTab(callback){
+    $(".osc-tab").tabs();
+}
 function selectUi(thatSelect){
     var uiSelect = $('<a href="#" class="select-box-trigger"></a>');
     var uiSelectIcon = $('<span class="select-box-icon"><div class="ico ico-20 ico-drop-down"></div></span>');
