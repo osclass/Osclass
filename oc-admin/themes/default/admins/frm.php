@@ -47,7 +47,7 @@
     $actions    = __get('actions') ;
 ?>
 <?php osc_current_admin_theme_path('parts/header.php') ; ?>
-<h2 class="render-title"><?php echo customFrmText()['title'] ; ?></h3>
+<h2 class="render-title"><?php echo customFrmText()['title'] ; ?></h2>
     <!-- add user form -->
     <div class="settings-user">
         <ul id="error_list" style="display: none;"></ul>
