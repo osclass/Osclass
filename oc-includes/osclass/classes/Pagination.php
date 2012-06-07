@@ -41,8 +41,8 @@
 
         public function __construct($params = null)
         {
-            $this->total              = isset($params['total']) ? $params['total'] : osc_search_total_pages() + 1;
-            $this->selected           = isset($params['selected']) ? $params['selected'] : osc_search_page() + 1;
+            $this->total              = isset($params['total']) ? $params['total'] + 1 : osc_search_total_pages() + 1;
+            $this->selected           = isset($params['selected']) ? $params['selected'] + 1 : osc_search_page() + 1;
             $this->class_first        = isset($params['class_first']) ? $params['class_first'] : 'searchPaginationFirst';
             $this->class_last         = isset($params['class_last']) ? $params['class_last'] : 'searchPaginationLast';
             $this->class_prev         = isset($params['class_prev']) ? $params['class_prev'] : 'searchPaginationPrev';
@@ -114,7 +114,8 @@
             $links = array();
             $isFirst = 0;
             $isLast = 0;
-
+            
+            
             $attrs = array();
             if( $this->nofollow ) {
                 $attrs['rel'] = 'nofollow';
@@ -144,8 +145,13 @@
                 }
                 $links[] = $this->createATag($this->text_prev, $attrs);
             }
+            
             foreach($pages['pages'] as $p) {
                 $isLast++;
+                if((!isset($pages['next']) && !isset($pages['last']) && ( $isLast == count($pages['pages']))) ){
+                    $classfirst_selected = $this->class_selected . ' list-last';
+                    $classfirst_non_selected =$this->class_non_selected . ' list-last';
+                }
                 if(!$isFirst){
                     $classfirst_selected = $this->class_selected .' list-first';
                     $classfirst_non_selected = $this->class_non_selected .' list-first';
@@ -153,10 +159,6 @@
                 } else {
                     $classfirst_selected = $this->class_selected;
                     $classfirst_non_selected = $this->class_non_selected;
-                }
-                if((!isset($pages['next']) && !isset($pages['last']) && ( $isLast == count($pages['pages']))) ){
-                    $classfirst_selected = $this->class_selected . ' list-last';
-                    $classfirst_non_selected =$this->class_non_selected . ' list-last';
                 }
                 if( $p == 1 ) {
                     $attrs['href'] = str_replace('{PAGE}', '', str_replace(urlencode('{PAGE}'), '', $this->url));
