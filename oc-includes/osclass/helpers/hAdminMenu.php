@@ -43,6 +43,11 @@
         osc_run_hook('admin_menu') ;
         $plugins_out = ob_get_contents();
         ob_end_clean();
+        // clean old menus (remove h3 element)
+        $plugins_out = preg_replace('|<h3>.*</h3>|', '', $plugins_out);
+        $plugins_out = preg_replace('|<ul>|', '', $plugins_out);
+        $plugins_out = preg_replace('|</ul>|', '', $plugins_out);
+        
         // -----------------------------------------------------
         
         $sMenu = '<!-- menu -->'.PHP_EOL ;
