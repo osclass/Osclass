@@ -182,12 +182,15 @@ require_once LIB_PATH . 'osclass/helpers/hAdminMenu.php';
 
 define('__OSC_LOADED__', true);
 
-Plugins::init() ;
-
-// init Rewrite class only if it's the frontend
-if( !OC_ADMIN ) {
+if( OC_ADMIN ) {
+    // init admin menu
+    AdminMenu::newInstance()->init();
+} else {
+    // init Rewrite class only if it's the frontend
     Rewrite::newInstance()->init();
 }
+
+Plugins::init() ;
 
 // Moved from BaseModel, since we need some session magic on index.php ;)
 Session::newInstance()->session_start() ;
