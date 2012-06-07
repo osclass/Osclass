@@ -109,18 +109,18 @@
 
                     $catManager = Category::newInstance() ;
                     $aRecountCat = array();
-                    
+
                     foreach($aIds as $id => $parent) {
                         if( $parent == 'root' ) {
                             $res = $catManager->updateOrder($id, $orderParent) ;
                             if( is_bool($res) && !$res ) {
                                 $error = 1 ;
                             }
-                            
+
                             // find category
                             $auxCategory = Category::newInstance()->findByPrimaryKey($id);
-                            
-                            // set parent category 
+
+                            // set parent category
                             $conditions = array('pk_i_id' => $id) ;
                             $array['fk_i_parent_id'] = NULL ;
                             $res = $catManager->update($array, $conditions) ;
@@ -133,7 +133,7 @@
                                     array_push($aRecountCat, $id);
                                     array_push($aRecountCat, $parentId);
                                 }
-                                
+
                             }
                             $orderParent++ ;
                         } else {
@@ -147,10 +147,10 @@
                                 $error = 1 ;
                             }
 
-                            // set parent category 
+                            // set parent category
                             $auxCategory = Category::newInstance()->findByPrimaryKey($id);
                             $auxCategoryP = Category::newInstance()->findByPrimaryKey($catParent);
-                            
+
                             $conditions = array('pk_i_id' => $id) ;
                             $array['fk_i_parent_id'] = $catParent ;
 
@@ -172,7 +172,7 @@
                     foreach($aRecountCat as $rId) {
                         osc_update_cat_stats_id($rId);
                     }
-                    
+
                     if( $error ) {
                         $result = array( 'error' => __("Some error ocurred") ) ;
                     } else {
@@ -199,7 +199,7 @@
                 case 'field_categories_post':
                     $error = 0;
                     $field = Field::newInstance()->findByName(Params::getParam("s_name"));
-                    
+
                     if (!isset($field['pk_i_id']) || (isset($field['pk_i_id']) && $field['pk_i_id'] == Params::getParam("id"))) {
                         // remove categories from a field
                         Field::newInstance()->cleanCategoriesFromField(Params::getParam("id"));
@@ -246,9 +246,9 @@
                     } else {
                         $result = array( 'ok' => __("Saved") , 'text' => Params::getParam("s_name"), 'field_id' => $field['pk_i_id']) ;
                     }
-                    
+
                     echo json_encode($result) ;
-                    
+
                     break;
                 case 'delete_field':
                     $id = Params::getParam("id");
@@ -256,7 +256,7 @@
 
                     $fieldManager = Field::newInstance();
                     $res = $fieldManager->deleteByPrimaryKey($id);
-                    
+
                     if($res > 0) {
                         $message = __('The custom field have been deleted');
                     } else {
@@ -304,7 +304,7 @@
                     $aCategory = $mCategory->findByPrimaryKey( $id ) ;
 
                     if( $aCategory == false ) {
-                        $result = array( 'error' => sprintf( __("It doesn't exist a category with this id: %d"), $id) ) ;
+                        $result = array( 'error' => sprintf( __("No category exists with this id: %d"), $id) ) ;
                         echo json_encode($result) ;
                         break ;
                     }
@@ -322,7 +322,7 @@
                             $aIds[]     = $subcategory['pk_i_id'];
                             $aUpdated[] = array( 'id' => $subcategory['pk_i_id'] ) ;
                         }
-                        
+
                         Item::newInstance()->enableByCategory($enabled, $aIds);
 
                         if( $enabled ) {
@@ -359,15 +359,15 @@
                     }
                     $result['affectedIds'] = array( array('id' => $id) ) ;
                     echo json_encode($result) ;
-                    
+
                     break ;
                 case 'delete_category':
                     $id = Params::getParam("id");
                     $error = 0;
-                    
+
                     $categoryManager = Category::newInstance();
                     $res = $categoryManager->deleteByPrimaryKey($id);
-                    
+
                     if($res > 0) {
                         $message = __('The categories have been deleted');
                     } else {
@@ -381,7 +381,7 @@
                         $result = array( 'ok' => __("Saved") ) ;
                     }
                     echo json_encode($result) ;
-                    
+
                     break;
                 case 'edit_category_post':
                     $id = Params::getParam("id");
@@ -411,12 +411,12 @@
                     if ($error==0 || ($error==1 && $has_one_title==1)) {
                         $categoryManager = Category::newInstance();
                         $res = $categoryManager->updateByPrimaryKey(array('fields' => $fields, 'aFieldsDescription' => $aFieldsDescription), $id);
-                        
+
                         if( is_bool($res) ) {
                             $error = 2;
                         }
                     }
-                    
+
                     if($error==0) {
                         $msg = __("Category updated correctly");
                     } else if($error==1) {
@@ -430,7 +430,7 @@
                         $msg = __('Error while updating');
                     }
                     echo json_encode(array('error' => $error, 'msg' => $msg, 'text' => $aFieldsDescription[$l]['s_name']));
-                    
+
                     break;
                 case 'custom': // Execute via AJAX custom file
                     $ajaxFile = Params::getParam("ajaxfile");
@@ -494,7 +494,7 @@
                             $mPages->update(array('i_order' => $page['i_order']), array('pk_i_id' => $id));
                             $mPages->update(array('i_order' => $actual_order), array('pk_i_id' => $page['pk_i_id']));
                         }
-                        
+
                         // TO BE IMPROVED
                         // json for datatables
                         $prefLocale = osc_current_user_locale() ;
@@ -588,12 +588,12 @@
                                         $error_queries = array();
                                         if (file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
                                             $sql = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
-                                            
+
                                             $conn = DBConnectionClass::newInstance();
                                             $c_db = $conn->getOsclassDb() ;
                                             $comm = new DBCommandClass( $c_db ) ;
                                             $error_queries = $comm->updateDB( str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ) ;
-                                            
+
                                         }
                                         if ($error_queries[0]) { // Everything is OK, continue
                                             /**********************************
@@ -632,13 +632,13 @@
                                             if ($rm_errors == 0) {
                                                 $message = __('Everything was OK! Your OSClass installation is updated');
                                             } else {
-                                                $message = __('Almost everything was OK! Your OSClass installation is updated, but there were some errors removing temporary files. Please, remove manually the "oc-temp" folder');
+                                                $message = __('Almost everything was OK! Your OSClass installation is updated, but there were some errors removing temporary files. Please manually remove the "oc-temp" folder');
                                                 $error = 6; // Some errors removing files
                                             }
                                         } else {
                                             $sql_error_msg = $error_queries[2];
                                             $message = __('Problems upgrading the database');
-                                            $error = 5; // Problems upgrading the database		                
+                                            $error = 5; // Problems upgrading the database
                                         }
                                     } else {
                                         $message = __('Problems copying files. Maybe permissions are not correct');
@@ -646,7 +646,7 @@
                                     }
                                 } else {
                                     $message = __('Nothing to copy');
-                                    $error = 99; // Nothing to copy. THIS SHOULD NEVER HAPPENS, means we dont update any file!
+                                    $error = 99; // Nothing to copy. THIS SHOULD NEVER HAPPEN, means we don't update any file!
                                 }
                             } else {
                                 $message = __('Unzip failed');
@@ -670,7 +670,7 @@
                         @chmod($k, $v);
                     }
                     break;
-                    
+
                 /*******************************
                  ** COMPLETE MARKET PROCESS **
                  *******************************/
@@ -725,7 +725,7 @@
                             error_log('Source file: ' . $data['s_source_file']) ;
                             error_log('Filename: ' . $filename) ;
                             $result   = osc_downloadFile($data['s_source_file'], $filename) ;
-                            
+
                             if ($result) { // Everything is OK, continue
                                 /**********************
                                  ***** UNZIP FILE *****
@@ -770,11 +770,11 @@
                                                 }
                                             }
                                         }
-                                            
+
                                         if (!rmdir($path)) {
                                             $rm_errors++;
                                         }
-                                            
+
                                         if ($fail == 0) { // Everything is OK, continue
                                             if($data['e_type']!='THEME' && $data['e_type']!='LANGUAGE') {
                                                 if($plugin!=false && $re_enable) {
@@ -789,7 +789,7 @@
                                                 $message = __('Everything was OK!');
                                                 $error = 0;
                                             } else {
-                                                $message = __('Almost everything was OK! but there were some errors removing temporary files. Please, remove manually the "oc-temp" folder');
+                                                $message = __('Almost everything was OK! but there were some errors removing temporary files. Please manually remove the "oc-temp" folder');
                                                 $error = 6; // Some errors removing files
                                             }
                                         } else {
@@ -798,7 +798,7 @@
                                         }
                                     } else {
                                         $message = __('Nothing to copy');
-                                        $error = 99; // Nothing to copy. THIS SHOULD NEVER HAPPENS, means we dont update any file!
+                                        $error = 99; // Nothing to copy. THIS SHOULD NEVER HAPPEN, means we don't update any file!
                                     }
                                 } else {
                                     $message = __('Unzip failed');
@@ -848,7 +848,7 @@
                     }
                     echo json_encode($data);
                     break;
-                    
+
                 case 'location_stats':
                     $workToDo = LocationsTmp::newInstance()->count() ;
                     if( $workToDo > 0 ) {
@@ -857,7 +857,7 @@
                         foreach($aLocations as $location) {
                             $id     = $location['id_location'];
                             $type   = $location['e_type'];
-                            $data   = 0; 
+                            $data   = 0;
                             // update locations stats
                             switch ( $type ) {
                                 case 'COUNTRY':

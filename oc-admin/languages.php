@@ -131,7 +131,7 @@
                                             $languageDateFormat     = trim($languageDateFormat);
                                             $languageStopWords      = strip_tags($languageStopWords);
                                             $languageStopWords      = trim($languageStopWords);
-                                            
+
                                             $msg = '';
                                             if(!osc_validate_text($languageName)) {
                                                 $msg .= _m("Language name field is required")."<br/>";
@@ -263,7 +263,7 @@
 
                                             foreach( $id as $i ) {
                                                 if( osc_language() == $i ) {
-                                                    $msg_warning = sprintf( _m("%s can't be disabled because is the default language"), osc_language() ) ;
+                                                    $msg_warning = sprintf( _m("%s can't be disabled because it's the default language"), osc_language() ) ;
                                                     continue ;
                                                 }
                                                 $iUpdated += $this->localeManager->update($aValues, array('pk_c_code' => $i)) ;
