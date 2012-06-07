@@ -28,7 +28,6 @@
     //customize Head
     function customHead() { ?>
         <script type="text/javascript">
-            // autocomplete users
             $(document).ready(function(){
                 // check_all bulkactions
                 $("#check_all").change(function(){
@@ -93,10 +92,10 @@
                 <thead>
                     <tr>
                         <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
-                        <th><?php echo __('E-mail') ; ?></th>
-                        <th><?php echo __('Name') ; ?></th>
-                        <th><?php echo __('Date') ; ?></th>
-                        <th><?php echo __('Update Date') ; ?></th>
+                        <th><?php _e('E-mail') ; ?></th>
+                        <th><?php _e('Name') ; ?></th>
+                        <th><?php _e('Date') ; ?></th>
+                        <th><?php _e('Update Date') ; ?></th>
                     </tr>
                 </thead>
                 <tbody>
