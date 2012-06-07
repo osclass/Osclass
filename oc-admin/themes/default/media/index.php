@@ -18,8 +18,8 @@
 
     function customPageHeader(){ ?>
         <h1><?php _e('Manage Media') ; ?>
-		<a hreg="#" class="btn ico ico-32 ico-engine float-right"></a>
-		<a hreg="#" class="btn ico ico-32 ico-help float-right"></a>
+		<a href="#" class="btn ico ico-32 ico-engine float-right"></a>
+		<a href="#" class="btn ico ico-32 ico-help float-right"></a>
 	</h1>
 <?php
     }
