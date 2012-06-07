@@ -181,24 +181,6 @@
                         $this->doView("plugins/view.php");
                     }
                     break;
-                case 'render':
-                    $file = Params::getParam("file");
-                    if($file!="") {
-                        // We pass the GET variables (in case we have somes)
-                        if(preg_match('|(.+?)\?(.*)|', $file, $match)) {
-                            $file = $match[1];
-                            if(preg_match_all('|&([^=]+)=([^&]*)|', urldecode('&'.$match[2].'&'), $get_vars)) {
-                                for($var_k=0;$var_k<count($get_vars[1]);$var_k++) {
-                                    Params::setParam($get_vars[1][$var_k], $get_vars[2][$var_k]);
-                                }
-                            }
-                        } else {
-                            $file = $_REQUEST['file'];
-                        };
-                        $this->_exportVariableToView("file", ABS_PATH . $file);
-                        $this->doView("theme/view.php");
-                    }
-                    break;
                 case 'configure':
                     $plugin = Params::getParam("plugin");
                     if($plugin!='') {
