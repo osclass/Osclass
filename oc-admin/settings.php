@@ -1023,7 +1023,7 @@ HTACCESS;
                                         $this->doView('settings/mailserver.php') ;
                 break;
                 case('mailserver_post'):if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
+                                            osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin') ;
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver') ;
                                         }
                                         // updating mailserver
@@ -1227,7 +1227,7 @@ HTACCESS;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media') ;
                 break ;
                 case('images_post'):    if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
+                                            osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin') ;
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media') ;
                                         }
 
