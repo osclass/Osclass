@@ -188,7 +188,18 @@
                                             osc_run_hook( 'delete_comment', Params::getParam('id') ) ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
                 break ;
-                default:
+                default:                    if( Params::getParam('iDisplayLength') == '' ) {
+                                                Params::setParam('iDisplayLength', 10 ) ;
+                                            }
+                                            $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
+                                            
+                                            require_once osc_admin_base_path() . 'ajax/comments_processing.php';
+                                            $params = Params::getParamsAsArray("get") ;
+                                            $comments_processing = new CommentsProcessingAjax( $params );
+                                            $aData = $comments_processing->result( $params ) ;
+
+                                            $this->_exportVariableToView('aComments', $aData) ;
+                                            
                                             $this->doView('comments/index.php') ;
                 break ;
             }
