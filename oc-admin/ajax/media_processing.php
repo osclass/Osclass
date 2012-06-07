@@ -45,6 +45,15 @@
         function __construct($params)
         {
             $this->_get = $params ;
+            $p_iPage      = 1;
+            if( !is_numeric(Params::getParam('iPage')) || Params::getParam('iPage') < 1 ) {
+                Params::setParam('iPage', $p_iPage );
+            }
+            
+            // force ORDER BY
+            $this->order_by['column_name'] = $this->column_names[4] ;
+            $this->order_by['type'] = 'desc' ;
+            
             $this->getDBParams() ;
             
             $this->media          = ItemResource::newInstance()->getResources($this->resourceID, $this->start, $this->limit, ( $this->order_by['column_name'] ? $this->order_by['column_name'] : 'pk_i_id' ), ( $this->order_by['type'] ? $this->order_by['type'] : 'desc' ) ) ;
@@ -54,9 +63,6 @@
             } else {
                 $this->total_filtered = ItemResource::newInstance()->countResources( $this->resourceID ) ;
             }
-
-            
-            $this->dumpToDatatables() ;
         }
 
         function __destruct()
@@ -79,15 +85,13 @@
                 if( $k == 'sEcho' ) {
                     $this->sEcho = intval($v) ;
                 }
-
-                /* for sorting */
-                if( $k == 'iSortCol_0' ) {
-                    $this->order_by['column_name'] = $this->column_names[$v] ;
-                }
-                if( $k == 'sSortDir_0' ) {
-                    $this->order_by['type'] = $v ;
-                }
             }
+            
+            // set start and limit using iPage param
+            $start = ((int)Params::getParam('iPage')-1) * $this->_get['iDisplayLength'];
+            
+            $this->start = intval( $start ) ;
+            $this->limit = intval( $this->_get['iDisplayLength'] ) ;
         }
 
         /* START - format functions */
