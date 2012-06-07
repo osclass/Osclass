@@ -160,7 +160,7 @@
                                                                             }
                                                                         }
                                                                         osc_add_flash_ok_message(sprintf(_m('%s has been added as a new country'), $countryName), 'admin');
-                                                                    }                                                
+                                                                    }
 
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
@@ -288,7 +288,7 @@
                                                                                               ,'fk_c_country_code' => $countryCode));
                                                                         $id = $mCities->dao->insertedId();
                                                                         CityStats::newInstance()->setNumItems($id, 0);
-                                                                        
+
                                                                         osc_add_flash_ok_message(sprintf(_m('%s has been added as a new city'),
                                                                                                          $newCity), 'admin');
                                                                     } else {
@@ -772,7 +772,7 @@ HTACCESS;
                                                 case 2:
                                                     $msg  = _m("Permalinks structure updated.") ;
                                                     $msg .= " " ;
-                                                    $msg .= _m("However, we can't check if Apache module <b>mod_rewrite</b> is loaded. If you experience some problems with the urls, you should deactivate <em>friendly urls</em>") ;
+                                                    $msg .= _m("However, we can't check if Apache module <b>mod_rewrite</b> is loaded. If you experience some problems with the URLs, you should deactivate <em>Friendly URLs</em>") ;
                                                     if($errors>0) {
                                                         $msg .= $msg_error;
                                                     }
@@ -781,17 +781,17 @@ HTACCESS;
                                                 case 3:
                                                     $msg  = _m("File <b>.htaccess</b> couldn't be filled with the right content.") ;
                                                     $msg .= " " ;
-                                                    $msg .= _m("Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file, please deactivate <em>friendly urls</em> option.") ;
+                                                    $msg .= _m("Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file, please deactivate <em>Friendly URLs</em> option.") ;
                                                     $msg .= "</p><pre>" . htmlentities($htaccess, ENT_COMPACT, "UTF-8") . '</pre><p>' ;
                                                     if($errors>0) {
                                                         $msg .= $msg_error;
                                                     }
                                                     osc_add_flash_error_message($msg, 'admin') ;
                                                 break;
-                                                case 4: 
+                                                case 4:
                                                     $msg  = _m("File <b>.htaccess</b> couldn't be filled with the right content.") ;
                                                     $msg .= " " ;
-                                                    $msg .= _m("Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file or experience some problems with the urls, please deactivate <em>friendly urls</em> option.") ;
+                                                    $msg .= _m("Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file or experience some problems with the URLs, please deactivate <em>Friendly URLs</em> option.") ;
                                                     $msg .= "</p><pre>" . htmlentities($htaccess, ENT_COMPACT, "UTF-8") . '</pre><p>' ;
                                                     if($errors>0) {
                                                         $msg .= $msg_error;
@@ -805,7 +805,7 @@ HTACCESS;
                                             Preference::newInstance()->update(array('s_value' => '0')
                                                                              ,array('s_name'  => 'mod_rewrite_loaded')) ;
 
-                                            osc_add_flash_ok_message(_m('Friendly urls successfully deactivated'), 'admin') ;
+                                            osc_add_flash_ok_message(_m('Friendly URLs successfully deactivated'), 'admin') ;
                                         }
 
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=settings&action=permalinks' ) ;
@@ -1023,7 +1023,7 @@ HTACCESS;
                                         $this->doView('settings/mailserver.php') ;
                 break;
                 case('mailserver_post'):if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
+                                            osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin') ;
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver') ;
                                         }
                                         // updating mailserver
@@ -1186,7 +1186,7 @@ HTACCESS;
                                             $status    = 'warning' ;
                                             $maxSizeKb = $upload_mb ;
                                             // flash message text warning
-                                            $error     .= sprintf( _m("You cannot set a maximum size file higher than the one that allows PHP configuration: <b>%d KB</b>"), $upload_mb ) ;
+                                            $error     .= sprintf( _m("You cannot set a maximum file size higher than the one allowed in the PHP configuration: <b>%d KB</b>"), $upload_mb ) ;
                                         }
 
                                         $iUpdated += Preference::newInstance()->update(
@@ -1217,7 +1217,7 @@ HTACCESS;
                                                 array('s_value' => $use_imagick),
                                                 array('s_name'  => 'use_imagick')
                                         ) ;
-                                        
+
                                         if( $error != '' ) {
                                             osc_add_flash_warning_message($error, 'admin') ;
                                         } else {
@@ -1227,7 +1227,7 @@ HTACCESS;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media') ;
                 break ;
                 case('images_post'):    if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
+                                            osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin') ;
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media') ;
                                         }
 
@@ -1305,7 +1305,7 @@ HTACCESS;
                                             } else {
                                                 // no es imagen o imagen sin extesión
                                             }
-                                            
+
                                         }
 
                                         osc_add_flash_ok_message( _m('Re-generation complete'), 'admin') ;
@@ -1345,8 +1345,8 @@ HTACCESS;
                                         $bAutoCron         = ($bAutoCron != '' ? true : false) ;
                                         $error = "";
 
-                                        
-                                            
+
+
                                         $msg = '';
                                         if(!osc_validate_text($sPageTitle)) {
                                             $msg .= _m("Page title field is required")."<br/>";
@@ -1368,7 +1368,7 @@ HTACCESS;
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=settings');
                                         }
 
-                                        
+
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageTitle)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'pageTitle')) ;
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageDesc)
@@ -1445,7 +1445,7 @@ HTACCESS;
                                                     array('s_name'  => 'save_latest_searches')
                                             ) ;
                                         }
-                                        
+
                                         if(Params::getParam('customPurge')=='') {
                                             osc_add_flash_error_message(_m('Custom number could not be left empty'), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=latestsearches') ;
@@ -1483,7 +1483,7 @@ HTACCESS;
         {
             $country_code    = Params::getParam('c_country');
             $aCountryCode[] = trim($country_code);
-            
+
             $manager_country = new Country();
             $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country_id&term=' .
                                                      urlencode(implode(',', $aCountryCode)) );
