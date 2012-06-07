@@ -52,7 +52,7 @@
                 <h2 class="render-title"><?php _e('Upload theme') ; ?></h2>
                 <div class="form-horizontal">
                 <?php if( is_writable( osc_themes_path() ) ) { ?>
-                    <div class="flashmessage info">
+                    <div class="flashmessage flashmessage-info">
                         <p class="info"><?php printf( __('Download more themes at %s'), '<a href="https://sourceforge.net/projects/osclass/files/Themes/" target="_blank">Sourceforge</a>') ; ?></p>
                     </div>
                     <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data">
@@ -70,8 +70,8 @@
                         </div>
                     </form>
                 <?php } else { ?>
-                    <div class="flashmessage error">
-                        <a class="close" href="#">×</a>
+                    <div class="flashmessage flashmessage-error">
+                        <a class="btn ico btn-mini ico-close" href="#">×</a>
                         <p><?php _e('Cannot install a new theme') ; ?></p>
                     </div>
                     <p class="text">

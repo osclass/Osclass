@@ -315,7 +315,7 @@ function drawCategory($category,$isSubcategory = false){
             <div class="right">
                 <!-- categories form -->
                 <div class="categories">
-                    <div class="flashmessage info">
+                    <div class="flashmessage flashmessage-info">
                         <p class="info"><?php _e('Drag&drop the categories to reorder them the way you like. Click on edit link to edit the category') ; ?></p>
                     </div>
                     <div class="list-categories">
