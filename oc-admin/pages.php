@@ -45,7 +45,7 @@
                     if(Params::getParam("id")=='') {
                         $this->redirectTo(osc_admin_base_url(true)."?page=pages");
                     }
-                    
+
                     $form     = count(Session::newInstance()->_getForm());
                     $keepForm = count(Session::newInstance()->_getKeepForm());
                     if($form == 0 || $form == $keepForm) {
@@ -78,7 +78,7 @@
 
                     Session::newInstance()->_setForm('s_internal_name',$s_internal_name);
                     Session::newInstance()->_setForm('aFieldsDescription',$aFieldsDescription);
-                    
+
                     if($not_empty) {
                         foreach($aFieldsDescription as $k => $_data) {
                             $this->pageManager->updateDescription($id, $k, $_data['s_title'], $_data['s_text']);
@@ -124,7 +124,7 @@
                     }
 
                     $page = $this->pageManager->findByInternalName($s_internal_name);
-                    
+
                     $aFields = array('s_internal_name' => $s_internal_name, 'b_indelible' => '0');
                     $aFieldsDescription = array();
                     $postParams = Params::getParamsAsArray('', false);
@@ -137,11 +137,11 @@
                             $aFieldsDescription[$m[1]][$m[2]] = $v;
                         }
                     }
-                    
+
                     Session::newInstance()->_setForm('s_internal_name',$s_internal_name);
                     Session::newInstance()->_setForm('aFieldsDescription',$aFieldsDescription);
-                    
-                    
+
+
                     if(!isset($page['pk_i_id'])) {
                         if($not_empty) {
                             $result = $this->pageManager->insert($aFields, $aFieldsDescription) ;
@@ -152,7 +152,7 @@
                             osc_add_flash_error_message(_m("The page couldn't be added, at least one title should not be empty"), 'admin') ;
                         }
                     } else {
-                        osc_add_flash_error_message(_m("Oops! That internal name is already in use. We can't made the changes"), 'admin') ;
+                        osc_add_flash_error_message(_m("Oops! That internal name is already in use. We can't make the changes"), 'admin') ;
                     }
                     $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=add");
                     break;
@@ -184,7 +184,7 @@
                         if($page_indelible == 1) {
                             osc_add_flash_error_message( _m("One page can't be deleted because it is indelible"), 'admin');
                         } else {
-                            osc_add_flash_error_message(sprintf(_m("%s pages couldn't be deleted because are indelible"), $page_indelible), 'admin');
+                            osc_add_flash_error_message(sprintf(_m("%s pages couldn't be deleted because they are indelible"), $page_indelible), 'admin');
                         }
                     }
                     if($page_deleted_error > 0) {
