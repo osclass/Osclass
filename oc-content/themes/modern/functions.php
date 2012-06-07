@@ -61,21 +61,15 @@
     osc_add_hook('init_admin', 'theme_modern_actions_admin');
     osc_admin_menu_appearance(__('Header logo', 'modern'), osc_admin_render_theme_url('oc-content/themes/modern/admin/header.php'), 'header_modern');
 
-    if( !function_exists('add_logo_header') ) {
-        function add_logo_header() {
-             $html = '<img border="0" alt="' . osc_page_title() . '" src="' . osc_current_web_theme_url('images/logo.jpg') . '">';
-             $js   = "<script>
-                          $(document).ready(function () {
-                              $('#logo').html('".$html."');
-                          });
-                      </script>";
-
+    if( !function_exists('logo_header') ) {
+        function logo_header() {
+             $html = '<img border="0" alt="' . osc_page_title() . '" src="' . osc_current_web_theme_url('images/logo.jpg') . '" />';
              if( file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) {
-                echo $js;
-             }
+                return $html;
+             } else {
+                return osc_page_title();
+            }
         }
-
-        osc_add_hook("header", "add_logo_header");
     }
 
 ?>
