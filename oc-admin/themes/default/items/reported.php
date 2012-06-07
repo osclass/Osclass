@@ -81,7 +81,7 @@
         </div>
     </div>
     
-    <form class="items datatables" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
         <input type="hidden" name="page" value="items" />
         <input type="hidden" name="action" value="bulk_actions" />
         <div id="bulk-actions">
@@ -156,19 +156,15 @@
         </div>
     </form>
 </div>
-
 <div class="has-pagination">
 <?php 
-    $pageActual = 1 ;
-    if( Params::getParam('iPage') != '' ) {
-        $pageActual = Params::getParam('iPage') ;
-    }
     
+    $pageActual = Params::getParam('iPage') ;
     $urlActual = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
-    $urlActual = preg_replace('/&iPage=(\d)+/', '', $urlActual) ;
+    $urlActual = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
     $pageTotal = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
     $params = array('total'    => $pageTotal
-                   ,'selected' => $pageActual
+                   ,'selected' => $pageActual-1
                    ,'url'      => $urlActual.'&iPage={PAGE}'
                    ,'sides'    => 5
         );

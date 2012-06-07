@@ -137,8 +137,6 @@
 </div>
 <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" style="display:none">
     <input type="hidden" name="page" value="items" />
-    <input type="hidden" name="iSortCol_0" value="7" />
-    <input type="hidden" name="sSortDir_0" value="0" />
     <input type="hidden" name="iDisplayLength" value="<?php echo $iDisplayLength;?>" />
     <div class="form-horizontal">
     <div class="grid-system">
@@ -371,16 +369,13 @@
 </div>
 <div class="has-pagination">
 <?php 
-    $pageActual = 1 ;
-    if( Params::getParam('iPage') != '' ) {
-        $pageActual = Params::getParam('iPage') ;
-    }
     
+    $pageActual = Params::getParam('iPage') ;
     $urlActual = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
-    $urlActual = preg_replace('/&iPage=(\d)+/', '', $urlActual) ;
+    $urlActual = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
     $pageTotal = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
     $params = array('total'    => $pageTotal
-                   ,'selected' => $pageActual
+                   ,'selected' => $pageActual-1
                    ,'url'      => $urlActual.'&iPage={PAGE}'
                    ,'sides'    => 5
         );

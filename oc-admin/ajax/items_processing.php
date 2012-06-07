@@ -215,15 +215,16 @@
                 $this->_get['iDisplayLength'] = 10 ;
             }
             
-            if( !isset($this->_get['iPage']) ) {
-                $this->_get['iPage'] = 1 ;
+            $p_iPage      = 1;
+            if( !is_numeric(Params::getParam('iPage')) || Params::getParam('iPage') < 1 ) {
+                Params::setParam('iPage', $p_iPage );
+                $this->iPage = $p_iPage ;
+            } else {
+                $this->iPage = Params::getParam('iPage') ;
             }
             
             // get & set values
             foreach($this->_get as $k => $v) {
-                if( $k == 'iPage' ) {
-                    $this->iPage = intval($v) ;
-                }
 
                 if( $k == 'sSearch' && $v != '') {
                     $this->search = $v;
@@ -290,7 +291,7 @@
                 }
             }
             // set start and limit using iPage param
-            $start = ($this->_get['iPage']-1) * $this->_get['iDisplayLength'];
+            $start = ($this->iPage - 1) * $this->_get['iDisplayLength'];
             
             $this->start = intval( $start ) ;
             $this->limit = intval( $this->_get['iDisplayLength'] ) ;

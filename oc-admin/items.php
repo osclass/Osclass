@@ -564,10 +564,6 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=items&action=settings');
                 break;
                 case('items_reported'): // show reported listings
-                                        $p_iPage      = 1;
-                                        if( !is_numeric(Params::getParam('iPage')) || Params::getParam('iPage') < 1 ) {
-                                            Params::setParam('iPage', $p_iPage );
-                                        }
                                         if( Params::getParam('sort') == '') {
                                             Params::setParam('sort', 'date') ;
                                         }
@@ -638,11 +634,7 @@
                                             Params::setParam('iDisplayLength', 10 ) ;
                                         }
                                         $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
-                                        
-                                        $p_iPage      = 1;
-                                        if( !is_numeric(Params::getParam('iPage')) || Params::getParam('iPage') < 1 ) {
-                                            Params::setParam('iPage', $p_iPage );
-                                        }
+                                     
                                         // Table header order by related
                                         if( Params::getParam('sort') == '') {
                                             Params::setParam('sort', 'date') ;
@@ -666,14 +658,12 @@
                                         if(count($aData['aaData']) == 0) {
                                             $total = (int)$aData['iTotalDisplayRecords'];
                                             $page  = (int)Params::getParam('iPage');
-                                            
                                             $maxPage = ( $total / (int)$aData['iDisplayLength'] ) -1 ;
                                             
                                             if($page > 1) {
                                                 $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
                                                 $page = $page-1;
                                                 $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
-                                                error_log($url);
                                                 $this->redirectTo($url) ;
                                             }
                                         }
