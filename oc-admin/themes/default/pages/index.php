@@ -28,7 +28,31 @@
     //customize Head
     function customHead() { ?>
         <script type="text/javascript">
+            function order_up(id) {
+                $('#datatables_list_processing').show() ;
+                $.ajax({
+                    url: "<?php echo osc_admin_base_url(true)?>?page=ajax&action=order_pages&id="+id+"&order=up",
+                    success: function(res) {
+                        window.location.reload( true );
+                    },
+                    error: function(){
+                        // alert error
+                    }
+                });
+            }
             
+            function order_down(id) {
+                $('#datatables_list_processing').show();
+                $.ajax({
+                    url: "<?php echo osc_admin_base_url(true)?>?page=ajax&action=order_pages&id="+id+"&order=down",
+                    success: function(res){
+                        window.location.reload( true );
+                    },
+                    error: function(){
+                        // alert error
+                    }
+                });
+            }
             $(document).ready(function(){
                 // check_all bulkactions
                 $("#check_all").change(function(){
