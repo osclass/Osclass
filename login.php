@@ -54,6 +54,9 @@
                                                         $request_uri = preg_replace('#'.$match.'#', $uri, $request_uri);
                                                         if(preg_match('|([&?]{1})page=([^&]*)|', '&'.$request_uri.'&', $match)) {
                                                             $page_redirect = $match[2];
+                                                            if($page_redirect=='' || $page_redirect=='login') {
+                                                                $url_redirect = osc_user_dashboard_url();
+                                                            }
                                                         }
                                                         break;
                                                     }
@@ -62,7 +65,7 @@
                                         } else if(preg_match('|[\?&]page=([^&]+)|', $url_redirect.'&', $match)) {
                                             $page_redirect = $match[1];
                                         }
-                                        if($page_redirect=='' || $page_redirect=='login' || $url_redirect=='') {
+                                        if($url_redirect=='') {
                                             $url_redirect = osc_user_dashboard_url();
                                         }
 
