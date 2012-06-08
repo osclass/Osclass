@@ -16,7 +16,7 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    function customPageHeader(){ ?>
+    function customPageHeader() { ?>
         <h1><?php _e('Manage Plugins') ; ?>
             <a href="#" class="btn ico ico-32 ico-engine float-right"></a>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
