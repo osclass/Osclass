@@ -91,6 +91,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                <?php if(count($aData['aaData'])>0) : ?>
                 <?php foreach( $aData['aaData'] as $array) : ?>
                     <tr>
                     <?php foreach($array as $key => $value) : ?>
@@ -104,6 +105,13 @@
                     <?php endforeach; ?>
                     </tr>
                 <?php endforeach;?>
+                <?php else : ?>
+                <tr>
+                    <td colspan="5" style="text-align: center;">
+                    <p><?php _e('No data available in table') ; ?></p>
+                    </td>
+                </tr>
+                <?php endif; ?>
                 </tbody>
             </table>
             <div id="table-row-actions"></div> <!-- used for table actions -->
