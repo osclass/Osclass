@@ -34,14 +34,14 @@ $(function(){
         var $rowActions = $('#table-row-actions');
         $(this).parents('tr').mouseenter(function(event){
             event.preventDefault();
-            var $containterOffset = $('.table-hast-actions').offset();
+            var $containterOffset = $('.table-contains-actions').offset();
             $thisOffset = $(this).offset();
             $rowActions.empty().append($actions.clone()).css({
                 width:$(this).width()-85,
                 top:($thisOffset.top-$containterOffset.top)+$(this).height()
             }).show();
             $('tr').removeClass('collapsed-hover');
-            if($(this).parents('div.table-hast-actions').hasClass('table-collapsed')){
+            if($(this).parents('div.table-contains-actions').hasClass('table-collapsed')){
                 var thatRow = $(this);
                 thatRow.next().addClass('collapsed-hover');
                 $rowActions.mouseleave(function(){
@@ -50,11 +50,11 @@ $(function(){
             }
         });
     });
-    $('.table-hast-actions').mouseleave(function(){
+    $('.table-contains-actions').mouseleave(function(){
         $('tr').removeClass('collapsed-hover');
         $('#table-row-actions').hide();
     });
-    $('.table-hast-actions').mouseleave(function(event){
+    $('.table-contains-actions').mouseleave(function(event){
         $('#table-row-actions').hide();
     })
     //Close help

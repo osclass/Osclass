@@ -28,20 +28,20 @@
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="backup-setting">
     <!-- settings form -->
-                    <div id="backup-settings">
-                        <h2 class="render-title"><?php _e('Category stats') ; ?></h2>
-                        <form id="backup_form" name="backup_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-                            <input type="hidden" name="page" value="tools" />
-                            <input type="hidden" name="action" value="category_post" />
-                            <fieldset>
-                            <div class="form-horizontal">
-                            <div class="form-actions">
-                                <input type="submit" id="backup_save" value="<?php echo osc_esc_html( __('Calculate category stats')); ?>" class="btn btn-submit" />
-                            </div>
-                        </div>
-                        </fieldset>
-                    </form>
+    <div id="backup-settings">
+        <h2 class="render-title"><?php _e('Category stats') ; ?></h2>
+        <form id="backup_form" name="backup_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+            <input type="hidden" name="page" value="tools" />
+            <input type="hidden" name="action" value="category_post" />
+            <fieldset>
+                <div class="form-horizontal">
+                    <div class="form-actions">
+                        <input type="submit" id="backup_save" value="<?php echo osc_esc_html( __('Calculate category stats')); ?>" class="btn btn-submit" />
+                    </div>
                 </div>
-                <!-- /settings form -->
+            </fieldset>
+        </form>
+    </div>
+    <!-- /settings form -->
 </div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                

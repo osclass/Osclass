@@ -79,43 +79,40 @@
                 </select> <input type="submit" <?php echo $onclick_bulkactions; ?> id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
             </label>
         </div>
-        <div class="table-hast-actions">
-            <table class="table" cellpadding="0" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
-                        <th><?php _e('E-mail') ; ?></th>
-                        <th><?php _e('Name') ; ?></th>
-                        <th><?php _e('Attached to') ; ?></th>
-                        <th><?php _e('Date') ; ?></th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php if(count($aData['aaData'])>0) : ?>
-                <?php foreach( $aData['aaData'] as $array) : ?>
-                    <tr>
-                    <?php foreach($array as $key => $value) : ?>
-                        <?php if( $key==0 ): ?>
-                        <td class="col-bulkactions">
-                        <?php else : ?>
-                        <td>
-                        <?php endif ; ?>
-                        <?php echo $value; ?>
-                        </td>
-                    <?php endforeach; ?>
-                    </tr>
-                <?php endforeach;?>
-                <?php else : ?>
+        <table class="table" cellpadding="0" cellspacing="0">
+            <thead>
                 <tr>
-                    <td colspan="5" style="text-align: center;">
-                    <p><?php _e('No data available in table') ; ?></p>
-                    </td>
+                    <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
+                    <th><?php _e('E-mail') ; ?></th>
+                    <th><?php _e('Name') ; ?></th>
+                    <th><?php _e('Attached to') ; ?></th>
+                    <th><?php _e('Date') ; ?></th>
                 </tr>
-                <?php endif; ?>
-                </tbody>
-            </table>
-            <div id="table-row-actions"></div> <!-- used for table actions -->
-        </div>
+            </thead>
+            <tbody>
+            <?php if(count($aData['aaData'])>0) : ?>
+            <?php foreach( $aData['aaData'] as $array) : ?>
+                <tr>
+                <?php foreach($array as $key => $value) : ?>
+                    <?php if( $key==0 ): ?>
+                    <td class="col-bulkactions">
+                    <?php else : ?>
+                    <td>
+                    <?php endif ; ?>
+                    <?php echo $value; ?>
+                    </td>
+                <?php endforeach; ?>
+                </tr>
+            <?php endforeach;?>
+            <?php else : ?>
+            <tr>
+                <td colspan="5" style="text-align: center;">
+                <p><?php _e('No data available in table') ; ?></p>
+                </td>
+            </tr>
+            <?php endif; ?>
+            </tbody>
+        </table>
     </form>
 </div>
 <div class="has-pagination">
