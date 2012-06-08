@@ -33,10 +33,12 @@
                 $.ajax({
                     url: "<?php echo osc_admin_base_url(true)?>?page=ajax&action=order_pages&id="+id+"&order=up",
                     success: function(res) {
+                        // TODO improve
                         window.location.reload( true );
                     },
                     error: function(){
                         // alert error
+                        // TODO
                     }
                 });
             }
@@ -46,10 +48,12 @@
                 $.ajax({
                     url: "<?php echo osc_admin_base_url(true)?>?page=ajax&action=order_pages&id="+id+"&order=down",
                     success: function(res){
+                        // TODO improve
                         window.location.reload( true );
                     },
                     error: function(){
                         // alert error
+                        // TODO
                     }
                 });
             }
