@@ -204,8 +204,20 @@
                     $this->redirectTo(osc_admin_base_url(true) . "?page=pages");
                     break;
                 default:
-                    $this->_exportVariableToView("prefLocale", osc_current_admin_locale());
-                    $this->_exportVariableToView("pages", $this->pageManager->listAll(0));
+                    if( Params::getParam('iDisplayLength') == '' ) {
+                        Params::setParam('iDisplayLength', 2 ) ;
+                    }
+                    $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
+
+                    require_once osc_admin_base_path() . 'ajax/pages_processing.php';
+                    $params = Params::getParamsAsArray("get") ;
+                    $pages_processing = new PagesProcessing( $params );
+                    $aData = $pages_processing->result( $params ) ;
+
+                    $this->_exportVariableToView('aPages', $aData) ;
+                    
+//                    $this->_exportVariableToView("prefLocale", osc_current_admin_locale());
+//                    $this->_exportVariableToView("pages", $this->pageManager->listAll(0));
                     $this->doView("pages/index.php");
 
             }
