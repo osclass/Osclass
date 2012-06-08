@@ -216,8 +216,6 @@
 
                     $this->_exportVariableToView('aPages', $aData) ;
                     
-//                    $this->_exportVariableToView("prefLocale", osc_current_admin_locale());
-//                    $this->_exportVariableToView("pages", $this->pageManager->listAll(0));
                     $this->doView("pages/index.php");
 
             }
