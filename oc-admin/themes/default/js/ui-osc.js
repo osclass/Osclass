@@ -32,14 +32,27 @@ $(function(){
     $('.table .actions').each(function(){
         var $actions = $(this);
         var $rowActions = $('#table-row-actions');
-        $(this).parents('tr').mouseenter(function(){
+        $(this).parents('tr').mouseenter(function(event){
+            event.preventDefault();
             var $containterOffset = $('.table-hast-actions').offset();
             $thisOffset = $(this).offset();
             $rowActions.empty().append($actions.clone()).css({
                 width:$(this).width()-85,
                 top:($thisOffset.top-$containterOffset.top)+$(this).height()
             }).show();
+            $('tr').removeClass('collapsed-hover');
+            if($(this).parents('div.table-hast-actions').hasClass('table-collapsed')){
+                var thatRow = $(this);
+                thatRow.next().addClass('collapsed-hover');
+                $rowActions.mouseleave(function(){
+                    $('tr').removeClass('collapsed-hover');
+                });
+            }
         });
+    });
+    $('.table-hast-actions').mouseleave(function(){
+        $('tr').removeClass('collapsed-hover');
+        $('#table-row-actions').hide();
     });
     $('.table-hast-actions').mouseleave(function(event){
         $('#table-row-actions').hide();
