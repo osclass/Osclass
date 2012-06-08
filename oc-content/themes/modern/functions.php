@@ -32,6 +32,35 @@
         }
     }
 
+    function theme_modern_actions_admin() {
+        switch( Params::getParam('action_specific') ) {
+            case('upload_logo'):
+                $package = Params::getFiles('logo');
+                if( $package['error'] == UPLOAD_ERR_OK ) {
+                    if( move_uploaded_file($package['tmp_name'], WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) {
+                        osc_add_flash_ok_message(_m('The logo image has been uploaded correctly'), 'admin');
+                    } else {
+                        osc_add_flash_error_message(_m("An error has occurred, please try again"), 'admin');
+                    }
+                } else {
+                    osc_add_flash_error_message(_m("An error has occurred, please try again"), 'admin');
+                }
+                header('Location: ' . osc_admin_render_theme_url('oc-content/themes/modern/admin/header.php')); exit;
+            break;
+            case('remove'):
+                if(file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) {
+                    @unlink( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" );
+                    osc_add_flash_ok_message(_m('The logo image has been removed'), 'admin');
+                } else {
+                    osc_add_flash_error_message(_m("Image not found"), 'admin');
+                }
+                header('Location: ' . osc_admin_render_theme_url('oc-content/themes/modern/admin/header.php')); exit;
+            break;
+        }
+    }
+    osc_add_hook('init_admin', 'theme_modern_actions_admin');
+    osc_admin_menu_appearance(__('Header logo', 'modern'), osc_admin_render_theme_url('oc-content/themes/modern/admin/header.php'), 'header_modern');
+
     if( !function_exists('add_logo_header') ) {
         function add_logo_header() {
              $html = '<img border="0" alt="' . osc_page_title() . '" src="' . osc_current_web_theme_url('images/logo.jpg') . '">';
@@ -49,15 +78,4 @@
         osc_add_hook("header", "add_logo_header");
     }
 
-    if( !function_exists('modern_admin_menu') ) {
-        function modern_admin_menu() {
-            echo '<h3><a href="#">'. __('Modern theme','modern') .'</a></h3>
-            <ul>
-                <li><a href="' . osc_admin_render_theme_url('oc-content/themes/modern/admin/admin_settings.php') . '">&raquo; '.__('Settings theme', 'modern').'</a></li>
-            </ul>';
-        }
-
-        osc_add_hook('admin_menu', 'modern_admin_menu');
-    }
-    
 ?>
