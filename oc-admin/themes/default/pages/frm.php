@@ -68,12 +68,12 @@
 ?>
 
 <?php osc_current_admin_theme_path('parts/header.php') ; ?>
-<h2 class="render-title"><?php echo customFrmText()['title'] ; ?></h2>
+<h2 class="render-title"><?php $aux = customFrmText(); echo $aux['title'] ; ?></h2>
 <div id="item-form">
     <?php printLocaleTabs(); ?>
      <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
         <input type="hidden" name="page" value="pages" />
-        <input type="hidden" name="action" value="<?php echo customFrmText()['action_frm'] ; ?>" />
+        <input type="hidden" name="action" value="<?php  $aux = customFrmText(); echo $aux['action_frm'] ; ?>" />
         <?php PageForm::primary_input_hidden($page) ; ?>
         <div id="left-side">
 
@@ -93,7 +93,7 @@
         </div>
         <div class="clear"></div>
         <div class="form-actions">
-            <input type="submit" value="<?php echo osc_esc_html(customFrmText()['btn_text']); ?>" class="btn btn-submit" />
+            <input type="submit" value="<?php  $aux = customFrmText(); echo osc_esc_html($aux['btn_text']); ?>" class="btn btn-submit" />
         </div>
     </form>
 </div>

@@ -27,7 +27,7 @@
     <h2 class="render-title"><?php _e('Add a plugin') ; ?></h2>
     <div id="upload-language">
         <div class="form-horizontal">
-        <?php if( is_writable( osc_translations_path() ) ) { ?>
+        <?php if( is_writable( osc_plugins_path() ) ) { ?>
             <div class="flashmessage flashmessage-info">
                 <p class="info"><?php printf( __('Download more plugins at %s'), '<a href="https://sourceforge.net/projects/osclass/files/Plugins/" target="_blank">Sourceforge</a>') ; ?></p>
             </div>

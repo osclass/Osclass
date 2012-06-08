@@ -17,9 +17,10 @@
      */
 
     function customPageHeader(){ ?>
-        <h1><?php _e('Manage Media') ; ?>
+        <h1><?php _e('Manage Pages') ; ?>
             <a href="#" class="btn ico ico-32 ico-engine float-right"></a>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
+            <a href="<?php echo osc_admin_base_url(true); ?>?page=pages&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Create page') ; ?></a>
 	</h1>
 <?php
     }
@@ -27,7 +28,31 @@
     //customize Head
     function customHead() { ?>
         <script type="text/javascript">
+            function order_up(id) {
+                $('#datatables_list_processing').show() ;
+                $.ajax({
+                    url: "<?php echo osc_admin_base_url(true)?>?page=ajax&action=order_pages&id="+id+"&order=up",
+                    success: function(res) {
+                        window.location.reload( true );
+                    },
+                    error: function(){
+                        // alert error
+                    }
+                });
+            }
             
+            function order_down(id) {
+                $('#datatables_list_processing').show();
+                $.ajax({
+                    url: "<?php echo osc_admin_base_url(true)?>?page=ajax&action=order_pages&id="+id+"&order=down",
+                    success: function(res){
+                        window.location.reload( true );
+                    },
+                    error: function(){
+                        // alert error
+                    }
+                });
+            }
             $(document).ready(function(){
                 // check_all bulkactions
                 $("#check_all").change(function(){
@@ -48,7 +73,7 @@
     osc_add_hook('admin_header','customHead');
    
     $iDisplayLength = __get('iDisplayLength');
-    $aData          = __get('aMedia'); 
+    $aData          = __get('aPages'); 
 
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
@@ -61,20 +86,20 @@
 </div>
         
 <div style="position:relative;">
-    <div id="listing-toolbar"> <!-- FERNANDO add class media-toolbar-->
+    <div id="listing-toolbar"> <!-- FERNANDO add class pages-toolbar-->
         <div class="float-right">
             
         </div>
     </div>
     
     <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-        <input type="hidden" name="page" value="media" />
+        <input type="hidden" name="page" value="pages" />
         
         <div id="bulk-actions">
             <label>
                 <select id="action" name="bulk_actions" class="select-box-extra">
                     <option value=""><?php _e('Bulk actions'); ?></option>
-                    <option value="delete_all"><?php _e('Delete') ?></option>
+                    <option value="delete"><?php _e('Delete') ?></option>
                     <?php $onclick_bulkactions= 'onclick="javascript:return confirm(\'' . osc_esc_js( __('You are doing bulk actions. Are you sure you want to continue?') ) . '\')"' ; ?>
                 </select> <input type="submit" <?php echo $onclick_bulkactions; ?> id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
             </label>
@@ -84,10 +109,9 @@
                 <thead>
                     <tr>
                         <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
-                        <th><?php _e('E-mail') ; ?></th>
-                        <th><?php _e('Name') ; ?></th>
-                        <th><?php _e('Attached to') ; ?></th>
-                        <th><?php _e('Date') ; ?></th>
+                        <th><?php _e('Internal name') ; ?></th>
+                        <th><?php _e('Title') ; ?></th>
+                        <th><?php _e('Order') ; ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -107,7 +131,7 @@
                 <?php endforeach;?>
                 <?php else : ?>
                 <tr>
-                    <td colspan="5" style="text-align: center;">
+                    <td colspan="4" style="text-align: center;">
                     <p><?php _e('No data available in table') ; ?></p>
                     </td>
                 </tr>
@@ -121,14 +145,17 @@
 <div class="has-pagination">
 <?php     
     $pageActual = Params::getParam('iPage') ;
+    error_log($pageActual .  " ___");
     $urlActual = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
     $urlActual = preg_replace('/&iPage=(\d)+/', '', $urlActual) ;
     $pageTotal = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
+    error_log( $aData['iTotalDisplayRecords'] . " / " . $aData['iDisplayLength'] );
     $params = array('total'    => $pageTotal
                    ,'selected' => $pageActual-1
                    ,'url'      => $urlActual.'&iPage={PAGE}'
                    ,'sides'    => 5
         );
+//    print_r($params);
     $pagination = new Pagination($params);
     $aux = $pagination->doPagination();
     
