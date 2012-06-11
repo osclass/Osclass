@@ -64,13 +64,14 @@
             </div>
 
             <div id="advanced_fields_iframe" class="custom-field-shrink">
-                <p><?php _e('Advanced options') ; ?></p>
+                <div class="icon-more"></div><?php _e('Advanced options') ; ?>
             </div>
             <div id="more-options_iframe" class="input-line">
-                <label><?php _e('Identifier name') ; ?></label>
-                <div class="input medium">
-                    <input type="text" class="medium" name="field_slug" value="<?php echo $field['s_slug'] ; ?>" />
-                    <p class="help-inline"><?php _e('Only alphanumeric characters are allowed [a-z0-9_-]') ; ?></p>
+                <div class="form-row" id="div_field_options">
+                    <div class="form-label"><?php _e('Identifier name') ; ?></div>
+                    <div class="form-controls">
+                        <input type="text" class="medium" name="field_slug" value="<?php echo $field['s_slug'] ; ?>" />
+                        <p class="help-inline"><?php _e('Only alphanumeric characters are allowed [a-z0-9_-]') ; ?></p>                    </div>
                 </div>
             </div>
             <div class="form-actions">
