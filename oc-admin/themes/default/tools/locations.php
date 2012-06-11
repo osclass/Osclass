@@ -20,9 +20,6 @@
     $all        = Preference::newInstance()->findValueByName('location_todo') ;
     $worktodo   = LocationsTmp::newInstance()->count() ;
     
-    error_log($all);
-    error_log($worktodo);
-    
     function render_offset(){
         return 'row-offset';
     }

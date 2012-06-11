@@ -553,7 +553,7 @@
                 $auxOptions  .= '</ul>'.PHP_EOL ;
                 
                 $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
-// print_r($aRow);
+
                 // fill a row
                 $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>' ;
                 $row[] = '<a href="' . osc_item_url().'">' . $title . '</a>'. $actions  ;

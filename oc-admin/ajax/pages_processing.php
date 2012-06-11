@@ -44,11 +44,7 @@
             $this->start = intval( $start ) ;
             $this->limit = intval( $this->_get['iDisplayLength'] ) ;
             
-            error_log($this->start . ', '. $this->limit);
-            
             $this->pages = Page::newInstance()->listAll(0, null, $this->start, $this->limit) ;
-            
-//            print_r($this->pages);
                         
             $this->total = Page::newInstance()->count(0) ;
             
