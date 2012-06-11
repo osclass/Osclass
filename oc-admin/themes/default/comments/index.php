@@ -23,6 +23,12 @@
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
+
+    function customPageTitle($string) {
+        return sprintf(__('Comments &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
     //customize Head
     function customHead() { ?>
         <script type="text/javascript">
@@ -45,18 +51,16 @@
     }
     osc_add_hook('admin_header','customHead');
     
-    $aData  = __get('aComments');
-?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+    $aData = __get('aComments');
 
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="help-box">
     <a href="#" class="btn ico ico-20 ico-close">x</a>
     <h3>What does a red highlight mean?</h3>
     <p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
     Red highlight means that the listing has been marked as spam.</p>
 </div>
-
-<h2 class="render-title"><?php _e('Manage reported listings') ; ?></h2>
+<h2 class="render-title"><?php _e('Manage comments') ; ?></h2>
 <div style="position:relative;">
     <div id="listing-toolbar">
         <div class="float-right">

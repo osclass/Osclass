@@ -2,7 +2,8 @@
 <html lang="<?php echo substr(osc_current_admin_locale(), 0, 2); ?>">
     <head>
         <meta charset="utf-8">
-        <title><?php _e('OSClass Admin Panel'); ?></title>
+        <title><?php echo osc_apply_filter('admin_title', osc_page_title() . ' - OSClass'); ?></title>
+        <meta name="title" content="<?php echo osc_apply_filter('admin_title', osc_page_title() . ' - OSClass'); ?>" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="content-language" content="<?php echo osc_current_admin_locale(); ?>" />
         <script src="<?php echo osc_current_admin_theme_js_url('jquery.min.js') ; ?>"></script>

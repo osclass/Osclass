@@ -15,14 +15,21 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-    $categories = __get('categories') ;
-    function customPageHeader(){ ?>
-        <h1>Categories
+
+    $categories = __get('categories');
+    function customPageHeader() { ?>
+        <h1><?php _e('Categories'); ?>
             <a href="<?php echo osc_admin_base_url(true) ; ?>?page=categories&amp;action=add_post_default" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
     </h1>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
+
+    function customPageTitle($string) {
+        return sprintf(__('Categories &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
     //customize Head
     function customHead() { ?>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_url('js/jquery.ui.nestedSortable.js') ; ?>"></script>

@@ -16,12 +16,17 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    function customPageHeader(){ ?>
+    function customPageTitle($string) {
+        return sprintf(__('Admins &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    function customPageHeader() { ?>
         <h1><?php _e('Admins') ; ?>
             <a href="#" class="btn ico ico-32 ico-engine float-right"></a>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
             <a href="<?php echo osc_admin_base_url(true); ?>?page=admins&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add admin') ; ?></a>
-	</h1>
+        </h1>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
@@ -41,25 +46,21 @@
                     });
                 });
             });
-            
         </script>
         <?php
     }
     osc_add_hook('admin_header','customHead');
-   
+
     $iDisplayLength = __get('iDisplayLength');
-    $aData          = __get('aAdmins'); 
+    $aData          = __get('aAdmins');
 
-?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="help-box">
     <a href="#" class="btn ico ico-20 ico-close">x</a>
     <h3>What does a red highlight mean?</h3>
     <p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
     Red highlight means that the listing has been marked as spam.</p>
 </div>
-        
 <div style="position:relative;">
     <div id="listing-toolbar"> <!-- FERNANDO add class admins-toolbar-->
         <div class="float-right">
@@ -112,7 +113,7 @@
                 <?php endif; ?>
                 </tbody>
             </table>
-            <div id="table-row-actions"></div> <!-- used for table actions -->
+            <div id="table-row-actions"></div><!-- used for table actions -->
         </div>
     </form>
 </div>
@@ -129,7 +130,7 @@
         );
     $pagination = new Pagination($params);
     $aux = $pagination->doPagination();
-    
+
     echo $aux;
 ?>
 </div>

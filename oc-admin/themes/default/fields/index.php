@@ -152,8 +152,14 @@ function customHead() { ?>
 </script>
     <?php
 }
-osc_add_hook('admin_header','customHead');
-osc_current_admin_theme_path('parts/header.php') ;
+    osc_add_hook('admin_header','customHead');
+
+    function customPageTitle($string) {
+        return sprintf(__('Custom fields &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    osc_current_admin_theme_path('parts/header.php') ;
 ?>
 <div class="header_title">
     <h2 class="render-title"><?php _e('Custom fields') ; ?></h2>

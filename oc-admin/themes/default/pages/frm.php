@@ -15,6 +15,7 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
+
     osc_current_admin_theme_path( 'functions.php' ) ;
     $page    = __get('page') ;
     $locales = OSCLocale::newInstance()->listAllEnabled() ;
@@ -40,6 +41,13 @@
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
+
+    function customPageTitle($string) {
+        $aux = customFrmText();
+        return sprintf('%s &raquo; %s', $aux['title'], $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
     //customize Head
     function customHead() { ?>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('tiny_mce/tiny_mce.js') ; ?>"></script>

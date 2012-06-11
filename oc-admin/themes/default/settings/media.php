@@ -24,7 +24,6 @@
     //customize Head
     function customHead(){
         echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.validate.min.js').'"></script>';
-        
         ?>
         <link rel="stylesheet" media="screen" type="text/css" href="<?php echo osc_current_admin_theme_js_url('colorpicker/css/colorpicker.css') ; ?>" />
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('colorpicker/js/colorpicker.js') ; ?>"></script>
@@ -130,15 +129,22 @@ $(document).ready(function(){
     function render_offset(){
         return 'row-offset';
     }
+
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1><?php _e('Media Settings') ; ?></h1>
+        <h1><?php _e('Settings') ; ?></h1>
     <?php
     }
-?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+
+    function customPageTitle($string) {
+        return sprintf(__('Media Settings &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <!--los input tienen una class para el tamaño ...-->
 <div id="general-settings">
+    <h2 class="render-title"><?php _e('Media Settings'); ?></h2>
     <ul id="error_list" style="display: none;"></ul>
     <form name="media_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
         <input type="hidden" name="page" value="settings" />

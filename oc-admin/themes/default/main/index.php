@@ -16,28 +16,33 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $numUsers            = __get("numUsers") ;
-    $numAdmins           = __get("numAdmins") ;
-
-    $numItems            = __get("numItems") ;
-    $numItemsSpam        = __get("numItemsSpam") ;
-    $numItemsBlock       = __get("numItemsBlock") ;
-    $numItemsInactive    = __get("numItemsInactive") ;
-    $numItemsPerCategory = __get("numItemsPerCategory") ;
-    $newsList            = __get("newsList") ;
-    $comments            = __get("comments") ;
-
+    $numUsers            = __get('numUsers');
+    $numAdmins           = __get('numAdmins');
+    $numItems            = __get('numItems');
+    $numItemsSpam        = __get('numItemsSpam');
+    $numItemsBlock       = __get('numItemsBlock');
+    $numItemsInactive    = __get('numItemsInactive');
+    $numItemsPerCategory = __get('numItemsPerCategory');
+    $newsList            = __get('newsList');
+    $comments            = __get('comments');
 
     osc_add_filter('render-wrapper','render_offset');
-    function render_offset(){
+    function render_offset() {
         return 'row-offset';
     }
+
     osc_add_hook('admin_page_header','customPageHeader');
-    function customPageHeader(){ ?>
+    function customPageHeader() { ?>
         <h1 class="dashboard"><?php _e('Dashboard') ; ?></h1>
     <?php
     }
-    function customHead(){
+
+    function customPageTitle($string) {
+        return sprintf(__('Dashboard &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    function customHead() {
     $items        = __get("items") ;
     $reports      = __get("reports") ;
     $max          = __get("max") ;
@@ -111,8 +116,8 @@
 <?php
     }
     osc_add_hook('admin_header', 'customHead');
-?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+
+    osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <div id="dashboard">
 <div class="grid-system">
     <div class="grid-row grid-first-row grid-50">

@@ -1,5 +1,4 @@
 <?php
-
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -16,25 +15,33 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-    osc_current_admin_theme_path( 'functions.php' ) ;
-    $new_item = __get('new_item') ;
+
+    osc_current_admin_theme_path( 'functions.php' );
+    $new_item = __get('new_item');
     function customText($return = 'title'){
         $new_item = __get('new_item') ;
         $text = array();
         if( $new_item ) {
-            $text['title']  = __('New listing') ;
-            $text['button'] = __('Add new listing') ;
+            $text['title']  = __('Add listing') ;
+            $text['button'] = __('Add listing') ;
         } else {
             $text['title']  = __('Edit listing') ;
             $text['button'] = __('Update listing') ;
         }
         return $text[$return];
     }
-    function customPageHeader(){ ?>
+
+    function customPageHeader() { ?>
         <h1><?php echo customText('title') ; ?></h1>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
+
+    function customPageTitle($string) {
+        return sprintf('%s &raquo; %s', customText('title'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
     //customize Head
     function customHead() { ?>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>

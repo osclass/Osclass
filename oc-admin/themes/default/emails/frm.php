@@ -15,9 +15,10 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-       
+
+    osc_current_admin_theme_path( 'functions.php' );
     function customPageHeader(){ ?>
-        <h1><?php _e('Page'); ?></h1>
+        <h1><?php _e('Settings'); ?></h1>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
@@ -43,12 +44,16 @@
         <?php
     }
     osc_add_hook('admin_header','customHead');
-    
-    $email   = __get("email") ;
-    $locales = OSCLocale::newInstance()->listAllEnabled() ;
-?>
 
-<?php osc_current_admin_theme_path('parts/header.php') ; ?>
+    function customPageTitle($string) {
+        return sprintf(__('Edit email template &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    $email   = __get("email");
+    $locales = OSCLocale::newInstance()->listAllEnabled();
+
+    osc_current_admin_theme_path('parts/header.php'); ?>
 <h2 class="render-title"><?php _e('Edit email template'); ?></h2>
 <div id="-form">
     <?php printLocaleTabs(); ?>
@@ -57,9 +62,7 @@
         <input type="hidden" name="action" value="edit_post" />
         <?php PageForm::primary_input_hidden($email); ?>
         <div id="left-side">
-
             <?php printLocaleTitlePage($locales, $page); ?>
-
             <div>
                 <label><?php _e('Internal name') ; ?></label>
                 <?php PageForm::internal_name_input_text($email) ; ?>

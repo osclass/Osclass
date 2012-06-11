@@ -19,13 +19,13 @@
 
     $all        = Preference::newInstance()->findValueByName('location_todo') ;
     $worktodo   = LocationsTmp::newInstance()->count() ;
-    
+
     function render_offset(){
         return 'row-offset';
     }
-    
+
     function customHead() { 
-        $all        = Preference::newInstance()->findValueByName('location_todo');
+        $all = Preference::newInstance()->findValueByName('location_todo');
         if( $all == '' ) $all = 0;
         $worktodo   = LocationsTmp::newInstance()->count() ; 
         ?>
@@ -64,17 +64,20 @@
     
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1 class="dashboard"><?php _e('Locations stats') ; ?></h1>
+        <h1><?php _e('Tools') ; ?></h1>
     <?php
     }
-    
-?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+
+    function customPageTitle($string) {
+        return sprintf(__('Location stats &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="locations-stats-setting">
     <!-- settings form -->
     <div id="">
         <h2 class="render-title"><?php _e('Locations stats') ; ?></h2>
-        
         <?php if($worktodo > 0) { ?>
         <p>
             <span id="percent">0</span> % <?php _e("Complete"); ?>

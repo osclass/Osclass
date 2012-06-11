@@ -42,12 +42,18 @@
         <h1><?php _e('Statistics') ; ?></h1>
     <?php
     }
-    function customHead(){
-    $items        = __get("items") ;
-    $max          = __get("max") ;
-    $reports      = __get("reports") ;
-    $max_views    = __get("max_views") ;
-    $latest_items = __get("latest_items") ;
+
+    function customPageTitle($string) {
+        return sprintf(__('Listing Statistics &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    function customHead() {
+        $items        = __get("items") ;
+        $max          = __get("max") ;
+        $reports      = __get("reports") ;
+        $max_views    = __get("max_views") ;
+        $latest_items = __get("latest_items") ;
 ?>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <?php if( count($items) > 0 ) { ?>

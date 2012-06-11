@@ -16,7 +16,6 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-
     //customize Head
     function customHead(){
         echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.validate.min.js').'"></script>';
@@ -320,7 +319,7 @@
                     }
                 });
             });
-            
+
             function showhide() {
                 $("#inner_rules").toggle();
                 if($("#show_hide a").html()=='<?php _e('Show rules'); ?>') {
@@ -344,16 +343,22 @@
         return 'row-offset';
     }
     osc_add_hook('admin_page_header','customPageHeader');
+
     function customPageHeader(){ ?>
-        <h1 class="dashboard"><?php _e('Permalinks Settings') ; ?></h1>
+        <h1><?php _e('Settings') ; ?></h1>
     <?php
     }
-?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+
+    function customPageTitle($string) {
+        return sprintf(__('Permalinks &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="mail-setting">
     <!-- settings form -->
                     <div id="mail-settings">
-                        <h2 class="render-title"><?php _e('Permalinks Settings') ; ?></h2>
+                        <h2 class="render-title"><?php _e('Permalinks') ; ?></h2>
                         <?php _e('By default OSClass uses web URLs which have question marks and lots of numbers in them. However, OSClass offers you friendly urls. This can improve the aesthetics, usability, and forward-compatibility of your links'); ?>
                         <ul id="error_list" style="display: none;"></ul>
                         <form name="settings_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">

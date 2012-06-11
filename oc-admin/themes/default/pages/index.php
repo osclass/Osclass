@@ -21,10 +21,16 @@
             <a href="#" class="btn ico ico-32 ico-engine float-right"></a>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
             <a href="<?php echo osc_admin_base_url(true); ?>?page=pages&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Create page') ; ?></a>
-	</h1>
+	   </h1>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
+
+    function customPageTitle($string) {
+        return sprintf(__('Pages &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
     //customize Head
     function customHead() { ?>
         <script type="text/javascript">
@@ -79,9 +85,7 @@
     $iDisplayLength = __get('iDisplayLength');
     $aData          = __get('aPages'); 
 
-?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="help-box">
     <a href="#" class="btn ico ico-20 ico-close">x</a>
     <h3>What does a red highlight mean?</h3>
@@ -119,27 +123,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php if(count($aData['aaData'])>0) : ?>
-                <?php foreach( $aData['aaData'] as $array) : ?>
+                <?php if(count($aData['aaData'])>0) { ?>
+                <?php foreach( $aData['aaData'] as $array) { ?>
                     <tr>
-                    <?php foreach($array as $key => $value) : ?>
-                        <?php if( $key==0 ): ?>
+                    <?php foreach($array as $key => $value) { ?>
+                        <?php if( $key==0 ) { ?>
                         <td class="col-bulkactions">
-                        <?php else : ?>
+                        <?php } else { ?>
                         <td>
-                        <?php endif ; ?>
+                        <?php } ?>
                         <?php echo $value; ?>
                         </td>
-                    <?php endforeach; ?>
+                    <?php } ?>
                     </tr>
-                <?php endforeach;?>
-                <?php else : ?>
+                <?php } ?>
+                <?php } else { ?>
                 <tr>
                     <td colspan="4" style="text-align: center;">
                     <p><?php _e('No data available in table') ; ?></p>
                     </td>
                 </tr>
-                <?php endif; ?>
+                <?php } ?>
                 </tbody>
             </table>
             <div id="table-row-actions"></div> <!-- used for table actions -->

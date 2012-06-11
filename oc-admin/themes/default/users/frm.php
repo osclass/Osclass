@@ -43,6 +43,13 @@
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
+
+    function customPageTitle($string) {
+        $aux = customFrmText();
+        return sprintf('%s &raquo; %s', $aux['title'], $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
     //customize Head
     function customHead() { 
         $user = __get('user');
