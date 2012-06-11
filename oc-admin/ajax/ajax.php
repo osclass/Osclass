@@ -727,13 +727,14 @@
                                     }
                                 }
                             }
-
-                            $tmp      = explode("/", $data['s_slug']) ;
-                            $filename = end($tmp) ;
+                            if($data['s_download']!='') {
+                                $filename = basename(str_replace("/download", "", $data['s_download']));
+                            } else {
+                                $filename = $data['s_slug']."_".$data['s_version'].".zip";
+                            }
                             error_log('Source file: ' . $data['s_source_file']) ;
                             error_log('Filename: ' . $filename) ;
                             $result   = osc_downloadFile($data['s_source_file'], $filename) ;
-                            
                             if ($result) { // Everything is OK, continue
                                 /**********************
                                  ***** UNZIP FILE *****
@@ -848,13 +849,17 @@
                                 break;
                             }
                         }
-                        if( !isset($data['s_source_file']) || !isset($data['s_slug']) || !isset($data['e_type'])) {
+                        if( !isset($data['s_source_file']) || !isset($data['s_slug'])) {
                             $data = array('error' => 2, 'error_msg' => __('Not a valid code'));
                         }
                     } else {
                         $data = array('error' => 1, 'error_msg' => __('No code was sumitted'));
                     }
                     echo json_encode($data);
+                    break;
+                    
+                case 'local_market': // AVOID CROSS DOMAIN ROBLEMS OF AJAX REQUEST
+                    echo osc_file_get_contents(osc_market_url()."?section=".Params::getParam("section"));
                     break;
                     
                 case 'location_stats':
