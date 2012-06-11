@@ -49,10 +49,8 @@
         ?>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <?php if(isset($user['pk_i_id'])) {
-            error_log('edit');
             UserForm::js_validation_edit() ;
         } else {
-            error_log('add noedit');
             UserForm::js_validation() ;
         }?>
         <?php UserForm::location_javascript("admin") ; ?>
