@@ -95,7 +95,7 @@
                             <h3 class="ui-dialog-titlebar"><?php _e('New listing'); ?></h3>
                             <div class="ui-state-body">
                                 <div id="placeholder" style="width:400px;height:300px;margin:0; margin:0 auto; padding-bottom: 45px;">
-                                    <?php if( count($users) == 0 ) {
+                                    <?php if( count($items) == 0 ) {
                                         _e("There're no statistics yet") ;
                                     }
                                     ?>
