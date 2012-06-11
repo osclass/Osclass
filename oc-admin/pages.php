@@ -137,11 +137,10 @@
                             $aFieldsDescription[$m[1]][$m[2]] = $v;
                         }
                     }
-                    
+
                     Session::newInstance()->_setForm('s_internal_name',$s_internal_name);
                     Session::newInstance()->_setForm('aFieldsDescription',$aFieldsDescription);
-                    
-                    
+
                     if(!isset($page['pk_i_id'])) {
                         if($not_empty) {
                             $result = $this->pageManager->insert($aFields, $aFieldsDescription) ;
@@ -205,19 +204,19 @@
                     break;
                 default:
                     if( Params::getParam('iDisplayLength') == '' ) {
-                        Params::setParam('iDisplayLength', 2 ) ;
+                        Params::setParam('iDisplayLength', 10 );
                     }
                     $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
 
-                    require_once osc_admin_base_path() . 'ajax/pages_processing.php';
-                    $params = Params::getParamsAsArray("get") ;
+                    require_once(osc_admin_base_path() . 'ajax/pages_processing.php');
+                    $params = Params::getParamsAsArray('get');
                     $pages_processing = new PagesProcessing( $params );
-                    $aData = $pages_processing->result( $params ) ;
+                    $aData = $pages_processing->result( $params );
 
-                    $this->_exportVariableToView('aPages', $aData) ;
-                    
+                    $this->_exportVariableToView('aPages', $aData);
+
                     $this->doView("pages/index.php");
-
+                break;
             }
         }
 
