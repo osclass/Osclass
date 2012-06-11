@@ -315,7 +315,9 @@
                                         require_once osc_admin_base_path() . 'ajax/users_processing.php';
                                         $users_processing = new UsersProcessingAjax(Params::getParamsAsArray("get"));
                                         $aData = $users_processing->result() ;
+                                        
                                         $this->_exportVariableToView('aUsers', $aData) ;
+                                        $this->_exportVariableToView('locales', OSCLocale::newInstance()->listAllEnabled() );
                                         
                                         $this->doView("users/index.php") ;
                 break ;
