@@ -33,7 +33,7 @@
         return $return;
     }
     function customPageHeader(){ ?>
-        <h1><?php _e('Users'); ?></h1>
+        <h1><?php _e('Admins'); ?></h1>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
@@ -43,14 +43,12 @@
         <?php
     }
     osc_add_hook('admin_header','customHead');
-    $new_item   = __get('new_item') ;
-    $actions    = __get('actions') ;
     
     $aux        = customFrmText();
 ?>
 <?php osc_current_admin_theme_path('parts/header.php') ; ?>
 <h2 class="render-title"><?php  echo $aux['title'] ; ?></h2>
-    <!-- add user form -->
+    <!-- add/edit admin form -->
     <div class="settings-user">
         <ul id="error_list" style="display: none;"></ul>
         <form name="admin_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
