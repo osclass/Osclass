@@ -17,10 +17,10 @@
      */
 
     function customPageHeader(){ ?>
-        <h1><?php _e('Manage Pages') ; ?>
+        <h1><?php _e('Admins') ; ?>
             <a href="#" class="btn ico ico-32 ico-engine float-right"></a>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
-            <a href="<?php echo osc_admin_base_url(true); ?>?page=pages&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Create page') ; ?></a>
+            <a href="<?php echo osc_admin_base_url(true); ?>?page=admins&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add admin') ; ?></a>
 	</h1>
 <?php
     }
@@ -28,35 +28,6 @@
     //customize Head
     function customHead() { ?>
         <script type="text/javascript">
-            function order_up(id) {
-                $('#datatables_list_processing').show() ;
-                $.ajax({
-                    url: "<?php echo osc_admin_base_url(true)?>?page=ajax&action=order_pages&id="+id+"&order=up",
-                    success: function(res) {
-                        // TODO improve
-                        window.location.reload( true );
-                    },
-                    error: function(){
-                        // alert error
-                        // TODO
-                    }
-                });
-            }
-            
-            function order_down(id) {
-                $('#datatables_list_processing').show();
-                $.ajax({
-                    url: "<?php echo osc_admin_base_url(true)?>?page=ajax&action=order_pages&id="+id+"&order=down",
-                    success: function(res){
-                        // TODO improve
-                        window.location.reload( true );
-                    },
-                    error: function(){
-                        // alert error
-                        // TODO
-                    }
-                });
-            }
             $(document).ready(function(){
                 // check_all bulkactions
                 $("#check_all").change(function(){
@@ -77,7 +48,7 @@
     osc_add_hook('admin_header','customHead');
    
     $iDisplayLength = __get('iDisplayLength');
-    $aData          = __get('aPages'); 
+    $aData          = __get('aAdmins'); 
 
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
@@ -90,20 +61,19 @@
 </div>
         
 <div style="position:relative;">
-    <div id="listing-toolbar"> <!-- FERNANDO add class pages-toolbar-->
+    <div id="listing-toolbar"> <!-- FERNANDO add class admins-toolbar-->
         <div class="float-right">
-            
         </div>
     </div>
     
     <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-        <input type="hidden" name="page" value="pages" />
+        <input type="hidden" name="page" value="admins" />
         
         <div id="bulk-actions">
             <label>
                 <select id="action" name="bulk_actions" class="select-box-extra">
-                    <option value=""><?php _e('Bulk actions'); ?></option>
-                    <option value="delete"><?php _e('Delete') ?></option>
+                    <option value=""><?php _e('Bulk actions') ; ?></option>
+                    <option value="delete"><?php _e('Delete') ; ?></option>
                     <?php $onclick_bulkactions= 'onclick="javascript:return confirm(\'' . osc_esc_js( __('You are doing bulk actions. Are you sure you want to continue?') ) . '\')"' ; ?>
                 </select> <input type="submit" <?php echo $onclick_bulkactions; ?> id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
             </label>
@@ -113,9 +83,9 @@
                 <thead>
                     <tr>
                         <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
-                        <th><?php _e('Internal name') ; ?></th>
-                        <th><?php _e('Title') ; ?></th>
-                        <th><?php _e('Order') ; ?></th>
+                        <th><?php _e('Username') ; ?></th>
+                        <th><?php _e('Name') ; ?></th>
+                        <th><?php _e('E-mail') ; ?></th>
                     </tr>
                 </thead>
                 <tbody>

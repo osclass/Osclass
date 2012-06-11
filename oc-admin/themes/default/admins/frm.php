@@ -33,7 +33,7 @@
         return $return;
     }
     function customPageHeader(){ ?>
-        <h1><?php _e('Users'); ?></h1>
+        <h1><?php _e('Admins'); ?></h1>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
@@ -43,22 +43,19 @@
         <?php
     }
     osc_add_hook('admin_header','customHead');
-    $new_item   = __get('new_item') ;
-    $actions    = __get('actions') ;
+    
+    $aux        = customFrmText();
 ?>
 <?php osc_current_admin_theme_path('parts/header.php') ; ?>
-<h2 class="render-title"><?php echo customFrmText()['title'] ; ?></h2>
-    <!-- add user form -->
+<h2 class="render-title"><?php  echo $aux['title'] ; ?></h2>
+    <!-- add/edit admin form -->
     <div class="settings-user">
         <ul id="error_list" style="display: none;"></ul>
         <form name="admin_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-            <input type="hidden" name="action" value="<?php echo customFrmText()['action_frm'] ; ?>" />
+            <input type="hidden" name="action" value="<?php echo $aux['action_frm'] ; ?>" />
             <input type="hidden" name="page" value="admins" />
             <?php AdminForm::primary_input_hidden($admin); ?>
             <?php AdminForm::js_validation(); ?>
-
-
-
 
             <fieldset>
             <div class="form-horizontal">
@@ -76,7 +73,7 @@
                     <div class="form-label"><?php _e('E-mail <em>(required)</em>') ; ?></div>
                     <div class="form-controls"><?php AdminForm::email_text($admin) ; ?></div>
                 </div>
-                <?php if(!customFrmText()['admin_edit'] || (customFrmText()['admin_edit'] && Params::getParam('id')!= osc_logged_admin_id() && Params::getParam('id')!='')) { ?>
+                <?php if(!$aux['admin_edit'] || ($aux['admin_edit'] && Params::getParam('id')!= osc_logged_admin_id() && Params::getParam('id')!='')) { ?>
                     <div class="form-row">
                         <div class="form-label"><?php _e('Admin type <em>(required)</em>') ; ?></div>
                         <div class="form-controls">
@@ -85,7 +82,7 @@
                         </div>
                     </div>
                 <?php }; ?>
-                <?php if(customFrmText()['admin_edit'] && osc_logged_admin_id()==$admin['pk_i_id']) { ?>
+                <?php if($aux['admin_edit'] && osc_logged_admin_id()==$admin['pk_i_id']) { ?>
                     <div class="form-row">
                         <div class="form-label"><?php _e('Current password') ; ?></div>
                         <div class="form-controls">
@@ -99,8 +96,8 @@
                     <div class="form-controls">
                         <?php AdminForm::password_text($admin) ; ?>
                     </div>
-                    <?php if(customFrmText()['admin_edit']) { ?>
-                        <div class="input-separate-top">
+                    <?php if($aux['admin_edit']) { ?>
+                        <div class="form-controls">
                             <?php AdminForm::check_password_text($admin) ; ?>
                             <p class="help-inline"><em><?php _e('Type your new password again') ; ?></em></p>
                         </div>
@@ -108,10 +105,8 @@
                 </div>
                 <div class="clear"></div>
 
-
-
                 <div class="form-actions">
-                    <input type="submit" value="<?php echo osc_esc_html(customFrmText()['btn_text']) ; ?>" class="btn btn-submit" />
+                    <input type="submit" value="<?php echo osc_esc_html($aux['btn_text']) ; ?>" class="btn btn-submit" />
                 </div>
             </div>
             </fieldset>
