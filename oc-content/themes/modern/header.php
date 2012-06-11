@@ -25,7 +25,7 @@
 <div class="container">
 <!-- header -->
 <div id="header">
-    <a id="logo" href="<?php echo osc_base_url() ; ?>"><strong><?php echo osc_page_title() ; ?></strong></a>
+    <a id="logo" href="<?php echo osc_base_url() ; ?>"><?php echo logo_header(); ?></a>
     <div id="user_menu">
         <ul>
             <?php if(osc_users_enabled()) { ?>
