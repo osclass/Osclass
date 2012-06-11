@@ -41,7 +41,7 @@
     }
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1 class="dashboard"><?php _e('Listing') ; ?></h1>
+        <h1><?php _e('Listing') ; ?></h1>
     <?php
     }
 ?>
