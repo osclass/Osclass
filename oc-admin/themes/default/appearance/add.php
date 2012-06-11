@@ -15,9 +15,13 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
+
+
     //customize Head
     function customHead(){
         echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.validate.min.js').'"></script>';
+        //echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery-ui-1.8.20.min.js').'"></script>';
+        echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.blockUI.js').'"></script>';
         ?>
         <script type="text/javascript">
             $(function() {
@@ -86,13 +90,125 @@
             </div>
             <div id="market">
                 <h2 class="render-title"><?php _e('Latest themes on market') ; ?></h2>
-                <?php /* SOME STUFF */ ?>
+                <div id="market_themes" class="available-theme">
+                </div>
             </div>
+            
+            <div id="market_installer" style="display: none">
+                <h3><?php _e('OSClass Market'); ?></h3>
+
+                <form action="" method="post">
+                    <input type="hidden" name="market_code" id="market_code" value="" />
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Name') ; ?></div>
+                        <div class="form-controls">
+                            <div id="market_name" class="form-label-checkbox"><?php _e("Loading data"); ?></div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Version') ; ?></div>
+                        <div class="form-controls">
+                            <div id="market_version" class="form-label-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Author') ; ?></div>
+                        <div class="form-controls">
+                            <div id="market_author" class="form-label-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('URL') ; ?></div>
+                        <div class="form-controls">
+                            <div id="market_url" class="form-label-checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button id="market_cancel" class="btn btn-submit" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
+                        <button id="market_install" class="btn btn-submit" ><?php echo osc_esc_html( __('I understand the risk, continue') ) ; ?></button>
+                    </div>
+                </form>
+            </div>
+            
         </div>
         <script>
         $(function() {
             $( "#tabs" ).tabs({ selected: 1 });
+            
+            $("#market_cancel").on("click", function(){
+                $.unblockUI();
+                return false;
+            });
+            
+            $("#market_install").on("click", function(){
+                $.getJSON(
+                "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
+                {"code" : $("#market_code").attr("value")},
+                function(data){
+                    alert(data.message);
+                });
+                $.unblockUI();
+                return false;
+            });
+            
+            $.getJSON(
+                "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=local_market",
+                {"section" : "themes"},
+                function(data){
+                    $("#market_themes").html(" ");
+                    if(data!=null && data.themes!=null) {
+                        for(var i=0;i<data.themes.length;i++) {
+                            $("#market_themes").append('<div class="theme">'
+                                +'<div class="theme-stage">'
+                                    +'<img src="" title="'+data.themes[i].s_title+'" alt="'+data.themes[i].s_title+'" />'
+                                    +'<div class="theme-actions">'
+                                        +'<a href="javascript:market_fetch_data(\''+data.themes[i].s_slug+'\');" class="btn btn-mini btn-green"><?php _e('Install') ; ?></a>'
+                                        +'<!-- <a target="_blank" href="" class="btn btn-mini btn-blue"><?php _e('Preview') ; ?></a> -->'
+                                    +'</div>'
+                                +'</div>'
+                                +'<div class="theme-info">'
+                                    +'<h3>'+data.themes[i].s_title+' '+data.themes[i].s_version+' <?php _e('by') ; ?> <a target="_blank" href="">'+data.themes[i].s_contact_name+'</a></h3>'
+                                +'</div>'
+                                +'<div class="theme-description">'
+                                    +data.themes[i].s_description
+                                +'</div>'
+                            +'</div>');
+                        }
+                    }
+                    $("#market_themes").append('<div class="clear"></div>');
+                }
+            );
+
         });
+        
+        function market_fetch_data(slug) {
+            $.blockUI({
+                message: $("#market_installer"),
+                css: { 
+                    textAlign: 'left',
+                    left: '370px',
+                    top: '180px',
+                    width: '450px',
+                    padding: 10
+                },
+                onBlock : function(){
+                    $.getJSON(
+                        "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
+                        {"code" : slug},
+                        function(data){
+                            if(data!=null) {
+                                $("#market_code").attr("value", data.s_slug);
+                                $("#market_name").html(data.s_title);
+                                $("#market_version").html(data.s_version);
+                                $("#market_author").html(data.s_author);
+                                $("#market_url").html(data.s_source_file);
+                            }
+                        }
+                    );
+                }
+            });
+        }
+        
         </script>
     </div>
     <!-- /themes list -->
