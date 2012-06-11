@@ -16,35 +16,36 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    osc_current_admin_theme_path( 'functions.php' ) ;
-    $page    = __get('page') ;
-    $locales = OSCLocale::newInstance()->listAllEnabled() ;
-    function customFrmText(){
-        $page    = __get('page') ;
-        $return = array();
+    osc_current_admin_theme_path( 'functions.php' );
+    $page    = __get('page');
+    $locales = OSCLocale::newInstance()->listAllEnabled();
+
+    function customFrmText($return = 'title') {
+        $page = __get('page');
+        $text = array();
         if( isset($page['pk_i_id']) ) {
-            $return['edit']       = true ;
-            $return['title']      = __('Edit page') ;
-            $return['action_frm'] = 'edit_post' ;
-            $return['btn_text']   = osc_esc_html( __('Save changes') ) ;
+            $text['edit']       = true;
+            $text['title']      = __('Edit page');
+            $text['action_frm'] = 'edit_post';
+            $text['btn_text']   = __('Save changes');
         } else {
-            $return['edit']       = false ;
-            $return['title']      = __('Add page') ;
-            $return['action_frm'] = 'add_post' ;
-            $return['btn_text']   = osc_esc_html( __('Add page') ) ;
+            $text['edit']       = false;
+            $text['title']      = __('Add page');
+            $text['action_frm'] = 'add_post';
+            $text['btn_text']   = __('Add page');
         }
 
-        return $return;
+        return $text[$return];
     }
-    function customPageHeader(){ ?>
-        <h1><?php _e('Page'); ?></h1>
+
+    function customPageHeader() { ?>
+        <h1><?php _e('Pages'); ?></h1>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
 
     function customPageTitle($string) {
-        $aux = customFrmText();
-        return sprintf('%s &raquo; %s', $aux['title'], $string);
+        return sprintf('%s &raquo; %s', customFrmText('title'), $string);
     }
     osc_add_filter('admin_title', 'customPageTitle');
 
@@ -65,33 +66,27 @@
                 entity_encoding : "raw",
                 theme_advanced_buttons1_add : "media",
                 theme_advanced_disable : "styleselect"
-            }) ;
+            });
         </script>
         <?php
     }
     osc_add_hook('admin_header','customHead');
-    
-    $new_item   = __get('new_item') ;
-    $actions    = __get('actions') ;
-?>
 
-<?php osc_current_admin_theme_path('parts/header.php') ; ?>
-<h2 class="render-title"><?php $aux = customFrmText(); echo $aux['title'] ; ?></h2>
+    osc_current_admin_theme_path('parts/header.php'); ?>
+<h2 class="render-title"><?php echo customFrmText('title'); ?></h2>
 <div id="item-form">
     <?php printLocaleTabs(); ?>
      <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
         <input type="hidden" name="page" value="pages" />
-        <input type="hidden" name="action" value="<?php  $aux = customFrmText(); echo $aux['action_frm'] ; ?>" />
-        <?php PageForm::primary_input_hidden($page) ; ?>
+        <input type="hidden" name="action" value="<?php echo customFrmText('action_frm'); ?>" />
+        <?php PageForm::primary_input_hidden($page); ?>
         <div id="left-side">
-
             <?php printLocaleTitlePage($locales, $page); ?>
-
             <div>
-                <label><?php _e('Internal name') ; ?></label>
-                <?php PageForm::internal_name_input_text($page) ; ?>
+                <label><?php _e('Internal name'); ?></label>
+                <?php PageForm::internal_name_input_text($page); ?>
                 <div class="flashmessage flashmessage-warning flashmessage-inline">
-                    <p><?php _e('Used to identify quickly this page') ; ?></p>
+                    <p><?php _e('Used to identify quickly this page'); ?></p>
                 </div>
                 <span class="help"></span>
             </div>
@@ -101,8 +96,8 @@
         </div>
         <div class="clear"></div>
         <div class="form-actions">
-            <input type="submit" value="<?php  $aux = customFrmText(); echo osc_esc_html($aux['btn_text']); ?>" class="btn btn-submit" />
+            <input type="submit" value="<?php echo osc_esc_html(customFrmText('btn_text')); ?>" class="btn btn-submit" />
         </div>
     </form>
 </div>
-<?php osc_current_admin_theme_path('parts/footer.php') ; ?>
+<?php osc_current_admin_theme_path('parts/footer.php'); ?>

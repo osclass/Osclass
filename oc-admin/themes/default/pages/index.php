@@ -16,12 +16,11 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    function customPageHeader(){ ?>
-        <h1><?php _e('Manage Pages') ; ?>
-            <a href="#" class="btn ico ico-32 ico-engine float-right"></a>
+    function customPageHeader() { ?>
+        <h1><?php _e('Pages'); ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
-            <a href="<?php echo osc_admin_base_url(true); ?>?page=pages&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Create page') ; ?></a>
-	   </h1>
+            <a href="<?php echo osc_admin_base_url(true); ?>?page=pages&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Create page'); ?></a>
+        </h1>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
@@ -48,7 +47,7 @@
                     }
                 });
             }
-            
+
             function order_down(id) {
                 $('#datatables_list_processing').show();
                 $.ajax({
@@ -63,6 +62,7 @@
                     }
                 });
             }
+
             $(document).ready(function(){
                 // check_all bulkactions
                 $("#check_all").change(function(){
@@ -76,40 +76,36 @@
                     });
                 });
             });
-            
         </script>
         <?php
     }
     osc_add_hook('admin_header','customHead');
-   
-    $iDisplayLength = __get('iDisplayLength');
-    $aData          = __get('aPages'); 
 
-    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+    $aData = __get('aPages');
+
+    osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <div id="help-box">
     <a href="#" class="btn ico ico-20 ico-close">x</a>
     <h3>What does a red highlight mean?</h3>
     <p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
     Red highlight means that the listing has been marked as spam.</p>
 </div>
-        
+<h2 class="render-title"><?php _e('Manage pages'); ?></h2>
 <div style="position:relative;">
     <div id="listing-toolbar"> <!-- FERNANDO add class pages-toolbar-->
         <div class="float-right">
             
         </div>
     </div>
-    
     <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
         <input type="hidden" name="page" value="pages" />
-        
         <div id="bulk-actions">
             <label>
                 <select id="action" name="bulk_actions" class="select-box-extra">
                     <option value=""><?php _e('Bulk actions'); ?></option>
-                    <option value="delete"><?php _e('Delete') ?></option>
-                    <?php $onclick_bulkactions= 'onclick="javascript:return confirm(\'' . osc_esc_js( __('You are doing bulk actions. Are you sure you want to continue?') ) . '\')"' ; ?>
-                </select> <input type="submit" <?php echo $onclick_bulkactions; ?> id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                    <option value="delete"><?php _e('Delete'); ?></option>
+                    <?php $onclick_bulkactions= 'onclick="javascript:return confirm(\'' . osc_esc_js( __('You are doing bulk actions. Are you sure you want to continue?') ) . '\')"'; ?>
+                </select> <input type="submit" <?php echo $onclick_bulkactions; ?> id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ); ?>" />
             </label>
         </div>
         <div class="table-contains-actions">
@@ -117,17 +113,17 @@
                 <thead>
                     <tr>
                         <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
-                        <th><?php _e('Internal name') ; ?></th>
-                        <th><?php _e('Title') ; ?></th>
-                        <th><?php _e('Order') ; ?></th>
+                        <th><?php _e('Internal name'); ?></th>
+                        <th><?php _e('Title'); ?></th>
+                        <th><?php _e('Order'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
-                <?php if(count($aData['aaData'])>0) { ?>
+                <?php if( count($aData['aaData']) > 0 ) { ?>
                 <?php foreach( $aData['aaData'] as $array) { ?>
                     <tr>
                     <?php foreach($array as $key => $value) { ?>
-                        <?php if( $key==0 ) { ?>
+                        <?php if( $key == 0 ) { ?>
                         <td class="col-bulkactions">
                         <?php } else { ?>
                         <td>
@@ -140,7 +136,7 @@
                 <?php } else { ?>
                 <tr>
                     <td colspan="4" style="text-align: center;">
-                    <p><?php _e('No data available in table') ; ?></p>
+                    <p><?php _e('No data available in table'); ?></p>
                     </td>
                 </tr>
                 <?php } ?>
@@ -153,18 +149,21 @@
 <div class="has-pagination">
 <?php     
     $pageActual = Params::getParam('iPage') ;
-    $urlActual = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
-    $urlActual = preg_replace('/&iPage=(\d)+/', '', $urlActual) ;
-    $pageTotal = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
-    $params = array('total'    => $pageTotal
-                   ,'selected' => $pageActual-1
-                   ,'url'      => $urlActual.'&iPage={PAGE}'
-                   ,'sides'    => 5
-        );
+    $urlActual  = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+    $urlActual  = preg_replace('/&iPage=(\d)+/', '', $urlActual) ;
+    $pageTotal  = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
+    $params     = array(
+        'total'    => $pageTotal,
+        'selected' => $pageActual - 1,
+        'url'      => $urlActual . '&iPage={PAGE}',
+        'sides'    => 5
+    );
     $pagination = new Pagination($params);
     $aux = $pagination->doPagination();
-    
-    echo $aux;
+
+    if( $pageTotal > 1) {
+        echo $aux;
+    }
 ?>
 </div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
