@@ -20,10 +20,7 @@
     $regions   = __get('regions') ;
     $cities    = __get('cities') ;
     $locales   = __get('locales') ;
-
-
-
-    $locales = OSCLocale::newInstance()->listAllEnabled() ;
+    
     function customFrmText(){
         $user      = __get('user') ;
         $return = array();
@@ -47,11 +44,15 @@
     }
     osc_add_hook('admin_page_header','customPageHeader');
     //customize Head
-    function customHead() { ?>
+    function customHead() { 
+        $user = __get('user');
+        ?>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <?php if(isset($user['pk_i_id'])) {
+            error_log('edit');
             UserForm::js_validation_edit() ;
         } else {
+            error_log('add noedit');
             UserForm::js_validation() ;
         }?>
         <?php UserForm::location_javascript("admin") ; ?>
@@ -59,12 +60,12 @@
         <?php
     }
     osc_add_hook('admin_header','customHead');
-    $new_item   = __get('new_item') ;
-    $actions    = __get('actions') ;
+    
+    $aux    = customFrmText();
 ?>
 
 <?php osc_current_admin_theme_path('parts/header.php') ; ?>
-<h2 class="render-title"><?php echo customFrmText()['title'] ; ?></h3>
+<h2 class="render-title"><?php echo $aux['title'] ; ?></h3>
 
 
     <!-- add user form -->
@@ -72,16 +73,16 @@
         <ul id="error_list" style="display: none;"></ul>
         <form name="register" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
             <input type="hidden" name="page" value="users" />
-            <input type="hidden" name="action" value="<?php echo customFrmText()['action_frm'] ; ?>" />
+            <input type="hidden" name="action" value="<?php echo $aux['action_frm'] ; ?>" />
             <h3 class="render-title"><?php _e('Contact info') ; ?></h3>
             <?php UserForm::primary_input_hidden($user) ; ?>
-            <?php if(customFrmText()['edit']) { ?>
+            <?php if($aux['edit']) { ?>
                 <input type="hidden" name="b_enabled" value="<?php echo $user['b_enabled'] ; ?>" />
                 <input type="hidden" name="b_active" value="<?php echo $user['b_active'] ; ?>" />
             <?php } ?>
             <fieldset>
             <div class="form-horizontal">
-                <?php if(customFrmText()['edit']) { ?>
+                <?php if($aux['edit']) { ?>
                 <div class="form-row">
                     <div class="form-label"><?php _e('Last access') ; ?></div>
                     <div class="form-controls">
@@ -172,15 +173,15 @@
                 </div>
                 <h3 class="render-title"><?php _e('Password') ; ?></h3>
                 <div class="form-row">
-                    <div class="form-label"><?php _e('New password') ; ?><?php if(!customFrmText()['edit']) { printf('<em>%s</em>', __('(twice, required)')) ; } ?></div>
+                    <div class="form-label"><?php _e('New password') ; ?><?php if(!$aux['edit']) { printf('<em>%s</em>', __('(twice, required)')) ; } ?></div>
                     <div class="form-controls">
                         <?php UserForm::password_text($user) ; ?>
-                        <?php if(customFrmText()['edit']) { ?>
+                        <?php if($aux['edit']) { ?>
                             <p class="help-inline"><?php _e('If you would like to change the password type a new one. Otherwise leave this blank') ; ?></p>
                         <?php } ?>
                         <div class="input-separate-top">
                             <?php UserForm::check_password_text($user) ; ?>
-                            <?php if(customFrmText()['edit']) { ?>
+                            <?php if($aux['edit']) { ?>
                                 <p class="help-inline"><?php _e('Type your new password again') ; ?></p>
                             <?php } ?>
                         </div>
@@ -188,7 +189,7 @@
                 </div>
                 <div class="clear"></div>
                 <div class="form-actions">
-                    <input type="submit" value="<?php echo osc_esc_html(customFrmText()['btn_text']) ; ?>" class="btn btn-submit" />
+                    <input type="submit" value="<?php echo osc_esc_html($aux['btn_text']) ; ?>" class="btn btn-submit" />
                 </div>
             </div>
             </fieldset>
