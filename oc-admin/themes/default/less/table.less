@@ -36,7 +36,7 @@ table {
 .table thead th {
 	vertical-align: bottom;
 }
-.table-hast-actions tbody td{
+.table-contains-actions tbody td{
 	padding-bottom:25px;
 }
 #table-row-actions{
@@ -54,6 +54,17 @@ table {
 	z-index:2;
 	padding:0px 42px;
 	text-align:left;
+}
+.table-collapsed #table-row-actions{
+	margin-top:0px;
+	*margin-top:0px;
+	padding:3px 42px;
+}
+.table-collapsed tbody td{
+	padding-bottom:4px;
+}
+.collapsed-hover td{
+	padding-top:31px;
 }
 #table-row-actions ul{
 	list-style:none; margin:0;
@@ -96,14 +107,15 @@ table {
 	opacity:1 !important;
 	text-align:center !important;
 }
-.table-hast-actions{
+.table-contains-actions{
 	position:relative;
 }
 .table div.actions{
 	display: none;
 }
 .status-spam,
-.status-spam td{
+.status-spam td,
+{
 	background:@status-spam;
 	border-color:@status-spam-border;
 }

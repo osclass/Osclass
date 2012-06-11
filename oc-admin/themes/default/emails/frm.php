@@ -15,26 +15,7 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-    osc_current_admin_theme_path( 'functions.php' ) ;
-    $page    = __get('page') ;
-    $locales = OSCLocale::newInstance()->listAllEnabled() ;
-    function customFrmText(){
-        $page    = __get('page') ;
-        $return = array();
-        if( isset($page['pk_i_id']) ) {
-            $return['edit']       = true ;
-            $return['title']      = __('Edit page') ;
-            $return['action_frm'] = 'edit_post' ;
-            $return['btn_text']   = osc_esc_html( __('Save changes') ) ;
-        } else {
-            $return['edit']       = false ;
-            $return['title']      = __('Add page') ;
-            $return['action_frm'] = 'add_post' ;
-            $return['btn_text']   = osc_esc_html( __('Add page') ) ;
-        }
-
-        return $return;
-    }
+       
     function customPageHeader(){ ?>
         <h1><?php _e('Page'); ?></h1>
 <?php
@@ -63,29 +44,28 @@
     }
     osc_add_hook('admin_header','customHead');
     
-    $new_item   = __get('new_item') ;
-    $actions    = __get('actions') ;
+    $email   = __get("email") ;
+    $locales = OSCLocale::newInstance()->listAllEnabled() ;
 ?>
 
 <?php osc_current_admin_theme_path('parts/header.php') ; ?>
-<h2 class="render-title"><?php $aux = customFrmText(); echo $aux['title'] ; ?></h2>
-<div id="item-form">
+<h2 class="render-title"><?php _e('Edit email template'); ?></h2>
+<div id="-form">
     <?php printLocaleTabs(); ?>
      <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
-        <input type="hidden" name="page" value="pages" />
-        <input type="hidden" name="action" value="<?php  $aux = customFrmText(); echo $aux['action_frm'] ; ?>" />
-        <?php PageForm::primary_input_hidden($page) ; ?>
+        <input type="hidden" name="page" value="emails" />
+        <input type="hidden" name="action" value="edit_post" />
+        <?php PageForm::primary_input_hidden($email); ?>
         <div id="left-side">
 
             <?php printLocaleTitlePage($locales, $page); ?>
 
             <div>
                 <label><?php _e('Internal name') ; ?></label>
-                <?php PageForm::internal_name_input_text($page) ; ?>
+                <?php PageForm::internal_name_input_text($email) ; ?>
                 <div class="flashmessage flashmessage-warning flashmessage-inline">
-                    <p><?php _e('Used to identify quickly this page') ; ?></p>
+                    <p><?php _e('Used to identify the email template') ; ?></p>
                 </div>
-                <span class="help"></span>
             </div>
             <div class="input-description-wide">
                 <?php printLocaleDescriptionPage($locales, $page); ?>
@@ -93,7 +73,7 @@
         </div>
         <div class="clear"></div>
         <div class="form-actions">
-            <input type="submit" value="<?php  $aux = customFrmText(); echo osc_esc_html($aux['btn_text']); ?>" class="btn btn-submit" />
+            <input type="submit" value="" class="btn btn-submit" />
         </div>
     </form>
 </div>

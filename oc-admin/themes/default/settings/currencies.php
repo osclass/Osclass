@@ -17,8 +17,9 @@
      */
 
     function customPageHeader(){ ?>
-        <h1><?php _e('Manage Comments') ; ?>
+        <h1><?php _e('Currencies') ; ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
+            <a href="<?php echo osc_admin_base_url(true).'?page=settings&action=currencies&type=add'; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
 	</h1>
 <?php
     }
@@ -26,7 +27,7 @@
     //customize Head
     function customHead() { ?>
         <script type="text/javascript">
-            // autocomplete users
+            
             $(document).ready(function(){
                 // check_all bulkactions
                 $("#check_all").change(function(){
@@ -44,8 +45,24 @@
         <?php
     }
     osc_add_hook('admin_header','customHead');
-    
-    $aData  = __get('aComments');
+   
+    $aCurrencies = __get('aCurrencies') ;
+
+    $aData = array() ;
+    foreach($aCurrencies as $currency) {
+        $row = array() ;
+        $row[] = '<input type="checkbox" name="code[]" value="' . osc_esc_html($currency['pk_c_code']) . '" />' ;
+
+        $options   = array() ;
+        $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) . '\');" href="' . osc_admin_base_url(true) . '?page=settings&amp;action=currencies&amp;type=delete&amp;code=' . $currency['pk_c_code'] . '">' . __('Delete') . '</a>' ;
+        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=settings&amp;action=currencies&amp;type=edit&amp;code=' . $currency['pk_c_code'] . '">' . __('Edit') . '</a>' ;
+
+        $row[] = $currency['pk_c_code'] . ' <small>(' . implode(' &middot; ', $options) . ')</small>' ;
+        $row[] = $currency['s_name'] ;
+        $row[] = $currency['s_description'] ;
+        $aData[] = $row ;
+    }
+
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 
@@ -55,85 +72,52 @@
     <p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
     Red highlight means that the listing has been marked as spam.</p>
 </div>
-
-<h2 class="render-title"><?php _e('Manage reported listings') ; ?></h2>
+        
 <div style="position:relative;">
-    <div id="listing-toolbar">
+    <div id="listing-toolbar"> <!-- FERNANDO add class currencies-toolbar-->
         <div class="float-right">
             
         </div>
     </div>
     
     <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-        <input type="hidden" name="page" value="comments" />
-        <input type="hidden" name="action" value="bulk_actions" />
+        <input type="hidden" name="page" value="settings" />
+        <input type="hidden" name="action" value="currencies" />
+        <input type="hidden" name="type" value="delete" />
         <div id="bulk-actions">
             <label>
-                <select id="bulk_actions" name="bulk_actions" class="select-box-extra">
+                <select id="action" name="bulk_actions" class="select-box-extra">
                     <option value=""><?php _e('Bulk actions') ; ?></option>
                     <option value="delete_all"><?php _e('Delete') ; ?></option>
-                    <option value="activate_all"><?php _e('Activate') ; ?></option>
-                    <option value="deactivate_all"><?php _e('Deactivate') ; ?></option>
-                    <option value="enable_all"><?php _e('Block') ; ?></option>
-                    <option value="disable_all"><?php _e('Unblock') ; ?></option>
                     <?php $onclick_bulkactions= 'onclick="javascript:return confirm(\'' . osc_esc_js( __('You are doing bulk actions. Are you sure you want to continue?') ) . '\')"' ; ?>
                 </select> <input type="submit" <?php echo $onclick_bulkactions; ?> id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
             </label>
         </div>
-        <div class="table-contains-actions">
-            <table class="table" cellpadding="0" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
-                        <th><?php _e('Author') ; ?></th>
-                        <th><?php _e('Comment') ; ?></th>
-                        <th><?php _e('Date') ; ?></th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php if(count($aData['aaData'])>0) : ?>
-                <?php foreach( $aData['aaData'] as $array) : ?>
-                    <tr>
-                    <?php foreach($array as $key => $value) : ?>
-                        <?php if( $key==0 ): ?>
-                        <td class="col-bulkactions">
-                        <?php else : ?>
-                        <td>
-                        <?php endif ; ?>
-                        <?php echo $value; ?>
-                        </td>
-                    <?php endforeach; ?>
-                    </tr>
-                <?php endforeach;?>
-                <?php else : ?>
-                    <tr>
-                        <td colspan="4" style="text-align: center;">
-                        <p><?php _e('No data available in table') ; ?></p>
-                        </td>
-                    </tr>
-                <?php endif; ?>
-                </tbody>
-            </table>
-            <div id="table-row-actions"></div> <!-- used for table actions -->
-        </div>
+        <table class="table" cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
+                    <th><?php _e('Code') ; ?></th>
+                    <th><?php _e('Name') ; ?></th>
+                    <th><?php _e('Description') ; ?></th>   
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach( $aData as $array) : ?>
+                <tr>
+                <?php foreach($array as $key => $value) : ?>
+                    <?php if( $key==0 ): ?>
+                    <td class="col-bulkactions">
+                    <?php else : ?>
+                    <td>
+                    <?php endif ; ?>
+                    <?php echo $value; ?>
+                    </td>
+                <?php endforeach; ?>
+                </tr>
+            <?php endforeach;?>
+            </tbody>
+        </table>
     </form>
-</div>
-<div class="has-pagination">
-<?php
-    $pageTotal = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
-    
-    $pageActual = Params::getParam('iPage') ;
-    $urlActual = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
-    $urlActual = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
-    $params = array('total'    => $pageTotal
-                   ,'selected' => $pageActual-1
-                   ,'url'      => $urlActual.'&iPage={PAGE}'
-                   ,'sides'    => 5
-        );
-    $pagination = new Pagination($params);
-    $aux = $pagination->doPagination();
-
-    echo $aux;
-?>
-</div>
+</div>    
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

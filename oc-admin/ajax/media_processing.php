@@ -99,7 +99,6 @@
         {
             $this->result['iTotalRecords']        = $this->total ;
             $this->result['iTotalDisplayRecords'] = $this->total_filtered ;
-            $this->result['sEcho']                = $this->sEcho ;
             $this->result['aaData']               = array() ;
 
             if( count($this->media) == 0 ) {

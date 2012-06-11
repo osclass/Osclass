@@ -15,7 +15,7 @@ Red highlight means that the listing has been marked as spam.</p>
 <div id="content-page">
 <!-- -->
 <h2 class="render-title">Manage listings</h2>
-<div class="table-hast-actions">
+<div class="table-contains-actions">
 <table class="table" cellpadding="0" cellspacing="0">
 	<thead>
 		<tr>

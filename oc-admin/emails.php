@@ -92,10 +92,64 @@
                     $this->redirectTo(osc_admin_base_url(true)."?page=emails&action=edit&id=" . $id);
                     break;
                 default:
-                    $this->_exportVariableToView("prefLocale", osc_current_admin_locale());
-                    $this->_exportVariableToView("emails", $this->emailManager->listAll(1));
-                    $this->doView("emails/index.php");
+                    //-
+                    if( Params::getParam('iDisplayLength') == '' ) {
+                        Params::setParam('iDisplayLength', 10 ) ;
+                    }
 
+                    $p_iPage      = 1;
+                    if( is_numeric(Params::getParam('iPage')) && Params::getParam('iPage') >= 1 ) {
+                        $p_iPage = Params::getParam('iPage');
+                    }
+                    Params::setParam('iPage', $p_iPage);
+
+                    $prefLocale = osc_current_admin_locale();
+                    $emails     = $this->emailManager->listAll(1);
+
+                    // pagination
+                    $start = ($p_iPage-1) * Params::getParam('iDisplayLength');
+                    $limit = Params::getParam('iDisplayLength');
+                    $count = count( $emails );
+
+                    $displayRecords = $limit;
+                    if( ($start+$limit ) > $count ) {
+                        $displayRecords = ($start+$limit) - $count;
+                    }
+                    // ----
+                    $aData = array() ;
+                    $max = ($start+$limit);
+                    if($max > $count) $max = $count;
+                    for($i = $start; $i < $max; $i++) {
+                        $email = $emails[$i];
+                    
+                        if(isset($email['locale'][$prefLocale]) && !empty($email['locale'][$prefLocale]['s_title'])) {
+                            $title = $email['locale'][$prefLocale];
+                        } else {
+                            $title = current($email['locale']);
+                        }
+                        $options = array();
+                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=emails&amp;action=edit&amp;id=' . $email["pk_i_id"] . '">' . __('Edit') . '</a>';
+                        
+                        $auxOptions = '<ul>'.PHP_EOL ;
+                        foreach( $options as $actual ) {
+                            $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
+                        }
+                        $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
+                                                
+                        $row = array() ;
+                        $row[] = $email['s_internal_name'] . $actions ;
+                        $row[] = $title['s_title'] ;
+                        $aData[] = $row ;
+                    }
+                    // ----
+                    $array['iTotalRecords']         = $displayRecords;
+                    $array['iTotalDisplayRecords']  = count($emails);
+                    $array['iDisplayLength']        = $limit;
+                    $array['aaData'] = $aData;
+
+                    $this->_exportVariableToView('aEmails', $array) ;
+                    
+                    $this->doView("emails/index.php");
             }
         }
 

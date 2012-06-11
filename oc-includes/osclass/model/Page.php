@@ -209,6 +209,32 @@
                 return array();
             }
         }
+        
+        /**
+         * Return number of all pages, or only number of indelible pages
+         * 
+         * @access public
+         * @since 3.0
+         * @param int $indelible
+         * @return int 
+         */
+        public function count($indelible = null)
+        {
+            $this->dao->select('count(*) as total') ;
+            $this->dao->from($this->getTableName()) ;
+            if( !is_null($indelible) ) {
+                $this->dao->where('b_indelible', $indelible) ;
+            }
+            
+            $result = $this->dao->get() ;
+            if($result) {
+                $aPages = $result->result() ;
+                return $aPages[0]['total'];
+            } else {
+                return 0;
+            }
+            
+        }
 
         /**
          * An array with data of some page, returns the title and description in every language available

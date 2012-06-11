@@ -17,8 +17,10 @@
      */
 
     function customPageHeader(){ ?>
-        <h1><?php _e('Manage Comments') ; ?>
+        <h1><?php _e('Manage Pages') ; ?>
+            <a href="#" class="btn ico ico-32 ico-engine float-right"></a>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
+            <a href="<?php echo osc_admin_base_url(true); ?>?page=pages&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Create page') ; ?></a>
 	</h1>
 <?php
     }
@@ -26,7 +28,35 @@
     //customize Head
     function customHead() { ?>
         <script type="text/javascript">
-            // autocomplete users
+            function order_up(id) {
+                $('#datatables_list_processing').show() ;
+                $.ajax({
+                    url: "<?php echo osc_admin_base_url(true)?>?page=ajax&action=order_pages&id="+id+"&order=up",
+                    success: function(res) {
+                        // TODO improve
+                        window.location.reload( true );
+                    },
+                    error: function(){
+                        // alert error
+                        // TODO
+                    }
+                });
+            }
+            
+            function order_down(id) {
+                $('#datatables_list_processing').show();
+                $.ajax({
+                    url: "<?php echo osc_admin_base_url(true)?>?page=ajax&action=order_pages&id="+id+"&order=down",
+                    success: function(res){
+                        // TODO improve
+                        window.location.reload( true );
+                    },
+                    error: function(){
+                        // alert error
+                        // TODO
+                    }
+                });
+            }
             $(document).ready(function(){
                 // check_all bulkactions
                 $("#check_all").change(function(){
@@ -40,12 +70,15 @@
                     });
                 });
             });
+            
         </script>
         <?php
     }
     osc_add_hook('admin_header','customHead');
-    
-    $aData  = __get('aComments');
+   
+    $iDisplayLength = __get('iDisplayLength');
+    $aData          = __get('aPages'); 
+
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 
@@ -55,27 +88,22 @@
     <p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
     Red highlight means that the listing has been marked as spam.</p>
 </div>
-
-<h2 class="render-title"><?php _e('Manage reported listings') ; ?></h2>
+        
 <div style="position:relative;">
-    <div id="listing-toolbar">
+    <div id="listing-toolbar"> <!-- FERNANDO add class pages-toolbar-->
         <div class="float-right">
             
         </div>
     </div>
     
     <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-        <input type="hidden" name="page" value="comments" />
-        <input type="hidden" name="action" value="bulk_actions" />
+        <input type="hidden" name="page" value="pages" />
+        
         <div id="bulk-actions">
             <label>
-                <select id="bulk_actions" name="bulk_actions" class="select-box-extra">
-                    <option value=""><?php _e('Bulk actions') ; ?></option>
-                    <option value="delete_all"><?php _e('Delete') ; ?></option>
-                    <option value="activate_all"><?php _e('Activate') ; ?></option>
-                    <option value="deactivate_all"><?php _e('Deactivate') ; ?></option>
-                    <option value="enable_all"><?php _e('Block') ; ?></option>
-                    <option value="disable_all"><?php _e('Unblock') ; ?></option>
+                <select id="action" name="bulk_actions" class="select-box-extra">
+                    <option value=""><?php _e('Bulk actions'); ?></option>
+                    <option value="delete"><?php _e('Delete') ?></option>
                     <?php $onclick_bulkactions= 'onclick="javascript:return confirm(\'' . osc_esc_js( __('You are doing bulk actions. Are you sure you want to continue?') ) . '\')"' ; ?>
                 </select> <input type="submit" <?php echo $onclick_bulkactions; ?> id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
             </label>
@@ -85,9 +113,9 @@
                 <thead>
                     <tr>
                         <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
-                        <th><?php _e('Author') ; ?></th>
-                        <th><?php _e('Comment') ; ?></th>
-                        <th><?php _e('Date') ; ?></th>
+                        <th><?php _e('Internal name') ; ?></th>
+                        <th><?php _e('Title') ; ?></th>
+                        <th><?php _e('Order') ; ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -106,11 +134,11 @@
                     </tr>
                 <?php endforeach;?>
                 <?php else : ?>
-                    <tr>
-                        <td colspan="4" style="text-align: center;">
-                        <p><?php _e('No data available in table') ; ?></p>
-                        </td>
-                    </tr>
+                <tr>
+                    <td colspan="4" style="text-align: center;">
+                    <p><?php _e('No data available in table') ; ?></p>
+                    </td>
+                </tr>
                 <?php endif; ?>
                 </tbody>
             </table>
@@ -119,12 +147,11 @@
     </form>
 </div>
 <div class="has-pagination">
-<?php
-    $pageTotal = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
-    
+<?php     
     $pageActual = Params::getParam('iPage') ;
     $urlActual = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
-    $urlActual = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
+    $urlActual = preg_replace('/&iPage=(\d)+/', '', $urlActual) ;
+    $pageTotal = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
     $params = array('total'    => $pageTotal
                    ,'selected' => $pageActual-1
                    ,'url'      => $urlActual.'&iPage={PAGE}'
@@ -132,7 +159,7 @@
         );
     $pagination = new Pagination($params);
     $aux = $pagination->doPagination();
-
+    
     echo $aux;
 ?>
 </div>
