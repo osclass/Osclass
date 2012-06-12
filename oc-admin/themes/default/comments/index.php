@@ -64,7 +64,11 @@
 <div style="position:relative;">
     <div id="listing-toolbar">
         <div class="float-right">
-            
+            <?php if(Params::getParam('showAll') == true) { ?>
+            <a href="<?php echo osc_admin_base_url(true) . '?page=comments&showAll=off'; ?>" class="btn btn-red"><?php _e('Hidden comments');?></a>
+            <?php } else { ?>
+            <a href="<?php echo osc_admin_base_url(true) . '?page=comments'; ?>" class="btn btn-blue"><?php _e('All comments');?></a>
+            <?php } ?>
         </div>
     </div>
     
@@ -96,17 +100,19 @@
                 </thead>
                 <tbody>
                 <?php if(count($aData['aaData'])>0) : ?>
-                <?php foreach( $aData['aaData'] as $array) : ?>
-                    <tr>
-                    <?php foreach($array as $key => $value) : ?>
-                        <?php if( $key==0 ): ?>
+                <?php foreach( $aData['aaData'] as $key => $array) : ?>
+                    <?php $aC = $aData['aaObject'][$key]; ?>
+                    <?php $class = ''; if($aC['b_enabled'] || $aC['b_active'] || $aC['b_spam']) $class = 'status-spam'; ?>
+                    <tr class="<?php echo $class; ?>">
+                    <?php foreach($array as $key => $value) { ?>
+                        <?php if( $key==0 ) { ?>
                         <td class="col-bulkactions">
-                        <?php else : ?>
+                        <?php } else { ?>
                         <td>
-                        <?php endif ; ?>
+                        <?php } ?>
                         <?php echo $value; ?>
                         </td>
-                    <?php endforeach; ?>
+                    <?php } ?>
                     </tr>
                 <?php endforeach;?>
                 <?php else : ?>

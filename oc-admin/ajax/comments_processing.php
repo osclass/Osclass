@@ -27,6 +27,7 @@
         private $limit ;
         private $start ;
         private $total ;
+        private $showAll ;
         private $total_filtered ;
         private $order_by = array() ;
 
@@ -50,12 +51,21 @@
             $this->order_by['column_name'] = $this->column_names[3] ;
             $this->order_by['type'] = 'desc' ;
             
-            $this->comments       = ItemComment::newInstance()->search($this->resourceID, $this->start, $this->limit, ( $this->order_by['column_name'] ? $this->order_by['column_name'] : 'pk_i_id' ), ( $this->order_by['type'] ? $this->order_by['type'] : 'desc' ) ) ;
-            $this->total          = ItemComment::newInstance()->count() ;
+            $this->comments       = ItemComment::newInstance()->search($this->resourceID, $this->start, $this->limit, 
+                    ( $this->order_by['column_name'] ? $this->order_by['column_name'] : 'pk_i_id' ), 
+                    ( $this->order_by['type'] ? $this->order_by['type'] : 'desc' ),
+                    $this->showAll) ;
+            
+            if($this->showAll) {
+                $this->total          = ItemComment::newInstance()->countAll();
+            } else {
+                $this->total          = ItemComment::newInstance()->countAll( '( c.b_active = 0 OR c.b_enabled = 0 OR c.b_spam = 1 )' );
+            }
+            
             if( $this->resourceID == null ) {
                 $this->total_filtered = $this->total ;
             } else {
-                $this->total_filtered = ItemResource::newInstance()->count( $this->resourceID ) ;
+                $this->total_filtered = ItemComment::newInstance()->count( $this->resourceID ) ;
             }
         }
 
@@ -65,14 +75,15 @@
         }
 
         private function getDBParams()
-        {
-            $p_iPage      = 1;
+        {   
+            $p_iPage        = 1;
             if( !is_numeric(Params::getParam('iPage')) || Params::getParam('iPage') < 1 ) {
                 Params::setParam('iPage', $p_iPage );
                 $this->iPage = $p_iPage ;
             } else {
                 $this->iPage = Params::getParam('iPage') ;
             }
+            $this->showAll   = Params::getParam('showAll') ;
             
             foreach($this->_get as $k => $v) {
                 if( ( $k == 'resourceId' ) && !empty($v) ) {
@@ -83,9 +94,6 @@
                 }
                 if( $k == 'iDisplayLength' ) {
                     $this->limit = intval($v) ;
-                }
-                if( $k == 'sEcho' ) {
-                    $this->sEcho = intval($v) ;
                 }
             }
             
@@ -106,8 +114,8 @@
 
             if( count($this->comments) == 0 ) {
                 return ;
-            }
-
+            }            
+                
             $count = 0 ;
             foreach($this->comments as $comment) {
                 $row = array() ;
@@ -147,10 +155,13 @@
             $this->result['iTotalDisplayRecords'] = $this->total ;
             $this->result['iDisplayLength']       = $this->_get['iDisplayLength'];
             $this->result['aaData']               = array() ;
+            $this->result['aaObject']             = array() ;
 
             if( count($this->comments) == 0 ) {
                 return ;
             }
+            
+            $this->result['aaObject'] = $this->comments;
 
             $count = 0 ;
             foreach($this->comments as $comment) {

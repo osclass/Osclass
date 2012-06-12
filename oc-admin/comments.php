@@ -191,6 +191,17 @@
                 default:                    if( Params::getParam('iDisplayLength') == '' ) {
                                                 Params::setParam('iDisplayLength', 10 ) ;
                                             }
+                                            // showAll == '' 
+                                            //      -> show all comments filtered
+                                            // showAll != '' 
+                                            //      -> show comments which are not 
+                                            //      -> diplayed at frontend
+                                            if( Params::getParam('showAll') == '' ) {
+                                                Params::setParam('showAll', true ) ;
+                                            } else {
+                                                Params::setParam('showAll', false ) ;
+                                            }
+                                            
                                             $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
                                             
                                             require_once osc_admin_base_path() . 'ajax/comments_processing.php';
