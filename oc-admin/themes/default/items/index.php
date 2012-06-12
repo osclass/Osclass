@@ -16,18 +16,18 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    function customPageHeader(){ ?>
-        <h1><?php _e('Manage listing') ; ?>
-            <a href="#" class="btn ico ico-32 ico-engine float-right"></a>
+    function customPageHeader() { ?>
+        <h1><?php _e('Listing'); ?>
+            <a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=settings" class="btn ico ico-32 ico-engine float-right"></a>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
-            <a href="<?php echo osc_admin_base_url(true) . '?page=items&action=post' ; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
+            <a href="<?php echo osc_admin_base_url(true) . '?page=items&action=post' ; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add listing'); ?></a>
 	</h1>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
 
     function customPageTitle($string) {
-        return sprintf(__('Manage listing &raquo; %s'), $string);
+        return sprintf(__('Manage listings &raquo; %s'), $string);
     }
     osc_add_filter('admin_title', 'customPageTitle');
 
@@ -38,7 +38,6 @@
         <script type="text/javascript">
             // autocomplete users
             $(document).ready(function(){
-
                 $('#filter-select').change( function () {
                     var option = $(this).find('option:selected').attr('value') ;
                     // clean values
@@ -54,7 +53,7 @@
                         $('#fPattern, #fUser').addClass('hide');
                     }
                 });
-                
+
                 $('input[name="user"]').attr( "autocomplete", "off" );
                 $('#user,#fUser').autocomplete({
                     source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax"+$('input[name="user"]').val(), // &term=
@@ -81,7 +80,7 @@
                     $('#display-filters').dialog({modal:true,width:700,title:'<?php echo osc_esc_js( __('Filters') ) ; ?>'});
                     return false;
                 });
-                
+
                 // check_all bulkactions
                 $("#check_all").change(function(){
                     var isChecked = $(this+':checked').length;
@@ -94,8 +93,6 @@
                     });
                 });
             });
-           
-            
         </script>
         <style>
             .ui-autocomplete-loading {
@@ -116,13 +113,13 @@
     }
     osc_add_hook('admin_header','customHead');
     
-    $users      = __get('users') ;
-    $stat       = __get('stat') ;
-    $categories = __get('categories') ;
-    $countries  = __get('countries') ;
-    $regions    = __get('regions') ;
-    $cities     = __get('cities') ;
-    $withFilters= __get('withFilters') ;
+    $users       = __get('users') ;
+    $stat        = __get('stat') ;
+    $categories  = __get('categories') ;
+    $countries   = __get('countries') ;
+    $regions     = __get('regions') ;
+    $cities      = __get('cities') ;
+    $withFilters = __get('withFilters') ;
 
     $iDisplayLength = __get('iDisplayLength');
     
@@ -261,7 +258,7 @@
         </div>
     </div>
 </form>
-<h2 class="render-title"><?php _e('Manage listing') ; ?></h2>
+<h2 class="render-title"><?php _e('Manage listings'); ?></h2>
 <div style="position:relative;">
     <div id="listing-toolbar">
         <div class="float-right">
@@ -338,32 +335,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php if(count($aData['aaData'])>0) : ?>
-                <?php foreach( $aData['aaData'] as $key => $array) : ?>
+                <?php if( count($aData['aaData']) > 0 ) { ?>
+                <?php foreach($aData['aaData'] as $key => $array) { ?>
                     <?php $class = ''; $aI = $aData['aaObject'][$key]; if(!$aI['b_active']) $class = 'status-spam'; ?>
-                    <?php if(!$aI['b_active'])  $class = 'status-spam'; ?>
+                    <?php if(!$aI['b_active']) $class = 'status-spam'; ?>
                     <?php if(!$aI['b_enabled']) $class = 'status-spam'; ?>
                     <?php if($aI['b_spam']) $class = 'status-spam'; ?>
                     <?php if($aI['b_premium']) $class = 'status-premium'; ?>
                     <tr class="<?php echo $class;?>">
-                    <?php foreach($array as $key => $value) : ?>
-                        <?php if( $key==0 ): ?>
+                    <?php foreach($array as $key => $value) { ?>
+                        <?php if( $key == 0 ) { ?>
                         <td class="col-bulkactions">
-                        <?php else : ?>
+                        <?php } else { ?>
                         <td>
-                        <?php endif ; ?>
+                        <?php } ?>
                         <?php echo $value; ?>
                         </td>
-                    <?php endforeach; ?>
+                    <?php } ?>
                     </tr>
-                <?php endforeach;?>
-                <?php else : ?>
+                <?php } ?>
+                <?php } else { ?>
                     <tr>
                         <td colspan="8" style="text-align: center;">
-                        <p><?php _e('No data available in table') ; ?></p>
+                        <p><?php _e('No data available in table'); ?></p>
                         </td>
                     </tr>
-                <?php endif; ?>
+                <?php } ?>
                 </tbody>
             </table>
             <div id="table-row-actions"></div> <!-- used for table actions -->
@@ -371,22 +368,23 @@
     </form>
 </div>
 <div class="has-pagination">
-<?php 
-    
-    $pageActual = Params::getParam('iPage') ;
-    $urlActual = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
-    $urlActual = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
-    $pageTotal = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
-    $params = array('total'    => $pageTotal
-                   ,'selected' => $pageActual-1
-                   ,'url'      => $urlActual.'&iPage={PAGE}'
-                   ,'sides'    => 5
-        );
-    $pagination = new Pagination($params);
-    $aux = $pagination->doPagination();
-    
-    echo $aux;
+<?php
+    $pageActual = Params::getParam('iPage');
+    $urlActual  = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+    $urlActual  = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
+    $pageTotal  = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
+    $params     = array(
+        'total'    => $pageTotal,
+        'selected' => $pageActual - 1,
+        'url'      => $urlActual . '&iPage={PAGE}',
+        'sides'    => 5
+    );
+
+    if( $pageTotal > 1 ) {
+        $pagination = new Pagination($params);
+        $aux = $pagination->doPagination();
+        echo $aux;
+    }
 ?>
 </div>
-    
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
