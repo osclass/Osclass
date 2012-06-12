@@ -16,7 +16,7 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-     
+
      class PagesProcessing
      {
         private $result ;
@@ -31,21 +31,21 @@
         function __construct($params)
         {
             $this->_get = $params ;
-            
-            $p_iPage      = 1;
+
+            $p_iPage = 1;
             if( !is_numeric(Params::getParam('iPage')) || Params::getParam('iPage') < 1 ) {
                 $this->_get['iPage'] = $p_iPage ;
                 Params::setParam('iPage', $p_iPage);
             }
-            
+
             // set start and limit using iPage param
             $start = ((int)$this->_get['iPage']-1) * $this->_get['iDisplayLength'];
-            
+
             $this->start = intval( $start ) ;
             $this->limit = intval( $this->_get['iDisplayLength'] ) ;
             
             $this->pages = Page::newInstance()->listAll(0, null, $this->start, $this->limit) ;
-                        
+
             $this->total = Page::newInstance()->count(0) ;
             
             $this->total_filtered = $this->total ;
@@ -71,9 +71,9 @@
             $prefLocale = osc_current_user_locale() ;
             $count = 0 ;
             foreach($this->pages as $aRow) {
-                $row        = array() ;
-                $content    = array() ;
-                
+                $row     = array() ;
+                $content = array() ;
+
                 if( isset($aRow['locale'][$prefLocale]) && !empty($aRow['locale'][$prefLocale]['s_title']) ) {
                     $content = $aRow['locale'][$prefLocale] ;
                 } else {
@@ -83,7 +83,7 @@
                 // -- options --
                 $options   = array() ;
                 View::newInstance()->_exportVariableToView('page', $aRow );
-                $options[] = '<a href="' . osc_static_page_url() . '">' . __('View page') . '</a>' ;
+                $options[] = '<a href="' . osc_static_page_url() . '" target="_blank">' . __('View page') . '</a>' ;
                 $options[] = '<a href="' . osc_admin_base_url(true) . '?page=pages&amp;action=edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>' ;
                 if( !$aRow['b_indelible'] ) {
                     $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js(__("This action can't be undone. Are you sure you want to continue?")) . '\')" href="' . osc_admin_base_url(true) . '?page=pages&amp;action=delete&amp;id=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
@@ -94,7 +94,7 @@
                     $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
                 }
                 $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
-                
+
                 $row[] = '<input type="checkbox" name="id[]"" value="' . $aRow['pk_i_id'] . '"" />' ;
                 $row[] = $aRow['s_internal_name'] . $actions ;
                 $row[] = $content['s_title'] ;
@@ -103,7 +103,7 @@
                 $this->result['aaData'][] = $row ;
             }
         }
-        
+
         /**
          * Dump $result to JSON and return the result
          * 

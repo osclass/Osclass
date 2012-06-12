@@ -19,14 +19,21 @@
     function render_offset(){
         return 'row-offset';
     }
+
     osc_add_hook('admin_page_header','customPageHeader');
-    function customPageHeader(){ ?>
-        <h1 class="dashboard"><?php _e('Spam and bots Settings') ; ?></h1>
+    function customPageHeader() { ?>
+        <h1><?php _e('Settings'); ?></h1>
     <?php
     }
-?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+
+    function customPageTitle($string) {
+        return sprintf(__('Spam and bots &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="spam-setting">
+    <h2 class="render-title"><?php _e('Spam and bots'); ?></h2>
     <div id="akismet-settings">
         <h2 class="render-title"><?php _e('Akismet') ; ?></h2>
         <p><?php _e("Akismet is a hosted web service that saves you time by automatically detecting comment and trackback spam. It's hosted on our servers, but we give you access to it through plugins and our API."); ?></p>

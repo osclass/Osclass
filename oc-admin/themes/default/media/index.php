@@ -24,6 +24,12 @@
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
+
+    function customPageTitle($string) {
+        return sprintf(__('Media &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
     //customize Head
     function customHead() { ?>
         <script type="text/javascript">

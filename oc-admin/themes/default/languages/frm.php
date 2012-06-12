@@ -17,10 +17,16 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
        function customPageHeader() { ?>
-        <h1><?php _e('Edit Language') ; ?></h1>
+        <h1><?php _e('Settings') ; ?></h1>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
+
+    function customPageTitle($string) {
+        return sprintf(__('Edit language &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
     //customize Head
     function customHead() { ?>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>

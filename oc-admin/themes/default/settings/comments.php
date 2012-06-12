@@ -15,6 +15,7 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
+
     //customize Head
     function customHead(){
         echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.validate.min.js').'"></script>';
@@ -70,14 +71,19 @@ $(document).ready(function(){
     function render_offset(){
         return 'row-offset';
     }
+
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1><?php _e('Comments Settings') ; ?></h1>
+        <h1><?php _e('Settings') ; ?></h1>
     <?php
     }
-?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 
+    function customPageTitle($string) {
+        return sprintf(__('Comments Settings &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="general-settings">
     <ul id="error_list" style="display: none;"></ul>
     <form name="comments_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">

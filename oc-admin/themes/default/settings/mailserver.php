@@ -16,11 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-
     //customize Head
-    function customHead(){
-        //echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.validate.min.js').'"></script>';
-        ?>
+    function customHead() { ?>
         <script type="text/javascript">
             jQuery(document).ready(function(){
                 $('select[name="mailserver_type"]').bind('change', function(){
@@ -61,16 +58,22 @@
     }
     osc_add_hook('admin_header','customHead');
 
-    function render_offset(){
+    function render_offset() {
         return 'row-offset';
     }
+
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1 class="dashboard"><?php _e('Mail Settings') ; ?></h1>
+        <h1><?php _e('Settings') ; ?></h1>
     <?php
     }
-?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+
+    function customPageTitle($string) {
+        return sprintf(__('Mail Settings &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="mail-setting">
     <!-- settings form -->
                     <div id="mail-settings">

@@ -15,18 +15,19 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
+
     $admin = __get("admin") ;
-    function customFrmText(){
+    function customFrmText() {
         $admin = __get("admin") ;
         $return = array();
         if( isset($admin['pk_i_id']) ) {
-            $return['admin_edit']       = true ;
+            $return['admin_edit'] = true ;
             $return['title']      = __('Edit admin') ;
             $return['action_frm'] = 'edit_post' ;
             $return['btn_text']   = __('Save') ;
         } else {
-            $return['admin_edit']       = false ;
-            $return['title']      = __('Add new admin') ;
+            $return['admin_edit']  = false ;
+            $return['title']      = __('Add admin') ;
             $return['action_frm'] = 'add_post' ;
             $return['btn_text']   = __('Add') ;
         }
@@ -44,10 +45,16 @@
     }
     osc_add_hook('admin_header','customHead');
     
-    $aux        = customFrmText();
-?>
-<?php osc_current_admin_theme_path('parts/header.php') ; ?>
-<h2 class="render-title"><?php  echo $aux['title'] ; ?></h2>
+    $aux = customFrmText();
+
+    function customPageTitle($string) {
+        $aux = customFrmText();
+        return sprintf('%s &raquo; %s', $aux['title'], $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    osc_current_admin_theme_path('parts/header.php') ; ?>
+<h2 class="render-title"><?php echo $aux['title'] ; ?></h2>
     <!-- add/edit admin form -->
     <div class="settings-user">
         <ul id="error_list" style="display: none;"></ul>
@@ -56,7 +63,6 @@
             <input type="hidden" name="page" value="admins" />
             <?php AdminForm::primary_input_hidden($admin); ?>
             <?php AdminForm::js_validation(); ?>
-
             <fieldset>
             <div class="form-horizontal">
                 <div class="form-row">
@@ -81,7 +87,7 @@
                             <p class="help-inline"><em><?php _e('Administrators have full control over all aspects of your installation, while moderators are only allowed to moderate listing, comments and media files') ; ?></em></p>
                         </div>
                     </div>
-                <?php }; ?>
+                <?php } ?>
                 <?php if($aux['admin_edit'] && osc_logged_admin_id()==$admin['pk_i_id']) { ?>
                     <div class="form-row">
                         <div class="form-label"><?php _e('Current password') ; ?></div>
@@ -90,7 +96,7 @@
                             <p class="help-inline"><em><?php _e('If you would like to change the password type your current one. Otherwise leave this blank') ; ?></em></p>
                         </div>
                     </div>
-                <?php }; ?>
+                <?php } ?>
                 <div class="form-row">
                     <div class="form-label"><?php _e('New password') ; ?></div>
                     <div class="form-controls">
@@ -101,10 +107,9 @@
                             <?php AdminForm::check_password_text($admin) ; ?>
                             <p class="help-inline"><em><?php _e('Type your new password again') ; ?></em></p>
                         </div>
-                    <?php }; ?>
+                    <?php } ?>
                 </div>
                 <div class="clear"></div>
-
                 <div class="form-actions">
                     <input type="submit" value="<?php echo osc_esc_html($aux['btn_text']) ; ?>" class="btn btn-submit" />
                 </div>

@@ -19,10 +19,16 @@
     function customPageHeader(){ ?>
         <h1><?php _e('Reported listings') ; ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
-	</h1>
+       </h1>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
+
+    function customPageTitle($string) {
+        return sprintf(__('Reported listings &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
     //customize Head
     function customHead() { ?>
         <script type="text/javascript">
@@ -52,7 +58,7 @@
         <?php
     }
     osc_add_hook('admin_header','customHead');
-    
+
     $aData      = __get('aItems') ;
     $url_spam   = __get('url_spam') ;
     $url_bad    = __get('url_bad') ;
@@ -60,19 +66,17 @@
     $url_off    = __get('url_off') ;
     $url_exp    = __get('url_exp') ;
     $url_date   = __get('url_date') ;
-    
+
     $sort       = Params::getParam('sort');
     $direction  = Params::getParam('direction');
-?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="help-box">
     <a href="#" class="btn ico ico-20 ico-close">x</a>
     <h3>What does a red highlight mean?</h3>
     <p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
     Red highlight means that the listing has been marked as spam.</p>
 </div>
-
 <h2 class="render-title"><?php _e('Manage reported listings') ; ?></h2>
 <div style="position:relative;">
     <div id="listing-toolbar">
@@ -80,7 +84,6 @@
             
         </div>
     </div>
-    
     <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
         <input type="hidden" name="page" value="items" />
         <input type="hidden" name="action" value="bulk_actions" />
@@ -129,27 +132,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php if(count($aData['aaData'])>0) : ?>
-                <?php foreach( $aData['aaData'] as $array) : ?>
+                <?php if(count($aData['aaData'])>0) { ?>
+                <?php foreach( $aData['aaData'] as $array) { ?>
                     <tr>
-                    <?php foreach($array as $key => $value) : ?>
-                        <?php if( $key==0 ): ?>
+                    <?php foreach($array as $key => $value) { ?>
+                        <?php if( $key==0 ) { ?>
                         <td class="col-bulkactions">
-                        <?php else : ?>
+                        <?php } else { ?>
                         <td>
-                        <?php endif ; ?>
+                        <?php } ?>
                         <?php echo $value; ?>
                         </td>
-                    <?php endforeach; ?>
+                    <?php } ?>
                     </tr>
-                <?php endforeach;?>
-                <?php else : ?>
+                <?php } ?>
+                <?php } else { ?>
                     <tr>
                         <td colspan="9" style="text-align: center;">
                         <p><?php _e('No data available in table') ; ?></p>
                         </td>
                     </tr>
-                <?php endif; ?>
+                <?php } ?>
                 </tbody>
             </table>
             <div id="table-row-actions"></div> <!-- used for table actions -->
@@ -157,8 +160,7 @@
     </form>
 </div>
 <div class="has-pagination">
-<?php 
-    
+<?php
     $pageActual = Params::getParam('iPage') ;
     $urlActual = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
     $urlActual = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
@@ -170,7 +172,7 @@
         );
     $pagination = new Pagination($params);
     $aux = $pagination->doPagination();
-    
+
     echo $aux;
 ?>
 </div>

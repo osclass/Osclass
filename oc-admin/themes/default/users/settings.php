@@ -31,9 +31,13 @@
         <h1><?php _e('Users Settings') ; ?></h1>
     <?php
     }
-?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 
+    function customPageTitle($string) {
+        return sprintf(__('Users Settings &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <!-- settings form -->
     <h2 class="render-title"><?php _e('Users Settings') ; ?></h2>
     <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">

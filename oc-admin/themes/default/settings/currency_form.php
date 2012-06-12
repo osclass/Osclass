@@ -16,7 +16,6 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-
     //customize Head
     function customHead(){
         ?>
@@ -61,29 +60,41 @@
 
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1><?php _e('Currencies') ; ?>
+        <h1><?php _e('Settings') ; ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
             <a href="<?php echo osc_admin_base_url(true).'?page=settings&action=currencies&type=add'; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
-	</h1>
+	   </h1>
     <?php
     }
-    
-    $aCurrency = View::newInstance()->_get('aCurrency') ;
-     $typeForm  = View::newInstance()->_get('typeForm') ;
 
-     if( $typeForm == 'add_post' ) {
-         $title  = __('Add Currency') ;
-         $submit = osc_esc_html( __('Add new currency') ) ;
-     } else {
-         $title  = __('Edit Currency') ;
-         $submit = osc_esc_html( __('Update') ) ;
-     }
-     
-?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+    $typeForm = __get('typeForm') ;
+    function customText($return = 'title') {
+        $typeForm = __get('typeForm') ;
+        $text     = array();
+        switch( $typeForm ) {
+            case('add_post'):
+                $text['title']  = __('Add currency');
+                $text['button'] = __('Add currency');
+            break;
+            case('edit_post'):
+                $text['title']  = __('Edit currency');
+                $text['button'] = __('Update currency');
+            break;
+        }
 
+        return $text[$return];
+    }
+
+    function customPageTitle($string) {
+        return sprintf('%s &raquo; %s', customText('title'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    $aCurrency = View::newInstance()->_get('aCurrency');
+
+    osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <div id="add-currency-settings">
-    <h2 class="render-title"><?php _e('Add currency') ; ?></h2>
+    <h2 class="render-title"><?php echo customText('title') ; ?></h2>
     <ul id="error_list" style="display: none;"></ul>
     <form name="currency_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
         <input type="hidden" name="page" value="settings" />
@@ -115,9 +126,9 @@
         </div>
         <div class="form-actions">
             <?php if( $typeForm == 'edit_post' ) { ?>
-            <input class="btn btn-red" type="button" value="Cancel" onclick="location.href='http://demo.osclass.org/cars/oc-admin/index.php?page=settings&amp;action=currencies'">
+            <input class="btn btn-red" type="button" value="Cancel" onclick="location.href='<?php echo osc_admin_base_url(true); ?>?page=settings&amp;action=currencies'">
             <?php } ?>
-            <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" class="btn btn-submit" />
+            <input type="submit" value="<?php echo osc_esc_html(customText('button')) ; ?>" class="btn btn-submit" />
         </div>
     </div>
     </fieldset>

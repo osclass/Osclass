@@ -18,13 +18,18 @@
 
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1 class="dashboard"><?php _e('Plugins') ; ?></h1>
+        <h1><?php _e('Plugins') ; ?></h1>
 <?php
     }
-?>
-<?php osc_current_admin_theme_path('parts/header.php') ; ?>
+
+    function customPageTitle($string) {
+        return sprintf(__('Add plugin &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    osc_current_admin_theme_path('parts/header.php') ; ?>
 <div class="appearance">
-    <h2 class="render-title"><?php _e('Add a plugin') ; ?></h2>
+    <h2 class="render-title"><?php _e('Add plugin') ; ?></h2>
     <div id="upload-language">
         <div class="form-horizontal">
         <?php if( is_writable( osc_plugins_path() ) ) { ?>

@@ -25,6 +25,12 @@
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
+
+    function customPageTitle($string) {
+        return sprintf(__('Manage listing &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
     //customize Head
     function customHead() { ?>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
@@ -126,9 +132,8 @@
     
     $sort       = Params::getParam('sort');
     $direction  = Params::getParam('direction');
-?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="help-box">
     <a href="#" class="btn ico ico-20 ico-close">x</a>
     <h3>What does a red highlight mean?</h3>

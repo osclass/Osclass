@@ -18,11 +18,16 @@
 
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader() { ?>
-        <h1 class="dashboard"><?php _e('Appearance') ; ?></h1>
+        <h1><?php _e('Appearance') ; ?></h1>
     <?php
     }
-?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ); ?>
+
+    function customPageTitle($string) {
+        return sprintf(__('Appearance &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <!-- theme files -->
 <div class="theme-files">
     <?php
