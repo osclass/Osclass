@@ -166,7 +166,7 @@
                     </h3>
                 </div>
                 <div class="widget-box-content">
-                    <b class="stats-title"><?php _e('_'); ?></b>
+                    <b class="stats-title"></b>
                     <div class="stats-detail"><?php echo $type_stat; ?></div>
                     <div id="placeholder" class="graph-placeholder" style="height:150px">
                         <?php if( count($items) == 0 ) {
@@ -190,7 +190,7 @@
                     </h3>
                 </div>
                 <div class="widget-box-content">
-                    <b class="stats-title"><?php _e('_'); ?></b>
+                    <b class="stats-title"></b>
                     <div class="stats-detail"><?php echo $type_stat; ?></div>
                     <div id="by_country" class="graph-placeholder" style="height:150px">
                         <?php if( count($reports) == 0 ) {
@@ -214,7 +214,7 @@
                     </h3>
                 </div>
                 <div class="widget-box-content">
-                    <b class="stats-title"><?php _e('_'); ?></b>
+                    <b class="stats-title"></b>
                     <div class="stats-detail"><?php echo $type_stat; ?></div>
                     <div id="by_region" class="graph-placeholder" style="height:150px">
                         <?php if( count($reports) == 0 ) {
@@ -252,6 +252,20 @@
                     <?php } else { ?>
                         <p><?php _e("There're no statistics yet") ; ?></p>
                     <?php } ?>
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid-row grid-50">
+        <div class="row-wrapper">
+            <div class="widget-box">
+                <div class="widget-box-title"><h3><?php _e('Avg. items per user') ; ?></h3></div>
+                <div class="widget-box-content">
+                    <div class="stats-detail">
+                        <?php printf( __('%s listings per user'), number_format($item, 2) ) ; ?>
+                    </div>
                 </div>
             </div>
         </div>
