@@ -340,7 +340,7 @@
             
             $this->dao->orderBy($order_by, $order) ;
             $this->dao->limit($start, $limit);
-            error_log($this->dao->_getSelect() );
+            
             $aux = $this->dao->get() ;
             return $aux->result() ;
         }
@@ -372,13 +372,17 @@
             return $row['numrows'];
         }
         
-        public function countAll($aConditions) 
+        public function countAll($aConditions = null ) 
         {
-            $this->dao->select('count(pk_i_id) as total') ;
-            $this->dao->from($this->getTableName()) ;
+            $this->dao->select('count(*) as total');
+            $this->dao->from($this->getTableName().' c') ;
+            $this->dao->from(DB_TABLE_PREFIX.'t_item i') ;
             
-            $this->dao->where($aConditions) ;
-            $result = $this->dao->get() ;
+            $this->dao->where('c.fk_i_item_id = i.pk_i_id');
+            if(!is_null($aConditions)) {
+                $this->dao->where($aConditions);
+            }
+            $result = $this->dao->get();
             
             if( $result == false ) { 
                 return false;
