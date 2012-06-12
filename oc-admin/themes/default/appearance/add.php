@@ -99,37 +99,24 @@
             </div>
             
             <div id="market_installer" style="display: none">
-                <h3><?php _e('OSClass Market'); ?></h3>
-
                 <form action="" method="post">
                     <input type="hidden" name="market_code" id="market_code" value="" />
-                    <div class="form-row">
-                        <div class="form-label"><?php _e('Name') ; ?></div>
-                        <div class="form-controls">
-                            <div id="market_name" class="form-label-checkbox"><?php _e("Loading data"); ?></div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-label"><?php _e('Version') ; ?></div>
-                        <div class="form-controls">
-                            <div id="market_version" class="form-label-checkbox"></div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-label"><?php _e('Author') ; ?></div>
-                        <div class="form-controls">
-                            <div id="market_author" class="form-label-checkbox"></div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-label"><?php _e('URL') ; ?></div>
-                        <div class="form-controls">
-                            <div id="market_url" class="form-label-checkbox"></div>
+                    <div class="osc-modal-content">
+                        <img src="" id="market_thumb"/>
+                        <div class="form-row">
+                            <strong><?php _e('Name') ; ?></strong>
+                            <span id="market_name" class="form-label-checkbox"><?php _e("Loading data"); ?></span>
+                            <strong><?php _e('Version') ; ?></strong>
+                            <span id="market_version" class="form-label-checkbox"></span>
+                            <strong class="form-label"><?php _e('Author') ; ?></strong>
+                            <span id="market_author" class="form-label-checkbox"></span>
+                            <strong><?php _e('URL') ; ?></strong>
+                            <span id="market_url" class="form-label-checkbox"></span>
                         </div>
                     </div>
                     <div class="form-actions">
-                        <button id="market_cancel" class="btn btn-submit" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                        <button id="market_install" class="btn btn-submit" ><?php echo osc_esc_html( __('I understand the risk, continue') ) ; ?></button>
+                        <button id="market_cancel" class="btn btn-red" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
+                        <button id="market_install" class="btn btn-submit" ><?php echo osc_esc_html( __('Continue install') ) ; ?></button>
                     </div>
                 </form>
             </div>
@@ -140,18 +127,23 @@
             $( "#tabs" ).tabs({ selected: 1 });
             
             $("#market_cancel").on("click", function(){
-                $.unblockUI();
+                $(".ui-dialog-content").dialog("close");
                 return false;
             });
             
             $("#market_install").on("click", function(){
+                $(".ui-dialog-content").dialog("close");
+                //$(".ui-dialog-content").dialog({title:'Downloading...'}).html('Please wait until the download is completed');
+                $('<div id="downloading"><div class="osc-modal-content">Please wait until the download is completed</div></div>').dialog({title:'Installing...',modal:true});
                 $.getJSON(
                 "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
                 {"code" : $("#market_code").attr("value")},
                 function(data){
-                    alert(data.message);
+                    $("#downloading .osc-modal-content").html(data.message);
+                    setTimeout(function(){
+                      $(".ui-dialog-content").dialog("close");  
+                  },1000);
                 });
-                $.unblockUI();
                 return false;
             });
             
@@ -162,6 +154,12 @@
                     $("#market_themes").html(" ");
                     if(data!=null && data.themes!=null) {
                         for(var i=0;i<data.themes.length;i++) {
+                            var description = $(data.themes[i].s_description).text();
+                            dots = '';
+                            if(description.length > 80){
+                                dots = '...';
+                            }
+                            console.log(description);
                             var imgsrc = '<?php echo osc_current_admin_theme("img/marketblank.jpg"); ?>';
                             if(data.themes[i].s_image!=null) {
                                 imgsrc = data.themes[i].s_image;
@@ -170,7 +168,7 @@
                                 +'<div class="theme-stage">'
                                     +'<img src="'+imgsrc+'" title="'+data.themes[i].s_title+'" alt="'+data.themes[i].s_title+'" />'
                                     +'<div class="theme-actions">'
-                                        +'<a href="javascript:market_fetch_data(\''+data.themes[i].s_slug+'\');" class="btn btn-mini btn-green"><?php _e('Install') ; ?></a>'
+                                        +'<a href="#'+data.themes[i].s_slug+'" class="btn btn-mini btn-green market-popup"><?php _e('Install') ; ?></a>'
                                         +'<a target="_blank" href="'+data.themes[i].s_preview+'" class="btn btn-mini btn-blue"><?php _e('Preview') ; ?></a>'
                                     +'</div>'
                                 +'</div>'
@@ -178,7 +176,7 @@
                                     +'<h3>'+data.themes[i].s_title+' '+data.themes[i].s_version+' <?php _e('by') ; ?> <a target="_blank" href="">'+data.themes[i].s_contact_name+'</a></h3>'
                                 +'</div>'
                                 +'<div class="theme-description">'
-                                    +data.themes[i].s_description
+                                    +description.substring(0,80)+dots
                                 +'</div>'
                             +'</div>');
                         }
@@ -188,8 +186,31 @@
             );
 
         });
-        
-        function market_fetch_data(slug) {
+        $('.market-popup').live('click',function(){
+            $.getJSON(
+                "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
+                {"code" : $(this).attr('href').replace('#','')},
+                function(data){
+                    if(data!=null) {
+                        $("#market_thumb").attr('src',data.s_thumbnail);
+                        $("#market_code").attr("value", data.s_slug);
+                        $("#market_name").html(data.s_title);
+                        $("#market_version").html(data.s_version);
+                        $("#market_author").html(data.s_author);
+                        $("#market_url").html(data.s_source_file);
+
+                        $('#market_installer').dialog({
+                            modal:true,
+                            title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
+                            class: 'osc-class-test'
+                        });
+                    }
+                }
+            );
+            
+            return false;
+        });
+        /*function market_fetch_data(slug) {
             $.blockUI({
                 message: $("#market_installer"),
                 css: { 
@@ -215,7 +236,7 @@
                     );
                 }
             });
-        }
+        }*/
         
         </script>
     </div>
