@@ -373,7 +373,7 @@ function osc_admin_toolbar_logout()
 
 function osc_admin_toolbar_comments()
 {   
-    $total = ItemComment::newInstance()->countAll( array('b_active' => 0) );
+    $total = ItemComment::newInstance()->countAll( '( c.b_active = 0 OR c.b_enabled = 0 OR c.b_spam = 1 )' );
     if( $total > 0 ) {
         $title = '<i class="circle circle-green">'.$total.'</i>'.__('New comments');
 
