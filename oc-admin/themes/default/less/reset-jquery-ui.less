@@ -13,3 +13,35 @@
 }
 .ui-tabs-right .ui-tabs-nav li.ui-state-default {float: right; }
 .ui-tabs-right .ui-tabs-nav li a { float: right; }
+.ui-dialog{
+	padding:0;
+	border:0;
+}
+.ui-dialog .ui-dialog-content{
+	padding:0px;
+	border:solid 1px @color-blue-border;
+	.rounded-corners(0 0 4px 4px);
+
+}
+.ui-dialog .ui-dialog-titlebar{
+	.rounded-corners(4px 4px 0 0);
+	border:none;
+	background-color:@color-blue;
+	color:@color-white;
+	font-weight:normal;
+	font-size:16px;
+	border:solid 1px @color-blue-border;
+	border-bottom:none;
+}
+.osc-modal-content{
+	padding:15px;
+}
+.ui-dialog .form-actions{
+	margin-bottom:0;
+	.rounded-corners(0 0 4px 4px);
+}
+#downloading{
+	font-size:15px;
+	color:@color-gray-dim;
+	text-align:center;
+}

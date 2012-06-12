@@ -3,6 +3,7 @@
 }
 a.btn{
 	height:15px;
+	background-image:url('../images/bnt-overlay.png');
 }
 .ico-48{
 	width:48px;
@@ -283,13 +284,15 @@ input.input-large{
 input.input-actions{
 	height:24px;
 }
-input.btn{
+input.btn,
+button.btn{
 	float:none;
 	width:auto;
 	height:34px;
 	padding-bottom:9px;
 	padding-top:7px;
 	vertical-align: top;
+	background-image:url('../images/bnt-overlay.png');
 }
 input.input-has-select{
 	.box-shadow(none);
@@ -303,12 +306,13 @@ input.input-has-select{
 	font-size:11px;
 	font-weight:bold;
 }
-input.btn-mini{
+input.btn-mini,
+button.btn-mini{
 	height:28px;
 	padding-top:6px;
 }
 .btn-submit{
-	background-image: linear-gradient(top, #05BBD3 5%, #028495 53%);
+	/*background-image: linear-gradient(top, #05BBD3 5%, #028495 53%);
 	background-image: -o-linear-gradient(top, #05BBD3 5%, #028495 53%);
 	background-image: -moz-linear-gradient(top, #05BBD3 5%, #028495 53%);
 	background-image: -webkit-linear-gradient(top, #05BBD3 5%, #028495 53%);
@@ -320,8 +324,9 @@ input.btn-mini{
 		left bottom,
 		color-stop(0.05, #05BBD3),
 		color-stop(0.53, #028495)
-	);
+	);*/
 	border-color:#027173;
+	background-color:@color-blue;
 	color:#ffffff;
 	font-size:13px;
 	padding-left:13px;
@@ -329,6 +334,10 @@ input.btn-mini{
 
 	text-shadow: 0px -1px 0px #026470;
 	filter: dropshadow(color=#026470, offx=0, offy=-1);
+}
+.btn-submit:hover{
+	background-color:@color-blue-hover;
+	border-color:#027173;
 }
 .well{
 	padding:10px;
