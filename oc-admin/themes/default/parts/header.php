@@ -36,7 +36,7 @@
                 <?php osc_run_hook('admin_page_header'); ?>
             </div>
             <?php osc_show_flash_message('admin') ; ?>
-            <div class="jsMessage flashmessage info" style="display: none;">
+            <div class="jsMessage flashmessage flashmessage-info" style="display: none;">
                 <a class="btn ico btn-mini ico-close">×</a>
                 <p></p>
             </div>
