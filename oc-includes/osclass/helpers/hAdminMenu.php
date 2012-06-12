@@ -44,7 +44,7 @@
         $plugins_out = ob_get_contents();
         ob_end_clean();
         // clean old menus (remove h3 element)
-        $plugins_out = preg_replace('|<h3><a .*>(.*)</a></h3>|', '<li><a href="#">=> $1 <=</a></li>', $plugins_out);
+        $plugins_out = preg_replace('|<h3><a .*>(.*)</a></h3>|', '<li><a href="#" style="text-decoration: underline; cursor: none;">$1</a></li>', $plugins_out);
         $plugins_out = preg_replace('|<ul>|', '', $plugins_out);
         $plugins_out = preg_replace('|</ul>|', '', $plugins_out);
         
