@@ -73,7 +73,7 @@
                 break ;
                 default:
                                         if( Params::getParam('iDisplayLength') == '' ) {
-                                            Params::setParam('iDisplayLength', 2 ) ;
+                                            Params::setParam('iDisplayLength', 10 ) ;
                                         }
                                         $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
                                         
