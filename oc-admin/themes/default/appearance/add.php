@@ -158,12 +158,16 @@
                     $("#market_themes").html(" ");
                     if(data!=null && data.themes!=null) {
                         for(var i=0;i<data.themes.length;i++) {
+                            var imgsrc = '<?php echo osc_current_admin_theme("img/marketblank.jpg"); ?>';
+                            if(data.themes[i].s_image!=null) {
+                                imgsrc = data.themes[i].s_image;
+                            }
                             $("#market_themes").append('<div class="theme">'
                                 +'<div class="theme-stage">'
-                                    +'<img src="" title="'+data.themes[i].s_title+'" alt="'+data.themes[i].s_title+'" />'
+                                    +'<img src="'+imgsrc+'" title="'+data.themes[i].s_title+'" alt="'+data.themes[i].s_title+'" />'
                                     +'<div class="theme-actions">'
                                         +'<a href="javascript:market_fetch_data(\''+data.themes[i].s_slug+'\');" class="btn btn-mini btn-green"><?php _e('Install') ; ?></a>'
-                                        +'<!-- <a target="_blank" href="" class="btn btn-mini btn-blue"><?php _e('Preview') ; ?></a> -->'
+                                        +'<a target="_blank" href="'+data.themes[i].s_preview+'" class="btn btn-mini btn-blue"><?php _e('Preview') ; ?></a>'
                                     +'</div>'
                                 +'</div>'
                                 +'<div class="theme-info">'
