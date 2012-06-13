@@ -73,14 +73,14 @@
                         <div class="clear"></div>
                     </div>
                 </div>
-                <h2 class="render-title"><?php _e('Available themes') ; ?></h2>
+                <h2 class="render-title"><?php _e('Available themes'); ?></h2>
                 <div class="available-theme">
                     <?php foreach($themes as $theme) { ?>
                     <?php
                             if( $theme == osc_theme() ) {
                                 continue;
                             }
-                            $info = WebThemes::newInstance()->loadThemeInfo($theme) ;
+                            $info = WebThemes::newInstance()->loadThemeInfo($theme);
                     ?>
                     <div class="theme">
                         <div class="theme-stage">
