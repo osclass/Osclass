@@ -104,51 +104,6 @@
             $this->limit = intval( $this->_get['iDisplayLength'] ) ;
         }
 
-        /* START - format functions */
-        private function toDatatablesFormat()
-        {
-            $this->result['iTotalRecords']        = $this->total_filtered ;
-            $this->result['iTotalDisplayRecords'] = $this->total ;
-            $this->result['sEcho']                = $this->sEcho ;
-            $this->result['aaData']               = array() ;
-
-            if( count($this->comments) == 0 ) {
-                return ;
-            }            
-                
-            $count = 0 ;
-            foreach($this->comments as $comment) {
-                $row = array() ;
-
-                $options = array() ;
-                $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=comment_edit&amp;id=' . $comment['pk_i_id'] . '" id="dt_link_edit">' . __('Edit') . '</a>' ;
-                if( $comment['b_active'] ) {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') . '</a>' ;
-                } else {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] .'&amp;value=ACTIVE">' . __('Activate') . '</a>' ;
-                }
-                if( $comment['b_enabled'] ) {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=DISABLE">' . __('Unblock') . '</a>' ;
-                } else {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=ENABLE">' . __('Block') . '</a>' ;
-                }
-                $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) . '\')" href="' . osc_admin_base_url(true) . '?page=comments&amp;action=delete&amp;id=' . $comment['pk_i_id'] .'" id="dt_link_delete">' . __('Delete') . '</a>' ;
-
-                $row[] = '<input type="checkbox" name="id[]" value="' . $comment['pk_i_id']  . '" />' ;
-                if( empty($comment['s_author_name']) ) {
-                    $user = User::newInstance()->findByPrimaryKey( $comment['fk_i_user_id'] );
-                    $comment['s_author_name'] = $user['s_email'];
-                }
-                $row[] = $comment['s_author_name'] . ' (<a target="_blank" href="' . osc_item_url_ns( $comment['fk_i_item_id'] ) . '">' . $comment['s_title'] . '</a>)<div class="datatables_quick_edit" style="display:none;">' . implode(' &middot; ', $options) . '</div>' ;
-                $row[] = $comment['s_body'] ;
-                $row[] = $comment['dt_pub_date'] ;
-
-
-                $count++ ;
-                $this->result['aaData'][] = $row ;
-            }
-        }
-
         private function toArrayFormat()
         {
             $this->result['iTotalRecords']        = $this->total_filtered ;
@@ -175,9 +130,9 @@
                     $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] .'&amp;value=ACTIVE">' . __('Activate') . '</a>' ;
                 }
                 if( $comment['b_enabled'] ) {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=DISABLE">' . __('Unblock') . '</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=DISABLE">' . __('Block') . '</a>' ;
                 } else {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=ENABLE">' . __('Block') . '</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=ENABLE">' . __('Unblock') . '</a>' ;
                 }
                 
                 $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=comment_edit&amp;id=' . $comment['pk_i_id'] . '" id="dt_link_edit">' . __('Edit') . '</a>' ;
