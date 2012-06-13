@@ -91,7 +91,9 @@
                 <div class="form-row">
                     <div class="form-label"><?php _e('Last access') ; ?></div>
                     <div class="form-controls">
+                        <div class='form-label-checkbox'>
                         <?php echo sprintf(__("%s on %s"), $user['s_access_ip'], $user['dt_access_date']);?>
+                        </div>
                     </div>
                 </div>
                 <?php }; ?>
