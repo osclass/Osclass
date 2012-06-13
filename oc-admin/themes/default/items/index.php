@@ -78,7 +78,7 @@
                 });*/
 
                 $('#btn-display-filters').click(function(){
-                    $('#display-filters').dialog({modal:true,width:'700px',title:'<?php echo osc_esc_js( __('Filters') ) ; ?>'});
+                    $('#display-filters').dialog({modal:true,width:700,title:'<?php echo osc_esc_js( __('Filters') ) ; ?>'});
                     return false;
                 });
                 
@@ -140,7 +140,7 @@
     <p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
     Red highlight means that the listing has been marked as spam.</p>
 </div>
-<form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" style="display:none">
+<form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions" style="display:none">
     <input type="hidden" name="page" value="items" />
     <input type="hidden" name="iDisplayLength" value="<?php echo $iDisplayLength;?>" />
     <div class="form-horizontal">
@@ -251,21 +251,14 @@
                 </div>
             </div>
         </div>
-        <div class="grid-row grid-100">
-            <div class="row-wrapper">
-                <div class="form-horizontal">
-                    <div class="form-row">
-                        <div class="form-actions">
-                            <input id="show-filters" type="submit" value="<?php echo osc_esc_html( __('Apply filters') ) ; ?>" class="btn btn-submit float-right" />
-                            <a class="btn float-right" href="<?php echo osc_admin_base_url(true).'?page=items'; ?>"><?php _e('Reset filters') ; ?></a>
-                            <div class="clear"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="clear"></div>
     </div>
+    </div>
+    <div class="form-actions">
+        <div class="wrapper">
+        <input id="show-filters" type="submit" value="<?php echo osc_esc_html( __('Apply filters') ) ; ?>" class="btn btn-submit" />
+        <a class="btn" href="<?php echo osc_admin_base_url(true).'?page=items'; ?>"><?php _e('Reset filters') ; ?></a>
+        </div>
     </div>
 </form>
 <h2 class="render-title"><?php _e('Manage listing') ; ?></h2>
