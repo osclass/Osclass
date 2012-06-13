@@ -23,10 +23,10 @@
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo osc_current_admin_theme_url('images/favicon-72.png'); ?>">
         <link rel="apple-touch-icon-precomposed" href="<?php echo osc_current_admin_theme_url('images/favicon-57.png'); ?>">
 
-        <?php osc_run_hook('admin_header') ; ?>
+        <?php osc_run_hook('admin_header'); ?>
     </head>
 <body>
-        <?php AdminToolbar::newInstance()->render() ;?>
+        <?php AdminToolbar::newInstance()->render(); ?>
     </div>
 
     <div id="content">

@@ -296,87 +296,6 @@
             $this->start = intval( $start ) ;
             $this->limit = intval( $this->_get['iDisplayLength'] ) ;
         }
-
-        /* START - format functions */
-        private function toDatatablesFormat() {
-            $this->result['iTotalRecords']        = $this->total_filtered ;
-            $this->result['iTotalDisplayRecords'] = $this->total ;
-            $this->result['sColumns']             = $this->sColumns ;
-            $this->result['aaData']               = array() ;
-
-            if( count($this->items) == 0 ) {
-                return ;
-            }
-
-            $count = 0;
-            foreach ($this->items as $aRow)
-            {
-                View::newInstance()->_exportVariableToView('item', $aRow);
-                $row     = array() ;
-                $options = array() ;
-
-                // prepare data
-                $title = mb_substr($aRow['s_title'], 0, 30, 'utf-8') ;
-                if($title != $aRow['s_title']) {
-                    $title .= '...' ;
-                }
-                
-                // only show if there are data
-                if( ItemComment::newInstance()->totalComments( $aRow['pk_i_id'] ) > 0 ) {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View comments') . '</a>' ;
-                }
-                if( ItemResource::newInstance()->countResources( $aRow['pk_i_id'] ) > 0 ) {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=media&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View media') . '</a>' ;
-                }
-                
-                $options_more = array();
-                if( $aRow['b_active'] ) {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') .'</a>' ;
-                } else {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=ACTIVE">' . __('Activate') .'</a>' ;
-                }
-                if( $aRow['b_enabled'] ) {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=DISABLE">' . __('Block') .'</a>' ;
-                } else {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=ENABLE">' . __('Unblock') .'</a>' ;
-                }
-                if( $aRow['b_premium'] ) {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $aRow['pk_i_id'] . '&amp;value=0">' . __('Unmark as premium') .'</a>' ;
-                } else {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $aRow['pk_i_id'] . '&amp;value=1">' . __('Mark as premium') .'</a>' ;
-                }
-                if( $aRow['b_spam'] ) {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $aRow['pk_i_id'] . '&amp;value=0">' . __('Unmark as spam') .'</a>' ;
-                } else {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $aRow['pk_i_id'] . '&amp;value=1">' . __('Mark as spam') .'</a>' ;
-                }
-                $moreActions = "<div class='moreAction'><a>" . __('More actions') . '</a><div> '. implode(' &middot; ', $options_more). "</div></div>" ;
-                
-                
-                $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=item_edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>' ;
-                $onclick_delete = 'onclick="javascript:return confirm(\'' . osc_esc_js( __('This action can not be undone. Are you sure you want to continue?') ) . '\')"' ;
-                $options[] = '<a ' . $onclick_delete . ' href="' . osc_admin_base_url(true) . '?page=items&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
-                
-                foreach($this->stat as $k => $s) {
-                    $options[] = '<a ' .$onclick_delete . ' href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;stat=' . $k . '&amp;id=' . $aRow['pk_i_id'] . '">' . sprintf( __('Clear %s'), $k ) . '</a>' ;
-                }
- 
-                // fill a row
-                $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>' ;
-                $row[] = '<a href="' . osc_item_url().'">' . $title . '</a> <div class="datatable_wrapper" style="display: none;"><div class="datatables_quick_edit" style="position: absolute;" >' . implode(' &middot; ', $options) . ' &middot; ' . $moreActions .'</div></div>' ;
-                $row[] = $aRow['s_user_name'] ;
-                $row[] = $aRow['s_category_name'] ;
-                $row[] = $aRow['s_country'] ;
-                $row[] = $aRow['s_region'] ;
-                $row[] = $aRow['s_city'] ;
-                $row[] = $aRow['dt_pub_date'] ;
-
-                $count++ ;
-                $this->result['aaData'][] = $row ;
-            }
-
-            return ;
-        }
         
         /**
          * new Design - return array
@@ -444,6 +363,7 @@
                     $options[] = '<a href="' . osc_admin_base_url(true) . '?page=media&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View media') . '</a>' ;
                 }
                 
+                $options_more = osc_apply_filter('more_actions_manage_items', $options_more);
                 // more actions
                 $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL ;
                 foreach( $options_more as $actual ) { 
@@ -451,6 +371,7 @@
                 }
                 $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL ;
                 
+                $options = osc_apply_filter('actions_manage_items', $options);
                 // create list of actions
                 $auxOptions = '<ul>'.PHP_EOL ;
                 foreach( $options as $actual ) {
@@ -542,6 +463,7 @@
                     $options[] = '<a href="' . osc_admin_base_url(true) . '?page=media&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View media') . '</a>' ;
                 }
                 
+                $options_more = osc_apply_filter('more_actions_manage_items', $options_more);
                 // more actions
                 $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL ;
                 foreach( $options_more as $actual ) { 
@@ -549,6 +471,7 @@
                 }
                 $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL ;
                 
+                $options = osc_apply_filter('actions_manage_items', $options);
                 // create list of actions
                 $auxOptions = '<ul>'.PHP_EOL ;
                 foreach( $options as $actual ) {
