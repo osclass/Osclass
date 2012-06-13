@@ -405,5 +405,18 @@ function osc_admin_toolbar_spam()
 // and we hook our function via
 //osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_spam') ;
 
+function osc_admin_toolbar_update_plugins()
+{   
+    
+}
+// and we hook our function via
+//osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_update_plugins') ;
+
+function osc_admin_toolbar_update_themes()
+{   
+    
+}
+// and we hook our function via
+//osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_update_themes') ;
 
 ?>
