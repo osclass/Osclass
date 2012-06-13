@@ -346,8 +346,13 @@
                 </thead>
                 <tbody>
                 <?php if(count($aData['aaData'])>0) : ?>
-                <?php foreach( $aData['aaData'] as $array) : ?>
-                    <tr>
+                <?php foreach( $aData['aaData'] as $key => $array) : ?>
+                    <?php $class = ''; $aI = $aData['aaObject'][$key]; if(!$aI['b_active']) $class = 'status-spam'; ?>
+                    <?php if(!$aI['b_active'])  $class = 'status-spam'; ?>
+                    <?php if(!$aI['b_enabled']) $class = 'status-spam'; ?>
+                    <?php if($aI['b_spam']) $class = 'status-spam'; ?>
+                    <?php if($aI['b_premium']) $class = 'status-premium'; ?>
+                    <tr class="<?php echo $class;?>">
                     <?php foreach($array as $key => $value) : ?>
                         <?php if( $key==0 ): ?>
                         <td class="col-bulkactions">

@@ -387,12 +387,15 @@
             $this->result['iTotalDisplayRecords'] = $this->total ;
             $this->result['sColumns']             = $this->sColumns ;
             $this->result['iDisplayLength']       = $this->_get['iDisplayLength'];
-            $this->result['aaData']               = array() ;
+            $this->result['aaData']               = array();
+            $this->result['aaObject']             = array();
 
             if( count($this->items) == 0 ) {
                 return ;
             }
 
+            $this->result['aaObject'] = $this->items;
+            
             $count = 0;
             foreach ($this->items as $aRow)
             {
@@ -489,6 +492,8 @@
                 return ;
             }
 
+            $this->result['aaObject'] = $this->items;
+            
             $count = 0;
             foreach ($this->items as $aRow)
             {

@@ -101,8 +101,11 @@
                 <tbody>
                 <?php if(count($aData['aaData'])>0) : ?>
                 <?php foreach( $aData['aaData'] as $key => $array) : ?>
-                    <?php $aC = $aData['aaObject'][$key]; ?>
-                    <?php $class = ''; if($aC['b_enabled'] || $aC['b_active'] || $aC['b_spam']) $class = 'status-spam'; ?>
+                    <?php 
+                    $aC = $aData['aaObject'][$key]; 
+                    $class = ''; 
+                    if(!$aC['b_enabled'] || !$aC['b_active'] || $aC['b_spam']) $class = 'status-spam'; 
+                    ?>
                     <tr class="<?php echo $class; ?>">
                     <?php foreach($array as $key => $value) { ?>
                         <?php if( $key==0 ) { ?>
