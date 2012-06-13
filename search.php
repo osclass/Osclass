@@ -59,7 +59,7 @@
                     }
                 }
                 if( Params::getParam('iPage') > 1 ) {
-                    $this->_exportVariableToView('canonical', osc_base_url() . $param_page[0]) ;
+                    $this->_exportVariableToView('canonical', osc_base_url() . $search_uri);
                 }
 
                 $params = preg_split('|_|', preg_replace('|.*?/|', '', $search_uri));
