@@ -96,7 +96,7 @@
                 </div>
             </div>
             
-            <div id="market_installer" style="display: none">
+            <div id="market_installer" style="display: none" class="has-form-actions">
                 <form action="" method="post">
                     <input type="hidden" name="market_code" id="market_code" value="" />
                     <div class="osc-modal-content-market">
@@ -124,8 +124,10 @@
                         <div class="clear"></div>
                     </div>
                     <div class="form-actions">
-                        <button id="market_cancel" class="btn btn-red" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                        <button id="market_install" class="btn btn-submit" ><?php echo osc_esc_html( __('Continue install') ) ; ?></button>
+                        <div class="wrapper">
+                            <button id="market_cancel" class="btn btn-red" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
+                            <button id="market_install" class="btn btn-submit" ><?php echo osc_esc_html( __('Continue install') ) ; ?></button>
+                        </div>
                     </div>
                 </form>
             </div>
