@@ -135,7 +135,7 @@
     $urlActual = preg_replace('/&iPage=(\d)+/', '', $urlActual) ;
     $pageTotal = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
     $params = array('total'    => $pageTotal
-                   ,'selected' => $pageActual
+                   ,'selected' => $pageActual-1
                    ,'url'      => $urlActual.'&iPage={PAGE}'
                    ,'sides'    => 5
         );
