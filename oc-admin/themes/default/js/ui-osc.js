@@ -100,6 +100,10 @@ $(function(){
         });
     });
     oscTab();
+    $(".close-dialog").on("click", function(){
+        $(".ui-dialog-content").dialog("close");
+        return false;
+    });
 });
 function oscTab(callback){
     $(".osc-tab").tabs();

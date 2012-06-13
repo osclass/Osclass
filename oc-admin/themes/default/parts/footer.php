@@ -1,9 +1,9 @@
-    	</div></div></div><!-- #grid-system -->
-    	</div><!-- #content-page -->
+        	</div></div></div><!-- #grid-system -->
+        	</div><!-- #content-page -->
+            <div id="footer">
+                <?php osc_run_hook('admin_footer') ; ?>
+            </div>
     	</div><!-- #content-render -->
-        <div id="footer">
-            <?php osc_run_hook('admin_footer') ; ?>
-        </div>
     </div><!-- #content -->
     <!-- javascript
     ================================================== -->

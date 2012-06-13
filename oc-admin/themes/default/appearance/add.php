@@ -220,35 +220,7 @@
             );
             
             return false;
-        });
-        /*function market_fetch_data(slug) {
-            $.blockUI({
-                message: $("#market_installer"),
-                css: { 
-                    textAlign: 'left',
-                    left: '370px',
-                    top: '180px',
-                    width: '450px',
-                    padding: 10
-                },
-                onBlock : function(){
-                    $.getJSON(
-                        "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
-                        {"code" : slug},
-                        function(data){
-                            if(data!=null) {
-                                $("#market_code").attr("value", data.s_slug);
-                                $("#market_name").html(data.s_title);
-                                $("#market_version").html(data.s_version);
-                                $("#market_author").html(data.s_author);
-                                $("#market_url").html(data.s_source_file);
-                            }
-                        }
-                    );
-                }
-            });
-        }*/
-        
+        });        
         </script>
     </div>
     <!-- /themes list -->
