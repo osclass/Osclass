@@ -169,6 +169,9 @@
                     $this->doView('appearance/view.php');
                 break;
                 default:
+                    // force the recount of themes that need to be updated
+                    osc_admin_toolbar_update_themes(true);
+                    
                     $themes = WebThemes::newInstance()->getListThemes();
                     $info = WebThemes::newInstance()->loadThemeInfo(osc_theme());
 
