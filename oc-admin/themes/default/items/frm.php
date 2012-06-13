@@ -117,7 +117,7 @@
         <div class="clear"></div>
         <?php } ?>
         <?php printLocaleTabs(); ?>
-        <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data">
+        <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data" name="item">
             <input type="hidden" name="page" value="items" />
             <?php if( $new_item ) { ?>
                 <input type="hidden" name="action" value="post_item" />

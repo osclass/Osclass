@@ -60,11 +60,9 @@ function customHead() { ?>
                     var ret = eval( "(" + res + ")");
                     var message = "";
                     if(ret.error) { 
-                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/cross.png'); ?>"/>';
                         message += ret.error; 
                     }
                     if(ret.ok){
-                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/tick.png'); ?>"/>';
                         message += ret.ok;
                         
                         $('#list_'+id).fadeOut("slow");
@@ -121,7 +119,6 @@ function customHead() { ?>
                         show_iframe('content_list_'+ret.field_id, ret.field_id);
                     } else {
                         var message = "";
-                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/cross.png');?>"/>';
                         message += '<?php _e('Custom field could not be added'); ?>'
                         $(".jsMessage").fadeIn('fast') ;
                         $(".jsMessage p").html(message) ;

@@ -19,6 +19,7 @@ a { color:#069; text-decoration:underline; }
 a:hover { color:#F80; }
 option.pad { margin-left:10px;}
 .empty { clear:both; color:#993300; float:left; padding:15px; width:100%; }
+.clear { clear:both; }
 .container { margin:0 auto; width:970px; }
 .content { clear:both; float:left; margin-bottom:20px; width:960px; }
 .content.home { border-top:1px solid #BBB; }
@@ -105,6 +106,10 @@ option.pad { margin-left:10px;}
 .search .extras .fieldset_title { color:#999; margin-bottom:5px; }
 .search fieldset { padding:15px 10px; }
 /* NOTE: see Uniform.js styles at the bottom for the fake select and fake button styles */
+
+/* Breadcrumb */
+div.breadcrumb { padding: 10px 0; border-bottom: 1px solid #BBB; width: 960px; }
+ul.breadcrumb li { float: left; padding: 0 2px; }
 
 /* List & Item Search Row */
 #form_publish .search { float:left; width:960px; }

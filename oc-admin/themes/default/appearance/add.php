@@ -96,7 +96,7 @@
                 </div>
             </div>
             
-            <div id="market_installer" style="display: none">
+            <div id="market_installer" style="display: none" class="has-form-actions">
                 <form action="" method="post">
                     <input type="hidden" name="market_code" id="market_code" value="" />
                     <div class="osc-modal-content-market">
@@ -124,8 +124,10 @@
                         <div class="clear"></div>
                     </div>
                     <div class="form-actions">
-                        <button id="market_cancel" class="btn btn-red" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                        <button id="market_install" class="btn btn-submit" ><?php echo osc_esc_html( __('Continue install') ) ; ?></button>
+                        <div class="wrapper">
+                            <button id="market_cancel" class="btn btn-red" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
+                            <button id="market_install" class="btn btn-submit" ><?php echo osc_esc_html( __('Continue install') ) ; ?></button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -218,35 +220,7 @@
             );
             
             return false;
-        });
-        /*function market_fetch_data(slug) {
-            $.blockUI({
-                message: $("#market_installer"),
-                css: { 
-                    textAlign: 'left',
-                    left: '370px',
-                    top: '180px',
-                    width: '450px',
-                    padding: 10
-                },
-                onBlock : function(){
-                    $.getJSON(
-                        "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
-                        {"code" : slug},
-                        function(data){
-                            if(data!=null) {
-                                $("#market_code").attr("value", data.s_slug);
-                                $("#market_name").html(data.s_title);
-                                $("#market_version").html(data.s_version);
-                                $("#market_author").html(data.s_author);
-                                $("#market_url").html(data.s_source_file);
-                            }
-                        }
-                    );
-                }
-            });
-        }*/
-        
+        });        
         </script>
     </div>
     <!-- /themes list -->
