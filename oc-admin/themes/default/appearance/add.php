@@ -19,8 +19,6 @@
     //customize Head
     function customHead(){
         echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.validate.min.js').'"></script>';
-        //echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery-ui-1.8.20.min.js').'"></script>';
-        echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.blockUI.js').'"></script>';
         ?>
         <script type="text/javascript">
             $(function() {
@@ -101,18 +99,29 @@
             <div id="market_installer" style="display: none">
                 <form action="" method="post">
                     <input type="hidden" name="market_code" id="market_code" value="" />
-                    <div class="osc-modal-content">
-                        <img src="" id="market_thumb"/>
-                        <div class="form-row">
-                            <strong><?php _e('Name') ; ?></strong>
-                            <span id="market_name" class="form-label-checkbox"><?php _e("Loading data"); ?></span>
-                            <strong><?php _e('Version') ; ?></strong>
-                            <span id="market_version" class="form-label-checkbox"></span>
-                            <strong class="form-label"><?php _e('Author') ; ?></strong>
-                            <span id="market_author" class="form-label-checkbox"></span>
-                            <strong><?php _e('URL') ; ?></strong>
-                            <span id="market_url" class="form-label-checkbox"></span>
-                        </div>
+                    <div class="osc-modal-content-market">
+                        <img src="" id="market_thumb" style="float:left"/>
+                        <table class="table" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr class="table-first-row">
+                                    <td><?php _e('Name') ; ?></td>
+                                    <td><span id="market_name"><?php _e("Loading data"); ?></span></td>
+                                </tr>
+                                <tr class="even">
+                                    <td><?php _e('Version') ; ?></td>
+                                    <td><span id="market_version"><?php _e("Loading data"); ?></span></td>
+                                </tr>
+                                <tr>
+                                    <td><?php _e('Author') ; ?></td>
+                                    <td><span id="market_author"><?php _e("Loading data"); ?></span></td>
+                                </tr>
+                                <tr class="even">
+                                    <td><?php _e('URL') ; ?></td>
+                                    <td><a id="market_url" href="#"><?php _e("Download manually"); ?></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="clear"></div>
                     </div>
                     <div class="form-actions">
                         <button id="market_cancel" class="btn btn-red" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
@@ -159,7 +168,6 @@
                             if(description.length > 80){
                                 dots = '...';
                             }
-                            console.log(description);
                             var imgsrc = '<?php echo osc_current_admin_theme("img/marketblank.jpg"); ?>';
                             if(data.themes[i].s_image!=null) {
                                 imgsrc = data.themes[i].s_image;
@@ -196,13 +204,14 @@
                         $("#market_code").attr("value", data.s_slug);
                         $("#market_name").html(data.s_title);
                         $("#market_version").html(data.s_version);
-                        $("#market_author").html(data.s_author);
-                        $("#market_url").html(data.s_source_file);
+                        $("#market_author").html(data.s_contact_name);
+                        $("#market_url").attr('href',data.s_source_file);
 
                         $('#market_installer').dialog({
                             modal:true,
                             title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
-                            class: 'osc-class-test'
+                            class: 'osc-class-test',
+                            width:485
                         });
                     }
                 }
