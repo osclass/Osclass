@@ -975,5 +975,15 @@
         return $result['host'];
     }
 
+    function osc_breadcrumb($separator = '&raquo;', $echo = true) {
+        $br = new Breadcrumb();
+        $br->init();
+        if( $echo ) {
+            echo $br->render($separator);
+            return ;
+        }
+        return $br->render($separator);
+    }
+
     /* file end: ./oc-includes/osclass/helpers/hDefines.php */
 ?>
