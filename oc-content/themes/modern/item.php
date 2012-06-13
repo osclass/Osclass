@@ -42,13 +42,8 @@
                 });
             });
         </script>
-        <?php if( osc_item_is_expired () ) { ?>
-        <meta name="robots" content="noindex, nofollow" />
-        <meta name="googlebot" content="noindex, nofollow" />
-        <?php } else { ?>
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content="index, follow" />
-        <?php } ?>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
