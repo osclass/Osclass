@@ -92,65 +92,6 @@
                 }
             }
         }
-
-        /**
-         * Set the $result variable with the appropiate data
-         * 
-         * @access private
-         * @since unknown
-         */
-        private function toDatatablesFormat()
-        {
-            $this->result['iTotalRecords']        = $this->total_filtered ;
-            $this->result['iTotalDisplayRecords'] = $this->total ;
-            $this->result['sEcho']                = $this->sEcho ;
-            $this->result['aaData']               = array() ;
-
-            if( count($this->users) == 0 ) {
-                return ;
-            }
-
-            $count = 0 ;
-            foreach ($this->users as $aRow) {
-                $row = array() ;
-                // first column
-                $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" /></div>' ;
-                // second column
-                $second  = $aRow['s_email'] . '<br/>' ;
-                $second .= '<div class="datatable_wrapper"><div class="datatables_quick_edit" ' ;
-                $second .= ' style="position:absolute; display:none ;">' ;
-                if( $aRow['b_active'] == 1 ) {
-                    $second .= '<a href="' . osc_admin_base_url(true) . '?page=users&action=deactivate&amp;id[]=' . $aRow['pk_i_id'] .'">' . __('Deactivate') . '</a>' ;
-                } else {
-                    $second .= '<a href="' . osc_admin_base_url(true) . '?page=users&action=activate&amp;id[]=' . $aRow['pk_i_id'] .'">' . __('Activate') . '</a>' ;
-                }
-                if( $aRow['b_enabled'] == 1 ) {
-                    $second .= ' &middot; <a href="' . osc_admin_base_url(true) . '?page=users&action=disable&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Block') . '</a>' ;
-                } else {
-                    $second .= ' &middot; <a href="' . osc_admin_base_url(true) . '?page=users&action=enable&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Unblock') . '</a>' ;
-                }
-                if( osc_user_validation_enabled() && ( $aRow['b_active'] == 0 ) ) {
-                    $second .= ' &middot; <a href="' . osc_admin_base_url(true) . '?page=users&action=resend_activation&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Re-send activation email') . '</a>' ;
-                }
-
-                $second .= ' &middot; <a href="' . osc_admin_base_url(true) . '?page=users&action=edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>' ;
-                $var     = 'onclick="javascript:return confirm(\'' . osc_esc_js(__('This action can not be undone. Are you sure you want to continue?')) . '\')"' ;
-                $second .= ' &middot; <a ' . $var . ' href="' . osc_admin_base_url(true) . '?page=users&action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
-                $second .= '</div></div>' ;
-                $row[] = $second ;
-                // third row
-                $row[] = $aRow['s_name'] ;
-                // fourth row
-                $row[] = $aRow['dt_reg_date'] ;
-                // fifth row
-                $row[] = $aRow['dt_mod_date'] ;
-
-                $count++ ;
-                $this->result['aaData'][] = $row ;
-            }
-
-            return ;
-        }
         
         public function toArrayFormat()
         {
@@ -188,13 +129,16 @@
                 if( osc_user_validation_enabled() && ( $aRow['b_active'] == 0 ) ) {
                     $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=resend_activation&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Re-send activation email') . '</a>' ;
                 }
-                 // more actions
+                
+                $options_more = osc_apply_filter('more_actions_manage_users', $options_more);
+                // more actions
                 $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL ;
                 foreach( $options_more as $actual ) { 
                     $moreOptions .= '<li>'.$actual."</li>".PHP_EOL;
                 }
                 $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL ;
 
+                $options = osc_apply_filter('actions_manage_users', $options);
                 // create list of actions
                 $auxOptions = '<ul>'.PHP_EOL ;
                 foreach( $options as $actual ) {
