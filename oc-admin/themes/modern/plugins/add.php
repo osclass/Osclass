@@ -77,7 +77,7 @@
             </div>
         </div>
 
-        <div id="market_installer" style="display: none" class="has-form-actions">
+        <div id="market_installer" class="has-form-actions hide">
             <form action="" method="post">
                 <input type="hidden" name="market_code" id="market_code" value="" />
                 <div class="osc-modal-content-market">
