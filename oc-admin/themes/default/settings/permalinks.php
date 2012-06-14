@@ -363,7 +363,7 @@
                         <ul id="error_list" style="display: none;"></ul>
                         <form name="settings_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                             <input type="hidden" name="page" value="settings" />
-                            <input type="hidden" name="action" value="pemalinks_post" />
+                            <input type="hidden" name="action" value="permalinks_post" />
                             <fieldset>
                             <div class="form-horizontal">
                             <div class="form-row">
