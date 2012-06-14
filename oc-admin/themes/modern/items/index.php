@@ -15,7 +15,12 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-
+    function addHelp(){
+        echo '<h3>What does a red highlight mean?</h3>';
+        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
+    Red highlight means that the listing has been marked as spam.</p>';
+    }
+    osc_add_hook('help_box','addHelp');
     function customPageHeader() { ?>
         <h1><?php _e('Listing'); ?>
             <a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=settings" class="btn ico ico-32 ico-engine float-right"></a>
@@ -131,12 +136,6 @@
     $direction  = Params::getParam('direction');
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<div id="help-box">
-    <a href="#" class="btn ico ico-20 ico-close">x</a>
-    <h3>What does a red highlight mean?</h3>
-    <p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>
-</div>
 <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions" style="display:none">
     <input type="hidden" name="page" value="items" />
     <input type="hidden" name="iDisplayLength" value="<?php echo $iDisplayLength;?>" />

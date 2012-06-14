@@ -35,6 +35,10 @@
             <div id="content-head">
                 <?php osc_run_hook('admin_page_header'); ?>
             </div>
+            <div id="help-box">
+                <a href="#" class="btn ico ico-20 ico-close">x</a>
+                <?php osc_run_hook('help_box'); ?>
+            </div>
             <?php osc_show_flash_message('admin') ; ?>
             <div class="jsMessage flashmessage flashmessage-info" style="display: none;">
                 <a class="btn ico btn-mini ico-close">×</a>
