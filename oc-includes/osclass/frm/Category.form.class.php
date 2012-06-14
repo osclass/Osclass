@@ -105,7 +105,7 @@
                     $contentTemp  = '<div id="'.$category['pk_i_id'].'-'.$locale['pk_c_code'].'" class="category-details-form">';
                     $contentTemp .= '<div class="FormElement"><label>' . __('Name') . '</label><input id="' . $name .'" type="text" name="' . $name .'" value="' . osc_esc_html(htmlentities($value, ENT_COMPAT, "UTF-8")) . '"/></div>' ;
                     $contentTemp .= '<div class="FormElement"><label>' . __('Description') . '</label>';
-                    $contentTemp .= '<textarea id="' . $name . '" name="' . $name . '" rows="10">' . $value . '</textarea>' ;
+                    $contentTemp .= '<textarea id="' . $nameTextarea . '" name="' . $nameTextarea . '" rows="10">' . $valueTextarea . '</textarea>' ;
                     $contentTemp .= '</div></div>';
                     $tabs[] = '<li><a href="#'.$category['pk_i_id'].'-'.$locale['pk_c_code'].'">' . $locale['s_name'] . '</a></li>';
                     $content[] = $contentTemp;
