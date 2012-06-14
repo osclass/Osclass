@@ -82,7 +82,6 @@
                 }
 
                 $class = '';
-                error_log($current_menu_id . "  --  " . $value[2] );
                 if($current_menu_id ==  $value[2]) {
                     $class = 'current';
                     $something_selected = true;
