@@ -105,7 +105,7 @@
 <div id="widgets-page">
     <div class="widgets">
         <div id="item-form">
-            <ul id="error_list" style="display: none;"></ul>
+            <ul id="error_list"></ul>
             <form name="widget_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                 <input type="hidden" name="action" value="<?php echo ( $edit ? 'edit_widget_post' : 'add_widget_post' ) ; ?>" />
                 <input type="hidden" name="page" value="appearance" />

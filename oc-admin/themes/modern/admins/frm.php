@@ -57,7 +57,7 @@
 <h2 class="render-title"><?php echo $aux['title'] ; ?></h2>
     <!-- add/edit admin form -->
     <div class="settings-user">
-        <ul id="error_list" style="display: none;"></ul>
+        <ul id="error_list"></ul>
         <form name="admin_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
             <input type="hidden" name="action" value="<?php echo $aux['action_frm'] ; ?>" />
             <input type="hidden" name="page" value="admins" />

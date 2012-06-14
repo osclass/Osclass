@@ -95,7 +95,7 @@
     osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <div id="add-currency-settings">
     <h2 class="render-title"><?php echo customText('title') ; ?></h2>
-    <ul id="error_list" style="display: none;"></ul>
+    <ul id="error_list"></ul>
     <form name="currency_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
         <input type="hidden" name="page" value="settings" />
         <input type="hidden" name="action" value="currencies" />

@@ -85,7 +85,7 @@ $(document).ready(function(){
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="general-settings">
-    <ul id="error_list" style="display: none;"></ul>
+    <ul id="error_list"></ul>
     <form name="comments_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
         <input type="hidden" name="page" value="settings" />
         <input type="hidden" name="action" value="comments_post" />

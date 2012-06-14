@@ -75,7 +75,7 @@
 
     <!-- add user form -->
     <div class="settings-user">
-        <ul id="error_list" style="display: none;"></ul>
+        <ul id="error_list"></ul>
         <form name="register" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
             <input type="hidden" name="page" value="users" />
             <input type="hidden" name="action" value="<?php echo $aux['action_frm'] ; ?>" />

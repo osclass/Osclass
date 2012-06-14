@@ -145,7 +145,7 @@ $(document).ready(function(){
 <!--los input tienen una class para el tamaño ...-->
 <div id="general-settings">
     <h2 class="render-title"><?php _e('Media Settings'); ?></h2>
-    <ul id="error_list" style="display: none;"></ul>
+    <ul id="error_list"></ul>
     <form name="media_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
         <input type="hidden" name="page" value="settings" />
         <input type="hidden" name="action" value="media_post" />

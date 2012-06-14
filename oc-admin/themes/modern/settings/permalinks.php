@@ -360,7 +360,7 @@
                     <div id="mail-settings">
                         <h2 class="render-title"><?php _e('Permalinks') ; ?></h2>
                         <?php _e('By default OSClass uses web URLs which have question marks and lots of numbers in them. However, OSClass offers you friendly urls. This can improve the aesthetics, usability, and forward-compatibility of your links'); ?>
-                        <ul id="error_list" style="display: none;"></ul>
+                        <ul id="error_list"></ul>
                         <form name="settings_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                             <input type="hidden" name="page" value="settings" />
                             <input type="hidden" name="action" value="permalinks_post" />
