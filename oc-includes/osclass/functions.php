@@ -390,7 +390,7 @@ function osc_admin_toolbar_spam()
         AdminToolbar::newInstance()->add_menu( 
                 array('id'    => 'spam',
                       'title' => $title,
-                      'href'  => osc_admin_base_url(true) . "?page=items",
+                      'href'  => osc_admin_base_url(true) . "?page=items&action=items_reported&sort=spam",
                       'meta'  => array('class' => 'action-btn action-btn-black')
                 ) );
     }
