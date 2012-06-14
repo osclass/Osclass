@@ -101,8 +101,6 @@
     $actions    = __get('actions') ;
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<div id="help-box">
-</div>
 <h2 class="render-title"><?php echo customText('title') ; ?></h2>
 <div id="item-form">
         <ul id="error_list"></ul>

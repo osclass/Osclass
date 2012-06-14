@@ -32,12 +32,6 @@
     $aData = __get('aEmails'); 
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<div id="help-box">
-    <a href="#" class="btn ico ico-20 ico-close">x</a>
-    <h3>What does a red highlight mean?</h3>
-    <p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>
-</div>
 <h2 class="render-title"><?php _e('Emails templates'); ?></h2>
 <div class="table-contains-actions">
     <table class="table" cellpadding="0" cellspacing="0">

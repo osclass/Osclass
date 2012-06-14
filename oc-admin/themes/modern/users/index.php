@@ -56,17 +56,7 @@
     $iDisplayLength = __get('iDisplayLength');
     $aData          = __get('aUsers'); 
 ?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-
-<div id="help-box">
-    <a href="#" class="btn ico ico-20 ico-close">x</a>
-    <h3>What does a red highlight mean?</h3>
-    <p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>
-</div>
-
-        
-        
+<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?> 
 <div style="position:relative;">
     <div id="listing-toolbar"> <!-- FERNANDO add class users-toolbar-->
         <div class="float-right">

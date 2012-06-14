@@ -63,13 +63,6 @@
         <li><a href="#upload-plugins"><?php _e('Upload plugin') ; ?></a></li>
     </ul>
     <div id="upload-plugins">
-        <div id="help-box">
-            <a href="#" class="btn ico ico-20 ico-close">x</a>
-            <h3>What does a red highlight mean?</h3>
-            <p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-            Red highlight means that the listing has been marked as spam.</p>
-        </div>
-
         <table class="table" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>

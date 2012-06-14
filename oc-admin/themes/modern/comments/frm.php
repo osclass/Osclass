@@ -53,8 +53,6 @@
     
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<div id="help-box">
-</div>
 <h2 class="render-title"><?php echo $title; ?></h2>
 <div id="language-form">
     <ul id="error_list"></ul>
