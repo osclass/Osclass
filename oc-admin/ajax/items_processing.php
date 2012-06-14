@@ -32,6 +32,7 @@
         private $order_by = array() ;
         private $stat = array() ;
         private $filters = array() ;
+        private $withFilters = false;
         private $column_names  = array(
             0 => 'dt_pub_date',
             1 => 's_title',
@@ -79,13 +80,107 @@
         function __construct($params)
         {
             $this->mSearch = new Search(true) ;
-            
+        }
+
+        function __destruct()
+        {
+            unset($this->_get) ;
+        }
+        
+        // ------------------------------------------------------------------------
+        
+        /*
+         * Return data for be displayed at 'Admin panel -> Reported listings'
+         * 
+         */
+        public function reported_listings( $params )
+        {
             $this->_get = $params ;
+            
             $this->getDBParams() ;
 
             $this->mSearch->limit($this->start, $this->limit) ;
             // only some fields can be ordered
-            $this->mSearch->order($this->order_by['column_name'], $this->order_by['type'], $this->order_by['table_name'] ) ;
+            $direction  = Params::getParam('direction') ;
+            $arrayDirection = array('desc', 'asc');
+            if( !in_array($direction, $arrayDirection) ) {
+                Params::setParam('direction', 'desc') ;
+                $direction = 'desc'; 
+            }
+            
+            $sort       = Params::getParam('sort') ;
+            $arraySortColumns = array(
+                'spam'  => 'i_num_spam',
+                'bad'   => 'i_num_bad_classified',
+                'rep'   => 'i_num_repeated',
+                'off'   => 'i_num_offensive',
+                'exp'   => 'i_num_expired',
+                'date'  => 'dt_pub_date'
+                );
+            // column sort
+            if( !key_exists($sort, $arraySortColumns) ) {
+                $sort       = 'dt_pub_date' ;
+            } else {
+                $sort = $arraySortColumns[$sort];
+            }
+            
+            $this->mSearch->order( $sort, $direction ) ;
+            
+//            if( Params::getParam('catId') != '' ) {
+//                $this->mSearch->addCategory( Params::getParam('catId') ) ;
+//            }
+//            if( $this->search ) {
+//                $this->mSearch->addPattern($this->search) ;
+//            }
+            
+            $this->mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
+            $this->mSearch->addField('SUM(s.`i_num_spam`) as i_num_spam');
+            $this->mSearch->addField('SUM(s.`i_num_bad_classified`) as i_num_bad_classified');
+            $this->mSearch->addField('SUM(s.`i_num_repeated`) as i_num_repeated');
+            $this->mSearch->addField('SUM(s.`i_num_offensive`) as i_num_offensive');
+            $this->mSearch->addField('SUM(s.`i_num_expired`) as i_num_expired');
+            $this->mSearch->addConditions(sprintf(" %st_item.pk_i_id ", DB_TABLE_PREFIX));
+            $this->mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
+            $this->mSearch->addGroupBy(sprintf(" %st_item.pk_i_id ", DB_TABLE_PREFIX)) ;
+            // do Search
+            $list_items = $this->mSearch->doSearch(true) ;
+            $this->items = Item::newInstance()->extendCategoryName( $list_items );
+            $this->total_filtered = $this->mSearch->countAll();
+            $this->total = $this->mSearch->count() ;
+            
+            $this->toArrayFormatReported() ;
+            return $this->result;
+        }
+        
+        /*
+         * Return data for be displayed at 'Admin panel -> Manage listings'
+         * 
+         */
+        public function listings( $params )
+        {
+            $this->_get = $params ;
+            
+            $this->getDBParams() ;
+                
+            $this->mSearch->limit($this->start, $this->limit) ;
+            
+            $direction  = Params::getParam('direction') ;
+            $arrayDirection = array('desc', 'asc');
+            if( !in_array($direction, $arrayDirection) ) {
+                Params::setParam('direction', 'desc') ;
+                $direction = 'desc'; 
+            }
+            
+            // column sort
+            $sort       = Params::getParam('sort') ;
+            $arraySortColumns = array('date'  => 'dt_pub_date');
+            if( !key_exists($sort, $arraySortColumns) ) {
+                $sort       = 'dt_pub_date' ;
+            } else {
+                $sort = $arraySortColumns[$sort];
+            }
+            // only some fields can be ordered
+            $this->mSearch->order( $sort, $direction ) ;
             
             if( Params::getParam('catId') != '' ) {
                 $this->mSearch->addCategory( Params::getParam('catId') ) ;
@@ -93,127 +188,146 @@
             if( $this->search ) {
                 $this->mSearch->addPattern($this->search);
             }
-
+            
             // do Search
             $list_items = $this->mSearch->doSearch(true) ;
-
-            $this->items = Item::newInstance()->extendCategoryName( $list_items ); 
+            $this->items = Item::newInstance()->extendCategoryName( $list_items );
             $this->total_filtered = $this->mSearch->countAll();
             $this->total = $this->mSearch->count() ;
-
-            $this->toDatatablesFormat() ;
-            $this->dumpToDatatables() ;
+            
+            return $this->result();
         }
+        
+        // ------------------------------------------------------------------------
 
-        function __destruct()
+        public function filters()
         {
-            unset($this->_get) ;
+            return $this->withFilters;
         }
-
+        
         private function getDBParams()
         {
+            // default values
+            if( !isset($this->_get['iDisplayStart']) ) {
+                $this->_get['iDisplayStart'] = 0 ;
+            }
+            if( !isset($this->_get['iDisplayLength']) ) {
+                $this->_get['iDisplayLength'] = 10 ;
+            }
+            
+            $p_iPage      = 1;
+            if( !is_numeric(Params::getParam('iPage')) || Params::getParam('iPage') < 1 ) {
+                Params::setParam('iPage', $p_iPage );
+                $this->iPage = $p_iPage ;
+            } else {
+                $this->iPage = Params::getParam('iPage') ;
+            }
+            
+            // get & set values
             foreach($this->_get as $k => $v) {
-                if( $k == 'iDisplayStart' ) {
-                    $this->start = intval($v) ;
-                }
-                if( $k == 'iDisplayLength' ) {
-                    $this->limit = intval($v) ;
-                }
-                if( $k == 'sEcho' ) {
-                    $this->sEcho = intval($v) ;
-                }
 
-                /* for sorting */
-                if( $k == 'iSortCol_0' ) {
-                    $this->order_by['column_name'] = $this->column_names[$v] ;
-                    $this->order_by['table_name']  = $this->tables_columns[$v] ;
-                }
-                if( $k == 'sSortDir_0' ) {
-                    $this->order_by['type'] = $v ;
-                }
-
-                if( $k == 'sSearch' ) {
+                if( $k == 'sSearch' && $v != '') {
                     $this->search = $v;
+                    $this->withFilters = true;
                 }
 
                 // filters
-                if( $k == 'fCol_userIdValue' ) {
+                if( $k == 'userId' && $v != '') {
                     $this->mSearch->fromUser($v);
+                    $this->withFilters = true;
                 }
-                if( $k == 'fCol_itemIdValue' ) {
+                if( $k == 'itemId' && $v != '') {
                     $this->mSearch->addItemId($v);
-                }
-                if( $k == 'fCol_countryId' ) {
-                    $this->mSearch->addCountry($v);
-                }
-                if( $k == 'fCol_regionId' ) {
-                    $this->mSearch->addRegion($v);
-                }
-                if( $k == 'fCol_cityId' ) {
-                    $this->mSearch->addCity($v);
+                    $this->withFilters = true;
                 }
                 
-                if( $k == 'fCol_country' ) {
+                // si hay id mejor ...
+                if( $k == 'countryId' && $v != '') {
                     $this->mSearch->addCountry($v);
+                    $this->withFilters = true;
                 }
-                if( $k == 'fCol_region' ) {
+                if( $k == 'regionId' && $v != '') {
                     $this->mSearch->addRegion($v);
+                    $this->withFilters = true;
                 }
-                if( $k == 'fCol_city' ) {
+                if( $k == 'cityId' && $v != '') {
                     $this->mSearch->addCity($v);
+                    $this->withFilters = true;
                 }
                 
-                if( $k == 'fCol_catId' ) {
+                if( $k == 'country' && $v != '') {
+                    $this->mSearch->addCountry($v);
+                    $this->withFilters = true;
+                }
+                if( $k == 'region' && $v != '') {
+                    $this->mSearch->addRegion($v);
+                    $this->withFilters = true;
+                }
+                
+                if( $k == 'city' && $v != '') {
+                    $this->mSearch->addCity($v);
+                    $this->withFilters = true;
+                }
+                
+                if( $k == 'catId' && $v != '') {
                     $this->mSearch->addCategory($v);
+                    $this->withFilters = true;
                 }
-                if( $k == 'fCol_bPremium' ) {
+                if( $k == 'b_premium' && $v != '') {
                     $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_premium = '.$v);
+                    $this->withFilters = true;
                 }
-                if( $k == 'fCol_bActive' ) {
+                if( $k == 'b_active' && $v != '') {
                     $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_active = '.$v);
+                    $this->withFilters = true;
                 }
-                if( $k == 'fCol_bEnabled' ) {
+                if( $k == 'b_enabled' && $v != '') {
                     $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_enabled = '.$v);
+                    $this->withFilters = true;
                 }
-                if( $k == 'fCol_bSpam' ) {
+                if( $k == 'b_spam' && $v != '') {
                     $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_spam = '.$v);
+                    $this->withFilters = true;
                 }
             }
+            // set start and limit using iPage param
+            $start = ($this->iPage - 1) * $this->_get['iDisplayLength'];
+            
+            $this->start = intval( $start ) ;
+            $this->limit = intval( $this->_get['iDisplayLength'] ) ;
         }
-
-        /* START - format functions */
-        private function toDatatablesFormat() {
+        
+        /**
+         * new Design - return array
+         * @return type 
+         */
+        private function toArrayFormat() {
             $this->result['iTotalRecords']        = $this->total_filtered ;
             $this->result['iTotalDisplayRecords'] = $this->total ;
-            $this->result['sEcho']                = $this->sEcho ;
             $this->result['sColumns']             = $this->sColumns ;
-            $this->result['aaData']               = array() ;
+            $this->result['iDisplayLength']       = $this->_get['iDisplayLength'];
+            $this->result['aaData']               = array();
+            $this->result['aaObject']             = array();
 
             if( count($this->items) == 0 ) {
                 return ;
             }
 
+            $this->result['aaObject'] = $this->items;
+            
             $count = 0;
             foreach ($this->items as $aRow)
             {
                 View::newInstance()->_exportVariableToView('item', $aRow);
                 $row     = array() ;
                 $options = array() ;
-
-                // prepare data
+                // -- prepare data --
+                // prepare item title
                 $title = mb_substr($aRow['s_title'], 0, 30, 'utf-8') ;
                 if($title != $aRow['s_title']) {
                     $title .= '...' ;
                 }
-                
-                // only show if there are data
-                if( ItemComment::newInstance()->totalComments( $aRow['pk_i_id'] ) > 0 ) {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View comments') . '</a>' ;
-                }
-                if( ItemResource::newInstance()->countResources( $aRow['pk_i_id'] ) > 0 ) {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=media&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View media') . '</a>' ;
-                }
-                
+                // show more options
                 $options_more = array();
                 if( $aRow['b_active'] ) {
                     $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') .'</a>' ;
@@ -235,20 +349,42 @@
                 } else {
                     $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $aRow['pk_i_id'] . '&amp;value=1">' . __('Mark as spam') .'</a>' ;
                 }
-                $moreActions = "<div class='moreAction'><a>" . __('More actions') . '</a><div> '. implode(' &middot; ', $options_more). "</div></div>" ;
                 
-                
+                // general options
                 $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=item_edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>' ;
                 $onclick_delete = 'onclick="javascript:return confirm(\'' . osc_esc_js( __('This action can not be undone. Are you sure you want to continue?') ) . '\')"' ;
                 $options[] = '<a ' . $onclick_delete . ' href="' . osc_admin_base_url(true) . '?page=items&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
                 
-                foreach($this->stat as $k => $s) {
-                    $options[] = '<a ' .$onclick_delete . ' href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;stat=' . $k . '&amp;id=' . $aRow['pk_i_id'] . '">' . sprintf( __('Clear %s'), $k ) . '</a>' ;
+                // only show if there are data
+                if( ItemComment::newInstance()->totalComments( $aRow['pk_i_id'] ) > 0 ) {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View comments') . '</a>' ;
                 }
+                if( ItemResource::newInstance()->countResources( $aRow['pk_i_id'] ) > 0 ) {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=media&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View media') . '</a>' ;
+                }
+                
+                $options_more = osc_apply_filter('more_actions_manage_items', $options_more);
+                // more actions
+                $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL ;
+                foreach( $options_more as $actual ) { 
+                    $moreOptions .= '<li>'.$actual."</li>".PHP_EOL;
+                }
+                $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL ;
+                
+                $options = osc_apply_filter('actions_manage_items', $options);
+                // create list of actions
+                $auxOptions = '<ul>'.PHP_EOL ;
+                foreach( $options as $actual ) {
+                    $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
+                }
+                $auxOptions  .= $moreOptions ;
+                $auxOptions  .= '</ul>'.PHP_EOL ;
+                
+                $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
  
                 // fill a row
                 $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>' ;
-                $row[] = '<a href="' . osc_item_url().'">' . $title . '</a> <div class="datatable_wrapper" style="display: none;"><div class="datatables_quick_edit" style="position: absolute;" >' . implode(' &middot; ', $options) . ' &middot; ' . $moreActions .'</div></div>' ;
+                $row[] = '<a href="' . osc_item_url().'">' . $title. '</a>'. $actions  ;
                 $row[] = $aRow['s_user_name'] ;
                 $row[] = $aRow['s_category_name'] ;
                 $row[] = $aRow['s_country'] ;
@@ -259,10 +395,110 @@
                 $count++ ;
                 $this->result['aaData'][] = $row ;
             }
-
             return ;
         }
 
+        /**
+         * new Design - return array
+         * @return type 
+         */
+        private function toArrayFormatReported() {
+            $this->result['iTotalRecords']        = $this->total_filtered ;
+            $this->result['iTotalDisplayRecords'] = $this->total ;
+            $this->result['sColumns']             = $this->sColumns ;
+            $this->result['iDisplayLength']       = $this->_get['iDisplayLength'];
+            $this->result['aaData']               = array() ;
+
+            if( count($this->items) == 0 ) {
+                return ;
+            }
+
+            $this->result['aaObject'] = $this->items;
+            
+            $count = 0;
+            foreach ($this->items as $aRow)
+            {
+                View::newInstance()->_exportVariableToView('item', $aRow);
+                $row     = array() ;
+                $options = array() ;
+                // -- prepare data --
+                // prepare item title
+                $title = mb_substr($aRow['s_title'], 0, 30, 'utf-8') ;
+                if($title != $aRow['s_title']) {
+                    $title .= '...' ;
+                }
+                // show more options
+                $options_more = array();
+                if( $aRow['b_active'] ) {
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') .'</a>' ;
+                } else {
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=ACTIVE">' . __('Activate') .'</a>' ;
+                }
+                if( $aRow['b_enabled'] ) {
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=DISABLE">' . __('Block') .'</a>' ;
+                } else {
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=ENABLE">' . __('Unblock') .'</a>' ;
+                }
+                if( $aRow['b_premium'] ) {
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $aRow['pk_i_id'] . '&amp;value=0">' . __('Unmark as premium') .'</a>' ;
+                } else {
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $aRow['pk_i_id'] . '&amp;value=1">' . __('Mark as premium') .'</a>' ;
+                }
+                if( $aRow['b_spam'] ) {
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $aRow['pk_i_id'] . '&amp;value=0">' . __('Unmark as spam') .'</a>' ;
+                } else {
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $aRow['pk_i_id'] . '&amp;value=1">' . __('Mark as spam') .'</a>' ;
+                }
+                
+                // general options
+                $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=item_edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>' ;
+                $onclick_delete = 'onclick="javascript:return confirm(\'' . osc_esc_js( __('This action can not be undone. Are you sure you want to continue?') ) . '\')"' ;
+                $options[] = '<a ' . $onclick_delete . ' href="' . osc_admin_base_url(true) . '?page=items&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
+                
+                // only show if there are data
+                if( ItemComment::newInstance()->totalComments( $aRow['pk_i_id'] ) > 0 ) {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View comments') . '</a>' ;
+                }
+                if( ItemResource::newInstance()->countResources( $aRow['pk_i_id'] ) > 0 ) {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=media&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View media') . '</a>' ;
+                }
+                
+                $options_more = osc_apply_filter('more_actions_manage_items', $options_more);
+                // more actions
+                $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL ;
+                foreach( $options_more as $actual ) { 
+                    $moreOptions .= '<li>'.$actual."</li>".PHP_EOL;
+                }
+                $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL ;
+                
+                $options = osc_apply_filter('actions_manage_items', $options);
+                // create list of actions
+                $auxOptions = '<ul>'.PHP_EOL ;
+                foreach( $options as $actual ) {
+                    $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
+                }
+                $auxOptions  .= $moreOptions ;
+                $auxOptions  .= '</ul>'.PHP_EOL ;
+                
+                $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
+
+                // fill a row
+                $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>' ;
+                $row[] = '<a href="' . osc_item_url().'">' . $title . '</a>'. $actions  ;
+                $row[] = $aRow['s_user_name'] ;
+                $row[] = $aRow['i_num_spam'] ;
+                $row[] = $aRow['i_num_bad_classified'] ;
+                $row[] = $aRow['i_num_repeated'] ;
+                $row[] = $aRow['i_num_expired'] ;
+                $row[] = $aRow['i_num_offensive'] ;
+                $row[] = $aRow['dt_pub_date'] ;
+
+                $count++ ;
+                $this->result['aaData'][] = $row ;
+            }
+            return ;
+        }
+        
         /**
          * Set toJson variable with the JSON representation of $result
          * 
@@ -286,6 +522,18 @@
             $this->toJSON($this->result) ;
             echo $this->toJSON ;
         }
+        
+        /**
+         * Dump $result to JSON and return the result
+         * 
+         * @access private
+         * @since unknown 
+         */
+        public function result()
+        {
+            $this->toArrayFormat();
+            return $this->result;
+        }
 
         /**
          * Dump $result
@@ -293,8 +541,9 @@
          * @access private
          * @since unknown 
          */
-        private function dumpToDatatables()
+        public function dumpToDatatables()
         {
+            $this->toDatatablesFormat() ;
             $this->dumpResult() ;
         }
      }

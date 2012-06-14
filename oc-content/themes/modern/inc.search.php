@@ -19,9 +19,8 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-     $sQuery = __("ie. PHP Programmer", 'modern');
+     $sQuery = osc_get_preference('keyword_placeholder', 'modern_theme');
 ?>
-
 <script type="text/javascript">
     var sQuery = '<?php echo osc_esc_js( $sQuery ); ?>' ;
 

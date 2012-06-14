@@ -181,24 +181,6 @@
                         $this->doView("plugins/view.php");
                     }
                     break;
-                case 'render':
-                    $file = Params::getParam("file");
-                    if($file!="") {
-                        // We pass the GET variables (in case we have somes)
-                        if(preg_match('|(.+?)\?(.*)|', $file, $match)) {
-                            $file = $match[1];
-                            if(preg_match_all('|&([^=]+)=([^&]*)|', urldecode('&'.$match[2].'&'), $get_vars)) {
-                                for($var_k=0;$var_k<count($get_vars[1]);$var_k++) {
-                                    Params::setParam($get_vars[1][$var_k], $get_vars[2][$var_k]);
-                                }
-                            }
-                        } else {
-                            $file = $_REQUEST['file'];
-                        };
-                        $this->_exportVariableToView("file", ABS_PATH . $file);
-                        $this->doView("theme/view.php");
-                    }
-                    break;
                 case 'configure':
                     $plugin = Params::getParam("plugin");
                     if($plugin!='') {
@@ -238,7 +220,91 @@
                     exit ;
                 break;
                 default:
-                    $this->_exportVariableToView("plugins", Plugins::listAll());
+                    if( Params::getParam('iDisplayLength') == '' ) {
+                        Params::setParam('iDisplayLength', 10 ) ;
+                    }
+                    // ?
+                    $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
+                    
+                    $p_iPage      = 1;
+                    if( is_numeric(Params::getParam('iPage')) && Params::getParam('iPage') >= 1 ) {
+                        $p_iPage = Params::getParam('iPage');
+                    }
+                    Params::setParam('iPage', $p_iPage);
+                    $aPlugin    = Plugins::listAll();
+                    $active_plugins = osc_get_plugins() ;
+                    
+                    // pagination
+                    $start = ($p_iPage-1) * Params::getParam('iDisplayLength');
+                    $limit = Params::getParam('iDisplayLength');
+                    $count = count( $aPlugin );
+                    
+                    $displayRecords = $limit;
+                    if( ($start+$limit ) > $count ) {
+                        $displayRecords = ($start+$limit) - $count;
+                    }
+                    // --------------------------------------------------------
+                    
+                    $aData = array() ;
+                    $max = ($start+$limit);
+                    if($max > $count) $max = $count;
+                    for($i = $start; $i < $max; $i++) {
+                        $plugin = $aPlugin[$i];
+                        $row   = array() ;
+                        $pInfo = osc_plugin_get_info($plugin);
+
+                        // prepare row 1
+                        $installed = 0 ;
+                        if( osc_plugin_is_installed($plugin) ) {
+                            $installed = 1 ;
+                        }
+                        $enabled = 0 ;
+                        if( osc_plugin_is_enabled($plugin) ) {
+                            $enabled = 1 ;
+                        }
+                        // prepare row 2
+                        $sUpdate = '' ;
+                        if( osc_check_update(@$pInfo['plugin_update_uri'], @$pInfo['version']) ) {
+                            $sUpdate = '<a href="' . osc_admin_base_url(true) . '?page=market&amp;code=' . htmlentities($pInfo['plugin_update_uri']) . '">' . __("There's a new version available to update") . '</a>' ;
+                        }
+                        // prepare row 4
+                        $sConfigure = '' ;
+                        if( isset($active_plugins[$plugin . '_configure']) ) {
+                            $sConfigure = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=admin&amp;plugin=' . $pInfo['filename'] . '">' . __('Configure') . '</a>' ;
+                        }
+                        // prepare row 5
+                        $sEnable = '' ;
+                        if( $installed ) {
+                            if( $enabled ) {
+                                $sEnable = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=disable&amp;plugin=' . $pInfo['filename'] . '">' . __('Disable') . '</a>' ;
+                            } else {
+                                $sEnable = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=enable&amp;plugin=' . $pInfo['filename'] . '">' . __('Enable') . '</a>' ;
+                            }
+                        }
+                        // prepare row 6
+                        $sInstall  = '' ;
+                        if( $installed ) {
+                            $delete_text = osc_esc_js( __("This action can not be undone. Uninstalling plugins may result in a permanent lost of data. Are you sure you want to continue?") ) ;
+                            $sInstall = '<a onclick="javascript:return confirm(\'' . $delete_text . '\') ;" href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=uninstall&amp;plugin=' . $pInfo['filename'] . '">' . __('Uninstall') . '</a>' ;
+                        } else {
+                            $sInstall = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=install&amp;plugin=' . $pInfo['filename'] . '">' . __('Install') . '</a>' ;
+                        }
+
+                        $row[] = '<input type="hidden" name="installed" value="' . $installed . '" enabled="' . $enabled . '" />' . $pInfo['plugin_name'] . '<div>' . $sUpdate . '</div>';
+                        $row[] = $pInfo['description'] ;
+                        $row[] = ($sConfigure!='')  ? $sConfigure   : '&nbsp;';
+                        $row[] = ($sEnable!='')     ? $sEnable      : '&nbsp;';
+                        $row[] = ($sInstall!='')    ? $sInstall     : '&nbsp;';
+                        $aData[] = $row ;
+                    }
+                    
+                    $array['iTotalRecords']         = $displayRecords;
+                    $array['iTotalDisplayRecords']  = count($aPlugin);
+                    $array['iDisplayLength']        = $limit;
+                    $array['aaData'] = $aData;
+                    // --------------------------------------------------------
+                    
+                    $this->_exportVariableToView('aPlugins', $array) ;
                     $this->doView("plugins/index.php");
             }
         }

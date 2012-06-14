@@ -46,6 +46,8 @@
             osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_comments', 0 );
             osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_spam'    , 0 );
             
+            osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_update_themes' , 0 );
+            
             osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_logout'  , 0 );
             
             osc_run_hook( 'add_admin_toolbar_menus' );
@@ -64,6 +66,16 @@
         function add_menu( $array ) 
         {
                 $this->nodes[ $array['id'] ] = (object) $array;
+        }
+        
+        /**
+         * Remove entry with id $id
+         * 
+         * @param type $id 
+         */
+        function remove_menu( $id )
+        {
+            unset( $this->nodes[ $id ] );
         }
         
         /**

@@ -27,7 +27,7 @@
      * @return string
      */
     function osc_admin_render_theme_url($file = '') {
-        return osc_admin_base_url(true).'?page=plugins&action=render&file=' . $file;
+        return osc_admin_base_url(true).'?page=appearance&action=render&file=' . $file;
     }
     
     

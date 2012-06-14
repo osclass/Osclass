@@ -30,10 +30,10 @@
             parent::doModel() ;
             //specific things for this class
             switch ($this->action) {
-                case 'add':
+                case('add'):
                     $this->doView("appearance/add.php");
                 break;
-                case 'add_post':
+                case('add_post'):
                     if( defined('DEMO') ) {
                         osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin');
                         $this->redirectTo(osc_admin_base_url(true) . '?page=appearance');
@@ -68,7 +68,7 @@
 
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
                 break;
-                case 'delete':
+                case('delete'):
                     if( defined('DEMO') ) {
                         osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin');
                         $this->redirectTo(osc_admin_base_url(true) . '?page=appearance');
@@ -90,17 +90,18 @@
 
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
                 break;
-                case 'widgets':
+                /* widgets */
+                case('widgets'):
                     $info = WebThemes::newInstance()->loadThemeInfo(osc_theme());
 
                     $this->_exportVariableToView("info", $info);
 
                     $this->doView('appearance/widgets.php');
                 break;
-                case 'add_widget':
+                case('add_widget'):
                     $this->doView('appearance/add_widget.php');
                 break;
-                case 'edit_widget':
+                case('edit_widget'):
                     $id = Params::getParam('id');
 
                     $widget = Widget::newInstance()->findByPrimaryKey($id);
@@ -108,15 +109,14 @@
 
                     $this->doView('appearance/add_widget.php');
                 break;
-                case 'delete_widget':
+                case('delete_widget'):
                     Widget::newInstance()->delete(
                         array('pk_i_id' => Params::getParam('id') )
                     );
                     osc_add_flash_ok_message( _m('Widget removed correctly'), 'admin');
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
                 break;
-                case 'edit_widget_post':
-
+                case('edit_widget_post'):
                     if(!osc_validate_text(Params::getParam("description"))) {
                         osc_add_flash_error_message( _m('Description field is required'), 'admin');
                         $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
@@ -124,8 +124,8 @@
 
                     $res = Widget::newInstance()->update(
                         array(
-                            's_description' => Params::getParam('description')
-                            ,'s_content' => Params::getParam('content', false, false)
+                            's_description' => Params::getParam('description'),
+                            's_content' => Params::getParam('content', false, false)
                         ),
                         array('pk_i_id' => Params::getParam('id') )
                     );
@@ -137,8 +137,7 @@
                     }
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
                     break;
-                case 'add_widget_post':
-
+                case('add_widget_post'):
                     if(!osc_validate_text(Params::getParam("description"))) {
                         osc_add_flash_error_message( _m('Description field is required'), 'admin');
                         $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
@@ -146,25 +145,33 @@
 
                     Widget::newInstance()->insert(
                         array(
-                            's_location' => Params::getParam('location')
-                            ,'e_kind' => 'html'
-                            ,'s_description' => Params::getParam('description')
-                            ,'s_content' => Params::getParam('content', false, false)
+                            's_location' => Params::getParam('location'),
+                            'e_kind' => 'html',
+                            's_description' => Params::getParam('description'),
+                            's_content' => Params::getParam('content', false, false)
                         )
                     );
                     osc_add_flash_ok_message( _m('Widget added correctly'), 'admin');
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
                 break;
-                case 'activate':
+                /* /widget */
+                case('activate'):
                     Preference::newInstance()->update(
-                            array('s_value' => Params::getParam('theme') )
-                            ,array('s_section' => 'osclass', 's_name' => 'theme')
+                            array('s_value' => Params::getParam('theme')),
+                            array('s_section' => 'osclass', 's_name' => 'theme')
                     );
                     osc_add_flash_ok_message( _m('Theme activated correctly'), 'admin');
                     osc_run_hook("theme_activate", Params::getParam('theme'));
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
                 break;
+                case('render'):
+                    $this->_exportVariableToView('file', osc_base_path() . Params::getParam("file"));
+                    $this->doView('appearance/view.php');
+                break;
                 default:
+                    // force the recount of themes that need to be updated
+                    osc_admin_toolbar_update_themes(true);
+                    
                     $themes = WebThemes::newInstance()->getListThemes();
                     $info = WebThemes::newInstance()->loadThemeInfo(osc_theme());
 
@@ -173,14 +180,15 @@
                     $this->_exportVariableToView("info", $info);
 
                     $this->doView('appearance/index.php');
+                break;
             }
         }
 
         //hopefully generic...
         function doView($file)
         {
-            osc_current_admin_theme_path($file) ;
-            Session::newInstance()->_clearVariables() ;
+            osc_current_admin_theme_path($file);
+            Session::newInstance()->_clearVariables();
         }
     }
 

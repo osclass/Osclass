@@ -87,18 +87,26 @@
                 case 'items': // Return items (use external file oc-admin/ajax/item_processing.php)
                     require_once osc_admin_base_path() . 'ajax/items_processing.php';
                     $items_processing = new ItemsProcessingAjax(Params::getParamsAsArray("get"));
+                    // HACK DELETE ON 3.0
+                    $items_processing->dumpToDatatables();
                     break;
                 case 'users': // Return users (use external file oc-admin/ajax/users_processing.php)
                     require_once osc_admin_base_path() . 'ajax/users_processing.php';
                     $users_processing = new UsersProcessingAjax(Params::getParamsAsArray("get"));
+                    // HACK DELETE ON 3.0
+                    $users_processing->dumpToDatatables();
                     break;
                 case 'media': // Return media (use external file oc-admin/ajax/media_processing.php)
                     require_once osc_admin_base_path() . 'ajax/media_processing.php';
                     $media_processing = new MediaProcessingAjax(Params::getParamsAsArray("get"));
+                    // HACK DELETE ON 3.0
+                    $media_processing->dumpToDatatables();
                     break;
                 case 'comments': // Return comments (use external file oc-admin/ajax/comments_processing.php)
                     require_once osc_admin_base_path() . 'ajax/comments_processing.php';
                     $comments_processing = new CommentsProcessingAjax(Params::getParamsAsArray("get"));
+                    // HACK DELETE ON 3.0
+                    $comments_processing->dumpToDatatables() ;
                     break;
                 case 'categories_order': // Save the order of the categories
                     $aIds        = Params::getParam('list') ;
@@ -719,9 +727,11 @@
                                     }
                                 }
                             }
-
-                            $tmp      = explode("/", $data['s_slug']) ;
-                            $filename = end($tmp) ;
+                            if($data['s_download']!='') {
+                                $filename = basename(str_replace("/download", "", $data['s_download']));
+                            } else {
+                                $filename = $data['s_slug']."_".$data['s_version'].".zip";
+                            }
                             error_log('Source file: ' . $data['s_source_file']) ;
                             error_log('Filename: ' . $filename) ;
                             $result   = osc_downloadFile($data['s_source_file'], $filename) ;
@@ -840,15 +850,17 @@
                                 break;
                             }
                         }
-                        if( !isset($data['s_source_file']) || !isset($data['s_slug']) || !isset($data['e_type'])) {
+                        if( !isset($data['s_source_file']) || !isset($data['s_slug'])) {
                             $data = array('error' => 2, 'error_msg' => __('Not a valid code'));
                         }
                     } else {
                         $data = array('error' => 1, 'error_msg' => __('No code was sumitted'));
                     }
                     echo json_encode($data);
+                    break;                   
+                case 'local_market': // AVOID CROSS DOMAIN ROBLEMS OF AJAX REQUEST
+                    echo osc_file_get_contents(osc_market_url()."?section=".Params::getParam("section"));
                     break;
-
                 case 'location_stats':
                     $workToDo = LocationsTmp::newInstance()->count() ;
                     if( $workToDo > 0 ) {

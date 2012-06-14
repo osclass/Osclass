@@ -117,23 +117,29 @@
     function render_offset(){
         return 'row-offset';
     }
+
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1 class="dashboard"><?php _e('General Settings') ; ?></h1>
+        <h1><?php _e('Settings'); ?></h1>
     <?php
     }
-?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+
+    function customPageTitle($string) {
+        return sprintf(__('General Settings &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="general-setting">
     <!-- settings form -->
-                    <div id="general-settings">
-                        <h2 class="render-title"><?php _e('General Settings') ; ?></h2>
-                                    <ul id="error_list" style="display: none;"></ul>
-                                    <form name="settings_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-                                        <input type="hidden" name="page" value="settings" />
-                                        <input type="hidden" name="action" value="update" />
-                                        <fieldset>
-                                            <div class="form-horizontal">
+    <div id="general-settings">
+        <h2 class="render-title"><?php _e('General Settings') ; ?></h2>
+            <ul id="error_list" style="display: none;"></ul>
+            <form name="settings_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+                <input type="hidden" name="page" value="settings" />
+                <input type="hidden" name="action" value="update" />
+                <fieldset>
+                    <div class="form-horizontal">
                     <div class="form-row">
                         <div class="form-label"><?php _e('Page title') ; ?></div>
                         <div class="form-controls"><input type="text" class="xlarge" name="pageTitle" value="<?php echo osc_esc_html( osc_page_title() ); ?>" /></div>
@@ -263,6 +269,14 @@
                         <div class="form-controls">
                             <input type="text" class="input-small" name="default_results_per_page" value="<?php echo osc_esc_html(osc_default_results_per_page_at_search()); ?>" />
                             <?php _e('listings at most') ; ?>
+                        </div>
+                    </div>
+                    <h2 class="render-title separate-top"><?php _e('Categories Settings') ; ?></h2>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Parent categories'); ?></div>
+                        <div class="form-controls">
+                            <div class="form-label-checkbox"><input type="checkbox" <?php echo ( osc_selectable_parent_categories() ? 'checked="checked"' : '' ) ; ?> name="selectable_parent_categories" value="1" />
+                            <?php _e('Allow users to select as a category when inserting or editing a listing a parent category') ; ?></div>
                         </div>
                     </div>
                     <h2 class="render-title separate-top"><?php _e('Contact Settings') ; ?></h2>

@@ -16,28 +16,108 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $numUsers            = __get("numUsers") ;
-    $numAdmins           = __get("numAdmins") ;
-
-    $numItems            = __get("numItems") ;
-    $numItemsSpam        = __get("numItemsSpam") ;
-    $numItemsBlock       = __get("numItemsBlock") ;
-    $numItemsInactive    = __get("numItemsInactive") ;
-    $numItemsPerCategory = __get("numItemsPerCategory") ;
-    $newsList            = __get("newsList") ;
-    $comments            = __get("comments") ;
+    $numUsers            = __get('numUsers');
+    $numAdmins           = __get('numAdmins');
+    $numItems            = __get('numItems');
+    $numItemsSpam        = __get('numItemsSpam');
+    $numItemsBlock       = __get('numItemsBlock');
+    $numItemsInactive    = __get('numItemsInactive');
+    $numItemsPerCategory = __get('numItemsPerCategory');
+    $newsList            = __get('newsList');
+    $comments            = __get('comments');
 
     osc_add_filter('render-wrapper','render_offset');
-    function render_offset(){
+    function render_offset() {
         return 'row-offset';
     }
+
     osc_add_hook('admin_page_header','customPageHeader');
-    function customPageHeader(){ ?>
-        <h1 class="dashboard"><?php _e('Dashboard') ; ?></h1>
+    function customPageHeader() { ?>
+        <h1><?php _e('Dashboard') ; ?></h1>
     <?php
     }
-?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+
+    function customPageTitle($string) {
+        return sprintf(__('Dashboard &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    function customHead() {
+    $items        = __get("items") ;
+    $reports      = __get("reports") ;
+    $max          = __get("max") ;
+        ?>
+     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript">
+            // Load the Visualization API and the piechart package.
+            google.load('visualization', '1', {'packages':['corechart']});
+
+            // Set a callback to run when the Google Visualization API is loaded.
+            google.setOnLoadCallback(drawChart);
+
+            // Callback that creates and populates a data table, 
+            // instantiates the pie chart, passes in the data and
+            // draws it.
+            function drawChart() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', '<?php _e('Date') ; ?>');
+                data.addColumn('number', '<?php _e('Items') ; ?>');
+                data.addColumn({type:'boolean',role:'certainty'});
+                <?php $k = 0 ;
+                echo "data.addRows(" . count($items) . ");" ;
+                foreach($items as $date => $num) {
+                    echo "data.setValue(" . $k . ', 0, "' . $date . '");';
+                    echo "data.setValue(" . $k . ", 1, " . $num . ");";
+                    $k++ ;
+                }
+                $k = 0 ;
+                ?>
+
+                // Instantiate and draw our chart, passing in some options.
+                var chart = new google.visualization.AreaChart(document.getElementById('placeholder'));
+                chart.draw(data, {
+                    colors:['#058dc7','#e6f4fa'],
+                        areaOpacity: 0.1,
+                        lineWidth:3,
+                        hAxis: {
+                        gridlines:{
+                            color: '#333',
+                            count: 3
+                        },
+                        viewWindow:'explicit',
+                        showTextEvery: 2,
+                        slantedText: false,
+                        textStyle:{
+                            color: '#058dc7',
+                            fontSize: 10
+                        }
+                        },
+                        vAxis: {
+                            gridlines:{
+                                color: '#DDD',
+                                count: 4,
+                                style: 'dooted'
+                            },
+                            viewWindow:'explicit',
+                            baselineColor:'#bababa'
+
+                        },
+                        pointSize: 6,
+                        legend: 'none',
+                        chartArea:{
+                            left:10,
+                            top:10,
+                            width:"95%",
+                            height:"88%"
+                        }
+                    });
+            }
+        </script>
+<?php
+    }
+    osc_add_hook('admin_header', 'customHead');
+
+    osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <div id="dashboard">
 <div class="grid-system">
     <div class="grid-row grid-first-row grid-50">
@@ -82,28 +162,10 @@
             <div class="widget-box">
                 <div class="widget-box-title"><h3><?php _e('Statistics'); ?> <select class="widget-box-selector select-box-big input-medium"><option>New items</option><option>New comments</option></select></h3></div>
                 <div class="widget-box-content">
-                    <table class="table" cellpadding="0" cellspacing="0">
-                        <tbody>
-                            <tr class="table-first-row">
-                                <td><?php _e('Number of listings') ; ?></td><td><?php echo (int) $numItems ; ?></td>
-                            </tr>
-                            <tr class="even">
-                                <td><?php _e('Number of public users') ; ?></td><td><?php echo (int) $numUsers ; ?></td>
-                            </tr>
-                            <tr>
-                                <td><?php _e('Number of administrators') ; ?></td><td><?php echo (int) $numAdmins ; ?></td>
-                            </tr>
-                            <tr class="even">
-                                <td><?php _e('Number of listings marked as spam') ; ?></td><td><?php echo (int) $numItemsSpam ; ?></td>
-                            </tr>
-                            <tr>
-                                <td><?php _e('Number of listings marked as blocked') ; ?></td><td><?php echo (int) $numItemsBlock ; ?></td>
-                            </tr>
-                            <tr class="even">
-                                <td><?php _e('Number of listings marked as inactive') ; ?></td><td><?php echo (int) $numItemsInactive ; ?></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <b class="stats-title"><?php _e('Number of items new items'); ?></b>
+                    <div class="stats-detail"><?php _e('Last update on'); ?> 21/05/2012</div>
+                    <div id="placeholder" class="graph-placeholder"></div>
+                    <a href="#" class="btn"><?php _e('Show all Statistics per Week'); ?></a>
                 </div>
             </div>
         </div>

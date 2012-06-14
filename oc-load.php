@@ -161,6 +161,7 @@ require_once LIB_PATH . 'osclass/classes/Rewrite.php';
 require_once LIB_PATH . 'osclass/classes/Stats.php';
 require_once LIB_PATH . 'osclass/classes/AdminMenu.php';
 require_once LIB_PATH . 'osclass/classes/AdminToolbar.php';
+require_once LIB_PATH . 'osclass/classes/Breadcrumb.php';
 require_once LIB_PATH . 'osclass/alerts.php';
 
 require_once LIB_PATH . 'osclass/frm/Form.form.class.php';
@@ -175,18 +176,22 @@ require_once LIB_PATH . 'osclass/frm/SendFriend.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Alert.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Field.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Admin.form.class.php';
+require_once LIB_PATH . 'osclass/frm/ManageItems.form.class.php';
 
 require_once LIB_PATH . 'osclass/functions.php';
 require_once LIB_PATH . 'osclass/helpers/hAdminMenu.php';
 
 define('__OSC_LOADED__', true);
 
-Plugins::init() ;
-
-// init Rewrite class only if it's the frontend
-if( !OC_ADMIN ) {
+if( OC_ADMIN ) {
+    // init admin menu
+    AdminMenu::newInstance()->init();
+} else {
+    // init Rewrite class only if it's the frontend
     Rewrite::newInstance()->init();
 }
+
+Plugins::init() ;
 
 // Moved from BaseModel, since we need some session magic on index.php ;)
 Session::newInstance()->session_start() ;

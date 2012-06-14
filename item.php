@@ -510,6 +510,13 @@
 
                     osc_run_hook('show_item', $item) ;
 
+                    // redirect to the correct url just in case it has changed
+                    $itemURI = str_replace(osc_base_url(), '', osc_item_url());
+                    $URI = preg_replace('|^' . REL_WEB_URL . '|', '', $_SERVER['REQUEST_URI']);
+                    if( $itemURI != $URI ) {
+                        $this->redirectTo(osc_base_url() . $itemURI);
+                    }
+
                     $this->doView('item.php') ;
                 break;
             }

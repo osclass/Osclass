@@ -8,6 +8,11 @@
 	padding:7px 5px;
 	font-size:18px;
 	color:@color-gray-black;
+	position: relative;
+}
+.widget-box-title .btn{
+	margin-top:-9px;
+	margin-right:-5px;
 }
 .widget-box-title h1,
 .widget-box-title h2,
@@ -19,8 +24,9 @@
 	font-weight:normal;
 }
 .widget-box-title .select-box{
-	margin-top:-7px;
-	margin-right:-6px;
+	position: absolute;
+	right:0px;
+	top:0px;
 }
 .widget-box-title .select-box-trigger{
 	background-color:@color-white;
@@ -29,8 +35,18 @@
 	background-color:@color-white;
 	padding:15px;
 	.rounded-corners;
+	position: relative;
 }
 .widget-box-selector{
 	float:right;
 	display:block;
+}
+.stats-title{
+	font-size:16px;
+	line-height:20px;
+	color:@color-gray-dim;
+}
+.stats-detail{
+	font-size:14px;
+	color:@color-gray-ash;
 }

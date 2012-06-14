@@ -302,9 +302,67 @@
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
                 break ;
                 default:
-                                            $locales = OSCLocale::newInstance()->listAll() ;
+                                            // -----
+                                            if( Params::getParam('iDisplayLength') == '' ) {
+                                                Params::setParam('iDisplayLength', 10 ) ;
+                                            }
+                                            // ?
+                                            $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
 
-                                            $this->_exportVariableToView('locales', $locales) ;
+                                            $p_iPage      = 1;
+                                            if( is_numeric(Params::getParam('iPage')) && Params::getParam('iPage') >= 1 ) {
+                                                $p_iPage = Params::getParam('iPage');
+                                            }
+                                            Params::setParam('iPage', $p_iPage);
+                                            
+                                            $aLanguages     = OSCLocale::newInstance()->listAll() ;
+
+                                            // pagination
+                                            $start = ($p_iPage-1) * Params::getParam('iDisplayLength');
+                                            $limit = Params::getParam('iDisplayLength');
+                                            $count = count( $aLanguages );
+
+                                            $displayRecords = $limit;
+                                            if( ($start+$limit ) > $count ) {
+                                                $displayRecords = ($start+$limit) - $count;
+                                            }
+                                            // ----
+                                            $aData = array() ;
+                                            $max = ($start+$limit);
+                                            if($max > $count) $max = $count;
+                                            for($i = $start; $i < $max; $i++) {
+                                                $l = $aLanguages[$i];
+                                                $row = array() ;
+                                                $row[] = '<input type="checkbox" name="id[]" value="' . $l['pk_c_code'] . '" />' ;
+
+                                                $options   = array() ;
+                                                $options[] = '<a href="' . osc_admin_base_url(true) . '?page=languages&amp;action=edit&amp;id='  . $l['pk_c_code'] . '">' . __('Edit') . '</a>' ;
+                                                $options[] = '<a href="' . osc_admin_base_url(true) . '?page=languages&amp;action=' . ( $l['b_enabled'] == 1 ? 'disable_selected' : 'enable_selected' ) . '&amp;id[]=' . $l['pk_c_code'] . '"> ' . ($l['b_enabled'] == 1 ? __('Disable (website)') : __('Enable (website)') ) . '</a> ' ;
+                                                $options[] = '<a href="' . osc_admin_base_url(true) . '?page=languages&amp;action=' . ( $l['b_enabled_bo'] == 1 ? 'disable_bo_selected' : 'enable_bo_selected' ) . '&amp;id[]=' . $l['pk_c_code'] . '">' . ( $l['b_enabled_bo'] == 1 ? __('Disable (oc-admin)') : __('Enable (oc-admin)') ) . '</a>' ;
+                                                $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js(__("This action can't be undone. Are you sure you want to continue?")) . '\');" href="' . osc_admin_base_url(true) . '?page=languages&amp;action=delete&amp;id[]=' . $l['pk_c_code'] . '">' . __('Delete') . '</a>' ;
+
+                                                $auxOptions = '<ul>'.PHP_EOL ;
+                                                foreach( $options as $actual ) {
+                                                    $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
+                                                }
+                                                $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
+                                                
+                                                $row[] = $l['s_name'] . $actions ;
+                                                $row[] = $l['s_short_name'] ;
+                                                $row[] = $l['s_description'] ;
+                                                $row[] = ( $l['b_enabled'] ? __('Yes') : __('No') ) ;
+                                                $row[] = ( $l['b_enabled_bo'] ? __('Yes') : __('No') ) ;
+
+                                                $aData[] = $row ;
+                                            }
+                                            // ----
+                                            $array['iTotalRecords']         = $displayRecords;
+                                            $array['iTotalDisplayRecords']  = count($aLanguages);
+                                            $array['iDisplayLength']        = $limit;
+                                            $array['aaData'] = $aData;
+                                            
+                                            $this->_exportVariableToView('aLanguages', $array) ;
+                                            
                                             $this->doView('languages/index.php') ;
                 break ;
             }

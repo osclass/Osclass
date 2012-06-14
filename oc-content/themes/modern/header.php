@@ -25,7 +25,7 @@
 <div class="container">
 <!-- header -->
 <div id="header">
-    <a id="logo" href="<?php echo osc_base_url() ; ?>"><strong><?php echo osc_page_title() ; ?></strong></a>
+    <a id="logo" href="<?php echo osc_base_url() ; ?>"><?php echo logo_header(); ?></a>
     <div id="user_menu">
         <ul>
             <?php if(osc_users_enabled()) { ?>
@@ -82,5 +82,17 @@
         <div class="empty"></div>
     </div>
 </div>
+<div class="clear"></div>
 <!-- /header -->
-<?php osc_show_widgets('header') ; ?>
+<?php
+    osc_show_widgets('header') ;
+
+    $breadcrumb = osc_breadcrumb('&raquo;', false);
+    if( $breadcrumb != '') { ?>
+    <div class="breadcrumb">
+        <?php echo $breadcrumb; ?>
+        <div class="clear"></div>
+    </div>
+<?php
+    }
+?>

@@ -245,5 +245,27 @@
         CategoryForm::category_select(Category::newInstance()->toTree(), $category, $default_str, $name) ;
     }
 
+    /**
+     * Get th category by id or slug
+     * 
+     * @since 3.0
+     * @param $by two possibilities: slug or id
+     * @param $what the id or slug category we're looking for
+     * @return array
+     */
+    function osc_get_category($by, $what) {
+        if( !in_array($by, array('slug', 'id')) ) {
+            return false;
+        }
+
+        switch ($by) {
+            case 'slug':
+                return Category::newInstance()->findBySlug($what);
+            break;
+            case 'id':
+                return Category::newInstance()->findByPrimaryKey($what);
+            break;
+        }
+    }
 
 ?>
