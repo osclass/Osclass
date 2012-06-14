@@ -19,8 +19,9 @@
     $comments        = __get("comments") ;
     $max             = __get("max") ;
     $latest_comments = __get("latest_comments") ;
+    $type            = Params::getParam('type_stat');
     
-    switch(Params::getParam('type_stat')){
+    switch($type){
         case 'week':
             $type_stat = __('Last 10 weeks');
             break;
@@ -119,20 +120,18 @@
 <div class="grid-system">
     <div class="grid-row grid-first-row grid-100 no-bottom-margin">
         <div class="row-wrapper">
-            <h2 class="render-title"><?php _e('Comments Statistics'); ?></h2>
+            <h2 class="render-title"><?php _e('Comments Statistics'); ?>
+                <a id="monthly" class="btn float-right <?php if($type=='month') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=comments&amp;type_stat=month"><?php _e('Last 10 months') ; ?></a>
+                <a id="weekly"  class="btn float-right <?php if($type=='week') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=comments&amp;type_stat=week"><?php _e('Last 10 weeks') ; ?></a>
+                <a id="daily"   class="btn float-right <?php if($type==''||$type=='day') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=comments&amp;type_stat=day"><?php _e('Last 10 days') ; ?></a>
+            </h2>
         </div>
     </div>
     <div class="grid-row grid-50">
         <div class="row-wrapper">
             <div class="widget-box">
                 <div class="widget-box-title">
-                    <h3><?php _e('Comments'); ?>
-                    <select class="widget-box-selector select-box-big input-medium">
-                        <option value="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=users&amp;type_stat=day"><?php _e('Last 10 days') ; ?></option>
-                        <option value="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=users&amp;type_stat=week"><?php _e('Last 10 weeks') ; ?></option>
-                        <option value="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=users&amp;type_stat=month"><?php _e('Last 10 months') ; ?></option>
-                    </select>
-                    </h3>
+                    <h3><?php _e('Comments'); ?></h3>
                 </div>
                 <div class="widget-box-content">
                     <b class="stats-title"></b>
