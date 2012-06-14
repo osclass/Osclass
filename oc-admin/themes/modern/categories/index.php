@@ -344,7 +344,7 @@ function drawCategory($category,$isSubcategory = false){
 
                                 <?php drawCategory($category); ?>
                                 <?php if($has_subcategories) { ?>
-                                    <ul class="subcategory subcategories-<?php echo $category['pk_i_id'] ; ?>" style="display: none;">
+                                    <ul class="subcategory subcategories-<?php echo $category['pk_i_id'] ; ?> hide">
                                     <?php foreach($category['categories'] as $category) {?>
                                         <li id="list_<?php echo $category['pk_i_id'] ; ?>" class="category_li <?php echo ( $category['b_enabled'] == 1 ? 'enabled' : 'disabled' ) ; ?>" >
                                             <?php drawCategory($category,true); ?>

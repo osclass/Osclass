@@ -142,7 +142,7 @@
                 <?php } ?>
                 <?php } else { ?>
                     <tr>
-                        <td colspan="9" style="text-align: center;">
+                        <td colspan="9" class="text-center">
                         <p><?php _e('No data available in table') ; ?></p>
                         </td>
                     </tr>

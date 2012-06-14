@@ -136,7 +136,7 @@
     $direction  = Params::getParam('direction');
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions" style="display:none">
+<form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
     <input type="hidden" name="page" value="items" />
     <input type="hidden" name="iDisplayLength" value="<?php echo $iDisplayLength;?>" />
     <div class="form-horizontal">
@@ -355,7 +355,7 @@
                 <?php } ?>
                 <?php } else { ?>
                     <tr>
-                        <td colspan="8" style="text-align: center;">
+                        <td colspan="8" class="text-center">
                         <p><?php _e('No data available in table'); ?></p>
                         </td>
                     </tr>

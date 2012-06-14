@@ -58,9 +58,9 @@
 </div><!-- grid close -->
 
 <!-- /settings form -->
-<div id="d_add_country" class="lightbox_country location has-form-actions" style="display:none;">
+<div id="d_add_country" class="lightbox_country location has-form-actions hide">
         <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_add_country_form">
-            <div><small id="c_code_error" style="display: none;"><?php _e('Country code should have two characters'); ?></small></div>
+            <div><small id="c_code_error" class="hide"><?php _e('Country code should have two characters'); ?></small></div>
             <input type="hidden" name="page" value="settings" />
             <input type="hidden" name="action" value="locations" />
             <input type="hidden" name="type" value="add_country" />
@@ -81,7 +81,7 @@
 </div>
 <!-- End form add country -->
 <!-- Form edit country -->
-<div id="d_edit_country" class="lightbox_country location has-form-actions" style="display:none;">
+<div id="d_edit_country" class="lightbox_country location has-form-actions hide">
         <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_edit_country_form">
             <input type="hidden" name="page" value="settings" />
             <input type="hidden" name="action" value="locations" />
@@ -102,7 +102,7 @@
 
 <!-- End form edit country -->
 <!-- Form add region -->
-<div id="d_add_region" class="lightbox_country location has-form-actions" style="display:none;">
+<div id="d_add_region" class="lightbox_country location has-form-actions hide">
     <div style="padding: 14px;">
         <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_add_region_form">
             <input type="hidden" name="page" value="settings" />
@@ -129,7 +129,7 @@
 
 <!-- End form add region -->
 <!-- Form edit region -->
-<div id="d_edit_region" class="lightbox_country location has-form-actions" style="display:none;">
+<div id="d_edit_region" class="lightbox_country location has-form-actions hide">
     <div style="padding: 14px;">
         <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_edit_region_form">
             <input type="hidden" name="page" value="settings" />
@@ -154,7 +154,7 @@
 
 <!-- End form edit region -->
 <!-- Form edit city -->
-<div id="d_add_city" class="lightbox_country location has-form-actions" style="display:none;">
+<div id="d_add_city" class="lightbox_country location has-form-actions hide">
     <div style="padding: 14px;">
         <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_add_city_form">
             <input type="hidden" name="page" value="settings" />
@@ -182,7 +182,7 @@
 
 <!-- End form add city -->
 <!-- Form edit city -->
-<div id="d_edit_city" class="lightbox_country location has-form-actions" style="display:none;">
+<div id="d_edit_city" class="lightbox_country location has-form-actions hide">
     <div style="padding: 14px;">
         <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_edit_city_form">
             <input type="hidden" name="page" value="settings" />
@@ -227,7 +227,7 @@
                     <div id="l_countries">
                         <?php foreach( $aCountries as $country ) { ?>
                         <div>
-                            <div style="float:left;">
+                            <div class="float-left">
                                 <div>
                                     <a class="close" onclick="javascript:return confirm('<?php echo osc_esc_js(__('This action can not be undone. Items with this location associated will be deleted. Are you sure you want to continue?')); ?>');" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations&type=delete_country&id=<?php echo urlencode($country['pk_c_code']) ; ?>">
                                         <img src="<?php echo osc_admin_base_url() ; ?>images/close.png" alt="<?php _e('Close'); ?>" title="<?php _e('Close'); ?>" />
@@ -235,10 +235,10 @@
                                     <a class="edit" href="javascript:void(0);" style="padding-right: 15px;" onclick="edit_countries($(this));" data="<?php echo osc_esc_html($country['s_name']);?>" code="<?php echo $country['pk_c_code'];?>"><?php echo $country['s_name'] ; ?></a>
                                 </div>
                             </div>
-                            <div style="float:right">
+                            <div class="float-right">
                                 <a class="view-more" href="javascript:void(0)" onclick="show_region('<?php echo $country['pk_c_code']; ?>', '<?php echo addslashes($country['s_name']) ; ?>')"><?php _e('View more'); ?> &raquo;</a>
                             </div>
-                            <div style="clear:both;"></div>
+                            <div class="clear"></div>
                         </div>
                         <?php } ?>
                     </div>
@@ -249,7 +249,7 @@
     <div class="grid-row grid-first-row grid-33">
         <div class="row-wrapper">
             <div class="widget-box">
-                <div class="widget-box-title"><h3><?php _e('Regions') ; ?><a id="b_new_region" href="javascript:void(0);" style="display: none;" class="btn float-right"><?php _e('Add new'); ?></a></h3></div>
+                <div class="widget-box-title"><h3><?php _e('Regions') ; ?><a id="b_new_region" href="javascript:void(0);" class="btn float-right hide"><?php _e('Add new'); ?></a></h3></div>
                 <div class="widget-box-content">
                     <div id="i_regions"></div>
                 </div>
@@ -259,7 +259,7 @@
     <div class="grid-row grid-first-row grid-33">
         <div class="row-wrapper">
             <div class="widget-box">
-                <div class="widget-box-title"><h3><?php _e('Cities') ; ?><a id="b_new_city" href="javascript:void(0);" class="btn float-right" style="display:none;"><?php _e('Add new'); ?></a></h3></div>
+                <div class="widget-box-title"><h3><?php _e('Cities') ; ?><a id="b_new_city" href="javascript:void(0);" class="btn float-right hide"><?php _e('Add new'); ?></a></h3></div>
                 <div class="widget-box-content"><div id="i_cities"></div></div>
             </div>
         </div>

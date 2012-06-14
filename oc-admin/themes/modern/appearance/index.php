@@ -115,7 +115,7 @@
                 <form action="" method="post">
                     <input type="hidden" name="market_code" id="market_code" value="" />
                     <div class="osc-modal-content-market">
-                        <img src="" id="market_thumb" style="float:left"/>
+                        <img src="" id="market_thumb" class="float-left"/>
                         <table class="table" cellpadding="0" cellspacing="0">
                             <tbody>
                                 <tr class="table-first-row">

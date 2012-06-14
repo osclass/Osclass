@@ -101,7 +101,7 @@
             <?php endforeach;?>
             <?php else : ?>
             <tr>
-                <td colspan="5" style="text-align: center;">
+                <td colspan="5" class="text-center">
                 <p><?php _e('No data available in table') ; ?></p>
                 </td>
             </tr>

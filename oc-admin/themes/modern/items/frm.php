@@ -154,7 +154,7 @@
                         </div>
                         <?php } ?>
                     </div>
-                    <p><a style="font-size: small;" href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo') ; ?></a></p>
+                    <p><a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo') ; ?></a></p>
                 <?php } ?>
                 <?php if( $new_item ) {
                         ItemForm::plugin_post_item() ;

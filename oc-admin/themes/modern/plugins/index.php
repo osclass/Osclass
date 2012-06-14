@@ -86,7 +86,7 @@
             <?php endforeach;?>
             <?php else : ?>
             <tr>
-                <td colspan="4" style="text-align: center;">
+                <td colspan="4" class="text-center">
                 <p><?php _e('No data available in table') ; ?></p>
                 </td>
             </tr>
@@ -126,7 +126,7 @@
         <form action="" method="post">
             <input type="hidden" name="market_code" id="market_code" value="" />
             <div class="osc-modal-content-market">
-                <img src="" id="market_thumb" style="float:left"/>
+                <img src="" id="market_thumb" class="float-left"/>
                 <table class="table" cellpadding="0" cellspacing="0">
                     <tbody>
                         <tr class="table-first-row">
