@@ -55,8 +55,8 @@
     $aData          = __get('aAdmins');
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<div style="position:relative;">
-    <div id="listing-toolbar"> <!-- FERNANDO add class admins-toolbar-->
+<div class="relative">
+    <div id="admins-toolbar" class="table-toolbar">
         <div class="float-right">
         </div>
     </div>

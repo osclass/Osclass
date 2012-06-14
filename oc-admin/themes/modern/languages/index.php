@@ -59,8 +59,8 @@
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <h2 class="render-title"><?php _e('Manage Languages'); ?></h2>
-<div style="position:relative;">
-    <div id="listing-toolbar"> <!-- FERNANDO add class language-toolbar-->
+<div class="relative">
+    <div id="language-toolbar" class="table-toolbar">
         <div class="float-right">
             
         </div>

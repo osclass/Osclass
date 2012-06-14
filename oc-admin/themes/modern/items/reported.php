@@ -72,7 +72,7 @@
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <h2 class="render-title"><?php _e('Manage reported listings') ; ?></h2>
-<div style="position:relative;">
+<div class="relative">
     <div id="listing-toolbar">
         <div class="float-right">
             

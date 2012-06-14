@@ -71,13 +71,9 @@
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <h2 class="render-title"><?php _e('Currencies') ; ?></h2>
-<div style="position:relative;">
-    <div id="listing-toolbar"> <!-- FERNANDO add class currencies-toolbar-->
-        <div class="float-right">
-            
-        </div>
-    </div>
-    
+<div class="relative">
+    <div id="currencies-toolbar" class="table-toolbar">
+    </div>    
     <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
         <input type="hidden" name="page" value="settings" />
         <input type="hidden" name="action" value="currencies" />

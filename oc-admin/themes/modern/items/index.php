@@ -258,7 +258,7 @@
     </div>
 </form>
 <h2 class="render-title"><?php _e('Manage listings'); ?></h2>
-<div style="position:relative;">
+<div class="relative">
     <div id="listing-toolbar">
         <div class="float-right">
             <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="shortcut-filters">

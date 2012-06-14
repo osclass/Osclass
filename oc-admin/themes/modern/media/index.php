@@ -58,11 +58,8 @@
 
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<div style="position:relative;">
-    <div id="listing-toolbar"> <!-- FERNANDO add class media-toolbar-->
-        <div class="float-right">
-            
-        </div>
+<div class="relative">
+    <div id="media-toolbar" class="table-toolbar">
     </div>
     
     <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">

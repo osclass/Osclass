@@ -85,11 +85,8 @@
 
     osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <h2 class="render-title"><?php _e('Manage pages'); ?></h2>
-<div style="position:relative;">
-    <div id="listing-toolbar"> <!-- FERNANDO add class pages-toolbar-->
-        <div class="float-right">
-            
-        </div>
+<div class="relative">
+    <div id="pages-toolbar" class="table-toolbar">
     </div>
     <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
         <input type="hidden" name="page" value="pages" />
