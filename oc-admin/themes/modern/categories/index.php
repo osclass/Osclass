@@ -55,9 +55,18 @@
                 border-bottom: 1px solid #EEDC94;
                 color: #404040;
             }
+            .cat-hover{
+                background-color:#fffccc !important;
+                background:#fffccc;
+            }
         </style>
         <script type="text/javascript">
             $(function() {
+                $('.category_div').live('mouseenter',function(){
+                    $(this).addClass('cat-hover');
+                }).live('mouseleave',function(){
+                    $(this).removeClass('cat-hover');
+                });
                 var list_original = '' ;
 
                 $('.sortable').nestedSortable({
