@@ -81,8 +81,14 @@
                     filters.toggle();
                 });*/
 
+                $('#display-filters').dialog({
+                    autoOpen: false,
+                    modal: true,
+                    width: 700,
+                    title: '<?php echo osc_esc_js( __('Filters') ) ; ?>'
+                });
                 $('#btn-display-filters').click(function(){
-                    $('#display-filters').dialog({modal:true,width:700,title:'<?php echo osc_esc_js( __('Filters') ) ; ?>'});
+                    $('#display-filters').dialog('open');
                     return false;
                 });
 
@@ -136,7 +142,7 @@
     $direction  = Params::getParam('direction');
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+<form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions">
     <input type="hidden" name="page" value="items" />
     <input type="hidden" name="iDisplayLength" value="<?php echo $iDisplayLength;?>" />
     <div class="form-horizontal">
