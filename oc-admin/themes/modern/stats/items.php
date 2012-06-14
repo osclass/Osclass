@@ -21,11 +21,40 @@
     $reports      = __get("reports") ;
     $max_views    = __get("max_views") ;
     $latest_items = __get("latest_items") ;
+    switch(Params::getParam('type_stat')){
+        case 'week':
+            $type_stat = __('Last 10 weeks');
+            break;
+        case 'month':
+            $type_stat = __('Last 10 months');
+            break;
+        default:
+            $type_stat = __('Last 10 days');
+    }
+
+
+    osc_add_filter('render-wrapper','render_offset');
+    function render_offset(){
+        return 'row-offset';
+    }
+    osc_add_hook('admin_page_header','customPageHeader');
+    function customPageHeader(){ ?>
+        <h1><?php _e('Statistics') ; ?></h1>
+    <?php
+    }
+
+    function customPageTitle($string) {
+        return sprintf(__('Listing Statistics &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    function customHead() {
+        $items        = __get("items") ;
+        $max          = __get("max") ;
+        $reports      = __get("reports") ;
+        $max_views    = __get("max_views") ;
+        $latest_items = __get("latest_items") ;
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
-    <head>
-        <?php osc_current_admin_theme_path('head.php') ; ?>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <?php if( count($items) > 0 ) { ?>
         <script type="text/javascript">
@@ -62,97 +91,177 @@
                 ?>
 
                 // Instantiate and draw our chart, passing in some options.
-                var chart = new google.visualization.LineChart(document.getElementById('placeholder'));
-                chart.draw(data, {width: 400, height: 300, vAxis: {maxValue: <?php echo ceil($max * 1.1) ; ?>}});
+                var chart = new google.visualization.AreaChart(document.getElementById('placeholder'));
+                chart.draw(data, {
+                    colors:['#058dc7','#e6f4fa'],
+                        areaOpacity: 0.1,
+                        lineWidth:3,
+                        hAxis: {
+                        gridlines:{
+                            color: '#333',
+                            count: 3
+                        },
+                        viewWindow:'explicit',
+                        showTextEvery: 2,
+                        slantedText: false,
+                        textStyle:{
+                            color: '#058dc7',
+                            fontSize: 10
+                        }
+                        },
+                        vAxis: {
+                            gridlines:{
+                                color: '#DDD',
+                                count: 4,
+                                style: 'dooted'
+                            },
+                            viewWindow:'explicit',
+                            baselineColor:'#bababa'
 
-                var chart2 = new google.visualization.ColumnChart(document.getElementById('placeholder_total'));
-                chart2.draw(data2, {width: 400, height: 300, vAxis: {maxValue: <?php echo ceil($max_views * 1.1) ;?>}});
+                        },
+                        pointSize: 6,
+                        legend: 'none',
+                        chartArea:{
+                            left:10,
+                            top:10,
+                            width:"95%",
+                            height:"80%"
+                        }
+                    });
+
+                var chart = new google.visualization.AreaChart(document.getElementById('placeholder_total'));
+                chart.draw(data2, {
+                    colors:['#058dc7','#e6f4fa'],
+                        areaOpacity: 0.1,
+                        lineWidth:3,
+                        hAxis: {
+                        gridlines:{
+                            color: '#333',
+                            count: 3
+                        },
+                        viewWindow:'explicit',
+                        showTextEvery: 2,
+                        slantedText: false,
+                        textStyle:{
+                            color: '#058dc7',
+                            fontSize: 10
+                        }
+                        },
+                        vAxis: {
+                            gridlines:{
+                                color: '#DDD',
+                                count: 4,
+                                style: 'dooted'
+                            },
+                            viewWindow:'explicit',
+                            baselineColor:'#bababa'
+
+                        },
+                        pointSize: 6,
+                        legend: 'none',
+                        chartArea:{
+                            left:10,
+                            top:10,
+                            width:"95%",
+                            height:"80%"
+                        }
+                    });
             }
         </script>
-        <?php } ?>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <!-- container -->
-        <div id="content">
-            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-            <!-- right container -->
-            <div class="right">
-                <div class="header_title">
-                    <h1 class="settings"><?php _e('Listings Statistics') ; ?></h1>
+<?php }
+    }
+    osc_add_hook('admin_header', 'customHead');
+?>
+<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+<div id="dashboard">
+<div class="grid-system">
+    <div class="grid-row grid-first-row grid-100 no-bottom-margin">
+        <div class="row-wrapper">
+                <h2 class="render-title"><?php _e('Listing Statistics'); ?></h2>
+        </div>
+    </div>
+    <div class="grid-row grid-50">
+        <div class="row-wrapper">
+            <div class="widget-box">
+                <div class="widget-box-title">
+                    <h3><?php _e('New listing'); ?>
+                    <select class="widget-box-selector select-box-big input-medium">
+                        <option value="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=day"><?php _e('Last 10 days') ; ?></option>
+                        <option value="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=week"><?php _e('Last 10 weeks') ; ?></option>
+                        <option value="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=month"><?php _e('Last 10 months') ; ?></option>
+                    </select>
+                    </h3>
                 </div>
-                <?php osc_show_flash_message('admin') ; ?>
-                <!-- items statistics -->
-                <div class="statistics">
-                <div class="actions-header">
-                    <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=day"><?php _e('Last 10 days') ; ?></a>
-                    <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=week"><?php _e('Last 10 weeks') ; ?></a>
-                    <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=month"><?php _e('Last 10 months') ; ?></a>
-                </div>
-                    <div class="sortable_div">
-                        <div class="float50per">
-                        <div class="latest-items ui-dialog ui-corner-all">
-                            <h3 class="ui-dialog-titlebar"><?php _e('New listing'); ?></h3>
-                            <div class="ui-state-body">
-                                <div id="placeholder" style="width:400px;height:300px;margin:0; margin:0 auto; padding-bottom: 45px;">
-                                    <?php if( count($items) == 0 ) {
-                                        _e("There're no statistics yet") ;
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="float50per">
-                        <div class="latest-items ui-dialog ui-corner-all">
-                            <h3 class="ui-dialog-titlebar"><?php _e("Total number of listings' views") ; ?></h3>
-                            <div class="ui-state-body">
-                                <div id="placeholder_total" style="width:400px;height:300px;margin:0; margin:0 auto; padding-bottom: 45px;">
-                                    <?php if( count($reports) == 0 ) {
-                                        _e("There're no statistics yet") ;
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-
-
-                        <div class="float50per">
-                        <div class="latest-items ui-dialog ui-corner-all">
-                            <h3 class="ui-dialog-titlebar"><?php _e('Latest listings on the web') ; ?></h3>
-                            <div class="ui-state-body">
-                                <?php if( count($latest_items) > 0 ) { ?>
-                                <table border="0">
-                                    <tr>
-                                        <th>ID</th>
-                                        <th><?php _e('Title') ; ?></th>
-                                        <th><?php _e('Author') ; ?></th>
-                                        <th><?php _e('Status') ; ?></th>
-                                    </tr>
-                                    <?php foreach($latest_items as $i) { ?>
-                                    <tr>
-                                        <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo $i['pk_i_id']; ?></a></td>
-                                        <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo $i['s_title']; ?></a></td>
-                                        <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo $i['s_contact_email']; ?></a></td>
-                                        <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo ($i['b_active'] == 1) ? __('Active') : __('Inactive') ; ?></a></td>
-                                    </tr>
-                                    <?php } ?>
-                                </table>
-                                <?php } else { ?>
-                                    <p><?php _e("There're no statistics yet") ; ?></p>
-                                <?php } ?>
-                            </div>
-                            </div>
-                        </div>
+                <div class="widget-box-content">
+                    <b class="stats-title"><?php _e('Number of new listings'); ?></b>
+                    <div class="stats-detail"><?php echo $type_stat; ?></div>
+                    <div id="placeholder" class="graph-placeholder" style="height:150px">
+                        <?php if( count($items) == 0 ) {
+                            _e("There're no statistics yet") ;
+                        } ?>
                     </div>
                 </div>
-                <!-- /items statistics -->
-                <div class="clear"></div>
             </div>
-            <!-- /right container -->
         </div>
-        <!-- /container -->
-        <?php osc_current_admin_theme_path('footer.php') ; ?>
-    </body>
-</html>
+    </div>
+    <div class="grid-row grid-50">
+        <div class="row-wrapper">
+            <div class="widget-box">
+                <div class="widget-box-title">
+                    <h3><?php _e('Lstings\' views'); ?>
+                    <select class="widget-box-selector select-box-big input-medium">
+                        <option value="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=day"><?php _e('Last 10 days') ; ?></option>
+                        <option value="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=week"><?php _e('Last 10 weeks') ; ?></option>
+                        <option value="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=month"><?php _e('Last 10 months') ; ?></option>
+                    </select>
+                    </h3>
+                </div>
+                <div class="widget-box-content">
+                    <b class="stats-title"><?php _e('Total number of listings\' views'); ?></b>
+                    <div class="stats-detail"><?php echo $type_stat; ?></div>
+                    <div id="placeholder_total" class="graph-placeholder" style="height:150px">
+                        <?php if( count($reports) == 0 ) {
+                            _e("There're no statistics yet") ;
+                        } ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid-row grid-first-row grid-100">
+        <div class="row-wrapper">
+            <div class="widget-box">
+                <div class="widget-box-title"><h3><?php _e('Latest listings on the web') ; ?></h3></div>
+                <div class="widget-box-content">
+                    <?php if( count($latest_items) > 0 ) { ?>
+                    <table class="table" cellpadding="0" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th><?php _e('Title') ; ?></th>
+                            <th><?php _e('Author') ; ?></th>
+                            <th><?php _e('Status') ; ?></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach($latest_items as $i) { ?>
+                        <tr>
+                            <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo $i['pk_i_id']; ?></a></td>
+                            <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo $i['s_title']; ?></a></td>
+                            <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo $i['s_contact_email']; ?></a></td>
+                            <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=item_edit&amp;id=<?php echo $i['pk_i_id']; ?>"><?php echo ($i['b_active'] == 1) ? __('Active') : __('Inactive') ; ?></a></td>
+                        </tr>
+                        <?php } ?>
+                        </tbody>
+                    </table>
+                    <?php } else { ?>
+                        <p><?php _e("There're no statistics yet") ; ?></p>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+</div>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

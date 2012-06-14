@@ -17,12 +17,10 @@
      */
 
     $aCountries = __get('aCountries');
-?>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
-    <head>
-        <script type="text/javascript">
+    //customize Head
+    function customHead(){
+        ?>
+       <script type="text/javascript">
             var base_url    = '<?php echo osc_admin_base_url(); ?>';
             var s_close     = '<?php echo osc_esc_js(_e('Close')); ?>';
             var s_view_more = '<?php echo osc_esc_js(_e('View more')); ?>';
@@ -36,233 +34,237 @@
             var editNewCityText = '<?php echo osc_esc_js(__('Edit city')) ; ?>';
             var addNewCityText = '<?php echo osc_esc_js(__('Add new city')) ; ?>';
         </script>
-        <?php osc_current_admin_theme_path('head.php') ; ?>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('location.js') ; ?>"></script>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <!-- container -->
-        <div id="content">
-            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-            <!-- right container -->
-            <div class="right">
+        <?php
+    }
+    osc_add_hook('admin_header','customHead');
 
-                <div class="header_title">
-                    <h1 class="settings"><?php _e('Locations') ; ?></h1>
-                </div>
-                <?php osc_show_flash_message('admin') ; ?>
-                <!-- settings form -->
-                <div id="settings_form" class="locations locations_box">
-                    <!-- Country -->
-                    <div style="float:left; width: 33%;  margin-left:10px">
-                        <div style="border-bottom: 1px dashed black; padding: 4px 4px 0px; width: 90%;" >
-                            <div style="float:left;">
-                                <h3>
-                                    <?php _e('Countries'); ?>
-                                </h3>
-                            </div>
-                            <div style="float:right;">
-                                <a id="b_new_country" href="javascript:void(0);"><?php _e('Add new'); ?></a>
-                            </div>
-                            <div style="clear:both;"></div>
-                        </div>
-                        <div id="l_countries" style="padding: 10px 0;">
-                            <?php foreach( $aCountries as $country ) { ?>
-                            <div style="padding: 4px; width: 90%;">
-                                <div style="float:left;">
-                                    <div>
-                                        <a id="country_delete" class="close" onclick="javascript:return confirm('<?php echo osc_esc_js(__('This action can not be undone. Items with this location associated will be deleted. Are you sure you want to continue?')); ?>');" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations&type=delete_country&id=<?php echo urlencode($country['pk_c_code']) ; ?>">
-                                            <img src="<?php echo osc_admin_base_url() ; ?>images/close.png" alt="<?php _e('Close'); ?>" title="<?php _e('Close'); ?>" />
-                                        </a>
-                                        <a id="country_edit" class="edit" href="javascript:void(0);" style="padding-right: 15px;" onclick="edit_countries($(this));" data="<?php echo osc_esc_html($country['s_name']);?>" code="<?php echo $country['pk_c_code'];?>"><?php echo $country['s_name'] ; ?></a>
-                                    </div>
-                                </div>
-                                <div style="float:right">
-                                    <a href="javascript:void(0)" onclick="show_region('<?php echo $country['pk_c_code']; ?>', '<?php echo addslashes($country['s_name']) ; ?>')"><?php _e('View more'); ?> &raquo;</a>
-                                </div>
-                            </div>
-                            <div style="clear:both;"></div>
-                            <?php } ?>
-                        </div>
-                        <div id="i_countries">
-                        </div>
-                    </div>
-                    <!-- End country -->
-                    <!-- Region -->
-                    <div style="float:left; width: 33%;">
-                        <div style="border-bottom: 1px dashed black; padding: 4px 4px 0px; width: 90%;" >
-                            <div style="float:left;">
-                                <h3>
-                                    <?php _e('Regions'); ?>
-                                </h3>
-                            </div>
-                            <div style="float:right;">
-                                <a id="b_new_region" href="javascript:void(0);" style="display: none;"><?php _e('Add new'); ?></a>
-                            </div>
-                            <div style="clear:both;"></div>
-                        </div>
-                        <div id="i_regions" style="padding: 10px 0;">
+    osc_add_hook('admin_page_header','customPageHeader');
+    function customPageHeader(){ ?>
+        <h1><?php _e('Settings') ; ?></h1>
+<?php
+    }
 
-                        </div>
-                    </div>
-                    <!-- End region -->
-                    <!-- City -->
-                    <div style="float:left; width: 32%; ">
-                        <div style="border-bottom: 1px dashed black; padding: 4px 4px 0px; width: 90%;" >
-                            <div style="float:left;">
-                                <h3>
-                                    <?php _e('Cities'); ?>
-                                </h3>
-                            </div>
-                            <div style="float:right;">
-                                <a id="b_new_city" href="javascript:void(0);" style="display:none;"><?php _e('Add new'); ?></a>
-                            </div>
-                            <div style="clear:both;"></div>
-                        </div>
-                        <div id="i_cities"  style="padding: 10px 0;">
-
-                        </div>
-                    </div>
-                    <!-- End city -->
-                    <div style="clear:both;"></div>
-                </div>
-                <!-- /settings form -->
-                <div>
-                    <!-- Form add country -->
-        <div id="d_add_country" class="lightbox_country location" style="display:none;">
-            <div style="padding: 14px;">
-                <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_add_country_form">
-                    <div><small id="c_code_error" style="display: none;"><?php _e('Country code should have two characters'); ?></small></div>
-                    <input type="hidden" name="page" value="settings" />
-                    <input type="hidden" name="action" value="locations" />
-                    <input type="hidden" name="type" value="add_country" />
-                    <input type="hidden" name="c_manual" value="1" />
-                    <label><?php _e('Country code'); ?>: </label><br />
-                    <input type="text" id="c_country" name="c_country" value="" /><br />
-                    <p>
-                        <label><?php _e('Country'); ?>: </label><br />
-                        <input type="text" id="country" name="country" value="" />
-                    </p>
-                </form>
-            </div>
+    function customPageTitle($string) {
+        return __('Locations');
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+    osc_current_admin_theme_path('parts/header.php') ; ?>
+<!-- container -->
+<h1 class="render-title"><?php _e('Locations') ; ?></h1>
+<?php osc_show_flash_message('admin') ; ?>
         </div>
-        <!-- End form add country -->
-        <!-- Form edit country -->
-        <div id="d_edit_country" class="lightbox_country location" style="display:none;">
-            <div style="padding: 14px;">
-                <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_edit_country_form">
-                    <input type="hidden" name="page" value="settings" />
-                    <input type="hidden" name="action" value="locations" />
-                    <input type="hidden" name="type" value="edit_country" />
-                    <input type="hidden" name="country_code" value="" />
-                    <p>
-                        <label><?php _e('Country'); ?>: </label><br />
-                        <input type="text" id="e_country" name="e_country" value="" />
-                    </p>
-                </form>
-            </div>
-        </div>
+    </div>
+</div><!-- grid close -->
 
-        <!-- End form edit country -->
-        <!-- Form add region -->
-        <div id="d_add_region" class="lightbox_country location" style="display:none;">
-            <div style="padding: 14px;">
-                <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_add_region_form">
-                    <input type="hidden" name="page" value="settings" />
-                    <input type="hidden" name="action" value="locations" />
-                    <input type="hidden" name="type" value="add_region" />
-                    <input type="hidden" name="country_c_parent" value="" />
-                    <input type="hidden" name="country_parent" value="" />
-                    <input type="hidden" name="r_manual" value="1" />
-                    <table>
-                        <tr>
-                            <td><?php _e('Region'); ?>: </td>
-                            <td><input type="text" id="region" name="region" value="" /></td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
-        </div>
-
-        <!-- End form add region -->
-        <!-- Form edit region -->
-        <div id="d_edit_region" class="lightbox_country location" style="display:none;">
-            <div style="padding: 14px;">
-                <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_edit_region_form">
-                    <input type="hidden" name="page" value="settings" />
-                    <input type="hidden" name="action" value="locations" />
-                    <input type="hidden" name="type" value="edit_region" />
-                    <input type="hidden" name="region_id" value="" />
-                    <table>
-                        <tr>
-                            <td><?php _e('Region'); ?>: </td>
-                            <td><input type="text" id="e_region" name="e_region" value="" /></td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
-        </div>
-
-        <!-- End form edit region -->
-        <!-- Form edit city -->
-        <div id="d_add_city" class="lightbox_country location" style="display:none;">
-            <div style="padding: 14px;">
-                <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_add_city_form">
-                    <input type="hidden" name="page" value="settings" />
-                    <input type="hidden" name="action" value="locations" />
-                    <input type="hidden" name="type" value="add_city" />
-                    <input type="hidden" name="country_c_parent" value="" />
-                    <input type="hidden" name="country_parent" value="" />
-                    <input type="hidden" name="region_parent" value="" />
-                    <input type="hidden" name="ci_manual" value="1" />
-                    <table>
-                        <tr>
-                            <td><?php _e('City'); ?>: </td>
-                            <td><input type="text" id="city" name="city" value="" /></td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
-        </div>
-
-        <!-- End form add city -->
-        <!-- Form edit city -->
-        <div id="d_edit_city" class="lightbox_country location" style="display:none;">
-            <div style="padding: 14px;">
-                <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_edit_city_form">
-                    <input type="hidden" name="page" value="settings" />
-                    <input type="hidden" name="action" value="locations" />
-                    <input type="hidden" name="type" value="edit_city" />
-                    <input type="hidden" name="city_id" value="" />
-                    <table>
-                        <tr>
-                            <td><?php _e('City'); ?>: </td>
-                            <td><input type="text" id="e_city" name="e_city" value="" /></td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
-        </div>
-        
-        <!-- End form edit city -->
+<!-- /settings form -->
+<div id="d_add_country" class="lightbox_country location has-form-actions" style="display:none;">
+        <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_add_country_form">
+            <div><small id="c_code_error" style="display: none;"><?php _e('Country code should have two characters'); ?></small></div>
+            <input type="hidden" name="page" value="settings" />
+            <input type="hidden" name="action" value="locations" />
+            <input type="hidden" name="type" value="add_country" />
+            <input type="hidden" name="c_manual" value="1" />
+            <label><?php _e('Country code'); ?>: </label><br />
+            <input type="text" id="c_country" name="c_country" value="" /><br />
+            <p>
+                <label><?php _e('Country'); ?>: </label><br />
+                <input type="text" id="country" name="country" value="" />
+            </p>
+             <div class="form-actions">
+                <div class="wrapper">
+                    <button class="btn btn-red close-dialog" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php echo osc_esc_html( __('Add country') ) ; ?></button>
                 </div>
             </div>
-            <!-- /right container -->
-        </div>
+        </form>
+</div>
+<!-- End form add country -->
+<!-- Form edit country -->
+<div id="d_edit_country" class="lightbox_country location has-form-actions" style="display:none;">
+        <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_edit_country_form">
+            <input type="hidden" name="page" value="settings" />
+            <input type="hidden" name="action" value="locations" />
+            <input type="hidden" name="type" value="edit_country" />
+            <input type="hidden" name="country_code" value="" />
+            <p>
+                <label><?php _e('Country'); ?>: </label><br />
+                <input type="text" id="e_country" name="e_country" value="" />
+            </p>
+            <div class="form-actions">
+                <div class="wrapper">
+                    <button class="btn btn-red close-dialog" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php echo osc_esc_html( __('Edit country') ) ; ?></button>
+                </div>
+            </div>
+        </form>
+</div>
+
+<!-- End form edit country -->
+<!-- Form add region -->
+<div id="d_add_region" class="lightbox_country location has-form-actions" style="display:none;">
+    <div style="padding: 14px;">
+        <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_add_region_form">
+            <input type="hidden" name="page" value="settings" />
+            <input type="hidden" name="action" value="locations" />
+            <input type="hidden" name="type" value="add_region" />
+            <input type="hidden" name="country_c_parent" value="" />
+            <input type="hidden" name="country_parent" value="" />
+            <input type="hidden" name="r_manual" value="1" />
+            <table>
+                <tr>
+                    <td><?php _e('Region'); ?>: </td>
+                    <td><input type="text" id="region" name="region" value="" /></td>
+                </tr>
+            </table>
+            <div class="form-actions">
+                <div class="wrapper">
+                    <button class="btn btn-red close-dialog" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php echo osc_esc_html( __('Add region') ) ; ?></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- End form add region -->
+<!-- Form edit region -->
+<div id="d_edit_region" class="lightbox_country location has-form-actions" style="display:none;">
+    <div style="padding: 14px;">
+        <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_edit_region_form">
+            <input type="hidden" name="page" value="settings" />
+            <input type="hidden" name="action" value="locations" />
+            <input type="hidden" name="type" value="edit_region" />
+            <input type="hidden" name="region_id" value="" />
+            <table>
+                <tr>
+                    <td><?php _e('Region'); ?>: </td>
+                    <td><input type="text" id="e_region" name="e_region" value="" /></td>
+                </tr>
+            </table>
+            <div class="form-actions">
+                <div class="wrapper">
+                    <button class="btn btn-red close-dialog" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php echo osc_esc_html( __('Edit region') ) ; ?></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- End form edit region -->
+<!-- Form edit city -->
+<div id="d_add_city" class="lightbox_country location has-form-actions" style="display:none;">
+    <div style="padding: 14px;">
+        <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_add_city_form">
+            <input type="hidden" name="page" value="settings" />
+            <input type="hidden" name="action" value="locations" />
+            <input type="hidden" name="type" value="add_city" />
+            <input type="hidden" name="country_c_parent" value="" />
+            <input type="hidden" name="country_parent" value="" />
+            <input type="hidden" name="region_parent" value="" />
+            <input type="hidden" name="ci_manual" value="1" />
+            <table>
+                <tr>
+                    <td><?php _e('City'); ?>: </td>
+                    <td><input type="text" id="city" name="city" value="" /></td>
+                </tr>
+            </table>
+            <div class="form-actions">
+                <div class="wrapper">
+                    <button class="btn btn-red close-dialog" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php echo osc_esc_html( __('Add city') ) ; ?></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- End form add city -->
+<!-- Form edit city -->
+<div id="d_edit_city" class="lightbox_country location has-form-actions" style="display:none;">
+    <div style="padding: 14px;">
+        <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_edit_city_form">
+            <input type="hidden" name="page" value="settings" />
+            <input type="hidden" name="action" value="locations" />
+            <input type="hidden" name="type" value="edit_city" />
+            <input type="hidden" name="city_id" value="" />
+            <table>
+                <tr>
+                    <td><?php _e('City'); ?>: </td>
+                    <td><input type="text" id="e_city" name="e_city" value="" /></td>
+                </tr>
+            </table>
+            <div class="form-actions">
+                <div class="wrapper">
+                    <button class="btn btn-red close-dialog" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php echo osc_esc_html( __('Edit city') ) ; ?></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<?php if(Params::getParam('country')!='' && Params::getParam('country_code')!='') { ?>
+    <script type="text/javascript">
         <?php if(Params::getParam('country')!='' && Params::getParam('country_code')!='') { ?>
-            <script type="text/javascript">
-                <?php if(Params::getParam('country')!='' && Params::getParam('country_code')!='') { ?>
-                    show_region('<?php echo Params::getParam('country_code'); ?>', '<?php echo addslashes(Params::getParam('country')); ?>');
-                    function hook_load_cities() {
-                    <?php if(Params::getParam('region')!='') { ?>
-                        show_city(<?php echo Params::getParam('region'); ?>);
-                    <?php }; ?>
-                    };
-                <?php }; ?>
-            </script>
+            show_region('<?php echo Params::getParam('country_code'); ?>', '<?php echo addslashes(Params::getParam('country')); ?>');
+            function hook_load_cities() {
+            <?php if(Params::getParam('region')!='') { ?>
+                show_city(<?php echo Params::getParam('region'); ?>);
+            <?php }; ?>
+            };
         <?php }; ?>
-        <!-- /container -->
-        <div id="fade" class="black_overlay"></div>
-        <?php osc_current_admin_theme_path('footer.php') ; ?>
-    </body>
-</html>
+    </script>
+<?php }; ?>
+<!-- settings form -->
+<div id="settings_form" class="locations">
+<div class="grid-system">
+    <div class="grid-row grid-first-row grid-33">
+        <div class="row-wrapper">
+            <div class="widget-box">
+                <div class="widget-box-title"><h3><?php _e('Countries'); ?> <a id="b_new_country" class="btn float-right" href="javascript:void(0);"><?php _e('Add new'); ?></a></h3></div>
+                <div class="widget-box-content">
+                    <div id="l_countries">
+                        <?php foreach( $aCountries as $country ) { ?>
+                        <div>
+                            <div style="float:left;">
+                                <div>
+                                    <a class="close" onclick="javascript:return confirm('<?php echo osc_esc_js(__('This action can not be undone. Items with this location associated will be deleted. Are you sure you want to continue?')); ?>');" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations&type=delete_country&id=<?php echo urlencode($country['pk_c_code']) ; ?>">
+                                        <img src="<?php echo osc_admin_base_url() ; ?>images/close.png" alt="<?php _e('Close'); ?>" title="<?php _e('Close'); ?>" />
+                                    </a>
+                                    <a class="edit" href="javascript:void(0);" style="padding-right: 15px;" onclick="edit_countries($(this));" data="<?php echo osc_esc_html($country['s_name']);?>" code="<?php echo $country['pk_c_code'];?>"><?php echo $country['s_name'] ; ?></a>
+                                </div>
+                            </div>
+                            <div style="float:right">
+                                <a class="view-more" href="javascript:void(0)" onclick="show_region('<?php echo $country['pk_c_code']; ?>', '<?php echo addslashes($country['s_name']) ; ?>')"><?php _e('View more'); ?> &raquo;</a>
+                            </div>
+                            <div style="clear:both;"></div>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid-row grid-first-row grid-33">
+        <div class="row-wrapper">
+            <div class="widget-box">
+                <div class="widget-box-title"><h3><?php _e('Regions') ; ?><a id="b_new_region" href="javascript:void(0);" style="display: none;" class="btn float-right"><?php _e('Add new'); ?></a></h3></div>
+                <div class="widget-box-content">
+                    <div id="i_regions"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid-row grid-first-row grid-33">
+        <div class="row-wrapper">
+            <div class="widget-box">
+                <div class="widget-box-title"><h3><?php _e('Cities') ; ?><a id="b_new_city" href="javascript:void(0);" class="btn float-right" style="display:none;"><?php _e('Add new'); ?></a></h3></div>
+                <div class="widget-box-content"><div id="i_cities"></div></div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+</div>
+<?php osc_current_admin_theme_path('parts/footer.php') ; ?>

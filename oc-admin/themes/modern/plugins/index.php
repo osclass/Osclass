@@ -16,171 +16,246 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $aPlugin        = __get('plugins') ;
-    $active_plugins = osc_get_plugins() ;
-
-    $aData = array() ;
-    foreach($aPlugin as $plugin) {
-        $row   = array() ;
-        $pInfo = osc_plugin_get_info($plugin);
-
-        // prepare row 1
-        $installed = 0 ;
-        if( osc_plugin_is_installed($plugin) ) {
-            $installed = 1 ;
-        }
-        $enabled = 0 ;
-        if( osc_plugin_is_enabled($plugin) ) {
-            $enabled = 1 ;
-        }
-        // prepare row 2
-        $sUpdate = '' ;
-        if( osc_check_update(@$pInfo['plugin_update_uri'], @$pInfo['version']) ) {
-            $sUpdate = '<a href="' . osc_admin_base_url(true) . '?page=market&amp;code=' . htmlentities($pInfo['plugin_update_uri']) . '">' . __("There's a new version available to update") . '</a>' ;
-        }
-        // prepare row 4
-        $sConfigure = '' ;
-        if( isset($active_plugins[$plugin . '_configure']) ) {
-            $sConfigure = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=admin&amp;plugin=' . $pInfo['filename'] . '">' . __('Configure') . '</a>' ;
-        }
-        // prepare row 5
-        $sEnable = '' ;
-        if( $installed ) {
-            if( $enabled ) {
-                $sEnable = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=disable&amp;plugin=' . $pInfo['filename'] . '">' . __('Disable') . '</a>' ;
-            } else {
-                $sEnable = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=enable&amp;plugin=' . $pInfo['filename'] . '">' . __('Enable') . '</a>' ;
-            }
-        }
-        // prepare row 6
-        $sInstall  = '' ;
-        if( $installed ) {
-            $delete_text = osc_esc_js( __("This action can not be undone. Uninstalling plugins may result in a permanent lost of data. Are you sure you want to continue?") ) ;
-
-            $sInstall = '<a onclick="javascript:return confirm(\'' . $delete_text . '\') ;" href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=uninstall&amp;plugin=' . $pInfo['filename'] . '">' . __('Uninstall') . '</a>' ;
-        } else {
-            $sInstall = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=install&amp;plugin=' . $pInfo['filename'] . '">' . __('Install') . '</a>' ;
-        }
-
-        $row[] = '<input type="hidden" name="installed" value="' . $installed . '" enabled="' . $enabled . '" />' . $pInfo['plugin_name'] . '<div>' . $sUpdate . '</div>';
-        $row[] = $pInfo['description'] ;
-        $row[] = $sConfigure ;
-        $row[] = $sEnable ;
-        $row[] = $sInstall ;
-
-        $aData[] = $row ;
+    function customPageHeader() { ?>
+        <h1><?php _e('Manage Plugins') ; ?>
+            <a href="#" class="btn ico ico-32 ico-help float-right"></a>
+            <a href="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add plugin') ; ?></a>
+	   </h1>
+<?php
     }
+    osc_add_hook('admin_page_header','customPageHeader');
 
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
-    <head>
-        <?php osc_current_admin_theme_path('head.php') ; ?>
-        <link href="<?php echo osc_current_admin_theme_styles_url('datatables.css') ; ?>" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.dataTables.js') ; ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.pagination.js') ; ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.extend.js') ; ?>"></script>
+    function customPageTitle($string) {
+        return sprintf(__('Plugins &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    //customize Head
+    function customHead() { ?>
         <script type="text/javascript">
-            $(function() {
-                oTable = $('#datatables_list').dataTable({
-                    "sDom": "<'row-action'<'row'<'span6 length-menu'l><'span6 filter'>fr>>t<'row'<'span6 info-results'i><'span6 paginate'p>>",
-                    "sPaginationType": "bootstrap",
-                    "bLengthChange": false,
-                    "bProcessing": true,
-                    "bServerSide": false,
-                    "bPaginate": true,
-                    "bFilter": false,
-                    "oLanguage": {
-                        "oPaginate": {
-                            "sNext" : "<?php echo osc_esc_html( __('Next') ) ; ?>",
-                            "sPrevious" : "<?php echo osc_esc_html( __('Previous') ) ; ?>"
-                        },
-                        "sEmptyTable" : "<?php echo osc_esc_html( __('No data available in table') ) ; ?>",
-                        "sInfo": "<?php echo osc_esc_html( sprintf( __('Showing %s to %s of %s entries'), '_START_', '_END_', '_TOTAL_') ) ; ?>",
-                        "sInfoEmpty": "<?php echo osc_esc_html( __('No entries to show') ) ; ?>",
-                        "sInfoFiltered": "<?php echo osc_esc_html( sprintf( __('(filtered from %s total entries)'), '_MAX_' ) ) ; ?>",
-                        "sLoadingRecords": "<?php echo osc_esc_html( __('Loading...') ) ; ?>",
-                        "sProcessing": "<?php echo osc_esc_html( __('Processing...') ) ; ?>",
-                        "sSearch": "<?php echo osc_esc_html( __('Search') ) ; ?>",
-                        "sZeroRecords": "<?php echo osc_esc_html( __('No matching records found') ) ; ?>"
-                    },
-                    "aaData": <?php echo json_encode($aData) ; ?>,
-                    "aoColumns": [
-                        {
-                            "sTitle": "<?php echo osc_esc_html( __('Name') ) ; ?>"
-                        },
-                        {
-                            "sTitle": "<?php echo osc_esc_html( __('Description') ) ; ?>"
-                        },
-                        {
-                            "sTitle": "",
-                            "sWidth": "65px"
-                        },
-                        {
-                            "sTitle": "",
-                            "sWidth": "65px"
-                        },
-                        {
-                            "sTitle": "",
-                            "sWidth": "65px"
+            $(document).ready(function(){
+                $('input:hidden[name="installed"]').each(function() {
+                    $(this).parent().parent().children().css('background', 'none') ;
+                    if( $(this).val() == '1' ) {
+                        if( $(this).attr("enabled") == 1 ) {
+                            $(this).parent().parent().css('background-color', '#EDFFDF') ;
+                        } else {
+                            $(this).parent().parent().css('background-color', '#FFFFDF') ;
                         }
-                    ],
-                    "aaSorting": [[4,'desc'], [3,'asc']],
-                    "fnDrawCallback": function() {
-                        $('input:hidden[name="installed"]').each(function() {
-                            $(this).parent().parent().children().css('background', 'none') ;
-                            if( $(this).val() == '1' ) {
-                                if( $(this).attr("enabled") == 1 ) {
-                                    $(this).parent().parent().css('background-color', '#EDFFDF') ;
-                                } else {
-                                    $(this).parent().parent().css('background-color', '#FFFFDF') ;
-                                }
-                            } else {
-                                $(this).parent().parent().css('background-color', '#FFF0DF') ;
-                            }
-                        }) ;
+                    } else {
+                        $(this).parent().parent().css('background-color', '#FFF0DF') ;
                     }
-                });
-
-                $('.filter').append( $("#add_plugin_button") ) ;
+                }) ;
             });
+            
         </script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <!-- container -->
-        <div id="content">
-            <?php osc_current_admin_theme_path( 'include/backoffice_menu.php' ) ; ?>
-            <!-- right container -->
-            <div class="right">
-                <div class="header_title">
-                    <h1 class="plugins"><?php _e('Plugins') ; ?></h1>
-                </div>
-                <?php osc_show_flash_message('admin') ; ?>
-                <?php if( Params::getParam('error') != '' ) { ?>
-                    <!-- flash message -->
-                    <div class="flashmessage error">
-                        <a class="close" href="#">×</a>
-                        <p>
-                            <?php _e("Plugin couldn't be installed because it triggered a <strong>fatal error</strong>") ; ?>
-                        </p>
-                        <iframe style="border:0;" width="100%" height="80" src="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=error_plugin&amp;plugin=<?php echo Params::getParam('error') ; ?>"></iframe>
-                    </div>
-                    <!-- /flash message -->
-                <?php } ?>
-                <!-- datatables plugins -->
-                <div id="add_plugin_button">
-                    <a href="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=add" class="btn" id="button_open"><?php _e('Add new plugin') ; ?></a>
-                </div>
-                <div class="datatables">
-                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatables_list"></table>
-                </div>
-                <!-- /datatables plugins -->
-            </div>
-            <!-- /right container -->
+        <?php
+    }
+    osc_add_hook('admin_header','customHead');
+   
+    $iDisplayLength = __get('iDisplayLength');
+    $aData          = __get('aPlugins'); 
+?>
+<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+<div id="tabs" class="ui-osc-tabs ui-tabs-right">
+    <ul>
+        <li><a href="#market"><?php _e('Market'); ?></a></li>
+        <li><a href="#upload-plugins"><?php _e('Upload plugin') ; ?></a></li>
+    </ul>
+    <div id="upload-plugins">
+        <div id="help-box">
+            <a href="#" class="btn ico ico-20 ico-close">x</a>
+            <h3>What does a red highlight mean?</h3>
+            <p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
+            Red highlight means that the listing has been marked as spam.</p>
         </div>
-        <!-- /container -->
-        <?php osc_current_admin_theme_path('footer.php') ; ?>
-    </body>
-</html>
+
+        <table class="table" cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th><?php _e('Name') ; ?></th>
+                    <th colspan=""><?php _e('Description') ; ?></th>
+                    <th> &nbsp; </th>
+                    <th> &nbsp; </th>
+                    <th> &nbsp; </th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php if(count($aData['aaData'])>0) : ?>
+            <?php foreach( $aData['aaData'] as $array) : ?>
+                <tr>
+                <?php foreach($array as $key => $value) : ?>
+                    <td>
+                    <?php echo $value; ?>
+                    </td>
+                <?php endforeach; ?>
+                </tr>
+            <?php endforeach;?>
+            <?php else : ?>
+            <tr>
+                <td colspan="4" style="text-align: center;">
+                <p><?php _e('No data available in table') ; ?></p>
+                </td>
+            </tr>
+            <?php endif; ?>
+            </tbody>
+        </table>
+
+        <div class="has-pagination">
+        <?php     
+            $pageActual = Params::getParam('iPage') ;
+            $urlActual = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+            $urlActual = preg_replace('/&iPage=(\d)+/', '', $urlActual) ;
+            $pageTotal = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
+
+            $params = array('total'    => $pageTotal
+                           ,'selected' => $pageActual-1
+                           ,'url'      => $urlActual.'&iPage={PAGE}'
+                           ,'sides'    => 5
+                );
+            $pagination = new Pagination($params);
+            $aux = $pagination->doPagination();
+
+            echo $aux;
+        ?>
+        </div>
+    </div>
+    
+        
+        
+    <div id="market">
+        <h2 class="render-title"><?php _e('Latest plugins on market') ; ?></h2>
+        <div id="market_plugins" class="available-theme">
+        </div>
+    </div>
+
+    <div id="market_installer" style="display: none" class="has-form-actions">
+        <form action="" method="post">
+            <input type="hidden" name="market_code" id="market_code" value="" />
+            <div class="osc-modal-content-market">
+                <img src="" id="market_thumb" style="float:left"/>
+                <table class="table" cellpadding="0" cellspacing="0">
+                    <tbody>
+                        <tr class="table-first-row">
+                            <td><?php _e('Name') ; ?></td>
+                            <td><span id="market_name"><?php _e("Loading data"); ?></span></td>
+                        </tr>
+                        <tr class="even">
+                            <td><?php _e('Version') ; ?></td>
+                            <td><span id="market_version"><?php _e("Loading data"); ?></span></td>
+                        </tr>
+                        <tr>
+                            <td><?php _e('Author') ; ?></td>
+                            <td><span id="market_author"><?php _e("Loading data"); ?></span></td>
+                        </tr>
+                        <tr class="even">
+                            <td><?php _e('URL') ; ?></td>
+                            <td><a id="market_url" href="#"><?php _e("Download manually"); ?></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="clear"></div>
+            </div>
+            <div class="form-actions">
+                <div class="wrapper">
+                    <button id="market_cancel" class="btn btn-red" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
+                    <button id="market_install" class="btn btn-submit" ><?php echo osc_esc_html( __('Continue install') ) ; ?></button>
+                </div>
+            </div>
+        </form>
+    </div>        
+
+</div>
+        
+        
+        
+<script>
+    $(function() {
+        $( "#tabs" ).tabs({ selected: 1 });
+
+        $("#market_cancel").on("click", function(){
+            $(".ui-dialog-content").dialog("close");
+            return false;
+        });
+
+        $("#market_install").on("click", function(){
+            $(".ui-dialog-content").dialog("close");
+            //$(".ui-dialog-content").dialog({title:'Downloading...'}).html('Please wait until the download is completed');
+            $('<div id="downloading"><div class="osc-modal-content">Please wait until the download is completed</div></div>').dialog({title:'Installing...',modal:true});
+            $.getJSON(
+            "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
+            {"code" : $("#market_code").attr("value")},
+            function(data){
+                $("#downloading .osc-modal-content").html(data.message);
+                setTimeout(function(){
+                  $(".ui-dialog-content").dialog("close");  
+              },1000);
+            });
+            return false;
+        });
+
+        $.getJSON(
+            "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=local_market",
+            {"section" : "plugins"},
+            function(data){
+                $("#market_plugins").html(" ");
+                if(data!=null && data.plugins!=null) {
+                    for(var i=0;i<data.plugins.length;i++) {
+                        var description = $(data.plugins[i].s_description).text();
+                        dots = '';
+                        if(description.length > 80){
+                            dots = '...';
+                        }
+                        var imgsrc = '<?php echo osc_current_admin_theme("img/marketblank.jpg"); ?>';
+                        if(data.plugins[i].s_image!=null) {
+                            imgsrc = data.plugins[i].s_image;
+                        }
+                        $("#market_plugins").append('<div class="theme">'
+                            +'<div class="plugin-stage">'
+                                +'<img src="'+imgsrc+'" title="'+data.plugins[i].s_title+'" alt="'+data.plugins[i].s_title+'" />'
+                                +'<div class="plugin-actions">'
+                                    +'<a href="#'+data.plugins[i].s_slug+'" class="btn btn-mini btn-green market-popup"><?php _e('Install') ; ?></a>'
+                                +'</div>'
+                            +'</div>'
+                            +'<div class="plugin-info">'
+                                +'<h3>'+data.plugins[i].s_title+' '+data.plugins[i].s_version+' <?php _e('by') ; ?> <a target="_blank" href="">'+data.plugins[i].s_contact_name+'</a></h3>'
+                            +'</div>'
+                            +'<div class="plugin-description">'
+                                +description.substring(0,80)+dots
+                            +'</div>'
+                        +'</div>');
+                    }
+                }
+                $("#market_plugins").append('<div class="clear"></div>');
+            }
+        );
+
+    });
+    $('.market-popup').live('click',function(){
+        $.getJSON(
+            "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
+            {"code" : $(this).attr('href').replace('#','')},
+            function(data){
+                if(data!=null) {
+                    $("#market_thumb").attr('src',data.s_thumbnail);
+                    $("#market_code").attr("value", data.s_slug);
+                    $("#market_name").html(data.s_title);
+                    $("#market_version").html(data.s_version);
+                    $("#market_author").html(data.s_contact_name);
+                    $("#market_url").attr('href',data.s_source_file);
+
+                    $('#market_installer').dialog({
+                        modal:true,
+                        title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
+                        class: 'osc-class-test',
+                        width:485
+                    });
+                }
+            }
+        );
+
+        return false;
+    });        
+</script>
+        
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
