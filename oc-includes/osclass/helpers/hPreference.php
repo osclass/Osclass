@@ -399,6 +399,15 @@
     }
     
     /**
+     * Gets when was the last version check
+     *
+     * @return string
+     */
+    function osc_plugins_last_version_check() {
+        return (getPreference('plugins_last_version_check')) ;
+    }
+    
+    /**
      * Gets json response when checking if there is available a new version
      *
      * @return string

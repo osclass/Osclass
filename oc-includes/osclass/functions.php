@@ -407,16 +407,10 @@ function osc_admin_toolbar_spam()
 
 function osc_admin_toolbar_update_plugins()
 {   
-}
-// and we hook our function via
-//osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_update_plugins') ;
-
-function osc_admin_toolbar_update_themes($force = false)
-{
-    $total = 0;
+     $total = 0;
     
     // check if exist a new version each day
-    if( (time() - osc_themes_last_version_check()) > (24 * 3600) || $force ) {
+    if( (time() - osc_plugins_last_version_check()) > (24 * 3600) || $force ) {
         $themes = WebThemes::newInstance()->getListThemes();
         foreach($themes as $theme) {
             $info = WebThemes::newInstance()->loadThemeInfo($theme);
@@ -445,6 +439,49 @@ function osc_admin_toolbar_update_themes($force = false)
                       'meta'  => array('class' => 'action-btn action-btn-black')
                 ) );
     }
+    
+}
+// and we hook our function via
+//osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_update_plugins') ;
+
+function osc_admin_toolbar_update_themes($force = false)
+{
+//    $total = 0;
+//    
+//    // check if exist a new version each day
+//    if( (time() - osc_themes_last_version_check()) > (24 * 3600) || $force ) {
+//        
+//        $themes = WebThemes::newInstance()->getListThemes();
+//        
+//        foreach($themes as $theme) {
+//        
+//            $info = WebThemes::newInstance()->loadThemeInfo($theme);
+//            
+//            if(osc_check_update(@$info['theme_update_uri'], @$info['version'])) {
+//                $total++;
+//            }
+//        }
+//        error_log('force or time');
+//        osc_set_preference( 'plugins_update_count', $total );
+//        osc_set_preference( 'plugins_last_version_check', time() );
+//        osc_reset_preferences();
+//    } else {
+//        error_log('get from preferences');
+//        $total = getPreference('plugins_update_count');
+//    }
+//    
+//    if($force) {
+//        AdminToolbar::newInstance()->remove_menu('update_theme______');
+//    }
+//    if($total > 0) {
+//        $title = '<i class="circle circle-red">'.$total.'</i>'.__('Themes updates'); 
+//        AdminToolbar::newInstance()->add_menu( 
+//                array('id'    => 'update_theme',
+//                      'title' => $title,
+//                      'href'  => osc_admin_base_url(true) . "?page=appearance",
+//                      'meta'  => array('class' => 'action-btn action-btn-black')
+//                ) );
+//    }
     
 }
 // and we hook our function via
