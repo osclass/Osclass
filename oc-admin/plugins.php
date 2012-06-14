@@ -303,6 +303,7 @@
                     $array['iDisplayLength']        = $limit;
                     $array['aaData'] = $aData;
                     // --------------------------------------------------------
+                    osc_admin_toolbar_update_plugins(true);
                     
                     $this->_exportVariableToView('aPlugins', $array) ;
                     $this->doView("plugins/index.php");
