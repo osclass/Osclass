@@ -319,8 +319,6 @@
                             break;
                         case 'sCategory':
                             $k = osc_get_preference('rewrite_search_category');
-                            $tmp = explode("/", $v);
-                            $v = $tmp[count($tmp)-1];
                             break;
                         case 'sUser':
                             $k = osc_get_preference('rewrite_search_user');
