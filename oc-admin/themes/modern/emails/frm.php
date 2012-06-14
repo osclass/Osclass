@@ -55,14 +55,14 @@
 
     osc_current_admin_theme_path('parts/header.php'); ?>
 <h2 class="render-title"><?php _e('Edit email template'); ?></h2>
-<div id="-form">
+<div id="item-form">
     <?php printLocaleTabs(); ?>
      <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
         <input type="hidden" name="page" value="emails" />
         <input type="hidden" name="action" value="edit_post" />
         <?php PageForm::primary_input_hidden($email); ?>
         <div id="left-side">
-            <?php printLocaleTitlePage($locales, $page); ?>
+            <?php printLocaleTitlePage($locales, $email); ?>
             <div>
                 <label><?php _e('Internal name') ; ?></label>
                 <?php PageForm::internal_name_input_text($email) ; ?>
@@ -71,12 +71,12 @@
                 </div>
             </div>
             <div class="input-description-wide">
-                <?php printLocaleDescriptionPage($locales, $page); ?>
+                <?php printLocaleDescriptionPage($locales, $email); ?>
             </div>
         </div>
         <div class="clear"></div>
         <div class="form-actions">
-            <input type="submit" value="" class="btn btn-submit" />
+            <input type="submit" value="<?php echo osc_esc_html(__('Save changes')); ?>" class="btn btn-submit" />
         </div>
     </form>
 </div>
