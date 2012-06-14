@@ -419,7 +419,7 @@ function osc_admin_toolbar_update_plugins($force = false)
         AdminToolbar::newInstance()->remove_menu('update_plugin');
     }
     if($total > 0) {
-        $title = '<i class="circle circle-red">'.$total.'</i>'.__('Plugin updates'); 
+        $title = '<i class="circle circle-gray">'.$total.'</i>'.__('Plugin updates'); 
         AdminToolbar::newInstance()->add_menu( 
                 array('id'    => 'update_plugin',
                       'title' => $title,
@@ -458,7 +458,7 @@ function osc_admin_toolbar_update_themes($force = false)
         AdminToolbar::newInstance()->remove_menu('update_theme');
     }
     if($total > 0) {
-        $title = '<i class="circle circle-red">'.$total.'</i>'.__('Themes updates'); 
+        $title = '<i class="circle circle-gray">'.$total.'</i>'.__('Themes updates'); 
         AdminToolbar::newInstance()->add_menu( 
                 array('id'    => 'update_theme',
                       'title' => $title,
