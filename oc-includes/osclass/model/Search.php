@@ -265,6 +265,19 @@
         }
 
         /**
+         * Add group by to the search
+         * 
+         * @access public
+         * @since unknown
+         * @param mixed $tables
+         * 
+         */
+        public function addGroupBy( $groupBy )
+        {
+            $this->dao->groupBy($groupBy) ;
+        }
+        
+        /**
          * Establish the order of the search
          *
          * @access public
@@ -831,7 +844,7 @@
             
             if($this->withItemId) { 
                 // add field s_user_name
-                $this->dao->select(sprintf('%st_item.*', DB_TABLE_PREFIX) );
+                $this->dao->select(sprintf('%st_item.*, %st_item.s_contact_name as s_user_name', DB_TABLE_PREFIX, DB_TABLE_PREFIX) );
                 $this->dao->from(sprintf('%st_item', DB_TABLE_PREFIX));
                 $this->dao->where('pk_i_id', (int)$this->itemId);
             } else {  
@@ -943,11 +956,16 @@
         {   
             $sql = $this->_makeSQL(false) ;
             $result = $this->dao->query($sql);
-            
+
             if($count) {
                 $sql = $this->_makeSQL(true) ;
                 $datatmp  = $this->dao->query( $sql ) ;
-                $this->total_results = $datatmp->numRows() ;
+
+                if( $datatmp == false ) {
+                    $this->total_results = 0;
+                } else {
+                    $this->total_results = $datatmp->numRows();
+                }
             } else {
                 $this->total_results = 0;                
             }

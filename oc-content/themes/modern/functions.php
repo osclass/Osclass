@@ -19,17 +19,13 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    define('MODERN_THEME_VERSION', '3.0');
+
     if( !OC_ADMIN ) {
-        if( !function_exists('add_close_button_fm') ) {
-            function add_close_button_fm($message){
-                return $message.'<a class="close">×</a>' ;
-            }
-            osc_add_filter('flash_message_text', 'add_close_button_fm') ;
-        }
         if( !function_exists('add_close_button_action') ) {
             function add_close_button_action(){
                 echo '<script type="text/javascript">';
-                    echo '$(".FlashMessage .close").click(function(){';
+                    echo '$(".flashmessage .ico-close").click(function(){';
                         echo '$(this).parent().hide();';
                     echo '});';
                 echo '</script>';
@@ -38,32 +34,73 @@
         }
     }
 
-    if( !function_exists('add_logo_header') ) {
-        function add_logo_header() {
-             $html = '<img border="0" alt="' . osc_page_title() . '" src="' . osc_current_web_theme_url('images/logo.jpg') . '">';
-             $js   = "<script>
-                          $(document).ready(function () {
-                              $('#logo').html('".$html."');
-                          });
-                      </script>";
+    function theme_modern_actions_admin() {
+        switch( Params::getParam('action_specific') ) {
+            case('settings'):
+                $footerLink = Params::getParam('footer_link');
+                osc_set_preference('keyword_placeholder', Params::getParam('keyword_placeholder'), 'modern_theme');
+                osc_set_preference('footer_link', ($footerLink ? '1' : '0'), 'modern_theme');
 
-             if( file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) {
-                echo $js;
-             }
+                osc_add_flash_ok_message(__('Theme settings updated correctly', 'modern'), 'admin');
+                header('Location: ' . osc_admin_render_theme_url('oc-content/themes/modern/admin/settings.php')); exit;
+            break;
+            case('upload_logo'):
+                $package = Params::getFiles('logo');
+                if( $package['error'] == UPLOAD_ERR_OK ) {
+                    if( move_uploaded_file($package['tmp_name'], WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) {
+                        osc_add_flash_ok_message(__('The logo image has been uploaded correctly', 'modern'), 'admin');
+                    } else {
+                        osc_add_flash_error_message(__("An error has occurred, please try again", 'modern'), 'admin');
+                    }
+                } else {
+                    osc_add_flash_error_message(__("An error has occurred, please try again", 'modern'), 'admin');
+                }
+                header('Location: ' . osc_admin_render_theme_url('oc-content/themes/modern/admin/header.php')); exit;
+            break;
+            case('remove'):
+                if(file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) {
+                    @unlink( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" );
+                    osc_add_flash_ok_message(__('The logo image has been removed', 'modern'), 'admin');
+                } else {
+                    osc_add_flash_error_message(__("Image not found", 'modern'), 'admin');
+                }
+                header('Location: ' . osc_admin_render_theme_url('oc-content/themes/modern/admin/header.php')); exit;
+            break;
         }
+    }
+    osc_add_hook('init_admin', 'theme_modern_actions_admin');
+    osc_admin_menu_appearance(__('Header logo', 'modern'), osc_admin_render_theme_url('oc-content/themes/modern/admin/header.php'), 'header_modern');
+    osc_admin_menu_appearance(__('Theme settings', 'modern'), osc_admin_render_theme_url('oc-content/themes/modern/admin/settings.php'), 'settings_modern');
 
-        osc_add_hook("header", "add_logo_header");
+    if( !function_exists('logo_header') ) {
+        function logo_header() {
+            $html = '<img border="0" alt="' . osc_page_title() . '" src="' . osc_current_web_theme_url('images/logo.jpg') . '" />';
+            if( file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) {
+                return $html;
+            } else {
+                return osc_page_title();
+            }
+        }
     }
 
-    if( !function_exists('modern_admin_menu') ) {
-        function modern_admin_menu() {
-            echo '<h3><a href="#">'. __('Modern theme','modern') .'</a></h3>
-            <ul>
-                <li><a href="' . osc_admin_render_theme_url('oc-content/themes/modern/admin/admin_settings.php') . '">&raquo; '.__('Settings theme', 'modern').'</a></li>
-            </ul>';
+    // install update options
+    if( !function_exists('modern_theme_install') ) {
+        function modern_theme_install() {
+            osc_set_preference('keyword_placeholder', __('ie. PHP Programmer', 'modern'), 'modern_theme');
+            osc_set_preference('version', MODERN_THEME_VERSION, 'modern_theme');
+            osc_set_preference('footer_link', true, 'modern_theme');
         }
-
-        osc_add_hook('admin_menu', 'modern_admin_menu');
     }
-    
+
+    if(!function_exists('check_install_modern_theme')) {
+        function check_install_modern_theme() {
+            $current_version = osc_get_preference('version', 'modern_theme');
+            //check if current version is installed or need an update<
+            if( !$current_version ) {
+                modern_theme_install();
+            }
+        }
+    }
+    check_install_modern_theme();
+
 ?>

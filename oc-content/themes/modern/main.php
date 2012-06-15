@@ -120,7 +120,7 @@
                         <h3><strong><?php _e("Location", 'modern') ; ?></strong></h3>
                         <ul>
                         <?php while(osc_has_list_regions() ) { ?>
-                            <li><a href="<?php echo osc_search_url( array( 'sRegion' => osc_list_region_id() ) ) ; ?>"><?php echo osc_list_region_name() ; ?></a> <em>(<?php echo osc_list_region_items() ; ?>)</em></li>
+                            <li><a href="<?php echo osc_list_region_url() ; ?>"><?php echo osc_list_region_name() ; ?></a> <em>(<?php echo osc_list_region_items() ; ?>)</em></li>
                         <?php } ?>
                         </ul>
                     </div>

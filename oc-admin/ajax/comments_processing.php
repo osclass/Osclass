@@ -27,6 +27,7 @@
         private $limit ;
         private $start ;
         private $total ;
+        private $showAll ;
         private $total_filtered ;
         private $order_by = array() ;
 
@@ -46,16 +47,26 @@
             $this->_get = $params ;
             $this->getDBParams() ;
             
-            $this->comments       = ItemComment::newInstance()->search($this->resourceID, $this->start, $this->limit, ( $this->order_by['column_name'] ? $this->order_by['column_name'] : 'pk_i_id' ), ( $this->order_by['type'] ? $this->order_by['type'] : 'desc' ) ) ;
-            $this->total          = ItemComment::newInstance()->count() ;
+            // force ORDER BY
+            $this->order_by['column_name'] = $this->column_names[3] ;
+            $this->order_by['type'] = 'desc' ;
+            
+            $this->comments       = ItemComment::newInstance()->search($this->resourceID, $this->start, $this->limit, 
+                    ( $this->order_by['column_name'] ? $this->order_by['column_name'] : 'pk_i_id' ), 
+                    ( $this->order_by['type'] ? $this->order_by['type'] : 'desc' ),
+                    $this->showAll) ;
+            
+            if($this->showAll) {
+                $this->total          = ItemComment::newInstance()->countAll();
+            } else {
+                $this->total          = ItemComment::newInstance()->countAll( '( c.b_active = 0 OR c.b_enabled = 0 OR c.b_spam = 1 )' );
+            }
+            
             if( $this->resourceID == null ) {
                 $this->total_filtered = $this->total ;
             } else {
-                $this->total_filtered = ItemResource::newInstance()->count( $this->resourceID ) ;
+                $this->total_filtered = ItemComment::newInstance()->count( $this->resourceID ) ;
             }
-
-            $this->toDatatablesFormat() ;
-            $this->dumpToDatatables() ;
         }
 
         function __destruct()
@@ -64,7 +75,16 @@
         }
 
         private function getDBParams()
-        {
+        {   
+            $p_iPage        = 1;
+            if( !is_numeric(Params::getParam('iPage')) || Params::getParam('iPage') < 1 ) {
+                Params::setParam('iPage', $p_iPage );
+                $this->iPage = $p_iPage ;
+            } else {
+                $this->iPage = Params::getParam('iPage') ;
+            }
+            $this->showAll   = Params::getParam('showAll') ;
+            
             foreach($this->_get as $k => $v) {
                 if( ( $k == 'resourceId' ) && !empty($v) ) {
                     $this->resourceID = intval($v) ;
@@ -75,56 +95,72 @@
                 if( $k == 'iDisplayLength' ) {
                     $this->limit = intval($v) ;
                 }
-                if( $k == 'sEcho' ) {
-                    $this->sEcho = intval($v) ;
-                }
-
-                /* for sorting */
-                if( $k == 'iSortCol_0' ) {
-                    $this->order_by['column_name'] = $this->column_names[$v] ;
-                }
-                if( $k == 'sSortDir_0' ) {
-                    $this->order_by['type'] = $v ;
-                }
             }
+            
+            // set start and limit using iPage param
+            $start = ((int)Params::getParam('iPage')-1) * $this->_get['iDisplayLength'];
+            
+            $this->start = intval( $start ) ;
+            $this->limit = intval( $this->_get['iDisplayLength'] ) ;
         }
 
-        /* START - format functions */
-        private function toDatatablesFormat()
+        private function toArrayFormat()
         {
             $this->result['iTotalRecords']        = $this->total_filtered ;
             $this->result['iTotalDisplayRecords'] = $this->total ;
-            $this->result['sEcho']                = $this->sEcho ;
+            $this->result['iDisplayLength']       = $this->_get['iDisplayLength'];
             $this->result['aaData']               = array() ;
+            $this->result['aaObject']             = array() ;
 
             if( count($this->comments) == 0 ) {
                 return ;
             }
+            
+            $this->result['aaObject'] = $this->comments;
 
             $count = 0 ;
             foreach($this->comments as $comment) {
                 $row = array() ;
-
                 $options = array() ;
-                $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=comment_edit&amp;id=' . $comment['pk_i_id'] . '" id="dt_link_edit">' . __('Edit') . '</a>' ;
+                $options_more = array() ;
+
                 if( $comment['b_active'] ) {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') . '</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') . '</a>' ;
                 } else {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] .'&amp;value=ACTIVE">' . __('Activate') . '</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] .'&amp;value=ACTIVE">' . __('Activate') . '</a>' ;
                 }
                 if( $comment['b_enabled'] ) {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=DISABLE">' . __('Unblock') . '</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=DISABLE">' . __('Block') . '</a>' ;
                 } else {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=ENABLE">' . __('Block') . '</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=ENABLE">' . __('Unblock') . '</a>' ;
                 }
+                
+                $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=comment_edit&amp;id=' . $comment['pk_i_id'] . '" id="dt_link_edit">' . __('Edit') . '</a>' ;
                 $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) . '\')" href="' . osc_admin_base_url(true) . '?page=comments&amp;action=delete&amp;id=' . $comment['pk_i_id'] .'" id="dt_link_delete">' . __('Delete') . '</a>' ;
 
+                // more actions
+                $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL ;
+                foreach( $options_more as $actual ) { 
+                    $moreOptions .= '<li>'.$actual."</li>".PHP_EOL;
+                }
+                $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL ;
+                
+                // create list of actions
+                $auxOptions = '<ul>'.PHP_EOL ;
+                foreach( $options as $actual ) {
+                    $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
+                }
+                $auxOptions  .= $moreOptions ;
+                $auxOptions  .= '</ul>'.PHP_EOL ;
+                
+                $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
+                
                 $row[] = '<input type="checkbox" name="id[]" value="' . $comment['pk_i_id']  . '" />' ;
                 if( empty($comment['s_author_name']) ) {
                     $user = User::newInstance()->findByPrimaryKey( $comment['fk_i_user_id'] );
                     $comment['s_author_name'] = $user['s_email'];
                 }
-                $row[] = $comment['s_author_name'] . ' (<a target="_blank" href="' . osc_item_url_ns( $comment['fk_i_item_id'] ) . '">' . $comment['s_title'] . '</a>)<div class="datatables_quick_edit" style="display:none;">' . implode(' &middot; ', $options) . '</div>' ;
+                $row[] = $comment['s_author_name'] . ' (<a target="_blank" href="' . osc_item_url( $comment['fk_i_item_id'] ) . '">' . $comment['s_title'] . '</a>)'. $actions  ;
                 $row[] = $comment['s_body'] ;
                 $row[] = $comment['dt_pub_date'] ;
 
@@ -133,7 +169,7 @@
                 $this->result['aaData'][] = $row ;
             }
         }
-
+        
         /**
          * Set toJson variable with the JSON representation of $result
          * 
@@ -164,9 +200,22 @@
          * @access private
          * @since unknown 
          */
-        private function dumpToDatatables()
+        public function dumpToDatatables()
         {
+            $this->toDatatablesFormat() ;
             $this->dumpResult() ;
+        }
+        
+        /**
+         * Dump $result to JSON and return the result
+         * 
+         * @access private
+         * @since unknown 
+         */
+        public function result()
+        {
+            $this->toArrayFormat();
+            return $this->result;
         }
      }
 

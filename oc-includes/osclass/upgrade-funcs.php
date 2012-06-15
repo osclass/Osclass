@@ -208,8 +208,6 @@ CREATE TABLE %st_item_description_tmp (
         @unlink(osc_admin_base_path()."upgrade-plugin.php");
     }
 
-    osc_changeVersionTo(237) ;
-
     if( osc_version() < 240 ) {
         // We no longer use s_what column in /*TABLE_PREFIX*/t_item_description
         $comm->query( sprintf('ALTER TABLE %st_item_description DROP COLUMN s_what', DB_TABLE_PREFIX) ) ;
@@ -373,20 +371,14 @@ CREATE TABLE %st_item_description_tmp (
         $comm->query("ALTER TABLE ".DB_TABLE_PREFIX."t_user ADD FOREIGN KEY (fk_c_country_code) REFERENCES ".DB_TABLE_PREFIX."t_country (pk_c_code)");
     }
 
-    osc_changeVersionTo(240) ;
-    
     if(osc_version() < 241) {
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'use_imagick', '0', 'BOOLEAN')", DB_TABLE_PREFIX));
     }
 
-    osc_changeVersionTo(241) ;
-    
     
     if(osc_version() < 300) {
         $comm->query(sprintf("ALTER TABLE %st_user DROP s_pass_answer", DB_TABLE_PREFIX));
         $comm->query(sprintf("ALTER TABLE %st_user DROP s_pass_question", DB_TABLE_PREFIX));
-        $comm->query(sprintf("ALTER TABLE %st_user ADD COLUMN dt_access_date DATETIME NOT NULL DEFAULT  '0000-00-00 00:00:00'", DB_TABLE_PREFIX));
-        $comm->query(sprintf("ALTER TABLE %st_user ADD COLUMN s_access_ip VARCHAR(15) NULL", DB_TABLE_PREFIX));
     }
 
     osc_changeVersionTo(300);
