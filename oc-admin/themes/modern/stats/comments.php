@@ -117,7 +117,7 @@
     osc_add_hook('admin_header', 'customHead');
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<div class="grid-system">
+<div class="grid-system" id="stats-page">
     <div class="grid-row grid-first-row grid-100 no-bottom-margin">
         <div class="row-wrapper">
             <h2 class="render-title"><?php _e('Comments Statistics'); ?>
