@@ -978,11 +978,8 @@
         {   
             $sql = $this->_makeSQL(false) ;
             $result = $this->dao->query($sql);
-            error_log($sql);
-            error_log("-------");
             if($count) {
                 $sql = $this->_makeSQL(true) ;
-                error_log($sql);
                 $datatmp  = $this->dao->query( $sql ) ;
 
                 if( $datatmp == false ) {
