@@ -356,7 +356,7 @@
                     $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View comments') . '</a>' ;
                 }
                 if( ItemResource::newInstance()->countResources( $aRow['pk_i_id'] ) > 0 ) {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=media&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View media') . '</a>' ;
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=media&amp;action=list&amp;resourceId=' . $aRow['pk_i_id'] . '">' . __('View media') . '</a>' ;
                 }
                 
                 $options_more = osc_apply_filter('more_actions_manage_items', $options_more);
