@@ -584,10 +584,10 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("xpath=//a[@id='b_new_country']");
 
         $this->selenium->type("country"     , "Andorra" ) ;
-        $this->selenium->type("c_country"   , "AN" ) ;
+        $this->selenium->type("c_country"   , "AD" ) ;
         $this->selenium->type('c_manual'    , '0') ;
 
-        $this->selenium->click("xpath=//button/span[text()='Add']") ;
+        $this->selenium->click("xpath=//button[contains(.,'Add country')]") ;
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new country") , "Can't add new country" );
@@ -596,13 +596,14 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div[1]/div/a[@class='edit']");
         $this->selenium->type("e_country"     , "Andorra_" ) ;
 
-        $this->selenium->click("xpath=//button/span[text()='Edit']") ;
+        $this->selenium->click("xpath=//button[contains(.,'Edit country')]") ;
+        //$this->selenium->click("xpath=//button[text()='Edit country']") ;
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been edited") , "Can't edit country name" );
         
         // delete country
-        $this->selenium->click("xpath=//a[@id='country_delete']");
+        $this->selenium->click("xpath=//a[@class='close']");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete Country" ) ;
         osc_reset_preferences();
@@ -630,7 +631,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->type("country", "ikea") ;
         $this->selenium->type("c_country", "IK") ;
 
-        $this->selenium->click("xpath=//button/span[text()='Add']") ;
+        $this->selenium->click("xpath=//button[contains(.,'Add country')]") ;
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new country") , "Add new country" ) ;
@@ -646,7 +647,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->type("country", "ikea") ;
         $this->selenium->type("c_country", "IK") ;
 
-        $this->selenium->click("xpath=//button/span[text()='Add']") ;
+        $this->selenium->click("xpath=//button[contains(.,'Add country')]") ;
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Add country twice" ) ;
@@ -660,7 +661,7 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->selenium->type("region", "Republica") ;
 
-        $this->selenium->click("xpath=//button/span[text()='Add']") ;
+        $this->selenium->click("xpath=//button[contains(.,'Add region')]") ;
         $this->selenium->waitForPageToLoad("10000") ;
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new region") , "Add new region" ) ;
@@ -674,7 +675,7 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->selenium->type("region", "Republica") ;
 
-        $this->selenium->click("xpath=//button/span[text()='Add']") ;
+        $this->selenium->click("xpath=//button[contains(.,'Add region')]") ;
         $this->selenium->waitForPageToLoad("10000") ;
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Add region twice" ) ;
@@ -688,7 +689,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("xpath=//a[@id='b_new_city']") ;
 
         $this->selenium->type("city", "Mi casa") ;
-        $this->selenium->click("xpath=//button/span[text()='Add']") ;
+        $this->selenium->click("xpath=//button[contains(.,'Add city')]") ;
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new city") , "Add new city" ) ;
@@ -702,7 +703,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("xpath=//a[@id='b_new_city']") ;
 
         $this->selenium->type("city", "Mi casa") ;
-        $this->selenium->click("xpath=//button/span[text()='Add']") ;
+        $this->selenium->click("xpath=//button[contains(.,'Add city')]") ;
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Add city twice" ) ;
@@ -718,7 +719,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("xpath=//a[@id='b_new_city']") ;
 
         $this->selenium->type("city", "Mi casa_") ;
-        $this->selenium->click("xpath=//button/span[text()='Add']") ;
+        $this->selenium->click("xpath=//button[contains(.,'Add city')]") ;
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new city") , "Add new city" ) ;
@@ -732,7 +733,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("xpath=//div[@id='i_cities']/div/div/a[text()='Mi casa_']") ; 
 
         $this->selenium->type("e_city", "Mi casa") ;
-        $this->selenium->click("xpath=//button/span[text()='Edit']") ;
+        $this->selenium->click("xpath=//button[contains(.,'Edit city')]") ;
         $this->selenium->waitForPageToLoad("10000");
         
         $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Change city name to existing one" ) ;
@@ -746,7 +747,7 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->selenium->type("region", "Republica_") ;
 
-        $this->selenium->click("xpath=//button/span[text()='Add']") ;
+        $this->selenium->click("xpath=//button[contains(.,'Add region')]") ;
         $this->selenium->waitForPageToLoad("10000") ;
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new region") , "Add new region" ) ;
@@ -759,7 +760,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("xpath=//div[@id='i_regions']/div/div/a[text()='Republica_']") ; 
         $this->selenium->type("e_region", "Republica") ;
 
-        $this->selenium->click("xpath=//button/span[text()='Edit']") ;
+        $this->selenium->click("xpath=//button[contains(.,'Edit region')]") ;
         $this->selenium->waitForPageToLoad("10000") ;
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Change region name to existing one" ) ;
@@ -768,7 +769,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("//a[@id='settings_locations']");
         $this->selenium->waitForPageToLoad("10000");
         // DELETE THE LOCATION
-        $this->selenium->click("xpath=//a[@id='country_delete'][1]");
+        $this->selenium->click("xpath=//a[@class='close'][1]");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Delete Country" ) ;
 
@@ -807,13 +808,12 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("Currency added") , "Add currency" ) ;
-
         // edit
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='settings_currencies']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/small/a[text()='Edit']");
+        $this->selenium->click("//table/tbody/tr/td[contains(.,'INR')]/a[text()='Edit']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->type("s_name", "");
@@ -834,7 +834,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("//a[@id='settings_currencies']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/small/a[text()='Delete']");
+        $this->selenium->click("//table/tbody/tr/td[contains(.,'INR')]/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("One currency has been deleted") , "Delete currency" ) ;
@@ -955,7 +955,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("//a[@id='settings_currencies']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/small/a[text()='Delete']");
+        $this->selenium->click("//table/tbody/tr/td[contains(.,'INR')]/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("One currency has been deleted") , "Delete currency" ) ;
@@ -997,6 +997,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->type("rewrite_item_mark", "");
         $this->selenium->type("rewrite_item_send_friend", "");
         $this->selenium->type("rewrite_item_contact", "");
+        $this->selenium->type("rewrite_item_new", "");
         $this->selenium->type("rewrite_item_activate", "");
         $this->selenium->type("rewrite_item_edit", "");
         $this->selenium->type("rewrite_item_delete", "");
@@ -1011,6 +1012,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->type("rewrite_user_items", "");
         $this->selenium->type("rewrite_user_alerts", "");
         $this->selenium->type("rewrite_user_recover", "");
+        $this->selenium->type("rewrite_user_forgot", "");
         $this->selenium->type("rewrite_user_change_password", "");
         $this->selenium->type("rewrite_user_change_email", "");
         $this->selenium->type("rewrite_user_change_email_confirm", "");
@@ -1018,40 +1020,7 @@ class OCadmin_generalSettings extends OCadmintest {
         sleep(4);
         
         
-        $this->assertTrue( $this->selenium->isTextPresent("Listings url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Page url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Categories url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Search url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Search country: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Search region: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Search city: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Search city area: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Search category: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Search pattern: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Search user: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Contact url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Feed url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Language url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Listing mark url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Listing send friend url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Listing contact url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Activate listing url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Edit listing url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Delete listing url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Delete listing resource url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Login url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("User dashboard url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Logout url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("User register url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Activate user url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Activate alert url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("User profile url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("User listings url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("User alerts url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Recover user url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Change password url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Change email url: this field is required") , "Empty permalink" ) ;
-        $this->assertTrue( $this->selenium->isTextPresent("Change email confirm url: this field is required") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("No fields could be left empty. 36 fields were not updated") , "Empty permalink" ) ;
 
         
         $this->selenium->type("rewrite_item_url", "item/{ITEM_ID}/{ITEM_TITLE}");
@@ -1071,7 +1040,8 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->type("rewrite_item_mark", "item/mark");
         $this->selenium->type("rewrite_item_send_friend", "item/send/friend");
         $this->selenium->type("rewrite_item_contact", "item/contact");
-        $this->selenium->type("rewrite_item_activate", "item/new");
+        $this->selenium->type("rewrite_item_new", "item/new");
+        $this->selenium->type("rewrite_item_activate", "item/activate");
         $this->selenium->type("rewrite_item_edit", "item/edit");
         $this->selenium->type("rewrite_item_delete", "item/delete");
         $this->selenium->type("rewrite_item_resource_delete", "item/resource/delete");
@@ -1097,7 +1067,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("rewrite_enabled");
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue( $this->selenium->isTextPresent("Friendly urls successfully deactivated") , "Disable permalinks" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Friendly URLs successfully deactivated") , "Disable permalinks" ) ;
         
         // return to previous state (before starting the tests)
         if($value=='on') {
