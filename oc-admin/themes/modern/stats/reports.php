@@ -123,16 +123,19 @@
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div class="grid-system" id="stats-page">
-    <div class="grid-row grid-first-row grid-100 no-bottom-margin">
+    <div class="grid-row grid-50 no-bottom-margin">
         <div class="row-wrapper">
-            <h2 class="render-title"><?php _e('Reports Statistics'); ?>
-                <a id="monthly" class="btn float-right <?php if($type=='month') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=reports&amp;type_stat=month"><?php _e('Last 10 months') ; ?></a>
-                <a id="weekly"  class="btn float-right <?php if($type=='week') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=reports&amp;type_stat=week"><?php _e('Last 10 weeks') ; ?></a>
-                <a id="daily"   class="btn float-right <?php if($type==''||$type=='day') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=reports&amp;type_stat=day"><?php _e('Last 10 days') ; ?></a>
-            </h2>
+            <h2 class="render-title"><?php _e('Reports Statistics'); ?></h2>
         </div>
     </div>
-    <div class="grid-row grid-100">
+    <div class="grid-row grid-50 no-bottom-margin">
+        <div class="row-wrapper">
+            <a id="monthly" class="btn float-right <?php if($type=='month') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=reports&amp;type_stat=month"><?php _e('Last 10 months') ; ?></a>
+            <a id="weekly"  class="btn float-right <?php if($type=='week') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=reports&amp;type_stat=week"><?php _e('Last 10 weeks') ; ?></a>
+            <a id="daily"   class="btn float-right <?php if($type==''||$type=='day') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=reports&amp;type_stat=day"><?php _e('Last 10 days') ; ?></a>
+        </div>
+    </div>
+    <div class="grid-row grid-100 clear">
         <div class="row-wrapper">
             <div class="widget-box">
                 <div class="widget-box-title">
