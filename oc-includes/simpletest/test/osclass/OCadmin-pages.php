@@ -10,7 +10,7 @@ class OCadmin_pages extends OCadminTest {
      * Create page
      * Delete page
      */  
-    function atestPagesInsert()
+    function testPagesInsert()
     {
         $this->loginWith() ;
         $this->newPage('test_page_example') ;
@@ -35,7 +35,7 @@ class OCadmin_pages extends OCadminTest {
      * Create page again
      * Delete page
      */  
-    function atestPagesInsertDuplicate()
+    function testPagesInsertDuplicate()
     {
         $this->loginWith() ;
         $this->newPageWithData('test_page_example',"just a title", "just a description") ;
@@ -53,7 +53,7 @@ class OCadmin_pages extends OCadminTest {
      * Edit page
      * Delete page
      */  
-    function atestPageEdit()
+    function testPageEdit()
     {
         $this->loginWith() ;
         $this->newPageWithData('test_page_example',"cos's test", "cos's test") ;
@@ -88,7 +88,7 @@ class OCadmin_pages extends OCadminTest {
      * Login oc-admin
      * Navigate throw pages
      */
-    public function atestTableNavigation()
+    public function testTableNavigation()
     {
         $this->loginWith() ;
 
@@ -103,12 +103,12 @@ class OCadmin_pages extends OCadminTest {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='pages_manage']");
         $this->selenium->waitForPageToLoad("10000");
-        $res = $this->selenium->getXpathCount("//table[@id='datatables_list']/tbody/tr");
+        $res = $this->selenium->getXpathCount("//table[@class='table']/tbody/tr");
         $this->assertEqual(10, $res,"10 rows does not appear [$res]");
-        $this->selenium->click("//li[@class='next']/a");
+        $this->selenium->click("//a[@class='searchPaginationNext list-last']");
         $this->selenium->waitForPageToLoad("10000");
-        
-        $res = $this->selenium->getXpathCount("//table[@id='datatables_list']/tbody/tr");
+
+        $res = $this->selenium->getXpathCount("//table[@class='table']/tbody/tr");
         $this->assertEqual(5, $res,"5 rows does not appear [$res]");
 
         // two pages
@@ -237,7 +237,7 @@ class OCadmin_pages extends OCadminTest {
             $this->selenium->click("//table/tbody/tr[contains(.,'$internal_name".$beg_."')]/td/input");
         }
 
-        $this->selenium->select("//div[@id='bulk_actions']/label/select[@name='action']", "value=delete");
+        $this->selenium->select("//select[@name='action']", "label=Delete");
         $this->selenium->click("//input[@id='bulk_apply']");
         $this->selenium->waitForPageToLoad("30000");
 
@@ -256,7 +256,7 @@ class OCadmin_pages extends OCadminTest {
 
 
         $this->selenium->click("//input[@id='check_all']");
-        $this->selenium->select("//div[@id='bulk_actions']/label/select[@name='action']", "value=delete");
+        $this->selenium->select("//select[@name='action']", "label=Delete");
         $this->selenium->click("//input[@id='bulk_apply']");
         $this->selenium->waitForPageToLoad("30000");
         // "regexpi:This is SeleniumWiki.com"
