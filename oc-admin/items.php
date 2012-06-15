@@ -577,6 +577,24 @@
                                         $items_processing = new ItemsProcessingAjax( $params );
                                         $aData = $items_processing->reported_listings( $params ) ;
 
+                                        $page  = (int)Params::getParam('iPage');
+                                        if(count($aData['aaData']) == 0 && $page!=1) {
+                                            $total = (int)$aData['iTotalDisplayRecords'];
+                                            $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
+
+                                            $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+
+                                            if($maxPage==0) {
+                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage=1', $url) ;
+                                                $this->redirectTo($url) ;
+                                            }
+
+                                            if($page > 1) {   
+                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
+                                                $this->redirectTo($url) ;
+                                            }
+                                        }
+                                        
                                         $url_base = osc_admin_base_url(true).'?page=items&action=items_reported' ;
                                         $arg_spam   = '&sort=spam'; $arg_bad    = '&sort=bad';
                                         $arg_rep    = '&sort=rep';  $arg_off    = '&sort=off';
@@ -616,7 +634,7 @@
                                         //calling the view...
                                         $this->doView('items/reported.php') ;
                 break;
-                default:                //default
+                default:                // default 
                                         $catId = Params::getParam('catId') ;
                     
                                         $countries = Country::newInstance()->listAll() ;
@@ -655,14 +673,19 @@
                                         $items_processing = new ItemsProcessingAjax( $params );
                                         $aData = $items_processing->listings( $params ) ;
                                         
-                                        if(count($aData['aaData']) == 0) {
+                                        $page  = (int)Params::getParam('iPage');
+                                        if(count($aData['aaData']) == 0 && $page!=1) {
                                             $total = (int)$aData['iTotalDisplayRecords'];
-                                            $page  = (int)Params::getParam('iPage');
-                                            $maxPage = ( $total / (int)$aData['iDisplayLength'] ) -1 ;
-                                            
-                                            if($page > 1) {
-                                                $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
-                                                $page = $page-1;
+                                            $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
+
+                                            $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+
+                                            if($maxPage==0) {
+                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage=1', $url) ;
+                                                $this->redirectTo($url) ;
+                                            }
+
+                                            if($page > 1) {   
                                                 $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
                                                 $this->redirectTo($url) ;
                                             }

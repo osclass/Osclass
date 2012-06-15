@@ -211,7 +211,6 @@
             if( !isset($this->_get['iDisplayLength']) ) {
                 $this->_get['iDisplayLength'] = 10 ;
             }
-            
             $p_iPage      = 1;
             if( !is_numeric(Params::getParam('iPage')) || Params::getParam('iPage') < 1 ) {
                 Params::setParam('iPage', $p_iPage );

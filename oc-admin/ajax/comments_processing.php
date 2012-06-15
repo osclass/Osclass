@@ -83,6 +83,7 @@
             } else {
                 $this->iPage = Params::getParam('iPage') ;
             }
+            
             $this->showAll   = Params::getParam('showAll') ;
             
             foreach($this->_get as $k => $v) {
@@ -98,7 +99,7 @@
             }
             
             // set start and limit using iPage param
-            $start = ((int)Params::getParam('iPage')-1) * $this->_get['iDisplayLength'];
+            $start = ((int)$this->iPage-1) * $this->_get['iDisplayLength'];
             
             $this->start = intval( $start ) ;
             $this->limit = intval( $this->_get['iDisplayLength'] ) ;
