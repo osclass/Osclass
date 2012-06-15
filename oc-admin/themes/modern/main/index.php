@@ -133,12 +133,12 @@
                         <?php foreach($numItemsPerCategory as $c) { ?>
                             <tr<?php if($countEvent%2 == 0){ echo ' class="even"';} if($countEvent == 1){ echo ' class="table-first-row"';} ?>>
                                 <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;catId=<?php echo $c['pk_i_id'] ; ?>"><?php echo $c['s_name'] ; ?></a></td>
-                                <td><?php echo "(" . $c['i_num_items'] . "&nbsp;" . ( ( $c['i_num_items'] == 1 ) ? __('Listing') : __('Listings') ) . ")" ; ?></td>
+                                <td><?php echo $c['i_num_items'] . "&nbsp;" . ( ( $c['i_num_items'] == 1 ) ? __('Listing') : __('Listings') ); ?></td>
                             </tr>
                             <?php foreach($c['categories'] as $subc) {?>
                                 <tr<?php if($countEvent%2 == 0){ echo 'class="even"';} ?>>
                                     <td class="children-cat"><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;catId=<?php echo $subc['pk_i_id'];?>"><?php echo $subc['s_name'] ; ?></a></td>
-                                    <td><?php echo "(" . $subc['i_num_items'] . " " . ( ( $subc['i_num_items'] == 1 ) ? __('Listing') : __('Listings') ) . ")" ; ?></td>
+                                    <td><?php echo $subc['i_num_items'] . " " . ( ( $subc['i_num_items'] == 1 ) ? __('Listing') : __('Listings') ); ?></td>
                                 </tr>
                             <?php
                             $countEvent++;
@@ -152,7 +152,7 @@
                     </table>
                     <?php } else { ?>
                         <?php _e("There aren't any uploaded listing yet") ; ?>
-                    <?php } ?>  
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -160,12 +160,11 @@
     <div class="grid-row grid-50">
         <div class="row-wrapper">
             <div class="widget-box">
-                <div class="widget-box-title"><h3><?php _e('Statistics'); ?> <select class="widget-box-selector select-box-big input-medium"><option>New items</option><option>New comments</option></select></h3></div>
+                <div class="widget-box-title"><h3><?php _e('Statistics'); ?> <select class="widget-box-selector select-box-big input-medium"><option><?php _e('New listings'); ?></option><option>New comments</option></select></h3></div>
                 <div class="widget-box-content">
-                    <b class="stats-title"><?php _e('Number of items new items'); ?></b>
-                    <div class="stats-detail"><?php _e('Last update on'); ?> 21/05/2012</div>
+                    <b class="stats-title"><?php _e('Number of new listings'); ?></b>
                     <div id="placeholder" class="graph-placeholder"></div>
-                    <a href="#" class="btn"><?php _e('Show all Statistics per Week'); ?></a>
+                    <a href="#" class="btn"><?php _e('Go to the statistics page'); ?></a>
                 </div>
             </div>
         </div>
