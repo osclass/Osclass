@@ -137,9 +137,6 @@
                 display: block;
                 background: white url("<?php echo osc_current_admin_theme_url('images/loading.gif'); ?>") right center no-repeat;
             }
-            .hide {
-                display: none !important;
-            }
         </style>
         <?php
     }
@@ -394,6 +391,14 @@
     </form>
 </div>
 <div class="has-pagination">
+    <ul>
+        <li>
+            <span class="list-first"><?php _e('Page'); ?></span>
+        </li>
+        <li class="pagination-input">
+            <input id="gotoPage" type="text" name="go_to_page" value="<?php echo Params::getParam('iPage'); ?>"/><button type="submit"><?php _e('Go!'); ?></button>
+        </li>
+    </ul>
 <?php
     $pageActual = Params::getParam('iPage');
     $urlActual  = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
@@ -412,14 +417,7 @@
         echo $aux;
     }
 ?>
-    <ul class="float-right btn-mini">
-        <li>
-            <a class="list-first"><?php _e('Page'); ?></a>
-        </li>
-        <li>
-            <a class="list-last"><input id="gotoPage" class="input-small" type="text" name="go_to_page" value=""/></a>
-        </li>
-    </ul>
+    
     
 </div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
