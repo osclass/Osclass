@@ -110,9 +110,6 @@
                 display: block;
                 background: white url("<?php echo osc_current_admin_theme_url('images/loading.gif'); ?>") right center no-repeat;
             }
-            .hide {
-                display: none !important;
-            }
         </style>
         <?php
     }
