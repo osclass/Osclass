@@ -144,7 +144,7 @@
                                 </div>
                             </div>
                             <div class="form-actions">
-                                <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" class="btn btn-submit" />
+                                <input type="submit" id="save_changes" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" class="btn btn-submit" />
                             </div>
                         </div>
                         </fieldset>
