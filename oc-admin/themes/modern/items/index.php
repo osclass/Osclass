@@ -365,42 +365,6 @@
     </form>
 </div>
 <?php 
-    $pageActual = Params::getParam('iPage');
-    $urlActual  = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
-    $urlActual  = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
-    $pageTotal  = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
-    $params     = array(
-        'total'    => $pageTotal,
-        'selected' => $pageActual - 1,
-        'url'      => $urlActual . '&iPage={PAGE}',
-        'sides'    => 5
-    );
+    osc_show_pagination_admin($aData);
 ?>
-<div class="has-pagination">
-    <form method="get" action="<?php echo $urlActual; ?>">
-        <?php foreach( Params::getParamsAsArray('get') as $key => $value ) { ?>
-        <?php if($key!='iPage') {?>
-        <input type="hidden" name="<?php echo $key;?>" value="<?php echo osc_esc_html($value); ?>" />
-        <?php } } ?>
-        <ul>
-            <li>
-                <span class="list-first"><?php _e('Page'); ?></span>
-            </li>
-            <li class="pagination-input">
-                <input id="gotoPage" type="text" name="iPage" value="<?php echo osc_esc_html($pageActual); ?>"/><button type="submit"><?php _e('Go!'); ?></button>
-            </li>
-        </ul>
-    </form>
-<?php
-    
-
-    if( $pageTotal > 1 ) {
-        $pagination = new Pagination($params);
-        $aux = $pagination->doPagination();
-        echo $aux;
-    }
-?>
-    
-    
-</div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
