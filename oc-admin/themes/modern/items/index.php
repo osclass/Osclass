@@ -15,6 +15,11 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
+
+    $pageActual = Params::getParam('iPage');
+    $urlActual  = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+    $urlActual  = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
+
     function addHelp(){
         echo '<h3>What does a red highlight mean?</h3>';
         echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
@@ -38,6 +43,11 @@
 
     //customize Head
     function customHead() { ?>
+    <?php 
+        $pageActual = Params::getParam('iPage');
+        $urlActual  = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+        $urlActual  = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
+    ?>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <?php ItemForm::location_javascript_new('admin') ; ?>
         <script type="text/javascript">
@@ -91,7 +101,7 @@
                     $('#display-filters').dialog('open');
                     return false;
                 });
-
+                
                 // check_all bulkactions
                 $("#check_all").change(function(){
                     var isChecked = $(this+':checked').length;
@@ -103,6 +113,27 @@
                         }
                     });
                 });
+                
+                
+                function isInt(x) {
+                    var y=parseInt(x);
+                    if (isNaN(y)) return false;
+                    return x==y && x.toString()==y.toString();
+                }
+                
+
+                $("#gotoPage").keypress(function(event) {
+                    if ( event.which == 13 ) {
+                        var value   = $("#gotoPage").attr('value');
+                        if(!isInt(value)) {
+                            alert('Page must be positive integer');
+                        }
+                        var url     = "<?php echo $urlActual."&iPage="?>"+value;
+                        console.log(url);
+                        window.location=url;
+                    }
+                });
+
             });
         </script>
         <style>
@@ -368,9 +399,9 @@
 </div>
 <div class="has-pagination">
 <?php
-    $pageActual = Params::getParam('iPage');
-    $urlActual  = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
-    $urlActual  = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
+//    $pageActual = Params::getParam('iPage');
+//    $urlActual  = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+//    $urlActual  = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
     $pageTotal  = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
     $params     = array(
         'total'    => $pageTotal,
@@ -385,5 +416,14 @@
         echo $aux;
     }
 ?>
+    <ul class="float-right btn-mini">
+        <li>
+            <a class="list-first"><?php _e('Page'); ?></a>
+        </li>
+        <li>
+            <input id="gotoPage" class="input-small" type="text" name="go_to_page" value=""/>
+        </li>
+    </ul>
+    
 </div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
