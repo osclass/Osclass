@@ -126,19 +126,15 @@
             
             $this->mSearch->order( $sort, $direction ) ;
             
-//            if( Params::getParam('catId') != '' ) {
-//                $this->mSearch->addCategory( Params::getParam('catId') ) ;
-//            }
-//            if( $this->search ) {
-//                $this->mSearch->addPattern($this->search) ;
-//            }
-            
             $this->mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
             $this->mSearch->addField('SUM(s.`i_num_spam`) as i_num_spam');
             $this->mSearch->addField('SUM(s.`i_num_bad_classified`) as i_num_bad_classified');
             $this->mSearch->addField('SUM(s.`i_num_repeated`) as i_num_repeated');
             $this->mSearch->addField('SUM(s.`i_num_offensive`) as i_num_offensive');
             $this->mSearch->addField('SUM(s.`i_num_expired`) as i_num_expired');
+            // having
+            $this->mSearch->setHaving('i_num_spam > 0 OR i_num_bad_classified > 0 OR i_num_repeated > 0 OR i_num_offensive > 0 OR i_num_expired > 0');
+            
             $this->mSearch->addConditions(sprintf(" %st_item.pk_i_id ", DB_TABLE_PREFIX));
             $this->mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
             $this->mSearch->addGroupBy(sprintf(" %st_item.pk_i_id ", DB_TABLE_PREFIX)) ;
