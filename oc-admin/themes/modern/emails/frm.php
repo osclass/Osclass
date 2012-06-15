@@ -16,79 +16,68 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $email   = __get("email") ;
-    $locales = OSCLocale::newInstance()->listAllEnabled() ;
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
-    <head>
-        <?php osc_current_admin_theme_path('head.php') ; ?>
+    osc_current_admin_theme_path( 'functions.php' );
+    function customPageHeader(){ ?>
+        <h1><?php _e('Settings'); ?></h1>
+<?php
+    }
+    osc_add_hook('admin_page_header','customPageHeader');
+    //customize Head
+    function customHead() { ?>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('tiny_mce/tiny_mce.js') ; ?>"></script>
         <script type="text/javascript">
             tinyMCE.init({
                 mode : "textareas",
                 theme : "advanced",
-                skin: "o2k7",
-                width: "70%",
-                height: "140px",
-                skin_variant : "silver",
-                theme_advanced_buttons1 : "bold,italic,underline,separator,undo,redo,separator,justifycenter,justifyright,justifyfull,separator,bullist,numlist,separator,link,unlink,separator,image,code",
-                theme_advanced_buttons2 : "",
+                skin: "cirkuit",
+                width: "100%",
+                height: "340px",
                 theme_advanced_buttons3 : "",
                 theme_advanced_toolbar_align : "left",
                 theme_advanced_toolbar_location : "top",
                 plugins : "media",
-                theme_advanced_buttons1_add : "media"
-            });
+                entity_encoding : "raw",
+                theme_advanced_buttons1_add : "media",
+                theme_advanced_disable : "styleselect"
+            }) ;
         </script>
-        <link href="<?php echo osc_current_admin_theme_styles_url('tabs.css') ; ?>" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('tabber-minimized.js') ; ?>"></script>
-        <script type="text/javascript">
-            document.write('<style type="text/css">.tabber{ display:none ; }</style>');
-        </script>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <!-- container -->
-        <div id="content">
-            <?php osc_current_admin_theme_path( 'include/backoffice_menu.php' ) ; ?>
-            <!-- right container -->
-            <div class="right">
-                <div class="header_title">
-                    <h1 class="pages"><?php _e('Edit email template') ; ?></h1>
+        <?php
+    }
+    osc_add_hook('admin_header','customHead');
+
+    function customPageTitle($string) {
+        return sprintf(__('Edit email template &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    $email   = __get("email");
+    $locales = OSCLocale::newInstance()->listAllEnabled();
+
+    osc_current_admin_theme_path('parts/header.php'); ?>
+<h2 class="render-title"><?php _e('Edit email template'); ?></h2>
+<div id="item-form">
+    <?php printLocaleTabs(); ?>
+     <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
+        <input type="hidden" name="page" value="emails" />
+        <input type="hidden" name="action" value="edit_post" />
+        <?php PageForm::primary_input_hidden($email); ?>
+        <div id="left-side">
+            <?php printLocaleTitlePage($locales, $email); ?>
+            <div>
+                <label><?php _e('Internal name') ; ?></label>
+                <?php PageForm::internal_name_input_text($email) ; ?>
+                <div class="flashmessage flashmessage-warning flashmessage-inline">
+                    <p><?php _e('Used to identify the email template') ; ?></p>
                 </div>
-                <?php osc_show_flash_message('admin') ; ?>
-                <!-- edit email template -->
-                <div class="emails">
-                    <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
-                        <input type="hidden" name="page" value="emails" />
-                        <input type="hidden" name="action" value="edit_post" />
-                        <?php PageForm::primary_input_hidden($email) ; ?>
-                        <fieldset>
-                            <div class="input-line">
-                                <label><?php _e('Internal name') ; ?></label>
-                                <div class="input medium">
-                                    <?php PageForm::internal_name_input_text($email) ; ?>
-                                    <p class="help-inline"><?php _e('Used to identify the email template') ; ?></p>
-                                </div>
-                            </div>
-                            <div class="input-line">
-                                <label></label>
-                                <div class="input">
-                                    <?php PageForm::multilanguage_name_description($locales, $email) ; ?>
-                                </div>
-                            </div>
-                            <div class="actions">
-                                <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
-                <!-- /edit email template -->
             </div>
-            <!-- /right container -->
+            <div class="input-description-wide">
+                <?php printLocaleDescriptionPage($locales, $email); ?>
+            </div>
         </div>
-        <!-- /container -->
-        <?php osc_current_admin_theme_path('footer.php') ; ?>
-    </body>
-</html>
+        <div class="clear"></div>
+        <div class="form-actions">
+            <input type="submit" value="<?php echo osc_esc_html(__('Save changes')); ?>" class="btn btn-submit" />
+        </div>
+    </form>
+</div>
+<?php osc_current_admin_theme_path('parts/footer.php') ; ?>

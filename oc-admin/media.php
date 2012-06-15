@@ -72,6 +72,18 @@
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=media' ) ;
                 break ;
                 default:
+                                        if( Params::getParam('iDisplayLength') == '' ) {
+                                            Params::setParam('iDisplayLength', 10 ) ;
+                                        }
+                                        $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
+                                        
+                                        require_once osc_admin_base_path() . 'ajax/media_processing.php';
+                                        $params = Params::getParamsAsArray("get") ;
+                                        $media_processing = new MediaProcessingAjax( $params );
+                                        $aData = $media_processing->result( $params ) ;
+                                        
+                                        $this->_exportVariableToView('aMedia', $aData) ;
+                                        
                                         $this->doView('media/index.php') ;
                 break ;
             }

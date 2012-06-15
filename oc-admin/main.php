@@ -50,6 +50,34 @@
                                     $this->_exportVariableToView( "newsList", osc_listNews() ) ;
                                     $this->_exportVariableToView( "comments", ItemComment::newInstance()->getLastComments(5) ) ;
 
+                                    //stats
+                                    $reports = array() ;
+                                    $stats_reports = Stats::newInstance()->new_reports_count(date( 'Y-m-d', mktime(0, 0, 0, date("m") - 10, date("d"), date("Y")) ),'month') ;
+                                    for($k = 10; $k >= 0; $k--) {
+                                        $reports[date( 'F', mktime(0, 0, 0, date("m") - $k, date("d"), date("Y")) )]['views']          = 0 ;
+                                        $reports[date( 'F', mktime(0, 0, 0, date("m") - $k, date("d"), date("Y")) )]['spam']           = 0 ;
+                                        $reports[date( 'F', mktime(0, 0, 0, date("m") - $k, date("d"), date("Y")) )]['repeated']       = 0 ;
+                                        $reports[date( 'F', mktime(0, 0, 0, date("m") - $k, date("d"), date("Y")) )]['bad_classified'] = 0 ;
+                                        $reports[date( 'F', mktime(0, 0, 0, date("m") - $k, date("d"), date("Y")) )]['offensive']      = 0 ;
+                                        $reports[date( 'F', mktime(0, 0, 0, date("m") - $k, date("d"), date("Y")) )]['expired']        = 0 ;
+                                    }
+                                    $items = array() ;
+                                    $stats_items = Stats::newInstance()->new_items_count(date( 'Y-m-d H:i:s',  mktime(0, 0, 0, date("m") - 10, date("d"), date("Y")) ),'month') ;
+                                    $stats_reports = Stats::newInstance()->new_reports_count(date( 'Y-m-d',  mktime(0, 0, 0, date("m") - 10, date("d"), date("Y")) ),'month') ;
+                                    for($k = 10; $k >= 0; $k--) {
+                                        $reports[date( 'F', mktime(0, 0, 0, date("m") - $k, date("d"), date("Y")) )]['views'] = 0 ;
+                                        $items[date( 'F', mktime(0, 0, 0, date("m") - $k, date("d"), date("Y")) )] = 0 ;
+                                    }
+                                    $max = 0 ;
+                                    foreach($stats_items as $item) {
+                                        $items[$item['d_date']] = $item['num'] ;
+                                        if( $item['num'] > $max ) {
+                                            $max = $item['num'] ;
+                                        }
+                                    }
+                                    $this->_exportVariableToView("reports", $reports) ;
+                                    $this->_exportVariableToView("items", $items) ;
+                                    $this->_exportVariableToView("max", $max) ;
                                     //calling the view...
                                     $this->doView('main/index.php') ;
             }

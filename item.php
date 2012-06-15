@@ -285,14 +285,21 @@
                     }
                 break;
                 case 'mark':
-                    $mItem = new ItemActions(false) ;
-
                     $id = Params::getParam('id') ;
                     $as = Params::getParam('as') ;
 
                     $item = Item::newInstance()->findByPrimaryKey($id);
                     View::newInstance()->_exportVariableToView('item', $item);
-                    $mItem->mark($id, $as) ;
+
+                    require_once(osc_lib_path() . 'osclass/user-agents.php');
+                    foreach($user_agents as $ua) {
+                        if(preg_match('|'.$ua.'|', @$_SERVER['HTTP_USER_AGENT'])) {
+                            // mark item if it's not a bot
+                            $mItem = new ItemActions(false) ;
+                            $mItem->mark($id, $as) ;
+                            break;
+                        }
+                    }
 
                     osc_add_flash_ok_message( _m("Thanks! That's very helpful") ) ;
                     $this->redirectTo( osc_item_url( ) );
@@ -486,9 +493,8 @@
                     }
                     
                     if(!osc_is_admin_user_logged_in()) {
-                        require_once LIB_PATH . 'osclass/user-agents.php';
+                        require_once(osc_lib_path() . 'osclass/user-agents.php');
                         foreach($user_agents as $ua) {
-                            print_r($_SERVER['HTTP_USER_AGENT']);
                             if(preg_match('|'.$ua.'|', @$_SERVER['HTTP_USER_AGENT'])) {
                                 $mStats = new ItemStats();
                                 $mStats->increase('i_num_views', $item['pk_i_id']);
@@ -510,6 +516,13 @@
                     $this->_exportVariableToView('item', $item);
 
                     osc_run_hook('show_item', $item) ;
+
+                    // redirect to the correct url just in case it has changed
+                    $itemURI = str_replace(osc_base_url(), '', osc_item_url());
+                    $URI = preg_replace('|^' . REL_WEB_URL . '|', '', $_SERVER['REQUEST_URI']);
+                    if( $itemURI != $URI ) {
+                        $this->redirectTo(osc_base_url() . $itemURI);
+                    }
 
                     $this->doView('item.php') ;
                 break;

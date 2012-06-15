@@ -15,32 +15,26 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
-    <head>
-        <?php osc_current_admin_theme_path('head.php') ; ?>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <!-- container -->
-        <div id="content">
-            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-            <!-- right container -->
-            <div class="right">
-                <div class="header_title">
-                    <h1 class="plugins"><?php _e('Plugins') ; ?></h1>
-                </div>
-                <?php osc_show_flash_message('admin') ; ?>
-                <!-- plugins files -->
-                <div class="plugins-files">
-                    <?php require __get('file') ; ?>
-                </div>
-                <!-- /v files -->
-            </div>
-            <!-- /right container -->
-        </div>
-        <!-- /container -->
-        <?php osc_current_admin_theme_path('footer.php') ; ?>
-    </body>
-</html>
+
+    osc_add_hook('admin_page_header','customPageHeader');
+    function customPageHeader() { ?>
+        <h1><?php _e('Plugins'); ?></h1>
+    <?php
+    }
+
+    function customPageTitle($string) {
+        return sprintf(__('Plugins &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    osc_current_admin_theme_path( 'parts/header.php' ); ?>
+<!-- theme files -->
+<div class="theme-files">
+    <?php
+        if( file_exists(__get('file')) ) {
+            require_once __get('file');
+        }
+    ?>
+</div>
+<!-- /theme files -->
+<?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

@@ -271,10 +271,60 @@
                                     }
                                     $this->redirectTo(osc_admin_base_url(true) . '?page=admins') ;
                 break ;
-                default:            // calling manage admins view
-                                    $admins = $this->adminManager->listAll() ;
+                default:            
+                                    if( Params::getParam('iDisplayLength') == '' ) {
+                                        Params::setParam('iDisplayLength', 10 ) ;
+                                    }
 
-                                    $this->_exportVariableToView('admins', $admins) ;
+                                    $p_iPage      = 1;
+                                    if( is_numeric(Params::getParam('iPage')) && Params::getParam('iPage') >= 1 ) {
+                                        $p_iPage = Params::getParam('iPage');
+                                    }
+                                    Params::setParam('iPage', $p_iPage);
+
+                                    $admins = $this->adminManager->listAll() ;
+                                    
+                                    // pagination
+                                    $start = ($p_iPage-1) * Params::getParam('iDisplayLength');
+                                    $limit = Params::getParam('iDisplayLength');
+                                    $count = count( $admins );
+
+                                    $displayRecords = $limit;
+                                    if( ($start+$limit ) > $count ) {
+                                        $displayRecords = ($start+$limit) - $count;
+                                    }
+                                    // ----
+                                    $aData = array() ;
+                                    $max = ($start+$limit);
+                                    if($max > $count) $max = $count;
+                                    for($i = $start; $i < $max; $i++) {
+                                    
+                                        $admin = $admins[$i];
+                                    
+                                        $options = array();
+                                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=admins&action=edit&amp;id='  . $admin['pk_i_id'] . '">' . __('Edit') . '</a>';
+                                        $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js(__('This action cannot be undone. Are you sure you want to continue?')) . '\');" href="' . osc_admin_base_url(true) . '?page=admins&action=delete&amp;id[]=' . $admin['pk_i_id'] . '">' . __('Delete') . '</a>';
+                                        $auxOptions = '<ul>'.PHP_EOL ;
+                                        foreach( $options as $actual ) {
+                                            $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
+                                        }
+                                        $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
+                                        
+                                        $row = array() ;
+                                        $row[] = '<input type="checkbox" name="id[]" value="' . $admin['pk_i_id'] . '" />' ;
+                                        $row[] = $admin['s_username'] . $actions ;
+                                        $row[] = $admin['s_name'] ;
+                                        $row[] = $admin['s_email'] ;
+
+                                        $aData[] = $row ;
+                                    }
+                                    $array['iTotalRecords']         = $displayRecords;
+                                    $array['iTotalDisplayRecords']  = count($admins);
+                                    $array['iDisplayLength']        = $limit;
+                                    $array['aaData'] = $aData;
+
+                                    $this->_exportVariableToView('aAdmins', $array) ;
+                                    // calling manage admins view
                                     $this->doView('admins/index.php') ;
                 break ;
             }

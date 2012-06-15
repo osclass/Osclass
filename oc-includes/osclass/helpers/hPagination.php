@@ -33,7 +33,11 @@
      * @return string pagination links
      */
     function osc_search_pagination() {
-        $pagination = new Pagination();
+        $params = array();
+        if( View::newInstance()->_exists('search_uri') ) {
+            $params['url'] = osc_base_url() . View::newInstance()->_get('search_uri') . '/{PAGE}';
+        }
+        $pagination = new Pagination($params);
         return $pagination->doPagination();
     }
 

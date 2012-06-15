@@ -26,22 +26,28 @@
         <input type="hidden" name="action" value="edit_category_post" />
         <?php CategoryForm::primary_input_hidden($category) ; ?>
         <fieldset>
-            <div class="input-line">
-                <label><?php _e('Expirations days') ; ?></label>
-                <div class="input micro">
-                    <?php CategoryForm::expiration_days_input_text($category) ; ?>
-                    <p class="help-inline"><?php _e("If the value is zero it means that there isn't expiration for this category") ; ?></p>
+            <div class="grid-system">
+                <div class="grid-row grid-first-row grid-30 no-bottom-margin">
+                    <div class="row-wrapper">
+                        <label><?php _e('Expirations days') ; ?></label>
+                        <div class="input micro">
+                            <?php CategoryForm::expiration_days_input_text($category) ; ?>
+                            <p class="help-inline"><?php _e("If the value is zero it means that there isn't expiration for this category") ; ?></p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="input-line">
-                <label></label>
-                <div class="input">
-                    <?php CategoryForm::multilanguage_name_description($locales, $category) ; ?>
+                <div class="grid-row grid-70 no-bottom-margin">
+                    <div class="row-wrapper">
+                        <?php CategoryForm::multilanguage_name_description($locales, $category) ; ?>
+                    </div>
                 </div>
+                <div class="clear"></div>
             </div>
-            <div class="actions">
-                <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
-                <input type="button" onclick="$('.iframe-category').remove() ;" value="<?php echo osc_esc_html( __('Cancel') ) ; ?>" />
+            <div class="form-vertical">
+                    <div class="form-actions">
+                        <input type="submit" class="btn btn-submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
+                        <input type="button" class="btn btn-red" onclick="$('.iframe-category').remove() ;" value="<?php echo osc_esc_html( __('Cancel') ) ; ?>" />
+                    </div>
             </div>
         </fieldset>
     </form>
@@ -82,6 +88,6 @@
             })
             return false ;
         });
+    oscTab();
     }) ;
-    tabberAutomatic() ;
 </script>

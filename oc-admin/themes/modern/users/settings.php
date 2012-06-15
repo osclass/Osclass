@@ -15,65 +15,71 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
-    <head>
-        <?php osc_current_admin_theme_path('head.php') ; ?>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <!-- container -->
-        <div id="content">
-            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-            <!-- right container -->
-            <div class="right">
-                <div class="header_title">
-                    <h1 class="settings"><?php _e('Users Settings') ; ?></h1>
+
+    //customize Head
+    function customHead(){ ?>
+        <script type="text/javascript">
+            $(document).ready(function() {
+            }) ;
+        </script>
+        <?php
+    }
+    osc_add_hook('admin_header','customHead');
+    
+    osc_add_hook('admin_page_header','customPageHeader');
+    function customPageHeader(){ ?>
+        <h1><?php _e('Users Settings') ; ?></h1>
+    <?php
+    }
+
+    function customPageTitle($string) {
+        return sprintf(__('Users Settings &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+<!-- settings form -->
+    <h2 class="render-title"><?php _e('Users Settings') ; ?></h2>
+    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+        <input type="hidden" name="page" value="users" />
+        <input type="hidden" name="action" value="settings_post" />
+        <fieldset>
+            <div class="form-horizontal">
+                <div class="form-row">
+                    <div class="form-label"> <?php _e('Settings') ; ?></div>
+                    <div class="form-controls">
+                        <label id="enabled_users" class="form-label-checkbox">
+                            <input type="checkbox" name="enabled_users" <?php echo ( osc_users_enabled() ? 'checked="checked"' : '' ) ; ?> value="1" />
+                            <?php _e('Users enabled') ; ?>
+                        </label>
+                    </div>
+                    <div class="form-controls separate-top-medium">
+                        <label id="enabled_user_registration">
+                            <input type="checkbox" name="enabled_user_registration" <?php echo ( osc_user_registration_enabled() ? 'checked="checked"' : '' ) ; ?> value="1" />
+                            <?php _e('Anyone can register') ; ?>
+                        </label>
+                    </div>
+                    <div class="form-controls separate-top-medium">
+                        <label id="enabled_user_validation">
+                            <input type="checkbox" name="enabled_user_validation" <?php echo ( osc_user_validation_enabled() ? 'checked="checked"' : '' ) ; ?> value="1" />
+                            <?php _e('Users need to validate their account') ; ?>
+                        </label>
+                    </div>
                 </div>
-                <?php osc_show_flash_message('admin') ; ?>
-                <!-- users settings form -->
-                <div class="settings users">
-                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-                        <input type="hidden" name="page" value="users" />
-                        <input type="hidden" name="action" value="settings_post" />
-                        <fieldset>
-                            <table class="table-backoffice-form">
-                                <tr>
-                                    <td class="labeled"><?php _e('Settings') ; ?></td>
-                                    <td><input type="checkbox" name="enabled_users" <?php echo ( osc_users_enabled() ? 'checked="checked"' : '' ) ; ?> value="1" />
-                                        <?php _e('Users enabled') ; ?></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td><input type="checkbox" name="enabled_user_registration" <?php echo ( osc_user_registration_enabled() ? 'checked="checked"' : '' ) ; ?> value="1" />
-                                        <?php _e('Anyone can register') ; ?></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td><input type="checkbox" name="enabled_user_validation" <?php echo ( osc_user_validation_enabled() ? 'checked="checked"' : '' ) ; ?> value="1" />
-                                        <?php _e('Users need to validate their account') ; ?></td>
-                                </tr>
-                                <tr>
-                                    <td class="labeled"><?php _e('Admin notifications') ; ?></td>
-                                    <td><input type="checkbox" name="notify_new_user" <?php echo ( osc_notify_new_user() ? 'checked="checked"' : '' ) ; ?> value="1" />
-                                        <?php _e('When a new user is registered') ; ?></td>
-                                </tr>
-                                <tr class="separate">
-                                    <td></td>
-                                    <td>
-                                        <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" />
-                                    </td>
-                                </tr>
-                            </table>
-                        </fieldset>
-                    </form>
+                <div class="form-row">
+                    <div class="form-label"> <?php _e('Admin notifications') ; ?></div>
+                    <div class="form-controls">
+                        <label id="notify_new_user" class="form-label-checkbox">
+                            <input type="checkbox" name="notify_new_user" <?php echo ( osc_notify_new_user() ? 'checked="checked"' : '' ) ; ?> value="1" />
+                            <?php _e('When a new user is registered') ; ?>
+                        </label>
+                    </div>
                 </div>
-                <!-- /users settings form -->
+                <div class="form-actions">
+                    <input type="submit" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" class="btn btn-submit" />
+                </div>
             </div>
-            <!-- /right container -->
-        </div>
-        <!-- /container -->
-        <?php osc_current_admin_theme_path('footer.php') ; ?>
-    </body>
-</html>
+        </fieldset>
+    </form>
+<!-- /settings form -->
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                

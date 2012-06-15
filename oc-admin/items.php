@@ -149,7 +149,7 @@
                                                 $id = Params::getParam('id') ;
                                                 $success = false;
 
-                                                if( $id != '' ) {
+                                                if($id) {
                                                     $numSuccess = 0;
                                                     foreach($id as $i) {
                                                         if ($i) {
@@ -160,12 +160,11 @@
                                                             }
                                                         }
                                                     }
+                                                    osc_add_flash_ok_message( sprintf(_mn('%d listing has been deleted', '%d listings have been deleted', $numSuccess), $numSuccess), 'admin') ;
                                                 }
-                                                osc_add_flash_ok_message( sprintf(_mn('%d listing has been deleted', '%d listings have been deleted', $numSuccess), $numSuccess), 'admin') ;
-                                                $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                             break;
                                         }
-                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                                        $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'delete':          //delete
                                         $id      = Params::getParam('id') ;
@@ -184,8 +183,8 @@
                                         } else {
                                             osc_add_flash_error_message( _m("The listing couldn't be deleted"), 'admin') ;
                                         }
-
-                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                                        
+                                        $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'status':          //status
                                         $id = Params::getParam('id') ;
@@ -250,7 +249,7 @@
                                                 break;
                                         }
                                       
-                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                                        $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'status_premium':  //status premium
                                         $id = Params::getParam('id') ;
@@ -275,7 +274,7 @@
                                             osc_add_flash_error_message( _m('Some error has occurred'), 'admin');
                                         }
                                         
-                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                                        $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'status_spam':  //status spam
                                         $id = Params::getParam('id') ;
@@ -300,7 +299,7 @@
                                             osc_add_flash_error_message( _m('Some error has occurred'), 'admin');
                                         }  
                                         
-                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                                        $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'clear_stat':
                                         $id     = Params::getParam('id') ;
@@ -336,6 +335,29 @@
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         }
 
+                                        if( $item['b_active'] ) {
+                                            $actions[] = '<a class="btn btn-green float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $item['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') .'</a>' ;
+                                        } else {
+                                            $actions[] = '<a class="btn btn-red float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $item['pk_i_id'] . '&amp;value=ACTIVE">' . __('Activate') .'</a>' ;
+                                        }
+                                        if( $item['b_enabled'] ) {
+                                            $actions[] = '<a class="btn btn-green float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $item['pk_i_id'] . '&amp;value=DISABLE">' . __('Block') .'</a>' ;
+                                        } else {
+                                            $actions[] = '<a class="btn btn-red float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $item['pk_i_id'] . '&amp;value=ENABLE">' . __('Unblock') .'</a>' ;
+                                        }
+                                        if( $item['b_premium'] ) {
+                                            $actions[] = '<a class="btn float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $item['pk_i_id'] . '&amp;value=0">' . __('Unmark as premium') .'</a>' ;
+                                        } else {
+                                            $actions[] = '<a class="btn float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $item['pk_i_id'] . '&amp;value=1">' . __('Mark as premium') .'</a>' ;
+                                        }
+                                        if( $item['b_spam'] ) {
+                                            $actions[] = '<a class="btn float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $item['pk_i_id'] . '&amp;value=0">' . __('Unmark as spam') .'</a>' ;
+                                        } else {
+                                            $actions[] = '<a class="btn float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $item['pk_i_id'] . '&amp;value=1">' . __('Mark as spam') .'</a>' ;
+                                        }
+                                        
+                                        $this->_exportVariableToView("actions", $actions);
+                                        
                                         $form     = count(Session::newInstance()->_getForm());
                                         $keepForm = count(Session::newInstance()->_getKeepForm());
                                         
@@ -343,6 +365,22 @@
                                             Session::newInstance()->_dropKeepForm();
                                         }
 
+                                        // save referer if belongs to manage items 
+                                        // redirect only if ManageItems or ReportedListngs
+                                        if( isset($_SERVER['HTTP_REFERER']) ) {
+                                            $referer = $_SERVER['HTTP_REFERER'] ;
+                                            if(preg_match('/page=items/', $referer) ) {
+                                                if(preg_match("/action=([\p{L}|_|-]+)/u", $referer, $matches)) {
+                                                    if( $matches[1] == 'items_reported' ) {
+                                                        Session::newInstance()->_set( 'osc_admin_referer', $referer );
+                                                    }
+                                                } else {
+                                                    // no actions - Manage Listings
+                                                    Session::newInstance()->_set( 'osc_admin_referer', $referer );
+                                                }
+                                            }
+                                        }
+                                        
                                         $this->_exportVariableToView("item", $item);
                                         $this->_exportVariableToView("new_item", FALSE);
 
@@ -368,9 +406,14 @@
                                         $success = $mItems->edit();
                                         
                                         if($success==1){
-                                            Session::newInstance()->_clearVariables();
                                             osc_add_flash_ok_message( _m('Changes saved correctly'), 'admin') ;
-                                            $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                                            $url = osc_admin_base_url(true) . "?page=items" ;
+                                            // if Referer is saved that means referer is ManageListings or ReportListings
+                                            if(Session::newInstance()->_get('osc_admin_referer')!='') {
+                                                $url = Session::newInstance()->_get('osc_admin_referer');
+                                            }
+                                            Session::newInstance()->_clearVariables();
+                                            $this->redirectTo( $url ) ;
                                         } else {
                                             osc_add_flash_error_message( $success , 'admin');
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items&action=item_edit&id=" . Params::getParam('id') );
@@ -520,7 +563,59 @@
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=items&action=settings');
                 break;
+                case('items_reported'): // show reported listings
+                                        if( Params::getParam('sort') == '') {
+                                            Params::setParam('sort', 'date') ;
+                                        }
+                                        $sort = Params::getParam('sort');
+                                        if( Params::getParam('direction') == '') {
+                                            Params::setParam('direction', 'desc');
+                                        }
+                                        $direction = Params::getParam('direction');
+                                        require_once osc_admin_base_path() . 'ajax/items_processing.php';
+                                        $params = Params::getParamsAsArray("get") ;
+                                        $items_processing = new ItemsProcessingAjax( $params );
+                                        $aData = $items_processing->reported_listings( $params ) ;
 
+                                        $url_base = osc_admin_base_url(true).'?page=items&action=items_reported' ;
+                                        $arg_spam   = '&sort=spam'; $arg_bad    = '&sort=bad';
+                                        $arg_rep    = '&sort=rep';  $arg_off    = '&sort=off';
+                                        $arg_exp    = '&sort=exp';  $arg_date   = '&sort=date';
+
+                                        switch ($sort) {
+                                            case('spam'):
+                                                if($direction == 'desc' || $direction == '') $arg_spam .= '&direction=asc';
+                                                break;
+                                            case('bad'):
+                                                if($direction == 'desc' || $direction == '') $arg_bad .= '&direction=asc';
+                                                break;
+                                            case('rep'):
+                                                if($direction == 'desc' || $direction == '') $arg_rep .= '&direction=asc';
+                                                break;
+                                            case('off'):
+                                                if($direction == 'desc' || $direction == '') $arg_off .= '&direction=asc';
+                                                break;
+                                            case('exp'):
+                                                if($direction == 'desc' || $direction == '') $arg_exp .= '&direction=asc';
+                                                break;
+                                            case('date'):
+                                                if($direction == 'desc' || $direction == '') $arg_date .= '&direction=asc';
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        
+                                        $this->_exportVariableToView('url_spam', $url_base.$arg_spam) ;
+                                        $this->_exportVariableToView('url_bad', $url_base.$arg_bad) ;
+                                        $this->_exportVariableToView('url_rep', $url_base.$arg_rep) ;
+                                        $this->_exportVariableToView('url_off', $url_base.$arg_off) ;
+                                        $this->_exportVariableToView('url_exp', $url_base.$arg_exp) ;
+                                        $this->_exportVariableToView('url_date', $url_base.$arg_date) ;
+                                        
+                                        $this->_exportVariableToView('aItems', $aData) ;
+                                        //calling the view...
+                                        $this->doView('items/reported.php') ;
+                break;
                 default:                //default
                                         $catId = Params::getParam('catId') ;
                     
@@ -533,11 +628,56 @@
                                         if( count($regions) > 0 ) {
                                             $cities = City::newInstance()->findByRegion($regions[0]['pk_i_id']) ;
                                         }
-                                        //preparing variables for the view
+                                        
+                                        // set default iDisplayLength 
+                                        if( Params::getParam('iDisplayLength') == '' ) {
+                                            Params::setParam('iDisplayLength', 10 ) ;
+                                        }
+                                        $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
+                                     
+                                        // Table header order by related
+                                        if( Params::getParam('sort') == '') {
+                                            Params::setParam('sort', 'date') ;
+                                        }
+                                        if( Params::getParam('direction') == '') {
+                                            Params::setParam('direction', 'desc');
+                                        }
+                                        
+                                        $arg_date = '&sort=date';
+                                        if(Params::getParam('sort') == 'date') {
+                                            if(Params::getParam('direction') == 'desc') $arg_date .= '&direction=asc';
+                                        }
+                                        $this->_exportVariableToView('url_date', osc_admin_base_url(true).'?page=items'.$arg_date) ;
+                                        // -- Table header order by related
+                                        
+                                        require_once osc_admin_base_path() . 'ajax/items_processing.php';
+                                        $params = Params::getParamsAsArray("get") ;
+                                        $items_processing = new ItemsProcessingAjax( $params );
+                                        $aData = $items_processing->listings( $params ) ;
+                                        
+                                        if(count($aData['aaData']) == 0) {
+                                            $total = (int)$aData['iTotalDisplayRecords'];
+                                            $page  = (int)Params::getParam('iPage');
+                                            $maxPage = ( $total / (int)$aData['iDisplayLength'] ) -1 ;
+                                            
+                                            if($page > 1) {
+                                                $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+                                                $page = $page-1;
+                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
+                                                $this->redirectTo($url) ;
+                                            }
+                                        }
+                                        
+                                        $this->_exportVariableToView('aItems', $aData) ;
+                                        
+                                        // there are filters activated
+                                        $this->_exportVariableToView('withFilters', $items_processing->filters() ) ;
+                                        
+                                        //preparing variables for the view                
                                         $this->_exportVariableToView("users", User::newInstance()->listAll());
                                         $this->_exportVariableToView("catId", $catId) ;
                                         $this->_exportVariableToView("stat", Params::getParam('stat')) ;
-
+                                        
                                         $this->_exportVariableToView("countries", $countries);
                                         $this->_exportVariableToView("regions", $regions);
                                         $this->_exportVariableToView("cities", $cities);
