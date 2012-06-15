@@ -559,6 +559,15 @@
         }
 
         /**
+         * Set having sentence to sql
+         * 
+         * @param type $having 
+         */
+        public function setHaving($having)
+        {
+            $this->dao->having($having);
+        }
+        /**
          * Filter by ad with picture or not
          *
          * @access public
