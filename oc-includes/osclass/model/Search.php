@@ -47,6 +47,8 @@
         private $total_results;
         private $total_results_table;
         private $sPattern;
+        private $groupBy;
+        private $having;
         
         private $withPattern;
         private $withPicture;
@@ -103,6 +105,8 @@
             $this->tables_join  = array();
             $this->search_fields = array();
             $this->itemConditions   = array();
+            $this->groupBy      = '';
+            $this->having       = '';
             
             $this->order();
             $this->limit();
@@ -274,7 +278,7 @@
          */
         public function addGroupBy( $groupBy )
         {
-            $this->dao->groupBy($groupBy) ;
+            $this->groupBy = $groupBy;
         }
         
         /**
@@ -558,6 +562,15 @@
             $this->priceRange($price, null);
         }
 
+        /**
+         * Set having sentence to sql
+         * 
+         * @param type $having 
+         */
+        public function addHaving($having)
+        {
+            $this->having = $having;
+        }
         /**
          * Filter by ad with picture or not
          *
@@ -850,6 +863,7 @@
             } else {  
                 if($count) {
                     $this->dao->select(DB_TABLE_PREFIX.'t_item.pk_i_id');
+                    $this->dao->select($extraFields) ; // plugins!
                 } else {
                     $this->dao->select(DB_TABLE_PREFIX.'t_item.*, '.DB_TABLE_PREFIX.'t_item.s_contact_name as s_user_name');
                     $this->dao->select($extraFields) ; // plugins!
@@ -897,7 +911,15 @@
                     $this->dao->where($conditionsSQL) ;
                 } 
                 // ---------------------------------------------------------
-                
+                // groupBy
+                if($this->groupBy != '') {
+                    $this->dao->groupBy( $this->groupBy );
+                }
+                // having 
+                if($this->having != '') {
+                    $this->dao->having($this->having);
+                }
+                // ---------------------------------------------------------
                 
                 // order & limit
                 $this->dao->orderBy( $this->order_column, $this->order_direction);
@@ -956,9 +978,11 @@
         {   
             $sql = $this->_makeSQL(false) ;
             $result = $this->dao->query($sql);
-
+            error_log($sql);
+            error_log("-------");
             if($count) {
                 $sql = $this->_makeSQL(true) ;
+                error_log($sql);
                 $datatmp  = $this->dao->query( $sql ) ;
 
                 if( $datatmp == false ) {
