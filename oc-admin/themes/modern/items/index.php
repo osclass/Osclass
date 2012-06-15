@@ -16,10 +16,6 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $pageActual = Params::getParam('iPage');
-    $urlActual  = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
-    $urlActual  = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
-
     function addHelp(){
         echo '<h3>What does a red highlight mean?</h3>';
         echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
@@ -399,9 +395,9 @@
 </div>
 <div class="has-pagination">
 <?php
-//    $pageActual = Params::getParam('iPage');
-//    $urlActual  = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
-//    $urlActual  = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
+    $pageActual = Params::getParam('iPage');
+    $urlActual  = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+    $urlActual  = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
     $pageTotal  = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
     $params     = array(
         'total'    => $pageTotal,
@@ -421,7 +417,7 @@
             <a class="list-first"><?php _e('Page'); ?></a>
         </li>
         <li>
-            <input id="gotoPage" class="input-small" type="text" name="go_to_page" value=""/>
+            <a class="list-last"><input id="gotoPage" class="input-small" type="text" name="go_to_page" value=""/></a>
         </li>
     </ul>
     
