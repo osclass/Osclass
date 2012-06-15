@@ -89,7 +89,7 @@
                         <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
                         <th><?php _e('Author') ; ?></th>
                         <th><?php _e('Comment') ; ?></th>
-                        <th><?php _e('Date') ; ?></th>
+                        <th class="col-date"><?php _e('Date') ; ?></th>
                     </tr>
                 </thead>
                 <tbody>

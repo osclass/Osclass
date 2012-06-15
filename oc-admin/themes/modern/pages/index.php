@@ -105,7 +105,7 @@
                     <tr>
                         <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
                         <th><?php _e('Internal name'); ?></th>
-                        <th><?php _e('Title'); ?></th>
+                        <th class="col-title"><?php _e('Title'); ?></th>
                         <th class="col-order"><?php _e('Order'); ?></th>
                     </tr>
                 </thead>

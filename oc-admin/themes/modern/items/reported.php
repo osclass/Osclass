@@ -47,14 +47,6 @@
                 });
             });
         </script>
-        <style>
-            table.table thead .sorting_desc {
-                background: url("<?php echo osc_current_admin_theme_url('images/sort_desc.png'); ?>") no-repeat scroll right center transparent;
-            }
-            table.table thead .sorting_asc {
-                background: url("<?php echo osc_current_admin_theme_url('images/sort_asc.png'); ?>") no-repeat scroll right center transparent;
-            }
-        </style>
         <?php
     }
     osc_add_hook('admin_header','customHead');
@@ -103,7 +95,7 @@
                 <thead>
                     <tr>
                         <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
-                        <th><?php _e('Title') ; ?></th>
+                        <th class="col-title"><?php _e('Title') ; ?></th>
                         <th><?php _e('User') ; ?></th>
                         <th class="<?php if($sort=='spam'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
                             <a href="<?php echo $url_spam; ?>"><?php _e('Spam') ; ?></a>
@@ -120,7 +112,7 @@
                         <th class="<?php if($sort=='off'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
                             <a href="<?php echo $url_off; ?>"><?php _e('offensive') ; ?>
                         </th>
-                        <th class="<?php if($sort=='date'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
+                        <th class="col-date <?php if($sort=='date'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
                             <a href="<?php echo $url_date; ?>"><?php _e('Date') ; ?>
                         </th>
                     </tr>

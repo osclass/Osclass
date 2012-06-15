@@ -81,7 +81,7 @@
                     <th><?php _e('E-mail') ; ?></th>
                     <th><?php _e('Name') ; ?></th>
                     <th><?php _e('Attached to') ; ?></th>
-                    <th><?php _e('Date') ; ?></th>
+                    <th class="col-date"><?php _e('Date') ; ?></th>
                 </tr>
             </thead>
             <tbody>

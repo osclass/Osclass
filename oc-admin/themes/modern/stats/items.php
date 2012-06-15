@@ -232,7 +232,7 @@
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th><?php _e('Title') ; ?></th>
+                            <th class="col-title"><?php _e('Title') ; ?></th>
                             <th><?php _e('Author') ; ?></th>
                             <th><?php _e('Status') ; ?></th>
                         </tr>

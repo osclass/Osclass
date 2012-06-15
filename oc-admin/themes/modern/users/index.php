@@ -86,7 +86,7 @@
                         <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
                         <th><?php _e('E-mail') ; ?></th>
                         <th><?php _e('Name') ; ?></th>
-                        <th><?php _e('Date') ; ?></th>
+                        <th class="col-date"><?php _e('Date') ; ?></th>
                         <th><?php _e('Update Date') ; ?></th>
                     </tr>
                 </thead>

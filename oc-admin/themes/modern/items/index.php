@@ -322,13 +322,13 @@
                 <thead>
                     <tr>
                         <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
-                        <th><?php _e('Title') ; ?></th>
+                        <th class="col-title"><?php _e('Title') ; ?></th>
                         <th><?php _e('User') ; ?></th>
                         <th><?php _e('Category') ; ?></th>
                         <th><?php _e('Country') ; ?></th>
                         <th><?php _e('Region') ; ?></th>
                         <th><?php _e('City') ; ?></th>
-                        <th class="<?php if($sort=='date'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
+                        <th class="col-date <?php if($sort=='date'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
                             <a href="<?php echo $url_date; ?>"><?php _e('Date') ; ?></a>
                         </th>
                     </tr>

@@ -37,8 +37,8 @@
     <table class="table" cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th><?php _e('Name') ; ?></th>
-                <th><?php _e('Title') ; ?></th>
+                <th class="col-name"><?php _e('Name') ; ?></th>
+                <th class="col-title"><?php _e('Title') ; ?></th>
             </tr>
         </thead>
         <tbody>
