@@ -437,3 +437,37 @@ textarea{
 .pagination-right {
   text-align: right;
 }
+.pagination-input{
+	float: left;
+	padding:0;
+	line-height: 30px;
+	text-decoration: none;
+	border: 1px solid #ddd;
+	border-left-width: 0;
+
+	.rounded-corners(0 3px 3px 0);
+}
+.pagination-input input{
+	height:30px;
+	margin:0;
+	border:0;
+	padding:0;
+	width:40px;
+	text-align:center;
+	.rounded-corners(0);
+	vertical-align:top;
+}
+.pagination-input button{
+	height:30px;
+	background:white;
+	border:0;
+	margin:0;
+	padding:0 10px;
+	border-left:solid 1px @color-gray-soft;
+	cursor: pointer;
+	color:#018BE3;
+	font-weight:bold;
+	vertical-align:top;
+	font-size:13px;
+	.rounded-corners(0 3px 3px 0);
+}
