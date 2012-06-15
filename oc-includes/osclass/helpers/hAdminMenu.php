@@ -245,8 +245,10 @@
         
         foreach($aMenu as $key => $value) {
             $aMenu_actions = array();
-            $url = str_replace(osc_admin_base_url(true) , '', $value[1] ) ;
-            $url = str_replace(osc_admin_base_url()     , '', $value[1] ) ;
+            $url = $value[1];
+            $url = str_replace(osc_admin_base_url(true) , '', $url ) ;
+            $url = str_replace(osc_admin_base_url()     , '', $url ) ;
+            
             array_push($aMenu_actions, $url);
             if( array_key_exists('sub', $value) ) {
                 $aSubmenu = $value['sub'] ;
@@ -257,12 +259,13 @@
                     }
                 }
             }
+            
             if(in_array($url_actual , $aMenu_actions)) {
                 $something_selected = true;
                 $menu_id = $value[2];
             } 
         }
-        
+
         if($something_selected)
             return $menu_id;
         
@@ -270,8 +273,9 @@
         $url_actual = preg_replace('/(&action=.+)/', '', $url_actual);
         foreach($aMenu as $key => $value) {
             $aMenu_actions = array();
-            $url = str_replace(osc_admin_base_url(true) , '', $value[1] ) ;
-            $url = str_replace(osc_admin_base_url()     , '', $value[1] ) ;
+            $url = $value[1];
+            $url = str_replace(osc_admin_base_url(true) , '', $url ) ;
+            $url = str_replace(osc_admin_base_url()     , '', $url ) ;
 
             array_push($aMenu_actions, $url);
             if( array_key_exists('sub', $value) ) {
@@ -288,6 +292,7 @@
                 $menu_id = $value[2];
             } 
         }
+        error_log('RETURNED VALUE '. $menu_id);
         return $menu_id;
     }
 ?>
