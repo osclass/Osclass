@@ -98,7 +98,7 @@
                 $row[] = '<input type="checkbox" name="id[]"" value="' . $aRow['pk_i_id'] . '"" />' ;
                 $row[] = $aRow['s_internal_name'] . $actions ;
                 $row[] = $content['s_title'] ;
-                $row[] = $aRow['i_order'] . ' <img id="up" onclick="order_up(' . $aRow['pk_i_id'] . ');" style="cursor:pointer; width:15px; height:15px;" src="' . osc_current_admin_theme_url('images/arrow_up.png') . '"/>  <img id="down" onclick="order_down(' . $aRow['pk_i_id'] . ');" style="cursor:pointer; width:15px; height:15px; margin-left: 10px;" src="' . osc_current_admin_theme_url('images/arrow_down.png') .'"/>' ;
+                $row[] = '<div class="order-box">' . $aRow['i_order'] . ' <img class="up" onclick="order_up(' . $aRow['pk_i_id'] . ');" src="' . osc_current_admin_theme_url('images/arrow_up.png') . '"/>  <img class="down" onclick="order_down(' . $aRow['pk_i_id'] . ');" src="' . osc_current_admin_theme_url('images/arrow_down.png') .'"/></div>' ;
 
                 $this->result['aaData'][] = $row ;
             }
