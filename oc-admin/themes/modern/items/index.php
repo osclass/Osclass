@@ -113,12 +113,6 @@
             .hide {
                 display: none !important;
             }
-            table.table thead .sorting_desc {
-                background: url("<?php echo osc_current_admin_theme_url('images/sort_desc.png'); ?>") no-repeat scroll right center transparent;
-            }
-            table.table thead .sorting_asc {
-                background: url("<?php echo osc_current_admin_theme_url('images/sort_asc.png'); ?>") no-repeat scroll right center transparent;
-            }
         </style>
         <?php
     }
