@@ -92,7 +92,7 @@
         <input type="hidden" name="page" value="pages" />
         <div id="bulk-actions">
             <label>
-                <select id="action" name="bulk_actions" class="select-box-extra">
+                <select id="action" name="action" class="select-box-extra">
                     <option value=""><?php _e('Bulk actions'); ?></option>
                     <option value="delete"><?php _e('Delete'); ?></option>
                     <?php $onclick_bulkactions= 'onclick="javascript:return confirm(\'' . osc_esc_js( __('You are doing bulk actions. Are you sure you want to continue?') ) . '\')"'; ?>
