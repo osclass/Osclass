@@ -112,8 +112,8 @@ function customHead() { ?>
                                     html += ' &middot; ';
                                     html += '<a onclick="delete_field(\''+ret.field_id+'\');"><?php _e('Delete') ; ?></a>';
                                 html += '</div>';
+                                html += '<div class="edit content_list_'+ret.field_id+'"></div>';
                             html += '</div>';
-                            html += '<div class="edit content_list_'+ret.field_id+'"></div>';
                         html += '</li>';
                         $("#ul_fields").append(html);
                         show_iframe('content_list_'+ret.field_id, ret.field_id);
