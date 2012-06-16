@@ -10,7 +10,7 @@ class OCadmin_tools extends OCadminTest {
      * Import sql
      * Remove imported data
      */
-    function testImportData()
+    function atestImportData()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -62,7 +62,7 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->waitForPageToLoad("30000");
         $this->selenium->click("//input[@id='backup_sql']");
         $this->selenium->waitForPageToLoad("300000");
-        $this->assertTrue($this->selenium->isTextPresent("Backup has been done properly"), "Backup database.");
+        $this->assertTrue($this->selenium->isTextPresent("Backup has completed successfully"), "Backup database.");
         // REMOVE FILE
         foreach (glob(osc_base_path() . "OSClass_mysqlbackup.*") as $filename) {
             unlink($filename);
@@ -73,7 +73,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Backup oclass
      */
-    function atestBackupZip()
+    function testBackupZip()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
