@@ -133,7 +133,7 @@
             $this->mSearch->addField('SUM(s.`i_num_offensive`) as i_num_offensive');
             $this->mSearch->addField('SUM(s.`i_num_expired`) as i_num_expired');
             // having
-            $this->mSearch->setHaving('i_num_spam > 0 OR i_num_bad_classified > 0 OR i_num_repeated > 0 OR i_num_offensive > 0 OR i_num_expired > 0');
+            $this->mSearch->addHaving('i_num_spam > 0 OR i_num_bad_classified > 0 OR i_num_repeated > 0 OR i_num_offensive > 0 OR i_num_expired > 0');
             
             $this->mSearch->addConditions(sprintf(" %st_item.pk_i_id ", DB_TABLE_PREFIX));
             $this->mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
@@ -141,6 +141,7 @@
             // do Search
             $list_items = $this->mSearch->doSearch(true) ;
             $this->items = Item::newInstance()->extendCategoryName( $list_items );
+            
             $this->total_filtered = $this->mSearch->countAll();
             $this->total = $this->mSearch->count() ;
             
@@ -210,7 +211,6 @@
             if( !isset($this->_get['iDisplayLength']) ) {
                 $this->_get['iDisplayLength'] = 10 ;
             }
-            
             $p_iPage      = 1;
             if( !is_numeric(Params::getParam('iPage')) || Params::getParam('iPage') < 1 ) {
                 Params::setParam('iPage', $p_iPage );
@@ -356,7 +356,7 @@
                     $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View comments') . '</a>' ;
                 }
                 if( ItemResource::newInstance()->countResources( $aRow['pk_i_id'] ) > 0 ) {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=media&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View media') . '</a>' ;
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=media&amp;action=list&amp;resourceId=' . $aRow['pk_i_id'] . '">' . __('View media') . '</a>' ;
                 }
                 
                 $options_more = osc_apply_filter('more_actions_manage_items', $options_more);

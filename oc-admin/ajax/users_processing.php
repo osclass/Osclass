@@ -67,18 +67,21 @@
          */
         private function getDBParams()
         {
+            // default values
+            if( !isset($this->_get['iDisplayStart']) ) {
+                $this->_get['iDisplayStart'] = 0 ;
+            }
+            $p_iPage      = 1;
+            if( !is_numeric(Params::getParam('iPage')) || Params::getParam('iPage') < 1 ) {
+                Params::setParam('iPage', $p_iPage );
+                $this->iPage = $p_iPage ;
+            } else {
+                $this->iPage = Params::getParam('iPage') ;
+            }
+            
             $this->order_by['column_name'] = 'pk_i_id';
             $this->order_by['type'] = 'DESC';
             foreach($this->_get as $k=>$v) {
-                if( $k == 'iDisplayStart' ) {
-                    $this->start = intval($v) ;
-                }
-                if( $k == 'iDisplayLength' ) {
-                    $this->limit = intval($v) ;
-                }
-                if( $k == 'sEcho' ) {
-                    $this->sEcho = intval($v) ;
-                }
                 if( $k == 'sSearch' ) {
                     $this->search = $v ;
                 }
@@ -91,6 +94,11 @@
                     $this->order_by['type'] = $v ;
                 }
             }
+            // set start and limit using iPage param
+            $start = ($this->iPage - 1) * $this->_get['iDisplayLength'];
+            
+            $this->start = intval( $start ) ;
+            $this->limit = intval( $this->_get['iDisplayLength'] ) ;
         }
         
         public function toArrayFormat()
