@@ -1210,16 +1210,18 @@
                 $aMimesAllowed = array();
                 $aExt = explode(',', osc_allowed_extension() );
                 foreach($aExt as $ext){
-                    $mime = $mimes[$ext];
-                    if( is_array($mime) ){
-                        foreach($mime as $aux){
-                            if( !in_array($aux, $aMimesAllowed) ) {
-                                array_push($aMimesAllowed, $aux );
+                    if(isset($mimes[$ext])) {
+                        $mime = $mimes[$ext];
+                        if( is_array($mime) ){
+                            foreach($mime as $aux){
+                                if( !in_array($aux, $aMimesAllowed) ) {
+                                    array_push($aMimesAllowed, $aux );
+                                }
                             }
-                        }
-                    } else {
-                        if( !in_array($mime, $aMimesAllowed) ) {
-                            array_push($aMimesAllowed, $mime );
+                        } else {
+                            if( !in_array($mime, $aMimesAllowed) ) {
+                                array_push($aMimesAllowed, $mime );
+                            }
                         }
                     }
                 }
