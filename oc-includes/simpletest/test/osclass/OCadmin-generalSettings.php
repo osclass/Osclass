@@ -113,7 +113,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->assertEqual( $this->selenium->getValue('keep_original_image'), $keep_original_image=='off'?'on':'off', 'Media tab, check keep_original_image');
 
         $this->selenium->type('maxSizeKb'   , $maxSizeKb);
-        $this->selenium->type('allowedExt'  , $allowedExt);
+        $this->selenium->type('allowedExt'  , 'png,jpg,gif');//$allowedExt);
         $this->selenium->type('dimThumbnail', $dimThumbnail);
         $this->selenium->type('dimPreview'  , $dimPreview);
         $this->selenium->type('dimNormal'   , $dimNormal);

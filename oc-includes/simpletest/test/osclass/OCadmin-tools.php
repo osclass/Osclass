@@ -62,7 +62,7 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->waitForPageToLoad("30000");
         $this->selenium->click("//input[@id='backup_sql']");
         $this->selenium->waitForPageToLoad("300000");
-        $this->assertTrue($this->selenium->isTextPresent("Backup has been done properly"), "Backup database.");
+        $this->assertTrue($this->selenium->isTextPresent("Backup has completed successfully"), "Backup database.");
         // REMOVE FILE
         foreach (glob(osc_base_path() . "OSClass_mysqlbackup.*") as $filename) {
             unlink($filename);
@@ -208,10 +208,10 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->open( $url );
         $this->selenium->waitForPageToLoad(10000);
         $this->selenium->type('user', $this->_adminUser);
-        $this->selenium->type('password', $this->_password."a");
+        $this->selenium->type('password', $this->_password."ax");
         $this->selenium->click('submit');
         $this->selenium->waitForPageToLoad(1000);
-        $this->assertTrue($this->selenium->isTextPresent("Sorry, incorrect password."), "HTTP REFERER INCORRECT ONE TIME");
+        $this->assertTrue($this->selenium->isTextPresent("Sorry, incorrect password"), "HTTP REFERER INCORRECT ONE TIME");
         $this->selenium->type('user', $this->_adminUser);
         $this->selenium->type('password', $this->_password);
         $this->selenium->click('submit');
@@ -223,15 +223,15 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->open( $url );
         $this->selenium->waitForPageToLoad(10000);
         $this->selenium->type('user', $this->_adminUser);
-        $this->selenium->type('password', $this->_password."a");
+        $this->selenium->type('password', $this->_password."ax");
         $this->selenium->click('submit');
         $this->selenium->waitForPageToLoad(1000);
-        $this->assertTrue($this->selenium->isTextPresent("Sorry, incorrect password."), "HTTP REFERER INCORRECT TWICE");
+        $this->assertTrue($this->selenium->isTextPresent("Sorry, incorrect password"), "HTTP REFERER INCORRECT TWICE");
         $this->selenium->type('user', $this->_adminUser);
         $this->selenium->type('password', $this->_password."ab");
         $this->selenium->click('submit');
         $this->selenium->waitForPageToLoad(1000);
-        $this->assertTrue($this->selenium->isTextPresent("Sorry, incorrect password."), "HTTP REFERER INCORRECT TWICE");
+        $this->assertTrue($this->selenium->isTextPresent("Sorry, incorrect password"), "HTTP REFERER INCORRECT TWICE");
         $this->selenium->type('user', $this->_adminUser);
         $this->selenium->type('password', $this->_password);
         $this->selenium->click('submit');
@@ -281,14 +281,14 @@ class OCadmin_tools extends OCadminTest {
             $this->selenium->select("//select[@id='bulk_actions']", "label=regexp:\\s*Delete");
             sleep(4);
             $this->selenium->click("//input[@id='bulk_apply']");
-            $this->selenium->waitForPageToLoad("10000");
+            $this->selenium->waitForPageToLoad("60000");
 
             if($check) {
                 $this->assertTrue($this->selenium->isTextPresent("listings have been deleted"), "Can't delete item. ERROR");
             }
     }
     
-    public function insertItem($cat, $title, $description, $price, $regionId, $cityId, $cityArea, $aPhotos, $user, $email , $logged = 0)
+    public function insertItem($cat, $title, $description, $price, $regionId, $cityId, $cityArea, $bPhotos, $user, $email , $logged = 0)
     {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Items");
