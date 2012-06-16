@@ -73,7 +73,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Backup oclass
      */
-    function testBackupZip()
+    function atestBackupZip()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -119,7 +119,7 @@ class OCadmin_tools extends OCadminTest {
     }
     
     
-    function atestLocations()
+    function testLocations()
     {
         
         $this->loginWith();
