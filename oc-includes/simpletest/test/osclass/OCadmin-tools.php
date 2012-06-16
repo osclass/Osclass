@@ -36,7 +36,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Import bad file. 
      */
-    function testImportDataFail()
+    function atestImportDataFail()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -53,7 +53,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Backup database
      */
-    function testBackupSql()
+    function atestBackupSql()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -73,7 +73,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Backup oclass
      */
-    function testBackupZip()
+    function atestBackupZip()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -90,7 +90,7 @@ class OCadmin_tools extends OCadminTest {
     }
     
     
-    function testMaintenance()
+    function atestMaintenance()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -119,7 +119,7 @@ class OCadmin_tools extends OCadminTest {
     }
     
     
-    function testLocations()
+    function atestLocations()
     {
         
         $this->loginWith();
@@ -184,7 +184,7 @@ class OCadmin_tools extends OCadminTest {
     /*
      * Test if the http_referer functionality is working on admin
      */
-    function testHTTPReferer()
+    function atestHTTPReferer()
     {
         $this->HTTPReferer( osc_admin_base_url(true)."?page=items" , "Manage listings");
         $this->HTTPReferer( osc_admin_base_url(true)."?page=stats&action=comments" , "Comments Statistics");
