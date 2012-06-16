@@ -37,7 +37,7 @@
                         <h2 class="render-title"><?php _e('Import') ; ?></h2>
                         <form id="backup_form" name="backup_form" action="<?php echo osc_admin_base_url(true) ; ?>" enctype="multipart/form-data" method="post">
                             <input type="hidden" name="page" value="tools" />
-                            <input type="hidden" name="action" value="import_tools" />
+                            <input type="hidden" name="action" value="import_post" />
                             <fieldset>
                             <div class="form-horizontal">
                             <div class="form-row">

@@ -310,11 +310,34 @@
                                         if( Params::getParam('iDisplayLength') == '' ) {
                                             Params::setParam('iDisplayLength', 10 ) ;
                                         }
+                                        $p_iPage      = 1;
+                                        if( is_numeric(Params::getParam('iPage')) && Params::getParam('iPage') >= 1 ) {
+                                            $p_iPage = Params::getParam('iPage');
+                                        }
+                                        Params::setParam('iPage', $p_iPage);
                                         $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
                                         
                                         require_once osc_admin_base_path() . 'ajax/users_processing.php';
                                         $users_processing = new UsersProcessingAjax(Params::getParamsAsArray("get"));
                                         $aData = $users_processing->result() ;
+                                        
+                                        $page  = (int)Params::getParam('iPage');
+                                        if(count($aData['aaData']) == 0 && $page!=1) {
+                                            $total = (int)$aData['iTotalDisplayRecords'];
+                                            $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
+
+                                            $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+
+                                            if($maxPage==0) {
+                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage=1', $url) ;
+                                                $this->redirectTo($url) ;
+                                            }
+
+                                            if($page > 1) {   
+                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
+                                                $this->redirectTo($url) ;
+                                            }
+                                        }
                                         
                                         $this->_exportVariableToView('aUsers', $aData) ;
                                         $this->_exportVariableToView('locales', OSCLocale::newInstance()->listAllEnabled() );

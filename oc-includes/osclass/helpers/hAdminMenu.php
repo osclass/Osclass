@@ -292,7 +292,7 @@
                 $menu_id = $value[2];
             } 
         }
-        error_log('RETURNED VALUE '. $menu_id);
+        
         return $menu_id;
     }
 ?>

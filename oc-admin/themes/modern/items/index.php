@@ -39,11 +39,6 @@
 
     //customize Head
     function customHead() { ?>
-    <?php 
-        $pageActual = Params::getParam('iPage');
-        $urlActual  = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
-        $urlActual  = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
-    ?>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <?php ItemForm::location_javascript_new('admin') ; ?>
         <script type="text/javascript">
@@ -109,27 +104,6 @@
                         }
                     });
                 });
-                
-                
-                function isInt(x) {
-                    var y=parseInt(x);
-                    if (isNaN(y)) return false;
-                    return x==y && x.toString()==y.toString();
-                }
-                
-
-                $("#gotoPage").keypress(function(event) {
-                    if ( event.which == 13 ) {
-                        var value   = $("#gotoPage").attr('value');
-                        if(!isInt(value)) {
-                            alert('Page must be positive integer');
-                        }
-                        var url     = "<?php echo $urlActual."&iPage="?>"+value;
-                        console.log(url);
-                        window.location=url;
-                    }
-                });
-
             });
         </script>
         <style>
@@ -390,34 +364,7 @@
         </div>
     </form>
 </div>
-<div class="has-pagination">
-    <ul>
-        <li>
-            <span class="list-first"><?php _e('Page'); ?></span>
-        </li>
-        <li class="pagination-input">
-            <input id="gotoPage" type="text" name="go_to_page" value="<?php echo Params::getParam('iPage'); ?>"/><button type="submit"><?php _e('Go!'); ?></button>
-        </li>
-    </ul>
-<?php
-    $pageActual = Params::getParam('iPage');
-    $urlActual  = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
-    $urlActual  = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
-    $pageTotal  = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
-    $params     = array(
-        'total'    => $pageTotal,
-        'selected' => $pageActual - 1,
-        'url'      => $urlActual . '&iPage={PAGE}',
-        'sides'    => 5
-    );
-
-    if( $pageTotal > 1 ) {
-        $pagination = new Pagination($params);
-        $aux = $pagination->doPagination();
-        echo $aux;
-    }
+<?php 
+    osc_show_pagination_admin($aData);
 ?>
-    
-    
-</div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

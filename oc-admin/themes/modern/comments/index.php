@@ -125,22 +125,7 @@
         </div>
     </form>
 </div>
-<div class="has-pagination">
-<?php
-    $pageTotal = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
-    
-    $pageActual = Params::getParam('iPage') ;
-    $urlActual = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
-    $urlActual = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
-    $params = array('total'    => $pageTotal
-                   ,'selected' => $pageActual-1
-                   ,'url'      => $urlActual.'&iPage={PAGE}'
-                   ,'sides'    => 5
-        );
-    $pagination = new Pagination($params);
-    $aux = $pagination->doPagination();
-
-    echo $aux;
+<?php 
+    osc_show_pagination_admin($aData);
 ?>
-</div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
