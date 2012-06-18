@@ -43,9 +43,7 @@
     osc_add_filter('admin_title', 'customPageTitle');
 
     function customHead() {
-    $items        = __get("items") ;
-    $reports      = __get("reports") ;
-    $max          = __get("max") ;
+    $items        = __get("item_stats") ;
         ?>
      <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script type="text/javascript">
@@ -160,11 +158,12 @@
     <div class="grid-row grid-50">
         <div class="row-wrapper">
             <div class="widget-box">
-                <div class="widget-box-title"><h3><?php _e('Statistics'); ?> <select class="widget-box-selector select-box-big input-medium"><option><?php _e('New listings'); ?></option><option>New comments</option></select></h3></div>
+                <div class="widget-box-title"><h3><?php _e('Statistics'); ?><?php /*<select class="widget-box-selector select-box-big input-medium"><option><?php _e('New listings'); ?></option><option>New comments</option></select>*/ ?></h3></div>
                 <div class="widget-box-content">
                     <b class="stats-title"><?php _e('Number of new listings'); ?></b>
+                    <div class="stats-detail"><?php printf(__('Total number of listings: %s'), $numItems); ?></div>
                     <div id="placeholder" class="graph-placeholder"></div>
-                    <a href="#" class="btn"><?php _e('Go to the statistics page'); ?></a>
+                    <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items" class="btn"><?php _e('Go to the statistics page'); ?></a>
                 </div>
             </div>
         </div>

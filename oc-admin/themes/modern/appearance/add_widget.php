@@ -62,7 +62,7 @@
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <script type="text/javascript">
             tinyMCE.init({
-                 mode : "textareas",
+                mode : "textareas",
                 theme : "advanced",
                 skin: "cirkuit",
                 width: "500px",

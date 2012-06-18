@@ -83,27 +83,26 @@
         </script>
         <?php ItemForm::location_javascript_new('admin') ; ?>
         <?php if( osc_images_enabled_at_items() ) ItemForm::photos_javascript() ; ?>
-        <style>
-            #item-action-list {
-                padding-bottom: 1em;
-                height: 15px;
-            }
-            #item-action-list li{
-                display: inline;
-                list-style-type: none;
-            }
-        </style>
         <?php
     }
     osc_add_hook('admin_header','customHead');
     
     $new_item   = __get('new_item') ;
     $actions    = __get('actions') ;
-?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<h2 class="render-title"><?php echo customText('title') ; ?></h2>
-<div id="item-form">
-        <ul id="error_list"></ul>
+
+    osc_add_filter('render-wrapper','render_offset');
+    function render_offset(){
+        return 'row-offset';
+    }
+osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+<div id="pretty-form">
+<div class="grid-row grid-50 no-bottom-margin">
+    <div class="row-wrapper">
+        <h2 class="render-title"><?php echo customText('title') ; ?></h2>
+    </div>
+</div>
+<div class="grid-row grid-50 no-bottom-margin">
+    <div class="row-wrapper">
         <?php if( !$new_item ) { ?>
         <ul id="item-action-list">
             <?php foreach($actions as $aux) { ?>
@@ -114,96 +113,104 @@
         </ul>
         <div class="clear"></div>
         <?php } ?>
-        <?php printLocaleTabs(); ?>
-        <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data" name="item">
-            <input type="hidden" name="page" value="items" />
-            <?php if( $new_item ) { ?>
-                <input type="hidden" name="action" value="post_item" />
-            <?php } else { ?>
-                <input type="hidden" name="action" value="item_edit_post" />
-                <input type="hidden" name="id" value="<?php echo osc_item_id() ; ?>" />
-                <input type="hidden" name="secret" value="<?php echo osc_item_secret() ; ?>" />
-            <?php } ?>
-            <?php /********************************* */ ?>
-            
-            <?php /********************************* */ ?>
-            <div id="left-side">
-                <?php printLocaleTitle(osc_get_locales()); ?>
-                <div>
-                    <label><?php _e('Category') ; ?></label>
-                    <?php ItemForm::category_select() ; ?>
-                </div>
-                <div class="input-description-wide">
-                    <?php printLocaleDescription(osc_get_locales()); ?>
-                </div>
-                <?php if(osc_price_enabled_at_items()) { ?>
-                    <div>
-                        <label><?php _e('Price') ; ?></label>
-                        <?php ItemForm::price_input_text() ; ?>
-                        <span class="input-currency"><?php ItemForm::currency_select() ; ?></span>
-                    </div>
-                <?php } ?>
-
-                <?php if( osc_images_enabled_at_items() ) { ?>
-                    <label><?php _e('Photos') ; ?></label>
-                    <?php ItemForm::photos() ; ?>
-                    <div id="photos">
-                        <?php if( osc_max_images_per_item() == 0 || ( osc_max_images_per_item() != 0 && osc_count_item_resources() < osc_max_images_per_item() ) ) { ?>
-                        <div>
-                            <input type="file" name="photos[]" /> (<?php _e('optional') ; ?>)
-                        </div>
-                        <?php } ?>
-                    </div>
-                    <p><a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo') ; ?></a></p>
-                <?php } ?>
-                <?php if( $new_item ) {
-                        ItemForm::plugin_post_item() ;
-                    } else {
-                        ItemForm::plugin_edit_item() ;
-                    }
-                ?>
-            </div>
-            <div id="right-side">
-                <div class="well ui-rounded-corners">
-                    <h3 class="label">User</h3>
-                    <?php ItemForm::user_select(null, null, __('Non-registered user')) ; ?>
-                    <div id="contact_info">
-                        <div class="input-has-placeholder input-separate-top">
-                            <label><?php _e('Name') ; ?></label>
-                            <?php ItemForm::contact_name_text() ; ?>
-                        </div>
-                        <div class="input-has-placeholder input-separate-top">
-                            <label><?php _e('E-mail') ; ?></label>
-                            <?php ItemForm::contact_email_text() ; ?>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="well ui-rounded-corners input-separate-top">
-                    <h3 class="label">Location</h3>
-                    <?php ItemForm::country_select() ; ?>
-                    <div class="input-has-placeholder input-separate-top">
-                        <label><?php _e('Region') ; ?></label>
-                        <?php ItemForm::region_text() ; ?>
-                    </div>
-                    <div class="input-has-placeholder input-separate-top">
-                        <label><?php _e('City') ; ?></label>
-                        <?php ItemForm::city_text() ; ?>
-                    </div>
-                    <div class="input-has-placeholder input-separate-top">
-                        <label><?php _e('City area') ; ?></label>
-                        <?php ItemForm::city_area_text() ; ?>
-                    </div>
-                    <div class="input-has-placeholder input-separate-top">
-                        <label><?php _e('Address') ; ?></label>
-                        <?php ItemForm::address_text() ; ?>
-                    </div>
-                </div>
-            </div>
-            <div class="clear"></div>
-            <div class="form-actions">
-                <input type="submit" value="<?php echo osc_esc_html(customText('button')); ?>" class="btn btn-submit" />
-            </div>
-            </form>
+    </div>
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
+<div class="grid-row grid-100">
+    <div class="row-wrapper">
+        <div id="item-form">
+                <ul id="error_list"></ul>
+                <?php printLocaleTabs(); ?>
+                <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data" name="item">
+                    <input type="hidden" name="page" value="items" />
+                    <?php if( $new_item ) { ?>
+                        <input type="hidden" name="action" value="post_item" />
+                    <?php } else { ?>
+                        <input type="hidden" name="action" value="item_edit_post" />
+                        <input type="hidden" name="id" value="<?php echo osc_item_id() ; ?>" />
+                        <input type="hidden" name="secret" value="<?php echo osc_item_secret() ; ?>" />
+                    <?php } ?>
+                    <?php /********************************* */ ?>
+                    
+                    <?php /********************************* */ ?>
+                    <div id="left-side">
+                        <?php printLocaleTitle(osc_get_locales()); ?>
+                        <div>
+                            <label><?php _e('Category') ; ?></label>
+                            <?php ItemForm::category_select() ; ?>
+                        </div>
+                        <div class="input-description-wide">
+                            <?php printLocaleDescription(osc_get_locales()); ?>
+                        </div>
+                        <?php if(osc_price_enabled_at_items()) { ?>
+                            <div>
+                                <label><?php _e('Price') ; ?></label>
+                                <?php ItemForm::price_input_text() ; ?>
+                                <span class="input-currency"><?php ItemForm::currency_select() ; ?></span>
+                            </div>
+                        <?php } ?>
+
+                        <?php if( osc_images_enabled_at_items() ) { ?>
+                            <label><?php _e('Photos') ; ?></label>
+                            <?php ItemForm::photos() ; ?>
+                            <div id="photos">
+                                <?php if( osc_max_images_per_item() == 0 || ( osc_max_images_per_item() != 0 && osc_count_item_resources() < osc_max_images_per_item() ) ) { ?>
+                                <div>
+                                    <input type="file" name="photos[]" /> (<?php _e('optional') ; ?>)
+                                </div>
+                                <?php } ?>
+                            </div>
+                            <p><a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo') ; ?></a></p>
+                        <?php } ?>
+                        <?php if( $new_item ) {
+                                ItemForm::plugin_post_item() ;
+                            } else {
+                                ItemForm::plugin_edit_item() ;
+                            }
+                        ?>
+                    </div>
+                    <div id="right-side">
+                        <div class="well ui-rounded-corners">
+                            <h3 class="label">User</h3>
+                            <?php ItemForm::user_select(null, null, __('Non-registered user')) ; ?>
+                            <div id="contact_info">
+                                <div class="input-has-placeholder input-separate-top">
+                                    <label><?php _e('Name') ; ?></label>
+                                    <?php ItemForm::contact_name_text() ; ?>
+                                </div>
+                                <div class="input-has-placeholder input-separate-top">
+                                    <label><?php _e('E-mail') ; ?></label>
+                                    <?php ItemForm::contact_email_text() ; ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="well ui-rounded-corners input-separate-top">
+                            <h3 class="label">Location</h3>
+                            <?php ItemForm::country_select() ; ?>
+                            <div class="input-has-placeholder input-separate-top">
+                                <label><?php _e('Region') ; ?></label>
+                                <?php ItemForm::region_text() ; ?>
+                            </div>
+                            <div class="input-has-placeholder input-separate-top">
+                                <label><?php _e('City') ; ?></label>
+                                <?php ItemForm::city_text() ; ?>
+                            </div>
+                            <div class="input-has-placeholder input-separate-top">
+                                <label><?php _e('City area') ; ?></label>
+                                <?php ItemForm::city_area_text() ; ?>
+                            </div>
+                            <div class="input-has-placeholder input-separate-top">
+                                <label><?php _e('Address') ; ?></label>
+                                <?php ItemForm::address_text() ; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="form-actions">
+                        <input type="submit" value="<?php echo osc_esc_html(customText('button')); ?>" class="btn btn-submit" />
+                    </div>
+                    </form>
+        </div>
+    </div>
+</div>
+</div>
