@@ -36,18 +36,13 @@
                                     $this->redirectTo( osc_admin_base_url(true) );
                 break;
                 default:            //default dashboard page (main page at oc-admin)
-                                    $this->_exportVariableToView( "numUsers", User::newInstance()->count() );
-                                    $this->_exportVariableToView( "numAdmins", Admin::newInstance()->count() );
+                                    $this->_exportVariableToView( "numItemsPerCategory", osc_get_non_empty_categories() );
 
+                                    $this->_exportVariableToView( "numUsers", User::newInstance()->count() );
                                     $this->_exportVariableToView( "numItems", Item::newInstance()->count() );
 
-                                    $this->_exportVariableToView( "numItemsSpam", Item::newInstance()->totalItems(null, 'SPAM') );
-                                    $this->_exportVariableToView( "numItemsBlock", Item::newInstance()->totalItems(null, 'DISABLED') );
-                                    $this->_exportVariableToView( "numItemsInactive", Item::newInstance()->totalItems(null, 'INACTIVE') );
-
-                                    $this->_exportVariableToView( "numItemsPerCategory", osc_get_non_empty_categories() );
-                                    $this->_exportVariableToView( "newsList", osc_listNews() );
                                     $this->_exportVariableToView( "comments", ItemComment::newInstance()->getLastComments(5) );
+                                    $this->_exportVariableToView( "newsList", osc_listNews() );
 
                                     // stats
                                     $items = array();
@@ -55,12 +50,20 @@
                                     for($k = 10; $k >= 0; $k--) {
                                         $items[date( 'Y-m-d', mktime(0, 0, 0, date("m"), date("d") - $k, date("Y")) )] = 0;
                                     }
-
                                     foreach($stats_items as $item) {
                                         $items[$item['d_date']] = $item['num'];
                                     }
+                                    $users = array();
+                                    $stats_users = Stats::newInstance()->new_users_count(date( 'Y-m-d H:i:s',  mktime(0, 0, 0, date("m"), date("d") - 10, date("Y")) ),'day') ;
+                                    for($k = 10; $k >= 0; $k--) {
+                                        $users[date( 'Y-m-d', mktime(0, 0, 0, date("m"), date("d") - $k, date("Y")) )] = 0 ;
+                                    }
+                                    foreach($stats_users as $user) {
+                                        $users[$user['d_date']] = $user['num'] ;
+                                    }
 
                                     $this->_exportVariableToView("item_stats", $items);
+                                    $this->_exportVariableToView("user_stats", $users);
                                     //calling the view...
                                     $this->doView('main/index.php');
             }
