@@ -161,6 +161,7 @@
                 <div class="widget-box-title"><h3><?php _e('Statistics'); ?><?php /*<select class="widget-box-selector select-box-big input-medium"><option><?php _e('New listings'); ?></option><option>New comments</option></select>*/ ?></h3></div>
                 <div class="widget-box-content">
                     <b class="stats-title"><?php _e('Number of new listings'); ?></b>
+                    <div class="stats-detail"><?php printf(__('Total number of listings: %s'), $numItems); ?></div>
                     <div id="placeholder" class="graph-placeholder"></div>
                     <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items" class="btn"><?php _e('Go to the statistics page'); ?></a>
                 </div>
