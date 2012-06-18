@@ -140,15 +140,15 @@
                 $(".toggle").bind("click", function(e) {
                     var list = $(this).parents('li').find('ul');
                     var li   = $(this).closest('li');
-                    if( $(this).attr('status') == 'collapsed' ) {
+                    if( $(this).hasClass('status-collapsed') ) {
                         $(li).removeClass('no-nest');
                         $(list).show();
-                        $(this).attr('status', 'expanded');
+                        $(this).removeClass('status-collapsed').addClass('status-expanded');
                         $(this).html('-');
                     } else {
                         $(li).addClass('no-nest');
                         $(list).hide();
-                        $(this).attr('status', 'collapsed');
+                        $(this).removeClass('status-expanded').addClass('status-collapsed');
                         $(this).html('+');
                     }
                 }) ;
@@ -299,12 +299,12 @@ function drawCategory($category,$isSubcategory = false){
         <div class="ico-childrens">
             <?php
         if($isSubcategory){
-            echo '<span class="toggle" status="expanded">-</span>';
+            echo '<span class="toggle status-expanded">-</span>';
         } else {
             if( $has_subcategories ) {
-                echo '<span class="toggle" status="collapsed">+</span>';
+                echo '<span class="toggle status-collapsed">+</span>';
             } else {
-                echo '<span class="toggle" status="expanded">-</span>';
+                echo '<span class="toggle status-expanded">-</span>';
             }
         }
         ?>

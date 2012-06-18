@@ -101,16 +101,16 @@
                             <a href="<?php echo $url_spam; ?>"><?php _e('Spam') ; ?></a>
                         </th>
                         <th class="<?php if($sort=='bad'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
-                            <a href="<?php echo $url_bad; ?>"><?php _e('misclassified') ; ?>
+                            <a href="<?php echo $url_bad; ?>"><?php _e('Misclassified') ; ?>
                         </th>
                         <th class="<?php if($sort=='rep'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
-                            <a href="<?php echo $url_rep; ?>"><?php _e('duplicated') ; ?>
+                            <a href="<?php echo $url_rep; ?>"><?php _e('Duplicated') ; ?>
                         </th>
                         <th class="<?php if($sort=='exp'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
-                            <a href="<?php echo $url_exp; ?>"><?php _e('expired') ; ?>
+                            <a href="<?php echo $url_exp; ?>"><?php _e('Expired') ; ?>
                         </th>
                         <th class="<?php if($sort=='off'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
-                            <a href="<?php echo $url_off; ?>"><?php _e('offensive') ; ?>
+                            <a href="<?php echo $url_off; ?>"><?php _e('Offensive') ; ?>
                         </th>
                         <th class="col-date <?php if($sort=='date'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
                             <a href="<?php echo $url_date; ?>"><?php _e('Date') ; ?>

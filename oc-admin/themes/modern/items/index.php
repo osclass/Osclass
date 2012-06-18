@@ -82,6 +82,12 @@
                     filters.toggle();
                 });*/
 
+                $("#dialog-delete").dialog({
+                    autoOpen: false,
+                    modal: true,
+                    title: '<?php echo osc_esc_js( __('Delete listing') ); ?>'
+                });
+
                 $('#display-filters').dialog({
                     autoOpen: false,
                     modal: true,
@@ -105,6 +111,11 @@
                     });
                 });
             });
+            function delete_dialog(item_id) {
+                $("#dialog-delete input[name='id[]']").attr('value', item_id);
+                $("#dialog-delete").dialog('open');
+                return false;
+            }
         </script>
         <style>
             .ui-autocomplete-loading {
@@ -367,4 +378,20 @@
 <?php 
     osc_show_pagination_admin($aData);
 ?>
+<form id="dialog-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions">
+    <input type="hidden" name="page" value="items" />
+    <input type="hidden" name="action" value="delete" />
+    <input type="hidden" name="id[]" value="" />
+    <div class="form-horizontal">
+        <div class="form-row">
+            <?php _e('Are you sure you want to delete this listing?'); ?>
+        </div>
+        <div class="form-actions">
+            <div class="wrapper">
+            <a class="btn" href="javascript:void();" onclick="$('#dialog-delete').dialog('close');"><?php _e('Cancel'); ?></a>
+            <input id="item-delete-input" type="submit" value="<?php echo osc_esc_html( __('Delete') ); ?>" class="btn btn-red" />
+            </div>
+        </div>
+    </div>
+</form>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
