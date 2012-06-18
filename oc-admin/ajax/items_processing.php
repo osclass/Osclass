@@ -120,8 +120,14 @@
             // column sort
             if( !key_exists($sort, $arraySortColumns) ) {
                 $sort       = 'dt_pub_date' ;
+                $this->mSearch->addHaving('i_num_spam > 0 OR i_num_bad_classified > 0 OR i_num_repeated > 0 OR i_num_offensive > 0 OR i_num_expired > 0');
             } else {
                 $sort = $arraySortColumns[$sort];
+                if($sort!='dt_pub_date') {
+                    $this->mSearch->addHaving($sort.' > 0');
+                } else {
+                    $this->mSearch->addHaving('i_num_spam > 0 OR i_num_bad_classified > 0 OR i_num_repeated > 0 OR i_num_offensive > 0 OR i_num_expired > 0');
+                }
             }
             
             $this->mSearch->order( $sort, $direction ) ;
@@ -132,8 +138,9 @@
             $this->mSearch->addField('SUM(s.`i_num_repeated`) as i_num_repeated');
             $this->mSearch->addField('SUM(s.`i_num_offensive`) as i_num_offensive');
             $this->mSearch->addField('SUM(s.`i_num_expired`) as i_num_expired');
+            
             // having
-            $this->mSearch->addHaving('i_num_spam > 0 OR i_num_bad_classified > 0 OR i_num_repeated > 0 OR i_num_offensive > 0 OR i_num_expired > 0');
+            
             
             $this->mSearch->addConditions(sprintf(" %st_item.pk_i_id ", DB_TABLE_PREFIX));
             $this->mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
