@@ -18,6 +18,7 @@
 
     function customPageHeader(){ ?>
         <h1><?php _e('Manage Comments') ; ?>
+            <a href="<?php echo osc_admin_base_url(true) . '?page=settings&action=comments' ; ?>" class="btn ico ico-32 ico-engine float-right"><?php _e('Settings'); ?></a>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
 	</h1>
 <?php
