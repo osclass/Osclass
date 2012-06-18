@@ -22,7 +22,7 @@
        <input type="hidden" name="cmd" value="_donations">
        <input type="hidden" name="business" value="info@osclass.org">
        <input type="hidden" name="item_name" value="OSClass project">
-       <input type="hidden" name="return" value="http://osclass.org/page/donate_thanks">
+       <input type="hidden" name="return" value="<?php echo osc_admin_base_url(); ?>">
        <input type="hidden" name="currency_code" value="USD">
        <input type="hidden" name="lc" value="US" />
     </form>
