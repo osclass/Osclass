@@ -11,6 +11,7 @@ sftp-config*
 # Config OSClass
 config.php
 oc-includes/osclass/t/config.php
+.maintenance
 
 # oc-content
 oc-content/debug*.log
