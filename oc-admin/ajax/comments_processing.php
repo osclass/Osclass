@@ -161,7 +161,7 @@
                     $user = User::newInstance()->findByPrimaryKey( $comment['fk_i_user_id'] );
                     $comment['s_author_name'] = $user['s_email'];
                 }
-                $row[] = $comment['s_author_name'] . ' (<a target="_blank" href="' . osc_item_url( $comment['fk_i_item_id'] ) . '">' . $comment['s_title'] . '</a>)'. $actions  ;
+                $row[] = $comment['s_author_name'] . ' (<a target="_blank" href="' . osc_item_url_ns( $comment['fk_i_item_id'] ) . '">' . $comment['s_title'] . '</a>)'. $actions  ;
                 $row[] = $comment['s_body'] ;
                 $row[] = $comment['dt_pub_date'] ;
 
