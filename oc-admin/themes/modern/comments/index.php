@@ -17,7 +17,7 @@
      */
 
     function customPageHeader(){ ?>
-        <h1><?php _e('Manage Comments') ; ?>
+        <h1><?php _e('Listing') ; ?>
             <a href="<?php echo osc_admin_base_url(true) . '?page=settings&action=comments' ; ?>" class="btn ico ico-32 ico-engine float-right"><?php _e('Settings'); ?></a>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
 	</h1>
@@ -128,5 +128,5 @@
 </div>
 <?php 
     osc_show_pagination_admin($aData);
+    osc_current_admin_theme_path( 'parts/footer.php' );
 ?>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
