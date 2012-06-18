@@ -323,8 +323,9 @@
                                         } else {
                                             osc_add_flash_error_message( _m("The listing hasn't been unmarked as")." $stat", 'admin') ;
                                         }
-
-                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items&stat=".$stat ) ;
+                                        
+                                        $this->redirectTo( $_SERVER['HTTP_REFERER'] );
+//                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items&stat=".$stat ) ;
 
                 break;
                 case 'item_edit':       // edit item
