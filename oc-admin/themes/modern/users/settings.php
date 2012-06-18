@@ -49,19 +49,19 @@
                     <div class="form-label"> <?php _e('Settings') ; ?></div>
                     <div class="form-controls">
                         <label id="enabled_users" class="form-label-checkbox">
-                            <input type="checkbox" name="enabled_users" <?php echo ( osc_users_enabled() ? 'checked="checked"' : '' ) ; ?> value="1" />
+                            <input type="checkbox" id="enabled_users" name="enabled_users" <?php echo ( osc_users_enabled() ? 'checked="checked"' : '' ) ; ?> value="1" />
                             <?php _e('Users enabled') ; ?>
                         </label>
                     </div>
                     <div class="form-controls separate-top-medium">
                         <label id="enabled_user_registration">
-                            <input type="checkbox" name="enabled_user_registration" <?php echo ( osc_user_registration_enabled() ? 'checked="checked"' : '' ) ; ?> value="1" />
+                            <input type="checkbox" id="enabled_user_registration" name="enabled_user_registration" <?php echo ( osc_user_registration_enabled() ? 'checked="checked"' : '' ) ; ?> value="1" />
                             <?php _e('Anyone can register') ; ?>
                         </label>
                     </div>
                     <div class="form-controls separate-top-medium">
                         <label id="enabled_user_validation">
-                            <input type="checkbox" name="enabled_user_validation" <?php echo ( osc_user_validation_enabled() ? 'checked="checked"' : '' ) ; ?> value="1" />
+                            <input type="checkbox" id="enabled_user_validation" name="enabled_user_validation" <?php echo ( osc_user_validation_enabled() ? 'checked="checked"' : '' ) ; ?> value="1" />
                             <?php _e('Users need to validate their account') ; ?>
                         </label>
                     </div>
@@ -70,7 +70,7 @@
                     <div class="form-label"> <?php _e('Admin notifications') ; ?></div>
                     <div class="form-controls">
                         <label id="notify_new_user" class="form-label-checkbox">
-                            <input type="checkbox" name="notify_new_user" <?php echo ( osc_notify_new_user() ? 'checked="checked"' : '' ) ; ?> value="1" />
+                            <input type="checkbox" id="notify_new_user" name="notify_new_user" <?php echo ( osc_notify_new_user() ? 'checked="checked"' : '' ) ; ?> value="1" />
                             <?php _e('When a new user is registered') ; ?>
                         </label>
                     </div>
