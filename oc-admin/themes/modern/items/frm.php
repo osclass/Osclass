@@ -22,11 +22,13 @@
         $new_item = __get('new_item') ;
         $text = array();
         if( $new_item ) {
-            $text['title']  = __('Add listing') ;
-            $text['button'] = __('Add listing') ;
+            $text['title']    = __('Listing');
+            $text['subtitle'] = __('Add listing');
+            $text['button']   = __('Add listing');
         } else {
-            $text['title']  = __('Edit listing') ;
-            $text['button'] = __('Update listing') ;
+            $text['title']    = __('Listing');
+            $text['subtitle'] = __('Edit listing');
+            $text['button']   = __('Update listing');
         }
         return $text[$return];
     }
@@ -38,7 +40,7 @@
     osc_add_hook('admin_page_header','customPageHeader');
 
     function customPageTitle($string) {
-        return sprintf('%s &raquo; %s', customText('title'), $string);
+        return sprintf('%s &raquo; %s', customText('subtitle'), $string);
     }
     osc_add_filter('admin_title', 'customPageTitle');
 
@@ -98,7 +100,7 @@ osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="pretty-form">
 <div class="grid-row grid-50 no-bottom-margin">
     <div class="row-wrapper">
-        <h2 class="render-title"><?php echo customText('title') ; ?></h2>
+        <h2 class="render-title"><?php echo customText('subtitle') ; ?></h2>
     </div>
 </div>
 <div class="grid-row grid-50 no-bottom-margin">
