@@ -429,57 +429,29 @@
                 if($title != $aRow['s_title']) {
                     $title .= '...' ;
                 }
-                // show more options
-                $options_more = array();
-                if( $aRow['b_active'] ) {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') .'</a>' ;
-                } else {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=ACTIVE">' . __('Activate') .'</a>' ;
-                }
-                if( $aRow['b_enabled'] ) {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=DISABLE">' . __('Block') .'</a>' ;
-                } else {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=ENABLE">' . __('Unblock') .'</a>' ;
-                }
-                if( $aRow['b_premium'] ) {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $aRow['pk_i_id'] . '&amp;value=0">' . __('Unmark as premium') .'</a>' ;
-                } else {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $aRow['pk_i_id'] . '&amp;value=1">' . __('Mark as premium') .'</a>' ;
-                }
-                if( $aRow['b_spam'] ) {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $aRow['pk_i_id'] . '&amp;value=0">' . __('Unmark as spam') .'</a>' ;
-                } else {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $aRow['pk_i_id'] . '&amp;value=1">' . __('Mark as spam') .'</a>' ;
-                }
                 
-                // general options
-                $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=item_edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>' ;
-                $onclick_delete = 'onclick="javascript:return confirm(\'' . osc_esc_js( __('This action can not be undone. Are you sure you want to continue?') ) . '\')"' ;
-                $options[] = '<a ' . $onclick_delete . ' href="' . osc_admin_base_url(true) . '?page=items&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
-                
-                // only show if there are data
-                if( ItemComment::newInstance()->totalComments( $aRow['pk_i_id'] ) > 0 ) {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View comments') . '</a>' ;
+                if( $aRow['i_num_spam'] > 0 ) {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;stat=spam">' . __('Clear Spam') .'</a>' ;
+                } 
+                if( $aRow['i_num_bad_classified'] > 0 ) {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;stat=bad">' . __('Clear Misclassified ') .'</a>' ;
                 }
-                if( ItemResource::newInstance()->countResources( $aRow['pk_i_id'] ) > 0 ) {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=media&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View media') . '</a>' ;
+                if( $aRow['i_num_repeated'] > 0 ) {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;stat=duplicated">' . __('Clear Duplicated') .'</a>' ;
                 }
-                
-                $options_more = osc_apply_filter('more_actions_manage_items', $options_more);
-                // more actions
-                $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL ;
-                foreach( $options_more as $actual ) { 
-                    $moreOptions .= '<li>'.$actual."</li>".PHP_EOL;
+                if( $aRow['i_num_offensive'] > 0 ) {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;stat=offensive">' . __('Clear Offensive') .'</a>' ;
                 }
-                $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL ;
-                
+                if( $aRow['i_num_expired'] > 0 ) {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;stat=expired">' . __('Clear Expired') .'</a>' ;
+                }
+                               
                 $options = osc_apply_filter('actions_manage_items', $options);
                 // create list of actions
                 $auxOptions = '<ul>'.PHP_EOL ;
                 foreach( $options as $actual ) {
                     $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
                 }
-                $auxOptions  .= $moreOptions ;
                 $auxOptions  .= '</ul>'.PHP_EOL ;
                 
                 $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
