@@ -142,4 +142,8 @@ function resetLayout(){
     } else {
        $('#show-more').show(); 
     }
+    //Footer
+    if($('#content-render').height() < height ){
+        $('#footer-wrapper').css('margin-bottom',-1*(height-$('#content-render').height()) );
+    }
 }
