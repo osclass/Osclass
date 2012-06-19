@@ -221,19 +221,23 @@ class OCadmin_languages extends OCadminTest {
     private function isDisabledOCAdmin($lang)
     {
         $this->selenium->open( osc_admin_base_url(true) ) ;
-            $this->selenium->click("//a[@id='settings_language']");
+        $this->selenium->click("//a[@id='settings_language']");
         $this->selenium->waitForPageToLoad("10000");
-
-        return $this->selenium->isTextPresent("//table/tbody/tr[contains(.,'$lang')]/td/div/ul/li/a[text()='Disable (oc-admin)']");
+        
+        $text = $this->selenium->getText("//table/tbody/tr/td[contains(.,'$lang')]/div/ul/li/a[text()='Disable (oc-admin)']");
+        return preg_match('/Disable \(oc-admin\)/i', $text);
+//        return $this->selenium->isTextPresent("//table/tbody/tr/td[contains(.,'$lang')]/div/ul/li/a[text()='Disable (oc-admin)']");
     }
 
     private function isDisabledWebsite($lang)
     {
         $this->selenium->open( osc_admin_base_url(true) ) ;
-            $this->selenium->click("//a[@id='settings_language']");
+        $this->selenium->click("//a[@id='settings_language']");
         $this->selenium->waitForPageToLoad("10000");
-
-        return $this->selenium->isTextPresent("//table/tbody/tr[contains(.,'$lang')]/td/div/ul/li/a[text()='Disable (website)']");
+        
+        $text = $this->selenium->getText("//table/tbody/tr/td[contains(.,'$lang')]/div/ul/li/a[text()='Disable (website)']");
+        return preg_match('/Disable \(website\)/i', $text);
+//        return $this->selenium->isTextPresent("//table/tbody/tr/td[contains(.,'$lang')]/div/ul/li/a[text()='Disable (website)']");
     }
 
     private function enableWebsite($lang)
