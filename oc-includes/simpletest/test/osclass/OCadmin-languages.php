@@ -22,7 +22,7 @@ class OCadmin_languages extends OCadminTest {
         $this->selenium->open( osc_admin_base_url(true) ) ;
         $this->selenium->click("//a[@id='settings_language']");
         $this->selenium->waitForPageToLoad("10000");
-        $this->selenium->click("//a[@id='button_open']");
+        $this->selenium->click("//a[text()='Add language']");
         $this->selenium->waitForPageToLoad("10000");
 
         if( $this->selenium->isTextPresent('To make the directory writable') ) {
@@ -47,7 +47,7 @@ class OCadmin_languages extends OCadminTest {
             $this->selenium->open( osc_admin_base_url(true) ) ;
             $this->selenium->click("//a[@id='settings_language']");
             $this->selenium->waitForPageToLoad("10000");
-            $this->selenium->click("//a[@id='button_open']");
+            $this->selenium->click("//a[text()='Add language']");
             $this->selenium->waitForPageToLoad("10000");
             $this->selenium->type("package", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/lang_es_ES_2.0.zip"));
             $this->selenium->click("//input[@type='submit']");
@@ -69,7 +69,7 @@ class OCadmin_languages extends OCadminTest {
             $this->selenium->open( osc_admin_base_url(true) ) ;
             $this->selenium->click("//a[@id='settings_language']");
             $this->selenium->waitForPageToLoad("10000");
-            $this->selenium->click("//a[@id='button_open']");
+            $this->selenium->click("//a[text()='Add language']");
             $this->selenium->waitForPageToLoad("10000");
             $this->selenium->type("package", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/logo.jpg"));
             $this->selenium->click("//input[@type='submit']");
@@ -99,6 +99,7 @@ class OCadmin_languages extends OCadminTest {
                 $this->checkWebsiteEnabled("Spanish");
             }
 
+            
             if( $this->isDisabledOCAdmin("Spanish") ) {
                 $this->enableOCAdmin("Spanish");
                 $this->logout();
@@ -127,10 +128,11 @@ class OCadmin_languages extends OCadminTest {
         if($this->canUpload){
             $this->loginWith() ;
             $this->selenium->open( osc_admin_base_url(true) );
+            $this->selenium->waitForPageToLoad("10000");
             $this->selenium->click("//a[@id='settings_language']");
             $this->selenium->waitForPageToLoad("10000");
-            $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Spanish')]");
-            $this->selenium->click("//table/tbody/tr/td[contains(.,'Spanish')]/div/div/a[text()='Edit']");
+            $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'Spanish')]");
+            $this->selenium->click("xpath=//table/tbody/tr[contains(.,'Spanish')]/td/div/ul/li/a[contains(.,'Edit')]");
             $this->selenium->waitForPageToLoad("10000");
             
             // TEST JS VALIDATION
@@ -156,8 +158,8 @@ class OCadmin_languages extends OCadminTest {
             
             $this->selenium->click("//a[@id='settings_language']");
             $this->selenium->waitForPageToLoad("10000");
-            $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Spanish')]");
-            $this->selenium->click("//table/tbody/tr/td[contains(.,'Spanish')]/div/div/a[text()='Edit']");
+            $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'Spanish')]");
+            $this->selenium->click("xpath=//table/tbody/tr[contains(.,'Spanish')]/td/div/ul/li/a[contains(.,'Edit')]");
             $this->selenium->waitForPageToLoad("10000");
             $this->selenium->type("s_name","Spanish upadated");
             $this->selenium->type("s_short_name","Spanish upadated");
@@ -195,10 +197,12 @@ class OCadmin_languages extends OCadminTest {
     private function doAction($action, $lang = "Spanish")
     {
         $this->selenium->open( osc_admin_base_url(true) );
-            $this->selenium->click("//a[@id='settings_language']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("//a[@id='settings_language']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->click("//table/tbody/tr/td[contains(.,'$lang')]/div/div/a[contains(.,'$action')]");
+        $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'$lang')]");
+        $this->selenium->click("xpath=//table/tbody/tr[contains(.,'$lang')]/td/div/ul/li/a[contains(.,'$action')]");
         $this->selenium->waitForPageToLoad("10000");
     }
     
@@ -220,12 +224,7 @@ class OCadmin_languages extends OCadminTest {
             $this->selenium->click("//a[@id='settings_language']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $thereare = $this->selenium->getXpathCount("//table/tbody/tr/td[contains(.,'$lang')]/div/div/a[text()='Disable (oc-admin)']");
-        if($thereare == 1) {
-            return FALSE;
-        }else{
-            return TRUE;
-        }
+        return $this->selenium->isTextPresent("//table/tbody/tr[contains(.,'$lang')]/td/div/ul/li/a[text()='Disable (oc-admin)']");
     }
 
     private function isDisabledWebsite($lang)
@@ -234,12 +233,7 @@ class OCadmin_languages extends OCadminTest {
             $this->selenium->click("//a[@id='settings_language']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $thereare = $this->selenium->getXpathCount("//table/tbody/tr/td[contains(.,'$lang')]/div/div/a[text()='Disable (website)']");
-        if($thereare == 1) {
-            return FALSE;
-        }else{
-            return TRUE;
-        }
+        return $this->selenium->isTextPresent("//table/tbody/tr[contains(.,'$lang')]/td/div/ul/li/a[text()='Disable (website)']");
     }
 
     private function enableWebsite($lang)
