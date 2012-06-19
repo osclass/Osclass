@@ -64,8 +64,10 @@
                             <div class="form-label"> <?php _e('Settings') ; ?></div>
                             <div class="form-controls">
                                 <div class="form-label-checkbox">
-                                    <input type="checkbox" <?php echo ( osc_reg_user_post() ? 'checked="checked"' : '') ; ?> name="reg_user_post" value="1" />
-                                    <?php _e('Only logged in users can post listings') ; ?>
+                                    <label>
+                                        <input type="checkbox" <?php echo ( osc_reg_user_post() ? 'checked="checked"' : '') ; ?> name="reg_user_post" value="1" />
+                                        <?php _e('Only logged in users can post listings') ; ?>
+                                    </label>
                                 </div>
                                 <div>
                                     <?php printf( __('An user has to wait %s seconds between each listing added'), '<input type="text" class="input-small" name="items_wait_time" value="' . osc_items_wait_time() . '" />') ; ?>
@@ -74,8 +76,10 @@
                                     </div>
                                 </div>
                                 <div class="separate-top-medium">
-                                    <input type="checkbox" <?php echo ( ( osc_moderate_items() == -1 ) ? '' : 'checked="checked"' ) ; ?> name="moderate_items" value="1" />
-                                    <?php _e('Users have to validate their listings') ; ?>
+                                    <label>
+                                        <input type="checkbox" <?php echo ( ( osc_moderate_items() == -1 ) ? '' : 'checked="checked"' ) ; ?> name="moderate_items" value="1" />
+                                        <?php _e('Users have to validate their listings') ; ?>
+                                    </label>
                                 </div>
                                 <div>
                                     <?php printf( __("After %s validated listings the user doesn't longer need to validate the listings"), '<input type="text" class="input-small" name="num_moderate_items" value="' . ( ( osc_moderate_items() == -1 ) ? '' : osc_moderate_items() ) . '" />') ; ?>
@@ -84,12 +88,16 @@
                                     </div>
                                 </div>
                                 <div class="separate-top-medium">
-                                    <input type="checkbox" <?php echo ( osc_logged_user_item_validation() ? 'checked="checked"' : '' ) ; ?> name="logged_user_item_validation" value="1" <?php echo ( ( osc_moderate_items() != -1 ) ? '' : 'disabled="disabled"') ; ?> />
-                                    <?php _e("Logged in users don't need to validate their listings") ; ?>
+                                    <label>
+                                        <input type="checkbox" <?php echo ( osc_logged_user_item_validation() ? 'checked="checked"' : '' ) ; ?> name="logged_user_item_validation" value="1" <?php echo ( ( osc_moderate_items() != -1 ) ? '' : 'disabled="disabled"') ; ?> />
+                                        <?php _e("Logged in users don't need to validate their listings") ; ?>
+                                    </label>
                                 </div>
                                 <div class="separate-top-medium">
-                                    <input type="checkbox" <?php echo ( ( osc_recaptcha_items_enabled() == '0' ) ? '' : 'checked="checked"' ) ; ?> name="enabled_recaptcha_items" value="1" />
-                                    <?php _e('Show reCAPTCHA in add/edit listing form') ; ?>
+                                    <label>
+                                        <input type="checkbox" <?php echo ( ( osc_recaptcha_items_enabled() == '0' ) ? '' : 'checked="checked"' ) ; ?> name="enabled_recaptcha_items" value="1" />
+                                        <?php _e('Show reCAPTCHA in add/edit listing form') ; ?>
+                                    </label>
                                     <div class="help-box"><?php _e('<strong>Remember</strong> that you must configure reCAPTCHA first') ; ?></div>
                                 </div>
                             </div>
@@ -98,12 +106,16 @@
                             <div class="form-label"> <?php _e('Contact publisher') ; ?></div>
                             <div class="form-controls">
                                 <div class="form-label-checkbox">
-                                   <input type="checkbox" <?php echo ( osc_reg_user_can_contact() ? 'checked="checked"' : '' ) ; ?> name="reg_user_can_contact" value="1" />
-                                    <?php _e('Only allow registered users to contact publisher') ; ?>
+                                    <label>
+                                        <input type="checkbox" <?php echo ( osc_reg_user_can_contact() ? 'checked="checked"' : '' ) ; ?> name="reg_user_can_contact" value="1" />
+                                        <?php _e('Only allow registered users to contact publisher') ; ?>
+                                    </label>
                                 </div>
                                 <div class="separate-top-medium">
-                                    <input type="checkbox" <?php echo ( osc_item_attachment() ? 'checked="checked"' : '' ) ; ?> name="item_attachment" value="1" />
-                                    <?php _e('Allow attach files in contact publisher form') ; ?>
+                                    <label>
+                                        <input type="checkbox" <?php echo ( osc_item_attachment() ? 'checked="checked"' : '' ) ; ?> name="item_attachment" value="1" />
+                                        <?php _e('Allow attach files in contact publisher form') ; ?>
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -111,16 +123,22 @@
                             <div class="form-label"> <?php _e('Notifications') ; ?></div>
                             <div class="form-controls">
                                 <div class="form-label-checkbox">
-                                    <input type="checkbox" <?php echo ( osc_notify_new_item() ? 'checked="checked"' : '') ; ?> name="notify_new_item" value="1" />
-                                    <?php _e('Notify admin when a new listing is added') ; ?>
+                                    <label>
+                                        <input type="checkbox" <?php echo ( osc_notify_new_item() ? 'checked="checked"' : '') ; ?> name="notify_new_item" value="1" />
+                                        <?php _e('Notify admin when a new listing is added') ; ?>
+                                    </label>
                                 </div>
                                 <div class="separate-top-medium">
-                                    <input type="checkbox" <?php echo ( osc_notify_contact_item() ? 'checked="checked"' : '' ) ; ?> name="notify_contact_item" value="1" />
-                                    <?php _e('Send a copy to admin of the contact publisher e-mail') ; ?>
+                                    <label>
+                                        <input type="checkbox" <?php echo ( osc_notify_contact_item() ? 'checked="checked"' : '' ) ; ?> name="notify_contact_item" value="1" />
+                                        <?php _e('Send a copy to admin of the contact publisher e-mail') ; ?>
+                                    </label>
                                 </div>
                                 <div class="separate-top-medium">
-                                    <input type="checkbox" <?php echo ( osc_notify_contact_friends() ? 'checked="checked"' : '' ) ; ?> name="notify_contact_friends" value="1" />
-                                    <?php _e('Send a copy to admin of the share listing e-mail') ; ?>
+                                    <label>
+                                        <input type="checkbox" <?php echo ( osc_notify_contact_friends() ? 'checked="checked"' : '' ) ; ?> name="notify_contact_friends" value="1" />
+                                        <?php _e('Send a copy to admin of the share listing e-mail') ; ?>
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -128,11 +146,15 @@
                             <div class="form-label"> <?php _e('Optional fields') ; ?></div>
                             <div class="form-controls">
                                 <div class="form-label-checkbox">
-                                    <input type="checkbox" <?php echo ( osc_price_enabled_at_items() ? 'checked="checked"' : '' ) ; ?> name="enableField#f_price@items" value="1"  />
-                                    <?php _e('Price') ; ?>
+                                    <label>
+                                        <input type="checkbox" <?php echo ( osc_price_enabled_at_items() ? 'checked="checked"' : '' ) ; ?> name="enableField#f_price@items" value="1"  />
+                                        <?php _e('Price') ; ?>
+                                    </label>
                                     <div class="separate-top-medium">
-                                        <input type="checkbox" <?php echo ( osc_images_enabled_at_items() ? 'checked="checked"' : '' ) ; ?> name="enableField#images@items" value="1" />
-                                        <?php _e('Attach images') ; ?>
+                                        <label>
+                                            <input type="checkbox" <?php echo ( osc_images_enabled_at_items() ? 'checked="checked"' : '' ) ; ?> name="enableField#images@items" value="1" />
+                                            <?php _e('Attach images') ; ?>
+                                        </label>
                                     </div>
                                     <div class="separate-top-medium">
                                         <?php printf( __('Attach %s images per listing'), '<input type="text" class="input-small" name="numImages@items" value="' . osc_max_images_per_item() . '" />' ) ; ?>
@@ -150,4 +172,4 @@
                 </div>
                 <!-- /settings form -->
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
