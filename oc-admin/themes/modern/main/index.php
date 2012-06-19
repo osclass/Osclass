@@ -16,15 +16,11 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $numUsers            = __get('numUsers');
-    $numAdmins           = __get('numAdmins');
-    $numItems            = __get('numItems');
-    $numItemsSpam        = __get('numItemsSpam');
-    $numItemsBlock       = __get('numItemsBlock');
-    $numItemsInactive    = __get('numItemsInactive');
     $numItemsPerCategory = __get('numItemsPerCategory');
-    $newsList            = __get('newsList');
+    $numItems            = __get('numItems');
+    $numUsers            = __get('numUsers');
     $comments            = __get('comments');
+    $newsList            = __get('newsList');
 
     osc_add_filter('render-wrapper','render_offset');
     function render_offset() {
@@ -43,23 +39,19 @@
     osc_add_filter('admin_title', 'customPageTitle');
 
     function customHead() {
-    $items        = __get("item_stats") ;
+        $items = __get('item_stats');
+        $users = __get('user_stats');
         ?>
-     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script type="text/javascript">
-            // Load the Visualization API and the piechart package.
             google.load('visualization', '1', {'packages':['corechart']});
+            google.setOnLoadCallback(drawChartListing);
+            google.setOnLoadCallback(drawChartUser);
 
-            // Set a callback to run when the Google Visualization API is loaded.
-            google.setOnLoadCallback(drawChart);
-
-            // Callback that creates and populates a data table, 
-            // instantiates the pie chart, passes in the data and
-            // draws it.
-            function drawChart() {
+            function drawChartListing() {
                 var data = new google.visualization.DataTable();
                 data.addColumn('string', '<?php _e('Date') ; ?>');
-                data.addColumn('number', '<?php _e('Items') ; ?>');
+                data.addColumn('number', '<?php _e('Listings') ; ?>');
                 data.addColumn({type:'boolean',role:'certainty'});
                 <?php $k = 0 ;
                 echo "data.addRows(" . count($items) . ");" ;
@@ -72,7 +64,7 @@
                 ?>
 
                 // Instantiate and draw our chart, passing in some options.
-                var chart = new google.visualization.AreaChart(document.getElementById('placeholder'));
+                var chart = new google.visualization.AreaChart(document.getElementById('placeholder-listing'));
                 chart.draw(data, {
                     colors:['#058dc7','#e6f4fa'],
                         areaOpacity: 0.1,
@@ -110,6 +102,73 @@
                         }
                     });
             }
+
+            function drawChartUser() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', '<?php _e('Date') ; ?>');
+                data.addColumn('number', '<?php _e('Users') ; ?>');
+                data.addColumn({type:'boolean',role:'certainty'});
+                <?php $k = 0 ;
+                echo "data.addRows(" . count($users) . ");" ;
+                foreach($users as $date => $num) {
+                    echo "data.setValue(" . $k . ', 0, "' . $date . '");';
+                    echo "data.setValue(" . $k . ", 1, " . $num . ");";
+                    $k++ ;
+                }
+                $k = 0 ;
+                ?>
+
+                // Instantiate and draw our chart, passing in some options.
+                var chart = new google.visualization.AreaChart(document.getElementById('placeholder-user'));
+                chart.draw(data, {
+                    colors:['#058dc7','#e6f4fa'],
+                    areaOpacity: 0.1,
+                    lineWidth:3,
+                    hAxis: {
+                    gridlines:{
+                        color: '#333',
+                        count: 3
+                    },
+                    viewWindow:'explicit',
+                    showTextEvery: 2,
+                    slantedText: false,
+                    textStyle:{
+                        color: '#058dc7',
+                        fontSize: 10
+                    }
+                    },
+                    vAxis: {
+                        gridlines:{
+                            color: '#DDD',
+                            count: 4,
+                            style: 'dooted'
+                        },
+                        viewWindow:'explicit',
+                        baselineColor:'#bababa'
+
+                    },
+                    pointSize: 6,
+                    legend: 'none',
+                    chartArea:{
+                        left:10,
+                        top:10,
+                        width:"95%",
+                        height:"88%"
+                    }
+                });
+            }
+
+            $(document).ready(function() {
+                $("#widget-box-stats-select").bind('change', function () {
+                    if( $(this).val() == 'users' ) {
+                        $('#widget-box-stats-listings').css('visibility', 'hidden');
+                        $('#widget-box-stats-users').css('visibility', 'visible');
+                    } else {
+                        $('#widget-box-stats-users').css('visibility', 'hidden');
+                        $('#widget-box-stats-listings').css('visibility', 'visible');
+                    }
+                });
+            });
         </script>
 <?php
     }
@@ -158,12 +217,20 @@
     <div class="grid-row grid-50">
         <div class="row-wrapper">
             <div class="widget-box">
-                <div class="widget-box-title"><h3><?php _e('Statistics'); ?><?php /*<select class="widget-box-selector select-box-big input-medium"><option><?php _e('New listings'); ?></option><option>New comments</option></select>*/ ?></h3></div>
-                <div class="widget-box-content">
-                    <b class="stats-title"><?php _e('Number of new listings'); ?></b>
-                    <div class="stats-detail"><?php printf(__('Total number of listings: %s'), $numItems); ?></div>
-                    <div id="placeholder" class="graph-placeholder"></div>
-                    <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items" class="btn"><?php _e('Go to the statistics page'); ?></a>
+                <div class="widget-box-title"><h3><?php _e('Statistics'); ?> <select id="widget-box-stats-select" class="widget-box-selector select-box-big input-medium"><option value="listing"><?php _e('New listings'); ?></option><option value="users"><?php _e('New users'); ?></option></select></h3></div>
+                <div class="widget-box-content widget-box-content-stats" style="overflow-y: visible;">
+                    <div id="widget-box-stats-listings" class="widget-box-stats">
+                        <b class="stats-title"><?php _e('New listings'); ?></b>
+                        <div class="stats-detail"><?php printf(__('Total number of listings: %s'), $numItems); ?></div>
+                        <div id="placeholder-listing" class="graph-placeholder"></div>
+                        <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items" class="btn"><?php _e('Listing statistics'); ?></a>
+                    </div>
+                    <div id="widget-box-stats-users" class="widget-box-stats" style="visibility: hidden;">
+                        <b class="stats-title"><?php _e('New users'); ?></b>
+                        <div class="stats-detail"><?php printf(__('Total number of users: %s'), $numUsers); ?></div>
+                        <div id="placeholder-user" class="graph-placeholder"></div>
+                        <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=users" class="btn"><?php _e('User statistics'); ?></a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -177,7 +244,7 @@
                     <ul class="list-latests">
                         <?php foreach($comments as $c) { ?>
                         <li>
-                            <strong><?php echo $c['s_author_name'] ; ?></strong> <?php _e('Commented on listing') ; ?> <em><a title="<?php echo $c['s_body'] ; ?>" target='_blank' href='<?php echo osc_base_url(true) . '?page=item&amp;id=' . $c['fk_i_item_id'] ; ?>' id='dt_link'><?php echo $c['s_title'] ; ?></a></em>
+                            <strong><?php echo $c['s_author_name'] ; ?></strong> <?php _e('commented on listing') ; ?> <em><a title="<?php echo $c['s_body'] ; ?>" target='_blank' href='<?php echo osc_base_url(true) . '?page=item&amp;id=' . $c['fk_i_item_id'] ; ?>' id='dt_link'><?php echo $c['s_title'] ; ?></a></em>
                         </li>
                         <?php } ?>
                     </ul>

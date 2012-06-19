@@ -78,14 +78,11 @@
                 <select id="bulk_actions" name="bulk_actions" class="select-box-extra">
                     <option value=""><?php _e('Bulk actions') ; ?></option>
                     <option value="delete_all"><?php _e('Delete') ; ?></option>
-                    <option value="activate_all"><?php _e('Activate') ; ?></option>
-                    <option value="deactivate_all"><?php _e('Deactivate') ; ?></option>
-                    <option value="disable_all"><?php _e('Block') ; ?></option>
-                    <option value="enable_all"><?php _e('Unblock') ; ?></option>
-                    <option value="premium_all"><?php _e('Mark as premium') ; ?></option>
-                    <option value="depremium_all"><?php _e('Unmark as premium') ; ?></option>
-                    <option value="spam_all"><?php _e('Mark as spam') ; ?></option>
-                    <option value="despam_all"><?php _e('Unmark as spam') ; ?></option>
+                    <option value="clear_spam_all"><?php _e('Clear Spam') ; ?></option>
+                    <option value="clear_bad_all"><?php _e('Clear Missclassified') ; ?></option>
+                    <option value="clear_dupl_all"><?php _e('Clear Duplicated') ; ?></option>
+                    <option value="clear_expi_all"><?php _e('Clear Expired') ; ?></option>
+                    <option value="clear_offe_all"><?php _e('Clear Offensive') ; ?></option>
                     <?php $onclick_bulkactions= 'onclick="javascript:return confirm(\'' . osc_esc_js( __('You are doing bulk actions. Are you sure you want to continue?') ) . '\')"' ; ?>
                 </select> <input type="submit" <?php echo $onclick_bulkactions; ?> id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
             </label>

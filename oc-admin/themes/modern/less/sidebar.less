@@ -33,10 +33,13 @@
 }
 #sidebar .oscmenu .current{
 	background:			 @color-gray-soft;
-
     -webkit-box-shadow: inset 0px 0px 10px 0px @color-gray-ash;
-        
     box-shadow: inset 0px 0px 10px 0px @color-gray-ash;
+}
+body.compact #sidebar .oscmenu .current{
+	background:			 @color-gray-hardblack;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 #show-more li{
 	float:left;
@@ -59,7 +62,12 @@
 	    font-size:			 12px;
 	    display:			 none;
 	}
-	#sidebar .oscmenu li li{
+	body.compact .oscmenu ul,
+	body.compact #hidden-menus{
+		left:				 50px !important;
+	}
+	#sidebar .oscmenu li li,
+	body.compact #sidebar .oscmenu li li{
 		width:			 auto;
 		height:			 auto;
 		border-bottom:   none;
@@ -72,19 +80,23 @@
 		margin-top:3px;
 		color:@color-gray-hardblack;
 	}
-	#sidebar .oscmenu li li a{
+	#sidebar .oscmenu li li a,
+	body.compact #sidebar .oscmenu li li a{
 		display:		 block;
 		padding:   		 2px 15px;
 		color:			 @color-gray-hardblack;
 
 	}
-	#sidebar .oscmenu li li a:hover{
+	#sidebar .oscmenu li li a:hover,
+	body.compact #sidebar .oscmenu li li a:hover{
 		background:		 @color-gray-light;
 	}
-	#sidebar .oscmenu li.hover ul{
+	#sidebar .oscmenu li.hover ul,
+	body.compact #sidebar .oscmenu li.hover ul{
 		display:	     block;
 	}
-	#sidebar .oscmenu li ul .arrow{
+	#sidebar .oscmenu li ul .arrow,
+	body.compact #sidebar .oscmenu li ul .arrow{
 		width:			 10px;
 		height:			 20px;
 		position: 		 absolute;
@@ -174,3 +186,22 @@
 		margin-top:		 0px;
 		background: 	 url('../images/arrow2.png');
 	}
+body.compact #sidebar{
+	background-color:@color-gray-black;
+	width:50px;
+}
+body.compact #sidebar .oscmenu li,
+body.compact #show-more li{
+	width:			     50px;
+	height:			     50px;
+	border-bottom:		 solid 1px @color-gray-hardblack;
+}
+body.compact #sidebar h3{
+	bottom:6px;
+	text-indent:-9999px;
+	font-size:0px;
+}
+body.compact #sidebar h3 .ico{
+	margin-left:	     7px;
+	zoom:0.8;
+}
