@@ -9,7 +9,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Create a new user
      */
-    function atestUserInsert()
+    function testUserInsert()
     {
         $this->loginWith() ;
         $this->insertUser() ;
@@ -20,7 +20,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Create a new user
      */
-    function atestUserInsertbyLink()
+    function testUserInsertbyLink()
     {
         $this->loginWith() ;
         $this->insertUserByLink() ;
@@ -31,7 +31,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Edit an user
      */
-    public function atestUserEdit()
+    public function testUserEdit()
     {
         $this->loginWith() ;
         $this->insertUser() ;
@@ -56,7 +56,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Test settings (users enabled, validation,...)
      */
-    public function atestSettings()
+    public function testSettings()
     {
         $this->loginWith() ;
         $this->settings();
@@ -66,7 +66,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Test bulk actions
      */
-    public function atestBulkActions()
+    public function testBulkActions()
     {
         $this->loginWith() ;
 
@@ -95,14 +95,14 @@ class OCadmin_users extends OCadminTest {
             $this->assertTrue( $this->selenium->isTextPresent("Users' settings have been updated") , "Can't update user settings. ERROR");
 
             if( $pref['enabled_users'] == 'on' ){
-                $this->assertEqual( $this->selenium->getValue('enabled_users'), 'off' ) ;
+                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']"), 'off' ) ;
             } else {
-                $this->assertEqual( $this->selenium->getValue('enabled_users'), 'on' ) ;
+                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']"), 'on' ) ;
             }
             if( $pref['enabled_user_validation'] == 'on' ){
-                $this->assertEqual( $this->selenium->getValue('enabled_user_validation'), 'off' ) ;
+                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']"), 'off' ) ;
             } else {
-                $this->assertEqual( $this->selenium->getValue('enabled_user_validation'), 'on' ) ;
+                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']"), 'on' ) ;
             }
             
         }
@@ -119,31 +119,41 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->click("//input[@id='bulk_apply']");
         $this->selenium->waitForPageToLoad("10000");        
         $this->assertTrue( $this->selenium->isTextPresent("One user has been deactivated") , "Deactivate user bulk action");
-        
+
+        $this->selenium->click("//a[@id='users_manage']");
+        $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//input[@id='check_all']");
         $this->selenium->select("action", "label=Resend activation");
         $this->selenium->click("//input[@id='bulk_apply']");
         $this->selenium->waitForPageToLoad("10000");        
         $this->assertTrue( $this->selenium->isTextPresent("Activation email sent to one user") , "Resend ACT user bulk action");
-        
+
+        $this->selenium->click("//a[@id='users_manage']");
+        $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//input[@id='check_all']");
         $this->selenium->select("action", "label=Activate");
         $this->selenium->click("//input[@id='bulk_apply']");
         $this->selenium->waitForPageToLoad("10000");        
         $this->assertTrue( $this->selenium->isTextPresent("One user has been activated") , "Activate user bulk action");
-        
+
+        $this->selenium->click("//a[@id='users_manage']");
+        $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//input[@id='check_all']");
         $this->selenium->select("action", "label=Block");
         $this->selenium->click("//input[@id='bulk_apply']");
         $this->selenium->waitForPageToLoad("10000");        
         $this->assertTrue( $this->selenium->isTextPresent("One user has been blocked") , "Block user bulk action");
-        
+
+        $this->selenium->click("//a[@id='users_manage']");
+        $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//input[@id='check_all']");
         $this->selenium->select("action", "label=Unblock");
         $this->selenium->click("//input[@id='bulk_apply']");
         $this->selenium->waitForPageToLoad("10000");        
         $this->assertTrue( $this->selenium->isTextPresent("One user has been unblocked") , "Unblock user bulk action");
-        
+
+        $this->selenium->click("//a[@id='users_manage']");
+        $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//input[@id='check_all']");
         $this->selenium->select("action", "label=Delete");
         $this->selenium->click("//input[@id='bulk_apply']");
@@ -171,14 +181,14 @@ class OCadmin_users extends OCadminTest {
             $this->assertTrue( $this->selenium->isTextPresent("Users' settings have been updated") , "Can't update user settings. ERROR");
 
             if( $pref['enabled_users'] == 'on' ){
-                $this->assertEqual( $this->selenium->getValue('enabled_users'), 'off' ) ;
+                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']"), 'off' ) ;
             } else {
-                $this->assertEqual( $this->selenium->getValue('enabled_users'), 'on' ) ;
+                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']"), 'on' ) ;
             }
             if( $pref['enabled_user_validation'] == 'on' ){
-                $this->assertEqual( $this->selenium->getValue('enabled_user_validation'), 'off' ) ;
+                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']"), 'off' ) ;
             } else {
-                $this->assertEqual( $this->selenium->getValue('enabled_user_validation'), 'on' ) ;
+                $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']"), 'on' ) ;
             }
         }
 
@@ -302,12 +312,9 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->click('link=Title new add test');
         $this->selenium->waitForPageToLoad("30000");
 
-        sleep(60);
-        
         $this->assertTrue( ($this->selenium->getValue('id=yourName') == 'real name user'), 'Name auto fill');
         $this->assertTrue( ($this->selenium->getValue('id=yourEmail') == 'test@mail.com'), 'Email auto fill');
-        $this->assertTrue( ($this->selenium->getValue('id=phoneNumber') == '666666666'), 'Phone auto fill');
-
+        
         // remove item
         $aItems = Item::newInstance()->findByEmail( 'foobar@mail.com' ) ;
         foreach($aItems as $item) {
@@ -456,19 +463,19 @@ class OCadmin_users extends OCadminTest {
         $this->assertTrue( $this->selenium->isTextPresent("Users' settings have been updated") , "Can't update user settings. ERROR");
 
         if( $pref['enabled_users'] == 'on' ){
-            $this->assertEqual( $this->selenium->getValue('enabled_users'), 'off' ) ;
+            $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']"), 'off' ) ;
         } else {
-            $this->assertEqual( $this->selenium->getValue('enabled_users'), 'on' ) ;
+            $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']"), 'on' ) ;
         }
         if( $pref['enabled_user_validation'] == 'on' ){
-            $this->assertEqual( $this->selenium->getValue('enabled_user_validation'), 'off' ) ;
+            $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']"), 'off' ) ;
         } else {
-            $this->assertEqual( $this->selenium->getValue('enabled_user_validation'), 'on' ) ;
+            $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']"), 'on' ) ;
         }
         if( $pref['enabled_user_registration'] == 'on' ){
-            $this->assertEqual( $this->selenium->getValue('enabled_user_registration'), 'off' ) ;
+            $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_registration']"), 'off' ) ;
         } else {
-            $this->assertEqual( $this->selenium->getValue('enabled_user_registration'), 'on' ) ;
+            $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_registration']"), 'on' ) ;
         }
 
         $this->selenium->click("enabled_users");
@@ -478,9 +485,9 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertEqual( $this->selenium->getValue('enabled_users')              ,  $pref['enabled_users'] ) ;
-        $this->assertEqual( $this->selenium->getValue('enabled_user_validation')    ,  $pref['enabled_user_validation'] ) ;
-        $this->assertEqual( $this->selenium->getValue('enabled_user_registration')  ,  $pref['enabled_user_registration'] ) ;
+        $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']")              ,  $pref['enabled_users'] ) ;
+        $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']")    ,  $pref['enabled_user_validation'] ) ;
+        $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_registration']")  ,  $pref['enabled_user_registration'] ) ;
 
         $this->assertTrue( $this->selenium->isTextPresent("Users' settings have been updated") , "Can't update user settings. ERROR");
 
