@@ -270,13 +270,25 @@
 <div class="relative">
     <div id="listing-toolbar">
         <div class="float-right">
-            <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="shortcut-filters">
+            <form method="get" action="<?php echo osc_admin_base_url(true); ?>"  class="inline select-items-per-page">
+                <?php foreach( Params::getParamsAsArray('get') as $key => $value ) { ?>
+                <?php if( $key != 'iDisplayLength' ) { ?>
+                <input type="hidden" name="<?php echo $key; ?>" value="<?php echo osc_esc_html($value); ?>" />
+                <?php } } ?>
+                <select name="iDisplayLength" class="select-box-extra select-box-medium float-left" onchange="this.form.submit();" >
+                    <option value="10"><?php printf(__('%d Listings'), 10); ?></option>
+                    <option value="25" <?php if( Params::getParam('iDisplayLength') == 25 ) echo 'selected'; ?> ><?php printf(__('%d Listings'), 25); ?></option>
+                    <option value="50" <?php if( Params::getParam('iDisplayLength') == 50 ) echo 'selected'; ?> ><?php printf(__('%d Listings'), 50); ?></option>
+                    <option value="100" <?php if( Params::getParam('iDisplayLength') == 100 ) echo 'selected'; ?> ><?php printf(__('%d Listings'), 100); ?></option>
+                </select>
+            </form>
+            <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="shortcut-filters" class="inline">
                 <input type="hidden" name="page" value="items" />
                 <input type="hidden" name="iDisplayLength" value="<?php echo $iDisplayLength;?>" />
                 <?php if($withFilters) { ?>
-                <a class="btn" href="<?php echo osc_admin_base_url(true).'?page=items'; ?>"><?php _e('Reset filters') ; ?></a>
+                <a id="btn-hide-filters" class="btn" href="<?php echo osc_admin_base_url(true).'?page=items'; ?>"><?php _e('Reset filters') ; ?></a>
                 <?php } ?>
-                <a href="#" class="btn <?php if($withFilters) { echo 'btn-red'; } ?>" id="btn-display-filters"><?php _e('Show filters') ; ?></a>
+                <a id="btn-display-filters" href="#" class="btn <?php if($withFilters) { echo 'btn-red'; } ?>"><?php _e('Show filters') ; ?></a>
 
                 <?php $opt = "oPattern"; if(Params::getParam('shortcut-filter') != '') { $opt = Params::getParam('shortcut-filter'); } ?>
                 <?php $classPattern = 'hide'; $classUser = 'hide'; $classItemId = 'hide'; ?>
@@ -304,14 +316,14 @@
             </form>
         </div>
     </div>
-    
+
     <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
         <input type="hidden" name="page" value="items" />
         <input type="hidden" name="action" value="bulk_actions" />
         
         <div id="bulk-actions">
             <label>
-                <select id="bulk_actions" name="bulk_actions" class="select-box-extra">
+                <select id="bulk_actions" name="bulk_actions" class="select-box-extra select-box-medium">
                     <option value=""><?php _e('Bulk actions') ; ?></option>
                     <option value="delete_all"><?php _e('Delete') ; ?></option>
                     <option value="activate_all"><?php _e('Activate') ; ?></option>
