@@ -129,6 +129,10 @@ function selectUi(thatSelect){
 function resetLayout(){
     var headerHeight = 50;
     var menuItemHeight = 80;
+    if($('body').hasClass('compact')){
+        menuItemHeight = 50;
+
+    }
     var height  = $(this).height()-headerHeight;
     var visible = Math.floor((height/menuItemHeight)-2)
     $('#sidebar').css('height',height);
