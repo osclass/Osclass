@@ -27,7 +27,7 @@
             <a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=settings" class="btn ico ico-32 ico-engine float-right"></a>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
             <a href="<?php echo osc_admin_base_url(true) . '?page=items&action=post' ; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add listing'); ?></a>
-	</h1>
+    </h1>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
@@ -76,18 +76,39 @@
                     }
                 });
 
-                // show filters
-                /*var filters = $('#show-filters-div').hide();
-                $('#show-filters-button').click(function(){
-                    filters.toggle();
-                });*/
-
+                // dialog delete
                 $("#dialog-delete").dialog({
                     autoOpen: false,
                     modal: true,
                     title: '<?php echo osc_esc_js( __('Delete listing') ); ?>'
                 });
 
+                // dialog bulk actions
+                $("#dialog-bulk-actions").dialog({
+                    autoOpen: false,
+                    modal: true
+                });
+                $("#bulk-actions-submit").click(function() {
+                    $("#datatablesForm").submit();
+                });
+                // dialog bulk actions function
+                $("#datatablesForm").submit(function() {
+                    if( $("#bulk_actions option:selected").val() == "" ) {
+                        return false;
+                    }
+
+                    if( $("#datatablesForm").attr('data-dialog-open') == "true" ) {
+                        return true;
+                    }
+
+                    $("#dialog-bulk-actions .form-row").html($("#bulk_actions option:selected").attr('data-dialog-content'));
+                    $("#bulk-actions-submit").html($("#bulk_actions option:selected").text());
+                    $("#datatablesForm").attr('data-dialog-open', 'true');
+                    $("#dialog-bulk-actions").dialog('open');
+                    return false;
+                });
+
+                // dialog filters
                 $('#display-filters').dialog({
                     autoOpen: false,
                     modal: true,
@@ -111,22 +132,18 @@
                     });
                 });
             });
+
+            // dialog delete function
             function delete_dialog(item_id) {
                 $("#dialog-delete input[name='id[]']").attr('value', item_id);
                 $("#dialog-delete").dialog('open');
                 return false;
             }
         </script>
-        <style>
-            .ui-autocomplete-loading {
-                display: block;
-                background: white url("<?php echo osc_current_admin_theme_url('images/loading.gif'); ?>") right center no-repeat;
-            }
-        </style>
         <?php
     }
     osc_add_hook('admin_header','customHead');
-    
+
     $users       = __get('users') ;
     $stat        = __get('stat') ;
     $categories  = __get('categories') ;
@@ -136,11 +153,11 @@
     $withFilters = __get('withFilters') ;
 
     $iDisplayLength = __get('iDisplayLength');
-    
+
     $aData      = __get('aItems') ;
-    
+
     $url_date   = __get('url_date') ;
-    
+
     $sort       = Params::getParam('sort');
     $direction  = Params::getParam('direction');
 
@@ -168,7 +185,6 @@
                         <?php ManageItemsForm::category_select($categories, null, null, true) ; ?>
                     </div>
                 </div>
-                
                 <div class="form-row">
                     <div class="form-label">
                         <?php _e('Country') ; ?>
@@ -239,7 +255,7 @@
                             <option value="" <?php echo ( (Params::getParam('b_enabled') == '') ? 'selected="selected"' : '' )?>><?php _e('ALL'); ?></option>
                             <option value="0" <?php echo ( (Params::getParam('b_enabled') == '0') ? 'selected="selected"' : '' )?>><?php _e('ON'); ?></option>
                             <option value="1" <?php echo ( (Params::getParam('b_enabled') == '1') ? 'selected="selected"' : '' )?>><?php _e('OFF'); ?></option>
-                        </select>   
+                        </select>
                     </div>
                 </div>
                 <div class="form-row">
@@ -316,26 +332,23 @@
             </form>
         </div>
     </div>
-
-    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post" data-dialog-open="false">
         <input type="hidden" name="page" value="items" />
         <input type="hidden" name="action" value="bulk_actions" />
-        
         <div id="bulk-actions">
             <label>
                 <select id="bulk_actions" name="bulk_actions" class="select-box-extra select-box-medium">
                     <option value=""><?php _e('Bulk actions') ; ?></option>
-                    <option value="delete_all"><?php _e('Delete') ; ?></option>
-                    <option value="activate_all"><?php _e('Activate') ; ?></option>
-                    <option value="deactivate_all"><?php _e('Deactivate') ; ?></option>
-                    <option value="disable_all"><?php _e('Block') ; ?></option>
-                    <option value="enable_all"><?php _e('Unblock') ; ?></option>
-                    <option value="premium_all"><?php _e('Mark as premium') ; ?></option>
-                    <option value="depremium_all"><?php _e('Unmark as premium') ; ?></option>
-                    <option value="spam_all"><?php _e('Mark as spam') ; ?></option>
-                    <option value="despam_all"><?php _e('Unmark as spam') ; ?></option>
-                    <?php $onclick_bulkactions= 'onclick="javascript:return confirm(\'' . osc_esc_js( __('You are doing bulk actions. Are you sure you want to continue?') ) . '\')"' ; ?>
-                </select> <input type="submit" <?php echo $onclick_bulkactions; ?> id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                    <option value="delete_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected listings?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ; ?></option>
+                    <option value="activate_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected listings?'), strtolower(__('Activate'))); ?>"><?php _e('Activate') ; ?></option>
+                    <option value="deactivate_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected listings?'), strtolower(__('Deactivate'))); ?>"><?php _e('Deactivate') ; ?></option>
+                    <option value="disable_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected listings?'), strtolower(__('Block'))); ?>"><?php _e('Block') ; ?></option>
+                    <option value="enable_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected listings?'), strtolower(__('Unblock'))); ?>"><?php _e('Unblock') ; ?></option>
+                    <option value="premium_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected listings?'), strtolower(__('Mark as premium'))); ?>"><?php _e('Mark as premium') ; ?></option>
+                    <option value="depremium_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected listings?'), strtolower(__('Unmark as premium'))); ?>"><?php _e('Unmark as premium') ; ?></option>
+                    <option value="spam_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected listings?'), strtolower(__('Mark as spam'))); ?>"><?php _e('Mark as spam') ; ?></option>
+                    <option value="despam_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected listings?'), strtolower(__('Unmark as spam'))); ?>"><?php _e('Unmark as spam') ; ?></option>
+                </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
             </label>
         </div>
         <div class="table-contains-actions">
@@ -400,10 +413,22 @@
         </div>
         <div class="form-actions">
             <div class="wrapper">
-            <a class="btn" href="javascript:void();" onclick="$('#dialog-delete').dialog('close');"><?php _e('Cancel'); ?></a>
-            <input id="item-delete-input" type="submit" value="<?php echo osc_esc_html( __('Delete') ); ?>" class="btn btn-red" />
+            <a class="btn" href="javascript:void(0);" onclick="$('#dialog-delete').dialog('close');"><?php _e('Cancel'); ?></a>
+            <input id="item-delete-submit" type="submit" value="<?php echo osc_esc_html( __('Delete') ); ?>" class="btn btn-red" />
             </div>
         </div>
     </div>
 </form>
+<div id="dialog-bulk-actions" title="<?php _e('Bulk actions'); ?>" class="has-form-actions">
+    <div class="form-horizontal">
+        <div class="form-row"></div>
+        <div class="form-actions">
+            <div class="wrapper">
+                <a class="btn" href="javascript:void(0);" onclick="$('#dialog-bulk-actions').dialog('close');"><?php _e('Cancel'); ?></a>
+                <a id="bulk-actions-submit" href="javascript:void(0);" class="btn btn-red" ><?php echo osc_esc_html( __('Delete') ); ?></a>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
