@@ -270,7 +270,7 @@
 <div class="relative">
     <div id="listing-toolbar">
         <div class="float-right">
-            <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="shortcut-filters">
+            <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="shortcut-filters" class="inline">
                 <input type="hidden" name="page" value="items" />
                 <input type="hidden" name="iDisplayLength" value="<?php echo $iDisplayLength;?>" />
                 <?php if($withFilters) { ?>
@@ -302,6 +302,12 @@
 
                 <input type="submit" class="btn submit-right" value="<?php echo osc_esc_html( __('Find') ) ; ?>">
             </form>
+            <form class="inline select-items-per-page">
+                <select name="show" class="select-box-extra select-box-medium">
+                    <option value="show-10"><?php _e('Show 10') ; ?></option>
+                </select>
+            </form>
+
         </div>
     </div>
     
