@@ -46,7 +46,8 @@
      * @return boolean
      */
     function osc_apply_filter($hook, $content) {
-        return Plugins::applyFilter($hook, $content);
+        $args = func_get_args();
+        return call_user_func_array(array('Plugins', 'applyFilter'), $args);
     }
     
     /**
