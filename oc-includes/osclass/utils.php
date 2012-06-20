@@ -981,6 +981,10 @@ function osc_check_language_update($update_uri, $version = null) {
 }
 
 function _get_market_url($type, $update_uri) {
+    if( $update_uri == null ) {
+        return false;
+    }
+
     if(in_array($type, array('plugins', 'themes', 'languages') ) ) {
         $uri = '';
         if(stripos("http://", $update_uri)===FALSE ) {
