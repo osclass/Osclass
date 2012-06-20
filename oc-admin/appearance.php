@@ -21,7 +21,7 @@
     {
         function __construct()
         {
-            parent::__construct() ;
+            parent::__construct();
         }
 
         //Business Layer...
@@ -173,7 +173,7 @@
                     osc_admin_toolbar_update_themes(true);
                     
                     $themes = WebThemes::newInstance()->getListThemes();
-                    $info = WebThemes::newInstance()->loadThemeInfo(osc_theme());
+                    $info   = WebThemes::newInstance()->loadThemeInfo(osc_theme());
 
                     //preparing variables for the view
                     $this->_exportVariableToView("themes", $themes);

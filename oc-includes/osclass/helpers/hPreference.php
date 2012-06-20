@@ -560,13 +560,22 @@
         $url = getPreference('marketURL');
         switch ($type) {
             case 'plugins':
-                $url .= 'plugins/'.$code;
+                $url .= 'section/plugins/';
+                if($code!='') {
+                    $url .= 'code/'. $code;
+                }
                 break;
             case 'themes':
-                $url .= 'themes/'.$code;
+                $url .= 'section/themes/';
+                if($code!='') {
+                    $url .= 'code/'. $code;
+                }
                 break;
             case 'languages':
-                $url .= 'languages/'.$code;
+                $url .= 'section/languages/';
+                if($code!='') {
+                    $url .= 'code/'. $code;
+                }
                 break;
             default:
                 break;

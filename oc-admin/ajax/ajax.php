@@ -848,7 +848,9 @@
                     echo json_encode($data);
                     break;                   
                 case 'local_market': // AVOID CROSS DOMAIN ROBLEMS OF AJAX REQUEST
-                    echo osc_file_get_contents(osc_market_url()."?section=".Params::getParam("section"));
+                    $marketPage = Params::getParam("mPage");
+                    error_log(osc_market_url(Params::getParam("section"))."page/".$marketPage);
+                    echo osc_file_get_contents(osc_market_url(Params::getParam("section"))."page/".$marketPage);
                     break;
                 case 'location_stats':
                     $workToDo = LocationsTmp::newInstance()->count() ;
