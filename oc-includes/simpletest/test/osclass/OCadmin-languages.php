@@ -228,9 +228,9 @@ class OCadmin_languages extends OCadminTest {
         $bool = preg_match('/Disable \(oc-admin\)/i', $text);
         if($bool) {
             echo "====> ".$text."   </br>";
-            return true;
-        } else {
             return false;
+        } else {
+            return true;
         }
     }
 
@@ -240,10 +240,9 @@ class OCadmin_languages extends OCadminTest {
         $this->selenium->click("//a[@id='settings_language']");
         $this->selenium->waitForPageToLoad("10000");
         
-        $text = $this->selenium->getText("//table/tbody/tr/td[contains(.,'$lang')]/div/ul/li/a[text()='Disable (website)']");
-        $bool = preg_match('/Disable \(website\)/i', $text);
+        $text = $this->selenium->getText("//table/tbody/tr/td[contains(.,'$lang')]/div/ul/li/a[text()='Enable (website)']");
+        $bool = preg_match('/Enable \(website\)/i', $text);
         if($bool) { 
-            echo "====> ".$text."   </br>";
             return true;
         } else {
             return false;
