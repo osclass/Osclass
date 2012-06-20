@@ -201,8 +201,8 @@ class OCadmin_languages extends OCadminTest {
         $this->selenium->click("//a[@id='settings_language']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'$lang')]");
-        $this->selenium->click("xpath=//table/tbody/tr[contains(.,'$lang')]/td/div/ul/li/a[contains(.,'$action')]");
+        $this->selenium->mouseOver("xpath=//table/tbody/tr/tr[contains(.,'$lang')]");
+        $this->selenium->click("xpath=//table/tbody/tr/td[contains(.,'$lang')]/div/ul/li/a[text()='$action']");
         $this->selenium->waitForPageToLoad("10000");
     }
     
@@ -225,8 +225,13 @@ class OCadmin_languages extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
         
         $text = $this->selenium->getText("//table/tbody/tr/td[contains(.,'$lang')]/div/ul/li/a[text()='Disable (oc-admin)']");
-        return preg_match('/Disable \(oc-admin\)/i', $text);
-//        return $this->selenium->isTextPresent("//table/tbody/tr/td[contains(.,'$lang')]/div/ul/li/a[text()='Disable (oc-admin)']");
+        $bool = preg_match('/Disable \(oc-admin\)/i', $text);
+        if($bool) {
+            echo "====> ".$text."   </br>";
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private function isDisabledWebsite($lang)
@@ -236,8 +241,13 @@ class OCadmin_languages extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
         
         $text = $this->selenium->getText("//table/tbody/tr/td[contains(.,'$lang')]/div/ul/li/a[text()='Disable (website)']");
-        return preg_match('/Disable \(website\)/i', $text);
-//        return $this->selenium->isTextPresent("//table/tbody/tr/td[contains(.,'$lang')]/div/ul/li/a[text()='Disable (website)']");
+        $bool = preg_match('/Disable \(website\)/i', $text);
+        if($bool) { 
+            echo "====> ".$text."   </br>";
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private function enableWebsite($lang)
