@@ -105,7 +105,7 @@
         $sMenu .= '</ul>'. PHP_EOL;
         
         $sMenu .= '<div id="show-more">'.PHP_EOL ;
-	$sMenu .= '<h3><a id="stats" href="#"><div class="ico ico-48 ico-more"></div>Show more</a></h3>'.PHP_EOL ;
+	$sMenu .= '<h3><a id="stats" href="#"><div class="ico ico-48 ico-more"></div>' . __('Show more') . '</a></h3>'.PHP_EOL ;
 	$sMenu .= '<ul id="hidden-menus">'.PHP_EOL ;
 	$sMenu .= '</ul>'.PHP_EOL ;
         $sMenu .= '</div>'.PHP_EOL ;

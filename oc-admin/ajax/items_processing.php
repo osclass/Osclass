@@ -386,7 +386,7 @@
  
                 // fill a row
                 $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>' ;
-                $row[] = '<a href="' . osc_item_url().'">' . $title. '</a>'. $actions  ;
+                $row[] = '<a href="' . osc_item_url().'" target="_blank">' . $title. '</a>'. $actions  ;
                 $row[] = $aRow['s_user_name'] ;
                 $row[] = $aRow['s_category_name'] ;
                 $row[] = $aRow['s_country'] ;
