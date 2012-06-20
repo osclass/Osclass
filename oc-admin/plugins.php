@@ -264,7 +264,7 @@
                         }
                         // prepare row 2
                         $sUpdate = '' ;
-                        if( osc_check_update(@$pInfo['plugin_update_uri'], @$pInfo['version']) ) {
+                        if( osc_check_plugin_update(@$pInfo['plugin_update_uri'], @$pInfo['version']) ) {
                             $sUpdate = '<a href="' . osc_admin_base_url(true) . '?page=market&amp;code=' . htmlentities($pInfo['plugin_update_uri']) . '">' . __("There's a new version available to update") . '</a>' ;
                         }
                         // prepare row 4

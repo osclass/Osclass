@@ -556,8 +556,22 @@
      *
      * @return string 
      */
-    function osc_market_url($code = '') {
-        return(getPreference('marketURL')."?code=".$code) ;
+    function osc_market_url($type = '', $code = '') {
+        $url = getPreference('marketURL');
+        switch ($type) {
+            case 'plugins':
+                $url .= 'plugins/'.$code;
+                break;
+            case 'themes':
+                $url .= 'themes/'.$code;
+                break;
+            case 'languages':
+                $url .= 'languages/'.$code;
+                break;
+            default:
+                break;
+        }
+        return $url;
     }
     
     /**

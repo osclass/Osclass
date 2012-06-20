@@ -404,7 +404,7 @@ function osc_admin_toolbar_update_plugins($force = false)
         $plugins    = Plugins::listAll();
         foreach($plugins as $plugin) {
             $info = osc_plugin_get_info($plugin);
-            if(osc_check_update(@$info['plugin_update_uri'], @$info['version'])) {
+            if(osc_check_plugin_update(@$info['plugin_update_uri'], @$info['version'])) {
                 $total++;
             }
         }
@@ -443,7 +443,7 @@ function osc_admin_toolbar_update_themes($force = false)
         
             $info = WebThemes::newInstance()->loadThemeInfo($theme);
             
-            if(osc_check_update(@$info['theme_update_uri'], @$info['version'])) {
+            if(osc_check_theme_update(@$info['theme_update_uri'], @$info['version'])) {
                 $total++;
             }
         }

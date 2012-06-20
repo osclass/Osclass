@@ -363,7 +363,7 @@
 
         static function checkUpdate($plugin) {
             $info = Plugins::getInfo($plugin);
-            return osc_check_update($info['plugin_update_uri'], $info['version']);
+            return osc_check_plugin_update($info['plugin_update_uri'], $info['version']);
         }
 
 
