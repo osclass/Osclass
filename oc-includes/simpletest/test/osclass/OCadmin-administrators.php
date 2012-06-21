@@ -206,19 +206,19 @@ class OCadmin_administrators extends OCadminTest {
         $this->selenium->click("//a[@id='items_manage']");
         $this->selenium->waitForPageToLoad(10000);
         sleep(4);
-        $this->assertTrue($this->selenium->isTextPresent("No data available in table"),"Moderator access");
+        $this->assertTrue($this->selenium->isTextPresent("Manage listings"),"Moderator access");
         
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='items_comments']");
         $this->selenium->waitForPageToLoad(10000);
         sleep(4);
-        $this->assertTrue($this->selenium->isTextPresent("No data available in table"),"Moderator access");
+        $this->assertTrue($this->selenium->isTextPresent("Manage comments"),"Moderator access");
         
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='items_media']");
         $this->selenium->waitForPageToLoad(10000);
         sleep(4);
-        $this->assertTrue($this->selenium->isTextPresent("No data available in table"),"Moderator access");
+        $this->assertTrue($this->selenium->isTextPresent("Manage Media"),"Moderator access");
         
         $this->selenium->open( osc_admin_base_url(true)."?page=admins" );
         $this->selenium->waitForPageToLoad(10000);
