@@ -2,7 +2,11 @@ $(function(){
 	$('#sidebar ul.oscmenu > li > ul').each(function(){
         var $submenu = $(this);
         $submenu.parent().hover(function(){
-            $submenu.css('margin-top',((80-$submenu.height())/2)-10);
+            var menuItemHeight = 80;
+            if($('body').hasClass('compact')){
+                menuItemHeight = 50;
+            }
+            $submenu.css('margin-top',((menuItemHeight-$submenu.height())/2)-10);
         },function(){
         });
     });
@@ -131,7 +135,6 @@ function resetLayout(){
     var menuItemHeight = 80;
     if($('body').hasClass('compact')){
         menuItemHeight = 50;
-
     }
     var height  = $(this).height()-headerHeight;
     var visible = Math.floor((height/menuItemHeight)-2)
