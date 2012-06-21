@@ -82,6 +82,9 @@ abstract class FrontendTest extends MyWebTestCase {
 
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
+        
+        $this->selenium->click("link=My account");
+        $this->selenium->waitForPageToLoad("30000");
     }
     
     /**
