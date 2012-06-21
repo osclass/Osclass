@@ -26,7 +26,6 @@ function customPageHeader(){ ?>
 osc_add_hook('admin_page_header','customPageHeader');
 //customize Head
 function customHead() { ?>
-<link href="<?php echo osc_current_admin_theme_styles_url('jquery.treeview.css') ; ?>" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.treeview.js') ; ?>"></script>
 <script type="text/javascript">
     function show_iframe(class_name, id) {
