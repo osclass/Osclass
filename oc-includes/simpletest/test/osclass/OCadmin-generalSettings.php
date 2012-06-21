@@ -773,6 +773,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Delete Country" ) ;
 
+        
         osc_reset_preferences();
     }
         
