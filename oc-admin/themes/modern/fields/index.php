@@ -115,6 +115,7 @@ function customHead() { ?>
                                 html += '<div class="edit content_list_'+ret.field_id+'"></div>';
                             html += '</div>';
                         html += '</li>';
+                        $("#fields-empty").remove();
                         $("#ul_fields").append(html);
                         show_iframe('content_list_'+ret.field_id, ret.field_id);
                     } else {
@@ -168,7 +169,7 @@ function customHead() { ?>
         <ul id="ul_fields">
         <?php $even = true ;
         if( count($fields) == 0 ) { ?>
-            <?php _e("You don't have any custom fields yet") ; ?>
+            <span id="fields-empty"><?php _e("You don't have any custom fields yet") ; ?></span>
         <?php } else {
             foreach($fields as $field) { ?>
                 <li id="list_<?php echo $field['pk_i_id'] ; ?>" class="field_li <?php echo ( $even ? 'even' : 'odd' ) ; ?>">
