@@ -259,27 +259,16 @@
 
                     break;
                 case 'delete_field':
-                    $id = Params::getParam("id");
-                    $error = 0;
+                    $res = Field::newInstance()->deleteByPrimaryKey(Params::getParam('id'));
 
-                    $fieldManager = Field::newInstance();
-                    $res = $fieldManager->deleteByPrimaryKey($id);
-
-                    if($res > 0) {
-                        $message = __('The custom field have been deleted');
+                    if( $res > 0 ) {
+                        $result = array('ok' => __('The custom field has been deleted'));
                     } else {
-                        $error = 1;
-                        $message = __('Error while deleting');
+                        $result = array('error' => __('Error while deleting'));
                     }
 
-                    if($error) {
-                        $result = array( 'error' => $message) ;
-                    } else {
-                        $result = array( 'ok' => __("Saved") ) ;
-                    }
-                    echo json_encode($result) ;
-
-                    break;
+                    echo json_encode($result);
+                break;
                 case 'add_field':
                     $s_name = __('NEW custom field');
                     $slug_tmp = $slug = preg_replace('|([-]+)|', '-', preg_replace('|[^a-z0-9_-]|', '-', strtolower($s_name)));
