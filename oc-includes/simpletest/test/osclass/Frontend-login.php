@@ -20,18 +20,23 @@ class Frontend_login extends FrontendTest {
 
         // register a new user.
         $this->doRegisterUser();
+        
         $this->assertTrue( $this->selenium->isTextPresent("Your account has been created successfully"), "Register an user.");
 
         $this->loginWith(NULL, 'foobar');
+        $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue( $this->selenium->isTextPresent("The password is incorrect"), 'Testing, Login user with incorrect password' );
 
         $this->loginWith('some@mail.com', NULL);
+        $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue( $this->selenium->isTextPresent("The user doesn't exist"), 'Testing, Login user with incorrect username' );
 
         $this->loginWith();
-        $this->assertTrue( $this->selenium->isTextPresent("User account manager"), 'Testing, Login user.' );
+        $this->selenium->waitForPageToLoad("30000");
+        $this->assertTrue( $this->selenium->isTextPresent("My account"), 'Testing, Login user.' );
 
         $this->logout();
+        $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue( $this->selenium->isTextPresent("Log in"), "Do Logout frontend." );
 
        // recover password
