@@ -77,7 +77,7 @@
                 });
 
                 // dialog delete
-                $("#dialog-delete").dialog({
+                $("#dialog-item-delete").dialog({
                     autoOpen: false,
                     modal: true,
                     title: '<?php echo osc_esc_js( __('Delete listing') ); ?>'
@@ -135,8 +135,8 @@
 
             // dialog delete function
             function delete_dialog(item_id) {
-                $("#dialog-delete input[name='id[]']").attr('value', item_id);
-                $("#dialog-delete").dialog('open');
+                $("#dialog-item-delete input[name='id[]']").attr('value', item_id);
+                $("#dialog-item-delete").dialog('open');
                 return false;
             }
         </script>
@@ -403,7 +403,7 @@
 <?php 
     osc_show_pagination_admin($aData);
 ?>
-<form id="dialog-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions">
+<form id="dialog-item-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions">
     <input type="hidden" name="page" value="items" />
     <input type="hidden" name="action" value="delete" />
     <input type="hidden" name="id[]" value="" />
@@ -413,7 +413,7 @@
         </div>
         <div class="form-actions">
             <div class="wrapper">
-            <a class="btn" href="javascript:void(0);" onclick="$('#dialog-delete').dialog('close');"><?php _e('Cancel'); ?></a>
+            <a class="btn" href="javascript:void(0);" onclick="$('#dialog-item-delete').dialog('close');"><?php _e('Cancel'); ?></a>
             <input id="item-delete-submit" type="submit" value="<?php echo osc_esc_html( __('Delete') ); ?>" class="btn btn-red" />
             </div>
         </div>
