@@ -20,7 +20,7 @@ class Frontend_offPermalinks extends OCadmintest {
             $this->selenium->click("rewrite_enabled");
             $this->selenium->click("//input[@type='submit']");
             $this->selenium->waitForPageToLoad("10000");
-            $this->assertTrue( $this->selenium->isTextPresent("Friendly urls successfully deactivated") , "Disable permalinks" ) ;
+            $this->assertTrue( $this->selenium->isTextPresent("Friendly URLs successfully deactivated") , "Disable permalinks" ) ;
         }   
 
     }
