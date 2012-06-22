@@ -220,6 +220,10 @@
                     exit ;
                 break;
                 default:
+                    if(Params::getParam('checkUpdated') != '') {
+                        osc_admin_toolbar_update_plugins(true);
+                    }
+                    
                     if( Params::getParam('iDisplayLength') == '' ) {
                         Params::setParam('iDisplayLength', 10 ) ;
                     }
@@ -264,8 +268,11 @@
                         }
                         // prepare row 2
                         $sUpdate = '' ;
-                        if( osc_check_plugin_update(@$pInfo['plugin_update_uri'], @$pInfo['version']) ) {
-                            $sUpdate = '<a href="' . osc_admin_base_url(true) . '?page=market&amp;code=' . htmlentities($pInfo['plugin_update_uri']) . '">' . __("There's a new version available to update") . '</a>' ;
+                        // get plugins to update from t_preference
+                        $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
+                        if(in_array($pInfo['short_name'],$aPluginsToUpdate )){ 
+//                            $sUpdate = '<a href="' . osc_admin_base_url(true) . '?page=market&amp;code=' . htmlentities($pInfo['plugin_update_uri']) . '">' . __("There's a new version available to update") . '</a>' ;
+                            $sUpdate = '<a class="market_update market-popup" href="#' . htmlentities($pInfo['plugin_update_uri']) . '">' . __("There's a new version available to update") . '</a>' ;
                         }
                         // prepare row 4
                         $sConfigure = '' ;
@@ -292,6 +299,7 @@
 
                         $row[] = '<input type="hidden" name="installed" value="' . $installed . '" enabled="' . $enabled . '" />' . $pInfo['plugin_name'] . '<div>' . $sUpdate . '</div>';
                         $row[] = $pInfo['description'] ;
+                        $row[] = ($sUpdate!='')     ? $sUpdate      : '&nbsp;';
                         $row[] = ($sConfigure!='')  ? $sConfigure   : '&nbsp;';
                         $row[] = ($sEnable!='')     ? $sEnable      : '&nbsp;';
                         $row[] = ($sInstall!='')    ? $sInstall     : '&nbsp;';
@@ -320,16 +328,17 @@
                             $this->redirectTo($url) ;
                         }
                     }
-                    osc_admin_toolbar_update_plugins(true);
+                    
                     
                     $this->_exportVariableToView('aPlugins', $array) ;
                     $this->doView("plugins/index.php");
+                break;
             }
         }
 
         //hopefully generic...
         function doView($file)
-        {
+        { 
             osc_current_admin_theme_path($file) ;
             Session::newInstance()->_clearVariables();
         }

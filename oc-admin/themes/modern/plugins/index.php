@@ -71,6 +71,7 @@
                     <th> &nbsp; </th>
                     <th> &nbsp; </th>
                     <th> &nbsp; </th>
+                    <th> &nbsp; </th>
                 </tr>
             </thead>
             <tbody>
@@ -86,7 +87,7 @@
             <?php endforeach;?>
             <?php else : ?>
             <tr>
-                <td colspan="4" class="text-center">
+                <td colspan="5" class="text-center">
                 <p><?php _e('No data available in table') ; ?></p>
                 </td>
             </tr>
@@ -98,12 +99,11 @@
             osc_show_pagination_admin($aData);
         ?>
     </div>
-    
-        
-        
     <div id="market">
         <h2 class="render-title"><?php _e('Latest plugins on market') ; ?></h2>
         <div id="market_plugins" class="available-theme">
+        </div>
+        <div id="market_pagination" class="has-pagination">
         </div>
     </div>
 
@@ -144,9 +144,7 @@
     </div>        
 
 </div>
-        
-        
-        
+             
 <script>
     $(function() {
         $( "#tabs" ).tabs({ selected: 1 });
@@ -162,7 +160,7 @@
             $('<div id="downloading"><div class="osc-modal-content">Please wait until the download is completed</div></div>').dialog({title:'Installing...',modal:true});
             $.getJSON(
             "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
-            {"code" : $("#market_code").attr("value")},
+            {"code" : $("#market_code").attr("value"), "section" : 'plugins'},
             function(data){
                 $("#downloading .osc-modal-content").html(data.message);
                 setTimeout(function(){
@@ -172,47 +170,66 @@
             return false;
         });
 
-        $.getJSON(
-            "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=local_market",
-            {"section" : "plugins"},
-            function(data){
-                $("#market_plugins").html(" ");
-                if(data!=null && data.plugins!=null) {
-                    for(var i=0;i<data.plugins.length;i++) {
-                        var description = $(data.plugins[i].s_description).text();
-                        dots = '';
-                        if(description.length > 80){
-                            dots = '...';
-                        }
-                        var imgsrc = '<?php echo osc_current_admin_theme("img/marketblank.jpg"); ?>';
-                        if(data.plugins[i].s_image!=null) {
-                            imgsrc = data.plugins[i].s_image;
-                        }
-                        $("#market_plugins").append('<div class="theme">'
-                            +'<div class="plugin-stage">'
-                                +'<img src="'+imgsrc+'" title="'+data.plugins[i].s_title+'" alt="'+data.plugins[i].s_title+'" />'
-                                +'<div class="plugin-actions">'
-                                    +'<a href="#'+data.plugins[i].s_slug+'" class="btn btn-mini btn-green market-popup"><?php _e('Install') ; ?></a>'
+        function getMarketContent(fPage) {
+            
+            // get page 
+            var page = 1;
+            if(fPage!="") {
+                page = fPage;
+            } 
+           
+            $.getJSON(
+                "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=local_market",
+                {"section" : "plugins", 'mPage' : page },
+                function(data){
+                    $("#market_plugins").html(" ");
+                    $('#market_pagination').html(" ");
+                    if(data!=null && data.plugins!=null) {
+                        for(var i=0;i<data.plugins.length;i++) {
+                            var description = $(data.plugins[i].s_description).text();
+                            dots = '';
+                            if(description.length > 80){
+                                dots = '...';
+                            }
+                           
+                            $("#market_plugins").append('<div class="theme">'
+                                +'<div class="plugin-stage">'
+                                    +'<div class="plugin-actions">'
+                                        +'<a href="#'+data.plugins[i].s_slug+'" class="btn btn-mini btn-green market-popup"><?php _e('Install') ; ?></a>'
+                                    +'</div>'
                                 +'</div>'
-                            +'</div>'
-                            +'<div class="plugin-info">'
-                                +'<h3>'+data.plugins[i].s_title+' '+data.plugins[i].s_version+' <?php _e('by') ; ?> <a target="_blank" href="">'+data.plugins[i].s_contact_name+'</a></h3>'
-                            +'</div>'
-                            +'<div class="plugin-description">'
-                                +description.substring(0,80)+dots
-                            +'</div>'
-                        +'</div>');
+                                +'<div class="plugin-info">'
+                                    +'<h3>'+data.plugins[i].s_title+' '+data.plugins[i].s_version+' <?php _e('by') ; ?> <a target="_blank" href="">'+data.plugins[i].s_contact_name+'</a></h3>'
+                                +'</div>'
+                                +'<div class="plugin-description">'
+                                    +description.substring(0,80)+dots
+                                +'</div>'
+                            +'</div>');
+                        }
+                        // add pagination
+                        $('#market_pagination').append(data.pagination_content);
                     }
-                }
-                $("#market_plugins").append('<div class="clear"></div>');
-            }
-        );
 
+                    $("#market_plugins").append('<div class="clear"></div>');
+                }
+            );
+        }
+        
+        getMarketContent( unescape(self.document.location.hash.substring(1)) );
+        // bind pagination to getJSON
+        $('#market_pagination a').live('click',function(){
+            var url =$(this).attr('href');
+            url = url.replace("#","");
+            getMarketContent(url);
+        });
+            
     });
     $('.market-popup').live('click',function(){
+        var update = false;
+        if( $(this).hasClass('market_update') ) update = true;
         $.getJSON(
             "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
-            {"code" : $(this).attr('href').replace('#','')},
+            {"code" : $(this).attr('href').replace('#',''), 'section' : 'plugins'},
             function(data){
                 if(data!=null) {
                     $("#market_thumb").attr('src',data.s_thumbnail);
@@ -221,6 +238,12 @@
                     $("#market_version").html(data.s_version);
                     $("#market_author").html(data.s_contact_name);
                     $("#market_url").attr('href',data.s_source_file);
+                    if(update) {
+                        $('#market_install').html("<?php echo osc_esc_html( __('Update') ) ; ?>");
+                    } else {
+                        $('#market_install').html("<?php echo osc_esc_html( __('Continue install') ) ; ?>");
+                    }
+                    
 
                     $('#market_installer').dialog({
                         modal:true,
