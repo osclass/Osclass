@@ -946,7 +946,7 @@
                     $aItem['friendName']    = Params::getParam('friendName');
                     $aItem['friendEmail']   = Params::getParam('friendEmail');
 
-                    $aItem['s_title']       = Params::getParam('s_title');
+                    $aItem['s_title']       = $item['s_title'];
                     $aItem['message']       = Params::getParam('message');
                 break;
                 case 'contact':
