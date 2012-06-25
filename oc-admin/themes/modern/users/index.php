@@ -110,6 +110,9 @@
         </div>
     </form>
 </div>
+<div class="showing-results">
+    <?php echo osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords']); ?>
+</div>
 <?php 
     osc_show_pagination_admin($aData);
 ?> 
