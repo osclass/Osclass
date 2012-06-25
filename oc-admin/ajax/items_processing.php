@@ -444,7 +444,12 @@
                 }
                 if( $aRow['i_num_expired'] > 0 ) {
                     $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;stat=expired">' . __('Clear Expired') .'</a>' ;
-                }                               
+                }
+                if(count($options) > 0) {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=item_edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>' ;
+                    $options[] = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=items&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;stat=all">' . __('Clear All') .'</a>' ;
+                }
 
                 // create list of actions
                 $auxOptions = '<ul>'.PHP_EOL ;
