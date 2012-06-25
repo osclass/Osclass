@@ -41,7 +41,8 @@
                                     $this->_exportVariableToView( "numUsers", User::newInstance()->count() );
                                     $this->_exportVariableToView( "numItems", Item::newInstance()->count() );
 
-                                    $this->_exportVariableToView( "newsList", osc_listNews() );
+                                    $this->_exportVariableToView('newsList', osc_listNews());
+                                    $this->_exportVariableToView('twitterRSS', osc_latestTweets());
 
                                     // stats
                                     $items = array();

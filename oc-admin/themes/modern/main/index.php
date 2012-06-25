@@ -20,6 +20,7 @@
     $numItems            = __get('numItems');
     $numUsers            = __get('numUsers');
     $newsList            = __get('newsList');
+    $twitterRSS          = __get('twitterRSS');
 
     osc_add_filter('render-wrapper','render_offset');
     function render_offset() {
@@ -276,6 +277,7 @@
             <div class="widget-box">
                 <div class="widget-box-title"><h3><?php _e('Latest news from OSClass') ; ?></h3></div>
                 <div class="widget-box-content">
+                    <h4 class="first-title"><?php _e('Blog'); ?></h4>
                     <?php if( is_array($newsList) ) { ?>
                         <ul class="list-latests">
                         <?php foreach ($newsList as $list) { ?>
@@ -290,6 +292,14 @@
                         </ul>
                     <?php } else { ?>
                         <?php _e('Unable to fetch news from OSClass. Please try again later') ; ?>
+                    <?php } ?>
+                    <h4><?php _e('Twitter'); ?></h4>
+                    <?php if( is_array($twitterRSS) ) { ?>
+                        <ul class="list-latests">
+                        <?php foreach( $twitterRSS as $tweet ) { ?>
+                            <li><a href="<?php echo $tweet['link']; ?>" target="_blank"><?php echo str_replace('osclass: ', '', $tweet['title']); ?></a></li>
+                        <?php } ?>
+                        </ul>
                     <?php } ?>
                 </div>
             </div>
