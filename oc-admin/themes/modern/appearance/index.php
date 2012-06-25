@@ -75,7 +75,9 @@
                 </div>
                 <h2 class="render-title"><?php _e('Available themes'); ?></h2>
                 <div class="available-theme">
-                    <?php foreach($themes as $theme) { ?>
+                    <?php $aThemesToUpdate = json_decode( getPreference('themes_to_update') );
+                    $bThemesToUpdate = (is_array($aThemesToUpdate))?true:false;
+                    foreach($themes as $theme) { ?>
                     <?php
                             if( $theme == osc_theme() ) {
                                 continue;
@@ -89,11 +91,12 @@
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=activate&amp;theme=<?php echo $theme ; ?>" class="btn btn-mini btn-green"><?php _e('Activate') ; ?></a>
                                 <a target="_blank" href="<?php echo osc_base_url(true) ; ?>?theme=<?php echo $theme ; ?>" class="btn btn-mini btn-blue"><?php _e('Preview') ; ?></a>
                                 <a onclick="javascript:return confirm('<?php echo osc_esc_js(__('This action can not be undone. Are you sure you want to continue?')); ?>')" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=delete&amp;webtheme=<?php echo $theme ; ?>" class="btn btn-mini float-right delete"><?php _e('Delete') ; ?></a>
-                                <?php 
-                                $aThemesToUpdate = json_decode( getPreference('themes_to_update') );
-                                if(in_array($theme,$aThemesToUpdate )){  ?>
+                                <?php
+                                if($bThemesToUpdate) {
+                                    if(in_array($theme,$aThemesToUpdate )){  ?>
                                     <a href='#<?php echo htmlentities($info['theme_update_uri']); ?>' class="btn btn-mini btn-orange market-popup"><?php _e("Update"); ?></a>
-                                <?php }; ?>
+                                <?php };
+                                }; ?>
                             </div>
                         </div>
                         <div class="theme-info">
