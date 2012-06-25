@@ -46,6 +46,14 @@ class OCadmin_moderator extends OCadminTest
         $this->selenium->waitForPageToLoad("2000");
         $this->assertTrue($this->selenium->isTextPresent("You don't have enough permissions"), "Don't have enough permissions" ) ;
 
+        $this->selenium->open(osc_admin_base_url(true).'?page=admins&action=edit');
+        $this->selenium->waitForPageToLoad("2000");
+        $this->assertTrue($this->selenium->isTextPresent("Edit admin"), "Don't have enough permissions" ) ;
+
+        $this->selenium->open(osc_admin_base_url(true).'?page=admins&action=add');
+        $this->selenium->waitForPageToLoad("2000");
+        $this->assertTrue($this->selenium->isTextPresent("You don't have enough permissions"), "Don't have enough permissions" ) ;
+
         $this->logout();
         $this->selenium->open(osc_admin_base_url(true).'?page=settings');
         $this->selenium->waitForPageToLoad("2000");
