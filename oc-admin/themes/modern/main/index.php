@@ -291,7 +291,7 @@
     <div class="grid-row grid-50">
         <div class="row-wrapper">
             <div class="widget-box">
-                <div class="widget-box-title"><h3><?php _e('Latest news from OSClass') ; ?></h3></div>
+                <div class="widget-box-title"><h3><?php _e('Latest news'); ?></h3></div>
                 <div class="widget-box-content">
                     <h4 class="first-title"><?php _e('Blog'); ?></h4>
                     <?php if( is_array($newsList) ) { ?>
