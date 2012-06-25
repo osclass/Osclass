@@ -237,37 +237,53 @@
     </div>
     <div class="grid-row grid-first-row grid-50">
         <div class="row-wrapper">
-            <div class="widget-box">
-                <div class="widget-box-title"><h3><?php _e('Listings by category') ; ?></h3></div>
+            <div class="widget-box  widget-box-project">
+                <div class="widget-box-title"><h3><?php _e('OSClass Project'); ?></h3></div>
                 <div class="widget-box-content">
-                    <?php
-                    $countEvent = 1;
-                    if( !empty($numItemsPerCategory) ) { ?>
-                    <table class="table" cellpadding="0" cellspacing="0">
-                        <tbody>
-                        <?php foreach($numItemsPerCategory as $c) { ?>
-                            <tr<?php if($countEvent%2 == 0){ echo ' class="even"';} if($countEvent == 1){ echo ' class="table-first-row"';} ?>>
-                                <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;catId=<?php echo $c['pk_i_id'] ; ?>"><?php echo $c['s_name'] ; ?></a></td>
-                                <td><?php echo $c['i_num_items'] . "&nbsp;" . ( ( $c['i_num_items'] == 1 ) ? __('Listing') : __('Listings') ); ?></td>
-                            </tr>
-                            <?php foreach($c['categories'] as $subc) {?>
-                                <tr<?php if($countEvent%2 == 0){ echo 'class="even"';} ?>>
-                                    <td class="children-cat"><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;catId=<?php echo $subc['pk_i_id'];?>"><?php echo $subc['s_name'] ; ?></a></td>
-                                    <td><?php echo $subc['i_num_items'] . " " . ( ( $subc['i_num_items'] == 1 ) ? __('Listing') : __('Listings') ); ?></td>
-                                </tr>
-                            <?php
-                            $countEvent++;
-                            }
-                            ?>
-                        <?php
-                        $countEvent++;
-                        }
-                        ?>
-                        </tbody>
-                    </table>
-                    <?php } else { ?>
-                        <?php _e("There aren't any uploaded listing yet") ; ?>
-                    <?php } ?>
+                    <form name="subscribe_form" action="http://osclass.org/" method="post">
+                        <input type="hidden" name="subscribe" value="submit" />
+                        <input type="hidden" name="return_path" value="<?php echo osc_admin_base_url(); ?>" />
+                        <input type="hidden" name="source" value="osclass" />
+                        <fieldset>
+                            <div class="form">
+                                <h4 class="first-title"><?php _e('Newsletter'); ?></h4>
+                                <p>
+                                    <?php _e('Want the latest tips and updates delivered to your inbox? <strong>Sign up now!</strong>'); ?>
+                                </p>
+                                <div class="form-row">
+                                    <div class="form-controls">
+                                        <input type="text" class="xlarge" name="email" value="">
+                                        <input type="submit" class="btn btn-mini" name="submit" value="<?php echo osc_esc_html(__('Subscribe')); ?>" />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <form name="_xclick" action="https://www.paypal.com/in/cgi-bin/webscr" method="post">
+                        <input type="hidden" name="cmd" value="_donations">
+                        <input type="hidden" name="business" value="info@osclass.org">
+                        <input type="hidden" name="item_name" value="OSClass project">
+                        <input type="hidden" name="return" value="<?php echo osc_admin_base_url(); ?>">
+                        <input type="hidden" name="currency_code" value="USD">
+                        <input type="hidden" name="lc" value="US" />
+                        <fieldset>
+                            <div class="form">
+                                <h4><?php _e('Donate'); ?></h4>
+                                <p><?php _e('OSClass is a free open source project sustained by the community. Money got from the donations will be used to ensure the development and improvements of the project.'); ?></p>
+                                <div class="form-row">
+                                    <div class="form-controls">
+                                        <select name="amount" class="input-medium">
+                                            <option value="50">50$</option>
+                                            <option value="25">25$</option>
+                                            <option value="10" selected>10$</option>
+                                            <option value="5">5$</option>
+                                            <option value=""><?php _e('Custom'); ?></option>
+                                        </select><input type="submit" class="btn btn-mini" name="submit" value="<?php echo osc_esc_html(__('Donate', 'modern')); ?>">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
             </div>
         </div>
