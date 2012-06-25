@@ -105,6 +105,7 @@
         );
     ?>
     <div class="has-pagination">
+        <?php osc_run_hook('before_show_pagination_admin'); ?>
         <form method="get" action="<?php echo $urlActual; ?>" style="display:inline;">
             <?php foreach( Params::getParamsAsArray('get') as $key => $value ) { ?>
             <?php if($key!='iPage') {?>
@@ -123,6 +124,7 @@
             $pagination = new Pagination($params);
             $aux = $pagination->doPagination();
             echo $aux;
+            osc_run_hook('after_show_pagination_admin');
     ?>
     </div>
     <?php 
