@@ -252,6 +252,8 @@
                     $aData = array() ;
                     $max = ($start+$limit);
                     if($max > $count) $max = $count;
+                    $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
+                    $bPluginsToUpdate = is_array($aPluginsToUpdate)?true:false;
                     for($i = $start; $i < $max; $i++) {
                         $plugin = $aPlugin[$i];
                         $row   = array() ;
@@ -269,10 +271,10 @@
                         // prepare row 2
                         $sUpdate = '' ;
                         // get plugins to update from t_preference
-                        $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
-                        if(in_array($pInfo['short_name'],$aPluginsToUpdate )){ 
-//                            $sUpdate = '<a href="' . osc_admin_base_url(true) . '?page=market&amp;code=' . htmlentities($pInfo['plugin_update_uri']) . '">' . __("There's a new version available to update") . '</a>' ;
-                            $sUpdate = '<a class="market_update market-popup" href="#' . htmlentities($pInfo['plugin_update_uri']) . '">' . __("There's a new version available to update") . '</a>' ;
+                        if($bPluginsToUpdate) {
+                            if(in_array($pInfo['short_name'],$aPluginsToUpdate )){ 
+                                $sUpdate = '<a class="market_update market-popup" href="#' . htmlentities($pInfo['plugin_update_uri']) . '">' . __("There's a new version available to update") . '</a>' ;
+                            }
                         }
                         // prepare row 4
                         $sConfigure = '' ;

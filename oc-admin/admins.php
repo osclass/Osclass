@@ -30,7 +30,7 @@
             parent::__construct() ;
 
             if( $this->isModerator() ) {
-                if( !((Params::getParam('id') != '') && (Params::getParam('id') != osc_logged_admin_id())) ) {
+                if(($this->action!='edit' && $this->action!='edit_post') || Params::getParam('id')!='' && Params::getParam('id') != osc_logged_admin_id()) {
                     osc_add_flash_error_message(_m("You don't have enough permissions"), 'admin');
                     $this->redirectTo(osc_admin_base_url());
                 }
@@ -241,7 +241,11 @@
                                         osc_add_flash_ok_message( _m('The admin has been updated'), 'admin') ;
                                     }
 
-                                    $this->redirectTo(osc_admin_base_url(true).'?page=admins') ;
+                                    if( $this->isModerator() ) {
+                                        $this->redirectTo(osc_admin_base_url(true)) ;
+                                    } else {
+                                        $this->redirectTo(osc_admin_base_url(true).'?page=admins') ;
+                                    }
                 break ;
                 case('delete'):     if( defined('DEMO') ) {
                                         osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
