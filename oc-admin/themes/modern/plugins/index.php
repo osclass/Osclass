@@ -59,7 +59,7 @@
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="tabs" class="ui-osc-tabs ui-tabs-right">
     <ul>
-        <li><a href="#market"><?php _e('Market'); ?></a></li>
+        <li><a href="#market" onclick="window.location = '<?php echo osc_admin_base_url(true) . '?page=market&action=plugins'; ?>'; return false; "><?php _e('Market'); ?></a></li>
         <li><a href="#upload-plugins"><?php _e('Upload plugin') ; ?></a></li>
     </ul>
     <div id="upload-plugins">
@@ -87,7 +87,7 @@
             <?php endforeach;?>
             <?php else : ?>
             <tr>
-                <td colspan="5" class="text-center">
+                <td colspan="6" class="text-center">
                 <p><?php _e('No data available in table') ; ?></p>
                 </td>
             </tr>
@@ -103,13 +103,6 @@
             osc_add_hook('before_show_pagination_admin','showingResults');
             osc_show_pagination_admin($aData);
         ?>
-    </div>
-    <div id="market">
-        <h2 class="render-title"><?php _e('Latest plugins on market') ; ?></h2>
-        <div id="market_plugins" class="available-theme">
-        </div>
-        <div id="market_pagination" class="has-pagination">
-        </div>
     </div>
 
     <div id="market_installer" class="has-form-actions hide">
@@ -161,74 +154,20 @@
 
         $("#market_install").on("click", function(){
             $(".ui-dialog-content").dialog("close");
-            //$(".ui-dialog-content").dialog({title:'Downloading...'}).html('Please wait until the download is completed');
             $('<div id="downloading"><div class="osc-modal-content">Please wait until the download is completed</div></div>').dialog({title:'Installing...',modal:true});
             $.getJSON(
             "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
             {"code" : $("#market_code").attr("value"), "section" : 'plugins'},
             function(data){
                 $("#downloading .osc-modal-content").html(data.message);
-                setTimeout(function(){
-                  $(".ui-dialog-content").dialog("close");  
-              },1000);
+                
+                
             });
             return false;
         });
-
-        function getMarketContent(fPage) {
-            
-            // get page 
-            var page = 1;
-            if(fPage!="") {
-                page = fPage;
-            } 
-           
-            $.getJSON(
-                "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=local_market",
-                {"section" : "plugins", 'mPage' : page },
-                function(data){
-                    $("#market_plugins").html(" ");
-                    $('#market_pagination').html(" ");
-                    if(data!=null && data.plugins!=null) {
-                        for(var i=0;i<data.plugins.length;i++) {
-                            var description = $(data.plugins[i].s_description).text();
-                            dots = '';
-                            if(description.length > 80){
-                                dots = '...';
-                            }
-                           
-                            $("#market_plugins").append('<div class="theme">'
-                                +'<div class="plugin-stage">'
-                                    +'<div class="plugin-actions">'
-                                        +'<a href="#'+data.plugins[i].s_slug+'" class="btn btn-mini btn-green market-popup"><?php _e('Install') ; ?></a>'
-                                    +'</div>'
-                                +'</div>'
-                                +'<div class="plugin-info">'
-                                    +'<h3>'+data.plugins[i].s_title+' '+data.plugins[i].s_version+' <?php _e('by') ; ?> <a target="_blank" href="">'+data.plugins[i].s_contact_name+'</a></h3>'
-                                +'</div>'
-                                +'<div class="plugin-description">'
-                                    +description.substring(0,80)+dots
-                                +'</div>'
-                            +'</div>');
-                        }
-                        // add pagination
-                        $('#market_pagination').append(data.pagination_content);
-                    }
-
-                    $("#market_plugins").append('<div class="clear"></div>');
-                }
-            );
-        }
-        
-        getMarketContent( unescape(self.document.location.hash.substring(1)) );
-        // bind pagination to getJSON
-        $('#market_pagination a').live('click',function(){
-            var url =$(this).attr('href');
-            url = url.replace("#","");
-            getMarketContent(url);
-        });
             
     });
+    
     $('.market-popup').live('click',function(){
         var update = false;
         if( $(this).hasClass('market_update') ) update = true;
@@ -248,7 +187,6 @@
                     } else {
                         $('#market_install').html("<?php echo osc_esc_html( __('Continue install') ) ; ?>");
                     }
-                    
 
                     $('#market_installer').dialog({
                         modal:true,
