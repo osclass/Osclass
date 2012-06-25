@@ -146,7 +146,7 @@
                         Session::newInstance()->_dropkeepForm('meta_'.$key);
 
                         if($success==1) {
-                            osc_add_flash_ok_message( _m('Check your inbox to verify your email address') ) ;
+                            osc_add_flash_ok_message( _m('Check your inbox to validate your listing') ) ;
                         } else {
                             osc_add_flash_ok_message( _m('Your listing has been published') ) ;
                         }

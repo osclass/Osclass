@@ -237,6 +237,60 @@ $(document).ready(function(){
                         </div>
                     </div>
                 </div>
+
+                <div id="watermark_text_box" class="table-backoffice-form" <?php echo ( osc_is_watermark_text() ? '' : 'style="display:none;"' ) ; ?>>
+                    <h2 class="render-title"><?php _e('Watermark Text Settings') ; ?></h2>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Text') ; ?></div>
+                        <div class="form-controls">
+                            <input type="text" class="large" name="watermark_text" value="<?php echo osc_esc_html( osc_watermark_text() ) ; ?>" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Color') ; ?></div>
+                        <div class="form-controls">
+                            <input type="text" maxlength="6" id="colorpickerField" class="small" name="watermark_text_color" value="<?php echo osc_esc_html( osc_watermark_text_color() ) ; ?>" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Position') ; ?></div>
+                        <div class="form-controls">
+                            <select name="watermark_text_place" id="watermark_text_place">
+                                <option value="centre" <?php echo (osc_watermark_place() == 'centre') ? 'selected="true"' : '' ; ?>><?php _e('Centre') ; ?></option>
+                                <option value="tl" <?php echo (osc_watermark_place() == 'tl') ? 'selected="true"' : '' ; ?>><?php _e('Top Left') ; ?></option>
+                                <option value="tr" <?php echo (osc_watermark_place() == 'tr') ? 'selected="true"' : '' ; ?>><?php _e('Top Right') ; ?></option>
+                                <option value="bl" <?php echo (osc_watermark_place() == 'bl') ? 'selected="true"' : '' ; ?>><?php _e('Bottom Left') ; ?></option>
+                                <option value="br" <?php echo (osc_watermark_place() == 'br') ? 'selected="true"' : '' ; ?>><?php _e('Bottom Right') ; ?></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div id="watermark_image_box" <?php echo ( osc_is_watermark_image() ? '' : 'style="display:none;"' ) ; ?>>
+                    <h2 class="render-title"><?php _e('Watermark Image Settings') ; ?></h2>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Image') ; ?></div>
+                        <div class="form-controls">
+                            <input type="file" name="watermark_image"/>
+                            <?php if(osc_is_watermark_image()!='') { ?>
+                                <div class="help-box"><img width="100px" src="<?php echo osc_base_url()."oc-content/uploads/watermark.png" ?>" /></div>
+                            <?php }; ?>
+                            <div class="help-box"><?php _e("It has to be a .PNG image") ; ?></div>
+                            <div class="help-box"><?php _e("OSClass doesn't check the watermark image size") ; ?></div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Position') ; ?></div>
+                        <div class="form-controls">
+                            <select name="watermark_image_place" id="watermark_image_place" >
+                                <option value="centre" <?php echo (osc_watermark_place() == 'centre') ? 'selected="true"' : '' ; ?>><?php _e('Centre') ; ?></option>
+                                <option value="tl" <?php echo (osc_watermark_place() == 'tl') ? 'selected="true"' : '' ; ?>><?php _e('Top Left') ; ?></option>
+                                <option value="tr" <?php echo (osc_watermark_place() == 'tr') ? 'selected="true"' : '' ; ?>><?php _e('Top Right') ; ?></option>
+                                <option value="bl" <?php echo (osc_watermark_place() == 'bl') ? 'selected="true"' : '' ; ?>><?php _e('Bottom Left') ; ?></option>
+                                <option value="br" <?php echo (osc_watermark_place() == 'br') ? 'selected="true"' : '' ; ?>><?php _e('Bottom Right') ; ?></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 
                 <h2 class="render-title"><?php _e('Regenerate images') ; ?></h2>
 

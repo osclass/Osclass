@@ -46,7 +46,7 @@
             </div>
             <div class="form-row">
                 <div class="form-label"></div>
-                <div class="form-controls"><?php FieldForm::required_checkbox($field); ?> <span><?php _e('This field is required') ; ?></span></div>
+                <div class="form-controls"><label><?php FieldForm::required_checkbox($field); ?> <span><?php _e('This field is required') ; ?></span></label></div>
             </div>
             <div class="form-row">
                 <div><?php _e('Select the categories where you want to apply these attribute:') ; ?></div>

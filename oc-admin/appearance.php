@@ -21,7 +21,7 @@
     {
         function __construct()
         {
-            parent::__construct() ;
+            parent::__construct();
         }
 
         //Business Layer...
@@ -170,10 +170,12 @@
                 break;
                 default:
                     // force the recount of themes that need to be updated
-                    osc_admin_toolbar_update_themes(true);
+                    if(Params::getParam('checkUpdated') != '') {
+                        osc_admin_toolbar_update_themes(true);
+                    }
                     
                     $themes = WebThemes::newInstance()->getListThemes();
-                    $info = WebThemes::newInstance()->loadThemeInfo(osc_theme());
+                    $info   = WebThemes::newInstance()->loadThemeInfo(osc_theme());
 
                     //preparing variables for the view
                     $this->_exportVariableToView("themes", $themes);

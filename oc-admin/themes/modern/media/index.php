@@ -110,7 +110,10 @@
         </table>
     </form>
 </div>
+<div class="showing-results">
+    <?php echo osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']); ?>
+</div>
 <?php 
     osc_show_pagination_admin($aData);
+    osc_current_admin_theme_path( 'parts/footer.php' );
 ?>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

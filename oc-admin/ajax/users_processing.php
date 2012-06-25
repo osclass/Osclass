@@ -138,7 +138,7 @@
                     $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=resend_activation&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Re-send activation email') . '</a>' ;
                 }
                 
-                $options_more = osc_apply_filter('more_actions_manage_users', $options_more);
+                $options_more = osc_apply_filter('more_actions_manage_users', $options_more, $aRow);
                 // more actions
                 $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL ;
                 foreach( $options_more as $actual ) { 
@@ -146,7 +146,7 @@
                 }
                 $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL ;
 
-                $options = osc_apply_filter('actions_manage_users', $options);
+                $options = osc_apply_filter('actions_manage_users', $options, $aRow);
                 // create list of actions
                 $auxOptions = '<ul>'.PHP_EOL ;
                 foreach( $options as $actual ) {

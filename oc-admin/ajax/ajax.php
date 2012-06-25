@@ -259,27 +259,16 @@
 
                     break;
                 case 'delete_field':
-                    $id = Params::getParam("id");
-                    $error = 0;
+                    $res = Field::newInstance()->deleteByPrimaryKey(Params::getParam('id'));
 
-                    $fieldManager = Field::newInstance();
-                    $res = $fieldManager->deleteByPrimaryKey($id);
-
-                    if($res > 0) {
-                        $message = __('The custom field have been deleted');
+                    if( $res > 0 ) {
+                        $result = array('ok' => __('The custom field has been deleted'));
                     } else {
-                        $error = 1;
-                        $message = __('Error while deleting');
+                        $result = array('error' => __('Error while deleting'));
                     }
 
-                    if($error) {
-                        $result = array( 'error' => $message) ;
-                    } else {
-                        $result = array( 'ok' => __("Saved") ) ;
-                    }
-                    echo json_encode($result) ;
-
-                    break;
+                    echo json_encode($result);
+                break;
                 case 'add_field':
                     $s_name = __('NEW custom field');
                     $slug_tmp = $slug = preg_replace('|([-]+)|', '-', preg_replace('|[^a-z0-9_-]|', '-', strtolower($s_name)));
@@ -683,21 +672,22 @@
                  ** COMPLETE MARKET PROCESS **
                  *******************************/
                 case 'market': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
-                    $code = Params::getParam('code');
-                    $plugin = false;
+                    $section = Params::getParam('section');
+                    $code    = Params::getParam('code');
+                    $plugin  = false;
                     $re_enable = false;
                     $message = "";
                     $error = 0;
                     $data = array();
-
                     /************************
                      *** CHECK VALID CODE ***
                      ************************/
-                    if ($code != '') {
+                    if ($code != '' && $section != '') {
 
                         if(stripos("http://", $code)===FALSE) {
                             // OSCLASS OFFICIAL REPOSITORY
-                            $data = json_decode(osc_file_get_contents(osc_market_url($code)), true);
+                            $url = osc_market_url($section, $code);
+                            $data = json_decode(osc_file_get_contents($url), true);
                         } else {
                             // THIRD PARTY REPOSITORY
                             if(osc_market_external_sources()) {
@@ -707,6 +697,7 @@
                                 break;
                             }
                         }
+                        
                         /***********************
                          **** DOWNLOAD FILE ****
                          ***********************/
@@ -732,8 +723,8 @@
                             } else {
                                 $filename = $data['s_slug']."_".$data['s_version'].".zip";
                             }
-                            error_log('Source file: ' . $data['s_source_file']) ;
-                            error_log('Filename: ' . $filename) ;
+//                            error_log('Source file: ' . $data['s_source_file']) ;
+//                            error_log('Filename: ' . $filename) ;
                             $result   = osc_downloadFile($data['s_source_file'], $filename) ;
 
                             if ($result) { // Everything is OK, continue
@@ -832,15 +823,16 @@
 
                     break;
                 case 'check_market': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
+                    $section = Params::getParam('section');
                     $code = Params::getParam('code');
                     $data = array();
                     /************************
                      *** CHECK VALID CODE ***
                      ************************/
-                    if ($code != '') {
+                    if ($code != '' && $section != '') {
                         if(stripos("http://", $code)===FALSE) {
                             // OSCLASS OFFICIAL REPOSITORY
-                            $data = json_decode(osc_file_get_contents(osc_market_url($code)), true);
+                            $data = json_decode(osc_file_get_contents(osc_market_url($section, $code)), true);
                         } else {
                             // THIRD PARTY REPOSITORY
                             if(osc_market_external_sources()) {
@@ -858,8 +850,27 @@
                     }
                     echo json_encode($data);
                     break;                   
-                case 'local_market': // AVOID CROSS DOMAIN ROBLEMS OF AJAX REQUEST
-                    echo osc_file_get_contents(osc_market_url()."?section=".Params::getParam("section"));
+                case 'local_market': // AVOID CROSS DOMAIN PROBLEMS OF AJAX REQUEST
+                    $marketPage = Params::getParam("mPage");
+                    if($marketPage>=1) $marketPage-- ;
+                    
+                    $out    = osc_file_get_contents(osc_market_url(Params::getParam("section"))."page/".$marketPage);
+                    $array  = json_decode($out, true);
+                    // do pagination 
+                    $pageActual = $array['page'];
+                    $totalPages = ceil( $array['total'] / $array['sizePage'] );
+                    $params     = array(
+                        'total'    => $totalPages,
+                        'selected' => $pageActual,
+                        'url'      => '#{PAGE}',
+                        'sides'    => 5
+                    );
+                    // set pagination
+                    $pagination = new Pagination($params);
+                    $aux = $pagination->doPagination();
+                    $array['pagination_content'] = $aux;
+                    // encode to json
+                    echo json_encode($array);
                     break;
                 case 'location_stats':
                     $workToDo = LocationsTmp::newInstance()->count() ;
