@@ -248,6 +248,23 @@
                                                     osc_add_flash_ok_message( sprintf(_mn('%d listing has been unmarked as offensive', '%d listings have been unmarked as offensive', $numSuccess), $numSuccess), 'admin') ;
                                                 }
                                             break;
+                                            case 'clear_all';
+                                                $id = Params::getParam('id') ;
+                                                $success = false;
+
+                                                if($id) {
+                                                    $numSuccess = 0;
+                                                    foreach($id as $i) {
+                                                        if ($i) {
+                                                            $success = $this->itemManager->clearStat($i , 'all' ) ;
+                                                            if($success) {
+                                                                $numSuccess++;
+                                                            }
+                                                        }
+                                                    }
+                                                    osc_add_flash_ok_message( sprintf(_mn('%d listing has been unmarked', '%d listings have been unmarked', $numSuccess), $numSuccess), 'admin') ;
+                                                }
+                                            break;
                                         }
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
