@@ -169,6 +169,15 @@
                     $this->doView('appearance/view.php');
                 break;
                 default:
+                    $marketError = Params::getParam('marketError');
+                    $slug = Params::getParam('slug');
+                    if($marketError!='') {
+                        if($marketError == '0') { // no error installed ok
+                            osc_add_flash_ok_message( __('Everything was OK!') . ' ( ' . $slug .' ) ', 'admin');
+                        } else {
+                            osc_add_flash_error_message( __('Error occurred') . ' ( ' . $slug .' ) ', 'admin');
+                        }
+                    }    
                     // force the recount of themes that need to be updated
                     if(Params::getParam('checkUpdated') != '') {
                         osc_admin_toolbar_update_themes(true);
