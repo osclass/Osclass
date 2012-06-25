@@ -19,7 +19,6 @@
     $numItemsPerCategory = __get('numItemsPerCategory');
     $numItems            = __get('numItems');
     $numUsers            = __get('numUsers');
-    $comments            = __get('comments');
     $newsList            = __get('newsList');
 
     osc_add_filter('render-wrapper','render_offset');
@@ -238,18 +237,35 @@
     <div class="grid-row grid-first-row grid-50">
         <div class="row-wrapper">
             <div class="widget-box">
-                <div class="widget-box-title"><h3><?php _e('Latest comments') ; ?></h3></div>
+                <div class="widget-box-title"><h3><?php _e('Listings by category') ; ?></h3></div>
                 <div class="widget-box-content">
-                    <?php if (count($comments) > 0) { ?>
-                    <ul class="list-latests">
-                        <?php foreach($comments as $c) { ?>
-                        <li>
-                            <strong><?php echo $c['s_author_name'] ; ?></strong> <?php _e('commented on listing') ; ?> <em><a title="<?php echo $c['s_body'] ; ?>" target='_blank' href='<?php echo osc_base_url(true) . '?page=item&amp;id=' . $c['fk_i_item_id'] ; ?>' id='dt_link'><?php echo $c['s_title'] ; ?></a></em>
-                        </li>
-                        <?php } ?>
-                    </ul>
+                    <?php
+                    $countEvent = 1;
+                    if( !empty($numItemsPerCategory) ) { ?>
+                    <table class="table" cellpadding="0" cellspacing="0">
+                        <tbody>
+                        <?php foreach($numItemsPerCategory as $c) { ?>
+                            <tr<?php if($countEvent%2 == 0){ echo ' class="even"';} if($countEvent == 1){ echo ' class="table-first-row"';} ?>>
+                                <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;catId=<?php echo $c['pk_i_id'] ; ?>"><?php echo $c['s_name'] ; ?></a></td>
+                                <td><?php echo $c['i_num_items'] . "&nbsp;" . ( ( $c['i_num_items'] == 1 ) ? __('Listing') : __('Listings') ); ?></td>
+                            </tr>
+                            <?php foreach($c['categories'] as $subc) {?>
+                                <tr<?php if($countEvent%2 == 0){ echo 'class="even"';} ?>>
+                                    <td class="children-cat"><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;catId=<?php echo $subc['pk_i_id'];?>"><?php echo $subc['s_name'] ; ?></a></td>
+                                    <td><?php echo $subc['i_num_items'] . " " . ( ( $subc['i_num_items'] == 1 ) ? __('Listing') : __('Listings') ); ?></td>
+                                </tr>
+                            <?php
+                            $countEvent++;
+                            }
+                            ?>
+                        <?php
+                        $countEvent++;
+                        }
+                        ?>
+                        </tbody>
+                    </table>
                     <?php } else { ?>
-                        <?php _e("There aren't any comments yet") ; ?>
+                        <?php _e("There aren't any uploaded listing yet") ; ?>
                     <?php } ?>
                 </div>
             </div>

@@ -41,7 +41,6 @@
                                     $this->_exportVariableToView( "numUsers", User::newInstance()->count() );
                                     $this->_exportVariableToView( "numItems", Item::newInstance()->count() );
 
-                                    $this->_exportVariableToView( "comments", ItemComment::newInstance()->getLastComments(5) );
                                     $this->_exportVariableToView( "newsList", osc_listNews() );
 
                                     // stats
