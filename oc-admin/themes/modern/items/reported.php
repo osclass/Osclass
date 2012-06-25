@@ -45,7 +45,21 @@
                         }
                     });
                 });
+                
+                // dialog delete
+                $("#dialog-item-delete").dialog({
+                    autoOpen: false,
+                    modal: true,
+                    title: '<?php echo osc_esc_js( __('Delete listing') ); ?>'
+                });
             });
+            
+            // dialog delete function
+            function delete_dialog(item_id) {
+                $("#dialog-item-delete input[name='id[]']").attr('value', item_id);
+                $("#dialog-item-delete").dialog('open');
+                return false;
+            }
         </script>
         <?php
     }
@@ -67,7 +81,9 @@
 <div class="relative">
     <div id="listing-toolbar">
         <div class="float-right">
-            
+            <?php if($sort!='date') { ?>
+            <a id="btn-reset-filters" class="btn btn-red" href="<?php echo osc_admin_base_url(true); ?>?page=items&action=items_reported"><?php _e('Reset filters'); ?></a>
+            <?php } ?>
         </div>
     </div>
     <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
@@ -78,6 +94,7 @@
                 <select id="bulk_actions" name="bulk_actions" class="select-box-extra">
                     <option value=""><?php _e('Bulk actions') ; ?></option>
                     <option value="delete_all"><?php _e('Delete') ; ?></option>
+                    <option value="clear_all"><?php _e('Clear All') ; ?></option>
                     <option value="clear_spam_all"><?php _e('Clear Spam') ; ?></option>
                     <option value="clear_bad_all"><?php _e('Clear Missclassified') ; ?></option>
                     <option value="clear_dupl_all"><?php _e('Clear Duplicated') ; ?></option>
@@ -145,4 +162,20 @@
 <?php 
     osc_show_pagination_admin($aData);
 ?>
+<form id="dialog-item-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions">
+    <input type="hidden" name="page" value="items" />
+    <input type="hidden" name="action" value="delete" />
+    <input type="hidden" name="id[]" value="" />
+    <div class="form-horizontal">
+        <div class="form-row">
+            <?php _e('Are you sure you want to delete this listing?'); ?>
+        </div>
+        <div class="form-actions">
+            <div class="wrapper">
+            <a class="btn" href="javascript:void(0);" onclick="$('#dialog-item-delete').dialog('close');"><?php _e('Cancel'); ?></a>
+            <input id="item-delete-submit" type="submit" value="<?php echo osc_esc_html( __('Delete') ); ?>" class="btn btn-red" />
+            </div>
+        </div>
+    </div>
+</form>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
