@@ -79,6 +79,11 @@
                     break;
                 }
             }
+
+            // show donation successful
+            if( Params::getParam('donation') == 'successful' ) {
+                osc_add_flash_ok_message(_m('Thank you very much for your donation'), 'admin');
+            }
         }
 
         function isLogged()
