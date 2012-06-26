@@ -11,7 +11,7 @@ class OCadmin_plugins extends OCadminTest {
      * Login oc-admin
      * UPLOAD / INSTALL / CONFIGURE / DISABLE / ENABLE / UNINSTALL PLUGIN
      */
-    /*function testPluginsUpload()
+    function testPluginsUpload()
     {
         
         // UPLOAD
@@ -96,7 +96,7 @@ class OCadmin_plugins extends OCadminTest {
         $this->deletePlugin();
     }
     
-    */
+    
     
     function testMarket()
     {
