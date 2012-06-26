@@ -316,6 +316,7 @@
                                         }
                                         Params::setParam('iPage', $p_iPage);
                                         $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
+                                        $this->_exportVariableToView('sSearch', Params::getParam('sSearch'));
                                         
                                         require_once osc_admin_base_path() . 'ajax/users_processing.php';
                                         $users_processing = new UsersProcessingAjax(Params::getParamsAsArray("get"));

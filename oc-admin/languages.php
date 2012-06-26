@@ -337,7 +337,7 @@
 
                                                 $options   = array() ;
                                                 $options[] = '<a href="' . osc_admin_base_url(true) . '?page=languages&amp;action=edit&amp;id='  . $l['pk_c_code'] . '">' . __('Edit') . '</a>' ;
-                                                $options[] = '<a href="' . osc_admin_base_url(true) . '?page=languages&amp;action=' . ( $l['b_enabled'] == 1 ? 'disable_selected' : 'enable_selected' ) . '&amp;id[]=' . $l['pk_c_code'] . '"> ' . ($l['b_enabled'] == 1 ? __('Disable (website)') : __('Enable (website)') ) . '</a> ' ;
+                                                $options[] = '<a href="' . osc_admin_base_url(true) . '?page=languages&amp;action=' . ( $l['b_enabled'] == 1 ? 'disable_selected' : 'enable_selected' ) . '&amp;id[]=' . $l['pk_c_code'] . '">' . ($l['b_enabled'] == 1 ? __('Disable (website)') : __('Enable (website)') ) . '</a> ' ;
                                                 $options[] = '<a href="' . osc_admin_base_url(true) . '?page=languages&amp;action=' . ( $l['b_enabled_bo'] == 1 ? 'disable_bo_selected' : 'enable_bo_selected' ) . '&amp;id[]=' . $l['pk_c_code'] . '">' . ( $l['b_enabled_bo'] == 1 ? __('Disable (oc-admin)') : __('Enable (oc-admin)') ) . '</a>' ;
                                                 $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js(__("This action can't be undone. Are you sure you want to continue?")) . '\');" href="' . osc_admin_base_url(true) . '?page=languages&amp;action=delete&amp;id[]=' . $l['pk_c_code'] . '">' . __('Delete') . '</a>' ;
 

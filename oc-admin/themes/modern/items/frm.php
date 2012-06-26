@@ -80,7 +80,7 @@
                     <?php }; ?>
                     $("#price").attr("value", price);
                 });
-                <?php }; ?>
+                <?php } ?>
             });
         </script>
         <?php ItemForm::location_javascript_new('admin') ; ?>
@@ -88,7 +88,7 @@
         <?php
     }
     osc_add_hook('admin_header','customHead');
-    
+
     $new_item   = __get('new_item') ;
     $actions    = __get('actions') ;
 
@@ -132,7 +132,7 @@ osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
                         <input type="hidden" name="secret" value="<?php echo osc_item_secret() ; ?>" />
                     <?php } ?>
                     <?php /********************************* */ ?>
-                    
+
                     <?php /********************************* */ ?>
                     <div id="left-side">
                         <?php printLocaleTitle(osc_get_locales()); ?>
@@ -209,6 +209,9 @@ osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
                     </div>
                     <div class="clear"></div>
                     <div class="form-actions">
+                        <?php if( !$new_item ) { ?>
+                        <a href="javascript:history.go(-1)" class="btn"><?php _e('Cancel'); ?></a>
+                        <?php } ?>
                         <input type="submit" value="<?php echo osc_esc_html(customText('button')); ?>" class="btn btn-submit" />
                     </div>
                     </form>

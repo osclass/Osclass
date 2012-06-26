@@ -18,7 +18,7 @@
 
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader() { ?>
-        <h1><?php _e('Plugins'); ?></h1>
+        <h1><?php echo osc_apply_filter('custom_plugin_title',__('Plugins')); ?></h1>
     <?php
     }
 

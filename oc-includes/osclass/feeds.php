@@ -23,27 +23,55 @@
 /**
  * This functions retrieves a news list from http://osclass.org. It uses the Cache services to speed up the process.
  */
-function osc_listNews() {
-    require_once LIB_PATH . 'osclass/classes/Cache.php';
+function osc_listNews($num = 3) {
+    require_once(osc_lib_path() . 'osclass/classes/Cache.php');
 
     $cache = new Cache('admin-blog_news', 900);
-    if ($cache->check()) {
+    if( $cache->check() ) {
         return $cache->retrieve();
-    } else {
-        $list = array();
+    }
 
-        $content = osc_file_get_contents('http://osclass.org/blog/feed/');
-        if ($content) {
-            $xml = simplexml_load_string($content);
-            foreach ($xml->channel->item as $item) {
-                $list[] = array(
-                    'link' => strval($item->link)
-                    , 'title' => strval($item->title)
-                    , 'pubDate' => strval($item->pubDate));
+    $list    = array();
+    $content = osc_file_get_contents('http://osclass.org/blog/feed/');
+    if( $content ) {
+        $xml   = simplexml_load_string($content);
+        $count = 0;
+        foreach ($xml->channel->item as $item) {
+            $list[] = array(
+                'link'    => strval($item->link),
+                'title'   => strval($item->title),
+                'pubDate' => strval($item->pubDate)
+            );
+
+            $count++;
+            if( $count == $num ) {
+                break;
             }
         }
+    }
 
-        $cache->store($list);
+    $cache->store($list);
+    return $list;
+}
+
+function osc_latestTweets($num = 5) {
+    $list    = array();
+    $content = osc_file_get_contents('https://twitter.com/statuses/user_timeline/osclass.rss');
+    if( $content ) {
+        $xml   = simplexml_load_string($content);
+        $count = 0;
+        foreach ($xml->channel->item as $item) {
+            $list[] = array(
+                'link'    => strval($item->link),
+                'title'   => strval($item->title),
+                'pubDate' => strval($item->pubDate)
+            );
+
+            $count++;
+            if( $count == $num ) {
+                break;
+            }
+        }
     }
 
     return $list;

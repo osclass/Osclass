@@ -25,7 +25,7 @@
 
         <?php osc_run_hook('admin_header'); ?>
     </head>
-<body>
+<body class="<?php echo implode(' ',osc_apply_filter('admin_body_class', array())); ?>">
         <?php AdminToolbar::newInstance()->render(); ?>
     </div>
 

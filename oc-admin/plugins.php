@@ -220,6 +220,20 @@
                     exit ;
                 break;
                 default:
+                    $marketError = Params::getParam('marketError');
+                    $slug = Params::getParam('slug');
+                    if($marketError!='') {
+                        if($marketError == '0') { // no error installed ok
+                            osc_add_flash_ok_message( __('Everything was OK!') . ' ' . $slug , 'admin');
+                        } else {
+                            osc_add_flash_error_message( __('Error occurred') . ' ' . $slug , 'admin');
+                        }
+                    }
+                    
+                    if(Params::getParam('checkUpdated') != '') {
+                        osc_admin_toolbar_update_plugins(true);
+                    }
+                    
                     if( Params::getParam('iDisplayLength') == '' ) {
                         Params::setParam('iDisplayLength', 10 ) ;
                     }
@@ -245,9 +259,12 @@
                     }
                     // --------------------------------------------------------
                     
-                    $aData = array() ;
+                    $aData = array();
+                    $aInfo = array();
                     $max = ($start+$limit);
                     if($max > $count) $max = $count;
+                    $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
+                    $bPluginsToUpdate = is_array($aPluginsToUpdate)?true:false;
                     for($i = $start; $i < $max; $i++) {
                         $plugin = $aPlugin[$i];
                         $row   = array() ;
@@ -264,8 +281,11 @@
                         }
                         // prepare row 2
                         $sUpdate = '' ;
-                        if( osc_check_update(@$pInfo['plugin_update_uri'], @$pInfo['version']) ) {
-                            $sUpdate = '<a href="' . osc_admin_base_url(true) . '?page=market&amp;code=' . htmlentities($pInfo['plugin_update_uri']) . '">' . __("There's a new version available to update") . '</a>' ;
+                        // get plugins to update from t_preference
+                        if($bPluginsToUpdate) {
+                            if(in_array($pInfo['short_name'],$aPluginsToUpdate )){ 
+                                $sUpdate = '<a class="market_update market-popup" href="#' . htmlentities($pInfo['plugin_update_uri']) . '">' . __("There's a new version available to update") . '</a>' ;
+                            }
                         }
                         // prepare row 4
                         $sConfigure = '' ;
@@ -292,16 +312,19 @@
 
                         $row[] = '<input type="hidden" name="installed" value="' . $installed . '" enabled="' . $enabled . '" />' . $pInfo['plugin_name'] . '<div>' . $sUpdate . '</div>';
                         $row[] = $pInfo['description'] ;
+                        $row[] = ($sUpdate!='')     ? $sUpdate      : '&nbsp;';
                         $row[] = ($sConfigure!='')  ? $sConfigure   : '&nbsp;';
                         $row[] = ($sEnable!='')     ? $sEnable      : '&nbsp;';
                         $row[] = ($sInstall!='')    ? $sInstall     : '&nbsp;';
                         $aData[] = $row ;
+                        $aInfo[@$pInfo['short_name']] = $pInfo;
                     }
                     
                     $array['iTotalRecords']         = $displayRecords;
                     $array['iTotalDisplayRecords']  = count($aPlugin);
                     $array['iDisplayLength']        = $limit;
                     $array['aaData'] = $aData;
+                    $array['aaInfo'] = $aInfo;
                     // --------------------------------------------------------
                     $page  = (int)Params::getParam('iPage');
                     if(count($array['aaData']) == 0 && $page!=1) {
@@ -320,16 +343,17 @@
                             $this->redirectTo($url) ;
                         }
                     }
-                    osc_admin_toolbar_update_plugins(true);
+                    
                     
                     $this->_exportVariableToView('aPlugins', $array) ;
                     $this->doView("plugins/index.php");
+                break;
             }
         }
 
         //hopefully generic...
         function doView($file)
-        {
+        { 
             osc_current_admin_theme_path($file) ;
             Session::newInstance()->_clearVariables();
         }

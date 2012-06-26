@@ -21,7 +21,7 @@
     {
         function __construct()
         {
-            parent::__construct() ;
+            parent::__construct();
         }
 
         //Business Layer...
@@ -169,11 +169,22 @@
                     $this->doView('appearance/view.php');
                 break;
                 default:
+                    $marketError = Params::getParam('marketError');
+                    $slug = Params::getParam('slug');
+                    if($marketError!='') {
+                        if($marketError == '0') { // no error installed ok
+                            osc_add_flash_ok_message( __('Everything was OK!') . ' ( ' . $slug .' ) ', 'admin');
+                        } else {
+                            osc_add_flash_error_message( __('Error occurred') . ' ( ' . $slug .' ) ', 'admin');
+                        }
+                    }    
                     // force the recount of themes that need to be updated
-                    osc_admin_toolbar_update_themes(true);
+                    if(Params::getParam('checkUpdated') != '') {
+                        osc_admin_toolbar_update_themes(true);
+                    }
                     
                     $themes = WebThemes::newInstance()->getListThemes();
-                    $info = WebThemes::newInstance()->loadThemeInfo(osc_theme());
+                    $info   = WebThemes::newInstance()->loadThemeInfo(osc_theme());
 
                     //preparing variables for the view
                     $this->_exportVariableToView("themes", $themes);

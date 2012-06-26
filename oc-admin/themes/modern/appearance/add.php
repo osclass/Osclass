@@ -48,13 +48,8 @@
     <!-- themes list -->
     <div class="appearance">
         <h2 class="render-title"><?php _e('Add new theme') ; ?></h2>
-        <div id="tabs" class="ui-osc-tabs ui-tabs-right">
-            <ul>
-                <li><a href="#market"><?php _e('Market'); ?></a></li>
-                <li><a href="#upload-themes"><?php _e('Upload theme') ; ?></a></li>
-            </ul>
+
             <div id="upload-themes" class="ui-osc-tabs-panel">
-                <h2 class="render-title"><?php _e('Upload theme') ; ?></h2>
                 <div class="form-horizontal">
                 <?php if( is_writable( osc_themes_path() ) ) { ?>
                     <div class="flashmessage flashmessage-info">
@@ -89,12 +84,7 @@
                 <?php } ?>
                 </div>
             </div>
-            <div id="market">
-                <h2 class="render-title"><?php _e('Latest themes on market') ; ?></h2>
-                <div id="market_themes" class="available-theme">
-                </div>
-            </div>
-            
+
             <div id="market_installer" class="has-form-actions hide">
                 <form action="" method="post">
                     <input type="hidden" name="market_code" id="market_code" value="" />
@@ -131,10 +121,8 @@
                 </form>
             </div>
             
-        </div>
         <script>
         $(function() {
-            $( "#tabs" ).tabs({ selected: 1 });
             
             $("#market_cancel").on("click", function(){
                 $(".ui-dialog-content").dialog("close");

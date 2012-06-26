@@ -59,6 +59,16 @@
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?> 
 <div class="relative">
     <div id="users-toolbar" class="table-toolbar">
+        <div class="float-right">
+            <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="shortcut-filters" class="inline">
+                <input type="hidden" name="page" value="users" />
+                <input 
+                    id="fPattern" type="text" name="sSearch"
+                    value="<?php echo osc_esc_html(Params::getParam('sSearch')); ?>" 
+                    class="input-text input-actions input-has-select"/>
+                <input type="submit" class="btn submit-right" value="<?php echo osc_esc_html( __('Find') ) ; ?>">
+            </form>
+        </div>
     </div>
     <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
         <input type="hidden" name="page" value="users" />
@@ -111,6 +121,11 @@
     </form>
 </div>
 <?php 
+    function showingResults(){
+        $aData = __get('aUsers');
+        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;
+    }
+    osc_add_hook('before_show_pagination_admin','showingResults');
     osc_show_pagination_admin($aData);
 ?> 
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

@@ -365,7 +365,7 @@
                     $options[] = '<a href="' . osc_admin_base_url(true) . '?page=media&amp;action=list&amp;resourceId=' . $aRow['pk_i_id'] . '">' . __('View media') . '</a>' ;
                 }
                 
-                $options_more = osc_apply_filter('more_actions_manage_items', $options_more);
+                $options_more = osc_apply_filter('more_actions_manage_items', $options_more, $aRow);
                 // more actions
                 $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL ;
                 foreach( $options_more as $actual ) { 
@@ -373,7 +373,7 @@
                 }
                 $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL ;
                 
-                $options = osc_apply_filter('actions_manage_items', $options);
+                $options = osc_apply_filter('actions_manage_items', $options, $aRow);
                 // create list of actions
                 $auxOptions = '<ul>'.PHP_EOL ;
                 foreach( $options as $actual ) {
@@ -386,7 +386,7 @@
  
                 // fill a row
                 $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>' ;
-                $row[] = '<a href="' . osc_item_url().'">' . $title. '</a>'. $actions  ;
+                $row[] = '<a href="' . osc_item_url().'" target="_blank">' . $title. '</a>'. $actions  ;
                 $row[] = $aRow['s_user_name'] ;
                 $row[] = $aRow['s_category_name'] ;
                 $row[] = $aRow['s_country'] ;
@@ -445,8 +445,12 @@
                 if( $aRow['i_num_expired'] > 0 ) {
                     $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;stat=expired">' . __('Clear Expired') .'</a>' ;
                 }
-                               
-                $options = osc_apply_filter('actions_manage_items', $options);
+                if(count($options) > 0) {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=item_edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>' ;
+                    $options[] = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=items&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;stat=all">' . __('Clear All') .'</a>' ;
+                }
+
                 // create list of actions
                 $auxOptions = '<ul>'.PHP_EOL ;
                 foreach( $options as $actual ) {
@@ -458,7 +462,7 @@
 
                 // fill a row
                 $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>' ;
-                $row[] = '<a href="' . osc_item_url().'">' . $title . '</a>'. $actions  ;
+                $row[] = '<a href="' . osc_item_url().'" target="_blank">' . $title . '</a>'. $actions  ;
                 $row[] = $aRow['s_user_name'] ;
                 $row[] = $aRow['i_num_spam'] ;
                 $row[] = $aRow['i_num_bad_classified'] ;

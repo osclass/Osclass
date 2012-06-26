@@ -163,6 +163,108 @@
                                                     osc_add_flash_ok_message( sprintf(_mn('%d listing has been deleted', '%d listings have been deleted', $numSuccess), $numSuccess), 'admin') ;
                                                 }
                                             break;
+                                            case 'clear_spam_all';
+                                                $id = Params::getParam('id') ;
+                                                $success = false;
+
+                                                if($id) {
+                                                    $numSuccess = 0;
+                                                    foreach($id as $i) {
+                                                        if ($i) {
+                                                            $success = $this->itemManager->clearStat($i , 'spam' ) ;
+                                                            if($success) {
+                                                                $numSuccess++;
+                                                            }
+                                                        }
+                                                    }
+                                                    osc_add_flash_ok_message( sprintf(_mn('%d listing has been unmarked as spam', '%d listings have been unmarked as spam', $numSuccess), $numSuccess), 'admin') ;
+                                                }
+                                            break;
+                                            case 'clear_bad_all';
+                                                $id = Params::getParam('id') ;
+                                                $success = false;
+
+                                                if($id) {
+                                                    $numSuccess = 0;
+                                                    foreach($id as $i) {
+                                                        if ($i) {
+                                                            $success = $this->itemManager->clearStat($i , 'bad' ) ;
+                                                            if($success) {
+                                                                $numSuccess++;
+                                                            }
+                                                        }
+                                                    }
+                                                    osc_add_flash_ok_message( sprintf(_mn('%d listing has been unmarked as missclassified', '%d listings have been unmarked as missclassified', $numSuccess), $numSuccess), 'admin') ;
+                                                }
+                                            break;
+                                            case 'clear_dupl_all';
+                                                $id = Params::getParam('id') ;
+                                                $success = false;
+
+                                                if($id) {
+                                                    $numSuccess = 0;
+                                                    foreach($id as $i) {
+                                                        if ($i) {
+                                                            $success = $this->itemManager->clearStat($i , 'duplicated' ) ;
+                                                            if($success) {
+                                                                $numSuccess++;
+                                                            }
+                                                        }
+                                                    }
+                                                    osc_add_flash_ok_message( sprintf(_mn('%d listing has been unmarked as duplicated', '%d listings have been unmarked as duplicated', $numSuccess), $numSuccess), 'admin') ;
+                                                }
+                                            break;
+                                            case 'clear_expi_all';
+                                                $id = Params::getParam('id') ;
+                                                $success = false;
+
+                                                if($id) {
+                                                    $numSuccess = 0;
+                                                    foreach($id as $i) {
+                                                        if ($i) {
+                                                            $success = $this->itemManager->clearStat($i , 'expired' ) ;
+                                                            if($success) {
+                                                                $numSuccess++;
+                                                            }
+                                                        }
+                                                    }
+                                                    osc_add_flash_ok_message( sprintf(_mn('%d listing has been unmarked as expired', '%d listings have been unmarked as expired', $numSuccess), $numSuccess), 'admin') ;
+                                                }
+                                            break;
+                                            case 'clear_offe_all';
+                                                $id = Params::getParam('id') ;
+                                                $success = false;
+
+                                                if($id) {
+                                                    $numSuccess = 0;
+                                                    foreach($id as $i) {
+                                                        if ($i) {
+                                                            $success = $this->itemManager->clearStat($i , 'offensive' ) ;
+                                                            if($success) {
+                                                                $numSuccess++;
+                                                            }
+                                                        }
+                                                    }
+                                                    osc_add_flash_ok_message( sprintf(_mn('%d listing has been unmarked as offensive', '%d listings have been unmarked as offensive', $numSuccess), $numSuccess), 'admin') ;
+                                                }
+                                            break;
+                                            case 'clear_all';
+                                                $id = Params::getParam('id') ;
+                                                $success = false;
+
+                                                if($id) {
+                                                    $numSuccess = 0;
+                                                    foreach($id as $i) {
+                                                        if ($i) {
+                                                            $success = $this->itemManager->clearStat($i , 'all' ) ;
+                                                            if($success) {
+                                                                $numSuccess++;
+                                                            }
+                                                        }
+                                                    }
+                                                    osc_add_flash_ok_message( sprintf(_mn('%d listing has been unmarked', '%d listings have been unmarked', $numSuccess), $numSuccess), 'admin') ;
+                                                }
+                                            break;
                                         }
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
@@ -337,12 +439,12 @@
                                         }
 
                                         if( $item['b_active'] ) {
-                                            $actions[] = '<a class="btn btn-green float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $item['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') .'</a>' ;
+                                            $actions[] = '<a class="btn float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $item['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') .'</a>' ;
                                         } else {
                                             $actions[] = '<a class="btn btn-red float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $item['pk_i_id'] . '&amp;value=ACTIVE">' . __('Activate') .'</a>' ;
                                         }
                                         if( $item['b_enabled'] ) {
-                                            $actions[] = '<a class="btn btn-green float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $item['pk_i_id'] . '&amp;value=DISABLE">' . __('Block') .'</a>' ;
+                                            $actions[] = '<a class="btn float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $item['pk_i_id'] . '&amp;value=DISABLE">' . __('Block') .'</a>' ;
                                         } else {
                                             $actions[] = '<a class="btn btn-red float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $item['pk_i_id'] . '&amp;value=ENABLE">' . __('Unblock') .'</a>' ;
                                         }

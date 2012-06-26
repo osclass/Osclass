@@ -396,24 +396,34 @@ function osc_admin_toolbar_spam()
     }
 }
 
-function osc_admin_toolbar_update_plugins($force = false)
-{   
-     $total = 0;
+function osc_check_plugins_update( $force = false ) 
+{
+    $total = 0;
+    $array = array();
     // check if exist a new version each day
     if( (time() - osc_plugins_last_version_check()) > (24 * 3600) || $force ) {
         $plugins    = Plugins::listAll();
         foreach($plugins as $plugin) {
             $info = osc_plugin_get_info($plugin);
-            if(osc_check_update(@$info['plugin_update_uri'], @$info['version'])) {
+            if(osc_check_plugin_update(@$info['plugin_update_uri'], @$info['version'])) {
+                $array[] = @$info['short_name'];
                 $total++;
             }
         }
+        osc_set_preference( 'plugins_to_update', json_encode($array) );
         osc_set_preference( 'plugins_update_count', $total );
         osc_set_preference( 'plugins_last_version_check', time() );
         osc_reset_preferences();
     } else {
         $total = getPreference('plugins_update_count');
     }
+    
+    return $total;
+}
+
+function osc_admin_toolbar_update_plugins($force = false)
+{   
+    $total = osc_check_plugins_update( $force );
     
     if($force) {
         AdminToolbar::newInstance()->remove_menu('update_plugin');
@@ -427,32 +437,36 @@ function osc_admin_toolbar_update_plugins($force = false)
                       'meta'  => array('class' => 'action-btn action-btn-black')
                 ) );
     }
-    
 }
 
-function osc_admin_toolbar_update_themes($force = false)
+function osc_check_themes_update( $force = false ) 
 {
     $total = 0;
-    
+    $array = array();
     // check if exist a new version each day
     if( (time() - osc_themes_last_version_check()) > (24 * 3600) || $force ) {
-        
         $themes = WebThemes::newInstance()->getListThemes();
-        
         foreach($themes as $theme) {
-        
             $info = WebThemes::newInstance()->loadThemeInfo($theme);
-            
-            if(osc_check_update(@$info['theme_update_uri'], @$info['version'])) {
+            if(osc_check_theme_update(@$info['theme_update_uri'], @$info['version'])) {
+                $array[] = $theme;
                 $total++;
             }
         }
+        osc_set_preference( 'themes_to_update', json_encode($array) );
         osc_set_preference( 'themes_update_count', $total );
         osc_set_preference( 'themes_last_version_check', time() );
         osc_reset_preferences();
     } else {
         $total = getPreference('themes_update_count');
     }
+    
+    return $total;
+}
+
+function osc_admin_toolbar_update_themes($force = false)
+{
+    $total = osc_check_themes_update( $force );
     
     if($force) {
         AdminToolbar::newInstance()->remove_menu('update_theme');

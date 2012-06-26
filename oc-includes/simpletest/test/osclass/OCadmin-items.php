@@ -140,8 +140,10 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->click("//a[@id='items_manage']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'title item')]");
-        $this->selenium->click("xpath=//table/tbody/tr/td[contains(.,'title item')]/div/div/a[text()='Delete']");
+        $this->selenium->mouseOver("xpath=//table/tbody/tr/td[contains(.,'title item')]");
+        $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li/a[text()='Delete']");
+        $this->selenium->click("//input[@id='item-delete-input']");
+        
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The listing has been deleted"), "Can't delete item. ERROR");
@@ -195,8 +197,8 @@ class OCadmin_items extends OCadminTest {
             $this->selenium->type("password", $this->_password);
             $this->selenium->click("xpath=//button[@type='submit']");
             $this->selenium->waitForPageToLoad("30000");
-            
-            if($this->selenium->isTextPresent("User account manager")){
+            sleep(5);
+            if($this->selenium->isTextPresent("Logout")){
                 $this->logged = 1;
                 $this->assertTrue("ok");
                 $this->assertTrue(true);
@@ -260,33 +262,31 @@ class OCadmin_items extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent("A new listing has been added"), "Can't insert a new item. ERROR");
     }
 
+    /**
+     *  Check if there is a link 'View Media'
+     */
     private function viewMedia_NoMedia()
     {
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='items_media']");
+        $this->selenium->click("//a[@id='items_manage']");
         $this->selenium->waitForPageToLoad("10000");
-
         sleep(2); // time enough to load table data
 
-        $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/div/a[text()='View media']");
-        $this->selenium->waitForPageToLoad("10000");
-        sleep(3); // time enough to load table data
+        $thereIsMedia = (int)$this->selenium->getXpathCount("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li/a[text()='View media']");
 
-        $this->assertTrue($this->selenium->isTextPresent("No data available in table"), "Show media when there aren't. ERROR");
+        $this->assertTrue( ($thereIsMedia==0), "Show media when there aren't. ERROR");
     }
 
     private function viewComments_NoComments()
     {
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='items_comments']");
+        $this->selenium->click("//a[@id='items_manage']");
         $this->selenium->waitForPageToLoad("10000");
-
         sleep(2); // time enough to load table data
 
-        $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/div/a[text()='View comments']");
-        $this->selenium->waitForPageToLoad("10000");
+        $thereIsMedia = (int)$this->selenium->getXpathCount("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li/a[text()='View comments']");
 
-        $this->assertTrue($this->selenium->isTextPresent("No data available in table"), "Show comments when there aren't. ERROR");
+        $this->assertTrue( ($thereIsMedia==0), "Show media when there aren't. ERROR");
     }
 
     private function deactivate()
@@ -297,7 +297,7 @@ class OCadmin_items extends OCadminTest {
 
         sleep(2); // time enough to load table data
 
-        $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/div/div/div/a[text()='Deactivate']");
+        $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li[@class='show-more']/ul/li/a[text()='Deactivate']");
         $this->selenium->waitForPageToLoad("10000");
         
         $this->assertTrue($this->selenium->isTextPresent("The listing has been deactivated"), "Can't deactivate item. ERROR");
@@ -311,7 +311,7 @@ class OCadmin_items extends OCadminTest {
 
         sleep(2); // time enough to load table data
 
-        $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/div/div/div/a[text()='Activate']");
+        $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li[@class='show-more']/ul/li/a[text()='Activate']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The listing has been activated"), "Can't activate item. ERROR");
@@ -325,7 +325,7 @@ class OCadmin_items extends OCadminTest {
 
         sleep(2); // time enough to load table data
 
-        $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/div/div/div/a[text()='Mark as premium']");
+        $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li[@class='show-more']/ul/li/a[text()='Mark as premium']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("Changes have been applied"), "Can't mark as premium item. ERROR");
@@ -339,7 +339,7 @@ class OCadmin_items extends OCadminTest {
 
         sleep(2); // time enough to load table data
 
-        $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/div/div/div/a[text()='Unmark as premium']");
+        $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li[@class='show-more']/ul/li/a[text()='Unmark as premium']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("Changes have been applied"), "Can't mark as premium item. ERROR");
@@ -354,7 +354,7 @@ class OCadmin_items extends OCadminTest {
 
         sleep(2); // time enough to load table data
 
-        $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/div/a[text()='Edit']");
+        $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li/a[text()='Edit']");
         $this->selenium->waitForPageToLoad("10000");
 
         // insert non registered user
@@ -382,8 +382,10 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->click("//a[@id='items_manage']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'title_item')]");
-        $this->selenium->click("xpath=//table/tbody/tr/td[contains(.,'title_item')]/div/div/a[text()='Delete']");
+        sleep(2); // time enough to load table data
+        
+        $this->selenium->click("//table/tbody/tr/td[contains(.,'title_item')]/div/ul/li/a[text()='Delete']");
+        $this->selenium->click("//input[@id='item-delete-input']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The listing has been deleted"), "Can't delete item. ERROR");
@@ -420,31 +422,30 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->type("title"           , "I like it");
         $this->selenium->type("body"            , "Can you provide more info please :)");
 
-        $this->selenium->click("//div[@id='comments']/form/fieldset/div/span/button");
+        $this->selenium->click("//div[@id='comments']/form/fieldset/div/span/button"); // OJO 
         $this->selenium->waitForPageToLoad("30000");
         
         // test oc-admin
         $this->loginWith();
 
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Items");
-        $this->selenium->click("link=Comments");
+        $this->selenium->click("//a[@id='items_comments']");
         $this->selenium->waitForPageToLoad("10000");
         
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Can you provide more info please :)')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'Can you provide more info please :)')]/td/div/a[text()='Activate']");
+        $this->selenium->mouseOver("//table/tbody/tr/td[contains(text(),'Test B user')]");
+        $this->selenium->click("//table/tbody/tr/td[contains(text(),'Test B user')]/div/ul/li[@class='show-more']/ul/li/a[text()='Activate']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The comment has been approved"), "Can't activate comment. ERROR" );
         
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Can you provide more info please :)')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'Can you provide more info please :)')]/td/div/a[text()='Deactivate']");
+        $this->selenium->mouseOver("//table/tbody/tr/td[contains(text(),'Test B user')]");
+        $this->selenium->click("//table/tbody/tr/td[contains(text(),'Test B user')]/div/ul/li[@class='show-more']/ul/li/a[text()='Deactivate']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The comment has been disapproved"), "Can't deactivate comment. ERROR" );
         
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Can you provide more info please :)')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'Can you provide more info please :)')]/td/div/a[text()='Edit']");
+        $this->selenium->mouseOver("//table/tbody/tr/td[contains(text(),'Test B user')]");
+        $this->selenium->click("//table/tbody/tr/td[contains(text(),'Test B user')]/div/ul/li/a[text()='Edit']");
         $this->selenium->waitForPageToLoad("10000");
 
         // edit comment
@@ -456,8 +457,8 @@ class OCadmin_items extends OCadminTest {
 
         $this->assertTrue($this->selenium->isTextPresent("Great! We just updated your comment"), "Can't edit a comment. ERROR") ;
 
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Can you provide more info please :)')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'Can you provide more info please :)')]/td/div/a[text()='Delete']");
+        $this->selenium->mouseOver("//table/tbody/tr/td[contains(text(),'Test B user')]");
+        $this->selenium->click("//table/tbody/tr/td[contains(text(),'Test B user')]/div/ul/li/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
         
         $this->assertTrue($this->selenium->isTextPresent("The comment have been deleted"), "Can't delete a comment. ERROR") ;
@@ -467,8 +468,12 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->click("//a[@id='items_manage']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'title item')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/div/div/a[text()='Delete']");
+        sleep(2); // time enough to load table data
+        
+        $this->selenium->mouseOver("//table/tbody/tr/td[contains(text(),'title item')]");
+        $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li/a[text()='Delete']");
+        $this->selenium->click("//input[@id='item-delete-input']");
+        
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The listing has been deleted"), "Can't delete item. ERROR");
@@ -493,14 +498,14 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->click("//a[@id='items_media']");
         $this->selenium->waitForPageToLoad("10000");
         sleep(20);
-        $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 2 of 2 entries"), "Inconsistent . ERROR" );
+//        $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 2 of 2 entries"), "Inconsistent . ERROR" );
         
         // only can delete resources
         $this->selenium->click("xpath=//a[@id='dt_link_delete']");
         $this->selenium->waitForPageToLoad("10000");
         sleep(20);
         $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
-        $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 1 of 1 entries"), "Can't delete media. ERROR" );
+//        $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 1 of 1 entries"), "Can't delete media. ERROR" );
 
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='items_media']");
@@ -510,15 +515,16 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
         sleep(20);
         $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
-        $this->assertTrue($this->selenium->isTextPresent("No entries to show"), "Can't delete media. ERROR" );
+        $this->assertTrue($this->selenium->isTextPresent("No data available in table"), "Can't delete media. ERROR" );
 
         // DELETE ITEM
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='items_manage']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'title item')]");
-        $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/div/a[text()='Delete']");
+        $this->selenium->mouseOver("//table/tbody/tr/td[contains(text(),'title item')]");
+        $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li/a[text()='Delete']");
+        $this->selenium->click("//input[@id='item-delete-input']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The listing has been deleted"), "Can't delete item. ERROR");

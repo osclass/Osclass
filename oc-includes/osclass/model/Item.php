@@ -463,7 +463,7 @@
         
         /**
          * Clear item stat given item id and stat to clear
-         * $stat array('spam', 'duplicated', 'bad', 'offensive', 'expired')
+         * $stat array('spam', 'duplicated', 'bad', 'offensive', 'expired', 'all')
          *
          * @access public
          * @since unknown
@@ -489,6 +489,14 @@
                 case 'expired':
                     $array_set  = array('i_num_expired' => 0);
                     break;
+                case 'all':
+                    $array_set = array(
+                        'i_num_spam'            => 0,
+                        'i_num_repeated'        => 0,
+                        'i_num_bad_classified'  => 0,
+                        'i_num_offensive'       => 0,
+                        'i_num_expired'         => 0
+                    );
                 default:
                     break;
             }

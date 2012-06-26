@@ -56,18 +56,22 @@
 
             $this->add_menu( __('Categories'), osc_admin_base_url(true) .'?page=categories', 'categories', 'administrator') ;
 
-            $this->add_menu( __('Pages'), osc_admin_base_url(true) .'?page=pages', 'pages', 'administrator' ) ; 
-            $this->add_submenu( 'pages', __('Manage pages'), osc_admin_base_url(true) .'?page=pages', 'pages_manage', 'administrator') ;
-            $this->add_submenu( 'pages',  __('Add new'), osc_admin_base_url(true) .'?page=pages&action=add', 'pages_new', 'administrator') ;
-
-            $this->add_menu( __('Appearance'), osc_admin_base_url(true) .'?page=appearance', 'appearance', 'administrator') ; 
+            $this->add_menu( __('Appearance'), osc_admin_base_url(true) .'?page=appearance', 'appearance', 'administrator') ;
             $this->add_submenu( 'appearance', __('Manage themes'), osc_admin_base_url(true) .'?page=appearance', 'appearance_manage', 'administrator') ;
             $this->add_submenu( 'appearance', __('Add new theme'), osc_admin_base_url(true) .'?page=appearance&action=add', 'appearance_new', 'administrator') ;
             $this->add_submenu( 'appearance', __('Manage widgets'), osc_admin_base_url(true) .'?page=appearance&action=widgets', 'appearance_widgets', 'administrator') ;
+            $this->add_submenu( 'appearance', __('Market'), osc_admin_base_url(true).'?page=market&action=themes', 'appearance_market', 'administrator') ;
 
             $this->add_menu(__('Plugins'), osc_admin_base_url(true) .'?page=plugins', 'plugins', 'administrator') ; 
             $this->add_submenu( 'plugins', __('Manage plugins'), osc_admin_base_url(true) .'?page=plugins', 'plugins_manage', 'administrator') ;
             $this->add_submenu( 'plugins', __('Add new plugin'), osc_admin_base_url(true) .'?page=plugins&action=add', 'plugins_new', 'administrator') ;
+            $this->add_submenu( 'plugins', __('Market'), osc_admin_base_url(true).'?page=market&action=plugins', 'plugins_market', 'administrator') ;
+
+            $this->add_menu( __('Statistics'), osc_admin_base_url(true) .'?page=stats&action=items', 'stats', 'administrator' );
+            $this->add_submenu( 'stats', __('Users'), osc_admin_base_url(true) .'?page=stats&action=users', 'stats_users', 'administrator') ;
+            $this->add_submenu( 'stats', __('Listings'), osc_admin_base_url(true) .'?page=stats&action=items', 'stats_items', 'moderator') ;
+            $this->add_submenu( 'stats', __('Comments'), osc_admin_base_url(true) .'?page=stats&action=comments', 'stats_comments', 'moderator') ;
+            $this->add_submenu( 'stats', __('Reports'), osc_admin_base_url(true) .'?page=stats&action=reports', 'stats_reports', 'administrator') ;
 
             $this->add_menu(__('Settings'), osc_admin_base_url(true) .'?page=settings', 'settings', 'administrator') ;
             $this->add_submenu( 'settings', __('General'), osc_admin_base_url(true) .'?page=settings', 'settings_general', 'administrator') ;
@@ -83,13 +87,9 @@
             $this->add_submenu( 'settings', __('Media'), osc_admin_base_url(true) .'?page=settings&action=media', 'settings_media', 'administrator') ;
             $this->add_submenu( 'settings', __('Last searches'), osc_admin_base_url(true) .'?page=settings&action=latestsearches', 'settings_searches', 'administrator') ;
 
-            $this->add_menu( __('Tools'), osc_admin_base_url(true) .'?page=tools&action=import', 'tools', 'administrator') ;
-            $this->add_submenu( 'tools', __('Import data'), osc_admin_base_url(true) .'?page=tools&action=import', 'tools_import', 'administrator') ;
-            $this->add_submenu( 'tools', __('Backup data'), osc_admin_base_url(true) .'?page=tools&action=backup', 'tools_backup', 'administrator') ;
-            $this->add_submenu( 'tools', __('Upgrade OSClass'), osc_admin_base_url(true) .'?page=tools&action=upgrade', 'tools_upgrade', 'administrator') ;
-            $this->add_submenu( 'tools', __('Location stats'), osc_admin_base_url(true) .'?page=tools&action=locations', 'tools_location', 'administrator') ;
-            $this->add_submenu( 'tools', __('Category stats'), osc_admin_base_url(true) .'?page=tools&action=category', 'tools_category', 'administrator') ;
-            $this->add_submenu( 'tools', __('Maintenance mode'), osc_admin_base_url(true) .'?page=tools&action=maintenance', 'tools_maintenance', 'administrator') ;
+            $this->add_menu( __('Pages'), osc_admin_base_url(true) .'?page=pages', 'pages', 'administrator' ) ;
+            $this->add_submenu( 'pages', __('Manage pages'), osc_admin_base_url(true) .'?page=pages', 'pages_manage', 'administrator') ;
+            $this->add_submenu( 'pages',  __('Add new'), osc_admin_base_url(true) .'?page=pages&action=add', 'pages_new', 'administrator') ;
 
             $this->add_menu( __('Users'), osc_admin_base_url(true) .'?page=users', 'users', 'moderator') ;
             $this->add_submenu( 'users', __('Manage administrators'), osc_admin_base_url(true) .'?page=admins', 'users_administrators_manage', 'administrator') ;
@@ -99,11 +99,13 @@
             $this->add_submenu( 'users', __('User settings'), osc_admin_base_url(true) .'?page=users&action=settings', 'users_settings', 'administrator') ;
             $this->add_submenu( 'users', __('Your Profile'), osc_admin_base_url(true) .'?page=admins&action=edit', 'users_administrators_profile', 'moderator') ;
 
-            $this->add_menu( __('Statistics'), osc_admin_base_url(true) .'?page=stats&action=items', 'stats', 'administrator' );
-            $this->add_submenu( 'stats', __('Users'), osc_admin_base_url(true) .'?page=stats&action=users', 'stats_users', 'administrator') ;
-            $this->add_submenu( 'stats', __('Listings'), osc_admin_base_url(true) .'?page=stats&action=items', 'stats_items', 'moderator') ;
-            $this->add_submenu( 'stats', __('Comments'), osc_admin_base_url(true) .'?page=stats&action=comments', 'stats_comments', 'moderator') ;
-            $this->add_submenu( 'stats', __('Reports'), osc_admin_base_url(true) .'?page=stats&action=reports', 'stats_reports', 'administrator') ;
+            $this->add_menu( __('Tools'), osc_admin_base_url(true) .'?page=tools&action=import', 'tools', 'administrator') ;
+            $this->add_submenu( 'tools', __('Import data'), osc_admin_base_url(true) .'?page=tools&action=import', 'tools_import', 'administrator') ;
+            $this->add_submenu( 'tools', __('Backup data'), osc_admin_base_url(true) .'?page=tools&action=backup', 'tools_backup', 'administrator') ;
+            $this->add_submenu( 'tools', __('Upgrade OSClass'), osc_admin_base_url(true) .'?page=tools&action=upgrade', 'tools_upgrade', 'administrator') ;
+            $this->add_submenu( 'tools', __('Location stats'), osc_admin_base_url(true) .'?page=tools&action=locations', 'tools_location', 'administrator') ;
+            $this->add_submenu( 'tools', __('Category stats'), osc_admin_base_url(true) .'?page=tools&action=category', 'tools_category', 'administrator') ;
+            $this->add_submenu( 'tools', __('Maintenance mode'), osc_admin_base_url(true) .'?page=tools&action=maintenance', 'tools_maintenance', 'administrator') ;
         }
 
         /**

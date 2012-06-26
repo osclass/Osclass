@@ -201,8 +201,8 @@ class OCadmin_languages extends OCadminTest {
         $this->selenium->click("//a[@id='settings_language']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'$lang')]");
-        $this->selenium->click("xpath=//table/tbody/tr[contains(.,'$lang')]/td/div/ul/li/a[contains(.,'$action')]");
+        $this->selenium->mouseOver("xpath=//table/tbody/tr/tr[contains(.,'$lang')]");
+        $this->selenium->click("xpath=//table/tbody/tr/td[contains(.,'$lang')]/div/ul/li/a[text()='$action']");
         $this->selenium->waitForPageToLoad("10000");
     }
     
@@ -221,19 +221,32 @@ class OCadmin_languages extends OCadminTest {
     private function isDisabledOCAdmin($lang)
     {
         $this->selenium->open( osc_admin_base_url(true) ) ;
-            $this->selenium->click("//a[@id='settings_language']");
+        $this->selenium->click("//a[@id='settings_language']");
         $this->selenium->waitForPageToLoad("10000");
-
-        return $this->selenium->isTextPresent("//table/tbody/tr[contains(.,'$lang')]/td/div/ul/li/a[text()='Disable (oc-admin)']");
+        
+        $text = $this->selenium->getText("//table/tbody/tr/td[contains(.,'$lang')]/div/ul/li/a[text()='Disable (oc-admin)']");
+        $bool = preg_match('/Disable \(oc-admin\)/i', $text);
+        if($bool) {
+            echo "====> ".$text."   </br>";
+            return false;
+        } else {
+            return true;
+        }
     }
 
     private function isDisabledWebsite($lang)
     {
         $this->selenium->open( osc_admin_base_url(true) ) ;
-            $this->selenium->click("//a[@id='settings_language']");
+        $this->selenium->click("//a[@id='settings_language']");
         $this->selenium->waitForPageToLoad("10000");
-
-        return $this->selenium->isTextPresent("//table/tbody/tr[contains(.,'$lang')]/td/div/ul/li/a[text()='Disable (website)']");
+        
+        $text = $this->selenium->getText("//table/tbody/tr/td[contains(.,'$lang')]/div/ul/li/a[text()='Enable (website)']");
+        $bool = preg_match('/Enable \(website\)/i', $text);
+        if($bool) { 
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private function enableWebsite($lang)

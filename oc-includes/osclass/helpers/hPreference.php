@@ -556,8 +556,31 @@
      *
      * @return string 
      */
-    function osc_market_url($code = '') {
-        return(getPreference('marketURL')."?code=".$code) ;
+    function osc_market_url($type = '', $code = '') {
+        $url = getPreference('marketURL');
+        switch ($type) {
+            case 'plugins':
+                $url .= 'section/plugins/';
+                if($code!='') {
+                    $url .= 'code/'. $code;
+                }
+                break;
+            case 'themes':
+                $url .= 'section/themes/';
+                if($code!='') {
+                    $url .= 'code/'. $code;
+                }
+                break;
+            case 'languages':
+                $url .= 'section/languages/';
+                if($code!='') {
+                    $url .= 'code/'. $code;
+                }
+                break;
+            default:
+                break;
+        }
+        return $url;
     }
     
     /**
