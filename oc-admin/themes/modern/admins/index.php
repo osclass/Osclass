@@ -111,10 +111,12 @@
         </div>
     </form>
 </div>
-<div class="showing-results">
-    <?php echo osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords']); ?>
-</div>
 <?php 
+    function showingResults(){
+        $aData = __get('aAdmins');
+        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords']).'</span></li></ul>';
+    }
+    osc_add_hook('before_show_pagination_admin','showingResults');
     osc_show_pagination_admin($aData);
     osc_current_admin_theme_path( 'parts/footer.php' );
 ?>
