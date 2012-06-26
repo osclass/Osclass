@@ -59,10 +59,18 @@
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="tabs" class="ui-osc-tabs ui-tabs-right">
     <ul>
+        <?php 
+            $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
+            $bPluginsToUpdate = is_array($aPluginsToUpdate)?true:false;
+            if($bPluginsToUpdate) { 
+        ?>
+        <li><a href="#update-plugins"><?php _e('Updates'); ?></a></li>
+        <?php } ?>
         <li><a href="#market" onclick="window.location = '<?php echo osc_admin_base_url(true) . '?page=market&action=plugins'; ?>'; return false; "><?php _e('Market'); ?></a></li>
         <li><a href="#upload-plugins"><?php _e('Upload plugin') ; ?></a></li>
     </ul>
     <div id="upload-plugins">
+        
         <table class="table" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
@@ -104,7 +112,53 @@
             osc_show_pagination_admin($aData);
         ?>
     </div>
-
+    <div id="update-plugins">
+        <?php 
+            $aIndex = array();
+            if($bPluginsToUpdate) {
+                $array_aux  = array_keys($aData['aaInfo']);
+                
+                foreach($aPluginsToUpdate as $slug) {
+                    $key = array_search($slug, $array_aux);
+                    if($key) {
+                        $aIndex[]   = $aData['aaData'][$key];
+                    }
+                }
+            }
+        ?>
+        <table class="table" cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th><?php _e('Name') ; ?></th>
+                    <th colspan=""><?php _e('Description') ; ?></th>
+                    <th> &nbsp; </th>
+                    <th> &nbsp; </th>
+                    <th> &nbsp; </th>
+                    <th> &nbsp; </th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php if(count($aIndex)>0) : ?>
+            <?php foreach( $aIndex as $array) : ?>
+                <tr>
+                <?php foreach($array as $key => $value) : ?>
+                    <td>
+                    <?php echo $value; ?>
+                    </td>
+                <?php endforeach; ?>
+                </tr>
+            <?php endforeach;?>
+            <?php else : ?>
+            <tr>
+                <td colspan="6" class="text-center">
+                <p><?php _e('No data available in table') ; ?></p>
+                </td>
+            </tr>
+            <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+    
     <div id="market_installer" class="has-form-actions hide">
         <form action="" method="post">
             <input type="hidden" name="market_code" id="market_code" value="" />
@@ -145,7 +199,12 @@
              
 <script>
     $(function() {
-        $( "#tabs" ).tabs({ selected: 1 });
+        var tab_id = unescape(self.document.location.hash.substring(1));
+        if(tab_id != '') {
+            $( "#tabs" ).tabs();
+        } else {
+            $( "#tabs" ).tabs({ selected: 2 });
+        }
 
         $("#market_cancel").on("click", function(){
             $(".ui-dialog-content").dialog("close");

@@ -59,6 +59,13 @@
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="tabs" class="ui-osc-tabs ui-tabs-right">
     <ul>
+        <?php 
+            $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
+            $bPluginsToUpdate = is_array($aPluginsToUpdate)?true:false;
+            if($bPluginsToUpdate) { 
+        ?>
+        <li><a href="#update-plugins" onclick="window.location = '<?php echo osc_admin_base_url(true) . '?page=plugins#update-plugins'; ?>'; return false; "><?php _e('Updates'); ?></a></li>
+        <?php } ?>
         <li><a href="#market"><?php _e('Market'); ?></a></li>
         <li><a href="#upload-plugins" onclick="window.location = '<?php echo osc_admin_base_url(true) . '?page=plugins'; ?>'; return false; "><?php _e('Upload plugin') ; ?></a></li>
     </ul>
@@ -110,7 +117,7 @@
              
 <script>
     $(function() {
-        $( "#tabs" ).tabs({ selected: 2 });
+        $( "#tabs" ).tabs({ selected: 1 });
 
         $("#market_cancel").on("click", function(){
             $(".ui-dialog-content").dialog("close");
