@@ -11,7 +11,7 @@ class OCadmin_plugins extends OCadminTest {
      * Login oc-admin
      * UPLOAD / INSTALL / CONFIGURE / DISABLE / ENABLE / UNINSTALL PLUGIN
      */
-    function testPluginsUpload()
+    /*function testPluginsUpload()
     {
         
         // UPLOAD
@@ -94,6 +94,41 @@ class OCadmin_plugins extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue($this->selenium->isTextPresent("Plugin uninstalled"),"Uninstall plugin $this->plugin");
         $this->deletePlugin();
+    }
+    
+    */
+    
+    function testMarket()
+    {
+        $this->loginWith();
+        $this->selenium->open( osc_admin_base_url(true) ) ;
+        $this->selenium->click("link=Plugins");
+        $this->selenium->click("link=Manage plugins");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("//div/div/div/div/div/ul/li/a[text()='Market']");
+        $this->selenium->waitForPageToLoad("10000");
+        sleep(10);
+        $res = $this->selenium->getXpathCount("//a[text()='Install']");
+        $this->assertTrue((10==$res), "Market loaded correctly");
+        $this->selenium->click("//a[text()='2']");
+        $this->selenium->waitForPageToLoad("10000");
+        sleep(10);
+        $res = $this->selenium->getXpathCount("//a[text()='Install']");
+        $this->assertTrue((10==$res), "Market loaded correctly");
+        $this->selenium->click("//a[text()='1']");
+        $this->selenium->waitForPageToLoad("10000");
+        sleep(10);
+        $res = $this->selenium->getXpathCount("//a[text()='Install']");
+        $this->assertTrue((10==$res), "Market loaded correctly");
+        
+        $this->selenium->click("//a[text()='Install'][1]");
+        sleep(4);
+        
+        $this->selenium->click("//button[text()='Continue install']");
+        $this->selenium->waitForPageToLoad("30000");
+        
+        $this->assertTrue($this->selenium->isTextPresent("Everything was OK!"),"Install plugin (market)");
+        
     }
     
     
