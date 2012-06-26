@@ -16,8 +16,13 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    //getting variables for this view
+    $themes = __get("themes") ;
+    $info   = __get("info") ;
+
     //customize Head
     function customHead(){
+        echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.validate.min.js').'"></script>';
         ?>
         <script type="text/javascript">
             $(function() {
@@ -36,55 +41,33 @@
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
         <h1><?php _e('Appearance') ; ?></h1>
-<?php
+    <?php
     }
 
     function customPageTitle($string) {
-        return sprintf(__('Add theme &raquo; %s'), $string);
+        return sprintf(__('Appearance &raquo; %s'), $string);
     }
     osc_add_filter('admin_title', 'customPageTitle');
 
-    osc_current_admin_theme_path('parts/header.php') ; ?>
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+<div id="appearance-page">
+    <form id="market-quick-search" class="quick-search"><input type="text" name="sPattern" placeholder="<?php _e('Search Themes'); ?>" class="input-text float-left"/><input type="Submit" value="Seach" class="btn ico ico-32 ico-search float-left"/><a href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance&amp;action=add" class="btn btn-green float-right"><?php _e('Add new theme'); ?></a></form>
     <!-- themes list -->
     <div class="appearance">
-        <h2 class="render-title"><?php _e('Add new theme') ; ?></h2>
-
-            <div id="upload-themes" class="ui-osc-tabs-panel">
-                <div class="form-horizontal">
-                <?php if( is_writable( osc_themes_path() ) ) { ?>
-                    <div class="flashmessage flashmessage-info">
-                        <p class="info"><?php printf( __('Download more themes at %s'), '<a href="https://sourceforge.net/projects/osclass/files/Themes/" target="_blank">Sourceforge</a>') ; ?></p>
-                    </div>
-                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="action" value="add_post" />
-                        <input type="hidden" name="page" value="appearance" />
-
-                        <div class="form-row">
-                            <div class="form-label"><?php _e('Theme package (.zip)') ; ?></div>
-                            <div class="form-controls">
-                                <div class="form-label-checkbox"><input type="file" name="package" id="package" /></div>
-                            </div>
-                        </div>
-                        <div class="form-actions">
-                            <input type="submit" value="<?php echo osc_esc_html( __('Upload') ) ; ?>" class="btn btn-submit" />
-                        </div>
-                    </form>
-                <?php } else { ?>
-                    <div class="flashmessage flashmessage-error">
-                        <a class="btn ico btn-mini ico-close" href="#">×</a>
-                        <p><?php _e('Cannot install a new theme') ; ?></p>
-                    </div>
-                    <p class="text">
-                        <?php _e('The theme folder is not writable on your server and you cannot upload themes from the administration panel. Please make the theme folder writable') ; ?>
-                    </p>
-                    <p class="text">
-                        <?php _e('To make the directory writable under UNIX execute this command from the shell:') ; ?>
-                    </p>
-                    <pre>chmod a+w <?php echo osc_themes_path() ; ?></pre>
-                <?php } ?>
+        <div id="tabs" class="ui-osc-tabs ui-tabs-right">
+            <ul>
+                <li><a href="#market"><?php _e('Market'); ?></a></li>
+                <li><a href="#available-themes" onclick="window.location = '<?php echo osc_admin_base_url(true) . '?page=appearance'; ?>'; return false; "><?php _e('Available themes') ; ?></a></li>
+            </ul>
+            <div id="market">
+                <h2 class="render-title"><?php _e('Latest themes on market') ; ?></h2>
+                <div id="market_themes" class="available-theme">
+                </div>
+                <div id="market_pagination" class="has-pagination">
                 </div>
             </div>
-
+            
+            
             <div id="market_installer" class="has-form-actions hide">
                 <form action="" method="post">
                     <input type="hidden" name="market_code" id="market_code" value="" />
@@ -121,8 +104,10 @@
                 </form>
             </div>
             
+            </div>
         <script>
         $(function() {
+            $( "#tabs" ).tabs({ selected: 2 });
             
             $("#market_cancel").on("click", function(){
                 $(".ui-dialog-content").dialog("close");
@@ -135,7 +120,7 @@
                 $('<div id="downloading"><div class="osc-modal-content">Please wait until the download is completed</div></div>').dialog({title:'Installing...',modal:true});
                 $.getJSON(
                 "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
-                {"code" : $("#market_code").attr("value")},
+                {"code" : $("#market_code").attr("value"), "section" : 'plugins'},
                 function(data){
                     $("#downloading .osc-modal-content").html(data.message);
                     setTimeout(function(){
@@ -145,48 +130,69 @@
                 return false;
             });
             
-            $.getJSON(
-                "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=local_market",
-                {"section" : "themes"},
-                function(data){
-                    $("#market_themes").html(" ");
-                    if(data!=null && data.themes!=null) {
-                        for(var i=0;i<data.themes.length;i++) {
-                            var description = $(data.themes[i].s_description).text();
-                            dots = '';
-                            if(description.length > 80){
-                                dots = '...';
-                            }
-                            var imgsrc = '<?php echo osc_current_admin_theme("img/marketblank.jpg"); ?>';
-                            if(data.themes[i].s_image!=null) {
-                                imgsrc = data.themes[i].s_image;
-                            }
-                            $("#market_themes").append('<div class="theme">'
-                                +'<div class="theme-stage">'
-                                    +'<img src="'+imgsrc+'" title="'+data.themes[i].s_title+'" alt="'+data.themes[i].s_title+'" />'
-                                    +'<div class="theme-actions">'
-                                        +'<a href="#'+data.themes[i].s_slug+'" class="btn btn-mini btn-green market-popup"><?php _e('Install') ; ?></a>'
-                                        +'<a target="_blank" href="'+data.themes[i].s_preview+'" class="btn btn-mini btn-blue"><?php _e('Preview') ; ?></a>'
+            function getMarketContent(fPage) 
+            {
+                // get page 
+                var page = 1;
+                if(fPage!="") {
+                    page = fPage;
+                } 
+                
+                $.getJSON(
+                    "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=local_market",
+                    {"section" : "themes", 'mPage' : page },
+                    function(data){
+                        $("#market_themes").html(" ");
+                        $('#market_pagination').html(" ");
+                        if(data!=null && data.themes!=null) {
+                            for(var i=0;i<data.themes.length;i++) {
+                                var description = $(data.themes[i].s_description).text();
+                                dots = '';
+                                if(description.length > 80){
+                                    dots = '...';
+                                }
+                                var imgsrc = '<?php echo osc_current_admin_theme("img/marketblank.jpg"); ?>';
+                                if(data.themes[i].s_image!=null) {
+                                    imgsrc = data.themes[i].s_image;
+                                }
+                                $("#market_themes").append('<div class="theme">'
+                                    +'<div class="theme-stage">'
+                                        +'<img src="'+imgsrc+'" title="'+data.themes[i].s_title+'" alt="'+data.themes[i].s_title+'" />'
+                                        +'<div class="theme-actions">'
+                                            +'<a href="#'+data.themes[i].s_slug+'" class="btn btn-mini btn-green market-popup"><?php _e('Install') ; ?></a>'
+                                            +'<a target="_blank" href="'+data.themes[i].s_preview+'" class="btn btn-mini btn-blue"><?php _e('Preview') ; ?></a>'
+                                        +'</div>'
                                     +'</div>'
-                                +'</div>'
-                                +'<div class="theme-info">'
-                                    +'<h3>'+data.themes[i].s_title+' '+data.themes[i].s_version+' <?php _e('by') ; ?> <a target="_blank" href="">'+data.themes[i].s_contact_name+'</a></h3>'
-                                +'</div>'
-                                +'<div class="theme-description">'
-                                    +description.substring(0,80)+dots
-                                +'</div>'
-                            +'</div>');
+                                    +'<div class="theme-info">'
+                                        +'<h3>'+data.themes[i].s_title+' '+data.themes[i].s_version+' <?php _e('by') ; ?> <a target="_blank" href="">'+data.themes[i].s_contact_name+'</a></h3>'
+                                    +'</div>'
+                                    +'<div class="theme-description">'
+                                        +description.substring(0,80)+dots
+                                    +'</div>'
+                                +'</div>');
+                            }
+                            // add pagination
+                            $('#market_pagination').append(data.pagination_content);
                         }
+                        $("#market_themes").append('<div class="clear"></div>');
                     }
-                    $("#market_themes").append('<div class="clear"></div>');
-                }
-            );
-
+                );
+            }
+            
+            getMarketContent( unescape(self.document.location.hash.substring(1)) );
+            // bind pagination to getJSON
+            $('#market_pagination a').live('click',function(){
+                var url =$(this).attr('href');
+                url = url.replace("#","");
+                getMarketContent(url);
+            });
+            
         });
+        
         $('.market-popup').live('click',function(){
             $.getJSON(
                 "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
-                {"code" : $(this).attr('href').replace('#','')},
+                {"code" : $(this).attr('href').replace('#',''), 'section' : 'plugins'},
                 function(data){
                     if(data!=null) {
                         $("#market_thumb").attr('src',data.s_thumbnail);
@@ -211,4 +217,5 @@
         </script>
     </div>
     <!-- /themes list -->
-<?php osc_current_admin_theme_path('parts/footer.php') ; ?>
+</div>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

@@ -78,7 +78,6 @@
                     div_regions.append(container);
                     div_regions.append(clear);
                 });
-                hook_load_cities();
             }
         });
         $('input[name=country_c_parent]').val(c_code);

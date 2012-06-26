@@ -60,6 +60,25 @@
                         $this->redirectTo(osc_admin_base_url(true) . '?page=upgrade');
                 }
             }
+
+            // show messages subscribed
+            $status_subscribe = Params::getParam('subscribe');
+            if( $status_subscribe != '' ) {
+                switch( $status_subscribe ) {
+                    case -1:
+                        osc_add_flash_error_message(_m('Entered an invalid email'), 'admin');
+                    break;
+                    case 0:
+                        osc_add_flash_warning_message(_m("You're already subscribed"), 'admin');
+                    break;
+                    case 1:
+                        osc_add_flash_ok_message(_m('Subscribed correctly'), 'admin');
+                    break;
+                    default:
+                        osc_add_flash_warning_message(_m("Error subscribing"), 'admin');
+                    break;
+                }
+            }
         }
 
         function isLogged()
