@@ -259,7 +259,8 @@
                     }
                     // --------------------------------------------------------
                     
-                    $aData = array() ;
+                    $aData = array();
+                    $aInfo = array();
                     $max = ($start+$limit);
                     if($max > $count) $max = $count;
                     $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
@@ -316,12 +317,14 @@
                         $row[] = ($sEnable!='')     ? $sEnable      : '&nbsp;';
                         $row[] = ($sInstall!='')    ? $sInstall     : '&nbsp;';
                         $aData[] = $row ;
+                        $aInfo[@$pInfo['short_name']] = $pInfo;
                     }
                     
                     $array['iTotalRecords']         = $displayRecords;
                     $array['iTotalDisplayRecords']  = count($aPlugin);
                     $array['iDisplayLength']        = $limit;
                     $array['aaData'] = $aData;
+                    $array['aaInfo'] = $aInfo;
                     // --------------------------------------------------------
                     $page  = (int)Params::getParam('iPage');
                     if(count($array['aaData']) == 0 && $page!=1) {
