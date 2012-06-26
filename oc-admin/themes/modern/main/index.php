@@ -261,11 +261,13 @@
                     </form>
                     <form name="_xclick" action="https://www.paypal.com/in/cgi-bin/webscr" method="post">
                         <input type="hidden" name="cmd" value="_donations">
+                        <input type="hidden" name="rm" value="2">
                         <input type="hidden" name="business" value="info@osclass.org">
                         <input type="hidden" name="item_name" value="OSClass project">
-                        <input type="hidden" name="return" value="<?php echo osc_admin_base_url(); ?>">
+                        <input type="hidden" name="return" value="http://osclass.org/paypal/">
                         <input type="hidden" name="currency_code" value="USD">
                         <input type="hidden" name="lc" value="US" />
+                        <input type="hidden" name="custom" value="<?php echo osc_admin_base_url(); ?>?donation=successful">
                         <fieldset>
                             <div class="form">
                                 <h4><?php _e('Donate'); ?></h4>
