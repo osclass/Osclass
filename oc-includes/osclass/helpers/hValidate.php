@@ -36,7 +36,7 @@
      */
     function osc_validate_text ($value = '', $count = 1, $required = true) {
         if ($required || $value) {
-            if ( !preg_match("/([\p{L}\p{N}]){".$count."}/i", strip_tags($value)) ) {
+            if ( !preg_match("/([\p{L}\p{N}]){".$count."}/iu", strip_tags($value)) ) {
                 return false;
             }
         }

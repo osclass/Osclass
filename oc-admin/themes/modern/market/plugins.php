@@ -64,101 +64,19 @@
             $bPluginsToUpdate = is_array($aPluginsToUpdate)?true:false;
             if($bPluginsToUpdate) { 
         ?>
-        <li><a href="#update-plugins"><?php _e('Updates'); ?></a></li>
+        <li><a href="#update-plugins" onclick="window.location = '<?php echo osc_admin_base_url(true) . '?page=plugins#update-plugins'; ?>'; return false; "><?php _e('Updates'); ?></a></li>
         <?php } ?>
-        <li><a href="#market" onclick="window.location = '<?php echo osc_admin_base_url(true) . '?page=market&action=plugins'; ?>'; return false; "><?php _e('Market'); ?></a></li>
-        <li><a href="#upload-plugins"><?php _e('Upload plugin') ; ?></a></li>
+        <li><a href="#market"><?php _e('Market'); ?></a></li>
+        <li><a href="#upload-plugins" onclick="window.location = '<?php echo osc_admin_base_url(true) . '?page=plugins'; ?>'; return false; "><?php _e('Upload plugin') ; ?></a></li>
     </ul>
-    <div id="upload-plugins">
-        
-        <table class="table" cellpadding="0" cellspacing="0">
-            <thead>
-                <tr>
-                    <th><?php _e('Name') ; ?></th>
-                    <th colspan=""><?php _e('Description') ; ?></th>
-                    <th> &nbsp; </th>
-                    <th> &nbsp; </th>
-                    <th> &nbsp; </th>
-                    <th> &nbsp; </th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php if(count($aData['aaData'])>0) : ?>
-            <?php foreach( $aData['aaData'] as $array) : ?>
-                <tr>
-                <?php foreach($array as $key => $value) : ?>
-                    <td>
-                    <?php echo $value; ?>
-                    </td>
-                <?php endforeach; ?>
-                </tr>
-            <?php endforeach;?>
-            <?php else : ?>
-            <tr>
-                <td colspan="6" class="text-center">
-                <p><?php _e('No data available in table') ; ?></p>
-                </td>
-            </tr>
-            <?php endif; ?>
-            </tbody>
-        </table>
+    <div id="market">
+        <h2 class="render-title"><?php _e('Latest plugins on market') ; ?></h2>
+        <div id="market_plugins" class="available-theme">
+        </div>
+        <div id="market_pagination" class="has-pagination">
+        </div>
+    </div>
 
-       <?php 
-            function showingResults(){
-                $aData = __get('aPlugins');
-                echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords']).'</span></li></ul>' ;
-            }
-            osc_add_hook('before_show_pagination_admin','showingResults');
-            osc_show_pagination_admin($aData);
-        ?>
-    </div>
-    <div id="update-plugins">
-        <?php 
-            $aIndex = array();
-            if($bPluginsToUpdate) {
-                $array_aux  = array_keys($aData['aaInfo']);
-                
-                foreach($aPluginsToUpdate as $slug) {
-                    $key = array_search($slug, $array_aux);
-                    if($key) {
-                        $aIndex[]   = $aData['aaData'][$key];
-                    }
-                }
-            }
-        ?>
-        <table class="table" cellpadding="0" cellspacing="0">
-            <thead>
-                <tr>
-                    <th><?php _e('Name') ; ?></th>
-                    <th colspan=""><?php _e('Description') ; ?></th>
-                    <th> &nbsp; </th>
-                    <th> &nbsp; </th>
-                    <th> &nbsp; </th>
-                    <th> &nbsp; </th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php if(count($aIndex)>0) : ?>
-            <?php foreach( $aIndex as $array) : ?>
-                <tr>
-                <?php foreach($array as $key => $value) : ?>
-                    <td>
-                    <?php echo $value; ?>
-                    </td>
-                <?php endforeach; ?>
-                </tr>
-            <?php endforeach;?>
-            <?php else : ?>
-            <tr>
-                <td colspan="6" class="text-center">
-                <p><?php _e('No data available in table') ; ?></p>
-                </td>
-            </tr>
-            <?php endif; ?>
-            </tbody>
-        </table>
-    </div>
-    
     <div id="market_installer" class="has-form-actions hide">
         <form action="" method="post">
             <input type="hidden" name="market_code" id="market_code" value="" />
@@ -199,12 +117,7 @@
              
 <script>
     $(function() {
-        var tab_id = unescape(self.document.location.hash.substring(1));
-        if(tab_id != '') {
-            $( "#tabs" ).tabs();
-        } else {
-            $( "#tabs" ).tabs({ selected: 2 });
-        }
+        $( "#tabs" ).tabs({ selected: 1 });
 
         $("#market_cancel").on("click", function(){
             $(".ui-dialog-content").dialog("close");
@@ -213,20 +126,76 @@
 
         $("#market_install").on("click", function(){
             $(".ui-dialog-content").dialog("close");
-            $('<div id="downloading"><div class="osc-modal-content">Please wait until the download is completed</div></div>').dialog({title:'Installing...',modal:true});
+            $('<div id="downloading"><div class="osc-modal-content">Please wait until the download is completed</div></div>').dialog({ 
+                title:'Installing...',
+                modal:true
+            });
+            
             $.getJSON(
             "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
             {"code" : $("#market_code").attr("value"), "section" : 'plugins'},
             function(data){
                 $("#downloading .osc-modal-content").html(data.message);
-                
-                
+                if(data.error != 1) {
+                    window.location = '<?php echo osc_admin_base_url(true);?>?page=plugins&marketError='+data.error+'&slug='+data.data['s_slug'];
+                }
             });
             return false;
         });
+
+        function getMarketContent(fPage) {
+            // get page 
+            var page = 1;
+            if(fPage!="") {
+                page = fPage;
+            } 
+           
+            $.getJSON(
+                "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=local_market",
+                {"section" : "plugins", 'mPage' : page },
+                function(data){
+                    $("#market_plugins").html(" ");
+                    $('#market_pagination').html(" ");
+                    if(data!=null && data.plugins!=null) {
+                        for(var i=0;i<data.plugins.length;i++) {
+                            var description = $(data.plugins[i].s_description).text();
+                            dots = '';
+                            if(description.length > 80){
+                                dots = '...';
+                            }
+                           
+                            $("#market_plugins").append('<div class="theme">'
+                                +'<div class="plugin-stage">'
+                                    +'<div class="plugin-actions">'
+                                        +'<a href="#'+data.plugins[i].s_slug+'" class="btn btn-mini btn-green market-popup"><?php _e('Install') ; ?></a>'
+                                    +'</div>'
+                                +'</div>'
+                                +'<div class="plugin-info">'
+                                    +'<h3>'+data.plugins[i].s_title+' '+data.plugins[i].s_version+' <?php _e('by') ; ?> <a target="_blank" href="">'+data.plugins[i].s_contact_name+'</a></h3>'
+                                +'</div>'
+                                +'<div class="plugin-description">'
+                                    +description.substring(0,80)+dots
+                                +'</div>'
+                            +'</div>');
+                        }
+                        // add pagination
+                        $('#market_pagination').append(data.pagination_content);
+                    }
+
+                    $("#market_plugins").append('<div class="clear"></div>');
+                }
+            );
+        }
+        
+        getMarketContent( unescape(self.document.location.hash.substring(1)) );
+        // bind pagination to getJSON
+        $('#market_pagination a').live('click',function(){
+            var url =$(this).attr('href');
+            url = url.replace("#","");
+            getMarketContent(url);
+        });
             
     });
-    
     $('.market-popup').live('click',function(){
         var update = false;
         if( $(this).hasClass('market_update') ) update = true;
@@ -246,7 +215,7 @@
                     } else {
                         $('#market_install').html("<?php echo osc_esc_html( __('Continue install') ) ; ?>");
                     }
-
+                    
                     $('#market_installer').dialog({
                         modal:true,
                         title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',

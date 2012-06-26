@@ -51,6 +51,13 @@ function osc_sanitizeString($string) {
     $string = str_replace('.', '-', $string);
     $string = preg_replace('/\s+/', '-', $string);
     $string = preg_replace('|[\p{Ps}\p{Pe}\p{Pi}\p{Pf}\p{Po}\p{S}\p{Z}\p{C}\p{No}]+|u', '', $string);
+
+    if( is_utf8($string) ) {
+        $string = urlencode($string);
+        // mdash & ndash
+        $string = str_replace(array('%e2%80%93', '%e2%80%94'), '-', strtolower($string));
+    }
+
     $string = preg_replace('/-+/', '-', $string);
     $string = trim($string, '-');
 

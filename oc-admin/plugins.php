@@ -220,6 +220,16 @@
                     exit ;
                 break;
                 default:
+                    $marketError = Params::getParam('marketError');
+                    $slug = Params::getParam('slug');
+                    if($marketError!='') {
+                        if($marketError == '0') { // no error installed ok
+                            osc_add_flash_ok_message( __('Everything was OK!') . ' ' . $slug , 'admin');
+                        } else {
+                            osc_add_flash_error_message( __('Error occurred') . ' ' . $slug , 'admin');
+                        }
+                    }
+                    
                     if(Params::getParam('checkUpdated') != '') {
                         osc_admin_toolbar_update_plugins(true);
                     }
@@ -249,7 +259,8 @@
                     }
                     // --------------------------------------------------------
                     
-                    $aData = array() ;
+                    $aData = array();
+                    $aInfo = array();
                     $max = ($start+$limit);
                     if($max > $count) $max = $count;
                     $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
@@ -306,12 +317,14 @@
                         $row[] = ($sEnable!='')     ? $sEnable      : '&nbsp;';
                         $row[] = ($sInstall!='')    ? $sInstall     : '&nbsp;';
                         $aData[] = $row ;
+                        $aInfo[@$pInfo['short_name']] = $pInfo;
                     }
                     
                     $array['iTotalRecords']         = $displayRecords;
                     $array['iTotalDisplayRecords']  = count($aPlugin);
                     $array['iDisplayLength']        = $limit;
                     $array['aaData'] = $aData;
+                    $array['aaInfo'] = $aInfo;
                     // --------------------------------------------------------
                     $page  = (int)Params::getParam('iPage');
                     if(count($array['aaData']) == 0 && $page!=1) {

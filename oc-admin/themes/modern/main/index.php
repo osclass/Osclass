@@ -19,8 +19,8 @@
     $numItemsPerCategory = __get('numItemsPerCategory');
     $numItems            = __get('numItems');
     $numUsers            = __get('numUsers');
-    $comments            = __get('comments');
     $newsList            = __get('newsList');
+    $twitterRSS          = __get('twitterRSS');
 
     osc_add_filter('render-wrapper','render_offset');
     function render_offset() {
@@ -237,20 +237,55 @@
     </div>
     <div class="grid-row grid-first-row grid-50">
         <div class="row-wrapper">
-            <div class="widget-box">
-                <div class="widget-box-title"><h3><?php _e('Latest comments') ; ?></h3></div>
+            <div class="widget-box  widget-box-project">
+                <div class="widget-box-title"><h3><?php _e('OSClass Project'); ?></h3></div>
                 <div class="widget-box-content">
-                    <?php if (count($comments) > 0) { ?>
-                    <ul class="list-latests">
-                        <?php foreach($comments as $c) { ?>
-                        <li>
-                            <strong><?php echo $c['s_author_name'] ; ?></strong> <?php _e('commented on listing') ; ?> <em><a title="<?php echo $c['s_body'] ; ?>" target='_blank' href='<?php echo osc_base_url(true) . '?page=item&amp;id=' . $c['fk_i_item_id'] ; ?>' id='dt_link'><?php echo $c['s_title'] ; ?></a></em>
-                        </li>
-                        <?php } ?>
-                    </ul>
-                    <?php } else { ?>
-                        <?php _e("There aren't any comments yet") ; ?>
-                    <?php } ?>
+                    <form name="subscribe_form" action="http://osclass.org/" method="post">
+                        <input type="hidden" name="subscribe" value="submit" />
+                        <input type="hidden" name="return_path" value="<?php echo osc_admin_base_url(); ?>" />
+                        <input type="hidden" name="source" value="osclass" />
+                        <fieldset>
+                            <div class="form">
+                                <h4 class="first-title"><?php _e('Newsletter'); ?></h4>
+                                <p>
+                                    <?php _e('Want the latest tips and updates delivered to your inbox? <strong>Sign up now!</strong>'); ?>
+                                </p>
+                                <div class="form-row">
+                                    <div class="form-controls">
+                                        <input type="text" class="xlarge" name="email" value="">
+                                        <input type="submit" class="btn btn-mini" name="submit" value="<?php echo osc_esc_html(__('Subscribe')); ?>" />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <form name="_xclick" action="https://www.paypal.com/in/cgi-bin/webscr" method="post">
+                        <input type="hidden" name="cmd" value="_donations">
+                        <input type="hidden" name="rm" value="2">
+                        <input type="hidden" name="business" value="info@osclass.org">
+                        <input type="hidden" name="item_name" value="OSClass project">
+                        <input type="hidden" name="return" value="http://osclass.org/paypal/">
+                        <input type="hidden" name="currency_code" value="USD">
+                        <input type="hidden" name="lc" value="US" />
+                        <input type="hidden" name="custom" value="<?php echo osc_admin_base_url(); ?>?donation=successful">
+                        <fieldset>
+                            <div class="form">
+                                <h4><?php _e('Donate'); ?></h4>
+                                <p><?php _e('OSClass is a free open source project sustained by the community. Money got from the donations will be used to ensure the development and improvements of the project.'); ?></p>
+                                <div class="form-row">
+                                    <div class="form-controls">
+                                        <select name="amount" class="input-medium">
+                                            <option value="50">50$</option>
+                                            <option value="25">25$</option>
+                                            <option value="10" selected>10$</option>
+                                            <option value="5">5$</option>
+                                            <option value=""><?php _e('Custom'); ?></option>
+                                        </select><input type="submit" class="btn btn-mini" name="submit" value="<?php echo osc_esc_html(__('Donate', 'modern')); ?>">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
             </div>
         </div>
@@ -258,8 +293,9 @@
     <div class="grid-row grid-50">
         <div class="row-wrapper">
             <div class="widget-box">
-                <div class="widget-box-title"><h3><?php _e('Latest news from OSClass') ; ?></h3></div>
+                <div class="widget-box-title"><h3><?php _e('Latest news'); ?></h3></div>
                 <div class="widget-box-content">
+                    <h4 class="first-title"><?php _e('Blog'); ?></h4>
                     <?php if( is_array($newsList) ) { ?>
                         <ul class="list-latests">
                         <?php foreach ($newsList as $list) { ?>
@@ -274,6 +310,14 @@
                         </ul>
                     <?php } else { ?>
                         <?php _e('Unable to fetch news from OSClass. Please try again later') ; ?>
+                    <?php } ?>
+                    <h4><?php _e('Twitter'); ?></h4>
+                    <?php if( is_array($twitterRSS) ) { ?>
+                        <ul class="list-latests">
+                        <?php foreach( $twitterRSS as $tweet ) { ?>
+                            <li><a href="<?php echo $tweet['link']; ?>" target="_blank"><?php echo str_replace('osclass: ', '', $tweet['title']); ?></a></li>
+                        <?php } ?>
+                        </ul>
                     <?php } ?>
                 </div>
             </div>
