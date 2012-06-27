@@ -238,7 +238,7 @@
     <div class="grid-row grid-first-row grid-50">
         <div class="row-wrapper">
             <div class="widget-box  widget-box-project">
-                <div class="widget-box-title"><h3><?php _e('OSClass Project'); ?></h3></div>
+                <div class="widget-box-title"><h3><?php _e('OSClass'); ?></h3></div>
                 <div class="widget-box-content">
                     <form name="subscribe_form" action="http://osclass.org/" method="post">
                         <input type="hidden" name="subscribe" value="submit" />
@@ -271,7 +271,7 @@
                         <fieldset>
                             <div class="form">
                                 <h4><?php _e('Donate'); ?></h4>
-                                <p><?php _e('OSClass is a free open source project sustained by the community. Money got from the donations will be used to ensure the development and improvements of the project.'); ?></p>
+                                <p><?php _e('OSClass is a free, open-source project, sustained by the community. Money received from donations will be used to further the development and improve the project.'); ?></p>
                                 <div class="form-row">
                                     <div class="form-controls">
                                         <select name="amount" class="input-medium">
