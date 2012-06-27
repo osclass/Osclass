@@ -435,7 +435,7 @@
                     $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;stat=spam">' . __('Clear Spam') .'</a>' ;
                 } 
                 if( $aRow['i_num_bad_classified'] > 0 ) {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;stat=bad">' . __('Clear Misclassified ') .'</a>' ;
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;stat=bad">' . __('Clear Misclassified') .'</a>' ;
                 }
                 if( $aRow['i_num_repeated'] > 0 ) {
                     $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;stat=duplicated">' . __('Clear Duplicated') .'</a>' ;
