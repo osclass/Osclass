@@ -14,17 +14,17 @@ class OCadmin_reported extends OCadminTest {
     {
         $this->loginWith();
         // insert 3 items
-        $this->insertItem() ;
-        $this->insertItem() ;
-        $this->insertItem() ;
-        $this->insertItem() ;
+//        $this->insertItem() ;
+//        $this->insertItem() ;
+//        $this->insertItem() ;
+//        $this->insertItem() ;
         
         // mark as spam item 1, 2, 3, 4
-        $this->markAs('spam',array(1,2,2,4) );
-        // mark as bad item 1 & 3
-        $this->markAs('bad',array(1,3,4) );
-        // mark as expire item 1 & 3
-        $this->markAs('exp',array(4) );
+//        $this->markAs('spam',array(1,2,3,4) );
+//        // mark as bad item 1 & 3
+//        $this->markAs('bad',array(1,3,4) );
+//        // mark as expire item 1 & 3
+//        $this->markAs('exp',array(4) );
         
         // go to admin reported listings
         // and sort the table by spam and bad
@@ -32,15 +32,13 @@ class OCadmin_reported extends OCadminTest {
         $this->checkOrder('spam', 4 );
         $this->checkOrder('bad' , 3 );
         $this->checkOrder('exp' , 1 );
-//        
+        
 //        // unmark 1 as spam
 //        $this->unmarkAs('spam', array(2));
 //        // unmark 1 as spam
 //        $this->unmarkAs('bad', array(3));
 //        // unmark 1 as ALL
 //        $this->unmarkAs('all', array(1));
-        
-        
     }
 
 //    /*
@@ -57,28 +55,37 @@ class OCadmin_reported extends OCadminTest {
     {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='items_reported']");
-        
+        $this->selenium->waitForPageToLoad("10000");
+        sleep(1);
         switch ($type) {
-                case 'spam':
-                    $this->selenium->click("//a[@id='order_spam']");
-                    $this->assertTrue($this->selenium->isTextPresent("Thanks! That's very helpful"), 'Item has been marked');
-                    break;
-                case 'exp':
-                    $this->selenium->click("//a[@id='order_expired']");
-                    $this->assertTrue($this->selenium->isTextPresent("Thanks! That's very helpful"), 'Item has been marked');
-                    break;
-                case 'bad':
-                    $this->selenium->click("//a[@id='order_bad']");
-                    $this->assertTrue($this->selenium->isTextPresent("Thanks! That's very helpful"), 'Item has been marked');
-                    break;
-                default:
-                    break;
-            }
+            case 'spam':
+                error_log('case spam');
+                $this->selenium->click("//a[@id='order_spam']");
+                sleep(1);
+                $num = $this->selenium->getXpathCount('//table/tbody/tr');
+                $this->assertTrue( ($num == $count) , 'There are the correct rows SPAM');
+                break;
+            case 'exp':
+                error_log('case exp');
+                $this->selenium->click("//a[@id='order_exp']");
+                sleep(1);
+                $num = $this->selenium->getXpathCount('//table/tbody/tr');
+                $this->assertTrue( ($num == $count) , 'There are the correct rows EXPIRED');
+                break;
+            case 'bad':
+                error_log('case bad');
+                $this->selenium->click("//a[@id='order_bad']");
+                sleep(1);
+                $num = $this->selenium->getXpathCount('//table/tbody/tr');
+                $this->assertTrue( ($num == $count) , 'There are the correct rows BAD');
+                break;
+            default:
+                break;
+        }
     }
     
     private function markAs($type, $array)
     {
-//        $xpath_str = "xpath=/html/body/div[2]/div[2]/div[5]/div/div/div/div/form/div[2]/table/tbody/tr[position()=_ID_]/td/a[contains(.,'title item')]@href";
         $xpath_str = "xpath=//table/tbody/tr[position()=_ID_]/td/a[contains(.,'title item')]@href";
         foreach($array as $id) {
             // go to reported listings
@@ -95,14 +102,17 @@ class OCadmin_reported extends OCadminTest {
             switch ($type) {
                 case 'spam':
                     $this->selenium->click("//a[@id='item_spam']");
+                    $this->selenium->waitForPageToLoad("10000");
                     $this->assertTrue($this->selenium->isTextPresent("Thanks! That's very helpful"), 'Item has been marked');
                     break;
                 case 'exp':
                     $this->selenium->click("//a[@id='item_expired']");
+                    $this->selenium->waitForPageToLoad("10000");
                     $this->assertTrue($this->selenium->isTextPresent("Thanks! That's very helpful"), 'Item has been marked');
                     break;
                 case 'bad':
                     $this->selenium->click("//a[@id='item_bad_category']");
+                    $this->selenium->waitForPageToLoad("10000");
                     $this->assertTrue($this->selenium->isTextPresent("Thanks! That's very helpful"), 'Item has been marked');
                     break;
                 default:
