@@ -173,22 +173,22 @@
                     $slug = Params::getParam('slug');
                     if($marketError!='') {
                         if($marketError == '0') { // no error installed ok
-                            osc_add_flash_ok_message( __('Everything was OK!') . ' ( ' . $slug .' ) ', 'admin');
+                            $help = '<br/><br/><b>' . __('You only need to activate or preview the theme').'</b>';
+                            osc_add_flash_ok_message( __('Everything was OK!') . ' ( ' . $slug .' ) ' . $help, 'admin');
                         } else {
                             osc_add_flash_error_message( __('Error occurred') . ' ( ' . $slug .' ) ', 'admin');
                         }
-                    }    
+                    }
+                    
                     // force the recount of themes that need to be updated
                     if(Params::getParam('checkUpdated') != '') {
                         osc_admin_toolbar_update_themes(true);
                     }
                     
                     $themes = WebThemes::newInstance()->getListThemes();
-                    $info   = WebThemes::newInstance()->loadThemeInfo(osc_theme());
 
                     //preparing variables for the view
                     $this->_exportVariableToView("themes", $themes);
-                    $this->_exportVariableToView("info", $info);
 
                     $this->doView('appearance/index.php');
                 break;
