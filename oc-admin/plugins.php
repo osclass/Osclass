@@ -224,7 +224,8 @@
                     $slug = Params::getParam('slug');
                     if($marketError!='') {
                         if($marketError == '0') { // no error installed ok
-                            osc_add_flash_ok_message( __('Everything was OK!') . ' ' . $slug , 'admin');
+                            $extra = '<br/><br/><b>' . __('You only need to install and configure the plugin.') . '</b>';
+                            osc_add_flash_ok_message( __('Everything was OK!') . ' ( ' . $slug . ' ) ' . $extra , 'admin');
                         } else {
                             osc_add_flash_error_message( __('Error occurred') . ' ' . $slug , 'admin');
                         }
