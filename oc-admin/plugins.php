@@ -192,22 +192,22 @@
                     } else {
                         $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
                     }
-                    break;
+                break;
                 case 'configure_post':
                     $plugin_short_name = Params::getParam("plugin_short_name");
-                    $categories = Params::getParam("categories");
-                    if($plugin_short_name!="") {
+                    $categories        = Params::getParam("categories");
+                    if( $plugin_short_name != "" ) {
                         Plugins::cleanCategoryFromPlugin($plugin_short_name);
                         if(isset($categories)) {
                             Plugins::addToCategoryPlugin($categories, $plugin_short_name);
                         }
-                    } else {
-                        osc_add_flash_error_message( _m('No plugin selected'), 'admin');
-                        $this->doView("plugins/index.php");
+                        osc_add_flash_ok_message( _m('Configuration was saved'), 'admin');
+                        $this->redirectTo(osc_get_http_referer());
                     }
-                    osc_add_flash_ok_message( _m('Configuration was saved'), 'admin');
-                    $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
-                    break;
+
+                    osc_add_flash_error_message( _m('No plugin selected'), 'admin');
+                    $this->doView('plugins/index.php');
+                break;
                 case 'error_plugin':
                     // force php errors and simulate plugin installation to show the errors in the iframe
                     if( !OSC_DEBUG ) {
