@@ -29,16 +29,16 @@ class OCadmin_reported extends OCadminTest {
         // go to admin reported listings
         // and sort the table by spam and bad
         // checkOrder($type, $count)
-        $this->checkOrder('spam', 4 );
-        $this->checkOrder('bad' , 3 );
-        $this->checkOrder('exp' , 1 );
+//        $this->checkOrder('spam', 4 );
+//        $this->checkOrder('bad' , 3 );
+//        $this->checkOrder('exp' , 1 );
         
-//        // unmark 1 as spam
-//        $this->unmarkAs('spam', array(2));
-//        // unmark 1 as spam
-//        $this->unmarkAs('bad', array(3));
-//        // unmark 1 as ALL
-//        $this->unmarkAs('all', array(1));
+        // unmark 1 as spam
+        $this->unmarkAs('spam', array(2));
+        // unmark 1 as spam
+        $this->unmarkAs('bad', array(3));
+        // unmark 1 as ALL
+        $this->unmarkAs('all', array(1));
     }
 
 //    /*
@@ -50,7 +50,42 @@ class OCadmin_reported extends OCadminTest {
 //        $this->loginWith() ;
 //        $this->editItem() ;
 //    }
-
+    private function unmarkAs($type, $array)
+    {
+        $xpath_str = "//table/tbody/tr[position()=_ID_]/td/div/ul/li/a[contains(.,'_ACTION_')]";
+        foreach($array as $id) {
+            
+            $new_xpath = str_replace('_ID_', $id, $xpath_str);
+            
+            $this->selenium->open( osc_admin_base_url(true) );
+            $this->selenium->click("//a[@id='items_reported']");
+            $this->selenium->waitForPageToLoad("10000");
+            sleep(1);
+            switch ($type) {
+                case 'spam':
+                    $new_xpath = str_replace('_ACTION_', 'Clear Spam', $new_xpath);
+                    $this->selenium->click($new_xpath);
+                    sleep(1);
+                    $this->assertTrue($this->selenium->isTextPresent("The listing has been unmarked as spam"), "Can't unmark spam. ERROR");
+                    break;
+                case 'exp':
+                    $new_xpath = str_replace('_ACTION_', 'Clear Expired', $new_xpath);
+                    $this->selenium->click($new_xpath);
+                    sleep(1);
+                    $this->assertTrue($this->selenium->isTextPresent("The listing has been unmarked as expired"), "Can't unmark spam. ERROR");
+                    break;
+                case 'bad':
+                    $new_xpath = str_replace('_ACTION_', 'Clear Misclassified', $new_xpath);
+                    $this->selenium->click($new_xpath);
+                    sleep(1);
+                    $this->assertTrue($this->selenium->isTextPresent("The listing has been unmarked as spam"), "Can't unmark spam. ERROR");
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    
     private function checkOrder($type, $count) 
     {
         $this->selenium->open( osc_admin_base_url(true) );
