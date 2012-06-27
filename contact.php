@@ -54,9 +54,10 @@
                                             $this->redirectTo(osc_contact_url());
                                         }
 
+                                        $message = sprintf(__("%s (%s) left this message : %s"), $yourName, $yourEmail, $message);
+                                        
                                         $params = array(
-                                            'from' => $yourEmail
-                                            ,'from_name' => $yourName
+                                            'reply_to' => $yourEmail
                                             ,'subject' => '[' . osc_page_title() . '] ' . __('Contact form') . ': ' . $subject
                                             ,'to' => osc_contact_email()
                                             ,'to_name' => __('Administrator')
