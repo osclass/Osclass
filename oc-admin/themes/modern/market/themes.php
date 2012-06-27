@@ -116,16 +116,22 @@
             
             $("#market_install").on("click", function(){
                 $(".ui-dialog-content").dialog("close");
-                //$(".ui-dialog-content").dialog({title:'Downloading...'}).html('Please wait until the download is completed');
                 $('<div id="downloading"><div class="osc-modal-content">Please wait until the download is completed</div></div>').dialog({title:'Installing...',modal:true});
                 $.getJSON(
                 "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
-                {"code" : $("#market_code").attr("value"), "section" : 'plugins'},
-                function(data){
-                    $("#downloading .osc-modal-content").html(data.message);
-                    setTimeout(function(){
-                      $(".ui-dialog-content").dialog("close");  
-                  },1000);
+                {"code" : $("#market_code").attr("value"), "section" : 'themes'},
+                function(data) {
+                    var content = data.message ;
+                    if(data.error == 0) { // no errors
+                        content += '<p><?php _e('You only need to activate or preview the theme');?></p>';
+                        content += "<p>";
+                        content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=themes&marketError='+data.error+'&slug='+data.data['s_slug']+'"><?php _e('Active or Preview'); ?></a>';
+                        content += '<a class="btn btn-mini btn-green" onclick=\'$(".ui-dialog-content").dialog("close");\'><?php _e('Continue installing'); ?>...</a>';
+                        content += "</p>";
+                    } else {
+                        content += '<a class="btn btn-mini btn-green" onclick=\'$(".ui-dialog-content").dialog("close");\'><?php _e('Close'); ?>...</a>';
+                    }
+                    $("#downloading .osc-modal-content").html(content);
                 });
                 return false;
             });

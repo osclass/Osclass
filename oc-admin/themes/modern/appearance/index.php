@@ -18,7 +18,7 @@
 
     //getting variables for this view
     $themes = __get("themes") ;
-    $info   = __get("info") ;
+    $info   = WebThemes::newInstance()->loadThemeInfo(osc_theme());
 
     //customize Head
     function customHead(){
@@ -86,14 +86,15 @@
                     ?>
                     <div class="theme">
                         <div class="theme-stage">
-                            <img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo $theme ; ?>/screenshot.png" title="<?php echo $info['name'] ; ?>" alt="<?php echo $info['name'] ; ?>" />
+                            <img src="<?php echo osc_base_url(); ?>/oc-content/themes/<?php echo $theme ; ?>/screenshot.png" title="<?php echo $info['name'] ; ?>" alt="<?php echo $info['name'] ; ?>" />
                             <div class="theme-actions">
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=activate&amp;theme=<?php echo $theme ; ?>" class="btn btn-mini btn-green"><?php _e('Activate') ; ?></a>
-                                <a target="_blank" href="<?php echo osc_base_url(true) ; ?>?theme=<?php echo $theme ; ?>" class="btn btn-mini btn-blue"><?php _e('Preview') ; ?></a>
+                                <a target="_blank" href="<?php echo osc_base_url(true); ?>?theme=<?php echo $theme ; ?>" class="btn btn-mini btn-blue"><?php _e('Preview') ; ?></a>
                                 <a onclick="javascript:return confirm('<?php echo osc_esc_js(__('This action can not be undone. Are you sure you want to continue?')); ?>')" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=delete&amp;webtheme=<?php echo $theme ; ?>" class="btn btn-mini float-right delete"><?php _e('Delete') ; ?></a>
                                 <?php
                                 if($bThemesToUpdate) {
-                                    if(in_array($theme,$aThemesToUpdate )){  ?>
+                                    if(in_array($theme,$aThemesToUpdate )){
+                                    ?>
                                     <a href='#<?php echo htmlentities(@$info['theme_update_uri']); ?>' class="btn btn-mini btn-orange market-popup"><?php _e("Update"); ?></a>
                                 <?php };
                                 }; ?>
@@ -110,14 +111,6 @@
                     <div class="clear"></div>
                 </div>
             </div>
-            <div id="market">
-                <h2 class="render-title"><?php _e('Latest themes on market') ; ?></h2>
-                <div id="market_themes" class="available-theme">
-                </div>
-                <div id="market_pagination" class="has-pagination">
-                </div>
-            </div>
-            
             
             <div id="market_installer" class="has-form-actions hide">
                 <form action="" method="post">
@@ -173,8 +166,16 @@
                 "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
                 {"code" : $("#market_code").attr("value"), "section" : 'themes'},
                 function(data){
-                    $("#downloading .osc-modal-content").html(data.message);
-                    window.location = '<?php echo osc_admin_base_url(true);?>?page=appearance&marketError='+data.error+'&slug='+data.data['s_slug'];
+                    var content = data.message ;
+                    if(data.error == 0) { // no errors
+                        content += '<p><?php _e('You only need to activate or preview the theme');?></p>';
+                        content += "<p>";
+                        content += '<a class="btn btn-mini btn-green" onclick=\'$(".ui-dialog-content").dialog("close");\'><?php _e('Continue installing'); ?>...</a>';
+                        content += "</p>";
+                    } else {
+                        content += '<a class="btn btn-mini btn-green" onclick=\'$(".ui-dialog-content").dialog("close");\'><?php _e('Close'); ?></a>';
+                    }
+                    $("#downloading .osc-modal-content").html(content);
                 });
                 return false;
             });            
