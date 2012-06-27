@@ -13,43 +13,42 @@ class OCadmin_reported extends OCadminTest {
     function testInsertItem()
     {
         $this->loginWith();
-        // insert 3 items
-//        $this->insertItem() ;
-//        $this->insertItem() ;
-//        $this->insertItem() ;
-//        $this->insertItem() ;
+        // insert 4 items
+        $this->insertItem() ;
+        $this->insertItem() ;
+        $this->insertItem() ;
+        $this->insertItem() ;
         
         // mark as spam item 1, 2, 3, 4
-//        $this->markAs('spam',array(1,2,3,4) );
-//        // mark as bad item 1 & 3
-//        $this->markAs('bad',array(1,3,4) );
-//        // mark as expire item 1 & 3
-//        $this->markAs('exp',array(4) );
+        $this->markAs('spam',array(1,2,3,4) );
+        // mark as bad item 1 & 3
+        $this->markAs('bad',array(1,3,4) );
+        // mark as expire item 1 & 3
+        $this->markAs('exp',array(4) );
         
         // go to admin reported listings
         // and sort the table by spam and bad
         // checkOrder($type, $count)
-//        $this->checkOrder('spam', 4 );
-//        $this->checkOrder('bad' , 3 );
-//        $this->checkOrder('exp' , 1 );
+        $this->checkOrder('spam', 4 );
+        $this->checkOrder('bad' , 3 );
+        $this->checkOrder('exp' , 1 );
         
         // unmark 1 as spam
         $this->unmarkAs('spam', array(2));
+        $this->checkOrder('spam', 3 );
         // unmark 1 as spam
-        $this->unmarkAs('bad', array(3));
+        $this->unmarkAs('bad', array(1));
+        $this->checkOrder('bad', 2 );
         // unmark 1 as ALL
         $this->unmarkAs('all', array(1));
+        $this->checkOrder('all', 3 );
     }
 
-//    /*
-//     * Login oc-admin
-//     * Edit item
-//     */
-//    function testEditItem()
-//    {
-//        $this->loginWith() ;
-//        $this->editItem() ;
-//    }
+    private function bulkaction($type, $array) 
+    {
+        
+    }
+    
     private function unmarkAs($type, $array)
     {
         $xpath_str = "//table/tbody/tr[position()=_ID_]/td/div/ul/li/a[contains(.,'_ACTION_')]";
@@ -63,22 +62,37 @@ class OCadmin_reported extends OCadminTest {
             sleep(1);
             switch ($type) {
                 case 'spam':
+                    // sort by 
+                     $this->selenium->click("//a[@id='order_spam']");
+                    sleep(1);
                     $new_xpath = str_replace('_ACTION_', 'Clear Spam', $new_xpath);
                     $this->selenium->click($new_xpath);
                     sleep(1);
                     $this->assertTrue($this->selenium->isTextPresent("The listing has been unmarked as spam"), "Can't unmark spam. ERROR");
                     break;
                 case 'exp':
+                    $this->selenium->click("//a[@id='order_exp']");
+                    sleep(1);
                     $new_xpath = str_replace('_ACTION_', 'Clear Expired', $new_xpath);
                     $this->selenium->click($new_xpath);
                     sleep(1);
                     $this->assertTrue($this->selenium->isTextPresent("The listing has been unmarked as expired"), "Can't unmark spam. ERROR");
                     break;
                 case 'bad':
+                    $this->selenium->click("//a[@id='order_bad']");
+                    sleep(1);
                     $new_xpath = str_replace('_ACTION_', 'Clear Misclassified', $new_xpath);
                     $this->selenium->click($new_xpath);
                     sleep(1);
-                    $this->assertTrue($this->selenium->isTextPresent("The listing has been unmarked as spam"), "Can't unmark spam. ERROR");
+                    $this->assertTrue($this->selenium->isTextPresent("The listing has been unmarked as bad"), "Can't unmark spam. ERROR");
+                    break;
+                case 'all':
+                    $this->selenium->click("//a[@id='order_date']");
+                    sleep(1);
+                    $new_xpath = str_replace('_ACTION_', 'Clear All', $new_xpath);
+                    $this->selenium->click($new_xpath);
+                    sleep(1);
+                    $this->assertTrue($this->selenium->isTextPresent("The listing has been unmarked"), "Can't unmark ALL. ERROR");
                     break;
                 default:
                     break;
@@ -91,6 +105,7 @@ class OCadmin_reported extends OCadminTest {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='items_reported']");
         $this->selenium->waitForPageToLoad("10000");
+        $num = 0;
         sleep(1);
         switch ($type) {
             case 'spam':
@@ -114,9 +129,15 @@ class OCadmin_reported extends OCadminTest {
                 $num = $this->selenium->getXpathCount('//table/tbody/tr');
                 $this->assertTrue( ($num == $count) , 'There are the correct rows BAD');
                 break;
+            case 'all':
+                error_log('case all');
+                $num = $this->selenium->getXpathCount('//table/tbody/tr');
+                $this->assertTrue( ($num == $count) , 'There are the correct rows (ALL)');
+                break;
             default:
                 break;
         }
+        error_log($num . " == " . $count);
     }
     
     private function markAs($type, $array)
