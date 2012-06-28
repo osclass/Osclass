@@ -16,29 +16,29 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-    
+
     $comment = __get('comment');
-    
+
     if(isset($comment['pk_i_id'])) {
         //editing...
         $title = __("Edit comment") ;
         $action_frm = "comment_edit_post";
-        $btn_text = osc_esc_html( __("Save"));
+        $btn_text = osc_esc_html( __("Update comment"));
     } else {
         //adding...
-        $title = __("Add a comment");
+        $title = __("Add comment");
         $action_frm = "add_comment_post";
         $btn_text = osc_esc_html( __('Add'));
     }
 
     function customPageHeader() { ?>
-        <h1><?php _e('Manage Comments') ; ?></h1>
+        <h1><?php _e('Listing') ; ?></h1>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
 
     function customPageTitle($string) {
-        return sprintf(__(' '));
+        return sprintf(__('Edit comment &raquo; %s'), $string);
     }
     osc_add_filter('admin_title', 'customPageTitle');
 
@@ -48,9 +48,8 @@
         <?php CommentForm::js_validation(true); 
     }
     osc_add_hook('admin_header','customHead');
-    
+
     $comment = __get('comment');
-    
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <h2 class="render-title"><?php echo $title; ?></h2>
@@ -86,23 +85,28 @@
             <div class="form-row">
                 <div class="form-label"><?php _e('Status'); ?></div>
                 <div class="form-controls">
-                    <?php echo ( $comment['b_active'] ? __('ACTIVE') : __('INACTIVE') ) ; ?> ( <a href="<?php echo osc_admin_base_url( true ) ; ?>?page=comments&action=status&id=<?php echo $comment['pk_i_id'] ; ?>&value=<?php echo ( ( $comment['b_active'] == 1) ? 'INACTIVE' : 'ACTIVE' ) ; ?>"><?php echo ( ( $comment['b_active'] == 1 ) ? __('De-activate') : __('Activate') ) ; ?></a> )
+                    <div class="form-label-checkbox">
+                        <?php echo ( $comment['b_active'] ? __('Active') : __('Inactive') ) ; ?> ( <a href="<?php echo osc_admin_base_url( true ) ; ?>?page=comments&action=status&id=<?php echo $comment['pk_i_id'] ; ?>&value=<?php echo ( ( $comment['b_active'] == 1) ? 'INACTIVE' : 'ACTIVE' ) ; ?>"><?php echo ( ( $comment['b_active'] == 1 ) ? __('Deactivate') : __('Activate') ) ; ?></a> )
+                    </div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-label"><?php _e('Status'); ?></div>
                 <div class="form-controls">
-                    <?php echo ( $comment['b_enabled'] ? __('ENABLED') : __('DISABLED') ) ; ?> ( <a href="<?php echo osc_admin_base_url( true ) ; ?>?page=comments&action=status&id=<?php echo $comment['pk_i_id'] ; ?>&value=<?php echo ( ( $comment['b_enabled'] == 1) ? 'DISABLE' : 'ENABLE' ) ; ?>"><?php echo ( ( $comment['b_enabled'] == 1 ) ? __('Disable') : __('Enable') ) ; ?></a> )
+                    <div class="form-label-checkbox">
+                        <?php echo ( $comment['b_enabled'] ? __('Unblocked') : __('Blocked') ) ; ?> ( <a href="<?php echo osc_admin_base_url( true ) ; ?>?page=comments&action=status&id=<?php echo $comment['pk_i_id'] ; ?>&value=<?php echo ( ( $comment['b_enabled'] == 1) ? 'DISABLE' : 'ENABLE' ) ; ?>"><?php echo ( ( $comment['b_enabled'] == 1 ) ? __('Block') : __('Unblock') ) ; ?></a> )
+                    </div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-label"><?php _e('Comment'); ?></div>
-                <div class="form-controls">
+                <div class="form-controls input-description-wide">
                     <?php CommentForm::body_input_textarea($comment); ?>
                 </div>
             </div>
         </div>
         <div class="form-actions">
+            <a href="javascript:history.go(-1)" class="btn"><?php _e('Cancel'); ?></a>
             <input type="submit" value="<?php echo $btn_text; ?>" class="btn btn-submit" />
         </div>
     </form>
