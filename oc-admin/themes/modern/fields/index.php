@@ -20,7 +20,7 @@
     $categories = __get('categories') ;
     $selected   = __get('default_selected') ;
 function customPageHeader(){ ?>
-        <h1><?php _e('Listing'); ?> <a href="#" class="btn btn-green ico ico-32 ico-add-white float-right" id="add-button"><?php _e('Add'); ?></a></h1>
+        <h1><?php _e('Listing'); ?> <a href="#" class="btn btn-green ico ico-32 ico-add-white float-right" id="add-button"><?php _e('Add custom field'); ?></a></h1>
 <?php
 }
 osc_add_hook('admin_page_header','customPageHeader');
@@ -104,7 +104,7 @@ function customHead() { ?>
             return false;
         });
 
-        $("#add-button").bind('click', function() {
+        $("#add-button, .add-button").bind('click', function() {
             $.ajax({
                 url: '<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=add_field',
                 context: document.body,
@@ -170,7 +170,7 @@ function customHead() { ?>
     osc_current_admin_theme_path('parts/header.php') ;
 ?>
 <div class="header_title">
-    <h2 class="render-title"><?php _e('Custom fields') ; ?></h2>
+    <h2 class="render-title"><?php _e('Custom fields') ; ?> <a href="javascript:void(0);" class="btn btn-mini add-button"><?php _e('Add new'); ?></a></h2>
 </div>
 <!-- custom fields -->
 <div class="custom-fields">

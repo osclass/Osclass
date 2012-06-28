@@ -123,7 +123,7 @@
     $aData = __get('aPages');
 
     osc_current_admin_theme_path( 'parts/header.php' ); ?>
-<h2 class="render-title"><?php _e('Manage pages'); ?></h2>
+<h2 class="render-title"><?php _e('Manage pages'); ?> <a href="<?php echo osc_admin_base_url(true); ?>?page=pages&amp;action=add" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
 <div class="relative">
     <div id="pages-toolbar" class="table-toolbar">
     </div>

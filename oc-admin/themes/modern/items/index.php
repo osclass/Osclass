@@ -282,7 +282,7 @@
         </div>
     </div>
 </form>
-<h2 class="render-title"><?php _e('Manage listings'); ?></h2>
+<h2 class="render-title"><?php _e('Manage listings'); ?> <a href="<?php echo osc_admin_base_url(true) . '?page=items&action=post' ; ?>" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
 <div class="relative">
     <div id="listing-toolbar">
         <div class="float-right">

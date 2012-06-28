@@ -40,7 +40,10 @@
 
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1><?php _e('Appearance') ; ?></h1>
+        <h1><?php _e('Appearance') ; ?>
+            <a href="#" class="btn ico ico-32 ico-help float-right"></a>
+            <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add theme') ; ?></a>
+        </h1>
     <?php
     }
 
