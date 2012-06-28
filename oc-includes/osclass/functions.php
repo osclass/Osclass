@@ -349,7 +349,8 @@ function osc_admin_toolbar_menu()
                 'id'        => 'home',
                 'title'     => '<span class="">'.  osc_page_title() .'</span>',
                 'href'      => osc_base_url(),
-                'meta'      => array('class' => 'user-profile')
+                'meta'      => array('class' => 'user-profile'),
+                'target'    => '_blank'
             ) );
 }
 
