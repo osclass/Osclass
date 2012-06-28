@@ -2,10 +2,10 @@
     .command { background-color: white; color: #2E2E2E; border: 1px solid black; padding: 8px; }
     .theme-files { min-width: 500px; }
 </style>
-<h2 class="render-title"><?php _e('Header logo'); ?></h2>
+<h2 class="render-title"><?php _e('Header logo', 'modern'); ?></h2>
 <?php if( is_writable( WebThemes::newInstance()->getCurrentThemePath() . "images/") ) { ?>
     <?php if(file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) { ?>
-        <h3 class="render-title"><?php _e('Preview') ?></h3>
+        <h3 class="render-title"><?php _e('Preview', 'modern') ?></h3>
         <img border="0" alt="<?php echo osc_esc_html( osc_page_title() ); ?>" src="<?php echo osc_current_web_theme_url('images/logo.jpg');?>" />
         <form action="<?php echo osc_admin_render_theme_url('oc-content/themes/modern/admin/header.php');?>" method="post" enctype="multipart/form-data">
             <input type="hidden" name="action_specific" value="remove" />
@@ -23,7 +23,7 @@
             <p><?php _e("There isn't any logo uploaded yet", 'modern'); ?></p>
         </div>
     <?php } ?>
-    <h2 class="render-title separate-top"><?php _e('Upload logo') ?></h2>
+    <h2 class="render-title separate-top"><?php _e('Upload logo', 'modern') ?></h2>
     <p>
         <?php _e('The preferred size of the logo is 600x100.', 'modern'); ?>
         <?php if( file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) { ?>
