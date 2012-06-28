@@ -108,6 +108,10 @@ $(function(){
         $(".ui-dialog-content").dialog("close");
         return false;
     });
+    //Dissable
+    $('.btn-disabled, *:disabled').css('opacity','0.7').click(function(){
+        return false;
+    });
 });
 function oscTab(callback){
     $(".osc-tab").tabs();
