@@ -46,12 +46,12 @@
             $this->add_menu( __('Dashboard'), osc_admin_base_url(), 'dash', 'moderator');
 
             $this->add_menu( __('Listing'), osc_admin_base_url(true).'?page=items', 'items', 'moderator') ; 
-            $this->add_submenu( 'items', __('Manage Listings'), osc_admin_base_url(true).'?page=items', 'items_manage', 'moderator') ;
-            $this->add_submenu( 'items', __('Reported Listings'), osc_admin_base_url(true).'?page=items&action=items_reported', 'items_reported', 'moderator') ;
-            $this->add_submenu( 'items', __('Add new'), osc_admin_base_url(true).'?page=items&action=post', 'items_new', 'moderator') ;
+            $this->add_submenu( 'items', __('Manage listings'), osc_admin_base_url(true).'?page=items', 'items_manage', 'moderator') ;
+            $this->add_submenu( 'items', __('Reported listings'), osc_admin_base_url(true).'?page=items&action=items_reported', 'items_reported', 'moderator') ;
+            $this->add_submenu( 'items', __('Add listing'), osc_admin_base_url(true).'?page=items&action=post', 'items_new', 'moderator') ;
             $this->add_submenu( 'items', __('Comments'), osc_admin_base_url(true).'?page=comments', 'items_comments', 'moderator') ;
             $this->add_submenu( 'items', __('Manage media'), osc_admin_base_url(true).'?page=media', 'items_media', 'moderator') ;
-            $this->add_submenu( 'items', __('Manage custom fields'), osc_admin_base_url(true).'?page=cfields', 'items_cfields', 'administrator') ;
+            $this->add_submenu( 'items', __('Custom fields'), osc_admin_base_url(true).'?page=cfields', 'items_cfields', 'administrator') ;
             $this->add_submenu( 'items', __('Settings'), osc_admin_base_url(true).'?page=items&action=settings', 'items_settings', 'administrator') ;
 
             $this->add_menu( __('Categories'), osc_admin_base_url(true) .'?page=categories', 'categories', 'administrator') ;
@@ -59,13 +59,13 @@
             $this->add_menu( __('Appearance'), osc_admin_base_url(true) .'?page=appearance', 'appearance', 'administrator') ;
             $this->add_submenu( 'appearance', __('Manage themes'), osc_admin_base_url(true) .'?page=appearance', 'appearance_manage', 'administrator') ;
             $this->add_submenu( 'appearance', __('Market'), osc_admin_base_url(true).'?page=market&action=themes', 'appearance_market', 'administrator') ;
-            $this->add_submenu( 'appearance', __('Add new theme'), osc_admin_base_url(true) .'?page=appearance&action=add', 'appearance_new', 'administrator') ;
+            $this->add_submenu( 'appearance', __('Add theme'), osc_admin_base_url(true) .'?page=appearance&action=add', 'appearance_new', 'administrator') ;
             $this->add_submenu( 'appearance', __('Manage widgets'), osc_admin_base_url(true) .'?page=appearance&action=widgets', 'appearance_widgets', 'administrator') ;
 
             $this->add_menu(__('Plugins'), osc_admin_base_url(true) .'?page=plugins', 'plugins', 'administrator') ; 
             $this->add_submenu( 'plugins', __('Manage plugins'), osc_admin_base_url(true) .'?page=plugins', 'plugins_manage', 'administrator') ;
             $this->add_submenu( 'plugins', __('Market'), osc_admin_base_url(true).'?page=market&action=plugins', 'plugins_market', 'administrator') ;
-            $this->add_submenu( 'plugins', __('Add new plugin'), osc_admin_base_url(true) .'?page=plugins&action=add', 'plugins_new', 'administrator') ;
+            $this->add_submenu( 'plugins', __('Add plugin'), osc_admin_base_url(true) .'?page=plugins&action=add', 'plugins_new', 'administrator') ;
 
             $this->add_menu( __('Statistics'), osc_admin_base_url(true) .'?page=stats&action=items', 'stats', 'administrator' );
             $this->add_submenu( 'stats', __('Users'), osc_admin_base_url(true) .'?page=stats&action=users', 'stats_users', 'administrator') ;
@@ -79,7 +79,7 @@
             $this->add_submenu( 'settings', __('Locations'), osc_admin_base_url(true) .'?page=settings&action=locations', 'settings_locations', 'administrator') ;
             $this->add_submenu( 'settings', __('E-mail templates'), osc_admin_base_url(true) .'?page=emails', 'settings_emails_manage', 'administrator') ;
             $this->add_submenu( 'settings', __('Manage languages'), osc_admin_base_url(true) .'?page=languages', 'settings_language', 'administrator') ;
-            $this->add_submenu( 'settings', __('Add a language'), osc_admin_base_url(true) .'?page=languages&action=add', 'settings_language_new', 'administrator') ;
+            $this->add_submenu( 'settings', __('Add language'), osc_admin_base_url(true) .'?page=languages&action=add', 'settings_language_new', 'administrator') ;
             $this->add_submenu( 'settings', __('Permalinks'), osc_admin_base_url(true) .'?page=settings&action=permalinks', 'settings_permalinks', 'administrator') ;
             $this->add_submenu( 'settings', __('Spam and bots'), osc_admin_base_url(true) .'?page=settings&action=spamNbots', 'settings_spambots', 'administrator') ;
             $this->add_submenu( 'settings', __('Currencies'), osc_admin_base_url(true) .'?page=settings&action=currencies', 'settings_currencies', 'administrator') ;
@@ -89,14 +89,14 @@
 
             $this->add_menu( __('Pages'), osc_admin_base_url(true) .'?page=pages', 'pages', 'administrator' ) ;
             $this->add_submenu( 'pages', __('Manage pages'), osc_admin_base_url(true) .'?page=pages', 'pages_manage', 'administrator') ;
-            $this->add_submenu( 'pages',  __('Add new'), osc_admin_base_url(true) .'?page=pages&action=add', 'pages_new', 'administrator') ;
+            $this->add_submenu( 'pages',  __('Add page'), osc_admin_base_url(true) .'?page=pages&action=add', 'pages_new', 'administrator') ;
 
             $this->add_menu( __('Users'), osc_admin_base_url(true) .'?page=users', 'users', 'moderator') ;
-            $this->add_submenu( 'users', __('Manage administrators'), osc_admin_base_url(true) .'?page=admins', 'users_administrators_manage', 'administrator') ;
-            $this->add_submenu( 'users', __('Add new administrator'), osc_admin_base_url(true) .'?page=admins&action=add', 'users_administrators_new', 'administrator') ;
-            $this->add_submenu( 'users', __('Manage users'), osc_admin_base_url(true) .'?page=users', 'users_manage', 'administrator') ;
-            $this->add_submenu( 'users', __('Add new user'), osc_admin_base_url(true) .'?page=users&action=create', 'users_new', 'administrator') ;
+            $this->add_submenu( 'users', __('Users'), osc_admin_base_url(true) .'?page=users', 'users_manage', 'administrator') ;
+            $this->add_submenu( 'users', __('Add user'), osc_admin_base_url(true) .'?page=users&action=create', 'users_new', 'administrator') ;
             $this->add_submenu( 'users', __('User settings'), osc_admin_base_url(true) .'?page=users&action=settings', 'users_settings', 'administrator') ;
+            $this->add_submenu( 'users', __('Administrators'), osc_admin_base_url(true) .'?page=admins', 'users_administrators_manage', 'administrator') ;
+            $this->add_submenu( 'users', __('Add administrator'), osc_admin_base_url(true) .'?page=admins&action=add', 'users_administrators_new', 'administrator') ;
             $this->add_submenu( 'users', __('Your Profile'), osc_admin_base_url(true) .'?page=admins&action=edit', 'users_administrators_profile', 'moderator') ;
 
             $this->add_menu( __('Tools'), osc_admin_base_url(true) .'?page=tools&action=import', 'tools', 'administrator') ;
