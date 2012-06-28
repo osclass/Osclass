@@ -664,7 +664,22 @@
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=items&action=settings');
                 break;
-                case('items_reported'): // show reported listings
+                case('items_reported'):
+                                        // set default iDisplayLength
+                                        if( Params::getParam('iDisplayLength') != '' ) {
+                                            Cookie::newInstance()->push('reportedlisting_iDisplayLength', Params::getParam('iDisplayLength'));
+                                            Cookie::newInstance()->set();
+                                        } else {
+                                            // set a default value if it's set in the cookie
+                                            if( Cookie::newInstance()->get_value('reportedlisting_iDisplayLength') != '' ) {
+                                                Params::setParam('iDisplayLength', Cookie::newInstance()->get_value('reportedlisting_iDisplayLength'));
+                                            } else {
+                                                Params::setParam('iDisplayLength', 10 );
+                                            }
+                                        }
+                                        $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
+
+                                        // show reported listings
                                         if( Params::getParam('sort') == '') {
                                             Params::setParam('sort', 'date') ;
                                         }

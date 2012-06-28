@@ -17,7 +17,7 @@
      */
 
     function customPageHeader(){ ?>
-        <h1><?php _e('Reported listings') ; ?>
+        <h1><?php _e('Listings') ; ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
        </h1>
 <?php
@@ -77,10 +77,22 @@
     $direction  = Params::getParam('direction');
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<h2 class="render-title"><?php _e('Manage reported listings') ; ?></h2>
+<h2 class="render-title"><?php _e('Reported listings') ; ?></h2>
 <div class="relative">
     <div id="listing-toolbar">
         <div class="float-right">
+            <form method="get" action="<?php echo osc_admin_base_url(true); ?>"  class="inline select-items-per-page">
+                <?php foreach( Params::getParamsAsArray('get') as $key => $value ) { ?>
+                <?php if( $key != 'iDisplayLength' ) { ?>
+                <input type="hidden" name="<?php echo $key; ?>" value="<?php echo osc_esc_html($value); ?>" />
+                <?php } } ?>
+                <select name="iDisplayLength" class="select-box-extra select-box-medium float-left" onchange="this.form.submit();" >
+                    <option value="10"><?php printf(__('%d Listings'), 10); ?></option>
+                    <option value="25" <?php if( Params::getParam('iDisplayLength') == 25 ) echo 'selected'; ?> ><?php printf(__('%d Listings'), 25); ?></option>
+                    <option value="50" <?php if( Params::getParam('iDisplayLength') == 50 ) echo 'selected'; ?> ><?php printf(__('%d Listings'), 50); ?></option>
+                    <option value="100" <?php if( Params::getParam('iDisplayLength') == 100 ) echo 'selected'; ?> ><?php printf(__('%d Listings'), 100); ?></option>
+                </select>
+            </form>
             <?php if($sort!='date') { ?>
             <a id="btn-reset-filters" class="btn btn-red" href="<?php echo osc_admin_base_url(true); ?>?page=items&action=items_reported"><?php _e('Reset filters'); ?></a>
             <?php } ?>
