@@ -427,8 +427,6 @@
                                         }
                                         
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
-//                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items&stat=".$stat ) ;
-
                 break;
                 case 'item_edit':       // edit item
                                         $id = Params::getParam('id') ;
@@ -749,10 +747,19 @@
                                         if( count($regions) > 0 ) {
                                             $cities = City::newInstance()->findByRegion($regions[0]['pk_i_id']) ;
                                         }
-                                        
+
+
                                         // set default iDisplayLength 
-                                        if( Params::getParam('iDisplayLength') == '' ) {
-                                            Params::setParam('iDisplayLength', 10 ) ;
+                                        if( Params::getParam('iDisplayLength') != '' ) {
+                                            Cookie::newInstance()->push('listing_iDisplayLength', Params::getParam('iDisplayLength'));
+                                            Cookie::newInstance()->set();
+                                        } else {
+                                            // set a default value if it's set in the cookie
+                                            if( Cookie::newInstance()->get_value('listing_iDisplayLength') != '' ) {
+                                                Params::setParam('iDisplayLength', Cookie::newInstance()->get_value('listing_iDisplayLength'));
+                                            } else {
+                                                Params::setParam('iDisplayLength', 10 );
+                                            }
                                         }
                                         $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
                                      
