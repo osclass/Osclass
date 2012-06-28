@@ -170,7 +170,6 @@
                 </div>
                 <div class="widget-box-content">
                     <b class="stats-title"></b>
-                    <div class="stats-detail"><?php echo $type_stat; ?></div>
                     <div id="placeholder" class="graph-placeholder" style="height:150px">
                         <?php if( count($users) == 0 ) {
                             _e("There're no statistics yet") ;
@@ -188,7 +187,6 @@
                 </div>
                 <div class="widget-box-content">
                     <b class="stats-title"></b>
-                    <div class="stats-detail"><?php echo $type_stat; ?></div>
                     <div id="by_country" class="graph-placeholder" style="height:150px">
                         <?php if( count($users_by_country) == 0 ) {
                             _e("There're no statistics yet") ;
@@ -206,7 +204,6 @@
                 </div>
                 <div class="widget-box-content">
                     <b class="stats-title"></b>
-                    <div class="stats-detail"><?php echo $type_stat; ?></div>
                     <div id="by_region" class="graph-placeholder" style="height:150px">
                         <?php if( count($users_by_region) == 0 ) {
                             _e("There're no statistics yet") ;

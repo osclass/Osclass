@@ -75,7 +75,7 @@
             $this->add_submenu( 'settings', __('Comments'), osc_admin_base_url(true) .'?page=settings&action=comments', 'settings_comments', 'administrator') ;
             $this->add_submenu( 'settings', __('Locations'), osc_admin_base_url(true) .'?page=settings&action=locations', 'settings_locations', 'administrator') ;
             $this->add_submenu( 'settings', __('E-mail templates'), osc_admin_base_url(true) .'?page=emails', 'settings_emails_manage', 'administrator') ;
-            $this->add_submenu( 'settings', __('Manage languages'), osc_admin_base_url(true) .'?page=languages', 'settings_language', 'administrator') ;
+            $this->add_submenu( 'settings', __('Languages'), osc_admin_base_url(true) .'?page=languages', 'settings_language', 'administrator') ;
             $this->add_submenu( 'settings', __('Permalinks'), osc_admin_base_url(true) .'?page=settings&action=permalinks', 'settings_permalinks', 'administrator') ;
             $this->add_submenu( 'settings', __('Spam and bots'), osc_admin_base_url(true) .'?page=settings&action=spamNbots', 'settings_spambots', 'administrator') ;
             $this->add_submenu( 'settings', __('Currencies'), osc_admin_base_url(true) .'?page=settings&action=currencies', 'settings_currencies', 'administrator') ;
