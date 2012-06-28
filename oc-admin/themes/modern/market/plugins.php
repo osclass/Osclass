@@ -135,10 +135,17 @@
             "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
             {"code" : $("#market_code").attr("value"), "section" : 'plugins'},
             function(data){
-                $("#downloading .osc-modal-content").html(data.message);
-                if(data.error != 1) {
-                    window.location = '<?php echo osc_admin_base_url(true);?>?page=plugins&marketError='+data.error+'&slug='+data.data['s_slug'];
+                var content = data.message ;
+                if(data.error == 0) { // no errors
+                    content += '<p><?php _e('You only need to install and configure the plugin.');?></p>';
+                    content += "<p>";
+                    content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=plugins&marketError='+data.error+'&slug='+data.data['s_slug']+'"><?php _e('Install & configure'); ?></a>';
+                    content += '<a class="btn btn-mini btn-green" onclick=\'$(".ui-dialog-content").dialog("close");\'><?php _e('Continue installing'); ?>...</a>';
+                    content += "</p>";
+                } else {
+                    content += '<a class="btn btn-mini btn-green" onclick=\'$(".ui-dialog-content").dialog("close");\'><?php _e('Close'); ?>...</a>';
                 }
+                $("#downloading .osc-modal-content").html(content);
             });
             return false;
         });
