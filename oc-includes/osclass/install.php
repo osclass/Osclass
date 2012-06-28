@@ -43,6 +43,7 @@ require_once LIB_PATH . 'osclass/helpers/hErrors.php';
 require_once LIB_PATH . 'osclass/helpers/hLocale.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php';
 require_once LIB_PATH . 'osclass/helpers/hSearch.php';
+require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
 require_once LIB_PATH . 'osclass/helpers/hTranslations.php';
 require_once LIB_PATH . 'osclass/helpers/hSanitize.php';
 require_once LIB_PATH . 'osclass/default-constants.php';
@@ -145,7 +146,7 @@ switch( $step ) {
             <div id="container">
                 <div id="header" class="installation">
                     <h1 id="logo">
-                        <img src="<?php echo get_absolute_url(); ?>oc-includes/images/osclass-logo.png" alt="OSClass" title="OSClass"/>
+                        <img src="<?php echo get_absolute_url(); ?>oc-includes/images/osclass-logo.png" alt="OSClass" title="OSClass" />
                     </h1>
                     <?php if(in_array($step, array(2,3,4))) { ?>
                     <ul id="nav">
@@ -159,14 +160,14 @@ switch( $step ) {
                 <div id="content">
                 <?php if($step == 1) { ?>
                     <h2 class="target"><?php _e('Welcome');?></h2>
-                    <form action="install.php" method="POST">
+                    <form action="install.php" method="post">
                         <div class="form-table">
                             <?php if( count($locales) > 1 ) { ?>
                                 <div>
                                     <label><?php _e('Choose language') ; ?></label>
-                                    <select name="install_locale" id="install_locale" onChange="window.location.href='?install_locale='+document.getElementById(this.id).value">
+                                    <select name="install_locale" id="install_locale" onchange="window.location.href='?install_locale='+document.getElementById(this.id).value">
                                         <?php foreach($locales as $k => $locale) {?>
-                                        <option value="<?php echo $k ; ?>" <?php if( $k == $current_locale ) { echo 'selected="selected"' ; } ?>><?php echo $locale['name'] ; ?></option>
+                                        <option value="<?php echo osc_esc_html($k) ; ?>" <?php if( $k == $current_locale ) { echo 'selected="selected"' ; } ?>><?php echo $locale['name'] ; ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -193,12 +194,12 @@ switch( $step ) {
                             <?php } ?>
                             </ul>
                             <div class="more-stats">
-                                <input type="checkbox" name="ping_engines" id="ping_engines" checked="checked" value="1"/>
+                                <input type="checkbox" name="ping_engines" id="ping_engines" checked="checked" value="1" />
                                 <label for="ping_engines">
                                     <?php _e('Allow my site to appear in search engines like Google.');?>
                                 </label>
-                                <br/>
-                                <input type="checkbox" name="save_stats" id="save_stats" checked="checked" value="1"/>
+                                <br />
+                                <input type="checkbox" name="save_stats" id="save_stats" checked="checked" value="1" />
                                 <input type="hidden" name="step" value="2" />
                                 <label for="save_stats">
                                     <?php _e('Help make OSClass better by automatically sending usage statistics and crash reports to OSClass.');?>
@@ -207,11 +208,11 @@ switch( $step ) {
                         </div>
                         <?php if($error) { ?>
                         <p class="margin20">
-                            <input type="button" class="button" onclick="document.location = 'install.php?step=1'" value="<?php _e('Try again');?>" />
+                            <input type="button" class="button" onclick="document.location = 'install.php?step=1'" value="<?php echo osc_esc_html( __('Try again'));?>" />
                         </p>
                         <?php } else { ?>
                         <p class="margin20">
-                            <input type="submit" class="button" value="<?php _e('Run the install');?>" />
+                            <input type="submit" class="button" value="<?php echo osc_esc_html( __('Run the install'));?>" />
                         </p>
                     <?php } ?>
                     </form>

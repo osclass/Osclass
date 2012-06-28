@@ -42,13 +42,8 @@
                 });
             });
         </script>
-        <?php if( osc_item_is_expired () ) { ?>
-        <meta name="robots" content="noindex, nofollow" />
-        <meta name="googlebot" content="noindex, nofollow" />
-        <?php } else { ?>
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content="index, follow" />
-        <?php } ?>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
@@ -86,7 +81,7 @@
                     <p><?php echo osc_item_description() ; ?></p>
                     <div id="custom_fields">
                         <?php if( osc_count_item_meta() >= 1 ) { ?>
-                            <br/>
+                            <br />
                             <div class="meta_list">
                                 <?php while ( osc_has_item_meta() ) { ?>
                                     <?php if(osc_item_meta_value()!='') { ?>
@@ -152,7 +147,7 @@
                                 <input type="hidden" name="page" value="item" />
                                 <input type="hidden" name="id" value="<?php echo osc_item_id() ; ?>" />
                                 <?php if(osc_is_web_user_logged_in()) { ?>
-                                    <input type="hidden" name="authorName" value="<?php echo osc_logged_user_name(); ?>" />
+                                    <input type="hidden" name="authorName" value="<?php echo osc_esc_html( osc_logged_user_name() ); ?>" />
                                     <input type="hidden" name="authorEmail" value="<?php echo osc_logged_user_email();?>" />
                                 <?php } else { ?>
                                     <label for="authorName"><?php _e('Your name', 'modern') ; ?>:</label> <?php CommentForm::author_input_text(); ?><br />
@@ -174,9 +169,9 @@
                         <?php for ( $i = 0; osc_has_item_resources() ; $i++ ) { ?>
                         <a href="<?php echo osc_resource_url(); ?>" rel="image_group" title="<?php _e('Image', 'modern'); ?> <?php echo $i+1;?> / <?php echo osc_count_item_resources();?>">
                             <?php if( $i == 0 ) { ?>
-                            <img src="<?php echo osc_resource_url(); ?>" width="315" alt="<?php echo osc_item_title(); ?>" title="<?php echo osc_item_title(); ?>"/>
+                            <img src="<?php echo osc_resource_url(); ?>" width="315" alt="<?php echo osc_item_title(); ?>" title="<?php echo osc_item_title(); ?>" />
                             <?php } else { ?>
-                                <img src="<?php echo osc_resource_thumbnail_url(); ?>" width="75" alt="<?php echo osc_item_title(); ?>" title="<?php echo osc_item_title(); ?>"/>
+                                <img src="<?php echo osc_resource_thumbnail_url(); ?>" width="75" alt="<?php echo osc_item_title(); ?>" title="<?php echo osc_item_title(); ?>" />
                             <?php } ?>
                         </a>
                         <?php } ?>
@@ -187,11 +182,11 @@
                     <h2><?php _e("Contact publisher", 'modern') ; ?></h2>
                     <?php if( osc_item_is_expired () ) { ?>
                         <p>
-                            <?php _e('The item is expired. You cannot contact the publisher.', 'modern') ; ?>
+                            <?php _e('The listing is expired. You cannot contact the publisher.', 'modern') ; ?>
                         </p>
                     <?php } else if( ( osc_logged_user_id() == osc_item_user_id() ) && osc_logged_user_id() != 0 ) { ?>
                         <p>
-                            <?php _e("It's your own item, you cannot contact the publisher.", 'modern') ; ?>
+                            <?php _e("It's your own listing, you cannot contact the publisher.", 'modern') ; ?>
                         </p>
                     <?php } else if( osc_reg_user_can_contact() && !osc_is_web_user_logged_in() ) { ?>
                         <p>

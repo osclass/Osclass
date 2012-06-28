@@ -23,7 +23,7 @@
                 <div id="header" class="readme">
                     <h1 id="logo">
                         <a href="http://osclass.org/" target="_blank">
-                            <img src="oc-includes/images/osclass-logo.png" alt="OSClass" title="OSClass"/>
+                            <img src="oc-includes/images/osclass-logo.png" alt="OSClass" title="OSClass" />
                         </a>
                         <br/>
                         Version 2.4.1
@@ -103,15 +103,15 @@
                         <div class="space-left-10">
                             <p>If you have any questions that aren't addressed in this document, please look at the online resources:</p>
                             <dl class="space-left-25">
-                                <dt><a href="http://doc.osclass.org/">OSClass Wiki</a></dt>
+                                <dt><a href="http://doc.osclass.org/" target="_blank">OSClass Wiki</a></dt>
                                 <dd>
                                     The wiki is where all information about OSClass is placed.
                                 </dd>
-                                <dt><a href="http://osclass.org/blog/">OSClass Blog</a></dt>
+                                <dt><a href="http://osclass.org/blog/" target="_blank">OSClass Blog</a></dt>
                                 <dd>
                                     This is where you'll find the latest updates and news related to OSClass.
                                 </dd>
-                                <dt><a href="http://forums.osclass.org/">OSClass Support Forums</a></dt>
+                                <dt><a href="http://forums.osclass.org/" target="_blank">OSClass Support Forums</a></dt>
                                 <dd>
                                     If you've looked everywhere and still can't find an answer.
                                     To help them help you be sure to use a descriptive thread title
@@ -122,7 +122,7 @@
                     </div>
                     <div id="license">
                         <h2 class="title">License</h2>
-                        <p class="space-left-10">OSClass is released under the GPLv3 (see <a href="licenses.txt">licenses.txt</a>).</p>
+                        <p class="space-left-10">OSClass is released under the GPLv3 (see <a href="licenses.txt" target="_blank">licenses.txt</a>).</p>
                     </div>
                 </div>
                 <div id="footer">

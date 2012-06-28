@@ -15,121 +15,117 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
-    <head>
-        <?php osc_current_admin_theme_path('head.php') ; ?>
-        <link href="<?php echo osc_current_admin_theme_styles_url('datatables.css') ; ?>" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.dataTables.js') ; ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.pagination.js') ; ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.extend.js') ; ?>"></script>
+
+    function customPageHeader(){ ?>
+        <h1><?php _e('Manage users') ; ?>
+		<a href="#" class="btn ico ico-32 ico-engine float-right"></a>
+		<a href="#" class="btn ico ico-32 ico-help float-right"></a>
+                <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=create' ; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
+	</h1>
+<?php
+    }
+    osc_add_hook('admin_page_header','customPageHeader');
+
+    function customPageTitle($string) {
+        return sprintf(__('Manage users &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    //customize Head
+    function customHead() { ?>
         <script type="text/javascript">
-            $(function() {
-                oTable = $('#datatables_list').dataTable({
-                    "sAjaxSource": "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=users",
-                    "iDisplayLength": 10,
-                    "iColumns"      : 5,
-                    "sDom": "<'row-action'<'row'<'span6 length-menu'l><'span6 filter'>fr>>t<'row'<'span6 info-results'i><'span6 paginate'p>>",
-                    "sPaginationType": "bootstrap",
-                    "bLengthChange": false,
-                    "bProcessing": true,
-                    "bServerSide":true,
-                    "bPaginate": true,
-                    "bFilter": true,
-                    "oLanguage": {
-                        "oPaginate": {
-                            "sNext" : "<?php echo osc_esc_html( __('Next') ) ; ?>",
-                            "sPrevious" : "<?php echo osc_esc_html( __('Previous') ) ; ?>"
-                        },
-                        "sEmptyTable" : "<?php echo osc_esc_html( __('No data available in table') ) ; ?>",
-                        "sInfo": "<?php echo osc_esc_html( sprintf( __('Showing %s to %s of %s entries'), '_START_', '_END_', '_TOTAL_') ) ; ?>",
-                        "sInfoEmpty": "<?php echo osc_esc_html( __('No entries to show') ) ; ?>",
-                        "sInfoFiltered": "<?php echo osc_esc_html( sprintf( __('(filtered from %s total entries)'), '_MAX_' ) ) ; ?>",
-                        "sLoadingRecords": "<?php echo osc_esc_html( __('Loading...') ) ; ?>",
-                        "sProcessing": "<?php echo osc_esc_html( __('Processing...') ) ; ?>",
-                        "sSearch": "<?php echo osc_esc_html( __('Search by name') ) ; ?>",
-                        "sZeroRecords": "<?php echo osc_esc_html( __('No matching records found') ) ; ?>"
-                    },
-                    "aoColumns": [
-                        {
-                            "sTitle": "<input id='check_all' type='checkbox' />",
-                            "bSortable": false,
-                            "sWidth": "10px",
-                            "bSearchable": false
-                        },
-                        {
-                            "sTitle": "<?php echo osc_esc_html( __('E-mail') ) ; ?>",
-                            "bSortable": true
-                        },
-                        {
-                            "sTitle": "<?php echo osc_esc_html( __('Name') ) ; ?>",
-                            "bSortable": true
-                        },
-                        {
-                            "sTitle": "<?php echo osc_esc_html( __('Date') ) ; ?>",
-                            "bSortable": true,
-                            "sWidth": "150px"
-                        },
-                        {
-                            "sTitle": "<?php echo osc_esc_html( __('Update Date') ) ; ?>",
-                            "bSortable": true,
-                            "sWidth": "150px"
+            $(document).ready(function(){
+                // check_all bulkactions
+                $("#check_all").change(function(){
+                    var isChecked = $(this+':checked').length;
+                    $('.col-bulkactions input').each( function() {
+                        if( isChecked == 1 ) {
+                            this.checked = true;
+                        } else {
+                            this.checked = false;
                         }
-                    ]
+                    });
                 });
-
-                $('#datatables_list tr').live('mouseover', function(event) {
-                    $('.datatables_quick_edit', this).show();
-                });
-
-                $('#datatables_list tr').live('mouseleave', function(event) {
-                    $('.datatables_quick_edit', this).hide();
-                });
-
-                $('.length-menu').append( $("#bulk_actions") ) ;
-                $('.filter').append( $("#add_user_button") ) ;
-            }) ;
+            });
+            
         </script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <!-- container -->
-        <div id="content">
-            <?php osc_current_admin_theme_path( 'include/backoffice_menu.php' ) ; ?>
-            <!-- right container -->
-		    <div class="right">
-                <div class="header_title">
-                    <h1 class="users"><?php _e('Users') ; ?></h1>
-                </div>
-                <?php osc_show_flash_message('admin') ; ?>
-                <!-- datatables users -->
-                <form class="settings users datatables" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-                    <input type="hidden" name="page" value="users" />
-                    <div id="bulk_actions">
-                        <label>
-                            <select name="action" id="action" class="display">
-                                <option value=""><?php _e('Bulk Actions') ; ?></option>
-                                <option value="activate"><?php _e('Activate') ; ?></option>
-                                <option value="deactivate"><?php _e('Deactivate') ; ?></option>
-                                <option value="enable"><?php _e('Block') ; ?></option>
-                                <option value="disable"><?php _e('Unblock') ; ?></option>
-                                <option value="delete"><?php _e('Delete') ; ?></option>
-                                <option value="resend_activation"><?php _e('Resend activation') ; ?></option>
-                            </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>">
-                        </label>
-                    </div>
-                    <div id="add_user_button">
-                        <a href="<?php echo osc_admin_base_url(true); ?>?page=users&amp;action=create" class="btn" id="button_open"><?php _e('Add user') ; ?></a>
-                    </div>
-                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatables_list"></table>
-                </form>
-                <!-- /datatables users -->
-            </div>
-            <!-- /right container -->
+        <?php
+    }
+    osc_add_hook('admin_header','customHead');
+   
+    $iDisplayLength = __get('iDisplayLength');
+    $aData          = __get('aUsers'); 
+?>
+<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?> 
+<div class="relative">
+    <div id="users-toolbar" class="table-toolbar">
+        <div class="float-right">
+            <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="shortcut-filters" class="inline">
+                <input type="hidden" name="page" value="users" />
+                <input 
+                    id="fPattern" type="text" name="sSearch"
+                    value="<?php echo osc_esc_html(Params::getParam('sSearch')); ?>" 
+                    class="input-text input-actions input-has-select"/>
+                <input type="submit" class="btn submit-right" value="<?php echo osc_esc_html( __('Find') ) ; ?>">
+            </form>
         </div>
-        <!-- /container -->
-        <?php osc_current_admin_theme_path('footer.php') ; ?>
-    </body>
-</html>
+    </div>
+    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+        <input type="hidden" name="page" value="users" />
+        
+        <div id="bulk-actions">
+            <label>
+                <select name="action" id="action" class="select-box-extra">
+                    <option value=""><?php _e('Bulk Actions') ; ?></option>
+                    <option value="activate"><?php _e('Activate') ; ?></option>
+                    <option value="deactivate"><?php _e('Deactivate') ; ?></option>
+                    <option value="enable"><?php _e('Unblock') ; ?></option>
+                    <option value="disable"><?php _e('Block') ; ?></option>
+                    <option value="delete"><?php _e('Delete') ; ?></option>
+                    <?php if( osc_user_validation_enabled() ) { ?>
+                        <option value="resend_activation"><?php _e('Resend activation') ; ?></option>
+                    <?php }; ?>
+                    <?php $onclick_bulkactions= 'onclick="javascript:return confirm(\'' . osc_esc_js( __('You are doing bulk actions. Are you sure you want to continue?') ) . '\')"' ; ?>
+                </select> <input type="submit" <?php echo $onclick_bulkactions; ?> id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+            </label>
+        </div>
+        <div class="table-contains-actions">
+            <table class="table" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
+                        <th><?php _e('E-mail') ; ?></th>
+                        <th><?php _e('Name') ; ?></th>
+                        <th class="col-date"><?php _e('Date') ; ?></th>
+                        <th><?php _e('Update Date') ; ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach( $aData['aaData'] as $array) : ?>
+                    <tr>
+                    <?php foreach($array as $key => $value) : ?>
+                        <?php if( $key==0 ): ?>
+                        <td class="col-bulkactions">
+                        <?php else : ?>
+                        <td>
+                        <?php endif ; ?>
+                        <?php echo $value; ?>
+                        </td>
+                    <?php endforeach; ?>
+                    </tr>
+                <?php endforeach;?>
+                </tbody>
+            </table>
+            <div id="table-row-actions"></div> <!-- used for table actions -->
+        </div>
+    </form>
+</div>
+<?php 
+    function showingResults(){
+        $aData = __get('aUsers');
+        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;
+    }
+    osc_add_hook('before_show_pagination_admin','showingResults');
+    osc_show_pagination_admin($aData);
+?> 
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

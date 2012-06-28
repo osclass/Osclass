@@ -29,6 +29,13 @@
         {
             parent::__construct() ;
 
+            if( $this->isModerator() ) {
+                if(($this->action!='edit' && $this->action!='edit_post') || Params::getParam('id')!='' && Params::getParam('id') != osc_logged_admin_id()) {
+                    osc_add_flash_error_message(_m("You don't have enough permissions"), 'admin');
+                    $this->redirectTo(osc_admin_base_url());
+                }
+            }
+
             //specific things for this class
             $this->adminManager = Admin::newInstance() ;
         }
@@ -52,6 +59,7 @@
                                     $sName     = Params::getParam('s_name') ;
                                     $sEmail    = Params::getParam('s_email') ;
                                     $sUserName = Params::getParam('s_username') ;
+                                    $bModerator = Params::getParam('b_moderator')==0?0:1;
 
                                     // cleaning parameters
                                     $sPassword = strip_tags($sPassword) ;
@@ -92,10 +100,11 @@
                                     }
 
                                     $array = array(
-                                        's_password' =>  sha1($sPassword),
-                                        's_name'     =>  $sName,
-                                        's_email'    =>  $sEmail,
-                                        's_username' =>  $sUserName
+                                        's_password'    =>  sha1($sPassword),
+                                        's_name'        =>  $sName,
+                                        's_email'       =>  $sEmail,
+                                        's_username'    =>  $sUserName,
+                                        'b_moderator'   =>  $bModerator
                                     ) ;
 
                                     $isInserted = $this->adminManager->insert($array) ;
@@ -139,6 +148,7 @@
                                     $sName        = Params::getParam('s_name') ;
                                     $sEmail       = Params::getParam('s_email') ;
                                     $sUserName    = Params::getParam('s_username') ;
+                                    $bModerator   = Params::getParam('b_moderator')==0?0:1;
 
                                     // cleaning parameters
                                     $sPassword   = strip_tags($sPassword) ;
@@ -207,14 +217,20 @@
                                             }
                                         }
                                     } else {
-                                        if( $sPassword!='' && $sPassword == $sPassword2) {
-                                            $array['s_password'] = sha1($sPassword) ;
-                                        } else {
-                                            osc_add_flash_warning_message( _m("The password couldn't be updated. Passwords don't match"), 'admin') ;
-                                            $this->redirectTo(osc_admin_base_url(true) . '?page=admins&action=edit&id=' . $adminId) ;
+                                        if( $sPassword!='') {
+                                            if($sPassword == $sPassword2) {
+                                                $array['s_password'] = sha1($sPassword) ;
+                                            } else {
+                                                osc_add_flash_warning_message( _m("The password couldn't be updated. Passwords don't match"), 'admin') ;
+                                                $this->redirectTo(osc_admin_base_url(true) . '?page=admins&action=edit&id=' . $adminId) ;
+                                            }
                                         }
                                     }
 
+                                    if($adminId!=osc_logged_admin_id()) {
+                                        $array['b_moderator'] = $bModerator;
+                                    }
+                                    
                                     $array['s_name']     = Params::getParam('s_name') ;
                                     $array['s_username'] = $sUserName ;
                                     $array['s_email']    = $sEmail ;
@@ -225,7 +241,11 @@
                                         osc_add_flash_ok_message( _m('The admin has been updated'), 'admin') ;
                                     }
 
-                                    $this->redirectTo(osc_admin_base_url(true).'?page=admins') ;
+                                    if( $this->isModerator() ) {
+                                        $this->redirectTo(osc_admin_base_url(true)) ;
+                                    } else {
+                                        $this->redirectTo(osc_admin_base_url(true).'?page=admins') ;
+                                    }
                 break ;
                 case('delete'):     if( defined('DEMO') ) {
                                         osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
@@ -255,10 +275,78 @@
                                     }
                                     $this->redirectTo(osc_admin_base_url(true) . '?page=admins') ;
                 break ;
-                default:            // calling manage admins view
-                                    $admins = $this->adminManager->listAll() ;
+                default:            
+                                    if( Params::getParam('iDisplayLength') == '' ) {
+                                        Params::setParam('iDisplayLength', 10 ) ;
+                                    }
 
-                                    $this->_exportVariableToView('admins', $admins) ;
+                                    $p_iPage      = 1;
+                                    if( is_numeric(Params::getParam('iPage')) && Params::getParam('iPage') >= 1 ) {
+                                        $p_iPage = Params::getParam('iPage');
+                                    }
+                                    Params::setParam('iPage', $p_iPage);
+
+                                    $admins = $this->adminManager->listAll() ;
+                                    
+                                    // pagination
+                                    $start = ($p_iPage-1) * Params::getParam('iDisplayLength');
+                                    $limit = Params::getParam('iDisplayLength');
+                                    $count = count( $admins );
+
+                                    $displayRecords = $limit;
+                                    if( ($start+$limit ) > $count ) {
+                                        $displayRecords = ($start+$limit) - $count;
+                                    }
+                                    // ----
+                                    $aData = array() ;
+                                    $max = ($start+$limit);
+                                    if($max > $count) $max = $count;
+                                    for($i = $start; $i < $max; $i++) {
+                                    
+                                        $admin = $admins[$i];
+                                    
+                                        $options = array();
+                                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=admins&action=edit&amp;id='  . $admin['pk_i_id'] . '">' . __('Edit') . '</a>';
+                                        $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js(__('This action cannot be undone. Are you sure you want to continue?')) . '\');" href="' . osc_admin_base_url(true) . '?page=admins&action=delete&amp;id[]=' . $admin['pk_i_id'] . '">' . __('Delete') . '</a>';
+                                        $auxOptions = '<ul>'.PHP_EOL ;
+                                        foreach( $options as $actual ) {
+                                            $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
+                                        }
+                                        $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
+                                        
+                                        $row = array() ;
+                                        $row[] = '<input type="checkbox" name="id[]" value="' . $admin['pk_i_id'] . '" />' ;
+                                        $row[] = $admin['s_username'] . $actions ;
+                                        $row[] = $admin['s_name'] ;
+                                        $row[] = $admin['s_email'] ;
+
+                                        $aData[] = $row ;
+                                    }
+                                    $array['iTotalRecords']         = $displayRecords;
+                                    $array['iTotalDisplayRecords']  = count($admins);
+                                    $array['iDisplayLength']        = $limit;
+                                    $array['aaData'] = $aData;
+
+                                    $page  = (int)Params::getParam('iPage');
+                                    if(count($array['aaData']) == 0 && $page!=1) {
+                                        $total = (int)$array['iTotalDisplayRecords'];
+                                        $maxPage = ceil( $total / (int)$array['iDisplayLength'] ) ;
+
+                                        $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+
+                                        if($maxPage==0) {
+                                            $url = preg_replace('/&iPage=(\d)+/', '&iPage=1', $url) ;
+                                            $this->redirectTo($url) ;
+                                        }
+
+                                        if($page > 1) {   
+                                            $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
+                                            $this->redirectTo($url) ;
+                                        }
+                                    }
+                                            
+                                    $this->_exportVariableToView('aAdmins', $array) ;
+                                    // calling manage admins view
                                     $this->doView('admins/index.php') ;
                 break ;
             }

@@ -32,8 +32,13 @@
      *
      * @return string pagination links
      */
-    function osc_search_pagination() {
-        $pagination = new Pagination();
+    function osc_search_pagination()
+    {
+        $params = array();
+        if( View::newInstance()->_exists('search_uri') ) {
+            $params['url'] = osc_base_url() . View::newInstance()->_get('search_uri') . '/{PAGE}';
+        }
+        $pagination = new Pagination($params);
         return $pagination->doPagination();
     }
 
@@ -77,9 +82,67 @@
      *
      * @return string pagination links
      */
-    function osc_pagination($params = null) {
+    function osc_pagination($params = null)
+    {
         $pagination = new Pagination($params);
         return $pagination->doPagination();
     }
 
+    
+    
+    
+    function osc_show_pagination_admin($aData)
+    {
+        $pageActual = Params::getParam('iPage');
+        $urlActual  = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+        $urlActual  = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
+        $pageTotal  = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
+        $params     = array(
+            'total'    => $pageTotal,
+            'selected' => $pageActual - 1,
+            'url'      => $urlActual . '&iPage={PAGE}',
+            'sides'    => 5
+        );
+    ?>
+    <div class="has-pagination">
+        <?php osc_run_hook('before_show_pagination_admin'); ?>
+        <form method="get" action="<?php echo $urlActual; ?>" style="display:inline;">
+            <?php foreach( Params::getParamsAsArray('get') as $key => $value ) { ?>
+            <?php if($key!='iPage') {?>
+            <input type="hidden" name="<?php echo $key;?>" value="<?php echo osc_esc_html($value); ?>" />
+            <?php } } ?>
+            <ul>
+                <li>
+                    <span class="list-first"><?php _e('Page'); ?></span>
+                </li>
+                <li class="pagination-input">
+                    <input id="gotoPage" type="text" name="iPage" value="<?php echo osc_esc_html($pageActual); ?>"/><button type="submit"><?php _e('Go!'); ?></button>
+                </li>
+            </ul>
+        </form>
+    <?php
+            $pagination = new Pagination($params);
+            $aux = $pagination->doPagination();
+            echo $aux;
+            osc_run_hook('after_show_pagination_admin');
+    ?>
+    </div>
+    <?php 
+    }
+
+    
+    
+    function osc_pagination_showing($from, $to, $filtered, $total = null)
+    {
+        if($to==0 || $filtered==0) {
+            $from = $to = $filtered = 0;
+        }
+        if($total!=null && $total>$filtered) {
+            return sprintf(__("Showing %s to %s of %s results (filtered from %s total results)"), $from, $to, $filtered, $total);
+        } else {
+            return sprintf(__("Showing %s to %s of %s results"), $from, $to, $filtered);
+        }
+    }
+    
+    
 ?>

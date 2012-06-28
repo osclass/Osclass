@@ -35,7 +35,7 @@
                     <input type="hidden" name="page" value="login" />
                     <input type="hidden" name="action" value="forgot_post" />
                     <input type="hidden" name="userId" value="<?php echo Params::getParam('userId'); ?>" />
-                    <input type="hidden" name="code" value="<?php echo Params::getParam('code'); ?>" />
+                    <input type="hidden" name="code" value="<?php echo osc_esc_html( Params::getParam('code') ); ?>" />
                     <fieldset>
                         <p>
                             <label for="new_email"><?php _e('New pasword', 'modern') ; ?></label><br />

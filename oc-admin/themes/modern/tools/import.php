@@ -15,47 +15,44 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
-    <head>
-        <?php osc_current_admin_theme_path('head.php') ; ?>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <!-- container -->
-        <div id="content">
-            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-            <!-- right container -->
-            <div class="right">
-                <div class="header_title">
-                    <h1 class="tools"><?php _e('Import') ; ?></h1>
-                </div>
-                <?php osc_show_flash_message('admin') ; ?>
-                <!-- tools import -->
-                <div class="tools import">
-                    <p class="text">
-                        <?php _e("You can modify your database to add, remove or modify its data here. It's usually used to import countries, regions and cities."); ?>
-                    </p>
-                    <form action="<?php echo osc_admin_base_url(true) ; ?>" enctype="multipart/form-data" method="post">
-                        <input type="hidden" name="action" value="import_post" />
-                        <input type="hidden" name="page" value="tools" />
-                        <fieldset>
-                            <div class="actions-nomargin">
-                                <p class="text">
-                                    <?php _e('File (.sql)') ; ?>
+
+    function render_offset(){
+        return 'row-offset';
+    }
+    osc_add_hook('admin_page_header','customPageHeader');
+    function customPageHeader(){ ?>
+        <h1><?php _e('Tools') ; ?></h1>
+    <?php
+    }
+
+    function customPageTitle($string) {
+        return sprintf(__('Import &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+<div id="backup-setting">
+    <!-- settings form -->
+                    <div id="backup-settings">
+                        <h2 class="render-title"><?php _e('Import') ; ?></h2>
+                        <form id="backup_form" name="backup_form" action="<?php echo osc_admin_base_url(true) ; ?>" enctype="multipart/form-data" method="post">
+                            <input type="hidden" name="page" value="tools" />
+                            <input type="hidden" name="action" value="import_post" />
+                            <fieldset>
+                            <div class="form-horizontal">
+                            <div class="form-row">
+                                <div class="form-label"><?php _e('File (.sql)') ; ?></div>
+                                <div class="form-controls">
                                     <input type="file" name="sql" id="sql" />
-                                </p>
-                                <input type="submit" value="<?php echo osc_esc_html( __('Import data') ) ; ?>" />
+                                </div>
                             </div>
+                            <div class="form-actions">
+                                <input type="submit" value="<?php echo osc_esc_html( __('Import data') ) ; ?>" class="btn btn-submit" />
+                            </div>
+                        </div>
                         </fieldset>
                     </form>
                 </div>
-                <!-- /tools import -->
-            </div>
-            <!-- /right container -->
-        </div>
-        <!-- /container -->
-        <?php osc_current_admin_theme_path('footer.php') ; ?>
-    </body>
-</html>
+                <!-- /settings form -->
+</div>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                

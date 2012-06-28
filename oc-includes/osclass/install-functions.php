@@ -579,7 +579,7 @@ function finish_installation( $password ) {
 /* Menus */
 function display_database_config() {
 ?>
-<form action="install.php" method="POST">
+<form action="install.php" method="post">
     <input type="hidden" name="step" value="3" />
     <h2 class="target"><?php _e('Database information'); ?></h2>
     <div class="form-table">
@@ -641,12 +641,12 @@ function display_database_config() {
                 </tr>
                 <tr id="admin_username_row">
                     <th align="left"><label for="admin_username"><?php _e('DB admin username'); ?></label></th>
-                    <td><input type="text" id="admin_username" name="admin_username" size="25" disabled/></td>
+                    <td><input type="text" id="admin_username" name="admin_username" size="25" disabled="disabled" /></td>
                     <td></td>
                 </tr>
                 <tr id="admin_password_row">
                     <th align="left"><label for="admin_password"><?php _e('DB admin password'); ?></label></th>
-                    <td><input type="password" id="admin_password" name="admin_password" value="" size="25" disabled/></td>
+                    <td><input type="password" id="admin_password" name="admin_password" value="" size="25" disabled="disabled" /></td>
                     <td></td>
                 </tr>
             </tbody>
@@ -654,7 +654,7 @@ function display_database_config() {
     </div>
     <div class="clear"></div>
     <p class="margin20">
-        <input type="submit" class="button" name="submit" value="Next"/>
+        <input type="submit" class="button" name="submit" value="Next" />
     </p>
     <div class="clear"></div>
 </form>
@@ -663,7 +663,7 @@ function display_database_config() {
 
 function display_target() {
 ?>
-<form id="target_form" name="target_form" action="#" method="POST" onsubmit="return false;">
+<form id="target_form" name="target_form" action="#" method="post" onsubmit="return false;">
     <h2 class="target"><?php _e('Information needed'); ?></h2>
     <div class="form-table">
         <h2 class="title"><?php _e('Admin user'); ?></h2>
@@ -672,14 +672,14 @@ function display_target() {
                 <tr>
                     <th><label><?php _e('Username'); ?></label></th>
                     <td>
-                        <input size="25" id="admin_user" name="s_name" type="text" value="admin"/>
+                        <input size="25" id="admin_user" name="s_name" type="text" value="admin" />
                     </td>
                     <td><span id="admin-user-error" class="error" style="display:none;"><?php _e('Admin user is required'); ?></span></td>
                 </tr>
                 <tr>
                     <th><label><?php _e('Password'); ?></label></th>
                     <td>
-                        <input size="25" class="password_test" name="s_passwd" type="text" value=""/>
+                        <input size="25" class="password_test" name="s_passwd" type="text" value="" />
                     </td>
                     <td></td>
                 </tr>
@@ -687,19 +687,19 @@ function display_target() {
         </table>
         <div class="admin-user">
             <?php _e('A password will be automatically generated for you if you leave this blank.'); ?>
-            <img src="<?php echo get_absolute_url() ?>oc-includes/images/question.png" class="question-skip vtip" title="<?php _e('You can modify username and password if you like, only need change the inputs value.'); ?>" alt=""/>
+            <img src="<?php echo get_absolute_url() ?>oc-includes/images/question.png" class="question-skip vtip" title="<?php _e('You can modify username and password if you like, only need change the inputs value.'); ?>" alt="" />
         </div>
         <h2 class="title"><?php _e('Contact information'); ?></h2>
         <table class="contact-info">
             <tbody>
                 <tr>
                     <th><label for="webtitle"><?php _e('Web title'); ?></label></th>
-                    <td><input type="text" id="webtitle" name="webtitle" size="25"/></td>
+                    <td><input type="text" id="webtitle" name="webtitle" size="25" /></td>
                     <td></td>
                 </tr>
                 <tr>
                     <th><label for="email"><?php _e('Contact e-mail'); ?></label></th>
-                    <td><input type="text" id="email" name="email" size="25"/></td>
+                    <td><input type="text" id="email" name="email" size="25" /></td>
                     <td><span id="email-error" class="error" style="display:none;"><?php _e('Put your e-mail here'); ?></span></td>
                 </tr>
             </tbody>
@@ -707,19 +707,19 @@ function display_target() {
         <h2 class="title"><?php _e('Location'); ?></h2>
         <p class="space-left-25 left no-bottom"><?php _e('Choose countries/cities where your target users are located'); ?></p>
         <div id="location-question" class="left question">
-            <img class="vtip" src="<?php echo get_absolute_url(); ?>oc-includes/images/question.png" title="<?php _e('Once you write a country, you\'ll be able to choose region and city too. Therefore, the intallation\'ll be more specific.'); ?>" alt=""/>
+            <img class="vtip" src="<?php echo get_absolute_url(); ?>oc-includes/images/question.png" title="<?php _e('Once you write a country, you\'ll be able to choose region and city too. Therefore, the intallation\'ll be more specific.'); ?>" alt="" />
         </div>
         <div class="clear"></div>
         <div id="location">
             <div id="country-box">
                 <div id="radio-target" style="display: none;">
-                    <input id="icountry" type="radio" name="c_country" value="Country" checked onclick="change_to_country(this);"/>
+                    <input id="icountry" type="radio" name="c_country" value="Country" checked onclick="change_to_country(this);" />
                     <label for="icountry"><?php _e('Country'); ?></label>
                     <input id="worlwide" type="radio" name="c_country" value="International" onclick="change_to_international(this);" />
                     <label for="worlwide"><?php _e('Worldwide'); ?></label>
                 </div>
                 <div id="d_country" class="box">
-                    <input type="text" id="t_country" class="left" name="t_country" size="1" onkeydown="more_size(this, event);"/>
+                    <input type="text" id="t_country" class="left" name="t_country" size="1" onkeydown="more_size(this, event);" />
                     <div class="clear"></div>
                 </div>
                 <div id="a_country">
@@ -729,13 +729,13 @@ function display_target() {
             </div>
             <div id="region-div" style="display:none;">
                 <div id="region-info" class="space-left-10">
-                    <a href="javascript://" onclick="$('#region-box').attr('style', '');$('#region-info').attr('style', 'display:none');$('#t_location').focus();"><?php _e('Click here if you want to specify region/regions or city/cities'); ?></a>
+                    <a href="javascript:void(0);" onclick="$('#region-box').attr('style', '');$('#region-info').attr('style', 'display:none');$('#t_location').focus();"><?php _e('Click here if you want to specify region/regions or city/cities'); ?></a>
                 </div>
                 <div id="region-box"  class="space-left-60" style="display:none;">
                     <div id="radio-target">
-                        <input id="iregion" type="radio" name="c_location" value="By region" onclick='$("#d_location span").remove();' checked="checked"/>
+                        <input id="iregion" type="radio" name="c_location" value="By region" onclick='$("#d_location span").remove();' checked="checked" />
                         <label for="iregion"><?php _e('By Region'); ?></label>
-                        <input id="icity" type="radio" name="c_location" value="By City" onclick='$("#d_location span").remove();'/>
+                        <input id="icity" type="radio" name="c_location" value="By City" onclick='$("#d_location span").remove();' />
                         <label for="icity"><?php _e('By City'); ?></label>
                     </div>
                     <div id="d_location" class="box">
@@ -748,7 +748,7 @@ function display_target() {
             </div>
             <div style="display: none;" id="location-error">
                 <?php _e('No internet connection. You can continue the installation and insert countries later.'); ?>
-                <input type="hidden" id="skip-location-h" name="skip-location-h" value="0"/>
+                <input type="hidden" id="skip-location-h" name="skip-location-h" value="0" />
             </div>
         </div>
     </div>
@@ -757,13 +757,13 @@ function display_target() {
         <a href="#" class="button" onclick="validate_form();">Next</a>
     </p>
     <div id="skip-location-d" style="display:none;">
-        <label for="skip-location" style="padding-left: 12px;"><input id="skip-location" name="skip-location" type="checkbox"/><?php _e('Continue installation process and insert countries later'); ?></label>
+        <label for="skip-location" style="padding-left: 12px;"><input id="skip-location" name="skip-location" type="checkbox" /><?php _e('Continue installation process and insert countries later'); ?></label>
     </div>
     <div class="clear"></div>
 </form>
 <div id="lightbox" style="display:none;">
     <div class="center">
-        <img src="<?php echo get_absolute_url(); ?>oc-includes/images/loading.gif" alt="" title=""/>
+        <img src="<?php echo get_absolute_url(); ?>oc-includes/images/loading.gif" alt="" title="" />
     </div>
 </div>
 <?php
@@ -796,8 +796,8 @@ function display_categories($error, $password) {
     </p>
 
 <?php } ?>
-<form id="category_form" action="install.php?step=5" method="POST">
-    <input type="hidden" name="password" value="<?php echo $password;?>"/>
+<form id="category_form" action="install.php?step=5" method="post">
+    <input type="hidden" name="password" value="<?php echo osc_esc_html( $password ) ; ?>" />
     <h2 class="target"><?php _e('Categories'); ?></h2>
     <div class="form-table">
         <?php if(Params::getParam('error_location') == 1) { ?>
@@ -818,7 +818,7 @@ function display_categories($error, $password) {
                 <a href="#" onclick="check_all('category_form', false); return false;">Uncheck all</a>
             </div>
             <div class="left">
-                <h3><?php _e('Select your classified categories');?> <span style="font-size:11px;"><?php _e('or');?></span> <a href="install.php?step=5"><?php _e('Skip');?></a><img src="<?php echo get_absolute_url() ?>oc-includes/images/question.png" class="question-skip vtip" title="<?php _e('You can add/remove categories after the installation, using the admin dashboard');?>" alt=""/></h3>
+                <h3><?php _e('Select your classified categories');?> <span style="font-size:11px;"><?php _e('or');?></span> <a href="install.php?step=5"><?php _e('Skip');?></a><img src="<?php echo get_absolute_url() ?>oc-includes/images/question.png" class="question-skip vtip" title="<?php _e('You can add/remove categories after the installation, using the admin dashboard');?>" alt="" /></h3>
             </div>
         </div>
         <table class="list-categories">
@@ -829,7 +829,7 @@ function display_categories($error, $password) {
                             <?php if (isset($categories[$i]) && is_array($categories[$i])) {?>
                             <div class="cat-title">
                                 <label for="category-<?php echo $categories[$i]['pk_i_id']?>">
-                                    <input id="category-<?php echo $categories[$i]['pk_i_id']?>" class="left" type="checkbox" name="categories[]" value="<?php echo $categories[$i]['pk_i_id']?>" onclick="javascript:check_cat('<?php echo $categories[$i]['pk_i_id']?>', this.checked);"/>
+                                    <input id="category-<?php echo $categories[$i]['pk_i_id']?>" class="left" type="checkbox" name="categories[]" value="<?php echo $categories[$i]['pk_i_id']?>" onclick="javascript:check_cat('<?php echo $categories[$i]['pk_i_id']?>', this.checked);" />
                                     <span><?php echo $categories[$i]['s_name']?></span>
                                 </label>
                             </div>
@@ -837,7 +837,7 @@ function display_categories($error, $password) {
                                 <?php foreach($categories[$i]['categories'] as $sc) { ?>
                                 <div id="category" class="space">
                                     <label for="category-<?php echo $sc['pk_i_id']?>" class="space">
-                                        <input id="category-<?php echo $sc['pk_i_id']?>" type="checkbox" name="categories[]" value="<?php echo $sc['pk_i_id']?>" onclick="javascript:check('category-<?php echo $categories[$i]['pk_i_id']?>')"/>
+                                        <input id="category-<?php echo $sc['pk_i_id']?>" type="checkbox" name="categories[]" value="<?php echo $sc['pk_i_id']?>" onclick="javascript:check('category-<?php echo $categories[$i]['pk_i_id']?>')" />
                                         <?php echo $sc['s_name']; ?>
                                     </label>
                                 </div>
@@ -852,7 +852,7 @@ function display_categories($error, $password) {
     </div>
     <div class="clear"></div>
     <p class="margin20">
-        <input type="submit" class="button" name="submit" value="Next"/>
+        <input type="submit" class="button" name="submit" value="Next" />
     </p>
     <div class="clear"></div>
 </form>

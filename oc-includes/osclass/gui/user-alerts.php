@@ -40,7 +40,7 @@
                 <?php } else { ?>
                     <?php while(osc_has_alerts()) { ?>
                         <div class="userItem" >
-                            <div><?php _e('Alert', 'modern'); ?> | <a onclick="javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?', 'modern'); ?>');" href="<?php echo osc_user_unsubscribe_alert_url() ; ?>"><?php _e('Delete this alert', 'modern') ; ?></a></div>
+                            <div><?php _e('Alert', 'modern'); ?> | <a onclick="javascript:return confirm('<?php echo osc_esc_js(__('This action can\'t be undone. Are you sure you want to continue?', 'modern')); ?>');" href="<?php echo osc_user_unsubscribe_alert_url() ; ?>"><?php _e('Delete this alert', 'modern') ; ?></a></div>
                             <div style="width: 75%; padding-left: 100px;" >
                             <?php while(osc_has_items()) { ?>
                                 <div class="userItem" >

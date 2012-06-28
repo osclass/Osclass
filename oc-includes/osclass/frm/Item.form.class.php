@@ -538,9 +538,9 @@
                         class_type = "ok";
                     }
                     var flash = $("#flash_js");
-                    var message = $('<div>').addClass('pubMessages').addClass(class_type).attr('id', 'FlashMessage').html(data.msg);
+                    var message = $('<div>').addClass('pubMessages').addClass(class_type).attr('id', 'flashmessage').html(data.msg);
                     flash.html(message);
-                    $("#FlashMessage").slideDown('slow').delay(3000).slideUp('slow');
+                    $("#flashmessage").slideDown('slow').delay(3000).slideUp('slow');
                 }
             });
         }
@@ -825,9 +825,9 @@
                         class_type = "ok";
                     }
                     var flash = $("#flash_js");
-                    var message = $('<div>').addClass('pubMessages').addClass(class_type).attr('id', 'FlashMessage').html(data.msg);
+                    var message = $('<div>').addClass('pubMessages').addClass(class_type).attr('id', 'flashmessage').html(data.msg);
                     flash.html(message);
-                    $("#FlashMessage").slideDown('slow').delay(3000).slideUp('slow');
+                    $("#flashmessage").slideDown('slow').delay(3000).slideUp('slow');
                 }
             });
         }

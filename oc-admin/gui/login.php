@@ -20,14 +20,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><?php echo osc_page_title() ; ?> &raquo; <?php _e('Log in') ; ?></title>
-        <script type="text/javascript" src="<?php echo osc_admin_base_url() ; ?>themes/modern/js/jquery.js"></script>
+        <script type="text/javascript" src="<?php echo osc_admin_base_url() ; ?>themes/modern/js/jquery.min.js"></script>
         <link type="text/css" href="style/backoffice_login.css" media="screen" rel="stylesheet" />
     </head>
     <body class="login">
         <div id="login">
             <h1>
                 <a href="<?php echo osc_base_url() ; ?>" title="OSClass">
-                    <img src="images/osclass-logo.gif" border="0" title="" alt=""/>
+                    <img src="images/osclass-logo.gif" border="0" title="" alt="" />
                 </a>
             </h1>
             <?php osc_show_flash_message('admin') ; ?>
@@ -62,15 +62,15 @@
                     <label>
                         <input name="remember" type="checkbox" id="remember" value="1" tabindex="90" /> <?php _e('Remember me') ; ?>
                     </label>
-                        <a href="<?php echo osc_admin_base_url(true); ?>?page=login&amp;action=recover" title="<?php _e('Forgot your password?') ; ?>" class="forgot"><?php _e('Forgot your password?') ; ?></a>
+                        <a href="<?php echo osc_admin_base_url(true); ?>?page=login&amp;action=recover" title="<?php echo osc_esc_html( __('Forgot your password?')) ; ?>" class="forgot"><?php _e('Forgot your password?') ; ?></a>
                 </p>
                 <p class="submit">
-                    <input type="submit" name="submit" id="submit" value="<?php _e('Log in') ; ?>" tabindex="100" />
+                    <input type="submit" name="submit" id="submit" value="<?php echo osc_esc_html( __('Log in')) ; ?>" tabindex="100" />
                 </p>
             </form>
             
         </div>
-        <p id="backtoblog"><a href="<?php echo osc_base_url() ; ?>" title="<?php printf( __('Back to %s'), osc_page_title() ) ; ?>">&larr; <?php printf( __('Back to %s'), osc_page_title() ) ; ?></a></p>
+        <p id="backtoblog"><a href="<?php echo osc_base_url() ; ?>" title="<?php echo osc_esc_html( sprintf( __('Back to %s'), osc_page_title() )) ; ?>">&larr; <?php printf( __('Back to %s'), osc_page_title() ) ; ?></a></p>
         <script type="text/javascript">
             $(function(){
                 function placeholder(input_form) {

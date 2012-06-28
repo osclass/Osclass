@@ -16,25 +16,10 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-     $aCurrency = View::newInstance()->_get('aCurrency') ;
-     $typeForm  = View::newInstance()->_get('typeForm') ;
-
-     if( $typeForm == 'add_post' ) {
-         $title  = __('Add Currency') ;
-         $submit = osc_esc_html( __('Add new currency') ) ;
-     } else {
-         $title  = __('Edit Currency') ;
-         $submit = osc_esc_html( __('Update') ) ;
-     }
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
-    <head>
-        <?php osc_current_admin_theme_path('head.php') ; ?>
+    //customize Head
+    function customHead(){
+        ?>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
         <script type="text/javascript">
             $(document).ready(function(){
                 // Code for form validation
@@ -51,15 +36,15 @@
                         }
                     },
                     messages: {
-                        pk_c_code: {
-                            required: "<?php _e("Currency code: this field is required"); ?>.",
-                            minlength: "<?php _e("Currency code: this field is required"); ?>.",
-                            maxlength: "<?php _e("Currency code: this field is required"); ?>."
-                        },
-                        s_name: {
-                            required: "<?php _e("Name: this field is required"); ?>.",
-                            minlength: "<?php _e("Name: this field is required"); ?>."
-                        }
+			pk_c_code: {
+				required: "<?php echo osc_esc_js( __('Currency code: this field is required')); ?>.",
+				minlength: "<?php echo osc_esc_js( __('Currency code: this field is required')); ?>.",
+				maxlength: "<?php echo osc_esc_js( __('Currency code: this field is required')); ?>."
+			},
+			s_name: {
+				required: "<?php echo osc_esc_js( __('Name: this field is required')); ?>.",
+				minlength: "<?php echo osc_esc_js( __('Name: this field is required')); ?>."
+			}
                     },
                     wrapper: "li",
                     errorLabelContainer: "#error_list",
@@ -69,62 +54,85 @@
                 });
             });
         </script>
-        <!-- container -->
-        <div id="content">
-            <?php osc_current_admin_theme_path( 'include/backoffice_menu.php' ) ; ?>
-            <!-- right container -->
-		    <div class="right">
-                <div class="header_title">
-                    <h1 class="currencies"><?php echo $title ; ?></h1>
-                </div>
-                <?php osc_show_flash_message('admin') ; ?>
-                <!-- currency-form form -->
-                <div class="settings currency-form">
-                    <ul id="error_list" style="display: none;"></ul>
-                    <form name="currency_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-                        <input type="hidden" name="page" value="settings" />
-                        <input type="hidden" name="action" value="currencies" />
-                        <input type="hidden" name="type" value="<?php echo $typeForm ; ?>" />
-                        <?php if( $typeForm == 'edit_post' ) { ?>
-                        <input type="hidden" name="pk_c_code" value="<?php echo osc_esc_html($aCurrency['pk_c_code']) ; ?>" />
-                        <?php } ?>
-                        <fieldset>
-                            <table class="table-backoffice-form">
-                                <tr>
-                                    <td class="labeled"><?php _e('Currency Code') ; ?></td>
-                                    <td>
-                                        <input type="text" class="medium" name="pk_c_code" value="<?php echo osc_esc_html($aCurrency['pk_c_code']) ; ?>" <?php if( $typeForm == 'edit_post' ) echo 'disabled' ; ?>/>
-                                        <span class="help-box"><?php _e('It should be a three-character code') ; ?></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><?php _e('Name') ; ?></td>
-                                    <td>
-                                        <input type="text" class="medium" name="s_name" value="<?php echo osc_esc_html($aCurrency['s_name']) ; ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><?php _e('Description') ; ?></td>
-                                    <td>
-                                        <input type="text" class="xlarge" name="s_description" value="<?php echo osc_esc_html($aCurrency['s_description']) ; ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><?php _e('Description') ; ?></td>
-                                    <td>
-                                        <input type="submit" value="<?php echo $submit ; ?>" />
-                                        <input type="button" onclick="location.href='<?php echo osc_admin_base_url(true) . '?page=settings&action=currencies' ; ?>'" value="<?php echo osc_esc_html( __('Cancel') ) ; ?>" />
-                                    </td>
-                                </tr>
-                            </table>
-                        </fieldset>
-                    </form>
-                </div>
-                <!-- /currency-form form -->
+        <?php
+    }
+    osc_add_hook('admin_header','customHead');
+
+    osc_add_hook('admin_page_header','customPageHeader');
+    function customPageHeader(){ ?>
+        <h1><?php _e('Settings') ; ?>
+            <a href="#" class="btn ico ico-32 ico-help float-right"></a>
+            <a href="<?php echo osc_admin_base_url(true).'?page=settings&action=currencies&type=add'; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
+	   </h1>
+    <?php
+    }
+
+    $typeForm = __get('typeForm') ;
+    function customText($return = 'title') {
+        $typeForm = __get('typeForm') ;
+        $text     = array();
+        switch( $typeForm ) {
+            case('add_post'):
+                $text['title']  = __('Add currency');
+                $text['button'] = __('Add currency');
+            break;
+            case('edit_post'):
+                $text['title']  = __('Edit currency');
+                $text['button'] = __('Update currency');
+            break;
+        }
+
+        return $text[$return];
+    }
+
+    function customPageTitle($string) {
+        return sprintf('%s &raquo; %s', customText('title'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    $aCurrency = View::newInstance()->_get('aCurrency');
+
+    osc_current_admin_theme_path( 'parts/header.php' ); ?>
+<div id="add-currency-settings">
+    <h2 class="render-title"><?php echo customText('title') ; ?></h2>
+    <ul id="error_list"></ul>
+    <form name="currency_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+        <input type="hidden" name="page" value="settings" />
+        <input type="hidden" name="action" value="currencies" />
+        <input type="hidden" name="type" value="<?php echo $typeForm ; ?>" />
+        <?php if( $typeForm == 'edit_post' ) { ?>
+        <input type="hidden" name="pk_c_code" value="<?php echo osc_esc_html($aCurrency['pk_c_code']) ; ?>" />
+        <?php } ?>
+        <fieldset>
+        <div class="form-horizontal">
+        <div class="form-row">
+            <div class="form-label"><?php _e('Currency Code'); ?></div>
+            <div class="form-controls">
+                <input type="text" class="input-small" name="pk_c_code" value="<?php echo osc_esc_html($aCurrency['pk_c_code']) ; ?>" <?php if( $typeForm == 'edit_post' ) echo 'disabled="disabled"' ; ?> />
+                <span class="help-box"><?php _e('It should be a three-character code') ; ?></span>
             </div>
-            <!-- /right container -->
         </div>
-        <!-- /container -->
-        <?php osc_current_admin_theme_path('footer.php') ; ?>
-    </body>
-</html>
+        <div class="form-row">
+            <div class="form-label"><?php _e('Name') ; ?></div>
+            <div class="form-controls">
+                <input type="text" class="input-large" name="s_name" value="<?php echo osc_esc_html($aCurrency['s_name']) ; ?>" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-label"><?php _e('Description') ; ?></div>
+            <div class="form-controls">
+                <input type="text" class="input-large" name="s_description" value="<?php echo osc_esc_html($aCurrency['s_description']) ; ?>" />
+            </div>
+        </div>
+        <div class="form-actions">
+            <?php if( $typeForm == 'edit_post' ) { ?>
+            <input class="btn btn-red" type="button" value="Cancel" onclick="location.href='<?php echo osc_admin_base_url(true); ?>?page=settings&amp;action=currencies'">
+            <?php } ?>
+            <input type="submit" value="<?php echo osc_esc_html(customText('button')) ; ?>" class="btn btn-submit" />
+        </div>
+    </div>
+    </fieldset>
+</form>
+</div>
+<!-- /settings form -->
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                

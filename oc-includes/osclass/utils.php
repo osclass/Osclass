@@ -301,7 +301,7 @@ function osc_sendMail($params) {
         $mail->Password = ( isset($params['password']) ) ? $params['password'] : osc_mailserver_password() ;
         $mail->Host = ( isset($params['host']) ) ? $params['host'] : osc_mailserver_host() ;
         $mail->Port = ( isset($params['port']) ) ? $params['port'] : osc_mailserver_port() ;
-        $mail->From = ( isset($params['from']) ) ? $params['from'] : osc_contact_email() ;
+        $mail->From = ( isset($params['from']) ) ? $params['from'] : 'osclass@' . osc_get_domain() ;
         $mail->FromName = ( isset($params['from_name']) ) ? $params['from_name'] : osc_page_title() ;
         $mail->Subject = ( isset($params['subject']) ) ? $params['subject'] : '' ;
         $mail->Body = ( isset($params['body']) ) ? $params['body'] : '' ;
@@ -341,8 +341,22 @@ function osc_sendMail($params) {
 function osc_mailBeauty($text, $params) {
 
     $text = str_ireplace($params[0], $params[1], $text) ;
-    $kwords = array('{WEB_URL}', '{WEB_TITLE}', '{CURRENT_DATE}', '{HOUR}', '{IP}') ;
-    $rwords = array(osc_base_url(), osc_page_title(), date('Y-m-d H:i:s'), date('H:i'), $_SERVER['REMOTE_ADDR']) ;
+    $kwords = array(
+        '{WEB_URL}',
+        '{WEB_TITLE}',
+        '{WEB_LINK}' ,
+        '{CURRENT_DATE}',
+        '{HOUR}',
+        '{IP_ADDRESS}'
+    );
+    $rwords = array(
+        osc_base_url(),
+        osc_page_title(),
+        '<a href="' . osc_base_url() . '">' . osc_page_title() . '</a>',
+        date('Y-m-d H:i:s'),
+        date('H:i'),
+        $_SERVER['REMOTE_ADDR']
+    );
     $text = str_ireplace($kwords, $rwords, $text) ;
     
     return $text ;
@@ -940,20 +954,42 @@ function rglob($pattern, $flags = 0, $path = '') {
     return $files;
 }
 
+// Market util functions
 
-/**
- * Check if a package could be update or not
- *
- * @param string $update_uri
- * @since 2.4
- * @return boolean
- */
-function osc_check_update($update_uri, $version = null) {
-    if($update_uri!="" && $version!=null) {
+function osc_check_plugin_update($update_uri, $version = null) {
+    $uri = _get_market_url('plugins', $update_uri);
+    if($uri != false) {
+        return _need_update($uri, $version);
+    }
+    return false;
+}
 
-        if(stripos("http://", $update_uri)===FALSE) {
+function osc_check_theme_update($update_uri, $version = null) {
+    $uri = _get_market_url('themes', $update_uri);
+    if($uri != false) {
+        return _need_update($uri, $version);
+    }
+    return false;
+}
+
+function osc_check_language_update($update_uri, $version = null) {
+    $uri = _get_market_url('languages', $update_uri);
+    if($uri != false) {
+        return _need_update($uri, $version);
+    }
+    return false;
+}
+
+function _get_market_url($type, $update_uri) {
+    if( $update_uri == null ) {
+        return false;
+    }
+
+    if(in_array($type, array('plugins', 'themes', 'languages') ) ) {
+        $uri = '';
+        if(stripos("http://", $update_uri)===FALSE ) {
             // OSCLASS OFFICIAL REPOSITORY
-            $uri = osc_market_url($update_uri);
+            $uri = osc_market_url($type, $update_uri);
         } else {
             // THIRD PARTY REPOSITORY
             if(!osc_market_external_sources()) {
@@ -961,18 +997,23 @@ function osc_check_update($update_uri, $version = null) {
             }
             $uri = $update_uri;
         }
+        return $uri;
+    } else {
+        return false;
+    }
+}
 
-        if(false===($json=@osc_file_get_contents($uri))) {
-            return false;
-        } else {
-            $data = json_decode($json , true);
-            if(isset($data['s_version']) && $data['s_version']>$version) {
-                return true;
-            }
+function _need_update($uri, $version) {
+    if(false===($json=@osc_file_get_contents($uri))) {
+        return false;
+    } else {
+        $data = json_decode($json , true);
+        if(isset($data['s_version']) && $data['s_version']>$version) {
+            return true;
         }
     }
-    return false;
-}    
+}
+// END -- Market util functions 
 
 /**
  * Update category stats

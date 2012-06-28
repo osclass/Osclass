@@ -216,22 +216,22 @@
             </div>
             <div id="sidebar">
                 <div class="filters">
-                    <form action="<?php echo osc_base_url(true); ?>" method="get" onSubmit="return checkEmptyCategories()">
+                    <form action="<?php echo osc_base_url(true); ?>" method="get" onsubmit="return checkEmptyCategories()">
                         <input type="hidden" name="page" value="search" />
                         <input type="hidden" name="sOrder" value="<?php echo osc_search_order(); ?>" />
                         <input type="hidden" name="iOrderType" value="<?php $allowedTypesForSorting = Search::getAllowedTypesForSorting() ; echo $allowedTypesForSorting[osc_search_order_type()]; ?>" />
                         <?php foreach(osc_search_user() as $userId) { ?>
-                        <input type="hidden" name="sUser[]" value="<?php echo $userId; ?>"/>
+                        <input type="hidden" name="sUser[]" value="<?php echo $userId; ?>" />
                         <?php } ?>
                         <fieldset class="box location">
                             <h3><strong><?php _e('Your search', 'modern'); ?></strong></h3>
                             <div class="row one_input">
-                                <input type="text" name="sPattern"  id="query" value="<?php echo osc_search_pattern() ; ?>" />
+                                <input type="text" name="sPattern" id="query" value="<?php echo osc_esc_html( osc_search_pattern() ); ?>" />
                             </div>
                             <h3><strong><?php _e('Location', 'modern') ; ?></strong></h3>
                             <div class="row one_input">
                                 <h6><?php _e('City', 'modern'); ?></h6>
-                                <input type="text" id="sCity" name="sCity" value="<?php echo osc_search_city() ; ?>" />
+                                <input type="text" id="sCity" name="sCity" value="<?php echo osc_esc_html( osc_search_city() ); ?>" />
                             </div>
                         </fieldset>
 
@@ -241,7 +241,7 @@
                             <div class="row checkboxes">
                                 <ul>
                                     <li>
-                                        <input type="checkbox" name="bPic" id="withPicture" value="1" <?php echo (osc_search_has_pic() ? 'checked' : ''); ?> />
+                                        <input type="checkbox" name="bPic" id="withPicture" value="1" <?php echo (osc_search_has_pic() ? 'checked="checked"' : ''); ?> />
                                         <label for="withPicture"><?php _e('Show only items with pictures', 'modern') ; ?></label>
                                     </li>
                                 </ul>
@@ -265,12 +265,12 @@
                                         <?php osc_goto_first_category() ; ?>
                                         <?php while(osc_has_categories()) { ?>
                                             <li class="parent">
-                                                <input class="parent" type="checkbox" id="cat<?php echo osc_category_id(); ?>" name="sCategory[]" value="<?php echo osc_category_id(); ?>" <?php $parentSelected=false; if (in_array(osc_category_id(), osc_search_category()) || in_array(osc_category_slug()."/", osc_search_category()) || in_array(osc_category_slug(), osc_search_category()) || count(osc_search_category())==0 ){ echo 'checked'; $parentSelected=true;} ?> /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
+                                                <input class="parent" type="checkbox" id="cat<?php echo osc_category_id(); ?>" name="sCategory[]" value="<?php echo osc_category_id(); ?>" <?php $parentSelected=false; if (in_array(osc_category_id(), osc_search_category()) || in_array(osc_category_slug()."/", osc_search_category()) || in_array(osc_category_slug(), osc_search_category()) || count(osc_search_category())==0 ){ echo 'checked="checked"'; $parentSelected=true;} ?> /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
                                                 <?php if(osc_count_subcategories() > 0) { ?>
                                                 <ul class="sub">
                                                     <?php while(osc_has_subcategories()) { ?>
                                                     <li>
-                                                    <input type="checkbox" id="cat<?php echo osc_category_id(); ?>" name="sCategory[]" value="<?php echo osc_category_id(); ?>"  <?php if( $parentSelected || in_array(osc_category_id(), osc_search_category()) || in_array(osc_category_slug()."/", osc_search_category()) || in_array(osc_category_slug(), osc_search_category()) || count(osc_search_category())==0 ){echo 'checked';} ?>/>
+                                                    <input type="checkbox" id="cat<?php echo osc_category_id(); ?>" name="sCategory[]" value="<?php echo osc_category_id(); ?>" <?php if( $parentSelected || in_array(osc_category_id(), osc_search_category()) || in_array(osc_category_slug()."/", osc_search_category()) || in_array(osc_category_slug(), osc_search_category()) || count(osc_search_category())==0 ){echo 'checked="checked"';} ?> />
                                                     <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
                                                     </li>
                                                     <?php } ?>
@@ -308,8 +308,8 @@
                         minLength: 2,
                         select: function( event, ui ) {
                             log( ui.item ?
-                                "<?php _e('Selected', 'modern'); ?>: " + ui.item.value + " aka " + ui.item.id :
-                                "<?php _e('Nothing selected, input was', 'modern'); ?> " + this.value );
+                                "<?php echo osc_esc_js(__('Selected', 'modern')); ?>: " + ui.item.value + " aka " + ui.item.id :
+                                "<?php echo osc_esc_js(__('Nothing selected, input was', 'modern')); ?> " + this.value );
                         }
                     });
                 });

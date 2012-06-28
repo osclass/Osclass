@@ -19,9 +19,6 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-
-
 function osc_meta_publish($catId = null) {
     echo '<div class="row">';
         FieldForm::meta_fields_input($catId);
@@ -37,38 +34,73 @@ function osc_meta_edit($catId = null, $item_id = null) {
 osc_add_hook('item_form', 'osc_meta_publish');
 osc_add_hook('item_edit', 'osc_meta_edit');
 
+function search_title() {
+    $region   = osc_search_region();
+    $city     = osc_search_city();
+    $category = osc_search_category_id();
+    $result   = '';
 
-function meta_title( ) {
+    $b_show_all = ($region == '' && $city == '' && $category == '');
+    $b_category = ($category != '');
+    $b_city     = ($city != '');
+    $b_region   = ($region != '');
+
+    if( $b_show_all ) {
+        return __('Search results');
+    }
+
+    if( osc_get_preference('seo_title_keyword') != '' ) {
+        $result .= osc_get_preference('seo_title_keyword') . ' ';
+    }
+
+    if($b_category && is_array($category) && count($category) > 0) {
+        $cat = Category::newInstance()->findByPrimaryKey($category[0]);
+        if( $cat ) {
+            $result .= strtolower($cat['s_name']) . ' ' ;
+        }
+    }
+
+    if($b_city && $b_region) {
+        $result .= $city;
+    } else if($b_city) {
+        $result .= $city;
+    } else if($b_region) {
+        $result .= $region;
+    }
+
+    return ucfirst($result);
+}
+
+function meta_title() {
     $location = Rewrite::newInstance()->get_location();
     $section  = Rewrite::newInstance()->get_section();
 
     switch ($location) {
         case ('item'):
             switch ($section) {
-                case 'item_add':    $text = __('Publish an item') . ' - ' . osc_page_title(); break;
-                case 'item_edit':   $text = __('Edit your item') . ' - ' . osc_page_title(); break;
-                case 'send_friend': $text = __('Send to a friend') . ' - ' . osc_item_title() . ' - ' . osc_page_title(); break;
-                case 'contact':     $text = __('Contact seller') . ' - ' . osc_item_title() . ' - ' . osc_page_title(); break;
-                default:            $text = osc_item_title() . ' - ' . osc_page_title(); break;
+                case 'item_add':    $text = __('Publish a listing'); break;
+                case 'item_edit':   $text = __('Edit your listing'); break;
+                case 'send_friend': $text = __('Send to a friend') . ' - ' . osc_item_title(); break;
+                case 'contact':     $text = __('Contact seller') . ' - ' . osc_item_title(); break;
+                default:            $text = osc_item_title() . ' ' . osc_item_city(); break;
             }
         break;
         case('page'):
-            $text = osc_static_page_title() . ' - ' . osc_page_title();
+            $text = osc_static_page_title();
         break;
         case('error'):
-            $text = __('Error') . ' - ' . osc_page_title();
+            $text = __('Error');
         break;
         case('search'):
-            $region   = Params::getParam('sRegion');
-            $city     = Params::getParam('sCity');
-            $pattern  = Params::getParam('sPattern');
+            $region   = osc_search_region();
+            $city     = osc_search_city();
+            $pattern  = osc_search_pattern();
             $category = osc_search_category_id();
-            $category = ((count($category) == 1) ? $category[0] : '');
             $s_page   = '';
             $i_page   = Params::getParam('iPage');
 
-            if($i_page != '' && $i_page > 0) {
-                $s_page = __('page') . ' ' . ($i_page + 1) . ' - ';
+            if($i_page != '' && $i_page > 1) {
+                $s_page = ' - ' . __('page') . ' ' . $i_page ;
             }
 
             $b_show_all = ($region == '' && $city == '' & $pattern == '' && $category == '');
@@ -78,7 +110,7 @@ function meta_title( ) {
             $b_region   = ($region != '');
 
             if($b_show_all) {
-                $text = __('Show all items') . ' - ' . $s_page . osc_page_title();
+                $text = __('Show all listings') . ' - ' . $s_page . osc_page_title();
             }
 
             $result = '';
@@ -86,122 +118,368 @@ function meta_title( ) {
                 $result .= $pattern . ' &raquo; ';
             }
 
-            if($b_category) {
-                $list        = array();
-                $aCategories = Category::newInstance()->toRootTree($category);
-                if(count($aCategories) > 0) {
-                    foreach ($aCategories as $single) {
-                        $list[] = $single['s_name'];
-                    }
-                    $result .= implode(' &raquo; ', $list) . ' &raquo; ';
+            if($b_category && is_array($category) && count($category) > 0) {
+                $cat = Category::newInstance()->findByPrimaryKey($category[0]);
+                if( $cat ) {
+                    $result .= strtolower($cat['s_name']) . ' ' ;
                 }
             }
 
-            if($b_city) {
+            if($b_city && $b_region) {
                 $result .= $city . ' &raquo; ';
-            }
-
-            if($b_region) {
+            } else if($b_city) {
+                $result .= $city . ' &raquo; ';
+            } else if($b_region) {
                 $result .= $region . ' &raquo; ';
             }
 
             $result = preg_replace('|\s?&raquo;\s$|', '', $result);
 
             if($result == '') {
-                $result = __('Search');
+                $result = __('Search results');
             }
 
-            $text = $result . ' - ' . $s_page . osc_page_title();
+            $text = '';
+            if( osc_get_preference('seo_title_keyword') != '' ) {
+                $text .= osc_get_preference('seo_title_keyword') . ' ';
+            }
+            $text .= $result . $s_page;
         break;
         case('login'):
             switch ($section) {
-                case('recover'): $text = __('Recover your password') . ' - ' . osc_page_title();
-                default:         $text = __('Login') . ' - ' . osc_page_title();
+                case('recover'): $text = __('Recover your password');
+                default:         $text = __('Login');
             }
         break;
         case('register'):
-            $text = __('Create a new account') . ' - ' . osc_page_title();
+            $text = __('Create a new account');
         break;
         case('user'):
             switch ($section) {
-                case('dashboard'):       $text = __('Dashboard') . ' - ' . osc_page_title(); break;
-                case('items'):           $text = __('Manage my items') . ' - ' . osc_page_title(); break;
-                case('alerts'):          $text = __('Manage my alerts') . ' - ' . osc_page_title(); break;
-                case('profile'):         $text = __('Update my profile') . ' - ' . osc_page_title(); break;
-                case('change_email'):    $text = __('Change my email') . ' - ' . osc_page_title(); break;
-                case('change_password'): $text = __('Change my password') . ' - ' . osc_page_title(); break;
-                case('forgot'):          $text = __('Recover my password') . ' - ' . osc_page_title(); break;
-                default:                 $text = osc_page_title(); break;
+                case('dashboard'):       $text = __('Dashboard'); break;
+                case('items'):           $text = __('Manage my listings'); break;
+                case('alerts'):          $text = __('Manage my alerts'); break;
+                case('profile'):         $text = __('Update my profile'); break;
+                case('pub_profile'):     $text = __('Public profile') . ' - ' . osc_user_name(); break;
+                case('change_email'):    $text = __('Change my email'); break;
+                case('change_password'): $text = __('Change my password'); break;
+                case('forgot'):          $text = __('Recover my password'); break;
             }
         break;
         case('contact'):
-            $text = __('Contact','modern') . ' - ' . osc_page_title();
+            $text = __('Contact','modern');
         break;
         default:
             $text = osc_page_title();
         break;
     }
 
-    $text = str_replace("\n", '', $text) ;
-    $text = trim($text) ;
-    $text = osc_esc_html($text) ;
-    return (osc_apply_filter('meta_title_filter', $text)) ;
+    if( !osc_is_home_page() ) {
+        $text .= ' - ' . osc_page_title();
+    }
+
+    return (osc_apply_filter('meta_title_filter', ucfirst($text)));
 }
 
 function meta_description( ) {
-    $location = Rewrite::newInstance()->get_location();
-    $section  = Rewrite::newInstance()->get_section();
-    $text     = '';
-
-    switch ($location) {
-        case ('item'):
-            switch ($section) {
-                case 'item_add':    $text = ''; break;
-                case 'item_edit':   $text = ''; break;
-                case 'send_friend': $text = ''; break;
-                case 'contact':     $text = ''; break;
-                default:
-                    $text = osc_item_category() . ', ' . osc_highlight(strip_tags(osc_item_description()), 140) . '..., ' . osc_item_category();
-                    break;
-            }
-        break;
-        case('page'):
-            $text = osc_highlight(strip_tags(osc_static_page_text()), 140, '', '') ;
-        break;
-        case('search'):
-            $result = '';
-
-            if(osc_count_items() == 0) {
-                $text = '';
-            }
-
-            if(osc_has_items ()) {
-                $result = osc_item_category() . ', ' . osc_highlight(strip_tags(osc_item_description()), 140) . '..., ' . osc_item_category();
-            }
-
-            osc_reset_items();
-            $text = $result;
-            break;
-        case(''): // home
-            $result = '';
-            if(osc_count_latest_items() == 0) {
-                $text = '';
-            }
-
-            if(osc_has_latest_items()) {
-                $result = osc_item_category() . ', ' . osc_highlight(strip_tags(osc_item_description()), 140) . '..., ' . osc_item_category();
-            }
-
-            osc_reset_latest_items();
-            $text = $result;
-        break;
+    $text = '';
+    // home page
+    if( osc_is_home_page() ) {
+        $text = osc_page_description();
+    }
+    // static page
+    if( osc_is_static_page() ) {
+        $text = osc_highlight(osc_static_page_text(), 140, '', '');
+    }
+    // search
+    if( osc_is_search_page() ) {
+        if( osc_has_items() ) {
+            $text = osc_item_category() . ' ' . osc_item_city() . ', ' . osc_highlight(osc_item_description(), 120) . ', ' . osc_item_category() . ' ' . osc_item_city();
+        }
+        osc_reset_items();
+    }
+    // listing
+    if( osc_is_ad_page() ) {
+        $text = osc_item_category() . ' ' . osc_item_city() . ', ' . osc_highlight(osc_item_description(), 120) . ', ' . osc_item_category() . ' ' . osc_item_city();
     }
 
-    $text = str_replace("\n", '', $text) ;
-    $text = trim($text) ;
-    $text = osc_esc_html($text) ;
     return (osc_apply_filter('meta_description_filter', $text)) ;
 }
 
+function osc_search_footer_links() {
+    $categoryID = '';
+    if( osc_search_category_id() ) {
+        $categoryID = osc_search_category_id();
 
+        if( Category::newInstance()->isRoot( current($categoryID) ) ) {
+            $cat = Category::newInstance()->findSubcategories(current($categoryID));
+            if( count($cat) > 0 ) {
+                $categoryID = array();
+                foreach($cat as $c) {
+                    $categoryID[] = $c['pk_i_id'];
+                }
+            }
+        }
+    }
+
+    if( osc_search_city() != '' ) {
+        return array();
+    }
+
+    $regionID = '';
+    if( osc_search_region() != '' ) {
+        $aRegion  = Region::newInstance()->findByName(osc_search_region());
+        $regionID = $aRegion['pk_i_id'];
+    }
+
+    $conn = DBConnectionClass::newInstance() ;
+    $data = $conn->getOsclassDb();
+    $comm = new DBCommandClass($data) ;
+
+    $comm->select('i.fk_i_category_id');
+    $comm->select('l.*');
+    $comm->select('COUNT(*) AS total');
+    $comm->from(DB_TABLE_PREFIX . 't_item as i');
+    $comm->from(DB_TABLE_PREFIX . 't_item_location as l');
+    if( $categoryID != '' ) {
+        $comm->whereIn('i.fk_i_category_id', $categoryID);
+    }
+    $comm->where('i.pk_i_id = l.fk_i_item_id');
+    $comm->where('i.b_enabled = 1');
+    $comm->where('l.fk_i_region_id IS NOT NULL');
+    $comm->where('l.fk_i_city_id IS NOT NULL');
+    if( $regionID != '' ) {
+        $comm->where('l.fk_i_region_id', $regionID);
+        $comm->groupBy('l.fk_i_city_id');
+    } else {
+        $comm->groupBy('l.fk_i_region_id');
+    }
+    $rs = $comm->get();
+
+    if( !$rs ) {
+        return array();
+    }
+
+    return $rs->result();
+}
+
+function osc_footer_link_url() {
+    $f   = View::newInstance()->_get('footer_link');
+    $url = osc_base_url();
+
+    if( osc_get_preference('seo_url_search_prefix') != '' ) {
+        $url .= osc_get_preference('seo_url_search_prefix') . '/';
+    }
+
+    $bCategory = false;
+    if( osc_search_category_id() ) {
+        $bCategory = true;
+        $cat = osc_get_category('id', $f['fk_i_category_id']);
+        $url .= $cat['s_slug'] . '_' ;
+    }
+
+    if( osc_search_region() == '' ) {
+        $url .= osc_sanitizeString($f['s_region']) . '-r' . $f['fk_i_region_id'];
+    } else {
+        $url .= osc_sanitizeString($f['s_city']) . '-c' . $f['fk_i_city_id'];
+    }
+
+    return $url;
+}
+
+function osc_footer_link_title() {
+    $f = View::newInstance()->_get('footer_link');
+    $text = '';
+
+    if( osc_get_preference('seo_title_keyword') != '' ) {
+        $text .= osc_get_preference('seo_title_keyword') . ' ';
+    }
+
+    if( osc_search_category_id() ) {
+        $cat = osc_get_category('id', $f['fk_i_category_id']);
+        $text .= strtolower($cat['s_name']) . ' ' ;
+    }
+
+    if( osc_search_region() == '' ) {
+        $text .= $f['s_region'];
+    } else {
+        $text .= $f['s_city'];
+    }
+
+    $text = trim($text);
+    return ucfirst($text);
+}
+
+/**
+ * Instantiate the admin toolbar object.
+ *
+ * @since 3.0
+ * @access private
+ * @return bool
+ */
+function _osc_admin_toolbar_init() 
+{
+    $adminToolbar = AdminToolbar::newInstance() ;
+    
+    $adminToolbar->init() ;
+    $adminToolbar->add_menus() ;
+    return true;
+}
+// and we hook our function via
+osc_add_hook( 'init_admin', '_osc_admin_toolbar_init') ;
+
+/**
+ * Draws admin toolbar
+ */
+function osc_draw_admin_toolbar() 
+{
+    $adminToolbar = AdminToolbar::newInstance() ;
+
+    // run hook for adding 
+    osc_run_hook('add_admin_toolbar_menus') ;
+    $adminToolbar->render() ;
+}
+
+/**
+ * Add webtitle with link to frontend 
+ */
+function osc_admin_toolbar_menu()
+{
+    AdminToolbar::newInstance()->add_menu( array(
+                'id'        => 'home',
+                'title'     => '<span class="">'.  osc_page_title() .'</span>',
+                'href'      => osc_base_url(),
+                'meta'      => array('class' => 'user-profile')
+            ) );
+}
+
+/**
+ * Add logout link
+ */
+function osc_admin_toolbar_logout()
+{   
+    AdminToolbar::newInstance()->add_menu( array(
+                'id'        => 'logout',
+                'title'     => __('Logout'),
+                'href'      => osc_admin_base_url(true) . '?action=logout',
+                'meta'      => array('class' => 'btn btn-dim ico ico-32 ico-power float-right')
+            ) );
+}
+
+function osc_admin_toolbar_comments()
+{   
+    $total = ItemComment::newInstance()->countAll( '( c.b_active = 0 OR c.b_enabled = 0 OR c.b_spam = 1 )' );
+    if( $total > 0 ) {
+        $title = '<i class="circle circle-green">'.$total.'</i>'.__('New comments');
+
+        AdminToolbar::newInstance()->add_menu( 
+                array('id'    => 'comments',
+                      'title' => $title,
+                      'href'  => osc_admin_base_url(true) . "?page=comments",
+                      'meta'  => array('class' => 'action-btn action-btn-black')
+                ) );
+    }
+}
+
+function osc_admin_toolbar_spam()
+{   
+    $total = Item::newInstance()->countByMarkas( 'spam' );
+    if( $total > 0 ) {
+        $title = '<i class="circle circle-red">'.$total.'</i>'.__('Spam');
+
+        AdminToolbar::newInstance()->add_menu( 
+                array('id'    => 'spam',
+                      'title' => $title,
+                      'href'  => osc_admin_base_url(true) . "?page=items&action=items_reported&sort=spam",
+                      'meta'  => array('class' => 'action-btn action-btn-black')
+                ) );
+    }
+}
+
+function osc_check_plugins_update( $force = false ) 
+{
+    $total = 0;
+    $array = array();
+    // check if exist a new version each day
+    if( (time() - osc_plugins_last_version_check()) > (24 * 3600) || $force ) {
+        $plugins    = Plugins::listAll();
+        foreach($plugins as $plugin) {
+            $info = osc_plugin_get_info($plugin);
+            if(osc_check_plugin_update(@$info['plugin_update_uri'], @$info['version'])) {
+                $array[] = @$info['short_name'];
+                $total++;
+            }
+        }
+        osc_set_preference( 'plugins_to_update', json_encode($array) );
+        osc_set_preference( 'plugins_update_count', $total );
+        osc_set_preference( 'plugins_last_version_check', time() );
+        osc_reset_preferences();
+    } else {
+        $total = getPreference('plugins_update_count');
+    }
+    
+    return $total;
+}
+
+function osc_admin_toolbar_update_plugins($force = false)
+{   
+    $total = osc_check_plugins_update( $force );
+    
+    if($force) {
+        AdminToolbar::newInstance()->remove_menu('update_plugin');
+    }
+    if($total > 0) {
+        $title = '<i class="circle circle-gray">'.$total.'</i>'.__('Plugin updates'); 
+        AdminToolbar::newInstance()->add_menu( 
+                array('id'    => 'update_plugin',
+                      'title' => $title,
+                      'href'  => osc_admin_base_url(true) . "?page=plugins",
+                      'meta'  => array('class' => 'action-btn action-btn-black')
+                ) );
+    }
+}
+
+function osc_check_themes_update( $force = false ) 
+{
+    $total = 0;
+    $array = array();
+    // check if exist a new version each day
+    if( (time() - osc_themes_last_version_check()) > (24 * 3600) || $force ) {
+        $themes = WebThemes::newInstance()->getListThemes();
+        foreach($themes as $theme) {
+            $info = WebThemes::newInstance()->loadThemeInfo($theme);
+            if(osc_check_theme_update(@$info['theme_update_uri'], @$info['version'])) {
+                $array[] = $theme;
+                $total++;
+            }
+        }
+        osc_set_preference( 'themes_to_update', json_encode($array) );
+        osc_set_preference( 'themes_update_count', $total );
+        osc_set_preference( 'themes_last_version_check', time() );
+        osc_reset_preferences();
+    } else {
+        $total = getPreference('themes_update_count');
+    }
+    
+    return $total;
+}
+
+function osc_admin_toolbar_update_themes($force = false)
+{
+    $total = osc_check_themes_update( $force );
+    
+    if($force) {
+        AdminToolbar::newInstance()->remove_menu('update_theme');
+    }
+    if($total > 0) {
+        $title = '<i class="circle circle-gray">'.$total.'</i>'.__('Themes updates'); 
+        AdminToolbar::newInstance()->add_menu( 
+                array('id'    => 'update_theme',
+                      'title' => $title,
+                      'href'  => osc_admin_base_url(true) . "?page=appearance",
+                      'meta'  => array('class' => 'action-btn action-btn-black')
+                ) );
+    }
+    
+}
 ?>

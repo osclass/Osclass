@@ -52,8 +52,6 @@
             $this->total = $list_users['total_results'] ;
             $this->total_filtered = $list_users['rows'] ;
 
-            $this->toDatatablesFormat() ;
-            $this->dumpToDatatables() ;
         }
 
         function __destruct()
@@ -69,18 +67,21 @@
          */
         private function getDBParams()
         {
+            // default values
+            if( !isset($this->_get['iDisplayStart']) ) {
+                $this->_get['iDisplayStart'] = 0 ;
+            }
+            $p_iPage      = 1;
+            if( !is_numeric(Params::getParam('iPage')) || Params::getParam('iPage') < 1 ) {
+                Params::setParam('iPage', $p_iPage );
+                $this->iPage = $p_iPage ;
+            } else {
+                $this->iPage = Params::getParam('iPage') ;
+            }
+            
             $this->order_by['column_name'] = 'pk_i_id';
             $this->order_by['type'] = 'DESC';
             foreach($this->_get as $k=>$v) {
-                if( $k == 'iDisplayStart' ) {
-                    $this->start = intval($v) ;
-                }
-                if( $k == 'iDisplayLength' ) {
-                    $this->limit = intval($v) ;
-                }
-                if( $k == 'sEcho' ) {
-                    $this->sEcho = intval($v) ;
-                }
                 if( $k == 'sSearch' ) {
                     $this->search = $v ;
                 }
@@ -93,19 +94,18 @@
                     $this->order_by['type'] = $v ;
                 }
             }
+            // set start and limit using iPage param
+            $start = ($this->iPage - 1) * $this->_get['iDisplayLength'];
+            
+            $this->start = intval( $start ) ;
+            $this->limit = intval( $this->_get['iDisplayLength'] ) ;
         }
-
-        /**
-         * Set the $result variable with the appropiate data
-         * 
-         * @access private
-         * @since unknown
-         */
-        private function toDatatablesFormat()
+        
+        public function toArrayFormat()
         {
             $this->result['iTotalRecords']        = $this->total_filtered ;
             $this->result['iTotalDisplayRecords'] = $this->total ;
-            $this->result['sEcho']                = $this->sEcho ;
+            $this->result['iDisplayLength']       = $this->_get['iDisplayLength'];
             $this->result['aaData']               = array() ;
 
             if( count($this->users) == 0 ) {
@@ -115,31 +115,50 @@
             $count = 0 ;
             foreach ($this->users as $aRow) {
                 $row = array() ;
+                $options        = array() ;
+                $options_more   = array() ;
                 // first column
                 $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" /></div>' ;
-                // second column
-                $second  = $aRow['s_email'] . '<br/>' ;
-                $second .= '<div class="datatable_wrapper"><div class="datatables_quick_edit" ' ;
-                $second .= ' style="position:absolute; display:none ;">' ;
+                
+                $options[]  = '<a href="' . osc_admin_base_url(true) . '?page=users&action=edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>' ;
+                $var        = 'onclick="javascript:return confirm(\'' . osc_esc_js(__('This action can not be undone. Are you sure you want to continue?')) . '\')"' ;
+                $options[]  = '<a ' . $var . ' href="' . osc_admin_base_url(true) . '?page=users&action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
+                
                 if( $aRow['b_active'] == 1 ) {
-                    $second .= '<a href="' . osc_admin_base_url(true) . '?page=users&action=deactivate&amp;id[]=' . $aRow['pk_i_id'] .'">' . __('Deactivate') . '</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=deactivate&amp;id[]=' . $aRow['pk_i_id'] .'">' . __('Deactivate') . '</a>' ;
                 } else {
-                    $second .= '<a href="' . osc_admin_base_url(true) . '?page=users&action=activate&amp;id[]=' . $aRow['pk_i_id'] .'">' . __('Activate') . '</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=activate&amp;id[]=' . $aRow['pk_i_id'] .'">' . __('Activate') . '</a>' ;
                 }
                 if( $aRow['b_enabled'] == 1 ) {
-                    $second .= ' &middot; <a href="' . osc_admin_base_url(true) . '?page=users&action=disable&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Block') . '</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=disable&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Block') . '</a>' ;
                 } else {
-                    $second .= ' &middot; <a href="' . osc_admin_base_url(true) . '?page=users&action=enable&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Unblock') . '</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=enable&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Unblock') . '</a>' ;
                 }
                 if( osc_user_validation_enabled() && ( $aRow['b_active'] == 0 ) ) {
-                    $second .= ' &middot; <a href="' . osc_admin_base_url(true) . '?page=users&action=resend_activation&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Re-send activation email') . '</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=resend_activation&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Re-send activation email') . '</a>' ;
                 }
+                
+                $options_more = osc_apply_filter('more_actions_manage_users', $options_more, $aRow);
+                // more actions
+                $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL ;
+                foreach( $options_more as $actual ) { 
+                    $moreOptions .= '<li>'.$actual."</li>".PHP_EOL;
+                }
+                $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL ;
 
-                $second .= ' &middot; <a href="' . osc_admin_base_url(true) . '?page=users&action=edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>' ;
-                $var     = 'onclick="javascript:return confirm(\'' . osc_esc_js('This action can not be undone. Are you sure you want to continue?') . '\')"' ;
-                $second .= ' &middot; <a ' . $var . ' href="' . osc_admin_base_url(true) . '?page=users&action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
-                $second .= '</div></div>' ;
-                $row[] = $second ;
+                $options = osc_apply_filter('actions_manage_users', $options, $aRow);
+                // create list of actions
+                $auxOptions = '<ul>'.PHP_EOL ;
+                foreach( $options as $actual ) {
+                    $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
+                }
+                $auxOptions  .= $moreOptions ;
+                $auxOptions  .= '</ul>'.PHP_EOL ;
+                
+                $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
+                // second column
+                $row[] = '<a href="' . osc_admin_base_url(true) . '?page=items&userId='. $aRow['pk_i_id'] .'&user='. $aRow['s_name'] .'">' . $aRow['s_email'] . '</a>'. $actions  ;
+                
                 // third row
                 $row[] = $aRow['s_name'] ;
                 // fourth row
@@ -184,9 +203,22 @@
          * @access private
          * @since unknown 
          */
-        private function dumpToDatatables()
+        public function dumpToDatatables()
         {
+            $this->toDatatablesFormat() ;
             $this->dumpResult() ;
+        }
+        
+        /**
+         * Dump $result to JSON and return the result
+         * 
+         * @access private
+         * @since unknown 
+         */
+        public function result()
+        {
+            $this->toArrayFormat();
+            return $this->result;
         }
      }
 

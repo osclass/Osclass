@@ -390,6 +390,24 @@
     }
 
     /**
+     * Gets when was the last version check
+     *
+     * @return string
+     */
+    function osc_themes_last_version_check() {
+        return (getPreference('themes_last_version_check')) ;
+    }
+    
+    /**
+     * Gets when was the last version check
+     *
+     * @return string
+     */
+    function osc_plugins_last_version_check() {
+        return (getPreference('plugins_last_version_check')) ;
+    }
+    
+    /**
      * Gets json response when checking if there is available a new version
      *
      * @return string
@@ -538,8 +556,31 @@
      *
      * @return string 
      */
-    function osc_market_url($code = '') {
-        return(getPreference('marketURL')."?code=".$code) ;
+    function osc_market_url($type = '', $code = '') {
+        $url = getPreference('marketURL');
+        switch ($type) {
+            case 'plugins':
+                $url .= 'section/plugins/';
+                if($code!='') {
+                    $url .= 'code/'. $code;
+                }
+                break;
+            case 'themes':
+                $url .= 'section/themes/';
+                if($code!='') {
+                    $url .= 'code/'. $code;
+                }
+                break;
+            case 'languages':
+                $url .= 'section/languages/';
+                if($code!='') {
+                    $url .= 'code/'. $code;
+                }
+                break;
+            default:
+                break;
+        }
+        return $url;
     }
     
     /**

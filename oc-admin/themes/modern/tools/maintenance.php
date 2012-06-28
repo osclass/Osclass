@@ -16,41 +16,44 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $maintenance = file_exists( osc_base_path() . '.maintenance') ;
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
-    <head>
-        <?php osc_current_admin_theme_path('head.php') ; ?>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <!-- container -->
-        <div id="content">
-            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-            <!-- right container -->
-            <div class="right">
-                <div class="header_title">
-                    <h1 class="tools"><?php _e('Maintenance') ; ?></h1>
+    $maintenance = file_exists( osc_base_path() . '.maintenance');
+
+    function render_offset(){
+        return 'row-offset';
+    }
+
+    osc_add_hook('admin_page_header','customPageHeader');
+    function customPageHeader(){ ?>
+        <h1><?php _e('Tools') ; ?></h1>
+    <?php
+    }
+
+    function customPageTitle($string) {
+        return sprintf(__('Maintenance &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+<div id="backup-setting">
+    <!-- settings form -->
+                    <div id="backup-settings">
+                        <h2 class="render-title"><?php _e('Maintenance') ; ?></h2>
+                        <form>
+                            <fieldset>
+                            <div class="form-horizontal">
+                            <div class="form-row">
+                                <?php _e('While in maintenance mode, users can not access your website. Useful if you need to make some changes on your website. Use the following button to toggle ON/OFF maintenance mode.') ; ?>
+                                <div class="help-box">
+                                    <?php printf( __('Maintenance mode is: <strong>%s</strong>'), ($maintenance ? __('ON') : __('OFF') ) ) ; ?>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <input type="button" value="<?php echo ( $maintenance ? osc_esc_html( __('Disable maintenance mode') ) : osc_esc_html( __('Enable maintenance mode') ) ) ; ?>" onclick="window.location.href='<?php echo osc_admin_base_url(true) ; ?>?page=tools&amp;action=maintenance&amp;mode=<?php echo ( $maintenance ? 'off' : 'on' ) ; ?>';" class="btn btn-submit" />
+                            </div>
+                        </div>
+                        </fieldset>
+                    </form>
                 </div>
-                <?php osc_show_flash_message('admin') ; ?>
-                <!-- tools maintenance -->
-                <div class="tools maintenance">
-                    <p class="text">
-                        <?php _e('While in maintenance mode, users can not access your website. Useful if you need to make some changes on your website. Use the following button to toggle ON/OFF maintenance mode.') ; ?>
-                    </p>
-                    <p class="text">
-                        <?php printf( __('Maintenance mode is: <strong>%s</strong>'), ($maintenance ? __('ON') : __('OFF') ) ) ; ?>
-                    </p>
-                    <div class="action-nomargin">
-                        <input type="button" value="<?php echo ( $maintenance ? osc_esc_html( __('Disable maintenance mode') ) : osc_esc_html( __('Enable maintenance mode') ) ) ; ?>" onclick="window.location.href='<?php echo osc_admin_base_url(true) ; ?>?page=tools&amp;action=maintenance&amp;mode=<?php echo ( $maintenance ? 'off' : 'on' ) ; ?>';" >
-                    </div>
-                </div>
-                <!-- /tools maintenance -->
-            </div>
-            <!-- /right container -->
-        </div>
-        <!-- /container -->
-        <?php osc_current_admin_theme_path('footer.php') ; ?>
-    </body>
-</html>
+                <!-- /settings form -->
+</div>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                

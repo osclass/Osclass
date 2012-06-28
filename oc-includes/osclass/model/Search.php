@@ -47,6 +47,8 @@
         private $total_results;
         private $total_results_table;
         private $sPattern;
+        private $groupBy;
+        private $having;
         
         private $withPattern;
         private $withPicture;
@@ -103,6 +105,8 @@
             $this->tables_join  = array();
             $this->search_fields = array();
             $this->itemConditions   = array();
+            $this->groupBy      = '';
+            $this->having       = '';
             
             $this->order();
             $this->limit();
@@ -265,6 +269,19 @@
         }
 
         /**
+         * Add group by to the search
+         * 
+         * @access public
+         * @since unknown
+         * @param mixed $tables
+         * 
+         */
+        public function addGroupBy( $groupBy )
+        {
+            $this->groupBy = $groupBy;
+        }
+        
+        /**
          * Establish the order of the search
          *
          * @access public
@@ -283,8 +300,6 @@
                 } else {
                     $this->order_column = sprintf("$table.$o_c", DB_TABLE_PREFIX);
                 }
-            } else {
-                $this->order_column = sprintf("$o_c", DB_TABLE_PREFIX);
             }
             $this->order_direction = $o_d;
         }
@@ -297,10 +312,10 @@
          * @param int $l_i
          * @param int $t_p_p results per page
          */
-        public function limit($l_i = 0, $r_p_p = 10) 
+        public function limit($l_i = 0, $r_p_p = null) 
         {
             $this->limit_init = $l_i;
-            $this->results_per_page = $r_p_p;
+            if($r_p_p!=null) { $this->results_per_page = $r_p_p; };
         }
 
         /**
@@ -547,6 +562,15 @@
             $this->priceRange($price, null);
         }
 
+        /**
+         * Set having sentence to sql
+         * 
+         * @param type $having 
+         */
+        public function addHaving($having)
+        {
+            $this->having = $having;
+        }
         /**
          * Filter by ad with picture or not
          *
@@ -833,12 +857,13 @@
             
             if($this->withItemId) { 
                 // add field s_user_name
-                $this->dao->select(sprintf('%st_item.*', DB_TABLE_PREFIX) );
+                $this->dao->select(sprintf('%st_item.*, %st_item.s_contact_name as s_user_name', DB_TABLE_PREFIX, DB_TABLE_PREFIX) );
                 $this->dao->from(sprintf('%st_item', DB_TABLE_PREFIX));
                 $this->dao->where('pk_i_id', (int)$this->itemId);
             } else {  
                 if($count) {
                     $this->dao->select(DB_TABLE_PREFIX.'t_item.pk_i_id');
+                    $this->dao->select($extraFields) ; // plugins!
                 } else {
                     $this->dao->select(DB_TABLE_PREFIX.'t_item.*, '.DB_TABLE_PREFIX.'t_item.s_contact_name as s_user_name');
                     $this->dao->select($extraFields) ; // plugins!
@@ -875,10 +900,6 @@
                     $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
                 }
                 $this->_priceRange();
-
-//                if ($this->withPattern ) {
-//                    $this->dao->where(DB_TABLE_PREFIX.'t_item.pk_i_id IN ('.$subSelect.')');
-//                }
                 
                 // PLUGINS TABLES !!
                 if( !empty($this->tables) ) {
@@ -890,7 +911,15 @@
                     $this->dao->where($conditionsSQL) ;
                 } 
                 // ---------------------------------------------------------
-                
+                // groupBy
+                if($this->groupBy != '') {
+                    $this->dao->groupBy( $this->groupBy );
+                }
+                // having 
+                if($this->having != '') {
+                    $this->dao->having($this->having);
+                }
+                // ---------------------------------------------------------
                 
                 // order & limit
                 $this->dao->orderBy( $this->order_column, $this->order_direction);
@@ -949,11 +978,15 @@
         {   
             $sql = $this->_makeSQL(false) ;
             $result = $this->dao->query($sql);
-            
             if($count) {
                 $sql = $this->_makeSQL(true) ;
                 $datatmp  = $this->dao->query( $sql ) ;
-                $this->total_results = $datatmp->numRows() ;
+
+                if( $datatmp == false ) {
+                    $this->total_results = 0;
+                } else {
+                    $this->total_results = $datatmp->numRows();
+                }
             } else {
                 $this->total_results = 0;                
             }

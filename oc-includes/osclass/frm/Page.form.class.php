@@ -39,9 +39,10 @@
             parent::generic_input_text('s_internal_name', $internal_name, null, (isset($page['b_indelible']) && $page['b_indelible'] == 1) ? true : false) ;
         }
 
-        static public function multilanguage_name_description($locales, $category = null) {
+        static public function multilanguage_name_description($locales, $page = null) {
             $num_locales = count($locales);
             if($num_locales > 1) echo '<div class="tabber">';
+            $aFieldsDescription = Session::newInstance()->_getForm("aFieldsDescription");
             foreach($locales as $locale) {
                 if($num_locales > 1) {
                     echo '<div class="tabbertab">';
@@ -51,11 +52,11 @@
                 echo '<div class="FormElementName">' . __('Title') . '</div>';
                 echo '<div class="FormElementInput">' ;
                 $title = '';
-                if(isset($category['locale'][$locale['pk_c_code']])) {
-                    $title = $category['locale'][$locale['pk_c_code']]['s_title'];
+                if(isset($page['locale'][$locale['pk_c_code']])) {
+                    $title = $page['locale'][$locale['pk_c_code']]['s_title'];
                 }
-                if( Session::newInstance()->_getForm($locale['pk_c_code'] . '#s_title') != '' ) {
-                    $title = Session::newInstance()->_getForm($locale['pk_c_code'] . '#s_title');
+                if( isset($aFieldsDescription[$locale['pk_c_code']]) && isset($aFieldsDescription[$locale['pk_c_code']]['s_title']) &&$aFieldsDescription[$locale['pk_c_code']]['s_title'] != '' ) {
+                    $title = $aFieldsDescription[$locale['pk_c_code']]['s_title'];
                 }
                 parent::generic_input_text($locale['pk_c_code'] . '#s_title', $title) ;
                 echo '</div>' ;
@@ -64,11 +65,11 @@
                 echo '<div class="FormElementName">' . __('Body') . '</div>';
                 echo '<div class="FormElementInput">' ;
                 $description = '';
-                if(isset($category['locale'][$locale['pk_c_code']])) {
-                    $description = $category['locale'][$locale['pk_c_code']]['s_text'];
+                if(isset($page['locale'][$locale['pk_c_code']])) {
+                    $description = $page['locale'][$locale['pk_c_code']]['s_text'];
                 }
-                if( Session::newInstance()->_getForm($locale['pk_c_code'] . '#s_text') != '' ) {
-                    $description = Session::newInstance()->_getForm($locale['pk_c_code'] . '#s_text');
+                if( isset($aFieldsDescription[$locale['pk_c_code']]) && isset($aFieldsDescription[$locale['pk_c_code']]['s_text']) &&$aFieldsDescription[$locale['pk_c_code']]['s_text'] != '' ) {
+                    $description = $aFieldsDescription[$locale['pk_c_code']]['s_text'];
                 }
                 parent::generic_textarea($locale['pk_c_code'] . '#s_text', $description) ;
                 echo '</div>';
