@@ -215,7 +215,7 @@
             <div class="row-wrapper">
                 <div class="form-row">
                     <div class="form-label">
-                        <?php _e('Listing user name') ; ?>
+                        <?php _e('User') ; ?>
                     </div>
                     <div class="form-controls">
                         <input id="user" name="user" type="text" value="<?php echo osc_esc_html(Params::getParam('user')); ?>" />
@@ -228,7 +228,7 @@
                     </div>
                     <div class="form-controls">
                         <select id="b_premium" name="b_premium">
-                            <option value="" <?php echo ( (Params::getParam('b_premium') == '') ? 'selected="selected"' : '' )?>><?php _e('ALL'); ?></option>
+                            <option value="" <?php echo ( (Params::getParam('b_premium') == '') ? 'selected="selected"' : '' )?>><?php _e('Choose an option'); ?></option>
                             <option value="1" <?php echo ( (Params::getParam('b_premium') == '1') ? 'selected="selected"' : '' )?>><?php _e('ON'); ?></option>
                             <option value="0" <?php echo ( (Params::getParam('b_premium') == '0') ? 'selected="selected"' : '' )?>><?php _e('OFF'); ?></option>
                         </select>
@@ -240,7 +240,7 @@
                     </div>
                     <div class="form-controls">
                         <select id="b_active" name="b_active">
-                            <option value="" <?php echo ( (Params::getParam('b_active') == '') ? 'selected="selected"' : '' )?>><?php _e('ALL'); ?></option>
+                            <option value="" <?php echo ( (Params::getParam('b_active') == '') ? 'selected="selected"' : '' )?>><?php _e('Choose an option'); ?></option>
                             <option value="1" <?php echo ( (Params::getParam('b_active') == '1') ? 'selected="selected"' : '' )?>><?php _e('ON'); ?></option>
                             <option value="0" <?php echo ( (Params::getParam('b_active') == '0') ? 'selected="selected"' : '' )?>><?php _e('OFF'); ?></option>
                         </select>
@@ -252,7 +252,7 @@
                     </div>
                     <div class="form-controls">
                         <select id="b_enabled" name="b_enabled">
-                            <option value="" <?php echo ( (Params::getParam('b_enabled') == '') ? 'selected="selected"' : '' )?>><?php _e('ALL'); ?></option>
+                            <option value="" <?php echo ( (Params::getParam('b_enabled') == '') ? 'selected="selected"' : '' )?>><?php _e('Choose an option'); ?></option>
                             <option value="0" <?php echo ( (Params::getParam('b_enabled') == '0') ? 'selected="selected"' : '' )?>><?php _e('ON'); ?></option>
                             <option value="1" <?php echo ( (Params::getParam('b_enabled') == '1') ? 'selected="selected"' : '' )?>><?php _e('OFF'); ?></option>
                         </select>
@@ -264,7 +264,7 @@
                     </div>
                     <div class="form-controls">
                         <select id="b_spam" name="b_spam">
-                            <option value="" <?php echo ( (Params::getParam('b_spam') == '') ? 'selected="selected"' : '' )?>><?php _e('ALL'); ?></option>
+                            <option value="" <?php echo ( (Params::getParam('b_spam') == '') ? 'selected="selected"' : '' )?>><?php _e('Choose an option'); ?></option>
                             <option value="1" <?php echo ( (Params::getParam('b_spam') == '1') ? 'selected="selected"' : '' )?>><?php _e('ON'); ?></option>
                             <option value="0" <?php echo ( (Params::getParam('b_spam') == '0') ? 'selected="selected"' : '' )?>><?php _e('OFF'); ?></option>
                         </select>
@@ -314,7 +314,7 @@
                 <select id="filter-select" name="shortcut-filter" class="select-box-extra select-box-input">
                     <option value="oPattern" <?php if($opt == 'oPattern'){ echo 'selected="selected"'; } ?>><?php _e('Pattern') ; ?></option>
                     <option value="oUser" <?php if($opt == 'oUser'){ echo 'selected="selected"'; } ?>><?php _e('User') ; ?></option>
-                    <option value="oItemId" <?php if($opt == 'oItemId'){ echo 'selected="selected"'; } ?>><?php _e('Item id') ; ?></option>
+                    <option value="oItemId" <?php if($opt == 'oItemId'){ echo 'selected="selected"'; } ?>><?php _e('Item ID') ; ?></option>
                 </select><input 
                     id="fPattern" type="text" name="sSearch"
                     value="<?php echo osc_esc_html(Params::getParam('sSearch')); ?>" 
@@ -337,7 +337,7 @@
         <input type="hidden" name="action" value="bulk_actions" />
         <div id="bulk-actions">
             <label>
-                <select id="bulk_actions" name="bulk_actions" class="select-box-extra select-box-medium">
+                <select id="bulk_actions" name="bulk_actions" class="select-box-extra">
                     <option value=""><?php _e('Bulk actions') ; ?></option>
                     <option value="delete_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected listings?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ; ?></option>
                     <option value="activate_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected listings?'), strtolower(__('Activate'))); ?>"><?php _e('Activate') ; ?></option>
