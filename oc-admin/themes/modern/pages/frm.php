@@ -96,6 +96,9 @@
         </div>
         <div class="clear"></div>
         <div class="form-actions">
+            <?php if( customFrmText('edit') ) { ?>
+            <a href="javascript:history.go(-1)" class="btn"><?php _e('Cancel'); ?></a>
+            <?php } ?>
             <input type="submit" value="<?php echo osc_esc_html(customFrmText('btn_text')); ?>" class="btn btn-submit" />
         </div>
     </form>

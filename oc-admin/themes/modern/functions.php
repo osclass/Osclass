@@ -47,6 +47,7 @@ function printLocaleTitlePage($locales = null,$page = null)
         }
         $name = $locale['pk_c_code'] . '#s_title';
 
+        echo '<div><label for="title">' . __('Title') . ' *</label>';
         echo '<div class="input-has-placeholder input-title-wide"><label for="title">' . __('Enter title here') . ' *</label>';
         echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($title, ENT_COMPAT, "UTF-8")) . '"  />' ;
         echo '</div>';
@@ -128,34 +129,3 @@ function jsLoacaleSelector()
 }
 
 osc_add_hook('admin_header','jsLoacaleSelector');
-/*
-foreach($locales as $locale) {
-    if($num_locales>1) { echo '<h2>' . $locale['s_name'] . '</h2>'; };
-
-
-
-
-
-
-
-    echo '<div><label for="title">' . __('Title') . ' *</label></div>';
-    $title = (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_title'])) ? $item['locale'][$locale['pk_c_code']]['s_title'] : '' ;
-    if( Session::newInstance()->_getForm('title') != "" ) {
-        $title_ = Session::newInstance()->_getForm('title');
-        if( $title_[$locale['pk_c_code']] != "" ){
-            $title = $title_[$locale['pk_c_code']];
-        }
-    }
-    self::title_input('title', $locale['pk_c_code'], $title);
-
-
-    echo '<div><label for="description">' . __('Description') . ' *</label></div>';
-    $description = (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_description'])) ? $item['locale'][$locale['pk_c_code']]['s_description'] : '';
-    if( Session::newInstance()->_getForm('description') != "" ) {
-        $description_ = Session::newInstance()->_getForm('description');
-        if( $description_[$locale['pk_c_code']] != "" ){
-            $description = $description_[$locale['pk_c_code']];
-        }
-    }
-    self::description_textarea('description', $locale['pk_c_code'], $description);
- }*/
