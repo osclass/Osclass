@@ -452,7 +452,7 @@
                                             $actions[] = '<a class="btn float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $item['pk_i_id'] . '&amp;value=1">' . __('Mark as premium') .'</a>' ;
                                         }
                                         if( $item['b_spam'] ) {
-                                            $actions[] = '<a class="btn float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $item['pk_i_id'] . '&amp;value=0">' . __('Unmark as spam') .'</a>' ;
+                                            $actions[] = '<a class="btn btn-red float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $item['pk_i_id'] . '&amp;value=0">' . __('Unmark as spam') .'</a>' ;
                                         } else {
                                             $actions[] = '<a class="btn float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $item['pk_i_id'] . '&amp;value=1">' . __('Mark as spam') .'</a>' ;
                                         }
@@ -737,7 +737,7 @@
                 break;
                 default:                // default 
                                         $catId = Params::getParam('catId') ;
-                    
+
                                         $countries = Country::newInstance()->listAll() ;
                                         $regions = array() ;
                                         if( count($countries) > 0 ) {
@@ -747,7 +747,6 @@
                                         if( count($regions) > 0 ) {
                                             $cities = City::newInstance()->findByRegion($regions[0]['pk_i_id']) ;
                                         }
-
 
                                         // set default iDisplayLength 
                                         if( Params::getParam('iDisplayLength') != '' ) {
@@ -762,7 +761,7 @@
                                             }
                                         }
                                         $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
-                                     
+
                                         // Table header order by related
                                         if( Params::getParam('sort') == '') {
                                             Params::setParam('sort', 'date') ;
@@ -770,19 +769,19 @@
                                         if( Params::getParam('direction') == '') {
                                             Params::setParam('direction', 'desc');
                                         }
-                                        
+
                                         $arg_date = '&sort=date';
                                         if(Params::getParam('sort') == 'date') {
                                             if(Params::getParam('direction') == 'desc') $arg_date .= '&direction=asc';
                                         }
                                         $this->_exportVariableToView('url_date', osc_admin_base_url(true).'?page=items'.$arg_date) ;
                                         // -- Table header order by related
-                                        
+
                                         require_once osc_admin_base_path() . 'ajax/items_processing.php';
                                         $params = Params::getParamsAsArray("get") ;
                                         $items_processing = new ItemsProcessingAjax( $params );
                                         $aData = $items_processing->listings( $params ) ;
-                                        
+
                                         $page  = (int)Params::getParam('iPage');
                                         if(count($aData['aaData']) == 0 && $page!=1) {
                                             $total = (int)$aData['iTotalDisplayRecords'];
@@ -800,21 +799,21 @@
                                                 $this->redirectTo($url) ;
                                             }
                                         }
-                                        
+
                                         $this->_exportVariableToView('aItems', $aData) ;
-                                        
+
                                         // there are filters activated
                                         $this->_exportVariableToView('withFilters', $items_processing->filters() ) ;
-                                        
+
                                         //preparing variables for the view                
                                         $this->_exportVariableToView("users", User::newInstance()->listAll());
                                         $this->_exportVariableToView("catId", $catId) ;
                                         $this->_exportVariableToView("stat", Params::getParam('stat')) ;
-                                        
+
                                         $this->_exportVariableToView("countries", $countries);
                                         $this->_exportVariableToView("regions", $regions);
                                         $this->_exportVariableToView("cities", $cities);
-                                        
+
                                         //calling the view...
                                         $this->doView('items/index.php') ;
             }
