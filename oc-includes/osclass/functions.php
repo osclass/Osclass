@@ -401,17 +401,22 @@ function osc_check_plugins_update( $force = false )
 {
     $total = 0;
     $array = array();
+    $array_downloaded = array();
     // check if exist a new version each day
     if( (time() - osc_plugins_last_version_check()) > (24 * 3600) || $force ) {
         $plugins    = Plugins::listAll();
         foreach($plugins as $plugin) {
             $info = osc_plugin_get_info($plugin);
             if(osc_check_plugin_update(@$info['plugin_update_uri'], @$info['version'])) {
-                $array[] = @$info['short_name'];
+                $array[] = @$info['plugin_update_uri'];
                 $total++;
+            }else{
             }
+            $array_downloaded[] = @$info['plugin_update_uri'];
         }
-        osc_set_preference( 'plugins_to_update', json_encode($array) );
+        
+        osc_set_preference( 'plugins_to_update' , json_encode($array) );
+        osc_set_preference( 'plugins_downloaded', json_encode($array_downloaded) );
         osc_set_preference( 'plugins_update_count', $total );
         osc_set_preference( 'plugins_last_version_check', time() );
         osc_reset_preferences();
@@ -434,7 +439,7 @@ function osc_admin_toolbar_update_plugins($force = false)
         AdminToolbar::newInstance()->add_menu( 
                 array('id'    => 'update_plugin',
                       'title' => $title,
-                      'href'  => osc_admin_base_url(true) . "?page=plugins",
+                      'href'  => osc_admin_base_url(true) . "?page=plugins#update-plugins",
                       'meta'  => array('class' => 'action-btn action-btn-black')
                 ) );
     }
@@ -444,6 +449,7 @@ function osc_check_themes_update( $force = false )
 {
     $total = 0;
     $array = array();
+    $array_downloaded = array();
     // check if exist a new version each day
     if( (time() - osc_themes_last_version_check()) > (24 * 3600) || $force ) {
         $themes = WebThemes::newInstance()->getListThemes();
@@ -453,8 +459,10 @@ function osc_check_themes_update( $force = false )
                 $array[] = $theme;
                 $total++;
             }
+            $array_downloaded[] = @$info['theme_update_uri'];
         }
         osc_set_preference( 'themes_to_update', json_encode($array) );
+        osc_set_preference( 'themes_downloaded', json_encode($array_downloaded) );
         osc_set_preference( 'themes_update_count', $total );
         osc_set_preference( 'themes_last_version_check', time() );
         osc_reset_preferences();
