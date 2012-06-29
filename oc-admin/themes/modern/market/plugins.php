@@ -55,6 +55,8 @@
    
     $iDisplayLength = __get('iDisplayLength');
     $aData          = __get('aPlugins'); 
+    
+    $tab_index = 0;
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="tabs" class="ui-osc-tabs ui-tabs-right">
@@ -62,7 +64,8 @@
         <?php 
             $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
             $bPluginsToUpdate = is_array($aPluginsToUpdate)?true:false;
-            if($bPluginsToUpdate) { 
+            if($bPluginsToUpdate && count($aPluginsToUpdate) > 0) { 
+                $tab_index = 1;
         ?>
         <li><a href="#update-plugins" onclick="window.location = '<?php echo osc_admin_base_url(true) . '?page=plugins#update-plugins'; ?>'; return false; "><?php _e('Updates'); ?></a></li>
         <?php } ?>
@@ -107,7 +110,7 @@
             <div class="form-actions">
                 <div class="wrapper">
                     <button id="market_cancel" class="btn btn-red" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                    <button id="market_install" class="btn btn-submit" ><?php echo osc_esc_html( __('Continue install') ) ; ?></button>
+                    <button id="market_install" class="btn btn-submit" ><?php echo osc_esc_html( __('Continue download') ) ; ?></button>
                 </div>
             </div>
         </form>
@@ -117,7 +120,7 @@
              
 <script>
     $(function() {
-        $( "#tabs" ).tabs({ selected: 1 });
+        $( "#tabs" ).tabs({ selected: <?php echo $tab_index; ?> });
 
         $("#market_cancel").on("click", function(){
             $(".ui-dialog-content").dialog("close");
@@ -126,8 +129,8 @@
 
         $("#market_install").on("click", function(){
             $(".ui-dialog-content").dialog("close");
-            $('<div id="downloading"><div class="osc-modal-content">Please wait until the download is completed</div></div>').dialog({ 
-                title:'Installing...',
+            $('<div id="downloading"><div class="osc-modal-content"><?php _e('Please wait until the download is completed'); ?></div></div>').dialog({ 
+                title:'<?php _e('Downloading'); ?>...',
                 modal:true
             });
             
@@ -137,13 +140,13 @@
             function(data){
                 var content = data.message ;
                 if(data.error == 0) { // no errors
-                    content += '<p><?php _e('You only need to install and configure the plugin.');?></p>';
+                    content += '<h3><?php _e('The plugin have been downloaded correctly, proceed to install and configure.');?></h3>';
                     content += "<p>";
-                    content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=plugins&marketError='+data.error+'&slug='+data.data['s_slug']+'"><?php _e('Install & configure'); ?></a>';
-                    content += '<a class="btn btn-mini btn-green" onclick=\'$(".ui-dialog-content").dialog("close");\'><?php _e('Continue installing'); ?>...</a>';
+                    content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=plugins&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php _e('Ok'); ?></a>';
+                    content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php _e('Close'); ?></a>';
                     content += "</p>";
                 } else {
-                    content += '<a class="btn btn-mini btn-green" onclick=\'$(".ui-dialog-content").dialog("close");\'><?php _e('Close'); ?>...</a>';
+                    content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php _e('Close'); ?></a>';
                 }
                 $("#downloading .osc-modal-content").html(content);
             });
@@ -169,12 +172,27 @@
                             dots = '';
                             if(description.length > 80){
                                 dots = '...';
+                            } 
+                           
+                            var plugins_downloaded  = <?php echo getPreference('plugins_downloaded'); ?>;
+                            var plugin_to_update    = <?php echo getPreference('plugins_to_update'); ?>;
+                            var button = '';
+                            
+                            if(jQuery.inArray(data.plugins[i].s_update_url, plugins_downloaded) >= 0 ) {
+                                if( jQuery.inArray(data.plugins[i].s_update_url, plugin_to_update) >= 0 ) {
+                                    button = '<a href="#'+data.plugins[i].s_update_url+'" class="btn btn-mini btn-orange market-popup market_update"><?php _e('Update') ; ?></a>';
+                                } else {
+                                    button = '<a href="#" class="btn btn-mini btn-blue btn-disabled" ><?php _e('Already downloaded') ; ?></a>';
+                                }
+                            } else {
+                                console.log( data.plugins[i].s_update_url );
+                                button = '<a href="#'+data.plugins[i].s_update_url+'" class="btn btn-mini btn-green market-popup"><?php _e('Download plugin') ; ?></a>';
                             }
                            
-                            $("#market_plugins").append('<div class="theme">'
+                            $("#market_plugins").append('<div class="plugin">'
                                 +'<div class="plugin-stage">'
                                     +'<div class="plugin-actions">'
-                                        +'<a href="#'+data.plugins[i].s_slug+'" class="btn btn-mini btn-green market-popup"><?php _e('Install') ; ?></a>'
+                                        + button
                                     +'</div>'
                                 +'</div>'
                                 +'<div class="plugin-info">'
@@ -212,7 +230,7 @@
             function(data){
                 if(data!=null) {
                     $("#market_thumb").attr('src',data.s_thumbnail);
-                    $("#market_code").attr("value", data.s_slug);
+                    $("#market_code").attr("value", data.s_update_url);
                     $("#market_name").html(data.s_title);
                     $("#market_version").html(data.s_version);
                     $("#market_author").html(data.s_contact_name);
@@ -220,7 +238,7 @@
                     if(update) {
                         $('#market_install').html("<?php echo osc_esc_html( __('Update') ) ; ?>");
                     } else {
-                        $('#market_install').html("<?php echo osc_esc_html( __('Continue install') ) ; ?>");
+                        $('#market_install').html("<?php echo osc_esc_html( __('Continue download') ) ; ?>");
                     }
                     
                     $('#market_installer').dialog({
