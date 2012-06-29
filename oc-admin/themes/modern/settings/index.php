@@ -302,13 +302,19 @@
                             <span class="help-box"><?php _e('It is <b>recommended</b> to have this option enabled, because some features require it.') ; ?></span>
                         </div>
                     </div>
+                    <h2 class="render-title separate-top"><?php _e('Check plugin & theme updates') ; ?></h2>
+                    <div class="form-row">
+                        <div class="form-label"><a class="btn" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=check_updates"><?php _e('Check updates');?></a></div>
+                        <div class="form-controls"></div>
+                    </div>
+                    <div class="clear"></div>
                     <div class="form-actions">
                         <input type="submit" id="save_changes" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" class="btn btn-submit" />
                     </div>
                 </div>
-                        </fieldset>
-                    </form>
-                </div>
-                <!-- /settings form -->
+            </fieldset>
+        </form>
+    </div>
+    <!-- /settings form -->
 </div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                
