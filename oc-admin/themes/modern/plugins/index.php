@@ -17,10 +17,20 @@
      */
 
     function customPageHeader() { ?>
-        <h1><?php _e('Manage Plugins') ; ?>
-            <a href="#" class="btn ico ico-32 ico-help float-right"></a>
-            <a href="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add plugin') ; ?></a>
-	   </h1>
+            <h1><?php _e('Manage Plugins') ; ?>
+                <a href="#" class="btn ico ico-32 ico-help float-right"></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add plugin') ; ?></a>
+            </h1>
+        <?php osc_show_flash_message('admin') ; ?>
+        <?php if( Params::getParam('error') != '' ) { ?>
+            </div>
+            <!-- flash message -->
+            <div class="flashmessage flashmessage-error" style="display:block">
+                <?php _e("Plugin couldn't be installed because it triggered a <strong>fatal error</strong>"); ?>
+                <a class="btn ico btn-mini ico-close">x</a>
+                <iframe style="border:0;" width="100%" height="60" src="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=error_plugin&amp;plugin=<?php echo Params::getParam('error') ; ?>"></iframe>
+            <!-- /flash message -->
+        <?php } ?>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
