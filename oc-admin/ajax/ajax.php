@@ -701,7 +701,7 @@
                         /***********************
                          **** DOWNLOAD FILE ****
                          ***********************/
-                        if( isset($data['s_slug']) && isset($data['s_source_file']) && isset($data['e_type'])) {
+                        if( isset($data['s_update_url']) && isset($data['s_source_file']) && isset($data['e_type'])) {
 
                             if($data['e_type']=='THEME') {
                                 $folder = 'themes/';
@@ -709,7 +709,7 @@
                                 $folder = 'languages/';
                             } else { // PLUGINS
                                 $folder = 'plugins/';
-                                $plugin = Plugins::findByUpdateURI($data['s_slug']);
+                                $plugin = Plugins::findByUpdateURI($data['s_update_url']);
                                 if($plugin!=false) {
                                     if(Plugins::isEnabled($plugin)) {
                                         Plugins::runHook($plugin.'_disable') ;
@@ -721,11 +721,11 @@
                             if($data['s_download']!='') {
                                 $filename = basename(str_replace("/download", "", $data['s_download']));
                             } else {
-                                $filename = $data['s_slug']."_".$data['s_version'].".zip";
+                                $filename = $data['s_update_url']."_".$data['s_version'].".zip";
                             }
 //                            error_log('Source file: ' . $data['s_source_file']) ;
 //                            error_log('Filename: ' . $filename) ;
-                            $result   = osc_downloadFile($data['s_source_file'], $filename) ;
+                            $result   = osc_downloadFile($data['s_source_file'], $filename);
 
                             if ($result) { // Everything is OK, continue
                                 /**********************
@@ -784,8 +784,15 @@
                                                         Plugins::runHook($plugin.'_enable') ;
                                                     }
                                                 }
+                                                
                                             }
-
+                                            // recount plugins&themes for update
+                                            if($section == 'plugins') {
+                                                osc_check_plugins_update(true);
+                                            } else if($section == 'themes') {
+                                                osc_check_themes_update(true);
+                                            }
+                                            
                                             if ($rm_errors == 0) {
                                                 $message = __('Everything was OK!');
                                                 $error = 0;
@@ -842,7 +849,7 @@
                                 break;
                             }
                         }
-                        if( !isset($data['s_source_file']) || !isset($data['s_slug'])) {
+                        if( !isset($data['s_source_file']) || !isset($data['s_update_url'])) {
                             $data = array('error' => 2, 'error_msg' => __('Not a valid code'));
                         }
                     } else {
