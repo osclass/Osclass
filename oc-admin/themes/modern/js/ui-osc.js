@@ -155,6 +155,12 @@ function resetLayout(){
     }
     //Footer
     if($('#content-render').height() < height ){
-        $('#footer-wrapper').css('margin-bottom',-1*(height-$('#content-render').height()) );
+        $('#footer-wrapper').css('margin-bottom',-1*(height-$('#content-render').height()-7) );
+    } else {
+        $('#footer-wrapper').css({
+            position:     'relative',
+            marginTop:    '0',
+            marginBottom: '0'
+        });
     }
 }
