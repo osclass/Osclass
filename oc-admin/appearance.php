@@ -169,16 +169,16 @@
                     $this->doView('appearance/view.php');
                 break;
                 default:
-                    $marketError = Params::getParam('marketError');
-                    $slug = Params::getParam('slug');
-                    if($marketError!='') {
-                        if($marketError == '0') { // no error installed ok
-                            $help = '<br/><br/><b>' . __('You only need to activate or preview the theme').'</b>';
-                            osc_add_flash_ok_message( __('Everything was OK!') . ' ( ' . $slug .' ) ' . $help, 'admin');
-                        } else {
-                            osc_add_flash_error_message( __('Error occurred') . ' ( ' . $slug .' ) ', 'admin');
-                        }
-                    }
+//                    $marketError = Params::getParam('marketError');
+//                    $slug = Params::getParam('slug');
+//                    if($marketError!='') {
+//                        if($marketError == '0') { // no error installed ok
+//                            $help = '<br/><br/><b>' . __('You only need to activate or preview the theme').'</b>';
+//                            osc_add_flash_ok_message( __('Everything was OK!') . ' ( ' . $slug .' ) ' . $help, 'admin');
+//                        } else {
+//                            osc_add_flash_error_message( __('Error occurred') . ' ( ' . $slug .' ) ', 'admin');
+//                        }
+//                    }
                     
                     // force the recount of themes that need to be updated
                     if(Params::getParam('checkUpdated') != '') {
