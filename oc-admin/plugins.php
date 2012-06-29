@@ -220,16 +220,16 @@
                     exit ;
                 break;
                 default:
-                    $marketError = Params::getParam('marketError');
-                    $slug = Params::getParam('slug');
-                    if($marketError!='') {
-                        if($marketError == '0') { // no error installed ok
-                            $extra = '<br/><br/><b>' . __('You only need to install and configure the plugin.') . '</b>';
-                            osc_add_flash_ok_message( __('Everything was OK!') . ' ( ' . $slug . ' ) ' . $extra , 'admin');
-                        } else {
-                            osc_add_flash_error_message( __('Error occurred') . ' ' . $slug , 'admin');
-                        }
-                    }
+//                    $marketError = Params::getParam('marketError');
+//                    $slug = Params::getParam('slug');
+//                    if($marketError!='') {
+//                        if($marketError == '0') { // no error installed ok
+//                            $extra = '<br/><br/><b>' . __('You only need to install and configure the plugin.') . '</b>';
+//                            osc_add_flash_ok_message( __('Everything was OK!') . ' ( ' . $slug . ' ) ' . $extra , 'admin');
+//                        } else {
+//                            osc_add_flash_error_message( __('Error occurred') . ' ' . $slug , 'admin');
+//                        }
+//                    }
                     
                     if(Params::getParam('checkUpdated') != '') {
                         osc_admin_toolbar_update_plugins(true);
@@ -284,7 +284,7 @@
                         $sUpdate = '' ;
                         // get plugins to update from t_preference
                         if($bPluginsToUpdate) {
-                            if(in_array($pInfo['short_name'],$aPluginsToUpdate )){ 
+                            if(in_array(@$pInfo['plugin_update_uri'],$aPluginsToUpdate )){ 
                                 $sUpdate = '<a class="market_update market-popup" href="#' . htmlentities($pInfo['plugin_update_uri']) . '">' . __("There's a new version available to update") . '</a>' ;
                             }
                         }
@@ -318,7 +318,11 @@
                         $row[] = ($sEnable!='')     ? $sEnable      : '&nbsp;';
                         $row[] = ($sInstall!='')    ? $sInstall     : '&nbsp;';
                         $aData[] = $row ;
-                        $aInfo[@$pInfo['short_name']] = $pInfo;
+                        if(@$pInfo['plugin_update_uri'] != '') {
+                            $aInfo[@$pInfo['plugin_update_uri']] = $pInfo;
+                        } else {
+                            $aInfo[$i] = $pInfo;
+                        }
                     }
                     
                     $array['iTotalRecords']         = $displayRecords;
@@ -326,6 +330,7 @@
                     $array['iDisplayLength']        = $limit;
                     $array['aaData'] = $aData;
                     $array['aaInfo'] = $aInfo;
+                    
                     // --------------------------------------------------------
                     $page  = (int)Params::getParam('iPage');
                     if(count($array['aaData']) == 0 && $page!=1) {
