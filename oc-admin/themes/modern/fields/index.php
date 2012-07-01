@@ -74,7 +74,7 @@
                         },
                         error: function(){
                             $(".jsMessage").css('display', 'block') ;
-                            $(".jsMessage p").html('<?php echo osc_esc_js( __("Ajax error, try again.") ) ; ?>') ;
+                            $(".jsMessage p").html("<?php _e('Ajax error, try again.') ; ?>") ;
                         }
                     }) ;
                 }
@@ -120,7 +120,7 @@
                             } else {
                                 var message = "";
                                 message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/cross.png');?>"/>';
-                                message += '<?php _e('Custom field could not be added'); ?>'
+                                message += '<?php echo osc_esc_js( __('Custom field could not be added')); ?>'
                                 $(".jsMessage").fadeIn('fast') ;
                                 $(".jsMessage p").html(message) ;
                             }
