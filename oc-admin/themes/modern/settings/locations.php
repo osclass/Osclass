@@ -71,8 +71,8 @@
                             <div style="padding: 4px; width: 90%;">
                                 <div style="float:left;">
                                     <div>
-                                        <a id="country_delete" class="close" onclick="javascript:return confirm('This action can not be undone. Items with this location associated will be deleted. Are you sure you want to continue?');" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations&type=delete_country&id=<?php echo urlencode($country['pk_c_code']) ; ?>">
-                                            <img src="<?php echo osc_admin_base_url() ; ?>images/close.png" alt="<?php _e('Close'); ?>" title="<?php _e('Close'); ?>" />
+    									<a id="country_delete" class="close" onclick="javascript:return confirm('<?php echo osc_esc_js ( __('This action can not be undone. Items with this location associated will be deleted. Are you sure you want to continue?' ) ) ?>');" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations&type=delete_country&id=<?php echo urlencode($country['pk_c_code']) ; ?>">
+										<img src="<?php echo osc_admin_base_url() ; ?>images/close.png" alt="<?php echo osc_esc_html( __('Close')); ?>" title="<?php echo osc_esc_html ( __('Close')); ?>" />
                                         </a>
                                         <a id="country_edit" class="edit" href="javascript:void(0);" style="padding-right: 15px;" onclick="edit_countries($(this));" data="<?php echo osc_esc_html($country['s_name']);?>" code="<?php echo $country['pk_c_code'];?>"><?php echo $country['s_name'] ; ?></a>
                                     </div>
