@@ -74,7 +74,7 @@
                         },
                         error: function(){
                             $(".jsMessage").css('display', 'block') ;
-                            $(".jsMessage p").html('<?php echo osc_esc_js( __("Ajax error, try again.") ) ; ?>') ;
+    						$(".jsMessage p").html("<?php echo osc_esc_html ( __('Ajax error, try again.') ) ; ?>") ;
                         }
                     }) ;
                 }
