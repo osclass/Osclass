@@ -52,7 +52,7 @@
                                     <p class="options">
                                         <strong><a href="<?php echo osc_item_edit_url(); ?>"><?php _e('Edit', 'modern'); ?></a></strong>
                                         <span>|</span>
-                                        <a class="delete" onclick="javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?', 'modern'); ?>')" href="<?php echo osc_item_delete_url();?>" ><?php _e('Delete', 'modern'); ?></a>
+                                        <a class="delete" onclick="javascript:return confirm('<?php echo osc_esc_js ( __('This action can not be undone. Are you sure you want to continue?', 'modern') ) ; ?>')" href="<?php echo osc_item_delete_url();?>" ><?php _e('Delete', 'modern'); ?></a>
                                         <?php if(osc_item_is_inactive()) {?>
                                         <span>|</span>
                                         <a href="<?php echo osc_item_activate_url();?>" ><?php _e('Activate', 'modern'); ?></a>
