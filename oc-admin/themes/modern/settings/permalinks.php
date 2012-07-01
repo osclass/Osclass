@@ -170,150 +170,150 @@
                         }
                     },
                     messages: {
-                        rewrite_item_url: {
-                            required: "<?php _e("Item url: this field is required"); ?>.",
-                            minlength: "<?php _e("Item url: this field is required"); ?>."
-                        },
-                        rewrite_page_url: {
-                            required: "<?php _e("Page url: this field is required"); ?>.",
-                            minlength: "<?php _e("Page url: this field is required"); ?>."
-                        },
-                        rewrite_cat_url: {
-                            required: "<?php _e("Categories url: this field is required"); ?>.",
-                            minlength: "<?php _e("Categories url: this field is required"); ?>."
-                        },
-                        rewrite_search_url: {
-                            required: "<?php _e("Search url: this field is required"); ?>.",
-                            minlength: "<?php _e("Search url: this field is required"); ?>."
-                        },
-                        rewrite_search_country: {
-                            required: "<?php _e("Search country: this field is required"); ?>.",
-                            minlength: "<?php _e("Search country: this field is required"); ?>."
-                        },
-                        rewrite_search_region: {
-                            required: "<?php _e("Search region: this field is required"); ?>.",
-                            minlength: "<?php _e("Search region: this field is required"); ?>."
-                        },
-                        rewrite_search_city: {
-                            required: "<?php _e("Search city: this field is required"); ?>.",
-                            minlength: "<?php _e("Search city: this field is required"); ?>."
-                        },
-                        rewrite_search_city_area: {
-                            required: "<?php _e("Search city area: this field is required"); ?>.",
-                            minlength: "<?php _e("Search city area: this field is required"); ?>."
-                        },
-                        rewrite_search_category: {
-                            required: "<?php _e("Search category: this field is required"); ?>.",
-                            minlength: "<?php _e("Search category: this field is required"); ?>."
-                        },
-                        rewrite_search_user: {
-                            required: "<?php _e("Search user: this field is required"); ?>.",
-                            minlength: "<?php _e("Search user: this field is required"); ?>."
-                        },
-                        rewrite_search_pattern: {
-                            required: "<?php _e("Search pattern: this field is required"); ?>.",
-                            minlength: "<?php _e("Search pattern: this field is required"); ?>."
-                        },
-                        rewrite_contact: {
-                            required: "<?php _e("Contact url: this field is required"); ?>.",
-                            minlength: "<?php _e("Contact url: this field is required"); ?>."
-                        },
-                        rewrite_feed: {
-                            required: "<?php _e("Feed url: this field is required"); ?>.",
-                            minlength: "<?php _e("Feed url: this field is required"); ?>."
-                        },
-                        rewrite_language: {
-                            required: "<?php _e("Language url: this field is required"); ?>.",
-                            minlength: "<?php _e("Language url: this field is required"); ?>."
-                        },
-                        rewrite_item_mark: {
-                            required: "<?php _e("Item mark url: this field is required"); ?>.",
-                            minlength: "<?php _e("Item mark url: this field is required"); ?>."
-                        },
-                        rewrite_item_send_friend: {
-                            required: "<?php _e("Item send friend url: this field is required"); ?>.",
-                            minlength: "<?php _e("Item send friend url: this field is required"); ?>."
-                        },
-                        rewrite_item_contact: {
-                            required: "<?php _e("Item contact url: this field is required"); ?>.",
-                            minlength: "<?php _e("Item contact url: this field is required"); ?>."
-                        },
-                        rewrite_item_new: {
-                            required: "<?php _e("New item url: this field is required"); ?>.",
-                            minlength: "<?php _e("New item url: this field is required"); ?>."
-                        },
-                        rewrite_item_activate: {
-                            required: "<?php _e("Activate item url: this field is required"); ?>.",
-                            minlength: "<?php _e("Activate item url: this field is required"); ?>."
-                        },
-                        rewrite_item_edit: {
-                            required: "<?php _e("Edit item url: this field is required"); ?>.",
-                            minlength: "<?php _e("Edit item url: this field is required"); ?>."
-                        },
-                        rewrite_item_delete: {
-                            required: "<?php _e("Delete item url: this field is required"); ?>.",
-                            minlength: "<?php _e("Delete item url: this field is required"); ?>."
-                        },
-                        rewrite_item_resource_delete: {
-                            required: "<?php _e("Delete item resource url: this field is required"); ?>.",
-                            minlength: "<?php _e("Delete item resource url: this field is required"); ?>."
-                        },
-                        rewrite_user_login: {
-                            required: "<?php _e("Login url: this field is required"); ?>.",
-                            minlength: "<?php _e("Login url: this field is required"); ?>."
-                        },
-                        rewrite_user_dashboard: {
-                            required: "<?php _e("User dashboard url: this field is required"); ?>.",
-                            minlength: "<?php _e("User dashboard url: this field is required"); ?>."
-                        },
-                        rewrite_user_logout: {
-                            required: "<?php _e("Logout url: this field is required"); ?>.",
-                            minlength: "<?php _e("Logout url: this field is required"); ?>."
-                        },
-                        rewrite_user_register: {
-                            required: "<?php _e("User register url: this field is required"); ?>.",
-                            minlength: "<?php _e("User register url: this field is required"); ?>."
-                        },
-                        rewrite_user_activate: {
-                            required: "<?php _e("Activate user url: this field is required"); ?>.",
-                            minlength: "<?php _e("Activate user url: this field is required"); ?>."
-                        },
-                        rewrite_user_activate_alert: {
-                            required: "<?php _e("Activate alert url: this field is required"); ?>.",
-                            minlength: "<?php _e("Activate aler url: this field is required"); ?>."
-                        },
-                        rewrite_user_profile: {
-                            required: "<?php _e("User profile url: this field is required"); ?>.",
-                            minlength: "<?php _e("User profile url: this field is required"); ?>."
-                        },
-                        rewrite_user_items: {
-                            required: "<?php _e("User items url: this field is required"); ?>.",
-                            minlength: "<?php _e("User items url: this field is required"); ?>."
-                        },
-                        rewrite_user_alerts: {
-                            required: "<?php _e("User alerts url: this field is required"); ?>.",
-                            minlength: "<?php _e("User alerts url: this field is required"); ?>."
-                        },
-                        rewrite_user_recover: {
-                            required: "<?php _e("Recover user url: this field is required"); ?>.",
-                            minlength: "<?php _e("Recover user url: this field is required"); ?>."
-                        },
-                        rewrite_user_forgot: {
-                            required: "<?php _e("User forgot url: this field is required"); ?>.",
-                            minlength: "<?php _e("User forgot url: this field is required"); ?>."
-                        },
-                        rewrite_user_change_password: {
-                            required: "<?php _e("Change password url: this field is required"); ?>.",
-                            minlength: "<?php _e("Change password url: this field is required"); ?>."
-                        },
-                        rewrite_user_change_email: {
-                            required: "<?php _e("Change email url: this field is required"); ?>.",
-                            minlength: "<?php _e("Change email url: this field is required"); ?>."
-                        },
-                        rewrite_user_change_email_confirm: {
-                            required: "<?php _e("Change email confirm url: this field is required"); ?>.",
-                            minlength: "<?php _e("Change email confirm url: this field is required"); ?>."
-                        }
+    					rewrite_item_url: {
+							required: '<?php echo osc_esc_js ( __('Item url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Item url: this field is required') ); ?>.'
+						},
+						rewrite_page_url: {
+							required: '<?php echo osc_esc_js ( __('Page url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Page url: this field is required') ); ?>.'
+						},
+						rewrite_cat_url: {
+							required: '<?php echo osc_esc_js ( __('Categories url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Categories url: this field is required') ); ?>.'
+						},
+						rewrite_search_url: {
+							required: '<?php echo osc_esc_js ( __('Search url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Search url: this field is required') ); ?>.'
+						},
+						rewrite_search_country: {
+							required: '<?php echo osc_esc_js ( __('Search country: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Search country: this field is required') ); ?>.'
+						},
+						rewrite_search_region: {
+							required: '<?php echo osc_esc_js ( __('Search region: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Search region: this field is required') ); ?>.'
+						},
+						rewrite_search_city: {
+							required: '<?php echo osc_esc_js ( __('Search city: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Search city: this field is required') ); ?>.'
+						},
+						rewrite_search_city_area: {
+							required: '<?php echo osc_esc_js ( __('Search city area: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Search city area: this field is required') ); ?>.'
+						},
+						rewrite_search_category: {
+							required: '<?php echo osc_esc_js ( __('Search category: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Search category: this field is required') ); ?>.'
+						},
+						rewrite_search_user: {
+							required: '<?php echo osc_esc_js ( __('Search user: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Search user: this field is required') ); ?>.'
+						},
+						rewrite_search_pattern: {
+							required: '<?php echo osc_esc_js ( __('Search pattern: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Search pattern: this field is required') ); ?>.'
+						},
+						rewrite_contact: {
+							required: '<?php echo osc_esc_js ( __('Contact url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Contact url: this field is required') ); ?>.'
+						},
+						rewrite_feed: {
+							required: '<?php echo osc_esc_js ( __('Feed url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Feed url: this field is required') ); ?>.'
+						},
+						rewrite_language: {
+							required: '<?php echo osc_esc_js ( __('Language url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Language url: this field is required') ); ?>.'
+						},
+						rewrite_item_mark: {
+							required: '<?php echo osc_esc_js ( __('Item mark url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Item mark url: this field is required') ); ?>.'
+						},
+						rewrite_item_send_friend: {
+							required: '<?php echo osc_esc_js ( __('Item send friend url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Item send friend url: this field is required') ); ?>.'
+						},
+						rewrite_item_contact: {
+							required: '<?php echo osc_esc_js ( __('Item contact url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Item contact url: this field is required') ); ?>.'
+						},
+						rewrite_item_new: {
+							required: '<?php echo osc_esc_js ( __('New item url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('New item url: this field is required') ); ?>.'
+						},
+						rewrite_item_activate: {
+							required: '<?php echo osc_esc_js ( __('Activate item url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Activate item url: this field is required') ); ?>.'
+						},
+						rewrite_item_edit: {
+							required: '<?php echo osc_esc_js ( __('Edit item url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Edit item url: this field is required') ); ?>.'
+						},
+						rewrite_item_delete: {
+							required: '<?php echo osc_esc_js ( __('Delete item url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Delete item url: this field is required') ); ?>.'
+						},
+						rewrite_item_resource_delete: {
+							required: '<?php echo osc_esc_js ( __('Delete item resource url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Delete item resource url: this field is required') ); ?>.'
+						},
+						rewrite_user_login: {
+							required: '<?php echo osc_esc_js ( __('Login url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Login url: this field is required') ); ?>.'
+						},
+						rewrite_user_dashboard: {
+							required: '<?php echo osc_esc_js ( __('User dashboard url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('User dashboard url: this field is required') ); ?>.'
+						},
+						rewrite_user_logout: {
+							required: '<?php echo osc_esc_js ( __('Logout url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Logout url: this field is required') ); ?>.'
+						},
+						rewrite_user_register: {
+							required: '<?php echo osc_esc_js ( __('User register url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('User register url: this field is required') ); ?>.'
+						},
+						rewrite_user_activate: {
+							required: '<?php echo osc_esc_js ( __('Activate user url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Activate user url: this field is required') ); ?>.'
+						},
+						rewrite_user_activate_alert: {
+							required: '<?php echo osc_esc_js ( __('Activate alert url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Activate aler url: this field is required') ); ?>.'
+						},
+						rewrite_user_profile: {
+							required: '<?php echo osc_esc_js ( __('User profile url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('User profile url: this field is required') ); ?>.'
+						},
+						rewrite_user_items: {
+							required: '<?php echo osc_esc_js ( __('User items url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('User items url: this field is required') ); ?>.'
+						},
+						rewrite_user_alerts: {
+							required: '<?php echo osc_esc_js ( __('User alerts url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('User alerts url: this field is required') ); ?>.'
+						},
+						rewrite_user_recover: {
+							required: '<?php echo osc_esc_js ( __('Recover user url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Recover user url: this field is required') ); ?>.'
+						},
+						rewrite_user_forgot: {
+							required: '<?php echo osc_esc_js ( __('User forgot url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('User forgot url: this field is required') ); ?>.'
+						},
+						rewrite_user_change_password: {
+							required: '<?php echo osc_esc_js ( __('Change password url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Change password url: this field is required') ); ?>.'
+						},
+						rewrite_user_change_email: {
+							required: '<?php echo osc_esc_js ( __('Change email url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Change email url: this field is required') ); ?>.'
+						},
+						rewrite_user_change_email_confirm: {
+							required: '<?php echo osc_esc_js ( __('Change email confirm url: this field is required') ); ?>.',
+							minlength: '<?php echo osc_esc_js ( __('Change email confirm url: this field is required') ); ?>.'
+						}
                     },
                     wrapper: "li",
                     errorLabelContainer: "#error_list",
