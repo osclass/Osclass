@@ -136,7 +136,7 @@
                 }
 
                 $second .= ' &middot; <a href="' . osc_admin_base_url(true) . '?page=users&action=edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>' ;
-                $var     = 'onclick="javascript:return confirm(\'' . osc_esc_js('This action can not be undone. Are you sure you want to continue?') . '\')"' ;
+                $var     = 'onclick="javascript:return confirm(\'' . osc_esc_js( __('This action can not be undone. Are you sure you want to continue?') ) . '\')"' ;
                 $second .= ' &middot; <a ' . $var . ' href="' . osc_admin_base_url(true) . '?page=users&action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
                 $second .= '</div></div>' ;
                 $row[] = $second ;
