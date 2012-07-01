@@ -28,7 +28,7 @@
             $(function() {
                 // Here we include specific jQuery, jQuery UI and Datatables functions.
                 $("#button_cancel").click(function() {
-                    if(confirm('<?php _e('Are you sure you want to cancel?'); ?>')) {
+                    if(confirm('<?php echo osc_esc_js ( __('Are you sure you want to cancel?')); ?>')) {
                         setTimeout ("window.location = 'appearance.php';", 100) ;
                     }
                 });
@@ -51,7 +51,7 @@
                 <div class="appearance">
                     <h2><?php _e('Current theme') ; ?></h2>
                     <div class="current-theme">
-                        <img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo osc_theme() ; ?>/screenshot.png" title="<?php echo $info['name'] ; ?>" alt="<?php echo $info['name'] ; ?>" />
+                        <img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo osc_theme() ; ?>/screenshot.png" title="<?php echo osc_esc_html ( $info['name'] ) ; ?>" alt="<?php echo osc_esc_html ( $info['name'] ) ; ?>" />
                         <div class="theme-info">
                             <h3><?php echo $info['name'] ; ?> <?php echo $info['version']; ?> <?php _e('by') ; ?> <a target="_blank" href="<?php echo $info['author_url'] ; ?>"><?php echo $info['author_name'] ; ?></a></h3>
                         </div>
@@ -69,7 +69,7 @@
                                 $info = WebThemes::newInstance()->loadThemeInfo($theme) ;
                         ?>
                         <div class="theme">
-                            <img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo $theme ; ?>/screenshot.png" title="<?php echo $info['name'] ; ?>" alt="<?php echo $info['name'] ; ?>" />
+                            <img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo $theme ; ?>/screenshot.png" title="<?php echo osc_esc_html ( $info['name'] ) ; ?>" alt="<?php echo osc_esc_html ( $info['name'] ) ; ?>" />
                             <div class="theme-info">
                                 <h3><?php echo $info['name'] ; ?> <?php echo $info['version']; ?> <?php _e('by') ; ?> <a target="_blank" href="<?php echo $info['author_url'] ; ?>"><?php echo $info['author_name'] ; ?></a></h3>
                             </div>
