@@ -39,17 +39,17 @@
                     "bFilter": true,
                     "oLanguage": {
                         "oPaginate": {
-                            "sNext" : "<?php echo osc_esc_html( __('Next') ) ; ?>",
-                            "sPrevious" : "<?php echo osc_esc_html( __('Previous') ) ; ?>"
+                            "sNext" : '<?php echo osc_esc_js ( __('Next') ) ; ?>',
+                            "sPrevious" : '<?php echo osc_esc_js ( __('Previous') ) ; ?>'
                         },
-                        "sEmptyTable" : "<?php echo osc_esc_html( __('No data available in table') ) ; ?>",
-                        "sInfo": "<?php echo osc_esc_html( sprintf( __('Showing %s to %s of %s entries'), '_START_', '_END_', '_TOTAL_') ) ; ?>",
-                        "sInfoEmpty": "<?php echo osc_esc_html( __('No entries to show') ) ; ?>",
-                        "sInfoFiltered": "<?php echo osc_esc_html( sprintf( __('(filtered from %s total entries)'), '_MAX_' ) ) ; ?>",
-                        "sLoadingRecords": "<?php echo osc_esc_html( __('Loading...') ) ; ?>",
-                        "sProcessing": "<?php echo osc_esc_html( __('Processing...') ) ; ?>",
-                        "sSearch": "<?php echo osc_esc_html( __('Search by name') ) ; ?>",
-                        "sZeroRecords": "<?php echo osc_esc_html( __('No matching records found') ) ; ?>"
+                        "sEmptyTable" : '<?php echo osc_esc_js ( __('No data available in table') ) ; ?>',
+                        "sInfo": '<?php echo osc_esc_js ( sprintf( __('Showing %s to %s of %s entries'), '_START_', '_END_', '_TOTAL_') ) ; ?>',
+                        "sInfoEmpty": '<?php echo osc_esc_js ( __('No entries to show') ) ; ?>',
+                        "sInfoFiltered": '<?php echo osc_esc_js ( sprintf( __('(filtered from %s total entries)'), '_MAX_' ) ) ; ?>',
+                        "sLoadingRecords": '<?php echo osc_esc_js ( __('Loading...') ) ; ?>',
+                        "sProcessing": '<?php echo osc_esc_js ( __('Processing...') ) ; ?>',
+                        "sSearch": '<?php echo osc_esc_js ( __('Search by name') ) ; ?>',
+                        "sZeroRecords": '<?php echo osc_esc_js ( __('No matching records found') ) ; ?>'
                     },
                     "aoColumns": [
                         {
@@ -59,20 +59,20 @@
                             "bSearchable": false
                         },
                         {
-                            "sTitle": "<?php echo osc_esc_html( __('E-mail') ) ; ?>",
+                            "sTitle": '<?php echo osc_esc_js ( __('E-mail') ) ; ?>',
                             "bSortable": true
                         },
                         {
-                            "sTitle": "<?php echo osc_esc_html( __('Name') ) ; ?>",
+                            "sTitle": '<?php echo osc_esc_js ( __('Name') ) ; ?>',
                             "bSortable": true
                         },
                         {
-                            "sTitle": "<?php echo osc_esc_html( __('Date') ) ; ?>",
+                            "sTitle": '<?php echo osc_esc_js ( __('Date') ) ; ?>',
                             "bSortable": true,
                             "sWidth": "150px"
                         },
                         {
-                            "sTitle": "<?php echo osc_esc_html( __('Update Date') ) ; ?>",
+                            "sTitle": '<?php echo osc_esc_js ( __('Update Date') ) ; ?>',
                             "bSortable": true,
                             "sWidth": "150px"
                         }
