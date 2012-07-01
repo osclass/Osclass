@@ -3,15 +3,15 @@ $(document).ready(function(){
     $(".sub_button").click(function(){
         $.post('<?php echo osc_base_url(true); ?>', {email:$("#alert_email").val(), userid:$("#alert_userId").val(), alert:$("#alert").val(), page:"ajax", action:"alerts"}, 
             function(data){
-                if(data==1) { alert('<?php _e('You have sucessfully subscribed to the alert', 'modern'); ?>'); }
-                else if(data==-1) { alert('<?php _e('Invalid email address', 'modern'); ?>'); }
-                else { alert('<?php _e('There was a problem with the alert', 'modern');?>');
+    			if(data==1) { alert('<?php echo osc_esc_js ( __('You have sucessfully subscribed to the alert', 'modern')); ?>'); }
+				else if(data==-1) { alert('<?php echo osc_esc_js ( __('Invalid email address', 'modern')); ?>'); }
+				else { alert('<?php echo osc_esc_js ( __('There was a problem with the alert', 'modern'));?>');
                 };
         });
         return false;
     });
 
-    var sQuery = '<?php echo AlertForm::default_email_text() ; ?>' ;
+    var sQuery = '<?php echo osc_esc_js ( AlertForm::default_email_text() ) ; ?>' ;
 
     if($('input[name=alert_email]').val() == sQuery) {
         $('input[name=alert_email]').css('color', 'gray');
