@@ -22,7 +22,7 @@
     foreach($admins as $admin) {
         $row = array() ;
         $row[] = '<input type="checkbox" name="id[]" value="' . $admin['pk_i_id'] . '" />' ;
-        $row[] = $admin['s_username'] . ' <div id="datatables_quick_edit"><a href="' . osc_admin_base_url(true) . '?page=admins&action=edit&amp;id='  . $admin['pk_i_id'] . '">' . __('Edit') . '</a> &middot; <a onclick="javascript:return confirm(\'' . osc_esc_js("This action can't be undone. Are you sure you want to continue?") . '\');" href="' . osc_admin_base_url(true) . '?page=admins&action=delete&amp;id[]=' . $admin['pk_i_id'] . '">' . __('Delete') . '</a></div>' ;
+        $row[] = $admin['s_username'] . ' <div id="datatables_quick_edit"><a href="' . osc_admin_base_url(true) . '?page=admins&action=edit&amp;id='  . $admin['pk_i_id'] . '">' . __('Edit') . '</a> &middot; <a onclick="javascript:return confirm(\'' . osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) . '\');" href="' . osc_admin_base_url(true) . '?page=admins&action=delete&amp;id[]=' . $admin['pk_i_id'] . '">' . __('Delete') . '</a></div>' ;
         $row[] = $admin['s_name'] ;
         $row[] = $admin['s_email'] ;
 
@@ -49,17 +49,17 @@
                     "bFilter": true,
                     "oLanguage": {
                         "oPaginate": {
-                            "sNext" : "<?php echo osc_esc_html( __('Next') ) ; ?>",
-                            "sPrevious" : "<?php echo osc_esc_html( __('Previous') ) ; ?>"
-                        },
-                        "sEmptyTable" : "<?php echo osc_esc_html( __('No data available in table') ) ; ?>",
-                        "sInfo": "<?php echo osc_esc_html( sprintf( __('Showing %s to %s of %s entries'), '_START_', '_END_', '_TOTAL_') ) ; ?>",
-                        "sInfoEmpty": "<?php echo osc_esc_html( __('No entries to show') ) ; ?>",
-                        "sInfoFiltered": "<?php echo osc_esc_html( sprintf( __('(filtered from %s total entries)'), '_MAX_' ) ) ; ?>",
-                        "sLoadingRecords": "<?php echo osc_esc_html( __('Loading...') ) ; ?>",
-                        "sProcessing": "<?php echo osc_esc_html( __('Processing...') ) ; ?>",
-                        "sSearch": "<?php echo osc_esc_html( __('Search') ) ; ?>",
-                        "sZeroRecords": "<?php echo osc_esc_html( __('No matching records found') ) ; ?>"
+				"sNext" : '<?php echo osc_esc_js( __('Next') ) ; ?>',
+				"sPrevious" : '<?php echo osc_esc_js( __('Previous') ) ; ?>'
+			},
+			"sEmptyTable" : '<?php echo osc_esc_js( __('No data available in table') ) ; ?>',
+			"sInfo": '<?php echo osc_esc_js( sprintf( __('Showing %s to %s of %s entries'), '_START_', '_END_', '_TOTAL_') ) ; ?>',
+			"sInfoEmpty": '<?php echo osc_esc_js( __('No entries to show') ) ; ?>',
+			"sInfoFiltered": '<?php echo osc_esc_js( sprintf( __('(filtered from %s total entries)'), '_MAX_' ) ) ; ?>',
+			"sLoadingRecords": '<?php echo osc_esc_js( __('Loading...') ) ; ?>',
+			"sProcessing": '<?php echo osc_esc_js( __('Processing...') ) ; ?>',
+			"sSearch": '<?php echo osc_esc_js( __('Search') ) ; ?>',
+			"sZeroRecords": '<?php echo osc_esc_js( __('No matching records found') ) ; ?>'
                     },
                     "aaData": <?php echo json_encode($aData) ; ?>,
                     "aoColumns": [
