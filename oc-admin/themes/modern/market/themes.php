@@ -228,7 +228,7 @@
                         $("#market_name").html(data.s_title);
                         $("#market_version").html(data.s_version);
                         $("#market_author").html(data.s_contact_name);
-                        if(data.s_compatible.indexOf("<?php echo $main_version; ?>2d")==-1) {
+                        if(data.s_compatible.indexOf("<?php echo $main_version; ?>")==-1) {
                             $("#market_compatible").html(data.s_compatible + " - "  + "<?php echo sprintf(__('Warning! This theme is not compatible with your current version of OSClass (%s)'), $main_version); ?>");
                             $("#market_compatible").parent().parent().addClass("flashmessage-error");
                         } else {
