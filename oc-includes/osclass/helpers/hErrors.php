@@ -44,7 +44,12 @@
                 <p><?php echo $message ; ?></p>
             </body>
         </html>
-        <?php die(); ?>
+        <?php 
+		// Instruct Search Engines to come back to the site after maintenance is done
+		header('HTTP/1.1 503 Service Temporarily Unavailable');
+		header('Status: 503 Service Temporarily Unavailable');
+		header('Retry-After: 900');
+        die(); ?>
     <?php }
 
     function osc_get_absolute_url() {
