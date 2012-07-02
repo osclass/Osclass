@@ -118,9 +118,9 @@ function customHead() { ?>
                                     html += ret.field_name;
                                 html += '</div>';
                                 html += '<div class="actions-edit-cfield">';
-                                    html += '<a href="javascript:void(0);"  onclick="show_iframe(\'content_list_'+ret.field_id+'\',\''+ret.field_id+'\');"><?php _e('Edit') ; ?></a>';
+                                    html += '<a href="javascript:void(0);"  onclick="show_iframe(\'content_list_'+ret.field_id+'\',\''+ret.field_id+'\');"><?php echo osc_esc_js(__('Edit')); ?></a>';
                                     html += ' &middot; ';
-                                    html += '<a href="javascript:void(0);"  onclick="delete_field(\''+ret.field_id+'\');"><?php _e('Delete') ; ?></a>';
+                                    html += '<a href="javascript:void(0);"  onclick="delete_field(\''+ret.field_id+'\');"><?php echo osc_esc_js(__('Delete')); ?></a>';
                                 html += '</div>';
                                 html += '<div class="edit content_list_'+ret.field_id+'"></div>';
                             html += '</div>';
@@ -130,7 +130,7 @@ function customHead() { ?>
                         show_iframe('content_list_'+ret.field_id, ret.field_id);
                     } else {
                         var message = "";
-                        message += '<?php _e('Custom field could not be added'); ?>'
+                        message += '<?php echo osc_esc_js(__('Custom field could not be added')); ?>'
                         $(".jsMessage").fadeIn('fast') ;
                         $(".jsMessage p").html(message) ;
                     }

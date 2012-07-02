@@ -207,7 +207,7 @@
 <?php if(Params::getParam('country')!='' && Params::getParam('country_code')!='') { ?>
     <script type="text/javascript">
         <?php if(Params::getParam('country')!='' && Params::getParam('country_code')!='') { ?>
-            show_region('<?php echo Params::getParam('country_code'); ?>', '<?php echo addslashes(Params::getParam('country')); ?>');
+            show_region('<?php echo Params::getParam('country_code'); ?>', '<?php echo osc_esc_js(Params::getParam('country')); ?>');
             function hook_load_cities() {
             <?php if(Params::getParam('region')!='') { ?>
                 show_city(<?php echo Params::getParam('region'); ?>);
@@ -230,13 +230,13 @@
                             <div class="float-left">
                                 <div>
                                     <a class="close" onclick="javascript:return confirm('<?php echo osc_esc_js(__('This action can not be undone. Items with this location associated will be deleted. Are you sure you want to continue?')); ?>');" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations&type=delete_country&id=<?php echo urlencode($country['pk_c_code']) ; ?>">
-                                        <img src="<?php echo osc_admin_base_url() ; ?>images/close.png" alt="<?php _e('Close'); ?>" title="<?php _e('Close'); ?>" />
+                                        <img src="<?php echo osc_admin_base_url() ; ?>images/close.png" alt="<?php echo osc_esc_html(__('Close')); ?>" title="<?php echo osc_esc_html(__('Close')); ?>" />
                                     </a>
                                     <a class="edit" href="javascript:void(0);" style="padding-right: 15px;" onclick="edit_countries($(this));" data="<?php echo osc_esc_html($country['s_name']);?>" code="<?php echo $country['pk_c_code'];?>"><?php echo $country['s_name'] ; ?></a>
                                 </div>
                             </div>
                             <div class="float-right">
-                                <a class="view-more" href="javascript:void(0)" onclick="show_region('<?php echo $country['pk_c_code']; ?>', '<?php echo addslashes($country['s_name']) ; ?>')"><?php _e('View more'); ?> &raquo;</a>
+                                <a class="view-more" href="javascript:void(0)" onclick="show_region('<?php echo $country['pk_c_code']; ?>', '<?php echo osc_esc_js($country['s_name']) ; ?>')"><?php _e('View more'); ?> &raquo;</a>
                             </div>
                             <div class="clear"></div>
                         </div>

@@ -28,7 +28,7 @@
             $(function() {
                 // Here we include specific jQuery, jQuery UI and Datatables functions.
                 $("#button_cancel").click(function() {
-                    if(confirm('<?php _e('Are you sure you want to cancel?'); ?>')) {
+                    if(confirm('<?php echo osc_esc_js(__('Are you sure you want to cancel?')); ?>')) {
                         setTimeout ("window.location = 'appearance.php';", 100) ;
                     }
                 });
