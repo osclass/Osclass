@@ -68,8 +68,8 @@ $(document).ready(function(){
                 regexp: '<?php echo osc_esc_js( __("Normal size: is not in the correct format")); ?>'
             },
             maxSizeKb: {
-                required: '<?php echo osc_esc_js( __("Maximun size: this field is required")); ?>',
-                digits: '<?php echo osc_esc_js( __("Maximun size: this field has to be numeric only")); ?>'
+                required: '<?php echo osc_esc_js( __("Maximum size: this field is required")); ?>',
+                digits: '<?php echo osc_esc_js( __("Maximum size: this field has to be numeric only")); ?>'
             }
         },
         wrapper: "li",
