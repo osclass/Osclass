@@ -78,7 +78,7 @@
                                     </div>
                                 </div>
                                 <div style="float:right">
-                                    <a href="javascript:void(0)" onclick="show_region('<?php echo $country['pk_c_code']; ?>', '<?php echo addslashes($country['s_name']) ; ?>')"><?php _e('View more'); ?> &raquo;</a>
+                                    <a href="javascript:void(0)" onclick="show_region('<?php echo $country['pk_c_code']; ?>', '<?php echo osc_esc_js($country['s_name']) ; ?>')"><?php _e('View more'); ?> &raquo;</a>
                                 </div>
                             </div>
                             <div style="clear:both;"></div>
