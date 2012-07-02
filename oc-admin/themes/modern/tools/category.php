@@ -36,6 +36,9 @@
     <!-- settings form -->
     <div id="backup-settings">
         <h2 class="render-title"><?php _e('Category stats') ; ?></h2>
+        <p>
+            <?php _e('You can recalculate stats by category, useful if the stats seems to be incorrect.'); ?>.
+        </p>
         <form id="backup_form" name="backup_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
             <input type="hidden" name="page" value="tools" />
             <input type="hidden" name="action" value="category_post" />
