@@ -23,13 +23,14 @@
     }
 
     function customPageTitle($string) {
-        return __('Upgrade_');
+        return __('Upgrade');
     }
     osc_add_filter('admin_title', 'customPageTitle');
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
     
     <div id="backup-settings">
+        <h2 class="render-title"><?php _e('Upgrade') ; ?></h2>
         <div id="result">
             <div id="output" style="display:none">
                 <img id="loading_immage" src="<?php echo osc_current_admin_theme_url('images/loading.gif') ; ?>" title="" alt="" />
