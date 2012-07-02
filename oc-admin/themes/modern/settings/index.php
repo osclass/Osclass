@@ -305,7 +305,9 @@
                     <h2 class="render-title separate-top"><?php _e('Check plugin & theme updates') ; ?></h2>
                     <div class="form-row">
                         <div class="form-label"><a class="btn" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=check_updates"><?php _e('Check updates');?></a></div>
-                        <div class="form-controls"></div>
+                        <div class="form-controls">
+                            <?php _e('Check for plugin or theme updates. Updates are checked once a day.') ; ?>
+                        </div>
                     </div>
                     <div class="clear"></div>
                     <div class="form-actions">

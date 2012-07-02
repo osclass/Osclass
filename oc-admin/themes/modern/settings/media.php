@@ -56,20 +56,20 @@ $(document).ready(function(){
         },
         messages: {
             dimThumbnail: {
-                required: "<?php echo osc_esc_js( __("Thumbnail size: this field is required")); ?>",
-                regexp: "<?php echo osc_esc_js( __("Thumbnail size: is not in the correct format")); ?>"
+                required: '<?php echo osc_esc_js( __("Thumbnail size: this field is required")); ?>',
+                regexp: '<?php echo osc_esc_js( __("Thumbnail size: is not in the correct format")); ?>'
             },
             dimPreview: {
-                required: "<?php echo osc_esc_js( __("Preview size: this field is required")); ?>",
-                regexp: "<?php echo osc_esc_js( __("Preview size: is not in the correct format")); ?>"
+                required: '<?php echo osc_esc_js( __("Preview size: this field is required")); ?>',
+                regexp: '<?php echo osc_esc_js( __("Preview size: is not in the correct format")); ?>'
             },
             dimNormal: {
-                required: "<?php echo osc_esc_js( __("Normal size: this field is required")); ?>",
-                regexp: "<?php echo osc_esc_js( __("Normal size: is not in the correct format")); ?>"
+                required: '<?php echo osc_esc_js( __("Normal size: this field is required")); ?>',
+                regexp: '<?php echo osc_esc_js( __("Normal size: is not in the correct format")); ?>'
             },
             maxSizeKb: {
-                required: "<?php echo osc_esc_js( __("Maximun size: this field is required")); ?>",
-                digits: "<?php echo osc_esc_js( __("Maximun size: this field has to be numeric only")); ?>"
+                required: '<?php echo osc_esc_js( __("Maximun size: this field is required")); ?>',
+                digits: '<?php echo osc_esc_js( __("Maximun size: this field has to be numeric only")); ?>'
             }
         },
         wrapper: "li",
@@ -98,7 +98,7 @@ $(document).ready(function(){
             $('#watermark_text_box').show() ;
             $('#watermark_image_box').hide() ;
             if( !$('input[name="keep_original_image"]').attr('checked') ) {
-                alert('<?php echo addslashes( __("It's highly recommended to have 'Keep original image' option active when you use watermarks.") ) ; ?>') ;
+                alert('<?php echo osc_esc_js( __("It's highly recommended to have 'Keep original image' option active when you use watermarks.") ) ; ?>') ;
             }
         }
     }) ;
@@ -108,7 +108,7 @@ $(document).ready(function(){
             $('#watermark_text_box').hide() ;
             $('#watermark_image_box').show() ;
             if( !$('input[name="keep_original_image"]').attr('checked') ) {
-                alert('<?php echo addslashes( __("It's highly recommended to have 'Keep original image' option active when you use watermarks.") ) ; ?>') ;
+                alert('<?php echo osc_esc_js( __("It's highly recommended to have 'Keep original image' option active when you use watermarks.") ) ; ?>') ;
             }
         }
     }) ;
@@ -116,7 +116,7 @@ $(document).ready(function(){
     $('input[name="keep_original_image"]').change(function() {
         if( !$(this).attr('checked') ) {
             if( !$('#watermark_none').attr('checked') ) {
-                alert('<?php echo addslashes( __("It's highly recommended to have 'Keep original image' option active when you use watermarks.") ) ; ?>') ;
+                alert('<?php echo osc_esc_js( __("It's highly recommended to have 'Keep original image' option active when you use watermarks.") ) ; ?>') ;
             }
         }
     }) ;
