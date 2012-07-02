@@ -174,7 +174,7 @@
                                 dots = '...';
                             } 
                            
-                            var plugins_downloaded  = <?php echo getPreference('plugins_downloaded'); ?>;
+                            var plugins_downloaded  = <?php $plugins_downloaded = getPreference('plugins_downloaded'); if($plugins_downloaded != ''){ echo $plugins_downloaded; } else { echo 'new Array()'; } ?>;
                             var plugin_to_update    = <?php echo getPreference('plugins_to_update'); ?>;
                             var button = '';
                             
