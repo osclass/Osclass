@@ -19,6 +19,9 @@
     //getting variables for this view
     $themes = __get("themes") ;
     $info   = __get("info") ;
+    
+    $version_length = strlen(osc_version());
+    $main_version = substr(osc_version(),0, $version_length-2).".".substr(osc_version(),$version_length-2, 1);
 
     //customize Head
     function customHead(){
@@ -86,6 +89,10 @@
                                 <tr>
                                     <td><?php _e('Author') ; ?></td>
                                     <td><span id="market_author"><?php _e("Loading data"); ?></span></td>
+                                </tr>
+                                <tr>
+                                    <td><?php _e('Compatible with') ; ?></td>
+                                    <td><span id="market_compatible"><?php _e("Loading data"); ?></span></td>
                                 </tr>
                                 <tr class="even">
                                     <td><?php _e('URL') ; ?></td>
@@ -222,6 +229,13 @@
                         $("#market_name").html(data.s_title);
                         $("#market_version").html(data.s_version);
                         $("#market_author").html(data.s_contact_name);
+                        if(data.s_compatible.indexOf("<?php echo $main_version; ?>2d")==-1) {
+                            $("#market_compatible").html(data.s_compatible + " - "  + "<?php echo sprintf(__('Warning! This theme is not compatible with your current version of OSClass (%s)'), $main_version); ?>");
+                            $("#market_compatible").parent().parent().addClass("flashmessage-error");
+                        } else {
+                            $("#market_compatible").html(data.s_compatible);
+                            $("#market_compatible").parent().parent().removeClass("flashmessage-error");
+                        }
                         $("#market_url").attr('href',data.s_source_file);
                         
                         if(update) {

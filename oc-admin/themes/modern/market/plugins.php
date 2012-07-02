@@ -99,6 +99,10 @@
                             <td><?php _e('Author') ; ?></td>
                             <td><span id="market_author"><?php _e("Loading data"); ?></span></td>
                         </tr>
+                        <tr>
+                            <td><?php _e('Compatible with') ; ?></td>
+                            <td><span id="market_compatible"><?php _e("Loading data"); ?></span></td>
+                        </tr>
                         <tr class="even">
                             <td><?php _e('URL') ; ?></td>
                             <td><a id="market_url" href="#"><?php _e("Download manually"); ?></span></td>
@@ -242,6 +246,13 @@
                     $("#market_name").html(data.s_title);
                     $("#market_version").html(data.s_version);
                     $("#market_author").html(data.s_contact_name);
+                    if(data.s_compatible.indexOf("<?php echo $main_version; ?>2d")==-1) {
+                        $("#market_compatible").html(data.s_compatible + " - "  + "<?php echo sprintf(__('Warning! This plugin is not compatible with your current version of OSClass (%s)'), $main_version); ?>");
+                        $("#market_compatible").parent().parent().addClass("flashmessage-error");
+                    } else {
+                        $("#market_compatible").html(data.s_compatible);
+                        $("#market_compatible").parent().parent().removeClass("flashmessage-error");
+                    }
                     $("#market_url").attr('href',data.s_source_file);
                     if(update) {
                         $('#market_install').html("<?php echo osc_esc_html( __('Update') ) ; ?>");
