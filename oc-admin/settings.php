@@ -1204,11 +1204,18 @@ HTACCESS;
                                                 array('s_name'  => 'use_imagick')
                                         ) ;
                                         
-                                        if( $error != '' ) {
-                                            osc_add_flash_warning_message($error, 'admin') ;
-                                        } else {
-                                            osc_add_flash_ok_message(_m('Media config has been updated'), 'admin') ;
-                                        }
+    									if( $error != '' ) {
+
+											if ( $status == 'warning' )
+												osc_add_flash_warning_message($error, 'admin') ;
+											elseif ( $status == 'error' )
+												osc_add_flash_error_message($error, 'admin') ;
+											else
+												osc_add_flash_ok_message($error, 'admin') ;
+
+										} else {
+											osc_add_flash_ok_message(_m('Media config has been updated'), 'admin') ;
+										}
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media') ;
                 break ;
