@@ -157,8 +157,7 @@
                                 if(description.length > 80){
                                     dots = '...';
                                 }
-                                
-                                var themes_downloaded  = <?php echo getPreference('themes_downloaded'); ?>;
+                                var themes_downloaded  = <?php $themes_downloaded = getPreference('themes_downloaded'); if($themes_downloaded != ''){ echo $themes_downloaded; } else { echo 'new Array()'; } ?>;
                                 var themes_to_update    = <?php echo getPreference('themes_to_update'); ?>;
                                 var button = '';
 

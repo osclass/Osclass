@@ -109,7 +109,7 @@ $(function(){
         return false;
     });
     //Dissable
-    $('.btn-disabled, *:disabled').css('opacity','0.7').click(function(){
+    $('.btn-disabled, *:disabled').css('opacity','0.7').live('click',function(){
         return false;
     });
 });

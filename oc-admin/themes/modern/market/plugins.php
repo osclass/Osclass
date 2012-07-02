@@ -74,8 +74,8 @@
     </ul>
     <div id="market">
         <h2 class="render-title"><?php _e('Latest plugins on market') ; ?></h2>
-        <div id="market_plugins" class="available-theme">
-        </div>
+        <table id="market_plugins" class="table available-theme">
+        </table>
         <div id="market_pagination" class="has-pagination">
         </div>
     </div>
@@ -188,20 +188,28 @@
                                 console.log( data.plugins[i].s_update_url );
                                 button = '<a href="#'+data.plugins[i].s_update_url+'" class="btn btn-mini btn-green market-popup"><?php _e('Download plugin') ; ?></a>';
                             }
-                           
-                            $("#market_plugins").append('<div class="plugin">'
-                                +'<div class="plugin-stage">'
-                                    +'<div class="plugin-actions">'
-                                        + button
-                                    +'</div>'
-                                +'</div>'
+                            even = '';
+                            if (i%2 == 0){
+                                even = 'even';
+                            }
+                            if(i==0){
+                                even = even+' table-first-row';
+                            }
+                            $("#market_plugins").append('<tr class="plugin '+even+'">'
+                                +'<td>'
                                 +'<div class="plugin-info">'
                                     +'<h3>'+data.plugins[i].s_title+' '+data.plugins[i].s_version+' <?php _e('by') ; ?> <a target="_blank" href="">'+data.plugins[i].s_contact_name+'</a></h3>'
                                 +'</div>'
                                 +'<div class="plugin-description">'
                                     +description.substring(0,80)+dots
                                 +'</div>'
-                            +'</div>');
+                                +'<div class="plugin-stage">'
+                                    +'<div class="plugin-actions">'
+                                        + button
+                                    +'</div>'
+                                +'</div>'
+                                +'</td>'
+                            +'</tr>');
                         }
                         // add pagination
                         $('#market_pagination').append(data.pagination_content);
