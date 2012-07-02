@@ -27,6 +27,29 @@
     }
     osc_add_filter('admin_title', 'customPageTitle');
 
+    //customize Head
+    function customHead(){ ?>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                if (typeof $.uniform != 'undefined') {
+                    $('textarea, button,select, input:file').uniform();
+                }
+
+                <?php if(Params::getParam('confirm')=='true') {?>
+                    $('#output').show();
+                    $('#tohide').hide();
+
+                    $.get('<?php echo osc_admin_base_url(true) ; ?>?page=upgrade&action=upgrade-funcs' , function(data) {
+                        $('#loading_immage').hide();
+                        $('#result').append(data+"<br/>");
+                    });
+                <?php } ?>
+            });
+        </script>
+    <?php } 
+    
+    osc_add_hook('admin_header','customHead');
+    
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
     
     <div id="backup-settings">
