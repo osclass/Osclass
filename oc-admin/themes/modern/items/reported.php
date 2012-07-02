@@ -16,6 +16,11 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    function addHelp() {
+        echo '<p>Desde aquí podrás borrar o editar los anuncios reportados por los usuarios (spam / mal clasificado / duplicado / expirado / ofensivo); también puedes eliminar el reporte si consideras que es erróneo.</p>';
+    }
+    osc_add_hook('help_box','addHelp');
+
     function customPageHeader(){ ?>
         <h1><?php _e('Listings') ; ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
