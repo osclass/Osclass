@@ -1219,7 +1219,17 @@ HTACCESS;
                                         ) ;
 
                                         if( $error != '' ) {
-                                            osc_add_flash_warning_message($error, 'admin') ;
+                                            switch($status) {
+                                                case('error'):
+                                                    osc_add_flash_error_message($error, 'admin');
+                                                break;
+                                                case('warning'):
+                                                    osc_add_flash_warning_message($error, 'admin');
+                                                break;
+                                                default:
+                                                    osc_add_flash_ok_message($error, 'admin');
+                                                break;
+                                            }
                                         } else {
                                             osc_add_flash_ok_message(_m('Media config has been updated'), 'admin') ;
                                         }
