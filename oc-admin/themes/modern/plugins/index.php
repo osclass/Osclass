@@ -266,7 +266,6 @@
                     $('#market_installer').dialog({
                         modal:true,
                         title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
-                        class: 'osc-class-test',
                         width:485
                     });
                 }

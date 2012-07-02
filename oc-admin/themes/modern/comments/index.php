@@ -50,7 +50,7 @@
                 // dialog delete
                 $("#dialog-comment-delete").dialog({
                     autoOpen: false,
-                    modal: true,
+                    modal: true
                 });
 
                 // dialog bulk actions

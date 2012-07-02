@@ -54,7 +54,6 @@
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="appearance-page">
-    <form id="market-quick-search" class="quick-search"><input type="text" name="sPattern" placeholder="<?php _e('Search Themes'); ?>" class="input-text float-left"/><input type="Submit" value="Seach" class="btn ico ico-32 ico-search float-left"/><a href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance&amp;action=add" class="btn btn-green float-right"><?php _e('Add new theme'); ?></a></form>
     <!-- themes list -->
     <div class="appearance">
         <div id="tabs" class="ui-osc-tabs ui-tabs-right">
@@ -63,7 +62,7 @@
                 <li><a href="#available-themes"><?php _e('Available themes') ; ?></a></li>
             </ul>
             <div id="available-themes" class="ui-osc-tabs-panel">
-                <h2 class="render-title"><?php _e('Current theme') ; ?></h2>
+                <h2 class="render-title"><?php _e('Current theme') ; ?>                <a href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance&amp;action=add" class="btn btn-green float-right"><?php _e('Add new theme'); ?></a></h2>
                 <div class="current-theme">
                     <div class="theme">
                         <img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo osc_theme() ; ?>/screenshot.png" title="<?php echo $info['name'] ; ?>" alt="<?php echo $info['name'] ; ?>" />
@@ -202,7 +201,6 @@
                         $('#market_installer').dialog({
                             modal:true,
                             title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
-                            class: 'osc-class-test',
                             width:485
                         });
                     }

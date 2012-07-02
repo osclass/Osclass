@@ -163,6 +163,10 @@ input.ico-32{
     position: relative;
     display:inline-block;
 }
+    #bulk-actions .select-box,
+    #listing-toolbar .select-box{
+        float:left;
+    }
     .select-box-big .select-box-trigger{
         height: 16px;
         padding:7px 45px 6px 12px;
@@ -194,12 +198,20 @@ input.ico-32{
 .select-box-medium .select-box-trigger{
     width:75px;
 }
+div.select-box-medium select{
+    width:134px;
+}
 .select-box-big .select-box-trigger{
     width:125px;
 }
+div.select-box-big select{
+    width:184px;
+}
+div.select-box-input select{
+    width:109px;
+}
 .select-box-trigger{
     background-color: @color-gray-light;
-    width:32px;
     border:solid 1px @color-gray-soft;
     .rounded-corners;
     text-decoration:none;
@@ -229,6 +241,7 @@ input.ico-32{
     .rounded-corners;
     width: 163px;
 }
+
 .select-box a:hover{
     text-decoration:none;
 }
@@ -236,7 +249,7 @@ input.ico-32{
     position:absolute;
     left:0px;
     top:0px;
-    width:100%;
+    width:222px;
     height:30px;
     -webkit-appearance:none;
     z-index:1003;
@@ -306,6 +319,8 @@ input.input-has-select{
     background-color: @color-gray-light;
     border-left:0;
     margin-right:5px;
+    margin-left:-5px;
+    *margin-top:-1px;
 }
 .btn-mini{
     height:16px;
@@ -490,6 +505,9 @@ ul.showing-results{
 }
 .select-items-per-page{
     margin-left:5px;
+}
+#content-head .btn{
+    *margin-top:-27px;
 }
 .ui-autocomplete-loading{
     display:block;
