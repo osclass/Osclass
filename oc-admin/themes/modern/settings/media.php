@@ -69,8 +69,8 @@
                             regexp: "<?php _e("Normal size: is not in the correct format"); ?>."
                         },
                         maxSizeKb: {
-                            required: "<?php _e("Maximun size: this field is required"); ?>.",
-                            digits: "<?php _e("Maximun size: this field has to be numeric only"); ?>."
+                            required: "<?php _e("Maximum size: this field is required"); ?>.",
+                            digits: "<?php _e("Maximum size: this field has to be numeric only"); ?>."
                         }
                     },
                     wrapper: "li",
