@@ -41,7 +41,10 @@
             $title = 'OSClass &raquo; Error' ;
             $message = sprintf(__('We are sorry for any inconvenience. %s is under maintenance mode') . '.', osc_page_title() ) ;
 
-            osc_die($title, $message) ;
+            header('HTTP/1.1 503 Service Temporarily Unavailable');
+            header('Status: 503 Service Temporarily Unavailable');
+            header('Retry-After: 900');
+            osc_die($title, $message);
         } else {
             define('__OSC_MAINTENANCE__', true);
         }
