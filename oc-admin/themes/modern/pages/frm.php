@@ -16,7 +16,6 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    osc_current_admin_theme_path( 'functions.php' );
     $page    = __get('page');
     $locales = OSCLocale::newInstance()->listAllEnabled();
 
@@ -62,10 +61,10 @@
                 theme_advanced_buttons3 : "",
                 theme_advanced_toolbar_align : "left",
                 theme_advanced_toolbar_location : "top",
-                plugins : "media",
+                plugins : "color",
                 entity_encoding : "raw",
-                theme_advanced_buttons1_add : "media",
-                theme_advanced_disable : "styleselect"
+                theme_advanced_buttons1_add : "forecolorpicker,fontsizeselect",
+                theme_advanced_disable : "styleselect,anchor,image"
             });
         </script>
         <?php
@@ -96,6 +95,9 @@
         </div>
         <div class="clear"></div>
         <div class="form-actions">
+            <?php if( customFrmText('edit') ) { ?>
+            <a href="javascript:history.go(-1)" class="btn"><?php _e('Cancel'); ?></a>
+            <?php } ?>
             <input type="submit" value="<?php echo osc_esc_html(customFrmText('btn_text')); ?>" class="btn btn-submit" />
         </div>
     </form>

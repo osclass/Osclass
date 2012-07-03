@@ -40,7 +40,6 @@
 
             //specific things for this class
             switch($this->action) {
-
                 case 'edit':
                     if(Params::getParam("id")=='') {
                         $this->redirectTo(osc_admin_base_url(true)."?page=pages");
@@ -58,13 +57,7 @@
                 case 'edit_post':
                     $id = Params::getParam("id");
                     $s_internal_name = Params::getParam("s_internal_name");
-                    // sanitize internal name
                     $s_internal_name = osc_sanitizeString($s_internal_name) ;
-
-                    if( !WebThemes::newInstance()->isValidPage($s_internal_name) ) {
-                        osc_add_flash_error_message(_m('You have to set a different internal name'), 'admin');
-                        $this->redirectTo(osc_admin_base_url(true)."?page=pages?action=edit&id=" . $id);
-                    }
 
                     $aFieldsDescription = array();
                     $postParams = Params::getParamsAsArray('', false);
@@ -75,9 +68,18 @@
                             $aFieldsDescription[$m[1]][$m[2]] = $v;
                         }
                     }
-
-                    Session::newInstance()->_setForm('s_internal_name',$s_internal_name);
                     Session::newInstance()->_setForm('aFieldsDescription',$aFieldsDescription);
+
+                    if( $s_internal_name == '' ) {
+                        osc_add_flash_error_message(_m('You have to set an internal name'), 'admin');
+                        $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=edit&id=" . $id);
+                    }
+
+                    if( !WebThemes::newInstance()->isValidPage($s_internal_name) ) {
+                        osc_add_flash_error_message(_m('You have to set a different internal name'), 'admin');
+                        $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=edit&id=" . $id);
+                    }
+                    Session::newInstance()->_setForm('s_internal_name',$s_internal_name);
 
                     if($not_empty) {
                         foreach($aFieldsDescription as $k => $_data) {
@@ -99,7 +101,6 @@
                     $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=edit&id=" . $id);
                     break;
                 case 'add':
-
                     $form     = count(Session::newInstance()->_getForm());
                     $keepForm = count(Session::newInstance()->_getKeepForm());
                     if($form == 0 || $form == $keepForm) {
@@ -113,7 +114,20 @@
                     $s_internal_name = Params::getParam("s_internal_name");
                     $s_internal_name = osc_sanitizeString($s_internal_name) ;
 
-                    if($s_internal_name=='') {
+                    $aFieldsDescription = array();
+                    $postParams = Params::getParamsAsArray('', false);
+                    $not_empty = false;
+                    foreach($postParams as $k => $v) {
+                        if(preg_match('|(.+?)#(.+)|', $k, $m)) {
+                            if($m[2]=='s_title' && $v!='') {
+                                $not_empty = true;
+                            }
+                            $aFieldsDescription[$m[1]][$m[2]] = $v;
+                        }
+                    }
+                    Session::newInstance()->_setForm('aFieldsDescription',$aFieldsDescription);
+
+                    if( $s_internal_name == '' ) {
                         osc_add_flash_error_message(_m('You have to set an internal name'), 'admin');
                         $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=add");
                     }
@@ -122,25 +136,10 @@
                         osc_add_flash_error_message(_m('You have to set a different internal name'), 'admin');
                         $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=add");
                     }
+                    $aFields = array('s_internal_name' => $s_internal_name, 'b_indelible' => '0');
+                    Session::newInstance()->_setForm('s_internal_name',$s_internal_name);
 
                     $page = $this->pageManager->findByInternalName($s_internal_name);
-
-                    $aFields = array('s_internal_name' => $s_internal_name, 'b_indelible' => '0');
-                    $aFieldsDescription = array();
-                    $postParams = Params::getParamsAsArray('', false);
-                    $not_empty = false;
-                    foreach ($postParams as $k => $v) {
-                        if(preg_match('|(.+?)#(.+)|', $k, $m)) {
-                            if($m[2]=='s_title' && $v!='') {
-                                $not_empty = true;
-                            }
-                            $aFieldsDescription[$m[1]][$m[2]] = $v;
-                        }
-                    }
-
-                    Session::newInstance()->_setForm('s_internal_name',$s_internal_name);
-                    Session::newInstance()->_setForm('aFieldsDescription',$aFieldsDescription);
-                    
                     if(!isset($page['pk_i_id'])) {
                         if($not_empty) {
                             $result = $this->pageManager->insert($aFields, $aFieldsDescription) ;

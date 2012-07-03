@@ -55,6 +55,7 @@
     $aData          = __get('aAdmins');
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+<h2 class="render-title"><?php _e('Manage admins'); ?> <a href="<?php echo osc_admin_base_url(true); ?>?page=admins&amp;action=add" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
 <div class="relative">
     <div id="admins-toolbar" class="table-toolbar">
         <div class="float-right">

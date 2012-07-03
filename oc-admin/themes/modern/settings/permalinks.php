@@ -563,7 +563,7 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="form-label"><?php _e('User lsitings') ; ?></div>
+                                        <div class="form-label"><?php _e('User listings') ; ?></div>
                                         <div class="form-controls">
                                             <input type="text" class="input-large" name="rewrite_user_items" value="<?php echo osc_esc_html(osc_get_preference('rewrite_user_items')); ?>" />
                                         </div>

@@ -238,15 +238,15 @@
     <div class="grid-row grid-first-row grid-50">
         <div class="row-wrapper">
             <div class="widget-box  widget-box-project">
-                <div class="widget-box-title"><h3><?php _e('OSClass Project'); ?></h3></div>
-                <div class="widget-box-content">
-                    <form name="subscribe_form" action="http://osclass.org/" method="post">
+                <div class="widget-box-title"><h3><?php _e('OSClass'); ?></h3></div>
+                <div class="widget-box-content widget-box-content-no-wrapp">
+                    <h4 class="first-title"><?php _e('Newsletter'); ?></h4>
+                    <form name="subscribe_form" action="http://osclass.org/" method="post" class="dash-widget-form">
                         <input type="hidden" name="subscribe" value="submit" />
                         <input type="hidden" name="return_path" value="<?php echo osc_admin_base_url(); ?>" />
                         <input type="hidden" name="source" value="osclass" />
                         <fieldset>
                             <div class="form">
-                                <h4 class="first-title"><?php _e('Newsletter'); ?></h4>
                                 <p>
                                     <?php _e('Want the latest tips and updates delivered to your inbox? <strong>Sign up now!</strong>'); ?>
                                 </p>
@@ -259,17 +259,19 @@
                             </div>
                         </fieldset>
                     </form>
-                    <form name="_xclick" action="https://www.paypal.com/in/cgi-bin/webscr" method="post">
+                    <h4><?php _e('Donate'); ?></h4>
+                    <form name="_xclick" action="https://www.paypal.com/in/cgi-bin/webscr" method="post" class="dash-widget-form">
                         <input type="hidden" name="cmd" value="_donations">
+                        <input type="hidden" name="rm" value="2">
                         <input type="hidden" name="business" value="info@osclass.org">
                         <input type="hidden" name="item_name" value="OSClass project">
-                        <input type="hidden" name="return" value="<?php echo osc_admin_base_url(); ?>">
+                        <input type="hidden" name="return" value="http://osclass.org/paypal/">
                         <input type="hidden" name="currency_code" value="USD">
                         <input type="hidden" name="lc" value="US" />
+                        <input type="hidden" name="custom" value="<?php echo osc_admin_base_url(); ?>?donation=successful">
                         <fieldset>
                             <div class="form">
-                                <h4><?php _e('Donate'); ?></h4>
-                                <p><?php _e('OSClass is a free open source project sustained by the community. Money got from the donations will be used to ensure the development and improvements of the project.'); ?></p>
+                                <p><?php _e('OSClass is a free, open-source project, sustained by the community. Money received from donations will be used to further the development and improve the project.'); ?></p>
                                 <div class="form-row">
                                     <div class="form-controls">
                                         <select name="amount" class="input-medium">
@@ -292,7 +294,7 @@
         <div class="row-wrapper">
             <div class="widget-box">
                 <div class="widget-box-title"><h3><?php _e('Latest news'); ?></h3></div>
-                <div class="widget-box-content">
+                <div class="widget-box-content widget-box-content-no-wrapp">
                     <h4 class="first-title"><?php _e('Blog'); ?></h4>
                     <?php if( is_array($newsList) ) { ?>
                         <ul class="list-latests">

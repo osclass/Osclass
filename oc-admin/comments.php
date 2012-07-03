@@ -87,7 +87,7 @@
                                                                                 }
                                                                                 osc_add_hook("enable_comment", $_id) ;
                                                                             }
-                                                                            osc_add_flash_ok_message( _m('The comments have been approved'), 'admin' ) ;
+                                                                            osc_add_flash_ok_message( _m('The comments have been unblocked'), 'admin' ) ;
                                                     break;
                                                     case('disable_all'):
                                                                             foreach ($id as $_id) {
@@ -97,7 +97,7 @@
                                                                                 );
                                                                                 osc_add_hook("disable_comment", $_id);
                                                                             }
-                                                                            osc_add_flash_ok_message( _m('The comments have been disapproved'), 'admin') ;
+                                                                            osc_add_flash_ok_message( _m('The comments have been blocked'), 'admin') ;
                                                     break;
                                                 }
                                             }
@@ -184,7 +184,7 @@
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
                 break ;
                 case('delete'):             $this->itemCommentManager->deleteByPrimaryKey( Params::getParam('id') ) ;
-                                            osc_add_flash_ok_message( _m('The comment have been deleted'), 'admin') ;
+                                            osc_add_flash_ok_message( _m('The comment has been deleted'), 'admin') ;
                                             osc_run_hook( 'delete_comment', Params::getParam('id') ) ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
                 break ;
@@ -196,7 +196,7 @@
                                             // showAll != '' 
                                             //      -> show comments which are not 
                                             //      -> diplayed at frontend
-                                            if( Params::getParam('showAll') == '' ) {
+                                            if( Params::getParam('showAll') == '' || Params::getParam('showAll') == '1' ) {
                                                 Params::setParam('showAll', true ) ;
                                             } else {
                                                 Params::setParam('showAll', false ) ;

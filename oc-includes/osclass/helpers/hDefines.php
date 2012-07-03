@@ -963,10 +963,12 @@
      */
     function osc_is_moderator() {
         $admin = Admin::newInstance()->findByPrimaryKey(osc_logged_admin_id());
-        if(isset($admin['b_moderator']) && $admin['b_moderator']==0) {
-            return false;
+        
+        if( isset($admin['b_moderator']) && $admin['b_moderator']!=0 ) {
+            return true;
         }
-        return true;
+        
+        return false;
     }
 
     function osc_get_domain() {
