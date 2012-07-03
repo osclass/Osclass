@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Modern Theme 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-19 16:32+0100\n"
+"POT-Creation-Date: 2012-07-03 13:37+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
 "Language-Team: OSClass <info@osclass.org>\n"
@@ -15,777 +15,781 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=n !=1;\n"
 "X-Poedit-Country: UNITED STATES\n"
-"X-Poedit-SearchPath-0: oc-content/themes/modern\n"
+"X-Poedit-SearchPath-0: /var/www/osclass-git/oc-content/themes/modern\n"
 
-#: oc-content/themes/modern/404.php:33
+#: /var/www/osclass-git/oc-content/themes/modern/404.php:33
 msgid "Page not found"
 msgstr ""
 
-#: oc-content/themes/modern/alert-form.php:6
+#: /var/www/osclass-git/oc-content/themes/modern/alert-form.php:6
 msgid "You have sucessfully subscribed to the alert"
 msgstr ""
 
-#: oc-content/themes/modern/alert-form.php:7
+#: /var/www/osclass-git/oc-content/themes/modern/alert-form.php:7
 msgid "Invalid email address"
 msgstr ""
 
-#: oc-content/themes/modern/alert-form.php:8
+#: /var/www/osclass-git/oc-content/themes/modern/alert-form.php:8
 msgid "There was a problem with the alert"
 msgstr ""
 
-#: oc-content/themes/modern/alert-form.php:39
+#: /var/www/osclass-git/oc-content/themes/modern/alert-form.php:39
 msgid "Subscribe to this search"
 msgstr ""
 
-#: oc-content/themes/modern/alert-form.php:55
+#: /var/www/osclass-git/oc-content/themes/modern/alert-form.php:55
 msgid "Subscribe now"
 msgstr ""
 
-#: oc-content/themes/modern/contact.php:34
+#: /var/www/osclass-git/oc-content/themes/modern/contact.php:34
 msgid "Contact us"
 msgstr ""
 
-#: oc-content/themes/modern/contact.php:40
+#: /var/www/osclass-git/oc-content/themes/modern/contact.php:40
 msgid "Subject"
 msgstr ""
 
-#: oc-content/themes/modern/contact.php:40
-#: oc-content/themes/modern/contact.php:42
-#: oc-content/themes/modern/item-contact.php:51
-#: oc-content/themes/modern/item.php:218
+#: /var/www/osclass-git/oc-content/themes/modern/contact.php:40
+#: /var/www/osclass-git/oc-content/themes/modern/contact.php:42
+#: /var/www/osclass-git/oc-content/themes/modern/item-contact.php:51
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:218
 msgid "optional"
 msgstr ""
 
-#: oc-content/themes/modern/contact.php:41
-#: oc-content/themes/modern/item-contact.php:52
-#: oc-content/themes/modern/item-send-friend.php:51
-#: oc-content/themes/modern/item.php:219
+#: /var/www/osclass-git/oc-content/themes/modern/contact.php:41
+#: /var/www/osclass-git/oc-content/themes/modern/item-contact.php:52
+#: /var/www/osclass-git/oc-content/themes/modern/item-send-friend.php:51
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:219
 msgid "Message"
 msgstr ""
 
-#: oc-content/themes/modern/contact.php:42
-#: oc-content/themes/modern/item-contact.php:48
-#: oc-content/themes/modern/item-send-friend.php:46
-#: oc-content/themes/modern/item.php:153
-#: oc-content/themes/modern/item.php:216
+#: /var/www/osclass-git/oc-content/themes/modern/contact.php:42
+#: /var/www/osclass-git/oc-content/themes/modern/item-contact.php:48
+#: /var/www/osclass-git/oc-content/themes/modern/item-send-friend.php:46
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:153
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:216
 msgid "Your name"
 msgstr ""
 
-#: oc-content/themes/modern/contact.php:43
-#: oc-content/themes/modern/item-contact.php:49
-#: oc-content/themes/modern/item-send-friend.php:47
-#: oc-content/themes/modern/item.php:217
+#: /var/www/osclass-git/oc-content/themes/modern/contact.php:43
+#: /var/www/osclass-git/oc-content/themes/modern/item-contact.php:49
+#: /var/www/osclass-git/oc-content/themes/modern/item-send-friend.php:47
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:217
 msgid "Your e-mail address"
 msgstr ""
 
-#: oc-content/themes/modern/contact.php:45
-#: oc-content/themes/modern/item-send-friend.php:54
-#: oc-content/themes/modern/item.php:158
-#: oc-content/themes/modern/item.php:239
+#: /var/www/osclass-git/oc-content/themes/modern/contact.php:45
+#: /var/www/osclass-git/oc-content/themes/modern/item-send-friend.php:54
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:158
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:239
 msgid "Send"
 msgstr ""
 
-#: oc-content/themes/modern/footer.php:28
+#: /var/www/osclass-git/oc-content/themes/modern/footer.php:28
 msgid "Contact"
 msgstr ""
 
-#: oc-content/themes/modern/footer.php:35
+#: /var/www/osclass-git/oc-content/themes/modern/footer.php:35
 msgid "This website is proudly using the <a title=\"OSClass web\" href=\"http://osclass.org/\">classifieds scripts</a> software <strong>OSClass</strong>"
 msgstr ""
 
-#: oc-content/themes/modern/footer.php:48
+#: /var/www/osclass-git/oc-content/themes/modern/footer.php:48
 msgid "Your search must be at least three characters long"
 msgstr ""
 
-#: oc-content/themes/modern/functions.php:44
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:44
 msgid "Theme settings updated correctly"
 msgstr ""
 
-#: oc-content/themes/modern/functions.php:51
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:51
 msgid "The logo image has been uploaded correctly"
 msgstr ""
 
-#: oc-content/themes/modern/functions.php:53
-#: oc-content/themes/modern/functions.php:56
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:53
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:56
 msgid "An error has occurred, please try again"
 msgstr ""
 
-#: oc-content/themes/modern/functions.php:63
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:63
 msgid "The logo image has been removed"
 msgstr ""
 
-#: oc-content/themes/modern/functions.php:65
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:65
 msgid "Image not found"
 msgstr ""
 
-#: oc-content/themes/modern/functions.php:72
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:72
 msgid "Header logo"
 msgstr ""
 
-#: oc-content/themes/modern/functions.php:73
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:73
 msgid "Theme settings"
 msgstr ""
 
-#: oc-content/themes/modern/functions.php:89
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:89
 msgid "ie. PHP Programmer"
 msgstr ""
 
-#: oc-content/themes/modern/head.php:39
+#: /var/www/osclass-git/oc-content/themes/modern/head.php:39
 msgid "No file selected"
 msgstr ""
 
-#: oc-content/themes/modern/head.php:40
+#: /var/www/osclass-git/oc-content/themes/modern/head.php:40
 msgid "Choose File"
 msgstr ""
 
-#: oc-content/themes/modern/header.php:34
+#: /var/www/osclass-git/oc-content/themes/modern/header.php:34
 #, php-format
 msgid "Hi %s"
 msgstr ""
 
-#: oc-content/themes/modern/header.php:35
+#: /var/www/osclass-git/oc-content/themes/modern/header.php:35
 msgid "My account"
 msgstr ""
 
-#: oc-content/themes/modern/header.php:36
+#: /var/www/osclass-git/oc-content/themes/modern/header.php:36
 msgid "Logout"
 msgstr ""
 
-#: oc-content/themes/modern/header.php:40
-#: oc-content/themes/modern/item.php:196
+#: /var/www/osclass-git/oc-content/themes/modern/header.php:40
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:196
 msgid "Login"
 msgstr ""
 
-#: oc-content/themes/modern/header.php:43
-#: oc-content/themes/modern/item.php:197
+#: /var/www/osclass-git/oc-content/themes/modern/header.php:43
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:197
 msgid "Register for a free account"
 msgstr ""
 
-#: oc-content/themes/modern/header.php:49
-#: oc-content/themes/modern/item-post.php:162
-#: oc-content/themes/modern/item.php:206
+#: /var/www/osclass-git/oc-content/themes/modern/header.php:49
+#: /var/www/osclass-git/oc-content/themes/modern/item-post.php:162
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:206
 msgid "E-mail"
 msgstr ""
 
-#: oc-content/themes/modern/header.php:51
+#: /var/www/osclass-git/oc-content/themes/modern/header.php:51
 msgid "Password"
 msgstr ""
 
-#: oc-content/themes/modern/header.php:53
+#: /var/www/osclass-git/oc-content/themes/modern/header.php:53
 msgid "Remember me"
 msgstr ""
 
-#: oc-content/themes/modern/header.php:54
+#: /var/www/osclass-git/oc-content/themes/modern/header.php:54
 msgid "Log in"
 msgstr ""
 
-#: oc-content/themes/modern/header.php:56
+#: /var/www/osclass-git/oc-content/themes/modern/header.php:56
 msgid "Forgot password?"
 msgstr ""
 
-#: oc-content/themes/modern/header.php:66
+#: /var/www/osclass-git/oc-content/themes/modern/header.php:66
 msgid "Language"
 msgstr ""
 
-#: oc-content/themes/modern/header.php:79
+#: /var/www/osclass-git/oc-content/themes/modern/header.php:79
 msgid "Publish your ad for free"
 msgstr ""
 
-#: oc-content/themes/modern/inc.search.php:54
-#: oc-content/themes/modern/item-edit.php:107
-#: oc-content/themes/modern/item-post.php:105
+#: /var/www/osclass-git/oc-content/themes/modern/inc.search.php:54
+#: /var/www/osclass-git/oc-content/themes/modern/item-edit.php:107
+#: /var/www/osclass-git/oc-content/themes/modern/item-post.php:105
 msgid "Select a category"
 msgstr ""
 
-#: oc-content/themes/modern/inc.search.php:56
+#: /var/www/osclass-git/oc-content/themes/modern/inc.search.php:56
 msgid "Search"
 msgstr ""
 
-#: oc-content/themes/modern/item-contact.php:34
-#: oc-content/themes/modern/item.php:101
+#: /var/www/osclass-git/oc-content/themes/modern/item-contact.php:34
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:101
 msgid "Contact seller"
 msgstr ""
 
-#: oc-content/themes/modern/item-contact.php:42
+#: /var/www/osclass-git/oc-content/themes/modern/item-contact.php:42
 msgid "To (seller)"
 msgstr ""
 
-#: oc-content/themes/modern/item-contact.php:43
-#: oc-content/themes/modern/item-send-friend.php:41
+#: /var/www/osclass-git/oc-content/themes/modern/item-contact.php:43
+#: /var/www/osclass-git/oc-content/themes/modern/item-send-friend.php:41
 msgid "Listing"
 msgstr ""
 
-#: oc-content/themes/modern/item-contact.php:51
-#: oc-content/themes/modern/item.php:218
+#: /var/www/osclass-git/oc-content/themes/modern/item-contact.php:51
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:218
 msgid "Phone number"
 msgstr ""
 
-#: oc-content/themes/modern/item-contact.php:54
+#: /var/www/osclass-git/oc-content/themes/modern/item-contact.php:54
 msgid "Send message"
 msgstr ""
 
-#: oc-content/themes/modern/item-edit.php:95
+#: /var/www/osclass-git/oc-content/themes/modern/item-edit.php:95
 msgid "Update your listing"
 msgstr ""
 
-#: oc-content/themes/modern/item-edit.php:104
-#: oc-content/themes/modern/item-post.php:102
+#: /var/www/osclass-git/oc-content/themes/modern/item-edit.php:104
+#: /var/www/osclass-git/oc-content/themes/modern/item-post.php:102
 msgid "General Information"
 msgstr ""
 
-#: oc-content/themes/modern/item-edit.php:106
-#: oc-content/themes/modern/item-post.php:104
+#: /var/www/osclass-git/oc-content/themes/modern/item-edit.php:106
+#: /var/www/osclass-git/oc-content/themes/modern/item-post.php:104
 msgid "Category"
 msgstr ""
 
-#: oc-content/themes/modern/item-edit.php:114
-#: oc-content/themes/modern/item-post.php:113
+#: /var/www/osclass-git/oc-content/themes/modern/item-edit.php:114
+#: /var/www/osclass-git/oc-content/themes/modern/item-post.php:113
 msgid "Price"
 msgstr ""
 
-#: oc-content/themes/modern/item-edit.php:122
-#: oc-content/themes/modern/item-post.php:120
+#: /var/www/osclass-git/oc-content/themes/modern/item-edit.php:122
+#: /var/www/osclass-git/oc-content/themes/modern/item-post.php:120
 msgid "Photos"
 msgstr ""
 
-#: oc-content/themes/modern/item-edit.php:131
-#: oc-content/themes/modern/item-post.php:126
+#: /var/www/osclass-git/oc-content/themes/modern/item-edit.php:131
+#: /var/www/osclass-git/oc-content/themes/modern/item-post.php:126
 msgid "Add new photo"
 msgstr ""
 
-#: oc-content/themes/modern/item-edit.php:136
-#: oc-content/themes/modern/main.php:120
+#: /var/www/osclass-git/oc-content/themes/modern/item-edit.php:136
+#: /var/www/osclass-git/oc-content/themes/modern/main.php:120
 msgid "Location"
 msgstr ""
 
-#: oc-content/themes/modern/item-edit.php:138
-#: oc-content/themes/modern/item-post.php:133
-#: oc-content/themes/modern/item.php:74
+#: /var/www/osclass-git/oc-content/themes/modern/item-edit.php:138
+#: /var/www/osclass-git/oc-content/themes/modern/item-post.php:133
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:74
 msgid "Country"
 msgstr ""
 
-#: oc-content/themes/modern/item-edit.php:142
-#: oc-content/themes/modern/item-post.php:137
-#: oc-content/themes/modern/item.php:75
+#: /var/www/osclass-git/oc-content/themes/modern/item-edit.php:142
+#: /var/www/osclass-git/oc-content/themes/modern/item-post.php:137
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:75
 msgid "Region"
 msgstr ""
 
-#: oc-content/themes/modern/item-edit.php:146
-#: oc-content/themes/modern/item-post.php:141
-#: oc-content/themes/modern/item.php:76
+#: /var/www/osclass-git/oc-content/themes/modern/item-edit.php:146
+#: /var/www/osclass-git/oc-content/themes/modern/item-post.php:141
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:76
 msgid "City"
 msgstr ""
 
-#: oc-content/themes/modern/item-edit.php:150
-#: oc-content/themes/modern/item.php:77
+#: /var/www/osclass-git/oc-content/themes/modern/item-edit.php:150
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:77
 msgid "City area"
 msgstr ""
 
-#: oc-content/themes/modern/item-edit.php:154
-#: oc-content/themes/modern/item-post.php:149
-#: oc-content/themes/modern/item.php:78
+#: /var/www/osclass-git/oc-content/themes/modern/item-edit.php:154
+#: /var/www/osclass-git/oc-content/themes/modern/item-post.php:149
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:78
 msgid "Address"
 msgstr ""
 
-#: oc-content/themes/modern/item-edit.php:166
+#: /var/www/osclass-git/oc-content/themes/modern/item-edit.php:166
 msgid "Update"
 msgstr ""
 
-#: oc-content/themes/modern/item-edit.php:167
+#: /var/www/osclass-git/oc-content/themes/modern/item-edit.php:167
 msgid "Cancel"
 msgstr ""
 
-#: oc-content/themes/modern/item-post.php:95
+#: /var/www/osclass-git/oc-content/themes/modern/item-post.php:95
 msgid "Publish a listing"
 msgstr ""
 
-#: oc-content/themes/modern/item-post.php:131
+#: /var/www/osclass-git/oc-content/themes/modern/item-post.php:131
 msgid "Listing Location"
 msgstr ""
 
-#: oc-content/themes/modern/item-post.php:145
+#: /var/www/osclass-git/oc-content/themes/modern/item-post.php:145
 msgid "City Area"
 msgstr ""
 
-#: oc-content/themes/modern/item-post.php:156
+#: /var/www/osclass-git/oc-content/themes/modern/item-post.php:156
 msgid "Seller's information"
 msgstr ""
 
-#: oc-content/themes/modern/item-post.php:158
-#: oc-content/themes/modern/item.php:201
-#: oc-content/themes/modern/item.php:203
+#: /var/www/osclass-git/oc-content/themes/modern/item-post.php:158
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:201
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:203
 msgid "Name"
 msgstr ""
 
-#: oc-content/themes/modern/item-post.php:169
+#: /var/www/osclass-git/oc-content/themes/modern/item-post.php:169
 msgid "Show e-mail on the listing page"
 msgstr ""
 
-#: oc-content/themes/modern/item-post.php:182
+#: /var/www/osclass-git/oc-content/themes/modern/item-post.php:182
 msgid "Publish"
 msgstr ""
 
-#: oc-content/themes/modern/item-send-friend.php:34
+#: /var/www/osclass-git/oc-content/themes/modern/item-send-friend.php:34
 msgid "Send to a friend"
 msgstr ""
 
-#: oc-content/themes/modern/item-send-friend.php:49
+#: /var/www/osclass-git/oc-content/themes/modern/item-send-friend.php:49
 msgid "Your friend's name"
 msgstr ""
 
-#: oc-content/themes/modern/item-send-friend.php:50
+#: /var/www/osclass-git/oc-content/themes/modern/item-send-friend.php:50
 msgid "Your friend's e-mail address"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:56
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:56
 msgid "Mark as"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:58
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:58
 msgid "spam"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:59
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:59
 msgid "misclassified"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:60
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:60
 msgid "duplicated"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:61
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:61
 msgid "expired"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:62
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:62
 msgid "offensive"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:70
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:70
 msgid "Published date"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:71
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:71
 msgid "Modified date"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:105
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:105
 msgid "Share"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:111
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:111
 msgid "Useful information"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:113
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:113
 msgid "Avoid scams by acting locally or paying with PayPal"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:114
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:114
 msgid "Never pay with Western Union, Moneygram or other anonymous payment services"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:115
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:115
 msgid "Don't buy or sell outside of your country. Don't accept cashier cheques from outside your country"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:116
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:116
 msgid "This site is never involved in any transaction, and does not handle payments, shipping, guarantee transactions, provide escrow services, or offer \"buyer protection\" or \"seller certification\""
 msgstr ""
 
-#: oc-content/themes/modern/item.php:122
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:122
 msgid "Comments"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:129
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:129
 msgid "by"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:133
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:133
 msgid "Delete your comment"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:133
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:133
 msgid "Delete"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:145
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:145
 msgid "Leave your comment (spam and offensive messages will be removed)"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:154
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:154
 msgid "Your e-mail"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:156
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:156
 msgid "Title"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:157
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:157
 msgid "Comment"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:170
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:170
 msgid "Image"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:182
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:182
 msgid "Contact publisher"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:185
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:185
 msgid "The listing is expired. You cannot contact the publisher."
 msgstr ""
 
-#: oc-content/themes/modern/item.php:189
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:189
 msgid "It's your own listing, you cannot contact the publisher."
 msgstr ""
 
-#: oc-content/themes/modern/item.php:193
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:193
 msgid "You must login or register a new free account in order to contact the advertiser"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:209
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:209
 msgid "Tel"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:233
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:233
 msgid "Enter the words above"
 msgstr ""
 
-#: oc-content/themes/modern/item.php:235
+#: /var/www/osclass-git/oc-content/themes/modern/item.php:235
 msgid "Help"
 msgstr ""
 
-#: oc-content/themes/modern/main.php:79
+#: /var/www/osclass-git/oc-content/themes/modern/main.php:79
 msgid "Latest Listings"
 msgstr ""
 
-#: oc-content/themes/modern/main.php:81
+#: /var/www/osclass-git/oc-content/themes/modern/main.php:81
 msgid "No Latest Listings"
 msgstr ""
 
-#: oc-content/themes/modern/main.php:111
+#: /var/www/osclass-git/oc-content/themes/modern/main.php:111
 msgid "See all offers"
 msgstr ""
 
-#: oc-content/themes/modern/search.php:195
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:195
 msgid "Search results"
 msgstr ""
 
-#: oc-content/themes/modern/search.php:198
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:198
 msgid "Sort by"
 msgstr ""
 
-#: oc-content/themes/modern/search.php:217
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:217
 #, php-format
 msgid "There are no results matching \"%s\""
 msgstr ""
 
-#: oc-content/themes/modern/search.php:236
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:236
 msgid "Your search"
 msgstr ""
 
-#: oc-content/themes/modern/search.php:250
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:250
 msgid "Show only"
 msgstr ""
 
-#: oc-content/themes/modern/search.php:255
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:255
 msgid "Show only listings with pictures"
 msgstr ""
 
-#: oc-content/themes/modern/search.php:263
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:263
 msgid "Min"
 msgstr ""
 
-#: oc-content/themes/modern/search.php:265
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:265
 msgid "Max"
 msgstr ""
 
-#: oc-content/themes/modern/search.php:304
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:304
 msgid "Apply"
 msgstr ""
 
-#: oc-content/themes/modern/search.php:321
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:321
 msgid "Selected"
 msgstr ""
 
-#: oc-content/themes/modern/search.php:322
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:322
 msgid "Nothing selected, input was"
 msgstr ""
 
-#: oc-content/themes/modern/search_gallery.php:41
-#: oc-content/themes/modern/search_list.php:41
+#: /var/www/osclass-git/oc-content/themes/modern/search_gallery.php:41
+#: /var/www/osclass-git/oc-content/themes/modern/search_list.php:41
 msgid "Sponsored ad"
 msgstr ""
 
-#: oc-content/themes/modern/user-alerts.php:32
-#: oc-content/themes/modern/user-change_email.php:33
-#: oc-content/themes/modern/user-change_password.php:33
-#: oc-content/themes/modern/user-dashboard.php:33
-#: oc-content/themes/modern/user-items.php:33
-#: oc-content/themes/modern/user-profile.php:35
+#: /var/www/osclass-git/oc-content/themes/modern/user-alerts.php:32
+#: /var/www/osclass-git/oc-content/themes/modern/user-change_email.php:33
+#: /var/www/osclass-git/oc-content/themes/modern/user-change_password.php:33
+#: /var/www/osclass-git/oc-content/themes/modern/user-dashboard.php:33
+#: /var/www/osclass-git/oc-content/themes/modern/user-items.php:33
+#: /var/www/osclass-git/oc-content/themes/modern/user-profile.php:35
 msgid "User account manager"
 msgstr ""
 
-#: oc-content/themes/modern/user-alerts.php:37
+#: /var/www/osclass-git/oc-content/themes/modern/user-alerts.php:37
 msgid "Your alerts"
 msgstr ""
 
-#: oc-content/themes/modern/user-alerts.php:39
+#: /var/www/osclass-git/oc-content/themes/modern/user-alerts.php:39
 msgid "You do not have any alerts yet"
 msgstr ""
 
-#: oc-content/themes/modern/user-alerts.php:43
+#: /var/www/osclass-git/oc-content/themes/modern/user-alerts.php:43
 msgid "Alert"
 msgstr ""
 
-#: oc-content/themes/modern/user-alerts.php:43
+#: /var/www/osclass-git/oc-content/themes/modern/user-alerts.php:43
 msgid "This action can't be undone. Are you sure you want to continue?"
 msgstr ""
 
-#: oc-content/themes/modern/user-alerts.php:43
+#: /var/www/osclass-git/oc-content/themes/modern/user-alerts.php:43
 msgid "Delete this alert"
 msgstr ""
 
-#: oc-content/themes/modern/user-alerts.php:49
-#: oc-content/themes/modern/user-dashboard.php:49
-#: oc-content/themes/modern/user-items.php:49
+#: /var/www/osclass-git/oc-content/themes/modern/user-alerts.php:49
+#: /var/www/osclass-git/oc-content/themes/modern/user-dashboard.php:49
+#: /var/www/osclass-git/oc-content/themes/modern/user-items.php:49
 msgid "Publication date"
 msgstr ""
 
-#: oc-content/themes/modern/user-alerts.php:57
+#: /var/www/osclass-git/oc-content/themes/modern/user-alerts.php:57
 msgid "Listings"
 msgstr ""
 
-#: oc-content/themes/modern/user-change_email.php:39
+#: /var/www/osclass-git/oc-content/themes/modern/user-change_email.php:39
 msgid "Change your e-mail"
 msgstr ""
 
-#: oc-content/themes/modern/user-change_email.php:45
+#: /var/www/osclass-git/oc-content/themes/modern/user-change_email.php:45
 msgid "Current e-mail"
 msgstr ""
 
-#: oc-content/themes/modern/user-change_email.php:49
+#: /var/www/osclass-git/oc-content/themes/modern/user-change_email.php:49
 msgid "New e-mail"
 msgstr ""
 
-#: oc-content/themes/modern/user-change_password.php:39
+#: /var/www/osclass-git/oc-content/themes/modern/user-change_password.php:39
 msgid "Change your password"
 msgstr ""
 
-#: oc-content/themes/modern/user-change_password.php:45
+#: /var/www/osclass-git/oc-content/themes/modern/user-change_password.php:45
 msgid "Current password"
 msgstr ""
 
-#: oc-content/themes/modern/user-change_password.php:49
+#: /var/www/osclass-git/oc-content/themes/modern/user-change_password.php:49
 msgid "New password"
 msgstr ""
 
-#: oc-content/themes/modern/user-change_password.php:53
+#: /var/www/osclass-git/oc-content/themes/modern/user-change_password.php:53
 msgid "Repeat new password"
 msgstr ""
 
-#: oc-content/themes/modern/user-dashboard.php:39
+#: /var/www/osclass-git/oc-content/themes/modern/user-dashboard.php:39
 #, php-format
 msgid "Listings from %s"
 msgstr ""
 
-#: oc-content/themes/modern/user-dashboard.php:41
+#: /var/www/osclass-git/oc-content/themes/modern/user-dashboard.php:41
 msgid "No listings have been added yet"
 msgstr ""
 
-#: oc-content/themes/modern/user-dashboard.php:52
+#: /var/www/osclass-git/oc-content/themes/modern/user-dashboard.php:52
 msgid "View listing"
 msgstr ""
 
-#: oc-content/themes/modern/user-dashboard.php:54
-#: oc-content/themes/modern/user-items.php:53
+#: /var/www/osclass-git/oc-content/themes/modern/user-dashboard.php:54
+#: /var/www/osclass-git/oc-content/themes/modern/user-items.php:53
 msgid "Edit"
 msgstr ""
 
-#: oc-content/themes/modern/user-dashboard.php:57
-#: oc-content/themes/modern/user-items.php:58
+#: /var/www/osclass-git/oc-content/themes/modern/user-dashboard.php:57
+#: /var/www/osclass-git/oc-content/themes/modern/user-items.php:58
 msgid "Activate"
 msgstr ""
 
-#: oc-content/themes/modern/user-forgot_password.php:33
-#: oc-content/themes/modern/user-recover.php:33
+#: /var/www/osclass-git/oc-content/themes/modern/user-forgot_password.php:33
+#: /var/www/osclass-git/oc-content/themes/modern/user-recover.php:33
 msgid "Recover your password"
 msgstr ""
 
-#: oc-content/themes/modern/user-forgot_password.php:41
+#: /var/www/osclass-git/oc-content/themes/modern/user-forgot_password.php:41
 msgid "New pasword"
 msgstr ""
 
-#: oc-content/themes/modern/user-forgot_password.php:45
+#: /var/www/osclass-git/oc-content/themes/modern/user-forgot_password.php:45
 msgid "Repeat new pasword"
 msgstr ""
 
-#: oc-content/themes/modern/user-forgot_password.php:48
+#: /var/www/osclass-git/oc-content/themes/modern/user-forgot_password.php:48
 msgid "Change password"
 msgstr ""
 
-#: oc-content/themes/modern/user-items.php:39
+#: /var/www/osclass-git/oc-content/themes/modern/user-items.php:39
 msgid "Your listings"
 msgstr ""
 
-#: oc-content/themes/modern/user-items.php:39
+#: /var/www/osclass-git/oc-content/themes/modern/user-items.php:39
 msgid "Post a new listing"
 msgstr ""
 
-#: oc-content/themes/modern/user-items.php:41
+#: /var/www/osclass-git/oc-content/themes/modern/user-items.php:41
 msgid "You don't have any listings yet"
 msgstr ""
 
-#: oc-content/themes/modern/user-items.php:55
+#: /var/www/osclass-git/oc-content/themes/modern/user-items.php:55
 msgid "This action can not be undone. Are you sure you want to continue?"
 msgstr ""
 
-#: oc-content/themes/modern/user-login.php:33
+#: /var/www/osclass-git/oc-content/themes/modern/user-login.php:33
 msgid "Access to your account"
 msgstr ""
 
-#: oc-content/themes/modern/user-profile.php:41
+#: /var/www/osclass-git/oc-content/themes/modern/user-profile.php:41
 msgid "Update your profile"
 msgstr ""
 
-#: oc-content/themes/modern/user-profile.php:55
+#: /var/www/osclass-git/oc-content/themes/modern/user-profile.php:55
 msgid "Modify e-mail"
 msgstr ""
 
-#: oc-content/themes/modern/user-profile.php:55
+#: /var/www/osclass-git/oc-content/themes/modern/user-profile.php:55
 msgid "Modify password"
 msgstr ""
 
-#: oc-content/themes/modern/user-profile.php:59
+#: /var/www/osclass-git/oc-content/themes/modern/user-profile.php:59
 msgid "User type"
 msgstr ""
 
-#: oc-content/themes/modern/user-profile.php:63
+#: /var/www/osclass-git/oc-content/themes/modern/user-profile.php:63
 msgid "Cell phone"
 msgstr ""
 
-#: oc-content/themes/modern/user-profile.php:67
+#: /var/www/osclass-git/oc-content/themes/modern/user-profile.php:67
 msgid "Phone"
 msgstr ""
 
-#: oc-content/themes/modern/user-profile.php:91
-#: oc-content/themes/modern/user-public-profile.php:69
+#: /var/www/osclass-git/oc-content/themes/modern/user-profile.php:91
+#: /var/www/osclass-git/oc-content/themes/modern/user-public-profile.php:69
 msgid "Website"
 msgstr ""
 
-#: oc-content/themes/modern/user-public-profile.php:58
+#: /var/www/osclass-git/oc-content/themes/modern/user-public-profile.php:58
 #, php-format
 msgid "%s's profile"
 msgstr ""
 
-#: oc-content/themes/modern/user-public-profile.php:64
+#: /var/www/osclass-git/oc-content/themes/modern/user-public-profile.php:64
 msgid "Profile"
 msgstr ""
 
-#: oc-content/themes/modern/user-public-profile.php:66
+#: /var/www/osclass-git/oc-content/themes/modern/user-public-profile.php:66
 msgid "Full name"
 msgstr ""
 
-#: oc-content/themes/modern/user-public-profile.php:70
+#: /var/www/osclass-git/oc-content/themes/modern/user-public-profile.php:70
 msgid "User Description"
 msgstr ""
 
-#: oc-content/themes/modern/user-public-profile.php:74
+#: /var/www/osclass-git/oc-content/themes/modern/user-public-profile.php:74
 msgid "Latest listings"
 msgstr ""
 
-#: oc-content/themes/modern/user-recover.php:40
+#: /var/www/osclass-git/oc-content/themes/modern/user-recover.php:40
 msgid "Send me a new password"
 msgstr ""
 
-#: oc-content/themes/modern/user-register.php:35
+#: /var/www/osclass-git/oc-content/themes/modern/user-register.php:35
 msgid "Register an account for free"
 msgstr ""
 
-#: oc-content/themes/modern/user-register.php:44
+#: /var/www/osclass-git/oc-content/themes/modern/user-register.php:44
 msgid "Re-type password"
 msgstr ""
 
-#: oc-content/themes/modern/user-register.php:46
+#: /var/www/osclass-git/oc-content/themes/modern/user-register.php:46
 msgid "Passwords don't match"
 msgstr ""
 
-#: oc-content/themes/modern/user-register.php:51
+#: /var/www/osclass-git/oc-content/themes/modern/user-register.php:51
 msgid "Create"
 msgstr ""
 
-#: oc-content/themes/modern/admin/header.php:8
+#: /var/www/osclass-git/oc-content/themes/modern/admin/header.php:8
 msgid "Preview"
 msgstr ""
 
-#: oc-content/themes/modern/admin/header.php:15
+#: /var/www/osclass-git/oc-content/themes/modern/admin/header.php:15
 msgid "Remove logo"
 msgstr ""
 
-#: oc-content/themes/modern/admin/header.php:23
+#: /var/www/osclass-git/oc-content/themes/modern/admin/header.php:23
 msgid "There isn't any logo uploaded yet"
 msgstr ""
 
-#: oc-content/themes/modern/admin/header.php:26
+#: /var/www/osclass-git/oc-content/themes/modern/admin/header.php:26
 msgid "Upload logo"
 msgstr ""
 
-#: oc-content/themes/modern/admin/header.php:28
+#: /var/www/osclass-git/oc-content/themes/modern/admin/header.php:28
 msgid "The preferred size of the logo is 600x100."
 msgstr ""
 
-#: oc-content/themes/modern/admin/header.php:30
+#: /var/www/osclass-git/oc-content/themes/modern/admin/header.php:30
 msgid "<strong>Note:</strong> Uploading another logo will overwrite the current logo."
 msgstr ""
 
-#: oc-content/themes/modern/admin/header.php:38
+#: /var/www/osclass-git/oc-content/themes/modern/admin/header.php:38
 msgid "Logo image (png,gif,jpg)"
 msgstr ""
 
-#: oc-content/themes/modern/admin/header.php:44
+#: /var/www/osclass-git/oc-content/themes/modern/admin/header.php:44
 msgid "Upload"
 msgstr ""
 
-#: oc-content/themes/modern/admin/header.php:53
+#: /var/www/osclass-git/oc-content/themes/modern/admin/header.php:53
 #, php-format
 msgid "The images folder <strong>%s</strong> is not writable on your server"
 msgstr ""
 
-#: oc-content/themes/modern/admin/header.php:54
+#: /var/www/osclass-git/oc-content/themes/modern/admin/header.php:54
 msgid "OSClass can't upload logo image from the administration panel."
 msgstr ""
 
-#: oc-content/themes/modern/admin/header.php:55
+#: /var/www/osclass-git/oc-content/themes/modern/admin/header.php:55
 msgid "Please make the mentioned image folder writable."
 msgstr ""
 
-#: oc-content/themes/modern/admin/header.php:60
+#: /var/www/osclass-git/oc-content/themes/modern/admin/header.php:60
 msgid "To make a directory writable under UNIX execute this command from the shell:"
 msgstr ""
 
-#: oc-content/themes/modern/admin/settings.php:10
+#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:10
 msgid "I would like to contribute to the development of OSClass with a donation of"
 msgstr ""
 
-#: oc-content/themes/modern/admin/settings.php:16
+#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:15
+msgid "Custom"
+msgstr ""
+
+#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:16
 msgid "Donate"
 msgstr ""
 
-#: oc-content/themes/modern/admin/settings.php:26
+#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:26
 msgid "Search placeholder"
 msgstr ""
 
-#: oc-content/themes/modern/admin/settings.php:30
+#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:30
 msgid "Footer link"
 msgstr ""
 
-#: oc-content/themes/modern/admin/settings.php:32
+#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:32
 msgid "I want to help OSClass linking to <a href=\"http://osclass.org/\" target=\"_blank\">osclass.org</a> from my site with the following text:"
 msgstr ""
 
-#: oc-content/themes/modern/admin/settings.php:37
+#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:37
 msgid "Save changes"
 msgstr ""
 
