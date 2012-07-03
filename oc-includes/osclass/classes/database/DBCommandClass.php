@@ -1335,7 +1335,7 @@
             $this->prepareAndSepareQueries($queries, $data_queries, $struct_queries);
 
             // hack
-            $comm->query("SET FOREIGN_KEY_CHECKS = 0");
+            $this->query("SET FOREIGN_KEY_CHECKS = 0");
             
             // Get tables from DB (already installed)
             $result = $this->query('SHOW TABLES');
@@ -1396,7 +1396,7 @@
                 }
             }
             // hack
-            $comm->query("SET FOREIGN_KEY_CHECKS = 1");
+            $this->query("SET FOREIGN_KEY_CHECKS = 1");
             error_log(' ----- END updateDB ----- ');
             
             return array($ok, $queries, $error_queries);
@@ -1595,7 +1595,7 @@
          */
         function isWriteType($sql)
         {
-            if ( ! preg_match('/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD DATA|COPY|ALTER|GRANT|REVOKE|LOCK|UNLOCK)\s+/i', $sql)) {
+            if ( ! preg_match('/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD DATA|COPY|ALTER|GRANT|REVOKE|LOCK|UNLOCK|RENAME)\s+/i', $sql)) {
                 return false;
             }
 
