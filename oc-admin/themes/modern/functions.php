@@ -1,4 +1,31 @@
 <?php
+osc_add_filter('admin_body_class', 'admin_modeCompact_class');
+function admin_modeCompact_class($args){
+    $compactMode = osc_get_preference('compact_mode','modern_admin_theme');
+    if($compactMode == true){
+        $args[] = 'compact';
+    }
+    return $args;
+}
+osc_add_hook('ajax_admin_compactmode','modern_compactmode_actions');
+function modern_compactmode_actions(){
+    $compactMode = osc_get_preference('compact_mode','modern_admin_theme');
+    $modeStatus  = array('compact_mode'=>true);
+    if($compactMode == true){
+        $modeStatus['compact_mode'] = false;
+    }
+    osc_set_preference('compact_mode', $modeStatus['compact_mode'], 'modern_admin_theme');
+    echo json_encode($modeStatus);
+}
+osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_switch_mode'  , 1 );
+function osc_admin_toolbar_switch_mode(){
+    AdminToolbar::newInstance()->add_menu( array(
+                'id'        => 'switch_mode',
+                'title'     => __('Compact mode').'<span class="trigger"></span>',
+                'href'      => osc_admin_base_url(true).'?page=ajax&action=runhook&hook=compactmode',
+                'meta'      => array('class' => 'float-right')
+            ) );
+}
 function printLocaleTabs($locales = null)
 {
     if($locales==null) { $locales = osc_get_locales(); }
