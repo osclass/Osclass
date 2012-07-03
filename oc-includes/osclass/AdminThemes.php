@@ -37,10 +37,6 @@
 
         public function __construct() {
             $this->setCurrentTheme( osc_admin_theme() ) ;
-            $functions_path = $this->getCurrentThemePath() . 'functions.php';
-            if( file_exists($functions_path) ) {
-                require_once $functions_path ;
-            }
         }
 
         /* PRIVATE */
