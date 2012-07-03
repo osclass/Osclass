@@ -16,7 +16,6 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    osc_current_admin_theme_path( 'functions.php' );
     $page    = __get('page');
     $locales = OSCLocale::newInstance()->listAllEnabled();
 
