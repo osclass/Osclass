@@ -1219,7 +1219,17 @@ HTACCESS;
                                         ) ;
 
                                         if( $error != '' ) {
-                                            osc_add_flash_warning_message($error, 'admin') ;
+                                            switch($status) {
+                                                case('error'):
+                                                    osc_add_flash_error_message($error, 'admin');
+                                                break;
+                                                case('warning'):
+                                                    osc_add_flash_warning_message($error, 'admin');
+                                                break;
+                                                default:
+                                                    osc_add_flash_ok_message($error, 'admin');
+                                                break;
+                                            }
                                         } else {
                                             osc_add_flash_ok_message(_m('Media config has been updated'), 'admin') ;
                                         }
@@ -1458,6 +1468,14 @@ HTACCESS;
                                             osc_add_flash_error_message( $error , 'admin');
                                         }
 
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings');
+                break;
+                case('check_updates'): 
+                                        osc_admin_toolbar_update_themes(true);
+                                        osc_admin_toolbar_update_plugins(true);
+                                        
+                                        osc_add_flash_ok_message( _m('Last check') . ':   ' . date("Y-m-d H:i") , 'admin');
+                                        
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings');
                 break;
                 case('latestsearches'):       //calling the comments settings view

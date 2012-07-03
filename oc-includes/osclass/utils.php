@@ -264,6 +264,11 @@ function osc_doRequest($url, $_data) {
 }
 
 function osc_sendMail($params) {
+    // DO NOT send mail if it's a demo
+    if( defined('DEMO') ) {
+        return false;
+    }
+
     if( key_exists('add_bcc', $params) ) {
         if( !is_array($params['add_bcc']) && $params['add_bcc'] != '' ) {
             $params['add_bcc'] = array($params['add_bcc']) ;

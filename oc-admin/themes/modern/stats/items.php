@@ -196,7 +196,6 @@
                 </div>
                 <div class="widget-box-content">
                     <b class="stats-title"><?php _e('Number of new listings'); ?></b>
-                    <div class="stats-detail"><?php echo $type_stat; ?></div>
                     <div id="placeholder" class="graph-placeholder" style="height:150px">
                         <?php if( count($items) == 0 ) {
                             _e("There're no statistics yet") ;
@@ -213,8 +212,7 @@
                     <h3><?php _e('Listings\' views'); ?></h3>
                 </div>
                 <div class="widget-box-content">
-                    <b class="stats-title"><?php _e('Total number of listings\' views'); ?></b>
-                    <div class="stats-detail"><?php echo $type_stat; ?></div>
+                    <b class="stats-title"><?php _e("Total number of listings' views"); ?></b>
                     <div id="placeholder_total" class="graph-placeholder" style="height:150px">
                         <?php if( count($reports) == 0 ) {
                             _e("There're no statistics yet") ;

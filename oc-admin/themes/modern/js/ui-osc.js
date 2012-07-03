@@ -108,6 +108,24 @@ $(function(){
         $(".ui-dialog-content").dialog("close");
         return false;
     });
+    //Dissable
+    $('.btn-disabled, *:disabled').css('opacity','0.7').live('click',function(){
+        return false;
+    });
+    //Compact mode
+    $("#osc_toolbar_switch_mode ").on("click", function(){
+        $.getJSON(
+        $(this).attr('href'),
+        function(data){
+            if(data.compact_mode == false){
+                $('body').removeClass('compact');
+            } else {
+                $('body').addClass('compact');
+            }
+            resetLayout();
+        });
+        return false;
+    });   
 });
 function oscTab(callback){
     $(".osc-tab").tabs();
@@ -151,6 +169,12 @@ function resetLayout(){
     }
     //Footer
     if($('#content-render').height() < height ){
-        $('#footer-wrapper').css('margin-bottom',-1*(height-$('#content-render').height()) );
+        $('#footer-wrapper').css('margin-bottom',-1*(height-$('#content-render').height()-7) );
+    } else {
+        $('#footer-wrapper').css({
+            position:     'relative',
+            marginTop:    '0',
+            marginBottom: '0'
+        });
     }
 }

@@ -16,7 +16,7 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-     
+
      class CommentsProcessingAjax
      {
         private $comments ;
@@ -37,7 +37,7 @@
             2 => 'c.s_body',
             3 => 'c.dt_pub_date'
         ) ;
-        
+
         /* For Datatables */
         private $sEcho = null;
         private $_get ;
@@ -46,16 +46,16 @@
         {
             $this->_get = $params ;
             $this->getDBParams() ;
-            
+
             // force ORDER BY
             $this->order_by['column_name'] = $this->column_names[3] ;
             $this->order_by['type'] = 'desc' ;
-            
+
             $this->comments       = ItemComment::newInstance()->search($this->resourceID, $this->start, $this->limit, 
                     ( $this->order_by['column_name'] ? $this->order_by['column_name'] : 'pk_i_id' ), 
                     ( $this->order_by['type'] ? $this->order_by['type'] : 'desc' ),
                     $this->showAll) ;
-            
+
             if($this->showAll) {
                 $this->total          = ItemComment::newInstance()->countAll();
             } else {
@@ -83,9 +83,9 @@
             } else {
                 $this->iPage = Params::getParam('iPage') ;
             }
-            
+
             $this->showAll   = Params::getParam('showAll') ;
-            
+
             foreach($this->_get as $k => $v) {
                 if( ( $k == 'resourceId' ) && !empty($v) ) {
                     $this->resourceID = intval($v) ;
@@ -97,10 +97,10 @@
                     $this->limit = intval($v) ;
                 }
             }
-            
+
             // set start and limit using iPage param
             $start = ((int)$this->iPage-1) * $this->_get['iDisplayLength'];
-            
+
             $this->start = intval( $start ) ;
             $this->limit = intval( $this->_get['iDisplayLength'] ) ;
         }
@@ -116,7 +116,7 @@
             if( count($this->comments) == 0 ) {
                 return ;
             }
-            
+
             $this->result['aaObject'] = $this->comments;
 
             $count = 0 ;
@@ -124,6 +124,8 @@
                 $row = array() ;
                 $options = array() ;
                 $options_more = array() ;
+
+                View::newInstance()->_exportVariableToView('item', Item::newInstance()->findByPrimaryKey($comment['fk_i_item_id']));
 
                 if( $comment['b_active'] ) {
                     $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') . '</a>' ;
@@ -135,9 +137,9 @@
                 } else {
                     $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=ENABLE">' . __('Unblock') . '</a>' ;
                 }
-                
+
                 $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=comment_edit&amp;id=' . $comment['pk_i_id'] . '" id="dt_link_edit">' . __('Edit') . '</a>' ;
-                $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) . '\')" href="' . osc_admin_base_url(true) . '?page=comments&amp;action=delete&amp;id=' . $comment['pk_i_id'] .'" id="dt_link_delete">' . __('Delete') . '</a>' ;
+                $options[] = '<a onclick="return delete_dialog(\'' . $comment['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=comments&amp;action=delete&amp;id=' . $comment['pk_i_id'] .'" id="dt_link_delete">' . __('Delete') . '</a>' ;
 
                 // more actions
                 $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL ;
@@ -161,10 +163,9 @@
                     $user = User::newInstance()->findByPrimaryKey( $comment['fk_i_user_id'] );
                     $comment['s_author_name'] = $user['s_email'];
                 }
-                $row[] = $comment['s_author_name'] . ' (<a target="_blank" href="' . osc_item_url_ns( $comment['fk_i_item_id'] ) . '">' . $comment['s_title'] . '</a>)'. $actions  ;
+                $row[] = $comment['s_author_name'] . ' (<a target="_blank" href="' . osc_item_url() . '">' . osc_item_title() . '</a>)'. $actions  ;
                 $row[] = $comment['s_body'] ;
                 $row[] = $comment['dt_pub_date'] ;
-
 
                 $count++ ;
                 $this->result['aaData'][] = $row ;
@@ -206,7 +207,7 @@
             $this->toDatatablesFormat() ;
             $this->dumpResult() ;
         }
-        
+
         /**
          * Dump $result to JSON and return the result
          * 

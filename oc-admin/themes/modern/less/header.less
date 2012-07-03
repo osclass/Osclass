@@ -21,3 +21,25 @@
 .navbar a{
     color:@color-white;
 }
+#osc_toolbar_switch_mode{
+    position: relative;
+    padding-right:80px;
+    color:@color-gray-dim;
+    padding-top:10px;
+    margin-right:10px;
+    cursor:default;
+}
+#osc_toolbar_switch_mode .trigger{
+    position: absolute;
+    right:0;
+    top:0;
+    width:70px;
+    height:36px;
+    background-image:url(../images/switch.png);
+    display: block;
+    cursor:pointer;
+    background-position:bottom left;
+}
+body.compact #osc_toolbar_switch_mode .trigger{
+    background-position:top left;
+}

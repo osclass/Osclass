@@ -140,7 +140,7 @@
          * @return array
          */
         
-        public function findByRegionId($reginId) 
+        public function findByRegionId($regionId) 
         {
             return $this->findByPrimaryKey($regionId);
         }   

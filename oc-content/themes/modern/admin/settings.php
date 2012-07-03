@@ -12,12 +12,12 @@
             <option value="25">25$</option>
             <option value="10" selected>10$</option>
             <option value="5">5$</option>
-            <option value="">Custom</option>
+            <option value=""><?php _e('Custom', 'modern'); ?></option>
         </select><input type="submit" class="btn btn-mini" name="submit" value="<?php echo osc_esc_html(__('Donate', 'modern')); ?>"></p>
     </div>
 </form>
 <?php } ?>
-<h2 class="render-title <?php echo (osc_get_preference('footer_link', 'modern_theme') ? '' : 'separate-top'); ?>"><?php _e('Theme settings'); ?></h2>
+<h2 class="render-title <?php echo (osc_get_preference('footer_link', 'modern_theme') ? '' : 'separate-top'); ?>"><?php _e('Theme settings', 'modern'); ?></h2>
 <form action="<?php echo osc_admin_render_theme_url('oc-content/themes/modern/admin/settings.php'); ?>" method="post">
     <input type="hidden" name="action_specific" value="settings" />
     <fieldset>
