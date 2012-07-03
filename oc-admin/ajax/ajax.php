@@ -395,7 +395,7 @@
                                     $aFieldsDescription[$m[1]][$m[2]] = $v;
                                     $s_text = $v;
                                 } else {
-                                    $aFieldsDescription[$m[1]][$m[2]] = ' ';
+                                    $aFieldsDescription[$m[1]][$m[2]] = NULL;
                                     $error = 1;
                                 }
                             } else {
