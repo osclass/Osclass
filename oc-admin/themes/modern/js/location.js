@@ -78,6 +78,7 @@
                     div_regions.append(container);
                     div_regions.append(clear);
                 });
+                resetLayout();
             }
         });
         $('input[name=country_c_parent]').val(c_code);
@@ -103,6 +104,7 @@
                     div_regions.append(container);
                     div_regions.append(clear);
                 });
+                resetLayout();
             }
         });
         $('#b_new_city').css('display','block');

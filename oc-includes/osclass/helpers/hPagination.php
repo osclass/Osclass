@@ -88,9 +88,6 @@
         return $pagination->doPagination();
     }
 
-    
-    
-    
     function osc_show_pagination_admin($aData)
     {
         $pageActual = Params::getParam('iPage');
@@ -103,13 +100,15 @@
             'url'      => $urlActual . '&iPage={PAGE}',
             'sides'    => 5
         );
+
+        if( $pageTotal > 1 ) {
     ?>
     <div class="has-pagination">
         <?php osc_run_hook('before_show_pagination_admin'); ?>
         <form method="get" action="<?php echo $urlActual; ?>" style="display:inline;">
             <?php foreach( Params::getParamsAsArray('get') as $key => $value ) { ?>
             <?php if($key!='iPage') {?>
-            <input type="hidden" name="<?php echo $key;?>" value="<?php echo osc_esc_html($value); ?>" />
+            <input type="hidden" name="<?php echo $key; ?>" value="<?php echo osc_esc_html($value); ?>" />
             <?php } } ?>
             <ul>
                 <li>
@@ -121,17 +120,16 @@
             </ul>
         </form>
     <?php
-            $pagination = new Pagination($params);
-            $aux = $pagination->doPagination();
-            echo $aux;
-            osc_run_hook('after_show_pagination_admin');
+        $pagination = new Pagination($params);
+        $aux = $pagination->doPagination();
+        echo $aux;
+        osc_run_hook('after_show_pagination_admin');
     ?>
     </div>
-    <?php 
+    <?php
+        }
     }
 
-    
-    
     function osc_pagination_showing($from, $to, $filtered, $total = null)
     {
         if($to==0 || $filtered==0) {
@@ -143,6 +141,5 @@
             return sprintf(__("Showing %s to %s of %s results"), $from, $to, $filtered);
         }
     }
-    
-    
+
 ?>

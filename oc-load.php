@@ -185,6 +185,9 @@ require_once LIB_PATH . 'osclass/helpers/hAdminMenu.php';
 
 define('__OSC_LOADED__', true);
 
+// Moved from BaseModel, since we need some session magic on index.php ;)
+Session::newInstance()->session_start() ;
+
 if( OC_ADMIN ) {
     // init admin menu
     AdminMenu::newInstance()->init();
@@ -195,8 +198,6 @@ if( OC_ADMIN ) {
 
 Plugins::init() ;
 
-// Moved from BaseModel, since we need some session magic on index.php ;)
-Session::newInstance()->session_start() ;
 
 if(osc_timezone() != '') {
     date_default_timezone_set(osc_timezone());

@@ -16,7 +16,6 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    osc_current_admin_theme_path( 'functions.php' );
     $new_item = __get('new_item');
     function customText($return = 'title'){
         $new_item = __get('new_item') ;
@@ -98,12 +97,12 @@
     }
 osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="pretty-form">
-<div class="grid-row grid-50 no-bottom-margin">
+<div class="grid-row no-bottom-margin">
     <div class="row-wrapper">
         <h2 class="render-title"><?php echo customText('subtitle') ; ?></h2>
     </div>
 </div>
-<div class="grid-row grid-50 no-bottom-margin">
+<div class="grid-row no-bottom-margin float-right">
     <div class="row-wrapper">
         <?php if( !$new_item ) { ?>
         <ul id="item-action-list">

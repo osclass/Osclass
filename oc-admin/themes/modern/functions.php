@@ -1,4 +1,31 @@
 <?php
+osc_add_filter('admin_body_class', 'admin_modeCompact_class');
+function admin_modeCompact_class($args){
+    $compactMode = osc_get_preference('compact_mode','modern_admin_theme');
+    if($compactMode == true){
+        $args[] = 'compact';
+    }
+    return $args;
+}
+osc_add_hook('ajax_admin_compactmode','modern_compactmode_actions');
+function modern_compactmode_actions(){
+    $compactMode = osc_get_preference('compact_mode','modern_admin_theme');
+    $modeStatus  = array('compact_mode'=>true);
+    if($compactMode == true){
+        $modeStatus['compact_mode'] = false;
+    }
+    osc_set_preference('compact_mode', $modeStatus['compact_mode'], 'modern_admin_theme');
+    echo json_encode($modeStatus);
+}
+osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_switch_mode'  , 1 );
+function osc_admin_toolbar_switch_mode(){
+    AdminToolbar::newInstance()->add_menu( array(
+                'id'        => 'switch_mode',
+                'title'     => __('Compact mode').'<span class="trigger"></span>',
+                'href'      => osc_admin_base_url(true).'?page=ajax&action=runhook&hook=compactmode',
+                'meta'      => array('class' => 'float-right')
+            ) );
+}
 function printLocaleTabs($locales = null)
 {
     if($locales==null) { $locales = osc_get_locales(); }
@@ -47,6 +74,7 @@ function printLocaleTitlePage($locales = null,$page = null)
         }
         $name = $locale['pk_c_code'] . '#s_title';
 
+        echo '<div><label for="title">' . __('Title') . ' *</label>';
         echo '<div class="input-has-placeholder input-title-wide"><label for="title">' . __('Enter title here') . ' *</label>';
         echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($title, ENT_COMPAT, "UTF-8")) . '"  />' ;
         echo '</div>';
@@ -128,34 +156,3 @@ function jsLoacaleSelector()
 }
 
 osc_add_hook('admin_header','jsLoacaleSelector');
-/*
-foreach($locales as $locale) {
-    if($num_locales>1) { echo '<h2>' . $locale['s_name'] . '</h2>'; };
-
-
-
-
-
-
-
-    echo '<div><label for="title">' . __('Title') . ' *</label></div>';
-    $title = (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_title'])) ? $item['locale'][$locale['pk_c_code']]['s_title'] : '' ;
-    if( Session::newInstance()->_getForm('title') != "" ) {
-        $title_ = Session::newInstance()->_getForm('title');
-        if( $title_[$locale['pk_c_code']] != "" ){
-            $title = $title_[$locale['pk_c_code']];
-        }
-    }
-    self::title_input('title', $locale['pk_c_code'], $title);
-
-
-    echo '<div><label for="description">' . __('Description') . ' *</label></div>';
-    $description = (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_description'])) ? $item['locale'][$locale['pk_c_code']]['s_description'] : '';
-    if( Session::newInstance()->_getForm('description') != "" ) {
-        $description_ = Session::newInstance()->_getForm('description');
-        if( $description_[$locale['pk_c_code']] != "" ){
-            $description = $description_[$locale['pk_c_code']];
-        }
-    }
-    self::description_textarea('description', $locale['pk_c_code'], $description);
- }*/

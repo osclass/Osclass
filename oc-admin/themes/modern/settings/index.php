@@ -54,24 +54,24 @@
             },
             messages: {
                 pageTitle: {
-                    required: "<?php _e("Page title: this field is required"); ?>.",
-                    minlength: "<?php _e("Page title: this field is required"); ?>."
+                    required: "<?php echo osc_esc_js(__("Page title: this field is required")); ?>.",
+                    minlength: "<?php echo osc_esc_js(__("Page title: this field is required")); ?>."
                 },
                 contactEmail: {
-                    required: "<?php _e("Email: this field is required"); ?>.",
-                    email: "<?php _e("Invalid email address"); ?>."
+                    required: "<?php echo osc_esc_js(__("Email: this field is required")); ?>.",
+                    email: "<?php echo osc_esc_js(__("Invalid email address")); ?>."
                 },
                 num_rss_items: {
-                    required: "<?php _e("RSS shows: this field is required"); ?>.",
-                    digits: "<?php _e("RSS shows: this field has to be numeric only"); ?>."
+                    required: "<?php echo osc_esc_js(__("RSS shows: this field is required")); ?>.",
+                    digits: "<?php echo osc_esc_js(__("RSS shows: this field has to be numeric only")); ?>."
                 },
                 max_latest_items_at_home: {
-                    required: "<?php _e("The latest listings show: this field is required"); ?>.",
-                    digits: "<?php _e("The latest listings show: this field has to be numeric only"); ?>."
+                    required: "<?php echo osc_esc_js(__("The latest listings show: this field is required")); ?>.",
+                    digits: "<?php echo osc_esc_js(__("The latest listings show: this field has to be numeric only")); ?>."
                 },
                 default_results_per_page: {
-                    required: "<?php _e("The search page shows: this field is required"); ?>.",
-                    digits: "<?php _e("The search page shows: this field has to be numeric only"); ?>."
+                    required: "<?php echo osc_esc_js(__("The search page shows: this field is required")); ?>.",
+                    digits: "<?php echo osc_esc_js(__("The search page shows: this field has to be numeric only")); ?>."
                 }
             },
             wrapper: "li",
@@ -184,12 +184,6 @@
                             </select>
                         </div>
                     </div>
-                    <?php /* <div class="form-row">
-                        <div class="form-label"><?php _e('External sources'); ?></div>
-                        <div class="form-controls">
-                    <input type="checkbox" id="market_external_sources" name="market_external_sources" value="1" <?php if(osc_market_external_sources()==1) {echo 'checked="checked"';}; ?> />
-                    <?php _e('Allow download packages from external sources'); ?>
-                    </div></div> */ ?>
                     <div class="form-row">
                         <div class="form-label"><?php _e('Timezone') ; ?></div>
                         <div class="form-controls">
@@ -275,34 +269,54 @@
                     <div class="form-row">
                         <div class="form-label"><?php _e('Parent categories'); ?></div>
                         <div class="form-controls">
-                            <div class="form-label-checkbox"><input type="checkbox" <?php echo ( osc_selectable_parent_categories() ? 'checked="checked"' : '' ) ; ?> name="selectable_parent_categories" value="1" />
-                            <?php _e('Allow users to select as a category when inserting or editing a listing a parent category') ; ?></div>
+                            <div class="form-label-checkbox">
+                                <label>
+                                    <input type="checkbox" <?php echo ( osc_selectable_parent_categories() ? 'checked="checked"' : '' ) ; ?> name="selectable_parent_categories" value="1" />
+                            <?php _e('Allow users to select as a category when inserting or editing a listing a parent category') ; ?>
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <h2 class="render-title separate-top"><?php _e('Contact Settings') ; ?></h2>
                     <div class="form-row">
                         <div class="form-label"><?php _e('Attachments') ; ?></div>
                         <div class="form-controls">
-                            <div class="form-label-checkbox"><input type="checkbox" <?php echo ( osc_contact_attachment() ? 'checked="checked"' : '' ) ; ?> name="enabled_attachment" value="1" />
-                            <?php _e('Allow people to attach a file to the contact form') ; ?></div>
+                            <div class="form-label-checkbox">
+                                <label>
+                                    <input type="checkbox" <?php echo ( osc_contact_attachment() ? 'checked="checked"' : '' ) ; ?> name="enabled_attachment" value="1" />
+                            <?php _e('Allow people to attach a file to the contact form') ; ?>
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <h2 class="render-title separate-top"><?php _e('Cron Settings') ; ?></h2>
                     <div class="form-row">
                         <div class="form-label"><?php _e('Automatic cron process') ; ?></div>
                         <div class="form-controls">
-                            <div class="form-label-checkbox"><input type="checkbox" <?php echo ( osc_auto_cron() ? 'checked="checked"' : '' ) ; ?> name="auto_cron" />
-                            <?php printf(__('Allow OSClass to run a built-in <a href="%s" target="_blank">cron</a> automatically without setting crontab'), 'http://en.wikipedia.org/wiki/Cron' ) ; ?></div>
+                            <div class="form-label-checkbox">
+                                <label>
+                                    <input type="checkbox" <?php echo ( osc_auto_cron() ? 'checked="checked"' : '' ) ; ?> name="auto_cron" />
+                            <?php printf(__('Allow OSClass to run a built-in <a href="%s" target="_blank">cron</a> automatically without setting crontab'), 'http://en.wikipedia.org/wiki/Cron' ) ; ?>
+                                </label>
+                            </div>
                             <span class="help-box"><?php _e('It is <b>recommended</b> to have this option enabled, because some features require it.') ; ?></span>
                         </div>
                     </div>
+                    <h2 class="render-title separate-top"><?php _e('Check plugin & theme updates') ; ?></h2>
+                    <div class="form-row">
+                        <div class="form-label"><a class="btn" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=check_updates"><?php _e('Check updates');?></a></div>
+                        <div class="form-controls">
+                            <?php _e('Check for plugin or theme updates. Updates are checked once a day.') ; ?>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
                     <div class="form-actions">
                         <input type="submit" id="save_changes" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" class="btn btn-submit" />
                     </div>
                 </div>
-                        </fieldset>
-                    </form>
-                </div>
-                <!-- /settings form -->
+            </fieldset>
+        </form>
+    </div>
+    <!-- /settings form -->
 </div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                

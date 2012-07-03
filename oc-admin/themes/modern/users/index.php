@@ -17,7 +17,7 @@
      */
 
     function customPageHeader(){ ?>
-        <h1><?php _e('Manage users') ; ?>
+        <h1><?php _e('Users') ; ?>
 		<a href="#" class="btn ico ico-32 ico-engine float-right"></a>
 		<a href="#" class="btn ico ico-32 ico-help float-right"></a>
                 <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=create' ; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
@@ -57,6 +57,7 @@
     $aData          = __get('aUsers'); 
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?> 
+<h2 class="render-title"><?php _e('Manage users'); ?> <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=create' ; ?>" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
 <div class="relative">
     <div id="users-toolbar" class="table-toolbar">
         <div class="float-right">

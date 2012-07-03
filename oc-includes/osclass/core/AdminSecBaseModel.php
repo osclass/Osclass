@@ -28,7 +28,7 @@
 
             // check if is moderator and can enter to this page
             if( $this->isModerator() ) {
-                if( !in_array($this->page, array('items', 'comments', 'media', 'login', 'admins', 'ajax', '')) ) {
+                if( !in_array($this->page, array('items', 'comments', 'media', 'login', 'admins', 'ajax', 'stats','')) ) {
                     osc_add_flash_error_message(_m("You don't have enough permissions"), 'admin');
                     $this->redirectTo(osc_admin_base_url());
                 }
@@ -78,6 +78,11 @@
                         osc_add_flash_warning_message(_m("Error subscribing"), 'admin');
                     break;
                 }
+            }
+
+            // show donation successful
+            if( Params::getParam('donation') == 'successful' ) {
+                osc_add_flash_ok_message(_m('Thank you very much for your donation'), 'admin');
             }
         }
 

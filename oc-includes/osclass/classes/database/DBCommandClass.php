@@ -1334,6 +1334,9 @@
             $data_queries = array();
             $this->prepareAndSepareQueries($queries, $data_queries, $struct_queries);
 
+            // hack
+            $comm->query("SET FOREIGN_KEY_CHECKS = 0");
+            
             // Get tables from DB (already installed)
             $result = $this->query('SHOW TABLES');
             $tables = $result->result();
@@ -1392,7 +1395,8 @@
                     error_log(' --- ' . $q );
                 }
             }
-            
+            // hack
+            $comm->query("SET FOREIGN_KEY_CHECKS = 1");
             error_log(' ----- END updateDB ----- ');
             
             return array($ok, $queries, $error_queries);

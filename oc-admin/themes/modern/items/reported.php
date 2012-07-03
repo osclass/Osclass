@@ -16,8 +16,13 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    function addHelp() {
+        echo '<p>Desde aquí podrás borrar o editar los anuncios reportados por los usuarios (spam / mal clasificado / duplicado / expirado / ofensivo); también puedes eliminar el reporte si consideras que es erróneo.</p>';
+    }
+    osc_add_hook('help_box','addHelp');
+
     function customPageHeader(){ ?>
-        <h1><?php _e('Reported listings') ; ?>
+        <h1><?php _e('Listings') ; ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
        </h1>
 <?php
@@ -77,10 +82,22 @@
     $direction  = Params::getParam('direction');
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<h2 class="render-title"><?php _e('Manage reported listings') ; ?></h2>
+<h2 class="render-title"><?php _e('Reported listings') ; ?></h2>
 <div class="relative">
     <div id="listing-toolbar">
         <div class="float-right">
+            <form method="get" action="<?php echo osc_admin_base_url(true); ?>"  class="inline select-items-per-page">
+                <?php foreach( Params::getParamsAsArray('get') as $key => $value ) { ?>
+                <?php if( $key != 'iDisplayLength' ) { ?>
+                <input type="hidden" name="<?php echo $key; ?>" value="<?php echo osc_esc_html($value); ?>" />
+                <?php } } ?>
+                <select name="iDisplayLength" class="select-box-extra select-box-medium float-left" onchange="this.form.submit();" >
+                    <option value="10"><?php printf(__('%d Listings'), 10); ?></option>
+                    <option value="25" <?php if( Params::getParam('iDisplayLength') == 25 ) echo 'selected'; ?> ><?php printf(__('%d Listings'), 25); ?></option>
+                    <option value="50" <?php if( Params::getParam('iDisplayLength') == 50 ) echo 'selected'; ?> ><?php printf(__('%d Listings'), 50); ?></option>
+                    <option value="100" <?php if( Params::getParam('iDisplayLength') == 100 ) echo 'selected'; ?> ><?php printf(__('%d Listings'), 100); ?></option>
+                </select>
+            </form>
             <?php if($sort!='date') { ?>
             <a id="btn-reset-filters" class="btn btn-red" href="<?php echo osc_admin_base_url(true); ?>?page=items&action=items_reported"><?php _e('Reset filters'); ?></a>
             <?php } ?>
@@ -112,22 +129,22 @@
                         <th class="col-title"><?php _e('Title') ; ?></th>
                         <th><?php _e('User') ; ?></th>
                         <th class="<?php if($sort=='spam'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
-                            <a href="<?php echo $url_spam; ?>"><?php _e('Spam') ; ?></a>
+                            <a id="order_spam" href="<?php echo $url_spam; ?>"><?php _e('Spam') ; ?></a>
                         </th>
                         <th class="<?php if($sort=='bad'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
-                            <a href="<?php echo $url_bad; ?>"><?php _e('Misclassified') ; ?>
+                            <a id="order_bad" href="<?php echo $url_bad; ?>"><?php _e('Misclassified') ; ?>
                         </th>
                         <th class="<?php if($sort=='rep'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
-                            <a href="<?php echo $url_rep; ?>"><?php _e('Duplicated') ; ?>
+                            <a id="order_rep" href="<?php echo $url_rep; ?>"><?php _e('Duplicated') ; ?>
                         </th>
                         <th class="<?php if($sort=='exp'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
-                            <a href="<?php echo $url_exp; ?>"><?php _e('Expired') ; ?>
+                            <a id="order_exp" href="<?php echo $url_exp; ?>"><?php _e('Expired') ; ?>
                         </th>
                         <th class="<?php if($sort=='off'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
-                            <a href="<?php echo $url_off; ?>"><?php _e('Offensive') ; ?>
+                            <a id="order_off" href="<?php echo $url_off; ?>"><?php _e('Offensive') ; ?>
                         </th>
                         <th class="col-date <?php if($sort=='date'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
-                            <a href="<?php echo $url_date; ?>"><?php _e('Date') ; ?>
+                            <a id="order_date" href="<?php echo $url_date; ?>"><?php _e('Date') ; ?>
                         </th>
                     </tr>
                 </thead>
