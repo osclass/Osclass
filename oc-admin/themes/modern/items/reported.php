@@ -57,6 +57,32 @@
                     modal: true,
                     title: '<?php echo osc_esc_js( __('Delete listing') ); ?>'
                 });
+
+                // dialog bulk actions
+                $("#dialog-bulk-actions").dialog({
+                    autoOpen: false,
+                    modal: true
+                });
+                $("#bulk-actions-submit").click(function() {
+                    $("#datatablesForm").submit();
+                });
+                // dialog bulk actions function
+                $("#datatablesForm").submit(function() {
+                    if( $("#bulk_actions option:selected").val() == "" ) {
+                        return false;
+                    }
+
+                    if( $("#datatablesForm").attr('data-dialog-open') == "true" ) {
+                        return true;
+                    }
+
+                    $("#dialog-bulk-actions .form-row").html($("#bulk_actions option:selected").attr('data-dialog-content'));
+                    $("#bulk-actions-submit").html($("#bulk_actions option:selected").text());
+                    $("#datatablesForm").attr('data-dialog-open', 'true');
+                    $("#dialog-bulk-actions").dialog('open');
+                    return false;
+                });
+                // /dialog bulk actions
             });
             
             // dialog delete function
@@ -110,15 +136,14 @@
             <label>
                 <select id="bulk_actions" name="bulk_actions" class="select-box-extra">
                     <option value=""><?php _e('Bulk actions') ; ?></option>
-                    <option value="delete_all"><?php _e('Delete') ; ?></option>
-                    <option value="clear_all"><?php _e('Clear All') ; ?></option>
-                    <option value="clear_spam_all"><?php _e('Clear Spam') ; ?></option>
-                    <option value="clear_bad_all"><?php _e('Clear Missclassified') ; ?></option>
-                    <option value="clear_dupl_all"><?php _e('Clear Duplicated') ; ?></option>
-                    <option value="clear_expi_all"><?php _e('Clear Expired') ; ?></option>
-                    <option value="clear_offe_all"><?php _e('Clear Offensive') ; ?></option>
-                    <?php $onclick_bulkactions= 'onclick="javascript:return confirm(\'' . osc_esc_js( __('You are doing bulk actions. Are you sure you want to continue?') ) . '\')"' ; ?>
-                </select> <input type="submit" <?php echo $onclick_bulkactions; ?> id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                    <option value="delete_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected items?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ; ?></option>
+                    <option value="clear_all" data-dialog-content="<?php _e('Are you sure you want to clear all the reportings of the selected items?'); ?>"><?php _e('Clear All') ; ?></option>
+                    <option value="clear_spam_all" data-dialog-content="<?php _e('Are you sure you want to clear the spam reportings of the selected items?'); ?>"><?php _e('Clear Spam') ; ?></option>
+                    <option value="clear_bad_all" data-dialog-content="<?php _e('Are you sure you want to clear the misclassified reportings of the selected items?'); ?>"><?php _e('Clear Missclassified') ; ?></option>
+                    <option value="clear_dupl_all" data-dialog-content="<?php _e('Are you sure you want to clear the duplicated reportings of the selected items?'); ?>"><?php _e('Clear Duplicated') ; ?></option>
+                    <option value="clear_expi_all" data-dialog-content="<?php _e('Are you sure you want to clear the expired reportings of the selected items?'); ?>"><?php _e('Clear Expired') ; ?></option>
+                    <option value="clear_offe_all" data-dialog-content="<?php _e('Are you sure you want to clear the offensive reportings of the selected items?'); ?>"><?php _e('Clear Offensive') ; ?></option>
+                </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
             </label>
         </div>
         <div class="table-contains-actions">
@@ -179,7 +204,7 @@
 <?php 
     osc_show_pagination_admin($aData);
 ?>
-<form id="dialog-item-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions">
+<form id="dialog-item-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
     <input type="hidden" name="page" value="items" />
     <input type="hidden" name="action" value="delete" />
     <input type="hidden" name="id[]" value="" />
@@ -195,4 +220,16 @@
         </div>
     </div>
 </form>
+<div id="dialog-bulk-actions" title="<?php _e('Bulk actions'); ?>" class="has-form-actions hide">
+    <div class="form-horizontal">
+        <div class="form-row"></div>
+        <div class="form-actions">
+            <div class="wrapper">
+                <a class="btn" href="javascript:void(0);" onclick="$('#dialog-bulk-actions').dialog('close');"><?php _e('Cancel'); ?></a>
+                <a id="bulk-actions-submit" href="javascript:void(0);" class="btn btn-red" ><?php echo osc_esc_html( __('Delete') ); ?></a>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

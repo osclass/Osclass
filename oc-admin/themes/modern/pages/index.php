@@ -133,7 +133,7 @@
             <label>
                 <select id="bulk_actions" name="action" class="select-box-extra">
                     <option value=""><?php _e('Bulk actions'); ?></option>
-                    <option value="delete"data-dialog-content="<?php printf(__('Are you sure you want to %s the selected pages?'), strtolower(__('Delete'))); ?>"><?php _e('Delete'); ?></option>
+                    <option value="delete" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected pages?'), strtolower(__('Delete'))); ?>"><?php _e('Delete'); ?></option>
                 </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ); ?>" />
             </label>
         </div>
@@ -178,7 +178,7 @@
 <?php 
     osc_show_pagination_admin($aData);
 ?>
-<form id="dialog-page-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions" title="<?php echo osc_esc_html(__('Delete page')); ?>">
+<form id="dialog-page-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete page')); ?>">
     <input type="hidden" name="page" value="pages" />
     <input type="hidden" name="action" value="delete" />
     <input type="hidden" name="id" value="" />
@@ -194,7 +194,7 @@
         </div>
     </div>
 </form>
-<div id="dialog-bulk-actions" title="<?php _e('Bulk actions'); ?>" class="has-form-actions">
+<div id="dialog-bulk-actions" title="<?php _e('Bulk actions'); ?>" class="has-form-actions hide">
     <div class="form-horizontal">
         <div class="form-row"></div>
         <div class="form-actions">
