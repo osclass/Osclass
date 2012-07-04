@@ -101,7 +101,7 @@ class OCadmin_pages extends OCadminTest {
         }
 
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='pages_manage']");
+        $this->selenium->click("//a[@id='pages']");
         $this->selenium->waitForPageToLoad("10000");
         $res = $this->selenium->getXpathCount("//table[@class='table']/tbody/tr");
         $this->assertEqual(10, $res,"10 rows does not appear [$res]");
@@ -123,7 +123,10 @@ class OCadmin_pages extends OCadminTest {
     private function newPage($internal_name)
     {
         $this->selenium->open( osc_admin_base_url(true) ) ;
-        $this->selenium->click("//a[@id='pages_new']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("//a[@id='pages']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("link=Add new");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->type("s_internal_name", $internal_name );
         $this->selenium->type("en_US#s_title", "title US");
@@ -140,7 +143,10 @@ class OCadmin_pages extends OCadminTest {
     private function newPageWithData($internal_name, $title, $description)
     {
         $this->selenium->open( osc_admin_base_url(true) ) ;
-        $this->selenium->click("//a[@id='pages_new']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("//a[@id='pages']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("link=Add new");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->type("s_internal_name", $internal_name );
@@ -158,7 +164,7 @@ class OCadmin_pages extends OCadminTest {
     private function checkPageData($internal_name, $title, $description) 
     {
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='pages_manage']");
+        $this->selenium->click("//a[@id='pages']");
         $this->selenium->waitForPageToLoad("30000");
 
         $this->selenium->mouseOver("//td[contains(.,'$internal_name')]");
@@ -178,7 +184,7 @@ class OCadmin_pages extends OCadminTest {
     private function editPage($internal_name, $title, $description)
     {
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='pages_manage']");
+        $this->selenium->click("//a[@id='pages']");
         $this->selenium->waitForPageToLoad("30000");
 
         $this->selenium->mouseOver("//td[contains(.,'$internal_name')]");
@@ -209,11 +215,13 @@ class OCadmin_pages extends OCadminTest {
     private function deletePage($internal_name)
     {
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='pages_manage']");
+        $this->selenium->click("//a[@id='pages']");
         $this->selenium->waitForPageToLoad("30000");
         
         $this->selenium->mouseOver("//td[contains(.,'$internal_name')]");
         $this->selenium->click("//div[@class='actions']/ul/li/a[text()='Delete']");
+        sleep(2);
+        $this->selenium->click("//input[@id='page-delete-submit']");
 
         // click alert OK
         
@@ -229,7 +237,7 @@ class OCadmin_pages extends OCadminTest {
     private function selectAndDelete($internal_name, $beg, $fin)
     {
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='pages_manage']");
+        $this->selenium->click("//a[@id='pages']");
         $this->selenium->waitForPageToLoad("30000");
 
         $beg_ = $beg;
@@ -239,6 +247,8 @@ class OCadmin_pages extends OCadminTest {
 
         $this->selenium->select("//select[@name='action']", "label=Delete");
         $this->selenium->click("//input[@id='bulk_apply']");
+        sleep(2);
+        $this->selenium->click("//a[@id='bulk-actions-submit']");
         $this->selenium->waitForPageToLoad("30000");
 
         if( $this->selenium->isTextPresent( ($fin-$beg) . " pages have been deleted correctly") ){
@@ -251,13 +261,15 @@ class OCadmin_pages extends OCadminTest {
     private function selectAllAndDelete()
     {
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='pages_manage']");
+        $this->selenium->click("//a[@id='pages']");
         $this->selenium->waitForPageToLoad("30000");
 
 
         $this->selenium->click("//input[@id='check_all']");
         $this->selenium->select("//select[@name='action']", "label=Delete");
         $this->selenium->click("//input[@id='bulk_apply']");
+        sleep(2);
+        $this->selenium->click("//a[@id='bulk-actions-submit']");
         $this->selenium->waitForPageToLoad("30000");
         // "regexpi:This is SeleniumWiki.com"
         if( $this->selenium->isTextPresent( "regexpi:pages have been deleted correctly") ){
