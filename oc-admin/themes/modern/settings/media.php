@@ -146,7 +146,7 @@ $(document).ready(function(){
 <div id="general-settings">
     <h2 class="render-title"><?php _e('Media Settings'); ?></h2>
     <ul id="error_list"></ul>
-    <form name="media_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+    <form name="media_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data">
         <input type="hidden" name="page" value="settings" />
         <input type="hidden" name="action" value="media_post" />
         <fieldset>
