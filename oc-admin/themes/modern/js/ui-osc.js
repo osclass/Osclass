@@ -165,13 +165,16 @@ function resetLayout(){
     var headerHeight = 50;
     var compactModeButtonHeight = 75;
     var menuItemHeight = 80;
-    if($('body').hasClass('compact')){
-        menuItemHeight = 50;
-    }
     var height  = $(this).height()-headerHeight;
     var visible = Math.floor(((height-compactModeButtonHeight)/menuItemHeight)-2)
     $('#sidebar').css('height',height);
     $('#sidebar ul.oscmenu > li').show();
+    
+    if($('body').hasClass('compact')){
+        $('#show-more').hide();
+        $('#sidebar ul.oscmenu > li').show();
+        return false;
+    }
     var hidden = $('#sidebar ul.oscmenu > li:gt('+visible+')');
     $('#hidden-menus').empty().append(hidden.clone()).css('width',(hidden.length*menuItemHeight));
     hidden.hide();
