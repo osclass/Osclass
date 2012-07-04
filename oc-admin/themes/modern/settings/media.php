@@ -27,101 +27,106 @@
         ?>
         <link rel="stylesheet" media="screen" type="text/css" href="<?php echo osc_current_admin_theme_js_url('colorpicker/css/colorpicker.css') ; ?>" />
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('colorpicker/js/colorpicker.js') ; ?>"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-    // Code for form validation
-    $.validator.addMethod('regexp', function(value, element, param) {
-        return this.optional(element) || value.match(param);
-    },
-    '<?php echo osc_esc_js( __('Size is not in the correct format') ); ?>');
+        <script type="text/javascript">
+            $(document).ready(function(){
+                // Code for form validation
+                $.validator.addMethod('regexp', function(value, element, param) {
+                    return this.optional(element) || value.match(param);
+                }, '<?php echo osc_esc_js( __('Size is not in the correct format') ); ?>');
 
-    $("form[name=media_form]").validate({
-        rules: {
-            dimThumbnail: {
-                required: true,
-                regexp: /^[0-9]+x[0-9]+$/i
-            },
-            dimPreview: {
-                required: true,
-                regexp: /^[0-9]+x[0-9]+$/i
-            },
-            dimNormal: {
-                required: true,
-                regexp: /^[0-9]+x[0-9]+$/i
-            },
-            maxSizeKb: {
-                required: true,
-                digits: true
-            }
-        },
-        messages: {
-            dimThumbnail: {
-                required: '<?php echo osc_esc_js( __("Thumbnail size: this field is required")); ?>',
-                regexp: '<?php echo osc_esc_js( __("Thumbnail size: is not in the correct format")); ?>'
-            },
-            dimPreview: {
-                required: '<?php echo osc_esc_js( __("Preview size: this field is required")); ?>',
-                regexp: '<?php echo osc_esc_js( __("Preview size: is not in the correct format")); ?>'
-            },
-            dimNormal: {
-                required: '<?php echo osc_esc_js( __("Normal size: this field is required")); ?>',
-                regexp: '<?php echo osc_esc_js( __("Normal size: is not in the correct format")); ?>'
-            },
-            maxSizeKb: {
-                required: '<?php echo osc_esc_js( __("Maximum size: this field is required")); ?>',
-                digits: '<?php echo osc_esc_js( __("Maximum size: this field has to be numeric only")); ?>'
-            }
-        },
-        wrapper: "li",
-        errorLabelContainer: "#error_list",
-        invalidHandler: function(form, validator) {
-            $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
-        }
-    });
+                $("form[name=media_form]").validate({
+                    rules: {
+                        dimThumbnail: {
+                            required: true,
+                            regexp: /^[0-9]+x[0-9]+$/i
+                        },
+                        dimPreview: {
+                            required: true,
+                            regexp: /^[0-9]+x[0-9]+$/i
+                        },
+                        dimNormal: {
+                            required: true,
+                            regexp: /^[0-9]+x[0-9]+$/i
+                        },
+                        maxSizeKb: {
+                            required: true,
+                            digits: true
+                        }
+                    },
+                    messages: {
+                        dimThumbnail: {
+                            required: '<?php echo osc_esc_js( __("Thumbnail size: this field is required")); ?>',
+                            regexp: '<?php echo osc_esc_js( __("Thumbnail size: is not in the correct format")); ?>'
+                        },
+                        dimPreview: {
+                            required: '<?php echo osc_esc_js( __("Preview size: this field is required")); ?>',
+                            regexp: '<?php echo osc_esc_js( __("Preview size: is not in the correct format")); ?>'
+                        },
+                        dimNormal: {
+                            required: '<?php echo osc_esc_js( __("Normal size: this field is required")); ?>',
+                            regexp: '<?php echo osc_esc_js( __("Normal size: is not in the correct format")); ?>'
+                        },
+                        maxSizeKb: {
+                            required: '<?php echo osc_esc_js( __("Maximum size: this field is required")); ?>',
+                            digits: '<?php echo osc_esc_js( __("Maximum size: this field has to be numeric only")); ?>'
+                        }
+                    },
+                    wrapper: "li",
+                    errorLabelContainer: "#error_list",
+                    invalidHandler: function(form, validator) {
+                        $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+                    }
+                });
 
-    $('#colorpickerField').ColorPicker({
-        onSubmit: function(hsb, hex, rgb, el) { },
-        onChange: function (hsb, hex, rgb) {
-            $('#colorpickerField').val(hex) ;
-        }
-    }) ;
+                $('#colorpickerField').ColorPicker({
+                    onSubmit: function(hsb, hex, rgb, el) { },
+                    onChange: function (hsb, hex, rgb) {
+                        $('#colorpickerField').val(hex) ;
+                    }
+                });
 
-    $('#watermark_none').bind('change', function() {
-        if( $(this).attr('checked') ) {
-            $('#watermark_text_box').hide() ;
-            $('#watermark_image_box').hide() ;
-        }
-    }) ;
+                $('#watermark_none').bind('change', function() {
+                    if( $(this).attr('checked') ) {
+                        $('#watermark_text_box').hide() ;
+                        $('#watermark_image_box').hide() ;
+                    }
+                });
 
-    $('#watermark_text').bind('change', function() {
-        if( $(this).attr('checked') ) {
-            $('#watermark_text_box').show() ;
-            $('#watermark_image_box').hide() ;
-            if( !$('input[name="keep_original_image"]').attr('checked') ) {
-                alert('<?php echo osc_esc_js( __("It's highly recommended to have 'Keep original image' option active when you use watermarks.") ) ; ?>') ;
-            }
-        }
-    }) ;
+                // dialog bulk actions
+                $("#dialog-watermark-warning").dialog({
+                    autoOpen: false,
+                    modal: true
+                });
 
-    $('#watermark_image').bind('change', function() {
-        if( $(this).attr('checked') ) {
-            $('#watermark_text_box').hide() ;
-            $('#watermark_image_box').show() ;
-            if( !$('input[name="keep_original_image"]').attr('checked') ) {
-                alert('<?php echo osc_esc_js( __("It's highly recommended to have 'Keep original image' option active when you use watermarks.") ) ; ?>') ;
-            }
-        }
-    }) ;
+                $('#watermark_text').bind('change', function() {
+                    if( $(this).attr('checked') ) {
+                        $('#watermark_text_box').show() ;
+                        $('#watermark_image_box').hide() ;
+                        if( !$('input[name="keep_original_image"]').attr('checked') ) {
+                            $("#dialog-watermark-warning").dialog('open');
+                        }
+                    }
+                });
 
-    $('input[name="keep_original_image"]').change(function() {
-        if( !$(this).attr('checked') ) {
-            if( !$('#watermark_none').attr('checked') ) {
-                alert('<?php echo osc_esc_js( __("It's highly recommended to have 'Keep original image' option active when you use watermarks.") ) ; ?>') ;
-            }
-        }
-    }) ;
-}) ;
-</script>
+                $('#watermark_image').bind('change', function() {
+                    if( $(this).attr('checked') ) {
+                        $('#watermark_text_box').hide() ;
+                        $('#watermark_image_box').show() ;
+                        if( !$('input[name="keep_original_image"]').attr('checked') ) {
+                            $("#dialog-watermark-warning").dialog('open');
+                        }
+                    }
+                });
+
+                $('input[name="keep_original_image"]').change(function() {
+                    if( !$(this).attr('checked') ) {
+                        if( !$('#watermark_none').attr('checked') ) {
+                            $("#dialog-watermark-warning").dialog('open');
+                        }
+                    }
+                });
+            });
+        </script>
         <?php
     }
     osc_add_hook('admin_header','customHead');
@@ -175,9 +180,7 @@ $(document).ready(function(){
                         </div>
                     </div>
                 </div>
-                
                 <h2 class="render-title"><?php _e('Restrictions') ; ?></h2>
-
                 <div class="form-row">
                     <div class="form-label"><?php _e('Maximum size') ; ?></div>
                     <div class="form-controls">
@@ -188,7 +191,6 @@ $(document).ready(function(){
                         </div>
                     </div>
                 </div>
-                
                 <div class="form-row">
                     <div class="form-label"><?php _e('Allowed formats') ; ?></div>
                     <div class="form-controls">
@@ -196,7 +198,6 @@ $(document).ready(function(){
                         <span class="help-box"><?php _e('For example: jpg, png, gif') ; ?></span>
                     </div>
                 </div>
-                
                 <div class="form-row">
                     <div class="form-label"><?php _e('ImageMagick') ; ?></div>
                     <div class="form-controls">
@@ -212,9 +213,7 @@ $(document).ready(function(){
                         <div class="help-box"><?php _e("It's faster and consumes less resources than GD library.") ; ?></div>
                     </div>
                 </div>
-                
                 <h2 class="render-title"><?php _e('Watermark') ; ?></h2>
-                
                 <div class="form-row">
                     <div class="form-label"><?php _e('Watermark type') ; ?></div>
                     <div class="form-controls">
@@ -237,7 +236,6 @@ $(document).ready(function(){
                         </div>
                     </div>
                 </div>
-
                 <div id="watermark_text_box" class="table-backoffice-form" <?php echo ( osc_is_watermark_text() ? '' : 'style="display:none;"' ) ; ?>>
                     <h2 class="render-title"><?php _e('Watermark Text Settings') ; ?></h2>
                     <div class="form-row">
@@ -291,9 +289,7 @@ $(document).ready(function(){
                         </div>
                     </div>
                 </div>
-                
                 <h2 class="render-title"><?php _e('Regenerate images') ; ?></h2>
-
                 <div class="form-row">
                     <div class="form-controls">
                     <p>    
@@ -306,11 +302,21 @@ $(document).ready(function(){
                 <div class="form-actions">
                     <input type="submit" id="save_changes" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" class="btn btn-submit" />
                 </div>
-
             </div>
         </fieldset>
     </form>
-    
-       
+</div>
+<div id="dialog-watermark-warning" title="<?php echo osc_esc_html(__('Recommendation')); ?>" class="has-form-actions hide">
+    <div class="form-horizontal">
+        <div class="form-row">
+            <?php _e("It's highly recommended to have 'Keep original image' option active when you use watermarks."); ?>
+        </div>
+        <div class="form-actions">
+            <div class="wrapper">
+                <a class="btn float-right" href="javascript:void(0);" onclick="$('#dialog-watermark-warning').dialog('close');"><?php _e('Close'); ?></a>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
 </div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                
