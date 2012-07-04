@@ -225,7 +225,7 @@ class OCadmin_items extends OCadminTest {
     private function insertItem($bPhotos = FALSE )
     {
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='items']");
+        $this->selenium->click("xpath=//a[@id='items']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("link=Add new");
         $this->selenium->waitForPageToLoad("10000");
@@ -254,8 +254,8 @@ class OCadmin_items extends OCadminTest {
 
         $this->selenium->type("address", "address item");
 
-        if( $bPhotos ){
-            $this->selenium->type("photos[]", LIB_PATH."simpletest/test/osclass/img_test1.gif");
+        if( $bPhotos ) {
+            $this->selenium->type("xpath=//input[@name='photos[]']", LIB_PATH."simpletest/test/osclass/img_test1.gif");
             sleep(0.5);
             $this->selenium->type("//div[@id='p-0']/input", LIB_PATH."simpletest/test/osclass/img_test2.gif");
         }
@@ -468,7 +468,7 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->click("//input[@id='comment-delete-submit']");
         $this->selenium->waitForPageToLoad("10000");
         
-        $this->assertTrue($this->selenium->isTextPresent("The comment have been deleted"), "Can't delete a comment. ERROR") ;
+        $this->assertTrue($this->selenium->isTextPresent("The comment has been deleted"), "Can't delete a comment. ERROR") ;
 
         // DELETE ITEM
         $this->selenium->open( osc_admin_base_url(true) );
@@ -504,11 +504,10 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='items_media']");
         $this->selenium->waitForPageToLoad("10000");
-        sleep(20);
 //        $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 2 of 2 entries"), "Inconsistent . ERROR" );
         
         // only can delete resources
-        $this->selenium->click("xpath=//a[@id='dt_link_delete']");
+        $this->selenium->click("xpath=//a[position()=1 and contains(.,'Delete')]");
         $this->selenium->waitForPageToLoad("10000");
         sleep(20);
         $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
@@ -518,7 +517,7 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->click("//a[@id='items_media']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->click("xpath=//a[@id='dt_link_delete']");
+        $this->selenium->click("xpath=//a[position()=1 and contains(.,'Delete')]");
         $this->selenium->waitForPageToLoad("10000");
         sleep(20);
         $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
