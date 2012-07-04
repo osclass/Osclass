@@ -12,14 +12,16 @@ class OCadmin_generalSettings extends OCadmintest {
      * Logout.
      */
 
-    function testCrontab()
+    function atestCrontab()
     {
         $uSettings = new utilSettings();
         
         $this->loginWith();
+        $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue(!$this->selenium->isTextPresent('Log in'), "Login oc-admin.");
         
         $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//a[@id='settings_general']");
         $this->selenium->waitForPageToLoad("10000");
         
@@ -46,7 +48,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Update all inputs and check if change has been saved, update old configuration and check again.
      * Logout
      */
-    function testMediatab()
+    function atestMediatab()
     {
         $uSettings = new utilSettings();
         
@@ -71,7 +73,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->type('dimNormal'   , 'adama');
         $this->selenium->click("//input[@id='save_changes']");
         sleep(4);
-        $this->assertTrue($this->selenium->isTextPresent("Maximun size: this field has to be numeric only"), "Media tab JS, update.");
+        $this->assertTrue($this->selenium->isTextPresent("Maximum size: this field has to be numeric only"), "Media tab JS, update.");
         $this->assertTrue($this->selenium->isTextPresent("Thumbnail size: is not in the correct format"), "Media tab JS, update.");
         $this->assertTrue($this->selenium->isTextPresent("Preview size: is not in the correct format"), "Media tab JS, update.");
         $this->assertTrue($this->selenium->isTextPresent("Normal size: is not in the correct format"), "Media tab JS, update.");
@@ -82,7 +84,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->type('dimNormal'   , '');
         $this->selenium->click("//input[@id='save_changes']");
         sleep(4);
-        $this->assertTrue($this->selenium->isTextPresent("Maximun size: this field is required"), "Media tab JS, update.");
+        $this->assertTrue($this->selenium->isTextPresent("Maximum size: this field is required"), "Media tab JS, update.");
         $this->assertTrue($this->selenium->isTextPresent("Thumbnail size: this field is required"), "Media tab JS, update.");
         $this->assertTrue($this->selenium->isTextPresent("Preview size: this field is required"), "Media tab JS, update.");
         $this->assertTrue($this->selenium->isTextPresent("Normal size: this field is required"), "Media tab JS, update.");
@@ -197,7 +199,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * update configuration and check and set old configuration again and check.
      * Logout.
      */
-    function testMailServer()
+    function atestMailServer()
     {
         $uSettings = new utilSettings();
         
@@ -270,7 +272,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Set akismet, recaptcha, check modifications
      * Logout
      */
-    function testSpamAndBots()
+    function atestSpamAndBots()
     {
         $uSettings = new utilSettings();
         
@@ -332,7 +334,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Logout
      * 
      */
-    function testComments()
+    function atestComments()
     {
         $uSettings = new utilSettings();
         $pref = array();
@@ -451,7 +453,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * update settings, and check
      * Logout
      */
-    function testGeneralSettings()
+    function atestGeneralSettings()
     {
         $pref = $this->getPreferencesGeneralSettings();
         
@@ -574,7 +576,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Add & edit & delete locations 
      * Logout
      */
-    function testLocationsGEO()
+    function atestLocationsGEO()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -783,7 +785,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * edit & delete the currency
      * Logout
      */
-    function testCurrency()
+    function atestCurrency()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -912,7 +914,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Delete 
      * Logout
      */
-    function testAddCurrencyTwice()
+    function atestAddCurrencyTwice()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -964,7 +966,7 @@ class OCadmin_generalSettings extends OCadmintest {
         osc_reset_preferences();
     }
     
-    function testPermalinks()
+    function atestPermalinks()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -1088,7 +1090,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Logout.
      */
 
-    function testLastSearches()
+    function atestLastSearches()
     {
         $uSettings = new utilSettings();
         
