@@ -172,7 +172,7 @@
     osc_add_hook('before_show_pagination_admin','showingResults');
     osc_show_pagination_admin($aData);
 ?>
-<form id="dialog-comment-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions" title="<?php echo osc_esc_html(__('Delete comment')); ?>">
+<form id="dialog-comment-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete comment')); ?>">
     <input type="hidden" name="page" value="comments" />
     <input type="hidden" name="action" value="delete" />
     <input type="hidden" name="id" value="" />
@@ -188,7 +188,7 @@
         </div>
     </div>
 </form>
-<div id="dialog-bulk-actions" title="<?php _e('Bulk actions'); ?>" class="has-form-actions">
+<div id="dialog-bulk-actions" title="<?php _e('Bulk actions'); ?>" class="has-form-actions hide">
     <div class="form-horizontal">
         <div class="form-row"></div>
         <div class="form-actions">

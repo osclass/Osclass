@@ -23,18 +23,6 @@
     //customize Head
     function customHead(){
         echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.validate.min.js').'"></script>';
-        ?>
-        <script type="text/javascript">
-            $(function() {
-                // Here we include specific jQuery, jQuery UI and Datatables functions.
-                $("#button_cancel").click(function() {
-                    if(confirm('<?php echo osc_esc_js(__('Are you sure you want to cancel?')); ?>')) {
-                        setTimeout ("window.location = 'appearance.php';", 100) ;
-                    }
-                });
-            });
-        </script>
-        <?php
     }
     osc_add_hook('admin_header','customHead');
 
@@ -62,7 +50,7 @@
                 <li><a href="#available-themes"><?php _e('Available themes') ; ?></a></li>
             </ul>
             <div id="available-themes" class="ui-osc-tabs-panel">
-                <h2 class="render-title"><?php _e('Current theme') ; ?>                <a href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance&amp;action=add" class="btn btn-green float-right"><?php _e('Add new theme'); ?></a></h2>
+                <h2 class="render-title"><?php _e('Current theme') ; ?> <a href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance&amp;action=add" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
                 <div class="current-theme">
                     <div class="theme">
                         <img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo osc_theme() ; ?>/screenshot.png" title="<?php echo $info['name'] ; ?>" alt="<?php echo $info['name'] ; ?>" />

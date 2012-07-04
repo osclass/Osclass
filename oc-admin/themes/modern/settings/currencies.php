@@ -20,7 +20,7 @@
         <h1><?php _e('Settings') ; ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
             <a href="<?php echo osc_admin_base_url(true).'?page=settings&action=currencies&type=add'; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
-	   </h1>
+        </h1>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
@@ -46,7 +46,46 @@
                         }
                     });
                 });
+
+                // dialog delete
+                $("#dialog-currency-delete").dialog({
+                    autoOpen: false,
+                    modal: true,
+                });
+
+                // dialog bulk actions
+                $("#dialog-bulk-actions").dialog({
+                    autoOpen: false,
+                    modal: true
+                });
+                $("#bulk-actions-submit").click(function() {
+                    $("#datatablesForm").submit();
+                });
+                // dialog bulk actions function
+                $("#datatablesForm").submit(function() {
+                    if( $("#bulk_actions option:selected").val() == "" ) {
+                        return false;
+                    }
+
+                    if( $("#datatablesForm").attr('data-dialog-open') == "true" ) {
+                        return true;
+                    }
+
+                    $("#dialog-bulk-actions .form-row").html($("#bulk_actions option:selected").attr('data-dialog-content'));
+                    $("#bulk-actions-submit").html($("#bulk_actions option:selected").text());
+                    $("#datatablesForm").attr('data-dialog-open', 'true');
+                    $("#dialog-bulk-actions").dialog('open');
+                    return false;
+                });
+                // /dialog bulk actions
             });
+
+            // dialog delete function
+            function delete_dialog(item_id) {
+                $("#dialog-currency-delete input[name='code']").attr('value', item_id);
+                $("#dialog-currency-delete").dialog('open');
+                return false;
+            }
         </script>
         <?php
     }
@@ -60,7 +99,7 @@
         $row[] = '<input type="checkbox" name="code[]" value="' . osc_esc_html($currency['pk_c_code']) . '" />' ;
 
         $options   = array() ;
-        $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) . '\');" href="' . osc_admin_base_url(true) . '?page=settings&amp;action=currencies&amp;type=delete&amp;code=' . $currency['pk_c_code'] . '">' . __('Delete') . '</a>' ;
+        $options[] = '<a onclick="return delete_dialog(\'' . $currency['pk_c_code'] . '\');" href="' . osc_admin_base_url(true) . '?page=settings&amp;action=currencies&amp;type=delete&amp;code=' . $currency['pk_c_code'] . '">' . __('Delete') . '</a>' ;
         $options[] = '<a href="' . osc_admin_base_url(true) . '?page=settings&amp;action=currencies&amp;type=edit&amp;code=' . $currency['pk_c_code'] . '">' . __('Edit') . '</a>' ;
 
         $row[] = $currency['pk_c_code'] . ' (' . implode(' &middot; ', $options) . ')' ;
@@ -70,7 +109,7 @@
     }
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<h2 class="render-title"><?php _e('Currencies') ; ?></h2>
+<h2 class="render-title"><?php _e('Currencies') ; ?> <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=currencies&type=add" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
 <div class="relative">
     <div id="currencies-toolbar" class="table-toolbar">
     </div>    
@@ -80,11 +119,10 @@
         <input type="hidden" name="type" value="delete" />
         <div id="bulk-actions">
             <label>
-                <select id="action" name="bulk_actions" class="select-box-extra">
+                <select id="bulk_actions" name="bulk_actions" class="select-box-extra">
                     <option value=""><?php _e('Bulk actions') ; ?></option>
-                    <option value="delete_all"><?php _e('Delete') ; ?></option>
-                    <?php $onclick_bulkactions= 'onclick="javascript:return confirm(\'' . osc_esc_js( __('You are doing bulk actions. Are you sure you want to continue?') ) . '\')"' ; ?>
-                </select> <input type="submit" <?php echo $onclick_bulkactions; ?> id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                    <option value="delete_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected currencies?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ; ?></option>
+                </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
             </label>
         </div>
         <table class="table" cellpadding="0" cellspacing="0">
@@ -97,21 +135,50 @@
                 </tr>
             </thead>
             <tbody>
-            <?php foreach( $aData as $array) : ?>
+            <?php foreach( $aData as $array ) { ?>
                 <tr>
-                <?php foreach($array as $key => $value) : ?>
-                    <?php if( $key==0 ): ?>
+                <?php foreach( $array as $key => $value ) { ?>
+                    <?php if( $key == 0 ) { ?>
                     <td class="col-bulkactions">
-                    <?php else : ?>
+                    <?php } else { ?>
                     <td>
-                    <?php endif ; ?>
+                    <?php } ?>
                     <?php echo $value; ?>
                     </td>
-                <?php endforeach; ?>
+                <?php } ?>
                 </tr>
-            <?php endforeach;?>
+            <?php } ?>
             </tbody>
         </table>
     </form>
-</div>    
+</div>
+<form id="dialog-currency-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete currency')); ?>">
+    <input type="hidden" name="page" value="settings" />
+    <input type="hidden" name="action" value="currencies" />
+    <input type="hidden" name="type" value="delete" />
+    <input type="hidden" name="code" value="" />
+    <div class="form-horizontal">
+        <div class="form-row">
+            <?php _e('Are you sure you want to delete this currency?'); ?>
+        </div>
+        <div class="form-actions">
+            <div class="wrapper">
+            <a class="btn" href="javascript:void(0);" onclick="$('#dialog-currency-delete').dialog('close');"><?php _e('Cancel'); ?></a>
+            <input id="currency-delete-submit" type="submit" value="<?php echo osc_esc_html( __('Delete') ); ?>" class="btn btn-red" />
+            </div>
+        </div>
+    </div>
+</form>
+<div id="dialog-bulk-actions" title="<?php _e('Bulk actions'); ?>" class="has-form-actions hide">
+    <div class="form-horizontal">
+        <div class="form-row"></div>
+        <div class="form-actions">
+            <div class="wrapper">
+                <a class="btn" href="javascript:void(0);" onclick="$('#dialog-bulk-actions').dialog('close');"><?php _e('Cancel'); ?></a>
+                <a id="bulk-actions-submit" href="javascript:void(0);" class="btn btn-red" ><?php echo osc_esc_html( __('Delete') ); ?></a>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
