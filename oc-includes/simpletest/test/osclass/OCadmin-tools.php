@@ -10,7 +10,7 @@ class OCadmin_tools extends OCadminTest {
      * Import sql
      * Remove imported data
      */
-    function testImportData()
+    function atestImportData()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -36,7 +36,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Import bad file. 
      */
-    function testImportDataFail()
+    function atestImportDataFail()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -53,7 +53,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Backup database
      */
-    function testBackupSql()
+    function atestBackupSql()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -73,7 +73,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Backup oclass
      */
-    function testBackupZip()
+    function atestBackupZip()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -90,7 +90,7 @@ class OCadmin_tools extends OCadminTest {
     }
     
     
-    function testMaintenance()
+    function atestMaintenance()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -184,7 +184,7 @@ class OCadmin_tools extends OCadminTest {
     /*
      * Test if the http_referer functionality is working on admin
      */
-    function testHTTPReferer()
+    function atestHTTPReferer()
     {
         $this->HTTPReferer( osc_admin_base_url(true)."?page=items" , "Manage listings");
         $this->HTTPReferer( osc_admin_base_url(true)."?page=stats&action=comments" , "Comments Statistics");
@@ -281,6 +281,8 @@ class OCadmin_tools extends OCadminTest {
             $this->selenium->select("//select[@id='bulk_actions']", "label=regexp:\\s*Delete");
             sleep(4);
             $this->selenium->click("//input[@id='bulk_apply']");
+            sleep(4);
+            $this->selenium->click("//a[@id='bulk-actions-submit']");
             $this->selenium->waitForPageToLoad("60000");
 
             if($check) {
@@ -291,8 +293,9 @@ class OCadmin_tools extends OCadminTest {
     public function insertItem($cat, $title, $description, $price, $regionId, $cityId, $cityArea, $bPhotos, $user, $email , $logged = 0)
     {
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Items");
-        $this->selenium->click("//a[@id='items_new']");
+        $this->selenium->click("//a[@id='items_manage']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("link=Add new");
         $this->selenium->waitForPageToLoad("10000");
 
         // insert non registered user
