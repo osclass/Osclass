@@ -174,6 +174,11 @@ function resetLayout(){
     
 
     //Footer
+    $('#footer-wrapper').css({
+        position:     'relative',
+        marginTop:    '0',
+        marginBottom: '0'
+    });
     if($('#content-render').height() < thisHeight ){
         $('#footer-wrapper').css('position','absolute').css('margin-bottom',-1*(thisHeight-$('#content').height()) );
         $('#sidebar').css({paddingBottom:(thisHeight-$('#content').height())});
@@ -188,7 +193,6 @@ function resetLayout(){
             marginBottom: '0'
         });
         $('#sidebar').css({paddingBottom:0});
-
     }
     if($('body').hasClass('compact')){
         if(thisHeight < 600){
@@ -209,5 +213,4 @@ function resetLayout(){
     } else {
        $('#show-more').show(); 
     }
-    
 }
