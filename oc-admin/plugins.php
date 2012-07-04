@@ -305,8 +305,7 @@
                         // prepare row 6
                         $sInstall  = '' ;
                         if( $installed ) {
-                            $delete_text = osc_esc_js( __("This action can not be undone. Uninstalling plugins may result in a permanent lost of data. Are you sure you want to continue?") ) ;
-                            $sInstall = '<a onclick="javascript:return confirm(\'' . $delete_text . '\') ;" href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=uninstall&amp;plugin=' . $pInfo['filename'] . '">' . __('Uninstall') . '</a>' ;
+                            $sInstall = '<a onclick="javascript:return uninstall_dialog(\'' . $pInfo['filename'] . '\');" href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=uninstall&amp;plugin=' . $pInfo['filename'] . '">' . __('Uninstall') . '</a>' ;
                         } else {
                             $sInstall = '<a href="' . osc_admin_base_url(true) . '?page=plugins&amp;action=install&amp;plugin=' . $pInfo['filename'] . '">' . __('Install') . '</a>' ;
                         }

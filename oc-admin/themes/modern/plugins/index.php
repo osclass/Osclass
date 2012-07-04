@@ -21,9 +21,9 @@
                 <a href="#" class="btn ico ico-32 ico-help float-right"></a>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add plugin') ; ?></a>
             </h1>
+        </div>
         <?php osc_show_flash_message('admin') ; ?>
         <?php if( Params::getParam('error') != '' ) { ?>
-            </div>
             <!-- flash message -->
             <div class="flashmessage flashmessage-error" style="display:block">
                 <?php _e("Plugin couldn't be installed because it triggered a <strong>fatal error</strong>"); ?>
@@ -55,17 +55,30 @@
                     } else {
                         $(this).parent().parent().css('background-color', '#FFF0DF') ;
                     }
-                }) ;
+                });
+
+                // dialog delete
+                $("#dialog-uninstall").dialog({
+                    autoOpen: false,
+                    modal: true,
+                    title: '<?php echo osc_esc_js( __('Uninstall plugin') ); ?>'
+                });
             });
-            
+
+            // dialog delete function
+            function uninstall_dialog(plugin) {
+                $("#dialog-uninstall input[name='plugin']").attr('value', plugin);
+                $("#dialog-uninstall").dialog('open');
+                return false;
+            }
         </script>
         <?php
     }
     osc_add_hook('admin_header','customHead');
-   
+
     $iDisplayLength = __get('iDisplayLength');
     $aData          = __get('aPlugins'); 
-    
+
     $tab_index = 1;
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
@@ -83,7 +96,6 @@
         <li><a href="#upload-plugins"><?php _e('Upload plugin') ; ?></a></li>
     </ul>
     <div id="upload-plugins">
-        
         <table class="table" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
@@ -115,8 +127,7 @@
             <?php endif; ?>
             </tbody>
         </table>
-
-       <?php 
+        <?php
             function showingResults(){
                 $aData = __get('aPlugins');
                 echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords']).'</span></li></ul>' ;
@@ -207,10 +218,24 @@
                 </div>
             </div>
         </form>
-    </div>        
-
+    </div>
 </div>
-             
+<form id="dialog-uninstall" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+    <input type="hidden" name="page" value="plugins" />
+    <input type="hidden" name="action" value="uninstall" />
+    <input type="hidden" name="plugin" value="" />
+    <div class="form-horizontal">
+        <div class="form-row">
+            <?php _e('This action can not be undone. Uninstalling plugins may result in a permanent lost of data. Are you sure you want to continue?'); ?>
+        </div>
+        <div class="form-actions">
+            <div class="wrapper">
+            <a class="btn" href="javascript:void(0);" onclick="$('#dialog-uninstall').dialog('close');"><?php _e('Cancel'); ?></a>
+            <input id="uninstall-submit" type="submit" value="<?php echo osc_esc_html( __('Uninstall') ); ?>" class="btn btn-red" />
+            </div>
+        </div>
+    </div>
+</form>
 <script>
     $(function() {
         var tab_id = unescape(self.document.location.hash.substring(1));
@@ -245,11 +270,9 @@
             });
             return false;
         });
-            
     });
-    
+
     $('.market-popup').live('click',function(){
-        
         $.getJSON(
             "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
             {"code" : $(this).attr('href').replace('#',''), 'section' : 'plugins'},
@@ -273,7 +296,6 @@
         );
 
         return false;
-    });        
+    });
 </script>
-
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
