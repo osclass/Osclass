@@ -307,7 +307,7 @@
                                     
                                         $options = array();
                                         $options[] = '<a href="' . osc_admin_base_url(true) . '?page=admins&action=edit&amp;id='  . $admin['pk_i_id'] . '">' . __('Edit') . '</a>';
-                                        $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js(__('This action cannot be undone. Are you sure you want to continue?')) . '\');" href="' . osc_admin_base_url(true) . '?page=admins&action=delete&amp;id[]=' . $admin['pk_i_id'] . '">' . __('Delete') . '</a>';
+                                        $options[] = '<a onclick="return delete_dialog(\'' . $admin['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=admins&action=delete&amp;id[]=' . $admin['pk_i_id'] . '">' . __('Delete') . '</a>';
                                         $auxOptions = '<ul>'.PHP_EOL ;
                                         foreach( $options as $actual ) {
                                             $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
