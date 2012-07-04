@@ -125,6 +125,22 @@ $(function(){
             resetLayout();
         });
         return false;
+    }).hover(function(){
+        if($('body').hasClass('compact')){
+           $("#osc_toolbar_switch_mode > .trigger").stop().animate({left:0},500);
+           $("#osc_toolbar_switch_mode > .background").stop().animate({backgroundColor:'#f3f3f3'},500);
+        } else {
+           $("#osc_toolbar_switch_mode > .trigger").stop().animate({left:24},500);
+           $("#osc_toolbar_switch_mode > .background").stop().animate({backgroundColor:'#00e1f2'},500);
+        }
+    },function(){
+        if($('body').hasClass('compact')){
+           $("#osc_toolbar_switch_mode > .trigger").stop().animate({left:24},500);
+           $("#osc_toolbar_switch_mode > .background").stop().animate({backgroundColor:'#00e1f2'},500);
+        } else {
+           $("#osc_toolbar_switch_mode > .trigger").stop().animate({left:0},500);
+           $("#osc_toolbar_switch_mode > .background").stop().animate({backgroundColor:'#f3f3f3'},500);
+        }
     });   
 });
 function oscTab(callback){
@@ -150,12 +166,13 @@ function selectUi(thatSelect){
 }        
 function resetLayout(){
     var headerHeight = 50;
+    var compactModeButtonHeight = 50;
     var menuItemHeight = 80;
     if($('body').hasClass('compact')){
         menuItemHeight = 50;
     }
     var height  = $(this).height()-headerHeight;
-    var visible = Math.floor((height/menuItemHeight)-2)
+    var visible = Math.floor(((height-compactModeButtonHeight)/menuItemHeight)-2)
     $('#sidebar').css('height',height);
     $('#sidebar ul.oscmenu > li').show();
     var hidden = $('#sidebar ul.oscmenu > li:gt('+visible+')');

@@ -21,25 +21,54 @@
 .navbar a{
     color:@color-white;
 }
+.osc_switch_mode{
+    padding-top:20px;
+    position:relative;
+    height: 55px;
+}
 #osc_toolbar_switch_mode{
     position: relative;
-    padding-right:80px;
-    color:@color-gray-dim;
-    padding-top:10px;
-    margin-right:10px;
-    cursor:default;
+    width:50px;
+    height:24px;
+    display: block;
+    margin:0 auto;
 }
-#osc_toolbar_switch_mode .trigger{
+#osc_toolbar_switch_mode .skin{
     position: absolute;
     right:0;
     top:0;
-    width:70px;
-    height:36px;
-    background-image:url(../images/switch.png);
+    width:50px;
+    height:24px;
+    background-image:url(../images/split-switch.png);
     display: block;
-    cursor:pointer;
-    background-position:bottom left;
+    background-position:0px -25px;
+}
+#osc_toolbar_switch_mode .background{
+    position: absolute;
+    right:5px;
+    top:4px;
+    width:40px;
+    height:15px;
+    display: block;
+    background-color:@color-gray-light;
+    .rounded-corners(14px);
+}
+#osc_toolbar_switch_mode .trigger{
+    position: absolute;
+    left:0;
+    top:0;
+    width:24px;
+    height:25px;
+    background-image:url(../images/split-switch.png);
+    display: block;
+    background-position:0px 0px;
+}
+body.compact #osc_toolbar_switch_mode .background{
+    background-color:#00e1f2;
 }
 body.compact #osc_toolbar_switch_mode .trigger{
-    background-position:top left;
+    left:26px;
+}
+body.compact #osc_toolbar_switch_mode:hover .background{
+    background-color:@color-gray-light;
 }
