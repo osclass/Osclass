@@ -21,18 +21,35 @@
     function customHead(){
         ?>
        <script type="text/javascript">
-            var base_url    = '<?php echo osc_admin_base_url(); ?>';
-            var s_close     = '<?php echo osc_esc_js(_e('Close')); ?>';
-            var s_view_more = '<?php echo osc_esc_js(_e('View more')); ?>';
-            var addText = '<?php echo osc_esc_js(_e('Add')); ?>';
-            var cancelText = '<?php echo osc_esc_js(_e('Cancel')); ?>';
-            var editText = '<?php echo osc_esc_js(_e('Edit')); ?>';
+            $(document).ready(function(){
+                // dialog delete
+                $("#dialog-location-delete").dialog({
+                    autoOpen: false,
+                    modal: true,
+                    title: '<?php echo osc_esc_js( __('Delete location') ); ?>'
+                });
+            });
+
+            var base_url           = '<?php echo osc_admin_base_url(); ?>';
+            var s_close            = '<?php echo osc_esc_js(_e('Close')); ?>';
+            var s_view_more        = '<?php echo osc_esc_js(_e('View more')); ?>';
+            var addText            = '<?php echo osc_esc_js(_e('Add')); ?>';
+            var cancelText         = '<?php echo osc_esc_js(_e('Cancel')); ?>';
+            var editText           = '<?php echo osc_esc_js(_e('Edit')); ?>';
             var editNewCountryText = '<?php echo osc_esc_js(__('Edit country')) ; ?>';
-            var addNewCountryText = '<?php echo osc_esc_js(__('Add new country')) ; ?>';
-            var editNewRegionText = '<?php echo osc_esc_js(__('Edit region')) ; ?>';
-            var addNewRegionText = '<?php echo osc_esc_js(__('Add new region')) ; ?>';
-            var editNewCityText = '<?php echo osc_esc_js(__('Edit city')) ; ?>';
-            var addNewCityText = '<?php echo osc_esc_js(__('Add new city')) ; ?>';
+            var addNewCountryText  = '<?php echo osc_esc_js(__('Add new country')) ; ?>';
+            var editNewRegionText  = '<?php echo osc_esc_js(__('Edit region')) ; ?>';
+            var addNewRegionText   = '<?php echo osc_esc_js(__('Add new region')) ; ?>';
+            var editNewCityText    = '<?php echo osc_esc_js(__('Edit city')) ; ?>';
+            var addNewCityText     = '<?php echo osc_esc_js(__('Add new city')) ; ?>';
+
+            // dialog delete function
+            function delete_dialog(item_id, item_type) {
+                $("#dialog-location-delete input[name='type']").attr('value', item_type);
+                $("#dialog-location-delete input[name='id']").attr('value', item_id);
+                $("#dialog-location-delete").dialog('open');
+                return false;
+            }
         </script>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('location.js') ; ?>"></script>
         <?php
@@ -56,7 +73,6 @@
         </div>
     </div>
 </div><!-- grid close -->
-
 <!-- /settings form -->
 <div id="d_add_country" class="lightbox_country location has-form-actions hide">
         <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_add_country_form">
@@ -99,7 +115,6 @@
             </div>
         </form>
 </div>
-
 <!-- End form edit country -->
 <!-- Form add region -->
 <div id="d_add_region" class="lightbox_country location has-form-actions hide">
@@ -126,7 +141,6 @@
         </form>
     </div>
 </div>
-
 <!-- End form add region -->
 <!-- Form edit region -->
 <div id="d_edit_region" class="lightbox_country location has-form-actions hide">
@@ -151,7 +165,6 @@
         </form>
     </div>
 </div>
-
 <!-- End form edit region -->
 <!-- Form edit city -->
 <div id="d_add_city" class="lightbox_country location has-form-actions hide">
@@ -179,7 +192,6 @@
         </form>
     </div>
 </div>
-
 <!-- End form add city -->
 <!-- Form edit city -->
 <div id="d_edit_city" class="lightbox_country location has-form-actions hide">
@@ -229,7 +241,7 @@
                         <div>
                             <div class="float-left">
                                 <div>
-                                    <a class="close" onclick="javascript:return confirm('<?php echo osc_esc_js(__('This action can not be undone. Items with this location associated will be deleted. Are you sure you want to continue?')); ?>');" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations&type=delete_country&id=<?php echo urlencode($country['pk_c_code']) ; ?>">
+                                    <a class="close" onclick="return delete_dialog(\'' . $country['pk_c_code'] . '\', 'delete_country');" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations&type=delete_country&id=<?php echo $country['pk_c_code']; ?>">
                                         <img src="<?php echo osc_admin_base_url() ; ?>images/close.png" alt="<?php echo osc_esc_html(__('Close')); ?>" title="<?php echo osc_esc_html(__('Close')); ?>" />
                                     </a>
                                     <a class="edit" href="javascript:void(0);" style="padding-right: 15px;" onclick="edit_countries($(this));" data="<?php echo osc_esc_html($country['s_name']);?>" code="<?php echo $country['pk_c_code'];?>"><?php echo $country['s_name'] ; ?></a>
@@ -265,4 +277,21 @@
         </div>
     </div>
     <div class="clear"></div>
+    <form id="dialog-location-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+        <input type="hidden" name="page" value="settings" />
+        <input type="hidden" name="action" value="locations" />
+        <input type="hidden" name="type" value="" />
+        <input type="hidden" name="id" value="" />
+        <div class="form-horizontal">
+            <div class="form-row">
+                <?php _e('This action can not be undone. Items with this location associated will be deleted. Are you sure you want to continue?'); ?>
+            </div>
+            <div class="form-actions">
+                <div class="wrapper">
+                <a class="btn" href="javascript:void(0);" onclick="$('#dialog-location-delete').dialog('close');"><?php _e('Cancel'); ?></a>
+                <input id="location-delete-submit" type="submit" value="<?php echo osc_esc_html( __('Delete') ); ?>" class="btn btn-red" />
+                </div>
+            </div>
+        </div>
+    </form>
 <?php osc_current_admin_theme_path('parts/footer.php') ; ?>
