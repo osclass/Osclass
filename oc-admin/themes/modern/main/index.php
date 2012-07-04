@@ -190,12 +190,12 @@
                         <?php
                         $even = false;
                         foreach($numItemsPerCategory as $c) {?>
-                            <tr<?php if($even == true){ $event = false; echo ' class="even"'; } else { $even = true; } if($countEvent == 1){ echo ' class="table-first-row"';} ?>>
+                            <tr<?php if($even == true){ $even = false; echo ' class="even"'; } else { $even = true; } if($countEvent == 1){ echo ' class="table-first-row"';} ?>>
                                 <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;catId=<?php echo $c['pk_i_id'] ; ?>"><?php echo $c['s_name'] ; ?></a></td>
                                 <td><?php echo $c['i_num_items'] . "&nbsp;" . ( ( $c['i_num_items'] == 1 ) ? __('Listing') : __('Listings') ); ?></td>
                             </tr>
                             <?php foreach($c['categories'] as $subc) {?>
-                                <tr<?php if($even == true){ $event = false; echo ' class="even"'; } else { $even = true; } ?>>
+                                <tr<?php if($even == true){ $even = false; echo ' class="even"'; } else { $even = true; } ?>>
                                     <td class="children-cat"><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;catId=<?php echo $subc['pk_i_id'];?>"><?php echo $subc['s_name'] ; ?></a></td>
                                     <td><?php echo $subc['i_num_items'] . " " . ( ( $subc['i_num_items'] == 1 ) ? __('Listing') : __('Listings') ); ?></td>
                                 </tr>
