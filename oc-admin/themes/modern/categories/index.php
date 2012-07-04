@@ -136,7 +136,7 @@
                         }
                     }
                 }) ;
-                
+
                 $(".toggle").bind("click", function(e) {
                     var list = $(this).parents('li').find('ul');
                     var li   = $(this).closest('li');
@@ -152,33 +152,14 @@
                         $(this).html('+');
                     }
                 }) ;
-            }) ;
 
-            list_original = $('.sortable').nestedSortable('serialize') ;
-            
-            function show_iframe(class_name, id) {
-                if($('.content_list_'+id+' .iframe-category').length == 0){
-                    $('.iframe-category').remove() ;
-                    var name = 'frame_'+ id ; 
-                    var id_  = 'frame_'+ id ;
-                    var url  = '<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=category_edit_iframe&id=' + id ;
-                    $.ajax({
-                        url: url,
-                        context: document.body,
-                        success: function(res){
-                            $('div.' + class_name).html(res);
-                            $('div.' + class_name).fadeIn("fast");
-                        }
-                    });
-                } else {
-                    $('.iframe-category').remove() ;
-                }
-                return false;
-            }
-            
-            function delete_category(id){
-                var answer = confirm('<?php echo osc_esc_js( __('WARNING: This will also delete the listings under that category. This action cannot be undone. Are you sure you want to continue?') ) ; ?>');
-                if( answer ) {
+                // dialog delete
+                $("#dialog-delete-category").dialog({
+                    autoOpen: false,
+                    modal: true
+                });
+                $("#category-delete-submit").click(function() {
+                    var id  = $("#dialog-delete-category").attr('data-category-id');
                     var url  = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=delete_category&id=' + id ;
 
                     $.ajax({
@@ -205,16 +186,48 @@
                         error: function() {
                             $(".jsMessage").show() ;
                             $(".jsMessage p").attr('class', '') ;
-                            $(".jsMessage p").html("<?php _e('Ajax error, try again.') ; ?>") ;
+                            $(".jsMessage p").html("<?php _e('Ajax error, try again.'); ?>") ;
                         }
-                    }) ;
+                    });
+                    $('#dialog-delete-category').dialog('close');
+                    $('body,html').animate({
+                        scrollTop: 0
+                    }, 500);
+                    return false;
+                });
+            });
+
+            list_original = $('.sortable').nestedSortable('serialize') ;
+
+            function show_iframe(class_name, id) {
+                if($('.content_list_'+id+' .iframe-category').length == 0){
+                    $('.iframe-category').remove() ;
+                    var name = 'frame_'+ id ;
+                    var id_  = 'frame_'+ id ;
+                    var url  = '<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=category_edit_iframe&id=' + id ;
+                    $.ajax({
+                        url: url,
+                        context: document.body,
+                        success: function(res){
+                            $('div.' + class_name).html(res);
+                            $('div.' + class_name).fadeIn("fast");
+                        }
+                    });
+                } else {
+                    $('.iframe-category').remove() ;
                 }
                 return false;
             }
-            
+
+            function delete_category(id) {
+                $("#dialog-delete-category").attr('data-category-id', id);
+                $("#dialog-delete-category").dialog('open');
+                return false ;
+            }
+
             function enable_cat(id) {
                 var enabled ;
-                
+
                 $(".jsMessage").fadeIn("fast") ;
                 $(".jsMessage p").attr('class', '') ;
                 $(".jsMessage p").html("<img height='16' width='16' src='<?php echo osc_current_admin_theme_url('images/spinner_loading.gif');?>'> <?php _e('This action can take a while.') ; ?>") ;
@@ -278,7 +291,7 @@
         <?php
     }
     osc_add_hook('admin_header','customHead');
-    
+
     $users      = __get('users') ;
     $stat       = __get('stat') ;
     $categories = __get('categories') ;
@@ -288,7 +301,7 @@
     $withFilters= __get('withFilters') ;
 
     $iDisplayLength = __get('iDisplayLength');
-    
+
     $aData      = __get('aItems') ;
 function drawCategory($category,$isSubcategory = false){
     if( count($category['categories']) > 0 ) { $has_subcategories = true ; } else { $has_subcategories = false ; }
@@ -361,4 +374,18 @@ function drawCategory($category,$isSubcategory = false){
                 <!-- /categories form -->
             </div>
             <!-- /right container -->
+            <div id="dialog-delete-category" title="<?php echo osc_esc_html(__('Delete category')); ?>" class="has-form-actions hide" data-category-id="">
+                <div class="form-horizontal">
+                    <div class="form-row">
+                        <?php _e('<strong>WARNING</strong>: This will also delete the listings under that category. This action cannot be undone. Are you sure you want to continue?'); ?>
+                    </div>
+                    <div class="form-actions">
+                        <div class="wrapper">
+                            <a class="btn" href="javascript:void(0);" onclick="$('#dialog-delete-category').dialog('close');"><?php _e('Cancel'); ?></a>
+                            <a id="category-delete-submit" href="javascript:void(0);" class="btn btn-red" ><?php echo osc_esc_html( __('Delete') ); ?></a>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 <?php osc_current_admin_theme_path('parts/footer.php') ; ?>
