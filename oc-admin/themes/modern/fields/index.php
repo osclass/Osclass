@@ -203,7 +203,7 @@ function customHead() { ?>
 </div>
 <!-- /custom fields -->
 <div class="clear"></div>
-<div id="dialog-delete-field" title="<?php echo osc_esc_html(__('Delete custom field')); ?>" class="has-form-actions" data-field-id="">
+<div id="dialog-delete-field" title="<?php echo osc_esc_html(__('Delete custom field')); ?>" class="has-form-actions hide" data-field-id="">
     <div class="form-horizontal">
         <div class="form-row">
             <?php _e('Are you sure you want to delete this custom field?'); ?>

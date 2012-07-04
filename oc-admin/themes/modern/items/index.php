@@ -162,7 +162,7 @@
     $direction  = Params::getParam('direction');
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions">
+<form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
     <input type="hidden" name="page" value="items" />
     <input type="hidden" name="iDisplayLength" value="<?php echo $iDisplayLength;?>" />
     <div class="form-horizontal">
@@ -408,7 +408,7 @@
     osc_add_hook('before_show_pagination_admin','showingResults');
     osc_show_pagination_admin($aData);
 ?>
-<form id="dialog-item-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions">
+<form id="dialog-item-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
     <input type="hidden" name="page" value="items" />
     <input type="hidden" name="action" value="delete" />
     <input type="hidden" name="id[]" value="" />
@@ -424,7 +424,7 @@
         </div>
     </div>
 </form>
-<div id="dialog-bulk-actions" title="<?php _e('Bulk actions'); ?>" class="has-form-actions">
+<div id="dialog-bulk-actions" title="<?php _e('Bulk actions'); ?>" class="has-form-actions hide">
     <div class="form-horizontal">
         <div class="form-row"></div>
         <div class="form-actions">

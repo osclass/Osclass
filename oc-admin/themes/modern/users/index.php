@@ -18,9 +18,9 @@
 
     function customPageHeader(){ ?>
         <h1><?php _e('Users') ; ?>
-		<a href="#" class="btn ico ico-32 ico-engine float-right"></a>
+		<a href="<?php echo osc_admin_base_url(true) . '?page=users&action=settings' ; ?>" class="btn ico ico-32 ico-engine float-right"></a>
 		<a href="#" class="btn ico ico-32 ico-help float-right"></a>
-                <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=create' ; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
+        <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=create' ; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
 	</h1>
 <?php
     }
@@ -46,8 +46,46 @@
                         }
                     });
                 });
+
+                // dialog delete
+                $("#dialog-user-delete").dialog({
+                    autoOpen: false,
+                    modal: true,
+                });
+
+                // dialog bulk actions
+                $("#dialog-bulk-actions").dialog({
+                    autoOpen: false,
+                    modal: true
+                });
+                $("#bulk-actions-submit").click(function() {
+                    $("#datatablesForm").submit();
+                });
+                // dialog bulk actions function
+                $("#datatablesForm").submit(function() {
+                    if( $("#bulk_actions option:selected").val() == "" ) {
+                        return false;
+                    }
+
+                    if( $("#datatablesForm").attr('data-dialog-open') == "true" ) {
+                        return true;
+                    }
+
+                    $("#dialog-bulk-actions .form-row").html($("#bulk_actions option:selected").attr('data-dialog-content'));
+                    $("#bulk-actions-submit").html($("#bulk_actions option:selected").text());
+                    $("#datatablesForm").attr('data-dialog-open', 'true');
+                    $("#dialog-bulk-actions").dialog('open');
+                    return false;
+                });
+                // /dialog bulk actions
             });
-            
+
+            // dialog delete function
+            function delete_dialog(item_id) {
+                $("#dialog-user-delete input[name='id[]']").attr('value', item_id);
+                $("#dialog-user-delete").dialog('open');
+                return false;
+            }
         </script>
         <?php
     }
@@ -66,7 +104,7 @@
                 <input 
                     id="fPattern" type="text" name="sSearch"
                     value="<?php echo osc_esc_html(Params::getParam('sSearch')); ?>" 
-                    class="input-text input-actions input-has-select"/>
+                    class="input-text input-actions"/>
                 <input type="submit" class="btn submit-right" value="<?php echo osc_esc_html( __('Find') ) ; ?>">
             </form>
         </div>
@@ -76,18 +114,17 @@
         
         <div id="bulk-actions">
             <label>
-                <select name="action" id="action" class="select-box-extra">
+                <select name="action" id="bulk_actions" class="select-box-extra">
                     <option value=""><?php _e('Bulk Actions') ; ?></option>
-                    <option value="activate"><?php _e('Activate') ; ?></option>
-                    <option value="deactivate"><?php _e('Deactivate') ; ?></option>
-                    <option value="enable"><?php _e('Unblock') ; ?></option>
-                    <option value="disable"><?php _e('Block') ; ?></option>
-                    <option value="delete"><?php _e('Delete') ; ?></option>
+                    <option value="activate" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Activate'))); ?>"><?php _e('Activate') ; ?></option>
+                    <option value="deactivate" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Deactivate'))); ?>"><?php _e('Deactivate') ; ?></option>
+                    <option value="enable" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Unblock'))); ?>"><?php _e('Unblock') ; ?></option>
+                    <option value="disable" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Block'))); ?>"><?php _e('Block') ; ?></option>
+                    <option value="delete" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ; ?></option>
                     <?php if( osc_user_validation_enabled() ) { ?>
-                        <option value="resend_activation"><?php _e('Resend activation') ; ?></option>
-                    <?php }; ?>
-                    <?php $onclick_bulkactions= 'onclick="javascript:return confirm(\'' . osc_esc_js( __('You are doing bulk actions. Are you sure you want to continue?') ) . '\')"' ; ?>
-                </select> <input type="submit" <?php echo $onclick_bulkactions; ?> id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                        <option value="resend_activation" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Resend the activation to'))); ?>"><?php _e('Resend activation') ; ?></option>
+                    <?php } ?>
+                </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
             </label>
         </div>
         <div class="table-contains-actions">
@@ -128,5 +165,33 @@
     }
     osc_add_hook('before_show_pagination_admin','showingResults');
     osc_show_pagination_admin($aData);
-?> 
+?>
+<form id="dialog-user-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete user')); ?>">
+    <input type="hidden" name="page" value="users" />
+    <input type="hidden" name="action" value="delete" />
+    <input type="hidden" name="id[]" value="" />
+    <div class="form-horizontal">
+        <div class="form-row">
+            <?php _e('Are you sure you want to delete this user?'); ?>
+        </div>
+        <div class="form-actions">
+            <div class="wrapper">
+            <a class="btn" href="javascript:void(0);" onclick="$('#dialog-user-delete').dialog('close');"><?php _e('Cancel'); ?></a>
+            <input id="user-delete-submit" type="submit" value="<?php echo osc_esc_html( __('Delete') ); ?>" class="btn btn-red" />
+            </div>
+        </div>
+    </div>
+</form>
+<div id="dialog-bulk-actions" title="<?php _e('Bulk actions'); ?>" class="has-form-actions hide">
+    <div class="form-horizontal">
+        <div class="form-row"></div>
+        <div class="form-actions">
+            <div class="wrapper">
+                <a class="btn" href="javascript:void(0);" onclick="$('#dialog-bulk-actions').dialog('close');"><?php _e('Cancel'); ?></a>
+                <a id="bulk-actions-submit" href="javascript:void(0);" class="btn btn-red" ><?php echo osc_esc_html( __('Delete') ); ?></a>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
