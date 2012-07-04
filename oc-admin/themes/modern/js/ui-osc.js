@@ -165,12 +165,19 @@ function resetLayout(){
     var headerHeight = 50;
     var compactModeButtonHeight = 75;
     var menuItemHeight = 80;
-    var height  = $(this).height()-headerHeight;
-    var visible = Math.floor(((height-compactModeButtonHeight)/menuItemHeight)-2)
-    $('#sidebar').css('height',height);
+    var thisHeight  = $(this).height()-headerHeight;
+    var $sidebar = $('#sidebar');
+    
+    var visible = Math.floor(((thisHeight-compactModeButtonHeight)/menuItemHeight)-2)
+    $sidebar.css('height',thisHeight);
     $('#sidebar ul.oscmenu > li').show();
     
     if($('body').hasClass('compact')){
+        if(thisHeight < 600){
+            $sidebar.css({height:'100%',position:'absolute',left:'-50px',top:0});
+        } else {
+            $sidebar.css({height:thisHeight,position:'fixed',left:0,top:'50px'});
+        }
         $('#show-more').hide();
         $('#sidebar ul.oscmenu > li').show();
         return false;
@@ -185,8 +192,8 @@ function resetLayout(){
        $('#show-more').show(); 
     }
     //Footer
-    if($('#content-render').height() < height ){
-        $('#footer-wrapper').css('margin-bottom',-1*(height-$('#content-render').height()-7) );
+    if($('#content-render').height() < thisHeight ){
+        $('#footer-wrapper').css('margin-bottom',-1*(thisHeight-$('#content-render').height()-7) );
     } else {
         $('#footer-wrapper').css({
             position:     'relative',
