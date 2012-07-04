@@ -58,7 +58,7 @@
         ?>
 
         $(document).ready(function(){
-            showAddress('<?php echo $address; ?>');
+            showAddress('<?php echo osc_esc_js($address); ?>');
         });
 
     </script>

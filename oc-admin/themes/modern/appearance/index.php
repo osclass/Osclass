@@ -18,29 +18,20 @@
 
     //getting variables for this view
     $themes = __get("themes") ;
-    $info   = __get("info") ;
+    $info   = WebThemes::newInstance()->loadThemeInfo(osc_theme());
 
     //customize Head
     function customHead(){
         echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.validate.min.js').'"></script>';
-        ?>
-        <script type="text/javascript">
-            $(function() {
-                // Here we include specific jQuery, jQuery UI and Datatables functions.
-                $("#button_cancel").click(function() {
-                    if(confirm('<?php _e('Are you sure you want to cancel?'); ?>')) {
-                        setTimeout ("window.location = 'appearance.php';", 100) ;
-                    }
-                });
-            });
-        </script>
-        <?php
     }
     osc_add_hook('admin_header','customHead');
 
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1><?php _e('Appearance') ; ?></h1>
+        <h1><?php _e('Appearance') ; ?>
+            <a href="#" class="btn ico ico-32 ico-help float-right"></a>
+            <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add theme') ; ?></a>
+        </h1>
     <?php
     }
 
@@ -51,7 +42,6 @@
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="appearance-page">
-    <form id="market-quick-search" class="quick-search"><input type="text" name="sPattern" placeholder="<?php _e('Search Themes'); ?>" class="input-text float-left"/><input type="Submit" value="Seach" class="btn ico ico-32 ico-search float-left"/><a href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance&amp;action=add" class="btn btn-green float-right"><?php _e('Add new theme'); ?></a></form>
     <!-- themes list -->
     <div class="appearance">
         <div id="tabs" class="ui-osc-tabs ui-tabs-right">
@@ -60,7 +50,7 @@
                 <li><a href="#available-themes"><?php _e('Available themes') ; ?></a></li>
             </ul>
             <div id="available-themes" class="ui-osc-tabs-panel">
-                <h2 class="render-title"><?php _e('Current theme') ; ?></h2>
+                <h2 class="render-title"><?php _e('Current theme') ; ?> <a href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance&amp;action=add" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
                 <div class="current-theme">
                     <div class="theme">
                         <img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo osc_theme() ; ?>/screenshot.png" title="<?php echo $info['name'] ; ?>" alt="<?php echo $info['name'] ; ?>" />
@@ -86,14 +76,15 @@
                     ?>
                     <div class="theme">
                         <div class="theme-stage">
-                            <img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo $theme ; ?>/screenshot.png" title="<?php echo $info['name'] ; ?>" alt="<?php echo $info['name'] ; ?>" />
+                            <img src="<?php echo osc_base_url(); ?>/oc-content/themes/<?php echo $theme ; ?>/screenshot.png" title="<?php echo $info['name'] ; ?>" alt="<?php echo $info['name'] ; ?>" />
                             <div class="theme-actions">
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=activate&amp;theme=<?php echo $theme ; ?>" class="btn btn-mini btn-green"><?php _e('Activate') ; ?></a>
-                                <a target="_blank" href="<?php echo osc_base_url(true) ; ?>?theme=<?php echo $theme ; ?>" class="btn btn-mini btn-blue"><?php _e('Preview') ; ?></a>
+                                <a target="_blank" href="<?php echo osc_base_url(true); ?>?theme=<?php echo $theme ; ?>" class="btn btn-mini btn-blue"><?php _e('Preview') ; ?></a>
                                 <a onclick="javascript:return confirm('<?php echo osc_esc_js(__('This action can not be undone. Are you sure you want to continue?')); ?>')" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=delete&amp;webtheme=<?php echo $theme ; ?>" class="btn btn-mini float-right delete"><?php _e('Delete') ; ?></a>
                                 <?php
                                 if($bThemesToUpdate) {
-                                    if(in_array($theme,$aThemesToUpdate )){  ?>
+                                    if(in_array($theme,$aThemesToUpdate )){
+                                    ?>
                                     <a href='#<?php echo htmlentities(@$info['theme_update_uri']); ?>' class="btn btn-mini btn-orange market-popup"><?php _e("Update"); ?></a>
                                 <?php };
                                 }; ?>
@@ -110,14 +101,6 @@
                     <div class="clear"></div>
                 </div>
             </div>
-            <div id="market">
-                <h2 class="render-title"><?php _e('Latest themes on market') ; ?></h2>
-                <div id="market_themes" class="available-theme">
-                </div>
-                <div id="market_pagination" class="has-pagination">
-                </div>
-            </div>
-            
             
             <div id="market_installer" class="has-form-actions hide">
                 <form action="" method="post">
@@ -167,36 +150,45 @@
             
             $("#market_install").on("click", function(){
                 $(".ui-dialog-content").dialog("close");
-                //$(".ui-dialog-content").dialog({title:'Downloading...'}).html('Please wait until the download is completed');
-                $('<div id="downloading"><div class="osc-modal-content">Please wait until the download is completed</div></div>').dialog({title:'Installing...',modal:true});
+                $('<div id="downloading"><div class="osc-modal-content"><?php _e('Please wait until the download is completed'); ?></div></div>').dialog({title:'<?php _e('Downloading'); ?>...',modal:true});
                 $.getJSON(
                 "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
                 {"code" : $("#market_code").attr("value"), "section" : 'themes'},
                 function(data){
-                    $("#downloading .osc-modal-content").html(data.message);
-                    window.location = '<?php echo osc_admin_base_url(true);?>?page=appearance&marketError='+data.error+'&slug='+data.data['s_slug'];
+                    var content = data.message ;
+                    if(data.error == 0) { // no errors
+                        content += '<h3><?php _e('The theme have been downloaded correctly, proceed to activate or preview it.');?></h3>';
+                        content += "<p>";
+                        content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php _e('Ok'); ?></a>';
+                        content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php _e('Close'); ?></a>';
+                        content += "</p>";
+                    } else {
+                        content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php _e('Close'); ?></a>';
+                    }
+                    $("#downloading .osc-modal-content").html(content);
                 });
                 return false;
             });            
         });
         
         $('.market-popup').live('click',function(){
+            
             $.getJSON(
                 "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
                 {"code" : $(this).attr('href').replace('#',''), 'section' : 'themes'},
                 function(data){
                     if(data!=null) {
                         $("#market_thumb").attr('src',data.s_thumbnail);
-                        $("#market_code").attr("value", data.s_slug);
+                        $("#market_code").attr("value", data.s_update_url);
                         $("#market_name").html(data.s_title);
                         $("#market_version").html(data.s_version);
                         $("#market_author").html(data.s_contact_name);
                         $("#market_url").attr('href',data.s_source_file);
+                        $('#market_install').html("<?php echo osc_esc_html( __('Update') ) ; ?>");
 
                         $('#market_installer').dialog({
                             modal:true,
                             title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
-                            class: 'osc-class-test',
                             width:485
                         });
                     }

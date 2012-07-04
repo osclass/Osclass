@@ -31,7 +31,6 @@
     osc_add_filter('admin_title', 'customPageTitle');
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<div id="backup-setting">
     <!-- settings form -->
                     <div id="backup-settings">
                         <h2 class="render-title"><?php _e('Import') ; ?></h2>
@@ -54,5 +53,4 @@
                     </form>
                 </div>
                 <!-- /settings form -->
-</div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                

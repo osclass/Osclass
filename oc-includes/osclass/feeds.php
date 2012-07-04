@@ -59,6 +59,9 @@ function osc_latestTweets($num = 5) {
     $content = osc_file_get_contents('https://twitter.com/statuses/user_timeline/osclass.rss');
     if( $content ) {
         $xml   = simplexml_load_string($content);
+        if(isset($xml->error)){
+            return $list;
+        };
         $count = 0;
         foreach ($xml->channel->item as $item) {
             $list[] = array(

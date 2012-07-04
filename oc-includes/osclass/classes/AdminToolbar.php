@@ -96,7 +96,7 @@
                         foreach($value->meta as $k => $v)
                             $meta .= $k.'="'.$v.'" ' ; 
                     }
-                    echo '<a id="osc_toolbar_'.$value->id.'" '.$meta.' href="'.$value->href.'">'.$value->title.'</a>';
+                    echo '<a id="osc_toolbar_'.$value->id.'" '.$meta.' href="'.$value->href.'" ' . ((isset($value->target)) ? 'target="' . $value->target . '"' : '') . '>'.$value->title.'</a>';
                 }
                 echo '</div></div>' ;
             }

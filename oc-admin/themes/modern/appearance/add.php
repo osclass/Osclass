@@ -16,23 +16,6 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    //customize Head
-    function customHead(){
-        ?>
-        <script type="text/javascript">
-            $(function() {
-                // Here we include specific jQuery, jQuery UI and Datatables functions.
-                $("#button_cancel").click(function() {
-                    if(confirm('<?php _e('Are you sure you want to cancel?'); ?>')) {
-                        setTimeout ("window.location = 'appearance.php';", 100) ;
-                    }
-                });
-            });
-        </script>
-        <?php
-    }
-    osc_add_hook('admin_header','customHead');
-
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
         <h1><?php _e('Appearance') ; ?></h1>
@@ -48,17 +31,15 @@
     <!-- themes list -->
     <div class="appearance">
         <h2 class="render-title"><?php _e('Add new theme') ; ?></h2>
-
             <div id="upload-themes" class="ui-osc-tabs-panel">
                 <div class="form-horizontal">
                 <?php if( is_writable( osc_themes_path() ) ) { ?>
-                    <div class="flashmessage flashmessage-info">
+                    <div class="flashmessage flashmessage-info flashmessage-inline" style="display: block;">
                         <p class="info"><?php printf( __('Download more themes at %s'), '<a href="https://sourceforge.net/projects/osclass/files/Themes/" target="_blank">Sourceforge</a>') ; ?></p>
                     </div>
                     <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="action" value="add_post" />
                         <input type="hidden" name="page" value="appearance" />
-
                         <div class="form-row">
                             <div class="form-label"><?php _e('Theme package (.zip)') ; ?></div>
                             <div class="form-controls">
@@ -84,7 +65,6 @@
                 <?php } ?>
                 </div>
             </div>
-
             <div id="market_installer" class="has-form-actions hide">
                 <form action="" method="post">
                     <input type="hidden" name="market_code" id="market_code" value="" />
@@ -120,15 +100,13 @@
                     </div>
                 </form>
             </div>
-            
         <script>
         $(function() {
-            
             $("#market_cancel").on("click", function(){
                 $(".ui-dialog-content").dialog("close");
                 return false;
             });
-            
+
             $("#market_install").on("click", function(){
                 $(".ui-dialog-content").dialog("close");
                 //$(".ui-dialog-content").dialog({title:'Downloading...'}).html('Please wait until the download is completed');
@@ -144,7 +122,7 @@
                 });
                 return false;
             });
-            
+
             $.getJSON(
                 "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=local_market",
                 {"section" : "themes"},
@@ -181,8 +159,8 @@
                     $("#market_themes").append('<div class="clear"></div>');
                 }
             );
-
         });
+
         $('.market-popup').live('click',function(){
             $.getJSON(
                 "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
@@ -199,13 +177,11 @@
                         $('#market_installer').dialog({
                             modal:true,
                             title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
-                            class: 'osc-class-test',
                             width:485
                         });
                     }
                 }
             );
-            
             return false;
         });        
         </script>

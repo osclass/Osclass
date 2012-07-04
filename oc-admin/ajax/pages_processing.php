@@ -86,7 +86,7 @@
                 $options[] = '<a href="' . osc_static_page_url() . '" target="_blank">' . __('View page') . '</a>' ;
                 $options[] = '<a href="' . osc_admin_base_url(true) . '?page=pages&amp;action=edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>' ;
                 if( !$aRow['b_indelible'] ) {
-                    $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js(__("This action can't be undone. Are you sure you want to continue?")) . '\')" href="' . osc_admin_base_url(true) . '?page=pages&amp;action=delete&amp;id=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
+                    $options[] = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=pages&amp;action=delete&amp;id=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
                 }
 
                 $auxOptions = '<ul>'.PHP_EOL ;
@@ -98,7 +98,7 @@
                 $row[] = '<input type="checkbox" name="id[]"" value="' . $aRow['pk_i_id'] . '"" />' ;
                 $row[] = $aRow['s_internal_name'] . $actions ;
                 $row[] = $content['s_title'] ;
-                $row[] = '<div class="order-box">' . $aRow['i_order'] . ' <img class="up" onclick="order_up(' . $aRow['pk_i_id'] . ');" src="' . osc_current_admin_theme_url('images/arrow_up.png') . '"/>  <img class="down" onclick="order_down(' . $aRow['pk_i_id'] . ');" src="' . osc_current_admin_theme_url('images/arrow_down.png') .'"/></div>' ;
+                $row[] = '<div class="order-box">' . $aRow['i_order'] . ' <img class="up" onclick="order_up(' . $aRow['pk_i_id'] . ');" src="' . osc_current_admin_theme_url('images/arrow_up.png') . '" alt="' . __('Up') . '" title="' . __('Up') . '" />  <img class="down" onclick="order_down(' . $aRow['pk_i_id'] . ');" src="' . osc_current_admin_theme_url('images/arrow_down.png') .'" alt="' . __('Down') . '" title="' . __('Down') . '" /></div>' ;
 
                 $this->result['aaData'][] = $row ;
             }

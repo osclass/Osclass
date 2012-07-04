@@ -55,6 +55,8 @@
    
     $iDisplayLength = __get('iDisplayLength');
     $aData          = __get('aPlugins'); 
+    
+    $tab_index = 0;
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="tabs" class="ui-osc-tabs ui-tabs-right">
@@ -62,7 +64,8 @@
         <?php 
             $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
             $bPluginsToUpdate = is_array($aPluginsToUpdate)?true:false;
-            if($bPluginsToUpdate) { 
+            if($bPluginsToUpdate && count($aPluginsToUpdate) > 0) { 
+                $tab_index = 1;
         ?>
         <li><a href="#update-plugins" onclick="window.location = '<?php echo osc_admin_base_url(true) . '?page=plugins#update-plugins'; ?>'; return false; "><?php _e('Updates'); ?></a></li>
         <?php } ?>
@@ -71,8 +74,8 @@
     </ul>
     <div id="market">
         <h2 class="render-title"><?php _e('Latest plugins on market') ; ?></h2>
-        <div id="market_plugins" class="available-theme">
-        </div>
+        <table id="market_plugins" class="table available-theme">
+        </table>
         <div id="market_pagination" class="has-pagination">
         </div>
     </div>
@@ -96,6 +99,10 @@
                             <td><?php _e('Author') ; ?></td>
                             <td><span id="market_author"><?php _e("Loading data"); ?></span></td>
                         </tr>
+                        <tr>
+                            <td><?php _e('Compatible with') ; ?></td>
+                            <td><span id="market_compatible"><?php _e("Loading data"); ?></span></td>
+                        </tr>
                         <tr class="even">
                             <td><?php _e('URL') ; ?></td>
                             <td><a id="market_url" href="#"><?php _e("Download manually"); ?></span></td>
@@ -107,7 +114,7 @@
             <div class="form-actions">
                 <div class="wrapper">
                     <button id="market_cancel" class="btn btn-red" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                    <button id="market_install" class="btn btn-submit" ><?php echo osc_esc_html( __('Continue install') ) ; ?></button>
+                    <button id="market_install" class="btn btn-submit" ><?php echo osc_esc_html( __('Continue download') ) ; ?></button>
                 </div>
             </div>
         </form>
@@ -117,7 +124,7 @@
              
 <script>
     $(function() {
-        $( "#tabs" ).tabs({ selected: 1 });
+        $( "#tabs" ).tabs({ selected: <?php echo $tab_index; ?> });
 
         $("#market_cancel").on("click", function(){
             $(".ui-dialog-content").dialog("close");
@@ -126,8 +133,8 @@
 
         $("#market_install").on("click", function(){
             $(".ui-dialog-content").dialog("close");
-            $('<div id="downloading"><div class="osc-modal-content">Please wait until the download is completed</div></div>').dialog({ 
-                title:'Installing...',
+            $('<div id="downloading"><div class="osc-modal-content"><?php _e('Please wait until the download is completed'); ?></div></div>').dialog({ 
+                title:'<?php _e('Downloading'); ?>...',
                 modal:true
             });
             
@@ -135,10 +142,17 @@
             "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
             {"code" : $("#market_code").attr("value"), "section" : 'plugins'},
             function(data){
-                $("#downloading .osc-modal-content").html(data.message);
-                if(data.error != 1) {
-                    window.location = '<?php echo osc_admin_base_url(true);?>?page=plugins&marketError='+data.error+'&slug='+data.data['s_slug'];
+                var content = data.message ;
+                if(data.error == 0) { // no errors
+                    content += '<h3><?php _e('The plugin have been downloaded correctly, proceed to install and configure.');?></h3>';
+                    content += "<p>";
+                    content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=plugins&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php _e('Ok'); ?></a>';
+                    content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php _e('Close'); ?></a>';
+                    content += "</p>";
+                } else {
+                    content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php _e('Close'); ?></a>';
                 }
+                $("#downloading .osc-modal-content").html(content);
             });
             return false;
         });
@@ -162,21 +176,44 @@
                             dots = '';
                             if(description.length > 80){
                                 dots = '...';
-                            }
+                            } 
                            
-                            $("#market_plugins").append('<div class="theme">'
-                                +'<div class="plugin-stage">'
-                                    +'<div class="plugin-actions">'
-                                        +'<a href="#'+data.plugins[i].s_slug+'" class="btn btn-mini btn-green market-popup"><?php _e('Install') ; ?></a>'
-                                    +'</div>'
-                                +'</div>'
+                            var plugins_downloaded  = <?php $plugins_downloaded = getPreference('plugins_downloaded'); if($plugins_downloaded != ''){ echo $plugins_downloaded; } else { echo 'new Array()'; } ?>;
+                            var plugin_to_update    = <?php echo getPreference('plugins_to_update'); ?>;
+                            var button = '';
+                            
+                            if(jQuery.inArray(data.plugins[i].s_update_url, plugins_downloaded) >= 0 ) {
+                                if( jQuery.inArray(data.plugins[i].s_update_url, plugin_to_update) >= 0 ) {
+                                    button = '<a href="#'+data.plugins[i].s_update_url+'" class="btn btn-mini btn-orange market-popup market_update"><?php _e('Update') ; ?></a>';
+                                } else {
+                                    button = '<a href="#" class="btn btn-mini btn-blue btn-disabled" ><?php _e('Already downloaded') ; ?></a>';
+                                }
+                            } else {
+                                console.log( data.plugins[i].s_update_url );
+                                button = '<a href="#'+data.plugins[i].s_update_url+'" class="btn btn-mini btn-green market-popup"><?php _e('Download plugin') ; ?></a>';
+                            }
+                            even = '';
+                            if (i%2 == 0){
+                                even = 'even';
+                            }
+                            if(i==0){
+                                even = even+' table-first-row';
+                            }
+                            $("#market_plugins").append('<tr class="plugin '+even+'">'
+                                +'<td>'
                                 +'<div class="plugin-info">'
                                     +'<h3>'+data.plugins[i].s_title+' '+data.plugins[i].s_version+' <?php _e('by') ; ?> <a target="_blank" href="">'+data.plugins[i].s_contact_name+'</a></h3>'
                                 +'</div>'
                                 +'<div class="plugin-description">'
                                     +description.substring(0,80)+dots
                                 +'</div>'
-                            +'</div>');
+                                +'<div class="plugin-stage">'
+                                    +'<div class="plugin-actions">'
+                                        + button
+                                    +'</div>'
+                                +'</div>'
+                                +'</td>'
+                            +'</tr>');
                         }
                         // add pagination
                         $('#market_pagination').append(data.pagination_content);
@@ -205,21 +242,27 @@
             function(data){
                 if(data!=null) {
                     $("#market_thumb").attr('src',data.s_thumbnail);
-                    $("#market_code").attr("value", data.s_slug);
+                    $("#market_code").attr("value", data.s_update_url);
                     $("#market_name").html(data.s_title);
                     $("#market_version").html(data.s_version);
                     $("#market_author").html(data.s_contact_name);
+                    if(data.s_compatible.indexOf("<?php echo $main_version; ?>")==-1) {
+                        $("#market_compatible").html(data.s_compatible + " - "  + "<?php echo sprintf(__('Warning! This plugin is not compatible with your current version of OSClass (%s)'), $main_version); ?>");
+                        $("#market_compatible").parent().parent().addClass("flashmessage-error");
+                    } else {
+                        $("#market_compatible").html(data.s_compatible);
+                        $("#market_compatible").parent().parent().removeClass("flashmessage-error");
+                    }
                     $("#market_url").attr('href',data.s_source_file);
                     if(update) {
                         $('#market_install').html("<?php echo osc_esc_html( __('Update') ) ; ?>");
                     } else {
-                        $('#market_install').html("<?php echo osc_esc_html( __('Continue install') ) ; ?>");
+                        $('#market_install').html("<?php echo osc_esc_html( __('Continue download') ) ; ?>");
                     }
                     
                     $('#market_installer').dialog({
                         modal:true,
                         title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
-                        class: 'osc-class-test',
                         width:485
                     });
                 }

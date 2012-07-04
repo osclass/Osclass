@@ -17,10 +17,20 @@
      */
 
     function customPageHeader() { ?>
-        <h1><?php _e('Manage Plugins') ; ?>
-            <a href="#" class="btn ico ico-32 ico-help float-right"></a>
-            <a href="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add plugin') ; ?></a>
-	   </h1>
+            <h1><?php _e('Manage Plugins') ; ?>
+                <a href="#" class="btn ico ico-32 ico-help float-right"></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add plugin') ; ?></a>
+            </h1>
+        <?php osc_show_flash_message('admin') ; ?>
+        <?php if( Params::getParam('error') != '' ) { ?>
+            </div>
+            <!-- flash message -->
+            <div class="flashmessage flashmessage-error" style="display:block">
+                <?php _e("Plugin couldn't be installed because it triggered a <strong>fatal error</strong>"); ?>
+                <a class="btn ico btn-mini ico-close">x</a>
+                <iframe style="border:0;" width="100%" height="60" src="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=error_plugin&amp;plugin=<?php echo Params::getParam('error') ; ?>"></iframe>
+            <!-- /flash message -->
+        <?php } ?>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
@@ -55,6 +65,8 @@
    
     $iDisplayLength = __get('iDisplayLength');
     $aData          = __get('aPlugins'); 
+    
+    $tab_index = 1;
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="tabs" class="ui-osc-tabs ui-tabs-right">
@@ -62,7 +74,8 @@
         <?php 
             $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
             $bPluginsToUpdate = is_array($aPluginsToUpdate)?true:false;
-            if($bPluginsToUpdate) { 
+            if($bPluginsToUpdate && count($aPluginsToUpdate) > 0) { 
+                $tab_index = 2;
         ?>
         <li><a href="#update-plugins"><?php _e('Updates'); ?></a></li>
         <?php } ?>
@@ -112,6 +125,7 @@
             osc_show_pagination_admin($aData);
         ?>
     </div>
+    <?php if($bPluginsToUpdate && count($aPluginsToUpdate) > 0) { ?>
     <div id="update-plugins">
         <?php 
             $aIndex = array();
@@ -158,7 +172,7 @@
             </tbody>
         </table>
     </div>
-    
+    <?php } ?>
     <div id="market_installer" class="has-form-actions hide">
         <form action="" method="post">
             <input type="hidden" name="market_code" id="market_code" value="" />
@@ -203,7 +217,7 @@
         if(tab_id != '') {
             $( "#tabs" ).tabs();
         } else {
-            $( "#tabs" ).tabs({ selected: 2 });
+            $( "#tabs" ).tabs({ selected: <?php echo $tab_index; ?> });
         }
 
         $("#market_cancel").on("click", function(){
@@ -213,14 +227,21 @@
 
         $("#market_install").on("click", function(){
             $(".ui-dialog-content").dialog("close");
-            $('<div id="downloading"><div class="osc-modal-content">Please wait until the download is completed</div></div>').dialog({title:'Installing...',modal:true});
+            $('<div id="downloading"><div class="osc-modal-content"><?php _e('Please wait until the download is completed'); ?></div></div>').dialog({title:'<?php _e('Downloading'); ?>...',modal:true});
             $.getJSON(
             "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
             {"code" : $("#market_code").attr("value"), "section" : 'plugins'},
             function(data){
-                $("#downloading .osc-modal-content").html(data.message);
-                
-                
+                var content = data.message ;
+                if(data.error == 0) { // no errors
+                    content += '<p><?php _e('The plugin have been downloaded correctly, proceed to install and configure.');?></p>';
+                    content += "<p>";
+                    content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=plugins&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php _e('Close'); ?></a>';
+                    content += "</p>";
+                } else {
+                    content += '<a class="btn btn-mini btn-green" onclick=\'$(".ui-dialog-content").dialog("close");\'><?php _e('Close'); ?>...</a>';
+                }
+                $("#downloading .osc-modal-content").html(content);
             });
             return false;
         });
@@ -228,29 +249,23 @@
     });
     
     $('.market-popup').live('click',function(){
-        var update = false;
-        if( $(this).hasClass('market_update') ) update = true;
+        
         $.getJSON(
             "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
             {"code" : $(this).attr('href').replace('#',''), 'section' : 'plugins'},
             function(data){
                 if(data!=null) {
                     $("#market_thumb").attr('src',data.s_thumbnail);
-                    $("#market_code").attr("value", data.s_slug);
+                    $("#market_code").attr("value", data.s_update_url);
                     $("#market_name").html(data.s_title);
                     $("#market_version").html(data.s_version);
                     $("#market_author").html(data.s_contact_name);
                     $("#market_url").attr('href',data.s_source_file);
-                    if(update) {
-                        $('#market_install').html("<?php echo osc_esc_html( __('Update') ) ; ?>");
-                    } else {
-                        $('#market_install').html("<?php echo osc_esc_html( __('Continue install') ) ; ?>");
-                    }
+                    $('#market_install').html("<?php echo osc_esc_html( __('Update') ) ; ?>");                    
 
                     $('#market_installer').dialog({
                         modal:true,
                         title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
-                        class: 'osc-class-test',
                         width:485
                     });
                 }

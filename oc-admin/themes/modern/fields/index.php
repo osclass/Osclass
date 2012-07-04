@@ -20,7 +20,7 @@
     $categories = __get('categories') ;
     $selected   = __get('default_selected') ;
 function customPageHeader(){ ?>
-        <h1><?php _e('Listing'); ?> <a href="#" class="btn btn-green ico ico-32 ico-add-white float-right" id="add-button"><?php _e('Add'); ?></a></h1>
+        <h1><?php _e('Listing'); ?> <a href="#" class="btn btn-green ico ico-32 ico-add-white float-right" id="add-button"><?php _e('Add custom field'); ?></a></h1>
 <?php
 }
 osc_add_hook('admin_page_header','customPageHeader');
@@ -104,7 +104,7 @@ function customHead() { ?>
             return false;
         });
 
-        $("#add-button").bind('click', function() {
+        $("#add-button, .add-button").bind('click', function() {
             $.ajax({
                 url: '<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=add_field',
                 context: document.body,
@@ -118,9 +118,9 @@ function customHead() { ?>
                                     html += ret.field_name;
                                 html += '</div>';
                                 html += '<div class="actions-edit-cfield">';
-                                    html += '<a href="javascript:void(0);"  onclick="show_iframe(\'content_list_'+ret.field_id+'\',\''+ret.field_id+'\');"><?php _e('Edit') ; ?></a>';
+                                    html += '<a href="javascript:void(0);"  onclick="show_iframe(\'content_list_'+ret.field_id+'\',\''+ret.field_id+'\');"><?php echo osc_esc_js(__('Edit')); ?></a>';
                                     html += ' &middot; ';
-                                    html += '<a href="javascript:void(0);"  onclick="delete_field(\''+ret.field_id+'\');"><?php _e('Delete') ; ?></a>';
+                                    html += '<a href="javascript:void(0);"  onclick="delete_field(\''+ret.field_id+'\');"><?php echo osc_esc_js(__('Delete')); ?></a>';
                                 html += '</div>';
                                 html += '<div class="edit content_list_'+ret.field_id+'"></div>';
                             html += '</div>';
@@ -130,7 +130,7 @@ function customHead() { ?>
                         show_iframe('content_list_'+ret.field_id, ret.field_id);
                     } else {
                         var message = "";
-                        message += '<?php _e('Custom field could not be added'); ?>'
+                        message += '<?php echo osc_esc_js(__('Custom field could not be added')); ?>'
                         $(".jsMessage").fadeIn('fast') ;
                         $(".jsMessage p").html(message) ;
                     }
@@ -170,7 +170,7 @@ function customHead() { ?>
     osc_current_admin_theme_path('parts/header.php') ;
 ?>
 <div class="header_title">
-    <h2 class="render-title"><?php _e('Custom fields') ; ?></h2>
+    <h2 class="render-title"><?php _e('Custom fields') ; ?> <a href="javascript:void(0);" class="btn btn-mini add-button"><?php _e('Add new'); ?></a></h2>
 </div>
 <!-- custom fields -->
 <div class="custom-fields">
@@ -203,7 +203,7 @@ function customHead() { ?>
 </div>
 <!-- /custom fields -->
 <div class="clear"></div>
-<div id="dialog-delete-field" title="<?php echo osc_esc_html(__('Delete custom field')); ?>" class="has-form-actions" data-field-id="">
+<div id="dialog-delete-field" title="<?php echo osc_esc_html(__('Delete custom field')); ?>" class="has-form-actions hide" data-field-id="">
     <div class="form-horizontal">
         <div class="form-row">
             <?php _e('Are you sure you want to delete this custom field?'); ?>
