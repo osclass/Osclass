@@ -47,13 +47,24 @@ class OCadmin_reported extends OCadminTest {
         // .. TODO ..
     }
 
-    function testBulkaction($type, $array) 
+    function testBulkaction() 
     {
+        $this->loginWith();
         // still having 4 items ...
         // clear all stats
-        $this->bulkAction('all');
         // check no results on reported
-        $this->checkOrder('all', 0);
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='items_reported']");
+        $this->selenium->waitForPageToLoad("10000");
+        sleep(1);
+        // select all 
+        $this->selenium->click("xpath=//input[@id='check_all']");
+        $this->selenium->select('bulk_actions', 'value=clear_all');
+        $this->selenium->click("xpath=//input[@id='bulk_apply']");
+        $this->selenium->click("xpath=//a[@id='bulk-actions-submit']");
+        
+        $this->checkOrder('all', 1);
+        $this->assertTrue($this->selenium->isTextPresent("No data available in table"), "BulkActions clear spam. ERROR");
         // markas XX + YY
         $this->markAs('spam', array(1,2));
         $this->markAs('exp', array(2));
@@ -61,87 +72,99 @@ class OCadmin_reported extends OCadminTest {
         $this->checkOrder('spam', 2);
         $this->checkOrder('exp',  1);
         // bulkAction unmark as XX
-        $this->bulkAction('exp');
         // check results on results
-        $this->checkOrder('exp', 0);
+        $this->bulkAction('exp');
+        $this->checkOrder('exp', 1);
+        $this->assertTrue($this->selenium->isTextPresent("No data available in table"), "BulkActions clear expired. ERROR");
         // bulkAction unmark as YY
-        $this->bulkAction('spam');
         // check no results on reported
-        $this->checkOrder('all', 0);
+        $this->bulkAction('spam');
+        $this->checkOrder('all', 1);
+        $this->assertTrue($this->selenium->isTextPresent("No data available in table"), "BulkActions clear all. ERROR");
     }
     
     function testRemoveAllItems()
     {
+        $this->loginWith();
+        
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='items_manage']");
         $this->selenium->waitForPageToLoad("10000");
-
         sleep(2); // time enough to load table data
-        
         $num = $this->selenium->getXpathCount('//table/tbody/tr');
         
-        while( $num > 0 ) {
-            $this->selenium->click("//table/tbody/tr/td[contains(.,'title_item')]/div/ul/li/a[text()='Delete']");
-            $this->selenium->click("//input[@id='item-delete-input']");
+        while( $num >= 1 ) {
+            $this->selenium->click("xpath=//input[@id='check_all']");
+            $this->selenium->select('bulk_actions', 'value=delete_all');
+            $this->selenium->click("xpath=//input[@id='bulk_apply']");
+            $this->selenium->click("xpath=//a[@id='bulk-actions-submit']");
             $this->selenium->waitForPageToLoad("10000");
-
-            $this->assertTrue($this->selenium->isTextPresent("The listing has been deleted"), "Can't delete item. ERROR");
+            $this->assertTrue($this->selenium->isTextPresent("listings have been deleted") || $this->selenium->isTextPresent("listing has been deleted")
+                    , "BulkActions delete all on delete test. ERROR");
             
             $num = $this->selenium->getXpathCount('//table/tbody/tr');
+            if($this->selenium->isTextPresent("No data available in table") ) {
+                break;
+            }
         }
     }
     
     private function bulkAction($type)
     {
-        foreach($array as $id) {
-            
-            $this->selenium->open( osc_admin_base_url(true) );
-            $this->selenium->click("//a[@id='items_reported']");
-            $this->selenium->waitForPageToLoad("10000");
-            sleep(1);
-            // select all 
-            $this->selenium->click("xpath=//input[@id='check_all']");
-            
-            switch ($type) {
-                case 'spam':
-                    $this->selenium->select('bulk_actions', 'clear_spam_all');
-                    $this->selenium->click("xpath=//input[@id='bulk_apply']");
-                    // TODO click dialog
-                    
-                    $this->assertTrue(
-                            $this->selenium->isTextPresent("listings have been unmarked as spam") || $this->selenium->isTextPresent("listing has been unmarked as spam")
-                            , "BulkActions clear spam. ERROR");
-                    break;
-                case 'exp':
-                    $this->selenium->select('bulk_actions', 'clear_expi_all');
-                    $this->selenium->click("xpath=//input[@id='bulk_apply']");
-                    // TODO click dialog
-                    
-                    $this->assertTrue(
-                            $this->selenium->isTextPresent("listings have been unmarked as expired") || $this->selenium->isTextPresent("listing has been unmarked as expired")
-                            , "BulkActions clear expired. ERROR");
-                    break;
-                case 'bad':
-                    $this->selenium->select('bulk_actions', 'clear_bad_all');
-                    $this->selenium->click("xpath=//input[@id='bulk_apply']");
-                    // TODO click dialog
-                    
-                    $this->assertTrue(
-                            $this->selenium->isTextPresent("listings have been unmarked as missclassified") || $this->selenium->isTextPresent("listing has been unmarked as missclassified")
-                            , "BulkActions clear bad. ERROR");
-                    break;
-                case 'all':
-                    $this->selenium->select('bulk_actions', 'clear_all');
-                    $this->selenium->click("xpath=//input[@id='bulk_apply']");
-                    // TODO click dialog
-                    
-                    $this->assertTrue($this->selenium->isTextPresent("listings have been unmarked") || $this->selenium->isTextPresent("listing has been unmarked")
-                            , "BulkActions clear all. ERROR");
-                    break;
-                default:
-                    break;
-            }
-        }
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='items_reported']");
+        $this->selenium->waitForPageToLoad("10000");
+        sleep(1);
+        // select all 
+        $this->selenium->click("xpath=//input[@id='check_all']");
+
+        switch ($type) {
+            case 'spam':
+                $this->selenium->select('bulk_actions', 'value=clear_spam_all');
+                $this->selenium->click("xpath=//input[@id='bulk_apply']");
+                $this->selenium->click("xpath=//a[@id='bulk-actions-submit']");
+                $this->selenium->waitForPageToLoad("10000");
+                $this->assertTrue(
+                        $this->selenium->isTextPresent("listings have been unmarked as spam") || $this->selenium->isTextPresent("listing has been unmarked as spam")
+                        , "BulkActions clear spam. ERROR");
+                break;
+            case 'exp':
+                $this->selenium->select('bulk_actions', 'value=clear_expi_all');
+                $this->selenium->click("xpath=//input[@id='bulk_apply']");
+                $this->selenium->click("xpath=//a[@id='bulk-actions-submit']");
+                $this->selenium->waitForPageToLoad("10000");
+                $this->assertTrue(
+                        $this->selenium->isTextPresent("listings have been unmarked as expired") || $this->selenium->isTextPresent("listing has been unmarked as expired")
+                        , "BulkActions clear expired. ERROR");
+                break;
+            case 'bad':
+                $this->selenium->select('bulk_actions', 'value=clear_bad_all');
+                $this->selenium->click("xpath=//input[@id='bulk_apply']");
+                $this->selenium->click("xpath=//a[@id='bulk-actions-submit']");
+                $this->selenium->waitForPageToLoad("10000");
+                $this->assertTrue(
+                        $this->selenium->isTextPresent("listings have been unmarked as missclassified") || $this->selenium->isTextPresent("listing has been unmarked as missclassified")
+                        , "BulkActions clear bad. ERROR");
+                break;
+            case 'all':
+                $this->selenium->select('bulk_actions', 'value=clear_all');
+                $this->selenium->click("xpath=//input[@id='bulk_apply']");
+                $this->selenium->click("xpath=//a[@id='bulk-actions-submit']");
+                $this->selenium->waitForPageToLoad("10000");
+                $this->assertTrue($this->selenium->isTextPresent("listings have been unmarked") || $this->selenium->isTextPresent("listing has been unmarked")
+                        , "BulkActions clear all. ERROR");
+                break;
+            case 'delete':
+                $this->selenium->select('bulk_actions', 'value=delete_all');
+                $this->selenium->click("xpath=//input[@id='bulk_apply']");
+                $this->selenium->click("xpath=//a[@id='bulk-actions-submit']");
+                $this->selenium->waitForPageToLoad("10000");
+                $this->assertTrue($this->selenium->isTextPresent("listings have been deleted") || $this->selenium->isTextPresent("listing has been deleted")
+                        , "BulkActions delete all. ERROR");
+                break;
+            default:
+                break;
+        } 
     }
     
     private function unmarkAs($type, $array)
@@ -276,8 +299,9 @@ class OCadmin_reported extends OCadminTest {
     private function insertItem($bPhotos = FALSE )
     {
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Items");
-        $this->selenium->click("//a[@id='items_new']");
+        $this->selenium->click("//a[@id='items']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("link=Add new");
         $this->selenium->waitForPageToLoad("10000");
 
         // insert non registered user
