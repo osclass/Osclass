@@ -95,10 +95,12 @@ class OCadmin_items extends OCadminTest {
         $dao->dao->where('fk_i_item_id', $item['pk_i_id']);
         $dao->dao->orderBy('dt_date', 'DESC');
         $dao->dao->limit(1);
-        $result = $dao->dao->get();
-        $stats  = $result->row();
         
-        $this->assertTrue($stats['i_num_views']==0, "ITEM STATS BEFORE");
+        $result = $dao->dao->get();
+        if($result != false) {
+            $stats  = $result->row();
+            $this->assertTrue($stats['i_num_views']==0, "ITEM STATS BEFORE");
+        }
         
         
         $random = rand(1, 10);
@@ -142,7 +144,8 @@ class OCadmin_items extends OCadminTest {
 
         $this->selenium->mouseOver("xpath=//table/tbody/tr/td[contains(.,'title item')]");
         $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li/a[text()='Delete']");
-        $this->selenium->click("//input[@id='item-delete-input']");
+        sleep(1);
+        $this->selenium->click("//input[@id='item-delete-submit']");
         
         $this->selenium->waitForPageToLoad("10000");
 
@@ -222,8 +225,9 @@ class OCadmin_items extends OCadminTest {
     private function insertItem($bPhotos = FALSE )
     {
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Items");
-        $this->selenium->click("//a[@id='items_new']");
+        $this->selenium->click("//a[@id='items']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("link=Add new");
         $this->selenium->waitForPageToLoad("10000");
 
         // insert non registered user
@@ -385,9 +389,10 @@ class OCadmin_items extends OCadminTest {
         sleep(2); // time enough to load table data
         
         $this->selenium->click("//table/tbody/tr/td[contains(.,'title_item')]/div/ul/li/a[text()='Delete']");
-        $this->selenium->click("//input[@id='item-delete-input']");
+        $this->selenium->click("//input[@id='item-delete-submit']");
+        sleep(1);
         $this->selenium->waitForPageToLoad("10000");
-
+        sleep(1);
         $this->assertTrue($this->selenium->isTextPresent("The listing has been deleted"), "Can't delete item. ERROR");
     }
 
@@ -459,6 +464,8 @@ class OCadmin_items extends OCadminTest {
 
         $this->selenium->mouseOver("//table/tbody/tr/td[contains(text(),'Test B user')]");
         $this->selenium->click("//table/tbody/tr/td[contains(text(),'Test B user')]/div/ul/li/a[text()='Delete']");
+        sleep(1);
+        $this->selenium->click("//input[@id='comment-delete-submit']");
         $this->selenium->waitForPageToLoad("10000");
         
         $this->assertTrue($this->selenium->isTextPresent("The comment have been deleted"), "Can't delete a comment. ERROR") ;
@@ -472,7 +479,7 @@ class OCadmin_items extends OCadminTest {
         
         $this->selenium->mouseOver("//table/tbody/tr/td[contains(text(),'title item')]");
         $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li/a[text()='Delete']");
-        $this->selenium->click("//input[@id='item-delete-input']");
+        $this->selenium->click("//input[@id='item-delete-submit']");
         
         $this->selenium->waitForPageToLoad("10000");
 
@@ -524,7 +531,7 @@ class OCadmin_items extends OCadminTest {
 
         $this->selenium->mouseOver("//table/tbody/tr/td[contains(text(),'title item')]");
         $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li/a[text()='Delete']");
-        $this->selenium->click("//input[@id='item-delete-input']");
+        $this->selenium->click("//input[@id='item-delete-submit']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The listing has been deleted"), "Can't delete item. ERROR");
