@@ -113,34 +113,31 @@ $(function(){
         return false;
     });
     //Compact mode
+    var cmode_trigger = $("#osc_toolbar_switch_mode > .trigger");
+    var cmode_bg = $("#osc_toolbar_switch_mode > .background");
+    if($('body').hasClass('compact')){
+        cmode_trigger.stop().animate({left:24},500);
+        cmode_bg.stop().animate({backgroundColor:'#00e1f2'},500);
+    } else {
+        cmode_trigger.stop().animate({left:0},500);
+        cmode_bg.stop().animate({backgroundColor:'#f3f3f3'},500);
+    }
     $("#osc_toolbar_switch_mode ").on("click", function(){
         $.getJSON(
         $(this).attr('href'),
         function(data){
             if(data.compact_mode == false){
                 $('body').removeClass('compact');
+                cmode_trigger.stop().animate({left:0},500);
+                cmode_bg.stop().animate({backgroundColor:'#f3f3f3'},500);
             } else {
                 $('body').addClass('compact');
+                cmode_trigger.stop().animate({left:24},500);
+                cmode_bg.stop().animate({backgroundColor:'#00e1f2'},500);
             }
             resetLayout();
         });
         return false;
-    }).hover(function(){
-        if($('body').hasClass('compact')){
-           $("#osc_toolbar_switch_mode > .trigger").stop().animate({left:0},500);
-           $("#osc_toolbar_switch_mode > .background").stop().animate({backgroundColor:'#f3f3f3'},500);
-        } else {
-           $("#osc_toolbar_switch_mode > .trigger").stop().animate({left:24},500);
-           $("#osc_toolbar_switch_mode > .background").stop().animate({backgroundColor:'#00e1f2'},500);
-        }
-    },function(){
-        if($('body').hasClass('compact')){
-           $("#osc_toolbar_switch_mode > .trigger").stop().animate({left:24},500);
-           $("#osc_toolbar_switch_mode > .background").stop().animate({backgroundColor:'#00e1f2'},500);
-        } else {
-           $("#osc_toolbar_switch_mode > .trigger").stop().animate({left:0},500);
-           $("#osc_toolbar_switch_mode > .background").stop().animate({backgroundColor:'#f3f3f3'},500);
-        }
     });   
 });
 function oscTab(callback){
@@ -166,7 +163,7 @@ function selectUi(thatSelect){
 }        
 function resetLayout(){
     var headerHeight = 50;
-    var compactModeButtonHeight = 50;
+    var compactModeButtonHeight = 75;
     var menuItemHeight = 80;
     if($('body').hasClass('compact')){
         menuItemHeight = 50;
