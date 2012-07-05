@@ -839,7 +839,7 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->selenium->click("//table/tbody/tr/td[contains(.,'INR')]/a[text()='Delete']");
         sleep(2);
-        $this->selenium->click("//a[@id='currency-delete-submit']");
+        $this->selenium->click("//input[@id='currency-delete-submit']");
         $this->selenium->waitForPageToLoad("30000");
 
         $this->assertTrue( $this->selenium->isTextPresent("One currency has been deleted") , "Delete currency" ) ;
@@ -966,7 +966,7 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->selenium->click("//table/tbody/tr/td[contains(.,'INR')]/a[text()='Delete']");
         sleep(2);
-        $this->selenium->click("//a[@id='currency-delete-submit']");
+        $this->selenium->click("//input[@id='currency-delete-submit']");
         $this->selenium->waitForPageToLoad("30000");
 
         $this->assertTrue( $this->selenium->isTextPresent("One currency has been deleted") , "Delete currency" ) ;
