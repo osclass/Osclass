@@ -33,10 +33,10 @@
     <div id="upload-language">
         <div class="form-horizontal">
         <?php if( is_writable( osc_translations_path() ) ) { ?>
-            <div class="flashmessage flashmessage-info">
+            <div class="flashmessage flashmessage-info flashmessage-inline" style="display:block;">
                 <p class="info"><?php printf( __('Download more languages at %s'), '<a href="https://sourceforge.net/projects/osclass/files/Languages/" target="_blank">Sourceforge</a>') ; ?></p>
             </div>
-            <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data">
+            <form class="separate-top" action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="action" value="add_post" />
                 <input type="hidden" name="page" value="languages" />
 
