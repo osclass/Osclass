@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Modern Theme 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-03 13:37+0100\n"
+"POT-Creation-Date: 2012-07-05 11:58+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
 "Language-Team: OSClass <info@osclass.org>\n"
@@ -470,47 +470,43 @@ msgid "See all offers"
 msgstr ""
 
 #: /var/www/osclass-git/oc-content/themes/modern/search.php:195
-msgid "Search results"
-msgstr ""
-
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:198
 msgid "Sort by"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:217
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:214
 #, php-format
 msgid "There are no results matching \"%s\""
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:236
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:242
 msgid "Your search"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:250
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:256
 msgid "Show only"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:255
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:261
 msgid "Show only listings with pictures"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:263
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:269
 msgid "Min"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:265
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:271
 msgid "Max"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:304
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:308
 msgid "Apply"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:321
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:325
 msgid "Selected"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/search.php:322
+#: /var/www/osclass-git/oc-content/themes/modern/search.php:326
 msgid "Nothing selected, input was"
 msgstr ""
 
