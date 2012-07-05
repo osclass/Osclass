@@ -17,8 +17,10 @@ class OCadmin_plugins extends OCadminTest {
         // UPLOAD
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) ) ;
-        $this->selenium->click("link=Plugins");
-        $this->selenium->click("link=Add new plugin");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("//a[@id='plugins_manage']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("link=Add plugin");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->type("package", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/plugins_breadcrumbs_2.0.zip") );
         $this->selenium->click("//input[@type='submit']");
@@ -31,8 +33,8 @@ class OCadmin_plugins extends OCadminTest {
         // INSTALL
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) ) ;
-        $this->selenium->click("link=Plugins");
-        $this->selenium->click("link=Manage plugins");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("//a[@id='plugins_manage']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//table/tbody/tr[contains(.,'Bread crumbs')]/td/a[text()='Install']");
         $this->selenium->waitForPageToLoad("10000");
@@ -44,8 +46,8 @@ class OCadmin_plugins extends OCadminTest {
         // CONFIGURE
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) ) ;
-        $this->selenium->click("link=Plugins");
-        $this->selenium->click("link=Manage plugins");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("//a[@id='plugins_manage']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//table/tbody/tr[contains(.,'Bread crumbs')]/td/a[text()='Configure']");
         //$this->selenium->click("//table/tbody/tr/td/a[@href[contains(.,'Bread crumbs')] and text()='Configure']");
@@ -58,8 +60,8 @@ class OCadmin_plugins extends OCadminTest {
         // DISABLE
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) ) ;
-        $this->selenium->click("link=Plugins");
-        $this->selenium->click("link=Manage plugins");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("//a[@id='plugins_manage']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//table/tbody/tr[contains(.,'Bread crumbs')]/td/a[text()='Disable']");
         //$this->selenium->click("//table/tbody/tr/td/a[text()='Disable' and @href[contains(.,'Bread crumbs')]]");
@@ -72,8 +74,8 @@ class OCadmin_plugins extends OCadminTest {
         // ENABLE
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) ) ;
-        $this->selenium->click("link=Plugins");
-        $this->selenium->click("link=Manage plugins");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("//a[@id='plugins_manage']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//table/tbody/tr[contains(.,'Bread crumbs')]/td/a[text()='Enable']");
         //$this->selenium->click("//table/tbody/tr/td/a[text()='Enable' and @href[contains(.,'Bread crumbs')]]");
@@ -86,11 +88,13 @@ class OCadmin_plugins extends OCadminTest {
         // UNINSTALL
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) ) ;
-        $this->selenium->click("link=Plugins");
-        $this->selenium->click("link=Manage plugins");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("//a[@id='plugins_manage']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//table/tbody/tr[contains(.,'Bread crumbs')]/td/a[text()='Uninstall']");
-        //$this->selenium->click("//table/tbody/tr/td/a[text()='Uninstall' and @href[contains(.,'Bread crumbs')]]");
+        sleep(2);
+        $this->selenium->click("//input[@id='uninstall-submit']");
+
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue($this->selenium->isTextPresent("Plugin uninstalled"),"Uninstall plugin $this->plugin");
         $this->deletePlugin();
@@ -98,7 +102,7 @@ class OCadmin_plugins extends OCadminTest {
     
     
     
-    function testMarket()
+    /*function testMarket()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) ) ;
@@ -129,7 +133,7 @@ class OCadmin_plugins extends OCadminTest {
         
         $this->assertTrue($this->selenium->isTextPresent("Everything was OK!"),"Install plugin (market)");
         
-    }
+    }*/
     
     
     private function deletePlugin() {
