@@ -23,7 +23,7 @@
     $users_by_region  = __get("users_by_region") ;
     $latest_users     = __get("latest_users") ;
     $type             = Params::getParam('type_stat');
-    
+
     switch($type){
         case 'week':
             $type_stat = __('Last 10 weeks');
@@ -35,14 +35,23 @@
             $type_stat = __('Last 10 days');
     }
 
-
     osc_add_filter('render-wrapper','render_offset');
     function render_offset(){
         return 'row-offset';
     }
+
+    function addHelp(){
+        echo '<h3>What does a red highlight mean?</h3>';
+        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
+    Red highlight means that the listing has been marked as spam.</p>';
+    }
+    osc_add_hook('help_box','addHelp');
+
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1><?php _e('Statistics') ; ?></h1>
+        <h1><?php _e('Statistics') ; ?>
+            <a href="#" class="btn ico ico-32 ico-help float-right"></a>
+        </h1>
     <?php
     }
     function customHead(){

@@ -16,11 +16,18 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    function addHelp(){
+        echo '<h3>What does a red highlight mean?</h3>';
+        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
+    Red highlight means that the listing has been marked as spam.</p>';
+    }
+    osc_add_hook('help_box','addHelp');
+
     function customPageHeader() { ?>
         <h1><?php _e('Manage Plugins') ; ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
             <a href="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add plugin') ; ?></a>
-	   </h1>
+        </h1>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
@@ -47,15 +54,17 @@
                     }
                 }) ;
             });
-            
         </script>
         <?php
     }
     osc_add_hook('admin_header','customHead');
-   
+
     $iDisplayLength = __get('iDisplayLength');
     $aData          = __get('aPlugins'); 
-    
+
+    $version_length = strlen(osc_version());
+    $main_version   = substr(osc_version(), 0, $version_length - 2) . "." . substr(osc_version(), $version_length - 2, 1);
+
     $tab_index = 0;
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
@@ -64,13 +73,13 @@
         <?php 
             $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
             $bPluginsToUpdate = is_array($aPluginsToUpdate)?true:false;
-            if($bPluginsToUpdate && count($aPluginsToUpdate) > 0) { 
+            if($bPluginsToUpdate && count($aPluginsToUpdate) > 0) {
                 $tab_index = 1;
         ?>
         <li><a href="#update-plugins" onclick="window.location = '<?php echo osc_admin_base_url(true) . '?page=plugins#update-plugins'; ?>'; return false; "><?php _e('Updates'); ?></a></li>
         <?php } ?>
         <li><a href="#market"><?php _e('Market'); ?></a></li>
-        <li><a href="#upload-plugins" onclick="window.location = '<?php echo osc_admin_base_url(true) . '?page=plugins'; ?>'; return false; "><?php _e('Upload plugin') ; ?></a></li>
+        <li><a href="#upload-plugins" onclick="window.location = '<?php echo osc_admin_base_url(true) . '?page=plugins'; ?>'; return false; "><?php _e('Available plugins') ; ?></a></li>
     </ul>
     <div id="market">
         <h2 class="render-title"><?php _e('Latest plugins on market') ; ?></h2>
@@ -79,7 +88,6 @@
         <div id="market_pagination" class="has-pagination">
         </div>
     </div>
-
     <div id="market_installer" class="has-form-actions hide">
         <form action="" method="post">
             <input type="hidden" name="market_code" id="market_code" value="" />
@@ -118,11 +126,9 @@
                 </div>
             </div>
         </form>
-    </div>        
-
+    </div>
 </div>
-             
-<script>
+<script type="text/javascript">
     $(function() {
         $( "#tabs" ).tabs({ selected: <?php echo $tab_index; ?> });
 
@@ -137,7 +143,7 @@
                 title:'<?php _e('Downloading'); ?>...',
                 modal:true
             });
-            
+
             $.getJSON(
             "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
             {"code" : $("#market_code").attr("value"), "section" : 'plugins'},
@@ -162,8 +168,8 @@
             var page = 1;
             if(fPage!="") {
                 page = fPage;
-            } 
-           
+            }
+
             $.getJSON(
                 "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=local_market",
                 {"section" : "plugins", 'mPage' : page },
@@ -176,12 +182,12 @@
                             dots = '';
                             if(description.length > 80){
                                 dots = '...';
-                            } 
-                           
+                            }
+
                             var plugins_downloaded  = <?php $plugins_downloaded = getPreference('plugins_downloaded'); if($plugins_downloaded != ''){ echo $plugins_downloaded; } else { echo 'new Array()'; } ?>;
                             var plugin_to_update    = <?php echo getPreference('plugins_to_update'); ?>;
                             var button = '';
-                            
+
                             if(jQuery.inArray(data.plugins[i].s_update_url, plugins_downloaded) >= 0 ) {
                                 if( jQuery.inArray(data.plugins[i].s_update_url, plugin_to_update) >= 0 ) {
                                     button = '<a href="#'+data.plugins[i].s_update_url+'" class="btn btn-mini btn-orange market-popup market_update"><?php _e('Update') ; ?></a>';
@@ -201,7 +207,7 @@
                             $("#market_plugins").append('<tr class="plugin '+even+'">'
                                 +'<td>'
                                 +'<div class="plugin-info">'
-                                    +'<h3>'+data.plugins[i].s_title+' '+data.plugins[i].s_version+' <?php _e('by') ; ?> <a target="_blank" href="">'+data.plugins[i].s_contact_name+'</a></h3>'
+                                    +'<h3>'+data.plugins[i].s_title+' '+data.plugins[i].s_version+' <?php _e('by') ; ?> '+data.plugins[i].s_contact_name+'</h3>'
                                 +'</div>'
                                 +'<div class="plugin-description">'
                                     +description.substring(0,80)+dots
@@ -222,7 +228,7 @@
                 }
             );
         }
-        
+
         getMarketContent( unescape(self.document.location.hash.substring(1)) );
         // bind pagination to getJSON
         $('#market_pagination a').live('click',function(){
@@ -230,7 +236,6 @@
             url = url.replace("#","");
             getMarketContent(url);
         });
-            
     });
     $('.market-popup').live('click',function(){
         var update = false;
@@ -258,7 +263,7 @@
                     } else {
                         $('#market_install').html("<?php echo osc_esc_html( __('Continue download') ) ; ?>");
                     }
-                    
+
                     $('#market_installer').dialog({
                         modal:true,
                         title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
@@ -269,7 +274,6 @@
         );
 
         return false;
-    });        
+    });
 </script>
-
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

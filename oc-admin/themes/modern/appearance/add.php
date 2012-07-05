@@ -16,9 +16,18 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    function addHelp(){
+        echo '<h3>What does a red highlight mean?</h3>';
+        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
+    Red highlight means that the listing has been marked as spam.</p>';
+    }
+    osc_add_hook('help_box','addHelp');
+
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1><?php _e('Appearance') ; ?></h1>
+        <h1><?php _e('Appearance') ; ?>
+            <a href="#" class="btn ico ico-32 ico-help float-right"></a>
+        </h1>
 <?php
     }
 
@@ -37,7 +46,7 @@
                     <div class="flashmessage flashmessage-info flashmessage-inline" style="display: block;">
                         <p class="info"><?php printf( __('Download more themes at %s'), '<a href="https://sourceforge.net/projects/osclass/files/Themes/" target="_blank">Sourceforge</a>') ; ?></p>
                     </div>
-                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data">
+                    <form class="separate-top" action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="action" value="add_post" />
                         <input type="hidden" name="page" value="appearance" />
                         <div class="form-row">

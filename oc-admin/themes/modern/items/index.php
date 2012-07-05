@@ -22,6 +22,7 @@
     Red highlight means that the listing has been marked as spam.</p>';
     }
     osc_add_hook('help_box','addHelp');
+
     function customPageHeader() { ?>
         <h1><?php _e('Listing'); ?>
             <a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=settings" class="btn ico ico-32 ico-engine float-right"></a>

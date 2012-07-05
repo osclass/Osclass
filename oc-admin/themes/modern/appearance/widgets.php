@@ -16,12 +16,23 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $info = __get("info") ;
+    $info = __get("info");
+
+    function addHelp(){
+        echo '<h3>What does a red highlight mean?</h3>';
+        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
+    Red highlight means that the listing has been marked as spam.</p>';
+    }
+    osc_add_hook('help_box','addHelp');
+
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1><?php _e('Appearance') ; ?></h1>
+        <h1><?php _e('Appearance') ; ?>
+            <a href="#" class="btn ico ico-32 ico-help float-right"></a>
+        </h1>
     <?php
     }
+
     function customPageTitle($string) {
         return sprintf(__('Appearance &raquo; %s'), $string);
     }
