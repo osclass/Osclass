@@ -22,7 +22,25 @@
 
     //customize Head
     function customHead(){
-        echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.validate.min.js').'"></script>';
+        echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.validate.min.js').'"></script>'; ?>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                // dialog delete
+                $("#dialog-delete-theme").dialog({
+                    autoOpen: false,
+                    modal: true,
+                    title: '<?php echo osc_esc_js( __('Delete theme') ); ?>'
+                });
+            });
+
+            // dialog delete function
+            function delete_dialog(theme) {
+                $("#dialog-delete-theme input[name='webtheme']").attr('value', theme);
+                $("#dialog-delete-theme").dialog('open');
+                return false;
+            }
+        </script>
+        <?php
     }
     osc_add_hook('admin_header','customHead');
 
@@ -80,7 +98,7 @@
                             <div class="theme-actions">
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=activate&amp;theme=<?php echo $theme ; ?>" class="btn btn-mini btn-green"><?php _e('Activate') ; ?></a>
                                 <a target="_blank" href="<?php echo osc_base_url(true); ?>?theme=<?php echo $theme ; ?>" class="btn btn-mini btn-blue"><?php _e('Preview') ; ?></a>
-                                <a onclick="javascript:return confirm('<?php echo osc_esc_js(__('This action can not be undone. Are you sure you want to continue?')); ?>')" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=delete&amp;webtheme=<?php echo $theme ; ?>" class="btn btn-mini float-right delete"><?php _e('Delete') ; ?></a>
+                                <a onclick="return delete_dialog('<?php echo $theme; ?>');" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=delete&amp;webtheme=<?php echo $theme ; ?>" class="btn btn-mini float-right delete"><?php _e('Delete') ; ?></a>
                                 <?php
                                 if($bThemesToUpdate) {
                                     if(in_array($theme,$aThemesToUpdate )){
@@ -101,7 +119,6 @@
                     <div class="clear"></div>
                 </div>
             </div>
-            
             <div id="market_installer" class="has-form-actions hide">
                 <form action="" method="post">
                     <input type="hidden" name="market_code" id="market_code" value="" />
@@ -137,68 +154,82 @@
                     </div>
                 </form>
             </div>
-            
-            </div>
-        <script>
-        $(function() {
-            $( "#tabs" ).tabs({ selected: 1 });
-            
-            $("#market_cancel").on("click", function(){
-                $(".ui-dialog-content").dialog("close");
-                return false;
-            });
-            
-            $("#market_install").on("click", function(){
-                $(".ui-dialog-content").dialog("close");
-                $('<div id="downloading"><div class="osc-modal-content"><?php _e('Please wait until the download is completed'); ?></div></div>').dialog({title:'<?php _e('Downloading'); ?>...',modal:true});
-                $.getJSON(
-                "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
-                {"code" : $("#market_code").attr("value"), "section" : 'themes'},
-                function(data){
-                    var content = data.message ;
-                    if(data.error == 0) { // no errors
-                        content += '<h3><?php _e('The theme have been downloaded correctly, proceed to activate or preview it.');?></h3>';
-                        content += "<p>";
-                        content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php _e('Ok'); ?></a>';
-                        content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php _e('Close'); ?></a>';
-                        content += "</p>";
-                    } else {
-                        content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php _e('Close'); ?></a>';
-                    }
-                    $("#downloading .osc-modal-content").html(content);
-                });
-                return false;
-            });            
-        });
-        
-        $('.market-popup').live('click',function(){
-            
-            $.getJSON(
-                "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
-                {"code" : $(this).attr('href').replace('#',''), 'section' : 'themes'},
-                function(data){
-                    if(data!=null) {
-                        $("#market_thumb").attr('src',data.s_thumbnail);
-                        $("#market_code").attr("value", data.s_update_url);
-                        $("#market_name").html(data.s_title);
-                        $("#market_version").html(data.s_version);
-                        $("#market_author").html(data.s_contact_name);
-                        $("#market_url").attr('href',data.s_source_file);
-                        $('#market_install').html("<?php echo osc_esc_html( __('Update') ) ; ?>");
-
-                        $('#market_installer').dialog({
-                            modal:true,
-                            title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
-                            width:485
-                        });
-                    }
-                }
-            );
-            
-            return false;
-        });        
-        </script>
+        </div>
     </div>
     <!-- /themes list -->
 </div>
+<form id="dialog-delete-theme" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+    <input type="hidden" name="page" value="appearance" />
+    <input type="hidden" name="action" value="delete" />
+    <input type="hidden" name="webtheme" value="" />
+    <div class="form-horizontal">
+        <div class="form-row">
+            <?php _e('This action can not be undone. Are you sure you want to delete the theme?'); ?>
+        </div>
+        <div class="form-actions">
+            <div class="wrapper">
+            <a class="btn" href="javascript:void(0);" onclick="$('#dialog-delete-theme').dialog('close');"><?php _e('Cancel'); ?></a>
+            <input id="delete-theme-submit" type="submit" value="<?php echo osc_esc_html( __('Uninstall') ); ?>" class="btn btn-red" />
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    $(function() {
+        $( "#tabs" ).tabs({ selected: 1 });
+
+        $("#market_cancel").on("click", function(){
+            $(".ui-dialog-content").dialog("close");
+            return false;
+        });
+
+        $("#market_install").on("click", function(){
+            $(".ui-dialog-content").dialog("close");
+            $('<div id="downloading"><div class="osc-modal-content"><?php echo osc_esc_js(__('Please wait until the download is completed')); ?></div></div>').dialog({title:'<?php echo osc_esc_js(__('Downloading')); ?>...',modal:true});
+            $.getJSON(
+            "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
+            {"code" : $("#market_code").attr("value"), "section" : 'themes'},
+            function(data){
+                var content = data.message ;
+                if(data.error == 0) { // no errors
+                    content += '<h3><?php echo osc_esc_js(__('The theme have been downloaded correctly, proceed to activate or preview it.')); ?></h3>';
+                    content += "<p>";
+                    content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php echo osc_esc_js(__('Ok')); ?></a>';
+                    content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php echo osc_esc_js(__('Close')); ?></a>';
+                    content += "</p>";
+                } else {
+                    content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php echo osc_esc_js(__('Close')); ?></a>';
+                }
+                $("#downloading .osc-modal-content").html(content);
+            });
+            return false;
+        });
+    });
+
+    $('.market-popup').live('click',function(){
+        $.getJSON(
+            "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
+            {"code" : $(this).attr('href').replace('#',''), 'section' : 'themes'},
+            function(data){
+                if(data!=null) {
+                    $("#market_thumb").attr('src',data.s_thumbnail);
+                    $("#market_code").attr("value", data.s_update_url);
+                    $("#market_name").html(data.s_title);
+                    $("#market_version").html(data.s_version);
+                    $("#market_author").html(data.s_contact_name);
+                    $("#market_url").attr('href',data.s_source_file);
+                    $('#market_install').html("<?php echo osc_esc_js( __('Update') ) ; ?>");
+
+                    $('#market_installer').dialog({
+                        modal:true,
+                        title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
+                        width:485
+                    });
+                }
+            }
+        );
+
+        return false;
+    });
+</script>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

@@ -491,43 +491,8 @@
                             $mPages->update(array('i_order' => $page['i_order']), array('pk_i_id' => $id));
                             $mPages->update(array('i_order' => $actual_order), array('pk_i_id' => $page['pk_i_id']));
                         }
-
-                        // TO BE IMPROVED
-                        // json for datatables
-                        $prefLocale = osc_current_user_locale() ;
-                        $this->_exportVariableToView( 'pages', $mPages->listAll(0) ) ;
-                        $o_json = array() ;
-                        while( osc_has_static_pages() ) {
-                            $row  = array() ;
-                            $page = osc_static_page();
-
-                            $content = array() ;
-                            if( isset($page['locale'][$prefLocale]) && !empty($page['locale'][$prefLocale]['s_title']) ) {
-                                $content = $page['locale'][$prefLocale] ;
-                            } else {
-                                $content = current($page['locale']) ;
-                            }
-
-                            $options   = array() ;
-                            $options[] = '<a href="' . osc_static_page_url() . '">' . __('View page') . '</a>' ;
-                            $options[] = '<a href="' . osc_admin_base_url(true) . '?page=pages&amp;action=edit&amp;id=' . osc_static_page_id() . '">' . __('Edit') . '</a>' ;
-                            if( !$page['b_indelible'] ) {
-                                $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js(__("This action can't be undone. Are you sure you want to continue?")) . '\')" href="' . osc_admin_base_url(true) . '?page=pages&amp;action=delete&amp;id=' . osc_static_page_id() . '">' . __('Delete') . '</a>' ;
-                            }
-
-                            $row[] = '<input type="checkbox" name="id[]"" value="' . osc_static_page_id() . '"" />' ;
-                            $row[] = $page['s_internal_name'] . '<div id="datatables_quick_edit" style="display: none;">' . implode(' &middot; ', $options) . '</div>' ;
-                            $row[] = $content['s_title'] ;
-                            $row[] = osc_static_page_order() . ' <img id="up" onclick="order_up(' . osc_static_page_id() . ');" style="cursor:pointer; width:15px; height:15px;" src="' . osc_current_admin_theme_url('images/arrow_up.png') . '"/> <br/><img id="down" onclick="order_down(' . osc_static_page_id() . ');" style="cursor:pointer; width:15px; height:15px; margin-left: 10px;" src="' . osc_current_admin_theme_url('images/arrow_down.png') .'"/>' ;
-
-                            $o_json[] = $row ;
-                        }
-
-                        echo json_encode($o_json) ;
                     }
-
-                    break;
-
+                break;
                 /******************************
                  ** COMPLETE UPGRADE PROCESS **
                  ******************************/

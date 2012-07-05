@@ -17,15 +17,6 @@ function modern_compactmode_actions(){
     osc_set_preference('compact_mode', $modeStatus['compact_mode'], 'modern_admin_theme');
     echo json_encode($modeStatus);
 }
-osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_switch_mode'  , 1 );
-function osc_admin_toolbar_switch_mode(){
-    AdminToolbar::newInstance()->add_menu( array(
-                'id'        => 'switch_mode',
-                'title'     => __('Compact mode').'<span class="trigger"></span>',
-                'href'      => osc_admin_base_url(true).'?page=ajax&action=runhook&hook=compactmode',
-                'meta'      => array('class' => 'float-right')
-            ) );
-}
 function printLocaleTabs($locales = null)
 {
     if($locales==null) { $locales = osc_get_locales(); }

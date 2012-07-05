@@ -109,6 +109,7 @@
 	$sMenu .= '<ul id="hidden-menus">'.PHP_EOL ;
 	$sMenu .= '</ul>'.PHP_EOL ;
         $sMenu .= '</div>'.PHP_EOL ;
+        $sMenu .= '<div class="osc_switch_mode"><a id="osc_toolbar_switch_mode" href="'.osc_admin_base_url(true).'?page=ajax&action=runhook&hook=compactmode"><div class="background"></div><div class="skin"></div><div class="trigger"></div></a><h3>'.__('Compact').'</h3></div>'.PHP_EOL ;
         
         $sMenu .= '</div>'.PHP_EOL ;
         $sMenu .= '<!-- menu end -->'.PHP_EOL ;
