@@ -72,7 +72,7 @@
 <?php osc_show_flash_message('admin') ; ?>
         </div>
     </div>
-</div><!-- grid close -->
+<!-- grid close -->
 <!-- /settings form -->
 <div id="d_add_country" class="lightbox_country location has-form-actions hide">
         <form action="<?php echo osc_admin_base_url(true); ?>" method="post" accept-charset="utf-8" id="d_add_country_form">
