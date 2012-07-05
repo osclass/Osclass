@@ -69,6 +69,64 @@ class OCadmin_appearance extends OCadminTest {
         $this->widgetsFooter();
         $this->editWidgetsHeader();
     }
+    
+    /*
+     * Test Market appearance
+     */
+    function testMarketDownload()
+    {
+        $this->loginWith();
+        // go to market tab and download first element not installed
+        $this->selenium->open(osc_admin_base_url(true));
+        $this->selenium->click("link=Manage themes");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("xpath=//div[@id='tabs']/ul/li/a[contains(.,'Market')]");
+        $this->selenium->waitForPageToLoad("10000");
+        sleep(5);
+        // there is more than one themes on market ?
+        $num_market_theme = $this->selenium->getXpathCount("//div[@id='market_themes']/div[@class='theme']");        
+        if($num_market_theme > 0) {
+            // get number of themes already downloaded
+            $num = $this->selenium->getXpathCount("//a[contains(.,'Already downloaded')]");
+            
+            $this->assertTrue(true, 'There are themes on market');
+            $pos  = 1;
+            while( $pos < $num_market_theme) {
+                $exist = $this->selenium->getXpathCount("//div[@id='market_themes']/div[position()=$pos]/div[position()=1]/div/a[position()=1 and contains(.,'Download theme')]");
+                if($exist == 1) {
+                    break;
+                } else {
+                    $pos++;
+                }
+            }
+            
+            // valid position
+            if($pos<=$num_market_theme) {
+                // get theme info
+                $description = $this->selenium->getText("//div[@id='market_themes']/div[position()=$pos]/div[@class='theme-description']");
+                $this->selenium->click("//div[@id='market_themes']/div[position()=$pos]/div[position()=1]/div/a[position()=1 and contains(.,'Download theme')]");
+                sleep(3);
+                $this->selenium->click("xpath=//button[@id='market_install']");
+                sleep(10);
+                $this->assertTrue($this->selenium->isTextPresent("Everything was OK!"), "Theme downloaded successfully.");
+                $this->selenium->click("link=Close");
+                $this->selenium->waitForPageToLoad("10000");
+                sleep(5);
+                // check you cannot download it again
+                $new_num = $this->selenium->getXpathCount("//a[contains(.,'Already downloaded')]");
+                echo $num ."  now " . $new_num ."\n";
+                $this->assertTrue( ($num+1 == $new_num) , "Theme downloaded successfully and marked as downloaded theme");
+                
+                // check appears at Manage themes
+                $this->selenium->click("link=Manage themes");
+                $this->selenium->waitForPageToLoad("10000");
+                
+                $this->assertTrue($this->selenium->isTextPresent($description), "Theme present at Manage themes.");
+            }
+        } else {
+            $this->asserTrue(false, 'There aren\'t themes on market');
+        }
+    }
 
     /*
      * Private functions
@@ -85,7 +143,7 @@ class OCadmin_appearance extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
 
         // add header widget
-        $this->selenium->click("//a[@id='add_header']");
+        $this->selenium->click("//a[@id='add_widget_header']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->type("description", "header1");
         $this->selenium->selectFrame("index=0");
@@ -107,7 +165,8 @@ class OCadmin_appearance extends OCadminTest {
 
         // remove widget
         $this->selenium->click("link=Delete");
-        $this->selenium->click("xpath=//a[@id='widget-delete-submit']");
+        sleep(1);
+        $this->selenium->click("xpath=//input[@id='widget-delete-submit']");
         $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue($this->selenium->isTextPresent("Widget removed correctly"), "Delete widget header.");
         $this->assertTrue(!$this->selenium->isTextPresent("header1"), "Check delete widget header.");
@@ -123,7 +182,7 @@ class OCadmin_appearance extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
 
         // add categories widget
-        $this->selenium->click("//a[@id='add_footer']");
+        $this->selenium->click("//a[@id='add_widget_footer']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->type("description", "footer1");
         $this->selenium->selectFrame("index=0");
@@ -145,7 +204,7 @@ class OCadmin_appearance extends OCadminTest {
 
         //remove widget
         $this->selenium->click("link=Delete");
-        $this->selenium->click("xpath=//a[@id='widget-delete-submit']");
+        $this->selenium->click("xpath=//input[@id='widget-delete-submit']");
         $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue($this->selenium->isTextPresent("Widget removed correctly"), "Delete widget footer.");
         $this->assertTrue(!$this->selenium->isTextPresent("footer1"), "Check delete widget footer.");
@@ -162,7 +221,7 @@ class OCadmin_appearance extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
 
         // add header widget
-        $this->selenium->click("//h4[contains(.,'header')]/a");
+        $this->selenium->click("//a[@id='add_widget_header']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->type("description", "header1");
         $this->selenium->selectFrame("index=0");
@@ -196,7 +255,7 @@ class OCadmin_appearance extends OCadminTest {
 
         // remove widget
         $this->selenium->click("link=Delete");
-        $this->selenium->click("xpath=//a[@id='widget-delete-submit']");
+        $this->selenium->click("xpath=//input[@id='widget-delete-submit']");
         $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue($this->selenium->isTextPresent("Widget removed correctly"), "Delete widget header.");
         $this->assertTrue(!$this->selenium->isTextPresent("header1"), "Check delete widget header.");
