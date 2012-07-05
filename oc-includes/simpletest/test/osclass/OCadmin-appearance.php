@@ -16,7 +16,7 @@ class OCadmin_appearance extends OCadminTest {
         @chmod(CONTENT_PATH."themes/", 0777);
         $this->selenium->open(osc_admin_base_url(true));
         $this->selenium->click("link=Appearance");
-        $this->selenium->click("link=Add new theme");
+        $this->selenium->click("link=Add new");
         $this->selenium->waitForPageToLoad("10000");
 
         if ($this->selenium->isTextPresent("chmod a+w ")) {
