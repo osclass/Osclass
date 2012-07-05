@@ -85,7 +85,8 @@
                                                 <td><?php printf( __('Description: %s'), $w['s_description'] ) ; ?></td>
                                                 <td>
                                                     <?php printf('<a href="%1$s?page=appearance&amp;action=edit_widget&amp;id=%2$s&amp;location=%3$s">' . __('Edit') .'</a>', osc_admin_base_url(true), $w['pk_i_id'], $location); ?>
-                                                    <?php printf('<a onclick="return delete_dialog(\'' . $w['pk_i_id'] . '\');">' . __('Delete') .'</a>', osc_admin_base_url(true), $w['pk_i_id']) ; ?></td>
+                                                    <a href="<?php printf('%s?page=appearance&amp;action=delete_widget&amp;id=%d"', osc_admin_base_url(true), $w['pk_i_id']);?>" onclick="return delete_dialog('<?php echo $w['pk_i_id']; ?>');"><?php _e('Delete') ;?></a>
+                                                </td>
                                             </tr>
                                         <?php
                                         $countEvent++;
