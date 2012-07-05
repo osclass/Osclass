@@ -81,7 +81,7 @@
             }
         });
     });
-    
+
     function custom_date(date_format) {
         $.getJSON(
             "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=date_format",
@@ -95,7 +95,7 @@
             }
         );
     }
-    
+
     function custom_time(time_format) {
         $.getJSON(
             "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=date_format",
@@ -118,9 +118,18 @@
         return 'row-offset';
     }
 
+    function addHelp(){
+        echo '<h3>What does a red highlight mean?</h3>';
+        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
+    Red highlight means that the listing has been marked as spam.</p>';
+    }
+    osc_add_hook('help_box','addHelp');
+
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1><?php _e('Settings'); ?></h1>
+        <h1><?php _e('Settings'); ?>
+            <a href="#" class="btn ico ico-32 ico-help float-right"></a>
+        </h1>
     <?php
     }
 
@@ -304,9 +313,8 @@
                     </div>
                     <h2 class="render-title separate-top"><?php _e('Check plugin & theme updates') ; ?></h2>
                     <div class="form-row">
-                        <div class="form-label"><a class="btn" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=check_updates"><?php _e('Check updates');?></a></div>
                         <div class="form-controls">
-                            <?php _e('Check for plugin or theme updates. Updates are checked once a day.') ; ?>
+                            <?php printf(__('Last checked on %s'), osc_format_date( osc_get_preference('themes_last_version_check') )); ?> <a class="btn btn-mini" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=check_updates"><?php _e('Check updates');?></a>
                         </div>
                     </div>
                     <div class="clear"></div>

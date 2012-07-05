@@ -16,6 +16,13 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    function addHelp(){
+        echo '<h3>What does a red highlight mean?</h3>';
+        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
+    Red highlight means that the listing has been marked as spam.</p>';
+    }
+    osc_add_hook('help_box','addHelp');
+
     function customPageHeader() { ?>
             <h1><?php _e('Manage Plugins') ; ?>
                 <a href="#" class="btn ico ico-32 ico-help float-right"></a>
@@ -93,7 +100,7 @@
         <li><a href="#update-plugins"><?php _e('Updates'); ?></a></li>
         <?php } ?>
         <li><a href="#market" onclick="window.location = '<?php echo osc_admin_base_url(true) . '?page=market&action=plugins'; ?>'; return false; "><?php _e('Market'); ?></a></li>
-        <li><a href="#upload-plugins"><?php _e('Upload plugin') ; ?></a></li>
+        <li><a href="#upload-plugins"><?php _e('Available plugins') ; ?></a></li>
     </ul>
     <div id="upload-plugins">
         <table class="table" cellpadding="0" cellspacing="0">

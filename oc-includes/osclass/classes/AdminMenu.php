@@ -48,8 +48,8 @@
             $this->add_menu( __('Listing'), osc_admin_base_url(true).'?page=items', 'items', 'moderator') ; 
             $this->add_submenu( 'items', __('Manage listings'), osc_admin_base_url(true).'?page=items', 'items_manage', 'moderator') ;
             $this->add_submenu( 'items', __('Reported listings'), osc_admin_base_url(true).'?page=items&action=items_reported', 'items_reported', 'moderator') ;
-            $this->add_submenu( 'items', __('Comments'), osc_admin_base_url(true).'?page=comments', 'items_comments', 'moderator') ;
             $this->add_submenu( 'items', __('Manage media'), osc_admin_base_url(true).'?page=media', 'items_media', 'moderator') ;
+            $this->add_submenu( 'items', __('Comments'), osc_admin_base_url(true).'?page=comments', 'items_comments', 'moderator') ;
             $this->add_submenu( 'items', __('Custom fields'), osc_admin_base_url(true).'?page=cfields', 'items_cfields', 'administrator') ;
             $this->add_submenu( 'items', __('Settings'), osc_admin_base_url(true).'?page=items&action=settings', 'items_settings', 'administrator') ;
 
@@ -65,10 +65,10 @@
             $this->add_submenu( 'plugins', __('Market'), osc_admin_base_url(true).'?page=market&action=plugins', 'plugins_market', 'administrator') ;
 
             $this->add_menu( __('Statistics'), osc_admin_base_url(true) .'?page=stats&action=items', 'stats', 'moderator' );
-            $this->add_submenu( 'stats', __('Users'), osc_admin_base_url(true) .'?page=stats&action=users', 'stats_users', 'moderator') ;
             $this->add_submenu( 'stats', __('Listings'), osc_admin_base_url(true) .'?page=stats&action=items', 'stats_items', 'moderator') ;
-            $this->add_submenu( 'stats', __('Comments'), osc_admin_base_url(true) .'?page=stats&action=comments', 'stats_comments', 'moderator') ;
             $this->add_submenu( 'stats', __('Reports'), osc_admin_base_url(true) .'?page=stats&action=reports', 'stats_reports', 'moderator') ;
+            $this->add_submenu( 'stats', __('Users'), osc_admin_base_url(true) .'?page=stats&action=users', 'stats_users', 'moderator') ;
+            $this->add_submenu( 'stats', __('Comments'), osc_admin_base_url(true) .'?page=stats&action=comments', 'stats_comments', 'moderator') ;
 
             $this->add_menu(__('Settings'), osc_admin_base_url(true) .'?page=settings', 'settings', 'administrator') ;
             $this->add_submenu( 'settings', __('General'), osc_admin_base_url(true) .'?page=settings', 'settings_general', 'administrator') ;

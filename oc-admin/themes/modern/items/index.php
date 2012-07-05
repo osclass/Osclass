@@ -22,6 +22,7 @@
     Red highlight means that the listing has been marked as spam.</p>';
     }
     osc_add_hook('help_box','addHelp');
+
     function customPageHeader() { ?>
         <h1><?php _e('Listing'); ?>
             <a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=settings" class="btn ico ico-32 ico-engine float-right"></a>
@@ -90,6 +91,10 @@
                 });
                 $("#bulk-actions-submit").click(function() {
                     $("#datatablesForm").submit();
+                });
+                $("#bulk-actions-cancel").click(function() {
+                    $("#datatablesForm").attr('data-dialog-open', 'false');
+                    $('#dialog-bulk-actions').dialog('close');
                 });
                 // dialog bulk actions function
                 $("#datatablesForm").submit(function() {
@@ -429,7 +434,7 @@
         <div class="form-row"></div>
         <div class="form-actions">
             <div class="wrapper">
-                <a class="btn" href="javascript:void(0);" onclick="$('#dialog-bulk-actions').dialog('close');"><?php _e('Cancel'); ?></a>
+                <a id="bulk-actions-cancel" class="btn" href="javascript:void(0);"><?php _e('Cancel'); ?></a>
                 <a id="bulk-actions-submit" href="javascript:void(0);" class="btn btn-red" ><?php echo osc_esc_html( __('Delete') ); ?></a>
                 <div class="clear"></div>
             </div>

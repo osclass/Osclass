@@ -19,8 +19,19 @@
     $fields     = __get('fields') ;
     $categories = __get('categories') ;
     $selected   = __get('default_selected') ;
-function customPageHeader(){ ?>
-        <h1><?php _e('Listing'); ?> <a href="#" class="btn btn-green ico ico-32 ico-add-white float-right" id="add-button"><?php _e('Add custom field'); ?></a></h1>
+
+    function addHelp(){
+        echo '<h3>What does a red highlight mean?</h3>';
+        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
+    Red highlight means that the listing has been marked as spam.</p>';
+    }
+    osc_add_hook('help_box','addHelp');
+
+    function customPageHeader(){ ?>
+        <h1><?php _e('Listing'); ?>
+            <a href="#" class="btn ico ico-32 ico-help float-right"></a>
+            <a href="#" class="btn btn-green ico ico-32 ico-add-white float-right" id="add-button"><?php _e('Add custom field'); ?></a>
+        </h1>
 <?php
 }
 osc_add_hook('admin_page_header','customPageHeader');

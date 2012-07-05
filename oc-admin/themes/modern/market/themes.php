@@ -19,7 +19,7 @@
     //getting variables for this view
     $themes = __get("themes") ;
     $info   = __get("info") ;
-    
+
     $version_length = strlen(osc_version());
     $main_version = substr(osc_version(),0, $version_length-2).".".substr(osc_version(),$version_length-2, 1);
 
@@ -29,9 +29,18 @@
     }
     osc_add_hook('admin_header','customHead');
 
+    function addHelp(){
+        echo '<h3>What does a red highlight mean?</h3>';
+        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
+    Red highlight means that the listing has been marked as spam.</p>';
+    }
+    osc_add_hook('help_box','addHelp');
+
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1><?php _e('Appearance') ; ?></h1>
+        <h1><?php _e('Appearance') ; ?>
+            <a href="#" class="btn ico ico-32 ico-help float-right"></a>
+        </h1>
     <?php
     }
 
@@ -56,8 +65,6 @@
                 <div id="market_pagination" class="has-pagination">
                 </div>
             </div>
-            
-            
             <div id="market_installer" class="has-form-actions hide">
                 <form action="" method="post">
                     <input type="hidden" name="market_code" id="market_code" value="" />
@@ -97,151 +104,147 @@
                     </div>
                 </form>
             </div>
-            
-            </div>
-        <script>
-        $(function() {
-            $( "#tabs" ).tabs({ selected: 2 });
-            
-            $("#market_cancel").on("click", function(){
-                $(".ui-dialog-content").dialog("close");
-                return false;
-            });
-            
-            $("#market_install").on("click", function(){
-                $(".ui-dialog-content").dialog("close");
-                $('<div id="downloading"><div class="osc-modal-content"><?php _e('Please wait until the download is completed'); ?></div></div>').dialog({title:'<?php _e('Downloading'); ?>...',modal:true});
-                $.getJSON(
-                "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
-                {"code" : $("#market_code").attr("value"), "section" : 'themes'},
-                function(data) {
-                    var content = data.message ;
-                    if(data.error == 0) { // no errors
-                        content += '<h3><?php _e('The theme have been downloaded correctly, proceed to activate or preview it.');?></h3>';
-                        content += "<p>";
-                        content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php _e('Ok'); ?></a>';
-                        content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php _e('Close'); ?></a>';
-                        content += "</p>";
-                    } else {
-                        content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php _e('Close'); ?></a>';
-                    }
-                    $("#downloading .osc-modal-content").html(content);
+        </div>
+        <script type="text/javascript">
+            $(function() {
+                $( "#tabs" ).tabs({ selected: 2 });
+
+                $("#market_cancel").on("click", function(){
+                    $(".ui-dialog-content").dialog("close");
+                    return false;
                 });
-                return false;
-            });
-            
-            function getMarketContent(fPage) 
-            {
-                // get page 
-                var page = 1;
-                if(fPage!="") {
-                    page = fPage;
-                } 
-                
-                $.getJSON(
-                    "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=local_market",
-                    {"section" : "themes", 'mPage' : page },
-                    function(data){
-                        $("#market_themes").html(" ");
-                        $('#market_pagination').html(" ");
-                        if(data!=null && data.themes!=null) {
-                            for(var i=0;i<data.themes.length;i++) {
-                                var description = $(data.themes[i].s_description).text();
-                                dots = '';
-                                if(description.length > 80){
-                                    dots = '...';
-                                }
-                                var themes_downloaded  = <?php $themes_downloaded = getPreference('themes_downloaded'); if($themes_downloaded != ''){ echo $themes_downloaded; } else { echo 'new Array()'; } ?>;
-                                var themes_to_update    = <?php echo getPreference('themes_to_update'); ?>;
-                                var button = '';
 
-                                if(jQuery.inArray(data.themes[i].s_update_url, themes_downloaded) >= 0 ) {
-                                    if( jQuery.inArray(data.themes[i].s_update_url, themes_to_update) >= 0 ) {
-                                        button = '<a href="#'+data.themes[i].s_update_url+'" class="btn btn-mini btn-orange market-popup market_update"><?php _e('Update') ; ?></a>';
-                                    } else {
-                                        button = '<a href="#" class="btn btn-mini btn-disabled" ><?php _e('Already downloaded') ; ?></a>';
-                                    }
-                                } else {
-                                    button = '<a href="#'+data.themes[i].s_update_url+'" class="btn btn-mini btn-green market-popup"><?php _e('Download theme') ; ?></a>';
-                                }
-                                button += '<a target="_blank" href="'+data.themes[i].s_preview+'" class="btn btn-mini btn-blue"><?php _e('Preview') ; ?></a>';
-
-                                var imgsrc = '<?php echo osc_current_admin_theme("img/marketblank.jpg"); ?>';
-                                if(data.themes[i].s_image!=null) {
-                                    imgsrc = data.themes[i].s_image;
-                                }
-                                $("#market_themes").append('<div class="theme">'
-                                    +'<div class="theme-stage">'
-                                        +'<img src="'+imgsrc+'" title="'+data.themes[i].s_title+'" alt="'+data.themes[i].s_title+'" />'
-                                        +'<div class="theme-actions">'
-                                            + button
-                                        +'</div>'
-                                    +'</div>'
-                                    +'<div class="theme-info">'
-                                        +'<h3>'+data.themes[i].s_title+' '+data.themes[i].s_version+' <?php _e('by') ; ?> <a target="_blank" href="">'+data.themes[i].s_contact_name+'</a></h3>'
-                                    +'</div>'
-                                    +'<div class="theme-description">'
-                                        +description.substring(0,80)+dots
-                                    +'</div>'
-                                +'</div>');
-                            }
-                            // add pagination
-                            $('#market_pagination').append(data.pagination_content);
+                $("#market_install").on("click", function(){
+                    $(".ui-dialog-content").dialog("close");
+                    $('<div id="downloading"><div class="osc-modal-content"><?php _e('Please wait until the download is completed'); ?></div></div>').dialog({title:'<?php _e('Downloading'); ?>...',modal:true});
+                    $.getJSON(
+                    "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
+                    {"code" : $("#market_code").attr("value"), "section" : 'themes'},
+                    function(data) {
+                        var content = data.message ;
+                        if(data.error == 0) { // no errors
+                            content += '<h3><?php _e('The theme have been downloaded correctly, proceed to activate or preview it.');?></h3>';
+                            content += "<p>";
+                            content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php _e('Ok'); ?></a>';
+                            content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php _e('Close'); ?></a>';
+                            content += "</p>";
+                        } else {
+                            content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php _e('Close'); ?></a>';
                         }
-                        $("#market_themes").append('<div class="clear"></div>');
+                        $("#downloading .osc-modal-content").html(content);
+                    });
+                    return false;
+                });
+
+                function getMarketContent(fPage) {
+                    // get page
+                    var page = 1;
+                    if(fPage!="") {
+                        page = fPage;
+                    }
+
+                    $.getJSON(
+                        "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=local_market",
+                        {"section" : "themes", 'mPage' : page },
+                        function(data){
+                            $("#market_themes").html(" ");
+                            $('#market_pagination').html(" ");
+                            if(data!=null && data.themes!=null) {
+                                for(var i=0;i<data.themes.length;i++) {
+                                    var description = $(data.themes[i].s_description).text();
+                                    dots = '';
+                                    if(description.length > 80){
+                                        dots = '...';
+                                    }
+                                    var themes_downloaded  = <?php $themes_downloaded = getPreference('themes_downloaded'); if($themes_downloaded != ''){ echo $themes_downloaded; } else { echo 'new Array()'; } ?>;
+                                    var themes_to_update    = <?php echo getPreference('themes_to_update'); ?>;
+                                    var button = '';
+
+                                    if(jQuery.inArray(data.themes[i].s_update_url, themes_downloaded) >= 0 ) {
+                                        if( jQuery.inArray(data.themes[i].s_update_url, themes_to_update) >= 0 ) {
+                                            button = '<a href="#'+data.themes[i].s_update_url+'" class="btn btn-mini btn-orange market-popup market_update"><?php _e('Update') ; ?></a>';
+                                        } else {
+                                            button = '<a href="#" class="btn btn-mini btn-disabled" ><?php _e('Already downloaded') ; ?></a>';
+                                        }
+                                    } else {
+                                        button = '<a href="#'+data.themes[i].s_update_url+'" class="btn btn-mini btn-green market-popup"><?php _e('Download theme') ; ?></a>';
+                                    }
+                                    button += '<a target="_blank" href="'+data.themes[i].s_preview+'" class="btn btn-mini btn-blue"><?php _e('Preview') ; ?></a>';
+
+                                    var imgsrc = '<?php echo osc_current_admin_theme("img/marketblank.jpg"); ?>';
+                                    if(data.themes[i].s_image!=null) {
+                                        imgsrc = data.themes[i].s_image;
+                                    }
+                                    $("#market_themes").append('<div class="theme">'
+                                        +'<div class="theme-stage">'
+                                            +'<img src="'+imgsrc+'" title="'+data.themes[i].s_title+'" alt="'+data.themes[i].s_title+'" />'
+                                            +'<div class="theme-actions">'
+                                                + button
+                                            +'</div>'
+                                        +'</div>'
+                                        +'<div class="theme-info">'
+                                            +'<h3>'+data.themes[i].s_title+' '+data.themes[i].s_version+' <?php _e('by') ; ?> '+data.themes[i].s_contact_name+'</h3>'
+                                        +'</div>'
+                                        +'<div class="theme-description">'
+                                            +description.substring(0,80)+dots
+                                        +'</div>'
+                                    +'</div>');
+                                }
+                                // add pagination
+                                $('#market_pagination').append(data.pagination_content);
+                            }
+                            $("#market_themes").append('<div class="clear"></div>');
+                        }
+                    );
+                }
+
+                getMarketContent( unescape(self.document.location.hash.substring(1)) );
+                // bind pagination to getJSON
+                $('#market_pagination a').live('click',function(){
+                    var url =$(this).attr('href');
+                    url = url.replace("#","");
+                    getMarketContent(url);
+                });
+            });
+
+            $('.market-popup').live('click',function(){
+                var update = false;
+                if( $(this).hasClass('market_update') ) update = true;
+                $.getJSON(
+                    "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
+                    {"code" : $(this).attr('href').replace('#',''), 'section' : 'themes'},
+                    function(data){
+                        if(data!=null) {
+                            $("#market_thumb").attr('src',data.s_thumbnail);
+                            $("#market_code").attr("value", data.s_update_url);
+                            $("#market_name").html(data.s_title);
+                            $("#market_version").html(data.s_version);
+                            $("#market_author").html(data.s_contact_name);
+                            if(data.s_compatible.indexOf("<?php echo $main_version; ?>")==-1) {
+                                $("#market_compatible").html(data.s_compatible + " - "  + "<?php echo sprintf(__('Warning! This theme is not compatible with your current version of OSClass (%s)'), $main_version); ?>");
+                                $("#market_compatible").parent().parent().addClass("flashmessage-error");
+                            } else {
+                                $("#market_compatible").html(data.s_compatible);
+                                $("#market_compatible").parent().parent().removeClass("flashmessage-error");
+                            }
+                            $("#market_url").attr('href',data.s_source_file);
+
+                            if(update) {
+                                $('#market_install').html("<?php echo osc_esc_html( __('Update') ) ; ?>");
+                            } else {
+                                $('#market_install').html("<?php echo osc_esc_html( __('Continue download') ) ; ?>");
+                            }
+
+                            $('#market_installer').dialog({
+                                modal:true,
+                                title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
+                                width:485
+                            });
+                        }
                     }
                 );
-            }
-            
-            getMarketContent( unescape(self.document.location.hash.substring(1)) );
-            // bind pagination to getJSON
-            $('#market_pagination a').live('click',function(){
-                var url =$(this).attr('href');
-                url = url.replace("#","");
-                getMarketContent(url);
+                return false;
             });
-            
-        });
-        
-        $('.market-popup').live('click',function(){
-            var update = false;
-            if( $(this).hasClass('market_update') ) update = true;
-            $.getJSON(
-                "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
-                {"code" : $(this).attr('href').replace('#',''), 'section' : 'themes'},
-                function(data){
-                    if(data!=null) {
-                        $("#market_thumb").attr('src',data.s_thumbnail);
-                        $("#market_code").attr("value", data.s_update_url);
-                        $("#market_name").html(data.s_title);
-                        $("#market_version").html(data.s_version);
-                        $("#market_author").html(data.s_contact_name);
-                        if(data.s_compatible.indexOf("<?php echo $main_version; ?>")==-1) {
-                            $("#market_compatible").html(data.s_compatible + " - "  + "<?php echo sprintf(__('Warning! This theme is not compatible with your current version of OSClass (%s)'), $main_version); ?>");
-                            $("#market_compatible").parent().parent().addClass("flashmessage-error");
-                        } else {
-                            $("#market_compatible").html(data.s_compatible);
-                            $("#market_compatible").parent().parent().removeClass("flashmessage-error");
-                        }
-                        $("#market_url").attr('href',data.s_source_file);
-                        
-                        if(update) {
-                            $('#market_install').html("<?php echo osc_esc_html( __('Update') ) ; ?>");
-                        } else {
-                            $('#market_install').html("<?php echo osc_esc_html( __('Continue download') ) ; ?>");
-                        }
-
-                        $('#market_installer').dialog({
-                            modal:true,
-                            title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
-                            width:485
-                        });
-                    }
-                }
-            );
-            
-            return false;
-        });        
         </script>
     </div>
     <!-- /themes list -->
