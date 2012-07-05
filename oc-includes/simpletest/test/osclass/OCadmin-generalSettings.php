@@ -12,7 +12,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Logout.
      */
 
-    function atestCrontab()
+    function testCrontab()
     {
         $uSettings = new utilSettings();
         
@@ -48,7 +48,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Update all inputs and check if change has been saved, update old configuration and check again.
      * Logout
      */
-    function atestMediatab()
+    function testMediatab()
     {
         $uSettings = new utilSettings();
         
@@ -199,7 +199,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * update configuration and check and set old configuration again and check.
      * Logout.
      */
-    function atestMailServer()
+    function testMailServer()
     {
         $uSettings = new utilSettings();
         
@@ -272,7 +272,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Set akismet, recaptcha, check modifications
      * Logout
      */
-    function atestSpamAndBots()
+    function testSpamAndBots()
     {
         $uSettings = new utilSettings();
         
@@ -334,7 +334,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Logout
      * 
      */
-    function atestComments()
+    function testComments()
     {
         $uSettings = new utilSettings();
         $pref = array();
@@ -453,7 +453,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * update settings, and check
      * Logout
      */
-    function atestGeneralSettings()
+    function testGeneralSettings()
     {
         $pref = $this->getPreferencesGeneralSettings();
         
@@ -576,7 +576,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Add & edit & delete locations 
      * Logout
      */
-    function atestLocationsGEO()
+    function testLocationsGEO()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -785,7 +785,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * edit & delete the currency
      * Logout
      */
-    function atestCurrency()
+    function testCurrency()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -838,7 +838,9 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("//table/tbody/tr/td[contains(.,'INR')]/a[text()='Delete']");
-        $this->selenium->waitForPageToLoad("10000");
+        sleep(2);
+        $this->selenium->click("//a[@id='currency-delete-submit']");
+        $this->selenium->waitForPageToLoad("30000");
 
         $this->assertTrue( $this->selenium->isTextPresent("One currency has been deleted") , "Delete currency" ) ;
         $this->assertTrue( !$this->selenium->isTextPresent("Indian_Rupee") , "Delete currency" ) ;
@@ -846,6 +848,7 @@ class OCadmin_generalSettings extends OCadmintest {
         
         // BULK DELETE
         $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//a[@id='settings_currencies']");
         $this->selenium->waitForPageToLoad("10000");
 
@@ -899,9 +902,12 @@ class OCadmin_generalSettings extends OCadmintest {
 
         $this->selenium->click("//table/tbody/tr/td/input[@value='INR']");
         $this->selenium->click("//table/tbody/tr/td/input[@value='AUD']");
-        $this->selenium->select("bulk_Actions", "label=Delete" ) ;
+        $this->selenium->select("bulk_actions", "label=Delete" ) ;
+        sleep(2);
         $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("10000");
+        sleep(2);
+        $this->selenium->click("//a[@id='bulk-actions-submit']");
+        $this->selenium->waitForPageToLoad("30000");
 
         $this->assertTrue( $this->selenium->isTextPresent("2 currencies have been deleted") , "BULK delete currency" ) ;
         
@@ -914,7 +920,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Delete 
      * Logout
      */
-    function atestAddCurrencyTwice()
+    function testAddCurrencyTwice()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -959,26 +965,28 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("//table/tbody/tr/td[contains(.,'INR')]/a[text()='Delete']");
-        $this->selenium->waitForPageToLoad("10000");
+        sleep(2);
+        $this->selenium->click("//a[@id='currency-delete-submit']");
+        $this->selenium->waitForPageToLoad("30000");
 
         $this->assertTrue( $this->selenium->isTextPresent("One currency has been deleted") , "Delete currency" ) ;
         $this->assertTrue( !$this->selenium->isTextPresent("Indian_Rupee") , "Delete currency" ) ;
         osc_reset_preferences();
     }
     
-    function atestPermalinks()
+    function testPermalinks()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='settings_permalinks']");
-        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->waitForPageToLoad("30000");
         $value = $this->selenium->getValue('rewrite_enabled');
         
         // If they were off, enable it
         if($value=='off') {
             $this->selenium->click("rewrite_enabled");
             $this->selenium->click("//input[@type='submit']");
-            $this->selenium->waitForPageToLoad("10000");
+            $this->selenium->waitForPageToLoad("30000");
             $this->assertTrue( $this->selenium->isTextPresent("Permalinks structure updated") , "Disable permalinks" ) ;
         }
         
@@ -1063,20 +1071,20 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->type("rewrite_user_change_email", "user/change/email");
         $this->selenium->type("rewrite_user_change_email_confirm", "user/change/email/confirm");
         $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue( $this->selenium->isTextPresent("Permalinks structure updated") , "Disable permalinks" ) ;
         
         // Disable at the end of the tests
         $this->selenium->click("rewrite_enabled");
         $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue( $this->selenium->isTextPresent("Friendly URLs successfully deactivated") , "Disable permalinks" ) ;
         
         // return to previous state (before starting the tests)
         if($value=='on') {
             $this->selenium->click("rewrite_enabled");
             $this->selenium->click("//input[@type='submit']");
-            $this->selenium->waitForPageToLoad("10000");
+            $this->selenium->waitForPageToLoad("30000");
             $this->assertTrue( $this->selenium->isTextPresent("Permalinks structure updated") , "Disable permalinks" ) ;
         }   
         osc_reset_preferences();
@@ -1090,7 +1098,7 @@ class OCadmin_generalSettings extends OCadmintest {
      * Logout.
      */
 
-    function atestLastSearches()
+    function testLastSearches()
     {
         $uSettings = new utilSettings();
         
