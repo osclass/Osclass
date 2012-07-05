@@ -89,6 +89,7 @@
                     if( $(this).attr('checked') ) {
                         $('#watermark_text_box').hide() ;
                         $('#watermark_image_box').hide() ;
+                        resetLayout();
                     }
                 });
 
@@ -105,6 +106,7 @@
                         if( !$('input[name="keep_original_image"]').attr('checked') ) {
                             $("#dialog-watermark-warning").dialog('open');
                         }
+                        resetLayout();
                     }
                 });
 
@@ -115,6 +117,7 @@
                         if( !$('input[name="keep_original_image"]').attr('checked') ) {
                             $("#dialog-watermark-warning").dialog('open');
                         }
+                        resetLayout();
                     }
                 });
 
@@ -123,6 +126,7 @@
                         if( !$('#watermark_none').attr('checked') ) {
                             $("#dialog-watermark-warning").dialog('open');
                         }
+                        resetLayout();
                     }
                 });
             });
