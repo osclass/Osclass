@@ -51,7 +51,7 @@
         <div class="content item">
             <div id="item_head">
                 <div class="inner">
-                    <h1><?php if( osc_price_enabled_at_items() ) { ?><span class="price"><?php echo osc_item_formated_price() ; ?></span> <?php } ?><strong><?php echo osc_item_title(); ?></strong></h1>
+                    <h1><?php if( osc_price_enabled_at_items() ) { ?><span class="price"><?php echo osc_item_formated_price() ; ?></span> <?php } ?><strong><?php echo osc_item_title() . ' ' . osc_item_city(); ?></strong></h1>
                     <p id="report">
                         <strong><?php _e('Mark as', 'modern') ; ?></strong>
                         <span>

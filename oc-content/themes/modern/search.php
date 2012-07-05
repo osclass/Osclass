@@ -45,7 +45,6 @@
                     width:13px; height:13px;
                     display: inline-block;
                     border:solid 1px #bababa;
-
                     border-radius:2px;
                     -moz-border-radius:2px;
                     -webkit-border-radius:2px;
@@ -56,7 +55,6 @@
                 .chbx.semi-checked{
                     background-image:url('<?php echo osc_current_web_theme_url('images/checkmark-partial.png'); ?>');
                 }
-
             </style>
             <script type="text/javascript">
                 $(document).ready(function(){
@@ -103,10 +101,10 @@
                             $(input).before();
                         }
                     });
-                    
+
                     $('li.parent').prepend('<span style="width:6px;display:inline-block;" class="toggle">+</span>');
                     $('ul.sub').toggle();
-                    
+
                     $('span.toggle').click(function(){ 
                         $(this).parent().find('ul.sub').toggle();
                         if($(this).text()=='+'){
@@ -115,18 +113,17 @@
                             $(this).html('+');
                         }
                     });
-                    
+
                     $("li input[name='sCategory[]']").change( function(){
                         var id = $(this).attr('id');
                         $(this).click();
                         $('#'+id+'_').click();
                     });
-                    
+
                     $('div.chbx').click( function() {
-                        
                         var isChecked       = $(this).hasClass('checked');
                         var isSemiChecked   = $(this).hasClass('semi-checked');
-                        
+
                         if(isChecked) {
                             $(this).removeClass('checked');
                             $(this).next('input').attr('checked', false);
@@ -137,7 +134,7 @@
                             $(this).addClass('checked');
                             $(this).next('input').attr('checked', true);
                         }
-                        
+
                         // there are subcategories ?
                         if($(this).parent().find('ul.sub').size()>0) {
                             if(isChecked){
@@ -192,7 +189,7 @@
                     <div id="list_head">
                         <div class="inner">
                             <h1>
-                                <strong><?php _e('Search results', 'modern') ; ?></strong>
+                                <strong><?php echo search_title(); ?></strong>
                             </h1>
                             <p class="see_by">
                                 <?php _e('Sort by', 'modern'); ?>:
@@ -221,6 +218,15 @@
                     <div class="paginate" >
                     <?php echo osc_search_pagination(); ?>
                     </div>
+                    <div class="clear"></div>
+                    <?php $footerLinks = osc_search_footer_links(); ?>
+                    <ul class="footer-links">
+                    <?php foreach($footerLinks as $f) { View::newInstance()->_exportVariableToView('footer_link', $f); ?>
+                        <?php if($f['total'] < 3) continue; ?>
+                        <li><a href="<?php echo osc_footer_link_url(); ?>"><?php echo osc_footer_link_title(); ?></a></li>
+                    <?php } ?>
+                    </ul>
+                    <div class="clear"></div>
                 </div>
             </div>
             <div id="sidebar">
@@ -292,7 +298,6 @@
                                 </div>
                             <?php } ?>
                         </fieldset>
-
                         <?php
                             if(osc_search_category_id()) {
                                 osc_run_hook('search_form', osc_search_category_id()) ;
@@ -300,7 +305,6 @@
                                 osc_run_hook('search_form') ;
                             }
                         ?>
-
                         <button type="submit"><?php _e('Apply', 'modern') ; ?></button>
                     </form>
                     <?php osc_alert_form() ; ?>
@@ -323,7 +327,7 @@
                         }
                     });
                 });
-                
+
                 function checkEmptyCategories() {
                     var n = $("input[id*=cat]:checked").length;
                     if(n>0) {
