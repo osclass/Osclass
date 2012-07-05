@@ -33,6 +33,30 @@
     <?php
     }
 
+    //customize Head
+    function customHead(){
+        echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.validate.min.js').'"></script>'; ?>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#dialog-widget-delete").dialog({
+                    autoOpen: false,
+                    modal: true,
+                    title: '<?php echo osc_esc_js( __('Delete widget') ); ?>'
+                });
+            });
+            
+            // dialog delete function
+            function delete_dialog(widget_id) {
+                $("#dialog-widget-delete input[name='id']").attr('value', widget_id);
+                $("#dialog-widget-delete").dialog('open');
+                return false;
+            }
+            
+        </script>
+        <?php
+    }
+    osc_add_hook('admin_header','customHead');
+
     function customPageTitle($string) {
         return sprintf(__('Appearance &raquo; %s'), $string);
     }
@@ -61,7 +85,7 @@
                                                 <td><?php printf( __('Description: %s'), $w['s_description'] ) ; ?></td>
                                                 <td>
                                                     <?php printf('<a href="%1$s?page=appearance&amp;action=edit_widget&amp;id=%2$s&amp;location=%3$s">' . __('Edit') .'</a>', osc_admin_base_url(true), $w['pk_i_id'], $location); ?>
-                                                    <?php printf('<a href="%s?page=appearance&amp;action=delete_widget&amp;id=%d">' . __('Delete') .'</a>', osc_admin_base_url(true), $w['pk_i_id']) ; ?></td>
+                                                    <?php printf('<a onclick="return delete_dialog(\'' . $w['pk_i_id'] . '\');">' . __('Delete') .'</a>', osc_admin_base_url(true), $w['pk_i_id']) ; ?></td>
                                             </tr>
                                         <?php
                                         $countEvent++;
@@ -79,6 +103,22 @@
         </div>
     </div>
 </div>
+<form id="dialog-widget-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+    <input type="hidden" name="page" value="appearance" />
+    <input type="hidden" name="action" value="delete_widget" />
+    <input type="hidden" name="id" value="" />
+    <div class="form-horizontal">
+        <div class="form-row">
+            <?php _e('Are you sure you want to delete this widget?'); ?>
+        </div>
+        <div class="form-actions">
+            <div class="wrapper">
+            <a class="btn" href="javascript:void(0);" onclick="$('#dialog-widget-delete').dialog('close');"><?php _e('Cancel'); ?></a>
+            <input id="widget-delete-submit" type="submit" value="<?php echo osc_esc_html( __('Delete') ); ?>" class="btn btn-red" />
+            </div>
+        </div>
+    </div>
+</form>
 <div class="grid-system">
             <div class="grid-row grid-100">
                 <div class="row-wrapper">
