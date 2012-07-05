@@ -72,7 +72,7 @@
                 <div class="grid-row grid-50">
                     <div class="row-wrapper">
                         <div class="widget-box">
-                            <div class="widget-box-title"><h3><?php printf( __('Section: %s'), $location ) ; ?> &middot; <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=add_widget&amp;location=<?php echo $location ; ?>" class="btn float-right"><?php _e('Add HTML widget') ; ?></a></h3></div>
+                            <div class="widget-box-title"><h3><?php printf( __('Section: %s'), $location ) ; ?> &middot; <a id="add_widget_<?php echo $location;?>" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=add_widget&amp;location=<?php echo $location ; ?>" class="btn float-right"><?php _e('Add HTML widget') ; ?></a></h3></div>
                             <div class="widget-box-content">
                                 <?php $widgets = Widget::newInstance()->findByLocation($location) ; ?>
                                 <?php if( count($widgets) > 0 ) {
