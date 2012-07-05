@@ -123,7 +123,7 @@ class OCadmin_appearance extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
 
         // add categories widget
-        $this->selenium->click("//a[@id='footer']");
+        $this->selenium->click("//a[@id='add_footer']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->type("description", "footer1");
         $this->selenium->selectFrame("index=0");
