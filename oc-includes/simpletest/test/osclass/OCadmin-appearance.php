@@ -9,13 +9,14 @@ class OCadmin_appearance extends OCadminTest {
      * Login oc-admin
      * Appearance -> add a new theme
      */
-
-    function testAddTheme() {
+    function testAddTheme() 
+    {
         $this->loginWith();
 
         @chmod(CONTENT_PATH."themes/", 0777);
         $this->selenium->open(osc_admin_base_url(true));
         $this->selenium->click("link=Appearance");
+        $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("link=Add new");
         $this->selenium->waitForPageToLoad("10000");
 
@@ -34,12 +35,12 @@ class OCadmin_appearance extends OCadminTest {
      * Appearance -> Manage themes
      * Activate theme and deactivate (activate default theme)
      */
-    function testActivateTheme() {
+    function testActivateTheme() 
+    {
         $this->loginWith();
 
         $this->selenium->open(osc_admin_base_url(true));
         $this->selenium->click("link=Appearance");
-        $this->selenium->click("link=Manage themes");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("//a[@href[contains(.,'newcorp')] and text()='Activate']");
@@ -49,7 +50,6 @@ class OCadmin_appearance extends OCadminTest {
 
         
         $this->selenium->click("link=Appearance");
-        $this->selenium->click("link=Manage themes");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("//a[@href[contains(.,'modern')] and text()='Activate']");
@@ -62,7 +62,8 @@ class OCadmin_appearance extends OCadminTest {
      * Add/Edit/Delete header & footer widgets
      */
 
-    function testWidgets() {
+    function testWidgets() 
+    {
         $this->loginWith();
         $this->widgetsHeader();
         $this->widgetsFooter();
@@ -77,14 +78,14 @@ class OCadmin_appearance extends OCadminTest {
      * add/delete header widget
      */
 
-    private function widgetsHeader() {
+    private function widgetsHeader() 
+    {
         $this->selenium->open(osc_admin_base_url(true));
-        $this->selenium->click("link=Appearance");
         $this->selenium->click("link=Manage widgets");
         $this->selenium->waitForPageToLoad("10000");
 
         // add header widget
-        $this->selenium->click("//h4[contains(.,'header')]/a");
+        $this->selenium->click("//a[@id='add_header']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->type("description", "header1");
         $this->selenium->selectFrame("index=0");
@@ -101,12 +102,12 @@ class OCadmin_appearance extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent('New Widget Header'), "Header widget at website.");
 
         $this->selenium->open(osc_admin_base_url(true));
-        $this->selenium->click("link=Appearance");
         $this->selenium->click("link=Manage widgets");
         $this->selenium->waitForPageToLoad("10000");
 
         // remove widget
         $this->selenium->click("link=Delete");
+        $this->selenium->click("xpath=//a[@id='widget-delete-submit']");
         $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue($this->selenium->isTextPresent("Widget removed correctly"), "Delete widget header.");
         $this->assertTrue(!$this->selenium->isTextPresent("header1"), "Check delete widget header.");
@@ -118,12 +119,11 @@ class OCadmin_appearance extends OCadminTest {
 
     private function widgetsFooter() {
         $this->selenium->open(osc_admin_base_url(true));
-        $this->selenium->click("link=Appearance");
         $this->selenium->click("link=Manage widgets");
         $this->selenium->waitForPageToLoad("10000");
 
         // add categories widget
-        $this->selenium->click("//h4[contains(.,'footer')]/a");
+        $this->selenium->click("//a[@id='footer']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->type("description", "footer1");
         $this->selenium->selectFrame("index=0");
@@ -140,12 +140,12 @@ class OCadmin_appearance extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent('New Widget Footer'), "Footer widget at website.");
 
         $this->selenium->open(osc_admin_base_url(true));
-        $this->selenium->click("link='Appearance']");
         $this->selenium->click("link=Manage widgets");
         $this->selenium->waitForPageToLoad("10000");
 
         //remove widget
         $this->selenium->click("link=Delete");
+        $this->selenium->click("xpath=//a[@id='widget-delete-submit']");
         $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue($this->selenium->isTextPresent("Widget removed correctly"), "Delete widget footer.");
         $this->assertTrue(!$this->selenium->isTextPresent("footer1"), "Check delete widget footer.");
@@ -155,9 +155,9 @@ class OCadmin_appearance extends OCadminTest {
      * add/edit/delete header widget
      */
 
-    private function editWidgetsHeader() {
+    private function editWidgetsHeader() 
+    {
         $this->selenium->open(osc_admin_base_url(true));
-        $this->selenium->click("link=Appearance");
         $this->selenium->click("link=Manage widgets");
         $this->selenium->waitForPageToLoad("10000");
 
@@ -191,12 +191,12 @@ class OCadmin_appearance extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent('New Widget Header - NEW CONTENT'), "Check header widget at website.");
 
         $this->selenium->open(osc_admin_base_url(true));
-        $this->selenium->click("link=Appearance");
         $this->selenium->click("link=Manage widgets");
         $this->selenium->waitForPageToLoad("10000");
 
         // remove widget
         $this->selenium->click("link=Delete");
+        $this->selenium->click("xpath=//a[@id='widget-delete-submit']");
         $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue($this->selenium->isTextPresent("Widget removed correctly"), "Delete widget header.");
         $this->assertTrue(!$this->selenium->isTextPresent("header1"), "Check delete widget header.");
