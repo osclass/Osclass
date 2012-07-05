@@ -97,6 +97,10 @@
                 $("#bulk-actions-submit").click(function() {
                     $("#datatablesForm").submit();
                 });
+                $("#bulk-actions-cancel").click(function() {
+                    $("#datatablesForm").attr('data-dialog-open', 'false');
+                    $('#dialog-bulk-actions').dialog('close');
+                });
                 // dialog bulk actions function
                 $("#datatablesForm").submit(function() {
                     if( $("#bulk_actions option:selected").val() == "" ) {
@@ -206,7 +210,7 @@
         <div class="form-row"></div>
         <div class="form-actions">
             <div class="wrapper">
-                <a class="btn" href="javascript:void(0);" onclick="$('#dialog-bulk-actions').dialog('close');"><?php _e('Cancel'); ?></a>
+                <a id="bulk-actions-cancel" class="btn" href="javascript:void(0);"><?php _e('Cancel'); ?></a>
                 <a id="bulk-actions-submit" href="javascript:void(0);" class="btn btn-red" ><?php echo osc_esc_html( __('Delete') ); ?></a>
                 <div class="clear"></div>
             </div>
