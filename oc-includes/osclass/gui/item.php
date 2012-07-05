@@ -42,13 +42,8 @@
                 });
             });
         </script>
-        <?php if( osc_item_is_expired () ) { ?>
-        <meta name="robots" content="noindex, nofollow" />
-        <meta name="googlebot" content="noindex, nofollow" />
-        <?php } else { ?>
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content="index, follow" />
-        <?php } ?>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
@@ -56,7 +51,7 @@
         <div class="content item">
             <div id="item_head">
                 <div class="inner">
-                    <h1><?php if( osc_price_enabled_at_items() ) { ?><span class="price"><?php echo osc_item_formated_price() ; ?></span> <?php } ?><strong><?php echo osc_item_title(); ?></strong></h1>
+                    <h1><?php if( osc_price_enabled_at_items() ) { ?><span class="price"><?php echo osc_item_formated_price() ; ?></span> <?php } ?><strong><?php echo osc_item_title() . ' ' . osc_item_city(); ?></strong></h1>
                     <p id="report">
                         <strong><?php _e('Mark as', 'modern') ; ?></strong>
                         <span>
@@ -187,11 +182,11 @@
                     <h2><?php _e("Contact publisher", 'modern') ; ?></h2>
                     <?php if( osc_item_is_expired () ) { ?>
                         <p>
-                            <?php _e('The item is expired. You cannot contact the publisher.', 'modern') ; ?>
+                            <?php _e('The listing is expired. You cannot contact the publisher.', 'modern') ; ?>
                         </p>
                     <?php } else if( ( osc_logged_user_id() == osc_item_user_id() ) && osc_logged_user_id() != 0 ) { ?>
                         <p>
-                            <?php _e("It's your own item, you cannot contact the publisher.", 'modern') ; ?>
+                            <?php _e("It's your own listing, you cannot contact the publisher.", 'modern') ; ?>
                         </p>
                     <?php } else if( osc_reg_user_can_contact() && !osc_is_web_user_logged_in() ) { ?>
                         <p>

@@ -8,6 +8,7 @@ ins {text-decoration: none;}
 del {text-decoration: line-through;}
 table {border-collapse: collapse;border-spacing: 0;}
 input:focus { outline:none; }
+.clear { clear:both; }
 
 /* -- ERROR PAGES --------------------------------------- */
 #comment_error_list .error, #error_list .error { padding: 2px 0; clear: both; }
@@ -19,12 +20,13 @@ a { color:#069; text-decoration:underline; }
 a:hover { color:#F80; }
 option.pad { margin-left:10px;}
 .empty { clear:both; color:#993300; float:left; padding:15px; width:100%; }
+.clear { clear:both; }
 .container { margin:0 auto; width:970px; }
 .content { clear:both; float:left; margin-bottom:20px; width:960px; }
 .content.home { border-top:1px solid #BBB; }
 
 /* Flash message */
-
+.flashmessage,
 .flashmessage {
     font-size: 14px;
     padding: 15px 0;
@@ -33,18 +35,18 @@ option.pad { margin-left:10px;}
     z-index: 999;
     text-align: center;
 }
-.flashmessage.warning {
+.flashmessage-warning {
     background-color: #FCF8E3;
     border-bottom: solid 2px #FBEED5;
     color: #C09853;
 }
-.flashmessage.error {
+.flashmessage-error {
     background-color: #F2DEDE;
     border-bottom: solid 2px #EED3D7;
     color: #B94A48;
 }
-.flashmessage.info,
-.flashmessage.ok {
+.flashmessage-info,
+.flashmessage-ok {
     background-color: #D9EDF7;
     border-bottom: solid 2px #BCE8F1;
     color: #3A87AD;
@@ -62,14 +64,14 @@ option.pad { margin-left:10px;}
     font-weight: bold;
     cursor: pointer;
 }
-.flashmessage.error .close {
+.flashmessage-error .close {
     color: #B94A48;
 }
-.flashmessage.warning .close {
+.flashmessage-warning .close {
     color: #C09853;
 }
-.flashmessage.success .close,
-.flashmessage.information .close {
+.flashmessage-success .close,
+.flashmessage-information .close {
     color: #3A87AD;
 }
 /* Header */
@@ -105,6 +107,13 @@ option.pad { margin-left:10px;}
 .search .extras .fieldset_title { color:#999; margin-bottom:5px; }
 .search fieldset { padding:15px 10px; }
 /* NOTE: see Uniform.js styles at the bottom for the fake select and fake button styles */
+
+/* Breadcrumb */
+div.breadcrumb { padding: 10px 0; border-bottom: 1px solid #BBB; width: 960px; }
+ul.breadcrumb li { float: left; padding: 0 2px; }
+
+/* footer link */
+.footer-links li { float: left; width: 220px; padding: 5px; font-size: 11px; }
 
 /* List & Item Search Row */
 #form_publish .search { float:left; width:960px; }
@@ -191,15 +200,16 @@ option.pad { margin-left:10px;}
 .ad_list table td.price { padding-left:25px; }
 
 /* Pagination */
-.paginate { padding:25px 0 20px; text-align:center; }
-.paginate a { border:1px solid #EEE; margin:0 1px; padding:5px 10px; text-decoration:none; }
+.paginate { padding:25px; text-align:center; clear: both; }
+.paginate li { display: inline; list-style-type: none; }
+.paginate a, .paginate span { text-decoration:none; margin:0 1px; padding:5px 10px; border:1px solid #EEE; }
 .paginate a.previous { margin-right:15px; }
 .paginate a.next { margin-left:15px; }
 .paginate strong { border:1px solid #EEE; color:#F30; margin:0 1px; padding:5px 10px; }
-.paginate span { color:#999; margin:0 1px; padding:5px; }
 .paginate em { border:1px solid #EEE; color:#AAA; font-style:normal; margin:0 1px; padding:5px 10px; text-decoration:none; }
 .paginate em.previous { margin-right:15px; }
 .paginate em.next { margin-left:15px; }
+.paginate .searchPaginationSelected { background-color: #D5E8FF; color:#F80; font-weight: bold; }
 
 /* Filters */
 .list .filters { background:#e9f5f9; border: 1px solid #bed7df; border-top:none; clear:both; margin-bottom:15px; padding:15px 10px; width:218px; -moz-border-radius-bottomleft: 15px; border-bottom-left-radius: 15px; }
@@ -603,4 +613,12 @@ div.uploader input { opacity: 0; filter: alpha(opacity:0); position: absolute; t
     border-bottom: 1px dotted #DDDDDD;
     padding: 8px;
     vertical-align: top;
+}
+#search-example{
+    padding-left:10px;
+    padding-bottom:10px;
+    color:#ff0000;
+}
+.filters #search-example{
+    padding:5px 0;
 }
