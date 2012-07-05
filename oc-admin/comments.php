@@ -217,9 +217,7 @@
                                                 $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
                                                 
                                                 if($maxPage==0) {
-                                                    error_log('-- '.$maxPage.'--');
                                                     $url = preg_replace('/&iPage=(\d)+/', '&iPage=1', $url) ;
-                                                    error_log($url);
                                                     $this->redirectTo($url) ;
                                                 }
                                                 

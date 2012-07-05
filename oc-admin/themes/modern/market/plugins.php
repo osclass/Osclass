@@ -189,7 +189,6 @@
                                     button = '<a href="#" class="btn btn-mini btn-blue btn-disabled" ><?php _e('Already downloaded') ; ?></a>';
                                 }
                             } else {
-                                console.log( data.plugins[i].s_update_url );
                                 button = '<a href="#'+data.plugins[i].s_update_url+'" class="btn btn-mini btn-green market-popup"><?php _e('Download plugin') ; ?></a>';
                             }
                             even = '';
