@@ -54,7 +54,7 @@
                             <?php } ?>
                             <?php if(osc_count_items() == 0) { ?>
                                     <br />
-                                    0 <?php _e('Items', 'modern'); ?>
+                                    0 <?php _e('Listings', 'modern'); ?>
                             <?php } ?>
                             </div>
                         </div>

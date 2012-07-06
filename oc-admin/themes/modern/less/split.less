@@ -3,6 +3,14 @@
 .status-collapsed{
     background-image:url('../images/split.png') !important;
 }
+@media only screen and (-moz-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: ~"2/1"), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    .ico,
+    .status-expanded,
+    .status-collapsed {
+        background-image: url(../images/split@2x.png) !important;
+        background-size:262px 420px;
+    }
+}
 .ico{
     text-indent:-99999px;
     background-repeat:no-repeat;
@@ -17,6 +25,16 @@
     li.hover .ico-dash{
         background-position:0px 0px;
     }
+    body.compact .ico-dashboard,
+    body.compact .ico-dash{
+        background-position:-192px -35px;
+    }
+        body.compact .current .ico-dashboard,
+        body.compact li.hover .ico-dashboard,
+        body.compact .current .ico-dash,
+        body.compact li.hover .ico-dash{
+            background-position:-192px 0px;
+        }    
 .ico-listing,
 .ico-items{
     background-position:-144px 0px;
@@ -27,6 +45,16 @@
     li.hover .ico-items{
         background-position:-96px 0px;
     }
+    body.compact .ico-listing,
+    body.compact .ico-items{
+        background-position:-192px -105px;
+    }
+        body.compact .current .ico-listing,
+        body.compact li.hover .ico-listing,
+        body.compact .current .ico-items,
+        body.compact li.hover .ico-items{
+            background-position:-192px -70px;
+        }
 .ico-categories{
     background-position:-48px -48px;
 }
@@ -34,6 +62,13 @@
     li.hover .ico-categories{
         background-position:-0px -48px;
     }
+    body.compact .ico-categories{
+        background-position:-192px -175px;
+    }
+        body.compact .current .ico-categories,
+        body.compact li.hover .ico-categories{
+            background-position:-192px -140px;
+        }
 .ico-pages{
     background-position:-144px -48px;
 }
@@ -41,6 +76,13 @@
     li.hover .ico-pages{
         background-position:-96px -48px;
     }
+    body.compact .ico-pages{
+        background-position:-192px -245px;
+    }
+        body.compact .current .ico-pages,
+        body.compact li.hover .ico-pages{
+            background-position:-192px -210px;
+        }
 .ico-appearance{
     background-position:-48px -96px;
 }
@@ -48,6 +90,13 @@
     li.hover .ico-appearance{
         background-position:-0px -96px;
     }
+    body.compact .ico-appearance,{
+        background-position:-192px -315px;
+    }
+        body.compact .current .ico-appearance,
+        body.compact li.hover .ico-appearance{
+            background-position:-192px -280px;
+        }
 .ico-plugins{
     background-position:-144px -96px;
 }
@@ -55,6 +104,13 @@
     li.hover .ico-plugins{
         background-position:-96px -96px;
     }
+    body.compact .ico-plugins{
+        background-position:-192px -385px;
+    }
+        body.compact .current .ico-plugins,
+        body.compact li.hover .ico-plugins{
+            background-position:-192px -350px;
+        }
 .ico-settings{
     background-position:-48px -144px;
 }
@@ -62,6 +118,13 @@
     li.hover .ico-settings{
         background-position:-0px -144px;
     }
+    body.compact .ico-settings{
+        background-position:-227px -35px;
+    }
+        body.compact .current .ico-settings,
+        body.compact li.hover .ico-settings{
+            background-position:-227px -0px;
+        }
 .ico-tools{
     background-position:-144px -144px;
 }
@@ -69,6 +132,13 @@
     li.hover .ico-tools{
         background-position:-96px -144px;
     }
+    body.compact .ico-tools{
+        background-position:-227px -105px;
+    }
+        body.compact .current .ico-tools,
+        body.compact li.hover .ico-tools{
+            background-position:-227px -70px;
+        }
 .ico-users{
     background-position:-48px -192px;
 }
@@ -76,6 +146,13 @@
     li.hover .ico-users{
         background-position:-0px -192px;
     }
+    body.compact .ico-users{
+        background-position:-227px -175px;
+    }
+        body.compact .current .ico-users,
+        body.compact li.hover .ico-users{
+            background-position:-227px -140px;
+        }
 .ico-statistics,
 .ico-stats{
     background-position:-144px -192px;
@@ -86,6 +163,16 @@
     li.hover .ico-stats{
         background-position:-96px -192px;
     }
+    body.compact .ico-statistics,
+    body.compact .ico-stats{
+        background-position:-227px -245px;
+    }
+        body.compact .current .ico-statistics,
+        body.compact li.hover .ico-statistics,
+        body.compact .current .ico-stats,
+        body.compact li.hover .ico-stats{
+            background-position:-227px -210px;
+        }
 .ico-more{
     background-position:-48px -240px;
 }

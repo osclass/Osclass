@@ -8,6 +8,7 @@ ins {text-decoration: none;}
 del {text-decoration: line-through;}
 table {border-collapse: collapse;border-spacing: 0;}
 input:focus { outline:none; }
+.clear { clear:both; }
 
 /* -- ERROR PAGES --------------------------------------- */
 #comment_error_list .error, #error_list .error { padding: 2px 0; clear: both; }
@@ -110,6 +111,9 @@ option.pad { margin-left:10px;}
 /* Breadcrumb */
 div.breadcrumb { padding: 10px 0; border-bottom: 1px solid #BBB; width: 960px; }
 ul.breadcrumb li { float: left; padding: 0 2px; }
+
+/* footer link */
+.footer-links li { float: left; width: 220px; padding: 5px; font-size: 11px; }
 
 /* List & Item Search Row */
 #form_publish .search { float:left; width:960px; }

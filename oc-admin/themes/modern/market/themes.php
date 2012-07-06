@@ -169,7 +169,9 @@
                                     } else {
                                         button = '<a href="#'+data.themes[i].s_update_url+'" class="btn btn-mini btn-green market-popup"><?php _e('Download theme') ; ?></a>';
                                     }
-                                    button += '<a target="_blank" href="'+data.themes[i].s_preview+'" class="btn btn-mini btn-blue"><?php _e('Preview') ; ?></a>';
+                                    if(data.themes[i].s_preview!='') {
+                                        button += '<a target="_blank" href="'+data.themes[i].s_preview+'" class="btn btn-mini btn-blue"><?php _e('Preview') ; ?></a>';
+                                    };
 
                                     var imgsrc = '<?php echo osc_current_admin_theme("img/marketblank.jpg"); ?>';
                                     if(data.themes[i].s_image!=null) {

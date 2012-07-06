@@ -67,13 +67,32 @@
                     }
                 }
             }
+            <?php if(osc_locale_thousands_sep()!='' || osc_locale_dec_point() != '') { ?>
+            $().ready(function(){
+                $("#price").blur(function(event) {
+                    var price = $("#price").attr("value");
+                    <?php if(osc_locale_thousands_sep()!='') { ?>
+                    while(price.indexOf('<?php echo osc_esc_js(osc_locale_thousands_sep());  ?>')!=-1) {
+                        price = price.replace('<?php echo osc_esc_js(osc_locale_thousands_sep());  ?>', '');
+                    }
+                    <?php }; ?>
+                    <?php if(osc_locale_dec_point!='') { ?>
+                    var tmp = price.split('<?php echo osc_esc_js(osc_locale_dec_point())?>');
+                    if(tmp.length>2) {
+                        price = tmp[0]+'<?php echo osc_esc_js(osc_locale_dec_point())?>'+tmp[1];
+                    }
+                    <?php }; ?>
+                    $("#price").attr("value", price);
+                });
+            });
+            <?php }; ?>
         </script>
         <!-- end only item-edit.php -->
     </head>
     <body>
         <?php osc_current_web_theme_path('header.php') ; ?>
         <div class="content add_item">
-            <h1><strong><?php _e('Update your item', 'modern'); ?></strong></h1>
+            <h1><strong><?php _e('Update your listing', 'modern'); ?></strong></h1>
             <ul id="error_list"></ul>
                 <form name="item" action="<?php echo osc_base_url(true)?>" method="post" enctype="multipart/form-data">
                 <fieldset>

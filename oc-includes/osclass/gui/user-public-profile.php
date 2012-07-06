@@ -46,6 +46,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="googlebot" content="noindex, nofollow" />
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
@@ -57,19 +59,19 @@
                 </div>
             </div>
             <div id="main">
-                <br/>
+                <br />
                 <div id="description">
-                <h2><?php _e('Profile'); ?></h2>
+                <h2><?php _e('Profile', 'modern'); ?></h2>
                     <ul id="user_data">
-                        <li><?php _e('Full name'); ?>: <?php echo osc_user_name(); ?></li>
-                        <li><?php _e('Address'); ?>: <?php echo $address; ?></li>
-                        <li><?php _e('Location'); ?>: <?php echo $location; ?></li>
-                        <li><?php _e('Website'); ?>: <?php echo osc_user_website(); ?></li>
-                        <li><?php _e('User Description'); ?>: <?php echo osc_user_info(); ?></li>
+                        <li><?php _e('Full name', 'modern'); ?>: <?php echo osc_user_name(); ?></li>
+                        <li><?php _e('Address', 'modern'); ?>: <?php echo $address; ?></li>
+                        <li><?php _e('Location', 'modern'); ?>: <?php echo $location; ?></li>
+                        <li><?php _e('Website', 'modern'); ?>: <?php echo osc_user_website(); ?></li>
+                        <li><?php _e('User Description', 'modern'); ?>: <?php echo osc_user_info(); ?></li>
                     </ul>
                 </div>
                 <div id="description" class="latest_ads">
-                    <h2><?php _e('Latest items'); ?></h2>
+                    <h2><?php _e('Latest listings', 'modern'); ?></h2>
                     <table border="0" cellspacing="0">
                         <tbody>
                             <?php $class = "even" ; ?>

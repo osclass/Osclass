@@ -29,4 +29,12 @@ $(document).ready(function(){
     function(){
         $(this).find("span").hide();
     });
+
+    // Hide login box
+    $('html').click(function() {
+        $('#login').hide();
+    });
+    $('#login,#login_open').click(function(event){
+        event.stopPropagation();
+    });
 });
