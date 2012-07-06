@@ -48,7 +48,7 @@ abstract class FrontendTest extends MyWebTestCase {
 
         $this->selenium->open( osc_base_url() );
         $this->selenium->click("link=Register for a free account");
-        $this->selenium->waitForPageToLoad("3000");
+        $this->selenium->waitForPageToLoad("30000");
 
         $this->selenium->type('s_name'      , 'testuser');
         $this->selenium->type('s_password'  , $pass);
@@ -56,10 +56,8 @@ abstract class FrontendTest extends MyWebTestCase {
         $this->selenium->type('s_email'     , $mail);
 
         $this->selenium->click("xpath=//span/button[text()='Create']");
-        $this->selenium->waitForPageToLoad("3000");
+        $this->selenium->waitForPageToLoad("30000");
 
-        echo "< ".$this->selenium->getText('//*[@id="FlashMessage"]')." ><br>";
-        
         $user = User::newInstance()->findByEmail($mail);
         return @$user['pk_i_id'];
     }

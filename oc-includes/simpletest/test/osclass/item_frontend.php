@@ -62,7 +62,7 @@ class ItemFrontend {
 
         $this->selenium->click("//button[text()='Publish']");
         $this->selenium->waitForPageToLoad("30000");
-        echo "< ".$this->selenium->getText('//*[@id="FlashMessage"]')." ><br>";
+
         flush();
         
         if( $logged == 0 ){

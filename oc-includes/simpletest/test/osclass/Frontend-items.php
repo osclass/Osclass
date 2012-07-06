@@ -34,7 +34,7 @@ class Frontend_items extends FrontendTest {
                                 $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'], 
                                 $this->_email);
-        $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address"),"Items, insert item, no user, with validation.") ;
+        $this->assertTrue($this->selenium->isTextPresent("Check your inbox"),"Items, insert item, no user, with validation.") ;
         
         $uSettings->set_reg_user_post(1);
         $this->selenium->open( osc_base_url() );
@@ -133,7 +133,7 @@ class Frontend_items extends FrontendTest {
      * add item, without validation
      * add item, with validation
      */
-    function testItems_User()
+    function atestItems_User()
     {
         require dirname(__FILE__).'/ItemData.php';
         $item = $aData[0];
@@ -161,7 +161,7 @@ class Frontend_items extends FrontendTest {
                                 $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'], 
                                 $this->_email);
-        $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address"),"Need validation but message don't appear")   ;
+        $this->assertTrue($this->selenium->isTextPresent("Check your inbox to validate your listing"),"Need validation but message don't appear")   ;
         
         $uSettings->set_logged_user_item_validation( $old_logged_user_item_validation );
         $uSettings->set_enabled_users($old_enabled_users);
@@ -177,7 +177,7 @@ class Frontend_items extends FrontendTest {
     /*
      * Try to edit a item with bad id_item
      */
-    function testEditUserItemBadId()
+    function atestEditUserItemBadId()
     {
         $this->selenium->open( osc_item_edit_url('', '9999') );
         $this->assertTrue($this->selenium->isTextPresent("Sorry, we don't have any listing with that ID"));
@@ -186,7 +186,7 @@ class Frontend_items extends FrontendTest {
     /*
      * Add a item, and try to edit logged as user
      */
-    function testEditUserItem1()
+    function atestEditUserItem1()
     {
         $this->logout();
         // create new item
@@ -235,7 +235,7 @@ class Frontend_items extends FrontendTest {
     /*
      * Activate item via 'My account' as registered user
      */
-    function testActivate() // Activate
+    function atestActivate() // Activate
     {
         $this->loginWith();
         
@@ -254,7 +254,7 @@ class Frontend_items extends FrontendTest {
      * Try to activate a item from other user, no registered user
      * Try to activate a item, item user / with secret
      */
-    function testActivate1()
+    function atestActivate1()
     {
         $uSettings = new utilSettings();
         $old_enabled_users              = $uSettings->set_enabled_users(1);
@@ -296,7 +296,7 @@ class Frontend_items extends FrontendTest {
      * Edit first item, with validation
      * Edit first item, without validation
      */
-    function testEditItem()
+    function atestEditItem()
     {
         $this->loginWith();
         
@@ -362,7 +362,7 @@ class Frontend_items extends FrontendTest {
     /*
      * Try to remove an item which not belongs to user 
      */
-    function testDeleteItemOtherUser()
+    function atestDeleteItemOtherUser()
     {
         $this->logout();
         $itemId = $this->_lastItemId();
@@ -372,7 +372,7 @@ class Frontend_items extends FrontendTest {
         $this->assertTrue( $this->selenium->isTextPresent("The listing you are trying to delete couldn't be deleted") ,"Items, delete item without secret." );
     }
     
-    function testDeleteItem()
+    function atestDeleteItem()
     {
         $this->loginWith();
         
@@ -425,7 +425,7 @@ class Frontend_items extends FrontendTest {
                                 $item['photo'], $item['contactName'], 
                                 'test@force.com');
         sleep(1);
-        $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address"),"Items, insert item, no user, with validation.") ;
+        $this->assertTrue($this->selenium->isTextPresent("Check your inbox to validate your listing"),"Items, insert item, no user, with validation.") ;
         
         $uSettings->set_items_wait_time($items_wait_time);
         $uSettings->set_selectable_parent_categories($set_selectable_parent_categories);
