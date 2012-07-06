@@ -20,6 +20,14 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    /**
+     * AdminMenu class
+     * 
+     * @since 3.0
+     * @package OSClass
+     * @subpackage classes
+     * @author OSClass
+     */
     class AdminMenu
     {
         private static $instance ;
