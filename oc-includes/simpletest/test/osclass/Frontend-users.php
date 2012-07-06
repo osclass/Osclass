@@ -170,7 +170,7 @@ class Frontend_users extends FrontendTest {
         $this->assertTrue( $this->selenium->isTextPresent( 'Address: address 30, city area') );
         $this->assertTrue( $this->selenium->isTextPresent( 'User Description: user description test') );
         $this->assertTrue( $this->selenium->isTextPresent( 'Website: www.osclass.org') );
-        $this->assertTrue( $this->selenium->isElementPresent("xpath=//div[@id='contact']") );
+
     }
     
     /*
