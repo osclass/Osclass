@@ -314,7 +314,7 @@
                     <h2 class="render-title separate-top"><?php _e('Check plugin & theme updates') ; ?></h2>
                     <div class="form-row">
                         <div class="form-controls">
-                            <?php printf(__('Last checked on %s'), osc_format_date( osc_get_preference('themes_last_version_check') )); ?> <a class="btn btn-mini" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=check_updates"><?php _e('Check updates');?></a>
+                            <?php printf(__('Last checked on %s'), osc_format_date( date('d-m-Y h:i:s', osc_get_preference('themes_last_version_check')) )); ?> <a class="btn btn-mini" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=check_updates"><?php _e('Check updates');?></a>
                         </div>
                     </div>
                     <div class="clear"></div>
