@@ -3,6 +3,14 @@
 .status-collapsed{
     background-image:url('../images/split.png') !important;
 }
+@media only screen and (-moz-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: ~"2/1"), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    .ico,
+    .status-expanded,
+    .status-collapsed {
+        background-image: url(../images/split@2x.png) !important;
+        background-size:262px 420px;
+    }
+}
 .ico{
     text-indent:-99999px;
     background-repeat:no-repeat;
