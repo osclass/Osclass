@@ -35,6 +35,13 @@
     }
 
     function theme_modern_actions_admin() {
+        if( Params::getParam('file') == 'oc-content/themes/modern/admin/settings.php' ) {
+            if( Params::getParam('donation') == 'successful' ) {
+                osc_set_preference('donation', '1', 'modern_theme');
+                osc_reset_preferences();
+            }
+        }
+
         switch( Params::getParam('action_specific') ) {
             case('settings'):
                 $footerLink = Params::getParam('footer_link');
@@ -89,6 +96,7 @@
             osc_set_preference('keyword_placeholder', __('ie. PHP Programmer', 'modern'), 'modern_theme');
             osc_set_preference('version', MODERN_THEME_VERSION, 'modern_theme');
             osc_set_preference('footer_link', true, 'modern_theme');
+            osc_set_preference('donation', '0', 'modern_theme');
         }
     }
 
