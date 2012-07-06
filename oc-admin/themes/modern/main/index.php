@@ -270,19 +270,19 @@
                         <input type="hidden" name="return" value="http://osclass.org/paypal/">
                         <input type="hidden" name="currency_code" value="USD">
                         <input type="hidden" name="lc" value="US" />
-                        <input type="hidden" name="custom" value="<?php echo osc_admin_base_url(); ?>?donation=successful">
+                        <input type="hidden" name="custom" value="<?php echo osc_admin_base_url(); ?>?donation=successful&source=dashboard">
                         <fieldset>
                             <div class="form">
                                 <p><?php _e('OSClass is a free, open-source project, sustained by the community. Money received from donations will be used to further the development and improve the project.'); ?></p>
                                 <div class="form-row">
                                     <div class="form-controls">
-                                        <select name="amount" class="input-medium">
+                                        <select name="amount" class="select-box-medium">
                                             <option value="50">50$</option>
                                             <option value="25">25$</option>
                                             <option value="10" selected>10$</option>
                                             <option value="5">5$</option>
                                             <option value=""><?php _e('Custom'); ?></option>
-                                        </select><input type="submit" class="btn btn-mini" name="submit" value="<?php echo osc_esc_html(__('Donate', 'modern')); ?>">
+                                        </select><input type="submit" class="btn btn-mini" name="submit" value="<?php echo osc_esc_html(__('Donate')); ?>">
                                     </div>
                                 </div>
                             </div>
