@@ -276,7 +276,7 @@
                                 <p><?php _e('OSClass is a free, open-source project, sustained by the community. Money received from donations will be used to further the development and improve the project.'); ?></p>
                                 <div class="form-row">
                                     <div class="form-controls">
-                                        <select name="amount" class="input-medium">
+                                        <select name="amount" class="select-box-medium">
                                             <option value="50">50$</option>
                                             <option value="25">25$</option>
                                             <option value="10" selected>10$</option>

@@ -9,7 +9,7 @@
     <input type="hidden" name="lc" value="US" />
     <input type="hidden" name="custom" value="<?php echo osc_admin_render_theme_url('oc-content/themes/modern/admin/settings.php'); ?>&donation=successful&source=modern">
     <div id="flashmessage" class="flashmessage flashmessage-inline flashmessage-warning" style="color: #505050; display: block; ">
-        <p><?php _e('I would like to contribute to the development of OSClass with a donation of', 'modern'); ?> <select name="amount" class="input-medium">
+        <p><?php _e('I would like to contribute to the development of OSClass with a donation of', 'modern'); ?> <select name="amount" class="select-box-medium">
             <option value="50">50$</option>
             <option value="25">25$</option>
             <option value="10" selected>10$</option>
