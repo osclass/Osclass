@@ -94,6 +94,10 @@
                 setTimeout(function() {
                     placeholder($('#user_login, #user_pass'));
                 }, '500') ;
+
+                $(".ico-close").click(function(){
+                    $(this).parent().hide();
+                });
             });
         </script>
     </body>

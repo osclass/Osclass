@@ -32,7 +32,7 @@
                 </a>
             </h1>
             <?php osc_show_flash_message('admin') ; ?>
-            <div class="message warning">
+            <div class="flashmessage">
                 <?php _e('Please enter your username or e-mail address') ; ?>.<br />
                 <?php _e('You will receive a new password via e-mail') ; ?>.
             </div>
@@ -62,6 +62,10 @@
                     }
                 }).prev().click(function(){
                         $(this).hide();
+                });
+
+                $(".ico-close").click(function(){
+                    $(this).parent().hide();
                 });
             });
         </script>
