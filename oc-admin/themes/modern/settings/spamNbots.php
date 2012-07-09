@@ -42,7 +42,7 @@
 <div id="spam-setting">
     <h2 class="render-title"><?php _e('Spam and bots'); ?></h2>
     <div id="akismet-settings">
-        <h2 class="render-title"><?php _e('Akismet') ; ?></h2>
+        <h3 class="render-title"><?php _e('Akismet') ; ?></h3>
         <p><?php _e("Akismet is a hosted web service that saves you time by automatically detecting comment and trackback spam. It's hosted on our servers, but we give you access to it through plugins and our API."); ?></p>
         <form name="settings_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
             <input type="hidden" name="page" value="settings" />
@@ -85,7 +85,7 @@
         </form>
     </div>
     <div id="recaptcha-settings" class="separate-top">
-        <h2 class="render-title"><?php _e('reCAPTCHA') ; ?></h2>
+        <h3 class="render-title"><?php _e('reCAPTCHA') ; ?></h3>
         <p><?php printf(__('reCAPTCHA helps prevent automated abuse of your site by using a CAPTCHA to ensure that only humans perform certain actions. <a href="%s" target="_blank">Get your key</a>'), 'http://www.google.com/recaptcha/whyrecaptcha') ; ?></p>
         <form name="settings_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
             <input type="hidden" name="page" value="settings" />
