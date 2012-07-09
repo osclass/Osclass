@@ -23,7 +23,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
     // Code for form validation
-    
+
     $.validator.addMethod('customrule', function(value, element) {
         if($('input:radio[name=purge_searches]:checked').val()=='custom') {
             if($("#custom_queries").val()=='') {
@@ -32,7 +32,7 @@ $(document).ready(function(){
         }
         return true;
     });
-    
+
     $("form[name=searches_form]").validate({
         rules: {
             custom_queries: {
@@ -62,10 +62,8 @@ $(document).ready(function(){
         return 'row-offset';
     }
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __("Save the searches users do on your site. In this way, you can get information on what they're most interested in. From here, you can manage the options on how much information you want to save.") . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 

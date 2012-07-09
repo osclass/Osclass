@@ -40,10 +40,8 @@
         return 'row-offset';
     }
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __('Stay up-to-date on the number of users registered on your site. You can also see a breakdown of the countries and regions where users live among those available on your site.') . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -54,6 +52,12 @@
         </h1>
     <?php
     }
+
+    function customPageTitle($string) {
+        return sprintf(__('User Statistics &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
     function customHead(){
     $users            = __get("users") ;
     $max              = __get("max") ;
