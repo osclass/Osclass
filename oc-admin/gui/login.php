@@ -26,7 +26,7 @@
     <body class="login">
         <div id="login">
             <h1>
-                <a href="<?php echo osc_base_url() ; ?>" title="OSClass">
+                <a href="http://osclass.org/" title="OSClass">
                     <img src="images/osclass-logo.gif" border="0" title="" alt="" />
                 </a>
             </h1>
