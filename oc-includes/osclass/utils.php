@@ -513,23 +513,212 @@ function osc_dbdump($path, $file) {
     return 1 ;
 }
 
-function osc_downloadFile($sourceFile, $downloadedFile) {
-    require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
+// -----------------------------------------------------------------------------
 
-    @set_time_limit(0);
-
-    $fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
-    if($fp) {
-        $ch = curl_init($sourceFile);
-        @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
-        curl_setopt($ch, CURLOPT_FILE, $fp);
-        @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_exec($ch);
-        curl_close($ch);
-        fclose($fp);
-        return true;
-    } else {
+/**
+ * Returns true if there is curl on system environment
+ * 
+ * @return type 
+ */
+function testCurl() {
+    if ( ! function_exists( 'curl_init' ) || ! function_exists( 'curl_exec' ) )
         return false;
+
+    return true;
+}
+
+/**
+ * Returns true if there is fsockopen on system environment
+ *
+ * @return type 
+ */
+function testFsockopen() {
+    if ( ! function_exists( 'fsockopen' ) )
+        return false;
+
+    return true;
+}
+
+/**
+ * IF http-chunked-decode not exist implement here
+ * @since 3.0
+ */
+if (!function_exists('http-chunked-decode')) { 
+    /** 
+     * dechunk an http 'transfer-encoding: chunked' message 
+     * 
+     * @param string $chunk the encoded message 
+     * @return string the decoded message.  If $chunk wasn't encoded properly it will be returned unmodified. 
+     */ 
+    function http_chunked_decode($chunk) { 
+        $pos = 0; 
+        $len = strlen($chunk); 
+        $dechunk = null; 
+
+        while(($pos < $len) 
+            && ($chunkLenHex = substr($chunk,$pos, ($newlineAt = strpos($chunk,"\n",$pos+1))-$pos))) 
+        { 
+            if (! is_hex($chunkLenHex)) { 
+                trigger_error('Value is not properly chunk encoded', E_USER_WARNING); 
+                return $chunk; 
+            } 
+
+            $pos = $newlineAt + 1; 
+            $chunkLen = hexdec(rtrim($chunkLenHex,"\r\n")); 
+            $dechunk .= substr($chunk, $pos, $chunkLen); 
+            $pos = strpos($chunk, "\n", $pos + $chunkLen) + 1; 
+        } 
+        return $dechunk; 
+    } 
+}
+
+/** 
+ * determine if a string can represent a number in hexadecimal 
+ * 
+ * @since 3.0
+ * @param string $hex 
+ * @return boolean true if the string is a hex, otherwise false 
+ */ 
+function is_hex($hex) { 
+    // regex is for weenies 
+    $hex = strtolower(trim(ltrim($hex,"0"))); 
+    if (empty($hex)) { $hex = 0; }; 
+    $dec = hexdec($hex); 
+    return ($hex == dechex($dec)); 
+}
+
+/**
+ * Process response and return headers and body
+ * 
+ * @since 3.0
+ * @param type $content
+ * @return type 
+ */
+function processResponse($content)
+{
+    $res = explode("\r\n\r\n", $content);
+    $headers = $res[0];
+    $body    = isset($res[1]) ? $res[1] : '';
+
+    if (!is_string($headers)) {
+        return array();
+    }
+    
+    return array('headers' => $headers, 'body' => $body);
+}
+
+/**
+ * Parse headers and return into array format
+ *
+ * @param type $headers
+ * @return type 
+ */
+function processHeaders($headers) 
+{
+    $headers = str_replace("\r\n", "\n", $headers);
+    $headers = preg_replace('/\n[ \t]/', ' ', $headers);
+    $headers = explode("\n", $headers);
+    $tmpHeaders = $headers;
+    $headers = array();
+
+    foreach ($tmpHeaders as $aux) {
+        if (preg_match('/^(.*):\s(.*)$/', $aux, $matches)) {
+            $headers[strtolower($matches[1])] = $matches[2];
+        }
+    }
+    return $headers;
+}
+
+/**
+ * Download file using fsockopen
+ *
+ * @since 3.0
+ * @param type $sourceFile
+ * @param type $fileout 
+ */
+function download_fsockopen($sourceFile, $fileout) 
+{
+    // parse URL 
+    $aUrl = parse_url($sourceFile);
+    $host = $aUrl['host'];
+    if ('localhost' == strtolower($host))
+        $host = '127.0.0.1';
+
+    $link = $aUrl['path'] . ( isset($aUrl['query']) ? '?' . $aUrl['query'] : '' );
+
+    if (empty($link))
+        $link .= '/';
+            
+    $fp = @fsockopen($host, 80, $errno, $errstr, 30);
+    if (!$fp) {
+        
+    } else {
+        $out = "GET $link HTTP/1.1\r\n";
+        $out .= "Host: $host\r\n";
+        $out .= "Connection: Close\r\n\r\n";
+        $out .= "\r\n";
+        fwrite($fp, $out);
+
+        $contents = '';
+        while (!feof($fp)) {
+            $contents.= fgets($fp, 1024);
+        }
+        // check redirections ? 
+        // if (redirections) then do request again
+        $aResult = processResponse($contents);
+        $headers = processHeaders($aResult['headers']);
+        
+        if (isset($headers['location']) && $headers['location'] != "") {
+            $aUrl = parse_url($headers['location']);
+
+            $host = $aUrl['host'];
+            if ('localhost' == strtolower($host))
+                $host = '127.0.0.1';
+
+            $requestPath = $aUrl['path'] . ( isset($aUrl['query']) ? '?' . $aUrl['query'] : '' );
+
+            if (empty($requestPath))
+                $requestPath .= '/';
+            
+            download_fsockopen($host, $requestPath, $fileout);
+        } else {
+            $body = $aResult['body'];
+            if($headers['transfer-encoding'] == 'chunked' ) {
+                $body = http_chunked_decode($aResult['body']);
+            }
+            
+            $ff = @fopen($fileout, 'w+');
+            fwrite($ff, $body);
+            fclose($ff);
+        }
+        fclose($fp);
+    }
+}
+
+function osc_downloadFile($sourceFile, $downloadedFile) 
+{
+    if ( testCurl() ) {
+        require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
+        @set_time_limit(0);
+
+        $fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
+        if($fp) {
+            $ch = curl_init($sourceFile);
+            @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+            curl_setopt($ch, CURLOPT_FILE, $fp);
+            @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+            curl_exec($ch);
+            curl_close($ch);
+            fclose($fp);
+            return true;
+        } else {
+            return false;
+        }
+    } else if (testFsockopen()) { // test curl/fsockopen
+        
+        $downloadedFile = osc_content_path() . 'downloads/' . $downloadedFile;
+        download_fsockopen($sourceFile, $downloadedFile);
+        return true;
     }
 }
 
@@ -548,6 +737,7 @@ function osc_file_get_contents($url) {
 
     return $data;
 }
+// -----------------------------------------------------------------------------
 
 /**
  * Check if we loaded some specific module of apache
