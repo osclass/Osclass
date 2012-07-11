@@ -226,7 +226,6 @@ function is_serialized($data) {
  * Perform a POST request, so we could launch fake-cron calls and other core-system calls without annoying the user
  */
 function osc_doRequest($url, $_data) {
-
     if (function_exists('fputs')) {
         // convert variables array to string:
         $data = array();
@@ -251,12 +250,12 @@ function osc_doRequest($url, $_data) {
             // send the request headers:
             fputs($fp, "POST $path HTTP/1.1\r\n");
             fputs($fp, "Host: $host\r\n");
-            fputs($fp, "Referer: OSClass\r\n");
+            fputs($fp, "Referer: OSClass (v.".  osc_version().")\r\n");
             fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
             fputs($fp, "Content-length: " . strlen($data) . "\r\n");
             fputs($fp, "Connection: close\r\n\r\n");
             fputs($fp, $data);
-
+            
             // close the socket connection:
             fclose($fp);
         }
