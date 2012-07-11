@@ -51,7 +51,7 @@
 
                                         $msg = '';
                                         if(!osc_validate_int(Params::getParam("num_moderate_comments"))) {
-                                            $msg .= _m("Number of moderate comments has to be numeric only")."<br/>";
+                                            $msg .= _m("Number of moderate comments has to be numeric value")."<br/>";
                                         }
                                         if(!osc_validate_int(Params::getParam("comments_per_page"))) {
                                             $msg .= _m("Comments per page has to be numeric only")."<br/>";
@@ -81,7 +81,7 @@
                                                                                       ,array('s_name' => 'reg_user_post_comments'));
 
                                         if($iUpdated > 0) {
-                                            osc_add_flash_ok_message( _m("Comments' settings have been updated"), 'admin');
+                                            osc_add_flash_ok_message( _m("Comment settings have been updated"), 'admin');
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=comments');
                 break;
@@ -758,7 +758,7 @@ HTACCESS;
                                             //Write rule to DB
                                             $rewrite->setRules();
 
-                                            $msg_error = '<br/>'._m('No fields could be left empty.')." ".sprintf(_mn('One field was not updated', '%s fields were not updated', $errors), $errors);
+                                            $msg_error = '<br/>'._m('All fields are required.')." ".sprintf(_mn('One field was not updated', '%s fields were not updated', $errors), $errors);
                                             switch($status) {
                                                 case 1:
                                                     $msg  = _m("Permalinks structure updated") ;
@@ -779,9 +779,9 @@ HTACCESS;
                                                     osc_add_flash_warning_message($msg, 'admin') ;
                                                 break;
                                                 case 3:
-                                                    $msg  = _m("File <b>.htaccess</b> couldn't be filled with the right content.") ;
+                                                    $msg  = _m("File <b>.htaccess</b> couldn't be filled out with the right content.") ;
                                                     $msg .= " " ;
-                                                    $msg .= _m("Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file, please deactivate <em>Friendly URLs</em> option.") ;
+                                                    $msg .= _m("Here's the content you have to add to the <b>.htaccess</b> file. If you can't create the file, please deactivate the <em>Friendly URLs</em> option.") ;
                                                     $msg .= "</p><pre>" . htmlentities($htaccess, ENT_COMPACT, "UTF-8") . '</pre><p>' ;
                                                     if($errors>0) {
                                                         $msg .= $msg_error;
@@ -789,9 +789,9 @@ HTACCESS;
                                                     osc_add_flash_error_message($msg, 'admin') ;
                                                 break;
                                                 case 4:
-                                                    $msg  = _m("File <b>.htaccess</b> couldn't be filled with the right content.") ;
+                                                    $msg  = _m("File <b>.htaccess</b> couldn't be filled out with the right content.") ;
                                                     $msg .= " " ;
-                                                    $msg .= _m("Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file or experience some problems with the URLs, please deactivate <em>Friendly URLs</em> option.") ;
+                                                    $msg .= _m("Here's the content you have to add to the <b>.htaccess</b> file. If you can't create the file or experience some problems with the URLs, please deactivate the <em>Friendly URLs</em> option.") ;
                                                     $msg .= "</p><pre>" . htmlentities($htaccess, ENT_COMPACT, "UTF-8") . '</pre><p>' ;
                                                     if($errors>0) {
                                                         $msg .= $msg_error;
@@ -973,9 +973,9 @@ HTACCESS;
 
                                                                     // foreign key error
                                                                     if( Currency::newInstance()->getErrorLevel() == '1451' ) {
-                                                                        $msg_current .= sprintf('</p><p>' . _m("%s could not be deleted because it has listings associated"), $currencyCode) ;
+                                                                        $msg_current .= sprintf('</p><p>' . _m("%s couldn't be deleted because it has listings associated to it"), $currencyCode) ;
                                                                     } else if( $currencyCode == osc_currency() ) {
-                                                                        $msg_current .= sprintf('</p><p>' . _m("%s could not be deleted because it's the default currency"), $currencyCode) ;
+                                                                        $msg_current .= sprintf('</p><p>' . _m("%s couldn't be deleted because it's the default currency"), $currencyCode) ;
                                                                     }
                                                                 }
 
@@ -1023,7 +1023,7 @@ HTACCESS;
                                         $this->doView('settings/mailserver.php') ;
                 break;
                 case('mailserver_post'):if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin') ;
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin') ;
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver') ;
                                         }
                                         // updating mailserver
@@ -1237,7 +1237,7 @@ HTACCESS;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media') ;
                 break ;
                 case('images_post'):    if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin') ;
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin') ;
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media') ;
                                         }
 
@@ -1364,13 +1364,13 @@ HTACCESS;
                                             $msg .= _m("Contact email field is required")."<br/>";
                                         }
                                         if(!osc_validate_int($sNumRssItems)) {
-                                            $msg .= _m("Number of listings in the RSS has to be numeric only")."<br/>";
+                                            $msg .= _m("Number of listings in the RSS has to be a numeric value")."<br/>";
                                         }
                                         if(!osc_validate_int($maxLatestItems)) {
-                                            $msg .= _m("Max latest listings has to be numeric only")."<br/>";
+                                            $msg .= _m("Max latest listings has to be a numeric value")."<br/>";
                                         }
                                         if(!osc_validate_int($numItemsSearch)) {
-                                            $msg .= _m("Number of listings on search has to be numeric only")."<br/>";
+                                            $msg .= _m("Number of listings on search has to be a numeric value")."<br/>";
                                         }
                                         if($msg!='') {
                                             osc_add_flash_error_message( $msg, 'admin');
@@ -1427,7 +1427,7 @@ HTACCESS;
                                             );
                                         } else {
                                             if($error != '') $error .= "</p><p>";
-                                            $error .= _m('Number of listings in the RSS must be integer');
+                                            $error .= _m('Number of listings in the RSS must be an integer');
                                         }
 
                                         if(is_int($maxLatestItems)) {
@@ -1437,7 +1437,7 @@ HTACCESS;
                                             );
                                         } else {
                                             if($error != '') $error .= "</p><p>";
-                                            $error .= _m('Number of recent listings displayed at home must be integer');
+                                            $error .= _m('Number of recent listings displayed at home must be an integer');
                                         }
 
                                         $iUpdated += Preference::newInstance()->update(
@@ -1538,7 +1538,7 @@ HTACCESS;
 
             $countries = json_decode($countries_json);
             if(isset($countries->error)) {
-                osc_add_flash_error_message(sprintf(_m('%s cannot be added'), $country), 'admin');
+                osc_add_flash_error_message(sprintf(_m("%s can't be added"), $country), 'admin');
                 return false;
             }
 
@@ -1618,7 +1618,7 @@ HTACCESS;
                                                   urlencode(implode(',', $aCountry)) . '&term=' . urlencode(implode(',', $aRegion)));
             $regions = json_decode($regions_json);
             if(isset($regions->error)) {
-                osc_add_flash_error_message(sprintf(_m('%s cannot be added'), $region), 'admin');
+                osc_add_flash_error_message(sprintf(_m("%s can't be added"), $region), 'admin');
                 return false;
             }
 

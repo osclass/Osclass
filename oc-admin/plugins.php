@@ -41,7 +41,7 @@
                     break;
                 case 'add_post':
                     if( defined('DEMO') ) {
-                        osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin');
+                        osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                         $this->redirectTo(osc_admin_base_url(true) . '?page=plugins');
                     }
 
@@ -76,7 +76,7 @@
                     break;
                 case 'install':
                     if( defined('DEMO') ) {
-                        osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin');
+                        osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                         $this->redirectTo(osc_admin_base_url(true) . '?page=plugins');
                     }
                     $pn = Params::getParam('plugin') ;
@@ -111,7 +111,7 @@
                     break;
                 case 'uninstall':
                     if( defined('DEMO') ) {
-                        osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin');
+                        osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                         $this->redirectTo(osc_admin_base_url(true) . '?page=plugins');
                     }
 
@@ -125,7 +125,7 @@
                     break;
                 case 'enable':
                     if( defined('DEMO') ) {
-                        osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin');
+                        osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                         $this->redirectTo(osc_admin_base_url(true) . '?page=plugins');
                     }
 
@@ -139,7 +139,7 @@
                     break;
                 case 'disable':
                     if( defined('DEMO') ) {
-                        osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin');
+                        osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                         $this->redirectTo(osc_admin_base_url(true) . '?page=plugins');
                     }
 
