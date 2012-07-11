@@ -36,7 +36,7 @@
             return self::$_instance;
         }
 
-        private function __construct()
+        public function __construct()
         {
             $this->os = PHP_OS ;
         }
