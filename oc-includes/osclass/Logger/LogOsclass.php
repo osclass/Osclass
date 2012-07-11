@@ -36,7 +36,7 @@
             return self::$_instance;
         }
 
-        private function __construct()
+        public function __construct()
         {
             $this->os = PHP_OS ;
         }
@@ -88,7 +88,17 @@
 
         private function sendOsclass($type, $message, $caller )
         {
-            require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
+            osc_doRequest(
+                    "http://admin.osclass.org/logger.php"
+                    , array(
+                        'type' => $type
+                        ,'component' => $this->component
+                        ,'os' => $this->os
+                        ,'message' => base64_encode($message)
+                        ,'fileLine' => base64_encode($caller)
+                    )
+            );
+            /*require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
 
             $url = "admin.osclass.org/logger.php?type=$type&component=".$this->component;
             $url .= "&os=".$this->os;
@@ -101,6 +111,8 @@
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $output = @curl_exec($ch);
             @curl_close($ch);
+        }
+        */
         }
     }
 

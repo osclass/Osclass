@@ -72,10 +72,8 @@ $(document).ready(function(){
         return 'row-offset';
     }
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __("Modify the options that allow your users to publish comments on your site's listings.") . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -88,7 +86,7 @@ $(document).ready(function(){
     }
 
     function customPageTitle($string) {
-        return sprintf(__('Comments Settings &raquo; %s'), $string);
+        return sprintf(__('Comment Settings &raquo; %s'), $string);
     }
     osc_add_filter('admin_title', 'customPageTitle');
 
@@ -100,7 +98,7 @@ $(document).ready(function(){
         <input type="hidden" name="action" value="comments_post" />
         <fieldset>
             <div class="form-horizontal">
-                <h2 class="render-title"><?php _e('Comments Settings') ; ?></h2>
+                <h2 class="render-title"><?php _e('Comment Settings') ; ?></h2>
 
                 <div class="form-row">
                     <div class="form-label"><?php _e('Default comment settings') ; ?></div>

@@ -16,10 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __("Manage the options related to users on your site. Here, you can decide if users must register or if email confirmation is necessary, among other options.") . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -32,13 +30,13 @@
     }
 
     function customPageTitle($string) {
-        return sprintf(__('Users Settings &raquo; %s'), $string);
+        return sprintf(__('User Settings &raquo; %s'), $string);
     }
     osc_add_filter('admin_title', 'customPageTitle');
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <!-- settings form -->
-    <h2 class="render-title"><?php _e('Users Settings') ; ?></h2>
+    <h2 class="render-title"><?php _e('User Settings') ; ?></h2>
     <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
         <input type="hidden" name="page" value="users" />
         <input type="hidden" name="action" value="settings_post" />
@@ -81,4 +79,4 @@
         </fieldset>
     </form>
 <!-- /settings form -->
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

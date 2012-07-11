@@ -16,10 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __('Manage the comments that users publish on the listings on your site. You can also edit, delete, activate or block comments.') . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -101,7 +99,7 @@
         <?php
     }
     osc_add_hook('admin_header','customHead');
-    
+
     $aData = __get('aComments');
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
@@ -116,7 +114,6 @@
             <?php } ?>
         </div>
     </div>
-    
     <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post" data-dialog-open="false">
         <input type="hidden" name="page" value="comments" />
         <input type="hidden" name="action" value="bulk_actions" />
@@ -143,8 +140,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php if(count($aData['aaData'])>0) : ?>
-                <?php foreach( $aData['aaData'] as $key => $array) : ?>
+                <?php if( count($aData['aaData']) > 0 ) { ?>
+                <?php foreach( $aData['aaData'] as $key => $array ) { ?>
                     <?php 
                     $aC = $aData['aaObject'][$key]; 
                     $class = ''; 
@@ -161,17 +158,17 @@
                         </td>
                     <?php } ?>
                     </tr>
-                <?php endforeach;?>
-                <?php else : ?>
+                <?php } ?>
+                <?php } else { ?>
                     <tr>
                         <td colspan="4" class="text-center">
                         <p><?php _e('No data available in table') ; ?></p>
                         </td>
                     </tr>
-                <?php endif; ?>
+                <?php } ?>
                 </tbody>
             </table>
-            <div id="table-row-actions"></div> <!-- used for table actions -->
+            <div id="table-row-actions"></div><!-- used for table actions -->
         </div>
     </form>
 </div>

@@ -20,6 +20,14 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    /**
+     * AdminToolbar class
+     * 
+     * @since 3.0
+     * @package OSClass
+     * @subpackage classes
+     * @author OSClass
+     */
     class AdminToolbar
     {
         private static $instance ;
@@ -39,6 +47,9 @@
 
         public function init(){} 
         
+        /**
+         * Add toolbar menus and add menus running hook add_admin_toolbar_menus
+         */
         function add_menus()
         {
             // User related, aligned right.
@@ -63,6 +74,7 @@
          * - title      - string    - The title of the node.
          * - href       - string    - The link for the item. Optional.
          * - meta       - array     - Meta data including the following keys: html, class, onclick, target, title, tabindex.
+         * - target     - string    - _blank
          */
         function add_menu( $array ) 
         {

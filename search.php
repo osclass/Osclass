@@ -70,7 +70,7 @@
                     $city = City::newInstance()->findByPrimaryKey($c[1]);
                     Params::setParam('sCity', $city['pk_i_id']);
                 } else {
-                    Params::setParam('sCategory', $params[0]);
+                    Params::setParam('sCategory', $search_uri);
                 }
                 if( count($params) == 2 ) {
                     $location = $params[1];

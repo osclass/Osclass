@@ -16,10 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __("Modify the emails your site's users receive when they join your site, when someone shows interest in their ad, to recover their password... <strong>Be careful</strong>: don't modify any of the words that appear within brackets.") . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -32,7 +30,7 @@
     osc_add_hook('admin_page_header','customPageHeader');
 
     function customPageTitle($string) {
-        return sprintf(__('Emails templates &raquo; %s'), $string);
+        return sprintf(__('Email templates &raquo; %s'), $string);
     }
     osc_add_filter('admin_title', 'customPageTitle');
 

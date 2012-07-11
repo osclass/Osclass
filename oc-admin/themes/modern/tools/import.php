@@ -21,10 +21,8 @@
     }
     osc_add_hook('admin_page_header','customPageHeader');
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __("Upload registers from other OSClass installations or upload new geographic information to your site. <strong>Be careful</strong>: don’t use this option if you're not 100% sure what you're doing.") . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -63,4 +61,4 @@
                     </form>
                 </div>
                 <!-- /settings form -->
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

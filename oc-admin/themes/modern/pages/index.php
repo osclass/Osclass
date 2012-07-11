@@ -16,10 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __('With OSClass you can create static pages on which information can be stored, such as "About Us" or "Info" pages. From here you can create, edit or delete your site\'s static pages.') . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 

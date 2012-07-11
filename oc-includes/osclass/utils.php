@@ -226,7 +226,6 @@ function is_serialized($data) {
  * Perform a POST request, so we could launch fake-cron calls and other core-system calls without annoying the user
  */
 function osc_doRequest($url, $_data) {
-
     if (function_exists('fputs')) {
         // convert variables array to string:
         $data = array();
@@ -241,21 +240,19 @@ function osc_doRequest($url, $_data) {
 
         // extract host and path:
         $host = $url['host'];
-        $path = $url['path'];
+        $path = $url['path'].'?'.$data;
 
         // open a socket connection on port 80
         // use localhost in case of issues with NATs (hairpinning)
         $fp = @fsockopen($host, 80);
-        
         if($fp!==false) {
-            // send the request headers:
-            fputs($fp, "POST $path HTTP/1.1\r\n");
-            fputs($fp, "Host: $host\r\n");
-            fputs($fp, "Referer: OSClass\r\n");
-            fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
-            fputs($fp, "Content-length: " . strlen($data) . "\r\n");
-            fputs($fp, "Connection: close\r\n\r\n");
-            fputs($fp, $data);
+            $out = "GET $path HTTP/1.1\r\n";
+            $out .= "Host: $host\r\n";
+            $out .= "Referer: OSClass (v.". osc_version() .")";
+            $out .= "Content-type: application/x-www-form-urlencoded\r\n";
+            $out .= "Connection: Close\r\n\r\n";
+            $out .= "\r\n";
+            fwrite($fp, $out);
 
             // close the socket connection:
             fclose($fp);
@@ -513,41 +510,236 @@ function osc_dbdump($path, $file) {
     return 1 ;
 }
 
-function osc_downloadFile($sourceFile, $downloadedFile) {
-    require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
+// -----------------------------------------------------------------------------
 
-    @set_time_limit(0);
-
-    $fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
-    if($fp) {
-        $ch = curl_init($sourceFile);
-        @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
-        curl_setopt($ch, CURLOPT_FILE, $fp);
-        @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_exec($ch);
-        curl_close($ch);
-        fclose($fp);
-        return true;
-    } else {
+/**
+ * Returns true if there is curl on system environment
+ * 
+ * @return type 
+ */
+function testCurl() {
+    if ( ! function_exists( 'curl_init' ) || ! function_exists( 'curl_exec' ) )
         return false;
+
+    return true;
+}
+
+/**
+ * Returns true if there is fsockopen on system environment
+ *
+ * @return type 
+ */
+function testFsockopen() {
+    if ( ! function_exists( 'fsockopen' ) )
+        return false;
+
+    return true;
+}
+
+/**
+ * IF http-chunked-decode not exist implement here
+ * @since 3.0
+ */
+if (!function_exists('http-chunked-decode')) { 
+    /** 
+     * dechunk an http 'transfer-encoding: chunked' message 
+     * 
+     * @param string $chunk the encoded message 
+     * @return string the decoded message.  If $chunk wasn't encoded properly it will be returned unmodified. 
+     */ 
+    function http_chunked_decode($chunk) { 
+        $pos = 0; 
+        $len = strlen($chunk); 
+        $dechunk = null; 
+
+        while(($pos < $len) 
+            && ($chunkLenHex = substr($chunk,$pos, ($newlineAt = strpos($chunk,"\n",$pos+1))-$pos))) 
+        { 
+            if (! is_hex($chunkLenHex)) { 
+                trigger_error('Value is not properly chunk encoded', E_USER_WARNING); 
+                return $chunk; 
+            } 
+
+            $pos = $newlineAt + 1; 
+            $chunkLen = hexdec(rtrim($chunkLenHex,"\r\n")); 
+            $dechunk .= substr($chunk, $pos, $chunkLen); 
+            $pos = strpos($chunk, "\n", $pos + $chunkLen) + 1; 
+        } 
+        return $dechunk; 
+    } 
+}
+
+/** 
+ * determine if a string can represent a number in hexadecimal 
+ * 
+ * @since 3.0
+ * @param string $hex 
+ * @return boolean true if the string is a hex, otherwise false 
+ */ 
+function is_hex($hex) { 
+    // regex is for weenies 
+    $hex = strtolower(trim(ltrim($hex,"0"))); 
+    if (empty($hex)) { $hex = 0; }; 
+    $dec = hexdec($hex); 
+    return ($hex == dechex($dec)); 
+}
+
+/**
+ * Process response and return headers and body
+ * 
+ * @since 3.0
+ * @param type $content
+ * @return type 
+ */
+function processResponse($content)
+{
+    $res = explode("\r\n\r\n", $content);
+    $headers = $res[0];
+    $body    = isset($res[1]) ? $res[1] : '';
+
+    if (!is_string($headers)) {
+        return array();
+    }
+    
+    return array('headers' => $headers, 'body' => $body);
+}
+
+/**
+ * Parse headers and return into array format
+ *
+ * @param type $headers
+ * @return type 
+ */
+function processHeaders($headers) 
+{
+    $headers = str_replace("\r\n", "\n", $headers);
+    $headers = preg_replace('/\n[ \t]/', ' ', $headers);
+    $headers = explode("\n", $headers);
+    $tmpHeaders = $headers;
+    $headers = array();
+
+    foreach ($tmpHeaders as $aux) {
+        if (preg_match('/^(.*):\s(.*)$/', $aux, $matches)) {
+            $headers[strtolower($matches[1])] = $matches[2];
+        }
+    }
+    return $headers;
+}
+
+/**
+ * Download file using fsockopen
+ *
+ * @since 3.0
+ * @param type $sourceFile
+ * @param type $fileout 
+ */
+function download_fsockopen($sourceFile, $fileout = null) 
+{
+    // parse URL 
+    $aUrl = parse_url($sourceFile);
+    $host = $aUrl['host'];
+    if ('localhost' == strtolower($host))
+        $host = '127.0.0.1';
+
+    $link = $aUrl['path'] . ( isset($aUrl['query']) ? '?' . $aUrl['query'] : '' );
+
+    if (empty($link))
+        $link .= '/';
+            
+    $fp = @fsockopen($host, 80, $errno, $errstr, 30);
+    if (!$fp) {
+        
+    } else {
+        $out = "GET $link HTTP/1.1\r\n";
+        $out .= "Host: $host\r\n";
+        $out .= "Connection: Close\r\n\r\n";
+        $out .= "\r\n";
+        fwrite($fp, $out);
+
+        $contents = '';
+        while (!feof($fp)) {
+            $contents.= fgets($fp, 1024);
+        }
+        // check redirections ? 
+        // if (redirections) then do request again
+        $aResult = processResponse($contents);
+        $headers = processHeaders($aResult['headers']);
+        
+        $location = @$headers['location'];
+        if (isset($location) && $location != "") {
+            $aUrl = parse_url($headers['location']);
+
+            $host = $aUrl['host'];
+            if ('localhost' == strtolower($host))
+                $host = '127.0.0.1';
+
+            $requestPath = $aUrl['path'] . ( isset($aUrl['query']) ? '?' . $aUrl['query'] : '' );
+
+            if (empty($requestPath))
+                $requestPath .= '/';
+            
+            download_fsockopen($host, $requestPath, $fileout);
+        } else {
+            $body = $aResult['body'];
+            $transferEncoding = @$headers['transfer-encoding'];
+            if($transferEncoding == 'chunked' ) {
+                $body = http_chunked_decode($aResult['body']);
+            }
+            if($fileout!=null) {
+                $ff = @fopen($fileout, 'w+');
+                fwrite($ff, $body);
+                fclose($ff);
+            } else {
+                return $body;
+            }
+        }
+        fclose($fp);
     }
 }
 
-function osc_file_get_contents($url) {
-    require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
+function osc_downloadFile($sourceFile, $downloadedFile) 
+{
+    if ( testCurl() ) {
+        @set_time_limit(0);
 
-    $ch = curl_init() ;
-    curl_setopt($ch, CURLOPT_URL, $url) ;
-    curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' OSClass (v.' . osc_version() . ')') ;
-    if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1) ;
-    @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
+        if($fp) {
+            $ch = curl_init($sourceFile);
+            @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+            curl_setopt($ch, CURLOPT_FILE, $fp);
+            @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+            curl_exec($ch);
+            curl_close($ch);
+            fclose($fp);
+            return true;
+        } else {
+            return false;
+        }
+    } else if (testFsockopen()) { // test curl/fsockopen
+        $downloadedFile = osc_content_path() . 'downloads/' . $downloadedFile;
+        download_fsockopen($sourceFile, $downloadedFile);
+        return true;
+    }
+}
 
-    $data = curl_exec($ch);
-    curl_close($ch);
+function osc_file_get_contents($url) 
+{
+    if( testCurl() ) {
+        $ch = curl_init() ;
+        curl_setopt($ch, CURLOPT_URL, $url) ;
+        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' OSClass (v.' . osc_version() . ')') ;
+        if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1) ;
+        @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
+        $data = curl_exec($ch);
+        curl_close($ch);
+    } else if( testFsockopen() ) {
+        $data = download_fsockopen($url);
+    }
     return $data;
 }
+// -----------------------------------------------------------------------------
 
 /**
  * Check if we loaded some specific module of apache

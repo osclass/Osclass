@@ -34,10 +34,8 @@
         return 'row-offset';
     }
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __('See how many listings from your site have been reported as spam, expired, duplicate, etc.') . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -48,6 +46,11 @@
         </h1>
     <?php
     }
+
+    function customPageTitle($string) {
+        return sprintf(__('Report Statistics &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
 
     function customHead() {
         $reports = __get("reports") ;
@@ -133,7 +136,7 @@
 <div class="grid-system" id="stats-page">
     <div class="grid-row grid-50 no-bottom-margin">
         <div class="row-wrapper">
-            <h2 class="render-title"><?php _e('Reports Statistics'); ?></h2>
+            <h2 class="render-title"><?php _e('Report Statistics'); ?></h2>
         </div>
     </div>
     <div class="grid-row grid-50 no-bottom-margin">

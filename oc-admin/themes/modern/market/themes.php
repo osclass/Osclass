@@ -29,10 +29,8 @@
     }
     osc_add_hook('admin_header','customHead');
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . sprintf(__('Browse and download available OSClass themes from a constantly-updated selection. Remember, you must install the theme after you download it. If you want to design a theme for OSClass, follow these instructions: %s'), '<a href="http://doc.osclass.org/How_to_create_a_theme" target="_blank">http://doc.osclass.org/How_to_create_a_theme</a>') . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
