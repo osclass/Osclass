@@ -230,9 +230,9 @@ function osc_meta_generator() {
     echo '<meta name="generator" content="OSClass ' . OSCLASS_VERSION . '" />';
 }
 
-/*require_once LIB_PATH . 'osclass/Logger/LogDatabase.php' ;
+//require_once LIB_PATH . 'osclass/Logger/LogDatabase.php' ;
 require_once LIB_PATH . 'osclass/Logger/LogOsclass.php' ;
-LogOsclassInstaller::instance()->fatal( 'MENSAJE FATAL' , "FATAAAAAAAAAAL" ) ;*/
+LogOsclassInstaller::instance()->fatal( 'MENSAJE FATAL CONEJO' , "FATAAAAAAAAAAL CONEJO" ) ;
 
 osc_add_hook("header", "osc_show_maintenance");
 osc_add_hook("header", "osc_show_maintenance_css");
