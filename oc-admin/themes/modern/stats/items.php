@@ -256,7 +256,7 @@
                         </tbody>
                     </table>
                     <?php } else { ?>
-                        <p><?php _e("There're no statistics yet") ; ?></p>
+                        <p><?php _e("There are no statistics yet") ; ?></p>
                     <?php } ?>
                 </div>
             </div>

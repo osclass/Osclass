@@ -84,7 +84,7 @@
                         <div class="form-label"><?php _e('Admin type <em>(required)</em>') ; ?></div>
                         <div class="form-controls">
                             <?php AdminForm::type_select($admin) ; ?>
-                            <p class="help-inline"><em><?php _e('Administrators have full control over all aspects of your installation, while moderators are only allowed to moderate listing, comments and media files') ; ?></em></p>
+                            <p class="help-inline"><em><?php _e('Administrators have total control over all aspects of your installation, while moderators are only allowed to moderate listings, comments and media files') ; ?></em></p>
                         </div>
                     </div>
                 <?php } ?>
@@ -93,7 +93,7 @@
                         <div class="form-label"><?php _e('Current password') ; ?></div>
                         <div class="form-controls">
                             <?php AdminForm::old_password_text($admin) ; ?>
-                            <p class="help-inline"><em><?php _e('If you would like to change the password type your current one. Otherwise leave this blank') ; ?></em></p>
+                            <p class="help-inline"><em><?php _e('If you want to change your password, type your current password here. Otherwise, leave this blank.') ; ?></em></p>
                         </div>
                     </div>
                 <?php } ?>

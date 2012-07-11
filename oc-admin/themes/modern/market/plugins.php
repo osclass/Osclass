@@ -80,7 +80,7 @@
         <li><a href="#upload-plugins" onclick="window.location = '<?php echo osc_admin_base_url(true) . '?page=plugins'; ?>'; return false; "><?php _e('Available plugins') ; ?></a></li>
     </ul>
     <div id="market">
-        <h2 class="render-title"><?php _e('Latest plugins on market') ; ?></h2>
+        <h2 class="render-title"><?php _e('Latest plugins available') ; ?></h2>
         <table id="market_plugins" class="table available-theme">
         </table>
         <div id="market_pagination" class="has-pagination">
@@ -148,7 +148,7 @@
             function(data){
                 var content = data.message ;
                 if(data.error == 0) { // no errors
-                    content += '<h3><?php _e('The plugin have been downloaded correctly, proceed to install and configure.');?></h3>';
+                    content += '<h3><?php _e('The plugin has been downloaded correctly, proceed to install and configure.');?></h3>';
                     content += "<p>";
                     content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=plugins&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php _e('Ok'); ?></a>';
                     content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php _e('Close'); ?></a>';

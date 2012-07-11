@@ -182,7 +182,7 @@
                     }
 
                     if( $error ) {
-                        $result = array( 'error' => __("Some error ocurred") ) ;
+                        $result = array( 'error' => __("An error occurred") ) ;
                     } else {
                         $result = array( 'ok' => __("Order saved")) ;
                     }
@@ -242,11 +242,11 @@
                         }
                         // error while updating?
                         if($error == 1) {
-                            $message = __("Error while updating.");
+                            $message = __("An error occurred while updating.");
                         }
                     } else {
                         $error = 1;
-                        $message = __("Sorry, you already have one field with that name");
+                        $message = __("Sorry, you already have a field with that name");
                     }
 
                     if($error) {
@@ -264,7 +264,7 @@
                     if( $res > 0 ) {
                         $result = array('ok' => __('The custom field has been deleted'));
                     } else {
-                        $result = array('error' => __('Error while deleting'));
+                        $result = array('error' => __('An error occurred while deleting'));
                     }
 
                     echo json_encode($result);
@@ -301,7 +301,7 @@
                     $aCategory = $mCategory->findByPrimaryKey( $id ) ;
 
                     if( $aCategory == false ) {
-                        $result = array( 'error' => sprintf( __("No category exists with this id: %d"), $id) ) ;
+                        $result = array( 'error' => sprintf( __("No category with id %d exists"), $id) ) ;
                         echo json_encode($result) ;
                         break ;
                     }
@@ -324,11 +324,11 @@
 
                         if( $enabled ) {
                             $result = array(
-                                'ok' => __('The category and its subcategories have been enabled')
+                                'ok' => __('The category as well as its subcategories have been enabled')
                             ) ;
                         } else {
                             $result = array(
-                                'ok' => __('The category and its subcategories have been disabled')
+                                'ok' => __('The category as well as its subcategories have been disabled')
                             ) ;
                         }
                         $result['affectedIds'] = $aUpdated ;
@@ -369,7 +369,7 @@
                         $message = __('The categories have been deleted');
                     } else {
                         $error = 1;
-                        $message = __('Error while deleting');
+                        $message = __('An error occurred while deleting');
                     }
 
                     if($error) {
@@ -419,12 +419,12 @@
                     } else if($error==1) {
                         if($has_one_title==1) {
                             $error = 4;
-                            $msg = __('Category updated correctly, but some titles were empty');
+                            $msg = __('Category updated correctly, but some titles are empty');
                         } else {
-                            $msg = __('Sorry, at least a title is needed');
+                            $msg = __('Sorry, including at least a title is mandatory');
                         }
                     } else if($error==2) {
-                        $msg = __('Error while updating');
+                        $msg = __('An error occurred while updating');
                     }
                     echo json_encode(array('error' => $error, 'msg' => $msg, 'text' => $aFieldsDescription[$l]['s_name']));
 
@@ -466,7 +466,7 @@
                     if( osc_sendMail($emailParams) ) {
                         $array = array('status' => '1', 'html' => __('Email sent successfully') ) ;
                     } else {
-                        $array = array('status' => '0', 'html' => __('An error has occurred while sending email') ) ;
+                        $array = array('status' => '0', 'html' => __('An error occurred while sending email') ) ;
                     }
                     echo json_encode($array) ;
                     break;
@@ -592,18 +592,18 @@
                                             }
                                             $deleted = @unlink(ABS_PATH . '.maintenance');
                                             if ($rm_errors == 0) {
-                                                $message = __('Everything was OK! Your OSClass installation is updated');
+                                                $message = __('Everything looks good! Your OSClass installation is up-to-date');
                                             } else {
-                                                $message = __('Almost everything was OK! Your OSClass installation is updated, but there were some errors removing temporary files. Please manually remove the "oc-temp" folder');
+                                                $message = __('Nearly everything looks good! Your OSClass installation is up-to-date, but there were some errors removing temporary files. Please manually remove the "oc-temp" folder');
                                                 $error = 6; // Some errors removing files
                                             }
                                         } else {
                                             $sql_error_msg = $error_queries[2];
-                                            $message = __('Problems upgrading the database');
+                                            $message = __('Problems when upgrading the database');
                                             $error = 5; // Problems upgrading the database
                                         }
                                     } else {
-                                        $message = __('Problems copying files. Maybe permissions are not correct');
+                                        $message = __('Problems when copying files. Please check your permissions. ');
                                         $error = 4; // Problems copying files. Maybe permissions are not correct
                                     }
                                 } else {
@@ -624,7 +624,7 @@
                     }
 
                     if ($error == 5) {
-                        $message .= "<br /><br />" . __('We had some errors upgrading your database. The follwing queries failed') . implode("<br />", $sql_error_msg);
+                        $message .= "<br /><br />" . __('We had some errors upgrading your database. The follwing queries failed:') . implode("<br />", $sql_error_msg);
                     }
                     echo $message;
 
@@ -759,14 +759,14 @@
                                             }
                                             
                                             if ($rm_errors == 0) {
-                                                $message = __('Everything was OK!');
+                                                $message = __('Everything looks good!');
                                                 $error = 0;
                                             } else {
-                                                $message = __('Almost everything was OK! but there were some errors removing temporary files. Please manually remove the "oc-temp" folder');
+                                                $message = __('Nearly everything looks good! but there were some errors removing temporary files. Please manually remove the \"oc-temp\" folder');
                                                 $error = 6; // Some errors removing files
                                             }
                                         } else {
-                                            $message = __('Problems copying files. Maybe permissions are not correct');
+                                            $message = __('Problems when copying files. Please check your permissions. ');
                                             $error = 4; // Problems copying files. Maybe permissions are not correct
                                         }
                                     } else {
@@ -815,10 +815,10 @@
                             }
                         }
                         if( !isset($data['s_source_file']) || !isset($data['s_update_url'])) {
-                            $data = array('error' => 2, 'error_msg' => __('Not a valid code'));
+                            $data = array('error' => 2, 'error_msg' => __('Invalid code'));
                         }
                     } else {
-                        $data = array('error' => 1, 'error_msg' => __('No code was sumitted'));
+                        $data = array('error' => 1, 'error_msg' => __('No code was submitted'));
                     }
                     echo json_encode($data);
                     break;                   
@@ -886,7 +886,7 @@
                     }
                     break;
                 case 'error_permissions':
-                    echo json_encode(array('error' => __("You don't have enough permissions")));
+                    echo json_encode(array('error' => __("You don't have the necessary permissions")));
                     break;
                 default:
                     echo json_encode(array('error' => __('no action defined')));

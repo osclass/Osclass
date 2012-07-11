@@ -285,7 +285,7 @@
                         // get plugins to update from t_preference
                         if($bPluginsToUpdate) {
                             if(in_array(@$pInfo['plugin_update_uri'],$aPluginsToUpdate )){ 
-                                $sUpdate = '<a class="market_update market-popup" href="#' . htmlentities($pInfo['plugin_update_uri']) . '">' . __("There's a new version available to update") . '</a>' ;
+                                $sUpdate = '<a class="market_update market-popup" href="#' . htmlentities($pInfo['plugin_update_uri']) . '">' . __("There's a new update available") . '</a>' ;
                             }
                         }
                         // prepare row 4

@@ -57,7 +57,7 @@
                 <li><a href="#available-themes" onclick="window.location = '<?php echo osc_admin_base_url(true) . '?page=appearance'; ?>'; return false; "><?php _e('Available themes') ; ?></a></li>
             </ul>
             <div id="market">
-                <h2 class="render-title"><?php _e('Latest themes on market') ; ?></h2>
+                <h2 class="render-title"><?php _e('Latest themes available') ; ?></h2>
                 <div id="market_themes" class="available-theme">
                 </div>
                 <div id="market_pagination" class="has-pagination">

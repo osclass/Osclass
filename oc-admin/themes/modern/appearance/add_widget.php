@@ -115,7 +115,7 @@
                 <input type="hidden" name="location" value="<?php echo Params::getParam('location', true) ; ?>" />
                 <fieldset>
                     <div class="input-line">
-                        <label><?php _e('Description (only for internal purposes)') ; ?></label>
+                        <label><?php _e('Description (for internal purposes only)') ; ?></label>
                         <div class="input">
                             <input type="text" class="large" name="description" value="<?php if( $edit ) { echo osc_esc_html($widget['s_description']) ; } ?>" />
                         </div>

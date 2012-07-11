@@ -167,7 +167,7 @@
         <input type="hidden" name="action" value="media_post" />
         <fieldset>
             <div class="form-horizontal">
-                <h2 class="render-title"><?php _e('Images sizes') ; ?></h2>
+                <h2 class="render-title"><?php _e('Image sizes') ; ?></h2>
                 <div class="form-row">
                     <p><?php _e('The sizes listed below determine the maximum dimensions in pixels to use when uploading a image. Format: <b>Width</b> x <b>Height</b>.') ; ?></p>
                     <div class="form-label"><?php _e('Thumbnail size') ; ?></div>
@@ -187,7 +187,7 @@
                         <div class="form-label-checkbox">
                             <input type="checkbox" id="keep_original_image" name="keep_original_image" value="1" <?php echo ( osc_keep_original_image() ? 'checked="checked"' : '' ) ; ?> />
                             <label for="keep_original_image"><?php _e('Keep original image, unaltered after uploading.') ; ?></label>
-                            <span class="help-box"><?php _e('It might occupy more space than usual.') ; ?></span>
+                            <span class="help-box"><?php _e('Image may occupy more space than usual.') ; ?></span>
                         </div>
                     </div>
                 </div>
@@ -304,7 +304,7 @@
                 <div class="form-row">
                     <div class="form-controls">
                     <p>    
-                        <?php _e("You can regenerate your different image dimensions. If you have changed the dimension of thumbnails, preview or normal images, you might want to regenerate your images.") ; ?>
+                        <?php _e("You can regenerate different image dimensions. If you have changed the dimension of thumbnails, preview or normal images, you might want to regenerate your images.") ; ?>
                     </p>
                     <a class="btn" href="<?php echo osc_admin_base_url(true) . '?page=settings&action=images_post'; ?>"><?php  _e('Regenerate') ; ?></a>
                     </div>
@@ -320,7 +320,7 @@
 <div id="dialog-watermark-warning" title="<?php echo osc_esc_html(__('Recommendation')); ?>" class="has-form-actions hide">
     <div class="form-horizontal">
         <div class="form-row">
-            <?php _e("It's highly recommended to have 'Keep original image' option active when you use watermarks."); ?>
+            <?php _e("We highly recommend you have the 'Keep original image' option active when you use watermarks."); ?>
         </div>
         <div class="form-actions">
             <div class="wrapper">

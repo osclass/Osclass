@@ -83,7 +83,7 @@
         </p>
         <?php } ?>
         <p>
-            <?php _e('You can recalculate your locations stats. This is useful if you upgrade from versions below OSClass 2.4'); ?>.
+            <?php _e('You can recalculate your location stats. This is useful if you upgrade from versions older than OSClass 2.4'); ?>.
         </p>
         <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
             <input type="hidden" name="action" value="locations_post" />
@@ -91,7 +91,7 @@
             <fieldset>
                 <div class="form-horizontal">
                     <div class="form-actions">
-                        <input id="button_save" type="submit" value="<?php echo osc_esc_html( __('Calculate locations stats')); ?>" class="btn btn-submit" />
+                        <input id="button_save" type="submit" value="<?php echo osc_esc_html( __('Calculate location stats')); ?>" class="btn btn-submit" />
                     </div>
                 </div>
             </fieldset>

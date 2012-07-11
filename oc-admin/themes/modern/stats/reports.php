@@ -71,7 +71,7 @@
             var data = new google.visualization.DataTable();
             data.addColumn('string', '<?php _e('Date') ; ?>');
             data.addColumn('number', '<?php _e('Spam') ; ?>');
-            data.addColumn('number', '<?php _e('Repeated') ; ?>');
+            data.addColumn('number', '<?php _e('Duplicated') ; ?>');
             data.addColumn('number', '<?php _e('Bad category') ; ?>');
             data.addColumn('number', '<?php _e('Offensive') ; ?>');
             data.addColumn('number', '<?php _e('Expired') ; ?>');
@@ -156,7 +156,7 @@
                     <b class="stats-title"></b>
                     <div id="placeholder" class="graph-placeholder" style="height:150px">
                         <?php if( count($reports) == 0 ) {
-                            _e("There're no statistics yet") ;
+                            _e("There are no statistics yet") ;
                         } ?>
                     </div>
                 </div>

@@ -76,14 +76,14 @@ function get_requirements( ) {
             'solution' => sprintf(__('You have to create <code>uploads</code> folder, i.e.: <code>mkdir %soc-content/uploads/</code>' ), ABS_PATH)),
 
         'Folder <code>oc-content/uploads</code> is writable' => array(
-            'requirement' => __('Folder <code>oc-content/uploads</code> is writable'), 
+            'requirement' => __('<code>oc-content/uploads</code> folder is writable'), 
             'fn' => is_writable( ABS_PATH . 'oc-content/uploads/' ), 
-            'solution' => sprintf(__('Folder <code>uploads</code> has to be writable, i.e.: <code>chmod a+w %soc-content/uploads/</code>'), ABS_PATH)),
+            'solution' => sprintf(__('<code>uploads</code> folder has to be writable, i.e.: <code>chmod a+w %soc-content/uploads/</code>'), ABS_PATH)),
 
         'Folder <code>oc-content/languages</code> exists' => array(
-            'requirement' => __('Folder <code>oc-content/languages</code> exists'), 
+            'requirement' => __('<code>oc-content/languages</code> folder exists'), 
             'fn' => file_exists( ABS_PATH . 'oc-content/languages/' ), 
-            'solution' => sprintf(__('You have to create <code>languages</code> folder, i.e.: <code>mkdir %soc-content/languages/</code>'), ABS_PATH))
+            'solution' => sprintf(__('You have to create the <code>languages</code> folder, i.e.: <code>mkdir %soc-content/languages/</code>'), ABS_PATH))
     );
 
     $config_writable = false;
@@ -94,9 +94,9 @@ function get_requirements( ) {
             $config_writable = true;
         }
         $array['File <code>config.php</code> is writable'] = array(
-            'requirement' => __('File <code>config.php</code> is writable'), 
+            'requirement' => __('<code>config.php</code> file is writable'), 
             'fn' => $config_writable, 
-            'solution' => sprintf(__('File <code>config.php</code> has to be writable, i.e.: <code>chmod a+w %sconfig.php</code>'), ABS_PATH));
+            'solution' => sprintf(__('<code>config.php</code> file has to be writable, i.e.: <code>chmod a+w %sconfig.php</code>'), ABS_PATH));
     } else {
         if (is_writable(ABS_PATH) ) {
             $root_writable = true;
@@ -110,9 +110,9 @@ function get_requirements( ) {
             $config_sample = true;
         }
         $array['File <code>config-sample.php</code> exists'] = array(
-            'requirement' => __('File <code>config-sample.php</code> exists'), 
+            'requirement' => __('<code>config-sample.php</code> file exists'), 
             'fn' => $config_sample, 
-            'solution' => __('File <code>config-sample.php</code> is required, you should download OSClass again.'));
+            'solution' => __('<code>config-sample.php</code> file is required, you should re-download OSClass.'));
     }
     
     return $array;
@@ -193,13 +193,13 @@ function oc_install( ) {
             }
 
             switch ($error_num) {
-                case 1049:  return array('error' => __('The database doesn\'t exist. You should check the "Create DB" checkbox and fill username and password with the right privileges')) ;
+                case 1049:  return array('error' => __("The database doesn't exist. You should check the \"Create DB\" checkbox and fill in a username and password with the right privileges")) ;
                 break;
                 case 1045:  return array('error' => __('Cannot connect to the database. Check if the user has privileges.')) ;
                 break;
                 case 1044:  return array('error' => __('Cannot connect to the database. Check if the username and password are correct.')) ;
                 break;
-                case 2005:  return array('error' => __('Cannot resolve MySQL host. Check if the host is correct.')) ;
+                case 2005:  return array('error' => __("Can't resolve MySQL host. Check if the host is correct.")) ;
                 break;
                 default:    return array('error' => sprintf(__('Cannot connect to the database. Error number: %s')), $error_num) ;
                 break;
@@ -214,14 +214,14 @@ function oc_install( ) {
 
         if( $error_num > 0 ) {
             if( reportToOsclass() ) {
-                LogOsclassInstaller::instance()->error(sprintf(__('Cannot create the database. Error number: %s'), $error_num) , __FILE__."::".__LINE__) ;
+                LogOsclassInstaller::instance()->error(sprintf(__("Can't create the database. Error number: %s"), $error_num) , __FILE__."::".__LINE__) ;
             }
 
             if( in_array( $error_num, array(1006, 1044, 1045) ) ) {
-                return array('error' => __('Cannot create the database. Check if the admin username and password are correct.')) ;
+                return array('error' => __("Can't create the database. Check if the admin username and password are correct.")) ;
             }
 
-            return array('error' => sprintf(__('Cannot create the database. Error number: %s'),  $error_num)) ;
+            return array('error' => sprintf(__("Can't create the database. Error number: %s"),  $error_num)) ;
         }
 
         unset($conn) ;
@@ -242,13 +242,13 @@ function oc_install( ) {
         }
 
         switch( $error_num ) {
-            case 1049:  return array('error' => __('The database doesn\'t exist. You should check the "Create DB" checkbox and fill username and password with the right privileges')) ;
+            case 1049:  return array('error' => __("The database doesn't exist. You should check the \"Create DB\" checkbox and fill in a username and password with the right privileges")) ;
             break ;
             case 1045:  return array('error' => __('Cannot connect to the database. Check if the user has privileges.')) ;
             break ;
             case 1044:  return array('error' => __('Cannot connect to the database. Check if the username and password are correct.')) ;
             break ;
-            case 2005:  return array('error' => __('Cannot resolve MySQL host. Check if the host is correct.')) ;
+            case 2005:  return array('error' => __("Can't resolve MySQL host. Check if the host is correct.")) ;
             break ;
             default:    return array('error' => sprintf(__('Cannot connect to the database. Error number: %s'), $error_num)) ;
             break ;
@@ -258,18 +258,18 @@ function oc_install( ) {
     if( file_exists(ABS_PATH . 'config.php') ) {
         if( !is_writable(ABS_PATH . 'config.php') ) {
             if( reportToOsclass() ) {
-                LogOsclassInstaller::instance()->error(__('Cannot write in config.php file. Check if the file is writable.') , __FILE__."::".__LINE__) ;
+                LogOsclassInstaller::instance()->error(__("Can't write in config.php file. Check if the file is writable.") , __FILE__."::".__LINE__) ;
             }
-            return array('error' => __('Cannot write in config.php file. Check if the file is writable.'));
+            return array('error' => __("Can't write in config.php file. Check if the file is writable."));
         }
         create_config_file($dbname, $username, $password, $dbhost, $tableprefix);
     } else {
         if( !file_exists(ABS_PATH . 'config-sample.php') ) {
             if( reportToOsclass() ) {
-                LogOsclassInstaller::instance()->error(__("config-sample.php doesn't exist. Check if you have everything well decompressed.") , __FILE__."::".__LINE__) ;
+                LogOsclassInstaller::instance()->error(__("config-sample.php doesn't exist. Check if everything is decompressed correctly.") , __FILE__."::".__LINE__) ;
             }
 
-            return array('error' => __("config-sample.php doesn't exist. Check if you have everything well decompressed."));
+            return array('error' => __("config-sample.php doesn't exist. Check if everything is decompressed correctly."));
         }
         if( !is_writable(ABS_PATH) ) {
             if( reportToOsclass() ) {
@@ -293,13 +293,13 @@ function oc_install( ) {
 
     if( $error_num > 0 ) {
         if( reportToOsclass() ) {
-            LogOsclassInstaller::instance()->error(sprintf(__('Cannot create the database structure. Error number: %s'), $error_num)  , __FILE__."::".__LINE__) ;
+            LogOsclassInstaller::instance()->error(sprintf(__("Can't create the database structure. Error number: %s"), $error_num)  , __FILE__."::".__LINE__) ;
         }
 
         switch ($error_num) {
             case 1050:  return array('error' => __('There are tables with the same name in the database. Change the table prefix or the database and try again.')) ;
             break;
-            default:    return array('error' => sprintf(__('Cannot create the database structure. Error number: %s'), $error_num)) ;
+            default:    return array('error' => sprintf(__("Can't create the database structure. Error number: %s"), $error_num)) ;
             break;
         }
     }
@@ -352,13 +352,13 @@ function oc_install( ) {
 
     if( $error_num > 0 ) {
         if( reportToOsclass() ) {
-            LogOsclassInstaller::instance()->error(sprintf(__('Cannot insert basic configuration. Error number: %s'), $error_num)  , __FILE__."::".__LINE__) ;
+            LogOsclassInstaller::instance()->error(sprintf(__("Can't insert basic configuration. Error number: %s"), $error_num)  , __FILE__."::".__LINE__) ;
         }
 
         switch ($error_num) {
-            case 1471:  return array('error' => __('Cannot insert basic configuration. This user has no privileges to \'INSERT\' into the database.'));
+            case 1471:  return array('error' => __("Can't insert basic configuration. This user has no privileges to 'INSERT' into the database."));
             break;
-            default:    return array('error' => sprintf(__('Cannot insert basic configuration. Error number: '), $error_num));
+            default:    return array('error' => sprintf(__("Can't insert basic configuration. Error number: %s"), $error_num));
             break;
         }
     }
@@ -687,7 +687,7 @@ function display_target() {
         </table>
         <div class="admin-user">
             <?php _e('A password will be automatically generated for you if you leave this blank.'); ?>
-            <img src="<?php echo get_absolute_url() ?>oc-includes/images/question.png" class="question-skip vtip" title="<?php _e('You can modify username and password if you like, only need change the inputs value.'); ?>" alt="" />
+            <img src="<?php echo get_absolute_url() ?>oc-includes/images/question.png" class="question-skip vtip" title="<?php _e('You can modify username and password if you like, just change the input value.'); ?>" alt="" />
         </div>
         <h2 class="title"><?php _e('Contact information'); ?></h2>
         <table class="contact-info">
@@ -707,7 +707,7 @@ function display_target() {
         <h2 class="title"><?php _e('Location'); ?></h2>
         <p class="space-left-25 left no-bottom"><?php _e('Choose countries/cities where your target users are located'); ?></p>
         <div id="location-question" class="left question">
-            <img class="vtip" src="<?php echo get_absolute_url(); ?>oc-includes/images/question.png" title="<?php _e('Once you write a country, you\'ll be able to choose region and city too. Therefore, the intallation\'ll be more specific.'); ?>" alt="" />
+            <img class="vtip" src="<?php echo get_absolute_url(); ?>oc-includes/images/question.png" title="<?php _e("Once you type a country, you'll be able to choose region and city as well. Therefore, the installation will be more specific."); ?>" alt="" />
         </div>
         <div class="clear"></div>
         <div id="location">
@@ -891,7 +891,7 @@ function display_finish($password) {
     $data = finish_installation( $password );
 ?>
 <h2 class="target"><?php _e('Congratulations!');?></h2>
-<p class="space-left-10"><?php _e('OSClass has been installed. Were you expecting more steps? Sorry to disappoint.');?></p>
+<p class="space-left-10"><?php _e("OSClass has been installed. Were you expecting more steps? Sorry to disappoint!");?></p>
 <p class="space-left-10"><?php echo sprintf(__('An e-mail with the password for oc-admin has been sent to: %s'), $data['s_email']);?></p>
 <div style="clear:both;"></div>
 <div class="form-table finish">

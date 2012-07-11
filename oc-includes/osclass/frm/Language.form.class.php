@@ -146,8 +146,8 @@
                     minlength: "<?php _e("Decimal point: this field is required"); ?>."
                 },
                 s_thousand_sep: {
-                    required: "<?php _e("Thousand separator: this field is required"); ?>.",
-                    minlength: "<?php _e("Thousand separator: this field is required"); ?>."
+                    required: "<?php _e("Thousands separator: this field is required"); ?>.",
+                    minlength: "<?php _e("Thousands separator: this field is required"); ?>."
                 },
                 s_date_format: {
                     required: "<?php _e("Date format: this field is required"); ?>.",

@@ -29,10 +29,10 @@
             <div class="grid-system">
                 <div class="grid-row grid-first-row grid-30 no-bottom-margin">
                     <div class="row-wrapper">
-                        <label><?php _e('Expirations days') ; ?></label>
+                        <label><?php _e('Expiration dates') ; ?></label>
                         <div class="input micro">
                             <?php CategoryForm::expiration_days_input_text($category) ; ?>
-                            <p class="help-inline"><?php _e("If the value is zero it means that there isn't expiration for this category") ; ?></p>
+                            <p class="help-inline"><?php _e("If the value is zero, it means this category doesn't have an expiration") ; ?></p>
                         </div>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                 error: function(){
                     $(".jsMessage").fadeIn("fast") ;
                     $(".jsMessage p").attr('class', '') ;
-                    $(".jsMessage p").html("<?php _e('Ajax error, try again.') ; ?>") ;
+                    $(".jsMessage p").html('<?php echo osc_esc_js(__('Ajax error, please try again.')); ?>') ;
                 }
             })
             return false ;

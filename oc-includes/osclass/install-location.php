@@ -93,7 +93,7 @@ function basic_info() {
     ) ;
     
     $body  = sprintf(__('Welcome %s,'),Params::getParam('webtitle'))."<br/><br/>" ;
-    $body .= sprintf(__('Your OSClass installation at %s is up and running. You can access to the administration panel with this data access:'), WEB_PATH)."<br/>";
+    $body .= sprintf(__('Your OSClass installation at %s is up and running. You can access the administration panel with these details:'), WEB_PATH)."<br/>";
     $body .= '<ul>';
     $body .= '<li>'.sprintf(__('username: %s'), $admin).'</li>';
     $body .= '<li>'.sprintf(__('password: %s'), $password).'</li>';

@@ -264,7 +264,7 @@
             function(data){
                 var content = data.message ;
                 if(data.error == 0) { // no errors
-                    content += '<p><?php _e('The plugin have been downloaded correctly, proceed to install and configure.');?></p>';
+                    content += '<p><?php _e('The plugin has been downloaded correctly, proceed to install and configure.'); ?></p>';
                     content += "<p>";
                     content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=plugins&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php _e('Close'); ?></a>';
                     content += "</p>";

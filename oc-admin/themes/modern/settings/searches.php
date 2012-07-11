@@ -42,8 +42,8 @@ $(document).ready(function(){
         },
         messages: {
             custom_queries: {
-                digits: "<?php echo osc_esc_js(__('Custom number: this field has to be numeric only')); ?>.",
-                customrule: "<?php echo osc_esc_js(__('Custom number: this field could not be left empty')); ?>."
+                digits: '<?php echo osc_esc_js(__('Custom number: this field has to be numeric only')); ?>.',
+                customrule: '<?php echo osc_esc_js(__('Custom number: this field cannot be left empty')); ?>.'
             }
         },
         wrapper: "li",
@@ -97,12 +97,12 @@ $(document).ready(function(){
                                             <div class="form-label-checkbox">
                                             <input type="checkbox" <?php echo ( osc_save_latest_searches() ) ? 'checked="checked"' : '' ; ?> name="save_latest_searches" />
                                             <?php _e('Save the latest user searches') ; ?>
-                                            <div class="help-box"><?php _e('It may be useful to know what queries users do.') ?></div>
+                                            <div class="help-box"><?php _e('It may be useful to know what queries users make.') ?></div>
                                         </div>
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="form-label"><?php _e('How long are stored the queries') ; ?></div>
+                                        <div class="form-label"><?php _e('How long queries are stored') ; ?></div>
                                         <div class="form-controls">
                                             <div>
                                                 <input type="radio" name="purge_searches" value="hour" <?php echo ( ( osc_purge_latest_searches() == 'hour' ) ? 'checked="checked"' : '' ) ; ?> onclick="javascript:document.getElementById('customPurge').value = 'hour' ;" />

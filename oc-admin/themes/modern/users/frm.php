@@ -134,7 +134,7 @@
                         <?php UserForm::website_text($user) ; ?>
                     </div>
                 </div>
-                <h3 class="render-title"><?php _e('About yourself') ; ?></h3>
+                <h3 class="render-title"><?php _e('About you') ; ?></h3>
                 <div class="form-row">
                     <div class="form-label"><?php _e('User type') ; ?></div>
                     <div class="form-controls">
@@ -184,7 +184,7 @@
                     <div class="form-controls">
                         <?php UserForm::password_text($user) ; ?>
                         <?php if($aux['edit']) { ?>
-                            <p class="help-inline"><?php _e('If you would like to change the password type a new one. Otherwise leave this blank') ; ?></p>
+                            <p class="help-inline"><?php _e("If you'd like to change the password, type a new one. Otherwise leave this blank") ; ?></p>
                         <?php } ?>
                         <div class="input-separate-top">
                             <?php UserForm::check_password_text($user) ; ?>

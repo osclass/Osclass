@@ -60,10 +60,10 @@
         <?php } else { ?>
             <div class="flashmessage flashmessage-error">
                 <a class="btn ico btn-mini ico-close" href="#">×</a>
-                <p><?php _e('Cannot install a new plugin') ; ?></p>
+                <p><?php _e('Cannot install new plugin') ; ?></p>
             </div>
             <p class="text">
-                <?php _e('The plugin folder is not writable on your server and you cannot upload plugins from the administration panel. Please make the folder writable') ; ?>
+                <?php _e('The plugin folder is not writable on your server so you cannot upload plugins from the administration panel. Please make the folder writable and try again.') ; ?>
             </p>
             <p class="text">
                 <?php _e('To make the directory writable under UNIX execute this command from the shell:') ; ?>

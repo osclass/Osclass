@@ -484,7 +484,7 @@ function osc_admin_toolbar_update_themes($force = false)
             AdminToolbar::newInstance()->remove_menu('update_theme');
         }
         if($total > 0) {
-            $title = '<i class="circle circle-gray">'.$total.'</i>'.__('Themes updates'); 
+            $title = '<i class="circle circle-gray">'.$total.'</i>'.__('Theme updates'); 
             AdminToolbar::newInstance()->add_menu( 
                     array('id'    => 'update_theme',
                           'title' => $title,
