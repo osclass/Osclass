@@ -22,11 +22,11 @@ class OCadmin_stats extends OCadminTest {
         
         $this->selenium->click("//a[@id='stats_comments']");
         $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue($this->selenium->isTextPresent("Comments Statistics"),"Comments Statistics");
+        $this->assertTrue($this->selenium->isTextPresent("Comment Statistics"),"Comments Statistics");
         
         $this->selenium->click("//a[@id='stats_reports']");
         $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue($this->selenium->isTextPresent("Reports Statistics"),"Reports Statistics");
+        $this->assertTrue($this->selenium->isTextPresent("Report Statistics"),"Reports Statistics");
     }
 
 }
