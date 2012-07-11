@@ -636,7 +636,7 @@ function processHeaders($headers)
  * @param type $sourceFile
  * @param type $fileout 
  */
-function download_fsockopen($sourceFile, $fileout) 
+function download_fsockopen($sourceFile, $fileout = null) 
 {
     // parse URL 
     $aUrl = parse_url($sourceFile);
@@ -668,7 +668,8 @@ function download_fsockopen($sourceFile, $fileout)
         $aResult = processResponse($contents);
         $headers = processHeaders($aResult['headers']);
         
-        if (isset($headers['location']) && $headers['location'] != "") {
+        $location = @$headers['location'];
+        if (isset($location) && $location != "") {
             $aUrl = parse_url($headers['location']);
 
             $host = $aUrl['host'];
@@ -683,13 +684,17 @@ function download_fsockopen($sourceFile, $fileout)
             download_fsockopen($host, $requestPath, $fileout);
         } else {
             $body = $aResult['body'];
-            if($headers['transfer-encoding'] == 'chunked' ) {
+            $transferEncoding = @$headers['transfer-encoding'];
+            if($transferEncoding == 'chunked' ) {
                 $body = http_chunked_decode($aResult['body']);
             }
-            
-            $ff = @fopen($fileout, 'w+');
-            fwrite($ff, $body);
-            fclose($ff);
+            if($fileout!=null) {
+                $ff = @fopen($fileout, 'w+');
+                fwrite($ff, $body);
+                fclose($ff);
+            } else {
+                return $body;
+            }
         }
         fclose($fp);
     }
@@ -698,7 +703,6 @@ function download_fsockopen($sourceFile, $fileout)
 function osc_downloadFile($sourceFile, $downloadedFile) 
 {
     if ( testCurl() ) {
-        require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
         @set_time_limit(0);
 
         $fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
@@ -715,26 +719,27 @@ function osc_downloadFile($sourceFile, $downloadedFile)
             return false;
         }
     } else if (testFsockopen()) { // test curl/fsockopen
-        
         $downloadedFile = osc_content_path() . 'downloads/' . $downloadedFile;
         download_fsockopen($sourceFile, $downloadedFile);
         return true;
     }
 }
 
-function osc_file_get_contents($url) {
-    require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
+function osc_file_get_contents($url) 
+{
+    if( testCurl() ) {
+        $ch = curl_init() ;
+        curl_setopt($ch, CURLOPT_URL, $url) ;
+        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' OSClass (v.' . osc_version() . ')') ;
+        if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1) ;
+        @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-    $ch = curl_init() ;
-    curl_setopt($ch, CURLOPT_URL, $url) ;
-    curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' OSClass (v.' . osc_version() . ')') ;
-    if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1) ;
-    @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-    $data = curl_exec($ch);
-    curl_close($ch);
-
+        $data = curl_exec($ch);
+        curl_close($ch);
+    } else if( testFsockopen() ) {
+        $data = download_fsockopen($url);
+    }
     return $data;
 }
 // -----------------------------------------------------------------------------
