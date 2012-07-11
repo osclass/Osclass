@@ -240,21 +240,35 @@ function osc_doRequest($url, $_data) {
 
         // extract host and path:
         $host = $url['host'];
-        $path = $url['path'];
-
+        $path = $url['path'].'?'.$data;
+error_log($path);
         // open a socket connection on port 80
         // use localhost in case of issues with NATs (hairpinning)
         $fp = @fsockopen($host, 80);
-        
+        $contents = "";
         if($fp!==false) {
+            $out = "GET $path HTTP/1.1\r\n";
+            $out .= "Host: $host\r\n";
+            $out .= "Content-type: application/x-www-form-urlencoded\r\n";
+            $out .= "Connection: Close\r\n\r\n";
+            $out .= "\r\n";
+            fwrite($fp, $out);
+
+            $contents = '';
+            while (!feof($fp)) {
+                $contents.= fgets($fp, 1024);
+            }
+            error_log($contents);
             // send the request headers:
-            fputs($fp, "POST $path HTTP/1.1\r\n");
-            fputs($fp, "Host: $host\r\n");
-            fputs($fp, "Referer: OSClass (v.".  osc_version().")\r\n");
-            fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
-            fputs($fp, "Content-length: " . strlen($data) . "\r\n");
-            fputs($fp, "Connection: close\r\n\r\n");
-            fputs($fp, $data);
+//            fputs($fp, "POST $path HTTP/1.1\r\n");
+//            fputs($fp, "Host: $host\r\n");
+//            fputs($fp, "Referer: OSClass (v.".  osc_version().")\r\n");
+//            fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
+//            fputs($fp, "Content-length: " . strlen($data) . "\r\n");
+//            fputs($fp, "Connection: close\r\n\r\n");
+//            fputs($fp, $data);
+          
+            
             
             // close the socket connection:
             fclose($fp);
