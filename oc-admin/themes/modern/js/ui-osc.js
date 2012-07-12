@@ -183,7 +183,6 @@ function resetLayout(){
         $('#show-more').hide();
     } else {
         var hidden = $('#sidebar ul.oscmenu > li:gt('+(visible-1)+')'); //-1 fix gt starts in 0
-        console.log(hidden.length);
         if(hidden.length > 1){
             $('#hidden-menus').empty().append(hidden.clone()).css({
                 width: (hidden.length*menuItemHeight)
