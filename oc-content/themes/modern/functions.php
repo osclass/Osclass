@@ -44,9 +44,11 @@
 
         switch( Params::getParam('action_specific') ) {
             case('settings'):
-                $footerLink = Params::getParam('footer_link');
+                $footerLink  = Params::getParam('footer_link');
+                $defaultLogo = Params::getParam('default_logo');
                 osc_set_preference('keyword_placeholder', Params::getParam('keyword_placeholder'), 'modern_theme');
                 osc_set_preference('footer_link', ($footerLink ? '1' : '0'), 'modern_theme');
+                osc_set_preference('default_logo', ($defaultLogo ? '1' : '0'), 'modern_theme');
 
                 osc_add_flash_ok_message(__('Theme settings updated correctly', 'modern'), 'admin');
                 header('Location: ' . osc_admin_render_theme_url('oc-content/themes/modern/admin/settings.php')); exit;
@@ -84,6 +86,8 @@
             $html = '<img border="0" alt="' . osc_page_title() . '" src="' . osc_current_web_theme_url('images/logo.jpg') . '" />';
             if( file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) {
                 return $html;
+            } else if( osc_get_preference('default_logo', 'modern_theme') && (file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/default-logo.jpg")) ) {
+                return '<img border="0" alt="' . osc_page_title() . '" src="' . osc_current_web_theme_url('images/default-logo.jpg') . '" />';
             } else {
                 return osc_page_title();
             }
@@ -97,6 +101,8 @@
             osc_set_preference('version', MODERN_THEME_VERSION, 'modern_theme');
             osc_set_preference('footer_link', true, 'modern_theme');
             osc_set_preference('donation', '0', 'modern_theme');
+            osc_set_preference('default_logo', '1', 'modern_theme');
+            osc_reset_preferences();
         }
     }
 
