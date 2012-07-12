@@ -20,7 +20,7 @@ class Frontend_contactForm extends FrontendTest {
         $this->selenium->click("xpath=//span/button[text()='Send']");
         $this->selenium->waitForPageToLoad("30000");
 
-        $this->assertTrue($this->selenium->isTextPresent("Your e-mail has been sent properly. Thank your for contacting us!"), 'Testing, contact form.');
+        $this->assertTrue($this->selenium->isTextPresent("Your email has been sent properly. Thank you for contacting us!"), 'Testing, contact form.');
     }
     
     /**
@@ -40,7 +40,7 @@ class Frontend_contactForm extends FrontendTest {
         $this->selenium->click("xpath=//span/button[text()='Send']");
         $this->selenium->waitForPageToLoad("30000");
 
-        $this->assertTrue($this->selenium->isTextPresent("You have to introduce a correct e-mail"), 'Testing, contact form.');
+        $this->assertTrue($this->selenium->isTextPresent("Please enter a correct email"), 'Testing, contact form.');
     }
 }
 ?>
