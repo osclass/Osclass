@@ -187,7 +187,7 @@ class OCadmin_tools extends OCadminTest {
     function testHTTPReferer()
     {
         $this->HTTPReferer( osc_admin_base_url(true)."?page=items" , "Manage listings");
-        $this->HTTPReferer( osc_admin_base_url(true)."?page=stats&action=comments" , "Comments Statistics");
+        $this->HTTPReferer( osc_admin_base_url(true)."?page=stats&action=comments" , "Comment Statistics");
     }
     
     function HTTPReferer($url, $text) 
