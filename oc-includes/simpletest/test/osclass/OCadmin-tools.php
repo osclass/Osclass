@@ -61,7 +61,7 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->click("link=Backup data");
         $this->selenium->waitForPageToLoad("30000");
         $this->selenium->click("//input[@id='backup_sql']");
-        $this->selenium->waitForPageToLoad("300000");
+        $this->selenium->waitForPageToLoad("600000");
         $this->assertTrue($this->selenium->isTextPresent("Backup has completed successfully"), "Backup database.");
         // REMOVE FILE
         foreach (glob(osc_base_path() . "OSClass_mysqlbackup.*") as $filename) {
@@ -81,7 +81,7 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->click("link=Backup data");
         $this->selenium->waitForPageToLoad("30000");
         $this->selenium->click("//input[@id='backup_zip']");
-        $this->selenium->waitForPageToLoad("300000");
+        $this->selenium->waitForPageToLoad("600000");
         $this->assertTrue($this->selenium->isTextPresent("Archiving successful!"), "Backup osclass.");
         // REMOVE FILE
         foreach (glob(osc_base_path() . "OSClass_backup.*") as $filename) {
