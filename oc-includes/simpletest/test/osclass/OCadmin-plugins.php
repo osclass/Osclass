@@ -140,7 +140,7 @@ class OCadmin_plugins extends OCadminTest {
         $this->selenium->click("//button[text()='Continue download']");
         sleep(15);
         
-        $this->assertTrue($this->selenium->isTextPresent("Everything was OK!"),"Install plugin (market)");
+        $this->assertTrue($this->selenium->isTextPresent("Everything looks good!"),"Install plugin (market)");
         $this->selenium->click("//div[@class='osc-modal-content']/p/a[text()='Ok']");
         $this->selenium->waitForPageToLoad("30000");
         
