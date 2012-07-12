@@ -226,35 +226,29 @@ function is_serialized($data) {
  * Perform a POST request, so we could launch fake-cron calls and other core-system calls without annoying the user
  */
 function osc_doRequest($url, $_data) {
-    if (function_exists('fputs')) {
-        // convert variables array to string:
-        $data = array();
-        while (list($n, $v) = each($_data)) {
-            $data[] = "$n=$v";
-        }
-        $data = implode('&', $data);
+    if (function_exists('fsockopen')) {
+        $data = http_build_query($_data);
 
-        // format --> test1=a&test2=b etc.
         // parse the given URL
         $url = parse_url($url);
 
         // extract host and path:
         $host = $url['host'];
-        $path = $url['path'].'?'.$data;
+        $path = $url['path'];
 
         // open a socket connection on port 80
         // use localhost in case of issues with NATs (hairpinning)
         $fp = @fsockopen($host, 80);
+        
         if($fp!==false) {
-            $out = "GET $path HTTP/1.1\r\n";
+            $out  = "POST $path HTTP/1.1\r\n";
             $out .= "Host: $host\r\n";
-            $out .= "Referer: OSClass (v.". osc_version() .")";
+            $out .= "Referer: OSClass (v.". osc_version() .")\r\n";
             $out .= "Content-type: application/x-www-form-urlencoded\r\n";
+            $out .= "Content-Length: ".strlen($data)."\r\n";
             $out .= "Connection: Close\r\n\r\n";
-            $out .= "\r\n";
+            $out .= "$data";
             fwrite($fp, $out);
-
-            // close the socket connection:
             fclose($fp);
         }
     }
