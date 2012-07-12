@@ -51,10 +51,10 @@
 
                                         $msg = '';
                                         if(!osc_validate_int(Params::getParam("num_moderate_comments"))) {
-                                            $msg .= _m("Number of moderate comments has to be numeric value")."<br/>";
+                                            $msg .= _m("Number of moderate comments must only contain numeric characters")."<br/>";
                                         }
                                         if(!osc_validate_int(Params::getParam("comments_per_page"))) {
-                                            $msg .= _m("Comments per page has to be numeric only")."<br/>";
+                                            $msg .= _m("Comments per page must only contain numeric characters")."<br/>";
                                         }
                                         if($msg!='') {
                                             osc_add_flash_error_message( $msg, 'admin');

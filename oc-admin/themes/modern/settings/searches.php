@@ -42,7 +42,7 @@ $(document).ready(function(){
         },
         messages: {
             custom_queries: {
-                digits: '<?php echo osc_esc_js(__('Custom number: this field has to be numeric only')); ?>.',
+                digits: '<?php echo osc_esc_js(__('Custom number: this field must only contain numeric characters')); ?>.',
                 customrule: '<?php echo osc_esc_js(__('Custom number: this field cannot be left empty')); ?>.'
             }
         },

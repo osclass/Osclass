@@ -68,7 +68,7 @@
                         },
                         maxSizeKb: {
                             required: '<?php echo osc_esc_js( __("Maximum size: this field is required")); ?>',
-                            digits: '<?php echo osc_esc_js( __("Maximum size: this field has to be numeric only")); ?>'
+                            digits: '<?php echo osc_esc_js( __("Maximum size: this field must only contain numeric characters")); ?>'
                         }
                     },
                     wrapper: "li",

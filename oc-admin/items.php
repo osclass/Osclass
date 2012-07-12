@@ -612,13 +612,13 @@
                                         
                                         $msg = '';
                                         if(!osc_validate_int(Params::getParam("items_wait_time"))) {
-                                            $msg .= _m("Wait time has to be numeric only")."<br/>";
+                                            $msg .= _m("Wait time must only contain numeric characters")."<br/>";
                                         }
                                         if(Params::getParam("num_moderate_items")!='' && !osc_validate_int(Params::getParam("num_moderate_items"))) {
-                                            $msg .= _m("Number of moderated listings has to be numeric only")."<br/>";
+                                            $msg .= _m("Number of moderated listings must only contain numeric characters")."<br/>";
                                         }
                                         if(!osc_validate_int($numImagesItems)) {
-                                            $msg .= _m("Images per listing has to be numeric only")."<br/>";
+                                            $msg .= _m("Images per listing must only contain numeric characters")."<br/>";
                                         }
                                         if($msg!='') {
                                             osc_add_flash_error_message( $msg, 'admin');

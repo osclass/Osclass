@@ -146,7 +146,7 @@
                                                 $msg .= _m("Currency format field is required")."<br/>";
                                             }
                                             if(!osc_validate_int($languageNumDec)) {
-                                                $msg .= _m("Number of decimals has to be numeric only")."<br/>";
+                                                $msg .= _m("Number of decimals must only contain numeric characters")."<br/>";
                                             }
                                             if($msg!='') {
                                                 osc_add_flash_error_message( $msg, 'admin');

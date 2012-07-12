@@ -63,7 +63,7 @@
                 },
                 num_rss_items: {
                     required: '<?php echo osc_esc_js(__("Listings shown in RSS feed: this field is required")); ?>.',
-                    digits: '<?php echo osc_esc_js(__("Listings shown in RSS feed: this field has to be numeric only")); ?>.'
+                    digits: '<?php echo osc_esc_js(__("Listings shown in RSS feed: this field must only contain numeric characters")); ?>.'
                 },
                 max_latest_items_at_home: {
                     required: '<?php echo osc_esc_js(__("Latest listings shown: this field is required")); ?>.',

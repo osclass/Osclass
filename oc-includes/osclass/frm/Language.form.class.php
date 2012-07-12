@@ -139,7 +139,7 @@
                 },
                 i_num_dec: {
                     required: "<?php _e("Number of decimals: this field is required"); ?>.",
-                    digits: "<?php _e("Number of decimals: this field has to be numeric only"); ?>."
+                    digits: "<?php _e("Number of decimals: this field must only contain numeric characters"); ?>."
                 },
                 s_dec_point: {
                     required: "<?php _e("Decimal point: this field is required"); ?>.",
