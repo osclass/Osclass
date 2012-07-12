@@ -79,10 +79,10 @@
             function drawChart() {
                 var data = new google.visualization.DataTable();
                 var data2 = new google.visualization.DataTable();
-                data.addColumn('string', '<?php _e('Date') ; ?>');
-                data.addColumn('number', '<?php _e('Items') ; ?>');
-                data2.addColumn('string', '<?php _e('Date') ; ?>');
-                data2.addColumn('number', '<?php _e('Views') ; ?>');
+                data.addColumn('string', '<?php echo osc_esc_js(__('Date')); ?>');
+                data.addColumn('number', '<?php echo osc_esc_js(__('Items')); ?>');
+                data2.addColumn('string', '<?php echo osc_esc_js(__('Date')); ?>');
+                data2.addColumn('number', '<?php echo osc_esc_js(__('Views')); ?>');
                 <?php $k = 0 ;
                 echo "data.addRows(" . count($items) . ");" ;
                 foreach($items as $date => $num) {

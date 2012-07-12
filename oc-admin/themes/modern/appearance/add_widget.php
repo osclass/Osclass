@@ -88,7 +88,7 @@
                     },
                     messages: {
                         description: {
-                            required:  "<?php _e("Description: this field is required"); ?>."
+                            required:  '<?php echo osc_esc_js(__("Description: this field is required")); ?>.'
                         }
                     },
                     errorLabelContainer: "#error_list",

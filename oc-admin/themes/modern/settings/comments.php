@@ -36,12 +36,12 @@ $(document).ready(function(){
         },
         messages: {
             num_moderate_comments: {
-                required: "<?php echo osc_esc_js(__("Moderated comments: this field is required")); ?>.",
-                digits: "<?php echo osc_esc_js(__("Moderated comments: this field must only contain numeric characters")); ?>."
+                required: '<?php echo osc_esc_js(__("Moderated comments: this field is required")); ?>.',
+                digits: '<?php echo osc_esc_js(__("Moderated comments: this field must only contain numeric characters")); ?>.'
             },
             comments_per_page: {
-                required: "<?php echo osc_esc_js(__("Comments per page: this field is required")); ?>.",
-                digits: "<?php echo osc_esc_js(__("Comments per page: this field must only contain numeric characters")); ?>."
+                required: '<?php echo osc_esc_js(__("Comments per page: this field is required")); ?>.',
+                digits: '<?php echo osc_esc_js(__("Comments per page: this field must only contain numeric characters")); ?>.'
             }
         },
         wrapper: "li",

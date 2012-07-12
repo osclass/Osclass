@@ -81,8 +81,8 @@
         function drawChart() {
             var data = new google.visualization.DataTable();
 
-            data.addColumn('string', '<?php _e('Date') ; ?>',0,1);
-            data.addColumn('number', '<?php _e('New users') ; ?>');
+            data.addColumn('string', '<?php echo osc_esc_js(__('Date')); ?>',0,1);
+            data.addColumn('number', '<?php echo osc_esc_js(__('New users')); ?>');
             <?php $k = 0 ;
             echo "data.addRows(" . count($users) . ");" ;
             foreach($users as $date => $num) {

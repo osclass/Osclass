@@ -69,12 +69,12 @@
         // draws it.
         function drawChart() {
             var data = new google.visualization.DataTable();
-            data.addColumn('string', '<?php _e('Date') ; ?>');
-            data.addColumn('number', '<?php _e('Spam') ; ?>');
-            data.addColumn('number', '<?php _e('Duplicated') ; ?>');
-            data.addColumn('number', '<?php _e('Bad category') ; ?>');
-            data.addColumn('number', '<?php _e('Offensive') ; ?>');
-            data.addColumn('number', '<?php _e('Expired') ; ?>');
+            data.addColumn('string', '<?php echo osc_esc_js(__('Date')); ?>');
+            data.addColumn('number', '<?php echo osc_esc_js(__('Spam')); ?>');
+            data.addColumn('number', '<?php echo osc_esc_js(__('Duplicated')); ?>');
+            data.addColumn('number', '<?php echo osc_esc_js(__('Bad category')); ?>');
+            data.addColumn('number', '<?php echo osc_esc_js(__('Offensive')); ?>');
+            data.addColumn('number', '<?php echo osc_esc_js(__('Expired')); ?>');
             <?php $k = 0;
             echo "data.addRows(".count($reports).");";
             foreach($reports as $date => $data) {

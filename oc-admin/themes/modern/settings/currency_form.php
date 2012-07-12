@@ -37,13 +37,13 @@
                     },
                     messages: {
                         pk_c_code: {
-                            required: "<?php echo osc_esc_js( __('Currency code: this field is required')); ?>.",
-                            minlength: "<?php echo osc_esc_js( __('Currency code: this field is required')); ?>.",
-                            maxlength: "<?php echo osc_esc_js( __('Currency code: this field is required')); ?>."
+                            required: '<?php echo osc_esc_js( __('Currency code: this field is required')); ?>.',
+                            minlength: '<?php echo osc_esc_js( __('Currency code: this field is required')); ?>.',
+                            maxlength: '<?php echo osc_esc_js( __('Currency code: this field is required')); ?>.'
                         },
                         s_name: {
-                            required: "<?php echo osc_esc_js( __('Name: this field is required')); ?>.",
-                            minlength: "<?php echo osc_esc_js( __('Name: this field is required')); ?>."
+                            required: '<?php echo osc_esc_js( __('Name: this field is required')); ?>.',
+                            minlength: '<?php echo osc_esc_js( __('Name: this field is required')); ?>.'
                         }
                     },
                     wrapper: "li",

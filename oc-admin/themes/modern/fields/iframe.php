@@ -131,7 +131,7 @@
                 },
                 error: function(){
                     $(".jsMessage").fadeIn('fast') ;
-                    $(".jsMessage p").html("<?php _e('Ajax error, try again.') ; ?>") ;
+                    $(".jsMessage p").html('<?php echo osc_esc_js(__('Ajax error, try again.')); ?>') ;
                 }
                 
             })        
