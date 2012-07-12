@@ -88,7 +88,7 @@
                     },
                     messages: {
                         description: {
-                            required:  "<?php _e("Description: this field is required"); ?>."
+                            required:  '<?php echo osc_esc_js(__("Description: this field is required")); ?>.'
                         }
                     },
                     errorLabelContainer: "#error_list",
@@ -115,7 +115,7 @@
                 <input type="hidden" name="location" value="<?php echo Params::getParam('location', true) ; ?>" />
                 <fieldset>
                     <div class="input-line">
-                        <label><?php _e('Description (only for internal purposes)') ; ?></label>
+                        <label><?php _e('Description (for internal purposes only)') ; ?></label>
                         <div class="input">
                             <input type="text" class="large" name="description" value="<?php if( $edit ) { echo osc_esc_html($widget['s_description']) ; } ?>" />
                         </div>

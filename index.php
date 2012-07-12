@@ -39,7 +39,7 @@
             require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
 
             $title   = sprintf(__('Maintenance &raquo; %s'), osc_page_title());
-            $message = sprintf(__('We are sorry for any inconvenience. %s is under maintenance mode') . '.', osc_page_title() );
+            $message = sprintf(__('We are sorry for any inconvenience. %s is undergoing maintenance.') . '.', osc_page_title() );
 
             header('HTTP/1.1 503 Service Temporarily Unavailable');
             header('Status: 503 Service Temporarily Unavailable');

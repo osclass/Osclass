@@ -54,24 +54,24 @@
             },
             messages: {
                 pageTitle: {
-                    required: "<?php echo osc_esc_js(__("Page title: this field is required")); ?>.",
-                    minlength: "<?php echo osc_esc_js(__("Page title: this field is required")); ?>."
+                    required: '<?php echo osc_esc_js(__("Page title: this field is required")); ?>.',
+                    minlength: '<?php echo osc_esc_js(__("Page title: this field is required")); ?>.'
                 },
                 contactEmail: {
-                    required: "<?php echo osc_esc_js(__("Email: this field is required")); ?>.",
-                    email: "<?php echo osc_esc_js(__("Invalid email address")); ?>."
+                    required: '<?php echo osc_esc_js(__("Email: this field is required")); ?>.',
+                    email: '<?php echo osc_esc_js(__("Invalid email address")); ?>.'
                 },
                 num_rss_items: {
-                    required: "<?php echo osc_esc_js(__("RSS shows: this field is required")); ?>.",
-                    digits: "<?php echo osc_esc_js(__("RSS shows: this field has to be numeric only")); ?>."
+                    required: '<?php echo osc_esc_js(__("Listings shown in RSS feed: this field is required")); ?>.',
+                    digits: '<?php echo osc_esc_js(__("Listings shown in RSS feed: this field must only contain numeric characters")); ?>.'
                 },
                 max_latest_items_at_home: {
-                    required: "<?php echo osc_esc_js(__("The latest listings show: this field is required")); ?>.",
-                    digits: "<?php echo osc_esc_js(__("The latest listings show: this field has to be numeric only")); ?>."
+                    required: '<?php echo osc_esc_js(__("Latest listings shown: this field is required")); ?>.',
+                    digits: '<?php echo osc_esc_js(__("Latest listings shown: this field must only contain numeric characters")); ?>.'
                 },
                 default_results_per_page: {
-                    required: "<?php echo osc_esc_js(__("The search page shows: this field is required")); ?>.",
-                    digits: "<?php echo osc_esc_js(__("The search page shows: this field has to be numeric only")); ?>."
+                    required: '<?php echo osc_esc_js(__("The search page shows: this field is required")); ?>.',
+                    digits: '<?php echo osc_esc_js(__("The search page shows: this field must only contain numeric characters")); ?>.'
                 }
             },
             wrapper: "li",
@@ -259,27 +259,27 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-label"><?php _e('The latest listings show') ; ?></div>
+                        <div class="form-label"><?php _e('Latest listings shown') ; ?></div>
                         <div class="form-controls">
                             <input type="text" class="input-small" name="max_latest_items_at_home" value="<?php echo osc_esc_html(osc_max_latest_items_at_home()) ; ?>" />
-                            <?php _e('Listings at most') ; ?>
+                            <?php _e('at most') ; ?>
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-label"><?php _e('The search page shows') ; ?></div>
+                        <div class="form-label"><?php _e('Search page shows') ; ?></div>
                         <div class="form-controls">
                             <input type="text" class="input-small" name="default_results_per_page" value="<?php echo osc_esc_html(osc_default_results_per_page_at_search()); ?>" />
                             <?php _e('listings at most') ; ?>
                         </div>
                     </div>
-                    <h2 class="render-title separate-top"><?php _e('Categories Settings') ; ?></h2>
+                    <h2 class="render-title separate-top"><?php _e('Category settings') ; ?></h2>
                     <div class="form-row">
                         <div class="form-label"><?php _e('Parent categories'); ?></div>
                         <div class="form-controls">
                             <div class="form-label-checkbox">
                                 <label>
                                     <input type="checkbox" <?php echo ( osc_selectable_parent_categories() ? 'checked="checked"' : '' ) ; ?> name="selectable_parent_categories" value="1" />
-                            <?php _e('Allow users to select as a category when inserting or editing a listing a parent category') ; ?>
+                            <?php _e('Allow users to select a parent category as a category when inserting or editing a listing ') ; ?>
                                 </label>
                             </div>
                         </div>

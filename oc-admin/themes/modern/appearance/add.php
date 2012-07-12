@@ -60,10 +60,10 @@
                 <?php } else { ?>
                     <div class="flashmessage flashmessage-error">
                         <a class="btn ico btn-mini ico-close" href="#">×</a>
-                        <p><?php _e('Cannot install a new theme') ; ?></p>
+                        <p><?php _e("Can't install a new theme") ; ?></p>
                     </div>
                     <p class="text">
-                        <?php _e('The theme folder is not writable on your server and you cannot upload themes from the administration panel. Please make the theme folder writable') ; ?>
+                        <?php _e("The theme folder is not writable on your server so you can't upload themes from the administration panel. Please make the theme folder writable and try again.") ; ?>
                     </p>
                     <p class="text">
                         <?php _e('To make the directory writable under UNIX execute this command from the shell:') ; ?>
@@ -150,8 +150,8 @@
                                 +'<div class="theme-stage">'
                                     +'<img src="'+imgsrc+'" title="'+data.themes[i].s_title+'" alt="'+data.themes[i].s_title+'" />'
                                     +'<div class="theme-actions">'
-                                        +'<a href="#'+data.themes[i].s_slug+'" class="btn btn-mini btn-green market-popup"><?php _e('Install') ; ?></a>'
-                                        +'<a target="_blank" href="'+data.themes[i].s_preview+'" class="btn btn-mini btn-blue"><?php _e('Preview') ; ?></a>'
+                                        +'<a href="#'+data.themes[i].s_slug+'" class="btn btn-mini btn-green market-popup"><?php echo osc_esc_js(__('Install')); ?></a>'
+                                        +'<a target="_blank" href="'+data.themes[i].s_preview+'" class="btn btn-mini btn-blue"><?php echo osc_esc_js(__('Preview')); ?></a>'
                                     +'</div>'
                                 +'</div>'
                                 +'<div class="theme-info">'

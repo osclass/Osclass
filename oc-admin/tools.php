@@ -226,7 +226,7 @@
                                             case(-4):   $msg = _m('The folder is not writable') ;
                                                         osc_add_flash_error_message( $msg, 'admin') ;
                                             break;
-                                            default:    $msg = _m('Backup has completed successfully') ;
+                                            default:    $msg = _m('Backup completed successfully') ;
                                                         osc_add_flash_ok_message( $msg, 'admin') ;
                                             break;
                                         }
@@ -258,7 +258,7 @@
                                             case(-5):   $msg = _m('The folder is not writable') ;
                                                         osc_add_flash_error_message( $msg, 'admin') ;
                                             break;
-                                            default:    $msg = _m('Backup has completed successfully') ;
+                                            default:    $msg = _m('Backup completed successfully') ;
                                                         osc_add_flash_ok_message( $msg, 'admin') ;
                                                         header('Content-Description: File Transfer');
                                                         header('Content-Type: application/octet-stream');
@@ -284,7 +284,7 @@
                                         $path = sys_get_temp_dir()."/";
 
                                         if ( osc_zip_folder(osc_base_path(),$path. $filename) ) {
-                                            $msg = _m('Archiving successful!') ;
+                                            $msg = _m('Archived successfully!') ;
                                             osc_add_flash_ok_message( $msg, 'admin') ;
                                             header('Content-Description: File Transfer');
                                             header('Content-Type: application/octet-stream');
@@ -298,7 +298,7 @@
                                             readfile($path.$filename);
                                             exit;
                                         }else{
-                                            $msg = _m('Error, the zip file was not created at the specified directory') ;
+                                            $msg = _m('Error, the zip file was not created in the specified directory') ;
                                             osc_add_flash_error_message( $msg, 'admin') ;
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
@@ -320,10 +320,10 @@
                                         $archive_folder = osc_base_path() ;
 
                                         if ( osc_zip_folder($archive_folder, $archive_name) ) {
-                                            $msg = _m('Archiving successful!') ;
+                                            $msg = _m('Archived successfully!') ;
                                             osc_add_flash_ok_message( $msg, 'admin') ;
                                         }else{
-                                            $msg = _m('Error, the zip file was not created at the specified directory') ;
+                                            $msg = _m('Error, the zip file was not created in the specified directory') ;
                                             osc_add_flash_error_message( $msg, 'admin') ;
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
@@ -343,7 +343,7 @@
                                             if( $fileHandler ) {
                                                 osc_add_flash_ok_message( _m('Maintenance mode is ON'), 'admin') ;
                                             } else {
-                                                osc_add_flash_error_message( _m('There was an error creating .maintenance file, please create it manually at the root folder'), 'admin')  ;
+                                                osc_add_flash_error_message( _m('There was an error creating the .maintenance file, please create it manually at the root folder'), 'admin') ;
                                             }
                                             fclose($fileHandler) ;
                                             $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=maintenance' ) ;
@@ -352,7 +352,7 @@
                                             if( $deleted ) {
                                                 osc_add_flash_ok_message( _m('Maintenance mode is OFF'), 'admin') ;
                                             } else {
-                                                osc_add_flash_error_message( _m('There was an error removing .maintenance file, please remove it manually from the root folder'), 'admin') ;
+                                                osc_add_flash_error_message( _m('There was an error removing the .maintenance file, please remove it manually from the root folder'), 'admin') ;
                                             }
                                             $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=maintenance' ) ;
                                         }

@@ -51,7 +51,7 @@
                                     $this->doView('admins/frm.php') ;
                 break ;
                 case('add_post'):   if( defined('DEMO') ) {
-                                        osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
+                                        osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin') ;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=admins') ;
                                     }
                                     // adding a new admin
@@ -112,7 +112,7 @@
                                     if( $isInserted ) {
                                         osc_add_flash_ok_message( _m('The admin has been added'), 'admin') ;
                                     } else {
-                                        osc_add_flash_error_message( _m('There have been an error adding a new admin'), 'admin') ;
+                                        osc_add_flash_error_message( _m('There has been an error adding a new admin'), 'admin') ;
                                     }
                                     $this->redirectTo(osc_admin_base_url(true).'?page=admins') ;
                 break ;
@@ -127,7 +127,7 @@
                                     }
 
                                     if( count($adminEdit) == 0 ) {
-                                        osc_add_flash_error_message( _m('There is no admin admin with this id'), 'admin') ;
+                                        osc_add_flash_error_message( _m('There is no admin with this id'), 'admin') ;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=admins') ;
                                     }
 
@@ -135,7 +135,7 @@
                                     $this->doView('admins/frm.php') ;
                 break ;
                 case('edit_post'):  if( defined('DEMO') ) {
-                                        osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
+                                        osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin') ;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=admins') ;
                                     }
                                     // updating a new admin
@@ -248,7 +248,7 @@
                                     }
                 break ;
                 case('delete'):     if( defined('DEMO') ) {
-                                        osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
+                                        osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin') ;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=admins') ;
                                     }
                                     // deleting and admin

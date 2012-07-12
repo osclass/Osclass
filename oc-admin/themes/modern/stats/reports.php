@@ -69,12 +69,12 @@
         // draws it.
         function drawChart() {
             var data = new google.visualization.DataTable();
-            data.addColumn('string', '<?php _e('Date') ; ?>');
-            data.addColumn('number', '<?php _e('Spam') ; ?>');
-            data.addColumn('number', '<?php _e('Repeated') ; ?>');
-            data.addColumn('number', '<?php _e('Bad category') ; ?>');
-            data.addColumn('number', '<?php _e('Offensive') ; ?>');
-            data.addColumn('number', '<?php _e('Expired') ; ?>');
+            data.addColumn('string', '<?php echo osc_esc_js(__('Date')); ?>');
+            data.addColumn('number', '<?php echo osc_esc_js(__('Spam')); ?>');
+            data.addColumn('number', '<?php echo osc_esc_js(__('Duplicated')); ?>');
+            data.addColumn('number', '<?php echo osc_esc_js(__('Bad category')); ?>');
+            data.addColumn('number', '<?php echo osc_esc_js(__('Offensive')); ?>');
+            data.addColumn('number', '<?php echo osc_esc_js(__('Expired')); ?>');
             <?php $k = 0;
             echo "data.addRows(".count($reports).");";
             foreach($reports as $date => $data) {
@@ -156,7 +156,7 @@
                     <b class="stats-title"></b>
                     <div id="placeholder" class="graph-placeholder" style="height:150px">
                         <?php if( count($reports) == 0 ) {
-                            _e("There're no statistics yet") ;
+                            _e("There are no statistics yet") ;
                         } ?>
                     </div>
                 </div>

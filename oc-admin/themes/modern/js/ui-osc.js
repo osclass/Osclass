@@ -183,14 +183,14 @@ function resetLayout(){
         $('#show-more').hide();
     } else {
         var hidden = $('#sidebar ul.oscmenu > li:gt('+(visible-1)+')'); //-1 fix gt starts in 0
-        $('#hidden-menus').empty().append(hidden.clone()).css({
-            width: (hidden.length*menuItemHeight)
-        })
-        hidden.hide();
-        if((visible+1) > $('#sidebar ul.oscmenu > li').length){
-            $('#show-more').hide();
+        if(hidden.length > 1){
+            $('#hidden-menus').empty().append(hidden.clone()).css({
+                width: (hidden.length*menuItemHeight)
+            })
+            hidden.hide();
+            $('#show-more').show();
         } else {
-            $('#show-more').show(); 
+            $('#show-more').hide(); 
         }
     }
     //global footer

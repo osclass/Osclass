@@ -62,7 +62,7 @@
             }
 
             // show messages subscribed
-            $status_subscribe = Params::getParam('subscribe');
+            $status_subscribe = Params::getParam('subscribe_osclass');
             if( $status_subscribe != '' ) {
                 switch( $status_subscribe ) {
                     case -1:

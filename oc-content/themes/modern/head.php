@@ -26,6 +26,11 @@
 <?php if( meta_description() != '' ) { ?>
 <meta name="description" content="<?php echo osc_esc_html(meta_description()); ?>" />
 <?php } ?>
+<?php if( function_exists('meta_keywords') ) { ?>
+<?php if( meta_keywords() != '' ) { ?>
+<meta name="keywords" content="<?php echo osc_esc_html(meta_keywords()); ?>" />
+<?php } ?>
+<?php } ?>
 <?php if( osc_get_canonical() != '' ) { ?>
 <link rel="canonical" href="<?php echo osc_get_canonical(); ?>"/>
 <?php } ?>

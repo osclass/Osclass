@@ -31,8 +31,14 @@
             <div class="form-row">
                 <div class="form-label"><?php _e('Footer link', 'modern'); ?></div>
                 <div class="form-controls">
-                    <div class="form-label-checkbox"><input type="checkbox" name="footer_link" value="1" <?php echo (osc_get_preference('footer_link', 'modern_theme') ? 'checked' : ''); ?> > <?php _e('I want to help OSClass linking to <a href="http://osclass.org/" target="_blank">osclass.org</a> from my site with the following text:', 'modern'); ?></div>
+                    <div class="form-label-checkbox"><input type="checkbox" name="footer_link" value="1" <?php echo (osc_get_preference('footer_link', 'modern_theme') ? 'checked' : ''); ?> > <?php _e('I want to help OSClass by linking to <a href="http://osclass.org/" target="_blank">osclass.org</a> from my site with the following text:', 'modern'); ?></div>
                     <span class="help-box"><?php _e('This website is proudly using the <a title="OSClass web" href="http://osclass.org/">classifieds scripts</a> software <strong>OSClass</strong>', 'modern'); ?></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-label"><?php _e('Default logo', 'modern'); ?></div>
+                <div class="form-controls">
+                    <div class="form-label-checkbox"><input type="checkbox" name="default_logo" value="1" <?php echo (osc_get_preference('default_logo', 'modern_theme') ? 'checked' : ''); ?> > <?php _e("Show default logo in case you didn't upload one previously", 'modern'); ?></div>
                 </div>
             </div>
             <div class="form-actions">

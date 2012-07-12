@@ -74,8 +74,8 @@
             // draws it.
             function drawChart() {
                 var data = new google.visualization.DataTable() ;
-                data.addColumn('string', '<?php _e('Date') ; ?>') ;
-                data.addColumn('number', '<?php _e('Comments') ; ?>') ;
+                data.addColumn('string', '<?php echo osc_esc_js(__('Date')); ?>') ;
+                data.addColumn('number', '<?php echo osc_esc_js(__('Comments')); ?>') ;
                 <?php $k = 0 ;
                 echo "data.addRows(" . count($comments) . ");" ;
                 foreach($comments as $date => $num) {
@@ -153,7 +153,7 @@
                     <b class="stats-title"></b>
                     <div id="placeholder" class="graph-placeholder" style="height:150px">
                         <?php if( count($comments) == 0 ) {
-                            _e("There're no statistics yet") ;
+                            _e("There are no statistics yet") ;
                         } ?>
                     </div>
                 </div>

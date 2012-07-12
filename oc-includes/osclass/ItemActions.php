@@ -61,10 +61,10 @@
 
             // Validate
             if ( !$this->checkAllowedExt($aItem['photos']) ) {
-                $flash_error .= _m("Image with incorrect extension.") . PHP_EOL;
+                $flash_error .= _m("Image with an incorrect extension.") . PHP_EOL;
             }
             if ( !$this->checkSize($aItem['photos']) ) {
-                $flash_error .= _m("Images too big. Max. size ") . osc_max_size_kb() ." Kb" . PHP_EOL;
+                $flash_error .= _m("Image is too big. Max. size") . osc_max_size_kb() ." Kb" . PHP_EOL;
             }
 
             $title_message = '';
@@ -95,7 +95,7 @@
 
             $flash_error .=
                 ((!osc_validate_category($aItem['catId'])) ? _m("Category invalid.") . PHP_EOL : '' ) .
-                ((!osc_validate_number($aItem['price'])) ? _m("Price must be number.") . PHP_EOL : '' ) .
+                ((!osc_validate_number($aItem['price'])) ? _m("Price must be a number.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['price'], 15)) ? _m("Price too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($contactName, 35)) ? _m("Name too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_email($contactEmail)) ? _m("Email invalid.") . PHP_EOL : '' ) .
@@ -256,10 +256,10 @@
 
             // Validate
             if ( !$this->checkAllowedExt($aItem['photos']) ) {
-                $flash_error .= _m("Image with incorrect extension.") . PHP_EOL;
+                $flash_error .= _m("Image with an incorrect extension.") . PHP_EOL;
             }
             if ( !$this->checkSize($aItem['photos']) ) {
-                $flash_error .= _m("Images too big. Max. size ") . osc_max_size_kb() . " Kb" . PHP_EOL;
+                $flash_error .= _m("Image is too big. Max. size") . osc_max_size_kb() . " Kb" . PHP_EOL;
             }
 
             $title_message  = '';
@@ -291,7 +291,7 @@
 
             $flash_error .=
                 ((!osc_validate_category($aItem['catId'])) ? _m("Category invalid.") . PHP_EOL : '' ) .
-                ((!osc_validate_number($aItem['price'])) ? _m("Price must be number.") . PHP_EOL : '' ) .
+                ((!osc_validate_number($aItem['price'])) ? _m("Price must be a number.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['price'], 15)) ? _m("Price too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['countryName'], 3, false)) ? _m("Country too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['countryName'], 50)) ? _m("Country too long.") . PHP_EOL : '' ) .
@@ -793,7 +793,7 @@
             $item_url   = osc_item_url();
             $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
             Params::setParam('item_url', $item_url );
-            osc_add_flash_ok_message( sprintf(_m('We just send your message to %s'), $aItem['friendName']) ) ;
+            osc_add_flash_ok_message( sprintf(_m('We just sent your message to %s'), $aItem['friendName']) ) ;
             return true;
         }
 
@@ -1240,7 +1240,7 @@
                 }
 
                 if(!$success){
-                    osc_add_flash_error_message( _m("The file you tried to upload does not have an allowed extension")) ;
+                    osc_add_flash_error_message( _m("The file you tried to upload does not have a valid extension")) ;
                 }
             }
             return $success;

@@ -71,7 +71,7 @@
                 <div class="form-controls">
                     <?php CommentForm::author_input_text($comment); ?>
                     <?php if(isset($comment['fk_i_user_id']) && $comment['fk_i_user_id']!='') {
-                    _e("It's a registered user") ; ?>
+                    _e("Registered user") ; ?>
                     <a href="<?php echo osc_admin_base_url(true) ; ?>?page=users&action=edit&id=<?php echo $comment['fk_i_user_id'] ; ?>"><?php _e('Edit user') ; ?></a>
                     <?php }?>
                 </div>

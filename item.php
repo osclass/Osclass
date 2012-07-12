@@ -131,7 +131,7 @@
                             foreach( $mItems->data as $key => $value ) {
                                 Session::newInstance()->_keepForm($key);
                             }
-                            osc_add_flash_error_message( _m('An user exists with that email, if it is you, please log-in'));
+                            osc_add_flash_error_message( _m('A user with that email address already exists, if it is you, please log in'));
                             $this->redirectTo(osc_user_login_url());
                         }
                     }
@@ -179,7 +179,7 @@
                                         $this->doView('item-edit.php');
                                     } else {
                                         // add a flash message [ITEM NO EXISTE]
-                                        osc_add_flash_error_message( _m("Sorry, we don't have any listing with that ID") ) ;
+                                        osc_add_flash_error_message( _m("Sorry, we don't have any listings with that ID") ) ;
                                         if($this->user != null) {
                                             $this->redirectTo( osc_user_list_items_url() );
                                         } else {
@@ -482,7 +482,7 @@
 
                     if ($item['b_active'] != 1) {
                         if( $this->userId == $item['fk_i_user_id'] ) {
-                            osc_add_flash_warning_message( _m("The listing hasn't been validated. Please validate it in order to show it to the rest of users") );
+                            osc_add_flash_warning_message( _m("The listing hasn't been validated. Please validate it in order to make it public") );
                         } else {
                             osc_add_flash_warning_message( _m("This listing hasn't been validated") );
                             $this->redirectTo( osc_base_url(true) );

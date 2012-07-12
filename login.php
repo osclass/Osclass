@@ -110,7 +110,7 @@
                                             $this->redirectTo( $url_redirect ) ;
 
                                         } else {
-                                            osc_add_flash_error_message(_m('This should never happens'));
+                                            osc_add_flash_error_message(_m('This should never happen'));
                                         }
 
                                         if(!$user['b_enabled']) {

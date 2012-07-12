@@ -47,7 +47,7 @@
                                         }
 
                                         if( !preg_match('|.*?@.{2,}\..{2,}|',$yourEmail) ) {
-                                            osc_add_flash_error_message( _m('You have to introduce a correct e-mail') ) ;
+                                            osc_add_flash_error_message( _m('Please enter a correct email') ) ;
                                             Session::newInstance()->_setForm("yourName",$yourName);
                                             Session::newInstance()->_setForm("subject",$subject);
                                             Session::newInstance()->_setForm("message_body",$message);
@@ -74,7 +74,7 @@
                                             $path = osc_content_path() . 'uploads/' . time() . '_' . $resourceName ;
 
                                             if(!is_writable(osc_content_path() . 'uploads/')) {
-                                                osc_add_flash_error_message( _m('There has been some errors sending the message')) ;
+                                                osc_add_flash_error_message( _m('There have been some errors sending the message')) ;
                                                 $this->redirectTo( osc_contact_url() );
                                             }
 
@@ -89,7 +89,7 @@
 
                                         osc_sendMail($params) ;
 
-                                        osc_add_flash_ok_message( _m('Your e-mail has been sent properly. Thank your for contacting us!') ) ;
+                                        osc_add_flash_ok_message( _m('Your email has been sent properly. Thank you for contacting us!') ) ;
 
                                         $this->redirectTo( osc_contact_url() ) ;
                 break;

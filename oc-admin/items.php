@@ -142,7 +142,7 @@
                                                             $numSuccess++;
                                                         }
                                                     }
-                                                    osc_add_flash_ok_message( sprintf(_mn('%d change have been made', '%d changes have been made', $numSuccess), $numSuccess), 'admin') ;
+                                                    osc_add_flash_ok_message( sprintf(_mn('%d change has been made', '%d changes have been made', $numSuccess), $numSuccess), 'admin') ;
                                                 }        
                                             break;
                                             case 'delete_all':
@@ -313,9 +313,9 @@
                                                 if( $success && $success > 0 ) {
                                                     osc_add_flash_ok_message( _m('The listing has been activated'), 'admin');
                                                 } else if ( !$success ){
-                                                    osc_add_flash_error_message( _m('Some error has occurred'), 'admin');
+                                                    osc_add_flash_error_message( _m('An error has occurred'), 'admin');
                                                 } else {
-                                                    osc_add_flash_error_message( _m('The listing cannot be activated, because it is blocked'), 'admin');
+                                                    osc_add_flash_error_message( _m("The listing can't be activated because it's blocked"), 'admin');
                                                 }
 
                                                 break;
@@ -325,7 +325,7 @@
                                                 if( $success && $success > 0 ) {
                                                     osc_add_flash_ok_message( _m('The listing has been deactivated'), 'admin');
                                                 } else {
-                                                    osc_add_flash_error_message( _m('Some error has occurred'), 'admin');
+                                                    osc_add_flash_error_message( _m('An error has occurred'), 'admin');
                                                 }
 
                                                 break;
@@ -335,7 +335,7 @@
                                                 if( $success && $success > 0 ) {
                                                     osc_add_flash_ok_message( _m('The listing has been enabled'), 'admin');
                                                 } else {
-                                                    osc_add_flash_error_message( _m('Some error has occurred'), 'admin');
+                                                    osc_add_flash_error_message( _m('An error has occurred'), 'admin');
                                                 }
 
                                                 break;
@@ -345,7 +345,7 @@
                                                 if( $success && $success > 0 ) {
                                                     osc_add_flash_ok_message( _m('The listing has been disabled'), 'admin');
                                                 } else {
-                                                    osc_add_flash_error_message( _m('Some error has occurred'), 'admin');
+                                                    osc_add_flash_error_message( _m('An error has occurred'), 'admin');
                                                 }
 
                                                 break;
@@ -373,7 +373,7 @@
                                         if ($mItems->premium($id, $value==1?true:false) ) {
                                             osc_add_flash_ok_message( _m('Changes have been applied'), 'admin');
                                         } else {
-                                            osc_add_flash_error_message( _m('Some error has occurred'), 'admin');
+                                            osc_add_flash_error_message( _m('An error has occurred'), 'admin');
                                         }
                                         
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
@@ -398,7 +398,7 @@
                                         if( $mItems->spam($id, $value==1?true:false) ){
                                             osc_add_flash_ok_message( _m('Changes have been applied'), 'admin');
                                         } else {
-                                            osc_add_flash_error_message( _m('Some error has occurred'), 'admin');
+                                            osc_add_flash_error_message( _m('An error has occurred'), 'admin');
                                         }  
                                         
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
@@ -531,7 +531,7 @@
 
                                         $result = ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name)) ;
                                         if($result === false) {
-                                            osc_add_flash_error_message( _m('Some error has occurred'), 'admin');
+                                            osc_add_flash_error_message( _m('An error has occurred'), 'admin');
                                         } else {
                                             osc_add_flash_ok_message( _m('Resource deleted'), 'admin') ;
                                         }
@@ -612,13 +612,13 @@
                                         
                                         $msg = '';
                                         if(!osc_validate_int(Params::getParam("items_wait_time"))) {
-                                            $msg .= _m("Wait time has to be numeric only")."<br/>";
+                                            $msg .= _m("Wait time must only contain numeric characters")."<br/>";
                                         }
                                         if(Params::getParam("num_moderate_items")!='' && !osc_validate_int(Params::getParam("num_moderate_items"))) {
-                                            $msg .= _m("Number of moderated listings has to be numeric only")."<br/>";
+                                            $msg .= _m("Number of moderated listings must only contain numeric characters")."<br/>";
                                         }
                                         if(!osc_validate_int($numImagesItems)) {
-                                            $msg .= _m("Images per listing has to be numeric only")."<br/>";
+                                            $msg .= _m("Images per listing must only contain numeric characters")."<br/>";
                                         }
                                         if($msg!='') {
                                             osc_add_flash_error_message( $msg, 'admin');

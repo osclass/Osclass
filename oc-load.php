@@ -206,7 +206,7 @@ if(osc_timezone() != '') {
 function osc_show_maintenance() {
     if(defined('__OSC_MAINTENANCE__')) { ?>
         <div id="maintenance" name="maintenance">
-             <?php _e("The website is currently under maintenance mode"); ?>
+             <?php _e("The website is currently undergoing maintenance"); ?>
         </div>
     <?php }
 }

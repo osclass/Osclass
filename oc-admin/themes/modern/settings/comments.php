@@ -36,12 +36,12 @@ $(document).ready(function(){
         },
         messages: {
             num_moderate_comments: {
-                required: "<?php echo osc_esc_js(__("Moderated comments: this field is required")); ?>.",
-                digits: "<?php echo osc_esc_js(__("Moderated comments: this field has to be numeric only")); ?>."
+                required: '<?php echo osc_esc_js(__("Moderated comments: this field is required")); ?>.',
+                digits: '<?php echo osc_esc_js(__("Moderated comments: this field must only contain numeric characters")); ?>.'
             },
             comments_per_page: {
-                required: "<?php echo osc_esc_js(__("Comments per page: this field is required")); ?>.",
-                digits: "<?php echo osc_esc_js(__("Comments per page: this field has to be numeric only")); ?>."
+                required: '<?php echo osc_esc_js(__("Comments per page: this field is required")); ?>.',
+                digits: '<?php echo osc_esc_js(__("Comments per page: this field must only contain numeric characters")); ?>.'
             }
         },
         wrapper: "li",
@@ -115,12 +115,12 @@ $(document).ready(function(){
                         </div>
                         <div class="form-label-checkbox">
                             <label>
-                                <input type="checkbox" <?php echo ( ( osc_moderate_comments() == -1 ) ? '' : 'checked="checked"' ) ; ?> name="moderate_comments" value="1" /> <?php _e('A comment is held for moderation') ; ?>
+                                <input type="checkbox" <?php echo ( ( osc_moderate_comments() == -1 ) ? '' : 'checked="checked"' ) ; ?> name="moderate_comments" value="1" /> <?php _e('A comment is being held for moderation') ; ?>
                             </label>
                         </div>
                         <div class="form-label-checkbox-offset">
-                            <?php printf( __('Before a comment appears, comment author must have %s previously approved comment'), '<input type="text" class="input-small" name="num_moderate_comments" value="' . ( (osc_moderate_comments() == -1 ) ? '' : osc_esc_html( osc_moderate_comments() ) ) . '" />' ) ; ?>
-                            <div class="help-box"><?php _e('If the value is zero an administrator must always approve the comment') ; ?></div>
+                            <?php printf( __('Before a comment appears, comment author must have at least %s previously approved comments'), '<input type="text" class="input-small" name="num_moderate_comments" value="' . ( (osc_moderate_comments() == -1 ) ? '' : osc_esc_html( osc_moderate_comments() ) ) . '" />' ) ; ?>
+                            <div class="help-box"><?php _e('If the value is zero, an administrator must always approve comments') ; ?></div>
                         </div>
                     </div>
                 </div>
@@ -128,7 +128,7 @@ $(document).ready(function(){
                     <div class="form-label"><?php _e('Other comment settings') ; ?></div>
                     <div class="form-controls">
                         <?php printf( __('Break comments into pages with %s comments per page'), '<input type="text" class="input-small" name="comments_per_page" value="' . osc_esc_html( osc_comments_per_page() ) . '" />' ) ; ?>
-                        <div class="help-box"><?php _e('If the value is zero all the comments are shown' ) ; ?></div>
+                        <div class="help-box"><?php _e('If the value is zero all comments are shown') ; ?></div>
                     </div>
                 </div>
 
@@ -139,7 +139,7 @@ $(document).ready(function(){
                     <div class="form-controls">
                         <div class="form-label-checkbox">
                             <label>
-                                <input type="checkbox" <?php echo ( osc_notify_new_comment() ? 'checked="checked"' : '' ) ; ?> name="notify_new_comment" value="1" /> <?php _e("There is a new comment") ; ?>
+                                <input type="checkbox" <?php echo ( osc_notify_new_comment() ? 'checked="checked"' : '' ) ; ?> name="notify_new_comment" value="1" /> <?php _e("A new comment is posted") ; ?>
                             </label>
                         </div>
                     </div>
@@ -149,7 +149,7 @@ $(document).ready(function(){
                     <div class="form-controls">
                         <div class="form-label-checkbox">
                             <label>
-                                <input type="checkbox" <?php echo ( osc_notify_new_comment_user() ? 'checked="checked"' : '' ) ; ?> name="notify_new_comment_user" value="1" /> <?php _e("There is a new comment in his listing") ; ?>
+                                <input type="checkbox" <?php echo ( osc_notify_new_comment_user() ? 'checked="checked"' : '' ) ; ?> name="notify_new_comment_user" value="1" /> <?php _e("There's a new comment on his listing") ; ?>
                             </label>
                         </div>
                     </div>

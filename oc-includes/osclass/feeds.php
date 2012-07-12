@@ -55,6 +55,13 @@ function osc_listNews($num = 3) {
 }
 
 function osc_latestTweets($num = 5) {
+    require_once(osc_lib_path() . 'osclass/classes/Cache.php');
+
+    $cache = new Cache('admin-twitter', 900);
+    if( $cache->check() ) {
+        return $cache->retrieve();
+    }
+
     $list    = array();
     $content = osc_file_get_contents('https://twitter.com/statuses/user_timeline/osclass.rss');
     if( $content ) {
@@ -77,6 +84,7 @@ function osc_latestTweets($num = 5) {
         }
     }
 
+    $cache->store($list);
     return $list;
 }
 
