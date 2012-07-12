@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OSClass 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-05 11:58+0100\n"
+"POT-Creation-Date: 2012-07-12 18:17+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
 "Language-Team: OSClass <info@osclass.org>\n"
@@ -55,15 +55,15 @@ msgid "The Recaptcha code is wrong"
 msgstr ""
 
 #: /var/www/osclass-git/contact.php:50
-msgid "You have to introduce a correct e-mail"
+msgid "Please enter a correct email"
 msgstr ""
 
 #: /var/www/osclass-git/contact.php:77
-msgid "There has been some errors sending the message"
+msgid "There have been some errors sending the message"
 msgstr ""
 
 #: /var/www/osclass-git/contact.php:92
-msgid "Your e-mail has been sent properly. Thank your for contacting us!"
+msgid "Your email has been sent properly. Thank you for contacting us!"
 msgstr ""
 
 #: /var/www/osclass-git/item.php:52
@@ -72,7 +72,7 @@ msgid "Only registered users are allowed to post listings"
 msgstr ""
 
 #: /var/www/osclass-git/item.php:134
-msgid "An user exists with that email, if it is you, please log-in"
+msgid "A user with that email address already exists, if it is you, please log in"
 msgstr ""
 
 #: /var/www/osclass-git/item.php:149
@@ -84,7 +84,7 @@ msgid "Your listing has been published"
 msgstr ""
 
 #: /var/www/osclass-git/item.php:182
-msgid "Sorry, we don't have any listing with that ID"
+msgid "Sorry, we don't have any listings with that ID"
 msgstr ""
 
 #: /var/www/osclass-git/item.php:228
@@ -179,7 +179,7 @@ msgid "The comment has been deleted"
 msgstr ""
 
 #: /var/www/osclass-git/item.php:485
-msgid "The listing hasn't been validated. Please validate it in order to show it to the rest of users"
+msgid "The listing hasn't been validated. Please validate it in order to make it public"
 msgstr ""
 
 #: /var/www/osclass-git/item.php:487
@@ -220,7 +220,7 @@ msgid "The user has been suspended"
 msgstr ""
 
 #: /var/www/osclass-git/login.php:113
-msgid "This should never happens"
+msgid "This should never happen"
 msgstr ""
 
 #: /var/www/osclass-git/login.php:130
@@ -277,7 +277,7 @@ msgid "The specified e-mail is already in use"
 msgstr ""
 
 #: /var/www/osclass-git/register.php:69
-msgid "The reCAPTCHA was not introduced correctly"
+msgid "The reCAPTCHA was not entered correctly"
 msgstr ""
 
 #: /var/www/osclass-git/register.php:72
@@ -316,7 +316,7 @@ msgstr ""
 
 #: /var/www/osclass-git/user-non-secure.php:75
 #: /var/www/osclass-git/user.php:191
-msgid "Ops! There was a problem trying to activate alert. Please contact the administrator"
+msgid "Oops! There was a problem trying to activate your alert. Please contact an administrator"
 msgstr ""
 
 #: /var/www/osclass-git/user-non-secure.php:85
@@ -326,7 +326,7 @@ msgstr ""
 
 #: /var/www/osclass-git/user-non-secure.php:87
 #: /var/www/osclass-git/user.php:203
-msgid "Ops! There was a problem trying to unsubscribe you. Please contact the administrator"
+msgid "Oops! There was a problem trying to unsubscribe you. Please contact an administrator"
 msgstr ""
 
 #: /var/www/osclass-git/user.php:75
@@ -357,7 +357,17 @@ msgstr ""
 #: /var/www/osclass-git/oc-admin/admins.php:54
 #: /var/www/osclass-git/oc-admin/admins.php:138
 #: /var/www/osclass-git/oc-admin/admins.php:251
-msgid "This action cannot be done because is a demo site"
+#: /var/www/osclass-git/oc-admin/appearance.php:38
+#: /var/www/osclass-git/oc-admin/appearance.php:73
+#: /var/www/osclass-git/oc-admin/login.php:97
+#: /var/www/osclass-git/oc-admin/plugins.php:44
+#: /var/www/osclass-git/oc-admin/plugins.php:79
+#: /var/www/osclass-git/oc-admin/plugins.php:114
+#: /var/www/osclass-git/oc-admin/plugins.php:128
+#: /var/www/osclass-git/oc-admin/plugins.php:142
+#: /var/www/osclass-git/oc-admin/settings.php:1026
+#: /var/www/osclass-git/oc-admin/settings.php:1240
+msgid "This action can't be done because it's a demo site"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/admins.php:76
@@ -393,11 +403,11 @@ msgid "The admin has been added"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/admins.php:115
-msgid "There have been an error adding a new admin"
+msgid "There has been an error adding a new admin"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/admins.php:130
-msgid "There is no admin admin with this id"
+msgid "There is no admin with this id"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/admins.php:182
@@ -435,19 +445,6 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-admin/admins.php:274
 msgid "The admin couldn't be deleted"
-msgstr ""
-
-#: /var/www/osclass-git/oc-admin/appearance.php:38
-#: /var/www/osclass-git/oc-admin/appearance.php:73
-#: /var/www/osclass-git/oc-admin/login.php:97
-#: /var/www/osclass-git/oc-admin/plugins.php:44
-#: /var/www/osclass-git/oc-admin/plugins.php:79
-#: /var/www/osclass-git/oc-admin/plugins.php:114
-#: /var/www/osclass-git/oc-admin/plugins.php:128
-#: /var/www/osclass-git/oc-admin/plugins.php:142
-#: /var/www/osclass-git/oc-admin/settings.php:1026
-#: /var/www/osclass-git/oc-admin/settings.php:1240
-msgid "This action cannot be done because it is a demo site"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/appearance.php:50
@@ -610,6 +607,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: /var/www/osclass-git/oc-admin/items.php:121
+#: /var/www/osclass-git/oc-admin/items.php:145
 #, php-format
 msgid "%d change has been made"
 msgid_plural "%d changes have been made"
@@ -620,13 +618,6 @@ msgstr[1] ""
 #, php-format
 msgid "%d listing has been marked as spam"
 msgid_plural "%d listings have been marked as spam"
-msgstr[0] ""
-msgstr[1] ""
-
-#: /var/www/osclass-git/oc-admin/items.php:145
-#, php-format
-msgid "%d change have been made"
-msgid_plural "%d changes have been made"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -698,11 +689,11 @@ msgstr ""
 #: /var/www/osclass-git/oc-admin/items.php:376
 #: /var/www/osclass-git/oc-admin/items.php:401
 #: /var/www/osclass-git/oc-admin/items.php:534
-msgid "Some error has occurred"
+msgid "An error has occurred"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/items.php:318
-msgid "The listing cannot be activated, because it is blocked"
+msgid "The listing can't be activated because it's blocked"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/items.php:326
@@ -745,15 +736,15 @@ msgid "A new listing has been added"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/items.php:615
-msgid "Wait time has to be numeric only"
+msgid "Wait time must only contain numeric characters"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/items.php:618
-msgid "Number of moderated listings has to be numeric only"
+msgid "Number of moderated listings must only contain numeric characters"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/items.php:621
-msgid "Images per listing has to be numeric only"
+msgid "Images per listing must only contain numeric characters"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/items.php:663
@@ -799,7 +790,7 @@ msgid "Currency format field is required"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/languages.php:149
-msgid "Number of decimals has to be numeric only"
+msgid "Number of decimals must only contain numeric characters"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/languages.php:170
@@ -823,8 +814,9 @@ msgid "Selected languages have been disabled for the website"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/languages.php:211
+#: /var/www/osclass-git/oc-admin/languages.php:266
 #, php-format
-msgid "%s can't be disabled because is the default language"
+msgid "%s can't be disabled because it's the default language"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/languages.php:230
@@ -833,11 +825,6 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-admin/languages.php:252
 msgid "Selected languages have been disabled for the backoffice (oc-admin)"
-msgstr ""
-
-#: /var/www/osclass-git/oc-admin/languages.php:266
-#, php-format
-msgid "%s can't be disabled because it's the default language"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/languages.php:290
@@ -1018,15 +1005,15 @@ msgid "No plugin selected"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:54
-msgid "Number of moderate comments has to be numeric only"
+msgid "Number of moderate comments must only contain numeric characters"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:57
-msgid "Comments per page has to be numeric only"
+msgid "Comments per page must only contain numeric characters"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:84
-msgid "Comments' settings have been updated"
+msgid "Comment settings have been updated"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:99
@@ -1083,7 +1070,7 @@ msgid "%s has been added as a new city"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:761
-msgid "No fields could be left empty."
+msgid "All fields are required."
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:761
@@ -1107,15 +1094,15 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:782
 #: /var/www/osclass-git/oc-admin/settings.php:792
-msgid "File <b>.htaccess</b> couldn't be filled with the right content."
+msgid "File <b>.htaccess</b> couldn't be filled out with the right content."
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:784
-msgid "Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file, please deactivate <em>Friendly URLs</em> option."
+msgid "Here's the content you have to add to the <b>.htaccess</b> file. If you can't create the file, please deactivate the <em>Friendly URLs</em> option."
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:794
-msgid "Below is the content that you have to add to <b>.htaccess</b> file. If you can't create the file or experience some problems with the URLs, please deactivate <em>Friendly URLs</em> option."
+msgid "Here's the content you have to add to the <b>.htaccess</b> file. If you can't create the file or experience some problems with the URLs, please deactivate the <em>Friendly URLs</em> option."
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:808
@@ -1170,12 +1157,12 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:976
 #, php-format
-msgid "%s could not be deleted because it has listings associated"
+msgid "%s couldn't be deleted because it has listings associated to it"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:978
 #, php-format
-msgid "%s could not be deleted because it's the default currency"
+msgid "%s couldn't be deleted because it's the default currency"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:986
@@ -1230,23 +1217,23 @@ msgid "Contact email field is required"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:1367
-msgid "Number of listings in the RSS has to be numeric only"
+msgid "Number of listings in the RSS has to be a numeric value"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:1370
-msgid "Max latest listings has to be numeric only"
+msgid "Max latest listings has to be a numeric value"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:1373
-msgid "Number of listings on search has to be numeric only"
+msgid "Number of listings on search has to be a numeric value"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:1430
-msgid "Number of listings in the RSS must be integer"
+msgid "Number of listings in the RSS must be an integer"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:1440
-msgid "Number of recent listings displayed at home must be integer"
+msgid "Number of recent listings displayed at home must be an integer"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:1463
@@ -1269,12 +1256,24 @@ msgstr ""
 #: /var/www/osclass-git/oc-admin/settings.php:1541
 #: /var/www/osclass-git/oc-admin/settings.php:1621
 #, php-format
-msgid "%s cannot be added"
+msgid "%s can't be added"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/settings.php:1658
 #, php-format
 msgid "%s has been added as a region of %s"
+msgstr ""
+
+#: /var/www/osclass-git/oc-admin/tools.php:40
+#: /var/www/osclass-git/oc-admin/tools.php:65
+#: /var/www/osclass-git/oc-admin/tools.php:155
+#: /var/www/osclass-git/oc-admin/tools.php:165
+#: /var/www/osclass-git/oc-admin/tools.php:202
+#: /var/www/osclass-git/oc-admin/tools.php:237
+#: /var/www/osclass-git/oc-admin/tools.php:280
+#: /var/www/osclass-git/oc-admin/tools.php:307
+#: /var/www/osclass-git/oc-admin/tools.php:335
+msgid "This action cannot be done because it is a demo site"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/tools.php:52
@@ -1312,7 +1311,7 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-admin/tools.php:229
 #: /var/www/osclass-git/oc-admin/tools.php:261
-msgid "Backup has completed successfully"
+msgid "Backup completed successfully"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/tools.php:252
@@ -1322,12 +1321,12 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-admin/tools.php:287
 #: /var/www/osclass-git/oc-admin/tools.php:323
-msgid "Archiving successful!"
+msgid "Archived successfully!"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/tools.php:301
 #: /var/www/osclass-git/oc-admin/tools.php:326
-msgid "Error, the zip file was not created at the specified directory"
+msgid "Error, the zip file was not created in the specified directory"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/tools.php:344
@@ -1335,7 +1334,7 @@ msgid "Maintenance mode is ON"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/tools.php:346
-msgid "There was an error creating .maintenance file, please create it manually at the root folder"
+msgid "There was an error creating the .maintenance file, please create it manually at the root folder"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/tools.php:353
@@ -1343,7 +1342,7 @@ msgid "Maintenance mode is OFF"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/tools.php:355
-msgid "There was an error removing .maintenance file, please remove it manually from the root folder"
+msgid "There was an error removing the .maintenance file, please remove it manually from the root folder"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/users.php:72
@@ -1384,7 +1383,7 @@ msgid "User id isn't in the correct format"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/users.php:148
-msgid "No user has been selected"
+msgid "No users have been selected"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/users.php:150
@@ -1395,7 +1394,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: /var/www/osclass-git/oc-admin/users.php:170
-msgid "No user has been activated"
+msgid "No users have been activated"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/users.php:172
@@ -1406,7 +1405,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: /var/www/osclass-git/oc-admin/users.php:193
-msgid "No user has been deactivated"
+msgid "No users have been deactivated"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/users.php:195
@@ -1417,7 +1416,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: /var/www/osclass-git/oc-admin/users.php:216
-msgid "No user has been enabled"
+msgid "No users have been enabled"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/users.php:218
@@ -1428,7 +1427,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: /var/www/osclass-git/oc-admin/users.php:239
-msgid "No user has been disabled"
+msgid "No users have been disabled"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/users.php:241
@@ -1439,7 +1438,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: /var/www/osclass-git/oc-admin/users.php:264
-msgid "No user has been deleted"
+msgid "No users have been deleted"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/users.php:266
@@ -1450,25 +1449,29 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: /var/www/osclass-git/oc-admin/users.php:304
-msgid "Users' settings have been updated"
+msgid "User settings have been updated"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/emails.php:460
-msgid "We have sent you an e-mail. Follow the instructions to validate the changes"
+msgid "We've sent you an e-mail. Follow its instructions to validate the changes"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/emails.php:462
-msgid "We tried to sent you an e-mail, but it failed. Please, contact the administrator"
+msgid "We tried to sent you an e-mail, but it failed. Please, contact an administrator"
+msgstr ""
+
+#: /var/www/osclass-git/oc-includes/osclass/emails.php:644
+msgid "There has been some errors sending the message"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:64
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:259
-msgid "Image with incorrect extension."
+msgid "Image with an incorrect extension."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:67
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:262
-msgid "Images too big. Max. size "
+msgid "Image is too big. Max. size"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:78
@@ -1498,7 +1501,7 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:98
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:294
-msgid "Price must be number."
+msgid "Price must be a number."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:99
@@ -1576,7 +1579,7 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:796
 #, php-format
-msgid "We just send your message to %s"
+msgid "We just sent your message to %s"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:1198
@@ -1584,7 +1587,7 @@ msgid "One of the files you tried to upload exceeds the maximum size"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/ItemActions.php:1243
-msgid "The file you tried to upload does not have an allowed extension"
+msgid "The file you tried to upload does not have a valid extension"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/core/AdminSecBaseModel.php:69
