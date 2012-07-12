@@ -148,19 +148,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php foreach( $aData['aaData'] as $array) : ?>
+                <?php if( count($aData['aaData']) > 0 ) { ?>
+                <?php foreach( $aData['aaData'] as $array) { ?>
                     <tr>
-                    <?php foreach($array as $key => $value) : ?>
-                        <?php if( $key==0 ): ?>
+                    <?php foreach($array as $key => $value) { ?>
+                        <?php if( $key==0 ) { ?>
                         <td class="col-bulkactions">
-                        <?php else : ?>
+                        <?php } else { ?>
                         <td>
-                        <?php endif ; ?>
+                        <?php } ?>
                         <?php echo $value; ?>
                         </td>
-                    <?php endforeach; ?>
+                    <?php } ?>
                     </tr>
-                <?php endforeach;?>
+                <?php } ?>
+                <?php } else { ?>
+                    <tr>
+                        <td colspan="5" class="text-center">
+                        <p><?php _e('No data available in table'); ?></p>
+                        </td>
+                    </tr>
+                <?php } ?>
                 </tbody>
             </table>
             <div id="table-row-actions"></div> <!-- used for table actions -->
