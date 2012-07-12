@@ -11,7 +11,7 @@ class OCadmin_plugins extends OCadminTest {
      * Login oc-admin
      * UPLOAD / INSTALL / CONFIGURE / DISABLE / ENABLE / UNINSTALL PLUGIN
      */
-    function atestPluginsUpload()
+    function testPluginsUpload()
     {
         
         // UPLOAD
@@ -28,7 +28,7 @@ class OCadmin_plugins extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent("The plugin has been uploaded correctly"),"Upload plugin $this->plugin");
     }
         
-    function atestPluginsInstall()
+    function testPluginsInstall()
     {
         // INSTALL
         $this->loginWith();
@@ -41,7 +41,7 @@ class OCadmin_plugins extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent("Plugin installed"),"Install plugin $this->plugin");
     }
         
-    function atestPluginsConfigure()
+    function testPluginsConfigure()
     {
         // CONFIGURE
         $this->loginWith();
@@ -55,7 +55,7 @@ class OCadmin_plugins extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent("Breadcrumbs Help"),"Configure plugin $this->plugin");
     }
         
-    function atestPluginsDisable()
+    function testPluginsDisable()
     {
         // DISABLE
         $this->loginWith();
@@ -69,7 +69,7 @@ class OCadmin_plugins extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent("Plugin disabled"),"Disable plugin $this->plugin");
     }
         
-    function atestPluginsEnable()
+    function testPluginsEnable()
     {
         // ENABLE
         $this->loginWith();
@@ -83,7 +83,7 @@ class OCadmin_plugins extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent("Plugin enabled"),"Enable plugin $this->plugin");
     }
         
-    function atestPluginsUninstall()
+    function testPluginsUninstall()
     {
         // UNINSTALL
         $this->loginWith();
