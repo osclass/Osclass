@@ -23,7 +23,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
-        <?php if(osc_count_items() == 0) { ?>
+        <?php if( osc_count_items() == 0 || Params::getParam('iPage') > 0 || stripos($_SERVER['REQUEST_URI'], 'search') )  { ?>
             <meta name="robots" content="noindex, nofollow" />
             <meta name="googlebot" content="noindex, nofollow" />
         <?php } else { ?>
@@ -45,11 +45,9 @@
                     width:13px; height:13px;
                     display: inline-block;
                     border:solid 1px #bababa;
-
                     border-radius:2px;
                     -moz-border-radius:2px;
                     -webkit-border-radius:2px;
-
                 }
                 .chbx.checked{
                     background-image:url('<?php echo osc_current_web_theme_url('images/checkmark.png'); ?>');
@@ -57,7 +55,6 @@
                 .chbx.semi-checked{
                     background-image:url('<?php echo osc_current_web_theme_url('images/checkmark-partial.png'); ?>');
                 }
-
             </style>
             <script type="text/javascript">
                 $(document).ready(function(){
@@ -83,8 +80,18 @@
                         var id = $(input).attr('id');
                         id = id+'_';
                         if(totalInputSub == totalInputSubChecked) {
-                            var aux = $('<div class="chbx checked"><span></span></div>').attr('id', id);
-                            $(input).before(aux);
+                            if(totalInputSub == 0) {
+                                if( $(this).find("input[name='sCategory[]']:checked").size() > 0) {    
+                                    var aux = $('<div class="chbx checked"><span></span></div>').attr('id', id);   
+                                    $(input).before(aux);
+                                } else {
+                                    var aux = $('<div class="chbx"><span></span></div>').attr('id', id);   
+                                    $(input).before(aux);
+                                }
+                            } else {
+                                var aux = $('<div class="chbx checked"><span></span></div>').attr('id', id);
+                                $(input).before(aux);
+                            }
                         }else if(totalInputSubChecked == 0) {
                             // no input checked
                             var aux = $('<div class="chbx"><span></span></div>').attr('id', id);
@@ -94,10 +101,10 @@
                             $(input).before();
                         }
                     });
-                    
+
                     $('li.parent').prepend('<span style="width:6px;display:inline-block;" class="toggle">+</span>');
                     $('ul.sub').toggle();
-                    
+
                     $('span.toggle').click(function(){ 
                         $(this).parent().find('ul.sub').toggle();
                         if($(this).text()=='+'){
@@ -106,18 +113,17 @@
                             $(this).html('+');
                         }
                     });
-                    
+
                     $("li input[name='sCategory[]']").change( function(){
                         var id = $(this).attr('id');
                         $(this).click();
                         $('#'+id+'_').click();
                     });
-                    
+
                     $('div.chbx').click( function() {
-                        
                         var isChecked       = $(this).hasClass('checked');
                         var isSemiChecked   = $(this).hasClass('semi-checked');
-                        
+
                         if(isChecked) {
                             $(this).removeClass('checked');
                             $(this).next('input').attr('checked', false);
@@ -128,7 +134,7 @@
                             $(this).addClass('checked');
                             $(this).next('input').attr('checked', true);
                         }
-                        
+
                         // there are subcategories ?
                         if($(this).parent().find('ul.sub').size()>0) {
                             if(isChecked){
@@ -183,7 +189,7 @@
                     <div id="list_head">
                         <div class="inner">
                             <h1>
-                                <strong><?php _e('Search results', 'modern') ; ?></strong>
+                                <strong><?php echo search_title(); ?></strong>
                             </h1>
                             <p class="see_by">
                                 <?php _e('Sort by', 'modern'); ?>:
@@ -212,26 +218,36 @@
                     <div class="paginate" >
                     <?php echo osc_search_pagination(); ?>
                     </div>
+                    <div class="clear"></div>
+                    <?php $footerLinks = osc_search_footer_links(); ?>
+                    <ul class="footer-links">
+                    <?php foreach($footerLinks as $f) { View::newInstance()->_exportVariableToView('footer_link', $f); ?>
+                        <?php if($f['total'] < 3) continue; ?>
+                        <li><a href="<?php echo osc_footer_link_url(); ?>"><?php echo osc_footer_link_title(); ?></a></li>
+                    <?php } ?>
+                    </ul>
+                    <div class="clear"></div>
                 </div>
             </div>
             <div id="sidebar">
                 <div class="filters">
-                    <form action="<?php echo osc_base_url(true); ?>" method="get" onSubmit="return checkEmptyCategories()">
+                    <form action="<?php echo osc_base_url(true); ?>" method="get" onsubmit="return doSearch()">
                         <input type="hidden" name="page" value="search" />
                         <input type="hidden" name="sOrder" value="<?php echo osc_search_order(); ?>" />
                         <input type="hidden" name="iOrderType" value="<?php $allowedTypesForSorting = Search::getAllowedTypesForSorting() ; echo $allowedTypesForSorting[osc_search_order_type()]; ?>" />
                         <?php foreach(osc_search_user() as $userId) { ?>
-                        <input type="hidden" name="sUser[]" value="<?php echo $userId; ?>"/>
+                        <input type="hidden" name="sUser[]" value="<?php echo $userId; ?>" />
                         <?php } ?>
                         <fieldset class="box location">
                             <h3><strong><?php _e('Your search', 'modern'); ?></strong></h3>
                             <div class="row one_input">
-                                <input type="text" name="sPattern"  id="query" value="<?php echo osc_search_pattern() ; ?>" />
+                                <input type="text" name="sPattern" id="query" value="<?php echo osc_esc_html( osc_search_pattern() ); ?>" />
+                                <div id="search-example"></div>
                             </div>
                             <h3><strong><?php _e('Location', 'modern') ; ?></strong></h3>
                             <div class="row one_input">
                                 <h6><?php _e('City', 'modern'); ?></h6>
-                                <input type="text" id="sCity" name="sCity" value="<?php echo osc_search_city() ; ?>" />
+                                <input type="text" id="sCity" name="sCity" value="<?php echo osc_esc_html( osc_search_city() ); ?>" />
                             </div>
                         </fieldset>
 
@@ -241,8 +257,8 @@
                             <div class="row checkboxes">
                                 <ul>
                                     <li>
-                                        <input type="checkbox" name="bPic" id="withPicture" value="1" <?php echo (osc_search_has_pic() ? 'checked' : ''); ?> />
-                                        <label for="withPicture"><?php _e('Show only items with pictures', 'modern') ; ?></label>
+                                        <input type="checkbox" name="bPic" id="withPicture" value="1" <?php echo (osc_search_has_pic() ? 'checked="checked"' : ''); ?> />
+                                        <label for="withPicture"><?php _e('Show only listings with pictures', 'modern') ; ?></label>
                                     </li>
                                 </ul>
                             </div>
@@ -265,12 +281,12 @@
                                         <?php osc_goto_first_category() ; ?>
                                         <?php while(osc_has_categories()) { ?>
                                             <li class="parent">
-                                                <input class="parent" type="checkbox" id="cat<?php echo osc_category_id(); ?>" name="sCategory[]" value="<?php echo osc_category_id(); ?>" <?php $parentSelected=false; if (in_array(osc_category_id(), osc_search_category()) || in_array(osc_category_slug()."/", osc_search_category()) || in_array(osc_category_slug(), osc_search_category()) || count(osc_search_category())==0 ){ echo 'checked'; $parentSelected=true;} ?> /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
+                                                <input class="parent" type="checkbox" id="cat<?php echo osc_category_id(); ?>" name="sCategory[]" value="<?php echo osc_category_id(); ?>" <?php $parentSelected=false; if (in_array(osc_category_id(), osc_search_category()) || in_array(osc_category_slug()."/", osc_search_category()) || in_array(osc_category_slug(), osc_search_category()) || count(osc_search_category())==0 ){ echo 'checked="checked"'; $parentSelected=true;} ?> /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
                                                 <?php if(osc_count_subcategories() > 0) { ?>
                                                 <ul class="sub">
                                                     <?php while(osc_has_subcategories()) { ?>
                                                     <li>
-                                                    <input type="checkbox" id="cat<?php echo osc_category_id(); ?>" name="sCategory[]" value="<?php echo osc_category_id(); ?>"  <?php if( $parentSelected || in_array(osc_category_id(), osc_search_category()) || in_array(osc_category_slug()."/", osc_search_category()) || in_array(osc_category_slug(), osc_search_category()) || count(osc_search_category())==0 ){echo 'checked';} ?>/>
+                                                    <input type="checkbox" id="cat<?php echo osc_category_id(); ?>" name="sCategory[]" value="<?php echo osc_category_id(); ?>"  <?php if( $parentSelected || in_array(osc_category_id(), osc_search_category()) || in_array(osc_category_slug()."/", osc_search_category()) || in_array(osc_category_slug(), osc_search_category()) || count(osc_search_category())==0 ){echo 'checked="checked"';} ?> />
                                                     <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
                                                     </li>
                                                     <?php } ?>
@@ -282,7 +298,6 @@
                                 </div>
                             <?php } ?>
                         </fieldset>
-
                         <?php
                             if(osc_search_category_id()) {
                                 osc_run_hook('search_form', osc_search_category_id()) ;
@@ -290,7 +305,6 @@
                                 osc_run_hook('search_form') ;
                             }
                         ?>
-
                         <button type="submit"><?php _e('Apply', 'modern') ; ?></button>
                     </form>
                     <?php osc_alert_form() ; ?>
@@ -313,7 +327,7 @@
                         }
                     });
                 });
-                
+
                 function checkEmptyCategories() {
                     var n = $("input[id*=cat]:checked").length;
                     if(n>0) {

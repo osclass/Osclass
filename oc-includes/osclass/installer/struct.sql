@@ -94,6 +94,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_admin (
     s_password VARCHAR(40) NOT NULL,
     s_email VARCHAR(100) NULL,
     s_secret VARCHAR(40) NULL,
+    b_moderator TINYINT(1) NOT NULL DEFAULT 0,
 
         PRIMARY KEY (pk_i_id),
         UNIQUE KEY (s_username),
@@ -115,8 +116,6 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     b_active TINYINT(1) NOT NULL DEFAULT 0,
     s_pass_code VARCHAR(100) NULL ,
     s_pass_date DATETIME NULL ,
-    s_pass_question VARCHAR(100) NULL ,
-    s_pass_answer VARCHAR(100) NULL,
     s_pass_ip VARCHAR(15) NULL,
     fk_c_country_code CHAR(2) NULL,
     s_country VARCHAR(40) NULL, 
@@ -130,10 +129,11 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     s_city_area VARCHAR(200) NULL,
     d_coord_lat DECIMAL(10,6),
     d_coord_long DECIMAL(10,6),
-    i_permissions VARCHAR(2) DEFAULT 0,
     b_company TINYINT(1) NOT NULL DEFAULT 0,
     i_items INT(10) UNSIGNED NULL DEFAULT 0,
     i_comments INT(10) UNSIGNED NULL DEFAULT 0,
+    dt_access_date DATETIME NOT NULL DEFAULT  '0000-00-00 00:00:00',
+    s_access_ip VARCHAR(15) NOT NULL DEFAULT '',
 
         PRIMARY KEY (pk_i_id),
         UNIQUE KEY (s_email),
@@ -180,7 +180,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_category (
 CREATE TABLE /*TABLE_PREFIX*/t_category_description (
     fk_i_category_id INT(10) UNSIGNED NOT NULL,
     fk_c_locale_code CHAR(5) NOT NULL,
-    s_name VARCHAR(100) NOT NULL,
+    s_name VARCHAR(100) NULL DEFAULT NULL,
     s_description TEXT NULL,
     s_slug VARCHAR(100) NOT NULL,
 

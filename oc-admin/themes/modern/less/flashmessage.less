@@ -1,0 +1,73 @@
+.flashmessage{
+    background:@warning-bg;
+    border:solid 1px @warning-border;
+    border-top:0;
+    padding: 18px 30px;
+    min-height:42px;
+    color:@warning-text;
+    display:none;
+}
+.flashmessage-info{
+    background:@info-bg;
+    border:solid 1px @info-border;
+    color:@info-text;
+}
+.flashmessage-error,
+.flashmessage-error td{
+    background:@error-bg;
+    border:solid 1px @error-border;
+    color:@error-text;
+}
+.flashmessage-ok{
+    background:@success-bg;
+    border:solid 1px @success-border;
+    color:@success-text;
+}
+.flashmessage-warning{
+    background:@warning-bg;
+    border:solid 1px @warning-border;
+    color:@warning-text;
+}
+.flashmessage-inline{
+    display: inline-block;
+    padding:0 10px;
+    min-height:0px;
+    .rounded-corners;
+}
+.flashmessage-inline p{
+    margin:5px 0;
+}
+#error_list{
+    border-top:0;
+    padding: 15px;
+    display:none;
+    background:@error-bg;
+    border:solid 1px @error-border;
+    color:@error-text;
+    .rounded-corners;
+
+}
+#content-page .flashmessage{
+    /*padding:15px;
+    min-height:0;
+    margin-bottom:15px;*/
+    .rounded-corners;
+}/*
+#content-page .flashmessage > p:first-child{
+    margin-top:0px;
+}
+#content-page .flashmessage > p:last-child{
+    margin-bottom:0px;
+}*/
+#content-page .flashmessage-info{
+    border-top:solid 1px @info-border;
+}
+#content-page .flashmessage-error{
+    border-top:solid 1px @error-border;
+}
+#content-page .flashmessage-ok{
+    border-top:solid 1px @success-border;
+}
+#content-page .flashmessage-warning{
+    border-top:solid 1px @warning-border;
+}

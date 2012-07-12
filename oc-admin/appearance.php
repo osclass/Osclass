@@ -21,7 +21,7 @@
     {
         function __construct()
         {
-            parent::__construct() ;
+            parent::__construct();
         }
 
         //Business Layer...
@@ -30,12 +30,12 @@
             parent::doModel() ;
             //specific things for this class
             switch ($this->action) {
-                case 'add':
+                case('add'):
                     $this->doView("appearance/add.php");
                 break;
-                case 'add_post':
+                case('add_post'):
                     if( defined('DEMO') ) {
-                        osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                        osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                         $this->redirectTo(osc_admin_base_url(true) . '?page=appearance');
                     }
                     $filePackage = Params::getFiles('package');
@@ -68,42 +68,64 @@
 
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
                 break;
-                case 'widgets':
+                case('delete'):
+                    if( defined('DEMO') ) {
+                        osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                        $this->redirectTo(osc_admin_base_url(true) . '?page=appearance');
+                    }
+                    $theme = Params::getParam('webtheme');
+                    if($theme!='') {
+                        if($theme!=  osc_current_web_theme()) {
+                            if(osc_deleteDir(osc_content_path()."themes/".$theme."/")) {
+                                osc_add_flash_ok_message(_m("Theme removed successfully"), "admin");
+                            } else {
+                                osc_add_flash_error_message(_m("There was a problem removing the theme"), "admin");
+                            }
+                        } else {
+                            osc_add_flash_error_message(_m("Current theme can not be deleted"), "admin");
+                        }
+                    } else {
+                        osc_add_flash_error_message(_m("No theme selected"), "admin");
+                    }
+
+                    $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
+                break;
+                /* widgets */
+                case('widgets'):
                     $info = WebThemes::newInstance()->loadThemeInfo(osc_theme());
 
                     $this->_exportVariableToView("info", $info);
 
                     $this->doView('appearance/widgets.php');
                 break;
-                case 'add_widget':
+                case('add_widget'):
                     $this->doView('appearance/add_widget.php');
                 break;
-                case 'edit_widget':
+                case('edit_widget'):
                     $id = Params::getParam('id');
-                    
+
                     $widget = Widget::newInstance()->findByPrimaryKey($id);
                     $this->_exportVariableToView("widget", $widget);
 
                     $this->doView('appearance/add_widget.php');
                 break;
-                case 'delete_widget':
+                case('delete_widget'):
                     Widget::newInstance()->delete(
                         array('pk_i_id' => Params::getParam('id') )
                     );
                     osc_add_flash_ok_message( _m('Widget removed correctly'), 'admin');
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
                 break;
-                case 'edit_widget_post':
-                    
+                case('edit_widget_post'):
                     if(!osc_validate_text(Params::getParam("description"))) {
                         osc_add_flash_error_message( _m('Description field is required'), 'admin');
                         $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
                     }
-                    
+
                     $res = Widget::newInstance()->update(
                         array(
-                            's_description' => Params::getParam('description')
-                            ,'s_content' => Params::getParam('content', false, false)
+                            's_description' => Params::getParam('description'),
+                            's_content' => Params::getParam('content', false, false)
                         ),
                         array('pk_i_id' => Params::getParam('id') )
                     );
@@ -115,50 +137,69 @@
                     }
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
                     break;
-                case 'add_widget_post':
-                    
+                case('add_widget_post'):
                     if(!osc_validate_text(Params::getParam("description"))) {
                         osc_add_flash_error_message( _m('Description field is required'), 'admin');
                         $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
                     }
-                    
+
                     Widget::newInstance()->insert(
                         array(
-                            's_location' => Params::getParam('location')
-                            ,'e_kind' => 'html'
-                            ,'s_description' => Params::getParam('description')
-                            ,'s_content' => Params::getParam('content', false, false)
+                            's_location' => Params::getParam('location'),
+                            'e_kind' => 'html',
+                            's_description' => Params::getParam('description'),
+                            's_content' => Params::getParam('content', false, false)
                         )
                     );
                     osc_add_flash_ok_message( _m('Widget added correctly'), 'admin');
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
                 break;
-                case 'activate':
+                /* /widget */
+                case('activate'):
                     Preference::newInstance()->update(
-                            array('s_value' => Params::getParam('theme') )
-                            ,array('s_section' => 'osclass', 's_name' => 'theme')
+                            array('s_value' => Params::getParam('theme')),
+                            array('s_section' => 'osclass', 's_name' => 'theme')
                     );
                     osc_add_flash_ok_message( _m('Theme activated correctly'), 'admin');
                     osc_run_hook("theme_activate", Params::getParam('theme'));
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
                 break;
+                case('render'):
+                    $this->_exportVariableToView('file', osc_base_path() . Params::getParam("file"));
+                    $this->doView('appearance/view.php');
+                break;
                 default:
+//                    $marketError = Params::getParam('marketError');
+//                    $slug = Params::getParam('slug');
+//                    if($marketError!='') {
+//                        if($marketError == '0') { // no error installed ok
+//                            $help = '<br/><br/><b>' . __('You only need to activate or preview the theme').'</b>';
+//                            osc_add_flash_ok_message( __('Everything was OK!') . ' ( ' . $slug .' ) ' . $help, 'admin');
+//                        } else {
+//                            osc_add_flash_error_message( __('Error occurred') . ' ( ' . $slug .' ) ', 'admin');
+//                        }
+//                    }
+                    
+                    // force the recount of themes that need to be updated
+                    if(Params::getParam('checkUpdated') != '') {
+                        osc_admin_toolbar_update_themes(true);
+                    }
+                    
                     $themes = WebThemes::newInstance()->getListThemes();
-                    $info = WebThemes::newInstance()->loadThemeInfo(osc_theme());
 
                     //preparing variables for the view
                     $this->_exportVariableToView("themes", $themes);
-                    $this->_exportVariableToView("info", $info);
 
                     $this->doView('appearance/index.php');
+                break;
             }
         }
 
         //hopefully generic...
         function doView($file)
         {
-            osc_current_admin_theme_path($file) ;
-            Session::newInstance()->_clearVariables() ;
+            osc_current_admin_theme_path($file);
+            Session::newInstance()->_clearVariables();
         }
     }
 

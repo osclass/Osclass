@@ -76,9 +76,9 @@
                     <?php } ?>
                </div>
                <div class="latest_ads">
-                    <h1><strong><?php _e('Latest Items', 'modern') ; ?></strong></h1>
+                    <h1><strong><?php _e('Latest Listings', 'modern') ; ?></strong></h1>
                     <?php if( osc_count_latest_items() == 0) { ?>
-                        <p class="empty"><?php _e('No Latest Items', 'modern') ; ?></p>
+                        <p class="empty"><?php _e('No Latest Listings', 'modern') ; ?></p>
                     <?php } else { ?>
                         <table border="0" cellspacing="0">
                              <tbody>
@@ -92,7 +92,7 @@
                                                     <img src="<?php echo osc_resource_thumbnail_url() ; ?>" width="75" height="56" title="<?php echo osc_item_title(); ?>" alt="<?php echo osc_item_title(); ?>" />
                                                 </a>
                                             <?php } else { ?>
-                                                <img src="<?php echo osc_current_web_theme_url('images/no_photo.gif') ; ?>" alt="" title=""/>
+                                                <img src="<?php echo osc_current_web_theme_url('images/no_photo.gif') ; ?>" alt="" title="" />
                                             <?php } ?>
                                          </td>
                                         <?php } ?>
@@ -120,7 +120,7 @@
                         <h3><strong><?php _e("Location", 'modern') ; ?></strong></h3>
                         <ul>
                         <?php while(osc_has_list_regions() ) { ?>
-                            <li><a href="<?php echo osc_search_url( array( 'sRegion' => osc_list_region_id() ) ) ; ?>"><?php echo osc_list_region_name() ; ?></a> <em>(<?php echo osc_list_region_items() ; ?>)</em></li>
+                            <li><a href="<?php echo osc_list_region_url() ; ?>"><?php echo osc_list_region_name() ; ?></a> <em>(<?php echo osc_list_region_items() ; ?>)</em></li>
                         <?php } ?>
                         </ul>
                     </div>

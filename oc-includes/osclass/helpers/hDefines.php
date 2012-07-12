@@ -293,12 +293,22 @@
     function osc_search_category_url() {
         $path = '' ;
         if(osc_rewrite_enabled()) {
-            $category = Category::newInstance()->hierarchy(osc_category_id()) ;
-            $sanitized_categories = array();
-            for ($i = count($category); $i > 0; $i--) {
-                $sanitized_categories[] = $category[$i - 1]['s_slug'];
+            $url = osc_get_preference('rewrite_cat_url');
+            if( preg_match('|{CATEGORIES}|', $url) ) {
+                $category = Category::newInstance()->hierarchy(osc_category_id()) ;
+                $sanitized_categories = array();
+                for ($i = count($category); $i > 0; $i--) {
+                    $sanitized_categories[] = $category[$i - 1]['s_slug'];
+                }
+                $url = str_replace('{CATEGORIES}', implode("/", $sanitized_categories), $url);
             }
-            $path = osc_base_url() . str_replace('{CATEGORIES}', implode("/", $sanitized_categories), str_replace('{CATEGORY_ID}', osc_category_id(), str_replace('{CATEGORY_SLUG}', osc_category_slug(), osc_get_preference('rewrite_cat_url'))));
+            $seo_prefix = '';
+            if( osc_get_preference('seo_url_search_prefix') != '' ) {
+                $seo_prefix = osc_get_preference('seo_url_search_prefix') . '/';
+            }
+            $url = str_replace('{CATEGORY_SLUG}', osc_category_slug(), $url);
+            $url = str_replace('{CATEGORY_ID}', osc_category_id(), $url);
+            $path = osc_base_url() . $seo_prefix . $url;
         } else {
             $path = sprintf( osc_base_url(true) . '?page=search&sCategory=%d', osc_category_id() ) ;
         }
@@ -410,19 +420,26 @@
      */
     function osc_item_url($locale = '') {
         if ( osc_rewrite_enabled() ) {
-            $sanitized_categories = array();
-            $cat = Category::newInstance()->hierarchy(osc_item_category_id()) ;
-            for ($i = (count($cat)); $i > 0; $i--) {
-                $sanitized_categories[] = $cat[$i - 1]['s_slug'];
+            $url = osc_get_preference('rewrite_item_url');
+            if( preg_match('|{CATEGORIES}|', $url) ) {
+                $sanitized_categories = array();
+                $cat = Category::newInstance()->hierarchy(osc_item_category_id()) ;
+                for ($i = (count($cat)); $i > 0; $i--) {
+                    $sanitized_categories[] = $cat[$i - 1]['s_slug'];
+                }
+                $url = str_replace('{CATEGORIES}', implode("/", $sanitized_categories), $url);
             }
-            $url = str_replace('{CATEGORIES}', implode("/", $sanitized_categories), str_replace('{ITEM_ID}', osc_item_id(), str_replace('{ITEM_TITLE}', osc_sanitizeString(osc_item_title()), osc_get_preference('rewrite_item_url'))));
+            $url = str_replace('{ITEM_ID}', osc_sanitizeString(osc_item_id()), $url);
+            $url = str_replace('{ITEM_CITY}', osc_sanitizeString(osc_item_city()), $url);
+            $url = str_replace('{ITEM_TITLE}', osc_sanitizeString(osc_item_title()), $url);
+            $url = str_replace('?', '', $url);
             if($locale!='') {
                 $path = osc_base_url().$locale."/".$url;
             } else {
                 $path = osc_base_url().$url;
             }
         } else {
-            $path = osc_item_url_ns( osc_item_id(), $locale ) ;
+            $path = osc_item_url_ns(osc_item_id(), $locale);
         }
         return $path ;
     }
@@ -907,6 +924,20 @@
     }
     
     /**
+     * Get if the user is on custom page
+     * 
+     * @return boolean
+     */
+    function osc_is_custom_page($file = null) {
+        if(Rewrite::newInstance()->get_location()=='custom') {
+            if($file==null || Params::getParam('file')==$file) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
      * Get location
      *
      * @return string
@@ -925,5 +956,36 @@
     }
 
 
+    /**
+     * Check is an admin is a super admin or only a moderator
+     * 
+     * @return boolean
+     */
+    function osc_is_moderator() {
+        $admin = Admin::newInstance()->findByPrimaryKey(osc_logged_admin_id());
+        
+        if( isset($admin['b_moderator']) && $admin['b_moderator']!=0 ) {
+            return true;
+        }
+        
+        return false;
+    }
 
+    function osc_get_domain() {
+        $result = parse_url( osc_base_url() );
+
+        return $result['host'];
+    }
+
+    function osc_breadcrumb($separator = '&raquo;', $echo = true) {
+        $br = new Breadcrumb();
+        $br->init();
+        if( $echo ) {
+            echo $br->render($separator);
+            return ;
+        }
+        return $br->render($separator);
+    }
+
+    /* file end: ./oc-includes/osclass/helpers/hDefines.php */
 ?>

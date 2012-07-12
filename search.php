@@ -19,13 +19,71 @@
 
     class CWebSearch extends BaseModel
     {
-        var $mSearch ;
-        
+        var $mSearch;
+        var $nice_url;
+        var $uri;
+
         function __construct()
         {
             parent::__construct() ;
-
             $this->mSearch = Search::newInstance();
+            $this->uri = preg_replace('|^' . REL_WEB_URL . '|', '', $_SERVER['REQUEST_URI']);
+
+            $this->nice_url = false;
+            if( !stripos($_SERVER['REQUEST_URI'], 'search') && osc_rewrite_enabled() ) {
+                $this->nice_url = true;
+            }
+
+            if( $this->nice_url ) {
+                // redirect if it ends with a slash
+                if( preg_match('|/$|', $this->uri) ) {
+                    $redirectURL = osc_base_url() . $this->uri;
+                    $redirectURL = preg_replace('|/$|', '', $redirectURL);
+                    $this->redirectTo($redirectURL);
+                }
+                $search_uri = preg_replace('|/[0-9]+$|', '', $this->uri);
+                $this->_exportVariableToView('search_uri', $search_uri);
+
+                // remove seo_url_search_prefix
+                if( osc_get_preference('seo_url_search_prefix') != '' ) {
+                    $this->uri = str_replace( osc_get_preference('seo_url_search_prefix') . '/', '', $this->uri);
+                }
+
+                // get page if it's set in the url
+                $iPage = preg_replace('|.*/([0-9]+)$|', '$01', $this->uri);
+                if( $iPage > 0 ) {
+                    Params::setParam('iPage', $iPage);
+                    // redirect without number of pages
+                    if( $iPage == 1 ) {
+                        $this->redirectTo(osc_base_url() . $search_uri);
+                    }
+                }
+                if( Params::getParam('iPage') > 1 ) {
+                    $this->_exportVariableToView('canonical', osc_base_url() . $search_uri);
+                }
+
+                $params = preg_split('|_|', preg_replace('|.*?/|', '', $search_uri));
+                if( preg_match('|r([0-9]+)$|', $params[0], $r) ) {
+                    $region = Region::newInstance()->findByPrimaryKey($r[1]);
+                    Params::setParam('sRegion', $region['pk_i_id']);
+                } else if( preg_match('|c([0-9]+)$|', $params[0], $c) ) {
+                    $city = City::newInstance()->findByPrimaryKey($c[1]);
+                    Params::setParam('sCity', $city['pk_i_id']);
+                } else {
+                    Params::setParam('sCategory', $search_uri);
+                }
+                if( count($params) == 2 ) {
+                    $location = $params[1];
+                    if( preg_match('|r([0-9]+)$|', $location, $r) ) {
+                        $region = Region::newInstance()->findByPrimaryKey($r[1]);
+                        Params::setParam('sRegion', $region['pk_i_id']);
+                    }
+                    if( preg_match('|c([0-9]+)$|', $location, $c) ) {
+                        $city = City::newInstance()->findByPrimaryKey($c[1]);
+                        Params::setParam('sCity', $city['pk_i_id']);
+                    }
+                }
+            }
         }
 
         //Business Layer...
@@ -167,7 +225,10 @@
             $p_iOrderType = $orderType;
 
             $p_sFeed      = Params::getParam('sFeed');
-            $p_iPage      = intval(Params::getParam('iPage'));
+            $p_iPage      = 0;
+            if( is_numeric(Params::getParam('iPage')) && Params::getParam('iPage') > 0 ) {
+                $p_iPage      = intval(Params::getParam('iPage')) - 1;
+            }
 
             if($p_sFeed != '') {
                 $p_sPageSize = 1000;
@@ -273,6 +334,21 @@
                 osc_run_hook('search', $this->mSearch) ;
 
                 //preparing variables...
+                $regionName = $p_sRegion;
+                if( is_numeric($p_sRegion) ) {
+                    $r = Region::newInstance()->findByPrimaryKey($p_sRegion);
+                    if( $r ) {
+                        $regionName = $r['s_name'];
+                    }
+                }
+                $cityName = $p_sCity;
+                if( is_numeric($p_sCity) ) {
+                    $c = City::newInstance()->findByPrimaryKey($p_sCity);
+                    if( $c ) {
+                        $cityName = $c['s_name'];
+                    }
+                }
+
                 //$this->_exportVariableToView('non_empty_categories', $aCategories) ;
                 $this->_exportVariableToView('search_start', $iStart) ;
                 $this->_exportVariableToView('search_end', $iEnd) ;
@@ -287,8 +363,8 @@
                 $this->_exportVariableToView('search_total_pages', $iNumPages) ;
                 $this->_exportVariableToView('search_page', $p_iPage) ;
                 $this->_exportVariableToView('search_has_pic', $p_bPic) ;
-                $this->_exportVariableToView('search_region', $p_sRegion) ;
-                $this->_exportVariableToView('search_city', $p_sCity) ;
+                $this->_exportVariableToView('search_region', $regionName) ;
+                $this->_exportVariableToView('search_city', $cityName) ;
                 $this->_exportVariableToView('search_price_min', $p_sPriceMin) ;
                 $this->_exportVariableToView('search_price_max', $p_sPriceMax) ;
                 $this->_exportVariableToView('search_total_items', $iTotalItems) ;
@@ -316,9 +392,9 @@
                     header('Content-type: text/xml; charset=utf-8');
 
                     $feed = new RSSFeed;
-                    $feed->setTitle(__('Latest items added') . ' - ' . osc_page_title());
+                    $feed->setTitle(__('Latest listings added') . ' - ' . osc_page_title());
                     $feed->setLink(osc_base_url());
-                    $feed->setDescription(__('Latest items added in') . ' ' . osc_page_title());
+                    $feed->setDescription(__('Latest listings added in') . ' ' . osc_page_title());
 
                     if(osc_count_items()>0) {
                         while(osc_has_items()) {

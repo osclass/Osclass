@@ -72,6 +72,36 @@
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=media' ) ;
                 break ;
                 default:
+                                        if( Params::getParam('iDisplayLength') == '' ) {
+                                            Params::setParam('iDisplayLength', 10 ) ;
+                                        }
+                                        $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
+                                        
+                                        require_once osc_admin_base_path() . 'ajax/media_processing.php';
+                                        $params = Params::getParamsAsArray("get") ;
+                                        $media_processing = new MediaProcessingAjax( $params );
+                                        $aData = $media_processing->result( $params ) ;
+                                        
+                                        $page  = (int)Params::getParam('iPage');
+                                        if(count($aData['aaData']) == 0 && $page!=1) {
+                                            $total = (int)$aData['iTotalDisplayRecords'];
+                                            $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
+
+                                            $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+
+                                            if($maxPage==0) {
+                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage=1', $url) ;
+                                                $this->redirectTo($url) ;
+                                            }
+
+                                            if($page > 1) {   
+                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
+                                                $this->redirectTo($url) ;
+                                            }
+                                        }
+                                        
+                                        $this->_exportVariableToView('aMedia', $aData) ;
+                                        
                                         $this->doView('media/index.php') ;
                 break ;
             }

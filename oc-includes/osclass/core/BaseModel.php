@@ -22,12 +22,14 @@
 
     abstract class BaseModel
     {
+        protected $page ;
         protected $action ;
         protected $ajax ;
         protected $time ;
 
         function __construct()
         {
+            $this->page   = Params::getParam('page') ;
             $this->action = Params::getParam('action') ;
             $this->ajax   = false ;
             $this->time   = list($sm, $ss) = explode(' ', microtime()) ;

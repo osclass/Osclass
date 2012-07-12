@@ -43,14 +43,22 @@
             }
         }
 
-        static function applyFilter($hook, $content)
-        {
+        static function applyFilter($hook)
+        {   
+            $args   = func_get_args();
+            $hook   = array_shift($args); 
+            if(isset($args[0])) {
+                $content = $args[0];
+            } else {
+                $content = '';
+            }
+            
             if(isset(self::$hooks[$hook])) {
                 for($priority = 0;$priority<=10;$priority++) {
                     if(isset(self::$hooks[$hook][$priority]) && is_array(self::$hooks[$hook][$priority])) {
                         foreach(self::$hooks[$hook][$priority] as $fxName) {
                             if(is_callable($fxName)) {
-                                $content = call_user_func($fxName, $content);
+                                $content = call_user_func_array($fxName, $args);
                             }
                         }
                     }
@@ -355,7 +363,7 @@
 
         static function checkUpdate($plugin) {
             $info = Plugins::getInfo($plugin);
-            return osc_check_update($info['plugin_update_uri'], $info['version']);
+            return osc_check_plugin_update($info['plugin_update_uri'], $info['version']);
         }
 
 

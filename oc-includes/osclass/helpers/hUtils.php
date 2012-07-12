@@ -168,7 +168,7 @@
         if($options == null) {
             $options = array();
             $options[] = array('name' => __('Dashboard'), 'url' => osc_user_dashboard_url(), 'class' => 'opt_dashboard') ;
-            $options[] = array('name' => __('Manage your items'), 'url' => osc_user_list_items_url(), 'class' => 'opt_items') ;
+            $options[] = array('name' => __('Manage your listings'), 'url' => osc_user_list_items_url(), 'class' => 'opt_items') ;
             $options[] = array('name' => __('Manage your alerts'), 'url' => osc_user_alerts_url(), 'class' => 'opt_alerts') ;
             $options[] = array('name' => __('My account'), 'url' => osc_user_profile_url(), 'class' => 'opt_account') ;
             $options[] = array('name' => __('Logout'), 'url' => osc_user_logout_url(), 'class' => 'opt_logout') ;
@@ -204,11 +204,13 @@
      * @return string
      */
     function osc_highlight($txt, $len = 300, $start_tag = '<strong>', $end_tag = '</strong>') {
-        if (strlen($txt) > $len) {
+        $txt = strip_tags($txt);
+        $txt = str_replace("\n", '', $txt);
+        $txt = trim($txt);
+        if( strlen($txt) > $len ) {
             $txt = mb_substr($txt, 0, $len, 'utf-8') . "..." ;
         }
-        
-        $query = osc_search_pattern() . " " . osc_search_city() ;
+        $query = osc_search_pattern();
         $query = trim(preg_replace('/\s+/', ' ', $query)) ;
         
         $aQuery = explode(' ', $query) ;

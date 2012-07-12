@@ -463,7 +463,7 @@
         
         /**
          * Clear item stat given item id and stat to clear
-         * $stat array('spam', 'duplicated', 'bad', 'offensive', 'expired')
+         * $stat array('spam', 'duplicated', 'bad', 'offensive', 'expired', 'all')
          *
          * @access public
          * @since unknown
@@ -489,6 +489,14 @@
                 case 'expired':
                     $array_set  = array('i_num_expired' => 0);
                     break;
+                case 'all':
+                    $array_set = array(
+                        'i_num_spam'            => 0,
+                        'i_num_repeated'        => 0,
+                        'i_num_bad_classified'  => 0,
+                        'i_num_offensive'       => 0,
+                        'i_num_expired'         => 0
+                    );
                 default:
                     break;
             }
@@ -558,6 +566,49 @@
             
             return $this->dao->query($sql);
         }
+        
+        /**
+         * Return the number of items marked as $type
+         *
+         * @param string $type spam, repeated, bad_classified, offensive, expired
+         * @return int
+         */
+        public function countByMarkas( $type )
+        {
+            $this->dao->select('count(*) as total') ;
+            $this->dao->from($this->getTableName().' i') ;
+            $this->dao->from(DB_TABLE_PREFIX.'t_item_stats s') ;
+            
+            $this->dao->where( 'i.pk_i_id = s.fk_i_item_id' ) ;
+            // i_num_spam, i_num_repeated, i_num_bad_classified, i_num_offensive, i_num_expired  
+            if (!is_null($type)) {
+                switch ($type) {
+                    case 'spam':  
+                        $this->dao->where('s.i_num_spam > 0 AND i.b_spam = 0');
+                    break;
+                    case 'repeated':   
+                        $this->dao->where('s.i_num_repeated > 0');
+                    break;
+                    case 'bad_classified':  
+                        $this->dao->where('s.i_num_bad_classified > 0');
+                    break;
+                    case 'offensive':   
+                        $this->dao->where('s.i_num_offensive > 0');
+                    break;
+                    case 'expired':   
+                        $this->dao->where('s.i_num_expired > 0');
+                    break;
+                    default:
+                }   
+            } else {
+                return 0;
+            }
+
+            $result = $this->dao->get() ;
+            $total_ads = $result->row() ;
+            return $total_ads['total'];
+        }
+        
         /**
          * Return meta fields for a given item
          *
@@ -820,13 +871,25 @@
                 }
 
                 // populate locations and category_name
-                $this->dao->select(DB_TABLE_PREFIX.'t_item_location.*, '.DB_TABLE_PREFIX.'t_item_stats.*, cd.s_name as s_category_name') ;
+                $this->dao->select(DB_TABLE_PREFIX.'t_item_location.*, cd.s_name as s_category_name') ;
+                // select sum item_stats
+                $this->dao->select('SUM(`s`.`i_num_views`) as `i_num_views`' );
+                $this->dao->select('SUM(`s`.`i_num_spam`) as `i_num_spam`' );
+                $this->dao->select('SUM(`s`.`i_num_bad_classified`) as `i_num_bad_classified`' );
+                $this->dao->select('SUM(`s`.`i_num_repeated`) as `i_num_repeated`' );
+                $this->dao->select('SUM(`s`.`i_num_offensive`) as `i_num_offensive`' );
+                $this->dao->select('SUM(`s`.`i_num_expired`) as `i_num_expired` ' );
+                $this->dao->select('SUM(`s`.`i_num_premium_views`) as `i_num_premium_views` ' );
+                
                 $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
                 $this->dao->from(DB_TABLE_PREFIX.'t_category_description as cd') ;
-                $this->dao->from(DB_TABLE_PREFIX.'t_item_stats') ;
+                $this->dao->from(DB_TABLE_PREFIX.'t_item_stats as s') ;
                 $this->dao->where(DB_TABLE_PREFIX.'t_item_location.fk_i_item_id', $item['pk_i_id']) ;
-                $this->dao->where(DB_TABLE_PREFIX.'t_item_stats.fk_i_item_id', $item['pk_i_id']) ;
+//                $this->dao->where(DB_TABLE_PREFIX.'t_item_stats.fk_i_item_id', $item['pk_i_id']) ;
+                $this->dao->where('s.fk_i_item_id', $item['pk_i_id']) ;
                 $this->dao->where('cd.fk_i_category_id', $item['fk_i_category_id']) ;
+                // group by item_id
+                $this->dao->groupBy('fk_i_item_id') ;
                 
                 $result = $this->dao->get() ;
                 $extraFields = $result->row() ;

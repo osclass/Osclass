@@ -62,8 +62,6 @@
                 'b_active',
                 's_pass_code',
                 's_pass_date',
-                's_pass_question',
-                's_pass_answer',
                 's_pass_ip',
                 'fk_c_country_code',
                 's_country',
@@ -77,10 +75,11 @@
                 's_city_area',
                 'd_coord_lat',
                 'd_coord_long',
-                'i_permissions',
                 'b_company',
                 'i_items',
-                'i_comments'
+                'i_comments',
+                'dt_access_date',
+                's_access_ip'
             );
             $this->setFields($array_fields) ;
         }
@@ -95,9 +94,10 @@
          */
         public function ajax($query = '') 
         {
-            $this->dao->select('pk_i_id as id, s_name as label, s_name as value') ;
+            $this->dao->select('pk_i_id as id, CONCAT(s_name, \' (\', s_email , \')\') as label, s_name as value') ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->like('s_name', $query, 'after') ;
+            $this->dao->orLike('s_email', $query, 'after') ;
             $this->dao->limit(0, 10);
 
             $result = $this->dao->get() ;
@@ -442,6 +442,29 @@
             
             $row = $result->row() ;
             return $row['i_total'];
+        }
+        
+        /**
+         * Insert last access data
+         * 
+         * @param int $userId
+         * @param datetime $date
+         * @param string $ip
+         * 
+         * @return boolean on success
+         */
+        function lastAccess($userId, $date, $ip, $time = NULL) {
+            if($time!=null) {
+                $this->dao->select("dt_access_date, s_access_ip");
+                $this->dao->from(DB_TABLE_PREFIX.'t_user');
+                $this->dao->where('pk_i_id', $userId);
+                $this->dao->where("dt_access_date <= '" . (date('Y-m-d H:i:s', time()-$time))."'");
+                $result = $this->dao->get() ;
+                if( $result == false || $result->numRows() == 0) {
+                    return false;
+                }
+            }
+            return $this->update(array('dt_access_date' => $date, 's_access_ip' => $ip), array('pk_i_id' => $userId));
         }
 
         /**

@@ -102,18 +102,22 @@ a.forgot{
     /*border:solid 1px #BCE8F1; background-color:#D9EDF7; color:#3A87AD;*/ color: #999999; font-weight:bold; font-size: 12px;
     -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px;
 }
-#FlashMessage{
+.flashmessage{
     margin:5px 5px 15px 495px; padding:15px;
     border:solid 1px #BCE8F1; background-color:#D9EDF7; color:#3A87AD;
     -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px;
 }
-#FlashMessage.error{
+.flashmessage-error{
     background-color: #F2DEDE;
     border-color: #EED3D7;
     color:#B94A48;
     font-size: 13px;
 }
-.error a{
+.ico-close{
+    cursor: hand;
+    float: right;
+}
+.flashmessage-error a{
     color:#B94A48;
     display:block;
 }

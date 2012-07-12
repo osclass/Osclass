@@ -69,7 +69,7 @@
 
                 foreach($categories as $c) {
                     echo '<li>' ;
-                    echo $d_string . '<input type="checkbox" name="categories[]" value="' . $c['pk_i_id'] . '" onclick="javascript:checkCat(\'' . $c['pk_i_id'] . '\', this.checked) ;" ' . ( in_array($c['pk_i_id'], $selected) ? 'checked' : '' ) . '>' . ( ( $depth == 0 ) ? '<span>' : '' ) . $c['s_name'] . ( ( $depth == 0 ) ? '</span>' : '' ) . '</input>';
+                    echo $d_string . '<input type="checkbox" name="categories[]" value="' . $c['pk_i_id'] . '" onclick="javascript:checkCat(\'' . $c['pk_i_id'] . '\', this.checked) ;" ' . ( in_array($c['pk_i_id'], $selected) ? 'checked="checked"' : '' ) . ' />' . ( ( $depth == 0 ) ? '<span>' : '' ) . $c['s_name'] . ( ( $depth == 0 ) ? '</span>' : '' );
                     CategoryForm::categories_tree($c['categories'], $selected, $depth + 1) ;
                     echo '</li>' ;
                 }
@@ -94,24 +94,25 @@
 
         static public function multilanguage_name_description($locales, $category = null)
         {
-            echo '<div class="tabber">';
+            $tabs = array();
+            $content = array();
             foreach($locales as $locale) {
-                echo '<div class="tabbertab">';
-                    echo '<h2>' . $locale['s_name'] . '</h2>';
-                    echo '<div class="FormElement">';
-                        echo '<div class="FormElementName">' . __('Title') . '</div>';
-                        echo '<div class="FormElementInput">' ;
-                            parent::generic_input_text($locale['pk_c_code'] . '#s_name', (isset($category['locale'][$locale['pk_c_code']])) ? $category['locale'][$locale['pk_c_code']]['s_name'] : "") ;
-                        echo '</div>' ;
-                    echo '</div>';
-                    echo '<div class="FormElement">';
-                        echo '<div class="FormElementName">' . __('Description') . '</div>';
-                        echo '<div class="FormElementInput">' ;
-                            parent::generic_textarea($locale['pk_c_code'] . '#s_description', (isset($category['locale'][$locale['pk_c_code']])) ? $category['locale'][$locale['pk_c_code']]['s_description'] : "") ;
-                        echo '</div>' ;
-                    echo '</div>';
-                echo '</div>';
+                    $value = (isset($category['locale'][$locale['pk_c_code']])) ? $category['locale'][$locale['pk_c_code']]['s_name'] : "";
+                    $name = $locale['pk_c_code'] . '#s_name';
+                    $nameTextarea = $locale['pk_c_code'] . '#s_description';
+                    $valueTextarea = (isset($category['locale'][$locale['pk_c_code']])) ? $category['locale'][$locale['pk_c_code']]['s_description'] : "";
+                    
+                    $contentTemp  = '<div id="'.$category['pk_i_id'].'-'.$locale['pk_c_code'].'" class="category-details-form">';
+                    $contentTemp .= '<div class="FormElement"><label>' . __('Name') . '</label><input id="' . $name .'" type="text" name="' . $name .'" value="' . osc_esc_html(htmlentities($value, ENT_COMPAT, "UTF-8")) . '"/></div>' ;
+                    $contentTemp .= '<div class="FormElement"><label>' . __('Description') . '</label>';
+                    $contentTemp .= '<textarea id="' . $nameTextarea . '" name="' . $nameTextarea . '" rows="10">' . $valueTextarea . '</textarea>' ;
+                    $contentTemp .= '</div></div>';
+                    $tabs[] = '<li><a href="#'.$category['pk_i_id'].'-'.$locale['pk_c_code'].'">' . $locale['s_name'] . '</a></li>';
+                    $content[] = $contentTemp;
              }
+             echo '<div class="ui-osc-tabs osc-tab">';
+             echo '<ul>'.join('',$tabs).'</ul>';
+             echo join('',$content);
              echo '</div>';
         }
     }

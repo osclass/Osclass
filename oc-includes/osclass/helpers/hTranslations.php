@@ -20,49 +20,48 @@
      */
 
     /**
-    * Helper Translation
-    * @package OSClass
-    * @subpackage Helpers
-    * @author OSClass
-    */
+     * Helper Translation
+     * @package OSClass
+     * @subpackage Helpers
+     * @author OSClass
+     */
 
     /**
      * Translate strings
      *
+     * @since unknown
+     * 
      * @param string $key
      * @param string $domain
      * @return string
      */
     function __($key, $domain = 'core') {
         $gt = Translation::newInstance()->_get($domain);
-        
+
         if(!$gt) {
             return $key;
         }
-        return $gt->translate($key);
+        $string = $gt->translate($key);
+        return osc_apply_filter('gettext', $string);
     }
 
     /**
-     * Translate strings (echo them)
+     * Translate strings and echo them
      *
+     * @since unknown
+     * 
      * @param string $key
      * @param string $domain
-     * @return string
      */
     function _e($key, $domain = 'core') {
-        $gt = Translation::newInstance()->_get($domain);
-
-        if(!$gt) {
-            echo $key;
-            return '';
-        }
-        echo $gt->translate($key);
-        return '';
+        echo __($key, $domain);
     }
 
     /**
      * Translate string (flash messages)
      *
+     * @since unknown
+     * 
      * @param string $key
      * @return string
      */
@@ -87,7 +86,8 @@
         if(!$gt) {
             return $key;
         }
-        return $gt->ngettext($single_key, $plural_key, $count);
+        $string = $gt->ngettext($single_key, $plural_key, $count);
+        return osc_apply_filter('ngettext', $string);
     }
 
     /**
@@ -104,4 +104,5 @@
         return _n($single_key, $plural_key, $count, 'messages');
     }
 
+    /* file end: ./oc-includes/osclass/helpers/hTranslations.php */
 ?>

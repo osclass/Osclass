@@ -234,6 +234,24 @@
     }
 
     /**
+     * Gets last access date
+     *
+     * @return string
+     */
+    function osc_user_access_date() {
+        return (int) osc_user_field("dt_access_date");
+    }
+    
+    /**
+     * Gets last access ip
+     *
+     * @return string
+     */
+    function osc_user_access_ip() {
+        return (int) osc_user_field("s_access_ip");
+    }
+    
+    /**
      * Gets website of current user
      *
      * @return string

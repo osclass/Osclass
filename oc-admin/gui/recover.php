@@ -20,19 +20,19 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><?php echo osc_page_title() ; ?> &raquo; <?php _e('Lost your password') ; ?></title>
-        <script type="text/javascript" src="<?php echo osc_admin_base_url() ; ?>themes/modern/js/jquery.js"></script>
+        <script type="text/javascript" src="<?php echo osc_admin_base_url() ; ?>themes/modern/js/jquery.min.js"></script>
         <link type="text/css" href="style/backoffice_login.css" media="screen" rel="stylesheet" />
     </head>
 
     <body class="recover">
         <div id="login">
             <h1>
-                <a href="<?php echo osc_base_url() ; ?>" title="OSClass">
-                    <img src="images/osclass-logo.gif" border="0" title="" alt=""/>
+                <a href="http://osclass.org/" title="OSClass">
+                    <img src="images/osclass-logo.gif" border="0" title="" alt="" />
                 </a>
             </h1>
             <?php osc_show_flash_message('admin') ; ?>
-            <div class="message warning">
+            <div class="flashmessage">
                 <?php _e('Please enter your username or e-mail address') ; ?>.<br />
                 <?php _e('You will receive a new password via e-mail') ; ?>.
             </div>
@@ -45,7 +45,7 @@
                     <input type="text" name="email" id="user_email" class="input" value="" size="20" tabindex="10" /></label>
                 </p>
                 <?php osc_show_recaptcha(); ?>
-                <p class="submit"><input type="submit" name="submit" id="submit" value="<?php _e('Get new password') ; ?>" tabindex="100" /></p>
+                <p class="submit"><input type="submit" name="submit" id="submit" value="<?php echo osc_esc_html( __('Get new password')) ; ?>" tabindex="100" /></p>
             </form>
             <p id="nav">
                 <a title="<?php _e('Log in') ; ?>" href="<?php echo osc_admin_base_url() ; ?>"><?php _e('Log in') ; ?></a>
@@ -62,6 +62,10 @@
                     }
                 }).prev().click(function(){
                         $(this).hide();
+                });
+
+                $(".ico-close").click(function(){
+                    $(this).parent().hide();
                 });
             });
         </script>

@@ -72,7 +72,7 @@
                     if( $result == 1 ) {
                         osc_add_flash_ok_message(_m('Alert activated'));
                     }else{
-                        osc_add_flash_error_message(_m('Ops! There was a problem trying to activate alert. Please contact the administrator'));
+                        osc_add_flash_error_message(_m('Oops! There was a problem trying to activate your alert. Please contact an administrator'));
                     }
 
                     $this->redirectTo( osc_base_url() );
@@ -84,7 +84,7 @@
                         Alerts::newInstance()->delete(array('s_email' => $email, 's_secret' => $secret));
                         osc_add_flash_ok_message(_m('Unsubscribed correctly'));
                     } else {
-                        osc_add_flash_error_message(_m('Ops! There was a problem trying to unsubscribe you. Please contact the administrator'));
+                        osc_add_flash_error_message(_m('Oops! There was a problem trying to unsubscribe you. Please contact an administrator'));
                     }
                     $this->redirectTo(osc_base_url());
                 break;

@@ -32,14 +32,23 @@
         {
             switch( $this->action ) {
                 case('login_post'):     //post execution for the login
+                                        $url_redirect  = osc_get_http_referer();
+                                        $page_redirect = '';
+                                        if(preg_match('|[\?&]page=([^&]+)|', $url_redirect.'&', $match)) {
+                                            $page_redirect = $match[1];
+                                        }
+                                        if($page_redirect=='' || $page_redirect=='login' || $url_redirect=='') {
+                                            $url_redirect = osc_admin_base_url();
+                                        }
+
                                         if( Params::getParam('user') == '' ) {
                                             osc_add_flash_error_message( _m('The username field is empty'), 'admin') ;
-                                            $this->redirectTo( osc_admin_base_url()."?action=login" ) ;
+                                            $this->redirectTo( osc_admin_base_url(true)."?page=login" ) ;
                                         }
 
                                         if( Params::getParam('password', false, false) == '' ) {
                                             osc_add_flash_error_message( _m('The password field is empty'), 'admin') ;
-                                            $this->redirectTo( osc_admin_base_url()."?action=login" ) ;
+                                            $this->redirectTo( osc_admin_base_url(true)."?page=login" ) ;
                                         }
 
                                         // fields are not empty
@@ -47,12 +56,12 @@
 
                                         if( !$admin ) {
                                             osc_add_flash_error_message( sprintf(_m('Sorry, incorrect username. <a href="%s">Have you lost your password?</a>'), osc_admin_base_url(true) . '?page=login&amp;action=recover' ), 'admin') ;
-                                            $this->redirectTo( osc_admin_base_url()."?action=login" ) ;
+                                            $this->redirectTo( osc_admin_base_url(true)."?page=login" ) ;
                                         }
 
                                         if( $admin["s_password"] !== sha1( Params::getParam('password', false, false) ) ) {
                                             osc_add_flash_error_message( sprintf(_m('Sorry, incorrect password. <a href="%s">Have you lost your password?</a>'), osc_admin_base_url(true) . '?page=login&amp;action=recover' ), 'admin') ;
-                                            $this->redirectTo( osc_admin_base_url()."?action=login" ) ;
+                                            $this->redirectTo( osc_admin_base_url(true)."?page=login" ) ;
                                         }
 
                                         if( Params::getParam('remember') ) {
@@ -79,13 +88,13 @@
                                         Session::newInstance()->_set('adminEmail', $admin['s_email']) ;
                                         Session::newInstance()->_set('adminLocale', Params::getParam('locale')) ;
 
-                                        $this->redirectTo( osc_admin_base_url() ) ;
+                                        $this->redirectTo( $url_redirect );
                 break ;
                 case('recover'):        // form to recover the password (in this case we have the form in /gui/)
                                         $this->doView('gui/recover.php') ;
                 break ;
                 case('recover_post'):   if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                                             $this->redirectTo( osc_admin_base_url() );
                                         }
 
@@ -94,7 +103,7 @@
                                         if( $admin ) {
                                             if( (osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field") ) {
                                                 if( !osc_check_recaptcha() ) {
-                                                    osc_add_flash_error_message( _m('The Recaptcha code is wrong'), 'admin') ;
+                                                    osc_add_flash_error_message( _m('The reCAPTCHA code is wrong'), 'admin') ;
                                                     $this->redirectTo( osc_admin_base_url(true).'?page=login&action=recover' );
                                                     return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                                                 }
@@ -108,7 +117,7 @@
                                                 array('pk_i_id' => $admin['pk_i_id'])
                                             );
                                             $password_url = osc_forgot_admin_password_confirm_url($admin['pk_i_id'], $newPassword);
-                                            
+
                                             osc_run_hook('hook_email_user_forgot_password', $admin, $password_url);
                                         }
 
@@ -140,9 +149,14 @@
                                             osc_add_flash_ok_message( _m('The password has been changed'), 'admin');
                                             $this->redirectTo(osc_admin_base_url());
                                         } else {
-                                            osc_add_flash_error_message( _m("Error, the password don't match"), 'admin') ;
+                                            osc_add_flash_error_message( _m("Error, the passwords don't match"), 'admin') ;
                                             $this->redirectTo(osc_forgot_admin_password_confirm_url(Params::getParam('adminId'), Params::getParam('code')));
                                         }
+                break;
+                default:
+                                        osc_run_hook( 'init_admin' ) ;
+                                        Session::newInstance()->_setReferer(osc_get_http_referer());
+                                        $this->doView( 'gui/login.php' );
                 break;
             }
         }
@@ -152,24 +166,7 @@
         {
             require osc_admin_base_path() . $file ;
         }
-        
-        
-        function logout()
-        {
-            //destroying session
-            Session::newInstance()->_drop('adminId') ;
-            Session::newInstance()->_drop('adminUserName') ;
-            Session::newInstance()->_drop('adminName') ;
-            Session::newInstance()->_drop('adminEmail') ;
-            Session::newInstance()->_drop('adminLocale') ;
 
-            Cookie::newInstance()->pop('oc_adminId') ;
-            Cookie::newInstance()->pop('oc_adminSecret') ;
-            Cookie::newInstance()->pop('oc_adminLocale') ;
-            Cookie::newInstance()->set() ;
-        }
-        
-        
     }
 
     /* file end: ./oc-admin/login.php */

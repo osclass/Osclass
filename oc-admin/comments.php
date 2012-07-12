@@ -87,7 +87,7 @@
                                                                                 }
                                                                                 osc_add_hook("enable_comment", $_id) ;
                                                                             }
-                                                                            osc_add_flash_ok_message( _m('The comments have been approved'), 'admin' ) ;
+                                                                            osc_add_flash_ok_message( _m('The comments have been unblocked'), 'admin' ) ;
                                                     break;
                                                     case('disable_all'):
                                                                             foreach ($id as $_id) {
@@ -97,7 +97,7 @@
                                                                                 );
                                                                                 osc_add_hook("disable_comment", $_id);
                                                                             }
-                                                                            osc_add_flash_ok_message( _m('The comments have been disapproved'), 'admin') ;
+                                                                            osc_add_flash_ok_message( _m('The comments have been blocked'), 'admin') ;
                                                     break;
                                                 }
                                             }
@@ -184,17 +184,51 @@
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
                 break ;
                 case('delete'):             $this->itemCommentManager->deleteByPrimaryKey( Params::getParam('id') ) ;
-                                            osc_add_flash_ok_message( _m('The comment have been deleted'), 'admin') ;
+                                            osc_add_flash_ok_message( _m('The comment has been deleted'), 'admin') ;
                                             osc_run_hook( 'delete_comment', Params::getParam('id') ) ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
                 break ;
-                default:                    if( Params::getParam('id') != '' ) {
-                                                $comments = $this->itemCommentManager->getAllComments( Params::getParam('id') ) ;
-                                            } else {
-                                                $comments = $this->itemCommentManager->getAllComments( ) ;
+                default:                    if( Params::getParam('iDisplayLength') == '' ) {
+                                                Params::setParam('iDisplayLength', 10 ) ;
                                             }
+                                            // showAll == '' 
+                                            //      -> show all comments filtered
+                                            // showAll != '' 
+                                            //      -> show comments which are not 
+                                            //      -> diplayed at frontend
+                                            if( Params::getParam('showAll') == '' || Params::getParam('showAll') == '1' ) {
+                                                Params::setParam('showAll', true ) ;
+                                            } else {
+                                                Params::setParam('showAll', false ) ;
+                                            }
+                                            
+                                            $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
+                                            
+                                            require_once osc_admin_base_path() . 'ajax/comments_processing.php';
+                                            $params = Params::getParamsAsArray("get") ;
+                                            $comments_processing = new CommentsProcessingAjax( $params );
+                                            $aData = $comments_processing->result( $params ) ;
 
-                                            $this->_exportVariableToView('comments', $comments) ;
+                                            $page  = (int)Params::getParam('iPage');
+                                            if(count($aData['aaData']) == 0 && $page!=1) {
+                                                $total = (int)$aData['iTotalDisplayRecords'];
+                                                $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
+                                                
+                                                $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+                                                
+                                                if($maxPage==0) {
+                                                    $url = preg_replace('/&iPage=(\d)+/', '&iPage=1', $url) ;
+                                                    $this->redirectTo($url) ;
+                                                }
+                                                
+                                                if($page > 1) {   
+                                                    $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
+                                                    $this->redirectTo($url) ;
+                                                }
+                                            }
+                                        
+                                            $this->_exportVariableToView('aComments', $aData) ;
+                                            
                                             $this->doView('comments/index.php') ;
                 break ;
             }

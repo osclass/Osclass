@@ -4,7 +4,7 @@ INSERT INTO /*TABLE_PREFIX*/t_currency (pk_c_code, s_name, s_description, b_enab
     ('EUR', 'European Union euro', 'Euro €', true);
 
 INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
-    ('osclass', 'version', 241, 'INTEGER')
+    ('osclass', 'version', 300, 'INTEGER')
     ,('osclass', 'theme', 'modern', 'STRING')
     ,('osclass', 'admin_language', 'en_US', 'STRING')
     ,('osclass', 'language', 'en_US', 'STRING')
@@ -20,8 +20,8 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'timezone', 'Europe/Madrid', 'STRING')
     ,('osclass', 'weekStart', '0', 'STRING')
     ,('osclass', 'moderate_comments', '0', 'INTEGER')
-    ,('osclass', 'moderate_items', '0', 'INTEGER')
-    ,('osclass', 'reg_user_post', '1', 'BOOLEAN')
+    ,('osclass', 'moderate_items', '-1', 'INTEGER')
+    ,('osclass', 'reg_user_post', '0', 'BOOLEAN')
     ,('osclass', 'num_rss_items', '50', 'INTEGER')
     ,('osclass', 'active_plugins', '', 'STRING')
     ,('osclass', 'installed_plugins', '', 'STRING')
@@ -110,6 +110,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'reg_user_post_comments', '0', 'BOOLEAN')
     ,('osclass', 'reg_user_can_contact', '0', 'BOOLEAN')
     ,('osclass', 'marketAllowExternalSources', '0', 'BOOLEAN')
+    ,('osclass', 'marketURL', 'http://market.osclass.org/api/', 'STRING')
     ,('osclass', 'watermark_text', '', 'STRING')
     ,('osclass', 'watermark_text_color', '', 'STRING')
     ,('osclass', 'watermark_place', 'centre', 'STRING')

@@ -15,20 +15,24 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-     
+
     $all        = Preference::newInstance()->findValueByName('location_todo') ;
     $worktodo   = LocationsTmp::newInstance()->count() ;
-?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
-    <head>
-        <?php osc_current_admin_theme_path('head.php') ; ?>
+    function render_offset(){
+        return 'row-offset';
+    }
+
+    function customHead() { 
+        $all = Preference::newInstance()->findValueByName('location_todo');
+        if( $all == '' ) $all = 0;
+        $worktodo   = LocationsTmp::newInstance()->count() ; 
+        ?>
         <script type="text/javascript">
             function reload() {
                 window.location = '<?php echo osc_admin_base_url(true).'?page=tools&action=locations'; ?>' ;
             }
-            
+
             function ajax_() {
                 $.ajax({
                     type: "POST",
@@ -38,7 +42,7 @@
                         if(data.status=='done') {
                         }else{
                             var pending = data.pending;
-                            var all = <?php echo $all;?>;
+                            var all = <?php echo osc_esc_js($all);?>;
                             var percent = parseInt( ((all-pending)*100) / all );
                             $('span#percent').html(percent);
                             ajax_();
@@ -46,47 +50,53 @@
                     }
                 });
             }
-            
+
             $(document).ready(function(){
                 if(<?php echo $worktodo;?>> 0) {
                     ajax_();
                 }
             });
         </script>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <div id="content">
-            <?php osc_current_admin_theme_path( 'include/backoffice_menu.php' ) ; ?>
-            <!-- right container -->
-            <div class="right">
-                <div class="header_title">
-                    <h1 class="items"><?php _e('Location stats') ; ?></h1>
-                </div>
-                <?php osc_show_flash_message('admin') ; ?>
-                <div id="locations_stats_form" style="border: 1px solid #ccc; background: #eee; ">
-                    <div style="padding: 20px;">
-                        <?php if($worktodo > 0) { ?>
-                        <p>
-                            <span id="percent">0</span> % <?php _e("Complete"); ?>
-                        </p>
-                        <br/>
-                        <?php } ?>
-                        <p>
-                            <?php _e('You can recalculate your locations stats. This is useful if you upgrade from versions below OSClass 2.4'); ?>.
-                        </p>
-                        <br/>
-                        <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
-                            <input type="hidden" name="action" value="locations_post" />
-                            <input type="hidden" name="page" value="tools" />
+        <?php
+    }
+    osc_add_hook('admin_header','customHead');
 
-                            <input id="button_save" type="submit" value="<?php _e('Calculate locations stats'); ?>" />
-                        </form>
+    osc_add_hook('admin_page_header','customPageHeader');
+    function customPageHeader(){ ?>
+        <h1><?php _e('Tools') ; ?></h1>
+    <?php
+    }
+
+    function customPageTitle($string) {
+        return sprintf(__('Location stats &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+<div id="locations-stats-setting">
+    <!-- settings form -->
+    <div id="">
+        <h2 class="render-title"><?php _e('Locations stats') ; ?></h2>
+        <?php if($worktodo > 0) { ?>
+        <p>
+            <span id="percent">0</span> % <?php _e("Complete"); ?>
+        </p>
+        <?php } ?>
+        <p>
+            <?php _e('You can recalculate your location stats. This is useful if you upgrade from versions older than OSClass 2.4'); ?>.
+        </p>
+        <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
+            <input type="hidden" name="action" value="locations_post" />
+            <input type="hidden" name="page" value="tools" />
+            <fieldset>
+                <div class="form-horizontal">
+                    <div class="form-actions">
+                        <input id="button_save" type="submit" value="<?php echo osc_esc_html( __('Calculate location stats')); ?>" class="btn btn-submit" />
                     </div>
                 </div>
-            </div>
-        </div>
-        <!-- /container -->
-        <?php osc_current_admin_theme_path('footer.php') ; ?>
-    </body>
-</html>
+            </fieldset>
+        </form>
+    </div>
+    <!-- /settings form -->
+</div>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

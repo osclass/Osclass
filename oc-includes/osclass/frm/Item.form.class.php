@@ -431,7 +431,7 @@
                     return true;
                 }
             },
-            "<?php _e("Description: needs to be longer"); ?>."
+            "<?php _e("Description needs to be longer"); ?>."
         );
 
         // Code for form validation
@@ -538,9 +538,9 @@
                         class_type = "ok";
                     }
                     var flash = $("#flash_js");
-                    var message = $('<div>').addClass('pubMessages').addClass(class_type).attr('id', 'FlashMessage').html(data.msg);
+                    var message = $('<div>').addClass('pubMessages').addClass(class_type).attr('id', 'flashmessage').html(data.msg);
                     flash.html(message);
-                    $("#FlashMessage").slideDown('slow').delay(3000).slideUp('slow');
+                    $("#flashmessage").slideDown('slow').delay(3000).slideUp('slow');
                 }
             });
         }
@@ -700,7 +700,7 @@
                     return true;
                 }
             },
-            "<?php _e("Description: needs to be longer"); ?>."
+            "<?php _e("Description needs to be longer"); ?>."
         );
 
         // Code for form validation
@@ -825,9 +825,9 @@
                         class_type = "ok";
                     }
                     var flash = $("#flash_js");
-                    var message = $('<div>').addClass('pubMessages').addClass(class_type).attr('id', 'FlashMessage').html(data.msg);
+                    var message = $('<div>').addClass('pubMessages').addClass(class_type).attr('id', 'flashmessage').html(data.msg);
                     flash.html(message);
-                    $("#FlashMessage").slideDown('slow').delay(3000).slideUp('slow');
+                    $("#flashmessage").slideDown('slow').delay(3000).slideUp('slow');
                 }
             });
         }
@@ -888,7 +888,7 @@
             gebi('photos').appendChild(d);
 
         } else {
-            alert('<?php _e('Sorry, you have reached the maximum number of images per ad');?>');
+            alert('<?php echo osc_esc_js(__('Sorry, you have reached the maximum number of images per listing')); ?>');
         }
     }
     // Listener: automatically add new file field when the visible ones are full.

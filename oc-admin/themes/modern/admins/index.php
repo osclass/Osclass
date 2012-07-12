@@ -16,109 +16,180 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $admins = __get("admins") ;
-
-    $aData = array() ;
-    foreach($admins as $admin) {
-        $row = array() ;
-        $row[] = '<input type="checkbox" name="id[]" value="' . $admin['pk_i_id'] . '" />' ;
-        $row[] = $admin['s_username'] . ' <div id="datatables_quick_edit"><a href="' . osc_admin_base_url(true) . '?page=admins&action=edit&amp;id='  . $admin['pk_i_id'] . '">' . __('Edit') . '</a> &middot; <a onclick="javascript:return confirm(\'' . osc_esc_js("This action can't be undone. Are you sure you want to continue?") . '\');" href="' . osc_admin_base_url(true) . '?page=admins&action=delete&amp;id[]=' . $admin['pk_i_id'] . '">' . __('Delete') . '</a></div>' ;
-        $row[] = $admin['s_name'] ;
-        $row[] = $admin['s_email'] ;
-
-        $aData[] = $row ;
+    function addHelp() {
+        echo '<p>' . __('Add users who can manage your page. You can add admins or moderators: admins have access to the whole admin panel while moderators can only modify listings and see stats.') . '</p>';
     }
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
-    <head>
-        <?php osc_current_admin_theme_path('head.php') ; ?>
-        <link href="<?php echo osc_current_admin_theme_styles_url('datatables.css') ; ?>" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.dataTables.js') ; ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.pagination.js') ; ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.extend.js') ; ?>"></script>
+    osc_add_hook('help_box','addHelp');
+
+    function customPageTitle($string) {
+        return sprintf(__('Admins &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    function customPageHeader() { ?>
+        <h1><?php _e('Admins') ; ?>
+            <a href="#" class="btn ico ico-32 ico-help float-right"></a>
+            <a href="<?php echo osc_admin_base_url(true); ?>?page=admins&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add admin') ; ?></a>
+        </h1>
+<?php
+    }
+    osc_add_hook('admin_page_header','customPageHeader');
+    //customize Head
+    function customHead() { ?>
         <script type="text/javascript">
-            $(function() {
-                oTable = $('#datatables_list').dataTable({
-                    "sDom": "<'row-action'<'row'<'span6 length-menu'l><'span6 filter'>fr>>t<'row'<'span6 info-results'i><'span6 paginate'p>>",
-                    "sPaginationType": "bootstrap",
-                    "bLengthChange": false,
-                    "bProcessing": true,
-                    "bServerSide":false,
-                    "bPaginate": true,
-                    "bFilter": true,
-                    "oLanguage": {
-                        "oPaginate": {
-                            "sNext" : "<?php echo osc_esc_html( __('Next') ) ; ?>",
-                            "sPrevious" : "<?php echo osc_esc_html( __('Previous') ) ; ?>"
-                        },
-                        "sEmptyTable" : "<?php echo osc_esc_html( __('No data available in table') ) ; ?>",
-                        "sInfo": "<?php echo osc_esc_html( sprintf( __('Showing %s to %s of %s entries'), '_START_', '_END_', '_TOTAL_') ) ; ?>",
-                        "sInfoEmpty": "<?php echo osc_esc_html( __('No entries to show') ) ; ?>",
-                        "sInfoFiltered": "<?php echo osc_esc_html( sprintf( __('(filtered from %s total entries)'), '_MAX_' ) ) ; ?>",
-                        "sLoadingRecords": "<?php echo osc_esc_html( __('Loading...') ) ; ?>",
-                        "sProcessing": "<?php echo osc_esc_html( __('Processing...') ) ; ?>",
-                        "sSearch": "<?php echo osc_esc_html( __('Search') ) ; ?>",
-                        "sZeroRecords": "<?php echo osc_esc_html( __('No matching records found') ) ; ?>"
-                    },
-                    "aaData": <?php echo json_encode($aData) ; ?>,
-                    "aoColumns": [
-                        {
-                            "sTitle": "<input id='check_all' type='checkbox' />",
-                            "bSortable": false,
-                            "sWidth": "10px",
-                            "bSearchable": false
-                        },
-                        {
-                            "sTitle": "<?php echo osc_esc_html( __('Username') ) ; ?>"
-                        },
-                        {
-                            "sTitle": "<?php echo osc_esc_html( __('Name') ) ; ?>"
-                        },
-                        {
-                            "sTitle": "<?php echo osc_esc_html( __('E-mail') ) ; ?>"
+            $(document).ready(function(){
+                // check_all bulkactions
+                $("#check_all").change(function(){
+                    var isChecked = $(this+':checked').length;
+                    $('.col-bulkactions input').each( function() {
+                        if( isChecked == 1 ) {
+                            this.checked = true;
+                        } else {
+                            this.checked = false;
                         }
-                    ]
+                    });
                 });
 
-                $('.length-menu').append( $("#bulk_actions") ) ;
-                $('.filter').append( $("#add_admin_button") ) ;
+                // dialog delete
+                $("#dialog-admin-delete").dialog({
+                    autoOpen: false,
+                    modal: true,
+                });
+
+                // dialog bulk actions
+                $("#dialog-bulk-actions").dialog({
+                    autoOpen: false,
+                    modal: true
+                });
+                $("#bulk-actions-submit").click(function() {
+                    $("#datatablesForm").submit();
+                });
+                $("#bulk-actions-cancel").click(function() {
+                    $("#datatablesForm").attr('data-dialog-open', 'false');
+                    $('#dialog-bulk-actions').dialog('close');
+                });
+                // dialog bulk actions function
+                $("#datatablesForm").submit(function() {
+                    if( $("#bulk_actions option:selected").val() == "" ) {
+                        return false;
+                    }
+
+                    if( $("#datatablesForm").attr('data-dialog-open') == "true" ) {
+                        return true;
+                    }
+
+                    $("#dialog-bulk-actions .form-row").html($("#bulk_actions option:selected").attr('data-dialog-content'));
+                    $("#bulk-actions-submit").html($("#bulk_actions option:selected").text());
+                    $("#datatablesForm").attr('data-dialog-open', 'true');
+                    $("#dialog-bulk-actions").dialog('open');
+                    return false;
+                });
+                // /dialog bulk actions
             });
+
+            // dialog delete function
+            function delete_dialog(item_id) {
+                $("#dialog-admin-delete input[name='id[]']").attr('value', item_id);
+                $("#dialog-admin-delete").dialog('open');
+                return false;
+            }
         </script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <!-- container -->
-        <div id="content">
-            <?php osc_current_admin_theme_path( 'include/backoffice_menu.php' ) ; ?>
-            <!-- right container -->
-		    <div class="right">
-                <div class="header_title">
-                    <h1 class="admins"><?php _e('Admins') ; ?></h1>
-                </div>
-                <?php osc_show_flash_message('admin') ; ?>
-                <!-- datatables admins -->
-                <form class="settings admins datatables" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-                    <input type="hidden" name="page" value="admins" />
-                    <div id="bulk_actions">
-                        <label>
-                            <select name="action" id="action" class="display">
-                                <option value=""><?php _e('Bulk actions') ; ?></option>
-                                <option value="delete"><?php _e('Delete') ; ?></option>
-                            </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>">
-                        </label>
-                    </div>
-                    <div id="add_admin_button">
-                        <a href="<?php echo osc_admin_base_url(true); ?>?page=admins&amp;action=add" class="btn" id="button_open"><?php _e('Add admin') ; ?></a>
-                    </div>
-                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatables_list"></table>
-                </form>
-                <!-- /datatables admins -->
-            </div>
-            <!-- /right container -->
+        <?php
+    }
+    osc_add_hook('admin_header','customHead');
+
+    $iDisplayLength = __get('iDisplayLength');
+    $aData          = __get('aAdmins');
+
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+<h2 class="render-title"><?php _e('Manage admins'); ?> <a href="<?php echo osc_admin_base_url(true); ?>?page=admins&amp;action=add" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
+<div class="relative">
+    <div id="admins-toolbar" class="table-toolbar">
+        <div class="float-right">
         </div>
-        <!-- /container -->
-        <?php osc_current_admin_theme_path('footer.php') ; ?>
-    </body>
-</html>
+    </div>
+    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+        <input type="hidden" name="page" value="admins" />
+        <div id="bulk-actions">
+            <label>
+                <select id="bulk_actions" name="action" class="select-box-extra">
+                    <option value=""><?php _e('Bulk actions') ; ?></option>
+                    <option value="delete" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected admins?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ; ?></option>
+                </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+            </label>
+        </div>
+        <div class="table-contains-actions">
+            <table class="table" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
+                        <th><?php _e('Username') ; ?></th>
+                        <th><?php _e('Name') ; ?></th>
+                        <th><?php _e('E-mail') ; ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php if( count($aData['aaData']) > 0 ) { ?>
+                <?php foreach( $aData['aaData'] as $array ) { ?>
+                    <tr>
+                    <?php foreach( $array as $key => $value ) { ?>
+                        <?php if( $key == 0 ) { ?>
+                        <td class="col-bulkactions">
+                        <?php } else { ?>
+                        <td>
+                        <?php } ?>
+                        <?php echo $value; ?>
+                        </td>
+                    <?php } ?>
+                    </tr>
+                <?php } ?>
+                <?php } else { ?>
+                <tr>
+                    <td colspan="4" class="text-center">
+                    <p><?php _e('No data available in table') ; ?></p>
+                    </td>
+                </tr>
+                <?php } ?>
+                </tbody>
+            </table>
+            <div id="table-row-actions"></div><!-- used for table actions -->
+        </div>
+    </form>
+</div>
+<?php 
+    function showingResults(){
+        $aData = __get('aAdmins');
+        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords']).'</span></li></ul>';
+    }
+    osc_add_hook('before_show_pagination_admin','showingResults');
+    osc_show_pagination_admin($aData);
+?>
+<form id="dialog-admin-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete admin')); ?>">
+    <input type="hidden" name="page" value="admins" />
+    <input type="hidden" name="action" value="delete" />
+    <input type="hidden" name="id[]" value="" />
+    <div class="form-horizontal">
+        <div class="form-row">
+            <?php _e('Are you sure you want to delete this admin?'); ?>
+        </div>
+        <div class="form-actions">
+            <div class="wrapper">
+            <a class="btn" href="javascript:void(0);" onclick="$('#dialog-admin-delete').dialog('close');"><?php _e('Cancel'); ?></a>
+            <input id="admin-delete-submit" type="submit" value="<?php echo osc_esc_html( __('Delete') ); ?>" class="btn btn-red" />
+            </div>
+        </div>
+    </div>
+</form>
+<div id="dialog-bulk-actions" title="<?php _e('Bulk actions'); ?>" class="has-form-actions hide">
+    <div class="form-horizontal">
+        <div class="form-row"></div>
+        <div class="form-actions">
+            <div class="wrapper">
+                <a id="bulk-actions-cancel" class="btn" href="javascript:void(0);"><?php _e('Cancel'); ?></a>
+                <a id="bulk-actions-submit" href="javascript:void(0);" class="btn btn-red" ><?php echo osc_esc_html( __('Delete') ); ?></a>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

@@ -278,6 +278,17 @@
     }
 
     /**
+     * Gets currency symbol of an item
+     *
+     * @since 3.0
+     * @return string
+     */
+    function osc_item_currency_symbol() {
+        $aCurrency = Currency::newInstance()->findBycode(osc_item_currency());
+        return $aCurrency['s_description'];
+    }
+
+    /**
      * Gets contact name of current item
      *
      * @return string
@@ -1024,12 +1035,12 @@
     function osc_format_price($price) {
         if ($price == null) return osc_apply_filter ('item_price_null', __('Check with seller') ) ;
         if ($price == 0) return osc_apply_filter ('item_price_zero', __('Free') ) ;
-        
+
         $price = $price/1000000;
 
         $currencyFormat = osc_locale_currency_format();
         $currencyFormat = str_replace('{NUMBER}', number_format($price, osc_locale_num_dec(), osc_locale_dec_point(), osc_locale_thousands_sep()), $currencyFormat);
-        $currencyFormat = str_replace('{CURRENCY}', osc_item_currency(), $currencyFormat);
+        $currencyFormat = str_replace('{CURRENCY}', osc_item_currency_symbol(), $currencyFormat);
         return osc_apply_filter('item_price', $currencyFormat ) ;
     }
 
@@ -1197,4 +1208,128 @@
         return $search->count();
     }
    
+    
+    /**
+     * Perform a search based on custom filters and conditions
+     * export the results to a variable to be able to manage it 
+     * from custom_items' helpers
+     * 
+     * 
+     * @param params This could be a string or and array
+     * Examples: 
+     *  Only one keyword
+     *  osc_query_item("keyword=value1,value2,value3,...")
+     *  
+     *  Multiple keywords
+     *  osc_query_item(array(
+     *      'keyword1' => 'value1,value2',
+     *      'keyword2' => 'value3,value4'
+     *  ))
+     * 
+     * Real live examples:
+     *  osc_query_item('category_name=cars,houses');
+     *  osc_query_item(array(
+     *      'category_name' => 'cars,houses',
+     *      'city' => 'Madrid'
+     *  ))
+     * 
+     * Possible keywords:
+     *  author
+     *  country
+     *  country_name
+     *  region
+     *  region_name
+     *  city
+     *  city_name
+     *  city_area
+     *  city_area_name
+     *  category
+     *  category_name
+     *  results_per_page
+     *  page
+     *  offset
+     *  
+     *  Any other keyword will be passed to the hook "custom_query"
+     *   osc_run_hook("custom_query", $keyword, $value);
+     *  A plugin could be created to handle those extra situation
+     * 
+     * @since 3.0
+     */
+    function osc_query_item($params = null) {
+        $mSearch = Search::newInstance();
+        if($params==null) {
+            $params = array();
+        } else if(is_string($params)){
+            $keyvalue = explode("=", $params);
+            $params = array($keyvalue[0] => $keyvalue[1]);
+        }
+        foreach($params as $key => $value) {
+            switch($key) {
+                case 'author':
+                    $tmp = explode(",", $value);
+                    foreach($tmp as $t) {
+                        $mSearch->fromUser($t);
+                    }
+                    break;
+                
+                case 'category':
+                case 'category_name':
+                    $tmp = explode(",", $value);
+                    foreach($tmp as $t) {
+                        $mSearch->addCategory($t);
+                    }
+                    break;
+                
+                case 'country':
+                case 'country_name':
+                    $tmp = explode(",", $value);
+                    foreach($tmp as $t) {
+                        $mSearch->addCountry($t);
+                    }
+                    break;
+                
+                case 'region':
+                case 'region_name':
+                    $tmp = explode(",", $value);
+                    foreach($tmp as $t) {
+                        $mSearch->addRegion($t);
+                    }
+                    break;
+                
+                case 'city':
+                case 'city_name':
+                    $tmp = explode(",", $value);
+                    foreach($tmp as $t) {
+                        $mSearch->addCity($t);
+                    }
+                    break;
+                
+                case 'city_area':
+                case 'city_area_name':
+                    $tmp = explode(",", $value);
+                    foreach($tmp as $t) {
+                        $mSearch->addCityArea($t);
+                    }
+                
+                case 'results_per_page':
+                    $mSearch->set_rpp($value);
+                    break;
+                
+                case 'page':
+                    $mSearch->page($value);
+                    break;
+                
+                case 'offset':
+                    $mSearch->limit($value);
+                    break;
+                
+                default:
+                    osc_run_hook('custom_query', $key, $value);
+                    break;
+            }
+        }
+        View::newInstance()->_exportVariableToView("customItems", $mSearch->doSearch());
+    }
+    
+    
  ?>

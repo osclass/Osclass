@@ -50,6 +50,15 @@
             parent::generic_input_text("s_email", isset($admin['s_email'])? $admin['s_email'] : '', null, false);
         }
 
+        static public function type_select($admin = null) {
+            $options = array(
+                array( 'i_value' => '0', 's_text' => __('Administrator') )
+                ,array( 'i_value' => '1', 's_text' => __('Moderator') )
+            ) ;
+
+            parent::generic_select( 'b_moderator', $options, 'i_value', 's_text', null, (isset($admin['b_moderator'])) ? $admin['b_moderator'] : null ) ;
+        }
+        
         static public function js_validation() {
 ?>
 <script type="text/javascript">
