@@ -42,9 +42,9 @@
             if(!$error_queries[0]) {
                 $skip_db_link = osc_admin_base_url(true) . "?page=upgrade&action=upgrade-funcs&skipdb=true";
                 $title    = __('OSClass &raquo; Has some errors') ;
-                $message  = __('We encountered some problems updating the database structure. The following queries failed:');
+                $message  = __("We've encountered some problems while updating the database structure. The following queries failed:");
                 $message .= "<br/><br/>" . implode("<br>", $error_queries[2]);
-                $message .= "<br/><br/>" . sprintf(__('These errors could be false-positive errors. If you\'re sure that is the case, you could <a href="%s">continue with the upgrade</a>, or <a href="http://forums.osclass.org/">ask in our forums</a>.'), $skip_db_link);
+                $message .= "<br/><br/>" . sprintf(__("These errors could be false-positive errors. If you're sure that is the case, you can <a href=\"%s\">continue with the upgrade</a>, or <a href=\"http://forums.osclass.org/\">ask in our forums</a>."), $skip_db_link);
                 osc_die($title, $message) ;
             }
         }
@@ -208,8 +208,6 @@ CREATE TABLE %st_item_description_tmp (
         @unlink(osc_admin_base_path()."upgrade-plugin.php");
     }
 
-    osc_changeVersionTo(237) ;
-
     if( osc_version() < 240 ) {
         // We no longer use s_what column in /*TABLE_PREFIX*/t_item_description
         $comm->query( sprintf('ALTER TABLE %st_item_description DROP COLUMN s_what', DB_TABLE_PREFIX) ) ;
@@ -285,7 +283,7 @@ CREATE TABLE %st_item_description_tmp (
             }
         }
         $url_location_stats = osc_admin_base_url(true)."?page=tools&action=locations";
-        $aMessages[] = '<p><b>'.__('You need to calculate locations stats, please go to admin panel, tools, recalculate location stats or click') .'  <a href="'.$url_location_stats.'">'.__('here').'</a></b></p>';
+        $aMessages[] = '<p><b>'.__('You need to calculate location stats, please go to admin panel, tools, recalculate location stats or click') .'  <a href="'.$url_location_stats.'">'.__('here').'</a></b></p>';
 
         // update t_alerts - Search object serialized to json
         $aAlerts = Alerts::newInstance()->findByType('HOURLY');
@@ -365,24 +363,34 @@ CREATE TABLE %st_item_description_tmp (
             }
         }
         $comm->query("DROP TABLE ".DB_TABLE_PREFIX."t_country");
+        // hack
+        $comm->query("SET FOREIGN_KEY_CHECKS = 0");
         $comm->query("RENAME TABLE  `".DB_TABLE_PREFIX."t_country_aux` TO  `".DB_TABLE_PREFIX."t_country`");
         $comm->query("ALTER TABLE ".DB_TABLE_PREFIX."t_city ADD FOREIGN KEY (fk_c_country_code) REFERENCES ".DB_TABLE_PREFIX."t_country (pk_c_code)");
         $comm->query("ALTER TABLE ".DB_TABLE_PREFIX."t_region ADD FOREIGN KEY (fk_c_country_code) REFERENCES ".DB_TABLE_PREFIX."t_country (pk_c_code)");
         $comm->query("ALTER TABLE ".DB_TABLE_PREFIX."t_country_stats ADD FOREIGN KEY (fk_c_country_code) REFERENCES ".DB_TABLE_PREFIX."t_country (pk_c_code)");
         $comm->query("ALTER TABLE ".DB_TABLE_PREFIX."t_item_location ADD FOREIGN KEY (fk_c_country_code) REFERENCES ".DB_TABLE_PREFIX."t_country (pk_c_code)");
         $comm->query("ALTER TABLE ".DB_TABLE_PREFIX."t_user ADD FOREIGN KEY (fk_c_country_code) REFERENCES ".DB_TABLE_PREFIX."t_country (pk_c_code)");
+        // hack
+        $comm->query("SET FOREIGN_KEY_CHECKS = 1");
     }
 
     if(osc_version() < 241) {
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'use_imagick', '0', 'BOOLEAN')", DB_TABLE_PREFIX));
     }
 
-    osc_changeVersionTo(241) ;
+    if(osc_version() < 300) {
+        $comm->query(sprintf("ALTER TABLE %st_user DROP s_pass_answer", DB_TABLE_PREFIX));
+        $comm->query(sprintf("ALTER TABLE %st_user DROP s_pass_question", DB_TABLE_PREFIX));
+        osc_set_preference('marketURL', 'http://market.osclass.org/api/');
+    }
+
+    osc_changeVersionTo(300);
 
     echo '<div style="border: 1px solid rgb(204, 204, 204); background: none repeat scroll 0% 0% rgb(238, 238, 238);"> <div style="padding: 20px;">';
     echo '<p>'.__('OSClass &raquo; Updated correctly').'</p>' ;
     echo '<p>'.__('OSClass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
-    foreach($aMessages as $msg){
+    foreach($aMessages as $msg) {
         echo "<p>".$msg."</p>";
     }
     echo "</div></div>";

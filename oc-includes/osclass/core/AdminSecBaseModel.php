@@ -25,6 +25,15 @@
         function __construct()
         {
             parent::__construct() ;
+
+            // check if is moderator and can enter to this page
+            if( $this->isModerator() ) {
+                if( !in_array($this->page, array('items', 'comments', 'media', 'login', 'admins', 'ajax', 'stats','')) ) {
+                    osc_add_flash_error_message(_m("You don't have enough permissions"), 'admin');
+                    $this->redirectTo(osc_admin_base_url());
+                }
+            }
+
             osc_run_hook( 'init_admin' ) ;
 
             // check if exist a new version each day
@@ -51,11 +60,40 @@
                         $this->redirectTo(osc_admin_base_url(true) . '?page=upgrade');
                 }
             }
+
+            // show messages subscribed
+            $status_subscribe = Params::getParam('subscribe_osclass');
+            if( $status_subscribe != '' ) {
+                switch( $status_subscribe ) {
+                    case -1:
+                        osc_add_flash_error_message(_m('Entered an invalid email'), 'admin');
+                    break;
+                    case 0:
+                        osc_add_flash_warning_message(_m("You're already subscribed"), 'admin');
+                    break;
+                    case 1:
+                        osc_add_flash_ok_message(_m('Subscribed correctly'), 'admin');
+                    break;
+                    default:
+                        osc_add_flash_warning_message(_m("Error subscribing"), 'admin');
+                    break;
+                }
+            }
+
+            // show donation successful
+            if( Params::getParam('donation') == 'successful' ) {
+                osc_add_flash_ok_message(_m('Thank you very much for your donation'), 'admin');
+            }
         }
 
         function isLogged()
         {
             return osc_is_admin_user_logged_in() ;
+        }
+
+        function isModerator()
+        {
+            return osc_is_moderator();
         }
 
         function logout()
@@ -76,10 +114,9 @@
 
         function showAuthFailPage()
         {
-            // juanramon: we add here de init_admin hook becuase if not, it's not called
-            osc_run_hook( 'init_admin' ) ;
-            require osc_admin_base_path() . 'gui/login.php' ;
-            exit ;
+            Session::newInstance()->session_start();
+            Session::newInstance()->_setReferer(osc_base_url() . preg_replace('|^' . REL_WEB_URL . '|', '', $_SERVER['REQUEST_URI']));
+            $this->redirectTo( osc_admin_base_url(true)."?page=login" ) ;
         }
     }
 

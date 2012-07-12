@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '2.4.1') ;
+define('OSCLASS_VERSION', '3.0.0') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -87,6 +87,7 @@ require_once LIB_PATH . 'osclass/helpers/hUsers.php';
 require_once LIB_PATH . 'osclass/helpers/hItems.php';
 require_once LIB_PATH . 'osclass/helpers/hSearch.php';
 require_once LIB_PATH . 'osclass/helpers/hUtils.php';
+
 require_once LIB_PATH . 'osclass/helpers/hCategories.php';
 require_once LIB_PATH . 'osclass/helpers/hTranslations.php';
 require_once LIB_PATH . 'osclass/helpers/hSecurity.php';
@@ -158,6 +159,9 @@ require_once LIB_PATH . 'osclass/classes/Pagination.php';
 require_once LIB_PATH . 'osclass/classes/Watermark.php';
 require_once LIB_PATH . 'osclass/classes/Rewrite.php';
 require_once LIB_PATH . 'osclass/classes/Stats.php';
+require_once LIB_PATH . 'osclass/classes/AdminMenu.php';
+require_once LIB_PATH . 'osclass/classes/AdminToolbar.php';
+require_once LIB_PATH . 'osclass/classes/Breadcrumb.php';
 require_once LIB_PATH . 'osclass/alerts.php';
 
 require_once LIB_PATH . 'osclass/frm/Form.form.class.php';
@@ -172,20 +176,26 @@ require_once LIB_PATH . 'osclass/frm/SendFriend.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Alert.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Field.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Admin.form.class.php';
+require_once LIB_PATH . 'osclass/frm/ManageItems.form.class.php';
 
 require_once LIB_PATH . 'osclass/functions.php';
+require_once LIB_PATH . 'osclass/helpers/hAdminMenu.php';
 
 define('__OSC_LOADED__', true);
 
-Plugins::init() ;
+// Moved from BaseModel, since we need some session magic on index.php ;)
+Session::newInstance()->session_start() ;
 
-// init Rewrite class only iif it's the frontend
-if( !OC_ADMIN ) {
+if( OC_ADMIN ) {
+    // init admin menu
+    AdminMenu::newInstance()->init();
+} else {
+    // init Rewrite class only if it's the frontend
     Rewrite::newInstance()->init();
 }
 
-// Moved from BaseModel, since we need some session magic on index.php ;)
-Session::newInstance()->session_start() ;
+Plugins::init() ;
+
 
 if(osc_timezone() != '') {
     date_default_timezone_set(osc_timezone());
@@ -194,16 +204,34 @@ if(osc_timezone() != '') {
 function osc_show_maintenance() {
     if(defined('__OSC_MAINTENANCE__')) { ?>
         <div id="maintenance" name="maintenance">
-             <?php _e("The website is currently under maintenance mode"); ?>
+             <?php _e("The website is currently undergoing maintenance"); ?>
         </div>
     <?php }
 }
-
+function osc_show_maintenance_css() {
+    if(defined('__OSC_MAINTENANCE__')) { ?>
+<style>
+#maintenance {
+    position: static;
+    top: 0px;
+    right: 0px;
+    background-color: #bc0202;
+    width: 100%;
+    height:20px;
+    text-align: center;
+    padding:5px 0;
+    font-size:14px;
+    color: #fefefe;
+}
+</style>
+    <?php }
+}
 function osc_meta_generator() {
     echo '<meta name="generator" content="OSClass ' . OSCLASS_VERSION . '" />';
 }
 
 osc_add_hook("header", "osc_show_maintenance");
+osc_add_hook("header", "osc_show_maintenance_css");
 osc_add_hook("header", "osc_meta_generator");
 
 /* file end: ./oc-load.php */

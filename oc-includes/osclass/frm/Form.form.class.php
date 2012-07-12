@@ -35,14 +35,14 @@
             echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($value, ENT_COMPAT, "UTF-8")) . '" ' ;
             if (isset($maxLength)) echo 'maxlength="' . $maxLength . '" ' ;
             if (!$autocomplete) echo ' autocomplete="off" ';
-            if ($readOnly) echo 'disabled readonly ' ;
+            if ($readOnly) echo 'disabled="disabled" readonly="readonly" ' ;
             echo '/>' ;
         }
 
         static protected function generic_password($name, $value, $maxLength = null, $readOnly = false) {
             echo '<input id="' . $name . '" type="password" name="' . $name . '" value="' . osc_esc_html(htmlentities($value, ENT_COMPAT, "UTF-8")) . '" ' ;
             if (isset($maxLength)) echo 'maxlength="' . $maxLength . '" ' ;
-            if ($readOnly) echo 'disabled readonly ' ;
+            if ($readOnly) echo 'disabled="disabled" readonly="readonly" ' ;
             echo '/>' ;
         }
 

@@ -15,112 +15,178 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
-    <head>
-        <?php osc_current_admin_theme_path('head.php') ; ?>
-        <link href="<?php echo osc_current_admin_theme_styles_url('datatables.css') ; ?>" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.dataTables.js') ; ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.pagination.js') ; ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.extend.js') ; ?>"></script>
+
+    function addHelp() {
+        echo '<p>' . __('Manage the images that users have uploaded along with their listings. You can delete them without deleting the whole listing if the image is inappropriate or doesn’t match the listing.') . '</p>';
+    }
+    osc_add_hook('help_box','addHelp');
+
+    function customPageHeader(){ ?>
+        <h1><?php _e('Manage Media') ; ?>
+            <a href="<?php echo osc_admin_base_url(true) . '?page=settings&action=media' ; ?>" class="btn ico ico-32 ico-engine float-right"></a>
+            <a href="#" class="btn ico ico-32 ico-help float-right"></a>
+        </h1>
+<?php
+    }
+    osc_add_hook('admin_page_header','customPageHeader');
+
+    function customPageTitle($string) {
+        return sprintf(__('Media &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    //customize Head
+    function customHead() { ?>
         <script type="text/javascript">
-            $(function() {
-                oTable = $('#datatables_list').dataTable({
-                    "sAjaxSource": "<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=media&resourceId=<?php echo Params::getParam('id') ; ?>",
-                    "iDisplayLength": 10,
-                    "iColumns"      : 5,
-                    "sDom": "<'row-action'<'row'<'span6 length-menu'l><'span6 filter'>fr>>t<'row'<'span6 info-results'i><'span6 paginate'p>>",
-                    "sPaginationType": "bootstrap",
-                    "bLengthChange": false,
-                    "bProcessing": true,
-                    "bServerSide":true,
-                    "bPaginate": true,
-                    "bFilter": false,
-                    "oLanguage": {
-                        "oPaginate": {
-                            "sNext" : "<?php echo osc_esc_html( __('Next') ) ; ?>",
-                            "sPrevious" : "<?php echo osc_esc_html( __('Previous') ) ; ?>"
-                        },
-                        "sEmptyTable" : "<?php echo osc_esc_html( __('No data available in table') ) ; ?>",
-                        "sInfo": "<?php echo osc_esc_html( sprintf( __('Showing %s to %s of %s entries'), '_START_', '_END_', '_TOTAL_') ) ; ?>",
-                        "sInfoEmpty": "<?php echo osc_esc_html( __('No entries to show') ) ; ?>",
-                        "sInfoFiltered": "<?php echo osc_esc_html( sprintf( __('(filtered from %s total entries)'), '_MAX_' ) ) ; ?>",
-                        "sLoadingRecords": "<?php echo osc_esc_html( __('Loading...') ) ; ?>",
-                        "sProcessing": "<?php echo osc_esc_html( __('Processing...') ) ; ?>",
-                        "sSearch": "<?php echo osc_esc_html( __('Search by name') ) ; ?>",
-                        "sZeroRecords": "<?php echo osc_esc_html( __('No matching records found') ) ; ?>"
-                    },
-                    "aoColumns": [
-                        {
-                            "sTitle": '<input id="check_all" type="checkbox" />',
-                            "bSortable": false,
-                            "sWidth": "10px",
-                            "bSearchable": false
-                        },
-                        {
-                            "sTitle": "<?php echo osc_esc_html( __('File') ) ; ?>",
-                            "bSortable": false,
-                        },
-                        {
-                            "sTitle": "<?php echo osc_esc_html( __('Action') ) ; ?>",
-                            "bSortable": false,
-                            "sWidth": "100px"
-                        },
-                        {
-                            "sTitle": "<?php echo osc_esc_html( __('Attached to') ) ; ?>",
-                            "bSortable": true
-                        },
-                        {
-                            "sTitle": "<?php echo osc_esc_html( __('Date') ) ; ?>",
-                            "sWidth": "150px",
-                            "bSortable": true
+            $(document).ready(function(){
+                // check_all bulkactions
+                $("#check_all").change(function(){
+                    var isChecked = $(this+':checked').length;
+                    $('.col-bulkactions input').each( function() {
+                        if( isChecked == 1 ) {
+                            this.checked = true;
+                        } else {
+                            this.checked = false;
                         }
-                    ]
-                }) ;
-
-                $('#datatables_list tr').live('mouseover', function(event) {
-                    $('.datatables_quick_edit', this).show();
+                    });
                 });
 
-                $('#datatables_list tr').live('mouseleave', function(event) {
-                    $('.datatables_quick_edit', this).hide();
+                // dialog delete
+                $("#dialog-media-delete").dialog({
+                    autoOpen: false,
+                    modal: true,
+                    title: '<?php echo osc_esc_js( __('Delete media') ); ?>'
                 });
 
-                $('.length-menu').append( $("#bulk_actions") ) ;
-            }) ;
+                // dialog bulk actions
+                $("#dialog-bulk-actions").dialog({
+                    autoOpen: false,
+                    modal: true
+                });
+                $("#bulk-actions-submit").click(function() {
+                    $("#datatablesForm").submit();
+                });
+                $("#bulk-actions-cancel").click(function() {
+                    $("#datatablesForm").attr('data-dialog-open', 'false');
+                    $('#dialog-bulk-actions').dialog('close');
+                });
+                // dialog bulk actions function
+                $("#datatablesForm").submit(function() {
+                    if( $("#bulk_actions option:selected").val() == "" ) {
+                        return false;
+                    }
+
+                    if( $("#datatablesForm").attr('data-dialog-open') == "true" ) {
+                        return true;
+                    }
+
+                    $("#dialog-bulk-actions .form-row").html($("#bulk_actions option:selected").attr('data-dialog-content'));
+                    $("#bulk-actions-submit").html($("#bulk_actions option:selected").text());
+                    $("#datatablesForm").attr('data-dialog-open', 'true');
+                    $("#dialog-bulk-actions").dialog('open');
+                    return false;
+                });
+            });
+
+            // dialog delete function
+            function delete_dialog(media_id) {
+                $("#dialog-media-delete input[name='id[]']").attr('value', media_id);
+                $("#dialog-media-delete").dialog('open');
+                return false;
+            }
         </script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <!-- container -->
-        <div id="content">
-            <?php osc_current_admin_theme_path( 'include/backoffice_menu.php' ) ; ?>
-            <!-- right container -->
-            <div class="right">
-                <div class="header_title">
-                    <h1 class="media"><?php _e('Manage Media') ; ?></h1>
-                </div>
-                <?php osc_show_flash_message('admin') ; ?>
-                <!-- datatables media -->
-                <form class="settings users datatables" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-                    <input type="hidden" name="page" value="media" />
-                    <div id="bulk_actions">
-                        <label>
-                            <select id="action" name="bulk_actions" class="display">
-                                <option value=""><?php _e('Bulk actions'); ?></option>
-                                <option value="delete_all"><?php _e('Delete') ?></option>
-                            </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>">
-                        </label>
-                    </div>
-                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatables_list"></table>
-                </form>
-                <!-- /datatables media -->
-            </div>
-            <!-- /right container -->
+        <?php
+    }
+    osc_add_hook('admin_header','customHead');
+
+    $iDisplayLength = __get('iDisplayLength');
+    $aData          = __get('aMedia');
+?>
+<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+<div class="relative">
+    <div id="media-toolbar" class="table-toolbar">
+    </div>
+    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+        <input type="hidden" name="page" value="media" />
+        <input type="hidden" name="action" value="bulk_actions" />
+        <div id="bulk-actions">
+            <label>
+                <select id="bulk_actions" name="bulk_actions" class="select-box-extra">
+                    <option value=""><?php _e('Bulk actions'); ?></option>
+                    <option value="delete_all"  data-dialog-content="<?php printf(__('Are you sure you want to %s the selected media files?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ?></option>
+                </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+            </label>
         </div>
-        <!-- /container -->
-        <?php osc_current_admin_theme_path('footer.php') ; ?>
-    </body>
-</html>
+        <table class="table" cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
+                    <th><?php _e('E-mail') ; ?></th>
+                    <th><?php _e('Name') ; ?></th>
+                    <th><?php _e('Attached to') ; ?></th>
+                    <th class="col-date"><?php _e('Date') ; ?></th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php if( count($aData['aaData']) > 0 ) { ?>
+            <?php foreach( $aData['aaData'] as $array ) { ?>
+                <tr>
+                <?php foreach( $array as $key => $value ) { ?>
+                    <?php if( $key == 0 ) { ?>
+                    <td class="col-bulkactions">
+                    <?php } else { ?>
+                    <td>
+                    <?php } ?>
+                    <?php echo $value; ?>
+                    </td>
+                <?php } ?>
+                </tr>
+            <?php } ?>
+            <?php } else { ?>
+            <tr>
+                <td colspan="5" class="text-center">
+                <p><?php _e('No data available in table') ; ?></p>
+                </td>
+            </tr>
+            <?php } ?>
+            </tbody>
+        </table>
+    </form>
+</div>
+<?php
+    function showingResults(){
+        $aData = __get('aMedia');
+        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;
+    }
+    osc_add_hook('before_show_pagination_admin','showingResults');
+    osc_show_pagination_admin($aData);
+?>
+<form id="dialog-media-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+    <input type="hidden" name="page" value="media" />
+    <input type="hidden" name="action" value="delete" />
+    <input type="hidden" name="id[]" value="" />
+    <div class="form-horizontal">
+        <div class="form-row">
+            <?php _e('Are you sure you want to delete this media file?'); ?>
+        </div>
+        <div class="form-actions">
+            <div class="wrapper">
+            <a class="btn" href="javascript:void(0);" onclick="$('#dialog-media-delete').dialog('close');"><?php _e('Cancel'); ?></a>
+            <input id="media-delete-submit" type="submit" value="<?php echo osc_esc_html( __('Delete') ); ?>" class="btn btn-red" />
+            </div>
+        </div>
+    </div>
+</form>
+<div id="dialog-bulk-actions" title="<?php _e('Bulk actions'); ?>" class="has-form-actions hide">
+    <div class="form-horizontal">
+        <div class="form-row"></div>
+        <div class="form-actions">
+            <div class="wrapper">
+                <a id="bulk-actions-cancel" class="btn" href="javascript:void(0);"><?php _e('Cancel'); ?></a>
+                <a id="bulk-actions-submit" href="javascript:void(0);" class="btn btn-red" ><?php echo osc_esc_html( __('Delete') ); ?></a>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

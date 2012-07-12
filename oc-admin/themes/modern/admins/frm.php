@@ -1,6 +1,6 @@
 <?php
     /**
-     * OSClass - software for creating and publishing online classified advertising platforms
+     * OSClass – software for creating and publishing online classified advertising platforms
      *
      * Copyright (C) 2010 OSCLASS
      *
@@ -16,100 +16,109 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    //getting variables for this view
     $admin = __get("admin") ;
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
-    <head>
-        <?php osc_current_admin_theme_path('head.php') ; ?>
+    function customFrmText() {
+        $admin = __get("admin") ;
+        $return = array();
+        if( isset($admin['pk_i_id']) ) {
+            $return['admin_edit'] = true ;
+            $return['title']      = __('Edit admin') ;
+            $return['action_frm'] = 'edit_post' ;
+            $return['btn_text']   = __('Save') ;
+        } else {
+            $return['admin_edit']  = false ;
+            $return['title']      = __('Add admin') ;
+            $return['action_frm'] = 'add_post' ;
+            $return['btn_text']   = __('Add') ;
+        }
+        return $return;
+    }
+    function customPageHeader(){ ?>
+        <h1><?php _e('Admins'); ?></h1>
+<?php
+    }
+    osc_add_hook('admin_page_header','customPageHeader');
+    //customize Head
+    function customHead() { ?>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
-    </head>
-    <body>
-        <?php 
-            if(isset($admin['pk_i_id'])) {
-                // Editing an admin
-                $admin_edit = true;
-                $title = __("Edit admin") ;
-                $action_frm = "edit_post";
-                $btn_text = __("Save");
-            } else {
-                // Adding new admin
-                $admin_edit = false;
-                $title = __("Add new admin") ;
-                $action_frm = "add_post";
-                $btn_text = __("Add");
-            }
-        ?>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <!-- container -->
-        <div id="content">
-            <?php osc_current_admin_theme_path( 'include/backoffice_menu.php' ) ; ?>
-            <!-- right container -->
-            <div class="right">
-                <div class="header_title">
-                    <h1 class="admins"><?php echo $title; ?></h1>
+        <?php
+    }
+    osc_add_hook('admin_header','customHead');
+    
+    $aux = customFrmText();
+
+    function customPageTitle($string) {
+        $aux = customFrmText();
+        return sprintf('%s &raquo; %s', $aux['title'], $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    osc_current_admin_theme_path('parts/header.php') ; ?>
+<h2 class="render-title"><?php echo $aux['title'] ; ?></h2>
+    <!-- add/edit admin form -->
+    <div class="settings-user">
+        <ul id="error_list"></ul>
+        <form name="admin_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+            <input type="hidden" name="action" value="<?php echo $aux['action_frm'] ; ?>" />
+            <input type="hidden" name="page" value="admins" />
+            <?php AdminForm::primary_input_hidden($admin); ?>
+            <?php AdminForm::js_validation(); ?>
+            <fieldset>
+            <div class="form-horizontal">
+                <div class="form-row">
+                    <div class="form-label"><?php _e('Name <em>(required)</em>') ; ?></div>
+                    <div class="form-controls">
+                        <?php AdminForm::name_text($admin) ; ?>
+                    </div>
                 </div>
-                <?php osc_show_flash_message('admin') ; ?>
-                <!-- add admin form -->
-                <div class="settings general">
-                    <ul id="error_list" style="display: none;"></ul>
-                    <form name="admin_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-                        <input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
-                        <input type="hidden" name="page" value="admins" />
-                        <?php AdminForm::primary_input_hidden($admin); ?>
-                        <?php AdminForm::js_validation(); ?>
-                        <fieldset>
-                            <div class="input-line">
-                                <label><?php _e('Name <em>(required)</em>') ; ?></label>
-                                <div class="input">
-                                    <?php AdminForm::name_text($admin) ; ?>
-                                </div>
-                            </div>
-                            <div class="input-line">
-                                <label><?php _e('Username <em>(required)</em>') ; ?></label>
-                                <div class="input">
-                                    <?php AdminForm::username_text($admin) ; ?>
-                                </div>
-                            </div>
-                            <div class="input-line">
-                                <label><?php _e('E-mail <em>(required)</em>') ; ?></label>
-                                <div class="input">
-                                    <?php AdminForm::email_text($admin) ; ?>
-                                </div>
-                            </div>
-                            <?php if($admin_edit && osc_logged_admin_id()==$admin['pk_i_id']) { ?>
-                                <div class="input-line">
-                                    <label><?php _e('Current password') ; ?></label>
-                                    <div class="input">
-                                        <?php AdminForm::old_password_text($admin) ; ?>
-                                        <p class="help-inline"><em><?php _e('If you would like to change the password type a new one. Otherwise leave this blank') ; ?></em></p>
-                                    </div>
-                                </div>
-                            <?php }; ?>
-                            <div class="input-line">
-                                <label><?php _e('New password') ; ?></label>
-                                <div class="input">
-                                    <?php AdminForm::password_text($admin) ; ?>
-                                </div>
-                                <?php if($admin_edit) { ?>
-                                    <div class="input">
-                                        <?php AdminForm::check_password_text($admin) ; ?>
-                                        <p class="help-inline"><em><?php _e('Type your new password again') ; ?></em></p>
-                                    </div>
-                                <?php }; ?>
-                            </div>
-                            <div class="actions">
-                                <input type="submit" value="<?php echo osc_esc_html($btn_text) ; ?>" />
-                            </div>
-                        </fieldset>
-                    </form>
+                <div class="form-row">
+                    <div class="form-label"><?php _e('Username <em>(required)</em>') ; ?></div>
+                    <div class="form-controls"><?php AdminForm::username_text($admin) ; ?></div>
                 </div>
-                <!-- /add admin form -->
+                <div class="form-row">
+                    <div class="form-label"><?php _e('E-mail <em>(required)</em>') ; ?></div>
+                    <div class="form-controls"><?php AdminForm::email_text($admin) ; ?></div>
+                </div>
+                <?php if(!$aux['admin_edit'] || ($aux['admin_edit'] && Params::getParam('id')!= osc_logged_admin_id() && Params::getParam('id')!='')) { ?>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Admin type <em>(required)</em>') ; ?></div>
+                        <div class="form-controls">
+                            <?php AdminForm::type_select($admin) ; ?>
+                            <p class="help-inline"><em><?php _e('Administrators have total control over all aspects of your installation, while moderators are only allowed to moderate listings, comments and media files') ; ?></em></p>
+                        </div>
+                    </div>
+                <?php } ?>
+                <?php if($aux['admin_edit'] && osc_logged_admin_id()==$admin['pk_i_id']) { ?>
+                    <div class="form-row">
+                        <div class="form-label"><?php _e('Current password') ; ?></div>
+                        <div class="form-controls">
+                            <?php AdminForm::old_password_text($admin) ; ?>
+                            <p class="help-inline"><em><?php _e('If you want to change your password, type your current password here. Otherwise, leave this blank.') ; ?></em></p>
+                        </div>
+                    </div>
+                <?php } ?>
+                <div class="form-row">
+                    <div class="form-label"><?php _e('New password') ; ?></div>
+                    <div class="form-controls">
+                        <?php AdminForm::password_text($admin) ; ?>
+                    </div>
+                    <?php if($aux['admin_edit']) { ?>
+                        <div class="form-controls">
+                            <?php AdminForm::check_password_text($admin) ; ?>
+                            <p class="help-inline"><em><?php _e('Type your new password again') ; ?></em></p>
+                        </div>
+                    <?php } ?>
+                </div>
+                <div class="clear"></div>
+                <div class="form-actions">
+                    <?php if( $aux['admin_edit'] ) { ?>
+                    <a href="javascript:history.go(-1)" class="btn"><?php _e('Cancel'); ?></a>
+                    <?php } ?>
+                    <input type="submit" value="<?php echo osc_esc_html($aux['btn_text']) ; ?>" class="btn btn-submit" />
+                </div>
             </div>
-            <!-- /right container -->
-        </div>
-        <!-- /container -->
-        <?php osc_current_admin_theme_path('footer.php') ; ?>
-    </body>
-</html>
+            </fieldset>
+        </form>
+    </div>
+    <!-- /add user form -->
+<?php osc_current_admin_theme_path('parts/footer.php') ; ?>

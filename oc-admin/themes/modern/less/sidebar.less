@@ -1,0 +1,209 @@
+#sidebar,
+#sidebar a{
+    color:               @color-gray-black;
+    text-decoration:     none;
+}
+#sidebar h3 .ico{
+    margin-left:         16px;
+    *margin-left:        0px;
+}
+#sidebar h3{
+    margin:              0px;
+    padding:             0px;
+    font-size:           11px;
+    font-weight:         normal;
+    text-align:          center;
+    position:            absolute;
+    bottom:              10px;
+    width:               100%;
+}
+#sidebar ul{
+    margin:              0px;
+    padding:             0px;
+    list-style:          0px;
+}
+#sidebar .oscmenu li,
+#show-more li{
+    width:               79px;
+    height:              79px;
+    border-bottom:       solid 1px @color-gray-soft;
+    list-style:          0px;
+    position:            relative;
+    list-style:          none;
+}
+#sidebar .oscmenu .current{
+    background:          @color-gray-soft;
+    -webkit-box-shadow: inset 0px 0px 10px 0px @color-gray-ash;
+    box-shadow: inset 0px 0px 10px 0px @color-gray-ash;
+    *margin-top:-5px;
+}
+body.compact #sidebar .oscmenu .current{
+    background:          @color-gray-hardblack;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+#show-more li{
+    float:left;
+    border-bottom:       none;
+}
+    #sidebar .oscmenu ul,
+    #hidden-menus{
+        position:            absolute;
+        list-style:          none;
+        padding:             10px 0;
+        width:               150px;
+        left:                70px;
+        top:                 -1px;
+        z-index:             3;
+        border:              solid 1px @color-gray-soft;
+        background-color:    @color-white;
+        .rounded-corners;
+        -webkit-box-shadow:  1px 1px 0px 0px @color-gray-ash;   
+        box-shadow:          1px 1px 0px 0px @color-gray-ash;
+        font-size:           12px;
+        display:             none;
+    }
+    body.compact .oscmenu ul,
+    body.compact #hidden-menus{
+        left:                50px !important;
+    }
+    #sidebar .oscmenu li li,
+    body.compact #sidebar .oscmenu li li{
+        width:           auto;
+        height:          auto;
+        border-bottom:   none;
+        list-style:      0px;
+        position:        relative;
+    }
+    #sidebar .submenu-divide{
+        background:#eaeaea;
+        padding:3px 15px;
+        margin-top:3px;
+        color:@color-gray-hardblack;
+    }
+    #sidebar .oscmenu li li a,
+    body.compact #sidebar .oscmenu li li a{
+        display:         block;
+        padding:         2px 15px;
+        color:           @color-gray-hardblack;
+
+    }
+    #sidebar .oscmenu li li a:hover,
+    body.compact #sidebar .oscmenu li li a:hover{
+        background:      @color-gray-light;
+    }
+    #sidebar .oscmenu li.hover ul,
+    body.compact #sidebar .oscmenu li.hover ul{
+        display:         block;
+    }
+    #sidebar .oscmenu li ul .arrow,
+    body.compact #sidebar .oscmenu li ul .arrow{
+        width:           10px;
+        height:          20px;
+        position:        absolute;
+        top:             50%;
+        left:            -10px;
+        padding:         0px;
+        margin-top:      -10px;
+        background:      url('../images/arrow.png');
+    }
+#submenu-sidebar{
+    position:            fixed;
+    padding:             10px;
+    width:               150px;
+    left:                70px;
+    top:                 0px;
+    z-index:             3;
+    border:              solid 1px @color-gray-soft;
+    background-color:    @color-white;
+    .rounded-corners;
+    -webkit-box-shadow:  1px 1px 0px 0px @color-gray-ash;   
+    box-shadow:          1px 1px 0px 0px @color-gray-ash;
+}
+    #submenu-sidebar ul{
+        list-style:      none;
+        margin:          0px;
+        padding:         0px;
+        font-size:       12px;
+    }
+#show-more{
+    width:               79px;
+    height:              79px;
+    border-bottom:       solid 1px @color-gray-soft;
+    list-style:          0px;
+    position:            relative;
+}
+#show-more li ul{
+    display:             none;
+}
+    #hidden-menus{
+        display:             none;
+        padding:             10px !important;
+        top:                 -10px;
+    }
+    #sidebar .hover #hidden-menus{
+        display:             block;
+    }
+    #hidden-menus .hover ul{
+        display:             block;
+        position:            absolute;
+        list-style:          none;
+        padding:             10px 0;
+        width:               150px;
+        left:                /*-4px*/-11px;
+        margin-top:          -15px;
+        z-index:             3;
+        border:              solid 1px @color-gray-soft;
+        background-color:    @color-white;
+        .rounded-corners;
+        -webkit-box-shadow:  1px 1px 0px 0px @color-gray-ash;   
+        box-shadow:          1px 1px 0px 0px @color-gray-ash;
+        font-size:           12px;
+    }
+    #hidden-menus .hover ul li{
+        width:           auto;
+        height:          auto;
+        border-bottom:   none;
+        list-style:      0px;
+        position:        relative;
+        float:none;
+    }
+    #hidden-menus ul li a{
+        display:         block;
+        padding:         2px 15px;
+        color:           @color-gray-hardblack;
+
+    }
+    #hidden-menus .hover ul li a:hover{
+        background:      @color-gray-light;
+    }
+    #show-more ul li.arrow{
+        height:          10px;
+        width:           20px;
+        position:        absolute;
+        top:             100%;
+        left:            40px;
+        padding:         0px;
+        margin-top:      0px;
+        background:      url('../images/arrow2.png');
+    }
+body.compact #sidebar{
+    background-color:@color-gray-black;
+    width:50px;
+}
+body.compact #sidebar .oscmenu li,
+body.compact #show-more li{
+    width:               50px;
+    height:              50px;
+    border-bottom:       solid 1px @color-gray-hardblack;
+}
+body.compact #sidebar h3{
+    bottom:6px;
+    text-indent:-9999px;
+    font-size:0px;
+}
+body.compact #sidebar h3 .ico{
+    margin-left:         8px;
+    width:               35px;
+    height:              35px;
+}

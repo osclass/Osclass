@@ -15,59 +15,55 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
-    <head>
-        <?php osc_current_admin_theme_path('head.php') ; ?>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <!-- container -->
-        <div id="content">
-            <?php osc_current_admin_theme_path( 'include/backoffice_menu.php' ) ; ?>
-            <!-- right container -->
-            <div class="right">
-                <div class="header_title">
-                    <h1 class="languages"><?php _e('Add a language') ; ?></h1>
-                </div>
-                <?php osc_show_flash_message('admin') ; ?>
-                <!-- add language form -->
-                <div class="languages">
-                <?php if( is_writable( osc_translations_path() ) ) { ?>
-                    <div class="FlashMessage info">
-                        <p class="info"><?php printf( __('Download more languages at %s'), '<a href="https://sourceforge.net/projects/osclass/files/Languages/" target="_blank">Sourceforge</a>') ; ?></p>
-                    </div>
-                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="action" value="add_post" />
-                        <input type="hidden" name="page" value="languages" />
-                        <div class="actions-nomargin">
-                            <p class="text">
-                                <?php _e('Language package (.zip)') ; ?>
-                                <input type="file" name="package" id="package" />
-                            </p>
-                            <input type="submit" value="<?php echo osc_esc_html( __('Upload') ) ; ?>" />
-                        </div>
-                    </form>
-                <?php } else { ?>
-                    <div class="FlashMessage error">
-                        <a class="close" href="#">×</a>
-                        <p><?php _e('Cannot install a new language') ; ?></p>
-                    </div>
-                    <p class="text">
-                        <?php _e('The translations folder is not writable on your server and you cannot upload translations from the administration panel. Please make the translation folder writable') ; ?>
-                    </p>
-                    <p class="text">
-                        <?php _e('To make the directory writable under UNIX execute this command from the shell:') ; ?>
-                    </p>
-                    <pre>chmod a+w <?php echo osc_translations_path() ; ?></pre>
-                <?php } ?>
-                </div>
-                <!-- /add language form -->
+
+    osc_add_hook('admin_page_header','customPageHeader');
+    function customPageHeader(){ ?>
+        <h1><?php _e('Settings') ; ?></h1>
+<?php
+    }
+
+    function customPageTitle($string) {
+        return sprintf(__('Add language &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    osc_current_admin_theme_path('parts/header.php') ; ?>
+<div class="appearance">
+    <h2 class="render-title"><?php _e('Add language') ; ?></h2>
+    <div id="upload-language">
+        <div class="form-horizontal">
+        <?php if( is_writable( osc_translations_path() ) ) { ?>
+            <div class="flashmessage flashmessage-info flashmessage-inline" style="display:block;">
+                <p class="info"><?php printf( __('Download more languages at %s'), '<a href="https://sourceforge.net/projects/osclass/files/Languages/" target="_blank">Sourceforge</a>') ; ?></p>
             </div>
-            <!-- /right container -->
+            <form class="separate-top" action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="add_post" />
+                <input type="hidden" name="page" value="languages" />
+
+                <div class="form-row">
+                    <div class="form-label"> <?php _e('Language package (.zip)') ; ?></div>
+                    <div class="form-controls">
+                        <div class="form-label-checkbox"><input type="file" name="package" id="package" /></div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <input type="submit" value="<?php echo osc_esc_html( __('Upload') ) ; ?>" class="btn btn-submit" />
+                </div>
+            </form>
+        <?php } else { ?>
+            <div class="flashmessage flashmessage-error">
+                <a class="btn ico btn-mini ico-close" href="#">×</a>
+                <p><?php _e("Can't install a new language") ; ?></p>
+            </div>
+            <p class="text">
+                <?php _e("The translations folder is not writable on your server so you can't upload translations from the administration panel. Please make the translation folder writable and try again.") ; ?>
+            </p>
+            <p class="text">
+                <?php _e('To make the directory writable under UNIX execute this command from the shell:') ; ?>
+            </p>
+            <pre>chmod a+w <?php echo osc_translations_path() ; ?></pre>
+        <?php } ?>
         </div>
-        <!-- /container -->
-        <?php osc_current_admin_theme_path('footer.php') ; ?>
-    </body>
-</html>
+    </div>
+</div>
+<?php osc_current_admin_theme_path('parts/footer.php') ; ?>

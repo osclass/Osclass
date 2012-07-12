@@ -24,6 +24,12 @@
 
     require_once ABS_PATH . 'oc-load.php' ;
 
+    $adminThemes = new AdminThemes() ;
+    $functions_path = $adminThemes->getCurrentThemePath() . 'functions.php';
+    if( file_exists($functions_path) ) {
+        require_once $functions_path ;
+    }
+
     if( file_exists(ABS_PATH . '.maintenance') ) {
         define('__OSC_MAINTENANCE__', true);
     }
@@ -100,6 +106,10 @@
         break;
         case('upgrade'):    require_once(osc_admin_base_path() . 'upgrade.php') ;
                             $do = new CAdminUpgrade() ;
+                            $do->doModel() ;
+        break;
+        case('market'):   require_once(osc_admin_base_path() . 'market.php') ;
+                            $do = new CAdminMarket() ;
                             $do->doModel() ;
         break;
         default:            //login of oc-admin

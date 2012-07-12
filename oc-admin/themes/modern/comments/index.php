@@ -16,141 +16,196 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $comments = __get('comments') ;
-
-    $aData = array() ;
-    foreach($comments as $comment) {
-        $row = array() ;
-
-        $options = array() ;
-        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=comment_edit&amp;id=' . $comment['pk_i_id'] . '" id="dt_link_edit">' . __('Edit') . '</a>' ;
-        if( $comment['b_active'] ) {
-            $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') . '</a>' ;
-        } else {
-            $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] .'&amp;value=ACTIVE">' . __('Activate') . '</a>' ;
-        }
-        if( $comment['b_enabled'] ) {
-            $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=DISABLE">' . __('Unblock') . '</a>' ;
-        } else {
-            $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=ENABLE">' . __('Block') . '</a>' ;
-        }
-        $options[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) . '\')" href="' . osc_admin_base_url(true) . '?page=comments&amp;action=delete&amp;id=' . $comment['pk_i_id'] .'" id="dt_link_delete">' . __('Delete') . '</a>' ;
-
-        $row[] = '<input type="checkbox" name="id[]" value="' . $comment['pk_i_id']  . '" />' ;
-        if( empty($comment['s_author_name']) ) {
-            $user = User::newInstance()->findByPrimaryKey( $comment['fk_i_user_id'] );
-            $comment['s_author_name'] = $user['s_email'];
-        }
-        $row[] = $comment['s_author_name'] . ' (<a target="_blank" href="' . osc_item_url_ns( $comment['fk_i_item_id'] ) . '">' . $comment['s_title'] . '</a>)<div class="datatables_quick_edit" style="display:none;">' . implode(' &middot; ', $options) . '</div>' ;
-        $row[] = $comment['s_body'] ;
-        $row[] = $comment['dt_pub_date'] ;
-
-        $aData[] = $row ;
+    function addHelp() {
+        echo '<p>' . __('Manage the comments that users publish on the listings on your site. You can also edit, delete, activate or block comments.') . '</p>';
     }
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()) ; ?>">
-    <head>
-        <?php osc_current_admin_theme_path('head.php') ; ?>
-        <link href="<?php echo osc_current_admin_theme_styles_url('datatables.css') ; ?>" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.dataTables.js') ; ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.pagination.js') ; ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.extend.js') ; ?>"></script>
+    osc_add_hook('help_box','addHelp');
+
+    function customPageHeader(){ ?>
+        <h1><?php _e('Listing') ; ?>
+            <a href="<?php echo osc_admin_base_url(true) . '?page=settings&action=comments' ; ?>" class="btn ico ico-32 ico-engine float-right"><?php _e('Settings'); ?></a>
+            <a href="#" class="btn ico ico-32 ico-help float-right"></a>
+        </h1>
+<?php
+    }
+    osc_add_hook('admin_page_header','customPageHeader');
+
+    function customPageTitle($string) {
+        return sprintf(__('Comments &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
+    //customize Head
+    function customHead() { ?>
         <script type="text/javascript">
-            $(function() {
-                oTable = $('#datatables_list').dataTable({
-                    "sDom": "<'row-action'<'row'<'span6 length-menu'l><'span6 filter'>fr>>t<'row'<'span6 info-results'i><'span6 paginate'p>>",
-                    "sPaginationType": "bootstrap",
-                    "bLengthChange": false,
-                    "bProcessing": true,
-                    "bServerSide":false,
-                    "bPaginate": true,
-                    "bFilter": false,
-                    "oLanguage": {
-                        "oPaginate": {
-                            "sNext" : "<?php echo osc_esc_html( __('Next') ) ; ?>",
-                            "sPrevious" : "<?php echo osc_esc_html( __('Previous') ) ; ?>"
-                        },
-                        "sEmptyTable" : "<?php echo osc_esc_html( __('No data available in table') ) ; ?>",
-                        "sInfo": "<?php echo osc_esc_html( sprintf( __('Showing %s to %s of %s entries'), '_START_', '_END_', '_TOTAL_') ) ; ?>",
-                        "sInfoEmpty": "<?php echo osc_esc_html( __('No entries to show') ) ; ?>",
-                        "sInfoFiltered": "<?php echo osc_esc_html( sprintf( __('(filtered from %s total entries)'), '_MAX_' ) ) ; ?>",
-                        "sLoadingRecords": "<?php echo osc_esc_html( __('Loading...') ) ; ?>",
-                        "sProcessing": "<?php echo osc_esc_html( __('Processing...') ) ; ?>",
-                        "sSearch": "<?php echo osc_esc_html( __('Search') ) ; ?>",
-                        "sZeroRecords": "<?php echo osc_esc_html( __('No matching records found') ) ; ?>"
-                    },
-                    "aaData": <?php echo json_encode($aData) ; ?>,
-                    "aoColumns": [
-                        {
-                            "sTitle": "<input id='check_all' type='checkbox' />",
-                            "bSortable": false,
-                            "sWidth": "10px",
-                            "bSearchable": false
-                        },
-                        {
-                            "sTitle": "<?php echo osc_esc_html( __('Author') ) ; ?>",
-                            "sWidth": "auto"
-                        },
-                        {
-                            "sTitle": "<?php echo osc_esc_html( __('Comment') ) ; ?>",
-                            "bSortable": false
-                        },
-                        {
-                            "sTitle": "<?php echo osc_esc_html( __('Date') ) ; ?>",
-                            "sWidth": "150px",
-                            "bSearchable": false
+            // autocomplete users
+            $(document).ready(function(){
+                // check_all bulkactions
+                $("#check_all").change(function(){
+                    var isChecked = $(this+':checked').length;
+                    $('.col-bulkactions input').each( function() {
+                        if( isChecked == 1 ) {
+                            this.checked = true;
+                        } else {
+                            this.checked = false;
                         }
-                    ]
+                    });
                 });
 
-                $('#datatables_list tr').live('mouseover', function(event) {
-                    $('.datatables_quick_edit', this).show();
+                // dialog delete
+                $("#dialog-comment-delete").dialog({
+                    autoOpen: false,
+                    modal: true
                 });
 
-                $('#datatables_list tr').live('mouseleave', function(event) {
-                    $('.datatables_quick_edit', this).hide();
+                // dialog bulk actions
+                $("#dialog-bulk-actions").dialog({
+                    autoOpen: false,
+                    modal: true
                 });
+                $("#bulk-actions-submit").click(function() {
+                    $("#datatablesForm").submit();
+                });
+                $("#bulk-actions-cancel").click(function() {
+                    $("#datatablesForm").attr('data-dialog-open', 'false');
+                    $('#dialog-bulk-actions').dialog('close');
+                });
+                // dialog bulk actions function
+                $("#datatablesForm").submit(function() {
+                    if( $("#bulk_actions option:selected").val() == "" ) {
+                        return false;
+                    }
 
-                $('.length-menu').append( $("#bulk_actions") ) ;
+                    if( $("#datatablesForm").attr('data-dialog-open') == "true" ) {
+                        return true;
+                    }
+
+                    $("#dialog-bulk-actions .form-row").html($("#bulk_actions option:selected").attr('data-dialog-content'));
+                    $("#bulk-actions-submit").html($("#bulk_actions option:selected").text());
+                    $("#datatablesForm").attr('data-dialog-open', 'true');
+                    $("#dialog-bulk-actions").dialog('open');
+                    return false;
+                });
+                // /dialog bulk actions
             });
+
+            // dialog delete function
+            function delete_dialog(item_id) {
+                $("#dialog-comment-delete input[name='id']").attr('value', item_id);
+                $("#dialog-comment-delete").dialog('open');
+                return false;
+            }
         </script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
-    </head>
-    <body>
-        <?php osc_current_admin_theme_path('header.php') ; ?>
-        <!-- container -->
-        <div id="content">
-            <?php osc_current_admin_theme_path( 'include/backoffice_menu.php' ) ; ?>
-            <!-- right container -->
-            <div class="right">
-                <div class="header_title">
-                    <h1 class="comments"><?php _e('Manage Comments') ; ?></h1>
-                </div>
-                <?php osc_show_flash_message('admin') ; ?>
-                <!-- datatables comments -->
-                <form class="comments datatables" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-                    <input type="hidden" name="page" value="comments" />
-                    <input type="hidden" name="action" value="bulk_actions" />
-                    <div id="bulk_actions">
-                        <label>
-                            <select id="bulk_actions" name="bulk_actions" class="display">
-                                <option value=""><?php _e('Bulk actions') ; ?></option>
-                                <option value="delete_all"><?php _e('Delete') ; ?></option>
-                                <option value="activate_all"><?php _e('Activate') ; ?></option>
-                                <option value="deactivate_all"><?php _e('Deactivate') ; ?></option>
-                                <option value="enable_all"><?php _e('Block') ; ?></option>
-                                <option value="disable_all"><?php _e('Unblock') ; ?></option>
-                            </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>">
-                        </label>
-                    </div>
-                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatables_list"></table>
-                </form>
-                <!-- /datatables comments -->
-            </div>
-            <!-- /right container -->
+        <?php
+    }
+    osc_add_hook('admin_header','customHead');
+
+    $aData = __get('aComments');
+
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+<h2 class="render-title"><?php _e('Comments') ; ?></h2>
+<div class="relative">
+    <div id="listing-toolbar">
+        <div class="float-right">
+            <?php if(Params::getParam('showAll') == true) { ?>
+            <a href="<?php echo osc_admin_base_url(true) . '?page=comments&showAll=off'; ?>" class="btn btn-red"><?php _e('Hidden comments');?></a>
+            <?php } else { ?>
+            <a href="<?php echo osc_admin_base_url(true) . '?page=comments'; ?>" class="btn btn-blue"><?php _e('All comments');?></a>
+            <?php } ?>
         </div>
-        <!-- /container -->
-        <?php osc_current_admin_theme_path('footer.php') ; ?>
-    </body>
-</html>
+    </div>
+    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post" data-dialog-open="false">
+        <input type="hidden" name="page" value="comments" />
+        <input type="hidden" name="action" value="bulk_actions" />
+        <div id="bulk-actions">
+            <label>
+                <select id="bulk_actions" name="bulk_actions" class="select-box-extra">
+                    <option value=""><?php _e('Bulk actions') ; ?></option>
+                    <option value="delete_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected comments?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ; ?></option>
+                    <option value="activate_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected comments?'), strtolower(__('Activate'))); ?>"><?php _e('Activate') ; ?></option>
+                    <option value="deactivate_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected comments?'), strtolower(__('Deactivate'))); ?>"><?php _e('Deactivate') ; ?></option>
+                    <option value="disable_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected comments?'), strtolower(__('Block'))); ?>"><?php _e('Block') ; ?></option>
+                    <option value="enable_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected comments?'), strtolower(__('Unblock'))); ?>"><?php _e('Unblock') ; ?></option>
+                </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+            </label>
+        </div>
+        <div class="table-contains-actions">
+            <table class="table" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
+                        <th><?php _e('Author') ; ?></th>
+                        <th><?php _e('Comment') ; ?></th>
+                        <th class="col-date"><?php _e('Date') ; ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php if( count($aData['aaData']) > 0 ) { ?>
+                <?php foreach( $aData['aaData'] as $key => $array ) { ?>
+                    <?php 
+                    $aC = $aData['aaObject'][$key]; 
+                    $class = ''; 
+                    if(!$aC['b_enabled'] || !$aC['b_active'] || $aC['b_spam']) $class = 'status-spam'; 
+                    ?>
+                    <tr class="<?php echo $class; ?>">
+                    <?php foreach($array as $key => $value) { ?>
+                        <?php if( $key==0 ) { ?>
+                        <td class="col-bulkactions">
+                        <?php } else { ?>
+                        <td>
+                        <?php } ?>
+                        <?php echo $value; ?>
+                        </td>
+                    <?php } ?>
+                    </tr>
+                <?php } ?>
+                <?php } else { ?>
+                    <tr>
+                        <td colspan="4" class="text-center">
+                        <p><?php _e('No data available in table') ; ?></p>
+                        </td>
+                    </tr>
+                <?php } ?>
+                </tbody>
+            </table>
+            <div id="table-row-actions"></div><!-- used for table actions -->
+        </div>
+    </form>
+</div>
+<?php 
+    function showingResults(){
+        $aData = __get('aComments');
+        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;
+    }
+    osc_add_hook('before_show_pagination_admin','showingResults');
+    osc_show_pagination_admin($aData);
+?>
+<form id="dialog-comment-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete comment')); ?>">
+    <input type="hidden" name="page" value="comments" />
+    <input type="hidden" name="action" value="delete" />
+    <input type="hidden" name="id" value="" />
+    <div class="form-horizontal">
+        <div class="form-row">
+            <?php _e('Are you sure you want to delete this comment?'); ?>
+        </div>
+        <div class="form-actions">
+            <div class="wrapper">
+            <a class="btn" href="javascript:void(0);" onclick="$('#dialog-comment-delete').dialog('close');"><?php _e('Cancel'); ?></a>
+            <input id="comment-delete-submit" type="submit" value="<?php echo osc_esc_html( __('Delete') ); ?>" class="btn btn-red" />
+            </div>
+        </div>
+    </div>
+</form>
+<div id="dialog-bulk-actions" title="<?php _e('Bulk actions'); ?>" class="has-form-actions hide">
+    <div class="form-horizontal">
+        <div class="form-row"></div>
+        <div class="form-actions">
+            <div class="wrapper">
+                <a id="bulk-actions-cancel" class="btn" href="javascript:void(0);"><?php _e('Cancel'); ?></a>
+                <a id="bulk-actions-submit" href="javascript:void(0);" class="btn btn-red" ><?php echo osc_esc_html( __('Delete') ); ?></a>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

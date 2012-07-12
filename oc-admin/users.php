@@ -136,6 +136,7 @@
                                         $userId   = Params::getParam('id');
                                         if(!is_array($userId)) {
                                             osc_add_flash_error_message( _m("User id isn't in the correct format"), 'admin') ;
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                                         }
 
                                         $userActions = new UserActions(true) ;
@@ -144,12 +145,11 @@
                                         }
 
                                         if($iUpdated==0) {
-                                            $msg = _m('No user has been selected') ;
+                                            osc_add_flash_error_message(_m('No users have been selected'), 'admin');
                                         } else {
-                                            $msg = sprintf( _mn('Activation email sent to one user', 'Activation email sent to %s users', $iUpdated), $iUpdated ) ;
+                                            osc_add_flash_ok_message(sprintf( _mn('Activation email sent to one user', 'Activation email sent to %s users', $iUpdated), $iUpdated ), 'admin');
                                         }
 
-                                        osc_add_flash_ok_message($msg, 'admin') ;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                 break ;
                 case('activate'):       //activate
@@ -158,6 +158,7 @@
                                         $userId   = Params::getParam('id') ;
                                         if( !is_array($userId) ) {
                                             osc_add_flash_error_message( _m("User id isn't in the correct format"), 'admin') ;
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                                         }
 
                                         $userActions = new UserActions(true) ;
@@ -166,7 +167,7 @@
                                         }
 
                                         if( $iUpdated == 0 ) {
-                                            $msg = _m('No user has been activated') ;
+                                            $msg = _m('No users have been activated') ;
                                         } else {
                                             $msg = sprintf( _mn('One user has been activated', '%s users have been activated', $iUpdated), $iUpdated ) ;
                                         }
@@ -180,6 +181,7 @@
                                         $userId   = Params::getParam('id') ;
                                         if( !is_array($userId) ) {
                                             osc_add_flash_error_message( _m("User id isn't in the correct format"), 'admin') ;
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                                         }
 
                                         $userActions = new UserActions(true) ;
@@ -188,7 +190,7 @@
                                         }
 
                                         if( $iUpdated == 0 ) {
-                                            $msg = _m('No user has been deactivated') ;
+                                            $msg = _m('No users have been deactivated') ;
                                         } else {
                                             $msg = sprintf( _mn('One user has been deactivated', '%s users have been deactivated', $iUpdated), $iUpdated ); 
                                         }
@@ -202,6 +204,7 @@
                                         $userId   = Params::getParam('id') ;
                                         if( !is_array($userId) ) {
                                             osc_add_flash_error_message(_m("User id isn't in the correct format"), 'admin') ;
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                                         }
 
                                         $userActions = new UserActions(true) ;
@@ -210,9 +213,9 @@
                                         }
 
                                         if( $iUpdated == 0 ) {
-                                            $msg = _m('No user has been enabled') ;
+                                            $msg = _m('No users have been enabled') ;
                                         } else {
-                                            $msg = sprintf( _mn('One user has been enabled', '%s users have been enabled', $iUpdated), $iUpdated ) ;
+                                            $msg = sprintf( _mn('One user has been unblocked', '%s users have been unblocked', $iUpdated), $iUpdated ) ;
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin') ;
@@ -224,6 +227,7 @@
                                         $userId   = Params::getParam('id') ;
                                         if( !is_array($userId) ) {
                                             osc_add_flash_error_message( _m("User id isn't in the correct format"), 'admin') ;
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                                         }
 
                                         $userActions = new UserActions(true) ;
@@ -232,9 +236,9 @@
                                         }
 
                                         if( $iUpdated == 0 ) {
-                                            $msg = _m('No user has been disabled') ;
+                                            $msg = _m('No users have been disabled') ;
                                         } else {
-                                            $msg = sprintf( _mn('One user has been disabled', '%s users have been disabled', $iUpdated), $iUpdated ) ;
+                                            $msg = sprintf( _mn('One user has been blocked', '%s users have been blocked', $iUpdated), $iUpdated ) ;
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin') ;
@@ -245,6 +249,7 @@
                                         $userId   = Params::getParam('id') ;
                                         if( !is_array($userId) ) {
                                             osc_add_flash_error_message( _m("User id isn't in the correct format"), 'admin') ;
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                                         }
 
                                         foreach($userId as $id) {
@@ -256,7 +261,7 @@
                                         }
 
                                         if( $iDeleted == 0 ) {
-                                            $msg = _m('No user has been deleted') ;
+                                            $msg = _m('No users have been deleted') ;
                                         } else {
                                             $msg = sprintf( _mn('One user has been deleted', '%s users have been deleted', $iDeleted), $iDeleted ) ;
                                         }
@@ -296,11 +301,48 @@
                                         ) ;
 
                                         if( $iUpdated > 0 ) {
-                                            osc_add_flash_ok_message( _m("Users' settings have been updated"), 'admin') ;
+                                            osc_add_flash_ok_message( _m("User settings have been updated"), 'admin') ;
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=settings') ;
                 break ;
                 default:                // manage users view
+                                        // set default iDisplayLength 
+                                        if( Params::getParam('iDisplayLength') == '' ) {
+                                            Params::setParam('iDisplayLength', 10 ) ;
+                                        }
+                                        $p_iPage      = 1;
+                                        if( is_numeric(Params::getParam('iPage')) && Params::getParam('iPage') >= 1 ) {
+                                            $p_iPage = Params::getParam('iPage');
+                                        }
+                                        Params::setParam('iPage', $p_iPage);
+                                        $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
+                                        $this->_exportVariableToView('sSearch', Params::getParam('sSearch'));
+                                        
+                                        require_once osc_admin_base_path() . 'ajax/users_processing.php';
+                                        $users_processing = new UsersProcessingAjax(Params::getParamsAsArray("get"));
+                                        $aData = $users_processing->result() ;
+                                        
+                                        $page  = (int)Params::getParam('iPage');
+                                        if(count($aData['aaData']) == 0 && $page!=1) {
+                                            $total = (int)$aData['iTotalDisplayRecords'];
+                                            $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
+
+                                            $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+
+                                            if($maxPage==0) {
+                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage=1', $url) ;
+                                                $this->redirectTo($url) ;
+                                            }
+
+                                            if($page > 1) {   
+                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
+                                                $this->redirectTo($url) ;
+                                            }
+                                        }
+                                        
+                                        $this->_exportVariableToView('aUsers', $aData) ;
+                                        $this->_exportVariableToView('locales', OSCLocale::newInstance()->listAllEnabled() );
+                                        
                                         $this->doView("users/index.php") ;
                 break ;
             }

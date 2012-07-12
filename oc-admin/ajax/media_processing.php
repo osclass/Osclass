@@ -16,7 +16,7 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-     
+
      class MediaProcessingAjax
      {
         private $media ;
@@ -45,8 +45,17 @@
         function __construct($params)
         {
             $this->_get = $params ;
+            $p_iPage    = 1;
+            if( !is_numeric(Params::getParam('iPage')) || Params::getParam('iPage') < 1 ) {
+                Params::setParam('iPage', $p_iPage );
+            }
+
+            // force ORDER BY
+            $this->order_by['column_name'] = $this->column_names[4] ;
+            $this->order_by['type'] = 'desc' ;
+
             $this->getDBParams() ;
-            
+
             $this->media          = ItemResource::newInstance()->getResources($this->resourceID, $this->start, $this->limit, ( $this->order_by['column_name'] ? $this->order_by['column_name'] : 'pk_i_id' ), ( $this->order_by['type'] ? $this->order_by['type'] : 'desc' ) ) ;
             $this->total          = ItemResource::newInstance()->countResources() ;
             if( $this->resourceID == null ) {
@@ -54,9 +63,6 @@
             } else {
                 $this->total_filtered = ItemResource::newInstance()->countResources( $this->resourceID ) ;
             }
-
-            $this->toDatatablesFormat() ;
-            $this->dumpToDatatables() ;
         }
 
         function __destruct()
@@ -79,15 +85,13 @@
                 if( $k == 'sEcho' ) {
                     $this->sEcho = intval($v) ;
                 }
-
-                /* for sorting */
-                if( $k == 'iSortCol_0' ) {
-                    $this->order_by['column_name'] = $this->column_names[$v] ;
-                }
-                if( $k == 'sSortDir_0' ) {
-                    $this->order_by['type'] = $v ;
-                }
             }
+
+            // set start and limit using iPage param
+            $start = ((int)Params::getParam('iPage')-1) * $this->_get['iDisplayLength'];
+
+            $this->start = intval( $start ) ;
+            $this->limit = intval( $this->_get['iDisplayLength'] ) ;
         }
 
         /* START - format functions */
@@ -95,7 +99,6 @@
         {
             $this->result['iTotalRecords']        = $this->total ;
             $this->result['iTotalDisplayRecords'] = $this->total_filtered ;
-            $this->result['sEcho']                = $this->sEcho ;
             $this->result['aaData']               = array() ;
 
             if( count($this->media) == 0 ) {
@@ -108,7 +111,34 @@
 
                 $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" />' ;
                 $row[] = '<div id="media_list_pic"><img src="' . osc_apply_filter('resource_path', osc_base_url() . $aRow['s_path']) . $aRow['pk_i_id'] . '_thumbnail.' . $aRow['s_extension'] . '" style="max-width: 60px; max-height: 60px;" /></div> <div id="media_list_filename">' . $aRow['s_content_type'] ;
-                $row[] = '<a onclick="javascript:return confirm(\'' . osc_esc_js( __('This action can not be undone. Are you sure you want to continue?') ) . '\')" href="' . osc_admin_base_url(true) . '?page=media&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '" id="dt_link_delete">' . __('Delete') . '</a>' ;
+                $row[] = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" >' . __('Delete') . '</a>' ;
+                $row[] = '<a target="_blank" href="' . osc_item_url_ns($aRow['fk_i_item_id']) . '">item #' . $aRow['fk_i_item_id'] . '</a>' ;
+                $row[] = $aRow['dt_pub_date'] ;
+
+                $count++ ;
+                $this->result['aaData'][] = $row ;
+            }
+        }
+
+        /* START - format functions */
+        private function toArrayFormat()
+        {
+            $this->result['iTotalRecords']        = $this->total ;
+            $this->result['iTotalDisplayRecords'] = $this->total_filtered ;
+            $this->result['iDisplayLength']       = $this->_get['iDisplayLength'];
+            $this->result['aaData']               = array() ;
+
+            if( count($this->media) == 0 ) {
+                return ;
+            }
+
+            $count = 0 ;
+            foreach($this->media as $aRow) {
+                $row = array() ;
+
+                $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" />' ;
+                $row[] = '<div id="media_list_pic"><img src="' . osc_apply_filter('resource_path', osc_base_url() . $aRow['s_path']) . $aRow['pk_i_id'] . '_thumbnail.' . $aRow['s_extension'] . '" style="max-width: 60px; max-height: 60px;" /></div> <div id="media_list_filename">' . $aRow['s_content_type'] ;
+                $row[] = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=media&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '" id="dt_link_delete">' . __('Delete') . '</a>' ;
                 $row[] = '<a target="_blank" href="' . osc_item_url_ns($aRow['fk_i_item_id']) . '">item #' . $aRow['fk_i_item_id'] . '</a>' ;
                 $row[] = $aRow['dt_pub_date'] ;
 
@@ -147,9 +177,22 @@
          * @access private
          * @since unknown 
          */
-        private function dumpToDatatables()
+        public function dumpToDatatables()
         {
+            $this->toDatatablesFormat() ;
             $this->dumpResult() ;
+        }
+
+        /**
+         * Dump $result to JSON and return the result
+         * 
+         * @access private
+         * @since unknown 
+         */
+        public function result()
+        {
+            $this->toArrayFormat();
+            return $this->result;
         }
      }
 

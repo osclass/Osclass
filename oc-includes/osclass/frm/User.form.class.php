@@ -421,12 +421,11 @@ function checkForm() {
             $("#cityId").attr('disabled',true);
         }
 
-        if( $("#countryId").attr('type').match(/select-one/) ) {
-            if( $("#countryId").attr('value') == "")  {
+        if( $("#countryId").prop('type').match(/select-one/) ) {
+            if( $("#countryId").attr('value') == "") {
                 $("#regionId").attr('disabled',true);
             }
         }
-
     });
 </script>
     <?php

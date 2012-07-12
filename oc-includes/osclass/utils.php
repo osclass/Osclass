@@ -226,16 +226,9 @@ function is_serialized($data) {
  * Perform a POST request, so we could launch fake-cron calls and other core-system calls without annoying the user
  */
 function osc_doRequest($url, $_data) {
+    if (function_exists('fsockopen')) {
+        $data = http_build_query($_data);
 
-    if (function_exists('fputs')) {
-        // convert variables array to string:
-        $data = array();
-        while (list($n, $v) = each($_data)) {
-            $data[] = "$n=$v";
-        }
-        $data = implode('&', $data);
-
-        // format --> test1=a&test2=b etc.
         // parse the given URL
         $url = parse_url($url);
 
@@ -248,22 +241,25 @@ function osc_doRequest($url, $_data) {
         $fp = @fsockopen($host, 80);
         
         if($fp!==false) {
-            // send the request headers:
-            fputs($fp, "POST $path HTTP/1.1\r\n");
-            fputs($fp, "Host: $host\r\n");
-            fputs($fp, "Referer: OSClass\r\n");
-            fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
-            fputs($fp, "Content-length: " . strlen($data) . "\r\n");
-            fputs($fp, "Connection: close\r\n\r\n");
-            fputs($fp, $data);
-
-            // close the socket connection:
+            $out  = "POST $path HTTP/1.1\r\n";
+            $out .= "Host: $host\r\n";
+            $out .= "Referer: OSClass (v.". osc_version() .")\r\n";
+            $out .= "Content-type: application/x-www-form-urlencoded\r\n";
+            $out .= "Content-Length: ".strlen($data)."\r\n";
+            $out .= "Connection: Close\r\n\r\n";
+            $out .= "$data";
+            fwrite($fp, $out);
             fclose($fp);
         }
     }
 }
 
 function osc_sendMail($params) {
+    // DO NOT send mail if it's a demo
+    if( defined('DEMO') ) {
+        return false;
+    }
+
     if( key_exists('add_bcc', $params) ) {
         if( !is_array($params['add_bcc']) && $params['add_bcc'] != '' ) {
             $params['add_bcc'] = array($params['add_bcc']) ;
@@ -301,7 +297,7 @@ function osc_sendMail($params) {
         $mail->Password = ( isset($params['password']) ) ? $params['password'] : osc_mailserver_password() ;
         $mail->Host = ( isset($params['host']) ) ? $params['host'] : osc_mailserver_host() ;
         $mail->Port = ( isset($params['port']) ) ? $params['port'] : osc_mailserver_port() ;
-        $mail->From = ( isset($params['from']) ) ? $params['from'] : osc_contact_email() ;
+        $mail->From = ( isset($params['from']) ) ? $params['from'] : 'osclass@' . osc_get_domain() ;
         $mail->FromName = ( isset($params['from_name']) ) ? $params['from_name'] : osc_page_title() ;
         $mail->Subject = ( isset($params['subject']) ) ? $params['subject'] : '' ;
         $mail->Body = ( isset($params['body']) ) ? $params['body'] : '' ;
@@ -341,8 +337,22 @@ function osc_sendMail($params) {
 function osc_mailBeauty($text, $params) {
 
     $text = str_ireplace($params[0], $params[1], $text) ;
-    $kwords = array('{WEB_URL}', '{WEB_TITLE}', '{CURRENT_DATE}', '{HOUR}', '{IP}') ;
-    $rwords = array(osc_base_url(), osc_page_title(), date('Y-m-d H:i:s'), date('H:i'), $_SERVER['REMOTE_ADDR']) ;
+    $kwords = array(
+        '{WEB_URL}',
+        '{WEB_TITLE}',
+        '{WEB_LINK}' ,
+        '{CURRENT_DATE}',
+        '{HOUR}',
+        '{IP_ADDRESS}'
+    );
+    $rwords = array(
+        osc_base_url(),
+        osc_page_title(),
+        '<a href="' . osc_base_url() . '">' . osc_page_title() . '</a>',
+        date('Y-m-d H:i:s'),
+        date('H:i'),
+        $_SERVER['REMOTE_ADDR']
+    );
     $text = str_ireplace($kwords, $rwords, $text) ;
     
     return $text ;
@@ -494,41 +504,236 @@ function osc_dbdump($path, $file) {
     return 1 ;
 }
 
-function osc_downloadFile($sourceFile, $downloadedFile) {
-    require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
+// -----------------------------------------------------------------------------
 
-    @set_time_limit(0);
-
-    $fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
-    if($fp) {
-        $ch = curl_init($sourceFile);
-        @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
-        curl_setopt($ch, CURLOPT_FILE, $fp);
-        @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_exec($ch);
-        curl_close($ch);
-        fclose($fp);
-        return true;
-    } else {
+/**
+ * Returns true if there is curl on system environment
+ * 
+ * @return type 
+ */
+function testCurl() {
+    if ( ! function_exists( 'curl_init' ) || ! function_exists( 'curl_exec' ) )
         return false;
+
+    return true;
+}
+
+/**
+ * Returns true if there is fsockopen on system environment
+ *
+ * @return type 
+ */
+function testFsockopen() {
+    if ( ! function_exists( 'fsockopen' ) )
+        return false;
+
+    return true;
+}
+
+/**
+ * IF http-chunked-decode not exist implement here
+ * @since 3.0
+ */
+if (!function_exists('http-chunked-decode')) { 
+    /** 
+     * dechunk an http 'transfer-encoding: chunked' message 
+     * 
+     * @param string $chunk the encoded message 
+     * @return string the decoded message.  If $chunk wasn't encoded properly it will be returned unmodified. 
+     */ 
+    function http_chunked_decode($chunk) { 
+        $pos = 0; 
+        $len = strlen($chunk); 
+        $dechunk = null; 
+
+        while(($pos < $len) 
+            && ($chunkLenHex = substr($chunk,$pos, ($newlineAt = strpos($chunk,"\n",$pos+1))-$pos))) 
+        { 
+            if (! is_hex($chunkLenHex)) { 
+                trigger_error('Value is not properly chunk encoded', E_USER_WARNING); 
+                return $chunk; 
+            } 
+
+            $pos = $newlineAt + 1; 
+            $chunkLen = hexdec(rtrim($chunkLenHex,"\r\n")); 
+            $dechunk .= substr($chunk, $pos, $chunkLen); 
+            $pos = strpos($chunk, "\n", $pos + $chunkLen) + 1; 
+        } 
+        return $dechunk; 
+    } 
+}
+
+/** 
+ * determine if a string can represent a number in hexadecimal 
+ * 
+ * @since 3.0
+ * @param string $hex 
+ * @return boolean true if the string is a hex, otherwise false 
+ */ 
+function is_hex($hex) { 
+    // regex is for weenies 
+    $hex = strtolower(trim(ltrim($hex,"0"))); 
+    if (empty($hex)) { $hex = 0; }; 
+    $dec = hexdec($hex); 
+    return ($hex == dechex($dec)); 
+}
+
+/**
+ * Process response and return headers and body
+ * 
+ * @since 3.0
+ * @param type $content
+ * @return type 
+ */
+function processResponse($content)
+{
+    $res = explode("\r\n\r\n", $content);
+    $headers = $res[0];
+    $body    = isset($res[1]) ? $res[1] : '';
+
+    if (!is_string($headers)) {
+        return array();
+    }
+    
+    return array('headers' => $headers, 'body' => $body);
+}
+
+/**
+ * Parse headers and return into array format
+ *
+ * @param type $headers
+ * @return type 
+ */
+function processHeaders($headers) 
+{
+    $headers = str_replace("\r\n", "\n", $headers);
+    $headers = preg_replace('/\n[ \t]/', ' ', $headers);
+    $headers = explode("\n", $headers);
+    $tmpHeaders = $headers;
+    $headers = array();
+
+    foreach ($tmpHeaders as $aux) {
+        if (preg_match('/^(.*):\s(.*)$/', $aux, $matches)) {
+            $headers[strtolower($matches[1])] = $matches[2];
+        }
+    }
+    return $headers;
+}
+
+/**
+ * Download file using fsockopen
+ *
+ * @since 3.0
+ * @param type $sourceFile
+ * @param type $fileout 
+ */
+function download_fsockopen($sourceFile, $fileout = null) 
+{
+    // parse URL 
+    $aUrl = parse_url($sourceFile);
+    $host = $aUrl['host'];
+    if ('localhost' == strtolower($host))
+        $host = '127.0.0.1';
+
+    $link = $aUrl['path'] . ( isset($aUrl['query']) ? '?' . $aUrl['query'] : '' );
+
+    if (empty($link))
+        $link .= '/';
+            
+    $fp = @fsockopen($host, 80, $errno, $errstr, 30);
+    if (!$fp) {
+        
+    } else {
+        $out = "GET $link HTTP/1.1\r\n";
+        $out .= "Host: $host\r\n";
+        $out .= "Connection: Close\r\n\r\n";
+        $out .= "\r\n";
+        fwrite($fp, $out);
+
+        $contents = '';
+        while (!feof($fp)) {
+            $contents.= fgets($fp, 1024);
+        }
+        // check redirections ? 
+        // if (redirections) then do request again
+        $aResult = processResponse($contents);
+        $headers = processHeaders($aResult['headers']);
+        
+        $location = @$headers['location'];
+        if (isset($location) && $location != "") {
+            $aUrl = parse_url($headers['location']);
+
+            $host = $aUrl['host'];
+            if ('localhost' == strtolower($host))
+                $host = '127.0.0.1';
+
+            $requestPath = $aUrl['path'] . ( isset($aUrl['query']) ? '?' . $aUrl['query'] : '' );
+
+            if (empty($requestPath))
+                $requestPath .= '/';
+            
+            download_fsockopen($host, $requestPath, $fileout);
+        } else {
+            $body = $aResult['body'];
+            $transferEncoding = @$headers['transfer-encoding'];
+            if($transferEncoding == 'chunked' ) {
+                $body = http_chunked_decode($aResult['body']);
+            }
+            if($fileout!=null) {
+                $ff = @fopen($fileout, 'w+');
+                fwrite($ff, $body);
+                fclose($ff);
+            } else {
+                return $body;
+            }
+        }
+        fclose($fp);
     }
 }
 
-function osc_file_get_contents($url) {
-    require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
+function osc_downloadFile($sourceFile, $downloadedFile) 
+{
+    if ( testCurl() ) {
+        @set_time_limit(0);
 
-    $ch = curl_init() ;
-    curl_setopt($ch, CURLOPT_URL, $url) ;
-    curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' OSClass (v.' . osc_version() . ')') ;
-    if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1) ;
-    @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
+        if($fp) {
+            $ch = curl_init($sourceFile);
+            @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+            curl_setopt($ch, CURLOPT_FILE, $fp);
+            @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+            curl_exec($ch);
+            curl_close($ch);
+            fclose($fp);
+            return true;
+        } else {
+            return false;
+        }
+    } else if (testFsockopen()) { // test curl/fsockopen
+        $downloadedFile = osc_content_path() . 'downloads/' . $downloadedFile;
+        download_fsockopen($sourceFile, $downloadedFile);
+        return true;
+    }
+}
 
-    $data = curl_exec($ch);
-    curl_close($ch);
+function osc_file_get_contents($url) 
+{
+    if( testCurl() ) {
+        $ch = curl_init() ;
+        curl_setopt($ch, CURLOPT_URL, $url) ;
+        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' OSClass (v.' . osc_version() . ')') ;
+        if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1) ;
+        @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
+        $data = curl_exec($ch);
+        curl_close($ch);
+    } else if( testFsockopen() ) {
+        $data = download_fsockopen($url);
+    }
     return $data;
 }
+// -----------------------------------------------------------------------------
 
 /**
  * Check if we loaded some specific module of apache
@@ -940,20 +1145,42 @@ function rglob($pattern, $flags = 0, $path = '') {
     return $files;
 }
 
+// Market util functions
 
-/**
- * Check if a package could be update or not
- *
- * @param string $update_uri
- * @since 2.4
- * @return boolean
- */
-function osc_check_update($update_uri, $version = null) {
-    if($update_uri!="" && $version!=null) {
+function osc_check_plugin_update($update_uri, $version = null) {
+    $uri = _get_market_url('plugins', $update_uri);
+    if($uri != false) {
+        return _need_update($uri, $version);
+    }
+    return false;
+}
 
-        if(stripos("http://", $update_uri)===FALSE) {
+function osc_check_theme_update($update_uri, $version = null) {
+    $uri = _get_market_url('themes', $update_uri);
+    if($uri != false) {
+        return _need_update($uri, $version);
+    }
+    return false;
+}
+
+function osc_check_language_update($update_uri, $version = null) {
+    $uri = _get_market_url('languages', $update_uri);
+    if($uri != false) {
+        return _need_update($uri, $version);
+    }
+    return false;
+}
+
+function _get_market_url($type, $update_uri) {
+    if( $update_uri == null ) {
+        return false;
+    }
+
+    if(in_array($type, array('plugins', 'themes', 'languages') ) ) {
+        $uri = '';
+        if(stripos("http://", $update_uri)===FALSE ) {
             // OSCLASS OFFICIAL REPOSITORY
-            $uri = osc_market_url($update_uri);
+            $uri = osc_market_url($type, $update_uri);
         } else {
             // THIRD PARTY REPOSITORY
             if(!osc_market_external_sources()) {
@@ -961,18 +1188,23 @@ function osc_check_update($update_uri, $version = null) {
             }
             $uri = $update_uri;
         }
+        return $uri;
+    } else {
+        return false;
+    }
+}
 
-        if(false===($json=@osc_file_get_contents($uri))) {
-            return false;
-        } else {
-            $data = json_decode($json , true);
-            if(isset($data['s_version']) && $data['s_version']>$version) {
-                return true;
-            }
+function _need_update($uri, $version) {
+    if(false===($json=@osc_file_get_contents($uri))) {
+        return false;
+    } else {
+        $data = json_decode($json , true);
+        if(isset($data['s_version']) && $data['s_version']>$version) {
+            return true;
         }
     }
-    return false;
-}    
+}
+// END -- Market util functions 
 
 /**
  * Update category stats

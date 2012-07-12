@@ -20,17 +20,31 @@
      */
 
     define('ABS_PATH', dirname($_SERVER['SCRIPT_FILENAME']) . '/');
+    if( !array_key_exists('HTTP_HOST', $_SERVER) ) {
+        define('CLI', true);
+    }
 
     require_once ABS_PATH . 'oc-load.php' ;
-    
+
+    if( CLI ) {
+        $cli_params = getopt('p:');
+        Params::setParam('page', $cli_params['p']);
+        if( !in_array(Params::getParam('page'), array('cron')) ) {
+            exit(1);
+        }
+    }
+
     if( file_exists(ABS_PATH . '.maintenance') ) {
         if(!osc_is_admin_user_logged_in()) {
             require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
 
-            $title = 'OSClass &raquo; Error' ;
-            $message = sprintf(__('We are sorry for any inconvenience. %s is under maintenance mode') . '.', osc_page_title() ) ;
+            $title   = sprintf(__('Maintenance &raquo; %s'), osc_page_title());
+            $message = sprintf(__('We are sorry for any inconvenience. %s is undergoing maintenance.') . '.', osc_page_title() );
 
-            osc_die($title, $message) ;
+            header('HTTP/1.1 503 Service Temporarily Unavailable');
+            header('Status: 503 Service Temporarily Unavailable');
+            header('Retry-After: 900');
+            osc_die($title, $message);
         } else {
             define('__OSC_MAINTENANCE__', true);
         }
@@ -47,6 +61,10 @@
         Cookie::newInstance()->set() ;
     }
 
+    if(osc_is_web_user_logged_in()) {
+        User::newInstance()->lastAccess(osc_logged_user_id(), date('Y-m-d H:i:s'), $_SERVER['REMOTE_ADDR'], 3600);
+    }
+    
     switch( Params::getParam('page') )
     {
         case ('cron'):      // cron system

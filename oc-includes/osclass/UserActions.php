@@ -362,7 +362,7 @@
             $user = $this->manager->findByPrimaryKey($user_id) ;
             $input['s_secret'] = $user['s_secret'];
 
-            if( !$user  || $user['b_active']==0) {
+            if( !$user  || $user['b_active']==1) {
                 return 0 ;
             }
 

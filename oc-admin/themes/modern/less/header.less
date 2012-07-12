@@ -1,0 +1,74 @@
+#header .user-profile{
+    font-size:18px;
+    margin:5px 15px 5px 0px;
+}
+#header a{
+    color:@color-gray-ash;
+    float:left;
+    text-decoration:none;
+}
+.header-wrapper{
+    padding:0 30px;
+}
+.navbar{
+    padding:          8px 0;
+    width:            100%;
+    background-color: @color-gray-black;
+    z-index:          1;
+    min-width:        800px;
+    color:            @color-gray-dim;
+}
+.navbar a{
+    color:@color-white;
+}
+.osc_switch_mode{
+    padding-top:20px;
+    position:relative;
+    height: 55px;
+}
+#osc_toolbar_switch_mode{
+    position: relative;
+    width:50px;
+    height:24px;
+    display: block;
+    margin:0 auto;
+}
+#osc_toolbar_switch_mode .skin{
+    position: absolute;
+    right:0;
+    top:0;
+    width:50px;
+    height:24px;
+    background-image:url(../images/split-switch.png);
+    display: block;
+    background-position:0px -25px;
+}
+#osc_toolbar_switch_mode .background{
+    position: absolute;
+    right:5px;
+    top:4px;
+    width:40px;
+    height:15px;
+    display: block;
+    background-color:@color-gray-light;
+    .rounded-corners(14px);
+}
+#osc_toolbar_switch_mode .trigger{
+    position: absolute;
+    left:0px;
+    top:0;
+    width:24px;
+    height:25px;
+    background-image:url(../images/split-switch.png);
+    display: block;
+    background-position:0px 0px;
+}
+body.compact #osc_toolbar_switch_mode .background{
+    background-color:#00e1f2;
+}
+body.compact #osc_toolbar_switch_mode .trigger{
+    left:26px;
+}
+body.compact #osc_toolbar_switch_mode:hover .background{
+    background-color:@color-gray-light;
+}

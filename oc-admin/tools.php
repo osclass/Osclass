@@ -37,7 +37,7 @@
                                         $this->doView('tools/import.php') ;
                 break ;
                 case('import_post'):    if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
+                                            osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin') ;
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=import') ;
                                         }
                                         // calling
@@ -62,7 +62,7 @@
                                         $this->doView('tools/images.php') ;
                 break;
                 case('images_post'):    if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=images');
                                         }
 
@@ -143,7 +143,7 @@
                                             } else {
                                                 // no es imagen o imagen sin extesión
                                             }
-                                            
+
                                         }
 
                                         osc_add_flash_ok_message( _m('Re-generation complete'), 'admin') ;
@@ -152,7 +152,7 @@
                 case('category'):       $this->doView('tools/category.php') ;
                 break;
                 case('category_post'):  if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
+                                            osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin') ;
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=category') ;
                                         }
                                         osc_update_cat_stats();
@@ -162,7 +162,7 @@
                 case('locations'):      $this->doView('tools/locations.php') ;
                 break;
                 case('locations_post'): if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
+                                            osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin') ;
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=locations') ;
                                         }
 
@@ -199,7 +199,7 @@
                                         $this->doView('tools/backup.php') ;
                 break ;
                 case('backup-sql'):     if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
                                         }
                                         //databasse dump...
@@ -226,7 +226,7 @@
                                             case(-4):   $msg = _m('The folder is not writable') ;
                                                         osc_add_flash_error_message( $msg, 'admin') ;
                                             break;
-                                            default:    $msg = _m('Backup has been done properly') ;
+                                            default:    $msg = _m('Backup completed successfully') ;
                                                         osc_add_flash_ok_message( $msg, 'admin') ;
                                             break;
                                         }
@@ -234,7 +234,7 @@
                 break ;
                 case('backup-sql_file'):
                                         if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
                                         }
                                         //databasse dump...
@@ -258,7 +258,7 @@
                                             case(-5):   $msg = _m('The folder is not writable') ;
                                                         osc_add_flash_error_message( $msg, 'admin') ;
                                             break;
-                                            default:    $msg = _m('Backup has been done properly') ;
+                                            default:    $msg = _m('Backup completed successfully') ;
                                                         osc_add_flash_ok_message( $msg, 'admin') ;
                                                         header('Content-Description: File Transfer');
                                                         header('Content-Type: application/octet-stream');
@@ -277,14 +277,14 @@
                 break ;
                 case('backup-zip_file'):
                                         if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
                                         }
                                         $filename = "OSClass_backup." . date('YmdHis') . ".zip" ;
                                         $path = sys_get_temp_dir()."/";
 
                                         if ( osc_zip_folder(osc_base_path(),$path. $filename) ) {
-                                            $msg = _m('Archiving successful!') ;
+                                            $msg = _m('Archived successfully!') ;
                                             osc_add_flash_ok_message( $msg, 'admin') ;
                                             header('Content-Description: File Transfer');
                                             header('Content-Type: application/octet-stream');
@@ -298,13 +298,13 @@
                                             readfile($path.$filename);
                                             exit;
                                         }else{
-                                            $msg = _m('Error, the zip file was not created at the specified directory') ;
+                                            $msg = _m('Error, the zip file was not created in the specified directory') ;
                                             osc_add_flash_error_message( $msg, 'admin') ;
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
                 break ;
                 case('backup-zip'):     if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
                                         }
                                         //zip of the code just to back it up
@@ -320,10 +320,10 @@
                                         $archive_folder = osc_base_path() ;
 
                                         if ( osc_zip_folder($archive_folder, $archive_name) ) {
-                                            $msg = _m('Archiving successful!') ;
+                                            $msg = _m('Archived successfully!') ;
                                             osc_add_flash_ok_message( $msg, 'admin') ;
                                         }else{
-                                            $msg = _m('Error, the zip file was not created at the specified directory') ;
+                                            $msg = _m('Error, the zip file was not created in the specified directory') ;
                                             osc_add_flash_error_message( $msg, 'admin') ;
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
@@ -332,7 +332,7 @@
                                         $this->doView('tools/backup.php') ;
                 break ;
                 case('maintenance'):    if( defined('DEMO') ) {
-                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin') ;
+                                            osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin') ;
                                             $this->doView('tools/maintenance.php') ;
                                             break ;
                                         }
@@ -343,7 +343,7 @@
                                             if( $fileHandler ) {
                                                 osc_add_flash_ok_message( _m('Maintenance mode is ON'), 'admin') ;
                                             } else {
-                                                osc_add_flash_error_message( _m('There was an error creating .maintenance file, please create it manually at the root folder'), 'admin')  ;
+                                                osc_add_flash_error_message( _m('There was an error creating the .maintenance file, please create it manually at the root folder'), 'admin') ;
                                             }
                                             fclose($fileHandler) ;
                                             $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=maintenance' ) ;
@@ -352,7 +352,7 @@
                                             if( $deleted ) {
                                                 osc_add_flash_ok_message( _m('Maintenance mode is OFF'), 'admin') ;
                                             } else {
-                                                osc_add_flash_error_message( _m('There was an error removing .maintenance file, please remove it manually from the root folder'), 'admin') ;
+                                                osc_add_flash_error_message( _m('There was an error removing the .maintenance file, please remove it manually from the root folder'), 'admin') ;
                                             }
                                             $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=maintenance' ) ;
                                         }

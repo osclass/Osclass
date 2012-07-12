@@ -301,7 +301,99 @@
             }
             return $results;
         }
+        
+        /**
+         * Return comments on command
+         * 
+         * @access public
+         * @since 2.4
+         * @param int item's ID or null
+         * @param int start
+         * @param int limit
+         * @param string order by
+         * @param string order
+         * @param bool $all true returns all comments, false, returns comments 
+         *      which not display at frontend
+         * @return array
+         */
+        public function search($itemId = null, $start = 0, $limit = 10, $order_by = 'c.pk_i_id', $order = 'DESC', $all = true) {
+            $this->dao->select('c.*') ;
+            $this->dao->from($this->getTableName().' c') ;
+            $this->dao->from(DB_TABLE_PREFIX.'t_item i') ;
+            
+            $conditions = array() ;
+            if(is_null($itemId)) {
+                $conditions = 'c.fk_i_item_id = i.pk_i_id';
+            } else {
+                $conditions = array(
+                    'i.pk_i_id'      => $itemId,
+                    'c.fk_i_item_id' => $itemId
+                );
+            }
+            
+            $this->dao->where($conditions);
+            
+            if(!$all) {
+                $auxCond = '( c.b_enabled = 0 OR c.b_active = 0 OR c.b_spam = 1 )';
+                $this->dao->where($auxCond);
+            }
+            
+            $this->dao->orderBy($order_by, $order) ;
+            $this->dao->limit($start, $limit);
+            
+            $aux = $this->dao->get() ;
+            return $aux->result() ;
+        }
+        
+        /**
+         * Count the number of comments
+         * 
+         * @param int item's ID or null
+         * @return int
+         */
+        public function count($itemId = null) {
+            $this->dao->select('COUNT(*) AS numrows') ;
+            $this->dao->from($this->getTableName().' c') ;
+            $this->dao->from(DB_TABLE_PREFIX.'t_item i') ;
+            
+            $conditions = array() ;
+            if(is_null($itemId)) {
+                $conditions = 'c.fk_i_item_id = i.pk_i_id';
+            } else {
+                $conditions = array(
+                    'i.pk_i_id'      => $itemId,
+                    'c.fk_i_item_id' => $itemId
+                );
+            }
+            
+            $this->dao->where($conditions) ;
+            $aux = $this->dao->get() ;
+            $row = $aux->row();
+            return $row['numrows'];
+        }
+        
+        public function countAll($aConditions = null ) 
+        {
+            $this->dao->select('count(*) as total');
+            $this->dao->from($this->getTableName().' c') ;
+            $this->dao->from(DB_TABLE_PREFIX.'t_item i') ;
+            
+            $this->dao->where('c.fk_i_item_id = i.pk_i_id');
+            if(!is_null($aConditions)) {
+                $this->dao->where($aConditions);
+            }
+            $result = $this->dao->get();
+            
+            if( $result == false ) { 
+                return false;
+            } else if($result->numRows() === 0) {
+                return 0;
+            } else {
+                $total = $result->row();
+                return $total['total'];
+            }
+        }
+        
     }
-
     /* file end: ./oc-includes/osclass/model/ItemComment.php */
 ?>

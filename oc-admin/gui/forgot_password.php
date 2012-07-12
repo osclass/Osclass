@@ -20,25 +20,25 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><?php echo osc_page_title() ; ?> &raquo; <?php _e('Change your password') ; ?></title>
-        <script type="text/javascript" src="<?php echo osc_admin_base_url() ; ?>themes/modern/js/jquery.js"></script>
+        <script type="text/javascript" src="<?php echo osc_admin_base_url() ; ?>themes/modern/js/jquery.min.js"></script>
         <link type="text/css" href="style/backoffice_login.css" media="screen" rel="stylesheet" />
     </head>
     <body class="forgot">
         <div id="login">
             <h1>
-                <a href="<?php echo osc_base_url() ; ?>" title="OSClass">
-                    <img src="images/osclass-logo.gif" border="0" title="" alt=""/>
+                <a href="http://osclass.org/" title="OSClass">
+                    <img src="images/osclass-logo.gif" border="0" title="" alt="" />
                 </a>
             </h1>
             <?php osc_show_flash_message('admin') ; ?>
-            <div class="message warning">
+            <div class="flashmessage">
                 <?php _e('Type your new password') ; ?>.
             </div>
             <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" >
                 <input type="hidden" name="page" value="login" />
                 <input type="hidden" name="action" value="forgot_post" />
-                <input type="hidden" name="adminId" value="<?php echo Params::getParam('adminId'); ?>" />
-                <input type="hidden" name="code" value="<?php echo Params::getParam('code'); ?>" />
+                <input type="hidden" name="adminId" value="<?php echo Params::getParam('adminId', true); ?>" />
+                <input type="hidden" name="code" value="<?php echo Params::getParam('code', true); ?>" />
                     <p>
                         <label for="new_password">
                             <span><?php _e('New pasword') ; ?></span>
@@ -52,7 +52,7 @@
                         </label>
                     </p>
                     <p class="submit">
-                        <input type="submit" name="submit" id="submit" value="<?php _e('Change password') ; ?>" tabindex="100" />
+                        <input type="submit" name="submit" id="submit" value="<?php echo osc_esc_html( __('Change password')); ?>" tabindex="100" />
                     </p>
             </form>
             <p id="nav">
@@ -70,6 +70,10 @@
                     }
                 }).prev().click(function(){
                     $(this).hide();
+                });
+
+                $(".ico-close").click(function(){
+                    $(this).parent().hide();
                 });
             });
         </script>
