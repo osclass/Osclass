@@ -16,17 +16,6 @@ class OCadmin_users extends OCadminTest {
         $this->deleteUser();
         flush();
     }
-
-    /*
-     * Create a new user
-     */
-    function testUserInsertbyLink()
-    {
-        $this->loginWith() ;
-        $this->insertUserByLink() ;
-        $this->deleteUser();
-        flush();
-    }
     
     /*
      * Edit an user
@@ -117,6 +106,8 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->click("//input[@id='check_all']");
         $this->selenium->select("action", "label=Deactivate");
         $this->selenium->click("//input[@id='bulk_apply']");
+        $this->selenium->click("//a[@id='bulk-actions-submit']");
+        
         $this->selenium->waitForPageToLoad("10000");        
         $this->assertTrue( $this->selenium->isTextPresent("One user has been deactivated") , "Deactivate user bulk action");
 
@@ -125,6 +116,7 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->click("//input[@id='check_all']");
         $this->selenium->select("action", "label=Resend activation");
         $this->selenium->click("//input[@id='bulk_apply']");
+        $this->selenium->click("//a[@id='bulk-actions-submit']");
         $this->selenium->waitForPageToLoad("10000");        
         $this->assertTrue( $this->selenium->isTextPresent("Activation email sent to one user") , "Resend ACT user bulk action");
 
@@ -133,6 +125,7 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->click("//input[@id='check_all']");
         $this->selenium->select("action", "label=Activate");
         $this->selenium->click("//input[@id='bulk_apply']");
+        $this->selenium->click("//a[@id='bulk-actions-submit']");
         $this->selenium->waitForPageToLoad("10000");        
         $this->assertTrue( $this->selenium->isTextPresent("One user has been activated") , "Activate user bulk action");
 
@@ -141,6 +134,7 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->click("//input[@id='check_all']");
         $this->selenium->select("action", "label=Block");
         $this->selenium->click("//input[@id='bulk_apply']");
+        $this->selenium->click("//a[@id='bulk-actions-submit']");
         $this->selenium->waitForPageToLoad("10000");        
         $this->assertTrue( $this->selenium->isTextPresent("One user has been blocked") , "Block user bulk action");
 
@@ -149,6 +143,7 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->click("//input[@id='check_all']");
         $this->selenium->select("action", "label=Unblock");
         $this->selenium->click("//input[@id='bulk_apply']");
+        $this->selenium->click("//a[@id='bulk-actions-submit']");
         $this->selenium->waitForPageToLoad("10000");        
         $this->assertTrue( $this->selenium->isTextPresent("One user has been unblocked") , "Unblock user bulk action");
 
@@ -157,6 +152,7 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->click("//input[@id='check_all']");
         $this->selenium->select("action", "label=Delete");
         $this->selenium->click("//input[@id='bulk_apply']");
+        $this->selenium->click("//a[@id='bulk-actions-submit']");
         $this->selenium->waitForPageToLoad("10000");        
         $this->assertTrue( $this->selenium->isTextPresent("One user has been deleted") , "Delete user bulk action");
         
@@ -200,10 +196,11 @@ class OCadmin_users extends OCadminTest {
      */    
     private function insertUser()
     {
-        $this->selenium->open( osc_admin_base_url(true) ) ;
-        $this->selenium->click("//a[@id='users_new']");
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("xpath=//a[@id='users_manage']");
         $this->selenium->waitForPageToLoad("10000");
-        
+        $this->selenium->click("link=Add new");
+        $this->selenium->waitForPageToLoad("10000");
         
         $this->selenium->type("s_email"         ,"");
         $this->selenium->type("s_password"      ,"");
@@ -323,49 +320,12 @@ class OCadmin_users extends OCadminTest {
     }
 
     /*
-     * Create a new user
-     */
-    private function insertUserByLink()
-    {
-        $this->selenium->open( osc_admin_base_url(true) ) ;
-        $this->selenium->click("link=Users");
-        $this->selenium->click("//a[@id='users_new']");
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->selenium->type("s_email"         ,"test1@mail.com");
-        $this->selenium->type("s_password"      ,"password");
-        $this->selenium->type("s_password2"     ,"password");
-
-        $this->selenium->type("s_name"          ,"real name user");
-
-        $this->selenium->type("s_phone_mobile"  ,"666666666");
-        $this->selenium->type("s_phone_land"    ,"930112233");
-
-        $this->selenium->type("s_website"       ,"http://osclass.org");
-        $this->selenium->type("s_info[en_US]"   ,"foobar description");
-
-        $this->selenium->type("cityArea"        ,"city area");
-        $this->selenium->type("address"         ,"address user");
-
-        $this->selenium->select("countryId"     , "label=Spain");
-        $this->selenium->select("regionId"      , "label=Barcelona");
-        $this->selenium->select("cityId"        , "label=Sabadell");
-        $this->selenium->select("b_company"     , "label=User");
-
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("1000");
-
-        $this->assertTrue($this->selenium->isTextPresent("The user has been created successfully"),"Create user");
-    }
-
-    /*
      * Edit an user
      */
     private function editUser()
     {
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Users");
-        $this->selenium->click("link=Manage users");
+        $this->selenium->click("xpath=//a[@id='users_manage']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'mail.com')]");
@@ -429,6 +389,7 @@ class OCadmin_users extends OCadminTest {
 
         $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'mail.com')]");
         $this->selenium->click("xpath=//table/tbody/tr[contains(.,'mail.com')]/td/div/ul/li/a[text()='Delete']");
+        $this->selenium->click("//input[@id='user-delete-submit']");
 
         $this->selenium->waitForPageToLoad("10000");
         sleep(1);
@@ -460,7 +421,7 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("Users' settings have been updated") , "Can't update user settings. ERROR");
+        $this->assertTrue( $this->selenium->isTextPresent("User settings have been updated") , "Can't update user settings. ERROR");
 
         if( $pref['enabled_users'] == 'on' ){
             $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']"), 'off' ) ;
@@ -489,7 +450,7 @@ class OCadmin_users extends OCadminTest {
         $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']")    ,  $pref['enabled_user_validation'] ) ;
         $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_registration']")  ,  $pref['enabled_user_registration'] ) ;
 
-        $this->assertTrue( $this->selenium->isTextPresent("Users' settings have been updated") , "Can't update user settings. ERROR");
+        $this->assertTrue( $this->selenium->isTextPresent("User settings have been updated") , "Can't update user settings. ERROR");
 
         /*
          * Testing deeper
