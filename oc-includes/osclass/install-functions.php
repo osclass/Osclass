@@ -829,7 +829,7 @@ function display_categories($error, $password) {
                             <?php if (isset($categories[$i]) && is_array($categories[$i])) {?>
                             <div class="cat-title">
                                 <label for="category-<?php echo $categories[$i]['pk_i_id']?>">
-                                    <input id="category-<?php echo $categories[$i]['pk_i_id']?>" class="left" type="checkbox" name="categories[]" value="<?php echo $categories[$i]['pk_i_id']?>" onclick="javascript:check_cat('<?php echo $categories[$i]['pk_i_id']?>', this.checked);" />
+                                    <input id="category-<?php echo $categories[$i]['pk_i_id']?>" class="left" type="checkbox" name="categories[]" value="<?php echo $categories[$i]['pk_i_id']?>" onclick="javascript:check_cat('<?php echo $categories[$i]['pk_i_id']?>', this.checked);" checked />
                                     <span><?php echo $categories[$i]['s_name']?></span>
                                 </label>
                             </div>
@@ -837,7 +837,7 @@ function display_categories($error, $password) {
                                 <?php foreach($categories[$i]['categories'] as $sc) { ?>
                                 <div id="category" class="space">
                                     <label for="category-<?php echo $sc['pk_i_id']?>" class="space">
-                                        <input id="category-<?php echo $sc['pk_i_id']?>" type="checkbox" name="categories[]" value="<?php echo $sc['pk_i_id']?>" onclick="javascript:check('category-<?php echo $categories[$i]['pk_i_id']?>')" />
+                                        <input id="category-<?php echo $sc['pk_i_id']?>" type="checkbox" name="categories[]" value="<?php echo $sc['pk_i_id']?>" onclick="javascript:check('category-<?php echo $categories[$i]['pk_i_id']?>')" checked />
                                         <?php echo $sc['s_name']; ?>
                                     </label>
                                 </div>
