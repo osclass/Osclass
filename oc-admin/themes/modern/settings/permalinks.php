@@ -381,12 +381,9 @@
                                     </div>
                                 </div>
                             </div>
-                                
                             <div id="custom_rules" <?php if( !osc_rewrite_enabled() ) { echo 'class="hide"'; } ?>>
                                 <div id="show_hide" ><a href="#" onclick="javascript:showhide();"><?php _e('Show rules'); ?></a></div>
                                 <div id="inner_rules" class="hide">
-
-
                                     <div class="form-row">
                                         <div class="form-label"><?php _e('Listing URL:') ; ?></div>
                                         <div class="form-controls">
@@ -614,6 +611,34 @@
                                     </div>
                                 </div>
                             </div>
+                            <?php if( osc_rewrite_enabled() ) { ?>
+                            <?php if( file_exists(osc_base_path() . '.htaccess') ) { ?>
+                            <div class="form-row">
+                                <h3 class="separate-top"><?php _e('Your .htaccess file') ?></h3>
+                                <pre><?php
+                                    $htaccess_content =  file_get_contents(osc_base_path() . '.htaccess');
+                                    echo htmlentities($htaccess_content);
+                                ?></pre>
+                            </div>
+                            <div class="form-row">
+                                <h3 class="separate-top"><?php _e('How your .htaccess file should looks like') ?></h3>
+                                <pre><?php
+                                    $rewrite_base = REL_WEB_URL ;
+                                    $htaccess     = <<<HTACCESS
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase {$rewrite_base}
+    RewriteRule ^index\.php$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . {$rewrite_base}index.php [L]
+</IfModule>
+HTACCESS;
+                                    echo htmlentities($htaccess);
+                                ?></pre>
+                            </div>
+                            <?php } ?>
+                            <?php } ?>
                             <div class="form-actions">
                                 <input type="submit" id="save_changes" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" class="btn btn-submit" />
                             </div>
