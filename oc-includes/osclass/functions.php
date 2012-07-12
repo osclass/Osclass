@@ -206,6 +206,51 @@ function meta_description( ) {
     return (osc_apply_filter('meta_description_filter', $text)) ;
 }
 
+function meta_keywords( ) {
+    $text = '';
+    // search
+    if( osc_is_search_page() ) {
+        if( osc_has_items() ) {
+            $keywords = array();
+            $keywords[] = osc_item_category();
+            if( osc_item_city() != '' ) {
+                $keywords[] = osc_item_city();
+                $keywords[] = sprintf('%s %s', osc_item_category(), osc_item_city());
+            }
+            if( osc_item_region() != '' ) {
+                $keywords[] = osc_item_region();
+                $keywords[] = sprintf('%s %s', osc_item_category(), osc_item_region());
+            }
+            if( (osc_item_city() != '') && (osc_item_region() != '') ) {
+                $keywords[] = sprintf('%s %s %s', osc_item_category(), osc_item_region(), osc_item_city());
+                $keywords[] = sprintf('%s %s', osc_item_region(), osc_item_city());
+            }
+            $text = implode(', ', $keywords);
+        }
+        osc_reset_items();
+    }
+    // listing
+    if( osc_is_ad_page() ) {
+        $keywords = array();
+        $keywords[] = osc_item_category();
+        if( osc_item_city() != '' ) {
+            $keywords[] = osc_item_city();
+            $keywords[] = sprintf('%s %s', osc_item_category(), osc_item_city());
+        }
+        if( osc_item_region() != '' ) {
+            $keywords[] = osc_item_region();
+            $keywords[] = sprintf('%s %s', osc_item_category(), osc_item_region());
+        }
+        if( (osc_item_city() != '') && (osc_item_region() != '') ) {
+            $keywords[] = sprintf('%s %s %s', osc_item_category(), osc_item_region(), osc_item_city());
+            $keywords[] = sprintf('%s %s', osc_item_region(), osc_item_city());
+        }
+        $text = implode(', ', $keywords);
+    }
+
+    return (osc_apply_filter('meta_keywords_filter', $text)) ;
+}
+
 function osc_search_footer_links() {
     $categoryID = '';
     if( osc_search_category_id() ) {
