@@ -508,6 +508,8 @@ class OCadmin_items extends OCadminTest {
         
         // only can delete resources
         $this->selenium->click("xpath=//a[position()=1 and contains(.,'Delete')]");
+        sleep(4);
+        $this->selenium->click("//input[@id='media-delete-submit']");
         $this->selenium->waitForPageToLoad("10000");
         sleep(20);
         $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
@@ -518,6 +520,8 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("xpath=//a[position()=1 and contains(.,'Delete')]");
+        sleep(4);
+        $this->selenium->click("//input[@id='media-delete-submit']");
         $this->selenium->waitForPageToLoad("10000");
         sleep(20);
         $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
