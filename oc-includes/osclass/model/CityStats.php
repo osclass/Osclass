@@ -172,7 +172,7 @@
             $this->dao->join(DB_TABLE_PREFIX.'t_city', $this->getTableName().'.fk_i_city_id = '.DB_TABLE_PREFIX.'t_city.pk_i_id', 'LEFT') ;
             $this->dao->where('i_num_items '.$zero.' 0' ) ;
             if( is_numeric($region) ) {
-                $this->dao->where(DB_TABLE_PREFIX.'t_region.fk_i_region_id = '.$region) ;
+                $this->dao->where(DB_TABLE_PREFIX.'t_city.fk_i_region_id = '.$region) ;
             }       
             $this->dao->orderBy($order) ;
             
