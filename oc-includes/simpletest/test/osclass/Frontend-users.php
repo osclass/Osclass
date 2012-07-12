@@ -273,7 +273,7 @@ class Frontend_users extends FrontendTest {
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("3000");        
 
-        $this->assertTrue( $this->selenium->isTextPresent("We have sent you an e-mail. Follow the instructions to validate the changes"), "Change user email, with email validation.");
+        $this->assertTrue( $this->selenium->isTextPresent("We've sent you an e-mail. Follow its instructions to validate the changes"), "Change user email, with email validation.");
 
         $this->logout();
         
