@@ -108,7 +108,7 @@ class OCadmin_appearance extends OCadminTest {
                 sleep(3);
                 $this->selenium->click("xpath=//button[@id='market_install']");
                 sleep(10);
-                $this->assertTrue($this->selenium->isTextPresent("Everything was OK!"), "Theme downloaded successfully.");
+                $this->assertTrue($this->selenium->isTextPresent("Everything looks good!"), "Theme downloaded successfully.");
                 $this->selenium->click("link=Close");
                 $this->selenium->waitForPageToLoad("10000");
                 sleep(5);

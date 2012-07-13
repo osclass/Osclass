@@ -144,7 +144,7 @@ class OCadmin_languages extends OCadminTest {
             $this->selenium->type("s_dec_point","");
             $this->selenium->type("s_thousand_sep","");
             $this->selenium->type("s_date_format","");
-            $this->selenium->click("//input[@type='submit']");
+            $this->selenium->click("xpath=//input[@type='submit']");
 
             sleep(4);
             
