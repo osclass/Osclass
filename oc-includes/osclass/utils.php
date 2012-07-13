@@ -534,7 +534,7 @@ function testFsockopen() {
  * IF http-chunked-decode not exist implement here
  * @since 3.0
  */
-if (!function_exists('http-chunked-decode')) { 
+if( !function_exists('http_chunked_decode') ) {
     /** 
      * dechunk an http 'transfer-encoding: chunked' message 
      * 
