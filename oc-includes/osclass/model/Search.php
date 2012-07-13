@@ -503,7 +503,7 @@
                     if(strlen($country)==2) {
                         $this->countries[] = sprintf("%st_item_location.fk_c_country_code = '%s' ", DB_TABLE_PREFIX, strtolower($country));
                     } else {
-                        $_country = Country::newInstance()->findByName($c) ;
+                        $_country = Country::newInstance()->findByName($country) ;
                         if( !empty($_country) ) {
                             $this->countries[] = sprintf("%st_item_location.fk_c_country_code = '%s' ", DB_TABLE_PREFIX, strtolower($_country['pk_c_code']));
                         } else {
