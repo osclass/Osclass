@@ -387,13 +387,13 @@ CREATE TABLE %st_item_description_tmp (
 
     osc_changeVersionTo(300);
 
-    echo '<div style="border: 1px solid rgb(204, 204, 204); background: none repeat scroll 0% 0% rgb(238, 238, 238);"> <div style="padding: 20px;">';
+    echo '<div class="well ui-rounded-corners separate-top-medium">';
     echo '<p>'.__('OSClass &raquo; Updated correctly').'</p>' ;
     echo '<p>'.__('OSClass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
     foreach($aMessages as $msg) {
         echo "<p>".$msg."</p>";
     }
-    echo "</div></div>";
+    echo "</div>";
 
     /**
      * Convert alerts < 2.4, updating s_search with json encoded to based64.
