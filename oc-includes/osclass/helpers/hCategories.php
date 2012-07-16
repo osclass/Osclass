@@ -194,7 +194,7 @@
     }
     
     /**
-     * Gets the slug of the current category
+     * Gets the slug of the current category. WARNING: This slug could NOT be used as a valid W3C HTML tag attribute as it could have other characters besides [A-Za-z0-9-_]
      *
      * @param string $locale
      * @return string
