@@ -1130,7 +1130,7 @@
             }
         } else if($meta['e_type']=="URL") {
             if(osc_field(osc_item_meta(), 's_value', '')!='') {
-                return '<a href="'.htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPACT, "UTF-8").'" >'.htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPACT, "UTF-8").'</a>';
+                return '<a href="'.htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8").'" >'.htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8").'</a>';
             } else {
                 return '';
             }
