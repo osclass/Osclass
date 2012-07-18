@@ -152,7 +152,8 @@
                     's_secret'              => $code,
                     'b_active'              => ($active=='ACTIVE'?1:0),
                     'b_enabled'             => 1,
-                    'b_show_email'          => $aItem['showEmail']
+                    'b_show_email'          => $aItem['showEmail'],
+                    's_ip'                  => $aItem['s_ip']
                 ));
 
                 if(!$this->is_admin) {
@@ -367,6 +368,7 @@
                     ,'fk_i_category_id'   => $aItem['catId']
                     ,'i_price'            => $aItem['price']
                     ,'fk_c_currency_code' => $aItem['currency']
+                    ,'s_ip'               => $aItem['s_ip']
                 ) ;
 
                 // only can change the user if you're an admin
@@ -1079,9 +1081,9 @@
             $aItem['title']         = Params::getParam('title');
             $aItem['description']   = Params::getParam('description');
             $aItem['photos']        = Params::getFiles('photos');
+            $aItem['s_ip']          = get_ip();
 
             // check params
-
             $country = Country::newInstance()->findByCode($aItem['countryId']);
             if( count($country) > 0 ) {
                 $countryId = $country['pk_c_code'];

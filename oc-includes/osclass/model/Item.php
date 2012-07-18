@@ -75,6 +75,7 @@
                 's_contact_name',
                 's_contact_email',
                 'b_premium',
+                's_ip',
                 'b_enabled',
                 'b_active',
                 'b_spam',
