@@ -71,18 +71,29 @@
     $aux    = customFrmText();
 ?>
 <?php osc_current_admin_theme_path('parts/header.php') ; ?>
-<script type="text/javascript">
-    function delete_alert(pk_i_id) {
-        $("#dialog-alert-delete input[name='alert_id']").attr('value', pk_i_id);
-        $("#dialog-alert-delete").dialog('open');
-    }
-    
-    $(document).ready(function(){
-        /*$("#alert-delete-submit").live("click", function(){
-            $("#dialog-alert-delete").dialog('close');
-        });*/
-    }
-</script>
+<?php if($aux['edit'] && count($aux['alerts'])>0) { ?>
+    <script type="text/javascript">
+        function delete_alert(search, secret, email) {
+            $("#dialog-alert-delete input[name='alert_search']").attr('value', search);
+            $("#dialog-alert-delete input[name='alert_secret']").attr('value', secret);
+            $("#dialog-alert-delete input[name='alert_email']").attr('value', email);
+            $("#dialog-alert-delete").dialog('open');
+        };
+
+        $(document).ready(function(){
+            $("#dialog-alert-delete").dialog({
+                autoOpen: false,
+                modal: true
+            });
+
+    /*
+            $("#alert-delete-submit").live("click", function(){
+                $("#dialog-alert-delete").dialog('close');
+                return false;
+            });*/
+        });
+    </script>
+<?php }; ?>
 <h2 class="render-title"><?php echo $aux['title'] ; ?></h3>
 
 
@@ -234,7 +245,7 @@
                             <div class="form-label">
                                 <?php echo sprintf(__('Alert #%d'), ($k+1)) ; ?>
                                 <br/>
-                                <a href="javascript:delete_alert(<?php echo $aux['alerts'][$k]['pk_i_id']; ?>);" ><?php _e("Delete"); ?></a>
+                                <a href="javascript:delete_alert('<?php echo $aux['alerts'][$k]['s_search']; ?>', '<?php echo $aux['alerts'][$k]['s_secret']; ?>', '<?php echo $aux['alerts'][$k]['s_email']; ?>');" ><?php _e("Delete"); ?></a>
                              </div>
                             <div class="form-controls">
                                 <?php foreach($results as $r) { ?>
@@ -249,22 +260,26 @@
                 </fieldset>
             </form>
         </div>
-    <?php }; ?>
-    
-    
-    <form id="dialog-alert-delete" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete alert')); ?>">
-        <input type="hidden" name="alert_id" value="" />
-        <div class="form-horizontal">
-            <div class="form-row">
-                <?php _e('Are you sure you want to delete this alert?'); ?>
-            </div>
-            <div class="form-actions">
-                <div class="wrapper">
-                <a class="btn" href="javascript:void(0);" onclick="$('#dialog-user-delete').dialog('close');"><?php _e('Cancel'); ?></a>
-                <input id="alert-delete-submit" type="submit" value="<?php echo osc_esc_html( __('Delete') ); ?>" class="btn btn-red" />
+
+        <form id="dialog-alert-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete alert')); ?>">
+            <input type="hidden" name="page" value="users" />
+            <input type="hidden" name="action" value="delete_alerts" />
+            <input type="hidden" name="alert_search" value="" />
+            <input type="hidden" name="alert_secret" value="" />
+            <input type="hidden" name="alert_email" value="" />
+            <input type="hidden" name="alert_user_id" value="<?php echo $user['pk_i_id']; ?>" />
+            <div class="form-horizontal">
+                <div class="form-row">
+                    <?php _e('Are you sure you want to delete this alert?'); ?>
+                </div>
+                <div class="form-actions">
+                    <div class="wrapper">
+                    <a class="btn" href="javascript:void(0);" onclick="$('#dialog-alert-delete').dialog('close');"><?php _e('Cancel'); ?></a>
+                    <input id="alert-delete-submit" type="submit" value="<?php echo osc_esc_html( __('Delete') ); ?>" class="btn btn-red" />
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>    
+        </form>
+    <?php }; ?>
     <!-- /add user form -->
 <?php osc_current_admin_theme_path('parts/footer.php') ; ?>

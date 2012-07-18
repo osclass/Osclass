@@ -269,6 +269,27 @@
                                         osc_add_flash_ok_message($msg, 'admin') ;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                 break ;
+                case('delete_alerts'):         //delete
+
+                                        $search = Params::getParam("alert_search");
+                                        $secret = Params::getParam("alert_secret");
+                                        $email = Params::getParam("alert_email");
+                                        Log::newInstance()->insertLog('user', 'delete_alerts', $secret, $search." _ ".$email, 'admin', osc_logged_admin_id()) ;
+                                        $result = Alerts::newInstance()->delete(array(
+                                            "s_search" => $search
+                                            ,"s_secret" => $secret
+                                            ,"s_email" => $email
+                                        ));
+
+                                        if( $result ) {
+                                            $msg = _m('Alert has been deleted');
+                                        } else {
+                                            $msg = _m('No alert has been deleted');
+                                        }
+
+                                        osc_add_flash_ok_message($msg, 'admin') ;
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&edit='.Params::getParam('alert_user_id')) ;
+                break ;
                 case('settings'):       // calling the users settings view
                                         $this->doView('users/settings.php') ;
                 break ;

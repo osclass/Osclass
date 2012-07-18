@@ -55,7 +55,7 @@
                 // dialog delete
                 $("#dialog-user-delete").dialog({
                     autoOpen: false,
-                    modal: true,
+                    modal: true
                 });
 
                 // dialog bulk actions
