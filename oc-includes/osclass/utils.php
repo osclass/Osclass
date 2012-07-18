@@ -44,6 +44,9 @@ function osc_isExpired($dt_expiration) {
  * @return boolean
  */
 function osc_deleteResource( $id , $admin) {
+    if( defined('DEMO') ) {
+        return false;
+    }
     if( is_array( $id ) ){
         $id = $id[0];
     }
