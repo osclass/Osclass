@@ -225,7 +225,7 @@
         </form>
     </div>
 </div>
-<form id="dialog-uninstall" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+<form id="dialog-uninstall" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide">
     <input type="hidden" name="page" value="plugins" />
     <input type="hidden" name="action" value="uninstall" />
     <input type="hidden" name="plugin" value="" />
