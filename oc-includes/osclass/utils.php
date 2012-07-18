@@ -1287,4 +1287,19 @@ function osc_update_cat_stats_id($id)
     $result = CategoryStats::newInstance()->dao->query($sql);
 }
 
+function get_ip() {
+    if( !empty($_SERVER['HTTP_CLIENT_IP']) ) {
+        return $_SERVER['HTTP_CLIENT_IP'];
+    }
+
+    if( !empty($_SERVER['HTTP_X_FORWARDED_FOR']) ) {
+        $ip_array = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        foreach($ip_array as $ip) {
+            return trim($ip);
+        }
+    }
+
+    return $_SERVER['REMOTE_ADDR'];
+}
+
 ?>

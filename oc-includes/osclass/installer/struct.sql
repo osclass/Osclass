@@ -208,6 +208,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item (
     fk_c_currency_code CHAR(3) NULL,
     s_contact_name VARCHAR(100) NULL,
     s_contact_email VARCHAR(140) NULL,
+    s_ip VARCHAR(64) NOT NULL DEFAULT '',
     b_premium TINYINT(1) NOT NULL DEFAULT 0,
     b_enabled TINYINT(1) NOT NULL DEFAULT 1,
     b_active TINYINT(1) NOT NULL DEFAULT 0,
