@@ -87,6 +87,8 @@
                                             $params['attachment'] = $path ;
                                         }
 
+                                        osc_run_hook('pre_contact_post');
+
                                         osc_sendMail($params) ;
 
                                         osc_add_flash_ok_message( _m('Your email has been sent properly. Thank you for contacting us!') ) ;

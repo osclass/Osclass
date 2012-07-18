@@ -329,9 +329,10 @@
                         }
                     }
 
+                    osc_run_hook('pre_item_send_friend_post', $item);
+
                     $mItem = new ItemActions(false);
                     $success = $mItem->send_friend();
-
                     if($success) {
                         Session::newInstance()->_clearVariables();
                         $this->redirectTo( osc_item_url() );
