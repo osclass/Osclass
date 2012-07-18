@@ -380,18 +380,17 @@
                         $this->redirectTo(osc_item_url());
                     }
 
-                    $mItem = new ItemActions(false);
+                    osc_run_hook('pre_item_contact_post', $item);
 
+                    $mItem  = new ItemActions(false);
                     $result = $mItem->contact();
-                    
                     if(is_string($result)){
                         osc_add_flash_error_message( $result ) ;
                     } else {
                         osc_add_flash_ok_message( _m("We've just sent an e-mail to the seller") ) ;
                     }
-                    
-                    $this->redirectTo( osc_item_url( ) );
 
+                    $this->redirectTo( osc_item_url( ) );
                     break;
                 case 'add_comment':
                     $mItem  = new ItemActions(false) ;
