@@ -237,6 +237,8 @@
                     <div class="form-row">
                         <?php for($k=0;$k<count($aux['alerts']);$k++) { 
                             $array_conditions = (array)json_decode(base64_decode($aux['alerts'][$k]['s_search']), true);
+                            $raw_data = osc_get_raw_search($array_conditions);
+                            print_r($raw_data);
                             $new_search = Search::newInstance();
                             $new_search->setJsonAlert($array_conditions);
                             $new_search->limit(0, 2);

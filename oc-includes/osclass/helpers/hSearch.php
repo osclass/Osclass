@@ -687,4 +687,22 @@
         return '';
     }
 
+    
+    function osc_get_raw_search($conditions) {
+        print_r($conditions);
+        
+        
+        unset($conditions['withPattern']);
+        unset($conditions['tables']);
+        unset($conditions['tables_join']);
+        unset($conditions['no_catched_tables']);
+        unset($conditions['no_catched_conditions']);
+        unset($conditions['user_ids']);
+        unset($conditions['order_column']);
+        unset($conditions['order_direction']);
+        unset($conditions['limit_init']);
+        unset($conditions['results_per_page']);
+        return $conditions;
+    }
+    
 ?>
