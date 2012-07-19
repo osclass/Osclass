@@ -782,7 +782,7 @@ HTACCESS;
                                                     $msg  = _m("File <b>.htaccess</b> couldn't be filled out with the right content.") ;
                                                     $msg .= " " ;
                                                     $msg .= _m("Here's the content you have to add to the <b>.htaccess</b> file. If you can't create the file, please deactivate the <em>Friendly URLs</em> option.") ;
-                                                    $msg .= "</p><pre>" . htmlentities($htaccess, ENT_COMPACT, "UTF-8") . '</pre><p>' ;
+                                                    $msg .= "</p><pre>" . htmlentities($htaccess, ENT_COMPAT, "UTF-8") . '</pre><p>' ;
                                                     if($errors>0) {
                                                         $msg .= $msg_error;
                                                     }
@@ -792,7 +792,7 @@ HTACCESS;
                                                     $msg  = _m("File <b>.htaccess</b> couldn't be filled out with the right content.") ;
                                                     $msg .= " " ;
                                                     $msg .= _m("Here's the content you have to add to the <b>.htaccess</b> file. If you can't create the file or experience some problems with the URLs, please deactivate the <em>Friendly URLs</em> option.") ;
-                                                    $msg .= "</p><pre>" . htmlentities($htaccess, ENT_COMPACT, "UTF-8") . '</pre><p>' ;
+                                                    $msg .= "</p><pre>" . htmlentities($htaccess, ENT_COMPAT, "UTF-8") . '</pre><p>' ;
                                                     if($errors>0) {
                                                         $msg .= $msg_error;
                                                     }
