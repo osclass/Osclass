@@ -180,6 +180,51 @@
                                         $this->_exportVariableToView("max_views", $max_views) ;
                                         $this->doView("stats/items.php") ;
                 break ;
+                case('alerts'):          // manage stats view
+                                        $alerts = array() ;
+                                        $subscribers = array() ;
+                                        if( Params::getParam('type_stat') == 'week' ) {
+                                            $stats_alerts = Stats::newInstance()->new_alerts_count(date( 'Y-m-d H:i:s',  mktime(0, 0, 0, date("m"), date("d") - 70, date("Y")) ),'week') ;
+                                            $stats_subscribers = Stats::newInstance()->new_subscribers_count(date( 'Y-m-d',  mktime(0, 0, 0, date("m"), date("d") - 70, date("Y")) ),'week') ;
+                                            for($k = 10; $k >= 0; $k--) {
+                                                $reports[date( 'W', mktime(0, 0, 0, date("m"), date("d"), date("Y")) ) - $k]['views'] = 0 ;
+                                                $items[date( 'W', mktime(0, 0, 0, date("m"), date("d"), date("Y")) ) - $k] = 0 ;
+                                            }
+                                        } else if( Params::getParam('type_stat') == 'month' ) {
+                                            $stats_alerts = Stats::newInstance()->new_alerts_count(date( 'Y-m-d H:i:s',  mktime(0, 0, 0, date("m") - 10, date("d"), date("Y")) ),'month') ;
+                                            $stats_subscribers = Stats::newInstance()->new_subscribers_count(date( 'Y-m-d',  mktime(0, 0, 0, date("m") - 10, date("d"), date("Y")) ),'month') ;
+                                            for($k = 10; $k >= 0; $k--) {
+                                                $reports[date( 'F', mktime(0, 0, 0, date("m") - $k, date("d"), date("Y")) )]['views'] = 0 ;
+                                                $items[date( 'F', mktime(0, 0, 0, date("m") - $k, date("d"), date("Y")) )] = 0 ;
+                                            }
+                                        } else {
+                                            $stats_alerts = Stats::newInstance()->new_alerts_count(date( 'Y-m-d H:i:s',  mktime(0, 0, 0, date("m"), date("d") - 10, date("Y")) ),'day') ;
+                                            $stats_subscribers = Stats::newInstance()->new_subscribers_count(date('Y-m-d',  mktime(0, 0, 0, date("m"), date("d") - 10, date("Y")) ),'day') ;
+                                            for($k = 10; $k >= 0; $k--) {
+                                                $reports[date( 'Y-m-d', mktime(0, 0, 0, date("m"), date("d") - $k, date("Y")) )]['views'] = 0 ;
+                                                $items[date( 'Y-m-d', mktime(0, 0, 0, date("m"), date("d") - $k, date("Y")) )] = 0 ;
+                                            }
+                                        }
+                                        $max = 0 ;
+                                        foreach($stats_alerts as $alert) {
+                                            $alerts[$alert['d_date']] = $alert['num'] ;
+                                            if( $alert['num'] > $max ) {
+                                                $max = $alert['num'] ;
+                                            }
+                                        }
+                                        $max_subs = 0 ;
+                                        foreach($stats_subscribers as $subscriber) {
+                                            $subscribers[$subscriber['d_date']] = $subscriber['num'] ;
+                                            if( $subscriber['num'] > $max_subs ) {
+                                                $max_subs = $subscriber['num'] ;
+                                            }
+                                        }
+                                        $this->_exportVariableToView("subscribers", $subscribers) ;
+                                        $this->_exportVariableToView("alerts", $alerts) ;
+                                        $this->_exportVariableToView("max", $max) ;
+                                        $this->_exportVariableToView("max_subs", $max_subs) ;
+                                        $this->doView("stats/alerts.php") ;
+                break ;
                 case('users'):          // manage stats view
                                         $users = array() ;
                                         if( Params::getParam('type_stat') == 'week' ) {

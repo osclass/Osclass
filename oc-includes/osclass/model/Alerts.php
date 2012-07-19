@@ -48,12 +48,13 @@
             $this->setTableName('t_alerts') ;
             // $this->setPrimaryKey('') ; // no primary key in preference table 
             $array_fields = array(
-                's_email',
-                'fk_i_user_id',
-                's_search',
-                's_secret',
-                'b_active',
-                'e_type'
+                's_email'
+                ,'fk_i_user_id'
+                ,'s_search'
+                ,'s_secret'
+                ,'b_active'
+                ,'e_type'
+                ,'dt_date'
             );
             $this->setFields($array_fields);
         }
@@ -294,7 +295,13 @@
             $results = $this->dao->get();
             
             if($results->numRows() == 0) {
-                return $this->dao->insert($this->getTableName(), array( 'fk_i_user_id' => $userid, 's_email' => $email, 's_search' => $alert, 'e_type' => $type, 's_secret' => $secret));
+                return $this->dao->insert($this->getTableName(), array(
+                    'fk_i_user_id' => $userid
+                    ,'s_email' => $email
+                    ,'s_search' => $alert
+                    ,'e_type' => $type
+                    ,'s_secret' => $secret
+                    ,'dt_date' => date('Y-m-d H:i:s')));
             }
             return false;
         }
