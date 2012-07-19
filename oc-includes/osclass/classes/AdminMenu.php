@@ -77,6 +77,7 @@
             $this->add_submenu( 'stats', __('Reports'), osc_admin_base_url(true) .'?page=stats&action=reports', 'stats_reports', 'moderator') ;
             $this->add_submenu( 'stats', __('Users'), osc_admin_base_url(true) .'?page=stats&action=users', 'stats_users', 'moderator') ;
             $this->add_submenu( 'stats', __('Comments'), osc_admin_base_url(true) .'?page=stats&action=comments', 'stats_comments', 'moderator') ;
+            $this->add_submenu( 'stats', __('Alerts'), osc_admin_base_url(true) .'?page=stats&action=alerts', 'stats_alerts', 'moderator') ;
 
             $this->add_menu(__('Settings'), osc_admin_base_url(true) .'?page=settings', 'settings', 'administrator') ;
             $this->add_submenu( 'settings', __('General'), osc_admin_base_url(true) .'?page=settings', 'settings_general', 'administrator') ;

@@ -161,7 +161,7 @@
         </table>
     </form>
 </div>
-<form id="dialog-currency-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete currency')); ?>">
+<form id="dialog-currency-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete currency')); ?>">
     <input type="hidden" name="page" value="settings" />
     <input type="hidden" name="action" value="currencies" />
     <input type="hidden" name="type" value="delete" />

@@ -193,5 +193,51 @@
             $result = $this->conn->get() ;
             return $result->result() ;
         }
+        
+        public function new_alerts_count($from_date, $date = 'day') 
+        {
+            if($date=='week') {
+                $this->conn->select('WEEK(dt_date) as d_date, COUNT(s_email) as num') ;
+                $this->conn->groupBy('WEEK(dt_date)') ;
+            } else if($date=='month') {
+                $this->conn->select('MONTHNAME(dt_date) as d_date, COUNT(s_email) as num') ;
+                $this->conn->groupBy('MONTH(dt_date)') ;
+            } else {
+                $this->conn->select('DATE(dt_date) as d_date, COUNT(s_email) as num') ;
+                $this->conn->groupBy('DAY(dt_date)') ;
+            }
+            
+            $this->conn->from(DB_TABLE_PREFIX."t_alerts") ;
+            $this->conn->where("dt_date > '$from_date'") ;
+            $this->conn->orderBy('dt_date', 'ASC') ;
+            
+            $result = $this->conn->get() ;
+            return $result->result() ;
+        }
+        
+        public function new_subscribers_count($from_date, $date = 'day') 
+        {
+            if($date=='week') {
+                $this->conn->select('WEEK(dt_date) as d_date, COUNT(DISTINCT s_email) as num') ;
+                $this->conn->groupBy('WEEK(dt_date)') ;
+            } else if($date=='month') {
+                $this->conn->select('MONTHNAME(dt_date) as d_date, COUNT(DISTINCT s_email) as num') ;
+                $this->conn->groupBy('MONTH(dt_date)') ;
+            } else {
+                $this->conn->select('DATE(dt_date) as d_date, COUNT(DISTINCT s_email) as num') ;
+                $this->conn->groupBy('DAY(dt_date)') ;
+            }
+            
+            $this->conn->from(DB_TABLE_PREFIX."t_alerts") ;
+            $this->conn->where("dt_date > '$from_date'") ;
+            $this->conn->orderBy('dt_date', 'ASC') ;
+            
+            $result = $this->conn->get() ;
+            return $result->result() ;
+        }
+        
+        
+        
+        
     }
 ?>

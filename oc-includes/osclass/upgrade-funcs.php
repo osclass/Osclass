@@ -385,7 +385,12 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('marketURL', 'http://market.osclass.org/api/');
     }
 
-    osc_changeVersionTo(300);
+    if(osc_version() < 310) {
+        $comm->query(sprintf("UPDATE %st_alerts SET dt_date = '%s' ", DB_TABLE_PREFIX, date("Y-m-d H:i:s")));
+        $comm->query(sprintf("ALTER TABLE %st_alerts ADD COLUMN dt_date DATETIME NULL ", DB_TABLE_PREFIX));
+    }
+
+    osc_changeVersionTo(310);
 
     echo '<div class="well ui-rounded-corners separate-top-medium">';
     echo '<p>'.__('OSClass &raquo; Updated correctly').'</p>' ;

@@ -411,7 +411,7 @@
     osc_add_hook('before_show_pagination_admin','showingResults');
     osc_show_pagination_admin($aData);
 ?>
-<form id="dialog-item-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+<form id="dialog-item-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide">
     <input type="hidden" name="page" value="items" />
     <input type="hidden" name="action" value="delete" />
     <input type="hidden" name="id[]" value="" />

@@ -30,11 +30,13 @@
             $return['title']      = __('Edit user') ;
             $return['action_frm'] = 'edit_post' ;
             $return['btn_text']   = __('Update user') ;
+            $return['alerts'] = Alerts::newInstance()->findByUser($user['pk_i_id']);
         } else {
             $return['edit']       = false ;
             $return['title']      = __('Add new user') ;
             $return['action_frm'] = 'create_post' ;
             $return['btn_text']   = __('Add new user') ;
+            $return['alerts'] = array();
         }
         return $return;
     }
@@ -68,8 +70,30 @@
     
     $aux    = customFrmText();
 ?>
-
 <?php osc_current_admin_theme_path('parts/header.php') ; ?>
+<?php if($aux['edit'] && count($aux['alerts'])>0) { ?>
+    <script type="text/javascript">
+        function delete_alert(search, secret, email) {
+            $("#dialog-alert-delete input[name='alert_search']").attr('value', search);
+            $("#dialog-alert-delete input[name='alert_secret']").attr('value', secret);
+            $("#dialog-alert-delete input[name='alert_email']").attr('value', email);
+            $("#dialog-alert-delete").dialog('open');
+        };
+
+        $(document).ready(function(){
+            $("#dialog-alert-delete").dialog({
+                autoOpen: false,
+                modal: true
+            });
+
+    /*
+            $("#alert-delete-submit").live("click", function(){
+                $("#dialog-alert-delete").dialog('close');
+                return false;
+            });*/
+        });
+    </script>
+<?php }; ?>
 <h2 class="render-title"><?php echo $aux['title'] ; ?></h3>
 
 
@@ -202,5 +226,60 @@
             </fieldset>
         </form>
     </div>
+    
+    
+    <?php if($aux['edit'] && count($aux['alerts'])>0) { ?>
+        <div class="settings-user">
+            <ul id="error_list"></ul>
+            <form>
+                <div class="form-horizontal">
+                    <h3 class="render-title"><?php _e('Alerts') ; ?></h3>
+                    <div class="form-row">
+                        <?php for($k=0;$k<count($aux['alerts']);$k++) { 
+                            $array_conditions = (array)json_decode(base64_decode($aux['alerts'][$k]['s_search']), true);
+                            $new_search = Search::newInstance();
+                            $new_search->setJsonAlert($array_conditions);
+                            $new_search->limit(0, 2);
+                            $results = $new_search->doSearch();
+                            ?>
+                            <div class="form-label">
+                                <?php echo sprintf(__('Alert #%d'), ($k+1)) ; ?>
+                                <br/>
+                                <a href="javascript:delete_alert('<?php echo $aux['alerts'][$k]['s_search']; ?>', '<?php echo $aux['alerts'][$k]['s_secret']; ?>', '<?php echo $aux['alerts'][$k]['s_email']; ?>');" ><?php _e("Delete"); ?></a>
+                             </div>
+                            <div class="form-controls">
+                                <?php foreach($results as $r) { ?>
+                                <label><b><?php echo $r['s_title']; ?></b></label>
+                                <p><?php echo $r['s_description']; ?></p>
+                                <?php }; ?>
+                           </div>
+                        <?php }; ?>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                </fieldset>
+            </form>
+        </div>
+
+        <form id="dialog-alert-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete alert')); ?>">
+            <input type="hidden" name="page" value="users" />
+            <input type="hidden" name="action" value="delete_alerts" />
+            <input type="hidden" name="alert_search" value="" />
+            <input type="hidden" name="alert_secret" value="" />
+            <input type="hidden" name="alert_email" value="" />
+            <input type="hidden" name="alert_user_id" value="<?php echo $user['pk_i_id']; ?>" />
+            <div class="form-horizontal">
+                <div class="form-row">
+                    <?php _e('Are you sure you want to delete this alert?'); ?>
+                </div>
+                <div class="form-actions">
+                    <div class="wrapper">
+                    <a class="btn" href="javascript:void(0);" onclick="$('#dialog-alert-delete').dialog('close');"><?php _e('Cancel'); ?></a>
+                    <input id="alert-delete-submit" type="submit" value="<?php echo osc_esc_html( __('Delete') ); ?>" class="btn btn-red" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    <?php }; ?>
     <!-- /add user form -->
 <?php osc_current_admin_theme_path('parts/footer.php') ; ?>
