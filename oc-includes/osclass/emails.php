@@ -19,7 +19,7 @@
 
     function fn_email_alert_validation($alert, $email, $secret) {
         $user['s_name'] = "";
-                                    
+
         // send alert validation email
         $prefLocale = osc_language() ;
         $page = Page::newInstance()->findByInternalName('email_alert_validation') ;
@@ -45,7 +45,7 @@
         $body  = osc_mailBeauty($_body , $words);
 
         $params = array(
-            'subject'  => $_title,
+            'subject'  => $title,
             'from'     => osc_contact_email(),
             'to'       => $email,
             'to_name'  => $user['s_name'],
