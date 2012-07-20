@@ -288,7 +288,41 @@
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin') ;
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&edit='.Params::getParam('alert_user_id')) ;
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('alert_user_id')) ;
+                break ;
+                case('status_alerts'):         //delete
+
+                                        $search = Params::getParam("search");
+                                        $secret = Params::getParam("secret");
+                                        $email = Params::getParam("email");
+                                        $status = Params::getParam("status");
+
+                                        $result = Alerts::newInstance()->update(
+                                            array(
+                                                "b_active" => $status
+                                            ),array(
+                                                "s_search" => $search
+                                                ,"s_secret" => $secret
+                                                ,"s_email" => $email
+                                                )
+                                        );
+
+                                        if( $result ) {
+                                            if($status==1) {
+                                                $msg = _m('Alert has been enabled');
+                                            } else {
+                                                $msg = _m('Alert has been disabled');
+                                            }
+                                        } else {
+                                            if($status==1) {
+                                                $msg = _m('No alert has been enabled');
+                                            } else {
+                                                $msg = _m('No alert has been disabled');
+                                            }
+                                        }
+
+                                        osc_add_flash_ok_message($msg, 'admin') ;
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('user_id')) ;
                 break ;
                 case('settings'):       // calling the users settings view
                                         $this->doView('users/settings.php') ;

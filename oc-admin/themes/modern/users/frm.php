@@ -94,6 +94,13 @@
             $("#dialog-alert-delete").dialog('open');
         };
 
+        function delete_alert(search, secret, email) {
+            $("#dialog-alert-delete input[name='alert_search']").attr('value', search);
+            $("#dialog-alert-delete input[name='alert_secret']").attr('value', secret);
+            $("#dialog-alert-delete input[name='alert_email']").attr('value', email);
+            $("#dialog-alert-delete").dialog('open');
+        };
+
         $(document).ready(function(){
             $("#dialog-alert-delete").dialog({
                 autoOpen: false,
@@ -283,7 +290,11 @@
                                 
                                 <a href="javascript:delete_alert('<?php echo $aux['alerts'][$k]['s_search']; ?>', '<?php echo $aux['alerts'][$k]['s_secret']; ?>', '<?php echo $aux['alerts'][$k]['s_email']; ?>');" ><?php _e("Delete"); ?></a>
                                 &nbsp;|&nbsp;
-                                <a href="javascript:delete_alert('<?php echo $aux['alerts'][$k]['s_search']; ?>', '<?php echo $aux['alerts'][$k]['s_secret']; ?>', '<?php echo $aux['alerts'][$k]['s_email']; ?>');" ><?php _e("Disable"); ?></a>
+                                <?php if($aux['alerts'][$k]['b_active']==1) { ?>
+                                <a href="<?php echo osc_admin_base_url(true)."?page=users&action=status_alerts&search=".$aux['alerts'][$k]['s_search']."&secret=".$aux['alerts'][$k]['s_secret']."&email=".$aux['alerts'][$k]['s_email']."&status=0&user_id=".$user['pk_i_id']; ?>" ><?php _e("Disable"); ?></a>
+                                <?php } else { ?>
+                                    <a href="<?php echo osc_admin_base_url(true)."?page=users&action=status_alerts&search=".$aux['alerts'][$k]['s_search']."&secret=".$aux['alerts'][$k]['s_secret']."&email=".$aux['alerts'][$k]['s_email']."&status=1&user_id=".$user['pk_i_id']; ?>" ><?php _e("Enable"); ?></a>
+                                <?php }; ?>
                              </div>
                             <div class="form-controls">
                                 <?php if(!empty($results)) {
