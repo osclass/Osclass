@@ -319,6 +319,30 @@
         {
             return $this->dao->update($this->getTableName(), array('b_active' => 1), array('s_email' => $email, 's_secret' => $secret));
         }
+        
+        
+        /**
+         * Search alerts
+         *
+         * @access public
+         * @since 3.1
+         * @param string $start
+         * @param string $limit
+         * @param string $order_by_column_name
+         * @param string $order_by_type
+         * @param string $search
+         * @return array
+         */        
+        function search($start, $limit, $order_by_column_name, $order_by_type, $search) {
+            $data['alerts'] = array();
+            $data['total_results'] = 0;
+            $data['rows'] = 0;
+            return $data;
+        }
+        
+        
+        
+        
     }
 
     /* file end: ./oc-includes/osclass/model/Alerts.php */
