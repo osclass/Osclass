@@ -511,6 +511,40 @@
         }
 
         /**
+         * Return a category's name given an id
+         * 
+         * @access public
+         * @since 3.1
+         * @param int $categoryID primary key
+         * @return string
+         */
+        public function findNameByPrimaryKey($categoryID)
+        {
+            if($categoryID == null) {
+                return false ;
+            }
+
+            $category = array() ;
+
+            if( array_key_exists($categoryID, $this->categories) ) {
+                $category = $this->categories[$categoryID];
+            } else {
+                $this->dao->select( "s_name" ) ;
+                $this->dao->from( $this->getTableName() ) ;
+                $this->dao->where( 'pk_i_id', $categoryID ) ;
+                $result = $this->dao->get() ;
+
+                if( $result == false ) {
+                    return false ;
+                }
+
+                $category = $result->row() ;
+            }
+
+            return $category['s_name'];
+        }
+
+        /**
          * delete a category and all information linked to it
          * 
          * @access public
