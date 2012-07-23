@@ -271,58 +271,76 @@
                 break ;
                 case('delete_alerts'):         //delete
 
+                                        $iDeleted = 0 ;
                                         $search = Params::getParam("alert_search");
                                         $secret = Params::getParam("alert_secret");
                                         $email = Params::getParam("alert_email");
-                                        Log::newInstance()->insertLog('user', 'delete_alerts', $secret, $search." _ ".$email, 'admin', osc_logged_admin_id()) ;
-                                        $result = Alerts::newInstance()->delete(array(
-                                            "s_search" => $search
-                                            ,"s_secret" => $secret
-                                            ,"s_email" => $email
-                                        ));
-
-                                        if( $result ) {
-                                            $msg = _m('Alert has been deleted');
+                                        $l = count($email);
+                                        for($k=0;$k<$l;$k++) {
+                                            Log::newInstance()->insertLog('user', 'delete_alerts', $secret[$k], $search[$k]." _ ".$email[$k], 'admin', osc_logged_admin_id()) ;
+                                            if(Alerts::newInstance()->delete(array(
+                                                "s_search" => $search[$k]
+                                                ,"s_secret" => $secret[$k]
+                                                ,"s_email" => $email[$k]
+                                            ))) {
+                                                $iDeleted++ ;
+                                            };
+                                        };
+                                        if( $iDeleted == 0 ) {
+                                            $msg = _m('No alerts have been deleted') ;
                                         } else {
-                                            $msg = _m('No alert has been deleted');
+                                            $msg = sprintf( _mn('One alert has been deleted', '%s alerts have been deleted', $iDeleted), $iDeleted ) ;
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin') ;
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('alert_user_id')) ;
+                                        if(Params::getParam('user_id')=='') {
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=alerts') ;
+                                        } else {
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('user_id')) ;
+                                        }
                 break ;
                 case('status_alerts'):         //delete
 
-                                        $search = Params::getParam("search");
-                                        $secret = Params::getParam("secret");
-                                        $email = Params::getParam("email");
+                                        $search = Params::getParam("alert_search");
+                                        $secret = Params::getParam("alert_secret");
+                                        $email = Params::getParam("alert_email");
                                         $status = Params::getParam("status");
+                                        $iUpdated = 0 ;
 
-                                        $result = Alerts::newInstance()->update(
-                                            array(
-                                                "b_active" => $status
-                                            ),array(
-                                                "s_search" => $search
-                                                ,"s_secret" => $secret
-                                                ,"s_email" => $email
-                                                )
-                                        );
+                                        $l = count($email);
+                                        for($k=0;$k<$l;$k++) {
+                                            $iUpdated += Alerts::newInstance()->update(
+                                                array(
+                                                    "b_active" => $status
+                                                ),array(
+                                                    "s_search" => $search[$k]
+                                                    ,"s_secret" => $secret[$k]
+                                                    ,"s_email" => $email[$k]
+                                                    )
+                                            );
+                                        };
 
-                                        if( $result ) {
-                                            if($status==1) {
-                                                $msg = _m('Alert has been enabled');
+                                        
+                                        if($status==1) {
+                                            if( $iUpdated == 0 ) {
+                                                $msg = _m('No alerts have been activated') ;
                                             } else {
-                                                $msg = _m('Alert has been disabled');
+                                                $msg = sprintf( _mn('One alert has been activated', '%s alerts have been activated', $iUpdated), $iUpdated ) ;
                                             }
                                         } else {
-                                            if($status==1) {
-                                                $msg = _m('No alert has been enabled');
+                                            if( $iUpdated == 0 ) {
+                                                $msg = _m('No alerts have been deactivated') ;
                                             } else {
-                                                $msg = _m('No alert has been disabled');
+                                                $msg = sprintf( _mn('One alert has been deactivated', '%s alerts have been deactivated', $iUpdated), $iUpdated ) ;
                                             }
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin') ;
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('user_id')) ;
+                                        if(Params::getParam('user_id')=='') {
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=alerts') ;
+                                        } else {
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('user_id')) ;
+                                        }
                 break ;
                 case('settings'):       // calling the users settings view
                                         $this->doView('users/settings.php') ;

@@ -84,20 +84,14 @@
                 border-radius:5px;
                 --moz-border-radius: 5px;
                 ---webkit-border-radius: 5px;
+                z-index: 100;
             }
         </style>
         <script type="text/javascript">
         function delete_alert(search, secret, email) {
-            $("#dialog-alert-delete input[name='alert_search']").attr('value', search);
-            $("#dialog-alert-delete input[name='alert_secret']").attr('value', secret);
-            $("#dialog-alert-delete input[name='alert_email']").attr('value', email);
-            $("#dialog-alert-delete").dialog('open');
-        };
-
-        function delete_alert(search, secret, email) {
-            $("#dialog-alert-delete input[name='alert_search']").attr('value', search);
-            $("#dialog-alert-delete input[name='alert_secret']").attr('value', secret);
-            $("#dialog-alert-delete input[name='alert_email']").attr('value', email);
+            $("#alert_search").attr('value', search);
+            $("#alert_secret").attr('value', secret);
+            $("#alert_email").attr('value', email);
             $("#dialog-alert-delete").dialog('open');
         };
 
@@ -115,6 +109,7 @@
             },function(){
                 $('#more-tooltip').hide();
             });
+            $('#more-tooltip').hide();
 
         });
     </script>
@@ -291,9 +286,9 @@
                                 <a href="javascript:delete_alert('<?php echo $aux['alerts'][$k]['s_search']; ?>', '<?php echo $aux['alerts'][$k]['s_secret']; ?>', '<?php echo $aux['alerts'][$k]['s_email']; ?>');" ><?php _e("Delete"); ?></a>
                                 &nbsp;|&nbsp;
                                 <?php if($aux['alerts'][$k]['b_active']==1) { ?>
-                                <a href="<?php echo osc_admin_base_url(true)."?page=users&action=status_alerts&search=".$aux['alerts'][$k]['s_search']."&secret=".$aux['alerts'][$k]['s_secret']."&email=".$aux['alerts'][$k]['s_email']."&status=0&user_id=".$user['pk_i_id']; ?>" ><?php _e("Disable"); ?></a>
+                                <a href="<?php echo osc_admin_base_url(true)."?page=users&action=status_alerts&alert_search[]=".$aux['alerts'][$k]['s_search']."&alert_secret[]=".$aux['alerts'][$k]['s_secret']."&alert_email[]=".$aux['alerts'][$k]['s_email']."&status=0&user_id=".$user['pk_i_id']; ?>" ><?php _e("Disable"); ?></a>
                                 <?php } else { ?>
-                                    <a href="<?php echo osc_admin_base_url(true)."?page=users&action=status_alerts&search=".$aux['alerts'][$k]['s_search']."&secret=".$aux['alerts'][$k]['s_secret']."&email=".$aux['alerts'][$k]['s_email']."&status=1&user_id=".$user['pk_i_id']; ?>" ><?php _e("Enable"); ?></a>
+                                    <a href="<?php echo osc_admin_base_url(true)."?page=users&action=status_alerts&alert_search[]=".$aux['alerts'][$k]['s_search']."&alert_secret[]=".$aux['alerts'][$k]['s_secret']."&alert_email[]=".$aux['alerts'][$k]['s_email']."&status=1&user_id=".$user['pk_i_id']; ?>" ><?php _e("Enable"); ?></a>
                                 <?php }; ?>
                              </div>
                             <div class="form-controls">
@@ -318,10 +313,10 @@
         <form id="dialog-alert-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete alert')); ?>">
             <input type="hidden" name="page" value="users" />
             <input type="hidden" name="action" value="delete_alerts" />
-            <input type="hidden" name="alert_search" value="" />
-            <input type="hidden" name="alert_secret" value="" />
-            <input type="hidden" name="alert_email" value="" />
-            <input type="hidden" name="alert_user_id" value="<?php echo $user['pk_i_id']; ?>" />
+            <input type="hidden" id="alert_search" name="alert_search[]" value="" />
+            <input type="hidden" id="alert_secret" name="alert_secret[]" value="" />
+            <input type="hidden" id="alert_email" name="alert_email[]" value="" />
+            <input type="hidden" id="alert_user_id" name="alert_user_id" value="<?php echo $user['pk_i_id']; ?>" />
             <div class="form-horizontal">
                 <div class="form-row">
                     <?php _e('Are you sure you want to delete this alert?'); ?>

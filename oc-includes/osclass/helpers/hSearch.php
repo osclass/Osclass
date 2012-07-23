@@ -719,8 +719,6 @@
             unset($conditions['sPattern']);
         }
         
-        
-        
         unset($conditions['withPattern']);
         unset($conditions['tables']);
         unset($conditions['tables_join']);

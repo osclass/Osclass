@@ -333,11 +333,43 @@
          * @param string $search
          * @return array
          */        
-        function search($start, $limit, $order_by_column_name, $order_by_type, $search) {
-            $data['alerts'] = array();
-            $data['total_results'] = 0;
-            $data['rows'] = 0;
-            return $data;
+        public function search($start = 0, $end = 10, $order_column = 'dt_date', $order_direction = 'DESC', $name = '')
+        {
+            // SET data, so we always return a valid object
+            $alerts = array() ;
+            $alerts['rows']             = 0 ;
+            $alerts['total_results']    = 0 ;
+            $alerts['alerts']           = array() ;
+
+            $this->dao->select('SQL_CALC_FOUND_ROWS *') ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->orderBy($order_column, $order_direction) ;
+            $this->dao->limit($start, $end) ;
+            if( $name != '' ) {
+                $this->dao->like('s_email', $name) ;
+            }
+            $rs = $this->dao->get() ;
+
+            if( !$rs ) {
+                return $alerts;
+            }
+
+            $alerts['alerts'] = $rs->result() ;
+
+            $rsRows = $this->dao->query('SELECT FOUND_ROWS() as total') ;
+            $data   = $rsRows->row() ;
+            if( $data['total'] ) {
+                $alerts['total_results'] = $data['total'] ;
+            }
+
+            $rsTotal = $this->dao->query('SELECT COUNT(*) as total FROM '.$this->getTableName()) ;
+            $data   = $rsTotal->row() ;
+            if( $data['total'] ) {
+                $alerts['rows'] = $data['total'] ;
+            }
+
+            return $alerts ;
+            
         }
         
         

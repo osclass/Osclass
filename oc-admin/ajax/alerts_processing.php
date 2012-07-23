@@ -31,11 +31,10 @@
         private $order_by = array() ;
 
         private $column_names  = array(
-            0 => 'dt_reg_date',
+            0 => 'dt_date',
             1 => 's_email',
-            2 => 's_name',
-            3 => 'dt_reg_date',
-            4 => 'dt_mod_date'
+            2 => 's_search',
+            3 => 'dt_date'
         ) ;
 
         /* For Datatables */
@@ -79,7 +78,7 @@
                 $this->iPage = Params::getParam('iPage') ;
             }
             
-            $this->order_by['column_name'] = 'pk_i_id';
+            $this->order_by['column_name'] = 'dt_date';
             $this->order_by['type'] = 'DESC';
             foreach($this->_get as $k=>$v) {
                 if( $k == 'sSearch' ) {
@@ -116,54 +115,54 @@
             foreach ($this->alerts as $aRow) {
                 $row = array() ;
                 $options        = array() ;
-                $options_more   = array() ;
                 // first column
-                $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" /></div>' ;
+                $row[] = '<input type="checkbox" s_search="' . $aRow['s_search'] . '" s_secret="' . $aRow['s_secret'] . '" s_email="' . $aRow['s_email'] . '" /></div>' ;
                 
-                $options[]  = '<a href="' . osc_admin_base_url(true) . '?page=users&action=edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>' ;
-                $options[]  = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=users&action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
+                $options[]  = '<a onclick="return delete_dialog(\'' . $aRow['s_email'] . '\', \'' . $aRow['s_secret'] . '\', \'' . $aRow['s_email'] . '\');" href="#">' . __('Delete') . '</a>' ;
+
                 
                 if( $aRow['b_active'] == 1 ) {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=deactivate&amp;id[]=' . $aRow['pk_i_id'] .'">' . __('Deactivate') . '</a>' ;
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=status_alerts&amp;alert_search[]=' . $aRow['s_search'] . '&amp;alert_secret[]=' . $aRow['s_secret'] . '&amp;alert_email[]=' . $aRow['s_email'] . '&amp;status=0" >' . __('Deactivate') . '</a>' ;
                 } else {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=activate&amp;id[]=' . $aRow['pk_i_id'] .'">' . __('Activate') . '</a>' ;
-                }
-                if( $aRow['b_enabled'] == 1 ) {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=disable&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Block') . '</a>' ;
-                } else {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=enable&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Unblock') . '</a>' ;
-                }
-                if( osc_user_validation_enabled() && ( $aRow['b_active'] == 0 ) ) {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=resend_activation&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Re-send activation email') . '</a>' ;
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=status_alerts&amp;alert_search[]=' . $aRow['s_search'] . '&amp;alert_secret[]=' . $aRow['s_secret'] . '&amp;alert_email[]=' . $aRow['s_email'] . '&amp;status=1" >' . __('Activate') . '</a>' ;
                 }
                 
-                $options_more = osc_apply_filter('more_actions_manage_users', $options_more, $aRow);
-                // more actions
-                $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL ;
-                foreach( $options_more as $actual ) { 
-                    $moreOptions .= '<li>'.$actual."</li>".PHP_EOL;
-                }
-                $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL ;
 
-                $options = osc_apply_filter('actions_manage_users', $options, $aRow);
+                $options = osc_apply_filter('actions_manage_alerts', $options, $aRow);
                 // create list of actions
                 $auxOptions = '<ul>'.PHP_EOL ;
                 foreach( $options as $actual ) {
                     $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
                 }
-                $auxOptions  .= $moreOptions ;
                 $auxOptions  .= '</ul>'.PHP_EOL ;
                 
                 $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
                 // second column
-                $row[] = '<a href="' . osc_admin_base_url(true) . '?page=items&userId='. $aRow['pk_i_id'] .'&user='. $aRow['s_name'] .'">' . $aRow['s_email'] . '</a>'. $actions  ;
+                $row[] = '<a href="' . osc_admin_base_url(true) . '?page=items&userId=">' . $aRow['s_email'] . '</a>'. $actions  ;
                 
                 // third row
-                $row[] = $aRow['s_name'] ;
+                
+                $pieces = array();
+                $conditions = osc_get_raw_search((array)json_decode(base64_decode($aRow['s_search']), true));
+                if(isset($conditions['sPattern']) && $conditions['sPattern']!='') {
+                    $pieces[] = sprintf(__("<b>Pattern:</b> %s"), $conditions['sPattern']);
+                }
+                if(isset($conditions['aCategories']) && !empty($conditions['aCategories'])) {
+                    $l = min(count($conditions['aCategories']), 4);
+                    $cat_array = array();
+                    for($c=0;$c<$l;$c++) {
+                        $cat_array[] = $conditions['aCategories'][$c];
+                    }
+                    if(count($conditions['aCategories'])>$l) {
+                        $cat_array[] = '<a href="#" class="more-tooltip" categories="'.osc_esc_html(implode(", ", $conditions['aCategories'])).'" >'.__("...More").'</a>';
+                    }
+
+                    $pieces[] = sprintf(__("<b>Categories:</b> %s"), implode(", ", $cat_array));
+                }
+
+                $row[] = implode($pieces, ", ");
                 // fourth row
-                $row[] = $aRow['dt_reg_date'] ;
-                // fifth row
-                $row[] = $aRow['dt_mod_date'] ;
+                $row[] = $aRow['dt_date'] ;
 
                 $count++ ;
                 $this->result['aaData'][] = $row ;

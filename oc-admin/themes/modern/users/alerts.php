@@ -36,6 +36,23 @@
 
     //customize Head
     function customHead() { ?>
+
+        <style>
+            #more-tooltip{
+                position:absolute;
+                background:#f2f2f2;
+                border:solid 2px #bababa;
+                margin-left:5px;
+                margin-top:0px;
+                padding:7px;
+                max-width: 400px;
+                border-radius:5px;
+                --moz-border-radius: 5px;
+                ---webkit-border-radius: 5px;
+                z-index: 100;
+            }
+        </style>
+
         <script type="text/javascript">
             $(document).ready(function(){
                 // check_all bulkactions
@@ -62,6 +79,27 @@
                     modal: true
                 });
                 $("#bulk-actions-submit").click(function() {
+                    $("#alert_search").remove();
+                    $("#alert_secret").remove();
+                    $("#alert_email").remove();
+                    $("input:checked").each(function(k, v){
+                        if($(v).attr("id")!="check_all") {
+                            $("#datatablesForm").append('<input type="hidden" name="alert_search[]" id="alert_search" value="' + $(v).attr("s_search") + '" />');
+                            $("#datatablesForm").append('<input type="hidden" name="alert_secret[]" id="alert_secret" value="' + $(v).attr("s_secret") + '" />');
+                            $("#datatablesForm").append('<input type="hidden" name="alert_email[]" id="alert_email" value="' + $(v).attr("s_email") + '" />');
+                        }
+                    });
+
+                    if($("#bulk_actions").attr("value")=="delete") {
+                        $("#action").attr("value", "delete_alerts");
+                    } else if($("#bulk_actions").attr("value")=="activate") {
+                        $("#action").attr("value", "status_alerts");
+                        $("#status").attr("value", "1");
+                    } else {
+                        $("#action").attr("value", "status_alerts");
+                        $("#status").attr("value", "0");
+                    }
+                    
                     $("#datatablesForm").submit();
                 });
                 $("#bulk-actions-cancel").click(function() {
@@ -85,14 +123,28 @@
                     return false;
                 });
                 // /dialog bulk actions
+                
+                
+                $(".more-tooltip").hover(function(e){
+                    $('#more-tooltip').html($(this).attr("categories")).css({
+                        top: e.pageY - this.offsetY - $('#more-tooltip').height() - 15,
+                        left: e.pageX
+                    }).show();
+                },function(){
+                    $('#more-tooltip').hide();
+                });
+                $('#more-tooltip').hide();
+
             });
 
             // dialog delete function
-            function delete_dialog(item_id) {
-                $("#dialog-alert-delete input[name='id[]']").attr('value', item_id);
+            function delete_alert(search, secret, email) {
+                $("#alert_search").attr('value', search);
+                $("#alert_secret").attr('value', secret);
+                $("#alert_email").attr('value', email);
                 $("#dialog-alert-delete").dialog('open');
-                return false;
-            }
+            };
+
         </script>
         <?php
     }
@@ -117,13 +169,15 @@
     </div>
     <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
         <input type="hidden" name="page" value="users" />
+        <input type="hidden" name="action" id="action" value="status_alerts" />
+        <input type="hidden" name="status" id="status" value="0" />
         
         <div id="bulk-actions">
             <label>
-                <select name="action" id="bulk_actions" class="select-box-extra">
+                <select name="alert_action" id="bulk_actions" class="select-box-extra">
                     <option value=""><?php _e('Bulk Actions') ; ?></option>
-                    <option value="enable" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected alerts?'), strtolower(__('Unblock'))); ?>"><?php _e('Unblock') ; ?></option>
-                    <option value="disable" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected alerts?'), strtolower(__('Block'))); ?>"><?php _e('Block') ; ?></option>
+                    <option value="activate" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected alerts?'), strtolower(__('Activate'))); ?>"><?php _e('Activate') ; ?></option>
+                    <option value="deactivate" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected alerts?'), strtolower(__('Deactivate'))); ?>"><?php _e('Deactivate') ; ?></option>
                     <option value="delete" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected alerts?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ; ?></option>
                 </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
             </label>
@@ -136,7 +190,6 @@
                         <th><?php _e('E-mail') ; ?></th>
                         <th><?php _e('Name') ; ?></th>
                         <th class="col-date"><?php _e('Date') ; ?></th>
-                        <th><?php _e('Update Date') ; ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -178,9 +231,9 @@
 <form id="dialog-alert-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete alert')); ?>">
     <input type="hidden" name="page" value="users" />
     <input type="hidden" name="action" value="delete_alerts" />
-    <input type="hidden" name="alert_search" value="" />
-    <input type="hidden" name="alert_secret" value="" />
-    <input type="hidden" name="alert_email" value="" />
+    <input type="hidden" name="alert_search[]" id="alert_search" value="" />
+    <input type="hidden" name="alert_secret[]" id="alert_secret" value="" />
+    <input type="hidden" name="alert_email[]" id="alert_email" value="" />
     <input type="hidden" name="alert_user_id" value="" />
     <div class="form-horizontal">
         <div class="form-row">
@@ -206,4 +259,5 @@
         </div>
     </div>
 </div>
+<div id="more-tooltip"></div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
