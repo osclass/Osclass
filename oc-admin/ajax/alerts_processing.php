@@ -118,7 +118,7 @@
                 // first column
                 $row[] = '<input type="checkbox" s_search="' . $aRow['s_search'] . '" s_secret="' . $aRow['s_secret'] . '" s_email="' . $aRow['s_email'] . '" /></div>' ;
                 
-                $options[]  = '<a onclick="return delete_dialog(\'' . $aRow['s_email'] . '\', \'' . $aRow['s_secret'] . '\', \'' . $aRow['s_email'] . '\');" href="#">' . __('Delete') . '</a>' ;
+                $options[]  = '<a onclick="return delete_alert(\'' . $aRow['s_search'] . '\', \'' . $aRow['s_secret'] . '\', \'' . $aRow['s_email'] . '\');" href="#">' . __('Delete') . '</a>' ;
 
                 
                 if( $aRow['b_active'] == 1 ) {
