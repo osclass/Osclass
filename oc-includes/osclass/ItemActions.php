@@ -1227,12 +1227,22 @@
                         }
                     }
                 }
-
                 foreach ($aResources['error'] as $key => $error) {
                     $bool_img = false;
                     if ($error == UPLOAD_ERR_OK) {
                         // check mime file
                         $fileMime = $aResources['type'][$key] ;
+                        if(stripos($fileMime, "image/")!==FALSE) {
+                            if(function_exists("getimagesize")) {
+                                $info = getimagesize($aResources['tmp_name'][$key]);
+                                if(isset($info['mime'])) {
+                                    $fileMime = $info['mime'];
+                                } else {
+                                    $fileMime = '';
+                                }
+                            };
+                        };
+                        
 
                         if(in_array($fileMime,$aMimesAllowed)) {
                             $bool_img = true;
