@@ -209,6 +209,7 @@
             
             $this->conn->from(DB_TABLE_PREFIX."t_alerts") ;
             $this->conn->where("dt_date > '$from_date'") ;
+            $this->conn->where("dt_unsub_date IS NULL");
             $this->conn->orderBy('dt_date', 'ASC') ;
             
             $result = $this->conn->get() ;
@@ -230,6 +231,7 @@
             
             $this->conn->from(DB_TABLE_PREFIX."t_alerts") ;
             $this->conn->where("dt_date > '$from_date'") ;
+            $this->conn->where("dt_unsub_date IS NULL");
             $this->conn->orderBy('dt_date', 'ASC') ;
             
             $result = $this->conn->get() ;

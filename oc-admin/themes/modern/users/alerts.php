@@ -79,17 +79,6 @@
                     modal: true
                 });
                 $("#bulk-actions-submit").click(function() {
-                    $("#alert_search").remove();
-                    $("#alert_secret").remove();
-                    $("#alert_email").remove();
-                    $("input:checked").each(function(k, v){
-                        if($(v).attr("id")!="check_all") {
-                            $("#datatablesForm").append('<input type="hidden" name="alert_search[]" id="alert_search" value="' + $(v).attr("s_search") + '" />');
-                            $("#datatablesForm").append('<input type="hidden" name="alert_secret[]" id="alert_secret" value="' + $(v).attr("s_secret") + '" />');
-                            $("#datatablesForm").append('<input type="hidden" name="alert_email[]" id="alert_email" value="' + $(v).attr("s_email") + '" />');
-                        }
-                    });
-
                     if($("#bulk_actions").attr("value")=="delete") {
                         $("#action").attr("value", "delete_alerts");
                     } else if($("#bulk_actions").attr("value")=="activate") {
@@ -138,10 +127,8 @@
             });
 
             // dialog delete function
-            function delete_alert(search, secret, email) {
-                $("#alert_search").attr('value', search);
-                $("#alert_secret").attr('value', secret);
-                $("#alert_email").attr('value', email);
+            function delete_alert(id) {
+                $("#alert_id").attr('value', id);
                 $("#dialog-alert-delete").dialog('open');
             };
 
@@ -231,9 +218,7 @@
 <form id="dialog-alert-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete alert')); ?>">
     <input type="hidden" name="page" value="users" />
     <input type="hidden" name="action" value="delete_alerts" />
-    <input type="hidden" name="alert_search[]" id="alert_search" value="" />
-    <input type="hidden" name="alert_secret[]" id="alert_secret" value="" />
-    <input type="hidden" name="alert_email[]" id="alert_email" value="" />
+    <input type="hidden" name="alert_id[]" id="alert_id" value="" />
     <input type="hidden" name="alert_user_id" value="" />
     <div class="form-horizontal">
         <div class="form-row">

@@ -46,15 +46,17 @@
         {
             parent::__construct();
             $this->setTableName('t_alerts') ;
-            // $this->setPrimaryKey('') ; // no primary key in preference table 
+            $this->setPrimaryKey('pk_i_id') ;
             $array_fields = array(
-                's_email'
+                'pk_i_id'
+                ,'s_email'
                 ,'fk_i_user_id'
                 ,'s_search'
                 ,'s_secret'
                 ,'b_active'
                 ,'e_type'
                 ,'dt_date'
+                ,'dt_unsub_date'
             );
             $this->setFields($array_fields);
         }
@@ -68,11 +70,14 @@
          * @param string $userId
          * @return array  
          */
-        function findByUser($userId) 
+        function findByUser($userId, $unsub = false) 
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('fk_i_user_id', $userId) ;
+            if(!$unsub) {
+                $this->dao->where('dt_unsub_date IS NULL');
+            }
             $result = $this->dao->get() ;
 
             if( $result == false ) { 
@@ -91,11 +96,14 @@
          * @param string $email
          * @return array
          */
-        function findByEmail($email) 
+        function findByEmail($email, $unsub = false)
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_email', $email) ;
+            if(!$unsub) {
+                $this->dao->where('dt_unsub_date IS NULL');
+            }
             $result = $this->dao->get() ;
             
             if( $result == false ) { 
@@ -114,11 +122,14 @@
          * @param string $type
          * @return array 
          */
-        function findByType($type) 
+        function findByType($type, $unsub = false)
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('e_type', $type);
+            if(!$unsub) {
+                $this->dao->where('dt_unsub_date IS NULL');
+            }
             $result = $this->dao->get();
             
             if( $result == false ) { 
@@ -138,11 +149,14 @@
          * @param bool $active
          * @return array
          */
-        function findByTypeGroup($type, $active = FALSE) 
+        function findByTypeGroup($type, $active = FALSE, $unsub = false)
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('e_type', $type);
+            if(!$unsub) {
+                $this->dao->where('dt_unsub_date IS NULL');
+            }
             if($active){
                 $this->dao->where('b_active', 1);
             }
@@ -168,14 +182,15 @@
          * 
          * WARNIGN doble where!
          */
-        function findBySearchAndType($search, $type)
+        function findBySearchAndType($search, $type, $unsub = false)
         {
             $this->dao->select();
             $this->dao->from($this->getTableName());
-            $conditions = array('e_type'    => $type,
-                                's_search'  => $search);
             $this->dao->where('e_type', $type);
             $this->dao->where('s_search', $search);
+            if(!$unsub) {
+                $this->dao->where('dt_unsub_date IS NULL');
+            }
             $result = $this->dao->get();
             
             if( $result == false ) { 
@@ -197,12 +212,15 @@
          * @param bool $active
          * @return array
          */
-        function findUsersBySearchAndType($search, $type, $active = FALSE) 
+        function findUsersBySearchAndType($search, $type, $active = FALSE, $unsub = false)
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('e_type', $type);
             $this->dao->where('s_search', $search);
+            if(!$unsub) {
+                $this->dao->where('dt_unsub_date IS NULL');
+            }
             if($active){
                 $this->dao->where('b_active', 1); 
             }
@@ -226,13 +244,16 @@
          * @param string $type
          * @return array
          */
-        function findByUserByType($userId, $type)
+        function findByUserByType($userId, $type, $unsub = false)
         {
             $this->dao->select();
             $this->dao->from($this->getTableName());
             $conditions = array('e_type'        => $type,
                                 'fk_i_user_id'  => $userId);
             $this->dao->where($conditions) ;
+            if(!$unsub) {
+                $this->dao->where('dt_unsub_date IS NULL');
+            }
             $result = $this->dao->get();
             
             if( $result == false ) { 
@@ -252,12 +273,15 @@
          * @param string $type
          * @return array
          */
-        function findByEmailByType($email, $type)
+        function findByEmailByType($email, $type, $unsub = false)
         {
             $this->dao->select();
             $this->dao->from($this->getTableName());
             $conditions = array('e_type'   => $type,
                                 's_email'  => $email);
+            if(!$unsub) {
+                $this->dao->where('dt_unsub_date IS NULL');
+            }
             $this->dao->where($conditions);
             $result = $this->dao->get();
             
@@ -280,7 +304,7 @@
          * @param string $type
          * @return bool on success
          */
-        function createAlert($userid = 0, $email, $alert, $secret, $type = 'DAILY')
+        function createAlert($userid, $email, $alert, $secret, $type = 'DAILY')
         {
             $results = 0;
             $this->dao->select();
@@ -311,13 +335,38 @@
          *
          * @access public
          * @since unknown
-         * @param string $email
-         * @param string $secret
+         * @param string $id
          * @return mixed false on fail, int of num. of affected rows
          */
-        function activate($email, $secret)
+        function activate($id)
         {
-            return $this->dao->update($this->getTableName(), array('b_active' => 1), array('s_email' => $email, 's_secret' => $secret));
+            return $this->dao->update($this->getTableName(), array('b_active' => 1), array('pk_i_id' => $id));
+        }
+        
+        /**
+         * Dectivate an alert
+         *
+         * @access public
+         * @since 3.1
+         * @param string $id
+         * @return mixed false on fail, int of num. of affected rows
+         */
+        function deactivate($id)
+        {
+            return $this->dao->update($this->getTableName(), array('b_active' => 0), array('pk_i_id' => $id));
+        }
+        
+        /**
+         * Unsub from an alert
+         *
+         * @access public
+         * @since 3.1
+         * @param string $id
+         * @return mixed false on fail, int of num. of affected rows
+         */
+        function unsub($id)
+        {
+            return $this->dao->update($this->getTableName(), array('dt_unsub_date' => date("Y-m-d H:i:s")), array('pk_i_id' => $id));
         }
         
         

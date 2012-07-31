@@ -703,7 +703,7 @@ HTACCESS;
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_logout').'/?$', 'index.php?page=main&action=logout');
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_register').'/?$', 'index.php?page=register&action=register');
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_activate').'/([0-9]+)/(.*?)/?$', 'index.php?page=register&action=validate&id=$1&code=$2');
-                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_activate_alert').'/([a-zA-Z0-9]+)/(.+)$', 'index.php?page=user&action=activate_alert&email=$2&secret=$1');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_activate_alert').'/([0-9]+)/([a-zA-Z0-9]+)/(.+)$', 'index.php?page=user&action=activate_alert&id=$1&email=$3&secret=$2');
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_profile').'/?$', 'index.php?page=user&action=profile');
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_profile').'/([0-9]+)/?$', 'index.php?page=user&action=pub_profile&id=$1');
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_items').'/?$', 'index.php?page=user&action=items');
