@@ -127,12 +127,6 @@
                     $options[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=status_alerts&amp;alert_id[]=' . $aRow['pk_i_id'] . '&amp;status=1" >' . __('Activate') . '</a>' ;
                 }
                 
-                if( $aRow['dt_unsub_date'] == null ) {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=sub_alerts&amp;alert_id[]=' . $aRow['pk_i_id'] . '&amp;status=0" >' . __('Unsubscribe') . '</a>' ;
-                } else {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=sub_alerts&amp;alert_id[]=' . $aRow['pk_i_id'] . '&amp;status=1" >' . __('Subscribe') . '</a>' ;
-                }
-                
 
                 $options = osc_apply_filter('actions_manage_alerts', $options, $aRow);
                 // create list of actions

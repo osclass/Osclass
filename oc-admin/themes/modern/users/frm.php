@@ -288,12 +288,6 @@
                                 <?php } else { ?>
                                 <a href="<?php echo osc_admin_base_url(true)."?page=users&action=status_alerts&id[]=".$aux['alerts'][$k]['pk_i_id']."&status=1&user_id=".$user['pk_i_id']; ?>" ><?php _e("Enable"); ?></a>
                                 <?php }; ?>
-                                &nbsp;|&nbsp;
-                                <?php if($aux['alerts'][$k]['dt_unsub_date']==null) { ?>
-                                <a href="<?php echo osc_admin_base_url(true)."?page=users&action=sub_alerts&id[]=".$aux['alerts'][$k]['pk_i_id']."&status=0&user_id=".$user['pk_i_id']; ?>" ><?php _e("Unsubscribe"); ?></a>
-                                <?php } else { ?>
-                                <a href="<?php echo osc_admin_base_url(true)."?page=users&action=sub_alerts&id[]=".$aux['alerts'][$k]['pk_i_id']."&status=1&user_id=".$user['pk_i_id']; ?>" ><?php _e("Subscribe"); ?></a>
-                                <?php }; ?>
                             </div>
                             <div class="form-controls">
                                 <?php if(!empty($results)) {
