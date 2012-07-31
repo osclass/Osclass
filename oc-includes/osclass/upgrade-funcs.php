@@ -387,8 +387,6 @@ CREATE TABLE %st_item_description_tmp (
 
     if(osc_version() < 310) {
         $comm->query(sprintf("ALTER TABLE %st_alerts ADD COLUMN pk_i_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ", DB_TABLE_PREFIX));
-        $comm->query(sprintf("ALTER TABLE %st_alerts ADD COLUMN dt_date DATETIME NULL ", DB_TABLE_PREFIX));
-        $comm->query(sprintf("ALTER TABLE %st_alerts ADD COLUMN dt_unsub_date DATETIME NULL ", DB_TABLE_PREFIX));
         $comm->query(sprintf("UPDATE %st_alerts SET dt_date = '%s' ", DB_TABLE_PREFIX, date("Y-m-d H:i:s")));
     }
 
