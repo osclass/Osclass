@@ -919,7 +919,7 @@
     $("#catId").change(function(){
         var cat_id = $(this).val();
         <?php if(OC_ADMIN) { ?>
-        var url = '<?php echo osc_base_url(true); ?>';
+        var url = '<?php echo osc_admin_base_url(true); ?>';
         <?php } else { ?>
         var url = '<?php echo osc_base_url(true); ?>';
         <?php } ?>
@@ -940,7 +940,7 @@
     $(document).ready(function(){
         var cat_id = $("#catId").val();
         <?php if(OC_ADMIN) { ?>
-        var url = '<?php echo osc_base_url(true); ?>';
+        var url = '<?php echo osc_admin_base_url(true); ?>';
         <?php } else { ?>
         var url = '<?php echo osc_base_url(true); ?>';
         <?php } ?>
