@@ -272,20 +272,22 @@
                 case('delete_alerts'):         //delete
 
                                         $iDeleted = 0 ;
-                                        $search = Params::getParam("alert_search");
-                                        $secret = Params::getParam("alert_secret");
-                                        $email = Params::getParam("alert_email");
-                                        $l = count($email);
-                                        for($k=0;$k<$l;$k++) {
-                                            Log::newInstance()->insertLog('user', 'delete_alerts', $secret[$k], $search[$k]." _ ".$email[$k], 'admin', osc_logged_admin_id()) ;
-                                            if(Alerts::newInstance()->delete(array(
-                                                "s_search" => $search[$k]
-                                                ,"s_secret" => $secret[$k]
-                                                ,"s_email" => $email[$k]
-                                            ))) {
-                                                $iDeleted++ ;
-                                            };
-                                        };
+                                        $alertId   = Params::getParam('alert_id') ;
+                                        if( !is_array($alertId) ) {
+                                            osc_add_flash_error_message( _m("Alert id isn't in the correct format"), 'admin') ;
+                                            if(Params::getParam('user_id')=='') {
+                                                $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=alerts') ;
+                                            } else {
+                                                $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('user_id')) ;
+                                            }
+                                        }
+
+                                        $mAlerts = new Alerts();
+                                        foreach($alertId as $id) {
+                                            Log::newInstance()->insertLog('user', 'delete_alerts', $id, $id, 'admin', osc_logged_admin_id()) ;
+                                            $iDeleted += $mAlerts->delete(array('pk_i_id' => $id));
+                                        }
+                                            
                                         if( $iDeleted == 0 ) {
                                             $msg = _m('No alerts have been deleted') ;
                                         } else {
@@ -301,24 +303,27 @@
                 break ;
                 case('status_alerts'):         //delete
 
-                                        $search = Params::getParam("alert_search");
-                                        $secret = Params::getParam("alert_secret");
-                                        $email = Params::getParam("alert_email");
                                         $status = Params::getParam("status");
                                         $iUpdated = 0 ;
+                                        $alertId   = Params::getParam('alert_id') ;
+                                        
+                                        if( !is_array($alertId) ) {
+                                            osc_add_flash_error_message( _m("Alert id isn't in the correct format"), 'admin') ;
+                                            if(Params::getParam('user_id')=='') {
+                                                $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=alerts') ;
+                                            } else {
+                                                $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('user_id')) ;
+                                            }
+                                        }
 
-                                        $l = count($email);
-                                        for($k=0;$k<$l;$k++) {
-                                            $iUpdated += Alerts::newInstance()->update(
-                                                array(
-                                                    "b_active" => $status
-                                                ),array(
-                                                    "s_search" => $search[$k]
-                                                    ,"s_secret" => $secret[$k]
-                                                    ,"s_email" => $email[$k]
-                                                    )
-                                            );
-                                        };
+                                        $mAlerts = new Alerts();
+                                        foreach($alertId as $id) {
+                                            if($status==1) {
+                                                $iUpdated += $mAlerts->activate($id);
+                                            } else {
+                                                $iUpdated += $mAlerts->deactivate($id);
+                                            }
+                                        }
 
                                         
                                         if($status==1) {

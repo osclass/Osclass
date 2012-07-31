@@ -116,15 +116,21 @@
                 $row = array() ;
                 $options        = array() ;
                 // first column
-                $row[] = '<input type="checkbox" s_search="' . $aRow['s_search'] . '" s_secret="' . $aRow['s_secret'] . '" s_email="' . $aRow['s_email'] . '" /></div>' ;
+                $row[] = '<input type="checkbox" name="alert_id[]" value="' . $aRow['pk_i_id'] . '" /></div>' ;
                 
-                $options[]  = '<a onclick="return delete_alert(\'' . $aRow['s_search'] . '\', \'' . $aRow['s_secret'] . '\', \'' . $aRow['s_email'] . '\');" href="#">' . __('Delete') . '</a>' ;
+                $options[]  = '<a onclick="return delete_alert(\'' . $aRow['pk_i_id'] . '\');" href="#">' . __('Delete') . '</a>' ;
 
                 
                 if( $aRow['b_active'] == 1 ) {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=status_alerts&amp;alert_search[]=' . $aRow['s_search'] . '&amp;alert_secret[]=' . $aRow['s_secret'] . '&amp;alert_email[]=' . $aRow['s_email'] . '&amp;status=0" >' . __('Deactivate') . '</a>' ;
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=status_alerts&amp;alert_id[]=' . $aRow['pk_i_id'] . '&amp;status=0" >' . __('Deactivate') . '</a>' ;
                 } else {
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=status_alerts&amp;alert_search[]=' . $aRow['s_search'] . '&amp;alert_secret[]=' . $aRow['s_secret'] . '&amp;alert_email[]=' . $aRow['s_email'] . '&amp;status=1" >' . __('Activate') . '</a>' ;
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=status_alerts&amp;alert_id[]=' . $aRow['pk_i_id'] . '&amp;status=1" >' . __('Activate') . '</a>' ;
+                }
+                
+                if( $aRow['dt_unsub_date'] == null ) {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=sub_alerts&amp;alert_id[]=' . $aRow['pk_i_id'] . '&amp;status=0" >' . __('Unsubscribe') . '</a>' ;
+                } else {
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=sub_alerts&amp;alert_id[]=' . $aRow['pk_i_id'] . '&amp;status=1" >' . __('Subscribe') . '</a>' ;
                 }
                 
 
