@@ -21,7 +21,7 @@
     {
         function __construct()
         {
-            parent::__construct() ;
+            parent::__construct();
         }
 
         //Business Layer...
@@ -29,14 +29,14 @@
         {
             switch($this->action) {
                 case('contact_post'):   //contact_post
-                                        $yourName = Params::getParam('yourName') ;
-                                        $yourEmail = Params::getParam('yourEmail') ;
-                                        $subject = Params::getParam('subject') ;
-                                        $message = Params::getParam('message') ;
+                                        $yourName  = Params::getParam('yourName');
+                                        $yourEmail = Params::getParam('yourEmail');
+                                        $subject   = Params::getParam('subject');
+                                        $message   = Params::getParam('message');
 
-                                        if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
+                                        if( (osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field") ) {
                                             if(!osc_check_recaptcha()) {
-                                                osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;
+                                                osc_add_flash_error_message( _m('The Recaptcha code is wrong'));
                                                 Session::newInstance()->_setForm("yourName",$yourName);
                                                 Session::newInstance()->_setForm("yourEmail",$yourEmail);
                                                 Session::newInstance()->_setForm("subject",$subject);
@@ -47,7 +47,7 @@
                                         }
 
                                         if( !preg_match('|.*?@.{2,}\..{2,}|',$yourEmail) ) {
-                                            osc_add_flash_error_message( _m('Please enter a correct email') ) ;
+                                            osc_add_flash_error_message( _m('Please enter a correct email') );
                                             Session::newInstance()->_setForm("yourName",$yourName);
                                             Session::newInstance()->_setForm("subject",$subject);
                                             Session::newInstance()->_setForm("message_body",$message);
@@ -57,46 +57,46 @@
                                         $message = sprintf(__("%s (%s) left this message : %s"), $yourName, $yourEmail, $message);
                                         
                                         $params = array(
-                                            'reply_to' => $yourEmail
-                                            ,'subject' => '[' . osc_page_title() . '] ' . __('Contact form') . ': ' . $subject
-                                            ,'to' => osc_contact_email()
-                                            ,'to_name' => __('Administrator')
-                                            ,'body' => $message
-                                            ,'alt_body' => $message
+                                            'reply_to' => $yourEmail,
+                                            'subject'  => '[' . osc_page_title() . '] ' . __('Contact form') . ': ' . $subject,
+                                            'to'       => osc_contact_email(),
+                                            'to_name'  => __('Administrator'),
+                                            'body'     => $message,
+                                            'alt_body' => $message
                                         );
 
-                                        if(osc_contact_attachment()) {
-                                            $attachment = Params::getFiles('attachment');
-                                            $resourceName = $attachment['name'] ;
-                                            $tmpName = $attachment['tmp_name'] ;
-                                            $resourceType = $attachment['type'] ;
+                                        if( osc_contact_attachment() ) {
+                                            $attachment   = Params::getFiles('attachment');
+                                            $resourceName = $attachment['name'];
+                                            $tmpName      = $attachment['tmp_name'];
+                                            $resourceType = $attachment['type'];
 
-                                            $path = osc_content_path() . 'uploads/' . time() . '_' . $resourceName ;
+                                            $path = osc_content_path() . 'uploads/' . time() . '_' . $resourceName;
 
-                                            if(!is_writable(osc_content_path() . 'uploads/')) {
-                                                osc_add_flash_error_message( _m('There have been some errors sending the message')) ;
+                                            if( !is_writable(osc_content_path() . 'uploads/') ) {
+                                                osc_add_flash_error_message( _m('There have been some errors sending the message'));
                                                 $this->redirectTo( osc_contact_url() );
                                             }
 
-                                            if(!move_uploaded_file($tmpName, $path)) {
-                                                unset($path) ;
+                                            if( !move_uploaded_file($tmpName, $path) ) {
+                                                unset($path);
                                             }
                                         }
 
-                                        if(isset($path)) {
-                                            $params['attachment'] = $path ;
+                                        if( isset($path) ) {
+                                            $params['attachment'] = $path;
                                         }
 
                                         osc_run_hook('pre_contact_post');
 
-                                        osc_sendMail($params) ;
+                                        osc_sendMail(osc_apply_filter('contact_params', $params));
 
-                                        osc_add_flash_ok_message( _m('Your email has been sent properly. Thank you for contacting us!') ) ;
+                                        osc_add_flash_ok_message( _m('Your email has been sent properly. Thank you for contacting us!') );
 
-                                        $this->redirectTo( osc_contact_url() ) ;
+                                        $this->redirectTo( osc_contact_url() );
                 break;
                 default:                //contact
-                                        $this->doView('contact.php') ;
+                                        $this->doView('contact.php');
             }
         }
 
@@ -104,7 +104,7 @@
         function doView($file)
         {
             osc_run_hook("before_html");
-            osc_current_web_theme_path($file) ;
+            osc_current_web_theme_path($file);
             Session::newInstance()->_clearVariables();
             osc_run_hook("after_html");
         }
