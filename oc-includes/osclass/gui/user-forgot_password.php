@@ -1,6 +1,6 @@
 <?php
     /*
-     *      OSClass software for creating and publishing online classified
+     *      OSClass – software for creating and publishing online classified
      *                           advertising platforms
      *
      *                        Copyright (C) 2010 OSCLASS
