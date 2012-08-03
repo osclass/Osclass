@@ -71,7 +71,7 @@
             $user['s_name'] = $user['s_email'];
         }
 
-        $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_secret']);
+        $unsub_link = osc_user_unsubscribe_alert_url($s_search['pk_i_id'], $user['s_email'], $s_search['s_secret']);
         $unsub_link = '<a href="' . $unsub_link . '">' . __('unsubscribe alert') . '</a>';
 
         $words   = array();
@@ -117,7 +117,7 @@
             $user['s_name'] = $user['s_email'];
         }
 
-        $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_secret']);
+        $unsub_link = osc_user_unsubscribe_alert_url($s_search['pk_i_id'], $user['s_email'], $s_search['s_secret']);
         $unsub_link = '<a href="' . $unsub_link . '">' . __('unsubscribe alert') . '</a>';
 
         $words   = array();
@@ -163,7 +163,7 @@
             $user['s_name'] = $user['s_email'];
         }
 
-        $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_secret']);
+        $unsub_link = osc_user_unsubscribe_alert_url($s_search['pk_i_id'], $user['s_email'], $s_search['s_secret']);
         $unsub_link = '<a href="' . $unsub_link . '">' . __('unsubscribe alert') . '</a>';
 
         $words   = array() ;
@@ -209,7 +209,7 @@
             $user['s_name'] = $user['s_email'];
         }
 
-        $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_secret']);
+        $unsub_link = osc_user_unsubscribe_alert_url($s_search['pk_i_id'], $user['s_email'], $s_search['s_secret']);
         $unsub_link = '<a href="' . $unsub_link . '">' . __('unsubscribe alert') . '</a>';
 
         $words   = array() ;
