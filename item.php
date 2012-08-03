@@ -333,6 +333,9 @@
 
                     $mItem = new ItemActions(false);
                     $success = $mItem->send_friend();
+
+                    osc_run_hook('post_item_send_friend_post', $item);
+
                     if($success) {
                         Session::newInstance()->_clearVariables();
                         $this->redirectTo( osc_item_url() );
@@ -385,6 +388,9 @@
 
                     $mItem  = new ItemActions(false);
                     $result = $mItem->contact();
+
+                    osc_run_hook('post_item_contact_post', $item);
+
                     if(is_string($result)){
                         osc_add_flash_error_message( $result ) ;
                     } else {
