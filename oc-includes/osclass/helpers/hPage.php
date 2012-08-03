@@ -158,7 +158,7 @@
      * @return boolean
      */
     function osc_get_static_page($internal_name, $locale = '') {
-        if ($locale == "") $locale = osc_current_user_locale() ;
+        if ($locale === '') $locale = osc_current_user_locale() ;
         return View::newInstance()->_exportVariableToView('page', Page::newInstance()->findByInternalName($internal_name, $locale) ) ;
     }    
     

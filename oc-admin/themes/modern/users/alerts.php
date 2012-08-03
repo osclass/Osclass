@@ -17,94 +17,106 @@
      */
 
     function addHelp() {
-        echo '<p>' . __('Add, edit or delete information associated to registered users. Keep in mind that deleting a user also deletes all the listings the user published.') . '</p>';
+        echo '<p>' . __('Add, edit or delete information associated to alerts.') . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
     function customPageHeader(){ ?>
-        <h1><?php _e('Users') ; ?>
-            <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=settings' ; ?>" class="btn ico ico-32 ico-engine float-right"></a>
+        <h1><?php _e('Alerts') ; ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
-            <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=create' ; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
         </h1>
 <?php
     }
     osc_add_hook('admin_page_header','customPageHeader');
 
     function customPageTitle($string) {
-        return sprintf(__('Manage users &raquo; %s'), $string);
+        return sprintf(__('Manage alerts &raquo; %s'), $string);
     }
     osc_add_filter('admin_title', 'customPageTitle');
 
     //customize Head
     function customHead() { ?>
         <script type="text/javascript">
-            $(document).ready(function(){
-                // check_all bulkactions
-                $("#check_all").change(function(){
-                    var isChecked = $(this+':checked').length;
-                    $('.col-bulkactions input').each( function() {
-                        if( isChecked == 1 ) {
-                            this.checked = true;
-                        } else {
-                            this.checked = false;
-                        }
-                    });
-                });
-
-                // dialog delete
-                $("#dialog-user-delete").dialog({
-                    autoOpen: false,
-                    modal: true
-                });
-
-                // dialog bulk actions
-                $("#dialog-bulk-actions").dialog({
-                    autoOpen: false,
-                    modal: true
-                });
-                $("#bulk-actions-submit").click(function() {
-                    $("#datatablesForm").submit();
-                });
-                $("#bulk-actions-cancel").click(function() {
-                    $("#datatablesForm").attr('data-dialog-open', 'false');
-                    $('#dialog-bulk-actions').dialog('close');
-                });
-                // dialog bulk actions function
-                $("#datatablesForm").submit(function() {
-                    if( $("#bulk_actions option:selected").val() == "" ) {
-                        return false;
-                    }
-
-                    if( $("#datatablesForm").attr('data-dialog-open') == "true" ) {
-                        return true;
-                    }
-
-                    $("#dialog-bulk-actions .form-row").html($("#bulk_actions option:selected").attr('data-dialog-content'));
-                    $("#bulk-actions-submit").html($("#bulk_actions option:selected").text());
-                    $("#datatablesForm").attr('data-dialog-open', 'true');
-                    $("#dialog-bulk-actions").dialog('open');
-                    return false;
-                });
-                // /dialog bulk actions
+        $(document).ready(function(){
+            //tooltip
+            $('.more-tooltip').each(function(){
+                $(this).osc_tooltip($(this).attr("categories"),{layout:'gray-tooltip',position:{x:'right',y:'middle'}});
             });
 
-            // dialog delete function
-            function delete_dialog(item_id) {
-                $("#dialog-user-delete input[name='id[]']").attr('value', item_id);
-                $("#dialog-user-delete").dialog('open');
+            // check_all bulkactions
+            $("#check_all").change(function(){
+                var isChecked = $(this+':checked').length;
+                $('.col-bulkactions input').each( function() {
+                    if( isChecked == 1 ) {
+                        this.checked = true;
+                    } else {
+                        this.checked = false;
+                    }
+                });
+            });
+
+            // dialog delete
+            $("#dialog-alert-delete").dialog({
+                autoOpen: false,
+                modal: true
+            });
+
+            // dialog bulk actions
+            $("#dialog-bulk-actions").dialog({
+                autoOpen: false,
+                modal: true
+            });
+            $("#bulk-actions-submit").click(function() {
+                if($("#bulk_actions").attr("value")=="delete") {
+                    $("#action").attr("value", "delete_alerts");
+                } else if($("#bulk_actions").attr("value")=="activate") {
+                    $("#action").attr("value", "status_alerts");
+                    $("#status").attr("value", "1");
+                } else {
+                    $("#action").attr("value", "status_alerts");
+                    $("#status").attr("value", "0");
+                }
+                
+                $("#datatablesForm").submit();
+            });
+            $("#bulk-actions-cancel").click(function() {
+                $("#datatablesForm").attr('data-dialog-open', 'false');
+                $('#dialog-bulk-actions').dialog('close');
+            });
+            // dialog bulk actions function
+            $("#datatablesForm").submit(function() {
+                if( $("#bulk_actions option:selected").val() == "" ) {
+                    return false;
+                }
+
+                if( $("#datatablesForm").attr('data-dialog-open') == "true" ) {
+                    return true;
+                }
+
+                $("#dialog-bulk-actions .form-row").html($("#bulk_actions option:selected").attr('data-dialog-content'));
+                $("#bulk-actions-submit").html($("#bulk_actions option:selected").text());
+                $("#datatablesForm").attr('data-dialog-open', 'true');
+                $("#dialog-bulk-actions").dialog('open');
                 return false;
-            }
+            });
+            // /dialog bulk actions
+        });
+
+        // dialog delete function
+        function delete_alert(id) {
+            $("#alert_id").attr('value', id);
+            $("#dialog-alert-delete").dialog('open');
+        };
+
         </script>
         <?php
     }
     osc_add_hook('admin_header','customHead');
    
-    $iDisplayLength = __get('iDisplayLength');
-    $aData          = __get('aUsers'); 
+    $aData          = __get('aAlerts'); 
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?> 
-<h2 class="render-title"><?php _e('Manage users'); ?> <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=create' ; ?>" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
+<h2 class="render-title"><?php _e('Manage alerts'); ?></h2>
 <div class="relative">
     <div id="users-toolbar" class="table-toolbar">
         <div class="float-right">
@@ -120,19 +132,16 @@
     </div>
     <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
         <input type="hidden" name="page" value="users" />
+        <input type="hidden" name="action" id="action" value="status_alerts" />
+        <input type="hidden" name="status" id="status" value="0" />
         
         <div id="bulk-actions">
             <label>
-                <select name="action" id="bulk_actions" class="select-box-extra">
+                <select name="alert_action" id="bulk_actions" class="select-box-extra">
                     <option value=""><?php _e('Bulk Actions') ; ?></option>
-                    <option value="activate" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Activate'))); ?>"><?php _e('Activate') ; ?></option>
-                    <option value="deactivate" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Deactivate'))); ?>"><?php _e('Deactivate') ; ?></option>
-                    <option value="enable" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Unblock'))); ?>"><?php _e('Unblock') ; ?></option>
-                    <option value="disable" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Block'))); ?>"><?php _e('Block') ; ?></option>
-                    <option value="delete" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ; ?></option>
-                    <?php if( osc_user_validation_enabled() ) { ?>
-                        <option value="resend_activation" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Resend the activation to'))); ?>"><?php _e('Resend activation') ; ?></option>
-                    <?php } ?>
+                    <option value="activate" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected alerts?'), strtolower(__('Activate'))); ?>"><?php _e('Activate') ; ?></option>
+                    <option value="deactivate" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected alerts?'), strtolower(__('Deactivate'))); ?>"><?php _e('Deactivate') ; ?></option>
+                    <option value="delete" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected alerts?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ; ?></option>
                 </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
             </label>
         </div>
@@ -144,7 +153,6 @@
                         <th><?php _e('E-mail') ; ?></th>
                         <th><?php _e('Name') ; ?></th>
                         <th class="col-date"><?php _e('Date') ; ?></th>
-                        <th><?php _e('Update Date') ; ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -177,24 +185,25 @@
 </div>
 <?php 
     function showingResults(){
-        $aData = __get('aUsers');
+        $aData = __get('aAlerts');
         echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;
     }
     osc_add_hook('before_show_pagination_admin','showingResults');
     osc_show_pagination_admin($aData);
 ?>
-<form id="dialog-user-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete user')); ?>">
+<form id="dialog-alert-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete alert')); ?>">
     <input type="hidden" name="page" value="users" />
-    <input type="hidden" name="action" value="delete" />
-    <input type="hidden" name="id[]" value="" />
+    <input type="hidden" name="action" value="delete_alerts" />
+    <input type="hidden" name="alert_id[]" id="alert_id" value="" />
+    <input type="hidden" name="alert_user_id" value="" />
     <div class="form-horizontal">
         <div class="form-row">
-            <?php _e('Are you sure you want to delete this user?'); ?>
+            <?php _e('Are you sure you want to delete this alert?'); ?>
         </div>
         <div class="form-actions">
             <div class="wrapper">
-            <a class="btn" href="javascript:void(0);" onclick="$('#dialog-user-delete').dialog('close');"><?php _e('Cancel'); ?></a>
-            <input id="user-delete-submit" type="submit" value="<?php echo osc_esc_html( __('Delete') ); ?>" class="btn btn-red" />
+            <a class="btn" href="javascript:void(0);" onclick="$('#dialog-alert-delete').dialog('close');"><?php _e('Cancel'); ?></a>
+            <input id="alert-delete-submit" type="submit" value="<?php echo osc_esc_html( __('Delete') ); ?>" class="btn btn-red" />
             </div>
         </div>
     </div>
@@ -211,4 +220,5 @@
         </div>
     </div>
 </div>
+<div id="more-tooltip"></div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

@@ -44,6 +44,9 @@ function osc_isExpired($dt_expiration) {
  * @return boolean
  */
 function osc_deleteResource( $id , $admin) {
+    if( defined('DEMO') ) {
+        return false;
+    }
     if( is_array( $id ) ){
         $id = $id[0];
     }
@@ -260,78 +263,166 @@ function osc_sendMail($params) {
         return false;
     }
 
+    require_once osc_lib_path() . 'phpmailer/class.phpmailer.php';
+    require_once osc_lib_path() . 'phpmailer/class.smtp.php';
+
+    $mail = new PHPMailer(true);
+
+    if( osc_mailserver_pop() ) {
+        require_once osc_lib_path() . 'phpmailer/class.pop3.php';
+        $pop = new POP3();
+
+        $pop3_host = osc_mailserver_host();
+        if( array_key_exists('host', $params) ) {
+            $pop3_host = $params['host'];
+        }
+
+        $pop3_port = osc_mailserver_port();
+        if( array_key_exists('port', $params) ) {
+            $pop3_port = $params['port'];
+        }
+
+        $pop3_username = osc_mailserver_username();
+        if( array_key_exists('username', $params) ) {
+            $pop3_username = $params['username'];
+        }
+
+        $pop3_password = osc_mailserver_password();
+        if( array_key_exists('password', $params) ) {
+            $pop3_password = $params['password'];
+        }
+
+        $pop->Authorise($pop3_host, $pop3_port, 30, $pop3_username, $pop3_password, 0);
+    }
+
+    if( osc_mailserver_auth() ) {
+        $mail->IsSMTP();
+        $mail->SMTPAuth = true;
+    } else if( osc_mailserver_pop() ) {
+        $mail->IsSMTP();
+    }
+
+    $smtpSecure = osc_mailserver_ssl();
+    if( array_key_exists('password', $params) ) {
+        $smtpSecure = $params['ssl'];
+    }
+    if( $smtpSecure != '' ) {
+        $mail->SMTPSecure = $smtpSecure;
+    }
+
+    $stmpUsername = osc_mailserver_username();
+    if( array_key_exists('username', $params) ) {
+        $stmpUsername = $params['username'];
+    }
+    if( $stmpUsername != '' ) {
+        $mail->Username = $stmpUsername;
+    }
+
+    $smtpPassword = osc_mailserver_password();
+    if( array_key_exists('password', $params) ) {
+        $smtpPassword = $params['password'];
+    }
+    if( $smtpPassword != '' ) {
+        $mail->Password = $smtpPassword;
+    }
+
+    $smtpHost = osc_mailserver_host();
+    if( array_key_exists('host', $params) ) {
+        $smtpHost = $params['host'];
+    }
+    if( $smtpHost != '' ) {
+        $mail->Host = $smtpHost;
+    }
+
+    $smtpPort = osc_mailserver_port();
+    if( array_key_exists('port', $params) ) {
+        $smtpPort = $params['port'];
+    }
+    if( $smtpPort != '' ) {
+        $mail->Port = $smtpPort;
+    }
+
+    $from = 'osclass@' . osc_get_domain();
+    if( array_key_exists('from', $params) ) {
+        $from = $params['from'];
+    }
+
+    $from_name = osc_page_title();
+    if( array_key_exists('from_name', $params) ) {
+        $from_name = $params['from_name'];
+    }
+
+    $mail->From     = osc_apply_filter('mail_from', $from);
+    $mail->FromName = osc_apply_filter('mail_from_name', $from_name);
+
+    $to      = $params['to'];
+    $to_name = '';
+    if( array_key_exists('to_name', $params) ) {
+        $to_name = $params['to_name'];
+    }
+
+    if( !is_array($to) ) {
+        $to = array($to => $to_name);
+    }
+
+    foreach($to as $to_email => $to_name) {
+        try {
+            $mail->addAddress($to_email, $to_name);
+        } catch (phpmailerException $e) {
+            continue;
+        }
+    }
+
     if( key_exists('add_bcc', $params) ) {
         if( !is_array($params['add_bcc']) && $params['add_bcc'] != '' ) {
             $params['add_bcc'] = array($params['add_bcc']) ;
         }
-    }
 
-    require_once osc_lib_path() . 'phpmailer/class.phpmailer.php' ;
-
-    if( osc_mailserver_pop() ) {
-        require_once osc_lib_path() . 'phpmailer/class.pop3.php' ;
-        $pop = new POP3() ;
-        $pop->Authorise(
-                ( isset($params['host']) ) ? $params['host'] : osc_mailserver_host(),
-                ( isset($params['port']) ) ? $params['port'] : osc_mailserver_port(),
-                30,
-                ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username(),
-                ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username(),
-                0
-        ) ;
-    }
-
-    $mail = new PHPMailer(true) ;
-    try {
-        $mail->CharSet = 'utf-8' ;
-
-        if( osc_mailserver_auth() ) {
-            $mail->IsSMTP() ;
-            $mail->SMTPAuth = true ;
-        } else if( osc_mailserver_pop() ) {
-            $mail->IsSMTP() ;
-        }
-
-        $mail->SMTPSecure = ( isset($params['ssl']) ) ? $params['ssl'] : osc_mailserver_ssl() ;
-        $mail->Username = ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username() ;
-        $mail->Password = ( isset($params['password']) ) ? $params['password'] : osc_mailserver_password() ;
-        $mail->Host = ( isset($params['host']) ) ? $params['host'] : osc_mailserver_host() ;
-        $mail->Port = ( isset($params['port']) ) ? $params['port'] : osc_mailserver_port() ;
-        $mail->From = ( isset($params['from']) ) ? $params['from'] : 'osclass@' . osc_get_domain() ;
-        $mail->FromName = ( isset($params['from_name']) ) ? $params['from_name'] : osc_page_title() ;
-        $mail->Subject = ( isset($params['subject']) ) ? $params['subject'] : '' ;
-        $mail->Body = ( isset($params['body']) ) ? $params['body'] : '' ;
-        $mail->AltBody = ( isset($params['alt_body']) ) ? $params['alt_body'] : '' ;
-        $to = ( isset($params['to']) ) ? $params['to'] : '' ;
-        $to_name = ( isset($params['to_name']) ) ? $params['to_name'] : '' ;
-
-        if( key_exists('add_bcc', $params) ) {
-            foreach( $params['add_bcc'] as $bcc ) {
+        foreach($params['add_bcc'] as $bcc) {
+            try {
                 $mail->AddBCC($bcc) ;
+            } catch ( phpmailerException $e ) {
+                continue;
             }
         }
-
-        if( isset($params['reply_to']) ) {
-            $mail->AddReplyTo($params['reply_to']) ;
-        }
-
-        if( isset($params['attachment']) ) {
-            $mail->AddAttachment($params['attachment']) ;
-        }
-
-        $mail->IsHTML(true) ;
-        $mail->AddAddress($to, $to_name) ;
-        $mail->Send() ;
-        return true ;
-    } catch (phpmailerException $e) {
-        error_log("phpmailerException in osc_sendMail() Error: ".$mail->ErrorInfo, 0);
-        return false ;
-    } catch (Exception $e) {
-        error_log("Exception in osc_sendMail() Error".$mail->ErrorInfo, 0);
-        return false ;
     }
 
-    return false ;
+    if( array_key_exists('reply_to', $params) ) {
+        try {
+            $mail->AddReplyTo($params['reply_to']) ;
+        } catch (phpmailerException $e) {
+            continue;
+        }
+    }
+
+    $mail->Subject = $params['subject'];
+    $mail->Body    = $params['body'];
+
+    if( array_key_exists('attachment', $params) ) {
+        if( !is_array($params['attachment']) ) {
+            $params['attachment'] = array( $params['attachment'] );
+        }
+
+        foreach($params['attachment'] as $attachment) {
+            try {
+                $mail->AddAttachment($attachment) ;
+            } catch (phpmailerException $e) {
+                continue;
+            }
+        }
+    }
+
+    $mail->CharSet = 'utf-8';
+    $mail->IsHTML(true);
+
+    // send email!
+    try {
+        $mail->Send();
+    } catch (phpmailerException $e) {
+        return false;
+    }
+
+    return true;
 }
 
 function osc_mailBeauty($text, $params) {
@@ -534,7 +625,7 @@ function testFsockopen() {
  * IF http-chunked-decode not exist implement here
  * @since 3.0
  */
-if (!function_exists('http-chunked-decode')) { 
+if( !function_exists('http_chunked_decode') ) {
     /** 
      * dechunk an http 'transfer-encoding: chunked' message 
      * 
@@ -1285,6 +1376,21 @@ function osc_update_cat_stats_id($id)
     $sql = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_category_stats (fk_i_category_id, i_num_items) VALUES ';
     $sql .= " (".$id.", ".$categoryTotal.")";
     $result = CategoryStats::newInstance()->dao->query($sql);
+}
+
+function get_ip() {
+    if( !empty($_SERVER['HTTP_CLIENT_IP']) ) {
+        return $_SERVER['HTTP_CLIENT_IP'];
+    }
+
+    if( !empty($_SERVER['HTTP_X_FORWARDED_FOR']) ) {
+        $ip_array = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        foreach($ip_array as $ip) {
+            return trim($ip);
+        }
+    }
+
+    return $_SERVER['REMOTE_ADDR'];
 }
 
 ?>

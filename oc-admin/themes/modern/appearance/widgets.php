@@ -102,7 +102,7 @@
         </div>
     </div>
 </div>
-<form id="dialog-widget-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+<form id="dialog-widget-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide">
     <input type="hidden" name="page" value="appearance" />
     <input type="hidden" name="action" value="delete_widget" />
     <input type="hidden" name="id" value="" />

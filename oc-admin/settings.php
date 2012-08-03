@@ -703,7 +703,7 @@ HTACCESS;
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_logout').'/?$', 'index.php?page=main&action=logout');
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_register').'/?$', 'index.php?page=register&action=register');
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_activate').'/([0-9]+)/(.*?)/?$', 'index.php?page=register&action=validate&id=$1&code=$2');
-                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_activate_alert').'/([a-zA-Z0-9]+)/(.+)$', 'index.php?page=user&action=activate_alert&email=$2&secret=$1');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_activate_alert').'/([0-9]+)/([a-zA-Z0-9]+)/(.+)$', 'index.php?page=user&action=activate_alert&id=$1&email=$3&secret=$2');
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_profile').'/?$', 'index.php?page=user&action=profile');
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_profile').'/([0-9]+)/?$', 'index.php?page=user&action=pub_profile&id=$1');
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_items').'/?$', 'index.php?page=user&action=items');
@@ -782,7 +782,7 @@ HTACCESS;
                                                     $msg  = _m("File <b>.htaccess</b> couldn't be filled out with the right content.") ;
                                                     $msg .= " " ;
                                                     $msg .= _m("Here's the content you have to add to the <b>.htaccess</b> file. If you can't create the file, please deactivate the <em>Friendly URLs</em> option.") ;
-                                                    $msg .= "</p><pre>" . htmlentities($htaccess, ENT_COMPACT, "UTF-8") . '</pre><p>' ;
+                                                    $msg .= "</p><pre>" . htmlentities($htaccess, ENT_COMPAT, "UTF-8") . '</pre><p>' ;
                                                     if($errors>0) {
                                                         $msg .= $msg_error;
                                                     }
@@ -792,7 +792,7 @@ HTACCESS;
                                                     $msg  = _m("File <b>.htaccess</b> couldn't be filled out with the right content.") ;
                                                     $msg .= " " ;
                                                     $msg .= _m("Here's the content you have to add to the <b>.htaccess</b> file. If you can't create the file or experience some problems with the URLs, please deactivate the <em>Friendly URLs</em> option.") ;
-                                                    $msg .= "</p><pre>" . htmlentities($htaccess, ENT_COMPACT, "UTF-8") . '</pre><p>' ;
+                                                    $msg .= "</p><pre>" . htmlentities($htaccess, ENT_COMPAT, "UTF-8") . '</pre><p>' ;
                                                     if($errors>0) {
                                                         $msg .= $msg_error;
                                                     }

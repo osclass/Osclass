@@ -104,16 +104,12 @@
 
         static private function _purify($value, $xss_check)
         {
-            self::$config = HTMLPurifier_Config::createDefault() ;
-            $allowed = 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]' ;
-            self::$config->set('HTML.Allowed', $allowed) ;
-            self::$config->set("HTML.SafeEmbed", true) ;
-            self::$config->set("HTML.SafeObject", true) ;
-            self::$config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align') ;
-            self::$config->set('Cache.SerializerPath', ABS_PATH . 'oc-content/uploads') ;
+            self::$config = HTMLPurifier_Config::createDefault();
+            self::$config->set('HTML.Allowed', '');
+            self::$config->set('Cache.SerializerPath', ABS_PATH . 'oc-content/uploads');
 
             if( !$xss_check ) {
-                return $value ;
+                return $value;
             }
 
             if( !isset(self::$purifier) ) {
@@ -122,13 +118,13 @@
 
             if( is_array($value) ) {
                 foreach($value as $k => &$v) {
-                    $v = self::_purify($v, $xss_check) ;
+                    $v = self::_purify($v, $xss_check);
                 }
             } else {
-                $value = self::$purifier->purify($value) ;
+                $value = self::$purifier->purify($value);
             }
 
-            return $value ;
+            return $value;
         }
     }
 

@@ -269,6 +269,84 @@
                                         osc_add_flash_ok_message($msg, 'admin') ;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                 break ;
+                case('delete_alerts'):         //delete
+
+                                        $iDeleted = 0 ;
+                                        $alertId   = Params::getParam('alert_id') ;
+                                        if( !is_array($alertId) ) {
+                                            osc_add_flash_error_message( _m("Alert id isn't in the correct format"), 'admin') ;
+                                            if(Params::getParam('user_id')=='') {
+                                                $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=alerts') ;
+                                            } else {
+                                                $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('user_id')) ;
+                                            }
+                                        }
+
+                                        $mAlerts = new Alerts();
+                                        foreach($alertId as $id) {
+                                            Log::newInstance()->insertLog('user', 'delete_alerts', $id, $id, 'admin', osc_logged_admin_id()) ;
+                                            $iDeleted += $mAlerts->delete(array('pk_i_id' => $id));
+                                        }
+                                            
+                                        if( $iDeleted == 0 ) {
+                                            $msg = _m('No alerts have been deleted') ;
+                                        } else {
+                                            $msg = sprintf( _mn('One alert has been deleted', '%s alerts have been deleted', $iDeleted), $iDeleted ) ;
+                                        }
+
+                                        osc_add_flash_ok_message($msg, 'admin') ;
+                                        if(Params::getParam('user_id')=='') {
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=alerts') ;
+                                        } else {
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('user_id')) ;
+                                        }
+                break ;
+                case('status_alerts'):         //delete
+
+                                        $status = Params::getParam("status");
+                                        $iUpdated = 0 ;
+                                        $alertId   = Params::getParam('alert_id') ;
+                                        
+                                        if( !is_array($alertId) ) {
+                                            osc_add_flash_error_message( _m("Alert id isn't in the correct format"), 'admin') ;
+                                            if(Params::getParam('user_id')=='') {
+                                                $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=alerts') ;
+                                            } else {
+                                                $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('user_id')) ;
+                                            }
+                                        }
+
+                                        $mAlerts = new Alerts();
+                                        foreach($alertId as $id) {
+                                            if($status==1) {
+                                                $iUpdated += $mAlerts->activate($id);
+                                            } else {
+                                                $iUpdated += $mAlerts->deactivate($id);
+                                            }
+                                        }
+
+                                        
+                                        if($status==1) {
+                                            if( $iUpdated == 0 ) {
+                                                $msg = _m('No alerts have been activated') ;
+                                            } else {
+                                                $msg = sprintf( _mn('One alert has been activated', '%s alerts have been activated', $iUpdated), $iUpdated ) ;
+                                            }
+                                        } else {
+                                            if( $iUpdated == 0 ) {
+                                                $msg = _m('No alerts have been deactivated') ;
+                                            } else {
+                                                $msg = sprintf( _mn('One alert has been deactivated', '%s alerts have been deactivated', $iUpdated), $iUpdated ) ;
+                                            }
+                                        }
+
+                                        osc_add_flash_ok_message($msg, 'admin') ;
+                                        if(Params::getParam('user_id')=='') {
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=alerts') ;
+                                        } else {
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('user_id')) ;
+                                        }
+                break ;
                 case('settings'):       // calling the users settings view
                                         $this->doView('users/settings.php') ;
                 break ;
@@ -304,6 +382,45 @@
                                             osc_add_flash_ok_message( _m("User settings have been updated"), 'admin') ;
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=settings') ;
+                break ;
+                case('alerts'):                // manage alerts view
+                                        // set default iDisplayLength 
+                                        if( Params::getParam('iDisplayLength') == '' ) {
+                                            Params::setParam('iDisplayLength', 10 ) ;
+                                        }
+                                        $p_iPage      = 1;
+                                        if( is_numeric(Params::getParam('iPage')) && Params::getParam('iPage') >= 1 ) {
+                                            $p_iPage = Params::getParam('iPage');
+                                        }
+                                        Params::setParam('iPage', $p_iPage);
+                                        $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
+                                        $this->_exportVariableToView('sSearch', Params::getParam('sSearch'));
+                                        
+                                        require_once osc_admin_base_path() . 'ajax/alerts_processing.php';
+                                        $alerts_processing = new AlertsProcessingAjax(Params::getParamsAsArray("get"));
+                                        $aData = $alerts_processing->result() ;
+                                        
+                                        $page  = (int)Params::getParam('iPage');
+                                        if(count($aData['aaData']) == 0 && $page!=1) {
+                                            $total = (int)$aData['iTotalDisplayRecords'];
+                                            $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
+
+                                            $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+
+                                            if($maxPage==0) {
+                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage=1', $url) ;
+                                                $this->redirectTo($url) ;
+                                            }
+
+                                            if($page > 1) {   
+                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
+                                                $this->redirectTo($url) ;
+                                            }
+                                        }
+                                        
+                                        $this->_exportVariableToView('aAlerts', $aData) ;
+                                        
+                                        $this->doView("users/alerts.php") ;
                 break ;
                 default:                // manage users view
                                         // set default iDisplayLength 

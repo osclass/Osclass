@@ -76,7 +76,7 @@
                                         $this->redirectTo( osc_user_profile_url() ) ;
                 break ;
                 case('alerts'):         //alerts
-                                        $aAlerts = Alerts::newInstance()->findByUser( Session::newInstance()->_get('userId') ) ;
+                                        $aAlerts = Alerts::newInstance()->findByUser( Session::newInstance()->_get('userId'), false ) ;
                                         $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId'));
                                         foreach($aAlerts as $k => $a) {
                                             $json               = base64_decode($a['s_search']) ;
@@ -194,14 +194,24 @@
                     $this->redirectTo( osc_base_url() );
                 break;
                 case 'unsub_alert':
-                    $email  = Params::getParam('email');
+                    $email = Params::getParam('email');
                     $secret = Params::getParam('secret');
-                    if($email!='' && $secret!='') {
-                        Alerts::newInstance()->delete(array('s_email' => $email, 's_secret' => $secret));
+                    $id     = Params::getParam('id');
+                    
+                    $alert = Alerts::newInstance()->findByPrimaryKey($id);
+                    $result = 0;
+                    if(!empty($alert)) {
+                        if($email==$alert['s_email'] && $secret==$alert['s_secret']) {
+                            $result = Alerts::newInstance()->unsub($id);
+                        }
+                    }
+
+                    if( $result == 1 ) {
                         osc_add_flash_ok_message(_m('Unsubscribed correctly'));
-                    } else {
+                    }else{
                         osc_add_flash_error_message(_m('Oops! There was a problem trying to unsubscribe you. Please contact an administrator'));
                     }
+
                     $this->redirectTo(osc_user_alerts_url());
                 break;
                 case 'deleteResource':

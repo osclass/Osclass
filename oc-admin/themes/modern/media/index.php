@@ -121,8 +121,8 @@
             <thead>
                 <tr>
                     <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
-                    <th><?php _e('E-mail') ; ?></th>
-                    <th><?php _e('Name') ; ?></th>
+                    <th><?php _e('File') ; ?></th>
+                    <th><?php _e('Action') ; ?></th>
                     <th><?php _e('Attached to') ; ?></th>
                     <th class="col-date"><?php _e('Date') ; ?></th>
                 </tr>
@@ -161,7 +161,7 @@
     osc_add_hook('before_show_pagination_admin','showingResults');
     osc_show_pagination_admin($aData);
 ?>
-<form id="dialog-media-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+<form id="dialog-media-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide">
     <input type="hidden" name="page" value="media" />
     <input type="hidden" name="action" value="delete" />
     <input type="hidden" name="id[]" value="" />
