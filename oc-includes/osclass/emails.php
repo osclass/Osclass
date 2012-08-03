@@ -28,7 +28,7 @@
         $_title = osc_apply_filter('email_title', osc_apply_filter('email_alert_validation_title', $page_description[$prefLocale]['s_title']));
         $_body  = osc_apply_filter('email_description', osc_apply_filter('email_alert_validation_description', $page_description[$prefLocale]['s_text']));
 
-        $validation_link = osc_user_activate_alert_url( $secret, $email );
+        $validation_link = osc_user_activate_alert_url( $alert['pk_i_id'], $secret, $email );
 
         $words   = array() ;
         $words[] = array(
