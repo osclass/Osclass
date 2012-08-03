@@ -558,13 +558,13 @@
         $body  = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_send_friend_description', $content['s_text'])), $words) ;
 
         $params = array(
-            'from'      => $aItem['yourEmail'],
-            'from_name' => $aItem['yourName'],
+            'from'      => osc_contact_email(),
+            'from_name' => osc_page_title(),
+            'reply_to'  => $aItem['yourEmail'],
             'subject'   => $title,
             'to'        => $aItem['friendEmail'],
             'to_name'   => $aItem['friendName'],
-            'body'      => $body,
-            'alt_body'   => $body
+            'body'      => $body
         );
 
         if( osc_notify_contact_friends() ) {
