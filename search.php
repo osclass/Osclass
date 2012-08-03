@@ -82,6 +82,7 @@
                         $city = City::newInstance()->findByPrimaryKey($c[1]);
                         Params::setParam('sCity', $city['pk_i_id']);
                     }
+                    Params::setParam('sCategory', $params[0]);
                 }
             }
         }
