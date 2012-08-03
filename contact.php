@@ -71,8 +71,6 @@
 MESSAGE;
 
                                         $params = array(
-                                            'from_name' => $yourName,
-                                            'from'      => $yourEmail,
                                             'to'        => osc_contact_email(),
                                             'to_name'   => osc_page_title(),
                                             'reply_to'  => $yourEmail,
