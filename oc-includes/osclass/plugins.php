@@ -259,14 +259,15 @@
                 }
             }
 
-            self::runHook($path . '_enable') ;
-
             $plugins_list[]  = $path ;
             $data['s_value'] = serialize($plugins_list) ;
             $condition = array( 's_section' => 'osclass', 's_name' => 'active_plugins') ;
             Preference::newInstance()->update($data, $condition) ;
 
             self::reload() ;
+
+            self::runHook($path . '_enable') ;
+
             return true ;
         }
 
