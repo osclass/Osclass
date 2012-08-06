@@ -65,7 +65,7 @@ if ( !function_exists('json_decode') ) {
  * Check if mb_substr function is loaded. In case it is not loaded, we implement it.
  */
 if ( !function_exists('mb_substr') ) {
-	function mb_substr( $str, $start, $length = null, $encoding = null ) {
+    function mb_substr( $str, $start, $length = null, $encoding = null ) {
         preg_match_all( '/./us', $str, $match );
         $chars = is_null( $length ) ? array_slice( $match[0], $start ) : array_slice( $match[0], $start, $length );
         return implode('', $chars );
