@@ -41,13 +41,13 @@
                 <input type="hidden" name="code" value="<?php echo Params::getParam('code', true); ?>" />
                     <p>
                         <label for="new_password">
-                            <span><?php _e('New pasword') ; ?></span>
+                            <span><?php _e('New password') ; ?></span>
                             <input id="new_password" type="password" name="new_password" value="" />
                         </label>
                     </p>
                     <p>
                         <label for="new_password2">
-                            <span><?php _e('Repeat new pasword') ; ?></span>
+                            <span><?php _e('Repeat new password') ; ?></span>
                             <input id="new_password2" type="password" name="new_password2" value="" />
                         </label>
                     </p>
