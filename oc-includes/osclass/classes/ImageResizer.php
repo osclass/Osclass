@@ -97,7 +97,7 @@
             if(file_exists($imagePath) && !is_writable($imagePath)) throw new Exception("$imagePath is not writable!");
             if(osc_use_imagick()) {
                 $this->im->setImageFileName($imagePath);
-                $this->im->writeImage();
+                $this->im->writeImage($imagePath);
             } else {
                imagejpeg($this->im, $imagePath);
             }
