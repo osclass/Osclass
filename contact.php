@@ -35,12 +35,12 @@
                                         $message   = Params::getParam('message');
 
                                         if( (osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field") ) {
-                                            if(!osc_check_recaptcha()) {
+                                            if( !osc_check_recaptcha() ) {
                                                 osc_add_flash_error_message( _m('The Recaptcha code is wrong'));
-                                                Session::newInstance()->_setForm("yourName",$yourName);
-                                                Session::newInstance()->_setForm("yourEmail",$yourEmail);
-                                                Session::newInstance()->_setForm("subject",$subject);
-                                                Session::newInstance()->_setForm("message_body",$message);
+                                                Session::newInstance()->_setForm('yourName', $yourName);
+                                                Session::newInstance()->_setForm('yourEmail', $yourEmail);
+                                                Session::newInstance()->_setForm('subject', $subject);
+                                                Session::newInstance()->_setForm('message_body', $message);
                                                 $this->redirectTo(osc_contact_url());
                                                 return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                                             }
@@ -48,21 +48,34 @@
 
                                         if( !preg_match('|.*?@.{2,}\..{2,}|',$yourEmail) ) {
                                             osc_add_flash_error_message( _m('Please enter a correct email') );
-                                            Session::newInstance()->_setForm("yourName",$yourName);
-                                            Session::newInstance()->_setForm("subject",$subject);
-                                            Session::newInstance()->_setForm("message_body",$message);
+                                            Session::newInstance()->_setForm('yourName', $yourName);
+                                            Session::newInstance()->_setForm('subject', $subject);
+                                            Session::newInstance()->_setForm('message_body', $message);
                                             $this->redirectTo(osc_contact_url());
                                         }
 
-                                        $message = sprintf(__("%s (%s) left this message : %s"), $yourName, $yourEmail, $message);
-                                        
+                                        $message_name    = sprintf(__('Name: %s'), $yourName);
+                                        $message_email   = sprintf(__('Email: %s'), $yourEmail);
+                                        $message_subject = sprintf(__('Subject: %s'), $subject);
+                                        $message_body    = sprintf(__('Message: %s'), $message);
+                                        $message_date    = sprintf(__('Date: %s at %s'), date('l F d, Y'), date('g:i a'));
+                                        $message_IP      = sprintf(__('IP Address: %s'), get_ip());
+                                        $message = <<<MESSAGE
+{$message_name}
+{$message_email}
+{$message_subject}
+{$message_body}
+
+{$message_date}
+{$message_IP}
+MESSAGE;
+
                                         $params = array(
-                                            'reply_to' => $yourEmail,
-                                            'subject'  => '[' . osc_page_title() . '] ' . __('Contact form') . ': ' . $subject,
-                                            'to'       => osc_contact_email(),
-                                            'to_name'  => __('Administrator'),
-                                            'body'     => $message,
-                                            'alt_body' => $message
+                                            'to'        => osc_contact_email(),
+                                            'to_name'   => osc_page_title(),
+                                            'reply_to'  => $yourEmail,
+                                            'subject'   => '[' . osc_page_title() . '] ' . __('Contact'),
+                                            'body'      => nl2br($message)
                                         );
 
                                         if( osc_contact_attachment() ) {
@@ -72,7 +85,6 @@
                                             $resourceType = $attachment['type'];
 
                                             $path = osc_content_path() . 'uploads/' . time() . '_' . $resourceName;
-
                                             if( !is_writable(osc_content_path() . 'uploads/') ) {
                                                 osc_add_flash_error_message( _m('There have been some errors sending the message'));
                                                 $this->redirectTo( osc_contact_url() );

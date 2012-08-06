@@ -1,0 +1,128 @@
+#osc-tooltip{
+    position:absolute;
+    z-index: 100;
+    max-width: 400px;
+}
+#osc-tooltip .tooltip-message{
+    padding:10px;
+    border-radius:5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    font-size:13px;
+    z-index:2;
+    position: relative
+}
+#osc-tooltip .tooltip-arrow{
+    position: absolute;
+    width:15px;
+    height: 15px;
+    display: block;
+    z-index:1;
+    background-repeat: no-repeat;
+}
+.black-tooltip .tooltip-message{
+    background:#505050;
+    border:solid 3px #303030;
+    color:#F3F3F3;
+}
+.info-tooltip .tooltip-message{
+    background: #E5F6FE;
+    color: #4D9FBF;
+    border:solid 3px #ADD9ED;
+}
+.warning-tooltip .tooltip-message{
+    background: #FBF7AA;
+    color: #A27D35;
+    border:solid 3px #F9E98E;
+}
+.success-tooltip .tooltip-message{
+    background: #CDE6AC;
+    color: #58792E;
+    border:solid 3px #A9DB66;
+}
+.error-tooltip .tooltip-message{
+    background: #F79992;
+    color: #9C2F2F;
+    border:solid 3px #CE6F6F;
+}
+.error-tooltip .tooltip-arrow{
+    background-image:url(../images/osc-tooltip-error.gif);
+}
+.gray-tooltip .tooltip-message{
+    background: #f2f2f2;
+    color: #454545;
+    border:solid 3px #e2e2e2;
+}
+.gray-tooltip .tooltip-arrow{
+    background-image:url(../images/osc-tooltip-gray.gif);
+}
+.right-middle .tooltip-arrow{
+    top:50%;
+    left:0;
+    margin-top:-8px;
+}
+.right-middle .tooltip-message{
+    margin-left:8px;
+}
+.left-middle .tooltip-arrow{
+    top:50%;
+    right:0;
+    margin-top:-8px;
+}
+.left-middle .tooltip-message{
+    margin-right:8px;
+}
+.right-top .tooltip-arrow{
+    bottom:0%;
+    left:0;
+    margin-top:0px;
+    background-position:-8px 0;
+}
+.right-top .tooltip-message{
+    margin-bottom:8px;
+}
+.left-top .tooltip-arrow{
+    bottom:0%;
+    right:0;
+    margin-top:0px;
+    background-position:8px 0;
+}
+.left-top .tooltip-message{
+    margin-bottom:8px;
+}
+.middle-top .tooltip-arrow{
+    bottom:0%;
+    right:50%;
+    margin-top:0px;
+    margin-right:-8px;
+}
+.middle-top .tooltip-message{
+    margin-bottom:8px;
+}
+.right-bottom .tooltip-arrow{
+    top:0%;
+    left:0;
+    margin-top:0px;
+    background-position:-8px 0;
+}
+.right-bottom .tooltip-message{
+    margin-top:8px;
+}
+.left-bottom .tooltip-arrow{
+    top:0%;
+    right:0;
+    margin-top:0px;
+    background-position:8px 0;
+}
+.left-bottom .tooltip-message{
+    margin-top:8px;
+}
+.middle-bottom .tooltip-arrow{
+    top:0%;
+    right:50%;
+    margin-top:0px;
+    margin-right:-8px;
+}
+.middle-bottom .tooltip-message{
+    margin-top:8px;
+}

@@ -28,7 +28,7 @@
         $_title = osc_apply_filter('email_title', osc_apply_filter('email_alert_validation_title', $page_description[$prefLocale]['s_title']));
         $_body  = osc_apply_filter('email_description', osc_apply_filter('email_alert_validation_description', $page_description[$prefLocale]['s_text']));
 
-        $validation_link = osc_user_activate_alert_url( $secret, $email );
+        $validation_link = osc_user_activate_alert_url( $alert['pk_i_id'], $secret, $email );
 
         $words   = array() ;
         $words[] = array(
@@ -71,7 +71,7 @@
             $user['s_name'] = $user['s_email'];
         }
 
-        $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_secret']);
+        $unsub_link = osc_user_unsubscribe_alert_url($s_search['pk_i_id'], $user['s_email'], $s_search['s_secret']);
         $unsub_link = '<a href="' . $unsub_link . '">' . __('unsubscribe alert') . '</a>';
 
         $words   = array();
@@ -117,7 +117,7 @@
             $user['s_name'] = $user['s_email'];
         }
 
-        $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_secret']);
+        $unsub_link = osc_user_unsubscribe_alert_url($s_search['pk_i_id'], $user['s_email'], $s_search['s_secret']);
         $unsub_link = '<a href="' . $unsub_link . '">' . __('unsubscribe alert') . '</a>';
 
         $words   = array();
@@ -163,7 +163,7 @@
             $user['s_name'] = $user['s_email'];
         }
 
-        $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_secret']);
+        $unsub_link = osc_user_unsubscribe_alert_url($s_search['pk_i_id'], $user['s_email'], $s_search['s_secret']);
         $unsub_link = '<a href="' . $unsub_link . '">' . __('unsubscribe alert') . '</a>';
 
         $words   = array() ;
@@ -209,7 +209,7 @@
             $user['s_name'] = $user['s_email'];
         }
 
-        $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_secret']);
+        $unsub_link = osc_user_unsubscribe_alert_url($s_search['pk_i_id'], $user['s_email'], $s_search['s_secret']);
         $unsub_link = '<a href="' . $unsub_link . '">' . __('unsubscribe alert') . '</a>';
 
         $words   = array() ;
@@ -558,13 +558,13 @@
         $body  = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_send_friend_description', $content['s_text'])), $words) ;
 
         $params = array(
-            'from'      => $aItem['yourEmail'],
-            'from_name' => $aItem['yourName'],
+            'from'      => osc_contact_email(),
+            'from_name' => osc_page_title(),
+            'reply_to'  => $aItem['yourEmail'],
             'subject'   => $title,
             'to'        => $aItem['friendEmail'],
             'to_name'   => $aItem['friendName'],
-            'body'      => $body,
-            'alt_body'   => $body
+            'body'      => $body
         );
 
         if( osc_notify_contact_friends() ) {

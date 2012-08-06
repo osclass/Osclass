@@ -82,11 +82,11 @@
                     $this->redirectTo( osc_base_url() );
                 break;
                 case 'unsub_alert':
-                    $email = Params::getParam('email');
+                    $email  = Params::getParam('email');
                     $secret = Params::getParam('secret');
                     $id     = Params::getParam('id');
                     
-                    $alert = Alerts::newInstance()->findByPrimaryKey($id);
+                    $alert  = Alerts::newInstance()->findByPrimaryKey($id);
                     $result = 0;
                     if(!empty($alert)) {
                         if($email==$alert['s_email'] && $secret==$alert['s_secret']) {

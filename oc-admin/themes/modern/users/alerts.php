@@ -36,101 +36,77 @@
 
     //customize Head
     function customHead() { ?>
-
-        <style>
-            #more-tooltip{
-                position:absolute;
-                background:#f2f2f2;
-                border:solid 2px #bababa;
-                margin-left:5px;
-                margin-top:0px;
-                padding:7px;
-                max-width: 400px;
-                border-radius:5px;
-                --moz-border-radius: 5px;
-                ---webkit-border-radius: 5px;
-                z-index: 100;
-            }
-        </style>
-
         <script type="text/javascript">
-            $(document).ready(function(){
-                // check_all bulkactions
-                $("#check_all").change(function(){
-                    var isChecked = $(this+':checked').length;
-                    $('.col-bulkactions input').each( function() {
-                        if( isChecked == 1 ) {
-                            this.checked = true;
-                        } else {
-                            this.checked = false;
-                        }
-                    });
-                });
-
-                // dialog delete
-                $("#dialog-alert-delete").dialog({
-                    autoOpen: false,
-                    modal: true
-                });
-
-                // dialog bulk actions
-                $("#dialog-bulk-actions").dialog({
-                    autoOpen: false,
-                    modal: true
-                });
-                $("#bulk-actions-submit").click(function() {
-                    if($("#bulk_actions").attr("value")=="delete") {
-                        $("#action").attr("value", "delete_alerts");
-                    } else if($("#bulk_actions").attr("value")=="activate") {
-                        $("#action").attr("value", "status_alerts");
-                        $("#status").attr("value", "1");
-                    } else {
-                        $("#action").attr("value", "status_alerts");
-                        $("#status").attr("value", "0");
-                    }
-                    
-                    $("#datatablesForm").submit();
-                });
-                $("#bulk-actions-cancel").click(function() {
-                    $("#datatablesForm").attr('data-dialog-open', 'false');
-                    $('#dialog-bulk-actions').dialog('close');
-                });
-                // dialog bulk actions function
-                $("#datatablesForm").submit(function() {
-                    if( $("#bulk_actions option:selected").val() == "" ) {
-                        return false;
-                    }
-
-                    if( $("#datatablesForm").attr('data-dialog-open') == "true" ) {
-                        return true;
-                    }
-
-                    $("#dialog-bulk-actions .form-row").html($("#bulk_actions option:selected").attr('data-dialog-content'));
-                    $("#bulk-actions-submit").html($("#bulk_actions option:selected").text());
-                    $("#datatablesForm").attr('data-dialog-open', 'true');
-                    $("#dialog-bulk-actions").dialog('open');
-                    return false;
-                });
-                // /dialog bulk actions
-                
-                
-                $(".more-tooltip").hover(function(e){
-                    $('#more-tooltip').html($(this).attr("categories")).css({
-                        top: e.pageY - this.offsetY - $('#more-tooltip').height() - 15,
-                        left: e.pageX
-                    }).show();
-                },function(){
-                    $('#more-tooltip').hide();
-                });
-                $('#more-tooltip').hide();
-
+        $(document).ready(function(){
+            //tooltip
+            $('.more-tooltip').each(function(){
+                $(this).osc_tooltip($(this).attr("categories"),{layout:'gray-tooltip',position:{x:'right',y:'middle'}});
             });
 
-            // dialog delete function
-            function delete_alert(id) {
-                $("#alert_id").attr('value', id);
-                $("#dialog-alert-delete").dialog('open');
-            };
+            // check_all bulkactions
+            $("#check_all").change(function(){
+                var isChecked = $(this+':checked').length;
+                $('.col-bulkactions input').each( function() {
+                    if( isChecked == 1 ) {
+                        this.checked = true;
+                    } else {
+                        this.checked = false;
+                    }
+                });
+            });
+
+            // dialog delete
+            $("#dialog-alert-delete").dialog({
+                autoOpen: false,
+                modal: true
+            });
+
+            // dialog bulk actions
+            $("#dialog-bulk-actions").dialog({
+                autoOpen: false,
+                modal: true
+            });
+            $("#bulk-actions-submit").click(function() {
+                if($("#bulk_actions").attr("value")=="delete") {
+                    $("#action").attr("value", "delete_alerts");
+                } else if($("#bulk_actions").attr("value")=="activate") {
+                    $("#action").attr("value", "status_alerts");
+                    $("#status").attr("value", "1");
+                } else {
+                    $("#action").attr("value", "status_alerts");
+                    $("#status").attr("value", "0");
+                }
+                
+                $("#datatablesForm").submit();
+            });
+            $("#bulk-actions-cancel").click(function() {
+                $("#datatablesForm").attr('data-dialog-open', 'false');
+                $('#dialog-bulk-actions').dialog('close');
+            });
+            // dialog bulk actions function
+            $("#datatablesForm").submit(function() {
+                if( $("#bulk_actions option:selected").val() == "" ) {
+                    return false;
+                }
+
+                if( $("#datatablesForm").attr('data-dialog-open') == "true" ) {
+                    return true;
+                }
+
+                $("#dialog-bulk-actions .form-row").html($("#bulk_actions option:selected").attr('data-dialog-content'));
+                $("#bulk-actions-submit").html($("#bulk_actions option:selected").text());
+                $("#datatablesForm").attr('data-dialog-open', 'true');
+                $("#dialog-bulk-actions").dialog('open');
+                return false;
+            });
+            // /dialog bulk actions
+        });
+
+        // dialog delete function
+        function delete_alert(id) {
+            $("#alert_id").attr('value', id);
+            $("#dialog-alert-delete").dialog('open');
+        };
 
         </script>
         <?php
