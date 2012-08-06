@@ -121,6 +121,7 @@ require_once LIB_PATH . 'osclass/ItemActions.php';
 require_once LIB_PATH . 'osclass/emails.php';
 require_once LIB_PATH . 'osclass/model/Admin.php';
 require_once LIB_PATH . 'osclass/model/Alerts.php';
+require_once LIB_PATH . 'osclass/model/AlertsStats.php';
 require_once LIB_PATH . 'osclass/model/Cron.php';
 require_once LIB_PATH . 'osclass/model/Category.php';
 require_once LIB_PATH . 'osclass/model/CategoryStats.php';
