@@ -174,20 +174,22 @@
             $options[] = array('name' => __('Logout'), 'url' => osc_user_logout_url(), 'class' => 'opt_logout') ;
         }
 
+        $options = osc_apply_filter('user_menu_filter', $options);
+        
         echo '<script type="text/javascript">' ;
-            echo '$(".user_menu > :first-child").addClass("first") ;' ;
-            echo '$(".user_menu > :last-child").addClass("last") ;' ;
+        echo '$(".user_menu > :first-child").addClass("first") ;' ;
+        echo '$(".user_menu > :last-child").addClass("last") ;' ;
         echo '</script>' ;
         echo '<ul class="user_menu">' ;
 
-            $var_l = count($options) ;
-            for($var_o = 0 ; $var_o < ($var_l-1) ; $var_o++) {
-                echo '<li class="' . $options[$var_o]['class'] . '" ><a href="' . $options[$var_o]['url'] . '" >' . $options[$var_o]['name'] . '</a></li>' ;
-            }
+        $var_l = count($options) ;
+        for($var_o = 0 ; $var_o < ($var_l-1) ; $var_o++) {
+            echo '<li class="' . $options[$var_o]['class'] . '" ><a href="' . $options[$var_o]['url'] . '" >' . $options[$var_o]['name'] . '</a></li>' ;
+        }
 
-            osc_run_hook('user_menu') ;
-            
-            echo '<li class="' . $options[$var_l-1]['class'] . '" ><a href="' . $options[$var_l-1]['url'] . '" >' . $options[$var_l-1]['name'] . '</a></li>' ;
+        osc_run_hook('user_menu') ;
+
+        echo '<li class="' . $options[$var_l-1]['class'] . '" ><a href="' . $options[$var_l-1]['url'] . '" >' . $options[$var_l-1]['name'] . '</a></li>' ;
 
         echo '</ul>' ;
     }
