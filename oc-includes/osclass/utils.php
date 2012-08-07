@@ -793,6 +793,7 @@ function osc_downloadFile($sourceFile, $downloadedFile)
             @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
             curl_setopt($ch, CURLOPT_FILE, $fp);
             @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($ch, CURLOPT_REFERER, osc_base_url());
             curl_exec($ch);
             curl_close($ch);
             fclose($fp);
@@ -815,8 +816,8 @@ function osc_file_get_contents($url)
         curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' OSClass (v.' . osc_version() . ')') ;
         if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1) ;
         @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_REFERER, osc_base_url());
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
         $data = curl_exec($ch);
         curl_close($ch);
     } else if( testFsockopen() ) {
