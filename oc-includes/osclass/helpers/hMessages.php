@@ -104,6 +104,10 @@
             echo '<div id="' . $id . '" class="' . $class . '">' ;
             echo osc_apply_filter('flash_message_text', $message) ;
             echo '</div>' ;
+        } else {
+            echo '<div id="' . $id . '" class="' . $class . '" style="display:none;">' ;
+            echo osc_apply_filter('flash_message_text', '') ;
+            echo '</div>' ;
         }
 
         Session::newInstance()->_dropMessage($section) ;
