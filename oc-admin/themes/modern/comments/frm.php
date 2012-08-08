@@ -45,7 +45,7 @@
     //customize Head
     function customHead() { ?>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
-        <?php CommentForm::js_validation(true); 
+        <?php CommentForm::js_validation(true);
     }
     osc_add_hook('admin_header','customHead');
 
@@ -58,7 +58,7 @@
     <form name="language_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
         <input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
         <input type="hidden" name="page" value="comments" />
-
+        <input type="hidden" name="id" value="<?php echo (isset($comment['pk_i_id'])) ? $comment['pk_i_id'] : '' ?>" />
         <div class="form-horizontal">
             <div class="form-row">
                 <div class="form-label"><?php _e('Title'); ?></div>
