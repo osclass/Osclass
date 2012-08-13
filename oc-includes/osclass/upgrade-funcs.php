@@ -385,7 +385,7 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('marketURL', 'http://market.osclass.org/api/');
     }
 
-    osc_changeVersionTo(300);
+    osc_changeVersionTo(301);
 
     echo '<div class="well ui-rounded-corners separate-top-medium">';
     echo '<p>'.__('OSClass &raquo; Updated correctly').'</p>' ;

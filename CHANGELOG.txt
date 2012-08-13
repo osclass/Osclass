@@ -1,3 +1,16 @@
+OSClass 3.0.1 2012-08-13
+------------------------
+- Bug: changed from ENT_COMPACT to ENT_COMPAT
+- Bug: Edit comment in oc-admin
+- Bug: Use image magic uploading images
+- Bug: Showing correctly the urls in RSS
+- Bug: Correct subject in alert emails
+- Bug: Typo mistake in manage media
+- Bug: category slugs only accept alphanumeric
+- Bug: emails sent from email contact instead of osclass@domain.tld
+- Bug: http_chunked_decode was being redeclared
+- [ Modern theme ] Removed a duplicated id
+
 OSClass 3.0 2012-07-12
 ----------------------
 - Added a toolbar at the header of the oc-admin
