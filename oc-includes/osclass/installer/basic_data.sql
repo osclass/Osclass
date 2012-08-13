@@ -54,7 +54,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'rewriteEnabled', '0', 'BOOLEAN')
     ,('osclass', 'mod_rewrite_loaded', '0', 'BOOLEAN')
     ,('osclass', 'rewrite_rules', '', 'STRING')
-    ,('osclass', 'rewrite_item_url', '{CATEGORIES}/{ITEM_TITLE}_{ITEM_ID}', 'STRING')
+    ,('osclass', 'rewrite_item_url', '{CATEGORIES}/{ITEM_TITLE}_i{ITEM_ID}', 'STRING')
     ,('osclass', 'rewrite_page_url', '{PAGE_SLUG}-p{PAGE_ID}', 'STRING')
     ,('osclass', 'rewrite_cat_url', '{CATEGORIES}/', 'STRING')
     ,('osclass', 'rewrite_search_url', 'search/', 'STRING')
