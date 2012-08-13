@@ -268,8 +268,8 @@ function recaptcha_mailhide_html($pubkey, $privkey, $email) {
   $emailparts = _recaptcha_mailhide_email_parts ($email);
   $url = recaptcha_mailhide_url ($pubkey, $privkey, $email);
   
-  return htmlentities($emailparts[0], ENT_COMPACT, "UTF-8") . "<a href='" . htmlentities ($url, ENT_COMPACT, "UTF-8") .
-    "' onclick=\"window.open('" . htmlentities ($url, ENT_COMPACT, "UTF-8") . "', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;\" title=\"Reveal this e-mail address\">...</a>@" . htmlentities ($emailparts [1], ENT_COMPACT, "UTF-8");
+  return htmlentities($emailparts[0], ENT_COMPAT, "UTF-8") . "<a href='" . htmlentities ($url, ENT_COMPAT, "UTF-8") .
+    "' onclick=\"window.open('" . htmlentities ($url, ENT_COMPAT, "UTF-8") . "', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;\" title=\"Reveal this e-mail address\">...</a>@" . htmlentities ($emailparts [1], ENT_COMPAT, "UTF-8");
 
 }
 
