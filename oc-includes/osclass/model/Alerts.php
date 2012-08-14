@@ -130,8 +130,8 @@
             if(!$unsub) {
                 $this->dao->where('dt_unsub_date IS NULL');
             }
-            if( ($active !== null) && is_bool($active) ) {
-                $this->dao->where('b_active', $active);
+            if( $active ) {
+                $this->dao->where('b_active', 1);
             }
             $result = $this->dao->get();
 
