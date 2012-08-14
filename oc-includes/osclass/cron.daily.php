@@ -84,11 +84,5 @@
         osc_runAlert('DAILY');
     }
 
-    osc_add_hook('cron_daily', 'osc_update_cat_stats');
-    osc_add_hook('cron_daily', 'update_location_stats');
-    osc_add_hook('cron_daily', 'purge_latest_searches_daily');
-    osc_add_hook('cron_daily', 'daily_alert');
-
     osc_run_hook('cron_daily');
-
     /* file end: ./oc-includes/osclass/cron.hourly.php */

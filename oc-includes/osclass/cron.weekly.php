@@ -32,8 +32,5 @@
         }
     }
 
-    osc_add_hook('cron_weekly', 'purge_latest_searches_weekly');
-
     osc_run_hook('cron_weekly');
-
     /* file end: ./oc-includes/osclass/cron.hourly.php */

@@ -69,5 +69,4 @@
     }
 
     osc_run_hook('cron') ;
-
-?>
+    /* file end: ./oc-includes/osclass/cron.php */

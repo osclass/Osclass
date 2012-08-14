@@ -34,8 +34,6 @@
             LatestSearches::newInstance()->purgeNumber($purge);
         }
     }
-    osc_add_hook('cron_hourly', 'purge_latest_searches_hourly');
 
     osc_run_hook('cron_hourly');
-
     /* file end: ./oc-includes/osclass/cron.hourly.php */

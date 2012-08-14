@@ -197,7 +197,6 @@ if( OC_ADMIN ) {
 
 Plugins::init() ;
 
-
 if(osc_timezone() != '') {
     date_default_timezone_set(osc_timezone());
 }
@@ -230,10 +229,19 @@ function osc_show_maintenance_css() {
 function osc_meta_generator() {
     echo '<meta name="generator" content="OSClass ' . OSCLASS_VERSION . '" />';
 }
+osc_add_hook('header', 'osc_show_maintenance');
+osc_add_hook('header', 'osc_show_maintenance_css');
+osc_add_hook('header', 'osc_meta_generator');
 
-osc_add_hook("header", "osc_show_maintenance");
-osc_add_hook("header", "osc_show_maintenance_css");
-osc_add_hook("header", "osc_meta_generator");
+// cron
+// hourly
+osc_add_hook('cron_hourly', 'purge_latest_searches_hourly');
+// daily
+osc_add_hook('cron_daily', 'osc_update_cat_stats');
+osc_add_hook('cron_daily', 'update_location_stats');
+osc_add_hook('cron_daily', 'purge_latest_searches_daily');
+osc_add_hook('cron_daily', 'daily_alert');
+// weekly
+osc_add_hook('cron_weekly', 'purge_latest_searches_weekly');
 
 /* file end: ./oc-load.php */
-?>
