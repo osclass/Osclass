@@ -27,17 +27,15 @@
     }
 
     function purge_latest_searches_hourly() {
-        $purge = osc_purge_latest_searches() ;
+        $purge = osc_purge_latest_searches();
         if( $purge == 'hour' ) {
-            LatestSearches::newInstance()->purgeDate( date('Y-m-d H:i:s', ( time() - 3600) ) ) ;
+            LatestSearches::newInstance()->purgeDate( date('Y-m-d H:i:s', ( time() - 3600) ) );
         } else if( !in_array($purge, array('forever', 'day', 'week')) ) {
-            LatestSearches::newInstance()->purgeNumber($purge) ;
+            LatestSearches::newInstance()->purgeNumber($purge);
         }
     }
-    
-    osc_add_hook('cron_hourly', 'purge_latest_searches_hourly') ;
+    osc_add_hook('cron_hourly', 'purge_latest_searches_hourly');
 
-    osc_runAlert('HOURLY') ;
+    osc_run_hook('cron_hourly');
 
-    osc_run_hook('cron_hourly') ;
-?>
+    /* file end: ./oc-includes/osclass/cron.hourly.php */

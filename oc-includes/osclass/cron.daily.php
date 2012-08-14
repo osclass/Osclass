@@ -23,13 +23,10 @@
     set_time_limit(0);
 
     if( !defined('__FROM_CRON__') ) {
-        define('__FROM_CRON__', true) ;
+        define('__FROM_CRON__', true);
     }
 
-    osc_update_cat_stats();
-    
-    function update_location_stats()
-    {
+    function update_location_stats() {
         $aCountries     = Country::newInstance()->listAll();
         $aCountryValues = array();
         
@@ -40,19 +37,19 @@
         $aCityValues    = array();
         
         foreach($aCountries as $country){
-            $id = $country['pk_c_code'] ;
-            $numItems = CountryStats::newInstance()->calculateNumItems( $id ) ;
+            $id = $country['pk_c_code'];
+            $numItems = CountryStats::newInstance()->calculateNumItems( $id );
             array_push($aCountryValues, "('$id', $numItems)" );
-            unset($numItems) ;
-            
+            unset($numItems);
+
             $aRegions = Region::newInstance()->findByCountry($id);
             foreach($aRegions as $region) {
-                $id = $region['pk_i_id'] ;
-                $numItems = RegionStats::newInstance()->calculateNumItems( $id ) ;
+                $id = $region['pk_i_id'];
+                $numItems = RegionStats::newInstance()->calculateNumItems( $id );
                 array_push($aRegionValues, "($id, $numItems)" );
-                unset($numItems) ;
-                
-                $aCities = City::newInstance()->findByRegion($id) ;
+                unset($numItems);
+
+                $aCities = City::newInstance()->findByRegion($id);
                 foreach($aCities as $city) {
                     $id = $city['pk_i_id'];
                     $numItems = CityStats::newInstance()->calculateNumItems( $id );
@@ -60,8 +57,8 @@
                     unset($numItems);
                 }
             }
-        }    
-        
+        }
+
         // insert Country stats
         $sql_country  = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_country_stats (fk_c_country_code, i_num_items) VALUES ';
         $sql_country .= implode(',', $aCountryValues);
@@ -77,18 +74,21 @@
     }
     
     function purge_latest_searches_daily() {
-        $purge = osc_purge_latest_searches() ;
+        $purge = osc_purge_latest_searches();
         if( $purge == 'day' ) {
-            LatestSearches::newInstance()->purgeDate( date('Y-m-d H:i:s', ( time() - (24 * 3600) ) ) ) ;
+            LatestSearches::newInstance()->purgeDate( date('Y-m-d H:i:s', ( time() - (24 * 3600) ) ) );
         }
     }
 
-    osc_add_hook('cron_daily', 'update_cat_stats') ;
-    osc_add_hook('cron_daily', 'update_location_stats') ;
-    osc_add_hook('cron_daily', 'purge_latest_searches_daily') ;
-    
-    osc_runAlert('DAILY') ;
+    function daily_alert() {
+        osc_runAlert('DAILY');
+    }
 
-    osc_run_hook('cron_daily') ;
+    osc_add_hook('cron_daily', 'osc_update_cat_stats');
+    osc_add_hook('cron_daily', 'update_location_stats');
+    osc_add_hook('cron_daily', 'purge_latest_searches_daily');
+    osc_add_hook('cron_daily', 'daily_alert');
 
-?>
+    osc_run_hook('cron_daily');
+
+    /* file end: ./oc-includes/osclass/cron.hourly.php */
