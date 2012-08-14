@@ -122,7 +122,7 @@
          * @param string $type
          * @return array 
          */
-        function findByType($type, $unsub = false)
+        function findByType($type, $active = false, $unsub = false)
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
@@ -130,9 +130,12 @@
             if(!$unsub) {
                 $this->dao->where('dt_unsub_date IS NULL');
             }
+            if( ($active !== null) && is_bool($active) ) {
+                $this->dao->where('b_active', $active);
+            }
             $result = $this->dao->get();
-            
-            if( $result == false ) { 
+
+            if( $result == false ) {
                 return false;
             } else {
                 return $result->result();
