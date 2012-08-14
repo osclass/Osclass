@@ -195,9 +195,7 @@ if( OC_ADMIN ) {
     Rewrite::newInstance()->init();
 }
 
-Plugins::init() ;
-
-if(osc_timezone() != '') {
+if( osc_timezone() != '' ) {
     date_default_timezone_set(osc_timezone());
 }
 
@@ -243,5 +241,7 @@ osc_add_hook('cron_daily', 'purge_latest_searches_daily');
 osc_add_hook('cron_daily', 'daily_alert');
 // weekly
 osc_add_hook('cron_weekly', 'purge_latest_searches_weekly');
+
+Plugins::init();
 
 /* file end: ./oc-load.php */
