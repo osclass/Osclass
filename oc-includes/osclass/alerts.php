@@ -41,7 +41,7 @@
         }
 
         $active   = TRUE;
-        $searches = Alerts::newInstance()->findByTypeGroup($type,$active);
+        $searches = Alerts::newInstance()->findByType($type, $active);
         foreach($searches as $s_search) {
             // Get if there're new ads on this search
             $json             = base64_decode($s_search['s_search']);
