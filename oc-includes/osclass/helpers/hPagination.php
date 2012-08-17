@@ -90,7 +90,7 @@
 
     function osc_show_pagination_admin($aData)
     {
-        $pageActual = Params::getParam('iPage');
+        $pageActual = isset($aData['iPage'])?$aData['iPage']:Params::getParam('iPage');
         $urlActual  = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
         $urlActual  = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
         $pageTotal  = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
