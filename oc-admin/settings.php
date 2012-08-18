@@ -214,18 +214,22 @@
                                                                         $countryCode = Params::getParam('country_c_parent');
                                                                         $country     = Country::newInstance()->findByCode($countryCode);
 
-                                                                        $exists = $mRegions->findByName($regionName, $countryCode);
-                                                                        if(!isset($exists['s_name'])) {
-                                                                            $data = array('fk_c_country_code' => $countryCode
-                                                                                         ,'s_name' => $regionName);
-                                                                            $mRegions->insert($data);
-                                                                            $id = $mRegions->dao->insertedId();
-                                                                            RegionStats::newInstance()->setNumItems($id, 0);
-                                                                            osc_add_flash_ok_message(sprintf(_m('%s has been added as a new region'),
-                                                                                                             $regionName), 'admin');
+                                                                        if(osc_validate_max($regionName, 0)) {
+                                                                            osc_add_flash_error_message(_m('Region name cannot be blank'), 'admin');
                                                                         } else {
-                                                                            osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
-                                                                                                             $regionName), 'admin');
+                                                                            $exists = $mRegions->findByName($regionName, $countryCode);
+                                                                            if(!isset($exists['s_name'])) {
+                                                                                $data = array('fk_c_country_code' => $countryCode
+                                                                                             ,'s_name' => $regionName);
+                                                                                $mRegions->insert($data);
+                                                                                $id = $mRegions->dao->insertedId();
+                                                                                RegionStats::newInstance()->setNumItems($id, 0);
+                                                                                osc_add_flash_ok_message(sprintf(_m('%s has been added as a new region'),
+                                                                                                                 $regionName), 'admin');
+                                                                            } else {
+                                                                                osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
+                                                                                                                 $regionName), 'admin');
+                                                                            }
                                                                         }
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$countryCode."&country=".@$country['s_name']);
