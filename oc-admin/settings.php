@@ -97,85 +97,85 @@
                                                                     if(osc_validate_max($countryCode, 1) || osc_validate_max($countryName, 1)) {
                                                                         osc_add_flash_error_message(_m('Country code and name should have at least two characters'), 'admin');
                                                                     } else {
-																		$exists = $mCountries->findByCode($countryCode);
-																		if(isset($exists['s_name'])) {
-																			osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
-																										  $countryName), 'admin');
+                                                                        $exists = $mCountries->findByCode($countryCode);
+                                                                        if(isset($exists['s_name'])) {
+                                                                            osc_add_flash_error_message(sprintf(_m('%s already was in the database'), $countryName), 'admin');
 																		} else {
-																			$countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country_code&term=' .
-																													 urlencode($countryCode) );
-																			$countries = json_decode($countries_json);
-																			$mCountries->insert(array('pk_c_code' => $countryCode,
-																									  's_name' => $countryName));
-																			CountryStats::newInstance()->setNumItems($countryCode, 0);
-																			if(isset($countries->error)) { // Country is not in our GEO database
-																				// We have no region for user-typed countries
-																			} else { // Country is in our GEO database, add regions and cities
-																				$manager_region = new Region();
-																				$regions_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country_code=' .
+                                                                            $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country_code&term=' .
+                                                                                                                     urlencode($countryCode) );
+                                                                            $countries = json_decode($countries_json);
+                                                                            $mCountries->insert(array('pk_c_code' => $countryCode,
+                                                                                                      's_name' => $countryName));
+                                                                            CountryStats::newInstance()->setNumItems($countryCode, 0);
+                                                                            if(isset($countries->error)) { // Country is not in our GEO database
+                                                                                // We have no region for user-typed countries
+                                                                            } else { // Country is in our GEO database, add regions and cities
+                                                                                $manager_region = new Region();
+                                                                                $regions_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country_code=' .
 																													  urlencode($countryCode) . '&term=all');
-																				$regions = json_decode($regions_json);
-																				if(!isset($regions->error)) {
+                                                                                $regions = json_decode($regions_json);
+                                                                                if(!isset($regions->error)) {
+                                                                                    if(count($regions) > 0) {
+                                                                                        foreach($regions as $r) {
+                                                                                            $manager_region->insert(array(
+                                                                                                "fk_c_country_code" => $r->country_code,
+                                                                                                "s_name" => $r->name
+                                                                                            ));
+                                                                                            $id = $manager_region->dao->insertedId();
+                                                                                            RegionStats::newInstance()->setNumItems($id, 0);
+                                                                                        }
+                                                                                    }
+                                                                                    unset($regions);
+                                                                                    unset($regions_json);
 
-																					if(count($regions) > 0) {
-																						foreach($regions as $r) {
-																							$manager_region->insert(array(
-																								"fk_c_country_code" => $r->country_code,
-																								"s_name" => $r->name
-																							));
-																							$id = $manager_region->dao->insertedId();
-																							RegionStats::newInstance()->setNumItems($id, 0);
-																						}
-																					}
-																					unset($regions);
-																					unset($regions_json);
-
-																					$manager_city = new City();
-																					if(count($countries) > 0) {
-																						foreach($countries as $c) {
-																							$regions = $manager_region->findByCountry( $c->id ) ;
-																							if(!isset($regions->error)) {
-																								if(count($regions) > 0) {
-																									foreach($regions as $region) {
-																										$cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' .
-																																			 urlencode($c->name) . '&region=' . urlencode($region['s_name']) . '&term=all') ;
-																										$cities = json_decode($cities_json) ;
-																										if(!isset($cities->error)) {
-																											if(count($cities) > 0) {
-																												foreach($cities as $ci) {
-																													$manager_city->insert(array(
-																														"fk_i_region_id" => $region['pk_i_id']
-																														,"s_name" => $ci->name
-																														,"fk_c_country_code" => $ci->country_code
-																													));
-																													$id = $manager_city->dao->insertedId();
-																													CityStats::newInstance()->setNumItems($id, 0);
-																												}
-																											}
-																										}
-																										unset($cities) ;
-																										unset($cities_json) ;
-																									}
-																								}
-																							}
-																						}
-																					}
-																				}
-																			}
-																			osc_add_flash_ok_message(sprintf(_m('%s has been added as a new country'), $countryName), 'admin');
-																		}
+                                                                                    $manager_city = new City();
+                                                                                    if(count($countries) > 0) {
+                                                                                        foreach($countries as $c) {
+                                                                                            $regions = $manager_region->findByCountry( $c->id ) ;
+                                                                                            if(!isset($regions->error)) {
+                                                                                                if(count($regions) > 0) {
+                                                                                                    foreach($regions as $region) {
+                                                                                                        $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' .
+                                                                                                                                            urlencode($c->name) . '&region=' . urlencode($region['s_name']) . '&term=all') ;
+                                                                                                        $cities = json_decode($cities_json) ;
+                                                                                                        if(!isset($cities->error)) {
+                                                                                                            if(count($cities) > 0) {
+                                                                                                                foreach($cities as $ci) {
+                                                                                                                    $manager_city->insert(array(
+                                                                                                                        "fk_i_region_id" => $region['pk_i_id']
+                                                                                                                        ,"s_name" => $ci->name
+                                                                                                                        ,"fk_c_country_code" => $ci->country_code
+                                                                                                                    ));
+                                                                                                                    $id = $manager_city->dao->insertedId();
+                                                                                                                    CityStats::newInstance()->setNumItems($id, 0);
+                                                                                                                }
+                                                                                                            }
+                                                                                                        }
+                                                                                                        unset($cities);
+                                                                                                        unset($cities_json);
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                            osc_add_flash_ok_message(sprintf(_m('%s has been added as a new country'), $countryName), 'admin');
+                                                                        }
                                                                     }
-
-
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
                                             case('edit_country'):   // edit country
-                                                                    $ok = $mCountries->update(array('s_name'=> Params::getParam('e_country')), array('pk_c_code' => Params::getParam('country_code')));
-
-                                                                    if( $ok ) {
-                                                                        osc_add_flash_ok_message(_m('Country has been edited'), 'admin');
+                                                                    if(osc_validate_max(Params::getParam('e_country'), 0)) {
+                                                                        osc_add_flash_error_message(_m('Country name cannot be blank'), 'admin');
                                                                     } else {
-                                                                        osc_add_flash_error_message(_m('There were some problems editing the country'), 'admin');
+                                                                        $ok = $mCountries->update(array('s_name'=> Params::getParam('e_country')), array('pk_c_code' => Params::getParam('country_code')));
+
+                                                                        if( $ok ) {
+                                                                            osc_add_flash_ok_message(_m('Country has been edited'), 'admin');
+                                                                        } else {
+                                                                            osc_add_flash_error_message(_m('There were some problems editing the country'), 'admin');
+                                                                        }
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
@@ -1589,8 +1589,8 @@ HTACCESS;
                             ));
                         }
                     }
-                    unset($cities) ;
-                    unset($cities_json) ;
+                    unset($cities);
+                    unset($cities_json);
                 }
             }
 
