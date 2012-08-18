@@ -94,7 +94,7 @@
                                                                     $countryCode = strtoupper(Params::getParam('c_country'));
                                                                     $countryName = Params::getParam('country');
 
-                                                                    if(osc_validate_max($countryCode, 1) || osc_validate_max($countryName, 1)) {
+                                                                    if(!osc_validate_min($countryCode, 1) || !osc_validate_min($countryName, 1)) {
                                                                         osc_add_flash_error_message(_m('Country code and name should have at least two characters'), 'admin');
                                                                     } else {
                                                                         $exists = $mCountries->findByCode($countryCode);
@@ -166,7 +166,7 @@
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
                                             case('edit_country'):   // edit country
-                                                                    if(osc_validate_max(Params::getParam('e_country'), 0)) {
+                                                                    if(!osc_validate_min(Params::getParam('e_country'), 1)) {
                                                                         osc_add_flash_error_message(_m('Country name cannot be blank'), 'admin');
                                                                     } else {
                                                                         $ok = $mCountries->update(array('s_name'=> Params::getParam('e_country')), array('pk_c_code' => Params::getParam('country_code')));
@@ -214,7 +214,7 @@
                                                                         $countryCode = Params::getParam('country_c_parent');
                                                                         $country     = Country::newInstance()->findByCode($countryCode);
 
-                                                                        if(osc_validate_max($regionName, 0)) {
+                                                                        if(!osc_validate_min($regionName, 1)) {
                                                                             osc_add_flash_error_message(_m('Region name cannot be blank'), 'admin');
                                                                         } else {
                                                                             $exists = $mRegions->findByName($regionName, $countryCode);
@@ -239,7 +239,7 @@
                                                                     $newRegion = Params::getParam('e_region');
                                                                     $regionId  = Params::getParam('region_id');
 
-                                                                    if(osc_validate_max($newRegion, 0)) {
+                                                                    if(!osc_validate_min($newRegion, 1)) {
                                                                         osc_add_flash_error_message(_m('Region name cannot be blank'), 'admin');
                                                                     } else {
                                                                         $exists = $mRegions->findByName($newRegion);
@@ -293,7 +293,7 @@
                                                                     $countryCode = Params::getParam('country_c_parent');
                                                                     $newCity     = Params::getParam('city');
 
-                                                                    if(osc_validate_max($newCity, 0)) {
+                                                                    if(!osc_validate_min($newCity, 1)) {
                                                                         osc_add_flash_error_message(_m('New city name cannot be blank'), 'admin');
                                                                     } else {
                                                                         $exists = $mCities->findByName($newCity, $regionId);
@@ -321,7 +321,7 @@
                                                                     $newCity = Params::getParam('e_city');
                                                                     $cityId  = Params::getParam('city_id');
 
-                                                                    if(osc_validate_max($newCity, 0)) {
+                                                                    if(!osc_validate_min($newCity, 1)) {
                                                                         osc_add_flash_error_message(_m('City name cannot be blank'), 'admin');
                                                                     } else {
                                                                         $exists = $mCities->findByName($newCity);
