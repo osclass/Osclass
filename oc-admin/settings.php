@@ -234,23 +234,28 @@
                                                                     $mRegions  = new Region();
                                                                     $newRegion = Params::getParam('e_region');
                                                                     $regionId  = Params::getParam('region_id');
-                                                                    $exists = $mRegions->findByName($newRegion);
-                                                                    if(!isset($exists['pk_i_id']) || $exists['pk_i_id']==$regionId) {
-                                                                        if($regionId != '') {
-                                                                            $aRegion = $mRegions->findByPrimaryKey($regionId);
-                                                                            $country     = Country::newInstance()->findByCode($aRegion['fk_c_country_code']);
-                                                                            $mRegions->update(array('s_name' => $newRegion)
-                                                                                             ,array('pk_i_id' => $regionId));
-                                                                            ItemLocation::newInstance()->update(
-                                                                                array('s_region'       => $newRegion),
-                                                                                array('fk_i_region_id' => $regionId)
-                                                                            );
-                                                                            osc_add_flash_ok_message(sprintf(_m('%s has been edited'),
-                                                                                                              $newRegion), 'admin');
-                                                                        }
+
+                                                                    if(osc_validate_max($newRegion, 0)) {
+                                                                        osc_add_flash_error_message(_m('Region name cannot be blank'), 'admin');
                                                                     } else {
-                                                                        osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
-                                                                                                            $newRegion), 'admin');
+                                                                        $exists = $mRegions->findByName($newRegion);
+                                                                        if(!isset($exists['pk_i_id']) || $exists['pk_i_id']==$regionId) {
+                                                                            if($regionId != '') {
+                                                                                $aRegion = $mRegions->findByPrimaryKey($regionId);
+                                                                                $country     = Country::newInstance()->findByCode($aRegion['fk_c_country_code']);
+                                                                                $mRegions->update(array('s_name' => $newRegion)
+                                                                                                 ,array('pk_i_id' => $regionId));
+                                                                                ItemLocation::newInstance()->update(
+                                                                                    array('s_region'       => $newRegion),
+                                                                                    array('fk_i_region_id' => $regionId)
+                                                                                );
+                                                                                osc_add_flash_ok_message(sprintf(_m('%s has been edited'),
+                                                                                                                  $newRegion), 'admin');
+                                                                            }
+                                                                        } else {
+                                                                            osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
+                                                                                                                $newRegion), 'admin');
+                                                                        }
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']);
                                             break;
