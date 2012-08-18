@@ -293,21 +293,25 @@
                                                                     $countryCode = Params::getParam('country_c_parent');
                                                                     $newCity     = Params::getParam('city');
 
-                                                                    $exists = $mCities->findByName($newCity, $regionId);
-                                                                    $region = $mRegion->findByPrimaryKey($regionId);
-                                                                    $country = Country::newInstance()->findByCode($region['fk_c_country_code']);
-                                                                    if(!isset($exists['s_name'])) {
-                                                                        $mCities->insert(array('fk_i_region_id'    => $regionId
-                                                                                              ,'s_name'            => $newCity
-                                                                                              ,'fk_c_country_code' => $countryCode));
-                                                                        $id = $mCities->dao->insertedId();
-                                                                        CityStats::newInstance()->setNumItems($id, 0);
-
-                                                                        osc_add_flash_ok_message(sprintf(_m('%s has been added as a new city'),
-                                                                                                         $newCity), 'admin');
+                                                                    if(osc_validate_max($newCity, 0)) {
+                                                                        osc_add_flash_error_message(_m('New city name cannot be blank'), 'admin');
                                                                     } else {
-                                                                        osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
-                                                                                                         $newCity), 'admin');
+                                                                        $exists = $mCities->findByName($newCity, $regionId);
+                                                                        $region = $mRegion->findByPrimaryKey($regionId);
+                                                                        $country = Country::newInstance()->findByCode($region['fk_c_country_code']);
+                                                                        if(!isset($exists['s_name'])) {
+                                                                            $mCities->insert(array('fk_i_region_id'    => $regionId
+                                                                                                  ,'s_name'            => $newCity
+                                                                                                  ,'fk_c_country_code' => $countryCode));
+                                                                            $id = $mCities->dao->insertedId();
+                                                                            CityStats::newInstance()->setNumItems($id, 0);
+
+                                                                            osc_add_flash_ok_message(sprintf(_m('%s has been added as a new city'),
+                                                                                                             $newCity), 'admin');
+                                                                        } else {
+                                                                            osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
+                                                                                                             $newCity), 'admin');
+                                                                        }
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']."&region=".$regionId);
                                             break;
@@ -317,22 +321,26 @@
                                                                     $newCity = Params::getParam('e_city');
                                                                     $cityId  = Params::getParam('city_id');
 
-                                                                    $exists = $mCities->findByName($newCity);
-                                                                    if(!isset($exists['pk_i_id']) || $exists['pk_i_id']==$cityId) {
-                                                                        $city = $mCities->findByPrimaryKey($cityId);
-                                                                        $region = $mRegion->findByPrimaryKey($city['fk_i_region_id']);
-                                                                        $country = Country::newInstance()->findByCode($region['fk_c_country_code']);
-                                                                        $mCities->update(array('s_name' => $newCity)
-                                                                                        ,array('pk_i_id' => $cityId));
-                                                                        ItemLocation::newInstance()->update(
-                                                                            array('s_city'       => $newCity),
-                                                                            array('fk_i_city_id' => $cityId)
-                                                                        );
-                                                                        osc_add_flash_ok_message(sprintf(_m('%s has been edited'),
-                                                                                                         $newCity), 'admin');
+                                                                    if(osc_validate_max($newCity, 0)) {
+                                                                        osc_add_flash_error_message(_m('City name cannot be blank'), 'admin');
                                                                     } else {
-                                                                        osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
-                                                                                                         $newCity), 'admin');
+                                                                        $exists = $mCities->findByName($newCity);
+                                                                        if(!isset($exists['pk_i_id']) || $exists['pk_i_id']==$cityId) {
+                                                                            $city = $mCities->findByPrimaryKey($cityId);
+                                                                            $region = $mRegion->findByPrimaryKey($city['fk_i_region_id']);
+                                                                            $country = Country::newInstance()->findByCode($region['fk_c_country_code']);
+                                                                            $mCities->update(array('s_name' => $newCity)
+                                                                                            ,array('pk_i_id' => $cityId));
+                                                                            ItemLocation::newInstance()->update(
+                                                                                array('s_city'       => $newCity),
+                                                                                array('fk_i_city_id' => $cityId)
+                                                                            );
+                                                                            osc_add_flash_ok_message(sprintf(_m('%s has been edited'),
+                                                                                                             $newCity), 'admin');
+                                                                        } else {
+                                                                            osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
+                                                                                                             $newCity), 'admin');
+                                                                        }
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']."&region=".@$region['pk_i_id']);
                                             break;
