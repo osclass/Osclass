@@ -68,7 +68,7 @@
                         case('item_edit'):
                             $l = array('url' => osc_item_url(), 'title' => osc_item_title());
                             $this->addLevel($l);
-                            $l = array('title' => $this->title['item_edit'];
+                            $l = array('title' => $this->title['item_edit']);
                             $this->addLevel($l);
                         break;
                         case('send_friend'):
