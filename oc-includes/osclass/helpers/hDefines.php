@@ -978,8 +978,8 @@
         return $result['host'];
     }
 
-    function osc_breadcrumb($separator = '&raquo;', $echo = true) {
-        $br = new Breadcrumb();
+    function osc_breadcrumb($separator = '&raquo;', $echo = true, $lang = array()) {
+        $br = new Breadcrumb($lang);
         $br->init();
         if( $echo ) {
             echo $br->render($separator);

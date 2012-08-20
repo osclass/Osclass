@@ -23,13 +23,15 @@
     {
         private $location;
         private $section;
+        private $title;
         protected $aLevel;
 
-        public function __construct()
+        public function __construct($lang = array())
         {
             $this->location = Rewrite::newInstance()->get_location();
             $this->section  = Rewrite::newInstance()->get_section();
             $this->aLevel   = array();
+            $this->setTitles($lang);
         }
 
         public function init()
@@ -45,7 +47,7 @@
             switch($this->getLocation()) {
                 case('item'):
                     if( $this->getSection() == 'item_add' ) {
-                        $l = array('title' => __('Publish a listing'));
+                        $l = array('title' => $this->title['item_add']);
                         $this->addLevel($l);
                         break;
                     }
@@ -66,19 +68,19 @@
                         case('item_edit'):
                             $l = array('url' => osc_item_url(), 'title' => osc_item_title());
                             $this->addLevel($l);
-                            $l = array('title' => __('Edit your listing'));
+                            $l = array('title' => $this->title['item_edit'];
                             $this->addLevel($l);
                         break;
                         case('send_friend'):
                             $l = array('url' => osc_item_url(), 'title' => osc_item_title());
                             $this->addLevel($l);
-                            $l = array('title' => __('Send to a friend'));
+                            $l = array('title' => $this->title['item_send_friend']);
                             $this->addLevel($l);
                         break;
                         case('contact'):
                             $l = array('url' => osc_item_url(), 'title' => osc_item_title());
                             $this->addLevel($l);
-                            $l = array('title' => __('Contact publisher'));
+                            $l = array('title' => $this->title['item_contact']);
                             $this->addLevel($l);
                         break;
                         case(''):
@@ -103,7 +105,7 @@
 
                         // show all
                         if( $b_show_all ) {
-                            $l = array('title' => __('Search results'));
+                            $l = array('title' => $this->title['search']);
                             $this->addLevel($l);
                             break; 
                         }
@@ -169,7 +171,7 @@
 
                         // pattern
                         if( $b_pattern ) {
-                            $l = array('title' => sprintf(__('Search results: %s'), $pattern));
+                            $l = array('title' => sprintf($this->title['search_pattern'], $pattern));
                             $this->addLevel($l);
                         }
 
@@ -185,43 +187,43 @@
                 case('user'):
                     // use dashboard without url if you're in the dashboards
                     if( $this->getSection() == 'dashboard' ) {
-                        $l = array('title' => __('Dashboard'));
+                        $l = array('title' => $this->title['user_dashboard']);
                         $this->addLevel($l);
                         break;
                     }
 
                     // use dashboard without url if you're in the dashboards
                     if( $this->getSection() == 'dashboard' ) {
-                        $l = array('title' => sprintf(__("%s's profile"), osc_user_name()));
+                        $l = array('title' => sprintf($this->title['user_dashboard_profile'], osc_user_name()));
                         $this->addLevel($l);
                         break;
                     }
 
                     $l = array(
                         'url'   => osc_user_dashboard_url(),
-                        'title' => __('Account')
+                        'title' => $this->title['user_account']
                     );
                     $this->addLevel($l);
 
                     switch($this->getSection()) {
                         case('items'):
-                            $l = array('title' => __('My listings'));
+                            $l = array('title' => $this->title['user_items']);
                             $this->addLevel($l);
                         break;
                         case('alerts'):
-                            $l = array('title' => __('My alerts'));
+                            $l = array('title' => $this->title['user_alerts']);
                             $this->addLevel($l);
                         break;
                         case('profile'):
-                            $l = array('title' => __('My profile'));
+                            $l = array('title' => $this->title['user_profile']);
                             $this->addLevel($l);
                         break;
                         case('change_email'):
-                            $l = array('title' => __('Change my email'));
+                            $l = array('title' => $this->title['user_change_email']);
                             $this->addLevel($l);
                         break;
                         case('change_password'):
-                            $l = array('title' => __('Change my password'));
+                            $l = array('title' => $this->title['user_change_password']);
                             $this->addLevel($l);
                         break;
                     }
@@ -229,21 +231,21 @@
                 case('login'):
                     switch($this->getSection()) {
                         case('recover'):
-                            $l = array('title' => __('Recover your password'));
+                            $l = array('title' => $this->title['login_recover']);
                             $this->addLevel($l);
                         break;
                         case('forgot'):
-                            $l = array('title' => __('Change your password'));
+                            $l = array('title' => $this->title['login_forgot']);
                             $this->addLevel($l);
                         break;
                         case(''):
-                            $l = array('title' => __('Login'));
+                            $l = array('title' => $this->title['login']);
                             $this->addLevel($l);
                         break;
                     }
                 break;
                 case('register'):
-                    $l = array('title' => __('Create a new account'));
+                    $l = array('title' => $this->title['register']);
                     $this->addLevel($l);
                 break;
                 case('page'):
@@ -251,7 +253,7 @@
                     $this->addLevel($l);
                 break;
                 case('contact'):
-                    $l = array('title' => __('Contact'));
+                    $l = array('title' => $this->title['contact']);
                     $this->addLevel($l);
                 break;
             }
@@ -291,6 +293,44 @@
             $result .= '</ul>' . PHP_EOL;
 
             return $result;
+        }
+
+        /**
+         * Set the texts for the breadcrumb
+         * 
+         * @since 3.1
+         */
+        public function setTitles($lang)
+        {
+            // default titles
+            $this->title['item_add']               = __('Publish a listing');
+            $this->title['item_edit']              = __('Edit your listing');
+            $this->title['item_send_friend']       = __('Send to a friend');
+            $this->title['item_contact']           = __('Contact publisher');
+            $this->title['search']                 = __('Search results');
+            $this->title['search_pattern']         = __('Search results: %s');
+            $this->title['user_dashboard']         = __('Dashboard');
+            $this->title['user_dashboard_profile'] = __("%s's profile");
+            $this->title['user_account']           = __('Account');
+            $this->title['user_items']             = __('My listings');
+            $this->title['user_alerts']            = __('My alerts');
+            $this->title['user_profile']           = __('Change my email');
+            $this->title['user_change_email']      = __('Change my password');
+            $this->title['login']                  = __('Login');
+            $this->title['login_recover']          = __('Recover your password');
+            $this->title['login_forgot']           = __('Change your password');
+            $this->title['register']               = __('Create a new account');
+            $this->title['contact']                = __('Contact');
+
+            if( !is_array($lang) ) {
+                return;
+            }
+
+            foreach($lang as $k => $v) {
+                if( array_key_exists($k, $this->title) ) {
+                    $this->title[$k] = $v;
+                }
+            }
         }
 
         public function getaLevel()
