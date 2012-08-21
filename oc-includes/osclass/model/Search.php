@@ -47,6 +47,7 @@
         private $total_results;
         private $total_results_table;
         private $sPattern;
+        private $sEmail;
         private $groupBy;
         private $having;
 
@@ -56,7 +57,8 @@
         private $withCategoryId;
         private $withUserId;
         private $withItemId;
-
+        private $withNoUserEmail;
+        
         private $price_min;
         private $price_max;
 
@@ -87,7 +89,8 @@
             $this->withCategoryId   = false;
             $this->withUserId       = false;
             $this->withPicture      = false;
-
+            $this->withNoUserEmail  = false;
+            
             $this->price_min = null;
             $this->price_max = null;
 
@@ -597,6 +600,18 @@
         }
 
         /**
+         * Filter by email
+         *
+         * @access public
+         * @since 2.4
+         * @param string $pattern 
+         */
+        public function addContactEmail($email)
+        {
+            $this->withNoUserEmail  = true;
+            $this->sEmail = $email;
+        }
+        /**
          * Return ads from specified users
          *
          * @access public
@@ -867,12 +882,16 @@
                     $this->dao->select($extraFields) ; // plugins!
                 }
                 $this->dao->from(DB_TABLE_PREFIX.'t_item');
-
+                
+                if($this->withNoUserEmail) {
+                    $this->dao->where( DB_TABLE_PREFIX.'t_item.s_contact_email', $this->sEmail );
+                }
+                
                 if ($this->withPattern ) {
                     $this->dao->join(DB_TABLE_PREFIX.'t_item_description as d','d.fk_i_item_id = '.DB_TABLE_PREFIX.'t_item.pk_i_id','LEFT');
                     $this->dao->where(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->sPattern) );
                 }
-
+                
                 // item conditions 
                 if(count($this->itemConditions)>0) {
                     $itemConditions = implode(' AND ', $this->itemConditions);

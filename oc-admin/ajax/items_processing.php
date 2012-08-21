@@ -226,6 +226,8 @@
                 $this->iPage = Params::getParam('iPage') ;
             }
             
+            $withUserId     = false;
+            $no_user_email  = '';
             // get & set values
             foreach($this->_get as $k => $v) {
 
@@ -238,6 +240,7 @@
                 if( $k == 'userId' && $v != '') {
                     $this->mSearch->fromUser($v);
                     $this->withFilters = true;
+                    $withUserId = true;
                 }
                 if( $k == 'itemId' && $v != '') {
                     $this->mSearch->addItemId($v);
@@ -292,7 +295,16 @@
                     $this->mSearch->addItemConditions(DB_TABLE_PREFIX.'t_item.b_spam = '.$v);
                     $this->withFilters = true;
                 }
+                if( $k == 'user' && $v != '') {
+                    $no_user_email = $v;
+                }
             }
+            
+            // add no registred user email if userId == '' and $no_user_email != ''
+            if( $no_user_email != '' && !$withUserId ) {
+                $this->mSearch->addContactEmail($no_user_email);
+            }
+            
             // set start and limit using iPage param
             $start = ($this->iPage - 1) * $this->_get['iDisplayLength'];
             
