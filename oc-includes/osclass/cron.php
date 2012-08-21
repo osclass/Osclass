@@ -28,7 +28,7 @@
     if( is_array($cron) ) {
         $i_next = strtotime($cron['d_next_exec']);
 
-        if( (CLI && (Params::getParam('cron-type') === 'hourly') || ((($i_now - $i_next) >= 0) && !CLI) ) {
+        if( (CLI && (Params::getParam('cron-type') === 'hourly')) || ((($i_now - $i_next) >= 0) && !CLI) ) {
             require_once osc_lib_path() . 'osclass/cron.hourly.php' ;
 
             // update the next execution time in t_cron
@@ -43,7 +43,7 @@
     if( is_array($cron) ) {
         $i_next = strtotime($cron['d_next_exec']) ;
 
-        if( (CLI && (Params::getParam('cron-type') === 'daily') || ((($i_now - $i_next) >= 0) && !CLI) ) {
+        if( (CLI && (Params::getParam('cron-type') === 'daily')) || ((($i_now - $i_next) >= 0) && !CLI) ) {
             require_once LIB_PATH . 'osclass/cron.daily.php' ;
 
             // update the next execution time in t_cron
@@ -58,7 +58,7 @@
     if(is_array($cron)) {
         $i_next = strtotime($cron['d_next_exec']) ;
 
-        if( (CLI && (Params::getParam('cron-type') === 'weekly') || ((($i_now - $i_next) >= 0) && !CLI) ) {
+        if( (CLI && (Params::getParam('cron-type') === 'weekly')) || ((($i_now - $i_next) >= 0) && !CLI) ) {
             require_once LIB_PATH . 'osclass/cron.weekly.php' ;
 
             // update the next execution time in t_cron
