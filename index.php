@@ -27,9 +27,10 @@
     require_once ABS_PATH . 'oc-load.php' ;
 
     if( CLI ) {
-        $cli_params = getopt('p:');
+        $cli_params = getopt('p:t:');
         Params::setParam('page', $cli_params['p']);
-        if( !in_array(Params::getParam('page'), array('cron')) ) {
+        Params::setParam('cron-type', $cli_params['t']);
+        if( !in_array(Params::getParam('page'), array('cron')) && !in_array(Params::getParam('cron-type'), array('hourly', 'daily', 'weekly')) ) {
             exit(1);
         }
     }
