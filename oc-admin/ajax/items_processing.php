@@ -303,6 +303,7 @@
             // add no registred user email if userId == '' and $no_user_email != ''
             if( $no_user_email != '' && !$withUserId ) {
                 $this->mSearch->addContactEmail($no_user_email);
+                $this->withFilters = true;
             }
             
             // set start and limit using iPage param

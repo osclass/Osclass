@@ -61,7 +61,7 @@
 
                 $('input[name="user"]').attr( "autocomplete", "off" );
                 $('#user,#fUser').autocomplete({
-                    source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax"+$('input[name="user"]').val(), // &term=
+                    source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax", //+$('input[name="user"]').val(), // &term=
                     minLength: 0,
                     select: function( event, ui ) {
                         if(ui.item.id=='') 
