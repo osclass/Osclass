@@ -40,6 +40,23 @@
     function customHead() { ?>
         <script type="text/javascript">
             $(document).ready(function(){
+                // users autocomplete
+                $('input[name="user"]').attr( "autocomplete", "off" );
+                $('#user,#fUser').autocomplete({
+                    source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax", //+$('input[name="user"]').val(), // &term=
+                    minLength: 0,
+                    select: function( event, ui ) {
+                        if(ui.item.id=='') 
+                            return false;
+                        $('#userId').val(ui.item.id);
+                        $('#fUserId').val(ui.item.id);
+                    },
+                    search: function() {
+                        $('#userId').val('');
+                        $('#fUserId').val('');
+                    }
+                });
+                
                 // check_all bulkactions
                 $("#check_all").change(function(){
                     var isChecked = $(this+':checked').length;
@@ -110,10 +127,8 @@
         <div class="float-right">
             <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="shortcut-filters" class="inline">
                 <input type="hidden" name="page" value="users" />
-                <input 
-                    id="fPattern" type="text" name="sSearch"
-                    value="<?php echo osc_esc_html(Params::getParam('sSearch')); ?>" 
-                    class="input-text input-actions"/>
+                <input id="fUser" name="user" type="text" class="fUser input-text input-actions" value="<?php echo osc_esc_html(Params::getParam('user')); ?>" />
+                <input id="fUserId" name="userId" type="hidden" value="<?php echo osc_esc_html(Params::getParam('userId')); ?>" />
                 <input type="submit" class="btn submit-right" value="<?php echo osc_esc_html( __('Find') ) ; ?>">
             </form>
         </div>
