@@ -29,6 +29,9 @@
         private $total_filtered ;
         private $search ;
         private $order_by = array() ;
+        
+        private $withUserId;
+        private $userId;
 
         private $column_names  = array(
             0 => 'dt_reg_date',
@@ -44,10 +47,18 @@
 
         function __construct($params)
         {
+            $this->withUserId = false;
             $this->_get = $params ;
             $this->getDBParams() ;
 
-            $list_users  = User::newInstance()->search($this->start, $this->limit, $this->order_by['column_name'], $this->order_by['type'], $this->search) ;
+            if($this->withUserId) {
+                $list_users  = User::newInstance()->searchByPrimaryKey($this->start, $this->limit, $this->userId, $this->order_by['column_name'], $this->order_by['type'] ) ;
+            } else if($this->search != ''){
+                $list_users  = User::newInstance()->searchByEmail($this->start, $this->limit, $this->search, $this->order_by['column_name'], $this->order_by['type'] ) ;
+            } else {
+                $list_users  = User::newInstance()->search($this->start, $this->limit, $this->order_by['column_name'], $this->order_by['type'] ) ;
+            }
+            
             $this->users = $list_users['users'] ;
             $this->total = $list_users['total_results'] ;
             $this->total_filtered = $list_users['rows'] ;
@@ -82,8 +93,12 @@
             $this->order_by['column_name'] = 'pk_i_id';
             $this->order_by['type'] = 'DESC';
             foreach($this->_get as $k=>$v) {
-                if( $k == 'sSearch' ) {
-                    $this->search = $v ;
+                if( $k == 'user') {
+                    $this->search = $v;
+                }
+                if( $k == 'userId' && $v != '') {
+                    $this->withUserId = true;
+                    $this->userId = $v;
                 }
 
                 /* for sorting */
