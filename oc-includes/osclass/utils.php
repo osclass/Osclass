@@ -263,10 +263,16 @@ function osc_sendMail($params) {
         return false;
     }
 
-    require_once osc_lib_path() . 'phpmailer/class.phpmailer.php';
-    require_once osc_lib_path() . 'phpmailer/class.smtp.php';
-
     $mail = new PHPMailer(true);
+    $mail->ClearAddresses();
+    $mail->ClearAllRecipients();
+    $mail->ClearAttachments();
+    $mail->ClearBCCs();
+    $mail->ClearCCs();
+    $mail->ClearCustomHeaders();
+    $mail->ClearReplyTos();
+
+    $mail = osc_apply_filter('init_send_mail', $mail);
 
     if( osc_mailserver_pop() ) {
         require_once osc_lib_path() . 'phpmailer/class.pop3.php';
@@ -414,6 +420,8 @@ function osc_sendMail($params) {
 
     $mail->CharSet = 'utf-8';
     $mail->IsHTML(true);
+
+    $mail = osc_apply_filter('pre_send_mail', $mail);
 
     // send email!
     try {
