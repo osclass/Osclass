@@ -244,4 +244,10 @@ osc_add_hook('cron_weekly', 'purge_latest_searches_weekly');
 
 Plugins::init();
 
+if( !class_exists('PHPMailer') ) {
+    require_once osc_lib_path() . 'phpmailer/class.phpmailer.php';
+}
+if( !class_exists('SMTP') ) {
+    require_once osc_lib_path() . 'phpmailer/class.smtp.php';
+}
 /* file end: ./oc-load.php */
