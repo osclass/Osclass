@@ -612,6 +612,18 @@
             $this->sEmail = $email;
         }
         /**
+         * Filter by email
+         *
+         * @access public
+         * @since 2.4
+         * @param string $pattern 
+         */
+        public function addContactEmail($email)
+        {
+            $this->withNoUserEmail  = true;
+            $this->sEmail = $email;
+        }
+        /**
          * Return ads from specified users
          *
          * @access public
