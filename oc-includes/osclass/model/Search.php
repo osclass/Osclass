@@ -600,7 +600,7 @@
             $this->withPattern  = true;
             $this->sPattern     = $pattern;
         }
-        
+
         /**
          * Filter by email
          *
@@ -613,6 +613,7 @@
             $this->withNoUserEmail  = true;
             $this->sEmail = $email;
         }
+        
         /**
          * Return ads from specified users
          *
