@@ -31,6 +31,9 @@
      */
     function osc_draw_admin_menu()
     {
+        // actual url
+        $actual_url = $_SERVER['QUERY_STRING'];
+        
         $something_selected = false;
         $adminMenu          = AdminMenu::newInstance() ;
         $aMenu              = $adminMenu->get_array_menu() ;
@@ -50,6 +53,7 @@
         
         // -----------------------------------------------------
         
+        $sub_current = false;
         $sMenu = '<!-- menu -->'.PHP_EOL ;
         $sMenu .= '<div id="sidebar">'.PHP_EOL ;
         $sMenu .= '<ul class="oscmenu">'.PHP_EOL ;
@@ -57,6 +61,8 @@
             $sSubmenu   = "";
             $credential = $value[3];
             if(!$is_moderator || $is_moderator && $credential == 'moderator') { // show
+                
+                $class      = '';
                 if( array_key_exists('sub', $value) ) {
                     // submenu
                     $aSubmenu = $value['sub'] ;
@@ -66,6 +72,14 @@
                             $credential_sub = $aSub[4];
                             if(!$is_moderator || $is_moderator && $credential_sub == 'moderator') { // show
 
+                                $url_submenu   = $aSub[1];
+                                $url_submenu   = str_replace(osc_admin_base_url(true).'?', '', $url_submenu);
+                                $url_submenu   = str_replace(osc_admin_base_url(), '', $url_submenu);
+                                if($actual_url == $url_submenu) {
+                                    $sub_current = true;
+                                    $class       = 'current';
+                                }
+                                
                                 $sSubmenu .= '<li><a id="'.$aSub[2].'" href="'.$aSub[1].'">'.$aSub[0].'</a></li>'.PHP_EOL ;
                             }   
                         }
@@ -81,8 +95,10 @@
                     }
                 }
 
-                $class = '';
-                if($current_menu_id ==  $value[2]) {
+                $url_menu   = $value[1];
+                $url_menu   = str_replace(osc_admin_base_url(true), '', $url_menu);
+                $url_menu   = str_replace(osc_admin_base_url(), '', $url_menu);
+                if($actual_url == $url_menu) {
                     $class = 'current';
                     $something_selected = true;
                 }
