@@ -154,28 +154,6 @@
                         <?php foreach($columns as $k => $v) {
                             echo '<th class="col-'.$k.' '.($sort==$k?($direction=='desc'?'sorting_desc':'sorting_asc'):'').'">'.$v.'</th>';
                         }; ?>
-
-                        <?php /*<th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
-                        <th class="col-title"><?php _e('Title') ; ?></th>
-                        <th><?php _e('User') ; ?></th>
-                        <th class="<?php if($sort=='spam'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
-                            <a id="order_spam" href="<?php echo $url_spam; ?>"><?php _e('Spam') ; ?></a>
-                        </th>
-                        <th class="<?php if($sort=='bad'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
-                            <a id="order_bad" href="<?php echo $url_bad; ?>"><?php _e('Misclassified') ; ?>
-                        </th>
-                        <th class="<?php if($sort=='rep'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
-                            <a id="order_rep" href="<?php echo $url_rep; ?>"><?php _e('Duplicated') ; ?>
-                        </th>
-                        <th class="<?php if($sort=='exp'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
-                            <a id="order_exp" href="<?php echo $url_exp; ?>"><?php _e('Expired') ; ?>
-                        </th>
-                        <th class="<?php if($sort=='off'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
-                            <a id="order_off" href="<?php echo $url_off; ?>"><?php _e('Offensive') ; ?>
-                        </th>
-                        <th class="col-date <?php if($sort=='date'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
-                            <a id="order_date" href="<?php echo $url_date; ?>"><?php _e('Date') ; ?>
-                        </th>*/?>
                     </tr>
                 </thead>
                 <tbody>
