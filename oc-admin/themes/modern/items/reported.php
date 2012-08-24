@@ -100,14 +100,11 @@
     }
     osc_add_hook('admin_header','customHead');
 
-    $aData      = __get('aItems') ;
-    $url_spam   = __get('url_spam') ;
-    $url_bad    = __get('url_bad') ;
-    $url_rep    = __get('url_rep') ;
-    $url_off    = __get('url_off') ;
-    $url_exp    = __get('url_exp') ;
-    $url_date   = __get('url_date') ;
 
+    $aData      = __get('aData');
+
+    $columns    = $aData['aColumns'];
+    $rows       = $aData['aRows'];
     $sort       = Params::getParam('sort');
     $direction  = Params::getParam('direction');
 
@@ -154,7 +151,11 @@
             <table class="table" cellpadding="0" cellspacing="0">
                 <thead>
                     <tr>
-                        <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
+                        <?php foreach($columns as $k => $v) {
+                            echo '<th class="col-'.$k.' '.($sort==$k?($direction=='desc'?'sorting_desc':'sorting_asc'):'').'">'.$v.'</th>';
+                        }; ?>
+
+                        <?php /*<th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
                         <th class="col-title"><?php _e('Title') ; ?></th>
                         <th><?php _e('User') ; ?></th>
                         <th class="<?php if($sort=='spam'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
@@ -174,24 +175,18 @@
                         </th>
                         <th class="col-date <?php if($sort=='date'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
                             <a id="order_date" href="<?php echo $url_date; ?>"><?php _e('Date') ; ?>
-                        </th>
+                        </th>*/?>
                     </tr>
                 </thead>
                 <tbody>
-                <?php if(count($aData['aaData'])>0) { ?>
-                <?php foreach( $aData['aaData'] as $array) { ?>
-                    <tr>
-                    <?php foreach($array as $key => $value) { ?>
-                        <?php if( $key==0 ) { ?>
-                        <td class="col-bulkactions">
-                        <?php } else { ?>
-                        <td>
-                        <?php } ?>
-                        <?php echo $value; ?>
-                        </td>
-                    <?php } ?>
-                    </tr>
-                <?php } ?>
+                <?php if( count($rows) > 0 ) { ?>
+                    <?php foreach($rows as $key => $row) { ?>
+                        <tr>
+                            <?php foreach($row as $k => $v) { ?>
+                                <td class="col-<?php echo $k; ?>"><?php echo $v; ?></td>
+                            <?php }; ?>
+                        </tr>
+                    <?php }; ?>
                 <?php } else { ?>
                     <tr>
                         <td colspan="9" class="text-center">

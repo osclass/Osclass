@@ -154,6 +154,8 @@
 
     $aData      = __get('aData');
     $aRawRows   = __get('aRawRows');
+    $sort       = Params::getParam('sort');
+    $direction  = Params::getParam('direction');
 
     $columns    = $aData['aColumns'];
     $rows       = $aData['aRows'];
@@ -353,7 +355,7 @@
                 <thead>
                     <tr>
                         <?php foreach($columns as $k => $v) {
-                            echo '<th class="col-'.$k.'">'.$v.'</th>';
+                            echo '<th class="col-'.$k.' '.($sort==$k?($direction=='desc'?'sorting_desc':'sorting_asc'):'').'">'.$v.'</th>';
                         }; ?>
                     </tr>
                 </thead>
