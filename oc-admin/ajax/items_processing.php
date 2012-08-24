@@ -332,6 +332,8 @@
             $this->result['aaObject'] = $this->items;
             
             $count = 0;
+            
+            
             foreach ($this->items as $aRow)
             {
                 View::newInstance()->_exportVariableToView('item', $aRow);
@@ -398,14 +400,17 @@
                 $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
  
                 // fill a row
-                $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>' ;
-                $row[] = '<a href="' . osc_item_url().'" target="_blank">' . $title. '</a>'. $actions  ;
-                $row[] = $aRow['s_user_name'] ;
-                $row[] = $aRow['s_category_name'] ;
-                $row[] = $aRow['s_country'] ;
-                $row[] = $aRow['s_region'] ;
-                $row[] = $aRow['s_city'] ;
-                $row[] = $aRow['dt_pub_date'] ;
+                $row['bulkactions'] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>' ;
+                $row['title'] = '<a href="' . osc_item_url().'" target="_blank">' . $title. '</a>'. $actions  ;
+                $row['user'] = $aRow['s_user_name'] ;
+                $row['category'] = $aRow['s_category_name'] ;
+                $row['country'] = $aRow['s_country'] ;
+                $row['region'] = $aRow['s_region'] ;
+                $row['city'] = $aRow['s_city'] ;
+                $row['date'] = $aRow['dt_pub_date'] ;
+                
+                $row = osc_apply_filter('items_processing_row', $row, $aRow);
+                
 
                 $count++ ;
                 $this->result['aaData'][] = $row ;
@@ -474,15 +479,17 @@
                 $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
 
                 // fill a row
-                $row[] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>' ;
-                $row[] = '<a href="' . osc_item_url().'" target="_blank">' . $title . '</a>'. $actions  ;
-                $row[] = $aRow['s_user_name'] ;
-                $row[] = $aRow['i_num_spam'] ;
-                $row[] = $aRow['i_num_bad_classified'] ;
-                $row[] = $aRow['i_num_repeated'] ;
-                $row[] = $aRow['i_num_expired'] ;
-                $row[] = $aRow['i_num_offensive'] ;
-                $row[] = $aRow['dt_pub_date'] ;
+                $row['bulkactions'] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>' ;
+                $row['title'] = '<a href="' . osc_item_url().'" target="_blank">' . $title . '</a>'. $actions  ;
+                $row['user'] = $aRow['s_user_name'] ;
+                $row['spam'] = $aRow['i_num_spam'] ;
+                $row['bad_classified'] = $aRow['i_num_bad_classified'] ;
+                $row['repeated'] = $aRow['i_num_repeated'] ;
+                $row['expired'] = $aRow['i_num_expired'] ;
+                $row['offensive'] = $aRow['i_num_offensive'] ;
+                $row['date'] = $aRow['dt_pub_date'] ;
+
+                $row = osc_apply_filter('items_processing_reported_row', $row, $aRow);
 
                 $count++ ;
                 $this->result['aaData'][] = $row ;

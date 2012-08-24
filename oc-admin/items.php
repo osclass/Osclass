@@ -751,17 +751,8 @@
                                         $this->doView('items/reported.php') ;
                 break;
                 default:                // default 
-                                        $catId = Params::getParam('catId') ;
 
-                                        $countries = Country::newInstance()->listAll() ;
-                                        $regions = array() ;
-                                        if( count($countries) > 0 ) {
-                                            $regions = Region::newInstance()->findByCountry($countries[0]['pk_c_code']) ;
-                                        }
-                                        $cities = array() ;
-                                        if( count($regions) > 0 ) {
-                                            $cities = City::newInstance()->findByRegion($regions[0]['pk_i_id']) ;
-                                        }
+                                        require_once osc_lib_path()."osclass/classes/datatables/ItemsDataTable.php";
 
                                         // set default iDisplayLength 
                                         if( Params::getParam('iDisplayLength') != '' ) {
@@ -785,20 +776,16 @@
                                             Params::setParam('direction', 'desc');
                                         }
 
-                                        $arg_date = '&sort=date';
-                                        if(Params::getParam('sort') == 'date') {
-                                            if(Params::getParam('direction') == 'desc') $arg_date .= '&direction=asc';
-                                        }
-                                        $this->_exportVariableToView('url_date', osc_admin_base_url(true).'?page=items'.$arg_date) ;
-                                        // -- Table header order by related
-
-                                        require_once osc_admin_base_path() . 'ajax/items_processing.php';
-                                        $params = Params::getParamsAsArray("get") ;
-                                        $items_processing = new ItemsProcessingAjax( $params );
-                                        $aData = $items_processing->listings( $params ) ;
-
                                         $page  = (int)Params::getParam('iPage');
-                                        if(count($aData['aaData']) == 0 && $page!=1) {
+                                        Params::setParam('iPage', $page);
+
+                                        $params = Params::getParamsAsArray("get") ;
+                                        
+                                        $itemsDataTable = ItemsDataTable::newInstance();
+                                        $itemsDataTable->table($params);
+                                        $aData = $itemsDataTable->getData();
+                                        
+                                        if(count($aData['aRows']) == 0 && $page!=1) {
                                             $total = (int)$aData['iTotalDisplayRecords'];
                                             $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
 
@@ -815,19 +802,10 @@
                                             }
                                         }
 
-                                        $this->_exportVariableToView('aItems', $aData) ;
 
-                                        // there are filters activated
-                                        $this->_exportVariableToView('withFilters', $items_processing->filters() ) ;
-
-                                        //preparing variables for the view                
-                                        $this->_exportVariableToView("users", User::newInstance()->listAll());
-                                        $this->_exportVariableToView("catId", $catId) ;
-                                        $this->_exportVariableToView("stat", Params::getParam('stat')) ;
-
-                                        $this->_exportVariableToView("countries", $countries);
-                                        $this->_exportVariableToView("regions", $regions);
-                                        $this->_exportVariableToView("cities", $cities);
+                                        $this->_exportVariableToView('aData', $aData) ;
+                                        $this->_exportVariableToView('withFilters', $itemsDataTable->withFilters());
+                                        $this->_exportVariableToView('aRawRows', $itemsDataTable->rawRows());
 
                                         //calling the view...
                                         $this->doView('items/index.php') ;
