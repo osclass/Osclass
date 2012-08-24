@@ -989,6 +989,7 @@
         public function prepareData( $is_add )
         {
             $aItem = array();
+            $data = array();
             
             $userId = null ;
             if( $this->is_admin ) {
@@ -1002,6 +1003,10 @@
                 if( $userId == '' ) {
                     $userId = NULL ;
                 }
+            }
+            
+            if( $userId != null ) {
+                $data   = User::newInstance()->findByPrimaryKey( $userId );
             }
             
             if($userId != null) {
