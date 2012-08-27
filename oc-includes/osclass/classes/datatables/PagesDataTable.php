@@ -68,7 +68,7 @@
             $this->addColumn('title', __('Title'));
             $this->addColumn('order', __('Order'));
 
-            $dummy['table'] = &$this;
+            $dummy = &$this;
             osc_run_hook("admin_users_table", $dummy);
         }
         

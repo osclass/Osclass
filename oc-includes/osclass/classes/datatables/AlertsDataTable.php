@@ -64,7 +64,7 @@
             $this->addColumn('alert', __('Alert'));
             $this->addColumn('date', __('Date'));
 
-            $dummy['table'] = &$this;
+            $dummy = &$this;
             osc_run_hook("admin_alerts_table", $dummy);
         }
         

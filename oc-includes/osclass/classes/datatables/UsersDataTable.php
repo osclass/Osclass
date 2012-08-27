@@ -76,7 +76,7 @@
             $this->addColumn('date', __('Date'));
             $this->addColumn('update_date', __('Update date'));
 
-            $dummy['table'] = &$this;
+            $dummy = &$this;
             osc_run_hook("admin_users_table", $dummy);
         }
         

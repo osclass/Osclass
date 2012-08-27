@@ -69,7 +69,7 @@
             $this->addColumn('attached_to', __('Attached to'));
             $this->addColumn('date', __('Date'));
 
-            $dummy['table'] = &$this;
+            $dummy = &$this;
             osc_run_hook("admin_media_table", $dummy);
         }
         

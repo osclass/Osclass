@@ -126,7 +126,7 @@
             $this->addColumn('city', __('City'));
             $this->addColumn('date', '<a href="'.osc_admin_base_url(true).'?page=items'.$arg_date.'">'.__('Date').'</a>');
 
-            $dummy['table'] = &$this;
+            $dummy = &$this;
             osc_run_hook("admin_items_table", $dummy);
         }
         
@@ -180,7 +180,7 @@
             $this->addColumn('off', '<a id="order_off" href="'.$url_off.'">'.__('Offensive').'</a>');
             $this->addColumn('date', '<a id="order_date" href="'.$url_date.'">'.__('Date').'</a>');
 
-            $dummy['table'] = &$this;
+            $dummy = &$this;
             osc_run_hook("admin_items_reported_table", $dummy);
         }
         

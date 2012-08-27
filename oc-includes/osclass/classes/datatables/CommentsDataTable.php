@@ -79,7 +79,7 @@
             $this->addColumn('comment', __('Comment'));
             $this->addColumn('date', __('Date'));
 
-            $dummy['table'] = &$this;
+            $dummy = &$this;
             osc_run_hook("admin_comments_table", $dummy);
         }
         
