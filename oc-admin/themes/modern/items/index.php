@@ -147,22 +147,18 @@
     }
     osc_add_hook('admin_header','customHead');
 
-    $users       = __get('users') ;
-    $stat        = __get('stat') ;
-    $categories  = __get('categories') ;
-    $countries   = __get('countries') ;
-    $regions     = __get('regions') ;
-    $cities      = __get('cities') ;
-    $withFilters = __get('withFilters') ;
+    $categories  = __get('categories');
+    $withFilters = __get('withFilters');
 
     $iDisplayLength = __get('iDisplayLength');
 
-    $aData      = __get('aItems') ;
-
-    $url_date   = __get('url_date') ;
-
+    $aData      = __get('aData');
+    $aRawRows   = __get('aRawRows');
     $sort       = Params::getParam('sort');
     $direction  = Params::getParam('direction');
+
+    $columns    = $aData['aColumns'];
+    $rows       = $aData['aRows'];
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
@@ -358,38 +354,26 @@
             <table class="table" cellpadding="0" cellspacing="0">
                 <thead>
                     <tr>
-                        <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
-                        <th class="col-title"><?php _e('Title') ; ?></th>
-                        <th><?php _e('User') ; ?></th>
-                        <th><?php _e('Category') ; ?></th>
-                        <th><?php _e('Country') ; ?></th>
-                        <th><?php _e('Region') ; ?></th>
-                        <th><?php _e('City') ; ?></th>
-                        <th class="col-date <?php if($sort=='date'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
-                            <a href="<?php echo $url_date; ?>"><?php _e('Date') ; ?></a>
-                        </th>
+                        <?php foreach($columns as $k => $v) {
+                            echo '<th class="col-'.$k.' '.($sort==$k?($direction=='desc'?'sorting_desc':'sorting_asc'):'').'">'.$v.'</th>';
+                        }; ?>
                     </tr>
                 </thead>
                 <tbody>
-                <?php if( count($aData['aaData']) > 0 ) { ?>
-                <?php foreach($aData['aaData'] as $key => $array) { ?>
-                    <?php $class = ''; $aI = $aData['aaObject'][$key]; if(!$aI['b_active']) $class = 'status-spam'; ?>
-                    <?php if(!$aI['b_active']) $class = 'status-spam'; ?>
-                    <?php if(!$aI['b_enabled']) $class = 'status-spam'; ?>
-                    <?php if($aI['b_spam']) $class = 'status-spam'; ?>
-                    <?php if($aI['b_premium']) $class = 'status-premium'; ?>
-                    <tr class="<?php echo $class;?>">
-                    <?php foreach($array as $key => $value) { ?>
-                        <?php if( $key == 0 ) { ?>
-                        <td class="col-bulkactions">
-                        <?php } else { ?>
-                        <td>
-                        <?php } ?>
-                        <?php echo $value; ?>
-                        </td>
-                    <?php } ?>
-                    </tr>
-                <?php } ?>
+                <?php if( count($rows) > 0 ) { ?>
+                    <?php foreach($rows as $key => $row) {
+                        $class = ''; $aI = $aRawRows[$key];
+                        if(!$aI['b_active']) $class = 'status-spam';
+                        if(!$aI['b_active']) $class = 'status-spam';
+                        if(!$aI['b_enabled']) $class = 'status-spam';
+                        if($aI['b_spam']) $class = 'status-spam';
+                        if($aI['b_premium']) $class = 'status-premium';/**/ ?>
+                        <tr class="<?php echo $class;?>">
+                            <?php foreach($row as $k => $v) { ?>
+                                <td class="col-<?php echo $k; ?>"><?php echo $v; ?></td>
+                            <?php }; ?>
+                        </tr>
+                    <?php }; ?>
                 <?php } else { ?>
                     <tr>
                         <td colspan="8" class="text-center">
@@ -405,8 +389,8 @@
 </div>
 <?php 
     function showingResults(){
-        $aData = __get('aItems');
-        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;
+        $aData = __get("aData");
+        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aRows']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;
     }
     osc_add_hook('before_show_pagination_admin','showingResults');
     osc_show_pagination_admin($aData);
