@@ -23,7 +23,7 @@
     /**
      * UsersDataTable class
      * 
-     * @since 3.0
+     * @since 3.1
      * @package OSClass
      * @subpackage classes
      * @author OSClass

@@ -100,7 +100,13 @@
     }
     osc_add_hook('admin_header','customHead');
 
-    $aData = __get('aComments');
+    $aData      = __get('aData');
+    $aRawRows   = __get('aRawRows');
+    $sort       = Params::getParam('sort');
+    $direction  = Params::getParam('direction');
+
+    $columns    = $aData['aColumns'];
+    $rows       = $aData['aRows'];
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <h2 class="render-title"><?php _e('Comments') ; ?></h2>
@@ -133,32 +139,24 @@
             <table class="table" cellpadding="0" cellspacing="0">
                 <thead>
                     <tr>
-                        <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
-                        <th><?php _e('Author') ; ?></th>
-                        <th><?php _e('Comment') ; ?></th>
-                        <th class="col-date"><?php _e('Date') ; ?></th>
+                        <?php foreach($columns as $k => $v) {
+                            echo '<th class="col-'.$k.' '.($sort==$k?($direction=='desc'?'sorting_desc':'sorting_asc'):'').'">'.$v.'</th>';
+                        }; ?>
                     </tr>
                 </thead>
                 <tbody>
-                <?php if( count($aData['aaData']) > 0 ) { ?>
-                <?php foreach( $aData['aaData'] as $key => $array ) { ?>
-                    <?php 
-                    $aC = $aData['aaObject'][$key]; 
-                    $class = ''; 
-                    if(!$aC['b_enabled'] || !$aC['b_active'] || $aC['b_spam']) $class = 'status-spam'; 
+                <?php if( count($rows) > 0 ) { ?>
+                    <?php foreach($rows as $key => $row) {
+                        $aC = $rawRows[$key];
+                        $class = ''; 
+                        if(!$aC['b_enabled'] || !$aC['b_active'] || $aC['b_spam']) $class = 'status-spam'; 
                     ?>
-                    <tr class="<?php echo $class; ?>">
-                    <?php foreach($array as $key => $value) { ?>
-                        <?php if( $key==0 ) { ?>
-                        <td class="col-bulkactions">
-                        <?php } else { ?>
-                        <td>
-                        <?php } ?>
-                        <?php echo $value; ?>
-                        </td>
-                    <?php } ?>
-                    </tr>
-                <?php } ?>
+                        <tr class="<?php echo $class; ?>">
+                            <?php foreach($row as $k => $v) { ?>
+                                <td class="col-<?php echo $k; ?>"><?php echo $v; ?></td>
+                            <?php }; ?>
+                        </tr>
+                    <?php }; ?>
                 <?php } else { ?>
                     <tr>
                         <td colspan="4" class="text-center">
@@ -174,8 +172,8 @@
 </div>
 <?php 
     function showingResults(){
-        $aData = __get('aComments');
-        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;
+        $aData = __get('aData');
+        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aRows']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;
     }
     osc_add_hook('before_show_pagination_admin','showingResults');
     osc_show_pagination_admin($aData);

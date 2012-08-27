@@ -188,46 +188,61 @@
                                             osc_run_hook( 'delete_comment', Params::getParam('id') ) ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
                 break ;
-                default:                    if( Params::getParam('iDisplayLength') == '' ) {
-                                                Params::setParam('iDisplayLength', 10 ) ;
-                                            }
-                                            // showAll == '' 
-                                            //      -> show all comments filtered
-                                            // showAll != '' 
-                                            //      -> show comments which are not 
-                                            //      -> diplayed at frontend
-                                            if( Params::getParam('showAll') == '' || Params::getParam('showAll') == '1' ) {
-                                                Params::setParam('showAll', true ) ;
+                default:                    
+                                            require_once osc_lib_path()."osclass/classes/datatables/CommentsDataTable.php";
+
+                                            // set default iDisplayLength 
+                                            if( Params::getParam('iDisplayLength') != '' ) {
+                                                Cookie::newInstance()->push('listing_iDisplayLength', Params::getParam('iDisplayLength'));
+                                                Cookie::newInstance()->set();
                                             } else {
-                                                Params::setParam('showAll', false ) ;
+                                                // set a default value if it's set in the cookie
+                                                if( Cookie::newInstance()->get_value('listing_iDisplayLength') != '' ) {
+                                                    Params::setParam('iDisplayLength', Cookie::newInstance()->get_value('listing_iDisplayLength'));
+                                                } else {
+                                                    Params::setParam('iDisplayLength', 10 );
+                                                }
                                             }
-                                            
                                             $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
-                                            
-                                            require_once osc_admin_base_path() . 'ajax/comments_processing.php';
-                                            $params = Params::getParamsAsArray("get") ;
-                                            $comments_processing = new CommentsProcessingAjax( $params );
-                                            $aData = $comments_processing->result( $params ) ;
+
+                                            // Table header order by related
+                                            if( Params::getParam('sort') == '') {
+                                                Params::setParam('sort', 'date') ;
+                                            }
+                                            if( Params::getParam('direction') == '') {
+                                                Params::setParam('direction', 'desc');
+                                            }
 
                                             $page  = (int)Params::getParam('iPage');
-                                            if(count($aData['aaData']) == 0 && $page!=1) {
+                                            if($page==0) { $page = 1; };
+                                            Params::setParam('iPage', $page);
+
+                                            $params = Params::getParamsAsArray("get") ;
+
+                                            $commentsDataTable = new CommentsDataTable();
+                                            $commentsDataTable->table($params);
+                                            $aData = $commentsDataTable->getData();
+
+                                            if(count($aData['aRows']) == 0 && $page!=1) {
                                                 $total = (int)$aData['iTotalDisplayRecords'];
                                                 $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
-                                                
+
                                                 $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
-                                                
+
                                                 if($maxPage==0) {
                                                     $url = preg_replace('/&iPage=(\d)+/', '&iPage=1', $url) ;
                                                     $this->redirectTo($url) ;
                                                 }
-                                                
+
                                                 if($page > 1) {   
                                                     $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
                                                     $this->redirectTo($url) ;
                                                 }
                                             }
-                                        
-                                            $this->_exportVariableToView('aComments', $aData) ;
+
+
+                                            $this->_exportVariableToView('aData', $aData) ;
+                                            $this->_exportVariableToView('aRawRows', $commentsDataTable->rawRows());
                                             
                                             $this->doView('comments/index.php') ;
                 break ;

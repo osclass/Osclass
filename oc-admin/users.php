@@ -384,24 +384,41 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=settings') ;
                 break ;
                 case('alerts'):                // manage alerts view
+                                        require_once osc_lib_path()."osclass/classes/datatables/AlertsDataTable.php";
+
                                         // set default iDisplayLength 
-                                        if( Params::getParam('iDisplayLength') == '' ) {
-                                            Params::setParam('iDisplayLength', 10 ) ;
+                                        if( Params::getParam('iDisplayLength') != '' ) {
+                                            Cookie::newInstance()->push('listing_iDisplayLength', Params::getParam('iDisplayLength'));
+                                            Cookie::newInstance()->set();
+                                        } else {
+                                            // set a default value if it's set in the cookie
+                                            if( Cookie::newInstance()->get_value('listing_iDisplayLength') != '' ) {
+                                                Params::setParam('iDisplayLength', Cookie::newInstance()->get_value('listing_iDisplayLength'));
+                                            } else {
+                                                Params::setParam('iDisplayLength', 10 );
+                                            }
                                         }
-                                        $p_iPage      = 1;
-                                        if( is_numeric(Params::getParam('iPage')) && Params::getParam('iPage') >= 1 ) {
-                                            $p_iPage = Params::getParam('iPage');
-                                        }
-                                        Params::setParam('iPage', $p_iPage);
                                         $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
-                                        $this->_exportVariableToView('sSearch', Params::getParam('sSearch'));
-                                        
-                                        require_once osc_admin_base_path() . 'ajax/alerts_processing.php';
-                                        $alerts_processing = new AlertsProcessingAjax(Params::getParamsAsArray("get"));
-                                        $aData = $alerts_processing->result() ;
-                                        
+
+                                        // Table header order by related
+                                        if( Params::getParam('sort') == '') {
+                                            Params::setParam('sort', 'date') ;
+                                        }
+                                        if( Params::getParam('direction') == '') {
+                                            Params::setParam('direction', 'desc');
+                                        }
+
                                         $page  = (int)Params::getParam('iPage');
-                                        if(count($aData['aaData']) == 0 && $page!=1) {
+                                        if($page==0) { $page = 1; };
+                                        Params::setParam('iPage', $page);
+
+                                        $params = Params::getParamsAsArray("get");
+
+                                        $alertsDataTable = new AlertsDataTable();
+                                        $alertsDataTable->table($params);
+                                        $aData = $alertsDataTable->getData();
+
+                                        if(count($aData['aRows']) == 0 && $page!=1) {
                                             $total = (int)$aData['iTotalDisplayRecords'];
                                             $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
 
@@ -417,8 +434,10 @@
                                                 $this->redirectTo($url) ;
                                             }
                                         }
-                                        
-                                        $this->_exportVariableToView('aAlerts', $aData) ;
+
+
+                                        $this->_exportVariableToView('aData', $aData) ;
+                                        $this->_exportVariableToView('aRawRows', $alertsDataTable->rawRows());
                                         
                                         $this->doView("users/alerts.php") ;
                 break ;
