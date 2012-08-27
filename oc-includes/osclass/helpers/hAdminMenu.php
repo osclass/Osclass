@@ -144,6 +144,14 @@
     }
     
     /**
+     * Remove the whole menu
+     */
+    function osc_remove_admin_menu()
+    {
+        AdminMenu::newInstance()->clear_menu() ;
+    }
+    
+    /**
      * Remove menu section with id $id_menu
      * @param type $id_menu 
      */

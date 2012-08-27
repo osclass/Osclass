@@ -189,47 +189,55 @@
         // common functions 
         public function add_menu_items( $submenu_title, $url, $submenu_id, $capability = null, $icon_url = null )
         {
-            $aSubMenu= $this->add_submenu('items', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
+            $this->add_submenu('items', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
         }
 
         public function add_menu_categories( $submenu_title, $url, $submenu_id, $capability = null, $icon_url = null )
         {
-            $aSubMenu= $this->add_submenu('categories', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
+            $this->add_submenu('categories', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
         }
 
         public function add_menu_pages( $submenu_title, $url, $submenu_id, $capability = null, $icon_url = null )
         {
-            $aSubMenu= $this->add_submenu('pages', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
+            $this->add_submenu('pages', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
         }
 
         public function add_menu_appearance( $submenu_title, $url, $submenu_id, $capability = null, $icon_url = null )
         {
-            $aSubMenu= $this->add_submenu('appearance', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
+            $this->add_submenu('appearance', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
         }
 
         public function add_menu_plugins( $submenu_title, $url, $submenu_id, $capability = null, $icon_url = null )
         {
-            $aSubMenu= $this->add_submenu('plugins', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
+            $this->add_submenu('plugins', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
         }
 
         public function add_menu_settings( $submenu_title, $url, $submenu_id, $capability = null, $icon_url = null )
         {
-            $aSubMenu= $this->add_submenu('settings', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
+            $this->add_submenu('settings', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
         }
 
         public function add_menu_tools( $submenu_title, $url, $submenu_id, $capability = null, $icon_url = null )
         {
-            $aSubMenu= $this->add_submenu('tools', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
+            $this->add_submenu('tools', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
         }
 
         public function add_menu_users( $submenu_title, $url, $submenu_id, $capability = null, $icon_url = null )
         {
-            $aSubMenu= $this->add_submenu('users', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
+            $this->add_submenu('users', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
         }
 
         public function add_menu_stats( $submenu_title, $url, $submenu_id, $capability = null, $icon_url = null )
         {
-            $aSubMenu= $this->add_submenu('stats', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
+            $this->add_submenu('stats', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
+        }
+        
+        /*
+         * Empty the menu
+         */
+        public function clear_menu( )
+        {
+            $this->aMenu = array() ;
         }
     }
 
