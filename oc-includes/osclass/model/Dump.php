@@ -93,7 +93,7 @@
             }
             
             foreach($result as $_line) {
-                $_str .= $_line['Create Table'] . ';';
+                $_str .= str_replace('CREATE TABLE', 'CREATE TABLE IF NOT EXISTS', $_line['Create Table'] . ';');
                 $_str .= "\n\n" ;
             }
 
