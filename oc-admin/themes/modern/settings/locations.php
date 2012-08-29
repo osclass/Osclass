@@ -284,7 +284,7 @@
         </div>
     </div>
     <div class="clear"></div>
-    <form id="dialog-location-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+    <form id="dialog-location-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide">
         <input type="hidden" name="page" value="settings" />
         <input type="hidden" name="action" value="locations" />
         <input type="hidden" name="type" value="" />

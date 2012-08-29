@@ -202,18 +202,41 @@
                     $this->redirectTo(osc_admin_base_url(true) . "?page=pages");
                     break;
                 default:
-                    if( Params::getParam('iDisplayLength') == '' ) {
-                        Params::setParam('iDisplayLength', 10 );
+                    require_once osc_lib_path()."osclass/classes/datatables/PagesDataTable.php";
+
+                    // set default iDisplayLength 
+                    if( Params::getParam('iDisplayLength') != '' ) {
+                        Cookie::newInstance()->push('listing_iDisplayLength', Params::getParam('iDisplayLength'));
+                        Cookie::newInstance()->set();
+                    } else {
+                        // set a default value if it's set in the cookie
+                        if( Cookie::newInstance()->get_value('listing_iDisplayLength') != '' ) {
+                            Params::setParam('iDisplayLength', Cookie::newInstance()->get_value('listing_iDisplayLength'));
+                        } else {
+                            Params::setParam('iDisplayLength', 10 );
+                        }
                     }
                     $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
 
-                    require_once(osc_admin_base_path() . 'ajax/pages_processing.php');
-                    $params = Params::getParamsAsArray('get');
-                    $pages_processing = new PagesProcessing( $params );
-                    $aData = $pages_processing->result( $params );
+                    // Table header order by related
+                    if( Params::getParam('sort') == '') {
+                        Params::setParam('sort', 'date') ;
+                    }
+                    if( Params::getParam('direction') == '') {
+                        Params::setParam('direction', 'desc');
+                    }
 
                     $page  = (int)Params::getParam('iPage');
-                    if(count($aData['aaData']) == 0 && $page!=1) {
+                    if($page==0) { $page = 1; };
+                    Params::setParam('iPage', $page);
+
+                    $params = Params::getParamsAsArray("get") ;
+
+                    $pagesDataTable = new PagesDataTable();
+                    $pagesDataTable->table($params);
+                    $aData = $pagesDataTable->getData();
+
+                    if(count($aData['aRows']) == 0 && $page!=1) {
                         $total = (int)$aData['iTotalDisplayRecords'];
                         $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
 
@@ -230,7 +253,9 @@
                         }
                     }
 
-                    $this->_exportVariableToView('aPages', $aData);
+
+                    $this->_exportVariableToView('aData', $aData) ;
+                    $this->_exportVariableToView('aRawRows', $pagesDataTable->rawRows());
 
                     $this->doView("pages/index.php");
                 break;

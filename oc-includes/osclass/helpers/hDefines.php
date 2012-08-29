@@ -515,10 +515,11 @@
      * @param string $secret
      * @return string
      */
-    function osc_user_unsubscribe_alert_url($email = '', $secret = '') {
+    function osc_user_unsubscribe_alert_url( $id = '', $email = '', $secret = '') {
         if($secret=='') { $secret = osc_alert_secret(); }
+        if($id=='') { $id = osc_alert_id(); }
         if($email=='') { $email = osc_user_email(); }
-        return osc_base_url(true) . '?page=user&action=unsub_alert&email='.urlencode($email).'&secret='.$secret ;
+        return osc_base_url(true) . '?page=user&action=unsub_alert&email='.urlencode($email).'&secret='.$secret.'&id='.$id ;
     }
 
     /**
@@ -528,11 +529,11 @@
      * @param string $email
      * @return string
      */
-    function osc_user_activate_alert_url( $secret , $email ) {
+    function osc_user_activate_alert_url( $id, $secret , $email ) {
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . osc_get_preference('rewrite_user_activate_alert') . '/' . $secret . '/' . urlencode($email) ;
+            return osc_base_url() . osc_get_preference('rewrite_user_activate_alert') . '/' . $id . '/' . $secret . '/' . urlencode($email) ;
         } else {
-            return osc_base_url(true) . '?page=user&action=activate_alert&email=' . urlencode($email) . '&secret=' . $secret ;
+            return osc_base_url(true) . '?page=user&action=activate_alert&email=' . urlencode($email) . '&secret=' . $secret .'&id='.$id ;
         }
 
     }
@@ -977,8 +978,8 @@
         return $result['host'];
     }
 
-    function osc_breadcrumb($separator = '&raquo;', $echo = true) {
-        $br = new Breadcrumb();
+    function osc_breadcrumb($separator = '&raquo;', $echo = true, $lang = array()) {
+        $br = new Breadcrumb($lang);
         $br->init();
         if( $echo ) {
             echo $br->render($separator);

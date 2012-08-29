@@ -59,6 +59,7 @@
                         foreach(self::$hooks[$hook][$priority] as $fxName) {
                             if(is_callable($fxName)) {
                                 $content = call_user_func_array($fxName, $args);
+                                $args[0] = $content;
                             }
                         }
                     }
@@ -249,6 +250,7 @@
 
         static function activate($path)
         {
+            $data = array();
             $data['s_value'] = osc_active_plugins() ;
             $plugins_list    = unserialize($data['s_value']);
 
@@ -259,14 +261,15 @@
                 }
             }
 
-            self::runHook($path . '_enable') ;
-
             $plugins_list[]  = $path ;
             $data['s_value'] = serialize($plugins_list) ;
             $condition = array( 's_section' => 'osclass', 's_name' => 'active_plugins') ;
             Preference::newInstance()->update($data, $condition) ;
 
             self::reload() ;
+
+            self::runHook($path . '_enable') ;
+
             return true ;
         }
 

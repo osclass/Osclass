@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Modern theme 3.0\n"
+"Project-Id-Version: Modern Theme 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-11 16:22+0100\n"
+"POT-Creation-Date: 2012-07-12 18:18+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
 "Language-Team: OSClass <info@osclass.org>\n"
@@ -97,44 +97,44 @@ msgstr ""
 msgid "Your search must be at least three characters long"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/functions.php:51
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:53
 msgid "Theme settings updated correctly"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/functions.php:58
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:60
 msgid "The logo image has been uploaded correctly"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/functions.php:60
-#: /var/www/osclass-git/oc-content/themes/modern/functions.php:63
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:62
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:65
 msgid "An error has occurred, please try again"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/functions.php:70
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:72
 msgid "The logo image has been removed"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/functions.php:72
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:74
 msgid "Image not found"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/functions.php:79
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:81
 msgid "Header logo"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/functions.php:80
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:82
 msgid "Theme settings"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/functions.php:96
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:100
 msgid "ie. PHP Programmer"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/head.php:39
+#: /var/www/osclass-git/oc-content/themes/modern/head.php:44
 msgid "No file selected"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/head.php:40
+#: /var/www/osclass-git/oc-content/themes/modern/head.php:45
 msgid "Choose File"
 msgstr ""
 
@@ -786,6 +786,14 @@ msgid "I want to help OSClass by linking to <a href=\"http://osclass.org/\" targ
 msgstr ""
 
 #: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:39
+msgid "Default logo"
+msgstr ""
+
+#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:41
+msgid "Show default logo in case you didn't upload one previously"
+msgstr ""
+
+#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:45
 msgid "Save changes"
 msgstr ""
 

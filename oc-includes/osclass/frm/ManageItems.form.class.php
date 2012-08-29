@@ -88,20 +88,12 @@
         static public function country_text() 
         {
             // get params GET (only manageItems)
-            if(Params::getParam('country') != '') {
-                $item['s_country'] = Params::getParam('country') ;
+            if(Params::getParam('countryName') != '') {
+                $item['s_country'] = Params::getParam('countryName') ;
                 $item['fk_c_country_code'] = Params::getParam('countryId');
             }
-            $only_one = false;
-            if(!isset($item['s_country'])) {
-                $countries = osc_get_countries();
-                if(count($countries)==1) {
-                    $item['s_country'] = $countries[0]['s_name'];
-                    $item['fk_c_country_code'] = $countries[0]['pk_c_code'];
-                    $only_one = true;
-                }
-            }
-            parent::generic_input_text('countryName', (isset($item['s_country'])) ? $item['s_country'] : null, null, $only_one) ;
+            
+            parent::generic_input_text('countryName', (isset($item['s_country'])) ? $item['s_country'] : null, false, false) ;
             parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code']) && $item['fk_c_country_code']!=null)?$item['fk_c_country_code']:'');
             return true ;
         }

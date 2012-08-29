@@ -1,3 +1,47 @@
+OSClass 3.0.1 2012-08-13
+------------------------
+- Bug: changed from ENT_COMPACT to ENT_COMPAT
+- Bug: Edit comment in oc-admin
+- Bug: Use image magic uploading images
+- Bug: Showing correctly the urls in RSS
+- Bug: Correct subject in alert emails
+- Bug: Typo mistake in manage media
+- Bug: category slugs only accept alphanumeric
+- Bug: emails sent from email contact instead of osclass@domain.tld
+- Bug: http_chunked_decode was being redeclared
+- [ Modern theme ] Removed a duplicated id
+
+OSClass 3.0 2012-07-12
+----------------------
+- Added a toolbar at the header of the oc-admin
+- New sidebar menu in the admin. Now it’s easier to add menus and submenus with helpers
+- Listing and user statistics in the dashboard
+- New oc-admin design
+- Manage reported listings
+- Manage comments added ‘hidden comments’ filter
+- Two types of administrator users: super admin and moderator (only access to manage items and statistics)
+- More hooks and filters added in the oc-admin: help message, title, manage listings, etc.
+- Help boxes in the oc-admin
+- Browse/Download/Update plugins and themes from the market
+- Manually check plugin & theme updates in General settings
+- Added pagination on manage plugins
+- Canonical urls (when is needed) in the search pages
+- Improved meta titles and meta descriptions
+- Meta keywords
+- Footer urls in the search listing
+- Redirect 301 from the old listing url when the listing title has been changed
+- Nofollow attribute in the pagination
+- Breadcrumbs using rich snippets
+- Changed HTML structure of the Pagination Class
+- Exclude bot requests in the statistics
+- Improved filters, now can accept more than one argument, but only the first argument will be returned
+- Improved HTTP requests, implemented fsockopen instead of libcurl when curls is not installed
+- Minor bug fixes from previous versiones
+- Fixed some typo mistakes
+- [ Modern theme ] Disable OSClass footer
+- [ Modern theme ] Improved H1s and titles
+- [ Modern theme ] Default logo
+
 OSClass 2.4.1 2012-05-22
 ------------------------
 - Fixed creation of search pagination url

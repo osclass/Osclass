@@ -29,8 +29,8 @@
      * @subpackage Model
      * @since 2.3
      */
-	class DAO
-        {
+    class DAO
+    {
         /**
          * DBCommandClass object
          * 

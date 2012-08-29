@@ -423,7 +423,7 @@
 
             $prefix  = (count($this->aWhere) > 0) ? $type : '' ;
 
-            $whereIn = $key . $not . ' IN (' . implode(', ', $this->aWherein) . ') ' ;
+            $whereIn = $prefix . $key . $not . ' IN (' . implode(', ', $this->aWherein) . ') ' ;
 
             $this->aWhere[] = $whereIn ;
             $this->aWherein = array() ;

@@ -182,15 +182,15 @@
                     <h2><?php _e("Contact publisher", 'modern') ; ?></h2>
                     <?php if( osc_item_is_expired () ) { ?>
                         <p>
-                            <?php _e('The listing is expired. You cannot contact the publisher.', 'modern') ; ?>
+                            <?php _e("The listing is expired. You can't contact the publisher.", 'modern') ; ?>
                         </p>
                     <?php } else if( ( osc_logged_user_id() == osc_item_user_id() ) && osc_logged_user_id() != 0 ) { ?>
                         <p>
-                            <?php _e("It's your own listing, you cannot contact the publisher.", 'modern') ; ?>
+                            <?php _e("It's your own listing, you can't contact the publisher.", 'modern') ; ?>
                         </p>
                     <?php } else if( osc_reg_user_can_contact() && !osc_is_web_user_logged_in() ) { ?>
                         <p>
-                            <?php _e("You must login or register a new free account in order to contact the advertiser", 'modern') ; ?>
+                            <?php _e("You must log in or register a new account in order to contact the advertiser", 'modern') ; ?>
                         </p>
                         <p class="contact_button">
                             <strong><a href="<?php echo osc_user_login_url() ; ?>"><?php _e('Login', 'modern') ; ?></a></strong>

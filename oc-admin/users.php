@@ -269,6 +269,84 @@
                                         osc_add_flash_ok_message($msg, 'admin') ;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                 break ;
+                case('delete_alerts'):         //delete
+
+                                        $iDeleted = 0 ;
+                                        $alertId   = Params::getParam('alert_id') ;
+                                        if( !is_array($alertId) ) {
+                                            osc_add_flash_error_message( _m("Alert id isn't in the correct format"), 'admin') ;
+                                            if(Params::getParam('user_id')=='') {
+                                                $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=alerts') ;
+                                            } else {
+                                                $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('user_id')) ;
+                                            }
+                                        }
+
+                                        $mAlerts = new Alerts();
+                                        foreach($alertId as $id) {
+                                            Log::newInstance()->insertLog('user', 'delete_alerts', $id, $id, 'admin', osc_logged_admin_id()) ;
+                                            $iDeleted += $mAlerts->delete(array('pk_i_id' => $id));
+                                        }
+                                            
+                                        if( $iDeleted == 0 ) {
+                                            $msg = _m('No alerts have been deleted') ;
+                                        } else {
+                                            $msg = sprintf( _mn('One alert has been deleted', '%s alerts have been deleted', $iDeleted), $iDeleted ) ;
+                                        }
+
+                                        osc_add_flash_ok_message($msg, 'admin') ;
+                                        if(Params::getParam('user_id')=='') {
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=alerts') ;
+                                        } else {
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('user_id')) ;
+                                        }
+                break ;
+                case('status_alerts'):         //delete
+
+                                        $status = Params::getParam("status");
+                                        $iUpdated = 0 ;
+                                        $alertId   = Params::getParam('alert_id') ;
+                                        
+                                        if( !is_array($alertId) ) {
+                                            osc_add_flash_error_message( _m("Alert id isn't in the correct format"), 'admin') ;
+                                            if(Params::getParam('user_id')=='') {
+                                                $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=alerts') ;
+                                            } else {
+                                                $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('user_id')) ;
+                                            }
+                                        }
+
+                                        $mAlerts = new Alerts();
+                                        foreach($alertId as $id) {
+                                            if($status==1) {
+                                                $iUpdated += $mAlerts->activate($id);
+                                            } else {
+                                                $iUpdated += $mAlerts->deactivate($id);
+                                            }
+                                        }
+
+                                        
+                                        if($status==1) {
+                                            if( $iUpdated == 0 ) {
+                                                $msg = _m('No alerts have been activated') ;
+                                            } else {
+                                                $msg = sprintf( _mn('One alert has been activated', '%s alerts have been activated', $iUpdated), $iUpdated ) ;
+                                            }
+                                        } else {
+                                            if( $iUpdated == 0 ) {
+                                                $msg = _m('No alerts have been deactivated') ;
+                                            } else {
+                                                $msg = sprintf( _mn('One alert has been deactivated', '%s alerts have been deactivated', $iUpdated), $iUpdated ) ;
+                                            }
+                                        }
+
+                                        osc_add_flash_ok_message($msg, 'admin') ;
+                                        if(Params::getParam('user_id')=='') {
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=alerts') ;
+                                        } else {
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('user_id')) ;
+                                        }
+                break ;
                 case('settings'):       // calling the users settings view
                                         $this->doView('users/settings.php') ;
                 break ;
@@ -305,25 +383,42 @@
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=settings') ;
                 break ;
-                default:                // manage users view
+                case('alerts'):                // manage alerts view
+                                        require_once osc_lib_path()."osclass/classes/datatables/AlertsDataTable.php";
+
                                         // set default iDisplayLength 
-                                        if( Params::getParam('iDisplayLength') == '' ) {
-                                            Params::setParam('iDisplayLength', 10 ) ;
+                                        if( Params::getParam('iDisplayLength') != '' ) {
+                                            Cookie::newInstance()->push('listing_iDisplayLength', Params::getParam('iDisplayLength'));
+                                            Cookie::newInstance()->set();
+                                        } else {
+                                            // set a default value if it's set in the cookie
+                                            if( Cookie::newInstance()->get_value('listing_iDisplayLength') != '' ) {
+                                                Params::setParam('iDisplayLength', Cookie::newInstance()->get_value('listing_iDisplayLength'));
+                                            } else {
+                                                Params::setParam('iDisplayLength', 10 );
+                                            }
                                         }
-                                        $p_iPage      = 1;
-                                        if( is_numeric(Params::getParam('iPage')) && Params::getParam('iPage') >= 1 ) {
-                                            $p_iPage = Params::getParam('iPage');
-                                        }
-                                        Params::setParam('iPage', $p_iPage);
                                         $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
-                                        $this->_exportVariableToView('sSearch', Params::getParam('sSearch'));
-                                        
-                                        require_once osc_admin_base_path() . 'ajax/users_processing.php';
-                                        $users_processing = new UsersProcessingAjax(Params::getParamsAsArray("get"));
-                                        $aData = $users_processing->result() ;
-                                        
+
+                                        // Table header order by related
+                                        if( Params::getParam('sort') == '') {
+                                            Params::setParam('sort', 'date') ;
+                                        }
+                                        if( Params::getParam('direction') == '') {
+                                            Params::setParam('direction', 'desc');
+                                        }
+
                                         $page  = (int)Params::getParam('iPage');
-                                        if(count($aData['aaData']) == 0 && $page!=1) {
+                                        if($page==0) { $page = 1; };
+                                        Params::setParam('iPage', $page);
+
+                                        $params = Params::getParamsAsArray("get");
+
+                                        $alertsDataTable = new AlertsDataTable();
+                                        $alertsDataTable->table($params);
+                                        $aData = $alertsDataTable->getData();
+
+                                        if(count($aData['aRows']) == 0 && $page!=1) {
                                             $total = (int)$aData['iTotalDisplayRecords'];
                                             $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
 
@@ -339,11 +434,72 @@
                                                 $this->redirectTo($url) ;
                                             }
                                         }
+
+
+                                        $this->_exportVariableToView('aData', $aData) ;
+                                        $this->_exportVariableToView('aRawRows', $alertsDataTable->rawRows());
                                         
-                                        $this->_exportVariableToView('aUsers', $aData) ;
-                                        $this->_exportVariableToView('locales', OSCLocale::newInstance()->listAllEnabled() );
+                                        $this->doView("users/alerts.php") ;
+                break ;
+                default:                // manage users view
+
+                                        require_once osc_lib_path()."osclass/classes/datatables/UsersDataTable.php";
+
+                                        // set default iDisplayLength 
+                                        if( Params::getParam('iDisplayLength') != '' ) {
+                                            Cookie::newInstance()->push('listing_iDisplayLength', Params::getParam('iDisplayLength'));
+                                            Cookie::newInstance()->set();
+                                        } else {
+                                            // set a default value if it's set in the cookie
+                                            if( Cookie::newInstance()->get_value('listing_iDisplayLength') != '' ) {
+                                                Params::setParam('iDisplayLength', Cookie::newInstance()->get_value('listing_iDisplayLength'));
+                                            } else {
+                                                Params::setParam('iDisplayLength', 10 );
+                                            }
+                                        }
+                                        $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
+
+                                        // Table header order by related
+                                        if( Params::getParam('sort') == '') {
+                                            Params::setParam('sort', 'date') ;
+                                        }
+                                        if( Params::getParam('direction') == '') {
+                                            Params::setParam('direction', 'desc');
+                                        }
+
+                                        $page  = (int)Params::getParam('iPage');
+                                        if($page==0) { $page = 1; };
+                                        Params::setParam('iPage', $page);
+
+                                        $params = Params::getParamsAsArray("get") ;
                                         
-                                        $this->doView("users/index.php") ;
+                                        $usersDataTable = new UsersDataTable();
+                                        $usersDataTable->table($params);
+                                        $aData = $usersDataTable->getData();
+                                        
+                                        if(count($aData['aRows']) == 0 && $page!=1) {
+                                            $total = (int)$aData['iTotalDisplayRecords'];
+                                            $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
+
+                                            $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+
+                                            if($maxPage==0) {
+                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage=1', $url) ;
+                                                $this->redirectTo($url) ;
+                                            }
+
+                                            if($page > 1) {   
+                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
+                                                $this->redirectTo($url) ;
+                                            }
+                                        }
+
+
+                                        $this->_exportVariableToView('aData', $aData) ;
+                                        $this->_exportVariableToView('aRawRows', $usersDataTable->rawRows());
+
+                                        //calling the view...
+                                        $this->doView('users/index.php') ;
                 break ;
             }
         }

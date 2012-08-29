@@ -156,11 +156,11 @@
                         if( preg_match("/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$email) ) {
                             $secret = osc_genRandomPassword();
 
-                            if( Alerts::newInstance()->createAlert($userid, $email, $alert, $secret) ) {
+                            if( $alertID = Alerts::newInstance()->createAlert($userid, $email, $alert, $secret) ) {
                                 if( (int)$userid > 0 ) {
                                     $user = User::newInstance()->findByPrimaryKey($userid);
                                     if($user['b_active']==1 && $user['b_enabled']==1) {
-                                        Alerts::newInstance()->activate($email, $secret);
+                                        Alerts::newInstance()->activate($alertID);
                                         echo '1';
                                         return true;
                                     } else {
@@ -168,7 +168,8 @@
                                         return false;
                                     }
                                 } else {
-                                    osc_run_hook('hook_email_alert_validation', $alert, $email, $secret);
+                                    $aAlert = Alerts::newInstance()->findByPrimaryKey($alertID);
+                                    osc_run_hook('hook_email_alert_validation', $aAlert, $email, $secret);
                                 }
 
                                 echo "1";

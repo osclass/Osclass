@@ -665,103 +665,8 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=items&action=settings');
                 break;
                 case('items_reported'):
-                                        // set default iDisplayLength
-                                        if( Params::getParam('iDisplayLength') != '' ) {
-                                            Cookie::newInstance()->push('reportedlisting_iDisplayLength', Params::getParam('iDisplayLength'));
-                                            Cookie::newInstance()->set();
-                                        } else {
-                                            // set a default value if it's set in the cookie
-                                            if( Cookie::newInstance()->get_value('reportedlisting_iDisplayLength') != '' ) {
-                                                Params::setParam('iDisplayLength', Cookie::newInstance()->get_value('reportedlisting_iDisplayLength'));
-                                            } else {
-                                                Params::setParam('iDisplayLength', 10 );
-                                            }
-                                        }
-                                        $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
 
-                                        // show reported listings
-                                        if( Params::getParam('sort') == '') {
-                                            Params::setParam('sort', 'date') ;
-                                        }
-                                        $sort = Params::getParam('sort');
-                                        if( Params::getParam('direction') == '') {
-                                            Params::setParam('direction', 'desc');
-                                        }
-                                        $direction = Params::getParam('direction');
-                                        require_once osc_admin_base_path() . 'ajax/items_processing.php';
-                                        $params = Params::getParamsAsArray("get") ;
-                                        $items_processing = new ItemsProcessingAjax( $params );
-                                        $aData = $items_processing->reported_listings( $params ) ;
-
-                                        $page  = (int)Params::getParam('iPage');
-                                        if(count($aData['aaData']) == 0 && $page!=1) {
-                                            $total = (int)$aData['iTotalDisplayRecords'];
-                                            $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
-
-                                            $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
-
-                                            if($maxPage==0) {
-                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage=1', $url) ;
-                                                $this->redirectTo($url) ;
-                                            }
-
-                                            if($page > 1) {   
-                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
-                                                $this->redirectTo($url) ;
-                                            }
-                                        }
-                                        
-                                        $url_base = osc_admin_base_url(true).'?page=items&action=items_reported' ;
-                                        $arg_spam   = '&sort=spam'; $arg_bad    = '&sort=bad';
-                                        $arg_rep    = '&sort=rep';  $arg_off    = '&sort=off';
-                                        $arg_exp    = '&sort=exp';  $arg_date   = '&sort=date';
-
-                                        switch ($sort) {
-                                            case('spam'):
-                                                if($direction == 'desc' || $direction == '') $arg_spam .= '&direction=asc';
-                                                break;
-                                            case('bad'):
-                                                if($direction == 'desc' || $direction == '') $arg_bad .= '&direction=asc';
-                                                break;
-                                            case('rep'):
-                                                if($direction == 'desc' || $direction == '') $arg_rep .= '&direction=asc';
-                                                break;
-                                            case('off'):
-                                                if($direction == 'desc' || $direction == '') $arg_off .= '&direction=asc';
-                                                break;
-                                            case('exp'):
-                                                if($direction == 'desc' || $direction == '') $arg_exp .= '&direction=asc';
-                                                break;
-                                            case('date'):
-                                                if($direction == 'desc' || $direction == '') $arg_date .= '&direction=asc';
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                        
-                                        $this->_exportVariableToView('url_spam', $url_base.$arg_spam) ;
-                                        $this->_exportVariableToView('url_bad', $url_base.$arg_bad) ;
-                                        $this->_exportVariableToView('url_rep', $url_base.$arg_rep) ;
-                                        $this->_exportVariableToView('url_off', $url_base.$arg_off) ;
-                                        $this->_exportVariableToView('url_exp', $url_base.$arg_exp) ;
-                                        $this->_exportVariableToView('url_date', $url_base.$arg_date) ;
-                                        
-                                        $this->_exportVariableToView('aItems', $aData) ;
-                                        //calling the view...
-                                        $this->doView('items/reported.php') ;
-                break;
-                default:                // default 
-                                        $catId = Params::getParam('catId') ;
-
-                                        $countries = Country::newInstance()->listAll() ;
-                                        $regions = array() ;
-                                        if( count($countries) > 0 ) {
-                                            $regions = Region::newInstance()->findByCountry($countries[0]['pk_c_code']) ;
-                                        }
-                                        $cities = array() ;
-                                        if( count($regions) > 0 ) {
-                                            $cities = City::newInstance()->findByRegion($regions[0]['pk_i_id']) ;
-                                        }
+                                        require_once osc_lib_path()."osclass/classes/datatables/ItemsDataTable.php";
 
                                         // set default iDisplayLength 
                                         if( Params::getParam('iDisplayLength') != '' ) {
@@ -785,20 +690,18 @@
                                             Params::setParam('direction', 'desc');
                                         }
 
-                                        $arg_date = '&sort=date';
-                                        if(Params::getParam('sort') == 'date') {
-                                            if(Params::getParam('direction') == 'desc') $arg_date .= '&direction=asc';
-                                        }
-                                        $this->_exportVariableToView('url_date', osc_admin_base_url(true).'?page=items'.$arg_date) ;
-                                        // -- Table header order by related
-
-                                        require_once osc_admin_base_path() . 'ajax/items_processing.php';
-                                        $params = Params::getParamsAsArray("get") ;
-                                        $items_processing = new ItemsProcessingAjax( $params );
-                                        $aData = $items_processing->listings( $params ) ;
-
                                         $page  = (int)Params::getParam('iPage');
-                                        if(count($aData['aaData']) == 0 && $page!=1) {
+                                        if($page==0) { $page = 1; };
+                                        Params::setParam('iPage', $page);
+
+                                        $params = Params::getParamsAsArray("get") ;
+                                        
+                                        $itemsDataTable = new ItemsDataTable();
+                                        $itemsDataTable->tableReported($params);
+                                        $aData = $itemsDataTable->getData();
+                                        
+                                        if(count($aData['aRows']) == 0 && $page!=1) {
+                                            print_r($aData);
                                             $total = (int)$aData['iTotalDisplayRecords'];
                                             $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
 
@@ -815,19 +718,70 @@
                                             }
                                         }
 
-                                        $this->_exportVariableToView('aItems', $aData) ;
 
-                                        // there are filters activated
-                                        $this->_exportVariableToView('withFilters', $items_processing->filters() ) ;
+                                        $this->_exportVariableToView('aData', $aData) ;
+                                        $this->_exportVariableToView('aRawRows', $itemsDataTable->rawRows());
 
-                                        //preparing variables for the view                
-                                        $this->_exportVariableToView("users", User::newInstance()->listAll());
-                                        $this->_exportVariableToView("catId", $catId) ;
-                                        $this->_exportVariableToView("stat", Params::getParam('stat')) ;
+                                        //calling the view...
+                                        $this->doView('items/reported.php') ;
+                break;
+                default:                // default 
 
-                                        $this->_exportVariableToView("countries", $countries);
-                                        $this->_exportVariableToView("regions", $regions);
-                                        $this->_exportVariableToView("cities", $cities);
+                                        require_once osc_lib_path()."osclass/classes/datatables/ItemsDataTable.php";
+
+                                        // set default iDisplayLength 
+                                        if( Params::getParam('iDisplayLength') != '' ) {
+                                            Cookie::newInstance()->push('listing_iDisplayLength', Params::getParam('iDisplayLength'));
+                                            Cookie::newInstance()->set();
+                                        } else {
+                                            // set a default value if it's set in the cookie
+                                            if( Cookie::newInstance()->get_value('listing_iDisplayLength') != '' ) {
+                                                Params::setParam('iDisplayLength', Cookie::newInstance()->get_value('listing_iDisplayLength'));
+                                            } else {
+                                                Params::setParam('iDisplayLength', 10 );
+                                            }
+                                        }
+                                        $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
+
+                                        // Table header order by related
+                                        if( Params::getParam('sort') == '') {
+                                            Params::setParam('sort', 'date') ;
+                                        }
+                                        if( Params::getParam('direction') == '') {
+                                            Params::setParam('direction', 'desc');
+                                        }
+
+                                        $page  = (int)Params::getParam('iPage');
+                                        if($page==0) { $page = 1; };
+                                        Params::setParam('iPage', $page);
+
+                                        $params = Params::getParamsAsArray("get") ;
+                                        
+                                        $itemsDataTable = new ItemsDataTable();
+                                        $itemsDataTable->table($params);
+                                        $aData = $itemsDataTable->getData();
+                                        
+                                        if(count($aData['aRows']) == 0 && $page!=1) {
+                                            $total = (int)$aData['iTotalDisplayRecords'];
+                                            $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
+
+                                            $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+
+                                            if($maxPage==0) {
+                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage=1', $url) ;
+                                                $this->redirectTo($url) ;
+                                            }
+
+                                            if($page > 1) {   
+                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
+                                                $this->redirectTo($url) ;
+                                            }
+                                        }
+
+
+                                        $this->_exportVariableToView('aData', $aData) ;
+                                        $this->_exportVariableToView('withFilters', $itemsDataTable->withFilters());
+                                        $this->_exportVariableToView('aRawRows', $itemsDataTable->rawRows());
 
                                         //calling the view...
                                         $this->doView('items/index.php') ;

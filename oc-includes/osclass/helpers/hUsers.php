@@ -484,6 +484,46 @@
     }
 
     /**
+     * Gets id of current alert
+     * @return string
+     */
+    function osc_alert_id() {
+        return (string) osc_alert_field('pk_i_id');
+    }
+
+    /**
+     * Gets aate of current alert
+     * @return string
+     */
+    function osc_alert_date() {
+        return (string) osc_alert_field('dt_date');
+    }
+
+    /**
+     * Gets unsub date of current alert
+     * @return string
+     */
+    function osc_alert_unsub_date() {
+        return (string) osc_alert_field('dt_unsub_date');
+    }
+
+    /**
+     * Gets type of current alert
+     * @return string
+     */
+    function osc_alert_type() {
+        return (string) osc_alert_field('e_type');
+    }
+
+    /**
+     * Gets active of current alert
+     * @return boolean
+     */
+    function osc_alert_is_active() {
+        return (bool) osc_alert_field('b_active');
+    }
+
+    /**
      * Gets the search object of a specific alert
      *
      * @return Search

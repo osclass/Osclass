@@ -385,15 +385,20 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('marketURL', 'http://market.osclass.org/api/');
     }
 
-    osc_changeVersionTo(300);
+    if(osc_version() < 310) {
+        $comm->query(sprintf("ALTER TABLE  %st_alerts ADD  `pk_i_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY", DB_TABLE_PREFIX));
+        $comm->query(sprintf("UPDATE %st_alerts SET dt_date = '%s' ", DB_TABLE_PREFIX, date("Y-m-d H:i:s")));
+    }
 
-    echo '<div style="border: 1px solid rgb(204, 204, 204); background: none repeat scroll 0% 0% rgb(238, 238, 238);"> <div style="padding: 20px;">';
+    osc_changeVersionTo(310);
+
+    echo '<div class="well ui-rounded-corners separate-top-medium">';
     echo '<p>'.__('OSClass &raquo; Updated correctly').'</p>' ;
     echo '<p>'.__('OSClass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
     foreach($aMessages as $msg) {
         echo "<p>".$msg."</p>";
     }
-    echo "</div></div>";
+    echo "</div>";
 
     /**
      * Convert alerts < 2.4, updating s_search with json encoded to based64.

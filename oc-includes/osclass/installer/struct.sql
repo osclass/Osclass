@@ -208,6 +208,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item (
     fk_c_currency_code CHAR(3) NULL,
     s_contact_name VARCHAR(100) NULL,
     s_contact_email VARCHAR(140) NULL,
+    s_ip VARCHAR(64) NOT NULL DEFAULT '',
     b_premium TINYINT(1) NOT NULL DEFAULT 0,
     b_enabled TINYINT(1) NOT NULL DEFAULT 1,
     b_active TINYINT(1) NOT NULL DEFAULT 0,
@@ -222,6 +223,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item (
         FOREIGN KEY (fk_c_currency_code) REFERENCES /*TABLE_PREFIX*/t_currency (pk_c_code),
 
         INDEX (fk_i_user_id),
+        INDEX idx_s_contact_email (s_contact_email(10)),
         INDEX (fk_i_category_id),
         INDEX (fk_c_currency_code),
         INDEX idx_pub_date (dt_pub_date),
@@ -356,12 +358,24 @@ CREATE TABLE /*TABLE_PREFIX*/t_cron (
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_alerts (
-  s_email VARCHAR(100) DEFAULT NULL,
-  fk_i_user_id INT(10) UNSIGNED DEFAULT NULL,
-  s_search LONGTEXT,
-  s_secret VARCHAR(40) NULL,
-  b_active TINYINT(1) NOT NULL DEFAULT 0,
-  e_type enum('INSTANT','HOURLY','DAILY','WEEKLY','CUSTOM') NOT NULL
+    pk_i_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    s_email VARCHAR(100) DEFAULT NULL,
+    fk_i_user_id INT(10) UNSIGNED DEFAULT NULL,
+    s_search LONGTEXT,
+    s_secret VARCHAR(40) NULL,
+    b_active TINYINT(1) NOT NULL DEFAULT 0,
+    e_type enum('INSTANT','HOURLY','DAILY','WEEKLY','CUSTOM') NOT NULL,
+    dt_date DATETIME NULL,
+    dt_unsub_date DATETIME NULL DEFAULT NULL,
+
+    PRIMARY KEY (pk_i_id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
+CREATE TABLE /*TABLE_PREFIX*/t_alerts_sent (
+    d_date DATE NOT NULL,
+    i_num_alerts_sent INT(10) UNSIGNED NOT NULL DEFAULT 0,
+
+    PRIMARY KEY (d_date)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_keywords (

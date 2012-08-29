@@ -152,7 +152,8 @@
                     's_secret'              => $code,
                     'b_active'              => ($active=='ACTIVE'?1:0),
                     'b_enabled'             => 1,
-                    'b_show_email'          => $aItem['showEmail']
+                    'b_show_email'          => $aItem['showEmail'],
+                    's_ip'                  => $aItem['s_ip']
                 ));
 
                 if(!$this->is_admin) {
@@ -367,6 +368,7 @@
                     ,'fk_i_category_id'   => $aItem['catId']
                     ,'i_price'            => $aItem['price']
                     ,'fk_c_currency_code' => $aItem['currency']
+                    ,'s_ip'               => $aItem['s_ip']
                 ) ;
 
                 // only can change the user if you're an admin
@@ -989,12 +991,14 @@
         public function prepareData( $is_add )
         {
             $aItem = array();
-
-            // prepare user
+            $data = array();
+            
             $userId = null ;
             if( $this->is_admin ) {
-                if( Params::getParam('userId') != '' ) {
-                    $userId = Params::getParam('userId');
+                // user
+                $data   = User::newInstance()->findByEmail(Params::getParam('contactEmail'));
+                if( isset($data['pk_i_id']) && is_numeric($data['pk_i_id']) ) {
+                    $userId = $data['pk_i_id'];
                 }
             } else {
                 $userId = Session::newInstance()->_get('userId');
@@ -1002,6 +1006,21 @@
                     $userId = NULL ;
                 }
             }
+            
+            if( $userId != null ) {
+                $data   = User::newInstance()->findByPrimaryKey( $userId );
+            }
+            
+            if($userId != null) {
+                $aItem['contactName']   = $data['s_name'];
+                $aItem['contactEmail']  = $data['s_email'];
+                Params::setParam('contactName', $data['s_name']);
+                Params::setParam('contactEmail', $data['s_email']);
+            } else {
+                $aItem['contactName']   = Params::getParam('contactName');
+                $aItem['contactEmail']  = Params::getParam('contactEmail');
+            }
+            $aItem['userId']        = $userId;
 
             if( $is_add ) {   // ADD
                 if($this->is_admin) {
@@ -1032,37 +1051,12 @@
                         $active = 'ACTIVE';
                     }
                 }
-
-                if ($userId != null) {
-                    $data = User::newInstance()->findByPrimaryKey($userId);
-                    $aItem['contactName']   = $data['s_name'];
-                    $aItem['contactEmail']  = $data['s_email'];
-                    Params::setParam('contactName', $data['s_name']);
-                    Params::setParam('contactEmail', $data['s_email']);
-                }else{
-                    $aItem['contactName']   = Params::getParam('contactName');
-                    $aItem['contactEmail']  = Params::getParam('contactEmail');
-                }
-
                 $aItem['active']        = $active;
-                $aItem['userId']        = $userId;
             } else {          // EDIT
                 $aItem['secret']    = Params::getParam('secret');
                 $aItem['idItem']    = Params::getParam('id');
-
-                if( $userId != null ) {
-                    $data = User::newInstance()->findByPrimaryKey($userId);
-                    $aItem['contactName']   = $data['s_name'];
-                    $aItem['contactEmail']  = $data['s_email'];
-                    Params::setParam('contactName', $data['s_name']);
-                    Params::setParam('contactEmail', $data['s_email']);
-                } else {
-                    $aItem['contactName']   = Params::getParam('contactName');
-                    $aItem['contactEmail']  = Params::getParam('contactEmail');
-                }
-                $aItem['userId']        = $userId;
             }
-
+            
             // get params
             $aItem['catId']         = Params::getParam('catId');
             $aItem['countryId']     = Params::getParam('countryId');
@@ -1079,9 +1073,9 @@
             $aItem['title']         = Params::getParam('title');
             $aItem['description']   = Params::getParam('description');
             $aItem['photos']        = Params::getFiles('photos');
+            $aItem['s_ip']          = get_ip();
 
             // check params
-
             $country = Country::newInstance()->findByCode($aItem['countryId']);
             if( count($country) > 0 ) {
                 $countryId = $country['pk_c_code'];
@@ -1225,12 +1219,22 @@
                         }
                     }
                 }
-
                 foreach ($aResources['error'] as $key => $error) {
                     $bool_img = false;
                     if ($error == UPLOAD_ERR_OK) {
                         // check mime file
                         $fileMime = $aResources['type'][$key] ;
+                        if(stripos($fileMime, "image/")!==FALSE) {
+                            if(function_exists("getimagesize")) {
+                                $info = getimagesize($aResources['tmp_name'][$key]);
+                                if(isset($info['mime'])) {
+                                    $fileMime = $info['mime'];
+                                } else {
+                                    $fileMime = '';
+                                }
+                            };
+                        };
+                        
 
                         if(in_array($fileMime,$aMimesAllowed)) {
                             $bool_img = true;

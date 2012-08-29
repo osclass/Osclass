@@ -63,9 +63,14 @@ function customHead() { ?>
         return false ;
     }
 
-    // check all the categories
+     // check all the categories
     function checkAll(id, check) {
         aa = $('#' + id + ' input[type=checkbox]').each(function() {
+            $(this).attr('checked', check) ;
+        }) ;
+    }
+    function checkCat(id, check) {
+        aa = $('#cat' + id + ' input[type=checkbox]').each(function() {
             $(this).attr('checked', check) ;
         }) ;
     }
