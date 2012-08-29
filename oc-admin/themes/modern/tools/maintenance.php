@@ -22,10 +22,8 @@
         return 'row-offset';
     }
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __('Show a "Site in maintenance mode" message to your users while you\'re updating your site or modifying its configuration.') . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -51,7 +49,7 @@
                             <fieldset>
                             <div class="form-horizontal">
                             <div class="form-row">
-                                <?php _e('While in maintenance mode, users can not access your website. Useful if you need to make some changes on your website. Use the following button to toggle ON/OFF maintenance mode.') ; ?>
+                                <?php _e("While in maintenance mode, users can't access your website. Useful if you need to make changes on your website. Use the following button to toggle maintenance mode ON/OFF.") ; ?>
                                 <div class="help-box">
                                     <?php printf( __('Maintenance mode is: <strong>%s</strong>'), ($maintenance ? __('ON') : __('OFF') ) ) ; ?>
                                 </div>

@@ -63,29 +63,43 @@
                 case 'activate_alert':
                     $email  = Params::getParam('email');
                     $secret = Params::getParam('secret');
+                    $id     = Params::getParam('id');
 
+                    $alert = Alerts::newInstance()->findByPrimaryKey($id);
                     $result = 0;
-                    if($email!='' && $secret!='') {
-                        $result = Alerts::newInstance()->activate($email, $secret );
+                    if(!empty($alert)) {
+                        if($email==$alert['s_email'] && $secret==$alert['s_secret']) {
+                            $result = Alerts::newInstance()->activate($id);
+                        }
                     }
 
                     if( $result == 1 ) {
                         osc_add_flash_ok_message(_m('Alert activated'));
                     }else{
-                        osc_add_flash_error_message(_m('Ops! There was a problem trying to activate alert. Please contact the administrator'));
+                        osc_add_flash_error_message(_m('Oops! There was a problem trying to activate your alert. Please contact an administrator'));
                     }
 
                     $this->redirectTo( osc_base_url() );
                 break;
                 case 'unsub_alert':
-                    $email = Params::getParam('email');
+                    $email  = Params::getParam('email');
                     $secret = Params::getParam('secret');
-                    if($email!='' && $secret!='') {
-                        Alerts::newInstance()->delete(array('s_email' => $email, 's_secret' => $secret));
-                        osc_add_flash_ok_message(_m('Unsubscribed correctly'));
-                    } else {
-                        osc_add_flash_error_message(_m('Ops! There was a problem trying to unsubscribe you. Please contact the administrator'));
+                    $id     = Params::getParam('id');
+                    
+                    $alert  = Alerts::newInstance()->findByPrimaryKey($id);
+                    $result = 0;
+                    if(!empty($alert)) {
+                        if($email==$alert['s_email'] && $secret==$alert['s_secret']) {
+                            $result = Alerts::newInstance()->unsub($id);
+                        }
                     }
+
+                    if( $result == 1 ) {
+                        osc_add_flash_ok_message(_m('Unsubscribed correctly'));
+                    }else{
+                        osc_add_flash_error_message(_m('Oops! There was a problem trying to unsubscribe you. Please contact an administrator'));
+                    }
+
                     $this->redirectTo(osc_base_url());
                 break;
                 case 'pub_profile':

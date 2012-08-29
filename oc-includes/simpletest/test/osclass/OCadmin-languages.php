@@ -22,7 +22,7 @@ class OCadmin_languages extends OCadminTest {
         $this->selenium->open( osc_admin_base_url(true) ) ;
         $this->selenium->click("//a[@id='settings_language']");
         $this->selenium->waitForPageToLoad("10000");
-        $this->selenium->click("//a[text()='Add language']");
+        $this->selenium->click("link=Add new");
         $this->selenium->waitForPageToLoad("10000");
 
         if( $this->selenium->isTextPresent('To make the directory writable') ) {
@@ -47,7 +47,7 @@ class OCadmin_languages extends OCadminTest {
             $this->selenium->open( osc_admin_base_url(true) ) ;
             $this->selenium->click("//a[@id='settings_language']");
             $this->selenium->waitForPageToLoad("10000");
-            $this->selenium->click("//a[text()='Add language']");
+            $this->selenium->click("link=Add new");
             $this->selenium->waitForPageToLoad("10000");
             $this->selenium->type("package", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/lang_es_ES_2.0.zip"));
             $this->selenium->click("//input[@type='submit']");
@@ -69,7 +69,7 @@ class OCadmin_languages extends OCadminTest {
             $this->selenium->open( osc_admin_base_url(true) ) ;
             $this->selenium->click("//a[@id='settings_language']");
             $this->selenium->waitForPageToLoad("10000");
-            $this->selenium->click("//a[text()='Add language']");
+            $this->selenium->click("link=Add new");
             $this->selenium->waitForPageToLoad("10000");
             $this->selenium->type("package", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/logo.jpg"));
             $this->selenium->click("//input[@type='submit']");
@@ -144,7 +144,7 @@ class OCadmin_languages extends OCadminTest {
             $this->selenium->type("s_dec_point","");
             $this->selenium->type("s_thousand_sep","");
             $this->selenium->type("s_date_format","");
-            $this->selenium->click("//input[@type='submit']");
+            $this->selenium->click("xpath=//input[@type='submit']");
 
             sleep(4);
             
@@ -203,6 +203,9 @@ class OCadmin_languages extends OCadminTest {
 
         $this->selenium->mouseOver("xpath=//table/tbody/tr/tr[contains(.,'$lang')]");
         $this->selenium->click("xpath=//table/tbody/tr/td[contains(.,'$lang')]/div/ul/li/a[text()='$action']");
+        if($action == 'Delete') {
+            $this->selenium->click("xpath=//input[@id='language-delete-submit']");
+        }
         $this->selenium->waitForPageToLoad("10000");
     }
     

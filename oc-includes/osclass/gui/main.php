@@ -28,7 +28,7 @@
     </head>
     <body>
         <?php osc_current_web_theme_path('header.php') ; ?>
-        <div id="form_publish">
+        <div class="form_publish">
             <?php osc_current_web_theme_path('inc.search.php') ; ?>
         </div>
         <div class="content home">
@@ -51,11 +51,11 @@
                     ?>
                     <?php while ( osc_has_categories() ) { ?>
                         <div class="category">
-                            <h1><strong><a class="category <?php echo osc_category_slug() ; ?>" href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span></strong></h1>
+                            <h1><strong><a class="category cat_<?php echo osc_category_id() ; ?>" href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span></strong></h1>
                             <?php if ( osc_count_subcategories() > 0 ) { ?>
                                 <ul>
                                     <?php while ( osc_has_subcategories() ) { ?>
-                                        <li><a class="category <?php echo osc_category_slug() ; ?>" href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span></li>
+                                        <li><a class="category cat_<?php echo osc_category_id() ; ?>" href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span></li>
                                     <?php } ?>
                                 </ul>
                             <?php } ?>

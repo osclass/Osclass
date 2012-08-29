@@ -44,10 +44,8 @@
     }
     osc_add_hook('admin_header','customHead');
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . sprintf(__("Change your site's look and feel by activating a theme among those available. You can download new themes from the <a href=\"%s\">market</a>. <strong>Be careful</strong>: if your theme has been customized, you'll lose all changes if you change to a new theme."), osc_admin_base_url(true) . '?page=market&action=themes') . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -165,7 +163,7 @@
     </div>
     <!-- /themes list -->
 </div>
-<form id="dialog-delete-theme" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+<form id="dialog-delete-theme" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide">
     <input type="hidden" name="page" value="appearance" />
     <input type="hidden" name="action" value="delete" />
     <input type="hidden" name="webtheme" value="" />
@@ -199,7 +197,7 @@
             function(data){
                 var content = data.message ;
                 if(data.error == 0) { // no errors
-                    content += '<h3><?php echo osc_esc_js(__('The theme have been downloaded correctly, proceed to activate or preview it.')); ?></h3>';
+                    content += '<h3><?php echo osc_esc_js(__('The theme has been downloaded correctly, proceed to activate or preview it.')); ?></h3>';
                     content += "<p>";
                     content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php echo osc_esc_js(__('Ok')); ?></a>';
                     content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php echo osc_esc_js(__('Close')); ?></a>';

@@ -16,9 +16,14 @@ class OCadmin_administrators extends OCadminTest {
     {
         $this->insertAdministrator();
         $this->loginWith() ;
+        
+        
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='users_administrators_new']");
+        $this->selenium->click("xpath=//a[@id='users_administrators_manage']");
         $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("link=Add new");
+        $this->selenium->waitForPageToLoad("10000");
+        
         $this->selenium->type("s_name","Real name user one");
         $this->selenium->type("s_username","useradminone");
         $this->selenium->type("s_password", "useradminpass");
@@ -36,7 +41,9 @@ class OCadmin_administrators extends OCadminTest {
         $this->insertAdministrator();
         $this->loginWith() ;
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='users_administrators_new']");
+        $this->selenium->click("xpath=//a[@id='users_administrators_manage']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("link=Add new");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->type("s_name","");
         $this->selenium->type("s_username","");
@@ -69,6 +76,7 @@ class OCadmin_administrators extends OCadminTest {
     {
         $this->insertAdministrator();
         $this->loginWith() ;
+        
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='users_administrators_profile']");
         $this->selenium->waitForPageToLoad("10000");
@@ -103,7 +111,6 @@ class OCadmin_administrators extends OCadminTest {
         $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'useradminone')]");
         $this->selenium->click("xpath=//table/tbody/tr[contains(.,'useradminone')]/td/div/ul/li/a[text()='Edit']");
         $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue($this->selenium->isTextPresent("Administrators have full control"), "Edit your profile, CHANGE TYPE");
         $this->selenium->type("s_name","Real name user one NEW");
         $this->selenium->type("s_username","useradminoneNEW");
         $this->selenium->type("s_password"  , "useradminpassNEW");
@@ -121,7 +128,6 @@ class OCadmin_administrators extends OCadminTest {
         $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'useradminone')]");
         $this->selenium->click("xpath=//table/tbody/tr[contains(.,'useradminone')]/td/div/ul/li/a[text()='Edit']");
         $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue($this->selenium->isTextPresent("Administrators have full control"), "Edit your profile, CHANGE TYPE");
         $this->selenium->type("s_name","Real name user one NEW");
         $this->selenium->type("s_username","useradminoneNEW");
         $this->selenium->type("s_email", "newadmin@mail.com");
@@ -145,7 +151,6 @@ class OCadmin_administrators extends OCadminTest {
         $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'useradminone')]");
         $this->selenium->click("xpath=//table/tbody/tr[contains(.,'useradminone')]/td/div/ul/li/a[text()='Edit']");
         $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue($this->selenium->isTextPresent("Administrators have full control"), "Edit your profile, CHANGE TYPE");
         $this->selenium->type("s_name","Real name user one NEW");
         $this->selenium->type("s_username","useradminoneNEW");
         $this->selenium->type("old_password", "useradminpassNEW");
@@ -185,7 +190,6 @@ class OCadmin_administrators extends OCadminTest {
         $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'useradminone')]");
         $this->selenium->click("xpath=//table/tbody/tr[contains(.,'useradminone')]/td/div/ul/li/a[text()='Edit']");
         $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue($this->selenium->isTextPresent("Administrators have full control"), "Edit your profile, CHANGE TYPE");
         $this->selenium->select("b_moderator", "label=Moderator");
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
@@ -212,7 +216,7 @@ class OCadmin_administrators extends OCadminTest {
         $this->selenium->click("//a[@id='items_comments']");
         $this->selenium->waitForPageToLoad(10000);
         sleep(4);
-        $this->assertTrue($this->selenium->isTextPresent("Manage comments"),"Moderator access");
+        $this->assertTrue($this->selenium->isTextPresent("Comments"),"Moderator access");
         
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='items_media']");
@@ -238,7 +242,7 @@ class OCadmin_administrators extends OCadminTest {
 
         $this->selenium->open( osc_admin_base_url(true)."?page=stats" );
         $this->selenium->waitForPageToLoad(10000);
-        $this->assertTrue($this->selenium->isTextPresent("You don't have enough permissions"),"Moderator access");
+        $this->assertTrue($this->selenium->isTextPresent("Number of new listings"),"Moderator access");
         
         $this->selenium->open( osc_admin_base_url(true)."?page=settings" );
         $this->selenium->waitForPageToLoad(10000);
@@ -276,9 +280,13 @@ class OCadmin_administrators extends OCadminTest {
     function insertAdministrator()
     {
         $this->loginWith() ;
+        
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='users_administrators_new']");
+        $this->selenium->click("xpath=//a[@id='users_administrators_manage']");
         $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("link=Add new");
+        $this->selenium->waitForPageToLoad("10000");
+        
         $this->selenium->type("s_name","Real name user one");
         $this->selenium->type("s_username","useradminone");
         $this->selenium->type("s_password", "useradminpass");
@@ -289,7 +297,6 @@ class OCadmin_administrators extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent("The admin has been added"),"Add administrator");
     }
     
-    
     function deleteAdministrator()
     {
         $this->loginWith() ;
@@ -298,10 +305,9 @@ class OCadmin_administrators extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'useradminone')]");
         $this->selenium->click("xpath=//table/tbody/tr[contains(.,'useradminone')]/td/div/ul/li/a[text()='Delete']");
+        $this->selenium->click("//input[@id='admin-delete-submit']");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue($this->selenium->isTextPresent("The admin has been deleted correctly"),"Delete administrator");
-    }
-    
-    
+    }  
 }
 ?>

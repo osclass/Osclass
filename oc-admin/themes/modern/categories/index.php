@@ -18,10 +18,8 @@
 
     $categories = __get('categories');
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __('Add, edit or delete the categories or subcategories in which users can post listings. Reorder sections by dragging and dropping, or nest a subcategory in an expanded category. <strong>Be careful</strong>: If you delete a category, all listings associated will also be deleted!') . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -97,7 +95,7 @@
                     start: function(event, ui) { 
                         list_original = $('.sortable').nestedSortable('serialize') ;
                         $(ui.helper).addClass('footest');
-                        $(ui.helper).prepend("<div style='opacity: 1 !important; padding:5px;' class='alert-custom'><?php _e('Note: You need to expand the category if you want to make it a subcategory.'); ?></div>");
+                        $(ui.helper).prepend('<div style="opacity: 1 !important; padding:5px;" class="alert-custom"><?php echo osc_esc_js(__('Note: You must expand the category in order to make it a subcategory.')); ?></div>');
                     },
                     stop: function(event, ui) { 
                         var list = '' ;
@@ -137,7 +135,7 @@
                                 error: function(){
                                     $(".jsMessage").fadeIn("fast") ;
                                     $(".jsMessage p").attr('class', '') ;
-                                    $(".jsMessage p").html("<?php _e('Ajax error, try again.') ; ?>") ;
+                                    $(".jsMessage p").html('<?php echo osc_esc_js(__('Ajax error, please try again.')); ?>') ;
                                 }
                             }) ;
 
@@ -195,7 +193,7 @@
                         error: function() {
                             $(".jsMessage").show() ;
                             $(".jsMessage p").attr('class', '') ;
-                            $(".jsMessage p").html("<?php _e('Ajax error, try again.'); ?>") ;
+                            $(".jsMessage p").html("<?php echo osc_esc_js(__('Ajax error, try again.')); ?>") ;
                         }
                     });
                     $('#dialog-delete-category').dialog('close');
@@ -239,7 +237,7 @@
 
                 $(".jsMessage").fadeIn("fast") ;
                 $(".jsMessage p").attr('class', '') ;
-                $(".jsMessage p").html("<img height='16' width='16' src='<?php echo osc_current_admin_theme_url('images/spinner_loading.gif');?>'> <?php _e('This action can take a while.') ; ?>") ;
+                $(".jsMessage p").html('<img height="16" width="16" src="<?php echo osc_current_admin_theme_url('images/spinner_loading.gif');?>"> <?php echo osc_esc_js(__('This action could take a while.')); ?>') ;
 
                 if( $('div[category_id=' + id + ']').hasClass('disabled') ) {
                     enabled = 1 ;
@@ -292,7 +290,7 @@
                     error: function(){
                         $(".jsMessage").show() ;
                         $(".jsMessage p").attr('class', '') ;
-                        $(".jsMessage p").html("<?php _e('Ajax error, try again.') ; ?>") ;
+                        $(".jsMessage p").html("<?php echo osc_esc_js(__('Ajax error, try again.')); ?>") ;
                     }
                 }) ;
             }

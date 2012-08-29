@@ -20,7 +20,7 @@
     </p>
     <?php } else { ?>
         <div class="flashmessage flashmessage-warning flashmessage-inline" style="display: block;">
-            <p><?php _e("There isn't any logo uploaded yet", 'modern'); ?></p>
+            <p><?php _e('No logo has been uploaded yet', 'modern'); ?></p>
         </div>
     <?php } ?>
     <h2 class="render-title separate-top"><?php _e('Upload logo', 'modern') ?></h2>
@@ -51,8 +51,8 @@
         <p>
             <?php
                 $msg  = sprintf(__('The images folder <strong>%s</strong> is not writable on your server', 'modern'), WebThemes::newInstance()->getCurrentThemePath() ."images/" ) .", ";
-                $msg .= __("OSClass can't upload logo image from the administration panel.", 'modern') . ' ';
-                $msg .= __('Please make the mentioned image folder writable.', 'modern') . ' ';
+                $msg .= __("OSClass can't upload the logo image from the administration panel.", 'modern') . ' ';
+                $msg .= __('Please make the aforementioned image folder writable.', 'modern') . ' ';
                 echo $msg;
             ?>
         </p>

@@ -90,7 +90,7 @@
 
     function osc_show_pagination_admin($aData)
     {
-        $pageActual = Params::getParam('iPage');
+        $pageActual = isset($aData['iPage'])?$aData['iPage']:Params::getParam('iPage');
         $urlActual  = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
         $urlActual  = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
         $pageTotal  = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
@@ -101,13 +101,13 @@
             'sides'    => 5
         );
 
-        if( $pageTotal > 1 ) {
     ?>
     <div class="has-pagination">
         <?php osc_run_hook('before_show_pagination_admin'); ?>
+        <?php if( $pageTotal > 1 ) { ?>
         <form method="get" action="<?php echo $urlActual; ?>" style="display:inline;">
             <?php foreach( Params::getParamsAsArray('get') as $key => $value ) { ?>
-            <?php if($key!='iPage') {?>
+            <?php if($key!='iPage') { ?>
             <input type="hidden" name="<?php echo $key; ?>" value="<?php echo osc_esc_html($value); ?>" />
             <?php } } ?>
             <ul>
@@ -119,15 +119,15 @@
                 </li>
             </ul>
         </form>
-    <?php
-        $pagination = new Pagination($params);
-        $aux = $pagination->doPagination();
-        echo $aux;
+        <?php
+            $pagination = new Pagination($params);
+            $aux = $pagination->doPagination();
+            echo $aux;
+        }
         osc_run_hook('after_show_pagination_admin');
     ?>
     </div>
     <?php
-        }
     }
 
     function osc_pagination_showing($from, $to, $filtered, $total = null)

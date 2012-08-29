@@ -421,7 +421,83 @@
 
             return $users ;
         }
+        
+        /**
+         * Return list of users by email
+         * 
+         * @access public
+         * @since 2.4
+         * @param int $start
+         * @param int $end
+         * @param string $order_column
+         * @param string $order_direction
+         * @parma string $email
+         * @return array
+         */
+        public function searchByEmail($start = 0, $end = 10,  $email = '', $order_column = 'pk_i_id', $order_direction = 'DESC')
+        {
+            return $this->_search('s_email', $email, $start, $end, $order_column, $order_direction);
+        }
+        
+        /**
+         * Return list of users by user id
+         * 
+         * @access public
+         * @since 2.4
+         * @param int $start
+         * @param int $end
+         * @param string $order_column
+         * @param string $order_direction
+         * @parma string $userId
+         * @return array
+         */
+        public function searchByPrimaryKey($start = 0, $end = 10,  $userId = '', $order_column = 'pk_i_id', $order_direction = 'DESC')
+        {
+            return $this->_search('pk_i_id', $userId, $start, $end, $order_column, $order_direction);
+        }
 
+        private function _search($field , $value, $start = 0, $end = 10, $order_column = 'pk_i_id', $order_direction = 'DESC')
+        {
+            // SET data, so we always return a valid object
+            $users = array() ;
+            $users['rows']          = 0 ;
+            $users['total_results'] = 0 ;
+            $users['users']         = array() ;
+
+            $this->dao->select('SQL_CALC_FOUND_ROWS *') ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->orderBy($order_column, $order_direction) ;
+            $this->dao->limit($start, $end) ;
+            
+            if($field == 'pk_i_id') {
+                $this->dao->where('pk_i_id', $value) ;
+            } else if($field == 's_email') {
+                $this->dao->where('s_email', $value) ;
+            }
+            
+            $rs = $this->dao->get() ;
+
+            if( !$rs ) {
+                return $users ;
+            }
+
+            $users['users'] = $rs->result() ;
+
+            $rsRows = $this->dao->query('SELECT FOUND_ROWS() as total') ;
+            $data   = $rsRows->row() ;
+            if( $data['total'] ) {
+                $users['total_results'] = $data['total'] ;
+            }
+
+            $rsTotal = $this->dao->query('SELECT COUNT(*) as total FROM '.$this->getTableName()) ;
+            $data   = $rsTotal->row() ;
+            if( $data['total'] ) {
+                $users['rows'] = $data['total'] ;
+            }
+
+            return $users ;
+        }
+        
         /**
          * Return number of users
          * 

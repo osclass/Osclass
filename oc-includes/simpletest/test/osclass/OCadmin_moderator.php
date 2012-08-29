@@ -26,16 +26,16 @@ class OCadmin_moderator extends OCadminTest
         $this->selenium->waitForPageToLoad("2000");
         // check Admin Menu
         $res = $this->selenium->getXpathCount("//ul[@class='oscmenu']/li");
-        $this->assertEqual(3, $res, "3 Menu options");
+        $this->assertEqual(4, $res, "4 Menu options");
 
         $res = $this->selenium->getXpathCount("//ul[@class='oscmenu']/li[@id='menu_dash']/ul/li");
         $this->assertEqual(0, $res, "0 Submenu options under id=menu_dash");
 
         $res = $this->selenium->getXpathCount("//ul[@class='oscmenu']/li[@id='menu_items']/ul/li");
-        $this->assertEqual(4, $res, "4 Submenu options under id=menu_items");
+        $this->assertEqual(5, $res, "5 Submenu options under id=menu_items");
 
         $res = $this->selenium->getXpathCount("//ul[@class='oscmenu']/li[@id='menu_users']/ul/li");
-        $this->assertEqual(1, $res, "1 Submenu options under id=menu_users");
+        $this->assertEqual(2, $res, "2 Submenu options under id=menu_users");
 
         // try to enter to restricted zone
         $this->selenium->open(osc_admin_base_url(true).'?page=admins');

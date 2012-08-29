@@ -44,6 +44,9 @@ function osc_isExpired($dt_expiration) {
  * @return boolean
  */
 function osc_deleteResource( $id , $admin) {
+    if( defined('DEMO') ) {
+        return false;
+    }
     if( is_array( $id ) ){
         $id = $id[0];
     }
@@ -226,16 +229,9 @@ function is_serialized($data) {
  * Perform a POST request, so we could launch fake-cron calls and other core-system calls without annoying the user
  */
 function osc_doRequest($url, $_data) {
+    if (function_exists('fsockopen')) {
+        $data = http_build_query($_data);
 
-    if (function_exists('fputs')) {
-        // convert variables array to string:
-        $data = array();
-        while (list($n, $v) = each($_data)) {
-            $data[] = "$n=$v";
-        }
-        $data = implode('&', $data);
-
-        // format --> test1=a&test2=b etc.
         // parse the given URL
         $url = parse_url($url);
 
@@ -248,16 +244,14 @@ function osc_doRequest($url, $_data) {
         $fp = @fsockopen($host, 80);
         
         if($fp!==false) {
-            // send the request headers:
-            fputs($fp, "POST $path HTTP/1.1\r\n");
-            fputs($fp, "Host: $host\r\n");
-            fputs($fp, "Referer: OSClass\r\n");
-            fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
-            fputs($fp, "Content-length: " . strlen($data) . "\r\n");
-            fputs($fp, "Connection: close\r\n\r\n");
-            fputs($fp, $data);
-
-            // close the socket connection:
+            $out  = "POST $path HTTP/1.1\r\n";
+            $out .= "Host: $host\r\n";
+            $out .= "Referer: OSClass (v.". osc_version() .")\r\n";
+            $out .= "Content-type: application/x-www-form-urlencoded\r\n";
+            $out .= "Content-Length: ".strlen($data)."\r\n";
+            $out .= "Connection: Close\r\n\r\n";
+            $out .= "$data";
+            fwrite($fp, $out);
             fclose($fp);
         }
     }
@@ -269,78 +263,174 @@ function osc_sendMail($params) {
         return false;
     }
 
+    $mail = new PHPMailer(true);
+    $mail->ClearAddresses();
+    $mail->ClearAllRecipients();
+    $mail->ClearAttachments();
+    $mail->ClearBCCs();
+    $mail->ClearCCs();
+    $mail->ClearCustomHeaders();
+    $mail->ClearReplyTos();
+
+    $mail = osc_apply_filter('init_send_mail', $mail);
+
+    if( osc_mailserver_pop() ) {
+        require_once osc_lib_path() . 'phpmailer/class.pop3.php';
+        $pop = new POP3();
+
+        $pop3_host = osc_mailserver_host();
+        if( array_key_exists('host', $params) ) {
+            $pop3_host = $params['host'];
+        }
+
+        $pop3_port = osc_mailserver_port();
+        if( array_key_exists('port', $params) ) {
+            $pop3_port = $params['port'];
+        }
+
+        $pop3_username = osc_mailserver_username();
+        if( array_key_exists('username', $params) ) {
+            $pop3_username = $params['username'];
+        }
+
+        $pop3_password = osc_mailserver_password();
+        if( array_key_exists('password', $params) ) {
+            $pop3_password = $params['password'];
+        }
+
+        $pop->Authorise($pop3_host, $pop3_port, 30, $pop3_username, $pop3_password, 0);
+    }
+
+    if( osc_mailserver_auth() ) {
+        $mail->IsSMTP();
+        $mail->SMTPAuth = true;
+    } else if( osc_mailserver_pop() ) {
+        $mail->IsSMTP();
+    }
+
+    $smtpSecure = osc_mailserver_ssl();
+    if( array_key_exists('password', $params) ) {
+        $smtpSecure = $params['ssl'];
+    }
+    if( $smtpSecure != '' ) {
+        $mail->SMTPSecure = $smtpSecure;
+    }
+
+    $stmpUsername = osc_mailserver_username();
+    if( array_key_exists('username', $params) ) {
+        $stmpUsername = $params['username'];
+    }
+    if( $stmpUsername != '' ) {
+        $mail->Username = $stmpUsername;
+    }
+
+    $smtpPassword = osc_mailserver_password();
+    if( array_key_exists('password', $params) ) {
+        $smtpPassword = $params['password'];
+    }
+    if( $smtpPassword != '' ) {
+        $mail->Password = $smtpPassword;
+    }
+
+    $smtpHost = osc_mailserver_host();
+    if( array_key_exists('host', $params) ) {
+        $smtpHost = $params['host'];
+    }
+    if( $smtpHost != '' ) {
+        $mail->Host = $smtpHost;
+    }
+
+    $smtpPort = osc_mailserver_port();
+    if( array_key_exists('port', $params) ) {
+        $smtpPort = $params['port'];
+    }
+    if( $smtpPort != '' ) {
+        $mail->Port = $smtpPort;
+    }
+
+    $from = 'osclass@' . osc_get_domain();
+    if( array_key_exists('from', $params) ) {
+        $from = $params['from'];
+    }
+
+    $from_name = osc_page_title();
+    if( array_key_exists('from_name', $params) ) {
+        $from_name = $params['from_name'];
+    }
+
+    $mail->From     = osc_apply_filter('mail_from', $from);
+    $mail->FromName = osc_apply_filter('mail_from_name', $from_name);
+
+    $to      = $params['to'];
+    $to_name = '';
+    if( array_key_exists('to_name', $params) ) {
+        $to_name = $params['to_name'];
+    }
+
+    if( !is_array($to) ) {
+        $to = array($to => $to_name);
+    }
+
+    foreach($to as $to_email => $to_name) {
+        try {
+            $mail->addAddress($to_email, $to_name);
+        } catch (phpmailerException $e) {
+            continue;
+        }
+    }
+
     if( key_exists('add_bcc', $params) ) {
         if( !is_array($params['add_bcc']) && $params['add_bcc'] != '' ) {
             $params['add_bcc'] = array($params['add_bcc']) ;
         }
-    }
 
-    require_once osc_lib_path() . 'phpmailer/class.phpmailer.php' ;
-
-    if( osc_mailserver_pop() ) {
-        require_once osc_lib_path() . 'phpmailer/class.pop3.php' ;
-        $pop = new POP3() ;
-        $pop->Authorise(
-                ( isset($params['host']) ) ? $params['host'] : osc_mailserver_host(),
-                ( isset($params['port']) ) ? $params['port'] : osc_mailserver_port(),
-                30,
-                ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username(),
-                ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username(),
-                0
-        ) ;
-    }
-
-    $mail = new PHPMailer(true) ;
-    try {
-        $mail->CharSet = 'utf-8' ;
-
-        if( osc_mailserver_auth() ) {
-            $mail->IsSMTP() ;
-            $mail->SMTPAuth = true ;
-        } else if( osc_mailserver_pop() ) {
-            $mail->IsSMTP() ;
-        }
-
-        $mail->SMTPSecure = ( isset($params['ssl']) ) ? $params['ssl'] : osc_mailserver_ssl() ;
-        $mail->Username = ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username() ;
-        $mail->Password = ( isset($params['password']) ) ? $params['password'] : osc_mailserver_password() ;
-        $mail->Host = ( isset($params['host']) ) ? $params['host'] : osc_mailserver_host() ;
-        $mail->Port = ( isset($params['port']) ) ? $params['port'] : osc_mailserver_port() ;
-        $mail->From = ( isset($params['from']) ) ? $params['from'] : 'osclass@' . osc_get_domain() ;
-        $mail->FromName = ( isset($params['from_name']) ) ? $params['from_name'] : osc_page_title() ;
-        $mail->Subject = ( isset($params['subject']) ) ? $params['subject'] : '' ;
-        $mail->Body = ( isset($params['body']) ) ? $params['body'] : '' ;
-        $mail->AltBody = ( isset($params['alt_body']) ) ? $params['alt_body'] : '' ;
-        $to = ( isset($params['to']) ) ? $params['to'] : '' ;
-        $to_name = ( isset($params['to_name']) ) ? $params['to_name'] : '' ;
-
-        if( key_exists('add_bcc', $params) ) {
-            foreach( $params['add_bcc'] as $bcc ) {
+        foreach($params['add_bcc'] as $bcc) {
+            try {
                 $mail->AddBCC($bcc) ;
+            } catch ( phpmailerException $e ) {
+                continue;
             }
         }
-
-        if( isset($params['reply_to']) ) {
-            $mail->AddReplyTo($params['reply_to']) ;
-        }
-
-        if( isset($params['attachment']) ) {
-            $mail->AddAttachment($params['attachment']) ;
-        }
-
-        $mail->IsHTML(true) ;
-        $mail->AddAddress($to, $to_name) ;
-        $mail->Send() ;
-        return true ;
-    } catch (phpmailerException $e) {
-        error_log("phpmailerException in osc_sendMail() Error: ".$mail->ErrorInfo, 0);
-        return false ;
-    } catch (Exception $e) {
-        error_log("Exception in osc_sendMail() Error".$mail->ErrorInfo, 0);
-        return false ;
     }
 
-    return false ;
+    if( array_key_exists('reply_to', $params) ) {
+        try {
+            $mail->AddReplyTo($params['reply_to']) ;
+        } catch (phpmailerException $e) {
+            continue;
+        }
+    }
+
+    $mail->Subject = $params['subject'];
+    $mail->Body    = $params['body'];
+
+    if( array_key_exists('attachment', $params) ) {
+        if( !is_array($params['attachment']) ) {
+            $params['attachment'] = array( $params['attachment'] );
+        }
+
+        foreach($params['attachment'] as $attachment) {
+            try {
+                $mail->AddAttachment($attachment) ;
+            } catch (phpmailerException $e) {
+                continue;
+            }
+        }
+    }
+
+    $mail->CharSet = 'utf-8';
+    $mail->IsHTML(true);
+
+    $mail = osc_apply_filter('pre_send_mail', $mail);
+
+    // send email!
+    try {
+        $mail->Send();
+    } catch (phpmailerException $e) {
+        return false;
+    }
+
+    return true;
 }
 
 function osc_mailBeauty($text, $params) {
@@ -513,41 +603,237 @@ function osc_dbdump($path, $file) {
     return 1 ;
 }
 
-function osc_downloadFile($sourceFile, $downloadedFile) {
-    require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
+// -----------------------------------------------------------------------------
 
-    @set_time_limit(0);
-
-    $fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
-    if($fp) {
-        $ch = curl_init($sourceFile);
-        @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
-        curl_setopt($ch, CURLOPT_FILE, $fp);
-        @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_exec($ch);
-        curl_close($ch);
-        fclose($fp);
-        return true;
-    } else {
+/**
+ * Returns true if there is curl on system environment
+ * 
+ * @return type 
+ */
+function testCurl() {
+    if ( ! function_exists( 'curl_init' ) || ! function_exists( 'curl_exec' ) )
         return false;
+
+    return true;
+}
+
+/**
+ * Returns true if there is fsockopen on system environment
+ *
+ * @return type 
+ */
+function testFsockopen() {
+    if ( ! function_exists( 'fsockopen' ) )
+        return false;
+
+    return true;
+}
+
+/**
+ * IF http-chunked-decode not exist implement here
+ * @since 3.0
+ */
+if( !function_exists('http_chunked_decode') ) {
+    /** 
+     * dechunk an http 'transfer-encoding: chunked' message 
+     * 
+     * @param string $chunk the encoded message 
+     * @return string the decoded message.  If $chunk wasn't encoded properly it will be returned unmodified. 
+     */ 
+    function http_chunked_decode($chunk) { 
+        $pos = 0; 
+        $len = strlen($chunk); 
+        $dechunk = null; 
+
+        while(($pos < $len) 
+            && ($chunkLenHex = substr($chunk,$pos, ($newlineAt = strpos($chunk,"\n",$pos+1))-$pos))) 
+        { 
+            if (! is_hex($chunkLenHex)) { 
+                trigger_error('Value is not properly chunk encoded', E_USER_WARNING); 
+                return $chunk; 
+            } 
+
+            $pos = $newlineAt + 1; 
+            $chunkLen = hexdec(rtrim($chunkLenHex,"\r\n")); 
+            $dechunk .= substr($chunk, $pos, $chunkLen); 
+            $pos = strpos($chunk, "\n", $pos + $chunkLen) + 1; 
+        } 
+        return $dechunk; 
+    } 
+}
+
+/** 
+ * determine if a string can represent a number in hexadecimal 
+ * 
+ * @since 3.0
+ * @param string $hex 
+ * @return boolean true if the string is a hex, otherwise false 
+ */ 
+function is_hex($hex) { 
+    // regex is for weenies 
+    $hex = strtolower(trim(ltrim($hex,"0"))); 
+    if (empty($hex)) { $hex = 0; }; 
+    $dec = hexdec($hex); 
+    return ($hex == dechex($dec)); 
+}
+
+/**
+ * Process response and return headers and body
+ * 
+ * @since 3.0
+ * @param type $content
+ * @return type 
+ */
+function processResponse($content)
+{
+    $res = explode("\r\n\r\n", $content);
+    $headers = $res[0];
+    $body    = isset($res[1]) ? $res[1] : '';
+
+    if (!is_string($headers)) {
+        return array();
+    }
+    
+    return array('headers' => $headers, 'body' => $body);
+}
+
+/**
+ * Parse headers and return into array format
+ *
+ * @param type $headers
+ * @return type 
+ */
+function processHeaders($headers) 
+{
+    $headers = str_replace("\r\n", "\n", $headers);
+    $headers = preg_replace('/\n[ \t]/', ' ', $headers);
+    $headers = explode("\n", $headers);
+    $tmpHeaders = $headers;
+    $headers = array();
+
+    foreach ($tmpHeaders as $aux) {
+        if (preg_match('/^(.*):\s(.*)$/', $aux, $matches)) {
+            $headers[strtolower($matches[1])] = $matches[2];
+        }
+    }
+    return $headers;
+}
+
+/**
+ * Download file using fsockopen
+ *
+ * @since 3.0
+ * @param type $sourceFile
+ * @param type $fileout 
+ */
+function download_fsockopen($sourceFile, $fileout = null) 
+{
+    // parse URL 
+    $aUrl = parse_url($sourceFile);
+    $host = $aUrl['host'];
+    if ('localhost' == strtolower($host))
+        $host = '127.0.0.1';
+
+    $link = $aUrl['path'] . ( isset($aUrl['query']) ? '?' . $aUrl['query'] : '' );
+
+    if (empty($link))
+        $link .= '/';
+            
+    $fp = @fsockopen($host, 80, $errno, $errstr, 30);
+    if (!$fp) {
+        
+    } else {
+        $out = "GET $link HTTP/1.1\r\n";
+        $out .= "Host: $host\r\n";
+        $out .= "Connection: Close\r\n\r\n";
+        $out .= "\r\n";
+        fwrite($fp, $out);
+
+        $contents = '';
+        while (!feof($fp)) {
+            $contents.= fgets($fp, 1024);
+        }
+        // check redirections ? 
+        // if (redirections) then do request again
+        $aResult = processResponse($contents);
+        $headers = processHeaders($aResult['headers']);
+        
+        $location = @$headers['location'];
+        if (isset($location) && $location != "") {
+            $aUrl = parse_url($headers['location']);
+
+            $host = $aUrl['host'];
+            if ('localhost' == strtolower($host))
+                $host = '127.0.0.1';
+
+            $requestPath = $aUrl['path'] . ( isset($aUrl['query']) ? '?' . $aUrl['query'] : '' );
+
+            if (empty($requestPath))
+                $requestPath .= '/';
+            
+            download_fsockopen($host, $requestPath, $fileout);
+        } else {
+            $body = $aResult['body'];
+            $transferEncoding = @$headers['transfer-encoding'];
+            if($transferEncoding == 'chunked' ) {
+                $body = http_chunked_decode($aResult['body']);
+            }
+            if($fileout!=null) {
+                $ff = @fopen($fileout, 'w+');
+                fwrite($ff, $body);
+                fclose($ff);
+            } else {
+                return $body;
+            }
+        }
+        fclose($fp);
     }
 }
 
-function osc_file_get_contents($url) {
-    require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
+function osc_downloadFile($sourceFile, $downloadedFile) 
+{
+    if ( testCurl() ) {
+        @set_time_limit(0);
 
-    $ch = curl_init() ;
-    curl_setopt($ch, CURLOPT_URL, $url) ;
-    curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' OSClass (v.' . osc_version() . ')') ;
-    if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1) ;
-    @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
+        if($fp) {
+            $ch = curl_init($sourceFile);
+            @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+            curl_setopt($ch, CURLOPT_FILE, $fp);
+            @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($ch, CURLOPT_REFERER, osc_base_url());
+            curl_exec($ch);
+            curl_close($ch);
+            fclose($fp);
+            return true;
+        } else {
+            return false;
+        }
+    } else if (testFsockopen()) { // test curl/fsockopen
+        $downloadedFile = osc_content_path() . 'downloads/' . $downloadedFile;
+        download_fsockopen($sourceFile, $downloadedFile);
+        return true;
+    }
+}
 
-    $data = curl_exec($ch);
-    curl_close($ch);
-
+function osc_file_get_contents($url) 
+{
+    if( testCurl() ) {
+        $ch = curl_init() ;
+        curl_setopt($ch, CURLOPT_URL, $url) ;
+        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' OSClass (v.' . osc_version() . ')') ;
+        if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1) ;
+        @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_REFERER, osc_base_url());
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $data = curl_exec($ch);
+        curl_close($ch);
+    } else if( testFsockopen() ) {
+        $data = download_fsockopen($url);
+    }
     return $data;
 }
+// -----------------------------------------------------------------------------
 
 /**
  * Check if we loaded some specific module of apache
@@ -1099,6 +1385,21 @@ function osc_update_cat_stats_id($id)
     $sql = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_category_stats (fk_i_category_id, i_num_items) VALUES ';
     $sql .= " (".$id.", ".$categoryTotal.")";
     $result = CategoryStats::newInstance()->dao->query($sql);
+}
+
+function get_ip() {
+    if( !empty($_SERVER['HTTP_CLIENT_IP']) ) {
+        return $_SERVER['HTTP_CLIENT_IP'];
+    }
+
+    if( !empty($_SERVER['HTTP_X_FORWARDED_FOR']) ) {
+        $ip_array = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        foreach($ip_array as $ip) {
+            return trim($ip);
+        }
+    }
+
+    return $_SERVER['REMOTE_ADDR'];
 }
 
 ?>

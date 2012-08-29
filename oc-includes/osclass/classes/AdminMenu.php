@@ -20,6 +20,14 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    /**
+     * AdminMenu class
+     * 
+     * @since 3.0
+     * @package OSClass
+     * @subpackage classes
+     * @author OSClass
+     */
     class AdminMenu
     {
         private static $instance ;
@@ -74,14 +82,14 @@
             $this->add_submenu( 'settings', __('General'), osc_admin_base_url(true) .'?page=settings', 'settings_general', 'administrator') ;
             $this->add_submenu( 'settings', __('Comments'), osc_admin_base_url(true) .'?page=settings&action=comments', 'settings_comments', 'administrator') ;
             $this->add_submenu( 'settings', __('Locations'), osc_admin_base_url(true) .'?page=settings&action=locations', 'settings_locations', 'administrator') ;
-            $this->add_submenu( 'settings', __('E-mail templates'), osc_admin_base_url(true) .'?page=emails', 'settings_emails_manage', 'administrator') ;
+            $this->add_submenu( 'settings', __('Email templates'), osc_admin_base_url(true) .'?page=emails', 'settings_emails_manage', 'administrator') ;
             $this->add_submenu( 'settings', __('Languages'), osc_admin_base_url(true) .'?page=languages', 'settings_language', 'administrator') ;
             $this->add_submenu( 'settings', __('Permalinks'), osc_admin_base_url(true) .'?page=settings&action=permalinks', 'settings_permalinks', 'administrator') ;
             $this->add_submenu( 'settings', __('Spam and bots'), osc_admin_base_url(true) .'?page=settings&action=spamNbots', 'settings_spambots', 'administrator') ;
             $this->add_submenu( 'settings', __('Currencies'), osc_admin_base_url(true) .'?page=settings&action=currencies', 'settings_currencies', 'administrator') ;
             $this->add_submenu( 'settings', __('Mail server'), osc_admin_base_url(true) .'?page=settings&action=mailserver', 'settings_mailserver', 'administrator') ;
             $this->add_submenu( 'settings', __('Media'), osc_admin_base_url(true) .'?page=settings&action=media', 'settings_media', 'administrator') ;
-            $this->add_submenu( 'settings', __('Last searches'), osc_admin_base_url(true) .'?page=settings&action=latestsearches', 'settings_searches', 'administrator') ;
+            $this->add_submenu( 'settings', __('Latest searches'), osc_admin_base_url(true) .'?page=settings&action=latestsearches', 'settings_searches', 'administrator') ;
 
             $this->add_menu( __('Pages'), osc_admin_base_url(true) .'?page=pages', 'pages', 'administrator' ) ;
 
@@ -90,6 +98,7 @@
             $this->add_submenu( 'users', __('User settings'), osc_admin_base_url(true) .'?page=users&action=settings', 'users_settings', 'administrator') ;
             $this->add_submenu( 'users', __('Administrators'), osc_admin_base_url(true) .'?page=admins', 'users_administrators_manage', 'administrator') ;
             $this->add_submenu( 'users', __('Your Profile'), osc_admin_base_url(true) .'?page=admins&action=edit', 'users_administrators_profile', 'moderator') ;
+            $this->add_submenu( 'users', __('Alerts'), osc_admin_base_url(true) .'?page=users&action=alerts', 'users_alerts', 'moderator') ;
 
             $this->add_menu( __('Tools'), osc_admin_base_url(true) .'?page=tools&action=import', 'tools', 'administrator') ;
             $this->add_submenu( 'tools', __('Import data'), osc_admin_base_url(true) .'?page=tools&action=import', 'tools_import', 'administrator') ;
@@ -180,47 +189,55 @@
         // common functions 
         public function add_menu_items( $submenu_title, $url, $submenu_id, $capability = null, $icon_url = null )
         {
-            $aSubMenu= $this->add_submenu('items', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
+            $this->add_submenu('items', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
         }
 
         public function add_menu_categories( $submenu_title, $url, $submenu_id, $capability = null, $icon_url = null )
         {
-            $aSubMenu= $this->add_submenu('categories', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
+            $this->add_submenu('categories', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
         }
 
         public function add_menu_pages( $submenu_title, $url, $submenu_id, $capability = null, $icon_url = null )
         {
-            $aSubMenu= $this->add_submenu('pages', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
+            $this->add_submenu('pages', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
         }
 
         public function add_menu_appearance( $submenu_title, $url, $submenu_id, $capability = null, $icon_url = null )
         {
-            $aSubMenu= $this->add_submenu('appearance', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
+            $this->add_submenu('appearance', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
         }
 
         public function add_menu_plugins( $submenu_title, $url, $submenu_id, $capability = null, $icon_url = null )
         {
-            $aSubMenu= $this->add_submenu('plugins', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
+            $this->add_submenu('plugins', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
         }
 
         public function add_menu_settings( $submenu_title, $url, $submenu_id, $capability = null, $icon_url = null )
         {
-            $aSubMenu= $this->add_submenu('settings', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
+            $this->add_submenu('settings', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
         }
 
         public function add_menu_tools( $submenu_title, $url, $submenu_id, $capability = null, $icon_url = null )
         {
-            $aSubMenu= $this->add_submenu('tools', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
+            $this->add_submenu('tools', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
         }
 
         public function add_menu_users( $submenu_title, $url, $submenu_id, $capability = null, $icon_url = null )
         {
-            $aSubMenu= $this->add_submenu('users', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
+            $this->add_submenu('users', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
         }
 
         public function add_menu_stats( $submenu_title, $url, $submenu_id, $capability = null, $icon_url = null )
         {
-            $aSubMenu= $this->add_submenu('stats', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
+            $this->add_submenu('stats', $submenu_title, $url, $submenu_id, $capability, $icon_url) ;
+        }
+        
+        /*
+         * Empty the menu
+         */
+        public function clear_menu( )
+        {
+            $this->aMenu = array() ;
         }
     }
 

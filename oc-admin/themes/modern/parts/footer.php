@@ -9,7 +9,7 @@
                         <a title="<?php _e('Forums'); ?>" href="http://forums.osclass.org/" target="_blank"><?php _e('Forums'); ?></a>
                     </div>
                     <div class="float-right">
-                        <strong>OSClass <?php echo OSCLASS_VERSION ; ?></strong>
+                        <strong>OSClass <?php echo preg_replace('|.0$|', '', OSCLASS_VERSION); ?></strong>
                     </div>
                     <a id="ninja" href="" class="ico ico-48 ico-dash-white"></a>
                     <div class="clear"></div>

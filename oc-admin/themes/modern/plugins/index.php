@@ -16,10 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __("Install or uninstall the plugins available in your installation. In some cases, you'll have to configure the plugin in order to get it to work.") . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -227,7 +225,7 @@
         </form>
     </div>
 </div>
-<form id="dialog-uninstall" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+<form id="dialog-uninstall" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide">
     <input type="hidden" name="page" value="plugins" />
     <input type="hidden" name="action" value="uninstall" />
     <input type="hidden" name="plugin" value="" />
@@ -266,9 +264,9 @@
             function(data){
                 var content = data.message ;
                 if(data.error == 0) { // no errors
-                    content += '<p><?php _e('The plugin have been downloaded correctly, proceed to install and configure.');?></p>';
+                    content += '<p><?php echo osc_esc_js(__('The plugin has been downloaded correctly, proceed to install and configure.')); ?></p>';
                     content += "<p>";
-                    content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=plugins&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php _e('Close'); ?></a>';
+                    content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=plugins&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php echo osc_esc_js(__('Close')); ?></a>';
                     content += "</p>";
                 } else {
                     content += '<a class="btn btn-mini btn-green" onclick=\'$(".ui-dialog-content").dialog("close");\'><?php _e('Close'); ?>...</a>';
@@ -291,7 +289,7 @@
                     $("#market_version").html(data.s_version);
                     $("#market_author").html(data.s_contact_name);
                     $("#market_url").attr('href',data.s_source_file);
-                    $('#market_install').html("<?php echo osc_esc_html( __('Update') ) ; ?>");                    
+                    $('#market_install').html("<?php echo osc_esc_js( __('Update') ) ; ?>");
 
                     $('#market_installer').dialog({
                         modal:true,

@@ -16,10 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __('Browse and download available OSClass plugins, from a constantly-updated selection. After downloading a plugin, you have to install it and configure it to get it up and running.') . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -82,7 +80,7 @@
         <li><a href="#upload-plugins" onclick="window.location = '<?php echo osc_admin_base_url(true) . '?page=plugins'; ?>'; return false; "><?php _e('Available plugins') ; ?></a></li>
     </ul>
     <div id="market">
-        <h2 class="render-title"><?php _e('Latest plugins on market') ; ?></h2>
+        <h2 class="render-title"><?php _e('Latest plugins available') ; ?></h2>
         <table id="market_plugins" class="table available-theme">
         </table>
         <div id="market_pagination" class="has-pagination">
@@ -139,8 +137,8 @@
 
         $("#market_install").on("click", function(){
             $(".ui-dialog-content").dialog("close");
-            $('<div id="downloading"><div class="osc-modal-content"><?php _e('Please wait until the download is completed'); ?></div></div>').dialog({ 
-                title:'<?php _e('Downloading'); ?>...',
+            $('<div id="downloading"><div class="osc-modal-content"><?php echo osc_esc_js(__('Please wait until the download is completed')); ?></div></div>').dialog({ 
+                title:'<?php echo osc_esc_js(__('Downloading')); ?>...',
                 modal:true
             });
 
@@ -150,13 +148,13 @@
             function(data){
                 var content = data.message ;
                 if(data.error == 0) { // no errors
-                    content += '<h3><?php _e('The plugin have been downloaded correctly, proceed to install and configure.');?></h3>';
+                    content += '<h3><?php echo osc_esc_js(__('The plugin has been downloaded correctly, proceed to install and configure.')); ?></h3>';
                     content += "<p>";
-                    content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=plugins&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php _e('Ok'); ?></a>';
-                    content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php _e('Close'); ?></a>';
+                    content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=plugins&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php echo osc_esc_js(__('Ok')); ?></a>';
+                    content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php echo osc_esc_js(__('Close')); ?></a>';
                     content += "</p>";
                 } else {
-                    content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php _e('Close'); ?></a>';
+                    content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php echo osc_esc_js(__('Close')); ?></a>';
                 }
                 $("#downloading .osc-modal-content").html(content);
             });
@@ -190,12 +188,12 @@
 
                             if(jQuery.inArray(data.plugins[i].s_update_url, plugins_downloaded) >= 0 ) {
                                 if( jQuery.inArray(data.plugins[i].s_update_url, plugin_to_update) >= 0 ) {
-                                    button = '<a href="#'+data.plugins[i].s_update_url+'" class="btn btn-mini btn-orange market-popup market_update"><?php _e('Update') ; ?></a>';
+                                    button = '<a href="#'+data.plugins[i].s_update_url+'" class="btn btn-mini btn-orange market-popup market_update"><?php echo osc_esc_js(__('Update')); ?></a>';
                                 } else {
-                                    button = '<a href="#" class="btn btn-mini btn-blue btn-disabled" ><?php _e('Already downloaded') ; ?></a>';
+                                    button = '<a href="#" class="btn btn-mini btn-blue btn-disabled" ><?php echo osc_esc_js(__('Already downloaded')); ?></a>';
                                 }
                             } else {
-                                button = '<a href="#'+data.plugins[i].s_update_url+'" class="btn btn-mini btn-green market-popup"><?php _e('Download plugin') ; ?></a>';
+                                button = '<a href="#'+data.plugins[i].s_update_url+'" class="btn btn-mini btn-green market-popup"><?php echo osc_esc_js(__('Download plugin')); ?></a>';
                             }
                             even = '';
                             if (i%2 == 0){
@@ -251,7 +249,7 @@
                     $("#market_version").html(data.s_version);
                     $("#market_author").html(data.s_contact_name);
                     if(data.s_compatible.indexOf("<?php echo $main_version; ?>")==-1) {
-                        $("#market_compatible").html(data.s_compatible + " - "  + "<?php echo sprintf(__('Warning! This plugin is not compatible with your current version of OSClass (%s)'), $main_version); ?>");
+                        $("#market_compatible").html(data.s_compatible + " - "  + "<?php echo osc_esc_js(sprintf(__('Warning! This plugin is not compatible with your current version of OSClass (%s)'), $main_version)); ?>");
                         $("#market_compatible").parent().parent().addClass("flashmessage-error");
                     } else {
                         $("#market_compatible").html(data.s_compatible);
@@ -259,9 +257,9 @@
                     }
                     $("#market_url").attr('href',data.s_source_file);
                     if(update) {
-                        $('#market_install').html("<?php echo osc_esc_html( __('Update') ) ; ?>");
+                        $('#market_install').html("<?php echo osc_esc_js( __('Update') ) ; ?>");
                     } else {
-                        $('#market_install').html("<?php echo osc_esc_html( __('Continue download') ) ; ?>");
+                        $('#market_install').html("<?php echo osc_esc_js( __('Continue download') ) ; ?>");
                     }
 
                     $('#market_installer').dialog({

@@ -40,10 +40,8 @@
         return 'row-offset';
     }
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __('Stay up-to-date on the number of users registered on your site. You can also see a breakdown of the countries and regions where users live among those available on your site.') . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -54,6 +52,12 @@
         </h1>
     <?php
     }
+
+    function customPageTitle($string) {
+        return sprintf(__('User Statistics &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
+
     function customHead(){
     $users            = __get("users") ;
     $max              = __get("max") ;
@@ -77,8 +81,8 @@
         function drawChart() {
             var data = new google.visualization.DataTable();
 
-            data.addColumn('string', '<?php _e('Date') ; ?>',0,1);
-            data.addColumn('number', '<?php _e('New users') ; ?>');
+            data.addColumn('string', '<?php echo osc_esc_js(__('Date')); ?>',0,1);
+            data.addColumn('number', '<?php echo osc_esc_js(__('New users')); ?>');
             <?php $k = 0 ;
             echo "data.addRows(" . count($users) . ");" ;
             foreach($users as $date => $num) {
@@ -247,7 +251,7 @@
                         </tbody>
                     </table>
                     <?php } else { ?>
-                        <p><?php _e("There're no statistics yet") ; ?></p>
+                        <p><?php _e("There are no statistics yet") ; ?></p>
                     <?php } ?>
 
 

@@ -23,7 +23,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
     // Code for form validation
-    
+
     $.validator.addMethod('customrule', function(value, element) {
         if($('input:radio[name=purge_searches]:checked').val()=='custom') {
             if($("#custom_queries").val()=='') {
@@ -32,7 +32,7 @@ $(document).ready(function(){
         }
         return true;
     });
-    
+
     $("form[name=searches_form]").validate({
         rules: {
             custom_queries: {
@@ -42,8 +42,8 @@ $(document).ready(function(){
         },
         messages: {
             custom_queries: {
-                digits: "<?php echo osc_esc_js(__('Custom number: this field has to be numeric only')); ?>.",
-                customrule: "<?php echo osc_esc_js(__('Custom number: this field could not be left empty')); ?>."
+                digits: '<?php echo osc_esc_js(__('Custom number: this field must only contain numeric characters')); ?>.',
+                customrule: '<?php echo osc_esc_js(__('Custom number: this field cannot be left empty')); ?>.'
             }
         },
         wrapper: "li",
@@ -62,10 +62,8 @@ $(document).ready(function(){
         return 'row-offset';
     }
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __("Save the searches users do on your site. In this way, you can get information on what they're most interested in. From here, you can manage the options on how much information you want to save.") . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -99,12 +97,12 @@ $(document).ready(function(){
                                             <div class="form-label-checkbox">
                                             <input type="checkbox" <?php echo ( osc_save_latest_searches() ) ? 'checked="checked"' : '' ; ?> name="save_latest_searches" />
                                             <?php _e('Save the latest user searches') ; ?>
-                                            <div class="help-box"><?php _e('It may be useful to know what queries users do.') ?></div>
+                                            <div class="help-box"><?php _e('It may be useful to know what queries users make.') ?></div>
                                         </div>
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="form-label"><?php _e('How long are stored the queries') ; ?></div>
+                                        <div class="form-label"><?php _e('How long queries are stored') ; ?></div>
                                         <div class="form-controls">
                                             <div>
                                                 <input type="radio" name="purge_searches" value="hour" <?php echo ( ( osc_purge_latest_searches() == 'hour' ) ? 'checked="checked"' : '' ) ; ?> onclick="javascript:document.getElementById('customPurge').value = 'hour' ;" />

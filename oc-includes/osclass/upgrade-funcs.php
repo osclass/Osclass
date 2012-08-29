@@ -42,9 +42,9 @@
             if(!$error_queries[0]) {
                 $skip_db_link = osc_admin_base_url(true) . "?page=upgrade&action=upgrade-funcs&skipdb=true";
                 $title    = __('OSClass &raquo; Has some errors') ;
-                $message  = __('We encountered some problems updating the database structure. The following queries failed:');
+                $message  = __("We've encountered some problems while updating the database structure. The following queries failed:");
                 $message .= "<br/><br/>" . implode("<br>", $error_queries[2]);
-                $message .= "<br/><br/>" . sprintf(__('These errors could be false-positive errors. If you\'re sure that is the case, you could <a href="%s">continue with the upgrade</a>, or <a href="http://forums.osclass.org/">ask in our forums</a>.'), $skip_db_link);
+                $message .= "<br/><br/>" . sprintf(__("These errors could be false-positive errors. If you're sure that is the case, you can <a href=\"%s\">continue with the upgrade</a>, or <a href=\"http://forums.osclass.org/\">ask in our forums</a>."), $skip_db_link);
                 osc_die($title, $message) ;
             }
         }
@@ -283,7 +283,7 @@ CREATE TABLE %st_item_description_tmp (
             }
         }
         $url_location_stats = osc_admin_base_url(true)."?page=tools&action=locations";
-        $aMessages[] = '<p><b>'.__('You need to calculate locations stats, please go to admin panel, tools, recalculate location stats or click') .'  <a href="'.$url_location_stats.'">'.__('here').'</a></b></p>';
+        $aMessages[] = '<p><b>'.__('You need to calculate location stats, please go to admin panel, tools, recalculate location stats or click') .'  <a href="'.$url_location_stats.'">'.__('here').'</a></b></p>';
 
         // update t_alerts - Search object serialized to json
         $aAlerts = Alerts::newInstance()->findByType('HOURLY');
@@ -379,21 +379,26 @@ CREATE TABLE %st_item_description_tmp (
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'use_imagick', '0', 'BOOLEAN')", DB_TABLE_PREFIX));
     }
 
-    
     if(osc_version() < 300) {
         $comm->query(sprintf("ALTER TABLE %st_user DROP s_pass_answer", DB_TABLE_PREFIX));
         $comm->query(sprintf("ALTER TABLE %st_user DROP s_pass_question", DB_TABLE_PREFIX));
+        osc_set_preference('marketURL', 'http://market.osclass.org/api/');
     }
 
-    osc_changeVersionTo(300);
+    if(osc_version() < 310) {
+        $comm->query(sprintf("ALTER TABLE  %st_alerts ADD  `pk_i_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY", DB_TABLE_PREFIX));
+        $comm->query(sprintf("UPDATE %st_alerts SET dt_date = '%s' ", DB_TABLE_PREFIX, date("Y-m-d H:i:s")));
+    }
 
-    echo '<div style="border: 1px solid rgb(204, 204, 204); background: none repeat scroll 0% 0% rgb(238, 238, 238);"> <div style="padding: 20px;">';
+    osc_changeVersionTo(310);
+
+    echo '<div class="well ui-rounded-corners separate-top-medium">';
     echo '<p>'.__('OSClass &raquo; Updated correctly').'</p>' ;
     echo '<p>'.__('OSClass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
     foreach($aMessages as $msg) {
         echo "<p>".$msg."</p>";
     }
-    echo "</div></div>";
+    echo "</div>";
 
     /**
      * Convert alerts < 2.4, updating s_search with json encoded to based64.

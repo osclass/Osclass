@@ -16,10 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __('Add users who can manage your page. You can add admins or moderators: admins have access to the whole admin panel while moderators can only modify listings and see stats.') . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -166,7 +164,7 @@
     osc_add_hook('before_show_pagination_admin','showingResults');
     osc_show_pagination_admin($aData);
 ?>
-<form id="dialog-admin-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete admin')); ?>">
+<form id="dialog-admin-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete admin')); ?>">
     <input type="hidden" name="page" value="admins" />
     <input type="hidden" name="action" value="delete" />
     <input type="hidden" name="id[]" value="" />

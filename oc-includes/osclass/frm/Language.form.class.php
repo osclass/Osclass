@@ -139,15 +139,15 @@
                 },
                 i_num_dec: {
                     required: "<?php _e("Number of decimals: this field is required"); ?>.",
-                    digits: "<?php _e("Number of decimals: this field has to be numeric only"); ?>."
+                    digits: "<?php _e("Number of decimals: this field must only contain numeric characters"); ?>."
                 },
                 s_dec_point: {
                     required: "<?php _e("Decimal point: this field is required"); ?>.",
                     minlength: "<?php _e("Decimal point: this field is required"); ?>."
                 },
                 s_thousand_sep: {
-                    required: "<?php _e("Thousand separator: this field is required"); ?>.",
-                    minlength: "<?php _e("Thousand separator: this field is required"); ?>."
+                    required: "<?php _e("Thousands separator: this field is required"); ?>.",
+                    minlength: "<?php _e("Thousands separator: this field is required"); ?>."
                 },
                 s_date_format: {
                     required: "<?php _e("Date format: this field is required"); ?>.",

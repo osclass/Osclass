@@ -56,10 +56,8 @@
     }
     osc_add_hook('admin_header','customHead');
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __("Add, edit or delete the countries, regions and cities installed on your OSClass. <strong>Be careful</strong>: modifying locations can cause your statistics to be incorrect until they're recalculated. Modify only if you're sure what you're doing!") . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -72,7 +70,7 @@
     }
 
     function customPageTitle($string) {
-        return __('Locations');
+        return sprintf(__('Locations &raquo; %s'), $string);
     }
     osc_add_filter('admin_title', 'customPageTitle');
     osc_current_admin_theme_path('parts/header.php') ; ?>
@@ -286,14 +284,14 @@
         </div>
     </div>
     <div class="clear"></div>
-    <form id="dialog-location-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+    <form id="dialog-location-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide">
         <input type="hidden" name="page" value="settings" />
         <input type="hidden" name="action" value="locations" />
         <input type="hidden" name="type" value="" />
         <input type="hidden" name="id" value="" />
         <div class="form-horizontal">
             <div class="form-row">
-                <?php _e('This action can not be undone. Items with this location associated will be deleted. Are you sure you want to continue?'); ?>
+                <?php _e("This action can't be undone. Items associated to this location will be deleted. Are you sure you want to continue?"); ?>
             </div>
             <div class="form-actions">
                 <div class="wrapper">

@@ -70,7 +70,7 @@
                     $city = City::newInstance()->findByPrimaryKey($c[1]);
                     Params::setParam('sCity', $city['pk_i_id']);
                 } else {
-                    Params::setParam('sCategory', $params[0]);
+                    Params::setParam('sCategory', $search_uri);
                 }
                 if( count($params) == 2 ) {
                     $location = $params[1];
@@ -82,6 +82,7 @@
                         $city = City::newInstance()->findByPrimaryKey($c[1]);
                         Params::setParam('sCity', $city['pk_i_id']);
                     }
+                    Params::setParam('sCategory', $params[0]);
                 }
             }
         }
@@ -402,17 +403,17 @@
                                 osc_has_item_resources();
                                 $feed->addItem(array(
                                     'title' => osc_item_title(),
-                                    'link' => htmlentities( osc_item_url(), ENT_COMPACT, "UTF-8" ),
+                                    'link' => htmlentities( osc_item_url(),  ENT_COMPAT, "UTF-8" ),
                                     'description' => osc_item_description(),
                                     'dt_pub_date' => osc_item_pub_date(),
-                                    'image'     => array(  'url'    => htmlentities(osc_resource_thumbnail_url(), ENT_COMPACT, "UTF-8"),
+                                    'image'     => array(  'url'    => htmlentities(osc_resource_thumbnail_url(),  ENT_COMPAT, "UTF-8"),
                                                            'title'  => osc_item_title(),
-                                                           'link'   => htmlentities( osc_item_url() , ENT_COMPACT, "UTF-8") )
+                                                           'link'   => htmlentities( osc_item_url() ,  ENT_COMPAT, "UTF-8") )
                                 ));
                             } else {
                                 $feed->addItem(array(
                                     'title' => osc_item_title(),
-                                    'link' => htmlentities( osc_item_url() , ENT_COMPACT, "UTF-8"),
+                                    'link' => htmlentities( osc_item_url() , ENT_COMPAT, "UTF-8"),
                                     'description' => osc_item_description(),
                                     'dt_pub_date' => osc_item_pub_date()
                                 ));

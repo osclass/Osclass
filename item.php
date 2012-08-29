@@ -131,7 +131,7 @@
                             foreach( $mItems->data as $key => $value ) {
                                 Session::newInstance()->_keepForm($key);
                             }
-                            osc_add_flash_error_message( _m('An user exists with that email, if it is you, please log-in'));
+                            osc_add_flash_error_message( _m('A user with that email address already exists, if it is you, please log in'));
                             $this->redirectTo(osc_user_login_url());
                         }
                     }
@@ -179,7 +179,7 @@
                                         $this->doView('item-edit.php');
                                     } else {
                                         // add a flash message [ITEM NO EXISTE]
-                                        osc_add_flash_error_message( _m("Sorry, we don't have any listing with that ID") ) ;
+                                        osc_add_flash_error_message( _m("Sorry, we don't have any listings with that ID") ) ;
                                         if($this->user != null) {
                                             $this->redirectTo( osc_user_list_items_url() );
                                         } else {
@@ -329,8 +329,12 @@
                         }
                     }
 
+                    osc_run_hook('pre_item_send_friend_post', $item);
+
                     $mItem = new ItemActions(false);
                     $success = $mItem->send_friend();
+
+                    osc_run_hook('post_item_send_friend_post', $item);
 
                     if($success) {
                         Session::newInstance()->_clearVariables();
@@ -380,18 +384,20 @@
                         $this->redirectTo(osc_item_url());
                     }
 
-                    $mItem = new ItemActions(false);
+                    osc_run_hook('pre_item_contact_post', $item);
 
+                    $mItem  = new ItemActions(false);
                     $result = $mItem->contact();
-                    
+
+                    osc_run_hook('post_item_contact_post', $item);
+
                     if(is_string($result)){
                         osc_add_flash_error_message( $result ) ;
                     } else {
                         osc_add_flash_ok_message( _m("We've just sent an e-mail to the seller") ) ;
                     }
-                    
-                    $this->redirectTo( osc_item_url( ) );
 
+                    $this->redirectTo( osc_item_url( ) );
                     break;
                 case 'add_comment':
                     $mItem  = new ItemActions(false) ;
@@ -482,7 +488,7 @@
 
                     if ($item['b_active'] != 1) {
                         if( $this->userId == $item['fk_i_user_id'] ) {
-                            osc_add_flash_warning_message( _m("The listing hasn't been validated. Please validate it in order to show it to the rest of users") );
+                            osc_add_flash_warning_message( _m("The listing hasn't been validated. Please validate it in order to make it public") );
                         } else {
                             osc_add_flash_warning_message( _m("This listing hasn't been validated") );
                             $this->redirectTo( osc_base_url(true) );
@@ -520,6 +526,21 @@
                     // redirect to the correct url just in case it has changed
                     $itemURI = str_replace(osc_base_url(), '', osc_item_url());
                     $URI = preg_replace('|^' . REL_WEB_URL . '|', '', $_SERVER['REQUEST_URI']);
+                    // do not clean QUERY_STRING if permalink is not enabled
+                    if( osc_rewrite_enabled () ) {
+                        $URI = str_replace('?' . $_SERVER['QUERY_STRING'], '', $URI);
+                    } else {
+                        $params_keep = array('page', 'id');
+                        $params      = array();
+                        foreach( Params::getParamsAsArray('get') as $k => $v ) {
+                            if( in_array($k, $params_keep) ) {
+                                $params[] = "$k=$v";
+                            }
+                        }
+                        $URI = 'index.php?' . implode('&', $params);
+                    }
+
+                    // redirect to the correct url
                     if( $itemURI != $URI ) {
                         $this->redirectTo(osc_base_url() . $itemURI);
                     }

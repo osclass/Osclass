@@ -18,7 +18,7 @@ class OCadmin_categories extends OCadminTest {
         $this->loginWith() ;
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Categories");
-        $this->selenium->click("//a[@id='categories_manage']");
+        $this->selenium->click("//a[@id='categories']");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue($this->selenium->isTextPresent("Categories"),"Categories ...");
         
@@ -50,8 +50,9 @@ class OCadmin_categories extends OCadminTest {
     function _addItem()
     {
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Items");
-        $this->selenium->click("//a[@id='items_new']");
+        $this->selenium->click("xpath=//a[@id='items']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("link=Add new");
         $this->selenium->waitForPageToLoad("10000");
 
         // insert non registered user

@@ -108,7 +108,20 @@
                     'word'	=>	array('application/msword', 'application/octet-stream'),
                     'xl'	=>	'application/excel',
                     'eml'	=>	'message/rfc822',
-                    'json' => array('application/json', 'text/json')
+                    'json'  => array('application/json', 'text/json'),
+                    'odt'   =>  'application/vnd.oasis.opendocument.text',
+                    'ods'   =>  'application/vnd.oasis.opendocument.spreadsheet',
+                    'odp'   =>  'application/vnd.oasis.opendocument.presentation',
+                    'odg'   =>  'application/vnd.oasis.opendocument.graphics',
+                    'odc'   =>  'application/vnd.oasis.opendocument.chart',
+                    'odf'   =>  'application/vnd.oasis.opendocument.formula',
+                    'odb'   =>  'application/vnd.oasis.opendocument.database',
+                    'odi'   =>  'application/vnd.oasis.opendocument.image',
+                    'odm'   =>  'application/vnd.oasis.opendocument.text-master',
+                    'ott'   =>  'application/vnd.oasis.opendocument.text-template',
+                    'ots'   =>  'application/vnd.oasis.opendocument.spreadsheet-template',
+                    'otp'   =>  'application/vnd.oasis.opendocument.presentation-template',
+                    'otg'   =>  'application/vnd.oasis.opendocument.graphics-templte'
                 );
 
 ?>

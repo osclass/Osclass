@@ -41,7 +41,7 @@
                 <div class="form-label"><?php _e('Options') ; ?></div>
                 <div class="form-controls">
                     <?php FieldForm::options_input_text($field) ; ?>
-                    <p class="help-inline"><?php _e('Separate the options by commas') ; ?></p>
+                    <p class="help-inline"><?php _e('Separate options with commas') ; ?></p>
                 </div>
             </div>
             <div class="form-row">
@@ -49,7 +49,7 @@
                 <div class="form-controls"><label><?php FieldForm::required_checkbox($field); ?> <span><?php _e('This field is required') ; ?></span></label></div>
             </div>
             <div class="form-row">
-                <div><?php _e('Select the categories where you want to apply these attribute:') ; ?></div>
+                <div><?php _e('Select the categories where you want to apply this attribute:') ; ?></div>
                 <div class="separate-top">
                 <div class="form-label">
                     <a href="javascript:void(0);" onclick="checkAll('cat_tree', true) ; return false ;"><?php _e('Check all') ; ?></a> &middot;
@@ -131,7 +131,7 @@
                 },
                 error: function(){
                     $(".jsMessage").fadeIn('fast') ;
-                    $(".jsMessage p").html("<?php _e('Ajax error, try again.') ; ?>") ;
+                    $(".jsMessage p").html('<?php echo osc_esc_js(__('Ajax error, try again.')); ?>') ;
                 }
                 
             })        

@@ -34,10 +34,8 @@
         return 'row-offset';
     }
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __('See how many listings from your site have been reported as spam, expired, duplicate, etc.') . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -48,6 +46,11 @@
         </h1>
     <?php
     }
+
+    function customPageTitle($string) {
+        return sprintf(__('Report Statistics &raquo; %s'), $string);
+    }
+    osc_add_filter('admin_title', 'customPageTitle');
 
     function customHead() {
         $reports = __get("reports") ;
@@ -66,12 +69,12 @@
         // draws it.
         function drawChart() {
             var data = new google.visualization.DataTable();
-            data.addColumn('string', '<?php _e('Date') ; ?>');
-            data.addColumn('number', '<?php _e('Spam') ; ?>');
-            data.addColumn('number', '<?php _e('Repeated') ; ?>');
-            data.addColumn('number', '<?php _e('Bad category') ; ?>');
-            data.addColumn('number', '<?php _e('Offensive') ; ?>');
-            data.addColumn('number', '<?php _e('Expired') ; ?>');
+            data.addColumn('string', '<?php echo osc_esc_js(__('Date')); ?>');
+            data.addColumn('number', '<?php echo osc_esc_js(__('Spam')); ?>');
+            data.addColumn('number', '<?php echo osc_esc_js(__('Duplicated')); ?>');
+            data.addColumn('number', '<?php echo osc_esc_js(__('Bad category')); ?>');
+            data.addColumn('number', '<?php echo osc_esc_js(__('Offensive')); ?>');
+            data.addColumn('number', '<?php echo osc_esc_js(__('Expired')); ?>');
             <?php $k = 0;
             echo "data.addRows(".count($reports).");";
             foreach($reports as $date => $data) {
@@ -133,7 +136,7 @@
 <div class="grid-system" id="stats-page">
     <div class="grid-row grid-50 no-bottom-margin">
         <div class="row-wrapper">
-            <h2 class="render-title"><?php _e('Reports Statistics'); ?></h2>
+            <h2 class="render-title"><?php _e('Report Statistics'); ?></h2>
         </div>
     </div>
     <div class="grid-row grid-50 no-bottom-margin">
@@ -153,7 +156,7 @@
                     <b class="stats-title"></b>
                     <div id="placeholder" class="graph-placeholder" style="height:150px">
                         <?php if( count($reports) == 0 ) {
-                            _e("There're no statistics yet") ;
+                            _e("There are no statistics yet") ;
                         } ?>
                     </div>
                 </div>

@@ -168,148 +168,148 @@
                     },
                     messages: {
                         rewrite_item_url: {
-                            required: "<?php echo osc_esc_js( __("Listings url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Listings url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Listings url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Listings url: this field is required")); ?>.'
                         },
                         rewrite_page_url: {
-                            required: "<?php echo osc_esc_js( __("Page url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Page url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Page url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Page url: this field is required")); ?>.'
                         },
                         rewrite_cat_url: {
-                            required: "<?php echo osc_esc_js( __("Categories url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Categories url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Categories url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Categories url: this field is required")); ?>.'
                         },
                         rewrite_search_url: {
-                            required: "<?php echo osc_esc_js( __("Search url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Search url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Search url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Search url: this field is required")); ?>.'
                         },
                         rewrite_search_country: {
-                            required: "<?php echo osc_esc_js( __("Search country: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Search country: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Search country: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Search country: this field is required")); ?>.'
                         },
                         rewrite_search_region: {
-                            required: "<?php echo osc_esc_js( __("Search region: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Search region: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Search region: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Search region: this field is required")); ?>.'
                         },
                         rewrite_search_city: {
-                            required: "<?php echo osc_esc_js( __("Search city: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Search city: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Search city: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Search city: this field is required")); ?>.'
                         },
                         rewrite_search_city_area: {
-                            required: "<?php echo osc_esc_js( __("Search city area: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Search city area: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Search city area: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Search city area: this field is required")); ?>.'
                         },
                         rewrite_search_category: {
-                            required: "<?php echo osc_esc_js( __("Search category: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Search category: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Search category: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Search category: this field is required")); ?>.'
                         },
                         rewrite_search_user: {
-                            required: "<?php echo osc_esc_js( __("Search user: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Search user: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Search user: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Search user: this field is required")); ?>.'
                         },
                         rewrite_search_pattern: {
-                            required: "<?php echo osc_esc_js( __("Search pattern: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Search pattern: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Search pattern: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Search pattern: this field is required")); ?>.'
                         },
                         rewrite_contact: {
-                            required: "<?php echo osc_esc_js( __("Contact url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Contact url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Contact url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Contact url: this field is required")); ?>.'
                         },
                         rewrite_feed: {
-                            required: "<?php echo osc_esc_js( __("Feed url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Feed url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Feed url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Feed url: this field is required")); ?>.'
                         },
                         rewrite_language: {
-                            required: "<?php echo osc_esc_js( __("Language url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Language url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Language url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Language url: this field is required")); ?>.'
                         },
                         rewrite_item_mark: {
-                            required: "<?php echo osc_esc_js( __("Listing mark url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Listing mark url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Listing mark url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Listing mark url: this field is required")); ?>.'
                         },
                         rewrite_item_send_friend: {
-                            required: "<?php echo osc_esc_js( __("Listing send friend url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Listing send friend url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Listing send friend url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Listing send friend url: this field is required")); ?>.'
                         },
                         rewrite_item_contact: {
-                            required: "<?php echo osc_esc_js( __("Listing contact url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Listing contact url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Listing contact url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Listing contact url: this field is required")); ?>.'
                         },
                         rewrite_item_new: {
-                            required: "<?php echo osc_esc_js( __("New listing url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("New listing url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("New listing url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("New listing url: this field is required")); ?>.'
                         },
                         rewrite_item_activate: {
-                            required: "<?php echo osc_esc_js( __("Activate listing url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Activate listing url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Activate listing url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Activate listing url: this field is required")); ?>.'
                         },
                         rewrite_item_edit: {
-                            required: "<?php echo osc_esc_js( __("Edit listing url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Edit listing url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Edit listing url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Edit listing url: this field is required")); ?>.'
                         },
                         rewrite_item_delete: {
-                            required: "<?php echo osc_esc_js( __("Delete listing url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Delete listing url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Delete listing url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Delete listing url: this field is required")); ?>.'
                         },
                         rewrite_item_resource_delete: {
-                            required: "<?php echo osc_esc_js( __("Delete listing resource url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Delete listing resource url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Delete listing resource url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Delete listing resource url: this field is required")); ?>.'
                         },
                         rewrite_user_login: {
-                            required: "<?php echo osc_esc_js( __("Login url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Login url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Login url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Login url: this field is required")); ?>.'
                         },
                         rewrite_user_dashboard: {
-                            required: "<?php echo osc_esc_js( __("User dashboard url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("User dashboard url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("User dashboard url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("User dashboard url: this field is required")); ?>.'
                         },
                         rewrite_user_logout: {
-                            required: "<?php echo osc_esc_js( __("Logout url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Logout url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Logout url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Logout url: this field is required")); ?>.'
                         },
                         rewrite_user_register: {
-                            required: "<?php echo osc_esc_js( __("User register url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("User register url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("User register url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("User register url: this field is required")); ?>.'
                         },
                         rewrite_user_activate: {
-                            required: "<?php echo osc_esc_js( __("Activate user url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Activate user url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Activate user url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Activate user url: this field is required")); ?>.'
                         },
                         rewrite_user_activate_alert: {
-                            required: "<?php echo osc_esc_js( __("Activate alert url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Activate aler url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Activate alert url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Activate aler url: this field is required")); ?>.'
                         },
                         rewrite_user_profile: {
-                            required: "<?php echo osc_esc_js( __("User profile url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("User profile url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("User profile url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("User profile url: this field is required")); ?>.'
                         },
                         rewrite_user_items: {
-                            required: "<?php echo osc_esc_js( __("User listings url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("User listings url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("User listings url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("User listings url: this field is required")); ?>.'
                         },
                         rewrite_user_alerts: {
-                            required: "<?php echo osc_esc_js( __("User alerts url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("User alerts url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("User alerts url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("User alerts url: this field is required")); ?>.'
                         },
                         rewrite_user_recover: {
-                            required: "<?php echo osc_esc_js( __("Recover user url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Recover user url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Recover user url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Recover user url: this field is required")); ?>.'
                         },
                         rewrite_user_forgot: {
-                            required: "<?php echo osc_esc_js( __("User forgot url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("User forgot url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("User forgot url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("User forgot url: this field is required")); ?>.'
                         },
                         rewrite_user_change_password: {
-                            required: "<?php echo osc_esc_js( __("Change password url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Change password url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Change password url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Change password url: this field is required")); ?>.'
                         },
                         rewrite_user_change_email: {
-                            required: "<?php echo osc_esc_js( __("Change email url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Change email url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Change email url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Change email url: this field is required")); ?>.'
                         },
                         rewrite_user_change_email_confirm: {
-                            required: "<?php echo osc_esc_js( __("Change email confirm url: this field is required")); ?>.",
-                            minlength: "<?php echo osc_esc_js( __("Change email confirm url: this field is required")); ?>."
+                            required: '<?php echo osc_esc_js( __("Change email confirm url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Change email confirm url: this field is required")); ?>.'
                         }
                     },
                     wrapper: "li",
@@ -322,11 +322,11 @@
 
             function showhide() {
                 $("#inner_rules").toggle();
-                if($("#show_hide a").html()=='<?php _e('Show rules'); ?>') {
-                    $("#show_hide a").html('<?php _e('Hide rules'); ?>');
+                if($("#show_hide a").html()=='<?php echo osc_esc_js(__('Show rules')); ?>') {
+                    $("#show_hide a").html('<?php echo osc_esc_js(__('Hide rules')); ?>');
                     resetLayout();
                 } else {
-                    $("#show_hide a").html('<?php _e('Show rules'); ?>')
+                    $("#show_hide a").html('<?php echo osc_esc_js(__('Show rules')); ?>')
                 }
             }
 
@@ -345,10 +345,8 @@
     }
     osc_add_hook('admin_page_header','customPageHeader');
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __("Activate this option if you want your site's URLs to be more attractive to search engines and intelligible for users. <strong>Be careful</strong>: depending on your hosting service, this might not work correctly.") . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -383,12 +381,9 @@
                                     </div>
                                 </div>
                             </div>
-                                
                             <div id="custom_rules" <?php if( !osc_rewrite_enabled() ) { echo 'class="hide"'; } ?>>
                                 <div id="show_hide" ><a href="#" onclick="javascript:showhide();"><?php _e('Show rules'); ?></a></div>
                                 <div id="inner_rules" class="hide">
-
-
                                     <div class="form-row">
                                         <div class="form-label"><?php _e('Listing URL:') ; ?></div>
                                         <div class="form-controls">
@@ -616,6 +611,34 @@
                                     </div>
                                 </div>
                             </div>
+                            <?php if( osc_rewrite_enabled() ) { ?>
+                            <?php if( file_exists(osc_base_path() . '.htaccess') ) { ?>
+                            <div class="form-row">
+                                <h3 class="separate-top"><?php _e('Your .htaccess file') ?></h3>
+                                <pre><?php
+                                    $htaccess_content =  file_get_contents(osc_base_path() . '.htaccess');
+                                    echo htmlentities($htaccess_content);
+                                ?></pre>
+                            </div>
+                            <div class="form-row">
+                                <h3 class="separate-top"><?php _e('How your .htaccess file should looks like') ?></h3>
+                                <pre><?php
+                                    $rewrite_base = REL_WEB_URL ;
+                                    $htaccess     = <<<HTACCESS
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase {$rewrite_base}
+    RewriteRule ^index\.php$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . {$rewrite_base}index.php [L]
+</IfModule>
+HTACCESS;
+                                    echo htmlentities($htaccess);
+                                ?></pre>
+                            </div>
+                            <?php } ?>
+                            <?php } ?>
                             <div class="form-actions">
                                 <input type="submit" id="save_changes" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" class="btn btn-submit" />
                             </div>

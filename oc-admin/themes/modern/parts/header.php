@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="content-language" content="<?php echo osc_current_admin_locale(); ?>" />
         <script src="<?php echo osc_current_admin_theme_js_url('jquery.min.js') ; ?>"></script>
+        <script src="<?php echo osc_current_admin_theme_js_url('osc.js') ; ?>"></script>        
         <script src="<?php echo osc_current_admin_theme_js_url('jquery-ui-1.8.20.min.js') ; ?>"></script>
         <script src="<?php echo osc_current_admin_theme_js_url('ui-osc.js') ; ?>"></script>
         <!-- styles

@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '3.0') ;
+define('OSCLASS_VERSION', '3.0.1') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -123,6 +123,7 @@ require_once LIB_PATH . 'osclass/ItemActions.php';
 require_once LIB_PATH . 'osclass/emails.php';
 require_once LIB_PATH . 'osclass/model/Admin.php';
 require_once LIB_PATH . 'osclass/model/Alerts.php';
+require_once LIB_PATH . 'osclass/model/AlertsStats.php';
 require_once LIB_PATH . 'osclass/model/Cron.php';
 require_once LIB_PATH . 'osclass/model/Category.php';
 require_once LIB_PATH . 'osclass/model/CategoryStats.php';
@@ -162,6 +163,7 @@ require_once LIB_PATH . 'osclass/classes/Watermark.php';
 require_once LIB_PATH . 'osclass/classes/Rewrite.php';
 require_once LIB_PATH . 'osclass/classes/Stats.php';
 require_once LIB_PATH . 'osclass/classes/AdminMenu.php';
+require_once LIB_PATH . 'osclass/classes/datatables/DataTable.php';
 require_once LIB_PATH . 'osclass/classes/AdminToolbar.php';
 require_once LIB_PATH . 'osclass/classes/Breadcrumb.php';
 require_once LIB_PATH . 'osclass/alerts.php';
@@ -196,17 +198,14 @@ if( OC_ADMIN ) {
     Rewrite::newInstance()->init();
 }
 
-Plugins::init() ;
-
-
-if(osc_timezone() != '') {
+if( osc_timezone() != '' ) {
     date_default_timezone_set(osc_timezone());
 }
 
 function osc_show_maintenance() {
     if(defined('__OSC_MAINTENANCE__')) { ?>
         <div id="maintenance" name="maintenance">
-             <?php _e("The website is currently under maintenance mode"); ?>
+             <?php _e("The website is currently undergoing maintenance"); ?>
         </div>
     <?php }
 }
@@ -231,10 +230,27 @@ function osc_show_maintenance_css() {
 function osc_meta_generator() {
     echo '<meta name="generator" content="OSClass ' . OSCLASS_VERSION . '" />';
 }
+osc_add_hook('header', 'osc_show_maintenance');
+osc_add_hook('header', 'osc_show_maintenance_css');
+osc_add_hook('header', 'osc_meta_generator');
 
-osc_add_hook("header", "osc_show_maintenance");
-osc_add_hook("header", "osc_show_maintenance_css");
-osc_add_hook("header", "osc_meta_generator");
+// cron
+// hourly
+osc_add_hook('cron_hourly', 'purge_latest_searches_hourly');
+// daily
+osc_add_hook('cron_daily', 'osc_update_cat_stats');
+osc_add_hook('cron_daily', 'update_location_stats');
+osc_add_hook('cron_daily', 'purge_latest_searches_daily');
+osc_add_hook('cron_daily', 'daily_alert');
+// weekly
+osc_add_hook('cron_weekly', 'purge_latest_searches_weekly');
 
+Plugins::init();
+
+if( !class_exists('PHPMailer') ) {
+    require_once osc_lib_path() . 'phpmailer/class.phpmailer.php';
+}
+if( !class_exists('SMTP') ) {
+    require_once osc_lib_path() . 'phpmailer/class.smtp.php';
+}
 /* file end: ./oc-load.php */
-?>

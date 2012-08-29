@@ -85,7 +85,7 @@
                 <label><?php _e('Internal name'); ?></label>
                 <?php PageForm::internal_name_input_text($page); ?>
                 <div class="flashmessage flashmessage-warning flashmessage-inline">
-                    <p><?php _e('Used to identify quickly this page'); ?></p>
+                    <p><?php _e('Used to quickly identify this page'); ?></p>
                 </div>
                 <span class="help"></span>
             </div>

@@ -20,10 +20,8 @@
     $categories = __get('categories') ;
     $selected   = __get('default_selected') ;
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __('Create new fields for users to fill out when they publish a listing. You can require extra  information such as the number of bedrooms in real estate listings or fuel type in car listings, for example.') . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -65,9 +63,14 @@ function customHead() { ?>
         return false ;
     }
 
-    // check all the categories
+     // check all the categories
     function checkAll(id, check) {
         aa = $('#' + id + ' input[type=checkbox]').each(function() {
+            $(this).attr('checked', check) ;
+        }) ;
+    }
+    function checkCat(id, check) {
+        aa = $('#cat' + id + ' input[type=checkbox]').each(function() {
             $(this).attr('checked', check) ;
         }) ;
     }

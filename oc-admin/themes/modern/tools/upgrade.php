@@ -73,10 +73,8 @@
         return 'row-offset';
     }
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __("Check to see if you're using the latest version of OSClass. If you're not, the system will let you know so you can update and use the newest features.") . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -105,11 +103,11 @@
                                 <div class="tools upgrade">
                                 <?php if( $ok ) { ?>
                                     <p class="text">
-                                        <?php printf( __('Your OSClass installation can be auto-upgraded. Please, backup your database and the folder oc-content before attempting to upgrade your OSClass installation. You can also upgrade OSClass manaully, more information in the %s'), '<a href="http://doc.osclass.org/">Wiki</a>') ; ?>
+                                        <?php printf( __('Your OSClass installation can be auto-upgraded. Please, back up your database and the folder oc-content before attempting to upgrade your OSClass installation. You can also upgrade OSClass manaully, more information in the %s'), '<a href="http://doc.osclass.org/">Wiki</a>') ; ?>
                                     </p>
                                 <?php } else { ?>
                                     <p class="text">
-                                        <?php _e('Your OSClass installation can not be auto-upgraded. Files and folders need to be writable. You could apply write permissions via SSH with the command "chmod -R a+w *" (without quotes) or via a FTP client, it depends on the program so we can not provide more information. You could also upgrade OSClass downloading the upgrade package, unzip it and replace the files on your server with the ones on the package.') ; ?>
+                                        <?php _e("Your OSClass installation can't be auto-upgraded. Files and folders need to be writable. You can apply write permissions via SSH with the command \"chmod -R a+w *\" (without quotes) or via an FTP client, it depends on the program so we can not provide more information. You can also upgrade OSClass by downloading the upgrade package, unzipping it and replacing the files on your server with the ones in the package.") ; ?>
                                     </p>
                                 <?php } ?>
                                     <div id="steps_div">

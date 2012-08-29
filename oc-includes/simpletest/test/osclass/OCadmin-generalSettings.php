@@ -115,7 +115,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->assertEqual( $this->selenium->getValue('keep_original_image'), $keep_original_image=='off'?'on':'off', 'Media tab, check keep_original_image');
 
         $this->selenium->type('maxSizeKb'   , $maxSizeKb);
-        $this->selenium->type('allowedExt'  , 'png,jpg,gif');//$allowedExt);
+        $this->selenium->type('allowedExt'  , 'png,gif,jpg');//$allowedExt);
         $this->selenium->type('dimThumbnail', $dimThumbnail);
         $this->selenium->type('dimPreview'  , $dimPreview);
         $this->selenium->type('dimNormal'   , $dimNormal);
@@ -361,8 +361,8 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("//input[@type='submit']");
         sleep(4);
         
-        $this->assertTrue( $this->selenium->isTextPresent("Moderated comments: this field has to be numeric only") , "Comments settings JS validator.");
-        $this->assertTrue( $this->selenium->isTextPresent("Comments per page: this field has to be numeric only") , "Comments settings JS validator.");
+        $this->assertTrue( $this->selenium->isTextPresent("Moderated comments: this field must only contain numeric characters") , "Comments settings JS validator.");
+        $this->assertTrue( $this->selenium->isTextPresent("Comments per page: this field must only contain numeric characters") , "Comments settings JS validator.");
         
         
         $this->selenium->click("enabled_comments");
@@ -377,7 +377,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("Comments' settings have been updated") , "Comments settings, check.");
+        $this->assertTrue( $this->selenium->isTextPresent("Comment settings have been updated") , "Comments settings, check.");
         if( $pref['enabled_comments'] == 'on' ){
             $this->assertEqual( $this->selenium->getValue('enabled_comments'), 'off' , "Comments settings, check." ) ;
         } else {
@@ -412,7 +412,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("Comments' settings have been updated") , "Update comments settings. ERROR");
+        $this->assertTrue( $this->selenium->isTextPresent("Comment settings have been updated") , "Update comments settings. ERROR");
         
         $this->assertEqual( $this->selenium->getValue('enabled_comments')       ,  $pref['enabled_comments']         , "Comments settings, check.") ;
         $this->assertEqual( $this->selenium->getValue('reg_user_post_comments') ,  $pref['reg_user_post_comments']   , "Comments settings, check.") ;
@@ -472,8 +472,8 @@ class OCadmin_generalSettings extends OCadmintest {
         sleep(4);
         
         $this->assertTrue( $this->selenium->isTextPresent("Page title: this field is required") , 'JS Validation');
-        $this->assertTrue( $this->selenium->isTextPresent("RSS shows: this field is required") , 'JS Validation');
-        $this->assertTrue( $this->selenium->isTextPresent("The latest listings show: this field is required") , 'JS Validation');
+        $this->assertTrue( $this->selenium->isTextPresent("Listings shown in RSS feed: this field is required") , 'JS Validation');
+        $this->assertTrue( $this->selenium->isTextPresent("Latest listings shown: this field is required") , 'JS Validation');
         $this->assertTrue( $this->selenium->isTextPresent("The search page shows: this field is required") , 'JS Validation');
         $this->assertTrue( $this->selenium->isTextPresent("Email: this field is required") , 'JS Validation');
 
@@ -486,9 +486,9 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->click("//input[@type='submit']");
         sleep(4);
         
-        $this->assertTrue( $this->selenium->isTextPresent("RSS shows: this field has to be numeric only") , 'JS Validation');
-        $this->assertTrue( $this->selenium->isTextPresent("The latest listings show: this field has to be numeric only") , 'JS Validation');
-        $this->assertTrue( $this->selenium->isTextPresent("The search page shows: this field has to be numeric only") , 'JS Validation');
+        $this->assertTrue( $this->selenium->isTextPresent("Listings shown in RSS feed: this field must only contain numeric characters") , 'JS Validation');
+        $this->assertTrue( $this->selenium->isTextPresent("Latest listings shown: this field must only contain numeric characters") , 'JS Validation');
+        $this->assertTrue( $this->selenium->isTextPresent("The search page shows: this field must only contain numeric characters") , 'JS Validation');
         $this->assertTrue( $this->selenium->isTextPresent("Invalid email address") , 'JS Validation');
         
         $this->selenium->type("pageTitle"   ,"New title web");
@@ -1031,7 +1031,7 @@ class OCadmin_generalSettings extends OCadmintest {
         sleep(4);
         
         
-        $this->assertTrue( $this->selenium->isTextPresent("No fields could be left empty. 36 fields were not updated") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("All fields are required. 36 fields were not updated") , "Empty permalink" ) ;
 
         
         $this->selenium->type("rewrite_item_url", "item/{ITEM_ID}/{ITEM_TITLE}");

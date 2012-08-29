@@ -10,7 +10,7 @@ class OCadmin_tools extends OCadminTest {
      * Import sql
      * Remove imported data
      */
-    function atestImportData()
+    function testImportData()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -36,7 +36,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Import bad file. 
      */
-    function atestImportDataFail()
+    function testImportDataFail()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -53,7 +53,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Backup database
      */
-    function atestBackupSql()
+    function testBackupSql()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -61,8 +61,8 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->click("link=Backup data");
         $this->selenium->waitForPageToLoad("30000");
         $this->selenium->click("//input[@id='backup_sql']");
-        $this->selenium->waitForPageToLoad("300000");
-        $this->assertTrue($this->selenium->isTextPresent("Backup has completed successfully"), "Backup database.");
+        $this->selenium->waitForPageToLoad("600000");
+        $this->assertTrue($this->selenium->isTextPresent("Backup completed successfully"), "Backup database.");
         // REMOVE FILE
         foreach (glob(osc_base_path() . "OSClass_mysqlbackup.*") as $filename) {
             unlink($filename);
@@ -73,7 +73,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Backup oclass
      */
-    function atestBackupZip()
+    function testBackupZip()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -81,8 +81,8 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->click("link=Backup data");
         $this->selenium->waitForPageToLoad("30000");
         $this->selenium->click("//input[@id='backup_zip']");
-        $this->selenium->waitForPageToLoad("300000");
-        $this->assertTrue($this->selenium->isTextPresent("Archiving successful!"), "Backup osclass.");
+        $this->selenium->waitForPageToLoad("600000");
+        $this->assertTrue($this->selenium->isTextPresent("Archived successfully!"), "Backup osclass.");
         // REMOVE FILE
         foreach (glob(osc_base_path() . "OSClass_backup.*") as $filename) {
             unlink($filename);
@@ -90,7 +90,7 @@ class OCadmin_tools extends OCadminTest {
     }
     
     
-    function atestMaintenance()
+    function testMaintenance()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -105,7 +105,7 @@ class OCadmin_tools extends OCadminTest {
         }
         
         $this->selenium->open( osc_base_url(true) );
-        $this->assertTrue($this->selenium->isTextPresent("The website is currently under maintenance mode"), "Check maintenance mode on public website");
+        $this->assertTrue($this->selenium->isTextPresent("The website is currently undergoing maintenance"), "Check maintenance mode on public website");
         
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -184,10 +184,10 @@ class OCadmin_tools extends OCadminTest {
     /*
      * Test if the http_referer functionality is working on admin
      */
-    function atestHTTPReferer()
+    function testHTTPReferer()
     {
         $this->HTTPReferer( osc_admin_base_url(true)."?page=items" , "Manage listings");
-        $this->HTTPReferer( osc_admin_base_url(true)."?page=stats&action=comments" , "Comments Statistics");
+        $this->HTTPReferer( osc_admin_base_url(true)."?page=stats&action=comments" , "Comment Statistics");
     }
     
     function HTTPReferer($url, $text) 

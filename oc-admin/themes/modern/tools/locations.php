@@ -32,7 +32,7 @@
             function reload() {
                 window.location = '<?php echo osc_admin_base_url(true).'?page=tools&action=locations'; ?>' ;
             }
-            
+
             function ajax_() {
                 $.ajax({
                     type: "POST",
@@ -50,7 +50,7 @@
                     }
                 });
             }
-            
+
             $(document).ready(function(){
                 if(<?php echo $worktodo;?>> 0) {
                     ajax_();
@@ -61,18 +61,9 @@
     }
     osc_add_hook('admin_header','customHead');
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
-    }
-    osc_add_hook('help_box','addHelp');
-
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1><?php _e('Tools') ; ?>
-            <a href="#" class="btn ico ico-32 ico-help float-right"></a>
-        </h1>
+        <h1><?php _e('Tools') ; ?></h1>
     <?php
     }
 
@@ -92,7 +83,7 @@
         </p>
         <?php } ?>
         <p>
-            <?php _e('You can recalculate your locations stats. This is useful if you upgrade from versions below OSClass 2.4'); ?>.
+            <?php _e('You can recalculate your location stats. This is useful if you upgrade from versions older than OSClass 2.4'); ?>.
         </p>
         <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
             <input type="hidden" name="action" value="locations_post" />
@@ -100,7 +91,7 @@
             <fieldset>
                 <div class="form-horizontal">
                     <div class="form-actions">
-                        <input id="button_save" type="submit" value="<?php echo osc_esc_html( __('Calculate locations stats')); ?>" class="btn btn-submit" />
+                        <input id="button_save" type="submit" value="<?php echo osc_esc_html( __('Calculate location stats')); ?>" class="btn btn-submit" />
                     </div>
                 </div>
             </fieldset>
@@ -108,4 +99,4 @@
     </div>
     <!-- /settings form -->
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

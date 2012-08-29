@@ -19,7 +19,7 @@
 
     function fn_email_alert_validation($alert, $email, $secret) {
         $user['s_name'] = "";
-                                    
+
         // send alert validation email
         $prefLocale = osc_language() ;
         $page = Page::newInstance()->findByInternalName('email_alert_validation') ;
@@ -28,7 +28,7 @@
         $_title = osc_apply_filter('email_title', osc_apply_filter('email_alert_validation_title', $page_description[$prefLocale]['s_title']));
         $_body  = osc_apply_filter('email_description', osc_apply_filter('email_alert_validation_description', $page_description[$prefLocale]['s_text']));
 
-        $validation_link = osc_user_activate_alert_url( $secret, $email );
+        $validation_link = osc_user_activate_alert_url( $alert['pk_i_id'], $secret, $email );
 
         $words   = array() ;
         $words[] = array(
@@ -45,7 +45,8 @@
         $body  = osc_mailBeauty($_body , $words);
 
         $params = array(
-            'subject'  => $_title,
+            'subject'  => $title,
+            'from'     => osc_contact_email(),
             'to'       => $email,
             'to_name'  => $user['s_name'],
             'body'     => $body,
@@ -70,7 +71,7 @@
             $user['s_name'] = $user['s_email'];
         }
 
-        $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_secret']);
+        $unsub_link = osc_user_unsubscribe_alert_url($s_search['pk_i_id'], $user['s_email'], $s_search['s_secret']);
         $unsub_link = '<a href="' . $unsub_link . '">' . __('unsubscribe alert') . '</a>';
 
         $words   = array();
@@ -91,6 +92,7 @@
 
         $params = array(
             'subject'  => $title,
+            'from'     => osc_contact_email(),
             'to'       => $user['s_email'],
             'to_name'  => $user['s_name'],
             'body'     => $body,
@@ -115,7 +117,7 @@
             $user['s_name'] = $user['s_email'];
         }
 
-        $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_secret']);
+        $unsub_link = osc_user_unsubscribe_alert_url($s_search['pk_i_id'], $user['s_email'], $s_search['s_secret']);
         $unsub_link = '<a href="' . $unsub_link . '">' . __('unsubscribe alert') . '</a>';
 
         $words   = array();
@@ -136,6 +138,7 @@
 
         $params = array(
             'subject'  => $title,
+            'from'     => osc_contact_email(),
             'to'       => $user['s_email'],
             'to_name'  => $user['s_name'],
             'body'     => $body,
@@ -160,7 +163,7 @@
             $user['s_name'] = $user['s_email'];
         }
 
-        $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_secret']);
+        $unsub_link = osc_user_unsubscribe_alert_url($s_search['pk_i_id'], $user['s_email'], $s_search['s_secret']);
         $unsub_link = '<a href="' . $unsub_link . '">' . __('unsubscribe alert') . '</a>';
 
         $words   = array() ;
@@ -181,6 +184,7 @@
 
         $params = array(
             'subject'  => $title,
+            'from'     => osc_contact_email(),
             'to'       => $user['s_email'],
             'to_name'  => $user['s_name'],
             'body'     => $body,
@@ -205,7 +209,7 @@
             $user['s_name'] = $user['s_email'];
         }
 
-        $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_secret']);
+        $unsub_link = osc_user_unsubscribe_alert_url($s_search['pk_i_id'], $user['s_email'], $s_search['s_secret']);
         $unsub_link = '<a href="' . $unsub_link . '">' . __('unsubscribe alert') . '</a>';
 
         $words   = array() ;
@@ -226,6 +230,7 @@
 
         $params = array(
             'subject'  => $title,
+            'from'     => osc_contact_email(),
             'to'       => $user['s_email'],
             'to_name'  => $user['s_name'],
             'body'     => $body,
@@ -273,6 +278,7 @@
 
             $emailParams = array(
                 'subject'  => $title,
+                'from'     => osc_contact_email(),
                 'to'       => $aComment['s_author_email'],
                 'to_name'  => $aComment['s_author_name'],
                 'body'     => $body,
@@ -330,6 +336,7 @@
 
         $emailParams = array(
             'subject'  => $title,
+            'from'     => osc_contact_email(),
             'to'       => $item['s_contact_email'],
             'to_name'  => $item['s_contact_name'],
             'body'     => $body,
@@ -372,6 +379,7 @@
 
             $emailParams = array(
                 'subject'  => $title,
+                'from'     => osc_contact_email(),
                 'to'       => $user['s_email'],
                 'to_name'  => $user['s_name'],
                 'body'     => $body,
@@ -410,6 +418,7 @@
 
             $emailParams = array(
                 'subject'  => $title,
+                'from'     => osc_contact_email(),
                 'to'       => $user['s_email'],
                 'to_name'  => $user['s_name'],
                 'body'     => $body,
@@ -451,15 +460,16 @@
 
             $params = array(
                 'subject'  => $title,
+                'from'     => osc_contact_email(),
                 'to'       => $new_email,
                 'to_name'  => Session::newInstance()->_get('userName'),
                 'body'     => $body,
                 'alt_body' => $body
             ) ;
             osc_sendMail($params);
-            osc_add_flash_ok_message( _m('We have sent you an e-mail. Follow the instructions to validate the changes'));
+            osc_add_flash_ok_message( _m("We've sent you an e-mail. Follow its instructions to validate the changes"));
         } else {
-            osc_add_flash_error_message( _m('We tried to sent you an e-mail, but it failed. Please, contact the administrator'));
+            osc_add_flash_error_message( _m("We tried to sent you an e-mail, but it failed. Please, contact an administrator"));
         }
     }
     osc_add_hook('hook_email_new_email', 'fn_email_new_email');
@@ -496,6 +506,7 @@
 
             $emailParams = array(
                 'subject'  => $title,
+                'from'     => osc_contact_email(),
                 'to'       => $user['s_email'],
                 'to_name'  => $user['s_name'],
                 'body'     => $body,
@@ -547,13 +558,13 @@
         $body  = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_send_friend_description', $content['s_text'])), $words) ;
 
         $params = array(
-            'from'      => $aItem['yourEmail'],
-            'from_name' => $aItem['yourName'],
+            'from'      => osc_contact_email(),
+            'from_name' => osc_page_title(),
+            'reply_to'  => $aItem['yourEmail'],
             'subject'   => $title,
             'to'        => $aItem['friendEmail'],
             'to_name'   => $aItem['friendName'],
-            'body'      => $body,
-           'alt_body'   => $body
+            'body'      => $body
         );
 
         if( osc_notify_contact_friends() ) {
@@ -716,8 +727,6 @@
         $from_name = osc_page_title() ;
 
         $emailParams = array(
-            'from'      => $admin_email,
-            'from_name' => __('Admin mail system'),
             'subject'   => $title_email,
             'to'        => $admin_email,
             'to_name'   => __('Admin mail system'),
@@ -806,6 +815,7 @@
 
         $emailParams =  array (
             'subject'  => $title,
+            'from'     => osc_contact_email(),
             'to'       => $contactEmail,
             'to_name'  => $contactName,
             'body'     => $body,
@@ -995,6 +1005,7 @@
 
         $emailParams = array(
             'subject'  => $title,
+            'from'     => osc_contact_email(),
             'to'       => $item['s_contact_email'],
             'to_name'  => $item['s_contact_name'],
             'body'     => $body,
@@ -1073,12 +1084,8 @@
         $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_inquiry_title', $content['s_title'])), $words);
         $body = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_inquiry_description', $content['s_text'])), $words);
 
-        $from = osc_contact_email() ;
-        $from_name = osc_page_title() ;
-
         $emailParams = array (
-            'from'      => $from,
-            'from_name' => $from_name,
+            'from'      => osc_contact_email(),
             'subject'   => $title,
             'to'        => osc_user_email(),
             'to_name'   => osc_user_name(),
@@ -1152,12 +1159,8 @@
         $title_email = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_comment_user_title', $content['s_title'])), $words);
         $body_email = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_comment_user_description', $content['s_text'])), $words);
 
-        $from = osc_contact_email() ;
-        $from_name = osc_page_title() ;
-
         $emailParams = array(
             'from'      => $admin_email,
-            'from_name' => __('Admin mail system'),
             'subject'   => $title_email,
             'to'        => $item['s_contact_email'],
             'to_name'   => $item['s_contact_name'],

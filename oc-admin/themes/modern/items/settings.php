@@ -16,10 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
+    function addHelp() {
+        echo '<p>' . __('Modify the general settings for your listings. Decide if users have to register in order to publish something, the number of pictures allowed for each listing, etc.') . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -81,7 +79,7 @@
                                 <div>
                                     <?php printf( __('An user has to wait %s seconds between each listing added'), '<input type="text" class="input-small" name="items_wait_time" value="' . osc_items_wait_time() . '" />') ; ?>
                                     <div class="help-box">
-                                        <?php _e('If the value is zero, there is no waiting') ; ?>
+                                        <?php _e('If the value is set to zero, there is no wait period') ; ?>
                                     </div>
                                 </div>
                                 <div class="separate-top-medium">
@@ -91,7 +89,7 @@
                                     </label>
                                 </div>
                                 <div>
-                                    <?php printf( __("After %s validated listings the user doesn't longer need to validate the listings"), '<input type="text" class="input-small" name="num_moderate_items" value="' . ( ( osc_moderate_items() == -1 ) ? '' : osc_moderate_items() ) . '" />') ; ?>
+                                    <?php printf( __("After %s validated listings the user doesn't need to validate the listings any more"), '<input type="text" class="input-small" name="num_moderate_items" value="' . ( ( osc_moderate_items() == -1 ) ? '' : osc_moderate_items() ) . '" />') ; ?>
                                     <div class="help-box">
                                         <?php _e('If the value is zero, it means that each listing must be validated') ; ?>
                                     </div>
@@ -123,7 +121,7 @@
                                 <div class="separate-top-medium">
                                     <label>
                                         <input type="checkbox" <?php echo ( osc_item_attachment() ? 'checked="checked"' : '' ) ; ?> name="item_attachment" value="1" />
-                                        <?php _e('Allow attach files in contact publisher form') ; ?>
+                                        <?php _e('Allow attached files in contact publisher form') ; ?>
                                     </label>
                                 </div>
                             </div>
@@ -140,13 +138,13 @@
                                 <div class="separate-top-medium">
                                     <label>
                                         <input type="checkbox" <?php echo ( osc_notify_contact_item() ? 'checked="checked"' : '' ) ; ?> name="notify_contact_item" value="1" />
-                                        <?php _e('Send a copy to admin of the contact publisher e-mail') ; ?>
+                                        <?php _e('Send admin a copy of the "contact publisher" email') ; ?>
                                     </label>
                                 </div>
                                 <div class="separate-top-medium">
                                     <label>
                                         <input type="checkbox" <?php echo ( osc_notify_contact_friends() ? 'checked="checked"' : '' ) ; ?> name="notify_contact_friends" value="1" />
-                                        <?php _e('Send a copy to admin of the share listing e-mail') ; ?>
+                                        <?php _e('Send admin a copy to "share listing" email') ; ?>
                                     </label>
                                 </div>
                             </div>
@@ -167,7 +165,7 @@
                                     </div>
                                     <div class="separate-top-medium">
                                         <?php printf( __('Attach %s images per listing'), '<input type="text" class="input-small" name="numImages@items" value="' . osc_max_images_per_item() . '" />' ) ; ?>
-                                        <div class="help-box"><?php _e('If the value is zero, it means unlimited number of images') ; ?></div>
+                                        <div class="help-box"><?php _e('If the value is zero, it means an unlimited number of images is allowed') ; ?></div>
                                     </div>
                                 </div>
                             </div>

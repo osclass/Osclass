@@ -27,9 +27,10 @@
     require_once ABS_PATH . 'oc-load.php' ;
 
     if( CLI ) {
-        $cli_params = getopt('p:');
+        $cli_params = getopt('p:t:');
         Params::setParam('page', $cli_params['p']);
-        if( !in_array(Params::getParam('page'), array('cron')) ) {
+        Params::setParam('cron-type', $cli_params['t']);
+        if( !in_array(Params::getParam('page'), array('cron')) && !in_array(Params::getParam('cron-type'), array('hourly', 'daily', 'weekly')) ) {
             exit(1);
         }
     }
@@ -39,7 +40,7 @@
             require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
 
             $title   = sprintf(__('Maintenance &raquo; %s'), osc_page_title());
-            $message = sprintf(__('We are sorry for any inconvenience. %s is under maintenance mode') . '.', osc_page_title() );
+            $message = sprintf(__('We are sorry for any inconvenience. %s is undergoing maintenance.') . '.', osc_page_title() );
 
             header('HTTP/1.1 503 Service Temporarily Unavailable');
             header('Status: 503 Service Temporarily Unavailable');

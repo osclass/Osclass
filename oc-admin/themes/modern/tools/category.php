@@ -20,18 +20,9 @@
         return 'row-offset';
     }
 
-    function addHelp(){
-        echo '<h3>What does a red highlight mean?</h3>';
-        echo '<p>This is where I would provide help to the user on how everything in my admin panel works. Formatted HTML works fine in here too.
-    Red highlight means that the listing has been marked as spam.</p>';
-    }
-    osc_add_hook('help_box','addHelp');
-
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1><?php _e('Tools'); ?>
-            <a href="#" class="btn ico ico-32 ico-help float-right"></a>
-        </h1>
+        <h1><?php _e('Tools'); ?></h1>
     <?php
     }
 
@@ -46,7 +37,7 @@
     <div id="backup-settings">
         <h2 class="render-title"><?php _e('Category stats') ; ?></h2>
         <p>
-            <?php _e('You can recalculate stats by category, useful if the stats seems to be incorrect.'); ?>.
+            <?php _e('You can recalculate stats by category, useful if the stats seem to be incorrect.'); ?>.
         </p>
         <form id="backup_form" name="backup_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
             <input type="hidden" name="page" value="tools" />
@@ -62,4 +53,4 @@
     </div>
     <!-- /settings form -->
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

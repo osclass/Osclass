@@ -508,6 +508,8 @@ class OCadmin_items extends OCadminTest {
         
         // only can delete resources
         $this->selenium->click("xpath=//a[position()=1 and contains(.,'Delete')]");
+        sleep(4);
+        $this->selenium->click("//input[@id='media-delete-submit']");
         $this->selenium->waitForPageToLoad("10000");
         sleep(20);
         $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
@@ -518,6 +520,8 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("xpath=//a[position()=1 and contains(.,'Delete')]");
+        sleep(4);
+        $this->selenium->click("//input[@id='media-delete-submit']");
         $this->selenium->waitForPageToLoad("10000");
         sleep(20);
         $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
@@ -697,7 +701,7 @@ class OCadmin_items extends OCadminTest {
         if($moderation == -1) {
             $this->assertTrue($this->selenium->isTextPresent("Your listing has been published"),"Item need validation moderate_items = -1 (NEVER MODERATE). ERROR" );
         } else if($moderation == 0 || $moderation == 1) {
-            $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address"),"Need validation but message don't appear") ;
+            $this->assertTrue($this->selenium->isTextPresent("Check your inbox to validate your listing"),"Need validation but message don't appear") ;
             // fake validate item
             $user = User::newInstance()->findByEmail($this->_email);
             $new_i_item = $user['i_items']+1;
@@ -708,7 +712,7 @@ class OCadmin_items extends OCadminTest {
         if($moderation == -1 || $moderation == 1) {
             $this->assertTrue($this->selenium->isTextPresent("Your listing has been published"),"Item need validation moderate_items = -1 (NEVER MODERATE). ERROR" );
         } else if($moderation == 0) {
-            $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address"),"Need validation but message don't appear" );
+            $this->assertTrue($this->selenium->isTextPresent("Check your inbox to validate your listing"),"Need validation but message don't appear" );
         }
         
         $user = User::newInstance()->findByEmail($this->_email);
@@ -729,7 +733,7 @@ class OCadmin_items extends OCadminTest {
         $this->post_item_website();
 
         if($bool == 0){
-            $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address"),"Need validation but message don't appear" );
+            $this->assertTrue($this->selenium->isTextPresent("Check your inbox to validate your listing"),"Need validation but message don't appear" );
         } else {
             $this->assertTrue($this->selenium->isTextPresent("Your listing has been published"),"Item need validation moderate_items = -1 (NEVER MODERATE). ERROR" );
         }

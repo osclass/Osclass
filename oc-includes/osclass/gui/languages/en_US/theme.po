@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Modern Theme 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-05 11:58+0100\n"
+"POT-Creation-Date: 2012-07-12 18:18+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
 "Language-Team: OSClass <info@osclass.org>\n"
@@ -97,44 +97,44 @@ msgstr ""
 msgid "Your search must be at least three characters long"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/functions.php:44
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:53
 msgid "Theme settings updated correctly"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/functions.php:51
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:60
 msgid "The logo image has been uploaded correctly"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/functions.php:53
-#: /var/www/osclass-git/oc-content/themes/modern/functions.php:56
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:62
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:65
 msgid "An error has occurred, please try again"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/functions.php:63
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:72
 msgid "The logo image has been removed"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/functions.php:65
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:74
 msgid "Image not found"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/functions.php:72
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:81
 msgid "Header logo"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/functions.php:73
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:82
 msgid "Theme settings"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/functions.php:89
+#: /var/www/osclass-git/oc-content/themes/modern/functions.php:100
 msgid "ie. PHP Programmer"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/head.php:39
+#: /var/www/osclass-git/oc-content/themes/modern/head.php:44
 msgid "No file selected"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/head.php:40
+#: /var/www/osclass-git/oc-content/themes/modern/head.php:45
 msgid "Choose File"
 msgstr ""
 
@@ -434,15 +434,15 @@ msgid "Contact publisher"
 msgstr ""
 
 #: /var/www/osclass-git/oc-content/themes/modern/item.php:185
-msgid "The listing is expired. You cannot contact the publisher."
+msgid "The listing is expired. You can't contact the publisher."
 msgstr ""
 
 #: /var/www/osclass-git/oc-content/themes/modern/item.php:189
-msgid "It's your own listing, you cannot contact the publisher."
+msgid "It's your own listing, you can't contact the publisher."
 msgstr ""
 
 #: /var/www/osclass-git/oc-content/themes/modern/item.php:193
-msgid "You must login or register a new free account in order to contact the advertiser"
+msgid "You must log in or register a new account in order to contact the advertiser"
 msgstr ""
 
 #: /var/www/osclass-git/oc-content/themes/modern/item.php:209
@@ -721,7 +721,7 @@ msgid "Remove logo"
 msgstr ""
 
 #: /var/www/osclass-git/oc-content/themes/modern/admin/header.php:23
-msgid "There isn't any logo uploaded yet"
+msgid "No logo has been uploaded yet"
 msgstr ""
 
 #: /var/www/osclass-git/oc-content/themes/modern/admin/header.php:26
@@ -750,42 +750,50 @@ msgid "The images folder <strong>%s</strong> is not writable on your server"
 msgstr ""
 
 #: /var/www/osclass-git/oc-content/themes/modern/admin/header.php:54
-msgid "OSClass can't upload logo image from the administration panel."
+msgid "OSClass can't upload the logo image from the administration panel."
 msgstr ""
 
 #: /var/www/osclass-git/oc-content/themes/modern/admin/header.php:55
-msgid "Please make the mentioned image folder writable."
+msgid "Please make the aforementioned image folder writable."
 msgstr ""
 
 #: /var/www/osclass-git/oc-content/themes/modern/admin/header.php:60
 msgid "To make a directory writable under UNIX execute this command from the shell:"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:10
+#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:12
 msgid "I would like to contribute to the development of OSClass with a donation of"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:15
+#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:17
 msgid "Custom"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:16
+#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:18
 msgid "Donate"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:26
+#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:28
 msgid "Search placeholder"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:30
+#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:32
 msgid "Footer link"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:32
-msgid "I want to help OSClass linking to <a href=\"http://osclass.org/\" target=\"_blank\">osclass.org</a> from my site with the following text:"
+#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:34
+msgid "I want to help OSClass by linking to <a href=\"http://osclass.org/\" target=\"_blank\">osclass.org</a> from my site with the following text:"
 msgstr ""
 
-#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:37
+#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:39
+msgid "Default logo"
+msgstr ""
+
+#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:41
+msgid "Show default logo in case you didn't upload one previously"
+msgstr ""
+
+#: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:45
 msgid "Save changes"
 msgstr ""
 

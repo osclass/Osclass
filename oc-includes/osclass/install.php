@@ -77,15 +77,13 @@ Session::newInstance()->_set('adminLocale', $current_locale);
 
 $translation = new Translation(true);
 
-
-
 $step = Params::getParam('step');
 if( !is_numeric($step) ) {
     $step = '1';
 }
 
 if( is_osclass_installed( ) ) {
-    $message = __('You appear to have already installed OSClass. To reinstall please clear your old database tables first.');
+    $message = __("Looks like you've already installed OSClass. To reinstall please clear your old database tables first.");
     osc_die('OSClass &raquo; Error', $message) ;
 }
 

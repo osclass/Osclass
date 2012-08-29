@@ -342,7 +342,10 @@
             $this->dao->limit($start, $limit);
             
             $aux = $this->dao->get() ;
-            return $aux->result() ;
+            if($aux) {
+                return $aux->result() ;
+            }
+            return array();
         }
         
         /**

@@ -379,6 +379,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
 
+        $('#countryName').attr( "autocomplete", "off" );
         $('#region').attr( "autocomplete", "off" );
         $('#city').attr( "autocomplete", "off" );
 
@@ -389,6 +390,20 @@
             $('#city').val('');            
         });
 
+        $('#countryName').live('keyup.autocomplete', function(){
+            $('#countryId').val('');
+            $( this ).autocomplete({
+                source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_countries",
+                minLength: 0,
+                select: function( event, ui ) {
+                    $('#countryId').val(ui.item.id);  
+                    $('#regionId').val('');
+                    $('#region').val('');
+                    $('#cityId').val('');
+                    $('#city').val('');     
+                }
+            });
+        });
 
         $('#region').live('keyup.autocomplete', function(){
             $('#regionId').val('');
@@ -431,7 +446,7 @@
                     return true;
                 }
             },
-            "<?php _e("Description: needs to be longer"); ?>."
+            "<?php _e("Description needs to be longer"); ?>."
         );
 
         // Code for form validation
@@ -673,13 +688,13 @@
              }
         });
 
-        if( $("#regionId").attr('value') == "")  {
+        if( $("#regionId").attr('value') == "") {
             $("#cityId").attr('disabled',true);
         }
 
         if($("#countryId").length != 0) {
             if( $("#countryId").attr('type').match(/select-one/) ) {
-                if( $("#countryId").attr('value') == "")  {
+                if( $("#countryId").attr('value') == "") {
                     $("#regionId").attr('disabled',true);
                 }
             }
@@ -700,7 +715,7 @@
                     return true;
                 }
             },
-            "<?php _e("Description: needs to be longer"); ?>."
+            "<?php _e("Description needs to be longer"); ?>."
         );
 
         // Code for form validation
@@ -888,7 +903,7 @@
             gebi('photos').appendChild(d);
 
         } else {
-            alert('<?php _e('Sorry, you have reached the maximum number of images per ad');?>');
+            alert('<?php echo osc_esc_js(__('Sorry, you have reached the maximum number of images per listing')); ?>');
         }
     }
     // Listener: automatically add new file field when the visible ones are full.
@@ -918,7 +933,11 @@
 <script type="text/javascript">
     $("#catId").change(function(){
         var cat_id = $(this).val();
+        <?php if(OC_ADMIN) { ?>
+        var url = '<?php echo osc_admin_base_url(true); ?>';
+        <?php } else { ?>
         var url = '<?php echo osc_base_url(true); ?>';
+        <?php } ?>
         var result = '';
 
         if(cat_id != '') {
@@ -935,7 +954,11 @@
     });
     $(document).ready(function(){
         var cat_id = $("#catId").val();
+        <?php if(OC_ADMIN) { ?>
+        var url = '<?php echo osc_admin_base_url(true); ?>';
+        <?php } else { ?>
         var url = '<?php echo osc_base_url(true); ?>';
+        <?php } ?>
         var result = '';
 
         if(cat_id != '') {
