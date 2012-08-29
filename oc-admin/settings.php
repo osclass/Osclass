@@ -1091,7 +1091,6 @@ HTACCESS;
 
                                         $iUpdated          = 0 ;
                                         $maxSizeKb         = Params::getParam('maxSizeKb') ;
-                                        $allowedExt        = Params::getParam('allowedExt') ;
                                         $dimThumbnail      = Params::getParam('dimThumbnail') ;
                                         $dimPreview        = Params::getParam('dimPreview') ;
                                         $dimNormal         = Params::getParam('dimNormal') ;
@@ -1173,7 +1172,6 @@ HTACCESS;
 
                                         // format parameters
                                         $maxSizeKb         = strip_tags($maxSizeKb) ;
-                                        $allowedExt        = strip_tags($allowedExt) ;
                                         $dimThumbnail      = strip_tags($dimThumbnail) ;
                                         $dimPreview        = strip_tags($dimPreview);
                                         $dimNormal         = strip_tags($dimNormal) ;
@@ -1202,10 +1200,6 @@ HTACCESS;
                                         $iUpdated += Preference::newInstance()->update(
                                                 array('s_value' => $maxSizeKb),
                                                 array('s_name'  => 'maxSizeKb')
-                                        ) ;
-                                        $iUpdated += Preference::newInstance()->update(
-                                                array('s_value' => $allowedExt),
-                                                array('s_name'  => 'allowedExt')
                                         ) ;
                                         $iUpdated += Preference::newInstance()->update(
                                                 array('s_value' => $dimThumbnail),
