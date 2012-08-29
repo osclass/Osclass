@@ -108,7 +108,7 @@ class Frontend_items extends FrontendTest {
                                 $item['photo'], $item['contactName'], 
                                 $this->_email);
         sleep(1);
-        $this->assertTrue($this->selenium->isTextPresent("A user with that email address already exists, if it is you, please log in") ;
+        $this->assertTrue($this->selenium->isTextPresent("A user with that email address already exists, if it is you, please log in"));
         
         $uSettings->set_items_wait_time($items_wait_time);
         $uSettings->set_selectable_parent_categories($set_selectable_parent_categories);
