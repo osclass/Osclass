@@ -30,6 +30,18 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 $('form#change-email').validate({
+                    rules: {
+                        new_email: {
+                            required: true,
+                            email: true
+                        }
+                    }, 
+                    messages: {
+                        new_email: {
+                            required: "<?php _e("Email: this field is required"); ?>.",
+                            email: "<?php _e("Invalid email address"); ?>."
+                            }
+                    },
                     errorLabelContainer: "#error_list",
                     wrapper: "li",
                 invalidHandler: function(form, validator) {
