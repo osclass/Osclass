@@ -38,8 +38,8 @@
                     }, 
                     messages: {
                         new_email: {
-                            required: "<?php _e("Email: this field is required"); ?>.",
-                            email: "<?php _e("Invalid email address"); ?>."
+                            required: "<?php _e("Email: this field is required", 'modern'); ?>.",
+                            email: "<?php _e("Invalid email address", 'modern'); ?>."
                             }
                     },
                     errorLabelContainer: "#error_list",
