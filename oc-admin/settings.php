@@ -173,7 +173,6 @@
                                                                             osc_add_flash_error_message(sprintf(_m("%s can't be added"), $regionName), 'admin');
                                                                         }
 
-                                                                        //$this->install_location_by_region();
                                                                     } else {
                                                                         $mRegions    = new Region();
                                                                         $regionName  = Params::getParam('region');
@@ -292,7 +291,7 @@
                                                                             }
                                                                         }
                                                                     }
-                                                                    //$this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']."&region=".$regionId);
+                                                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']."&region=".$regionId);
                                             break;
                                             case('edit_city'):      // edit city
                                                                     $mRegion = new Region();

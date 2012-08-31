@@ -217,11 +217,11 @@ switch( $step ) {
                 <?php } elseif($step == 2) {
                          display_database_config();
                     } elseif($step == 3) {
-                        if( !isset($error["error"]) ) {
+                        //if( !isset($error["error"]) ) {
                             display_target();
-                        } else {
-                            display_database_error($error, ($step - 1));
-                        }
+                        //} else {
+                        //    display_database_error($error, ($step - 1));
+                        //}
                     } elseif($step == 4) {
                         display_categories($error, $password);
                     } elseif($step == 5) {

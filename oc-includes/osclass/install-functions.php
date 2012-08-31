@@ -662,6 +662,23 @@ function display_database_config() {
 }
 
 function display_target() {
+    
+    $internet_error = false;
+    $country_list = json_decode(osc_file_get_contents('http://localhost/~conejo/geo/newgeo.services.php?action=countries'), true);
+
+    $region_list = array();
+    
+    $country_ip = '';
+    if(preg_match('|([a-z]{2})-([A-Z]{2})|', @$_SERVER['HTTP_ACCEPT_LANGUAGE'], $match)) {
+        $country_ip = $match[2];
+        $region_list = json_decode(osc_file_get_contents('http://localhost/~conejo/geo/newgeo.services.php?action=regions&country='.$match[2]), true);
+    }
+    
+    if(!isset($country_list[0]) || !isset($country_list[0]['s_name'])) {
+        $internet_error = true;
+    }
+    
+    
 ?>
 <form id="target_form" name="target_form" action="#" method="post" onsubmit="return false;">
     <h2 class="target"><?php _e('Information needed'); ?></h2>
@@ -711,45 +728,23 @@ function display_target() {
         </div>
         <div class="clear"></div>
         <div id="location">
+            <?php if(!$internet_error) { ?>
             <div id="country-box">
-                <div id="radio-target" style="display: none;">
-                    <input id="icountry" type="radio" name="c_country" value="Country" checked onclick="change_to_country(this);" />
-                    <label for="icountry"><?php _e('Country'); ?></label>
-                    <input id="worlwide" type="radio" name="c_country" value="International" onclick="change_to_international(this);" />
-                    <label for="worlwide"><?php _e('Worldwide'); ?></label>
-                </div>
-                <div id="d_country" class="box">
-                    <input type="text" id="t_country" class="left" name="t_country" size="1" onkeydown="more_size(this, event);" />
-                    <div class="clear"></div>
-                </div>
-                <div id="a_country">
 
-                </div>
-                <p id="country-error" style="display:none;"><?php _e('Region/City targeting is only available when you choose only "one country"'); ?></p>
-            </div>
-            <div id="region-div" style="display:none;">
-                <div id="region-info" class="space-left-10">
-                    <a href="javascript:void(0);" onclick="$('#region-box').attr('style', '');$('#region-info').attr('style', 'display:none');$('#t_location').focus();"><?php _e('Click here if you want to specify region/regions or city/cities'); ?></a>
-                </div>
-                <div id="region-box"  class="space-left-60" style="display:none;">
-                    <div id="radio-target">
-                        <input id="iregion" type="radio" name="c_location" value="By region" onclick='$("#d_location span").remove();' checked="checked" />
-                        <label for="iregion"><?php _e('By Region'); ?></label>
-                        <input id="icity" type="radio" name="c_location" value="By City" onclick='$("#d_location span").remove();' />
-                        <label for="icity"><?php _e('By City'); ?></label>
-                    </div>
-                    <div id="d_location" class="box">
-                        <input type="text" id="t_location" name="t_location" size="1" onkeydown="more_size(this);" />
-                    </div>
-                    <div id="a_location">
+                <select name="country_select" id="country_select" >
+                    <option value="international"><?php _e("International"); ?></option>
+                    <?php foreach($country_list as $c) { ?>
+                        <option value="<?php echo $c['code']; ?>" <?php if($c['code']==$country_ip) { echo 'selected="selected"'; }; ?>><?php echo $c['s_name']; ?></option>
+                    <?php }; ?>
+                </select>
 
-                    </div>
-                </div>
             </div>
-            <div style="display: none;" id="location-error">
+            <?php } else { ?>
+            <div id="location-error">
                 <?php _e('No internet connection. You can continue the installation and insert countries later.'); ?>
                 <input type="hidden" id="skip-location-h" name="skip-location-h" value="0" />
             </div>
+            <?php }; ?>
         </div>
     </div>
     <div class="clear"></div>
