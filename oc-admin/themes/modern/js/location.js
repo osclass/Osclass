@@ -131,17 +131,16 @@
         var countries ;
         $("#country").autocomplete({
             source: function( text, add ) {
-                $.ajax({
-                    "url": "http://geo.osclass.org/geo.services.php?callback=?&action=country&max=5",
-                    "dataType": "jsonp",
-                    "data": text,
-                    success: function( json ) {
+                $.getJSON(
+                    "http://localhost/~conejo/geo/newgeo.services.php?action=country",
+                    {"data" : text},
+                    function(json){
                         var suggestions = [];
                         if( json.length > 0 ) {
                             countries = new Array();
                             $.each(json, function(i, val){
-                                suggestions.push(val.name);
-                                countries[val.name] = val.code;
+                                suggestions.push(val.s_name);
+                                countries[val.s_name] = val.code;
                                 $('input[name=c_manual]').val('0');
                             });
                         } else {
@@ -151,7 +150,7 @@
                         }
                         add(suggestions);
                     }
-                });
+                );
             },
 
             select: function(e, ui) {
@@ -168,17 +167,16 @@
         var regions ;
         $("#region").autocomplete({
             source: function( text, add ) {
-                $.ajax({
-                    "url": 'http://geo.osclass.org/geo.services.php?callback=?&action=region&max=5&country=' + $('input[name=country_parent]').val(),
-                    "dataType": "jsonp",
-                    "data": text,
-                    success: function( json ) {
+                $.getJSON(
+                    "http://localhost/~conejo/geo/newgeo.services.php?action=region",
+                    {"data" : text, "country" :  $('input[name=country_c_parent]').val()},
+                    function(json){
                         var suggestions = [];
                         if( json.length > 0 ) {
                             regions = new Array();
                             $.each(json, function(i, val){
-                                suggestions.push(val.name);
-                                regions[val.name] = val.code;
+                                suggestions.push(val.s_name);
+                                regions[val.s_name] = val.code;
                                 $('input[name=r_manual]').val('0');
                             });
                         } else {
@@ -188,7 +186,15 @@
                         }
                         add(suggestions);
                     }
-                });
+                );
+            },
+
+            select: function(e, ui) {
+                if ( typeof regions[ui.item.value] !== "undefined" && regions[ui.item.value]) {
+                    $("#region_id").val(regions[ui.item.value]);
+                } else {
+                    $("#region_id").val('');
+                }
             },
 
             selectFirst: true
@@ -197,17 +203,16 @@
         var cities ;
         $("#city").autocomplete({
             source: function( text, add ) {
-                $.ajax({
-                    "url": 'http://geo.osclass.org/geo.services.php?callback=?&action=city&max=5&country=' + $('input[name=country_parent]').val(),
-                    "dataType": "jsonp",
-                    "data": text,
-                    success: function( json ) {
+                $.getJSON(
+                    "http://localhost/~conejo/geo/newgeo.services.php?action=city",
+                    {"data" : text, "region" :  $('input[name=region_parent]').val()},
+                    function(json){
                         var suggestions = [];
                         if( json.length > 0 ) {
                             cities = new Array();
                             $.each(json, function(i, val){
-                                suggestions.push(val.name);
-                                cities[val.name] = val.code;
+                                suggestions.push(val.s_name);
+                                cities[val.s_name] = val.code;
                                 $('input[name=ci_manual]').val('0');
                             });
                         } else {
@@ -217,7 +222,15 @@
                         }
                         add(suggestions);
                     }
-                });
+                );
+            },
+
+            select: function(e, ui) {
+                if ( typeof cities[ui.item.value] !== "undefined" && cities[ui.item.value]) {
+                    $("#city_id").val(cities[ui.item.value]);
+                } else {
+                    $("#city_id").val('');
+                }
             },
 
             selectFirst: true
