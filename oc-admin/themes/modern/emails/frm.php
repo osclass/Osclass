@@ -39,6 +39,41 @@
                 theme_advanced_buttons1_add : "media",
                 theme_advanced_disable : "styleselect"
             }) ;
+
+            $(document).ready(function(){
+                // dialog filters
+                $('#dialog-test-it').dialog({
+                    autoOpen: false,
+                    modal: true,
+                    width: 700,
+                    title: '<?php echo osc_esc_js( __('Send email') ) ; ?>'
+                });
+                $('#btn-display-test-it').click(function(){
+                    $('#dialog-test-it').dialog('open');
+                    return false;
+                });
+                
+                $('#btn-test-it').click(function() {
+                    var name   = $('input[name*="#s_title"]:visible').attr('name');
+                    var locale = name.replace("#s_title","");
+                    
+                    var idTinymce = locale+"#s_text";
+                    
+                    $.post('<?php echo osc_admin_base_url(true); ?>',
+                    {  
+                        page: 'ajax',
+                        action: 'test_mail_template',
+                        email:  $('input[name="test_email"]:visible').val(),
+                        title:  $('input[name*="s_title"]:visible').val(),
+                        body: escape(tinyMCE.get(idTinymce).getContent({format : 'html'}) )
+                    },
+                    function(data) {
+                        alert(data.html); 
+                    }, 'json');
+                    return false;
+                });
+            });
+            
         </script>
         <?php
     }
@@ -74,9 +109,15 @@
             </div>
         </div>
         <div class="clear"></div>
-        <div class="form-actions">
+        <div class="form-actions form-inline">
             <input type="submit" value="<?php echo osc_esc_html(__('Save changes')); ?>" class="btn btn-submit" />
+            <a id="btn-display-test-it" class="btn btn-submit"><?php _e('Test it'); ?></a>
         </div>
     </form>
+</div>
+
+<div id="dialog-test-it" class="hide">
+    <input type="text" name="test_email" class="input-actions"/>
+    <input type="submit" id="btn-test-it" href="#" class="btn btn-blue submit-right" value="<?php _e('Send email'); ?>"/>
 </div>
 <?php osc_current_admin_theme_path('parts/footer.php') ; ?>
