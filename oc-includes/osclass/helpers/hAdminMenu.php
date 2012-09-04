@@ -32,7 +32,8 @@
     function osc_draw_admin_menu()
     {
         // actual url
-        $actual_url = $_SERVER['QUERY_STRING'];
+        $actual_url  = $_SERVER['QUERY_STRING'];
+        $actual_page = Params::getParam('page');
         
         $something_selected = false;
         $adminMenu          = AdminMenu::newInstance() ;
@@ -79,6 +80,9 @@
                                 if($actual_url == $url_submenu) {
                                     $sub_current = true;
                                     $class       = 'current';
+                                } else if($actual_page == $value[2]) {
+                                    $sub_current = true;
+                                    $class       = 'current';
                                 }
                                 
                                 $sSubmenu .= '<li><a id="'.$aSub[2].'" href="'.$aSub[1].'">'.$aSub[0].'</a></li>'.PHP_EOL ;
@@ -99,11 +103,16 @@
                 $url_menu   = $value[1];
                 $url_menu   = str_replace(osc_admin_base_url(true).'?', '', $url_menu);
                 $url_menu   = str_replace(osc_admin_base_url(), '', $url_menu);
-                error_log($url_menu ." == ". $actual_url);
+                
                 if($actual_url == $url_menu) {
                     $class = 'current';
                     $something_selected = true;
+                } else if($actual_page == $value[2]) {
+                    $class       = 'current';
+                    $something_selected = true;
                 }
+                
+                $class = osc_apply_filter('current_admin_menu_'.$value[2],$class);
                 
                 $icon = '';
                 if(isset($value[4])) {
