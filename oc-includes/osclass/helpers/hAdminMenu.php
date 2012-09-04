@@ -58,6 +58,7 @@
         $sMenu .= '<div id="sidebar">'.PHP_EOL ;
         $sMenu .= '<ul class="oscmenu">'.PHP_EOL ;
         foreach($aMenu as $key => $value) {
+            
             $sSubmenu   = "";
             $credential = $value[3];
             if(!$is_moderator || $is_moderator && $credential == 'moderator') { // show
@@ -94,10 +95,11 @@
                         $sSubmenu .= "</ul>".PHP_EOL;
                     }
                 }
-
+                
                 $url_menu   = $value[1];
-                $url_menu   = str_replace(osc_admin_base_url(true), '', $url_menu);
+                $url_menu   = str_replace(osc_admin_base_url(true).'?', '', $url_menu);
                 $url_menu   = str_replace(osc_admin_base_url(), '', $url_menu);
+                error_log($url_menu ." == ". $actual_url);
                 if($actual_url == $url_menu) {
                     $class = 'current';
                     $something_selected = true;
