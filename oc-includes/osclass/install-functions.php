@@ -662,16 +662,16 @@ function display_database_config() {
 }
 
 function display_target() {
-    
-    $internet_error = false;
-    $country_list = json_decode(osc_file_get_contents('http://localhost/~conejo/geo/newgeo.services.php?action=countries'), true);
+    $country_list = osc_file_get_contents('http://geo.osclass.org/newgeo.services.php?action=countries');
+    $country_list = json_decode(substr($country_list, 1, strlen($country_list)-2), true);
 
     $region_list = array();
     
     $country_ip = '';
     if(preg_match('|([a-z]{2})-([A-Z]{2})|', @$_SERVER['HTTP_ACCEPT_LANGUAGE'], $match)) {
         $country_ip = $match[2];
-        $region_list = json_decode(osc_file_get_contents('http://localhost/~conejo/geo/newgeo.services.php?action=regions&country='.$match[2]), true);
+        $region_list = osc_file_get_contents('http://geo.osclass.org/newgeo.services.php?action=regions&country='.$match[2]);
+        $region_list = json_decode(substr($region_list, 1, strlen($region_list)-2), true);
     }
     
     if(!isset($country_list[0]) || !isset($country_list[0]['s_name'])) {
@@ -729,20 +729,38 @@ function display_target() {
         <div class="clear"></div>
         <div id="location">
             <?php if(!$internet_error) { ?>
+            <input type="hidden" id="skip-location-input" name="skip-location-input" value="0" />
+            <input type="hidden" id="country-input" name="country-input" value="" />
+            <input type="hidden" id="region-input" name="region-input" value="" />
+            <input type="hidden" id="city-input" name="city-input" value="" />
             <div id="country-box">
 
                 <select name="country_select" id="country_select" >
-                    <option value="international"><?php _e("International"); ?></option>
+                    <option value="skip"><?php _e("Skip location"); ?></option>
+                    <!-- <option value="all"><?php _e("International"); ?></option> -->
                     <?php foreach($country_list as $c) { ?>
                         <option value="<?php echo $c['code']; ?>" <?php if($c['code']==$country_ip) { echo 'selected="selected"'; }; ?>><?php echo $c['s_name']; ?></option>
                     <?php }; ?>
                 </select>
+                
+                <select name="region_select" id="region_select" style="display: none;">
+                    <option value="all"><?php _e("All regions"); ?></option>
+                </select>
+                
+                <select name="city_select" id="city_select" style="display: none;">
+                    <option value="all"><?php _e("All cities"); ?></option>
+                </select>
+                
+                <div id="no_region_text" style="display: none;"><?php _e("There are no regions available for this country"); ?></div>
+
+                <div id="no_city_text" style="display: none;"><?php _e("There are no cities available for this region"); ?></div>
+                
 
             </div>
             <?php } else { ?>
             <div id="location-error">
                 <?php _e('No internet connection. You can continue the installation and insert countries later.'); ?>
-                <input type="hidden" id="skip-location-h" name="skip-location-h" value="0" />
+                <input type="hidden" id="skip-location-input" name="skip-location-input" value="1" />
             </div>
             <?php }; ?>
         </div>
@@ -751,9 +769,6 @@ function display_target() {
     <p class="margin20">
         <a href="#" class="button" onclick="validate_form();">Next</a>
     </p>
-    <div id="skip-location-d" style="display:none;">
-        <label for="skip-location" style="padding-left: 12px;"><input id="skip-location" name="skip-location" type="checkbox" /><?php _e('Continue installation process and insert countries later'); ?></label>
-    </div>
     <div class="clear"></div>
 </form>
 <div id="lightbox" style="display:none;">

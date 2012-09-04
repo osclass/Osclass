@@ -131,10 +131,11 @@
         var countries ;
         $("#country").autocomplete({
             source: function( text, add ) {
-                $.getJSON(
-                    "http://localhost/~conejo/geo/newgeo.services.php?action=country",
-                    {"data" : text},
-                    function(json){
+                $.ajax({
+                    "url": "http://geo.osclass.org/newgeo.services.php?callback=?&action=country",
+                    "dataType": "jsonp",
+                    "data": text,
+                    "success": function(json) {
                         var suggestions = [];
                         if( json.length > 0 ) {
                             countries = new Array();
@@ -149,8 +150,10 @@
                             $('input[name=c_manual]').val('1');
                         }
                         add(suggestions);
+                    },
+                    "error": function(d,msg) {
                     }
-                );
+                });
             },
 
             select: function(e, ui) {
@@ -167,10 +170,12 @@
         var regions ;
         $("#region").autocomplete({
             source: function( text, add ) {
-                $.getJSON(
-                    "http://localhost/~conejo/geo/newgeo.services.php?action=region",
-                    {"data" : text, "country" :  $('input[name=country_c_parent]').val()},
-                    function(json){
+                text.country = $('input[name=country_c_parent]').val();
+                $.ajax({
+                    "url": "http://geo.osclass.org/newgeo.services.php?callback=?&action=region",
+                    "dataType": "jsonp",
+                    "data": text,
+                    "success": function(json) {
                         var suggestions = [];
                         if( json.length > 0 ) {
                             regions = new Array();
@@ -185,8 +190,10 @@
                             $('input[name=r_manual]').val('1');
                         }
                         add(suggestions);
+                    },
+                    "error": function(d,msg) {
                     }
-                );
+                });
             },
 
             select: function(e, ui) {
@@ -203,10 +210,12 @@
         var cities ;
         $("#city").autocomplete({
             source: function( text, add ) {
-                $.getJSON(
-                    "http://localhost/~conejo/geo/newgeo.services.php?action=city",
-                    {"data" : text, "region" :  $('input[name=region_parent]').val()},
-                    function(json){
+                text.region = $('input[name=region_parent]').val();
+                $.ajax({
+                    "url": "http://geo.osclass.org/newgeo.services.php?callback=?&action=city",
+                    "dataType": "jsonp",
+                    "data": text,
+                    "success": function(json) {
                         var suggestions = [];
                         if( json.length > 0 ) {
                             cities = new Array();
@@ -221,8 +230,10 @@
                             $('input[name=ci_manual]').val('1');
                         }
                         add(suggestions);
+                    },
+                    "error": function(d,msg) {
                     }
-                );
+                });
             },
 
             select: function(e, ui) {

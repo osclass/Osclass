@@ -101,7 +101,7 @@
                                                                         if(isset($exists['s_name'])) {
                                                                             osc_add_flash_error_message(sprintf(_m('%s already was in the database'), $countryName), 'admin');
                                                                         } else {
-                                                                            $data_sql = osc_file_get_contents('http://localhost/~conejo/geo/newgeo.download.php?action=country&term=' . urlencode($countryCode) );
+                                                                            $data_sql = osc_file_get_contents('http://geo.osclass.org/newgeo.download.php?action=country&term=' . urlencode($countryCode) );
 
                                                                             $conn = DBConnectionClass::newInstance() ;
                                                                             $c_db = $conn->getOsclassDb() ;
@@ -160,7 +160,7 @@
                                                                         $regionId    = Params::getParam('region_id');
                                                                         $regionName  = Params::getParam('region');
                                                                         if($regionId!='') {
-                                                                            $data_sql = osc_file_get_contents('http://localhost/~conejo/geo/newgeo.download.php?action=region&term=' . urlencode($regionId) );
+                                                                            $data_sql = osc_file_get_contents('http://geo.osclass.org/newgeo.download.php?action=region&term=' . urlencode($regionId) );
 
                                                                             $conn = DBConnectionClass::newInstance() ;
                                                                             $c_db = $conn->getOsclassDb() ;
@@ -252,7 +252,7 @@
                                                                         $cityId    = Params::getParam('city_id');
                                                                         $cityName  = Params::getParam('city');
                                                                         if($cityId!='') {
-                                                                            $data_sql = osc_file_get_contents('http://localhost/~conejo/geo/newgeo.download.php?action=city&term=' . urlencode($cityId) );
+                                                                            $data_sql = osc_file_get_contents('http://geo.osclass.org/newgeo.download.php?action=city&term=' . urlencode($cityId) );
 
                                                                             $conn = DBConnectionClass::newInstance() ;
                                                                             $c_db = $conn->getOsclassDb() ;

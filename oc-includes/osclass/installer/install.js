@@ -64,16 +64,6 @@ function validate_form() {
         num_error = num_error + 1;
     }
 
-    if( $('#skip-location-h').val() == 0 ) {
-        if($("#d_country span").length < 1) {
-            $("#d_country").css('border', '2px solid red');
-            num_error = num_error + 1;
-        }
-    } else {
-        if( !$('#skip-location').attr('checked') ) {
-            num_error = num_error + 1;
-        }
-    }
     
     var pattern_notnull=/^[a-zA-Z0-9]+$/;
     if( !pattern_notnull.test(admin_user.value) ) {
@@ -88,9 +78,6 @@ function validate_form() {
     var input = $("#target_form input");
     $("#lightbox").css('display','');
 
-    if( $('input[name=c_country]:checked').val() == 'International' ) {
-        alert('You\'ve chosen worlwide, it might take a while')
-    }
 
     $.ajax({
         type: 'POST',
@@ -99,7 +86,7 @@ function validate_form() {
         data: input,
         timeout: 600000,
         success: function(data) {
-            if(data.status == 200) {
+            if(data.status == true) {
                 var form = document.createElement("form");
                 form.setAttribute("method", 'POST');
                 form.setAttribute("action", 'install.php');
@@ -145,8 +132,6 @@ function no_internet() {
     $('#worlwide').attr('disabled', true );
     $('#d_country span').remove();
     $('#location-error').css('display','block');
-    $('#skip-location-d').css('display','block');
-    $('#skip-location-h').attr('value','1');
 }
 
 function more_size(input, event) {
@@ -154,6 +139,76 @@ function more_size(input, event) {
         input.setAttribute("size", (parseInt(input.getAttribute('size')) - 1) );
     } else {
         input.setAttribute("size", (parseInt(input.getAttribute('size')) + 1) );
+    }
+}
+
+function get_regions(country) {
+    $("#country-input").attr("value", country);
+    $("#region-input").attr("value", "all");
+    $("#city-input").attr("value", "all");
+    $('#city_select').hide();
+    $('#no_city_text').hide();
+    $('#skip-location-input').attr('value','0');
+    if(country=="skip") {
+        $('#skip-location-input').attr('value','1');
+    } else if(country=='all') {
+        $('#region_select').hide();
+        $('#no_region_text').hide();
+    } else {
+        var jsondata = new Object();
+        jsondata.country = country;
+        $.jsonp({
+            "url": "http://geo.osclass.org/newgeo.services.php?callback=?&action=regions",
+            "data": jsondata,
+            "success": function(json) {
+                if( json.length > 0 ) {
+                    $('#region_select').show();
+                    $('#no_region_text').hide();
+                    $(".region_select").remove();
+                    $.each(json, function(i, val){
+                        $("#region_select").append('<option value="'+val.code+'" class="region_select" >'+val.s_name+'</option>');
+                    });
+                } else {
+                    $('#region_select').hide();
+                    $('#no_region_text').show();
+                };
+            },
+            "error": function(d,msg) {
+                //no_internet();
+            }
+        });
+    }
+}
+
+function get_cities(region) {
+    $("#region-input").attr("value", region);
+    $("#city-input").attr("value", "all");
+    if(region=='all') {
+        $('#city_select').hide();
+        $('#no_city_text').hide();
+    } else {
+        var jsondata = new Object();
+        jsondata.region = region;
+        $.jsonp({
+            "url": "http://geo.osclass.org/newgeo.services.php?callback=?&action=cities",
+            "data": jsondata,
+            "success": function(json) {
+                if( json.length > 0 ) {
+                    $('#city_select').show();
+                    $('#no_city_text').hide();
+                    $(".city_select").remove();
+                    $.each(json, function(i, val){
+                        $("#city_select").append('<option value="'+val.code+'" class="city_select" >'+val.s_name+'</option>');
+                    });
+                } else {
+                    $('#city_select').hide();
+                    $('#no_city_text').show();
+                };
+            },
+            "error": function(d,msg) {
+                //no_internet();
+            }
+        });
     }
 }
 
@@ -166,6 +221,21 @@ $(document).ready(function(){
     $("#admin_user").focus(function() {
         $('#admin-user-error').attr('style', 'display:none;');
     });
+    
+    $("#country_select").change(function(){
+        get_regions($("#country_select option:selected").attr("value"));
+    });
+
+    $("#region_select").change(function(){
+        get_cities($("#region_select option:selected").attr("value"));
+    });
+    
+    $("#city_select").change(function(){
+        $("#city-input").attr("value", $("#city_select option:selected").attr("value"));
+    });
+
+    get_regions($("#country_select option:selected").attr("value"));
+    
 });
 
 /* Extension of jQuery */
