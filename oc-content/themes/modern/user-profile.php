@@ -47,18 +47,18 @@
                         $("#delete_account").click(function(){
                             $("#dialog-delete-account").dialog('open');
                         });
-                        
-                        $("#delete-account-cancel").click(function(){
-                            $("#dialog-delete-account").dialog('close');
-                        });
-                        
-                        $("#delete-account-submit").click(function(){
-                            window.location = '<?php echo osc_base_url(true).'?page=user&action=delete&id='.osc_user_id().'&secret='.$user['s_secret']; ?>';
-                        });
-                        
+                                                
                         $("#dialog-delete-account").dialog({
                             autoOpen: false,
-                            modal: true
+                            modal: true,
+                            buttons: {
+                                "<?php echo osc_esc_js(__('Delete', 'modern')); ?>": function() {
+                                    window.location = '<?php echo osc_base_url(true).'?page=user&action=delete&id='.osc_user_id().'&secret='.$user['s_secret']; ?>';
+                                },
+                                "<?php echo osc_esc_js(__('Cancel', 'modern')); ?>": function() {
+                                    $( this ).dialog( "close" );
+                                }
+                            }
                         });
                     });
                 </script>
@@ -118,7 +118,7 @@
                         </div>
                         <div class="row">
                             <button type="submit"><?php _e('Update', 'modern') ; ?></button>
-                            <a id="delete_account" class="btn btn-red"><?php _e('Delete my account', 'modern') ; ?></a>
+                            <button id="delete_account" type="button"><?php _e('Delete my account', 'modern') ; ?></button>
                         </div>
                         <?php osc_run_hook('user_form') ; ?>
                     </fieldset>
@@ -129,13 +129,6 @@
             <div class="form-horizontal">
                 <div class="form-row">
                     <p><?php _e('All your listings and alerts will be removed, this action can not be undone.', 'modern');?></p>
-                </div>
-                <div class="form-actions">
-                    <div class="wrapper">
-                        <a id="delete-account-cancel" class="btn" href="javascript:void(0);return false;"><?php _e('Cancel', 'modern'); ?></a>
-                        <a id="delete-account-submit" href="javascript:void(0);return false;" class="btn btn-red" ><?php echo osc_esc_html( __('Delete', 'modern') ); ?></a>
-                        <div class="clear"></div>
-                    </div>
                 </div>
             </div>
         </div>
