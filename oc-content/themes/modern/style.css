@@ -382,6 +382,7 @@ ul.breadcrumb li { float: left; padding: 0 2px; }
 .user_account .your_items .item span { color:#CCC; margin:0 10px; }
 .user_account .your_items .item .options { margin-top:5px; }
 .user_account .your_items .item .delete { color:#999; font-size:11px; }
+#uniform-delete_account, #delete_account{ background-color:#DB4040;border-color:#9E0000; color:#fff;}
 
 /* -- ADD ITEM FORM --------------------------------------- */
 .add_item { clear:both; float:left; padding:15px 10px; width:950px; }
