@@ -20,11 +20,13 @@
      */
 
     $locales   = __get('locales') ;
+    $user = osc_user();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
+        <link href="<?php echo osc_current_web_theme_styles_url('jquery-ui/jquery-ui-1.8.20.custom.css'); ?>" rel="stylesheet">
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
     </head>
@@ -40,6 +42,26 @@
             <div id="main" class="modify_profile">
                 <h2><?php _e('Update your profile', 'modern') ; ?></h2>
                 <?php UserForm::location_javascript(); ?>
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        $("#delete_account").click(function(){
+                            $("#dialog-delete-account").dialog('open');
+                        });
+                        
+                        $("#delete-account-cancel").click(function(){
+                            $("#dialog-delete-account").dialog('close');
+                        });
+                        
+                        $("#delete-account-submit").click(function(){
+                            window.location = '<?php echo osc_base_url(true).'?page=user&action=delete&id='.osc_user_id().'&secret='.$user['s_secret']; ?>';
+                        });
+                        
+                        $("#dialog-delete-account").dialog({
+                            autoOpen: false,
+                            modal: true
+                        });
+                    });
+                </script>
                 <form action="<?php echo osc_base_url(true) ; ?>" method="post">
                     <input type="hidden" name="page" value="user" />
                     <input type="hidden" name="action" value="profile_post" />
@@ -96,10 +118,25 @@
                         </div>
                         <div class="row">
                             <button type="submit"><?php _e('Update', 'modern') ; ?></button>
+                            <a id="delete_account" class="btn btn-red"><?php _e('Delete my account', 'modern') ; ?></a>
                         </div>
                         <?php osc_run_hook('user_form') ; ?>
                     </fieldset>
                 </form>
+            </div>
+        </div>
+        <div id="dialog-delete-account" title="<?php _e('Delete account', 'modern'); ?>" class="has-form-actions hide">
+            <div class="form-horizontal">
+                <div class="form-row">
+                    <p><?php _e('All your listings and alerts will be removed, this action can not be undone.', 'modern');?></p>
+                </div>
+                <div class="form-actions">
+                    <div class="wrapper">
+                        <a id="delete-account-cancel" class="btn" href="javascript:void(0);return false;"><?php _e('Cancel', 'modern'); ?></a>
+                        <a id="delete-account-submit" href="javascript:void(0);return false;" class="btn btn-red" ><?php echo osc_esc_html( __('Delete', 'modern') ); ?></a>
+                        <div class="clear"></div>
+                    </div>
+                </div>
             </div>
         </div>
         <?php osc_current_web_theme_path('footer.php') ; ?>

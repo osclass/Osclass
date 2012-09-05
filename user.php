@@ -239,6 +239,35 @@
 
                     $this->redirectTo( osc_base_url(true) . "?page=item&action=item_edit&id=" . $fkid );
                 break;
+                case 'delete':
+                    $id     = Params::getParam('id');
+                    $secret = Params::getParam('secret');
+                    if(osc_is_web_user_logged_in()) {
+                        $user = User::newInstance()->findByPrimaryKey(osc_logged_user_id());
+                        View::newInstance()->_exportVariableToView('user', $user);
+                        if(!empty($user) && osc_logged_user_id()==$id && $secret==$user['s_secret']) {
+                            User::newInstance()->deleteUser(osc_logged_user_id());
+                            
+                            Session::newInstance()->_drop('userId') ;
+                            Session::newInstance()->_drop('userName') ;
+                            Session::newInstance()->_drop('userEmail') ;
+                            Session::newInstance()->_drop('userPhone') ;
+
+                            Cookie::newInstance()->pop('oc_userId') ;
+                            Cookie::newInstance()->pop('oc_userSecret') ;
+                            Cookie::newInstance()->set() ;
+
+                            osc_add_flash_ok_message(_m("Your account have been deleted"));
+                            $this->redirectTo( osc_base_url() ) ;
+                        } else {
+                            osc_add_flash_error_message(_m("Oops! you can not do that"));
+                            $this->redirectTo(osc_user_dashboard_url() );
+                        }
+                    } else {
+                        osc_add_flash_error_message(_m("Oops! you can not do that"));
+                        $this->redirectTo(osc_base_url() );
+                    }
+                break;
             }
         }
 
