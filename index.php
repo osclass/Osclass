@@ -77,62 +77,62 @@
                             || (Params::getParam('action')=='unsub_alert' && !osc_is_web_user_logged_in())
                             || Params::getParam('action')=='contact_post'
                             || Params::getParam('action')=='pub_profile') {
-                                require_once(osc_base_path() . 'user-non-secure.php') ;
+                                require_once(osc_lib_path() . 'osclass/controller/user-non-secure.php') ;
                                 $do = new CWebUserNonSecure() ;
                                 $do->doModel() ;
                             } else {
-                                require_once(osc_base_path() . 'user.php') ;
+                                require_once(osc_lib_path() . 'osclass/controller/user.php') ;
                                 $do = new CWebUser() ;
                                 $do->doModel() ;
                             }
         break;
         case ('item'):      // item pages
-                            require_once(osc_base_path() . 'item.php');
+                            require_once(osc_lib_path() . 'osclass/controller/item.php');
                             $do = new CWebItem() ;
                             $do->doModel() ;
         break;
         case ('search'):    // search pages
-                            require_once(osc_base_path() . 'search.php') ;
+                            require_once(osc_lib_path() . 'osclass/controller/search.php') ;
                             $do = new CWebSearch() ;
                             $do->doModel() ;
         break;
         case ('page'):      // static pages
-                            require_once(osc_base_path() . 'page.php') ;
+                            require_once(osc_lib_path() . 'osclass/controller/page.php') ;
                             $do = new CWebPage() ;
                             $do->doModel() ;
         break;
         case ('register'):  // register page
-                            require_once(osc_base_path() . 'register.php') ;
+                            require_once(osc_lib_path() . 'osclass/controller/register.php') ;
                             $do = new CWebRegister() ;
                             $do->doModel() ;
         break;
         case ('ajax'):      // ajax
-                            require_once(osc_base_path() . 'ajax.php') ;
+                            require_once(osc_lib_path() . 'osclass/controller/ajax.php') ;
                             $do = new CWebAjax() ;
                             $do->doModel() ;
         break;
         case ('login'):     // login page
-                            require_once(osc_base_path() . 'login.php') ;
+                            require_once(osc_lib_path() . 'osclass/controller/login.php') ;
                             $do = new CWebLogin() ;
                             $do->doModel() ;
         break;
         case ('language'):  // set language
-                            require_once(osc_base_path() . 'language.php');
+                            require_once(osc_lib_path() . 'osclass/controller/language.php');
                             $do = new CWebLanguage();
                             $do->doModel();
         break;
         case ('contact'):   //contact
-                            require_once(osc_base_path() . 'contact.php') ;
+                            require_once(osc_lib_path() . 'osclass/controller/contact.php') ;
                             $do = new CWebContact() ;
                             $do->doModel() ;
         break;
         case ('custom'):   //contact
-                            require_once(osc_base_path() . 'custom.php') ;
+                            require_once(osc_lib_path() . 'osclass/controller/custom.php') ;
                             $do = new CWebCustom() ;
                             $do->doModel() ;
         break;
         default:            // home and static pages that are mandatory...
-                            require_once(osc_base_path() . 'main.php') ;
+                            require_once(osc_lib_path() . 'osclass/controller/main.php') ;
                             $do = new CWebMain() ;
                             $do->doModel() ;
         break;
