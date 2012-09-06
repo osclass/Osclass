@@ -73,7 +73,7 @@
 
         public function __construct()
         {
-            $this->script = array();
+            $this->scripts = array();
             $this->styles = array();
             $this->path = osc_themes_path();
 
