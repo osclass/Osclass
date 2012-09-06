@@ -13,10 +13,7 @@
         <!-- styles
         ================================================== -->
         <link href="<?php echo osc_current_admin_theme_styles_url('jquery-ui/jquery-ui-1.8.20.custom.css'); ?>" rel="stylesheet">
-
         <link href="<?php echo osc_current_admin_theme_styles_url('main.css'); ?>" rel="stylesheet">
-        <!-- favicons
-        ================================================== -->
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <?php osc_run_hook('admin_header'); ?>
     </head>
