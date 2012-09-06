@@ -24,12 +24,6 @@
 
     require_once ABS_PATH . 'oc-load.php' ;
 
-    $adminThemes = new AdminThemes() ;
-    $functions_path = $adminThemes->getCurrentThemePath() . 'functions.php';
-    if( file_exists($functions_path) ) {
-        require_once $functions_path ;
-    }
-
     if( file_exists(ABS_PATH . '.maintenance') ) {
         define('__OSC_MAINTENANCE__', true);
     }
