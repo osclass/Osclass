@@ -53,7 +53,7 @@ function admin_header_favicons() {
         ================================================== -->
 <?php
     foreach($favicons as $f) { ?>
-        <link <?php if($f['rel'] !== '') { ?>rel="<?php echo $f['rel']; ?>" <?php } ?> <?php if($f['sizes'] !== '') { ?>sizes="<?php echo $f['sizes']; ?>" <?php } ?> href="<?php echo $f['href']; ?>">
+        <link <?php if($f['rel'] !== '') { ?>rel="<?php echo $f['rel']; ?>" <?php } if($f['sizes'] !== '') { ?>sizes="<?php echo $f['sizes']; ?>" <?php } ?>href="<?php echo $f['href']; ?>">
     <?php }
 }
 osc_add_hook('admin_header', 'admin_header_favicons');
