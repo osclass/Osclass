@@ -58,6 +58,38 @@ function admin_header_favicons() {
 }
 osc_add_hook('admin_header', 'admin_header_favicons');
 
+function admin_footer_html() { ?>
+    <div class="float-left">
+        <?php printf(__('Thank you for using <a href="%s" target="_blank">OSClass</a>'), 'http://osclass.org/'); ?> -
+        <a title="<?php _e('Documentation'); ?>" href="http://doc.osclass.org/" target="_blank"><?php _e('Documentation'); ?></a> &middot;
+        <a title="<?php _e('Forums'); ?>" href="http://forums.osclass.org/" target="_blank"><?php _e('Forums'); ?></a>
+    </div>
+    <div class="float-right">
+        <strong>OSClass <?php echo preg_replace('|.0$|', '', OSCLASS_VERSION); ?></strong>
+    </div>
+    <a id="ninja" href="" class="ico ico-48 ico-dash-white"></a>
+    <div class="clear"></div>
+    <form id="donate-form" name="_xclick" action="https://www.paypal.com/in/cgi-bin/webscr" method="post" target="_blank">
+       <input type="hidden" name="cmd" value="_donations">
+       <input type="hidden" name="business" value="info@osclass.org">
+       <input type="hidden" name="item_name" value="OSClass project">
+       <input type="hidden" name="return" value="<?php echo osc_admin_base_url(); ?>">
+       <input type="hidden" name="currency_code" value="USD">
+       <input type="hidden" name="lc" value="US" />
+    </form>
+    <!-- javascript
+    ================================================== -->
+    <script type="text/javascript">
+        var $ninja = $('#ninja');
+
+        $ninja.click(function(){
+            jQuery('#donate-form').submit();
+            return false;
+        });
+    </script><?php
+}
+osc_add_hook('admin_footer', 'admin_footer_html');
+
 function printLocaleTabs($locales = null) {
     if($locales==null) { $locales = osc_get_locales(); }
     $num_locales = count($locales);
