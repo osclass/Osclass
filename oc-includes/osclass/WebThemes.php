@@ -25,6 +25,11 @@
         private $theme_url ;
         private $theme_path ;
         private $theme_exists ;
+        private $scripts;
+        private $styles;
+        
+        private $resolved;
+        private $unresolved;
 
         private $pages = array( '404',
                                 'contact',
@@ -68,6 +73,8 @@
 
         public function __construct()
         {
+            $this->script = array();
+            $this->styles = array();
             $this->path = osc_themes_path();
 
             if( Params::getParam('theme') != '' && Session::newInstance()->_get('adminId') != '' ) {
@@ -262,6 +269,131 @@
         {
             return !in_array($internal_name, $this->pages);
         }
+
+        
+        /**
+         * Add style to be loaded
+         * 
+         * @param type $id
+         * @param type $url 
+         */
+        public function addStyle($id, $url) {
+            $this->styles[$id] = $url;
+        }
+        
+        /**
+         * Remove style to not be loaded
+         * 
+         * @param type $id 
+         */
+        public function removeStyle($id) {
+            unset($this->styles[$id]);
+        }
+        
+        /**
+         * Print the HTML tags to load the styles 
+         */
+        public function printStyles() {
+            foreach($this->styles as $css) {
+                echo '<link href="'.$css.'" rel="stylesheet" type="text/css" />' . PHP_EOL;
+            }
+        }
+        
+        /**
+         * Add script to be loaded
+         * 
+         * @param type $id
+         * @param type $url
+         * @param type $dependencies mixed, it could be an array or a string
+         */
+        public function addScript($id, $url, $dependencies = null) {
+            $this->scripts[$id] = array(
+                'key' => $id
+                ,'url' => $url
+                ,'dependencies' => $dependencies
+            );
+        }
+        
+        /**
+         * Remove script to not be loaded
+         * 
+         * @param type $id 
+         */
+        public function removeScript($id) {
+            unset($this->scripts[$id]);
+        }
+        
+        /**
+         * Order script before being printed on the HTML
+         */
+        private function orderScripts() {
+            $this->resolved = array();
+            $this->unresolved = array();
+            $this->error = array();
+            foreach($this->scripts as $node) {
+                if($node['dependencies']==null) {
+                    $this->resolved[$node['key']] = $node['key'];
+                } else {
+                    $this->solveDeps($node);
+                }
+            }
+            if(!empty($this->error)) {
+                _e('ERROR: There was a circular dependency, some script depends on other script that depends on the first one');                
+            }
+        }
+        
+        /**
+         *  Print the HTML tags to load the scripts
+         */
+        public function printScripts() {
+            $this->orderScripts();
+            foreach($this->resolved as $id) {
+                if(isset($this->scripts[$id]['url'])) {
+                    echo '<script type="text/javascript" src="'.$this->scripts[$id]['url'].'"></script>' . PHP_EOL;
+                }
+            }
+        }
+        
+        /**
+         * Algorithm to solve the dependencies of the scripts
+         * 
+         * @param type $node 
+         */
+        private function solveDeps($node) {
+            $error = false;
+            if(!isset($this->resolved[$node['key']])) {
+                $this->unresolved[$node['key']] = $node['key'];
+                if($node['dependencies']!=null) {
+                    if(is_array($node['dependencies'])) {
+                        foreach($node['dependencies'] as $dep) {
+                            if(!in_array($dep, $this->resolved)) {
+                                if(in_array($dep, $this->unresolved)) {
+                                    $this->error[$dep] = $dep;
+                                    $error = true;
+                                } else {
+                                    $this->solveDeps($this->scripts[$dep]);
+                                }
+                            }
+                        }
+                    } else {
+                        if(!in_array($node['dependencies'], $this->resolved)) {
+                            if(in_array($node['dependencies'], $this->unresolved)) {
+                                $this->error[$node['dependencies']] = $node['dependencies'];
+                                $error = true;
+                            } else {
+                                $this->solveDeps($this->scripts[$node['dependencies']]);
+                            }
+                        }
+                    }
+                }
+                if(!$error) {
+                    $this->resolved[$node['key']] = $node['key'];
+                    unset($this->unresolved[$node['key']]);
+                }
+            }
+        }
+        
+        
     }
 
     /* file end: ./oc-includes/osclass/WebThemes.php */
