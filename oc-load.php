@@ -232,6 +232,7 @@ osc_add_hook('header', 'osc_show_maintenance');
 osc_add_hook('header', 'osc_show_maintenance_css');
 osc_add_hook('header', 'osc_meta_generator');
 osc_add_hook('header', 'osc_load_scripts', 10);
+osc_add_hook('header', 'osc_load_styles', 10);
 
 // cron
 // hourly

@@ -124,7 +124,7 @@
     /**
      * Print the HTML tags to make the style load
      */
-    function osc_load_style() {
+    function osc_load_styles() {
         WebThemes::newInstance()->printStyles();
     }
     
