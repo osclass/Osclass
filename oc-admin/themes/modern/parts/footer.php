@@ -3,10 +3,11 @@
             <div class="clear"></div>
             <div id="footer-wrapper">
                 <div id="footer">
-                    <?php osc_run_hook('admin_footer') ; ?>
+                    <?php osc_run_hook('admin_content_footer') ; ?>
                 </div>
             </div>
         </div><!-- #content-render -->
     </div><!-- #content -->
+    <?php osc_run_hook('admin_footer') ; ?>
     </body>
 </html>
