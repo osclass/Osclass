@@ -18,40 +18,6 @@
         <!-- favicons
         ================================================== -->
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <?php
-            // TODO: we should move this to another place
-            $favicons   = array();
-            $favicons[] = array(
-                'rel'   => 'shortcut icon',
-                'sizes' => '',
-                'href'  => osc_current_admin_theme_url('images/favicon-48.png')
-            );
-            $favicons[] = array(
-                'rel'   => 'apple-touch-icon-precomposed',
-                'sizes' => '144x144',
-                'href'  => osc_current_admin_theme_url('images/favicon-144.png')
-            );
-            $favicons[] = array(
-                'rel'   => 'apple-touch-icon-precomposed',
-                'sizes' => '114x114',
-                'href'  => osc_current_admin_theme_url('images/favicon-114.png')
-            );
-            $favicons[] = array(
-                'rel'   => 'apple-touch-icon-precomposed',
-                'sizes' => '72x72',
-                'href'  => osc_current_admin_theme_url('images/favicon-72.png')
-            );
-            $favicons[] = array(
-                'rel'   => 'apple-touch-icon-precomposed',
-                'sizes' => '',
-                'href'  => osc_current_admin_theme_url('images/favicon-57.png')
-            );
-
-            $favicons = osc_apply_filter('admin_favicons', $favicons);
-        ?>
-        <?php foreach($favicons as $f) { ?>
-        <link <?php if($f['rel'] !== '') { ?>rel="<?php echo $f['rel']; ?>" <?php { ?> <?php if($f['sizes'] !== '') { ?>sizes="<?php echo $f['sizes']; ?>" <?php { ?> href="<?php echo $f['href']; ?>">
-        <?php } ?>
         <?php osc_run_hook('admin_header'); ?>
     </head>
 <body class="<?php echo implode(' ',osc_apply_filter('admin_body_class', array())); ?>">

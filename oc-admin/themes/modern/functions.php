@@ -1,4 +1,5 @@
 <?php
+
 osc_add_filter('admin_body_class', 'admin_modeCompact_class');
 function admin_modeCompact_class($args){
     $compactMode = osc_get_preference('compact_mode','modern_admin_theme');
@@ -17,8 +18,44 @@ function modern_compactmode_actions(){
     osc_set_preference('compact_mode', $modeStatus['compact_mode'], 'modern_admin_theme');
     echo json_encode($modeStatus);
 }
-function printLocaleTabs($locales = null)
-{
+
+function admin_header_favicons() {
+    $favicons   = array();
+    $favicons[] = array(
+        'rel'   => 'shortcut icon',
+        'sizes' => '',
+        'href'  => osc_current_admin_theme_url('images/favicon-48.png')
+    );
+    $favicons[] = array(
+        'rel'   => 'apple-touch-icon-precomposed',
+        'sizes' => '144x144',
+        'href'  => osc_current_admin_theme_url('images/favicon-144.png')
+    );
+    $favicons[] = array(
+        'rel'   => 'apple-touch-icon-precomposed',
+        'sizes' => '114x114',
+        'href'  => osc_current_admin_theme_url('images/favicon-114.png')
+    );
+    $favicons[] = array(
+        'rel'   => 'apple-touch-icon-precomposed',
+        'sizes' => '72x72',
+        'href'  => osc_current_admin_theme_url('images/favicon-72.png')
+    );
+    $favicons[] = array(
+        'rel'   => 'apple-touch-icon-precomposed',
+        'sizes' => '',
+        'href'  => osc_current_admin_theme_url('images/favicon-57.png')
+    );
+
+    $favicons = osc_apply_filter('admin_favicons', $favicons);
+
+    foreach($favicons as $f) { ?>
+        <link <?php if($f['rel'] !== '') { ?>rel="<?php echo $f['rel']; ?>" <?php { ?> <?php if($f['sizes'] !== '') { ?>sizes="<?php echo $f['sizes']; ?>" <?php { ?> href="<?php echo $f['href']; ?>">
+    <?php }
+}
+osc_add_hook('admin_header', 'admin_header_favicons');
+
+function printLocaleTabs($locales = null) {
     if($locales==null) { $locales = osc_get_locales(); }
     $num_locales = count($locales);
     if($num_locales>1) {
@@ -29,15 +66,13 @@ function printLocaleTabs($locales = null)
     echo '</ul></div>';
     };
 }
-
-function printLocaleTitle($locales = null,$item = null)
-{
+function printLocaleTitle($locales = null, $item = null) {
     if($locales==null) { $locales = osc_get_locales(); }
     if($item==null) { $item = osc_item(); }
     $num_locales = count($locales);
     foreach($locales as $locale) {
-    	echo '<div class="input-has-placeholder input-title-wide"><label for="title">' . __('Enter title here') . ' *</label>';
-    	$title = (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_title'])) ? $item['locale'][$locale['pk_c_code']]['s_title'] : '' ;
+        echo '<div class="input-has-placeholder input-title-wide"><label for="title">' . __('Enter title here') . ' *</label>';
+        $title = (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_title'])) ? $item['locale'][$locale['pk_c_code']]['s_title'] : '' ;
         if( Session::newInstance()->_getForm('title') != "" ) {
             $title_ = Session::newInstance()->_getForm('title');
             if( $title_[$locale['pk_c_code']] != "" ){
@@ -49,8 +84,7 @@ function printLocaleTitle($locales = null,$item = null)
         echo '</div>';
     }
 }
-function printLocaleTitlePage($locales = null,$page = null)
-{
+function printLocaleTitlePage($locales = null,$page = null) {
     if($locales==null) { $locales = osc_get_locales(); }
     $aFieldsDescription = Session::newInstance()->_getForm("aFieldsDescription");
     $num_locales = count($locales);
@@ -71,14 +105,12 @@ function printLocaleTitlePage($locales = null,$page = null)
         echo '</div>';
     }
 }
-
-function printLocaleDescription($locales = null,$item = null)
-{
+function printLocaleDescription($locales = null, $item = null) {
     if($locales==null) { $locales = osc_get_locales(); }
     if($item==null) { $item = osc_item(); }
     $num_locales = count($locales);
     foreach($locales as $locale) {
-	   	$name = 'description'. '[' . $locale['pk_c_code'] . ']';
+        $name = 'description'. '[' . $locale['pk_c_code'] . ']';
 
         echo '<div><label for="description">' . __('Description') . ' *</label>';
         $description = (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_description'])) ? $item['locale'][$locale['pk_c_code']]['s_description'] : '';
@@ -91,8 +123,7 @@ function printLocaleDescription($locales = null,$item = null)
         echo '<textarea id="' . $name . '" name="' . $name . '" rows="10">' . $description . '</textarea></div>' ;
     }
 }
-function printLocaleDescriptionPage($locales = null,$page = null)
-{
+function printLocaleDescriptionPage($locales = null, $page = null) {
     if($locales==null) { $locales = osc_get_locales(); }
     $aFieldsDescription = Session::newInstance()->_getForm("aFieldsDescription");
     $num_locales = count($locales);
@@ -111,39 +142,37 @@ function printLocaleDescriptionPage($locales = null,$page = null)
     }
 }
 
-function jsLoacaleSelector()
-{
+function jsLocaleSelector() {
     $locales = osc_get_locales();
     $codes = array();
     foreach($locales as $locale) {
         $codes[] = '\''.osc_esc_js($locale['pk_c_code']).'\'';
     }
-	?>
-	<script type="text/javascript">
-		var locales = new Object;
-		locales.current = '<?php echo osc_esc_js($locales[0]['pk_c_code']); ?>';
-		locales.codes = new Array(<?php echo join(',',$codes); ?>);
+    ?>
+    <script type="text/javascript">
+        var locales = new Object;
+        locales.current = '<?php echo osc_esc_js($locales[0]['pk_c_code']); ?>';
+        locales.codes = new Array(<?php echo join(',',$codes); ?>);
 
-		locales.string = '[name*="'+locales.codes.join('"],[name*="')+'"],.'+locales.codes.join(',.');
-		$(function(){
-			$('#language-tab li a').click(function(){
-				$('#language-tab li').removeClass('ui-state-active').removeClass('ui-tabs-selected');
-				$(this).parent().addClass('ui-tabs-selected ui-state-active');
-				var currentLocale = $(this).attr('href').replace('#','');
-			    $(locales.string).parent().hide();
-			    $('[name*="'+currentLocale+'"], .'+currentLocale).parent().show();
-			    locales.current = currentLocale;
-			    return false;
-			}).triggerHandler('click');
-		});
-		function tabberAutomatic(){
-			$('.tabber:hidden').show();
-			$('.tabber h2').remove();
-			$(locales.string).parent().hide();
-			$('[name*="'+locales.current+'"],.'+locales.current).parent().show();
-		}
-	</script>
-	<?php
+        locales.string = '[name*="'+locales.codes.join('"],[name*="')+'"],.'+locales.codes.join(',.');
+        $(function(){
+            $('#language-tab li a').click(function(){
+                $('#language-tab li').removeClass('ui-state-active').removeClass('ui-tabs-selected');
+                $(this).parent().addClass('ui-tabs-selected ui-state-active');
+                var currentLocale = $(this).attr('href').replace('#','');
+                $(locales.string).parent().hide();
+                $('[name*="'+currentLocale+'"], .'+currentLocale).parent().show();
+                locales.current = currentLocale;
+                return false;
+            }).triggerHandler('click');
+        });
+        function tabberAutomatic(){
+            $('.tabber:hidden').show();
+            $('.tabber h2').remove();
+            $(locales.string).parent().hide();
+            $('[name*="'+locales.current+'"],.'+locales.current).parent().show();
+        }
+    </script>
+    <?php
 }
-
-osc_add_hook('admin_header','jsLoacaleSelector');
+osc_add_hook('admin_header','jsLocaleSelector');
