@@ -109,6 +109,7 @@ require_once LIB_PATH . 'osclass/core/WebSecBaseModel.php';
 require_once LIB_PATH . 'osclass/core/AdminSecBaseModel.php';
 require_once LIB_PATH . 'osclass/core/Translation.php';
 
+require_once LIB_PATH . 'osclass/Themes.php';
 require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/WebThemes.php';
 require_once LIB_PATH . 'osclass/compatibility.php';
