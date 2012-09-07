@@ -74,4 +74,59 @@
             osc_add_flash_error_message($message['msg'], $section);
         }
     }
+    
+    /**
+     * Add script to be loaded
+     * 
+     * @param $id keyname to identify the script
+     * @param $url url of the .js file
+     * @param $dependencies mixed, could be an array or a string
+     */
+    function osc_enqueue_script($id, $url, $dependencies = null) {
+        WebThemes::newInstance()->addScript($id, $url, $dependencies);
+    }
+    
+    /**
+     * Remove script from the queue, so it will not be loaded
+     * 
+     * @param type $id 
+     */
+    function osc_remove_script($id) {
+        WebThemes::newInstance()->removeScript($id);
+    }
+
+    /**
+     * Print the HTML tags to make the script load
+     */
+    function osc_load_scripts() {
+        WebThemes::newInstance()->printScripts();
+    }
+    
+    /**
+     * Add style to be loaded
+     * 
+     * @param $id keyname to identify the style
+     * @param $url url of the .css file
+     */
+    function osc_enqueue_style($id, $url) {
+        WebThemes::newInstance()->addStyle($id, $url);
+    }
+    
+    /**
+     * Remove style from the queue, so it will not be loaded
+     * 
+     * @param type $id 
+     */
+    function osc_remove_style($id) {
+        WebThemes::newInstance()->removeStyle($id);
+    }
+    
+    /**
+     * Print the HTML tags to make the style load
+     */
+    function osc_load_styles() {
+        WebThemes::newInstance()->printStyles();
+    }
+    
+    
 ?>

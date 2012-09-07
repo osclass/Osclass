@@ -109,6 +109,7 @@ require_once LIB_PATH . 'osclass/core/WebSecBaseModel.php';
 require_once LIB_PATH . 'osclass/core/AdminSecBaseModel.php';
 require_once LIB_PATH . 'osclass/core/Translation.php';
 
+require_once LIB_PATH . 'osclass/Themes.php';
 require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/WebThemes.php';
 require_once LIB_PATH . 'osclass/compatibility.php';
@@ -192,6 +193,10 @@ Session::newInstance()->session_start() ;
 if( OC_ADMIN ) {
     // init admin menu
     AdminMenu::newInstance()->init();
+    $functions_path = AdminThemes::newInstance()->getCurrentThemePath() . 'functions.php';
+    if( file_exists($functions_path) ) {
+        require_once $functions_path ;
+    }
 } else {
     // init Rewrite class only if it's the frontend
     Rewrite::newInstance()->init();
@@ -232,6 +237,8 @@ function osc_meta_generator() {
 osc_add_hook('header', 'osc_show_maintenance');
 osc_add_hook('header', 'osc_show_maintenance_css');
 osc_add_hook('header', 'osc_meta_generator');
+osc_add_hook('header', 'osc_load_scripts', 10);
+osc_add_hook('header', 'osc_load_styles', 10);
 
 // cron
 // hourly
