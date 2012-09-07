@@ -13,17 +13,8 @@
         <!-- styles
         ================================================== -->
         <link href="<?php echo osc_current_admin_theme_styles_url('jquery-ui/jquery-ui-1.8.20.custom.css'); ?>" rel="stylesheet">
-
         <link href="<?php echo osc_current_admin_theme_styles_url('main.css'); ?>" rel="stylesheet">
-        <!-- favicons
-        ================================================== -->
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <link rel="shortcut icon" href="<?php echo osc_current_admin_theme_url('images/favicon-48.png'); ?>">
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo osc_current_admin_theme_url('images/favicon-144.png'); ?>">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo osc_current_admin_theme_url('images/favicon-114.png'); ?>">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo osc_current_admin_theme_url('images/favicon-72.png'); ?>">
-        <link rel="apple-touch-icon-precomposed" href="<?php echo osc_current_admin_theme_url('images/favicon-57.png'); ?>">
-
         <?php osc_run_hook('admin_header'); ?>
     </head>
 <body class="<?php echo implode(' ',osc_apply_filter('admin_body_class', array())); ?>">

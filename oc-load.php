@@ -192,6 +192,10 @@ Session::newInstance()->session_start() ;
 if( OC_ADMIN ) {
     // init admin menu
     AdminMenu::newInstance()->init();
+    $functions_path = AdminThemes::newInstance()->getCurrentThemePath() . 'functions.php';
+    if( file_exists($functions_path) ) {
+        require_once $functions_path ;
+    }
 } else {
     // init Rewrite class only if it's the frontend
     Rewrite::newInstance()->init();
