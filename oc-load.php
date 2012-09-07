@@ -164,6 +164,7 @@ require_once LIB_PATH . 'osclass/classes/AdminMenu.php';
 require_once LIB_PATH . 'osclass/classes/datatables/DataTable.php';
 require_once LIB_PATH . 'osclass/classes/AdminToolbar.php';
 require_once LIB_PATH . 'osclass/classes/Breadcrumb.php';
+require_once LIB_PATH . 'osclass/classes/EmailVariables.php';
 require_once LIB_PATH . 'osclass/alerts.php';
 
 require_once LIB_PATH . 'osclass/frm/Form.form.class.php';

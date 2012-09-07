@@ -68,7 +68,7 @@ function printLocaleTitlePage($locales = null,$page = null)
         echo '<div><label for="title">' . __('Title') . ' *</label>';
         echo '<div class="input-has-placeholder input-title-wide"><label for="title">' . __('Enter title here') . ' *</label>';
         echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($title, ENT_COMPAT, "UTF-8")) . '"  />' ;
-        echo '</div>';
+        echo '</div></div>';
     }
 }
 
