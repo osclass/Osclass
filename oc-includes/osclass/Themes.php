@@ -159,13 +159,11 @@
          */
         public function printScripts() {
             $this->orderScripts();
-            echo "#####################################################";
             foreach($this->resolved as $id) {
                 if(isset($this->scripts[$id]['url'])) {
                     echo '<script type="text/javascript" src="'.$this->scripts[$id]['url'].'"></script>' . PHP_EOL;
                 }
             }
-            echo "#####################################################";
         }
         
         /**

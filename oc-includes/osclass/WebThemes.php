@@ -64,6 +64,7 @@
         public function __construct()
         {
             $this->scripts = array();
+            $this->queue = array();
             $this->styles = array();
             $this->path = osc_themes_path();
 
