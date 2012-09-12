@@ -22,6 +22,7 @@
         <title><?php echo osc_page_title() ; ?> &raquo; <?php _e('Lost your password') ; ?></title>
         <script type="text/javascript" src="<?php echo osc_admin_base_url() ; ?>themes/modern/js/jquery.min.js"></script>
         <link type="text/css" href="style/backoffice_login.css" media="screen" rel="stylesheet" />
+        <?php osc_run_hook('admin_login_header'); ?>
     </head>
     <body class="recover">
         <div id="login">
