@@ -74,6 +74,24 @@
             osc_add_flash_error_message($message['msg'], $section);
         }
     }
+
+    /**
+     * Remove script from the queue, so it will not be loaded
+     * 
+     * @param type $id 
+     */
+    function osc_enqueue_script($id) {
+        WebThemes::newInstance()->enqueueScript($id);
+    }
+
+    /**
+     * Remove script from the queue, so it will not be loaded
+     * 
+     * @param type $id 
+     */
+    function osc_remove_script($id) {
+        WebThemes::newInstance()->removeScript($id);
+    }
     
     /**
      * Add script to be loaded
@@ -82,8 +100,8 @@
      * @param $url url of the .js file
      * @param $dependencies mixed, could be an array or a string
      */
-    function osc_enqueue_script($id, $url, $dependencies = null) {
-        WebThemes::newInstance()->addScript($id, $url, $dependencies);
+    function osc_register_script($id, $url, $dependencies = null) {
+        WebThemes::newInstance()->registerScript($id, $url, $dependencies);
     }
     
     /**
@@ -91,8 +109,8 @@
      * 
      * @param type $id 
      */
-    function osc_remove_script($id) {
-        WebThemes::newInstance()->removeScript($id);
+    function osc_unregister_script($id) {
+        WebThemes::newInstance()->unregisterScript($id);
     }
 
     /**

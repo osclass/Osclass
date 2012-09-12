@@ -29,6 +29,7 @@
         protected $theme_exists ;
         
         protected $scripts;
+        protected $queue;
         protected $styles;
         
         protected $resolved;
@@ -92,6 +93,19 @@
             }
         }
         
+        public function enqueueScript($id) {
+            $this->queue[$id] = $id;
+        }
+        
+        /**
+         * Remove script to not be loaded
+         * 
+         * @param type $id 
+         */
+        public function removeScript($id) {
+            unset($this->queue[$id]);
+        }
+        
         /**
          * Add script to be loaded
          * 
@@ -99,7 +113,7 @@
          * @param type $url
          * @param type $dependencies mixed, it could be an array or a string
          */
-        public function addScript($id, $url, $dependencies = null) {
+        public function registerScript($id, $url, $dependencies = null) {
             $this->scripts[$id] = array(
                 'key' => $id
                 ,'url' => $url
@@ -112,7 +126,7 @@
          * 
          * @param type $id 
          */
-        public function removeScript($id) {
+        public function unregisterScript($id) {
             unset($this->scripts[$id]);
         }
         
@@ -123,15 +137,20 @@
             $this->resolved = array();
             $this->unresolved = array();
             $this->error = array();
-            foreach($this->scripts as $node) {
-                if($node['dependencies']==null) {
-                    $this->resolved[$node['key']] = $node['key'];
+            foreach($this->queue as $queue) {
+                if(isset($this->scripts[$queue])) {
+                    $node = $this->scripts[$queue];
+                    if($node['dependencies']==null) {
+                        $this->resolved[$node['key']] = $node['key'];
+                    } else {
+                        $this->solveDeps($node);
+                    }
                 } else {
-                    $this->solveDeps($node);
+                    $this->error[$queue] = $queue;
                 }
             }
             if(!empty($this->error)) {
-                _e('ERROR: There was a circular dependency, some script depends on other script that depends on the first one');                
+                echo sprintf(__('ERROR: Some scripts could not be loaded (%s)'), implode(", ", $this->error));
             }
         }
         
@@ -164,7 +183,11 @@
                                     $this->error[$dep] = $dep;
                                     $error = true;
                                 } else {
-                                    $this->solveDeps($this->scripts[$dep]);
+                                    if(isset($this->scripts[$dep])) {
+                                        $this->solveDeps($this->scripts[$dep]);
+                                    } else {
+                                        $this->error[$dep] = $dep;
+                                    }
                                 }
                             }
                         }
@@ -174,7 +197,11 @@
                                 $this->error[$node['dependencies']] = $node['dependencies'];
                                 $error = true;
                             } else {
-                                $this->solveDeps($this->scripts[$node['dependencies']]);
+                                if(isset($this->scripts[$node['dependencies']])) {
+                                    $this->solveDeps($this->scripts[$node['dependencies']]);
+                                } else {
+                                    $this->error[$node['dependencies']] = $node['dependencies'];
+                                }
                             }
                         }
                     }
