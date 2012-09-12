@@ -32,7 +32,7 @@
     function osc_draw_admin_menu()
     {
         // actual url
-        $actual_url  = $_SERVER['QUERY_STRING'];
+        $actual_url  = urldecode($_SERVER['QUERY_STRING']);
         $actual_page = Params::getParam('page');
         
         $something_selected = false;
@@ -62,6 +62,8 @@
         // find current menu section 
         $current_menu = '';
         $priority = 0;
+        $urlLenght = 0;
+        
         foreach($aMenu as $key => $value) {
             // --- submenu section
             if( array_key_exists('sub', $value) ) {
@@ -73,15 +75,23 @@
                         $url_submenu   = $aSub[1];
                         $url_submenu   = str_replace(osc_admin_base_url(true).'?', '', $url_submenu);
                         $url_submenu   = str_replace(osc_admin_base_url(), '', $url_submenu);
-                        if( $actual_url == $url_submenu && $priority<2 ) {
-                            $sub_current = true;
-                            $current_menu = $value[2];
-                            $priority  = 2;
+                        
+                        error_log(@$actual_url."  ".@$url_submenu);
+                        if( strpos($actual_url, $url_submenu, 0) === 0 && $priority<=2  && $url_menu != '') {
+                            
+                            if( $urlLenght<strlen($url_submenu) ) {
+                                $urlLenght = strlen($url_submenu);
+                                $sub_current = true;
+                                $current_menu = $value[2];
+                                $priority  = 2;
+                                error_log("current ".$urlLenght);
+                            }
                         } else if( $actual_page == $value[2] && $priority<1 ) {
                             $sub_current = true;
                             $current_menu = $value[2];
                             $priority  = 1;
-                        }
+                            error_log("current");
+                        } 
                     }
                 }
             }
@@ -90,18 +100,29 @@
             $url_menu   = $value[1];
             $url_menu   = str_replace(osc_admin_base_url(true).'?', '', $url_menu);
             $url_menu   = str_replace(osc_admin_base_url(), '', $url_menu);
-
-            if($actual_url == $url_menu  && $priority<2 ) {
-                $sub_current = true;
-                $current_menu = $value[2];
-                $priority  = 2;
+            
+            error_log(@$actual_url."  ".@$url_menu." ".strpos($actual_url, $url_menu) );
+            if(@strpos($actual_url, $url_menu) === 0  && $priority<=2 && $url_menu != '') {
+                if( $urlLenght<strlen($url_menu) ) {
+                    $urlLenght = strlen($url_menu);
+                    $sub_current = true;
+                    $current_menu = $value[2];
+                    $priority  = 2;
+                    error_log("current");
+                }
             } else if($actual_page == $value[2] &&  $priority<1 ) {
                 $sub_current = true;
                 $current_menu = $value[2];
                 $priority  = 1;
+                error_log("current");
+            } else if($url_menu == $actual_page) {
+                $sub_current = true;
+                $current_menu = $value[2];
+                $priority  = 0;
+                error_log("current");
             }
         }
-        
+        $value = array();
         foreach($aMenu as $key => $value) {
             
             $sSubmenu   = "";

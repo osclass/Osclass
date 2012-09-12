@@ -164,10 +164,16 @@
         //in this case, this function is prepared for the "recover your password" form
         function doView($file)
         {
-            require osc_admin_base_path() . $file ;
-        }
+            $login_admin_title = osc_apply_filter('login_admin_title', 'Osclass');
+            $login_admin_url   = osc_apply_filter('login_admin_url', 'http://osclass.org/');
+            $login_admin_image = osc_apply_filter('login_admin_image', osc_admin_base_url() . 'images/osclass-logo.gif');
+            
+            View::newInstance()->_exportVariableToView('login_admin_title', $login_admin_title);
+            View::newInstance()->_exportVariableToView('login_admin_url', $login_admin_url);
+            View::newInstance()->_exportVariableToView('login_admin_image', $login_admin_image);
 
+            require osc_admin_base_path() . $file;
+        }
     }
 
     /* file end: ./oc-admin/login.php */
-?>
