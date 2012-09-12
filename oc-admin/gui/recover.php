@@ -23,12 +23,11 @@
         <script type="text/javascript" src="<?php echo osc_admin_base_url() ; ?>themes/modern/js/jquery.min.js"></script>
         <link type="text/css" href="style/backoffice_login.css" media="screen" rel="stylesheet" />
     </head>
-
     <body class="recover">
         <div id="login">
             <h1>
-                <a href="http://osclass.org/" title="OSClass">
-                    <img src="images/osclass-logo.gif" border="0" title="" alt="" />
+                <a href="<?php echo View::newInstance()->_get('login_admin_url'); ?>" title="<?php echo View::newInstance()->_get('login_admin_title'); ?>">
+                    <img src="<?php echo View::newInstance()->_get('login_admin_image'); ?>" border="0" title="<?php echo View::newInstance()->_get('login_admin_title'); ?>" alt="<?php echo View::newInstance()->_get('login_admin_title'); ?>" />
                 </a>
             </h1>
             <?php osc_show_flash_message('admin') ; ?>
