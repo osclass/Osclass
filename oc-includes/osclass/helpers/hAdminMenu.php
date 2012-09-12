@@ -76,7 +76,6 @@
                         $url_submenu   = str_replace(osc_admin_base_url(true).'?', '', $url_submenu);
                         $url_submenu   = str_replace(osc_admin_base_url(), '', $url_submenu);
                         
-                        error_log(@$actual_url."  ".@$url_submenu);
                         if( strpos($actual_url, $url_submenu, 0) === 0 && $priority<=2  && $url_menu != '') {
                             
                             if( $urlLenght<strlen($url_submenu) ) {
@@ -84,13 +83,11 @@
                                 $sub_current = true;
                                 $current_menu = $value[2];
                                 $priority  = 2;
-                                error_log("current ".$urlLenght);
                             }
                         } else if( $actual_page == $value[2] && $priority<1 ) {
                             $sub_current = true;
                             $current_menu = $value[2];
                             $priority  = 1;
-                            error_log("current");
                         } 
                     }
                 }
@@ -101,25 +98,21 @@
             $url_menu   = str_replace(osc_admin_base_url(true).'?', '', $url_menu);
             $url_menu   = str_replace(osc_admin_base_url(), '', $url_menu);
             
-            error_log(@$actual_url."  ".@$url_menu." ".strpos($actual_url, $url_menu) );
             if(@strpos($actual_url, $url_menu) === 0  && $priority<=2 && $url_menu != '') {
                 if( $urlLenght<strlen($url_menu) ) {
                     $urlLenght = strlen($url_menu);
                     $sub_current = true;
                     $current_menu = $value[2];
                     $priority  = 2;
-                    error_log("current");
                 }
             } else if($actual_page == $value[2] &&  $priority<1 ) {
                 $sub_current = true;
                 $current_menu = $value[2];
                 $priority  = 1;
-                error_log("current");
             } else if($url_menu == $actual_page) {
                 $sub_current = true;
                 $current_menu = $value[2];
                 $priority  = 0;
-                error_log("current");
             }
         }
         $value = array();
