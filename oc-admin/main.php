@@ -72,8 +72,10 @@
         //hopefully generic...
         function doView($file)
         {
-            osc_current_admin_theme_path($file);
+            osc_run_hook("before_admin_html");
+            osc_current_admin_theme_path($file) ;
             Session::newInstance()->_clearVariables();
+            osc_run_hook("after_admin_html");
         }
     }
 
