@@ -53,7 +53,6 @@ function get_relative_url( ) {
  * @return array Requirements
  */
 function get_requirements( ) {
-    $gd    = gd_info();
     $array = array(
         'PHP version >= 5.x' => array(
             'requirement' => __('PHP version >= 5.x'), 
