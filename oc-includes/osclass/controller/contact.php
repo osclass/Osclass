@@ -99,7 +99,7 @@ MESSAGE;
                                             $params['attachment'] = $path;
                                         }
 
-                                        osc_run_hook('pre_contact_post');
+                                        osc_run_hook('pre_contact_post', $params);
 
                                         osc_sendMail(osc_apply_filter('contact_params', $params));
 
