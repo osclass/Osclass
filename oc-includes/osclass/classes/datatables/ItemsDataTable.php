@@ -247,7 +247,9 @@
                     foreach( $options as $actual) {
                         $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
                     }
-                    $auxOptions  .= $moreOptions ;
+                    if(!empty($options_more)) {
+                        $auxOptions  .= $moreOptions ;
+                    }
                     $auxOptions  .= '</ul>'.PHP_EOL ;
 
                     $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
