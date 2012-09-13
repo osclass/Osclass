@@ -172,7 +172,10 @@
             View::newInstance()->_exportVariableToView('login_admin_url', $login_admin_url);
             View::newInstance()->_exportVariableToView('login_admin_image', $login_admin_image);
 
+            osc_run_hook("before_admin_html");
             require osc_admin_base_path() . $file;
+            osc_run_hook("after_admin_html");
+            
         }
     }
 
