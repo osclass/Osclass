@@ -32,7 +32,8 @@
     function osc_draw_admin_menu()
     {
         // actual url
-        $actual_url = $_SERVER['QUERY_STRING'];
+        $actual_url  = urldecode($_SERVER['QUERY_STRING']);
+        $actual_page = Params::getParam('page');
         
         $something_selected = false;
         $adminMenu          = AdminMenu::newInstance() ;
@@ -57,7 +58,66 @@
         $sMenu = '<!-- menu -->'.PHP_EOL ;
         $sMenu .= '<div id="sidebar">'.PHP_EOL ;
         $sMenu .= '<ul class="oscmenu">'.PHP_EOL ;
+        
+        // find current menu section 
+        $current_menu = '';
+        $priority = 0;
+        $urlLenght = 0;
+        
         foreach($aMenu as $key => $value) {
+            // --- submenu section
+            if( array_key_exists('sub', $value) ) {
+                $aSubmenu = $value['sub'] ;
+                foreach($aSubmenu as $aSub) {
+                    $credential_sub = $aSub[4];
+                    if(!$is_moderator || $is_moderator && $credential_sub == 'moderator') { // show
+
+                        $url_submenu   = $aSub[1];
+                        $url_submenu   = str_replace(osc_admin_base_url(true).'?', '', $url_submenu);
+                        $url_submenu   = str_replace(osc_admin_base_url(), '', $url_submenu);
+                        
+                        if( strpos($actual_url, $url_submenu, 0) === 0 && $priority<=2  && $url_menu != '') {
+                            
+                            if( $urlLenght<strlen($url_submenu) ) {
+                                $urlLenght = strlen($url_submenu);
+                                $sub_current = true;
+                                $current_menu = $value[2];
+                                $priority  = 2;
+                            }
+                        } else if( $actual_page == $value[2] && $priority<1 ) {
+                            $sub_current = true;
+                            $current_menu = $value[2];
+                            $priority  = 1;
+                        } 
+                    }
+                }
+            }
+            
+            // --- menu section
+            $url_menu   = $value[1];
+            $url_menu   = str_replace(osc_admin_base_url(true).'?', '', $url_menu);
+            $url_menu   = str_replace(osc_admin_base_url(), '', $url_menu);
+            
+            if(@strpos($actual_url, $url_menu) === 0  && $priority<=2 && $url_menu != '') {
+                if( $urlLenght<strlen($url_menu) ) {
+                    $urlLenght = strlen($url_menu);
+                    $sub_current = true;
+                    $current_menu = $value[2];
+                    $priority  = 2;
+                }
+            } else if($actual_page == $value[2] &&  $priority<1 ) {
+                $sub_current = true;
+                $current_menu = $value[2];
+                $priority  = 1;
+            } else if($url_menu == $actual_page) {
+                $sub_current = true;
+                $current_menu = $value[2];
+                $priority  = 0;
+            }
+        }
+        $value = array();
+        foreach($aMenu as $key => $value) {
+            
             $sSubmenu   = "";
             $credential = $value[3];
             if(!$is_moderator || $is_moderator && $credential == 'moderator') { // show
@@ -71,22 +131,11 @@
                         foreach($aSubmenu as $aSub) {
                             $credential_sub = $aSub[4];
                             if(!$is_moderator || $is_moderator && $credential_sub == 'moderator') { // show
-
-                                $url_submenu   = $aSub[1];
-                                $url_submenu   = str_replace(osc_admin_base_url(true).'?', '', $url_submenu);
-                                $url_submenu   = str_replace(osc_admin_base_url(), '', $url_submenu);
-                                if($actual_url == $url_submenu) {
-                                    $sub_current = true;
-                                    $class       = 'current';
-                                }
-                                
                                 $sSubmenu .= '<li><a id="'.$aSub[2].'" href="'.$aSub[1].'">'.$aSub[0].'</a></li>'.PHP_EOL ;
                             }   
                         }
                         // hardcoded plugins/themes under menu plugins 
                         if($key == 'plugins' && !$is_moderator) {
-                            // preprocess plugin_out, remove all tags unless 
-                            // <li> tags
                             $sSubmenu .= $plugins_out;
                         }
                         
@@ -94,14 +143,8 @@
                         $sSubmenu .= "</ul>".PHP_EOL;
                     }
                 }
-
-                $url_menu   = $value[1];
-                $url_menu   = str_replace(osc_admin_base_url(true), '', $url_menu);
-                $url_menu   = str_replace(osc_admin_base_url(), '', $url_menu);
-                if($actual_url == $url_menu) {
-                    $class = 'current';
-                    $something_selected = true;
-                }
+                
+                $class = osc_apply_filter('current_admin_menu_'.$value[2],$class);
                 
                 $icon = '';
                 if(isset($value[4])) {
@@ -110,6 +153,7 @@
                     $icon = '<div class="ico ico-48 ico-'.$value[2].'">';
                 }
                 
+                if( $current_menu == $value[2] ) { $class = 'current'; }
                 $sMenu .= '<li id="menu_'.$value[2].'" class="'.$class.'">'.PHP_EOL ;
                 $sMenu .= '<h3><a id="'.$value[2].'" href="'.$value[1].'">'.$icon.'</div>'.$value[0].'</a></h3>'.PHP_EOL ;
                 $sMenu .= $sSubmenu;

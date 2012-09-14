@@ -129,7 +129,11 @@
                                 <div class="form-controls">
                                     <input type="text" class="input-medium" name="mailserver_ssl" value="<?php echo osc_esc_html(osc_mailserver_ssl()); ?>" />
                                     <?php _e('Options: blank, ssl or tls'); ?>
-                                    <?php if( !@apache_mod_loaded('mod_ssl') ) { ?>
+                                    <?php if( php_sapi_name() == 'cgi-fcgi' || php_sapi_name() == 'cgi' ) { ?>
+                                    <div class="flashmessage flashmessage-inline warning">
+                                        <p><?php _e("Cannot be sure that Apache Module <b>mod_ssl</b> is loaded.") ; ?></p>
+                                    </div>
+                                    <?php } else if( !@apache_mod_loaded('mod_ssl') ) { ?>
                                     <div class="flashmessage flashmessage-inline warning">
                                         <p><?php _e("Apache Module <b>mod_ssl</b> is not loaded") ; ?></p>
                                     </div>

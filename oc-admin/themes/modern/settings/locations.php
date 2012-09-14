@@ -133,6 +133,7 @@
             <input type="hidden" name="country_c_parent" value="" />
             <input type="hidden" name="country_parent" value="" />
             <input type="hidden" name="r_manual" value="1" />
+            <input type="hidden" name="region_id" id="region_id" value="" />
             <table>
                 <tr>
                     <td><?php _e('Region'); ?>: </td>
@@ -184,6 +185,7 @@
             <input type="hidden" name="country_parent" value="" />
             <input type="hidden" name="region_parent" value="" />
             <input type="hidden" name="ci_manual" value="1" />
+            <input type="hidden" name="city_id" id="city_id" value="" />
             <table>
                 <tr>
                     <td><?php _e('City'); ?>: </td>

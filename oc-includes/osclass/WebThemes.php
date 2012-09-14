@@ -17,14 +17,9 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    class WebThemes
+    class WebThemes extends Themes
     {
         private static $instance ;
-        private $path ;
-        private $theme ;
-        private $theme_url ;
-        private $theme_path ;
-        private $theme_exists ;
 
         private $pages = array( '404',
                                 'contact',
@@ -68,6 +63,9 @@
 
         public function __construct()
         {
+            $this->scripts = array();
+            $this->queue = array();
+            $this->styles = array();
             $this->path = osc_themes_path();
 
             if( Params::getParam('theme') != '' && Session::newInstance()->_get('adminId') != '' ) {
@@ -82,8 +80,7 @@
             }
         }
 
-        /* PRIVATE */
-        private function setCurrentThemePath()
+        public function setCurrentThemePath()
         {
             if ( file_exists( $this->path . $this->theme . '/' ) ) {
                 $this->theme_exists = true ;
@@ -94,7 +91,7 @@
             }
         }
 
-        private function setCurrentThemeUrl()
+        public function setCurrentThemeUrl()
         {
             if ( $this->theme_exists ) {
                 $this->theme_url = osc_base_url() . str_replace(osc_base_path(), '', $this->theme_path) ;
@@ -135,30 +132,6 @@
             }
         }
 
-        public function getCurrentTheme()
-        {
-            return $this->theme ;
-        }
-
-        public function getCurrentThemeUrl()
-        {
-            return $this->theme_url ;
-        }
-
-        public function getCurrentThemePath()
-        {
-            return $this->theme_path ;
-        }
-
-        public function getCurrentThemeStyles()
-        {
-            return $this->theme_url . 'css/' ;
-        }
-
-        public function getCurrentThemeJs()
-        {
-            return $this->theme_url . 'js/' ;
-        }
 
         /**
          * This function returns an array of themes (those copied in the oc-content/themes folder)
@@ -262,6 +235,8 @@
         {
             return !in_array($internal_name, $this->pages);
         }
+
+        
     }
 
     /* file end: ./oc-includes/osclass/WebThemes.php */

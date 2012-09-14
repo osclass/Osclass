@@ -203,13 +203,6 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-label"><?php _e('Allowed formats') ; ?></div>
-                    <div class="form-controls">
-                        <input type="text" class="input-medium" name="allowedExt" value="<?php echo osc_esc_html( osc_allowed_extension() ) ; ?>" />
-                        <span class="help-box"><?php _e('For example: jpg, png, gif') ; ?></span>
-                    </div>
-                </div>
-                <div class="form-row">
                     <div class="form-label"><?php _e('ImageMagick') ; ?></div>
                     <div class="form-controls">
                         <div class="form-label-checkbox">

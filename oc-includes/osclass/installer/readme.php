@@ -1,8 +1,8 @@
 <?php
     function osc_getRelativeWebURL() {
         $url = $_SERVER['REQUEST_URI'];
-        $pos = strpos($url, '/oc-installer');
-        return substr($url, 0, strpos($url, '/oc-installer'));
+        $pos = strpos($url, '/oc-includes');
+        return substr($url, 0, strpos($url, '/oc-includes'));
     }
 
     function osc_getAbsoluteWebURL() {
@@ -15,7 +15,7 @@
     <head>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             <title>OSClass - Readme</title>
-            <link rel="stylesheet" type="text/css" media="all" href="oc-includes/osclass/installer/install.css" />
+            <link rel="stylesheet" type="text/css" media="all" href="<?php echo osc_getAbsoluteWebURL(); ?>/oc-includes/osclass/installer/install.css" />
     </head>
     <body>
         <div id="wrapper">
@@ -23,7 +23,7 @@
                 <div id="header" class="readme">
                     <h1 id="logo">
                         <a href="http://osclass.org/" target="_blank">
-                            <img src="oc-includes/images/osclass-logo.png" alt="OSClass" title="OSClass" />
+                            <img src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-includes/images/osclass-logo.png" alt="OSClass" title="OSClass" />
                         </a>
                         <br/>
                         Version 3.0.1
@@ -122,7 +122,7 @@
                     </div>
                     <div id="license">
                         <h2 class="title">License</h2>
-                        <p class="space-left-10">OSClass is released under the GPLv3 (see <a href="licenses.txt" target="_blank">licenses.txt</a>).</p>
+                        <p class="space-left-10">OSClass is released under the GPLv3 (see <a href="<?php echo osc_getAbsoluteWebURL(); ?>/licenses.txt" target="_blank">licenses.txt</a>).</p>
                     </div>
                 </div>
                 <div id="footer">

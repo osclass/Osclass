@@ -150,7 +150,7 @@ function osc_plugin_path($file) {
 function osc_plugin_url($file) {
     // Sanitize windows paths and duplicated slashes
     $dir = preg_replace('|/+|','/', str_replace('\\','/',dirname($file)));
-    $dir = WEB_PATH . 'oc-content/plugins/' . preg_replace('#^.*oc-content\/plugins\/#','',$dir) . "/";
+    $dir = osc_base_url() . 'oc-content/plugins/' . preg_replace('#^.*oc-content\/plugins\/#','',$dir) . "/";
     return $dir;
 }
 
@@ -843,7 +843,6 @@ function osc_file_get_contents($url)
  * @return bool
  */
 function apache_mod_loaded($mod) {
-
     if(function_exists('apache_get_modules')) {
         $modules = apache_get_modules();
         if(in_array($mod, $modules)) { return true; }
@@ -851,8 +850,8 @@ function apache_mod_loaded($mod) {
         ob_start();
         phpinfo(INFO_MODULES);
         $content = ob_get_contents();
-        if(stripos($content, $mod)!==FALSE) { return true; }
         ob_end_clean();
+        if(stripos($content, $mod)!==FALSE) { return true; }
     }
     return false;
 }

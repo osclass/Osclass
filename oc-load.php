@@ -67,6 +67,7 @@ require_once LIB_PATH . 'osclass/classes/database/DBConnectionClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DBCommandClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DBRecordsetClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DAO.php';
+require_once LIB_PATH . 'osclass/model/SiteInfo.php';
 require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
 require_once LIB_PATH . 'osclass/model/Preference.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php';
@@ -110,6 +111,7 @@ require_once LIB_PATH . 'osclass/core/WebSecBaseModel.php';
 require_once LIB_PATH . 'osclass/core/AdminSecBaseModel.php';
 require_once LIB_PATH . 'osclass/core/Translation.php';
 
+require_once LIB_PATH . 'osclass/Themes.php';
 require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/WebThemes.php';
 require_once LIB_PATH . 'osclass/compatibility.php';
@@ -145,7 +147,6 @@ require_once LIB_PATH . 'osclass/model/ItemLocation.php';
 require_once LIB_PATH . 'osclass/model/Widget.php';
 require_once LIB_PATH . 'osclass/model/Search.php';
 require_once LIB_PATH . 'osclass/model/LatestSearches.php';
-require_once LIB_PATH . 'osclass/model/SiteInfo.php';
 require_once LIB_PATH . 'osclass/model/Field.php';
 require_once LIB_PATH . 'osclass/model/Log.php';
 require_once LIB_PATH . 'osclass/model/CountryStats.php';
@@ -166,6 +167,7 @@ require_once LIB_PATH . 'osclass/classes/AdminMenu.php';
 require_once LIB_PATH . 'osclass/classes/datatables/DataTable.php';
 require_once LIB_PATH . 'osclass/classes/AdminToolbar.php';
 require_once LIB_PATH . 'osclass/classes/Breadcrumb.php';
+require_once LIB_PATH . 'osclass/classes/EmailVariables.php';
 require_once LIB_PATH . 'osclass/alerts.php';
 
 require_once LIB_PATH . 'osclass/frm/Form.form.class.php';
@@ -193,6 +195,10 @@ Session::newInstance()->session_start() ;
 if( OC_ADMIN ) {
     // init admin menu
     AdminMenu::newInstance()->init();
+    $functions_path = AdminThemes::newInstance()->getCurrentThemePath() . 'functions.php';
+    if( file_exists($functions_path) ) {
+        require_once $functions_path ;
+    }
 } else {
     // init Rewrite class only if it's the frontend
     Rewrite::newInstance()->init();
@@ -233,6 +239,8 @@ function osc_meta_generator() {
 osc_add_hook('header', 'osc_show_maintenance');
 osc_add_hook('header', 'osc_show_maintenance_css');
 osc_add_hook('header', 'osc_meta_generator');
+osc_add_hook('header', 'osc_load_scripts', 10);
+osc_add_hook('header', 'osc_load_styles', 10);
 
 // cron
 // hourly
