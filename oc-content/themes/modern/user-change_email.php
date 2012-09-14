@@ -25,6 +25,30 @@
         <?php osc_current_web_theme_path('head.php') ; ?>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
+        
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('form#change-email').validate({
+                    rules: {
+                        new_email: {
+                            required: true,
+                            email: true
+                        }
+                    }, 
+                    messages: {
+                        new_email: {
+                            required: "<?php _e("Email: this field is required", 'modern'); ?>.",
+                            email: "<?php _e("Invalid email address", 'modern'); ?>."
+                            }
+                    },
+                    errorLabelContainer: "#error_list",
+                    wrapper: "li",
+                invalidHandler: function(form, validator) {
+                    $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+                }});
+            });
+        </script>
     </head>
     <body>
         <?php osc_current_web_theme_path('header.php') ; ?>
@@ -37,7 +61,8 @@
             </div>
             <div id="main" class="modify_profile">
                 <h2><?php _e('Change your e-mail', 'modern') ; ?></h2>
-                <form action="<?php echo osc_base_url(true) ; ?>" method="post">
+                <ul id="error_list"></ul>
+                <form id="change-email" action="<?php echo osc_base_url(true) ; ?>" method="post">
                     <input type="hidden" name="page" value="user" />
                     <input type="hidden" name="action" value="change_email_post" />
                     <fieldset>

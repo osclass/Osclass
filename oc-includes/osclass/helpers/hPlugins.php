@@ -200,12 +200,44 @@
     /**
      * Gets the ajax url
      *
+     * @since 3.1
+     * @param string $hook
+     * @param array $params
+     * @return string
+     */
+    function osc_admin_ajax_hook_url($hook = '', $params = array()) {
+        return _osc_ajax_hook_url(true, $hook, $params);
+    }
+
+    /**
+     * Gets the ajax url
+     *
+     * @since 3.0
      * @param string $hook
      * @param array $params
      * @return string
      */
     function osc_ajax_hook_url($hook = '', $params = array()) {
-        $url = osc_base_url(true) . '?page=ajax&action=runhook' ;
+        return _osc_ajax_hook_url(false, $hook, $params);
+    }
+
+    /**
+     * Gets the ajax url
+     *
+     * @since 3.1
+     * @param string $admin
+     * @param string $hook
+     * @param array $params
+     * @return string
+     */
+    function _osc_ajax_hook_url($admin, $hook, $params) {
+        if( $admin ) {
+            $url = osc_admin_base_url(true);
+        } else {
+            $url = osc_base_url(true);
+        }
+
+        $url .= '?page=ajax&action=runhook';
 
         if( $hook != '' ) {
             $url .= '&hook=' . $hook ;

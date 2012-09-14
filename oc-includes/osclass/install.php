@@ -236,7 +236,7 @@ switch( $step ) {
                 <div id="footer">
                     <ul>
                         <li>
-                            <a href="<?php echo get_absolute_url(); ?>readme.php" target="_blank"><?php _e('Readme'); ?></a>
+                            <a href="<?php echo get_absolute_url(); ?>/oc-includes/osclass/installer/readme.php" target="_blank"><?php _e('Readme'); ?></a>
                         </li>
                         <li>
                             <a href="http://admin.osclass.org/feedback.php" target="_blank"><?php _e('Feedback'); ?></a>
