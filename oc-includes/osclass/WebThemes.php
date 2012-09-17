@@ -63,9 +63,7 @@
 
         public function __construct()
         {
-            $this->scripts = array();
-            $this->queue = array();
-            $this->styles = array();
+            parent::__construct();
             $this->path = osc_themes_path();
 
             if( Params::getParam('theme') != '' && Session::newInstance()->_get('adminId') != '' ) {
@@ -131,7 +129,6 @@
                 require_once $functions_path;
             }
         }
-
 
         /**
          * This function returns an array of themes (those copied in the oc-content/themes folder)
@@ -218,7 +215,7 @@
             if($info['name']!='') {
                 return $info;
             }
-            
+
             // OLD CODE INFO
             require_once $path;
             $fxName = $theme . '_theme_info';
@@ -235,9 +232,6 @@
         {
             return !in_array($internal_name, $this->pages);
         }
-
-        
     }
 
     /* file end: ./oc-includes/osclass/WebThemes.php */
-?>

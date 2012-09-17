@@ -16,17 +16,18 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    osc_enqueue_script('jquery-validate');
+    osc_enqueue_script('colorpicker');
+    osc_enqueue_style('colorpicker', osc_assets_url('js/colorpicker/css/colorpicker.css'));
+
     $maxPHPsize    = View::newInstance()->_get('max_size_upload') ;
     $imagickLoaded = extension_loaded('imagick') ;
     $aGD           = @gd_info() ;
     $freeType      = array_key_exists('FreeType Support', $aGD) ;
 
     //customize Head
-    function customHead(){
-        echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.validate.min.js').'"></script>';
-        ?>
+    function customHead() { ?>
         <link rel="stylesheet" media="screen" type="text/css" href="<?php echo osc_current_admin_theme_js_url('colorpicker/css/colorpicker.css') ; ?>" />
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('colorpicker/js/colorpicker.js') ; ?>"></script>
         <script type="text/javascript">
             $(document).ready(function(){
                 // Code for form validation

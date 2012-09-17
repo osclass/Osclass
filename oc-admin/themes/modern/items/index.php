@@ -16,6 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    osc_enqueue_script('jquery-validate');
+
     function addHelp() {
         echo '<p>' . __('Manage all the listings on your site: edit, delete or block the latest listings published. You can also filter by several parameters: user, region, city, etc.') . '</p>';
     }
@@ -37,9 +39,8 @@
     osc_add_filter('admin_title', 'customPageTitle');
 
     //customize Head
-    function customHead() { ?>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
-        <?php ItemForm::location_javascript_new('admin') ; ?>
+    function customHead() {
+        ItemForm::location_javascript_new('admin') ; ?>
         <script type="text/javascript">
             // autocomplete users
             $(document).ready(function(){

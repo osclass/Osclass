@@ -84,6 +84,12 @@
             if( Params::getParam('donation') == 'successful' ) {
                 osc_add_flash_ok_message(_m('Thank you very much for your donation'), 'admin');
             }
+
+            // enqueue scripts
+            osc_enqueue_script('jquery');
+            osc_enqueue_script('jquery-ui');
+            osc_enqueue_script('admin-osc');
+            osc_enqueue_script('admin-ui-osc');
         }
 
         function isLogged()

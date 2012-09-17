@@ -16,6 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    osc_enqueue_script('jquery-validate');
+    osc_enqueue_script('tiny_mce');
 
     $info   = __get("info") ;
     $widget = __get("widget") ;
@@ -58,8 +60,6 @@
             $button = osc_esc_html( __('Add widget') ) ;
         }
         ?>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('tiny_mce/tiny_mce.js') ; ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <script type="text/javascript">
             tinyMCE.init({
                 mode : "textareas",
