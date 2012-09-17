@@ -52,9 +52,8 @@ class Installer_installer extends InstallerTest {
             $this->selenium->type("webtitle", "test_web_osclass");
             $this->selenium->type("email", $email);
 
-            $this->selenium->type("xpath=//input[@id='t_country']", "spai");
-            $this->selenium->keyDown( "xpath=//input[@id='t_country']", "n" ) ;
-            $this->selenium->keyPress( "xpath=//input[@id='t_country']", "\\13");
+            $this->selenium->select("country_select", "label=regexp:\\s*Spain");
+
             sleep(2);
             $this->selenium->click("xpath=//div[@id='location']/div[@id='country-box']/div[@id='a_country']/ul/li/a");
             $this->selenium->click("link=Next");
@@ -125,9 +124,7 @@ class Installer_installer extends InstallerTest {
             $this->selenium->type("webtitle", "test_web_osclass");
             $this->selenium->type("email", $email);
 
-            $this->selenium->type("xpath=//input[@id='t_country']", "spai");
-            $this->selenium->keyDown( "xpath=//input[@id='t_country']", "n" ) ;
-            $this->selenium->keyPress( "xpath=//input[@id='t_country']", "\\13");
+            $this->selenium->select("country_select", "label=regexp:\\s*Spain");
             sleep(2);
             $this->selenium->click("xpath=//div[@id='location']/div[@id='country-box']/div[@id='a_country']/ul/li/a");
             $this->selenium->click("link=Next");
