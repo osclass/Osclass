@@ -180,9 +180,9 @@ class Frontend_search extends FrontendTest {
         $uSettings = new utilSettings();
         $old_enable_user_val  = $uSettings->set_enabled_user_validation(0);
         // create a new user
-        $userId = $this->doRegisterUser();
+        $userId = $this->doRegisterUser('testusersearch@osclass.org', 'password');
         // add new items to user
-        $this->loginWith();
+        $this->loginWith('testusersearch@osclass.org', 'password');
         for($i=0; $i<2; $i++){
             $item = $aData[$i];
             $this->insertItem(  $item['catId'], $item['title'], 
@@ -202,7 +202,7 @@ class Frontend_search extends FrontendTest {
         $this->assertTrue($count == 2 , "Search by [ User id ].");
         
         // remove user test
-        $this->removeUserByMail();
+        $this->removeUserByMail('testusersearch@osclass.org');
     }
     
     /*
@@ -226,7 +226,7 @@ class Frontend_search extends FrontendTest {
         $this->assertTrue($count == 4 , "Search by [ sCity Balsereny ].");
         
         $searchCityArea = osc_search_url(array('sCityArea'  => 'city area test')); 
-        echo $searchCityArea."<br>"; 
+        //echo $searchCityArea."<br>"; 
         $this->selenium->open( $searchCityArea );
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
         $this->assertTrue($count == 2 , "Search by [ sCityArea city area test ].");
@@ -262,7 +262,7 @@ class Frontend_search extends FrontendTest {
         $mItems = new Item();
         $aItems = $mItems->listWhere('fk_i_category_id = 39');
         foreach($aItems as $actual_item) {
-            echo "update -> " . $actual_item['pk_i_id'] ."<br>";
+            //echo "update -> " . $actual_item['pk_i_id'] ."<br>";
             $mItems->update( array('dt_expiration' => '2010-05-05 10:00:00', 'dt_pub_date' => '2010-05-03 10:00:00') , array('pk_i_id' => $actual_item['pk_i_id']) );
         }
 
@@ -290,7 +290,7 @@ class Frontend_search extends FrontendTest {
         $aItems = Item::newInstance()->findByEmail($this->_email) ;
         foreach( $aItems as $item ) {
             $url = osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] );
-            echo $url."<br>";
+            //echo $url."<br>";
             $this->selenium->open( $url );
             $this->assertTrue($this->selenium->isTextPresent("Your listing has been deleted"), "Delete item.");
         }
