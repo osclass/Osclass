@@ -94,8 +94,7 @@ class OCadmin_tools extends OCadminTest {
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Tools");
-        $this->selenium->click("link=Maintenance mode");
+        $this->selenium->click("//a[@id='tools_maintenance']");
         $this->selenium->waitForPageToLoad("30000");
         $maintenance = $this->selenium->isTextPresent("Maintenance mode is: ON");
         if(!$maintenance) {
@@ -109,8 +108,7 @@ class OCadmin_tools extends OCadminTest {
         
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Tools");
-        $this->selenium->click("link=Maintenance mode");
+        $this->selenium->click("//a[@id='tools_maintenance']");
         $this->selenium->waitForPageToLoad("30000");
         $this->selenium->click("//input[@value='Disable maintenance mode']");
         $this->selenium->waitForPageToLoad("300000");

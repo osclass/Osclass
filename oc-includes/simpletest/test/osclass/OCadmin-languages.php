@@ -148,7 +148,7 @@ class OCadmin_languages extends OCadminTest {
 
             sleep(4);
             
-            $this->assertTrue($this->selenium->isTextPresent("Number of decimals: this field has to be numeric only."),"Edit language Spanish - JS validation -");
+            $this->assertTrue($this->selenium->isTextPresent("Number of decimals: this field must only contain numeric characters."),"Edit language Spanish - JS validation -");
             $this->assertTrue($this->selenium->isTextPresent("Name: this field is required."),"Edit language Spanish - JS validation -");
             $this->assertTrue($this->selenium->isTextPresent("Short name: this field is required."),"Edit language Spanish - JS validation -");
             $this->assertTrue($this->selenium->isTextPresent("Description: this field is required."),"Edit language Spanish - JS validation -");
@@ -230,7 +230,7 @@ class OCadmin_languages extends OCadminTest {
         $text = $this->selenium->getText("//table/tbody/tr/td[contains(.,'$lang')]/div/ul/li/a[text()='Disable (oc-admin)']");
         $bool = preg_match('/Disable \(oc-admin\)/i', $text);
         if($bool) {
-            echo "====> ".$text."   </br>";
+            //echo "====> ".$text."   </br>";
             return false;
         } else {
             return true;
