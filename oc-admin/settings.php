@@ -96,6 +96,7 @@
                                                                     if(Params::getParam('c_manual')==1) {
                                                                         $mCountries->insert(array('pk_c_code' => $countryCode,
                                                                                                   's_name' => $countryName));
+                                                                        osc_add_flash_ok_message(sprintf(_m('%s has been added as a new country'), $countryName), 'admin');
                                                                     } else {
                                                                         if(!osc_validate_min($countryCode, 1) || !osc_validate_min($countryName, 1)) {
                                                                             osc_add_flash_error_message(_m('Country code and name should have at least two characters'), 'admin');
