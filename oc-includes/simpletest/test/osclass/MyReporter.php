@@ -100,9 +100,9 @@ class MyReporter extends SimpleReporter {
         if(PHP_SAPI==='cli') {
             print " * * *  REPORTER  * * * ".PHP_EOL;
             print "[".$test_name."] ".$this->getTestCaseProgress() . "/" . $this->getTestCaseCount().PHP_EOL;
-            print $this->getPassCount()." ~~ PASSES".PHP_EOL;
-            print $this->getFailCount()." ## FAILS".PHP_EOL;
-            print $this->getExceptionCount()." %% EXCEPTIONS".PHP_EOL;
+            print "\033[1;32m".$this->getPassCount()." ~~ PASSES\033[0m".PHP_EOL;
+            print "\033[1;31m".$this->getFailCount()." ## FAILS\033[0m".PHP_EOL;
+            print "\033[1;33m".$this->getExceptionCount()." %% EXCEPTIONS\033[0m".PHP_EOL;
         } else {
             $colour = ($this->getFailCount() + $this->getExceptionCount() > 0 ? "red" : "green");
             print "<div style=\"";
@@ -169,7 +169,7 @@ class MyReporter extends SimpleReporter {
             array_shift($breadcrumb);
             $failcli = implode(" > ", $breadcrumb);
             $failcli .= " > " . $this->htmlEntities($message);
-            print "## FAIL ## ".$failcli.PHP_EOL;
+            print "\033[1;31m## FAIL ##\033[0m ".$failcli.PHP_EOL;
             flush();
         } else {
             print $fail;
@@ -179,7 +179,7 @@ class MyReporter extends SimpleReporter {
     function  paintPass($message) {
         parent::paintPass($message);
         if(PHP_SAPI==='cli') {
-            print "~~ PASS ~~ ".$this->htmlEntities($message).PHP_EOL;
+            print "\033[1;32m~~ PASS ~~ \033[0m".$this->htmlEntities($message).PHP_EOL;
             flush();
         } else {
             print "<span class=\"pass\">Pass</span>: ";
@@ -218,7 +218,7 @@ class MyReporter extends SimpleReporter {
         if(PHP_SAPI==='cli') {
             $breadcrumb = $this->getTestList();
             array_shift($breadcrumb);
-            print "%% EXCEPTION %% ".implode(" > ", $breadcrumb)." > ".$this->htmlEntities($message).PHP_EOL;
+            print "\033[1;33m%% EXCEPTION %%\033[0m ".implode(" > ", $breadcrumb)." > ".$this->htmlEntities($message).PHP_EOL;
         } else {
             print "<span class=\"fail\">Exception</span>: ";
             $breadcrumb = $this->getTestList();
@@ -242,7 +242,7 @@ class MyReporter extends SimpleReporter {
                     '] with message ['. $exception->getMessage() .
                     '] in ['. $exception->getFile() .
                     ' line ' . $exception->getLine() . ']';
-            print "%% EXCEPTION %% ".implode(" > ", $breadcrumb)." > ".$this->htmlEntities($message).PHP_EOL;
+            print "\033[1;33m%% EXCEPTION %%\033[0m ".implode(" > ", $breadcrumb)." > ".$this->htmlEntities($message).PHP_EOL;
         } else {
             print "<span class=\"fail\">Exception</span>: ";
             $breadcrumb = $this->getTestList();
@@ -266,7 +266,7 @@ class MyReporter extends SimpleReporter {
         if(PHP_SAPI==='cli') {
             $breadcrumb = $this->getTestList();
             array_shift($breadcrumb);
-            print "%% SKKIPED %% ".implode(" > ", $breadcrumb)." > ".$this->htmlEntities($message).PHP_EOL;
+            print "\033[1;35m%% SKKIPED %%\033[0m ".implode(" > ", $breadcrumb)." > ".$this->htmlEntities($message).PHP_EOL;
         } else {
             print "<span class=\"pass\">Skipped</span>: ";
             $breadcrumb = $this->getTestList();
