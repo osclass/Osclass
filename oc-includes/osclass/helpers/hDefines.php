@@ -241,7 +241,7 @@
      * @return string
      */
     function osc_assets_url($file = '') {
-        if( stripos($ajaxFile, '../') !== false ) {
+        if( stripos($file, '../') !== false ) {
             $file = '';
         }
 
