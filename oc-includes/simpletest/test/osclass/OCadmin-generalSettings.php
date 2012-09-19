@@ -73,7 +73,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->type('dimNormal'   , 'adama');
         $this->selenium->click("//input[@id='save_changes']");
         sleep(4);
-        $this->assertTrue($this->selenium->isTextPresent("Maximum size: this field has to be numeric only"), "Media tab JS, update.");
+        $this->assertTrue($this->selenium->isTextPresent("Maximum size: this field must only contain numeric characters"), "Media tab JS, update.");
         $this->assertTrue($this->selenium->isTextPresent("Thumbnail size: is not in the correct format"), "Media tab JS, update.");
         $this->assertTrue($this->selenium->isTextPresent("Preview size: is not in the correct format"), "Media tab JS, update.");
         $this->assertTrue($this->selenium->isTextPresent("Normal size: is not in the correct format"), "Media tab JS, update.");
@@ -108,7 +108,6 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->assertTrue($this->selenium->isTextPresent("Media config has been updated"), "Media tab, update.");
 
         $this->assertEqual( $this->selenium->getValue("maxSizeKb")      , '500', 'Media tab, check maxSizeKb');
-        $this->assertEqual( $this->selenium->getValue('allowedExt')     , 'ext,deg,osc', 'Media tab, check allowedExt ext,deg,osc');
         $this->assertEqual( $this->selenium->getValue('dimThumbnail')   , '10x10', 'Media tab, check dimThumnai 10x10');
         $this->assertEqual( $this->selenium->getValue('dimPreview')     , '50x50' , 'Media tab, check dimPreview 50x50');
         $this->assertEqual( $this->selenium->getValue('dimNormal')      , '100x100', 'Media tab, check dimNormal 100x100');
@@ -127,7 +126,6 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->assertTrue($this->selenium->isTextPresent("Media config has been updated"), "Media tab, update.");
 
         $this->assertEqual( $this->selenium->getValue("maxSizeKb")      , $maxSizeKb);
-        $this->assertEqual( $this->selenium->getValue('allowedExt')     , $allowedExt);
         $this->assertEqual( $this->selenium->getValue('dimThumbnail')   , $dimThumbnail);
         $this->assertEqual( $this->selenium->getValue('dimPreview')     , $dimPreview);
         $this->assertEqual( $this->selenium->getValue('dimNormal')      , $dimNormal);
@@ -1165,7 +1163,7 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->keyUp("custom_queries", "");
         $this->selenium->click("//input[@type='submit']");
         sleep(4);
-        $this->assertTrue($this->selenium->isTextPresent("Custom number: this field could not be left empty."), "Last Searches JS, update.");
+        $this->assertTrue($this->selenium->isTextPresent("Custom number: this field cannot be left empty."), "Last Searches JS, update.");
         $this->selenium->click("//input[@value='custom']");
         $this->selenium->type("custom_queries", "123");
         $this->selenium->keyUp("custom_queries", "3");
@@ -1179,7 +1177,7 @@ class OCadmin_generalSettings extends OCadmintest {
         sleep(4);
         $this->selenium->click("//input[@type='submit']");
         sleep(4);
-        $this->assertTrue($this->selenium->isTextPresent("Custom number: this field could not be left empty."), "Last Searches JS, update.");
+        $this->assertTrue($this->selenium->isTextPresent("Custom number: this field cannot be left empty."), "Last Searches JS, update.");
 
         $this->selenium->click("//input[@value='week']");
         $this->selenium->click("//input[@type='submit']");

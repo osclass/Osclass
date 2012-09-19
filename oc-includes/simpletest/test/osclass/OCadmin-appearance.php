@@ -117,11 +117,14 @@ class OCadmin_appearance extends OCadminTest {
                 echo $num ."  now " . $new_num ."\n";
                 $this->assertTrue( ($num+1 == $new_num) , "Theme downloaded successfully and marked as downloaded theme");
                 
+                // TITLE and DESCRIPTION shows in Market are from t_item table and not from the index.php file
+                // Ther is NO way to check them correctly since they could be different, for example
+                // OSClass India theme 1.0 by OSClass team - India theme 1.0.2 by India Theme (which is the same)
                 // check appears at Manage themes
-                $this->selenium->click("link=Manage themes");
-                $this->selenium->waitForPageToLoad("10000");
+                //$this->selenium->click("//a[@id='appearance_manage']");
+                //$this->selenium->waitForPageToLoad("10000");
                 
-                $this->assertTrue($this->selenium->isTextPresent($description), "Theme present at Manage themes.");
+                //$this->assertTrue($this->selenium->isTextPresent($description), "Theme present at Manage themes.");
             }
         } else {
             $this->asserTrue(false, 'There aren\'t themes on market');
