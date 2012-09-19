@@ -93,24 +93,28 @@
                                             case('add_country'):    // add country
                                                                     $countryCode = strtoupper(Params::getParam('c_country'));
                                                                     $countryName = Params::getParam('country');
-
-                                                                    if(!osc_validate_min($countryCode, 1) || !osc_validate_min($countryName, 1)) {
-                                                                        osc_add_flash_error_message(_m('Country code and name should have at least two characters'), 'admin');
+                                                                    if(Params::getParam('c_manual')==1) {
+                                                                        $mCountries->insert(array('pk_c_code' => $countryCode,
+                                                                                                  's_name' => $countryName));
                                                                     } else {
-                                                                        $exists = $mCountries->findByCode($countryCode);
-                                                                        if(isset($exists['s_name'])) {
-                                                                            osc_add_flash_error_message(sprintf(_m('%s already was in the database'), $countryName), 'admin');
+                                                                        if(!osc_validate_min($countryCode, 1) || !osc_validate_min($countryName, 1)) {
+                                                                            osc_add_flash_error_message(_m('Country code and name should have at least two characters'), 'admin');
                                                                         } else {
-                                                                            $data_sql = osc_file_get_contents('http://geo.osclass.org/newgeo.download.php?action=country&term=' . urlencode($countryCode) );
+                                                                            $exists = $mCountries->findByCode($countryCode);
+                                                                            if(isset($exists['s_name'])) {
+                                                                                osc_add_flash_error_message(sprintf(_m('%s already was in the database'), $countryName), 'admin');
+                                                                            } else {
+                                                                                $data_sql = osc_file_get_contents('http://geo.osclass.org/newgeo.download.php?action=country&term=' . urlencode($countryCode) );
 
-                                                                            $conn = DBConnectionClass::newInstance() ;
-                                                                            $c_db = $conn->getOsclassDb() ;
-                                                                            $comm = new DBCommandClass($c_db) ;
-                                                                            $comm->query("SET FOREIGN_KEY_CHECKS = 0");
-                                                                            $comm->importSQL($data_sql);
-                                                                            $comm->query("SET FOREIGN_KEY_CHECKS = 1");
-                                                                            
-                                                                            osc_add_flash_ok_message(sprintf(_m('%s has been added as a new country'), $countryName), 'admin');
+                                                                                $conn = DBConnectionClass::newInstance() ;
+                                                                                $c_db = $conn->getOsclassDb() ;
+                                                                                $comm = new DBCommandClass($c_db) ;
+                                                                                $comm->query("SET FOREIGN_KEY_CHECKS = 0");
+                                                                                $comm->importSQL($data_sql);
+                                                                                $comm->query("SET FOREIGN_KEY_CHECKS = 1");
+
+                                                                                osc_add_flash_ok_message(sprintf(_m('%s has been added as a new country'), $countryName), 'admin');
+                                                                            }
                                                                         }
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
