@@ -15,6 +15,9 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
+
+    osc_enqueue_script('jquery-validate');
+
     $user      = __get('user') ;
     $countries = __get('countries') ;
     $regions   = __get('regions') ;
@@ -55,9 +58,8 @@
     //customize Head
     function customHead() { 
         $user = __get('user');
-        ?>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
-        <?php if(isset($user['pk_i_id'])) {
+
+        if(isset($user['pk_i_id'])) {
             UserForm::js_validation_edit() ;
         } else {
             UserForm::js_validation() ;

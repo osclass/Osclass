@@ -16,10 +16,10 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    osc_enqueue_script('jquery-validate');
+
     //customize Head
-    function customHead(){
-        echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.validate.min.js').'"></script>';
-        ?>
+    function customHead() { ?>
 <script type="text/javascript">
 $(document).ready(function(){
     // Code for form validation

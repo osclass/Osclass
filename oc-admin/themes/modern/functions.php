@@ -88,7 +88,7 @@ function admin_footer_html() { ?>
         });
     </script><?php
 }
-osc_add_hook('admin_footer', 'admin_content_footer');
+osc_add_hook('admin_content_footer', 'admin_footer_html');
 
 function printLocaleTabs($locales = null) {
     if($locales==null) { $locales = osc_get_locales(); }

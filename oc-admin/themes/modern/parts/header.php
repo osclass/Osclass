@@ -1,26 +1,23 @@
 <!DOCTYPE html>
 <html lang="<?php echo substr(osc_current_admin_locale(), 0, 2); ?>">
-    <head>
-        <meta charset="utf-8">
-        <title><?php echo osc_apply_filter('admin_title', osc_page_title() . ' - OSClass'); ?></title>
-        <meta name="title" content="<?php echo osc_apply_filter('admin_title', osc_page_title() . ' - OSClass'); ?>" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="content-language" content="<?php echo osc_current_admin_locale(); ?>" />
-        <script src="<?php echo osc_current_admin_theme_js_url('jquery.min.js') ; ?>"></script>
-        <script src="<?php echo osc_current_admin_theme_js_url('osc.js') ; ?>"></script>        
-        <script src="<?php echo osc_current_admin_theme_js_url('jquery-ui-1.8.20.min.js') ; ?>"></script>
-        <script src="<?php echo osc_current_admin_theme_js_url('ui-osc.js') ; ?>"></script>
-        <!-- styles
-        ================================================== -->
-        <link href="<?php echo osc_current_admin_theme_styles_url('jquery-ui/jquery-ui-1.8.20.custom.css'); ?>" rel="stylesheet">
-        <link href="<?php echo osc_current_admin_theme_styles_url('main.css'); ?>" rel="stylesheet">
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <?php osc_run_hook('admin_header'); ?>
-    </head>
+<head>
+    <meta charset="utf-8">
+    <title><?php echo osc_apply_filter('admin_title', osc_page_title() . ' - OSClass'); ?></title>
+    <meta name="title" content="<?php echo osc_apply_filter('admin_title', osc_page_title() . ' - OSClass'); ?>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="content-language" content="<?php echo osc_current_admin_locale(); ?>" />
+    <!-- scripts
+    ================================================== -->
+    <?php osc_load_scripts(); ?>
+    <!-- styles
+    ================================================== -->
+    <?php osc_load_styles(); ?>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <?php osc_run_hook('admin_header'); ?>
+</head>
 <body class="<?php echo implode(' ',osc_apply_filter('admin_body_class', array())); ?>">
-        <?php AdminToolbar::newInstance()->render(); ?>
+    <?php AdminToolbar::newInstance()->render(); ?>
     </div>
-
     <div id="content">
         <?php osc_draw_admin_menu(); ?>
         <div id="content-render">

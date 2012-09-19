@@ -16,6 +16,9 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    osc_enqueue_script('jquery-validate');
+    osc_enqueue_script('admin-location');
+
     $aCountries = __get('aCountries');
     //customize Head
     function customHead(){
@@ -51,7 +54,6 @@
                 return false;
             }
         </script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('location.js') ; ?>"></script>
         <?php
     }
     osc_add_hook('admin_header','customHead');

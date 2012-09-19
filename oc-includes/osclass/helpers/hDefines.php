@@ -233,7 +233,21 @@
         return WebThemes::newInstance()->getCurrentThemeJs() . $file ;
     }
 
-    
+    /**
+     * Gets the complete path of a given common asset
+     *
+     * @since 3.0
+     * @param string $file
+     * @return string
+     */
+    function osc_assets_url($file = '') {
+        if( stripos($ajaxFile, '../') !== false ) {
+            $file = '';
+        }
+
+        return osc_base_url() . 'oc-includes/osclass/assets/' . $file;
+    }
+
     /////////////////////////////////////
     //functions for the public website //
     /////////////////////////////////////
