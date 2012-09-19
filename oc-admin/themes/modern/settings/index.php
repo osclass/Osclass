@@ -16,6 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    osc_enqueue_script('jquery-validate');
+
     $dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y') ;
     $timeFormats = array('g:i a', 'g:i A', 'H:i') ;
 
@@ -23,9 +25,7 @@
     $aCurrencies = __get('aCurrencies') ;
 
     //customize Head
-    function customHead(){
-        echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.validate.min.js').'"></script>';
-        ?>
+    function customHead() { ?>
 <script type="text/javascript">
     $(document).ready(function(){
         // Code for form validation

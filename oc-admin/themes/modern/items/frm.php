@@ -16,6 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    osc_enqueue_script('jquery-validate');
+
     $new_item = __get('new_item');
     function customText($return = 'title'){
         $new_item = __get('new_item') ;
@@ -45,7 +47,6 @@
 
     //customize Head
     function customHead() { ?>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <script type="text/javascript">
             document.write('<style type="text/css"> .tabber{ display:none; } </style>') ;
             $(document).ready(function(){

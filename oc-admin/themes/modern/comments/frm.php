@@ -17,6 +17,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    osc_enqueue_script('jquery-validate');
+
     $comment = __get('comment');
 
     if(isset($comment['pk_i_id'])) {
@@ -43,9 +45,8 @@
     osc_add_filter('admin_title', 'customPageTitle');
 
     //customize Head
-    function customHead() { ?>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
-        <?php CommentForm::js_validation(true);
+    function customHead() {
+        CommentForm::js_validation(true);
     }
     osc_add_hook('admin_header','customHead');
 

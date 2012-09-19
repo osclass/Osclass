@@ -16,18 +16,14 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    osc_enqueue_script('jquery-validate');
+
     //getting variables for this view
     $themes = __get("themes") ;
     $info   = __get("info") ;
 
     $version_length = strlen(osc_version());
     $main_version = substr(osc_version(),0, $version_length-2).".".substr(osc_version(),$version_length-2, 1);
-
-    //customize Head
-    function customHead(){
-        echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.validate.min.js').'"></script>';
-    }
-    osc_add_hook('admin_header','customHead');
 
     function addHelp() {
         echo '<p>' . sprintf(__('Browse and download available OSClass themes from a constantly-updated selection. Remember, you must install the theme after you download it. If you want to design a theme for OSClass, follow these instructions: %s'), '<a href="http://doc.osclass.org/How_to_create_a_theme" target="_blank">http://doc.osclass.org/How_to_create_a_theme</a>') . '</p>';

@@ -20,14 +20,14 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    abstract class Themes {
-
+    abstract class Themes
+    {
         private static $instance ;
         protected $theme ;
         protected $theme_url ;
         protected $theme_path ;
         protected $theme_exists ;
-        
+
         protected $scripts;
         protected $queue;
         protected $styles;
@@ -35,33 +35,46 @@
         protected $resolved;
         protected $unresolved;
 
+        public function __construct()
+        {
+            $this->scripts = array();
+            $this->queue   = array();
+            $this->styles  = array();
+        }
+
         abstract protected function setCurrentThemeUrl();
         abstract protected function setCurrentThemePath();
 
         /* PUBLIC */
-        public function setCurrentTheme($theme) {
+        public function setCurrentTheme($theme)
+        {
             $this->theme = $theme ;
             $this->setCurrentThemePath() ;
             $this->setCurrentThemeUrl() ;
         }
 
-        public function getCurrentTheme() {
+        public function getCurrentTheme()
+        {
             return $this->theme ;
         }
 
-        public function getCurrentThemeUrl() {
+        public function getCurrentThemeUrl()
+        {
             return $this->theme_url ;
         }
 
-        public function getCurrentThemePath() {
+        public function getCurrentThemePath()
+        {
             return $this->theme_path ;
         }
 
-        public function getCurrentThemeStyles() {
+        public function getCurrentThemeStyles()
+        {
             return $this->theme_url . 'css/' ;
         }
 
-        public function getCurrentThemeJs() {
+        public function getCurrentThemeJs()
+        {
             return $this->theme_url . 'js/' ;
         }
 
@@ -71,41 +84,46 @@
          * @param type $id
          * @param type $url 
          */
-        public function addStyle($id, $url) {
+        public function addStyle($id, $url)
+        {
             $this->styles[$id] = $url;
         }
-        
+
         /**
          * Remove style to not be loaded
          * 
          * @param type $id 
          */
-        public function removeStyle($id) {
+        public function removeStyle($id)
+        {
             unset($this->styles[$id]);
         }
-        
+
         /**
          * Print the HTML tags to load the styles 
          */
-        public function printStyles() {
+        public function printStyles()
+        {
             foreach($this->styles as $css) {
                 echo '<link href="'.$css.'" rel="stylesheet" type="text/css" />' . PHP_EOL;
             }
         }
-        
-        public function enqueueScript($id) {
+
+        public function enqueueScript($id)
+        {
             $this->queue[$id] = $id;
         }
-        
+
         /**
          * Remove script to not be loaded
          * 
          * @param type $id 
          */
-        public function removeScript($id) {
+        public function removeScript($id)
+        {
             unset($this->queue[$id]);
         }
-        
+
         /**
          * Add script to be loaded
          * 
@@ -113,27 +131,30 @@
          * @param type $url
          * @param type $dependencies mixed, it could be an array or a string
          */
-        public function registerScript($id, $url, $dependencies = null) {
+        public function registerScript($id, $url, $dependencies = null)
+        {
             $this->scripts[$id] = array(
                 'key' => $id
                 ,'url' => $url
                 ,'dependencies' => $dependencies
             );
         }
-        
+
         /**
          * Remove script to not be loaded
          * 
          * @param type $id 
          */
-        public function unregisterScript($id) {
+        public function unregisterScript($id)
+        {
             unset($this->scripts[$id]);
         }
-        
+
         /**
          * Order script before being printed on the HTML
          */
-        private function orderScripts() {
+        private function orderScripts()
+        {
             $this->resolved = array();
             $this->unresolved = array();
             $this->error = array();
@@ -153,11 +174,12 @@
                 echo sprintf(__('ERROR: Some scripts could not be loaded (%s)'), implode(", ", $this->error));
             }
         }
-        
+
         /**
          *  Print the HTML tags to load the scripts
          */
-        public function printScripts() {
+        public function printScripts()
+        {
             $this->orderScripts();
             foreach($this->resolved as $id) {
                 if(isset($this->scripts[$id]['url'])) {
@@ -165,13 +187,14 @@
                 }
             }
         }
-        
+
         /**
          * Algorithm to solve the dependencies of the scripts
          * 
          * @param type $node 
          */
-        private function solveDeps($node) {
+        private function solveDeps($node)
+        {
             $error = false;
             if(!isset($this->resolved[$node['key']])) {
                 $this->unresolved[$node['key']] = $node['key'];
@@ -212,8 +235,6 @@
                 }
             }
         }
-                
-        
     }
 
-?>
+    /* file end: ./oc-includes/osclass/Themes.php */

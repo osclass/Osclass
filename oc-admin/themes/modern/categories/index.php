@@ -16,6 +16,9 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    osc_enqueue_script('jquery-nested');
+    osc_enqueue_script('tabber');
+
     $categories = __get('categories');
 
     function addHelp() {
@@ -39,8 +42,6 @@
 
     //customize Head
     function customHead() { ?>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_url('js/jquery.ui.nestedSortable.js') ; ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_url('js/tabber-minimized.js') ; ?>"></script>
         <script type="text/javascript">
             document.write('<style type="text/css">.tabber{ display:none ; }</style>');
         </script>
