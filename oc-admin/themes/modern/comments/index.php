@@ -147,7 +147,7 @@
                 <tbody>
                 <?php if( count($rows) > 0 ) { ?>
                     <?php foreach($rows as $key => $row) {
-                        $aC = $rawRows[$key];
+                        $aC = $aRawRows[$key];
                         $class = ''; 
                         if(!$aC['b_enabled'] || !$aC['b_active'] || $aC['b_spam']) $class = 'status-spam'; 
                     ?>
