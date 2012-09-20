@@ -10,7 +10,7 @@ class OCadmin_items extends OCadminTest {
      * Insert item
      * 
      */
-    function testInsertItem()
+    function atestInsertItem()
     {
         $this->loginWith();
         $this->insertItem() ;
@@ -26,7 +26,7 @@ class OCadmin_items extends OCadminTest {
      * Login oc-admin
      * Edit item
      */
-    function testEditItem()
+    function atestEditItem()
     {
         $this->loginWith() ;
         $this->editItem() ;
@@ -36,7 +36,7 @@ class OCadmin_items extends OCadminTest {
      * Login oc-admin
      * Delete item
      */
-    function testDeleteItem()
+    function atestDeleteItem()
     {
         $this->loginWith() ;
         $this->deleteItem() ;
@@ -56,7 +56,7 @@ class OCadmin_items extends OCadminTest {
      * Login oc-admin
      * Insert item, add media to item
      */
-    function testMedia()
+    function atestMedia()
     {
         $this->loginWith() ;
         $this->insertItemAndMedia() ;
@@ -66,7 +66,7 @@ class OCadmin_items extends OCadminTest {
      * Login oc-admin
      * Check all item settings (values & behaviour into website)
      */
-    function testSettings()
+    function atestSettings()
     {
         $this->loginWith() ;
         $this->settings() ;
@@ -75,7 +75,7 @@ class OCadmin_items extends OCadminTest {
     /**
      * Test item's views
      */
-    function testStats() 
+    function atestStats() 
     {
         $this->loginWith();
         $this->insertItem();
