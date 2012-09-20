@@ -149,7 +149,7 @@
             $this->order_by['column_name'] = 'c.dt_pub_date';
             $this->order_by['type'] = 'desc';
             
-            $this->showAll   = Params::getParam('showAll') ;
+            $this->showAll   = Params::getParam('showAll')=='off'?false:true ;
 
             foreach($_get as $k => $v) {
                 if( ( $k == 'resourceId' ) && !empty($v) ) {
