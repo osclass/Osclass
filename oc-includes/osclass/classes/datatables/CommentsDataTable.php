@@ -92,21 +92,21 @@
                     $options = array() ;
                     $options_more = array() ;
 
-                    View::newInstance()->_exportVariableToView('item', Item::newInstance()->findByPrimaryKey($comment['fk_i_item_id']));
+                    View::newInstance()->_exportVariableToView('item', Item::newInstance()->findByPrimaryKey($aRow['fk_i_item_id']));
 
-                    if( $comment['b_active'] ) {
-                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') . '</a>' ;
+                    if( $aRow['b_active'] ) {
+                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') . '</a>' ;
                     } else {
-                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] .'&amp;value=ACTIVE">' . __('Activate') . '</a>' ;
+                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $aRow['pk_i_id'] .'&amp;value=ACTIVE">' . __('Activate') . '</a>' ;
                     }
-                    if( $comment['b_enabled'] ) {
-                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=DISABLE">' . __('Block') . '</a>' ;
+                    if( $aRow['b_enabled'] ) {
+                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=DISABLE">' . __('Block') . '</a>' ;
                     } else {
-                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=ENABLE">' . __('Unblock') . '</a>' ;
+                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;value=ENABLE">' . __('Unblock') . '</a>' ;
                     }
 
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=comment_edit&amp;id=' . $comment['pk_i_id'] . '" id="dt_link_edit">' . __('Edit') . '</a>' ;
-                    $options[] = '<a onclick="return delete_dialog(\'' . $comment['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=comments&amp;action=delete&amp;id=' . $comment['pk_i_id'] .'" id="dt_link_delete">' . __('Delete') . '</a>' ;
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=comment_edit&amp;id=' . $aRow['pk_i_id'] . '" id="dt_link_edit">' . __('Edit') . '</a>' ;
+                    $options[] = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=comments&amp;action=delete&amp;id=' . $aRow['pk_i_id'] .'" id="dt_link_delete">' . __('Delete') . '</a>' ;
 
                     // more actions
                     $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL ;
@@ -125,14 +125,14 @@
 
                     $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
 
-                    $row['bulkactions'] = '<input type="checkbox" name="id[]" value="' . $comment['pk_i_id']  . '" />' ;
-                    if( empty($comment['s_author_name']) ) {
-                        $user = User::newInstance()->findByPrimaryKey( $comment['fk_i_user_id'] );
-                        $comment['s_author_name'] = $user['s_email'];
+                    $row['bulkactions'] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id']  . '" />' ;
+                    if( empty($aRow['s_author_name']) ) {
+                        $user = User::newInstance()->findByPrimaryKey( $aRow['fk_i_user_id'] );
+                        $aRow['s_author_name'] = $user['s_email'];
                     }
-                    $row['author'] = $comment['s_author_name'] . ' (<a target="_blank" href="' . osc_item_url() . '">' . osc_item_title() . '</a>)'. $actions  ;
-                    $row['comment'] = $comment['s_body'] ;
-                    $row['date'] = $comment['dt_pub_date'] ;
+                    $row['author'] = $aRow['s_author_name'] . ' (<a target="_blank" href="' . osc_item_url() . '">' . osc_item_title() . '</a>)'. $actions  ;
+                    $row['comment'] = $aRow['s_body'] ;
+                    $row['date'] = $aRow['dt_pub_date'] ;
 
                     $row = osc_apply_filter('comments_processing_row', $row, $aRow);
 
@@ -149,7 +149,7 @@
             $this->order_by['column_name'] = 'c.dt_pub_date';
             $this->order_by['type'] = 'desc';
             
-            $this->showAll   = Params::getParam('showAll') ;
+            $this->showAll   = Params::getParam('showAll')=='off'?false:true ;
 
             foreach($_get as $k => $v) {
                 if( ( $k == 'resourceId' ) && !empty($v) ) {

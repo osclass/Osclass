@@ -113,7 +113,7 @@
 <div class="relative">
     <div id="listing-toolbar">
         <div class="float-right">
-            <?php if(Params::getParam('showAll') == true) { ?>
+            <?php if(Params::getParam('showAll') != 'off') { ?>
             <a href="<?php echo osc_admin_base_url(true) . '?page=comments&showAll=off'; ?>" class="btn btn-red"><?php _e('Hidden comments');?></a>
             <?php } else { ?>
             <a href="<?php echo osc_admin_base_url(true) . '?page=comments'; ?>" class="btn btn-blue"><?php _e('All comments');?></a>
@@ -147,7 +147,7 @@
                 <tbody>
                 <?php if( count($rows) > 0 ) { ?>
                     <?php foreach($rows as $key => $row) {
-                        $aC = $rawRows[$key];
+                        $aC = $aRawRows[$key];
                         $class = ''; 
                         if(!$aC['b_enabled'] || !$aC['b_active'] || $aC['b_spam']) $class = 'status-spam'; 
                     ?>
