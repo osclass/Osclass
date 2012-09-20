@@ -18,6 +18,6 @@
     system("git merge --no-ff develop; echo $?", $rv);
     if($rv!=0) { echo "CRON FAILED"; exit; };
 
-    system("php oc-includes/simpletest/test/osclass/test_all.php --installer --frontend --admin", $rv);
-
+    system("php oc-includes/simpletest/test/osclass/test_all.php --installer");
+    
 ?>
