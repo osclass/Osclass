@@ -132,7 +132,7 @@
                 <div id="right-side">
                     <div class="well ui-rounded-corners">
                         <h3 style="margin: 0;margin-bottom: 10px;text-align: center; color: #616161;"><?php _e('Legend'); ?></h3>
-                        <?php foreach($aEmailVars as $key => $value) { error_log($key); ?>
+                        <?php foreach($aEmailVars as $key => $value) { ?>
                         <label><b><?php echo $key; ?></b><br/><?php echo $value;?></label><hr/>
                         <?php } ?>
                     </div>
@@ -142,9 +142,6 @@
         </div>
     </div>
 </div>
-        
-    
-
 <div id="dialog-test-it" class="hide">
     <input type="text" name="test_email" class="input-actions"/>
     <input type="submit" id="btn-test-it" href="#" class="btn btn-blue submit-right" value="<?php _e('Send email'); ?>"/>
