@@ -116,5 +116,19 @@
         }
     }
     check_install_modern_theme();
+    
+    
+    function modern_meta_color() {
+        $page = __get('page');
+        $meta = json_decode(@$page['s_meta'], true);
+        ?>
+        <select name="meta[color]">
+            <option value="red" <?php if($meta['color']=='red') { echo 'selected="selected"'; }; ?>><?php _e('Red', 'modern'); ?></option>
+            <option value="green" <?php if($meta['color']=='green') { echo 'selected="selected"'; }; ?>><?php _e('Green', 'modern'); ?></option>
+            <option value="blue" <?php if($meta['color']=='blue') { echo 'selected="selected"'; }; ?>><?php _e('Blue', 'modern'); ?></option>
+        </select>
+        <?php
+    }
+    osc_add_hook('page_meta', 'modern_meta_color');
 
 ?>

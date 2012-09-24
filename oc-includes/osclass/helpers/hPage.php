@@ -40,6 +40,11 @@
         } else {
             $page = null ;
         }
+
+        if ( !View::newInstance()->_exists('page_meta') ) {
+            View::newInstance()->_exportVariableToView('page_meta', json_decode($page['s_meta'], true));
+        }
+
         return($page) ;
     }
 
@@ -122,6 +127,32 @@
     }
 
     /**
+     * Gets current page meta information
+     *
+     * @return string
+     */
+    function osc_static_page_meta($field = null) {
+        if($field == null) {
+            if ( !View::newInstance()->_exists('page_meta') ) {
+                return json_decode(osc_static_page_field("s_meta"),  true);
+            } else {
+                return View::newInstance()->_get('s_meta');
+            }
+        } else {
+            if ( !View::newInstance()->_exists('page_meta') ) {
+                $meta = json_decode(osc_static_page_field("s_meta"),  true);
+            } else {
+                $meta = View::newInstance()->_get('page_meta');
+            }
+            if(isset($meta[$field])) {
+                return $meta[$field];
+            } else {
+                return '';
+            }
+        }
+    }
+
+    /**
      * Gets current page url
      *
      * @param string $locale
@@ -159,9 +190,11 @@
      */
     function osc_get_static_page($internal_name, $locale = '') {
         if ($locale == "") $locale = osc_current_user_locale() ;
-        return View::newInstance()->_exportVariableToView('page', Page::newInstance()->findByInternalName($internal_name, $locale) ) ;
+        $page = Page::newInstance()->findByInternalName($internal_name, $locale);
+        View::newInstance()->_exportVariableToView('page_meta', json_decode($page['s_meta'], true));
+        return View::newInstance()->_exportVariableToView('page', $page);
     }
-
+    
     /**
      * Gets the total of static pages. If static pages are not loaded, this function will load them.
      *
@@ -184,8 +217,15 @@
         if ( !View::newInstance()->_exists('pages') ) {
             View::newInstance()->_exportVariableToView('pages', Page::newInstance()->listAll(false) ) ;
         }
+<<<<<<< HEAD
 
         return View::newInstance()->_next('pages') ;
+=======
+
+        $page = View::newInstance()->_next('pages');
+        View::newInstance()->_exportVariableToView('page_meta', json_decode($page['s_meta'], true));
+        return $page;
+>>>>>>> page templates added
     }
 
     /**

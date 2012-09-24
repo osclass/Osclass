@@ -18,7 +18,11 @@
 
     osc_enqueue_script('tiny_mce');
 
-    $page    = __get('page');
+    $page       = __get('page');
+    $templates  = __get('templates');
+    $meta       = json_decode(@$page['s_meta'], true);
+    
+    $template_selected = (isset($meta['template']) && $meta['template']!='')?$meta['template']:'default';
     $locales = OSCLocale::newInstance()->listAllEnabled();
 
     function customFrmText($return = 'title') {
@@ -92,6 +96,19 @@
             </div>
             <div class="input-description-wide">
                 <?php printLocaleDescriptionPage($locales, $page); ?>
+            </div>
+            <?php if(count($templates)>0) { ?>
+                <div>
+                    <select name="meta[template]">
+                        <option value="default" <?php if($template_selected=='default') { echo 'selected="selected"'; }; ?>><?php _e('Default template'); ?></option>
+                        <?php foreach($templates as $template) { ?>
+                            <option value="<?php echo $template?>" <?php if($template_selected==$template) { echo 'selected="selected"'; }; ?>><?php echo $template; ?></option>
+                        <?php }; ?>
+                    </select>
+                </div>
+            <?php }; ?>
+            <div>
+                <?php osc_run_hook('page_meta'); ?>
             </div>
         </div>
         <div class="clear"></div>

@@ -53,7 +53,8 @@
                 'b_indelible',
                 'dt_pub_date',
                 'dt_mod_date',
-                'i_order') ;
+                'i_order',
+                's_meta') ;
             $this->setFields($array_fields) ;
         }
 
@@ -404,6 +405,7 @@
                 ,'dt_pub_date' => date('Y-m-d H:i:s')
                 ,'dt_mod_date' => date('Y-m-d H:i:s')
                 ,'i_order' => ($order+1)
+                ,'s_meta' => $aFields['s_meta']
             ));
 
 
@@ -515,6 +517,24 @@
         public function updateInternalName($id, $intName)
         {
             $fields = array('s_internal_name' => $intName,
+                             'dt_mod_date'    => date('Y-m-d H:i:s'));
+            $where  = array('pk_i_id' => $id);
+
+            return $this->dao->update($this->tableName, $fields, $where);
+        }
+
+        /**
+         * It change the meta field of a page.
+         *
+         * @access public
+         * @since 3.1
+         * @param int $id The id of the page to be changed.
+         * @param string $meta The meta field
+         * @return int Number of affected rows.
+         */
+        public function updateMeta($id, $meta)
+        {
+            $fields = array('s_meta' => $meta,
                              'dt_mod_date'    => date('Y-m-d H:i:s'));
             $where  = array('pk_i_id' => $id);
 

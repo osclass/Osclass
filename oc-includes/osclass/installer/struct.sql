@@ -328,6 +328,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_pages (
     dt_pub_date DATETIME NOT NULL,
     dt_mod_date DATETIME NULL,
     i_order INT(3) NOT NULL DEFAULT 0,
+    s_meta TEXT NULL,
 
         PRIMARY KEY (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';

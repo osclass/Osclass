@@ -51,6 +51,8 @@
                         Session::newInstance()->_dropKeepForm();
                     }
 
+                    $templates = WebThemes::newInstance()->getAvailableTemplates();
+                    $this->_exportVariableToView('templates', $templates);
                     $this->_exportVariableToView("page", $this->pageManager->findByPrimaryKey(Params::getParam("id")));
                     $this->doView("pages/frm.php");
                     break;
@@ -58,6 +60,9 @@
                     $id = Params::getParam("id");
                     $s_internal_name = Params::getParam("s_internal_name");
                     $s_internal_name = osc_sanitizeString($s_internal_name) ;
+                    
+                    $meta = Params::getParam('meta');
+                    $this->pageManager->updateMeta($id, json_encode($meta));
 
                     $aFieldsDescription = array();
                     $postParams = Params::getParamsAsArray('', false);
@@ -107,12 +112,16 @@
                         Session::newInstance()->_dropKeepForm();
                     }
 
+                    $templates = WebThemes::newInstance()->getAvailableTemplates();
+                    $this->_exportVariableToView('templates', $templates);
                     $this->_exportVariableToView("page", array());
                     $this->doView("pages/frm.php");
                     break;
                 case 'add_post':
                     $s_internal_name = Params::getParam("s_internal_name");
-                    $s_internal_name = osc_sanitizeString($s_internal_name) ;
+                    $s_internal_name = osc_sanitizeString($s_internal_name);
+                    
+                    $meta = Params::getParam('meta');
 
                     $aFieldsDescription = array();
                     $postParams = Params::getParamsAsArray('', false);
@@ -136,7 +145,7 @@
                         osc_add_flash_error_message(_m('You have to set a different internal name'), 'admin');
                         $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=add");
                     }
-                    $aFields = array('s_internal_name' => $s_internal_name, 'b_indelible' => '0');
+                    $aFields = array('s_internal_name' => $s_internal_name, 'b_indelible' => '0', 's_meta' => json_encode($meta));
                     Session::newInstance()->_setForm('s_internal_name',$s_internal_name);
 
                     $page = $this->pageManager->findByInternalName($s_internal_name);

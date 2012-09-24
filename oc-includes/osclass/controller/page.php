@@ -64,11 +64,15 @@
                 Session::newInstance()->_set('userLocale', Params::getParam('lang')) ;
             }
 
+            $meta = json_decode($page['s_meta'], true);
+            
             // load the right template file
             if( file_exists(osc_themes_path() . osc_theme() . '/page-' . $page['s_internal_name'] . '.php') ) {
-                $this->doView('page-' . $page['s_internal_name'] . '.php') ;
+                $this->doView('page-' . $page['s_internal_name'] . '.php');
+            } else if( isset($meta['template']) && file_exists(osc_themes_path() . osc_theme() . '/' . $meta['template']) ) {
+                $this->doView($meta['template']);
             } else {
-                $this->doView('page.php') ;
+                $this->doView('page.php');
             }
         }
 
