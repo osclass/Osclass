@@ -6,32 +6,32 @@ import os
 
 def main():
     rv = os.system("git checkout develop; echo $?")
-    if not rv:
+    if rv!=0:
         print "CRON FAILED"
         sys.exit()
 
     rv = os.system("git reset --hard origin/develop; echo $?")
-    if not rv:
+    if rv!=0:
         print "CRON FAILED"
         sys.exit()
 
     rv = os.system("git fetch origin develop; echo $?")
-    if not rv:
+    if rv!=0:
         print "CRON FAILED"
         sys.exit()
 
     rv = os.system("git checkout testing; echo $?")
-    if not rv:
+    if rv!=0:
         print "CRON FAILED"
         sys.exit()
 
     rv = os.system("git reset --hard origin/testing; echo $?")
-    if not rv:
+    if rv!=0:
         print "CRON FAILED"
         sys.exit()
 
     rv = os.system("git merge --no-ff develop; echo $?")
-    if not rv:
+    if rv!=0:
         print "CRON FAILED"
         sys.exit()
 
