@@ -319,6 +319,9 @@
                             break;
                         case 'sCategory':
                             $k = osc_get_preference('rewrite_search_category');
+                            if(is_array($v)) {
+                                $v = implode(",", $v);
+                            }
                             break;
                         case 'sUser':
                             $k = osc_get_preference('rewrite_search_user');
