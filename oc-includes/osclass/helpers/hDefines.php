@@ -693,7 +693,7 @@
      * @return string
      */
     function osc_item_edit_url($secret = '', $id = '') {
-        if ($id == '') $id = osc_item_id();
+        if ($id == '') { $id = osc_item_id(); };
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . osc_get_preference('rewrite_item_edit') . '/' . $id . '/' . $secret ;
         } else {
@@ -709,7 +709,7 @@
      * @return string
      */
     function osc_item_delete_url($secret = '', $id = '') {
-        if ($id == '') $id = osc_item_id();
+        if ($id == '') { $id = osc_item_id(); };
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . osc_get_preference('rewrite_item_delete') . '/' . $id . '/' . $secret ;
         } else {
@@ -725,7 +725,7 @@
      * @return string
      */
     function osc_item_activate_url($secret = '', $id = '') {
-        if ($id == '') $id = osc_item_id();
+        if ($id == '') { $id = osc_item_id(); };
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . osc_get_preference('rewrite_item_activate') . '/' . $id . '/' . $secret ;
         } else {

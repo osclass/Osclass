@@ -215,7 +215,7 @@
                         if( (osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field") ) {
                             if( !osc_check_recaptcha() ) {
                                 osc_add_flash_error_message( _m('The Recaptcha code is wrong') ) ;
-                                $this->redirectTo( osc_item_edit_url() ) ;
+                                $this->redirectTo( osc_item_edit_url($secret, $id) ) ;
                                 return false ; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                             }
                         }
@@ -230,7 +230,7 @@
                             $this->redirectTo( osc_item_url() ) ;
                         } else {
                             osc_add_flash_error_message( $success) ;
-                            $this->redirectTo( osc_item_edit_url($secret) ) ;
+                            $this->redirectTo( osc_item_edit_url($secret, $id) ) ;
                         }
                     }
                 break;
