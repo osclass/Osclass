@@ -701,7 +701,6 @@
                                         $aData = $itemsDataTable->getData();
                                         
                                         if(count($aData['aRows']) == 0 && $page!=1) {
-                                            print_r($aData);
                                             $total = (int)$aData['iTotalDisplayRecords'];
                                             $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
 
