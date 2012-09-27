@@ -604,9 +604,11 @@
     function osc_item_comments_page() {
         $page = Params::getParam('comments-page');
         if($page=='') {
-            $page = 0;
+            return 0;
         }
-        return (int) $page;
+        if($page>0) {
+            return (int) $page-1;
+        }
     }
     
     ///////////////////////
