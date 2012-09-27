@@ -580,7 +580,8 @@
         $yourEmail  = $aItem['yourEmail'] ;
         $yourName   = $aItem['yourName'] ;
         $phoneNumber= $aItem['phoneNumber'] ;
-        $message    = $aItem['message'] ;
+        // contact - strip_tags + nl2br
+        $message    = nl2br( strip_tags( $aItem['message'] ) );
 
         $path = null ;
         $item = Item::newInstance()->findByPrimaryKey( $id ) ;
@@ -676,7 +677,8 @@
         $authorEmail = trim($aItem['authorEmail']);
         $authorEmail = strip_tags($authorEmail);
         $body        = trim($aItem['body']);
-        $body        = strip_tags($body);
+        // only \n -> <br/>
+        $body        = nl2br(strip_tags($body));
         $title       = $aItem['title'] ;
         $itemId      = $aItem['id'] ;
         $userId      = $aItem['userId'] ;
@@ -1108,7 +1110,8 @@
         $authorEmail = trim($aItem['authorEmail']);
         $authorEmail = strip_tags($authorEmail);
         $body        = trim($aItem['body']);
-        $body        = strip_tags($body);
+        // only \n -> <br/>
+        $body        = nl2br(strip_tags($body));
         $title       = $aItem['title'] ;
         $itemId      = $aItem['id'] ;
         $userId      = $aItem['userId'] ;
