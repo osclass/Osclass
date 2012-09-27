@@ -54,7 +54,7 @@
                     } else if(option == 'oUser'){
                         $('#fUser').removeClass('hide');
                         $('#fPattern, #fItemId').addClass('hide');
-                    } else {   
+                    } else {
                         $('#fItemId').removeClass('hide');
                         $('#fPattern, #fUser').addClass('hide');
                     }
@@ -62,10 +62,10 @@
 
                 $('input[name="user"]').attr( "autocomplete", "off" );
                 $('#user,#fUser').autocomplete({
-                    source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax", //+$('input[name="user"]').val(), // &term=
+                    source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax",
                     minLength: 0,
                     select: function( event, ui ) {
-                        if(ui.item.id=='') 
+                        if(ui.item.id=='')
                             return false;
                         $('#userId').val(ui.item.id);
                         $('#fUserId').val(ui.item.id);
@@ -123,7 +123,7 @@
                     $('#display-filters').dialog('open');
                     return false;
                 });
-                
+
                 // check_all bulkactions
                 $("#check_all").change(function(){
                     var isChecked = $(this+':checked').length;
@@ -315,17 +315,17 @@
                     <option value="oPattern" <?php if($opt == 'oPattern'){ echo 'selected="selected"'; } ?>><?php _e('Pattern') ; ?></option>
                     <option value="oUser" <?php if($opt == 'oUser'){ echo 'selected="selected"'; } ?>><?php _e('Email') ; ?></option>
                     <option value="oItemId" <?php if($opt == 'oItemId'){ echo 'selected="selected"'; } ?>><?php _e('Item ID') ; ?></option>
-                </select><input 
+                </select><input
                     id="fPattern" type="text" name="sSearch"
-                    value="<?php echo osc_esc_html(Params::getParam('sSearch')); ?>" 
-                    class="input-text input-actions input-has-select <?php echo $classPattern; ?>"/><input 
-                    id="fUser" name="user" type="text" 
-                    class="fUser input-text input-actions input-has-select <?php echo $classUser; ?>" 
-                    value="<?php echo osc_esc_html(Params::getParam('user')); ?>" /><input 
-                    id="fUserId" name="userId" type="hidden" 
-                    value="<?php echo osc_esc_html(Params::getParam('userId')); ?>" /><input 
-                    id="fItemId" type="text" name="itemId" 
-                    value="<?php echo osc_esc_html(Params::getParam('itemId')); ?>" 
+                    value="<?php echo osc_esc_html(Params::getParam('sSearch')); ?>"
+                    class="input-text input-actions input-has-select <?php echo $classPattern; ?>"/><input
+                    id="fUser" name="user" type="text"
+                    class="fUser input-text input-actions input-has-select <?php echo $classUser; ?>"
+                    value="<?php echo osc_esc_html(Params::getParam('user')); ?>" /><input
+                    id="fUserId" name="userId" type="hidden"
+                    value="<?php echo osc_esc_html(Params::getParam('userId')); ?>" /><input
+                    id="fItemId" type="text" name="itemId"
+                    value="<?php echo osc_esc_html(Params::getParam('itemId')); ?>"
                     class="input-text input-actions input-has-select <?php echo $classItemId; ?>"/>
 
                 <input type="submit" class="btn submit-right" value="<?php echo osc_esc_html( __('Find') ) ; ?>">
@@ -377,7 +377,7 @@
                     <?php }; ?>
                 <?php } else { ?>
                     <tr>
-                        <td colspan="8" class="text-center">
+                        <td colspan="<?php echo count($columns); ?>" class="text-center">
                         <p><?php _e('No data available in table'); ?></p>
                         </td>
                     </tr>
@@ -388,7 +388,7 @@
         </div>
     </form>
 </div>
-<?php 
+<?php
     function showingResults(){
         $aData = __get("aData");
         echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aRows']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;
