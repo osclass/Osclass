@@ -135,7 +135,7 @@
                                         <?php } ?>
                                     </div>
                                 <?php } ?>
-                                <div class="pagination">
+                                <div class="paginate" style="text-align: right;">
                                     <?php echo osc_comments_pagination(); ?>
                                 </div>
                             </div>

@@ -115,7 +115,12 @@
         {
             $result = array();
             if( $page == null ) { $page = osc_item_comments_page(); }
-            if( $page == '' ) { $page = 0; }
+            if( $page == '' ) { 
+                $page = 0; 
+            } else if($page > 0) {
+                $page = $page-1;
+            }
+                
             if( $commentsPerPage == null ) { $commentsPerPage = osc_comments_per_page(); }
             
             $this->dao->select() ;
