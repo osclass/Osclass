@@ -22,7 +22,7 @@
 
     /**
      * Model database for Region table
-     * 
+     *
      * @package OSClass
      * @subpackage Model
      * @since unknown
@@ -31,7 +31,7 @@
     {
         /**
          *
-         * @var type 
+         * @var type
          */
         private static $instance ;
 
@@ -44,7 +44,7 @@
         }
 
         /**
-         * 
+         *
          */
         function __construct()
         {
@@ -56,7 +56,7 @@
 
         /**
          * Gets all regions from a country
-         * 
+         *
          * @access public
          * @since unknown
          * @deprecated since 2.3
@@ -71,7 +71,7 @@
 
         /**
          * Gets all regions from a country
-         * 
+         *
          * @access public
          * @since unknown
          * @param type $countryId
@@ -89,7 +89,7 @@
 
         /**
          * Find a region by its name and country
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $name
@@ -108,10 +108,10 @@
             $result = $this->dao->get() ;
             return $result->row();
         }
-        
+
         /**
          * Function to deal with ajax queries
-         * 
+         *
          * @access public
          * @since unknown
          * @param type $query

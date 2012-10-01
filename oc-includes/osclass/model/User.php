@@ -27,7 +27,7 @@
     {
         /**
          *
-         * @var type 
+         * @var type
          */
         private static $instance ;
 
@@ -40,7 +40,7 @@
         }
 
         /**
-         * 
+         *
          */
         function __construct()
         {
@@ -83,7 +83,7 @@
             );
             $this->setFields($array_fields) ;
         }
-        
+
         /**
          * Find an user by its primary key
          *
@@ -92,7 +92,7 @@
          * @param string $term
          * @return array
          */
-        public function ajax($query = '') 
+        public function ajax($query = '')
         {
             $this->dao->select('pk_i_id as id, CONCAT(s_name, \' (\', s_email , \')\') as label, s_name as value') ;
             $this->dao->from($this->getTableName()) ;
@@ -101,7 +101,7 @@
             $this->dao->limit(0, 10);
 
             $result = $this->dao->get() ;
-            
+
             if( $result == false ) {
                 return array() ;
             }
@@ -109,7 +109,7 @@
             return $result->result() ;
         }
 
-                
+
         /**
          * Find an user by its primary key
          *
@@ -120,7 +120,7 @@
          * @return array
          */
         public function findByPrimaryKey($id, $locale = null)
-        {   
+        {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->where($this->getPrimaryKey(), $id) ;
@@ -150,7 +150,7 @@
 
             return $row;
         }
-        
+
         /**
          * Find an user by its email
          *
@@ -165,7 +165,7 @@
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_email', $email) ;
             $result = $this->dao->get() ;
-            
+
             if( $result == false ) {
                 return false;
             } else if($result->numRows() == 1){
@@ -174,7 +174,7 @@
                 return array();
             }
         }
-        
+
         /**
          * Find an user by its id and password
          *
@@ -194,7 +194,7 @@
             );
             $this->dao->where($conditions) ;
             $result = $this->dao->get() ;
-            
+
             if( $result == false ) {
                 return false;
             } else if($result->numRows() == 1){
@@ -203,14 +203,14 @@
                 return array();
             }
         }
-        
+
         /**
          * Find an user by its id and secret
          *
          * @access public
          * @since unknown
          * @param string $id
-         * @param string $secret 
+         * @param string $secret
          */
         public function findByIdSecret($id, $secret)
         {
@@ -222,7 +222,7 @@
             );
             $this->dao->where($conditions) ;
             $result = $this->dao->get() ;
-            
+
             if( $result == false ) {
                 return false;
             } else if($result->numRows() == 1){
@@ -231,9 +231,9 @@
                 return array();
             }
         }
-        
+
         /**
-         * 
+         *
          *
          * @access public
          * @since unknown
@@ -254,7 +254,7 @@
             $this->dao->where($conditions) ;
             $this->dao->where("s_pass_date >= '$date'");
             $result = $this->dao->get() ;
-            
+
            if( $result == false ) {
                 return false;
             } else if($result->numRows() == 1){
@@ -263,7 +263,7 @@
                 return array();
             }
         }
-        
+
         /**
          * Delete an user given its id
          *
@@ -276,20 +276,20 @@
         {
             if($id!=null) {
                 osc_run_hook('delete_user', $id);
-                
+
                 $this->dao->select('pk_i_id, fk_i_category_id');
                 $this->dao->from(DB_TABLE_PREFIX."t_item") ;
                 $this->dao->where('fk_i_user_id', $id) ;
                 $result = $this->dao->get() ;
                 $items = $result->result() ;
-                
+
                 $itemManager = Item::newInstance();
                 foreach($items as $item) {
                     $itemManager->deleteByPrimaryKey($item['pk_i_id']);
                 }
-                
+
                 ItemComment::newInstance()->delete(array('fk_i_user_id' => $id));
-                
+
                 $this->dao->delete(DB_TABLE_PREFIX.'t_user_email_tmp', array('fk_i_user_id' => $id)) ;
                 $this->dao->delete(DB_TABLE_PREFIX.'t_user_description', array('fk_i_user_id' => $id)) ;
                 $this->dao->delete(DB_TABLE_PREFIX.'t_alerts', array('fk_i_user_id' => $id)) ;
@@ -297,10 +297,10 @@
             }
             return false;
         }
-        
+
         /**
          * Insert users' description
-         * 
+         *
          * @access private
          * @since unknown
          * @param int $id
@@ -315,13 +315,13 @@
                 'fk_c_locale_code'  => $locale,
                 's_info'            => $info
             );
-            
+
             return $this->dao->insert(DB_TABLE_PREFIX.'t_user_description', $array_set) ;
         }
-        
+
         /**
          * Update users' description
-         * 
+         *
          * @access public
          * @since unknown
          * @param int $id
@@ -338,17 +338,17 @@
                 $result = $this->insertDescription($id, $locale, $info);
                 return $result;
             }
-            
+
             $array_where = array(
                 'fk_c_locale_code'  => $locale,
                 'fk_i_user_id'      => $id
             );
             return $this->dao->update(DB_TABLE_PREFIX.'t_user_description', array('s_info'    => $info), $array_where) ;
         }
-        
+
         /**
          * Check if a description exists
-         * 
+         *
          * @access private
          * @since unknown
          * @param array $conditions
@@ -359,22 +359,22 @@
             $this->dao->select() ;
             $this->dao->from(DB_TABLE_PREFIX.'t_user_description') ;
             $this->dao->where($conditions) ;
-            
+
             $result = $this->dao->get() ;
-            
+
             if( $result == false || $result->numRows() == 0) {
                 return false;
             } else {
                 return true;
             }
-            
+
             return (bool) $result;
         }
-        
-        
+
+
         /**
          * Return list of users
-         * 
+         *
          * @access public
          * @since 2.4
          * @param int $start
@@ -421,10 +421,10 @@
 
             return $users ;
         }
-        
+
         /**
          * Return list of users by email
-         * 
+         *
          * @access public
          * @since 2.4
          * @param int $start
@@ -438,10 +438,10 @@
         {
             return $this->_search('s_email', $email, $start, $end, $order_column, $order_direction);
         }
-        
+
         /**
          * Return list of users by user id
-         * 
+         *
          * @access public
          * @since 2.4
          * @param int $start
@@ -468,13 +468,13 @@
             $this->dao->from($this->getTableName()) ;
             $this->dao->orderBy($order_column, $order_direction) ;
             $this->dao->limit($start, $end) ;
-            
+
             if($field == 'pk_i_id') {
                 $this->dao->where('pk_i_id', $value) ;
             } else if($field == 's_email') {
                 $this->dao->where('s_email', $value) ;
             }
-            
+
             $rs = $this->dao->get() ;
 
             if( !$rs ) {
@@ -497,10 +497,10 @@
 
             return $users ;
         }
-        
+
         /**
          * Return number of users
-         * 
+         *
          * @since 2.3.6
          * @return int
          */
@@ -509,24 +509,24 @@
             $this->dao->select("COUNT(*) as i_total") ;
             $this->dao->from(DB_TABLE_PREFIX.'t_user');
             $this->dao->where($condition) ;
-            
+
             $result = $this->dao->get() ;
-            
+
             if( $result == false || $result->numRows() == 0) {
                 return 0;
             }
-            
+
             $row = $result->row() ;
             return $row['i_total'];
         }
-        
+
         /**
          * Insert last access data
-         * 
+         *
          * @param int $userId
          * @param datetime $date
          * @param string $ip
-         * 
+         *
          * @return boolean on success
          */
         function lastAccess($userId, $date, $ip, $time = NULL) {
@@ -548,25 +548,25 @@
          *
          * @access public
          * @since unknown
-         * @param int $id user id 
+         * @param int $id user id
          * @return int number of affected rows, id error occurred return false
          */
-        public function increaseNumItems($id) 
+        public function increaseNumItems($id)
         {
             if(!is_numeric($id)) {
                 return false;
             }
-            
+
             $sql = sprintf('UPDATE %s SET i_items = i_items + 1 WHERE pk_i_id = %d', $this->getTableName(), $id);
             return $this->dao->query($sql);
         }
-        
+
         /**
          * Decrease number of items, given a user id
-         * 
+         *
          * @access public
          * @since unknown
-         * @param int $id user id 
+         * @param int $id user id
          * @return int number of affected rows, id error occurred return false
          */
         public function decreaseNumItems($id)
@@ -574,7 +574,7 @@
             if(!is_numeric($id)) {
                 return false;
             }
-            
+
             $sql = sprintf('UPDATE %s SET i_items = i_items - 1 WHERE pk_i_id = %d', $this->getTableName(), $id);
             return $this->dao->query($sql);
         }

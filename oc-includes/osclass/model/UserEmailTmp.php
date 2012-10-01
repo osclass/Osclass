@@ -21,13 +21,13 @@
      */
 
     /**
-     * 
+     *
      */
     class UserEmailTmp extends DAO
     {
         /**
          *
-         * @var type 
+         * @var type
          */
         private static $instance ;
 
@@ -40,7 +40,7 @@
         }
 
         /**
-         * 
+         *
          */
         function __construct()
         {
@@ -60,7 +60,7 @@
         function findByPk($id) {
             return $this->findByPrimaryKey($id) ;
         }
-        
+
         /**
          *
          * @access public

@@ -27,7 +27,7 @@
     {
         /**
          *
-         * @var type 
+         * @var type
          */
         private static $instance ;
 
@@ -40,7 +40,7 @@
         }
 
         /**
-         * 
+         *
          */
         function __construct()
         {
@@ -51,12 +51,12 @@
                 'pk_i_id',
                 's_internal_name',
                 'b_indelible',
-                'dt_pub_date', 
-                'dt_mod_date', 
+                'dt_pub_date',
+                'dt_mod_date',
                 'i_order') ;
             $this->setFields($array_fields) ;
         }
-        
+
         /**
          * Find a page by page id.
          *
@@ -72,7 +72,7 @@
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('pk_i_id', $id) ;
             $result = $this->dao->get() ;
-            
+
             $row = $result->row() ;
 
             if( $result == false ) {
@@ -82,7 +82,7 @@
             if( $result->numRows() == 0 ) {
                 return false ;
             }
-            
+
             $row = $result->row() ;
 
             // page_description
@@ -102,7 +102,7 @@
 
             return $row ;
         }
-        
+
         /**
          * Find a page by internal name.
          *
@@ -118,8 +118,8 @@
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_internal_name', $intName) ;
             $result = $this->dao->get() ;
-            
-            
+
+
             if( $result == false ) {
                 return array() ;
             }
@@ -127,11 +127,11 @@
             if( $result->numRows() == 0 ){
                 return array() ;
             }
-            
+
             $row = $result->row() ;
             return $this->extendDescription($row, $locale) ;
         }
-        
+
         /**
          * Find a page by order.
          *
@@ -209,14 +209,14 @@
                 return array();
             }
         }
-        
+
         /**
          * Return number of all pages, or only number of indelible pages
-         * 
+         *
          * @access public
          * @since 3.0
          * @param int $indelible
-         * @return int 
+         * @return int
          */
         public function count($indelible = null)
         {
@@ -225,7 +225,7 @@
             if( !is_null($indelible) ) {
                 $this->dao->where('b_indelible', $indelible) ;
             }
-            
+
             $result = $this->dao->get() ;
             if($result) {
                 $aPages = $result->result() ;
@@ -233,7 +233,7 @@
             } else {
                 return 0;
             }
-            
+
         }
 
         /**
@@ -275,14 +275,14 @@
          * @access public
          * @since unknown
          * @param int $id Page id which is going to be deleted
-         * @return@return mixed It return the number of affected rows if the delete has been 
+         * @return@return mixed It return the number of affected rows if the delete has been
          * correct or false if nothing has been modified
          */
         public function deleteByPrimaryKey($id)
         {
             $row = $this->findByPrimaryKey($id);
             $order = $row['i_order'];
-            
+
             $this->reOrderPages($order);
 
             $this->dao->delete($this->getDescriptionTableName(), array('fk_i_pages_id' => $id));
@@ -397,7 +397,7 @@
             if( is_null($order) ){
                 $order = -1;
             }
-            
+
             $this->dao->insert($this->tableName, array(
                 's_internal_name' => $aFields['s_internal_name']
                 ,'b_indelible' => $aFields['b_indelible']
@@ -499,7 +499,7 @@
 
             $result = $this->dao->get();
             $count = $result->row();
-            
+
             return ($count['total']>0)?true:false;
         }
 
@@ -554,7 +554,7 @@
             $this->dao->where('s_internal_name', $internalName);
             $this->dao->where('pk_i_id <> '.$id);
             $result = $this->dao->get();
-            
+
             if($result->numRows() > 0) {
                 return true;
             }

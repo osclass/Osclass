@@ -22,7 +22,7 @@
 
     /**
      * Model database for CityArea table
-     * 
+     *
      * @package OSClass
      * @subpackage Model
      * @since unknown
@@ -32,7 +32,7 @@
         /**
          * It references to self object: CityArea.
          * It is used as a singleton
-         * 
+         *
          * @access private
          * @since unknown
          * @var CityArea
@@ -42,10 +42,10 @@
         /**
          * It creates a new CityArea object class ir if it has been created
          * before, it return the previous object
-         * 
+         *
          * @access public
          * @since unknown
-         * @return CityArea 
+         * @return CityArea
          */
         public static function newInstance()
         {
@@ -68,12 +68,12 @@
 
         /**
          * Get the cityArea by its name and city
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $query
          * @param int $regionId
-         * @return array 
+         * @return array
          */
         function findByName($cityAreaName, $cityId = null)
         {
@@ -93,10 +93,10 @@
 
             return $result->row() ;
         }
-        
+
         /**
          * Return city areas of a given city ID
-         * 
+         *
          * @access public
          * @since 2.4
          * @param $cityId

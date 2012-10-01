@@ -22,7 +22,7 @@
 
     /**
      * Model database for Field table
-     * 
+     *
      * @package OSClass
      * @subpackage Model
      * @since unknown
@@ -32,17 +32,17 @@
         /**
          * It references to self object: Field.
          * It is used as a singleton
-         * 
+         *
          * @access private
          * @since unknown
-         * @var Field 
+         * @var Field
          */
         private static $instance ;
 
         /**
          * It creates a new Field object class ir if it has been created
          * before, it return the previous object
-         * 
+         *
          * @access public
          * @since unknown
          * @return Field
@@ -68,7 +68,7 @@
 
         /**
          * Find a field by its id.
-         * 
+         *
          * @access public
          * @since unknown
          * @param int $id
@@ -212,7 +212,7 @@
 
         /**
          * Insert a new field
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $name
@@ -220,7 +220,7 @@
          * @param string $slug
          * @param bool $required
          * @param array $options
-         * @param array $categories 
+         * @param array $categories
          */
         public function insertField($name, $type, $slug, $required, $options, $categories = null) {
             if($slug=='') {
@@ -245,15 +245,15 @@
             }
             return $return;
         }
-        
-        
+
+
         /**
          * Save the categories linked to a field
-         * 
+         *
          * @access public
          * @since unknown
          * @param int $id
-         * @param array $categories 
+         * @param array $categories
          * @return bool
          */
         public function insertCategories($id, $categories = null) {
@@ -269,10 +269,10 @@
             }
             return false;
         }
-        
+
         /**
          * Removes categories from a field
-         * 
+         *
          * @access public
          * @since unknown
          * @param int $id
@@ -281,10 +281,10 @@
         public function cleanCategoriesFromField($id) {
             return $this->dao->delete(sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_field_id' =>$id));
         }
-        
+
         /**
          * Update a field value
-         * 
+         *
          * @access public
          * @since unknown
          * @param int $itemId
@@ -298,7 +298,7 @@
 
         /**
          * Delete a field and all information associated with it
-         * 
+         *
          * @access public
          * @since unknown
          * @param int $id

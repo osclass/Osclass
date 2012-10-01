@@ -21,13 +21,13 @@
      */
 
     /**
-     * 
+     *
      */
     class Search extends DAO
     {
         /**
          *
-         * @var type 
+         * @var type
          */
         private $conditions;
         private $itemConditions;
@@ -58,7 +58,7 @@
         private $withUserId;
         private $withItemId;
         private $withNoUserEmail;
-        
+
         private $price_min;
         private $price_max;
 
@@ -76,7 +76,7 @@
         }
 
         /**
-         * 
+         *
          */
         function __construct($expired = false)
         {
@@ -90,7 +90,7 @@
             $this->withUserId       = false;
             $this->withPicture      = false;
             $this->withNoUserEmail  = false;
-            
+
             $this->price_min = null;
             $this->price_max = null;
 
@@ -115,7 +115,7 @@
             $this->results_per_page = 10;
 
             if(!$expired) {
-                // t_item 
+                // t_item
                 $this->addItemConditions(sprintf("%st_item.b_enabled = 1 ", DB_TABLE_PREFIX));
                 $this->addItemConditions(sprintf("%st_item.b_active = 1 ", DB_TABLE_PREFIX));
                 $this->addItemConditions(sprintf("%st_item.b_spam = 0", DB_TABLE_PREFIX));
@@ -132,7 +132,7 @@
 
         /**
          * Return an array with columns allowed for sorting
-         * 
+         *
          * @return array
          */
         public static function getAllowedColumnsForSorting()
@@ -142,14 +142,14 @@
 
         /**
          * Return an array with type of sorting
-         * 
+         *
          * @return array
          */
         public static function getAllowedTypesForSorting()
         {
             return ( array (0 => 'asc', 1 => 'desc') ) ;
         }
-        
+
 
         // juanramon: little hack to get alerts work in search layout
         public function reconnect()
@@ -271,17 +271,17 @@
 
         /**
          * Add group by to the search
-         * 
+         *
          * @access public
          * @since unknown
          * @param mixed $tables
-         * 
+         *
          */
         public function addGroupBy( $groupBy )
         {
             $this->groupBy = $groupBy;
         }
-        
+
         /**
          * Establish the order of the search
          *
@@ -291,7 +291,7 @@
          * @param string $o_d direction
          * @param string $table
          */
-        public function order($o_c = 'dt_pub_date', $o_d = 'DESC', $table = NULL) 
+        public function order($o_c = 'dt_pub_date', $o_d = 'DESC', $table = NULL)
         {
             if($table == '') {
                 $this->order_column = $o_c;
@@ -313,7 +313,7 @@
          * @param int $l_i
          * @param int $t_p_p results per page
          */
-        public function limit($l_i = 0, $r_p_p = null) 
+        public function limit($l_i = 0, $r_p_p = null)
         {
             $this->limit_init = $l_i;
             if($r_p_p!=null) { $this->results_per_page = $r_p_p; };
@@ -326,7 +326,7 @@
          * @since unknown
          * @param int $t_p_p results per page
          */
-        public function set_rpp($r_p_p) 
+        public function set_rpp($r_p_p)
         {
             $this->results_per_page = $r_p_p;
         }
@@ -339,7 +339,7 @@
          * @param int $p page
          * @param int $t_p_p results per page
          */
-        public function page($p = 0, $r_p_p = null) 
+        public function page($p = 0, $r_p_p = null)
         {
             if($r_p_p!=null) { $this->results_per_page = $r_p_p; };
             $this->limit_init = $this->results_per_page*$p;
@@ -565,8 +565,8 @@
 
         /**
          * Set having sentence to sql
-         * 
-         * @param type $having 
+         *
+         * @param type $having
          */
         public function addHaving($having)
         {
@@ -587,11 +587,11 @@
         }
 
         /**
-         * Filter by search pattern 
+         * Filter by search pattern
          *
          * @access public
          * @since 2.4
-         * @param string $pattern 
+         * @param string $pattern
          */
         public function addPattern($pattern)
         {
@@ -604,14 +604,14 @@
          *
          * @access public
          * @since 2.4
-         * @param string $pattern 
+         * @param string $pattern
          */
         public function addContactEmail($email)
         {
             $this->withNoUserEmail  = true;
             $this->sEmail = $email;
         }
-        
+
         /**
          * Return ads from specified users
          *
@@ -638,7 +638,7 @@
         {
             $this->dao->from(sprintf('%st_user',DB_TABLE_PREFIX));
             $this->dao->where(sprintf('%st_user.pk_i_id = %st_item.fk_i_user_id',DB_TABLE_PREFIX,DB_TABLE_PREFIX));
-            
+
             if(is_array($this->user_ids)) {
                 $this->dao->where(" ( ".implode(" || ", $this->user_ids)." ) ");
             } else {
@@ -664,7 +664,7 @@
             if($branches!=null) {
                 foreach($branches as $branch) {
                     if(!in_array($branch['pk_i_id'], $this->categories)) {
-                        $this->categories[] = $branch['pk_i_id'] ; 
+                        $this->categories[] = $branch['pk_i_id'] ;
                         if(isset($branch['categories'])) {
                             $list = $this->pruneBranches($branch['categories']);
                         }
@@ -707,12 +707,12 @@
 
         /**
          *  Add joins for future use
-         * 
+         *
          * @since 2.4
          * @param string $key
          * @param string $table
          * @param string $condition
-         * @param string $type 
+         * @param string $type
          */
         public function addJoinTable($key, $table, $condition, $type)
         {
@@ -721,7 +721,7 @@
 
         /**
          * Add join to current query
-         * 
+         *
          * @since 2.4
          */
         private function _joinTable()
@@ -778,7 +778,7 @@
         /**
          * Only search by pattern + location + category
          *
-         * @param type $num 
+         * @param type $num
          */
         private function _makeSQLPremium($num = 2)
         {
@@ -883,17 +883,17 @@
                     $this->dao->select($extraFields) ; // plugins!
                 }
                 $this->dao->from(DB_TABLE_PREFIX.'t_item');
-                
+
                 if($this->withNoUserEmail) {
                     $this->dao->where( DB_TABLE_PREFIX.'t_item.s_contact_email', $this->sEmail );
                 }
-                
+
                 if ($this->withPattern ) {
                     $this->dao->join(DB_TABLE_PREFIX.'t_item_description as d','d.fk_i_item_id = '.DB_TABLE_PREFIX.'t_item.pk_i_id','LEFT');
                     $this->dao->where(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->sPattern) );
                 }
-                
-                // item conditions 
+
+                // item conditions
                 if(count($this->itemConditions)>0) {
                     $itemConditions = implode(' AND ', $this->itemConditions);
                     $this->dao->where($itemConditions);
@@ -929,7 +929,7 @@
                 if($this->groupBy != '') {
                     $this->dao->groupBy( $this->groupBy );
                 }
-                // having 
+                // having
                 if($this->having != '') {
                     $this->dao->having($this->having);
                 }
@@ -969,7 +969,7 @@
         /**
          * Return total items on t_item without any filter
          *
-         * @return type 
+         * @return type
          */
         public function countAll()
         {
@@ -988,7 +988,7 @@
          * @since unknown
          * @param bool $extended if you want to extend ad's data
          */
-        public function doSearch($extended = true, $count = true) 
+        public function doSearch($extended = true, $count = true)
         {
             $sql = $this->_makeSQL(false) ;
             $result = $this->dao->query($sql);
@@ -1011,7 +1011,7 @@
 
             if($result) {
                 $items = $result->result();
-            } else { 
+            } else {
                 $items = array();
             }
 
@@ -1031,7 +1031,7 @@
          */
         /**
          * solo acepta pattern + location + stats, category
-         * 
+         *
          */
         public function getPremiums($max = 2)
         {
@@ -1039,7 +1039,7 @@
 
             $result = $this->dao->query($premium_sql);
             $items = $result->result();
-            
+
             $mStat = ItemStats::newInstance();
             foreach($items as $item) {
                 $mStat->increase('i_num_premium_views', $item['pk_i_id']);
@@ -1050,7 +1050,7 @@
         /**
          * Return latest posted items, you can filter by category and specify the
          * number of items returned.
-         * 
+         *
          * @param int $numItems
          * @param mixed $category int or array(int)
          * @param bool $withPicture
@@ -1070,7 +1070,7 @@
             $whe  = DB_TABLE_PREFIX.'t_item.b_active = 1 AND ';
             $whe .= DB_TABLE_PREFIX.'t_item.b_enabled = 1 AND ';
             $whe .= DB_TABLE_PREFIX.'t_item.b_spam = 0 AND ';
-            
+
             $whe .= '('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_item.dt_expiration >= \''. date('Y-m-d H:i:s').'\') ';
 
             //$whe .= 'AND '.DB_TABLE_PREFIX.'t_category.b_enabled = 1 ';
@@ -1117,7 +1117,7 @@
          * <code>
          *  Search::newInstance()->listRegions($country, ">=", "country_name ASC" )
          * </code>
-         * 
+         *
          * @deprecated
          * @access public
          * @since unknown
@@ -1136,7 +1136,7 @@
          * <code>
          *  Search::newInstance()->listCities($region, ">=", "city_name ASC" )
          * </code>
-         * 
+         *
          * @deprecated
          * @access public
          * @since unknown
@@ -1194,7 +1194,7 @@
         /**
          * Given the current search object, extract search parameters & conditions
          * as array.
-         * 
+         *
          * @return array
          */
         private function _getConditions()
@@ -1230,22 +1230,22 @@
                 } else if(preg_match('/'.DB_TABLE_PREFIX.'t_category.b_enabled/', $condition, $matches) ) {
                     // t_category.b_enabled is not longer needed
                 } else if(preg_match_all('/('.DB_TABLE_PREFIX.'t_item_location.s_city_area\s*LIKE\s*\'%([\s\p{L}\p{N}]*)%\'\s*)/u', $condition, $matches) ) { // OJO
-                    // Comprobar: si ( s_name existe ) then get location id, 
+                    // Comprobar: si ( s_name existe ) then get location id,
                     $aData['s_city_area'][] = DB_TABLE_PREFIX.'t_item_location.s_city_area LIKE \'%'.$matches[2][0].'%\'';
                 } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item_location.fk_i_city_area_id = (.*)/', $condition, $matches) ) {
                     $aData['fk_i_city_area_id'][] = DB_TABLE_PREFIX.'t_item_location.fk_i_city_area_id = '.$matches[1];
                 } else if(preg_match_all('/('.DB_TABLE_PREFIX.'t_item_location.s_city\s*LIKE\s*\'%([\s\p{L}\p{N}]*)%\'\s*)/u', $condition, $matches) ) { // OJO
-                    // Comprobar: si ( s_name existe ) then get location id, 
+                    // Comprobar: si ( s_name existe ) then get location id,
                     $aData['cities'][] = DB_TABLE_PREFIX.'t_item_location.s_city LIKE \'%'.$matches[2][0].'%\'';
                 } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item_location.fk_i_city_id = (.*)/', $condition, $matches) ) {
                     $aData['cities'][] = DB_TABLE_PREFIX.'t_item_location.fk_i_city_id = '.$matches[1];
                 } else if(preg_match_all('/('.DB_TABLE_PREFIX.'t_item_location.s_region\s*LIKE\s*\'%([\s\p{L}\p{N}]*)%\'\s*)/u', $condition, $matches) ) { // OJO
-                    // Comprobar: si ( s_name existe ) then get location id, 
+                    // Comprobar: si ( s_name existe ) then get location id,
                     $aData['s_region'][] = DB_TABLE_PREFIX.'t_item_location.s_region LIKE \'%'.$matches[2][0].'%\'';
                 } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item_location.fk_i_region_id = (.*)/', $condition, $matches) ) {
                     $aData['fk_i_region_id'] = DB_TABLE_PREFIX.'t_item_location.fk_i_region_id = '.$matches[1];
                 } else if(preg_match_all('/('.DB_TABLE_PREFIX.'t_item_location.s_country\s*LIKE\s*\'%([\s\p{L}\p{N}]*)%\'\s*)/u', $condition, $matches) ) { // OJO
-                    // Comprobar: si ( s_name existe ) then get location id,  
+                    // Comprobar: si ( s_name existe ) then get location id,
                     $aData['s_country'][] = DB_TABLE_PREFIX.'t_item_location.s_country LIKE \'%'.$matches[2][0].'%\'';
                 } else if(preg_match('/'.DB_TABLE_PREFIX.'t_item_location.fk_c_country_code = \'?(.*)\'?/', $condition, $matches) ) {
                     $aData['fk_c_country_code'][] = DB_TABLE_PREFIX.'t_item_location.fk_c_country_code = '.$matches[1];
@@ -1321,7 +1321,7 @@
 
                 $aData['tables']        = $this->tables;
                 $aData['tables_join']   = $this->tables_join;
-                
+
                 $aData['no_catched_tables']     = $this->tables;
                 $aData['no_catched_conditions'] = $this->conditions;
 
@@ -1343,7 +1343,7 @@
             $this->categories   = $aData['aCategories'];
             // locations
             $this->city_areas   = $aData['city_areas'] ;
-            $this->cities       = $aData['cities']; 
+            $this->cities       = $aData['cities'];
             $this->regions      = $aData['regions'] ;
             $this->countries    = $aData['countries'];
 

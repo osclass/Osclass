@@ -19,7 +19,7 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
-    
+
     /**
      * Model database for LocationsTmp table
      *
@@ -64,21 +64,21 @@
             $this->setTableName('t_locations_tmp') ;
             $this->setFields( array('id_location', 'e_type') ) ;
         }
-        
-        function getLocations($max) 
+
+        function getLocations($max)
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->limit($max) ;
             $rs = $this->dao->get() ;
-            
+
             if($rs === false) {
                 return array() ;
             }
             return $rs->result() ;
         }
-        
-        function delete($where) 
+
+        function delete($where)
         {
             return $this->dao->delete($this->getTableName(), $where ) ;
         }
