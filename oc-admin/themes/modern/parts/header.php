@@ -6,13 +6,10 @@
     <meta name="title" content="<?php echo osc_apply_filter('admin_title', osc_page_title() . ' - OSClass'); ?>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="content-language" content="<?php echo osc_current_admin_locale(); ?>" />
-    <!-- scripts
-    ================================================== -->
-    <?php osc_load_scripts(); ?>
-    <!-- styles
-    ================================================== -->
-    <?php osc_load_styles(); ?>
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <script type="text/javascript">
+        var osc = window.osc || {};
+    </script>
     <?php osc_run_hook('admin_header'); ?>
 </head>
 <body class="<?php echo implode(' ',osc_apply_filter('admin_body_class', array())); ?>">

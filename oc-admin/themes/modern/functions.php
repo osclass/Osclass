@@ -90,6 +90,19 @@ function admin_footer_html() { ?>
 }
 osc_add_hook('admin_content_footer', 'admin_footer_html');
 
+function admin_theme_js() { ?>
+    <!-- scripts
+    ================================================== -->
+    <?php osc_load_scripts();
+}
+osc_add_hook('admin_header', 'admin_theme_js', 1);
+function admin_theme_css() { ?>
+    <!-- styles
+    ================================================== -->
+    <?php osc_load_styles();
+}
+osc_add_hook('admin_header', 'admin_theme_css', 2);
+
 function printLocaleTabs($locales = null) {
     if($locales==null) { $locales = osc_get_locales(); }
     $num_locales = count($locales);
