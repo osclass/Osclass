@@ -41,7 +41,7 @@
         static public function required_checkbox($field = null) {
             parent::generic_input_checkbox('field_required', 1, ($field!=null && isset($field['b_required']) && $field['b_required']==1)?true:false);
         }
-        
+
         static public function type_select($field = null) {
             ?>
             <select name="field_type" id="field_type">
@@ -55,7 +55,7 @@
             <?php
             return true;
         }
-        
+
         static public function meta($field = null) {
             if($field!=null) {
                 if(Session::newInstance()->_getForm('meta_'.$field['pk_i_id']) != ""){
@@ -112,7 +112,7 @@
                 echo '</div>';
             }
         }
-        
+
     }
 
 ?>

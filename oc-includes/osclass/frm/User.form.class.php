@@ -155,7 +155,7 @@
 
             parent::generic_select( 'b_company', $options, 'i_value', 's_text', null, (isset($user['b_company'])) ? $user['b_company'] : null ) ;
         }
-        
+
         static public function user_select($users){
             Form::generic_select('userId', $users, 'pk_i_id', 's_name',  __('All') , NULL );
         }
@@ -204,9 +204,9 @@
         });
     });
 </script>
-<?php 
+<?php
         }
-        
+
         static public function js_validation_old() {
 ?>
 <script type="text/javascript">
@@ -302,7 +302,7 @@ function checkForm() {
         });
     });
 </script>
-<?php 
+<?php
         }
 
         static public function location_javascript($path = 'front') {

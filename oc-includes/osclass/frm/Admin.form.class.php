@@ -58,7 +58,7 @@
 
             parent::generic_select( 'b_moderator', $options, 'i_value', 's_text', null, (isset($admin['b_moderator'])) ? $admin['b_moderator'] : null ) ;
         }
-        
+
         static public function js_validation() {
 ?>
 <script type="text/javascript">
@@ -123,9 +123,9 @@
         });
     });
 </script>
-<?php 
+<?php
         }
-        
+
     }
 
     /* file end: ./oc-includes/osclass/frm/Admin.form.class.php */

@@ -35,7 +35,7 @@
                     $categories = osc_get_categories() ;
                 }
             }
-            
+
             echo '<select name="catId" id="catId">' ;
             if(isset($default_item)) {
                 echo '<option value="">' . $default_item . '</option>' ;
@@ -44,7 +44,7 @@
             }
 
             if(count($categories)==1) { $parent_selectable = 1; };
-            
+
             foreach($categories as $c) {
                 if ( !osc_selectable_parent_categories() && !$parent_selectable ) {
                     echo '<optgroup label="' . $c['s_name'] . '">' ;
@@ -62,7 +62,7 @@
             echo '</select>' ;
             return true ;
         }
-    
+
         // OK
         static public function subcategory_select($categories, $item, $default_item = null, $deep = 0)
         {
@@ -84,21 +84,21 @@
                 }
             }
         }
-        
-        static public function country_text() 
+
+        static public function country_text()
         {
             // get params GET (only manageItems)
             if(Params::getParam('countryName') != '') {
                 $item['s_country'] = Params::getParam('countryName') ;
                 $item['fk_c_country_code'] = Params::getParam('countryId');
             }
-            
+
             parent::generic_input_text('countryName', (isset($item['s_country'])) ? $item['s_country'] : null, false, false) ;
             parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code']) && $item['fk_c_country_code']!=null)?$item['fk_c_country_code']:'');
             return true ;
         }
-        
-        static public function region_text() 
+
+        static public function region_text()
         {
             // get params GET (only manageItems)
             if(Params::getParam('region') != '') {
@@ -109,8 +109,8 @@
             parent::generic_input_hidden('regionId', (isset($item['fk_i_region_id']) && $item['fk_i_region_id']!=null)?$item['fk_i_region_id']:'');
             return true ;
         }
-        
-        static public function city_text() 
+
+        static public function city_text()
         {
             // get params GET (only manageItems)
             if(Params::getParam('city') != '') {
