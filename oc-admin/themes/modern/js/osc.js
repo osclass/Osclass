@@ -16,7 +16,7 @@
  **/
 osc = {};
 /* ===================================================
- * osc tooltip 
+ * osc tooltip
  * ===================================================
  * Usage:
  * Display a custom tooltip on mouse over.
@@ -54,28 +54,28 @@ osc.tooltip = function(message, options){
         var $tooltipContainer = $('<div class="tooltip-message"></div>');
         $tooltipContainer.append(message);
         $tooltip.html($tooltipContainer).attr('class',opts.layout+' '+opts.position.x+'-'+opts.position.y).append('<div class="tooltip-arrow"></div>').show();
-        switch (opts.position.y) { 
-            case 'top': 
+        switch (opts.position.y) {
+            case 'top':
                 positionTop = offset.top-($tooltip.outerHeight());
-                break 
-            case 'middle': 
+                break
+            case 'middle':
                 positionTop = offset.top-($tooltip.outerHeight()/2)+($(this).outerHeight()/2);
-                break 
-            case 'bottom': 
+                break
+            case 'bottom':
                 positionTop = offset.top+$(this).outerHeight();
-                break 
-        } 
-        switch (opts.position.x) { 
-            case 'left': 
+                break
+        }
+        switch (opts.position.x) {
+            case 'left':
                 positionLeft = offset.left-$tooltip.outerWidth();
-                break 
-            case 'middle': 
+                break
+            case 'middle':
                 positionLeft = offset.left-($tooltip.outerWidth()/2)+($(this).outerWidth()/2);
-                break 
-            case 'right': 
+                break
+            case 'right':
                 positionLeft = offset.left+$(this).width();
-                break 
-        }               
+                break
+        }
         $tooltip.css({
             left: positionLeft,
             top:  positionTop
