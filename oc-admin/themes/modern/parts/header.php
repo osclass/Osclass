@@ -9,6 +9,14 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <script type="text/javascript">
         var osc = window.osc || {};
+        <?php
+            /* TODO: enqueue js lang strings */
+            $lang = array(
+                'no_subcategory' => __('No Subcategory'),
+                'select_subcategory' => __('Select Subcategory')
+            );
+        ?>
+        osc.langs = <?php echo json_encode($lang); ?>;
     </script>
     <?php osc_run_hook('admin_header'); ?>
 </head>
