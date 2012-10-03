@@ -33,7 +33,7 @@
 
     /**
     * Gets current item array from view
-    * 
+    *
     * @return array $item, or null if not exist
     */
     function osc_item() {
@@ -48,8 +48,8 @@
 
     /**
     * Gets comment array form view
-    * 
-    * @return array $comment 
+    *
+    * @return array $comment
     */
     function osc_comment() {
         if (View::newInstance()->_exists('comments')) {
@@ -60,10 +60,10 @@
 
         return($comment) ;
     }
-    
+
     /**
     * Gets resource array from view
-    * 
+    *
     * @return array $resource
     */
     function osc_resource() {
@@ -78,10 +78,10 @@
 
     /**
     * Gets a specific field from current item
-    * 
+    *
     * @param type $field
     * @param type $locale
-    * @return field_type 
+    * @return field_type
     */
     function osc_item_field($field, $locale = "") {
         return osc_field(osc_item(), $field, $locale) ;
@@ -89,10 +89,10 @@
 
     /**
     * Gets a specific field from current comment
-    * 
+    *
     * @param type $field
     * @param type $locale
-    * @return field_type 
+    * @return field_type
     */
     function osc_comment_field($field, $locale = '') {
         return osc_field(osc_comment(), $field, $locale) ;
@@ -100,10 +100,10 @@
 
     /**
     * Gets a specific field from current resource
-    * 
+    *
     * @param type $field
     * @param type $locale
-    * @return field_type 
+    * @return field_type
     */
     function osc_resource_field($field, $locale = '') {
         return osc_field(osc_resource(), $field, $locale) ;
@@ -117,10 +117,10 @@
     // HELPERS FOR ITEMS //
     ///////////////////////
 
-    
+
     /**
     * Gets id from current item
-    * 
+    *
     * @return int
     */
     function osc_item_id() {
@@ -129,7 +129,7 @@
 
     /**
     * Gets user id from current item
-    * 
+    *
     * @return int
     */
     function osc_item_user_id() {
@@ -140,7 +140,7 @@
      * Gets description from current item, if $locale is unspecified $locale is current user locale
      *
      * @param string $locale
-     * @return string $desc 
+     * @return string $desc
      */
     function osc_item_description($locale = "") {
         if ($locale == "") $locale = osc_current_user_locale() ;
@@ -162,9 +162,9 @@
 
     /**
      * Gets title from current item, if $locale is unspecified $locale is current user locale
-     * 
+     *
      * @param string $locale
-     * @return string 
+     * @return string
      */
     function osc_item_title($locale = "") {
         if ($locale == "") $locale = osc_current_user_locale() ;
@@ -188,7 +188,7 @@
      * Gets category from current item
      *
      * @param string $locale
-     * @return string 
+     * @return string
      */
     function osc_item_category($locale = "") {
         if ($locale == "") $locale = osc_current_user_locale() ;
@@ -203,7 +203,7 @@
      * Gets category description from current item, if $locale is unspecified $locale is current user locale
      *
      * @param type $locale
-     * @return string 
+     * @return string
      */
     function osc_item_category_description($locale = "") {
         if ($locale == "") $locale = osc_current_user_locale() ;
@@ -217,7 +217,7 @@
     /**
      * Gets category id of current item
      *
-     * @return int 
+     * @return int
      */
     function osc_item_category_id() {
         return (int) osc_item_field("fk_i_category_id") ;
@@ -240,7 +240,7 @@
     function osc_item_mod_date() {
         return (string) osc_item_field("dt_mod_date");
     }
-    
+
     /**
      * Gets date expiration of current item
      *
@@ -427,8 +427,8 @@
 
     /**
      * Return true if item is expired, else return false
-     * 
-     * @return boolean  
+     *
+     * @return boolean
      */
     function osc_item_is_expired() {
         if( osc_item_is_premium() ) {
@@ -437,7 +437,7 @@
             return osc_isExpired(osc_item_dt_expiration());
         }
     }
-    
+
     /**
      * Gets status of current item.
      * b_active = true  -> item is active
@@ -585,7 +585,7 @@
      */
     function osc_list_items_per_page() {
         return View::newInstance()->_get('items_per_page');
-    }    
+    }
 
     /**
      * Gets total number of comments of current item
@@ -610,11 +610,11 @@
             return (int) $page-1;
         }
     }
-    
+
     ///////////////////////
     // HELPERS FOR ITEMS //
     ///////////////////////
-    
+
 
     //////////////////////////
     // HELPERS FOR COMMENTS //
@@ -781,22 +781,22 @@
     function osc_resource_original_url() {
         return (string) osc_resource_path().osc_resource_id()."_original.".osc_resource_field("s_extension");
     }
-    
+
     /**
      * Set the internal pointer of array resources to its first element, and return it.
-     * 
+     *
      * @since 2.3.6
      * @return array
      */
     function osc_reset_resources() {
         return View::newInstance()->_reset('resources') ;
     }
-    
-    
+
+
     ///////////////////////////////
     // END HELPERS FOR RESOURCES //
     ///////////////////////////////
-    
+
     /////////////
     // DETAILS //
     /////////////
@@ -925,7 +925,7 @@
     //////////
     // HOME //
     //////////
-    
+
     /**
      * Gets next item of last items
      *
@@ -977,7 +977,7 @@
         };
         return (int) View::newInstance()->_count('latestItems') ;
     }
-    
+
     //////////////
     // END HOME //
     //////////////
@@ -1019,7 +1019,7 @@
     function osc_count_custom_items() {
         return (int) View::newInstance()->_count('customItems') ;
     }
-    
+
     /**
      * Set the internal pointer of array customItems to its first element, and return it.
      *
@@ -1031,7 +1031,7 @@
         View::newInstance()->_exportVariableToView('itemLoop', '');
         return View::newInstance()->_reset('customItems') ;
     }
-    
+
     /**
      * Formats the price using the appropiate currency.
      *
@@ -1071,23 +1071,23 @@
     function osc_priv_count_item_resources() {
         return (int) View::newInstance()->_count('resources') ;
     }
-    
+
     /***************
      * META FIELDS *
      ***************/
-    
+
     /**
      * Gets number of item meta field
      *
      * @return integer
-     */    
+     */
     function osc_count_item_meta() {
         if ( !View::newInstance()->_exists('metafields') ) {
             View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->metaFields(osc_item_id()) ) ;
         }
         return View::newInstance()->_count('metafields') ;
     }
-    
+
     /**
      * Gets next item meta field if there is, else return null
      *
@@ -1116,16 +1116,16 @@
      * Gets item meta field
      *
      * @return array
-     */    
+     */
     function osc_item_meta() {
         return View::newInstance()->_current('metafields') ;
     }
-   
+
     /**
      * Gets item meta value
      *
      * @return string
-     */    
+     */
     function osc_item_meta_value() {
         $meta = osc_item_meta();
         if($meta['e_type']=="CHECKBOX") {
@@ -1141,104 +1141,104 @@
                 return '';
             }
         } else {
-            return htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8") ; 
+            return htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8") ;
         }
     }
-   
+
     /**
      * Gets item meta name
      *
      * @return string
-     */    
+     */
     function osc_item_meta_name() {
         return osc_field(osc_item_meta(), 's_name', '') ;
     }
-   
+
     /**
      * Gets item meta id
      *
      * @return integer
-     */    
+     */
     function osc_item_meta_id() {
         return osc_field(osc_item_meta(), 'pk_i_id', '') ;
     }
-   
+
     /**
      * Gets item meta slug
      *
      * @return string
-     */    
+     */
     function osc_item_meta_slug() {
         return osc_field(osc_item_meta(), 's_slug', '') ;
     }
-   
+
     /**
      * Gets total number of active items
      *
      * @return string
-     */    
+     */
     function osc_total_active_items() {
         $search = new Search(false);
         return $search->count();
     }
-   
+
     /**
      * Gets total number of all items
      *
      * @return string
-     */    
+     */
     function osc_total_items() {
         $search = new Search(true);
         return $search->count();
     }
-   
+
     /**
      * Gets total number of active items today
      *
      * @return string
-     */    
+     */
     function osc_total_active_items_today() {
         $search = new Search(false);
         $search->addConditions(sprintf('DATEDIFF(\'%s\', %st_item.dt_pub_date) < 1', date('Y-m-d H:i:s'), DB_TABLE_PREFIX));
         return $search->count();
     }
-   
+
     /**
      * Gets total number of all items today
      *
      * @return string
-     */    
+     */
     function osc_total_items_today() {
         $search = new Search(true);
         $search->addConditions(sprintf('DATEDIFF(\'%s\', %st_item.dt_pub_date) < 1', date('Y-m-d H:i:s'), DB_TABLE_PREFIX));
         return $search->count();
     }
-   
-    
+
+
     /**
      * Perform a search based on custom filters and conditions
-     * export the results to a variable to be able to manage it 
+     * export the results to a variable to be able to manage it
      * from custom_items' helpers
-     * 
-     * 
+     *
+     *
      * @param params This could be a string or and array
-     * Examples: 
+     * Examples:
      *  Only one keyword
      *  osc_query_item("keyword=value1,value2,value3,...")
-     *  
+     *
      *  Multiple keywords
      *  osc_query_item(array(
      *      'keyword1' => 'value1,value2',
      *      'keyword2' => 'value3,value4'
      *  ))
-     * 
+     *
      * Real live examples:
      *  osc_query_item('category_name=cars,houses');
      *  osc_query_item(array(
      *      'category_name' => 'cars,houses',
      *      'city' => 'Madrid'
      *  ))
-     * 
+     *
      * Possible keywords:
      *  author
      *  country
@@ -1254,11 +1254,11 @@
      *  results_per_page
      *  page
      *  offset
-     *  
+     *
      *  Any other keyword will be passed to the hook "custom_query"
      *   osc_run_hook("custom_query", $keyword, $value);
      *  A plugin could be created to handle those extra situation
-     * 
+     *
      * @since 3.0
      */
     function osc_query_item($params = null) {
@@ -1277,7 +1277,7 @@
                         $mSearch->fromUser($t);
                     }
                     break;
-                
+
                 case 'category':
                 case 'category_name':
                     $tmp = explode(",", $value);
@@ -1285,7 +1285,7 @@
                         $mSearch->addCategory($t);
                     }
                     break;
-                
+
                 case 'country':
                 case 'country_name':
                     $tmp = explode(",", $value);
@@ -1293,7 +1293,7 @@
                         $mSearch->addCountry($t);
                     }
                     break;
-                
+
                 case 'region':
                 case 'region_name':
                     $tmp = explode(",", $value);
@@ -1301,7 +1301,7 @@
                         $mSearch->addRegion($t);
                     }
                     break;
-                
+
                 case 'city':
                 case 'city_name':
                     $tmp = explode(",", $value);
@@ -1309,26 +1309,26 @@
                         $mSearch->addCity($t);
                     }
                     break;
-                
+
                 case 'city_area':
                 case 'city_area_name':
                     $tmp = explode(",", $value);
                     foreach($tmp as $t) {
                         $mSearch->addCityArea($t);
                     }
-                
+
                 case 'results_per_page':
                     $mSearch->set_rpp($value);
                     break;
-                
+
                 case 'page':
                     $mSearch->page($value);
                     break;
-                
+
                 case 'offset':
                     $mSearch->limit($value);
                     break;
-                
+
                 default:
                     osc_run_hook('custom_query', $key, $value);
                     break;
@@ -1336,6 +1336,6 @@
         }
         View::newInstance()->_exportVariableToView("customItems", $mSearch->doSearch());
     }
-    
-    
+
+
  ?>

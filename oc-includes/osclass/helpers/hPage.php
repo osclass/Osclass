@@ -42,10 +42,10 @@
         }
         return($page) ;
     }
-    
+
     /**
      * Gets current page field
-     * 
+     *
      * @param string $field
      * @param string $locale
      * @return string
@@ -149,7 +149,7 @@
         }
         return $path ;
     }
-    
+
     /**
      * Gets the specified static page by internal name.
      *
@@ -160,8 +160,8 @@
     function osc_get_static_page($internal_name, $locale = '') {
         if ($locale == "") $locale = osc_current_user_locale() ;
         return View::newInstance()->_exportVariableToView('page', Page::newInstance()->findByInternalName($internal_name, $locale) ) ;
-    }    
-    
+    }
+
     /**
      * Gets the total of static pages. If static pages are not loaded, this function will load them.
      *
@@ -184,7 +184,7 @@
         if ( !View::newInstance()->_exists('pages') ) {
             View::newInstance()->_exportVariableToView('pages', Page::newInstance()->listAll(false) ) ;
         }
-        
+
         return View::newInstance()->_next('pages') ;
     }
 

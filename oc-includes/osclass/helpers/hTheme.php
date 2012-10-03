@@ -29,13 +29,13 @@
     function osc_admin_render_theme_url($file = '') {
         return osc_admin_base_url(true).'?page=appearance&action=render&file=' . $file;
     }
-    
-    
+
+
     /**
      * Render the specified file
      *
      * @param string $file must be a relative path, from PLUGINS_PATH
-     */    
+     */
     function osc_render_file($file = '') {
         if($file=='') {
             $file = __get('file');
@@ -45,8 +45,8 @@
         $file = str_replace("../", "", str_replace("://", "", preg_replace("|http([s]*)|", "", $file)));
         include osc_plugins_path().$file;
     }
-    
-    
+
+
     /**
      * Gets urls for render custom files in front-end
      *
@@ -58,12 +58,12 @@
         $file = str_replace("../", "", str_replace("://", "", preg_replace("|http([s]*)|", "", $file)));
         return osc_base_url(true).'?page=custom&file=' . $file;
     }
-    
+
     /**
      * Re-send the flash messages of the given section. Usefull for custom theme/plugins files.
      *
      * @param string $$section
-     */    
+     */
     function osc_resend_flash_messages($section = "pubMessages") {
         $message = Session::newInstance()->_getMessage($section);
         if($message["type"]=="info") {
@@ -77,8 +77,8 @@
 
     /**
      * Enqueue script
-     * 
-     * @param type $id 
+     *
+     * @param type $id
      */
     function osc_enqueue_script($id) {
         if( OC_ADMIN ) {
@@ -90,8 +90,8 @@
 
     /**
      * Remove script from the queue, so it will not be loaded
-     * 
-     * @param type $id 
+     *
+     * @param type $id
      */
     function osc_remove_script($id) {
         if( OC_ADMIN ) {
@@ -103,7 +103,7 @@
 
     /**
      * Add script to be loaded
-     * 
+     *
      * @param $id keyname to identify the script
      * @param $url url of the .js file
      * @param $dependencies mixed, could be an array or a string
@@ -118,8 +118,8 @@
 
     /**
      * Remove script from the queue, so it will not be loaded
-     * 
-     * @param type $id 
+     *
+     * @param type $id
      */
     function osc_unregister_script($id) {
         if( OC_ADMIN ) {
@@ -142,7 +142,7 @@
 
     /**
      * Add style to be loaded
-     * 
+     *
      * @param $id keyname to identify the style
      * @param $url url of the .css file
      */
@@ -156,8 +156,8 @@
 
     /**
      * Remove style from the queue, so it will not be loaded
-     * 
-     * @param type $id 
+     *
+     * @param type $id
      */
     function osc_remove_style($id) {
         if( OC_ADMIN ) {

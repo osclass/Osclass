@@ -65,7 +65,7 @@
             return null;
         }
     }
-    
+
     /**
      * Gets current city area
      *
@@ -78,7 +78,7 @@
             return null;
         }
     }
-    
+
     /**
      * Iterator for countries, return null if there's no more countries
      *
@@ -189,7 +189,7 @@
     function osc_country_name() {
         return osc_field(osc_country(), 'country_name', '') ;
     }
-    
+
     /**
      * Gets country's items
      *
@@ -207,7 +207,7 @@
     function osc_region_name() {
         return osc_field(osc_region(), 'region_name', '') ;
     }
-    
+
     /**
      * Gets region's items
      *

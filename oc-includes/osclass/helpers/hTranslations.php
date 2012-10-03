@@ -30,7 +30,7 @@
      * Translate strings
      *
      * @since unknown
-     * 
+     *
      * @param string $key
      * @param string $domain
      * @return string
@@ -49,7 +49,7 @@
      * Translate strings and echo them
      *
      * @since unknown
-     * 
+     *
      * @param string $key
      * @param string $domain
      */
@@ -61,7 +61,7 @@
      * Translate string (flash messages)
      *
      * @since unknown
-     * 
+     *
      * @param string $key
      * @return string
      */

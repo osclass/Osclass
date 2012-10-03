@@ -25,7 +25,7 @@
      * @subpackage Helpers
      * @author OSClass
      */
-     
+
     /**
      * Getting from View the $key index
      *
@@ -77,7 +77,7 @@
         }
         return '' ;
     }
-    
+
     /**
      * Print all widgets belonging to $location
      *
@@ -93,7 +93,7 @@
     /**
      * Print recaptcha html, if $section = "recover_password"
      * set 'recover_time' at session.
-     * 
+     *
      * @param  string $section
      * @return void
      */
@@ -107,7 +107,7 @@
                        echo recaptcha_get_html( osc_recaptcha_public_key() )."<br />" ;
                     }
                 break;
-                
+
                 default:
                    echo recaptcha_get_html( osc_recaptcha_public_key() ) ;
                 break;
@@ -125,14 +125,14 @@
         if($dateformat==null) {
             $dateformat = osc_date_format();
         }
-        
+
         $month = array('', __('January'), __('February'), __('March'), __('April'), __('May'), __('June'), __('July'), __('August'), __('September'), __('October'), __('November'), __('December'));
         $month_short = array('', __('Jan'), __('Feb'), __('Mar'), __('Apr'), __('May'), __('Jun'), __('Jul'), __('Aug'), __('Sep'), __('Oct'), __('Nov'), __('Dec'));
         $day = array('', __('Monday'), __('Tuesday'), __('Wednesday'), __('Thursday'), __('Friday'), __('Saturday'), __('Sunday'));
         $day_short = array('', __('Mon'), __('Tue'), __('Wed'), __('Thu'), __('Fri'), __('Sat'), __('Sun'));
         $ampm = array('AM' => __('AM'), 'PM' => __('PM'), 'am' => __('am'), 'pm' => __('pm'));
 
-        
+
         $time = strtotime($date);
         $dateformat = preg_replace('|(?<!\\\)F|', osc_escape_string($month[date('n', $time)]), $dateformat);
         $dateformat = preg_replace('|(?<!\\\)M|', osc_escape_string($month_short[date('n', $time)]), $dateformat);
@@ -143,7 +143,7 @@
         return date($dateformat, $time);
     }
 
-    
+
     /**
      * Scapes letters and numbers of a string
      *
@@ -155,8 +155,8 @@
         $string = preg_replace('/^([0-9])/', '\\\\\\\\\1', $string);
         $string = preg_replace('/([a-z])/i', '\\\\\1', $string);
         return $string;
-    }    
-    
+    }
+
     /**
      * Prints the user's account menu
      *
@@ -175,7 +175,7 @@
         }
 
         $options = osc_apply_filter('user_menu_filter', $options);
-        
+
         echo '<script type="text/javascript">' ;
         echo '$(".user_menu > :first-child").addClass("first") ;' ;
         echo '$(".user_menu > :last-child").addClass("last") ;' ;
@@ -214,7 +214,7 @@
         }
         $query = osc_search_pattern();
         $query = trim(preg_replace('/\s+/', ' ', $query)) ;
-        
+
         $aQuery = explode(' ', $query) ;
         foreach ($aQuery as $word) {
             $word = trim($word);
@@ -224,10 +224,10 @@
         }
         return $txt ;
     }
-    
-    
+
+
     /**
-     * 
+     *
      */
     function osc_get_http_referer() {
         $ref = Rewrite::newInstance()->get_http_referer();

@@ -34,7 +34,7 @@
 
     /**
     * Gets new premiums ads
-    * 
+    *
     * @return array $premiums
     */
     function osc_get_premiums($max = 2) {
@@ -55,7 +55,7 @@
 
     /**
     * Gets current premium array from view
-    * 
+    *
     * @return array $premium, or null if not exist
     */
     function osc_premium() {
@@ -68,10 +68,10 @@
 
     /**
     * Gets a specific field from current premium
-    * 
+    *
     * @param type $field
     * @param type $locale
-    * @return field_type 
+    * @return field_type
     */
     function osc_premium_field($field, $locale = "") {
         return osc_field(osc_premium(), $field, $locale) ;
@@ -86,10 +86,10 @@
     // HELPERS FOR PREMIUMS //
     ///////////////////////
 
-    
+
     /**
     * Gets id from current premium
-    * 
+    *
     * @return int
     */
     function osc_premium_id() {
@@ -98,7 +98,7 @@
 
     /**
     * Gets user id from current premium
-    * 
+    *
     * @return int
     */
     function osc_premium_user_id() {
@@ -109,7 +109,7 @@
      * Gets description from current premium, if $locale is unspecified $locale is current user locale
      *
      * @param string $locale
-     * @return string $desc 
+     * @return string $desc
      */
     function osc_premium_description($locale = "") {
         if ($locale == "") $locale = osc_current_user_locale() ;
@@ -131,9 +131,9 @@
 
     /**
      * Gets title from current premium, if $locale is unspecified $locale is current user locale
-     * 
+     *
      * @param string $locale
-     * @return string 
+     * @return string
      */
     function osc_premium_title($locale = "") {
         if ($locale == "") $locale = osc_current_user_locale() ;
@@ -157,7 +157,7 @@
      * Gets category from current premium
      *
      * @param string $locale
-     * @return string 
+     * @return string
      */
     function osc_premium_category($locale = "") {
         if ($locale == "") $locale = osc_current_user_locale() ;
@@ -172,7 +172,7 @@
      * Gets category description from current premium, if $locale is unspecified $locale is current user locale
      *
      * @param type $locale
-     * @return string 
+     * @return string
      */
     function osc_premium_category_description($locale = "") {
         if ($locale == "") $locale = osc_current_user_locale() ;
@@ -186,7 +186,7 @@
     /**
      * Gets category id of current premium
      *
-     * @return int 
+     * @return int
      */
     function osc_premium_category_id() {
         return (int) osc_premium_field("fk_i_category_id") ;
@@ -438,13 +438,13 @@
         }
         return (int) $page;
     }
-    
+
     //////////////////////////
     // HELPERS FOR PREMIUMS //
     //////////////////////////
-    
 
-    
+
+
     /////////////
     // DETAILS //
     /////////////
@@ -556,23 +556,23 @@
         return (int) View::newInstance()->_count('premiums') ;
     }
 
-    
+
     /***************
      * META FIELDS *
      ***************/
-    
+
     /**
      * Gets number of premium meta field
      *
      * @return integer
-     */    
+     */
     function osc_count_premium_meta() {
         if ( !View::newInstance()->_exists('metafields') ) {
             View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->metaFields(osc_premium_id()) ) ;
         }
         return View::newInstance()->_count('metafields') ;
     }
-    
+
     /**
      * Gets next premium meta field if there is, else return null
      *
@@ -597,5 +597,5 @@
         return View::newInstance()->_get('metafields') ;
     }
 
-   
+
  ?>
