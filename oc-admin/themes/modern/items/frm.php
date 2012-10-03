@@ -268,3 +268,4 @@
     </div>
 </div>
 </div>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

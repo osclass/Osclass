@@ -9,13 +9,13 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <script type="text/javascript">
         var osc = window.osc || {};
-        <?php
+<?php
             /* TODO: enqueue js lang strings */
             $lang = array(
-                'no_subcategory' => __('No Subcategory'),
+                'no_subcategory'     => __('No Subcategory'),
                 'select_subcategory' => __('Select Subcategory')
             );
-        ?>
+?>
         osc.langs = <?php echo json_encode($lang); ?>;
     </script>
     <?php osc_run_hook('admin_header'); ?>
@@ -41,4 +41,4 @@
             <div id="content-page">
                 <div class="grid-system">
                     <div class="grid-row grid-first-row grid-100">
-                        <div class="row-wrapper <?php echo osc_apply_filter('render-wrapper',''); ?>">
+                        <div class="row-wrapper <?php echo osc_apply_filter('render-wrapper', ''); ?>">
