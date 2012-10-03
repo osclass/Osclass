@@ -190,37 +190,4 @@ function printLocaleDescriptionPage($locales = null, $page = null) {
     }
 }
 
-function jsLocaleSelector() {
-    $locales = osc_get_locales();
-    $codes = array();
-    foreach($locales as $locale) {
-        $codes[] = '\''.osc_esc_js($locale['pk_c_code']).'\'';
-    }
-    ?>
-    <script type="text/javascript">
-        var locales = new Object;
-        locales.current = '<?php echo osc_esc_js($locales[0]['pk_c_code']); ?>';
-        locales.codes = new Array(<?php echo join(',',$codes); ?>);
-
-        locales.string = '[name*="'+locales.codes.join('"],[name*="')+'"],.'+locales.codes.join(',.');
-        $(function(){
-            $('#language-tab li a').click(function(){
-                $('#language-tab li').removeClass('ui-state-active').removeClass('ui-tabs-selected');
-                $(this).parent().addClass('ui-tabs-selected ui-state-active');
-                var currentLocale = $(this).attr('href').replace('#','');
-                $(locales.string).parent().hide();
-                $('[name*="'+currentLocale+'"], .'+currentLocale).parent().show();
-                locales.current = currentLocale;
-                return false;
-            }).triggerHandler('click');
-        });
-        function tabberAutomatic(){
-            $('.tabber:hidden').show();
-            $('.tabber h2').remove();
-            $(locales.string).parent().hide();
-            $('[name*="'+locales.current+'"],.'+locales.current).parent().show();
-        }
-    </script>
-    <?php
-}
-osc_add_hook('admin_header','jsLocaleSelector');
+/* end of file */

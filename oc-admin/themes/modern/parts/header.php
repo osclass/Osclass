@@ -10,12 +10,21 @@
     <script type="text/javascript">
         var osc = window.osc || {};
 <?php
-            /* TODO: enqueue js lang strings */
-            $lang = array(
-                'no_subcategory'     => __('No Subcategory'),
-                'select_subcategory' => __('Select Subcategory')
-            );
+    /* TODO: enqueue js lang strings */
+    $lang = array(
+        'no_subcategory'     => __('No Subcategory'),
+        'select_subcategory' => __('Select Subcategory')
+    );
+    $locales = osc_get_locales();
+    $codes   = array();
+    foreach($locales as $locale) {
+        $codes[] = '\''. osc_esc_js($locale['pk_c_code']) . '\'';
+    }
 ?>
+        osc.locales = {};
+        osc.locales.current = '<?php echo osc_current_admin_locale(); ?>';
+        osc.locales.codes   = new Array(<?php echo join(',', $codes); ?>);
+        osc.locales.string  = '[name*="' + osc.locales.codes.join('"],[name*="') + '"],.' + osc.locales.codes.join(',.');
         osc.langs = <?php echo json_encode($lang); ?>;
     </script>
     <?php osc_run_hook('admin_header'); ?>
