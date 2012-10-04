@@ -48,8 +48,9 @@ osc.tooltip = function(message, options){
     }
 
     //Add the message
-
+    var hovered;
     $(this).hover(function(){
+        hovered = true;
         var offset = $(this).offset();
         var $tooltipContainer = $('<div class="tooltip-message"></div>');
         $tooltipContainer.append(message);
@@ -82,7 +83,21 @@ osc.tooltip = function(message, options){
         });
 
     },function(){
-        $tooltip.hide();
+        hovered = false;
+        setTimeout(function(){
+        if(!hovered) {
+            $tooltip.hide();
+        }}, 100);
+    });
+
+    jQuery("#osc-tooltip").mouseover(function(){
+        hovered = true;
+    }).mouseout(function(){
+        hovered = false;
+        setTimeout(function(){
+        if(!hovered) {
+            $tooltip.hide();
+        }}, 100);
     });
 };
 
