@@ -21,7 +21,7 @@
     $page       = __get('page');
     $templates  = __get('templates');
     $meta       = json_decode(@$page['s_meta'], true);
-    
+
     $template_selected = (isset($meta['template']) && $meta['template']!='')?$meta['template']:'default';
     $locales = OSCLocale::newInstance()->listAllEnabled();
 
@@ -66,10 +66,11 @@
                 theme_advanced_buttons3 : "",
                 theme_advanced_toolbar_align : "left",
                 theme_advanced_toolbar_location : "top",
-                plugins : "color",
+                plugins : "media, ibrowser",
                 entity_encoding : "raw",
                 theme_advanced_buttons1_add : "forecolorpicker,fontsizeselect",
-                theme_advanced_disable : "styleselect,anchor,image"
+                theme_advanced_buttons3: "media,ibrowser",
+                theme_advanced_disable : "styleselect,anchor"
             });
         </script>
         <?php

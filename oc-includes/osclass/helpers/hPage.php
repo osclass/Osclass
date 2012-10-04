@@ -42,7 +42,7 @@
         }
 
         if ( !View::newInstance()->_exists('page_meta') ) {
-            View::newInstance()->_exportVariableToView('page_meta', json_decode($page['s_meta'], true));
+            View::newInstance()->_exportVariableToView('page_meta', json_decode(@$page['s_meta'], true));
         }
 
         return($page) ;
@@ -194,7 +194,7 @@
         View::newInstance()->_exportVariableToView('page_meta', json_decode($page['s_meta'], true));
         return View::newInstance()->_exportVariableToView('page', $page);
     }
-    
+
     /**
      * Gets the total of static pages. If static pages are not loaded, this function will load them.
      *
@@ -217,15 +217,10 @@
         if ( !View::newInstance()->_exists('pages') ) {
             View::newInstance()->_exportVariableToView('pages', Page::newInstance()->listAll(false) ) ;
         }
-<<<<<<< HEAD
-
-        return View::newInstance()->_next('pages') ;
-=======
 
         $page = View::newInstance()->_next('pages');
         View::newInstance()->_exportVariableToView('page_meta', json_decode($page['s_meta'], true));
         return $page;
->>>>>>> page templates added
     }
 
     /**
