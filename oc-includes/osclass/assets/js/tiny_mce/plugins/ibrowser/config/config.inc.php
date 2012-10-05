@@ -22,6 +22,11 @@
         date_default_timezone_set('Europe/Madrid');
 	//  see readme.txt for further instructions
 	include dirname(__FILE__) . '/../../../../../../../../config.php';
+        include dirname(__FILE__) . '/../../../../../../../../oc-load.php';
+        // check admin logged
+        if( !osc_is_admin_user_logged_in() ) {
+            die();
+        }
 	//-------------------------------------------------------------------------
 	$cfg['lang']   		= 'en';														// default language; e.g. 'en'
 	$cfg['valid']  		= array('gif', 'jpg', 'jpeg', 'png');						// valid extentions for image files
