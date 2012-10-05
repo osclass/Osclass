@@ -120,6 +120,9 @@
          */
         public function findByPrimaryKey($id)
         {
+            if( !is_numeric($id) || $id == null ) {
+                return array() ;
+            }
             $this->dao->select('l.*, i.*, SUM(s.i_num_views) AS i_num_views') ;
             $this->dao->from($this->getTableName().' i') ;
             $this->dao->join(DB_TABLE_PREFIX.'t_item_location l', 'l.fk_i_item_id = i.pk_i_id ', 'LEFT') ;
