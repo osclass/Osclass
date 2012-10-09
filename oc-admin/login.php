@@ -88,6 +88,8 @@
                                         Session::newInstance()->_set('adminEmail', $admin['s_email']) ;
                                         Session::newInstance()->_set('adminLocale', Params::getParam('locale')) ;
 
+                                        osc_run_hook('login_admin');
+
                                         $this->redirectTo( $url_redirect );
                 break ;
                 case('recover'):        // form to recover the password (in this case we have the form in /gui/)
@@ -167,7 +169,7 @@
             $login_admin_title = osc_apply_filter('login_admin_title', 'Osclass');
             $login_admin_url   = osc_apply_filter('login_admin_url', 'http://osclass.org/');
             $login_admin_image = osc_apply_filter('login_admin_image', osc_admin_base_url() . 'images/osclass-logo.gif');
-            
+
             View::newInstance()->_exportVariableToView('login_admin_title', $login_admin_title);
             View::newInstance()->_exportVariableToView('login_admin_url', $login_admin_url);
             View::newInstance()->_exportVariableToView('login_admin_image', $login_admin_image);
@@ -175,7 +177,7 @@
             osc_run_hook("before_admin_html");
             require osc_admin_base_path() . $file;
             osc_run_hook("after_admin_html");
-            
+
         }
     }
 
