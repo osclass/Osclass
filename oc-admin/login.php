@@ -124,7 +124,7 @@
                                         }
 
                                         osc_add_flash_ok_message( _m('A new password has been sent to your e-mail'), 'admin') ;
-                                        $this->redirectTo( osc_admin_base_url() ) ;
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=login') ;
                 break ;
                 case('forgot'):         // form to recover the password (in this case we have the form in /gui/)
                                         $admin = Admin::newInstance()->findByIdSecret(Params::getParam('adminId'), Params::getParam('code'));
@@ -149,7 +149,7 @@
                                                 ), array('pk_i_id' => $admin['pk_i_id'])
                                             );
                                             osc_add_flash_ok_message( _m('The password has been changed'), 'admin');
-                                            $this->redirectTo(osc_admin_base_url());
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=login');
                                         } else {
                                             osc_add_flash_error_message( _m("Error, the passwords don't match"), 'admin') ;
                                             $this->redirectTo(osc_forgot_admin_password_confirm_url(Params::getParam('adminId'), Params::getParam('code')));
