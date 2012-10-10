@@ -79,7 +79,7 @@
 
                     if( Session::newInstance()->_getForm('countryId') != "" ) {
                         $countryId  = Session::newInstance()->_getForm('countryId') ;
-                        $regions    = Region::newInstance()->findByCountry($countryId) ; 
+                        $regions    = Region::newInstance()->findByCountry($countryId) ;
                         $this->_exportVariableToView('regions', $regions) ;
                         if(Session::newInstance()->_getForm('regionId') != "" ) {
                             $regionId  = Session::newInstance()->_getForm('regionId') ;
@@ -99,7 +99,7 @@
                         osc_add_flash_warning_message( _m('Only registered users are allowed to post listings') ) ;
                         $this->redirectTo( osc_base_url(true) ) ;
                     }
-                    
+
                     $mItems = new ItemActions(false);
                     // prepare data for ADD ITEM
                     $mItems->prepareData(true);
@@ -223,7 +223,7 @@
                         $success = $mItems->edit();
 
                         osc_run_hook('edited_item', Item::newInstance()->findByPrimaryKey($id));
-                        
+
                         if($success==1) {
                             osc_add_flash_ok_message( _m("Great! We've just updated your listing") ) ;
                             View::newInstance()->_exportVariableToView("item", Item::newInstance()->findByPrimaryKey($id));
@@ -497,7 +497,7 @@
                         osc_add_flash_warning_message( _m('The listing has been suspended') );
                         $this->redirectTo( osc_base_url(true) );
                     }
-                    
+
                     if(!osc_is_admin_user_logged_in()) {
                         require_once(osc_lib_path() . 'osclass/user-agents.php');
                         foreach($user_agents as $ua) {
@@ -518,7 +518,7 @@
                         $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
                         $this->_exportVariableToView('user', $user);
                     }
-                    
+
                     $this->_exportVariableToView('item', $item);
 
                     osc_run_hook('show_item', $item) ;

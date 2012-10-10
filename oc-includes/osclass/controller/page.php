@@ -57,7 +57,7 @@
                 $page['locale'][$k]['s_title'] = str_ireplace($kwords, $rwords, osc_apply_filter('email_description', $v['s_title']));
                 $page['locale'][$k]['s_text'] = str_ireplace($kwords, $rwords, osc_apply_filter('email_description', $v['s_text']));
             }
-            
+
             // export $page content to View
             $this->_exportVariableToView('page', $page) ;
             if( Params::getParam('lang') != '' ) {

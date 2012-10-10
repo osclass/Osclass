@@ -62,7 +62,7 @@
                                         $this->_exportVariableToView('cities', $aCities) ;
                                         $this->_exportVariableToView('user', $user) ;
                                         $this->_exportVariableToView('locales', OSCLocale::newInstance()->listAllEnabled() ) ;
-                                        
+
                                         $this->doView('user-profile.php') ;
                 break ;
                 case('profile_post'):   //profile post...
@@ -81,15 +81,15 @@
                                         foreach($aAlerts as $k => $a) {
                                             $json               = base64_decode($a['s_search']) ;
                                             $array_conditions   = (array)json_decode($json);
-                                            
+
 //                                            $search = Search::newInstance();
                                             $search = new Search();
                                             $search->setJsonAlert($array_conditions);
                                             $search->limit(0, 3) ;
-                                            
+
                                             $aAlerts[$k]['items'] = $search->doSearch() ;
                                         }
-                                            
+
                                         $this->_exportVariableToView('alerts', $aAlerts) ;
                                         View::newInstance()->_reset('alerts') ;
                                         $this->_exportVariableToView('user', $user) ;
@@ -197,7 +197,7 @@
                     $email = Params::getParam('email');
                     $secret = Params::getParam('secret');
                     $id     = Params::getParam('id');
-                    
+
                     $alert = Alerts::newInstance()->findByPrimaryKey($id);
                     $result = 0;
                     if(!empty($alert)) {
@@ -247,7 +247,7 @@
                         View::newInstance()->_exportVariableToView('user', $user);
                         if(!empty($user) && osc_logged_user_id()==$id && $secret==$user['s_secret']) {
                             User::newInstance()->deleteUser(osc_logged_user_id());
-                            
+
                             Session::newInstance()->_drop('userId') ;
                             Session::newInstance()->_drop('userName') ;
                             Session::newInstance()->_drop('userEmail') ;
