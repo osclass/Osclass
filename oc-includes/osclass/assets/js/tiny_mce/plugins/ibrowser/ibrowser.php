@@ -1,6 +1,6 @@
 <?php
 	// ================================================
-	// PHP image browser - iBrowser 
+	// PHP image browser - iBrowser
 	// ================================================
 	// iBrowser dialog
 	// ================================================
@@ -12,7 +12,7 @@
 	// ================================================
 	// Revision: 1.3.1                 Date: 10/09/2009
 	// ================================================
-	
+
 	//-------------------------------------------------------------------------
 	// unset $cfg['ilibs_incl'] - dynamic image library
 	if (isset($cfg['ilibs_inc'])) {
@@ -23,18 +23,18 @@
 	include dirname(__FILE__) . '/config/config.inc.php';
 	include dirname(__FILE__) . '/langs/lang.class.php';
 	//-------------------------------------------------------------------------
-	// language settings	
+	// language settings
 	$l = (isset($_REQUEST['lang']) ? new PLUG_Lang($_REQUEST['lang']) : new PLUG_Lang($cfg['lang']));
-	$l->setBlock('ibrowser');	
+	$l->setBlock('ibrowser');
 	//-------------------------------------------------------------------------
-	// if set, include file specified in $cfg['ilibs_incl']; hardcoded libraries will be ignored!	
+	// if set, include file specified in $cfg['ilibs_incl']; hardcoded libraries will be ignored!
 	if (!empty($cfg['ilibs_inc'])) {
 		include $cfg['ilibs_inc'];
-	}	
-	//-------------------------------------------------------------------------		
-	// set current image library	
+	}
+	//-------------------------------------------------------------------------
+	// set current image library
 	$clib = (isset($_REQUEST['clib']) ? $_REQUEST['clib'] : '');
-	//-------------------------------------------------------------------------	
+	//-------------------------------------------------------------------------
 	$value_found = false;
 	// callback function for preventing listing of non-library directory
 	function is_array_value($value, $key, $tlib) {
@@ -45,12 +45,12 @@
 		if ($value == $tlib) {
 			$value_found = true;
 		}
-	}	
-	//-------------------------------------------------------------------------	
-	array_walk($cfg['ilibs'], 'is_array_value', $clib);	
+	}
+	//-------------------------------------------------------------------------
+	array_walk($cfg['ilibs'], 'is_array_value', $clib);
 	if (!$value_found || empty($clib)) {
 		$clib = $cfg['ilibs'][0]['value'];
-	}		
+	}
 	//-------------------------------------------------------------------------
 	// create library dropdown
 	$lib_options = liboptions($cfg['ilibs'], '', $clib,'');
@@ -78,61 +78,61 @@
 	function iBrowser() {
 		// browser check
 		this.isMSIE  = (navigator.appName == 'Microsoft Internet Explorer');
-		this.isGecko = navigator.userAgent.indexOf('Gecko') != -1;		
+		this.isGecko = navigator.userAgent.indexOf('Gecko') != -1;
 	};
 	var iBrowser = new iBrowser();
 
 // ============================================================
 // = iBrowser init V 1.0, date: 12/03/2004                    =
 // ============================================================
-	function init() {			
-		var formObj = document.forms[0];		
-		btnInit();	 // init menu buttons		
-		document.getElementById('mainDivHeader').innerHTML = setTitle('imDiv'); 		
-		//-------------------------------------------------------------------------			
+	function init() {
+		var formObj = document.forms[0];
+		btnInit();	 // init menu buttons
+		document.getElementById('mainDivHeader').innerHTML = setTitle('imDiv');
+		//-------------------------------------------------------------------------
 		// hide library selection if there is only one library available!
 		if (formObj.ilibs.options.length > 1) {
 			changeClass(0,'ilibsDiv','showit');
 		}
 		//-------------------------------------------------------------------------
-		// window arguments			
-		var args = window.dialogArguments;		
+		// window arguments
+		var args = window.dialogArguments;
 		if (args) {										// if dialog argument are available
-			if (args.src) { 							// source is image and maybe also link				
-				initImageArgs(); 						// init and set image attributes					
+			if (args.src) { 							// source is image and maybe also link
+				initImageArgs(); 						// init and set image attributes
 			} else if (args.a) { 						// source is popup image only
-				setImagePopup(args.popSrc);				// update popup preview				
+				setImagePopup(args.popSrc);				// update popup preview
 				formObj.popSrc.value = args.popSrc;		// popup image url
 				formObj.popTitle.value = args.popTitle;	// link title
 				for (var i = 0; i < formObj.popClassName.options.length; i++) {	// CLASS value
 					if (formObj.popClassName.options[i].value == args.popClassName) {
-						formObj.popClassName.options.selectedIndex = i;				
+						formObj.popClassName.options.selectedIndex = i;
 					}
 				}
 				if (args.rsrc) { 						// random image with popup link
 					setRandom(0);
-				}		
+				}
 			} else if (args.rsrc) { 					// random image
 				setRandom(0);
 			}
 		}
-		
+
 		// adjust size of upload field for gecko
 		if (iBrowser.isGecko) {
 			var fldFile = document.getElementById('nfile[]');
 			fldFile.setAttribute('size', 45);
 		}
-				 
+
 		//-------------------------------------------------------------------------
-		preloadImages('images/firefox.gif','images/explorer.gif','images/img_in.gif','images/img_at.gif','images/img_po.gif','images/help.gif','images/help_off.gif','images/about.gif','images/about_off.gif','images/im.gif','images/dir_off.gif','images/dir.gif','images/prev_off.gif','images/prev.gif','images/symbols_off.gif','images/symbols.gif','images/alert_off.gif','images/alert.gif','images/dirview_off.gif','images/dirview.gif'); // preload images				
+		preloadImages('images/firefox.gif','images/explorer.gif','images/img_in.gif','images/img_at.gif','images/img_po.gif','images/help.gif','images/help_off.gif','images/about.gif','images/about_off.gif','images/im.gif','images/dir_off.gif','images/dir.gif','images/prev_off.gif','images/prev.gif','images/symbols_off.gif','images/symbols.gif','images/alert_off.gif','images/alert.gif','images/dirview_off.gif','images/dirview.gif'); // preload images
 		btnStage();
-		resizeDialogToContent();		
-		window.focus();		
+		resizeDialogToContent();
+		window.focus();
 	}
 // ============================================================
 // = image buttons init V 1.0, date: 05/27/2005               =
 // ============================================================
-	function btnInit() {		
+	function btnInit() {
 		var x = document.getElementById('menuBarDiv').getElementsByTagName('li');
 		for (var i = 0; i < x.length; i++) {
 			if (x[i].className   == 'btnUp') {
@@ -141,16 +141,16 @@
 				x[i].onmousedown = btn_down;
 				x[i].onclick     = btn_click;
 			}
-		}		
+		}
 	}
 // ============================================================
 // = menu buttons V 1.0, date: 06/03/2005                     =
-// ============================================================	
+// ============================================================
 	function btn_over() {	// menu button hover
 		if (this.className != 'btnDown') {
 			this.className  = 'btnOver';
 		}
-	}	
+	}
 	function btn_out() {	// menu button out
 		if (this.className != 'btnDown') {
 			this.className  = 'btnUp';
@@ -161,21 +161,21 @@
 			this.className  = 'btnDown';
 		}
 	}
-	function btn_click() {	// menu button click		
+	function btn_click() {	// menu button click
 		var formObj = document.forms[0];
 		var args = btn_click.arguments;
-		if(document.getElementById(args[0]) != null) { 				
-			this.id = document.getElementById(args[0]).id;				
+		if(document.getElementById(args[0]) != null) {
+			this.id = document.getElementById(args[0]).id;
 		}
 		var x = document.getElementById('menuBarDiv').getElementsByTagName('li');
 		for (var i = 0; i < x.length; i++) {
-			if (x[i].className == 'btnDown') {				
-				if (x[i].id != this.id) {					
+			if (x[i].className == 'btnDown') {
+				if (x[i].id != this.id) {
 					x[i].className = 'btnUp';
 				}
 			}
-		}	
-				
+		}
+
 		// check whether image has been selected or not
 		if (this.id == 'mbtn_at') { // properties functions
 			if(!btnStage()) {
@@ -185,22 +185,22 @@
 				return;
 			}
 		}
-		
+
 		// reset all classes to "hideit"
-		changeClass(0,'imDiv','hideit','inDiv','hideit','atDiv','hideit','hideit','raDiv','hideit');		
-		// get element, set title			
-		elm = this.id.substring(this.id.length-2, this.id.length);			
-		elm = elm + 'Div';			
+		changeClass(0,'imDiv','hideit','inDiv','hideit','atDiv','hideit','hideit','raDiv','hideit');
+		// get element, set title
+		elm = this.id.substring(this.id.length-2, this.id.length);
+		elm = elm + 'Div';
 		document.getElementById('mainDivHeader').innerHTML = setTitle(elm);
-			
-		if (this.id == 'mbtn_po') {			
-			var iProps = window.dialogArguments;			
-			if (iProps && iProps.a) { // show remove link only if link			 
+
+		if (this.id == 'mbtn_po') {
+			var iProps = window.dialogArguments;
+			if (iProps && iProps.a) { // show remove link only if link
 				changeClass(1,'fileDivWrap','hideit','fileDiv','hideit','img_ren','hideit','img_del','hideit','inDiv','showit','poDiv','showit','poDelDiv','showit','raDiv','hideit');
 			} else {
 				changeClass(1,'fileDivWrap','hideit','fileDiv','hideit','img_ren','hideit','img_del','hideit','inDiv','showit','poDiv','showit','poDelDiv','hideit','raDiv','hideit');
 			}
-		} else {						
+		} else {
 			<?php if (($cfg['create'] && isset($cfg['ilibs_inc'])) || $cfg['upload'] || $cfg['rename'] || $cfg['delete']) { ?>
 				changeClass(1,'poDiv','hideit','fileDivWrap','showit','img_ren','showit','img_del','showit',elm,'showit','raDiv','showit');
 			<?php } else { ?>
@@ -216,7 +216,7 @@
 		switch(elm) {
 			case 'imDiv':
 				retstr = '<?php echo $l->m('im_004'); ?>';
-				break;		
+				break;
 			case 'inDiv':
 				retstr = '<?php echo $l->m('im_008'); ?>';
 				break;
@@ -227,103 +227,103 @@
 				retstr = '<?php echo $l->m('im_014'); ?>';
 				break;
 			default:
-				retstr = '<?php echo $l->m('im_016'); ?>'; 		
+				retstr = '<?php echo $l->m('im_016'); ?>';
 		}
-		return retstr;	
+		return retstr;
 	}
 // ============================================================
 // = get image path and update ilist V 1.0, date: 04/25/2005  =
 // ============================================================
 	function initImageArgs() {
-		var formObj = document.forms[0];		
+		var formObj = document.forms[0];
 		var args = window.dialogArguments;
-		
+
 		// in case of full url, remove 'http://
 		var pos = args.src.indexOf('://');
-		if (pos != -1) {			
-   			pos = args.src.indexOf('/', pos + 3 ); // + length of '://'   			
-			args.src = args.src.substring(pos);			
-		}	
-		
+		if (pos != -1) {
+   			pos = args.src.indexOf('/', pos + 3 ); // + length of '://'
+			args.src = args.src.substring(pos);
+		}
+
 		// set current image file, and library
 		var pos   = args.src.lastIndexOf('/');
-		var cfile = args.src.slice(pos+1,args.src.length);		
-		var clib  = absPath(args.src.slice(0,pos+1)); // relative path to library		
+		var cfile = args.src.slice(pos+1,args.src.length);
+		var clib  = absPath(args.src.slice(0,pos+1)); // relative path to library
 		// set current directory/library & update image list
 		for (var i = 0; i < formObj.ilibs.options.length; i++) {
 			if (formObj.ilibs.options[i].value == clib) {
-				formObj.ilibs.options.selectedIndex = i;	
-				formObj.param.value = 'update' + '|' + cfile;			
-				formObj.submit();						
+				formObj.ilibs.options.selectedIndex = i;
+				formObj.param.value = 'update' + '|' + cfile;
+				formObj.submit();
 			}
-		}		
+		}
 	}
 // ============================================================
 // = set image properties V 1.0, date: 04/25/2005             =
-// ============================================================		
+// ============================================================
 	function setImageArgs() {
-		var formObj = document.forms[0];		
-		var args = window.dialogArguments;					
-		
+		var formObj = document.forms[0];
+		var args = window.dialogArguments;
+
 		if (args.tsrc) { 											// dynamic thumbnail
 			formObj.pr_src.value = args.tsrc;
-			changeClass(0,'alertImg','showit');						// show warning		
+			changeClass(0,'alertImg','showit');						// show warning
 		}
 		if (args.rset) {
 			formObj.pr_src.value = args.rsrc;
 		}
-		
-		formObj.pr_width.value 	= args.width  ? args.width  : '';	// WIDTH value		
+
+		formObj.pr_width.value 	= args.width  ? args.width  : '';	// WIDTH value
 		formObj.pr_height.value	= args.height ? args.height : '';	// HEIGHT value
-		formObj.pr_alt.value 	= args.alt;							// ALT text		
+		formObj.pr_alt.value 	= args.alt;							// ALT text
 		formObj.pr_title.value 	= args.title;						// DESCR text
-		formObj.pr_border.value = args.border ? args.border : '';	// BORDER value	
-		formObj.pr_vspace.value = args.vspace ? args.vspace : '';	// VSPACE value				
+		formObj.pr_border.value = args.border ? args.border : '';	// BORDER value
+		formObj.pr_vspace.value = args.vspace ? args.vspace : '';	// VSPACE value
 		formObj.pr_hspace.value = args.hspace ? args.hspace : '';	// HSPACE value
-		
+
 		if (args.caption == 1) { // if image caption
 			formObj.pr_chkCaption.checked = true;
 			for (var i = 0; i < formObj.pr_captionClass.options.length; i++) {	// CLASS value
 				if (formObj.pr_captionClass.options[i].value == args.captionClass) {
-					formObj.pr_captionClass.options.selectedIndex = i;				
+					formObj.pr_captionClass.options.selectedIndex = i;
 				}
 			}
 		}
-		
-		for (var i = 0; i < formObj.pr_align.options.length; i++) {	// ALIGN value 
+
+		for (var i = 0; i < formObj.pr_align.options.length; i++) {	// ALIGN value
 			if (formObj.pr_align.options[i].value == args.align) {
-				formObj.pr_align.options.selectedIndex = i;				
+				formObj.pr_align.options.selectedIndex = i;
 			}
 		}
-		
+
 		for (var i = 0; i < formObj.pr_class.options.length; i++) {	// CLASS value
 			if (formObj.pr_class.options[i].value == args.className) {
-				formObj.pr_class.options.selectedIndex = i;				
+				formObj.pr_class.options.selectedIndex = i;
 			}
 		}
 		// set popup preview in case it's a popup
-		if (args.popSrc) {					
-			setImagePopup(args.popSrc);				// update popup preview			
+		if (args.popSrc) {
+			setImagePopup(args.popSrc);				// update popup preview
 			formObj.popTitle.value = args.popTitle;	// link title
 			for (var i = 0; i < formObj.popClassName.options.length; i++) {	// CLASS value
 				if (formObj.popClassName.options[i].value == args.popClassName) {
-					formObj.popClassName.options.selectedIndex = i;				
+					formObj.popClassName.options.selectedIndex = i;
 				}
-			}		
+			}
 		}
-		formObj.param.value = ''; // resetting param value		
+		formObj.param.value = ''; // resetting param value
 	}
 // ============================================================
 // = set popup image src preview V 1.0, date: 05/13/2005      =
-// ============================================================	
-	function setImagePopup(popSrc) {		
+// ============================================================
+	function setImagePopup(popSrc) {
 		var formObj = document.forms[0];
-		var src = '<?php echo $cfg['scripts']; ?>' + 'phpThumb/phpThumb.php'; // command			
-		src     = src + '?src=' + popSrc; 					// popup source image				
+		var src = '<?php echo $cfg['scripts']; ?>' + 'phpThumb/phpThumb.php'; // command
+		src     = src + '?src=' + popSrc; 					// popup source image
 		src     = src + '&w=80'; 							// image width
 		src     = src + '&h=60'; 							// image height
-		src     = src + '&zc=1'; 							// zoom crop			
-		document.getElementById('poPrevFrame').src = src; 	// update preview	
+		src     = src + '&zc=1'; 							// zoom crop
+		document.getElementById('poPrevFrame').src = src; 	// update preview
 		formObj.popSrc.value = popSrc;
 	}
 // ============================================================
@@ -337,12 +337,12 @@
 		for (var i = 0; i < x.length; i++) {
 			if (x[i].className == 'btnDown') {
 				if (x[i].id == 'mbtn_po') { // popup mode
-					if(formObj.chkP.checked) {								
+					if(formObj.chkP.checked) {
 						args.action    = 2; // delete popup link
 					} else { // create / edit link to popup image
-						args.action    = 1; 
-						args.popUrl    = '<?php echo $cfg['pop_url']; ?>'; // link to popup.php						
-						args.popSrc    = (formObj.popSrc.value)   ? (formObj.popSrc.value)   : '';						
+						args.action    = 1;
+						args.popUrl    = '<?php echo $cfg['pop_url']; ?>'; // link to popup.php
+						args.popSrc    = (formObj.popSrc.value)   ? (formObj.popSrc.value)   : '';
 						args.popTitle  = (formObj.popTitle.value) ? (formObj.popTitle.value) : '';
 						args.popTxt    = '<?php echo $l->m('in_036'); ?>';
 						if (formObj.popClassName.selectedIndex > 0) { // if class style is selected
@@ -351,32 +351,32 @@
 						// caption parameters
 						args.caption      = formObj.pr_chkCaption.checked ? formObj.pr_chkCaption.value : '';
 						args.captionClass = (formObj.pr_captionClass.options[formObj.pr_captionClass.selectedIndex].value) ? (formObj.pr_captionClass.options[formObj.pr_captionClass.selectedIndex].value) : '';
-					}							
+					}
 				}
 			}
 		}
 		//-------------------------------------------------------------------------
-		// check if valid image is selected		
-		if (!args.action) { // if not popup	mode, check whether there is a valid image selected		
-			if (formObj.pr_src.value == '') { // no valid picture has been selected				
+		// check if valid image is selected
+		if (!args.action) { // if not popup	mode, check whether there is a valid image selected
+			if (formObj.pr_src.value == '') { // no valid picture has been selected
 				var msg = escapeHTML('<?php echo $l->m('er_001') . ': ' . $l->m('er_002'); ?>');
 				alert(msg);
 				return;
 			}
-			
-			args.src = (formObj.pr_src.value) ? (formObj.pr_src.value) : '';									
+
+			args.src = (formObj.pr_src.value) ? (formObj.pr_src.value) : '';
 			if ('<?php echo $cfg['furl']; ?>' == true) { // create full url incl. e.g. http://localhost....
-				args.src = '<?php echo $cfg['base_url']; ?>' + args.src;				
+				args.src = '<?php echo $cfg['base_url']; ?>' + args.src;
 			}
-						
+
 			args.width  = (formObj.pr_width.value)  ? (formObj.pr_width.value)  : '';
-			args.height = (formObj.pr_height.value) ? (formObj.pr_height.value) : '';				
+			args.height = (formObj.pr_height.value) ? (formObj.pr_height.value) : '';
 			args.align 	= (formObj.pr_align.value)  ? (formObj.pr_align.value)  : '';
-			args.border = (formObj.pr_border.value) ? (formObj.pr_border.value) : '';				
+			args.border = (formObj.pr_border.value) ? (formObj.pr_border.value) : '';
 			args.alt 	= (formObj.pr_alt.value)    ? (formObj.pr_alt.value)    : '';
 			args.title 	= (formObj.pr_title.value)  ? (formObj.pr_title.value)  : '';
 			args.hspace = (formObj.pr_hspace.value) ? (formObj.pr_hspace.value) : '';
-			args.vspace = (formObj.pr_vspace.value) ? (formObj.pr_vspace.value) : ''; 
+			args.vspace = (formObj.pr_vspace.value) ? (formObj.pr_vspace.value) : '';
 			if (formObj.pr_class.selectedIndex > 0) { // if class style is selected
 				args.className = (formObj.pr_class.options[formObj.pr_class.selectedIndex].value) ? (formObj.pr_class.options[formObj.pr_class.selectedIndex].value) : '';
 			}
@@ -384,178 +384,178 @@
 			args.caption = formObj.pr_chkCaption.checked ? formObj.pr_chkCaption.value : '';
 			args.captionClass = (formObj.pr_captionClass.options[formObj.pr_captionClass.selectedIndex].value) ? (formObj.pr_captionClass.options[formObj.pr_captionClass.selectedIndex].value) : '';
 		} else { // check whether there is valid popup image
-			if (formObj.popSrc.value == '') { // no valid picture has been selected				
+			if (formObj.popSrc.value == '') { // no valid picture has been selected
 				var msg = escapeHTML('<?php echo $l->m('er_001') . ': ' . $l->m('er_002'); ?>');
 				alert(msg);
 				return;
 			}
-		}		
-							
-		//-------------------------------------------------------------------------	
-		// save image to wysiwyg editor and close window		
+		}
+
+		//-------------------------------------------------------------------------
+		// save image to wysiwyg editor and close window
 		window.returnValue = args;
-		window.close();				
-		
-		if (iBrowser.isGecko) { // Gecko				
-			<?php					
-				if (!empty($_REQUEST['callback'])) {          				
+		window.close();
+
+		if (iBrowser.isGecko) { // Gecko
+			<?php
+				if (!empty($_REQUEST['callback'])) {
 					echo "opener." . @$_REQUEST['callback'] . "('" . @$_REQUEST['editor'] . "',this);\n";
 				};
-			?>	
-		}	
+			?>
+		}
 	}
 // ============================================================
 // = image change - set attributes V 1.0, date: 12/03/2004    =
 // ============================================================
-	function imageChange() {		
+	function imageChange() {
 		var formObj = document.forms[0];
-		var args 	= imageChange.arguments;  												// image change arguments - set by rfiles.php						
-		var clib    = absPath(formObj.ilibs.options[formObj.ilibs.selectedIndex].value);	// current library - absolute path		
+		var args 	= imageChange.arguments;  												// image change arguments - set by rfiles.php
+		var clib    = absPath(formObj.ilibs.options[formObj.ilibs.selectedIndex].value);	// current library - absolute path
 		var cfile   = document.getElementById('cimg').attributes['cfile'].value;			// get current image
-		var cwidth  = document.getElementById('cimg').attributes['cwidth'].value;			// get current width	
-		var cheight = document.getElementById('cimg').attributes['cheight'].value;			// get current height		
+		var cwidth  = document.getElementById('cimg').attributes['cwidth'].value;			// get current width
+		var cheight = document.getElementById('cimg').attributes['cheight'].value;			// get current height
 		var csize   = document.getElementById('cimg').attributes['csize'].value.split('|');	// get current size (array)
-		var ctype   = document.getElementById('cimg').attributes['ctype'].value.split('|');	// get current type (array)	
-			
+		var ctype   = document.getElementById('cimg').attributes['ctype'].value.split('|');	// get current type (array)
+
 		//-------------------------------------------------------------------------
 		// set default image attributes
-		formObj.pr_src.value    = clib + cfile;		
+		formObj.pr_src.value    = clib + cfile;
 		formObj.pr_width.value  = cwidth;
-		formObj.pr_height.value = cheight;		
-		formObj.pr_size.value   = csize[0];		
+		formObj.pr_height.value = cheight;
+		formObj.pr_size.value   = csize[0];
 		formObj.pr_align.options.selectedIndex = 0;
 		formObj.pr_class.options.selectedIndex = 0;
-		document.getElementById('pr_sizeUnit').innerHTML = csize[1]; // e.g. kb		
+		document.getElementById('pr_sizeUnit').innerHTML = csize[1]; // e.g. kb
 		formObj.pr_alt.value 	= cfile.substr(0, cfile.length-4);
-		formObj.pr_title.value 	= cfile.substr(0, cfile.length-4);		
+		formObj.pr_title.value 	= cfile.substr(0, cfile.length-4);
 		changeClass(0,'alertImg','hideit');
 		//-------------------------------------------------------------------------
-		// update preview window	
-		var sizes = resizePreview(cwidth, cheight, 150, 150);		
+		// update preview window
+		var sizes = resizePreview(cwidth, cheight, 150, 150);
 		var src = '<?php echo $cfg['scripts']; ?>' + 'phpThumb/phpThumb.php'; // command
 		src = src + '?src=' + clib + cfile; // source file
-		src = src + '&w=' + sizes['w']; // width		
+		src = src + '&w=' + sizes['w']; // width
 		document.getElementById('inPrevFrame').src = src; // update regular preview
-		
+
 		//-------------------------------------------------------------------------
 		// reset rename and delete info
 		if ('<?php echo $cfg['rename']; ?>' == true) {
-			formObj.in_srcnew.value  = cfile.substr(0, cfile.length-4); // default rename value			
+			formObj.in_srcnew.value  = cfile.substr(0, cfile.length-4); // default rename value
 		}
 		if ('<?php echo $cfg['delete']; ?>' == true) {
 			formObj.in_delinfo.value = cfile; 							// default delete value
 		}
-		
+
 		//-------------------------------------------------------------------------
-		// change image attributes in case it's an existing image		
-		if (args[0] == 'update') { 	// if argument from rfiles.php received				
+		// change image attributes in case it's an existing image
+		if (args[0] == 'update') { 	// if argument from rfiles.php received
 			setImageArgs(); 		// update image attributes
 		} else if (args[0] == 'delete') { // image was deleted
-			document.getElementById('cimg').attributes['cfile'].value = '';			
+			document.getElementById('cimg').attributes['cfile'].value = '';
 			document.getElementById('in_srcnew').value  = '';
-			document.getElementById('in_delinfo').value = '';			
+			document.getElementById('in_delinfo').value = '';
 			document.getElementById('inPrevFrame').src = 'images/noImg.gif'; // update preview
 		}
-			
+
 		//-------------------------------------------------------------------------
 		// update popup preview and set popup default attributes
 		if (document.getElementById('mbtn_po').className == 'btnDown') {
-			var popSrc = clib + cfile; 
-			setImagePopup(popSrc);			
-			formObj.popTitle.value = cfile.substr(0, cfile.length-4);			
+			var popSrc = clib + cfile;
+			setImagePopup(popSrc);
+			formObj.popTitle.value = cfile.substr(0, cfile.length-4);
 		}
 		//-------------------------------------------------------------------------
 		// random image
 		formObj.chkRandom.checked = false; // uncheck random on image change
 		changeClass(1,'raParamDiv','hideit');
 		//-------------------------------------------------------------------------
-		updateStyle();		
-		btnStage();	
+		updateStyle();
+		btnStage();
 	}
 // ============================================================
 // = update style frame V 1.0, date: 12/13/2004               =
-// ============================================================	
+// ============================================================
 	function updateStyle() {
-		var formObj = document.forms[0];			
-		document.getElementById('atPrevImg').align 	 	= formObj.pr_align.options[formObj.pr_align.selectedIndex].value;			
+		var formObj = document.forms[0];
+		document.getElementById('atPrevImg').align 	 	= formObj.pr_align.options[formObj.pr_align.selectedIndex].value;
 		document.getElementById('atPrevImg').vspace 	= formObj.pr_vspace.value;
 		document.getElementById('atPrevImg').hspace 	= formObj.pr_hspace.value;
 		document.getElementById('atPrevImg').border 	= formObj.pr_border.value;
 		document.getElementById('atPrevImg').alt 		= formObj.pr_alt.value;
 		document.getElementById('atPrevImg').title 	 	= formObj.pr_title.value;
-		document.getElementById('atPrevImg').className 	= formObj.pr_class.options[formObj.pr_class.selectedIndex].value;	
+		document.getElementById('atPrevImg').className 	= formObj.pr_class.options[formObj.pr_class.selectedIndex].value;
 	}
 // ============================================================
 // = enable/disable menu buttons, date: 03/21/2005            =
-// ============================================================ 
+// ============================================================
 	function btnStage() {
-		var formObj = document.forms[0];					
-		var cfile   = document.getElementById('cimg').attributes['cfile'].value; // current image	
-		if (cfile  == '') {			
-			formObj.img_at.src = 'images/img_at_off.gif';			
+		var formObj = document.forms[0];
+		var cfile   = document.getElementById('cimg').attributes['cfile'].value; // current image
+		if (cfile  == '') {
+			formObj.img_at.src = 'images/img_at_off.gif';
 			if (formObj.img_cr) {
-				formObj.img_cr.src = 'images/img_cr_off.gif';	
-			}		
+				formObj.img_cr.src = 'images/img_cr_off.gif';
+			}
 			return false;
 		}
 		formObj.img_at.src = 'images/img_at.gif';
 		if (formObj.img_cr) {
 			formObj.img_cr.src = 'images/img_cr.gif';
 		}
-		return true;		
+		return true;
 	}
 // ============================================================
 // = resize image to fit preview V 1.0, date: 12/19/2004      =
-// ============================================================	
-	function resizePreview(w,h,mw,mh) { // width, height, max width, max height				
-		var sizes = new Array();		
+// ============================================================
+	function resizePreview(w,h,mw,mh) { // width, height, max width, max height
+		var sizes = new Array();
 		if (w > mw || h > mh) { // thumbnailing required
-			f = w / h; // proportions of image: (f > 1) = landscape; (f < 1) = portrait; (f = 1) = square			
+			f = w / h; // proportions of image: (f > 1) = landscape; (f < 1) = portrait; (f = 1) = square
 			if (f > 1) { // landscape and square
 				w = mw;
-				h = Math.round(w / f);			
+				h = Math.round(w / f);
 			} else if (f <= 1) {	// portrait
-				h = mh;				
-				w = Math.round(h * f);			
-			}	
-		}				
+				h = mh;
+				w = Math.round(h * f);
+			}
+		}
 		sizes['w'] = w;
 		sizes['h'] = h;
 		return sizes;
 	}
 // ============================================================
 // = insert special characters V 1.0, date: 03/31/2005        =
-// ============================================================		
-	function selSymbol(elm) {				
+// ============================================================
+	function selSymbol(elm) {
 		var wArgs = {};
 		wArgs.iBrowser = iBrowser;
 		wArgs.elm = elm;	// passing calling element to function
-		if ((iBrowser.isMSIE)) { 
-			var rArgs = showModalDialog('<?php echo $cfg['scripts']; ?>symbols.php?lang=<?php echo $l->lang; ?>', wArgs, 
-			'dialogHeight:300px; dialogWidth:400px; scrollbars: no; menubar: no; toolbar: no; resizable: no; status: no;');													
-			if (rArgs) {				
+		if ((iBrowser.isMSIE)) {
+			var rArgs = showModalDialog('<?php echo $cfg['scripts']; ?>symbols.php?lang=<?php echo $l->lang; ?>', wArgs,
+			'dialogHeight:300px; dialogWidth:400px; scrollbars: no; menubar: no; toolbar: no; resizable: no; status: no;');
+			if (rArgs) {
 				setSymbol(null, null, rArgs);
-			}			
+			}
 		} else if (iBrowser.isGecko) {
-			var wnd = window.open('<?php echo $cfg['scripts']; ?>symbols.php?lang=<?php echo $l->lang; ?>&callback=setSymbol', 'symbols', 'status=no, modal=yes, width=400, height=300');				
+			var wnd = window.open('<?php echo $cfg['scripts']; ?>symbols.php?lang=<?php echo $l->lang; ?>&callback=setSymbol', 'symbols', 'status=no, modal=yes, width=400, height=300');
 			wnd.dialogArguments = wArgs;
-		}		
+		}
 	}
 	// set symbol callback
-	function setSymbol(editor, sender, rArgs) {		
-		if (!rArgs) { // Gecko		
-			var rArgs = sender.returnValue;				
+	function setSymbol(editor, sender, rArgs) {
+		if (!rArgs) { // Gecko
+			var rArgs = sender.returnValue;
 		}
 		if (rArgs.chr != null) {
 			var chr = rArgs.chr;
-			var elm = rArgs.elm;				
-			chr = String.fromCharCode(chr.substring(2, chr.length -1)); // e.g. returns &#220;		
+			var elm = rArgs.elm;
+			chr = String.fromCharCode(chr.substring(2, chr.length -1)); // e.g. returns &#220;
 			document.getElementById(elm).value = document.getElementById(elm).value + ' ' + chr;
-		}			
-  }		 
+		}
+  }
 // ============================================================
 // = preload Images, date: 11/13/2004                         =
-// ============================================================		
+// ============================================================
 	function preloadImages() {
   		var d=document;
 		if(d.images) {
@@ -572,135 +572,135 @@
 // ============================================================
 // = change image library V 1.0, date: 04/22/2005             =
 // ============================================================
-	function ilibsClick() {		
-		var formObj = document.forms[0];		
-		formObj.param.value = ''; // clear param values;		
-		formObj.submit();	
-		// reset values 
+	function ilibsClick() {
+		var formObj = document.forms[0];
+		formObj.param.value = ''; // clear param values;
+		formObj.submit();
+		// reset values
 		document.getElementById('inPrevFrame').src = 'images/noImg.gif'; // update preview
 		document.getElementById('cimg').attributes['cfile'].value = '';
-		btnStage();			
+		btnStage();
 	}
 // ============================================================
 // = upload image, date: 05/24/2005                           =
 // ============================================================
 	function uploadClick() {
-		var formObj = document.forms[0];		
+		var formObj = document.forms[0];
 		if (!checkUpload()) {
 			var msg = escapeHTML('<?php echo $l->m('er_001') . ': ' . $l->m('er_023'); ?>');
 			alert(msg);
 			return;
 		}
-		if (confirm('<?php echo $l->m('er_021'); ?>')) {			
-			formObj.param.value = 'upload'; // parameter: <action>			
+		if (confirm('<?php echo $l->m('er_021'); ?>')) {
+			formObj.param.value = 'upload'; // parameter: <action>
 			showloadmessage();
-			formObj.submit();						
+			formObj.submit();
 		}
 	}
 	// check whether image file is selected for uploading
-	function checkUpload() {		
-		var formObj = document.forms[0];	
+	function checkUpload() {
+		var formObj = document.forms[0];
 		var upload = false;
 		var x = document.getElementById('fiUplDiv').getElementsByTagName('input');
 		for (var i = 0; i < x.length; i++) {
 			if (x[i].type == 'file') {
-				if (x[i].value != '') { // check whether files has been selected for upload					
-					
-					for (z=0; document.getElementById('chkThumbSize['+ z +']'); z++) {						
+				if (x[i].value != '') { // check whether files has been selected for upload
+
+					for (z=0; document.getElementById('chkThumbSize['+ z +']'); z++) {
 						if(document.getElementById('chkThumbSize['+ z +']').checked) {
-							upload = true;							
-						}						
+							upload = true;
+						}
 					}
 				}
-			}			
+			}
 		}
-		return upload;	
+		return upload;
 	}
 // ============================================================
 // = delete image V 1.0, date: 04/22/2005                     =
 // ============================================================
 	function deleteClick() {
-		var formObj = document.forms[0];		
+		var formObj = document.forms[0];
 		var cfile = document.getElementById('cimg').attributes['cfile'].value;
-		if (cfile == '') { // check if image is selected	
+		if (cfile == '') { // check if image is selected
 			var msg = escapeHTML('<?php echo $l->m('er_001') . ': ' . $l->m('er_002'); ?>');
 			alert(msg);
 			return;
 		}
-				
-		if (confirm('<?php echo $l->m('er_008'); ?> ' + cfile + '!')) {				
-			formObj.param.value = 'delete' + '|' + cfile; // parameter: <action>|<file>				
-			formObj.submit();	
-		}	  	
-	} 
+
+		if (confirm('<?php echo $l->m('er_008'); ?> ' + cfile + '!')) {
+			formObj.param.value = 'delete' + '|' + cfile; // parameter: <action>|<file>
+			formObj.submit();
+		}
+	}
 // ============================================================
 // = rename image V 1.0, date: 04/22/2005                     =
 // ============================================================
 	function renameClick() {
 		var formObj = document.forms[0];
 		var clib =  formObj.ilibs.options[formObj.ilibs.selectedIndex].value; // current library
-		var cfile = document.getElementById('cimg').attributes['cfile'].value;		
-		var ctype = document.getElementById('cimg').attributes['ctype'].value.split('|');		
-				
+		var cfile = document.getElementById('cimg').attributes['cfile'].value;
+		var ctype = document.getElementById('cimg').attributes['ctype'].value.split('|');
+
 		if (cfile == '') { // check if image is selected
 			var msg = escapeHTML('<?php echo $l->m('er_001') . ': ' . $l->m('er_002'); ?>');
 			alert(msg);
 			return;
-		}		
-		
-		var ctype = '.' + imageType(ctype[0]);		
+		}
+
+		var ctype = '.' + imageType(ctype[0]);
 		if (formObj.in_srcnew.value == '' || formObj.in_srcnew.value + ctype == cfile) { // new name is either empty or hasn't changed
 			var msg = escapeHTML('<?php echo $l->m('er_011'); ?>');
 			alert(msg);
 			return;
 		}
-				
-		if (confirm('<?php echo $l->m('er_010'); ?>: ' + formObj.in_srcnew.value + ctype)) { // do rename					
-			var nfile = formObj.in_srcnew.value + ctype;				 
-			formObj.param.value = 'rename' + '|' + cfile + '|' + nfile; // parameter: <action>|<filename>|<newname>		
-			formObj.submit();				
-		}		  	
+
+		if (confirm('<?php echo $l->m('er_010'); ?>: ' + formObj.in_srcnew.value + ctype)) { // do rename
+			var nfile = formObj.in_srcnew.value + ctype;
+			formObj.param.value = 'rename' + '|' + cfile + '|' + nfile; // parameter: <action>|<filename>|<newname>
+			formObj.submit();
+		}
 	}
 // ============================================================
 // = switch list view V 1.0, date: 07/06/2005                 =
 // ============================================================
 	function switchList() {
-		var formObj = document.forms[0];			
-		if (formObj.flist.value == 1) { // check if image is selected	
+		var formObj = document.forms[0];
+		if (formObj.flist.value == 1) { // check if image is selected
 			formObj.flist.value = 0;
 		} else {
 			formObj.flist.value = 1;
-		}		
-		// refresh list view		
+		}
+		// refresh list view
 		var cfile = document.getElementById('cimg').attributes['cfile'].value;
 		if (cfile.length > 0) {
-			formObj.param.value = 'switch' + '|' + cfile;	
+			formObj.param.value = 'switch' + '|' + cfile;
 		}
-		formObj.submit();	
-	} 
+		formObj.submit();
+	}
 // ============================================================
 // = create directory V 1.0, date: 04/22/2005                 =
 // ============================================================
 	function createClick() {
 		var formObj = document.forms[0];
 		var clib    = formObj.ilibs.options[formObj.ilibs.selectedIndex].value; 		// current library
-		
+
 		if (clib == '') { // check if library is selected
 			var msg = escapeHTML('<?php echo $l->m('er_001') . ': ' . $l->m('er_002'); ?>');
 			alert(msg);
 			return;
-		}			
+		}
 		if (formObj.in_dirnew.value == '') { // check if user has entered a new directory name
 			var msg = escapeHTML('<?php echo $l->m('er_011'); ?>');
 			alert(msg);
 			return;
 		}
-				
-		if (confirm('<?php echo $l->m('in_026'); ?>: ' + clib + formObj.in_dirnew.value)) {					
-			var nfile = formObj.in_dirnew.value;						 
-			formObj.param.value = 'create' + '|' + nfile; // parameter: <action>|<newdir>		
-			formObj.submit();				
-		}				
+
+		if (confirm('<?php echo $l->m('in_026'); ?>: ' + clib + formObj.in_dirnew.value)) {
+			var nfile = formObj.in_dirnew.value;
+			formObj.param.value = 'create' + '|' + nfile; // parameter: <action>|<newdir>
+			formObj.submit();
+		}
 	}
 // ============================================================
 // = set random image, date: 07/17/2005                       =
@@ -709,16 +709,16 @@
 		var formObj = document.forms[0];
 		var action = setRandom.arguments;
 		if (action[0] == 0) { // set arguments on init
-			var args = window.dialogArguments;	
+			var args = window.dialogArguments;
 			var formObj = document.forms[0];
-			
+
 			for (var i = 0; i < formObj.ilibs.options.length; i++) { // random library
 				var pos = args.rlib.indexOf(formObj.ilibs.options[i].value);
 				if (pos != -1) {
-					formObj.ilibs.options.selectedIndex = i;	
+					formObj.ilibs.options.selectedIndex = i;
 				}
 			}
-			
+
 			ilibsClick();
 			formObj.chkRandom.checked = true;
 			formObj.randomParam.value = args.rset;
@@ -731,20 +731,20 @@
 		} else if (action[0] == 1) {
 			if (formObj.chkRandom.checked) {
 				document.getElementById('inPrevFrame').src = 'images/randomImg.gif'; // update preview
-				var clib= formObj.ilibs.options[formObj.ilibs.selectedIndex].value; 
-				var src = '<?php echo $cfg['scripts']; ?>' + 'random.php'; // command					
+				var clib= formObj.ilibs.options[formObj.ilibs.selectedIndex].value;
+				var src = '<?php echo $cfg['scripts']; ?>' + 'random.php'; // command
 				src     = src + unescape('?dir=<?php echo str_replace('\\','/', $cfg['root_dir']); ?>' + clib);
-				src     = src + formObj.randomParam.value;				
+				src     = src + formObj.randomParam.value;
 				formObj.pr_src.value    = src;
 				formObj.pr_alt.value    = '<?php echo $l->m('in_053'); ?>';
 				formObj.pr_title.value  = '<?php echo $l->m('in_053'); ?>';
 				formObj.pr_width.value  = '';
 				formObj.pr_height.value = '';
 				changeClass(1,'raParamDiv','showit');
-				document.getElementById('cimg').attributes['cfile'].value = src;				
+				document.getElementById('cimg').attributes['cfile'].value = src;
 				btnStage();
 				formObj.param.value = '';
-				formObj.submit();	
+				formObj.submit();
 			} else {
 				document.getElementById('inPrevFrame').src = 'images/noImg.gif'; // update preview
 				formObj.param.value = '';
@@ -752,7 +752,7 @@
 				changeClass('raParamDiv','hideit');
 				document.getElementById('cimg').attributes['cfile'].value = '';
 				btnStage();
-				formObj.submit();		
+				formObj.submit();
 			}
 		} else if (action[0] == 2) { // resetting parameter values to config value
 			formObj.randomParam.value = '<?php echo $cfg['random']; ?>';
@@ -761,31 +761,31 @@
 
 // ============================================================
 // = full size preview V 1.0, date: 12/18/2004                =
-// ============================================================	
+// ============================================================
 	function fullSizeView() {
-		var formObj = document.forms[0];		
+		var formObj = document.forms[0];
 		var clib    = formObj.ilibs.options[formObj.ilibs.selectedIndex].value; 	// current library
-		var cfile   = document.getElementById('cimg').attributes['cfile'].value; 	// current image			
+		var cfile   = document.getElementById('cimg').attributes['cfile'].value; 	// current image
 		var cwidth  = document.getElementById('cimg').attributes['cwidth'].value;	// current width
 		var cheight = document.getElementById('cimg').attributes['cheight'].value;	// current height
-		if (cfile != '') {	
-			var sizes;		
-			sizes = resizePreview(cwidth,cheight,512,512);			
-			if (sizes['w'] > 150 || sizes['h'] > 150) { // open external window if size &gt; 150 which is the size of the preview window			
+		if (cfile != '') {
+			var sizes;
+			sizes = resizePreview(cwidth,cheight,512,512);
+			if (sizes['w'] > 150 || sizes['h'] > 150) { // open external window if size &gt; 150 which is the size of the preview window
 			} else {
 				var msg = escapeHTML('<?php echo $l->m('er_001') . ': ' . $l->m('er_032'); ?>');
 				alert(msg);
 				return;
 			}
-			var src;						
-			src = '<?php echo $cfg['scripts']; ?>' + 'phpThumb/phpThumb.php'; // command							
+			var src;
+			src = '<?php echo $cfg['scripts']; ?>' + 'phpThumb/phpThumb.php'; // command
 			src = src + '?src=' + absPath(clib) + cfile; // source image
-			src = src + '&w='+sizes['w']; //image width						
-		
-			var windowName = 'fullView';							
+			src = src + '&w='+sizes['w']; //image width
+
+			var windowName = 'fullView';
 			var features =
 			'width='        + sizes['w'] +
-			',height='      + sizes['h'] +        		
+			',height='      + sizes['h'] +
 			',top='         + '10'  +
 			',left='        + '10'  +
 			',location='    + 'no'  +
@@ -793,98 +793,98 @@
 			',scrollbars='  + 'no'  +
 			',status='      + 'no'  +
 			',toolbar='     + 'no'  +
-			',resizable='   + 'no';			
+			',resizable='   + 'no';
 			// open full view popup window
-			window.open('<?php echo $cfg['pop_url']; ?>?url=' + escape(src) + '&clTxt=' + '<?php echo $l->m('in_036'); ?>', windowName, features);				
+			window.open('<?php echo $cfg['pop_url']; ?>?url=' + escape(src) + '&clTxt=' + '<?php echo $l->m('in_036'); ?>', windowName, features);
 		}
 	}
 // ============================================================
 // = change class, date: 12/01/2004                           =
 // ============================================================
-	function changeClass() { 		
-		var args = changeClass.arguments; 		
+	function changeClass() {
+		var args = changeClass.arguments;
 		if (args[0] == 0 || args[0] == 1) { // 0 = no resizeDialogToContent; 1 = resizeDialogToContent
 			var start = 1;
 		} else {
 			var start = 0;
 		}
-		
+
 		for(var i = start; i < args.length; i += 2) {
-			if(document.getElementById(args[i]) != null) {				
+			if(document.getElementById(args[i]) != null) {
 				document.getElementById(args[i]).className = args[i+1];
 			}
 		}
 		// resize dialog to content
-		if (args[0] == 1) {					
+		if (args[0] == 1) {
 			resizeDialogToContent();
-		}		
-	}	
+		}
+	}
 // ============================================================
 // = image dimension change, date: 05/08/2005                 =
-// ============================================================		
-	function changeDim(sel) {		
+// ============================================================
+	function changeDim(sel) {
 		var formObj = document.forms[0];
-		var cwidth  = document.getElementById('cimg').attributes['cwidth'].value;			// get current width	
-		var cheight = document.getElementById('cimg').attributes['cheight'].value;			// get current height	
-		
-		if (eval(formObj.pr_width.value) > cwidth || eval(formObj.pr_height.value) > cheight) { 		// check for enlarging			
+		var cwidth  = document.getElementById('cimg').attributes['cwidth'].value;			// get current width
+		var cheight = document.getElementById('cimg').attributes['cheight'].value;			// get current height
+
+		if (eval(formObj.pr_width.value) > cwidth || eval(formObj.pr_height.value) > cheight) { 		// check for enlarging
 			var msg = escapeHTML('<?php echo $l->m('er_001') . ': ' . $l->m('er_035'); ?>');
 			alert(msg);
 			resetDim();
 			return;
-		}		
-		
-		f = cheight/cwidth; // factor		
-		if (sel == 1) { 																	// height changed				
+		}
+
+		f = cheight/cwidth; // factor
+		if (sel == 1) { 																	// height changed
 			formObj.pr_width.value  = Math.round(formObj.pr_height.value / f);
-		} else if (sel == 0) { 																// width changed			
-			formObj.pr_height.value = Math.round(formObj.pr_width.value * f);			
-		}		
+		} else if (sel == 0) { 																// width changed
+			formObj.pr_height.value = Math.round(formObj.pr_width.value * f);
+		}
 	}
-	
+
 	function resetDim() { // reset dimensions
  		var formObj = document.forms[0];
-		var cwidth  = document.getElementById('cimg').attributes['cwidth'].value;			// get current width	
-		var cheight = document.getElementById('cimg').attributes['cheight'].value;			// get current height	
+		var cwidth  = document.getElementById('cimg').attributes['cwidth'].value;			// get current width
+		var cheight = document.getElementById('cimg').attributes['cheight'].value;			// get current height
 		formObj.pr_width.value  = cwidth;
 		formObj.pr_height.value = cheight;
-	}			
+	}
 // ============================================================
 // = show about, date: 06/04/2005                             =
-// ============================================================	
-	function about() {		
-		var formObj = document.forms[0];		
+// ============================================================
+	function about() {
+		var formObj = document.forms[0];
 		if (document.getElementById('imDiv').className == 'hideit') {
 			var x = document.getElementById('menuBarDiv').getElementsByTagName('li');
 			for (var i = 0; i < x.length; i++) {
-				if (x[i].className == 'btnDown') {				
+				if (x[i].className == 'btnDown') {
 					formObj.param.value = (x[i].id);
-					elm = x[i].id.substring(x[i].id.length-2, x[i].id.length);			
+					elm = x[i].id.substring(x[i].id.length-2, x[i].id.length);
 					if (elm == 'po') { // popup windows - uses inDiv
 						elm = 'in'
 					}
 					elm = elm + 'Div';
-					document.getElementById('mainDivHeader').innerHTML = setTitle('imDiv'); 		
-					changeClass(1,elm,'hideit','imDiv','showit');											
+					document.getElementById('mainDivHeader').innerHTML = setTitle('imDiv');
+					changeClass(1,elm,'hideit','imDiv','showit');
 				}
 			}
 		} else if (document.getElementById('imDiv').className == 'showit' && formObj.param.value != '') {
-			elm = formObj.param.value;			
-			btn_click(elm);			
+			elm = formObj.param.value;
+			btn_click(elm);
 		}
 	}
 // ============================================================
 // = image file type extension V 1.0, date: 11/27/2004        =
-// ============================================================	
-	function imageType(type) {		
-		var ext;		
+// ============================================================
+	function imageType(type) {
+		var ext;
 		switch(parseInt(type)) {
 			case 1 : ext = 'gif'; break;
    			case 2 : ext = 'jpg'; break;
 			case 3 : ext = 'png'; break;
 			case 6 : ext = 'bmp'; break;
-   			default: ext = 'unknown';		
-		}		
+   			default: ext = 'unknown';
+		}
 		return ext;
 	}
 // ============================================================
@@ -892,10 +892,10 @@
 // ============================================================
 	function showloadmessage() {
 		document.getElementById('dialogLoadMessage').style.display = 'block';
-	}	
+	}
 	function hideloadmessage() {
 		document.getElementById('dialogLoadMessage').style.display = 'none';
-	}	
+	}
 // ============================================================
 // = show image info layer, date: 04/22/2005                  =
 // ============================================================
@@ -903,39 +903,39 @@
 		var formObj = document.forms[0];
 		if (formObj.chkRandom.checked) { // random image
 			return false;
-		}		
-		if (document.getElementById('cimg').attributes['cfile'].value != '') {			
+		}
+		if (document.getElementById('cimg').attributes['cfile'].value != '') {
 			var obj  = document.getElementById('inPrevDiv');
-			var oDiv = document.getElementById('infoDiv');				
-			
+			var oDiv = document.getElementById('infoDiv');
+
 			if (oDiv.className == 'showit') {
 				changeClass(0,oDiv.id,'hideit');
 			} else {
 				document.getElementById('inf_cwidth').innerHTML  = document.getElementById('cimg').attributes['cwidth'].value  + ' px';
 				document.getElementById('inf_cheight').innerHTML = document.getElementById('cimg').attributes['cheight'].value + ' px';
-				ctype = document.getElementById('cimg').attributes['ctype'].value.split('|'); 
-				document.getElementById('inf_ctype').innerHTML   = ctype[1];		
+				ctype = document.getElementById('cimg').attributes['ctype'].value.split('|');
+				document.getElementById('inf_ctype').innerHTML   = ctype[1];
 				csize = document.getElementById('cimg').attributes['csize'].value.split('|');
-				document.getElementById('inf_csize').innerHTML   = csize[0] + ' ' + csize[1];				
-				document.getElementById('inf_ccdate').innerHTML  = document.getElementById('cimg').attributes['ccdate'].value; 
-				document.getElementById('inf_cmdate').innerHTML  = document.getElementById('cimg').attributes['cmdate'].value;		
+				document.getElementById('inf_csize').innerHTML   = csize[0] + ' ' + csize[1];
+				document.getElementById('inf_ccdate').innerHTML  = document.getElementById('cimg').attributes['ccdate'].value;
+				document.getElementById('inf_cmdate').innerHTML  = document.getElementById('cimg').attributes['cmdate'].value;
 				if (iBrowser.isMSIE) {
-					moveInfoTo(obj, oDiv, 0, 0); // object to move to (destination), object being moved, x offset, y offset		
+					moveInfoTo(obj, oDiv, 0, 0); // object to move to (destination), object being moved, x offset, y offset
 				} else if (iBrowser.isGecko) {
 					moveInfoTo(obj, oDiv, 0, 0); // object to move to (destination), object being moved, x offset, y offset
-				}						
+				}
 				changeClass(0, oDiv.id, 'showit');
 			}
-		}	
+		}
 	}
 // ============================================================
 // = move layer/div to object, date: 04/22/2005               =
 // ============================================================
-	function moveInfoTo(obj, oDiv, ox, oy) {			
+	function moveInfoTo(obj, oDiv, ox, oy) {
 			var newX = getPosX(obj) + ox;
-			var newY = getPosY(obj) + oy;			
+			var newY = getPosY(obj) + oy;
 			document.getElementById(oDiv.id).style.left = newX + 'px';
-			document.getElementById(oDiv.id).style.top  = newY + 'px';					
+			document.getElementById(oDiv.id).style.top  = newY + 'px';
 	}
 // ============================================================
 // = get object's position, date: 04/22/2005                  =
@@ -950,7 +950,7 @@
 		} else if (obj.x) {
 			cleft += obj.x;
 		}
-		return cleft;		
+		return cleft;
 	}
 
 	function getPosY(obj) { // get Y position
@@ -970,16 +970,16 @@
 // ============================================================
 	function absPath(path) {
 		if (path.charAt(0) != '/') {
-			path = '/' + path;			
+			path = '/' + path;
 		}
 		return path;
 	}
 // ============================================================
 // = escapeHTML, date: 08/12/2005                             =
 // ============================================================
-	function escapeHTML(str) {		
+	function escapeHTML(str) {
 		var divElm = document.createElement('div');
-		divElm.innerHTML = str; 
+		divElm.innerHTML = str;
 		str = divElm.innerHTML;
 		return str;
   	}
@@ -1047,11 +1047,11 @@
                     <?php echo $l->m('im_009'); ?>
                   </div>
                 </li>
-                <li id="mbtn_po" class="btnUp"><img id="img_po" src="images/img_po.gif" width="40" height="40" />
+<!--                <li id="mbtn_po" class="btnUp"><img id="img_po" src="images/img_po.gif" width="40" height="40" />
                   <div>
                     <?php echo $l->m('im_013'); ?>
                   </div>
-                </li>
+                </li>-->
               </ul>
             </div>
           </div>
@@ -1066,7 +1066,7 @@
         <div class="brdPad">
           <div id="mainDiv">
             <!- WELCOME ----------------------------------------------------------- -->
-            <div id="imDiv" class="showit">
+            <div id="imDiv" class="hideit">
               <p><img class="right" src="images/ib.gif" alt="<?php echo $l->m('im_001'); ?>" title="<?php echo $l->m('im_001'); ?>" width="48" height="48" border="0" /><strong>net<span class="hilight">4</span>visions.com</strong> - the image browser plugin for WYSIWYG editors like FCKeditor, SPAW, tinyMCE, Xinha, and HTMLarea!</p>
               <p> <strong> <span class="hilight">i</span>Browser</strong> does upload images and supply file management functions. Images can be resized on the fly. If you need even more advanced features, have a look at <strong> <span class="hilight">i</span>Manager</strong>, another <strong>net<span class="hilight">4</span>visions.com</strong> plugin - it adds truecolor image editing functions like: resize, flip, crop, add text, gamma correct, merge into other image, and many others.</p>
               <p><strong> <span class="hilight">i</span>Browser</strong> is written and distributed under the GNU General Public License which means that its source code is freely-distributed and available to the general public.</p>
@@ -1080,10 +1080,10 @@
             </div>
             <!- // imDiv -->
             <!- INSERT/CHANGE ----------------------------------------------------- -->
-            <div id="inDiv" class="hideit">
+            <div id="inDiv" class="showit">
               <fieldset>
               <!- select library ---------------------------------------------------- -->
-              <div id="ilibsDiv" class="showit">
+              <div id="ilibsDiv" class="hideit">
                 <div class="rowDiv">
                   <div class="btnRight">
                     <img class="hlpBtn" src="images/help_off.gif" onMouseOver="this.src='images/help.gif';" onMouseOut="this.src='images/help_off.gif';" onClick="alert(this.alt);" title="<?php echo $l->m('in_003'); ?>" alt="<?php echo $l->m('in_003'); ?>" width="16" height="16" border="0" />
@@ -1181,7 +1181,7 @@
                 <div class="rowDiv">
                   <label for="popClassName"> <span class="pad10"> <?php echo $l->m('at_009'); ?> </span> </label>
                   <select class="fldm" id="popClassName" name="popClassName" />
-                  
+
                   <option value="default" selected="selected"><?php echo $l->m('at_099'); ?></option>
                   <?php echo getStyles(false); ?>
                   </select>
@@ -1265,8 +1265,8 @@
                       <div class="btnRight">
                         <img onClick="uploadClick();" src="images/okclick_off.gif" onMouseOver="this.src='images/okclick.gif';" onMouseOut="this.src='images/okclick_off.gif';" alt="<?php echo $l->m('in_019'); ?>" title="<?php echo $l->m('in_019'); ?>" width="16" height="16" />
                       </div>
-                      <?php 
-							$max = isset($cfg['umax']) && $cfg['umax'] >= 1 ? $cfg['umax'] : 1;					
+                      <?php
+							$max = isset($cfg['umax']) && $cfg['umax'] >= 1 ? $cfg['umax'] : 1;
 							for($i=1; $i <= $max; $i++) {; ?>
                       <label for="nfile"> <span class="pad10"> <?php echo $l->m('in_018'); if ($max > 1){ echo ' (' . $i . ')';} ?> </span> </label>
                       <input name="nfile[]" type="file" class="fldlg" id="nfile[]" size="53" accept="image/*" />
@@ -1461,7 +1461,7 @@
 // ============================================================
 	function liboptions($arr, $prefix = '', $sel = '') {
   		$retval = '';
-  		foreach($arr as $lib) {			
+  		foreach($arr as $lib) {
     		$retval .= '<option value="' . absPath($lib['value']) . '"' . (($lib['value'] == $sel) ? ' selected="selected"' : '') . '>' . $prefix . $lib['text'] . '</option>' . "\n";
   		}
   		return $retval;
@@ -1472,7 +1472,7 @@
 	function thumbSizes($arr, $sel = '') {
   		global $l;
 		$retval = '';
-  		foreach($arr as $key => $thumb) {			
+  		foreach($arr as $key => $thumb) {
 			$retval .= '<div>' . '<input id="chkThumbSize[' . $key . ']" name="chkThumbSize[' . $key . ']" class="chkBox" type="checkbox" value="' . $key . '"' . (($key == 0) ? ' checked="checked"' : '') . ' />' . '<span class="frmText">' . (($thumb['size'] == '*') ? $l->m('in_022') . '&nbsp;'  : $thumb['size'] . ' px' ) . '</span>' . (($thumb['crop'] == true) ? '<img src="images/thbCrop.gif" align="absmiddle" width="10px" height="10px" alt="' . $l->m('in_023') . '" title="' . $l->m('in_023') . '" />' : '') . '</div>' . "\n";
 		}
   		return $retval;
@@ -1480,7 +1480,7 @@
 // ============================================================
 // = abs path - add slashes V 1.0, date: 05/10/2005           =
 // ============================================================
-	function absPath($path) {		
+	function absPath($path) {
 		if (substr($path,-1)  != '/') $path .= '/';
 		if (substr($path,0,1) != '/') $path  = '/' . $path;
 		return $path;
