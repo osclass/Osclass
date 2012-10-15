@@ -259,7 +259,7 @@ osc_register_script('jquery-treeview', osc_assets_url('js/jquery.treeview.js'), 
 osc_register_script('jquery-nested', osc_assets_url('js/jquery.ui.nestedSortable.js'), 'jquery');
 osc_register_script('jquery-validate', osc_assets_url('js/jquery.validate.min.js'), 'jquery');
 osc_register_script('tabber', osc_assets_url('js/tabber-minimized.js'), 'jquery');
-osc_register_script('tiny_mce', osc_assets_url('js/tiny_mce/tiny_mce.js'));
+osc_register_script('tiny_mce', osc_assets_url('js/tiny_mce/tiny_mce_src.js'));
 osc_register_script('colorpicker', osc_assets_url('js/colorpicker/js/colorpicker.js'));
 
 Plugins::init();
