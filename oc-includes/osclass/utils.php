@@ -22,16 +22,16 @@
 
 
 /**
- * check if the item is expired 
+ * check if the item is expired
  */
 function osc_isExpired($dt_expiration) {
     $now       = date("Ymdhis");
-    
+
     $dt_expiration = str_replace(' ', '', $dt_expiration);
     $dt_expiration = str_replace('-', '', $dt_expiration);
     $dt_expiration = str_replace(':', '', $dt_expiration);
 
-    if ($dt_expiration > $now) { 
+    if ($dt_expiration > $now) {
         return false;
     } else {
         return true;
@@ -53,7 +53,7 @@ function osc_deleteResource( $id , $admin) {
     $resource = ItemResource::newInstance()->findByPrimaryKey($id) ;
     if( !is_null($resource) ){
         Log::newInstance()->insertLog('item', 'delete resource', $resource['pk_i_id'], $id, $admin?'admin':'user', $admin ? osc_logged_admin_id() : osc_logged_user_id()) ;
-        
+
         $backtracel = '';
         foreach(debug_backtrace() as $k=>$v){
             if($v['function'] == "include" || $v['function'] == "include_once" || $v['function'] == "require_once" || $v['function'] == "require"){
@@ -62,7 +62,7 @@ function osc_deleteResource( $id , $admin) {
                 $backtracel .= "#".$k." ".$v['function']." called@ [".$v['file'].":".$v['line']."] / ";
             }
         }
-        
+
         Log::newInstance()->insertLog('item', 'delete resource backtrace', $resource['pk_i_id'], $backtracel, $admin?'admin':'user', $admin ? osc_logged_admin_id() : osc_logged_user_id()) ;
 
         @unlink(osc_base_path() . $resource['s_path'] .$resource['pk_i_id'].".".$resource['s_extension']);
@@ -242,7 +242,7 @@ function osc_doRequest($url, $_data) {
         // open a socket connection on port 80
         // use localhost in case of issues with NATs (hairpinning)
         $fp = @fsockopen($host, 80);
-        
+
         if($fp!==false) {
             $out  = "POST $path HTTP/1.1\r\n";
             $out .= "Host: $host\r\n";
@@ -453,7 +453,7 @@ function osc_mailBeauty($text, $params) {
         $_SERVER['REMOTE_ADDR']
     );
     $text = str_ireplace($kwords, $rwords, $text) ;
-    
+
     return $text ;
 }
 
@@ -534,19 +534,19 @@ function osc_copyemz($file1,$file2){
     } else {
         $status=true;
     }
-                   
+
     return $status;
-} 
+}
 
 /**
  * Dump osclass database into path file
  *
  * @param type $path
  * @param type $file
- * @return type 
+ * @return type
  */
 function osc_dbdump($path, $file) {
-    
+
     require_once LIB_PATH . 'osclass/model/Dump.php';
     if ( !is_writable($path) ) return -4 ;
     if($path == '') return -1 ;
@@ -557,7 +557,7 @@ function osc_dbdump($path, $file) {
 
     $path .= $file ;
     $result = $dump->showTables();
-    
+
     if(!$result) {
         $_str = '' ;
         $_str .= '/* no tables in ' . DB_NAME . ' */' ;
@@ -569,7 +569,7 @@ function osc_dbdump($path, $file) {
 
         return -3 ;
     }
-    
+
     $_str = '' ;
     $_str .= '/* OSCLASS MYSQL Autobackup (' . date('Y-m-d H:i:s') . ') */' ;
     $_str .= "\n" ;
@@ -583,7 +583,7 @@ function osc_dbdump($path, $file) {
         $tableName = current($_table);
         $tables[$tableName] = $tableName;
     }
-    
+
     $tables_order = array('t_locale', 't_country', 't_currency', 't_region', 't_city', 't_city_area', 't_widget', 't_admin', 't_user', 't_user_description', 't_category', 't_category_description', 't_category_stats', 't_item', 't_item_description', 't_item_location', 't_item_stats', 't_item_resource', 't_item_comment', 't_preference', 't_user_preferences', 't_pages', 't_pages_description', 't_plugin_category', 't_cron', 't_alerts', 't_keywords', 't_meta_fields', 't_meta_categories', 't_item_meta');
     // Backup default OSClass tables in order, so no problem when importing them back
     foreach($tables_order as $table) {
@@ -593,13 +593,13 @@ function osc_dbdump($path, $file) {
             unset($tables[DB_TABLE_PREFIX . $table]) ;
         }
     }
-    
+
     // Backup the rest of tables
     foreach($tables as $table) {
         $dump->table_structure($path, $table) ;
         $dump->table_data($path, $table) ;
     }
-    
+
     return 1 ;
 }
 
@@ -607,8 +607,8 @@ function osc_dbdump($path, $file) {
 
 /**
  * Returns true if there is curl on system environment
- * 
- * @return type 
+ *
+ * @return type
  */
 function testCurl() {
     if ( ! function_exists( 'curl_init' ) || ! function_exists( 'curl_exec' ) )
@@ -620,7 +620,7 @@ function testCurl() {
 /**
  * Returns true if there is fsockopen on system environment
  *
- * @return type 
+ * @return type
  */
 function testFsockopen() {
     if ( ! function_exists( 'fsockopen' ) )
@@ -634,55 +634,55 @@ function testFsockopen() {
  * @since 3.0
  */
 if( !function_exists('http_chunked_decode') ) {
-    /** 
-     * dechunk an http 'transfer-encoding: chunked' message 
-     * 
-     * @param string $chunk the encoded message 
-     * @return string the decoded message.  If $chunk wasn't encoded properly it will be returned unmodified. 
-     */ 
-    function http_chunked_decode($chunk) { 
-        $pos = 0; 
-        $len = strlen($chunk); 
-        $dechunk = null; 
+    /**
+     * dechunk an http 'transfer-encoding: chunked' message
+     *
+     * @param string $chunk the encoded message
+     * @return string the decoded message.  If $chunk wasn't encoded properly it will be returned unmodified.
+     */
+    function http_chunked_decode($chunk) {
+        $pos = 0;
+        $len = strlen($chunk);
+        $dechunk = null;
 
-        while(($pos < $len) 
-            && ($chunkLenHex = substr($chunk,$pos, ($newlineAt = strpos($chunk,"\n",$pos+1))-$pos))) 
-        { 
-            if (! is_hex($chunkLenHex)) { 
-                trigger_error('Value is not properly chunk encoded', E_USER_WARNING); 
-                return $chunk; 
-            } 
+        while(($pos < $len)
+            && ($chunkLenHex = substr($chunk,$pos, ($newlineAt = strpos($chunk,"\n",$pos+1))-$pos)))
+        {
+            if (! is_hex($chunkLenHex)) {
+                trigger_error('Value is not properly chunk encoded', E_USER_WARNING);
+                return $chunk;
+            }
 
-            $pos = $newlineAt + 1; 
-            $chunkLen = hexdec(rtrim($chunkLenHex,"\r\n")); 
-            $dechunk .= substr($chunk, $pos, $chunkLen); 
-            $pos = strpos($chunk, "\n", $pos + $chunkLen) + 1; 
-        } 
-        return $dechunk; 
-    } 
+            $pos = $newlineAt + 1;
+            $chunkLen = hexdec(rtrim($chunkLenHex,"\r\n"));
+            $dechunk .= substr($chunk, $pos, $chunkLen);
+            $pos = strpos($chunk, "\n", $pos + $chunkLen) + 1;
+        }
+        return $dechunk;
+    }
 }
 
-/** 
- * determine if a string can represent a number in hexadecimal 
- * 
+/**
+ * determine if a string can represent a number in hexadecimal
+ *
  * @since 3.0
- * @param string $hex 
- * @return boolean true if the string is a hex, otherwise false 
- */ 
-function is_hex($hex) { 
-    // regex is for weenies 
-    $hex = strtolower(trim(ltrim($hex,"0"))); 
-    if (empty($hex)) { $hex = 0; }; 
-    $dec = hexdec($hex); 
-    return ($hex == dechex($dec)); 
+ * @param string $hex
+ * @return boolean true if the string is a hex, otherwise false
+ */
+function is_hex($hex) {
+    // regex is for weenies
+    $hex = strtolower(trim(ltrim($hex,"0")));
+    if (empty($hex)) { $hex = 0; };
+    $dec = hexdec($hex);
+    return ($hex == dechex($dec));
 }
 
 /**
  * Process response and return headers and body
- * 
+ *
  * @since 3.0
  * @param type $content
- * @return type 
+ * @return type
  */
 function processResponse($content)
 {
@@ -693,7 +693,7 @@ function processResponse($content)
     if (!is_string($headers)) {
         return array();
     }
-    
+
     return array('headers' => $headers, 'body' => $body);
 }
 
@@ -701,9 +701,9 @@ function processResponse($content)
  * Parse headers and return into array format
  *
  * @param type $headers
- * @return type 
+ * @return type
  */
-function processHeaders($headers) 
+function processHeaders($headers)
 {
     $headers = str_replace("\r\n", "\n", $headers);
     $headers = preg_replace('/\n[ \t]/', ' ', $headers);
@@ -724,11 +724,11 @@ function processHeaders($headers)
  *
  * @since 3.0
  * @param type $sourceFile
- * @param type $fileout 
+ * @param type $fileout
  */
-function download_fsockopen($sourceFile, $fileout = null) 
+function download_fsockopen($sourceFile, $fileout = null)
 {
-    // parse URL 
+    // parse URL
     $aUrl = parse_url($sourceFile);
     $host = $aUrl['host'];
     if ('localhost' == strtolower($host))
@@ -738,10 +738,10 @@ function download_fsockopen($sourceFile, $fileout = null)
 
     if (empty($link))
         $link .= '/';
-            
+
     $fp = @fsockopen($host, 80, $errno, $errstr, 30);
     if (!$fp) {
-        
+
     } else {
         $out = "GET $link HTTP/1.1\r\n";
         $out .= "Host: $host\r\n";
@@ -753,11 +753,11 @@ function download_fsockopen($sourceFile, $fileout = null)
         while (!feof($fp)) {
             $contents.= fgets($fp, 1024);
         }
-        // check redirections ? 
+        // check redirections ?
         // if (redirections) then do request again
         $aResult = processResponse($contents);
         $headers = processHeaders($aResult['headers']);
-        
+
         $location = @$headers['location'];
         if (isset($location) && $location != "") {
             $aUrl = parse_url($headers['location']);
@@ -770,7 +770,7 @@ function download_fsockopen($sourceFile, $fileout = null)
 
             if (empty($requestPath))
                 $requestPath .= '/';
-            
+
             download_fsockopen($host, $requestPath, $fileout);
         } else {
             $body = $aResult['body'];
@@ -790,7 +790,7 @@ function download_fsockopen($sourceFile, $fileout = null)
     }
 }
 
-function osc_downloadFile($sourceFile, $downloadedFile) 
+function osc_downloadFile($sourceFile, $downloadedFile)
 {
     if ( testCurl() ) {
         @set_time_limit(0);
@@ -816,7 +816,7 @@ function osc_downloadFile($sourceFile, $downloadedFile)
     }
 }
 
-function osc_file_get_contents($url) 
+function osc_file_get_contents($url)
 {
     if( testCurl() ) {
         $ch = curl_init() ;
@@ -839,7 +839,7 @@ function osc_file_get_contents($url)
  * Check if we loaded some specific module of apache
  *
  * @param string $mod
- * 
+ *
  * @return bool
  */
 function apache_mod_loaded($mod) {
@@ -867,7 +867,7 @@ function osc_changeVersionTo($version = null) {
         Preference::newInstance()->update(array('s_value' => $version), array( 's_section' => 'osclass', 's_name' => 'version'));
         //XXX: I don't know if it's really needed. Only for reload the values of the preferences
         Preference::newInstance()->toArray() ;
-    }    
+    }
 }
 
 function strip_slashes_extended($array) {
@@ -927,7 +927,7 @@ function _unzip_file_ziparchive($file, $to) {
     if($zip->numFiles==0) {
         return 2;
     }
-    
+
 
     for ($i = 0; $i < $zip->numFiles; $i++) {
         $file = $zip->statIndex($i);
@@ -969,7 +969,7 @@ function _unzip_file_ziparchive($file, $to) {
  *
  * @param string $zip_file Full path of the zip file
  * @param string $to Full path where it is going to be unzipped
- * @return int 
+ * @return int
  */
 function _unzip_file_pclzip($zip_file, $to) {
     // first, we load the library
@@ -990,7 +990,7 @@ function _unzip_file_pclzip($zip_file, $to) {
         if (substr($file['filename'], 0, 9) === '__MACOSX/') {
             continue;
         }
-        
+
         if ($file['folder']) {
             @mkdir($to . $file['filename'], 0777);
             continue;
@@ -1042,7 +1042,7 @@ function _zip_folder_ziparchive($archive_folder, $archive_name) {
         while (count($dirs)) {
             $dir = current($dirs);
             $zip -> addEmptyDir(str_replace(ABS_PATH, '', $dir));
-      
+
             $dh = opendir($dir);
             while (false !== ($_file = readdir($dh))) {
                 if ($_file != '.' && $_file != '..') {
@@ -1079,11 +1079,11 @@ function _zip_folder_pclzip($archive_folder, $archive_name) {
     $zip = new PclZip($archive_name);
     if($zip) {
         $dir = preg_replace('/[\/]{2,}/', '/', $archive_folder."/");
-   
+
         $v_dir = osc_base_path();
         $v_remove = $v_dir;
 
-        // To support windows and the C: root you need to add the 
+        // To support windows and the C: root you need to add the
         // following 3 lines, should be ignored on linux
         if (substr($v_dir, 1,1) == ':') {
             $v_remove = substr($v_dir, 2);
@@ -1096,7 +1096,7 @@ function _zip_folder_pclzip($archive_folder, $archive_name) {
     } else {
         return false;
     }
-    
+
 }
 
 function osc_check_recaptcha() {
@@ -1107,7 +1107,7 @@ function osc_check_recaptcha() {
                                         ,$_SERVER["REMOTE_ADDR"]
                                         ,Params::getParam("recaptcha_challenge_field")
                                         ,Params::getParam("recaptcha_response_field"));
-                                        
+
         return $resp->is_valid;
     }
 
@@ -1181,7 +1181,7 @@ function osc_change_permissions( $dir = ABS_PATH ) {
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/downloads")) {
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/uploads")) {
                     } else {
-                        $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file)); 
+                        $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
                         if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
                     }
                 } else {
@@ -1303,7 +1303,7 @@ function _need_update($uri, $version) {
         }
     }
 }
-// END -- Market util functions 
+// END -- Market util functions
 
 /**
  * Update category stats
@@ -1354,20 +1354,20 @@ function osc_update_cat_stats() {
 
 /**
  * Recount items for a given a category id
- * 
- * @param int $id 
+ *
+ * @param int $id
  */
 function osc_update_cat_stats_id($id)
 {
     // get sub categorias
     if( !Category::newInstance()->isRoot($id) ) {
         $auxCat = Category::newInstance()->findRootCategory($id);
-        $id = $auxCat['pk_i_id']; 
+        $id = $auxCat['pk_i_id'];
     }
-    
+
     $aCategories    = Category::newInstance()->findSubcategories($id);
     $categoryTotal  = 0;
-    
+
     if( count($aCategories) > 0 ) {
         // sumar items de la categoría
         foreach($aCategories as $category) {
@@ -1380,7 +1380,7 @@ function osc_update_cat_stats_id($id)
         $total     = Item::newInstance()->numItems($category, true, true) ;
         $categoryTotal += $total;
     }
-    
+
     $sql = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_category_stats (fk_i_category_id, i_num_items) VALUES ';
     $sql .= " (".$id.", ".$categoryTotal.")";
     $result = CategoryStats::newInstance()->dao->query($sql);
@@ -1401,4 +1401,170 @@ function get_ip() {
     return $_SERVER['REMOTE_ADDR'];
 }
 
+// iBrowser -> tinymce language
+function osc_tinymce_ibrowser_language() {
+?>
+<script>
+
+</script>
+<?
+}
+/*
+//<script>
+//    tinyMCE.addI18n({en:{
+//        common:{
+//            edit_confirm:"<?php _e('Do you want to use the WYSIWYG mode for this textarea?'); ?>",
+//            apply:"<?php _e('Apply'); ?>",
+//            insert:"<?php _e('Insert'); ?>",
+//            update:"<?php _e('Update'); ?>",
+//            cancel:"<?php _e('Cancel'); ?>",
+//            close:"<?php _e('Close'); ?>",
+//            browse:"<?php _e('Browse'); ?>",
+//            class_name:"Class",
+//            not_set:"<?php _e('-- Not set --'); ?>",
+//            clipboard_msg:"<?php _e('Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?'); ?>",
+//            clipboard_no_support:"<?php _e('Currently not supported by your browser, use keyboard shortcuts instead.'); ?>",
+//            popup_blocked:"<?php _e('Sorry, but we have noticed that your popup-blocker has disabled a window that provides application functionality. You will need to disable popup blocking on this site in order to fully utilize this tool.'); ?>",
+//            invalid_data:"<?php _e('Error: Invalid values entered, these are marked in red.'); ?>",
+//            more_colors:"<?php _e('More colors'); ?>"
+//        },
+//        contextmenu:{
+//            align:"<?php _e('Alignment'); ?>",
+//            left:"<?php _e('Left'); ?>",
+//            center:"<?php _e('Center'); ?>",
+//            right:"<?php _e('Right'); ?>",
+//            full:"<?php _e('Full'); ?>"
+//        },
+//        insertdatetime:{
+//            date_fmt:"%Y-%m-%d",
+//            time_fmt:"%H:%M:%S",
+//            insertdate_desc:"<?php _e('Insert date'); ?>",
+//            inserttime_desc:"<?php _e('Insert time'); ?>",
+//            months_long:"<?php _e('January,February,March,April,May,June,July,August,September,October,November,December'); ?>",
+//            months_short:"<?php _e('Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'); ?>",
+//            day_long:"<?php _e('Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday'); ?>",
+//            day_short:"<?php _e('Sun,Mon,Tue,Wed,Thu,Fri,Sat,Sun'); ?>"
+//        },
+//        print:{
+//            print_desc:"<?php _e('Print'); ?>"
+//        },
+//        preview:{
+//            preview_desc:"<?php _e('Preview'); ?>"
+//        },
+//        directionality:{
+//            ltr_desc:"<?php _e('Direction left to right'); ?>",
+//            rtl_desc:"<?php _e('Direction right to left'); ?>"
+//        },
+//        layer:{
+//            insertlayer_desc:"<?php _e('Insert new layer'); ?>",
+//            forward_desc:"<?php _e('Move forward'); ?>",
+//            backward_desc:"<?php _e('Move backward'); ?>",
+//            absolute_desc:"<?php _e('Toggle absolute positioning'); ?>",
+//            content:"<?php _e('New layer...'); ?>"
+//        },
+//        save:{
+//            save_desc:"<?php _e('Save'); ?>",
+//            cancel_desc:"<?php _e('Cancel all changes'); ?>"
+//        },
+//        nonbreaking:{
+//            nonbreaking_desc:"<?php _e('Insert non-breaking space character'); ?>"
+//        },
+//        iespell:{
+//            iespell_desc:"<?php _e('Run spell checking'); ?>",
+//            download:"<?php _e('ieSpell not detected. Do you want to install it now?'); ?>"
+//        },
+//        advhr:{
+//            advhr_desc:"<?php _e('Horizontal rule'); ?>"
+//        },
+//        emotions:{
+//            emotions_desc:"<?php _e('Emotions'); ?>"
+//        },
+//        searchreplace:{
+//            search_desc:"<?php _e('Find'); ?>",
+//            replace_desc:"<?php _e('Find/Replace'); ?>"
+//        },
+//        advimage:{
+//            image_desc:"<?php _e('Insert/edit image'); ?>"
+//        },
+//        advlink:{
+//            link_desc:"<?php _e('Insert/edit link'); ?>"
+//        },
+//        xhtmlxtras:{
+//            cite_desc:"<?php _e('Citation'); ?>",
+//            abbr_desc:"<?php _e('Abbreviation'); ?>",
+//            acronym_desc:"<?php _e('Acronym'); ?>",
+//            del_desc:"<?php _e('Deletion'); ?>",
+//            ins_desc:"<?php _e('Insertion'); ?>",
+//            attribs_desc:"<?php _e('Insert/Edit Attributes'); ?>"
+//        },
+//        style:{
+//            desc:"<?php _e('Edit CSS Style'); ?>"
+//        },
+//        paste:{
+//            paste_text_desc:"<?php _e('Paste as Plain Text'); ?>",
+//            paste_word_desc:"<?php _e('Paste from Word'); ?>",
+//            selectall_desc:"<?php _e('Select All'); ?>"
+//        },
+//        paste_dlg:{
+//            text_title:"<?php _e('Use CTRL+V on your keyboard to paste the text into the window.'); ?>",
+//            text_linebreaks:"<?php _e('Keep linebreaks'); ?>",
+//            word_title:"<?php _e('Use CTRL+V on your keyboard to paste the text into the window.'); ?>"
+//        },
+//        table:{
+//            desc:"<?php _e('Inserts a new table'); ?>",
+//            row_before_desc:"<?php _e('Insert row before'); ?>",
+//            row_after_desc:"<?php _e('Insert row after'); ?>",
+//            delete_row_desc:"<?php _e('Delete row'); ?>",
+//            col_before_desc:"<?php _e('Insert column before'); ?>",
+//            col_after_desc:"<?php _e('Insert column after'); ?>",
+//            delete_col_desc:"<?php _e('Remove column'); ?>",
+//            split_cells_desc:"<?php _e('Split merged table cells'); ?>",
+//            merge_cells_desc:"<?php _e('Merge table cells'); ?>",
+//            row_desc:"<?php _e('Table row properties'); ?>",
+//            cell_desc:"<?php _e('Table cell properties'); ?>",
+//            props_desc:"<?php _e('Table properties'); ?>",
+//            paste_row_before_desc:"<?php _e('Paste table row before'); ?>",
+//            paste_row_after_desc:"<?php _e('Paste table row after'); ?>",
+//            cut_row_desc:"<?php _e('Cut table row'); ?>",
+//            copy_row_desc:"<?php _e('Copy table row'); ?>",
+//            del:"<?php _e('Delete table'); ?>",
+//            row:"<?php _e('Row'); ?>",
+//            col:"<?php _e('Column'); ?>",
+//            cell:"<?php _e('Cell'); ?>"
+//        },
+//        autosave:{
+//            unload_msg:"<?php _e('The changes you made will be lost if you navigate away from this page.'); ?>"
+//        },
+//        fullscreen:{
+//            desc:"<?php _e('Toggle fullscreen mode'); ?>"
+//        },
+//        media:{
+//            desc:"<?php _e('Insert / edit embedded media'); ?>",
+//            edit:"<?php _e('Edit embedded media'); ?>"
+//        },
+//        fullpage:{
+//            desc:"<?php _e('Document properties'); ?>"
+//        },
+//        template:{
+//            desc:"<?php _e('Insert predefined template content'); ?>"
+//        },
+//        visualchars:{
+//            desc:"<?php _e('Visual control characters on/off.'); ?>"
+//        },
+//        spellchecker:{
+//            desc:"<?php _e('Toggle spellchecker'); ?>",
+//            menu:"<?php _e('Spellchecker settings'); ?>",
+//            ignore_word:"<?php _e('Ignore word'); ?>",
+//            ignore_words:"<?php _e('Ignore all'); ?>",
+//            langs:"<?php _e('Languages'); ?>",
+//            wait:"<?php _e('Please wait...'); ?>",
+//            sug:"<?php _e('Suggestions'); ?>",
+//            no_sug:"<?php _e('No suggestions'); ?>",
+//            no_mpell:"<?php _e('No misspellings found.'); ?>"
+//        },
+//        pagebreak:{
+//            desc:"<?php _e('Insert page break.'); ?>"
+//        }}});
+//    </script>
+*/
 ?>
