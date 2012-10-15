@@ -27,8 +27,19 @@
         if( !osc_is_admin_user_logged_in() ) {
             die();
         }
+
+//        // set admin language - iBrowser
+//        if(osc_current_user_locale() != '') {
+//            $osc_language = substr(osc_current_admin_locale(), 0, 2);
+//            // REMOVE
+//            error_log( "locale iBrowser -> ". osc_current_user_locale() ." ". $osc_language);
+//            $cfg['lang'] = $osc_language;
+//        } else {
+//            $cfg['lang'] = 'en'; // default language; e.g. 'en'
+//        }
+//        // /language
+
 	//-------------------------------------------------------------------------
-	$cfg['lang']   		= 'en';														// default language; e.g. 'en'
 	$cfg['valid']  		= array('gif', 'jpg', 'jpeg', 'png');						// valid extentions for image files
 	$cfg['upload'] 		= true; 													// allow uploading of image: 'true' or 'false'
 	$cfg['umax'] 		= 1;														// max. number of image files to be uploaded; default: 1; value > 1
@@ -100,7 +111,7 @@
 	// use static image libraries
 	$cfg['ilibs'] = array (																// image library path with slashes; absolute to root directory - please make sure that the directories have write permissions
 		array (
-			'value'   	=> REL_WEB_URL.'oc-content/uploads/',
+			'value'   	=> REL_WEB_URL.'oc-content/uploads/pages/',
 			'text'    	=> 'Site Pictures',
 		)
 //                ,array (
