@@ -98,11 +98,9 @@
             </div>
             <span class="help"></span>
         </div>
-        <div class="input-description-wide">
-            <?php printLocaleDescriptionPage($locales, $page); ?>
-        </div>
         <?php if(count($templates)>0) { ?>
             <div>
+                <label><?php _e('Page template'); ?></label>
                 <select name="meta[template]">
                     <option value="default" <?php if($template_selected=='default') { echo 'selected="selected"'; }; ?>><?php _e('Default template'); ?></option>
                     <?php foreach($templates as $template) { ?>
@@ -111,6 +109,9 @@
                 </select>
             </div>
         <?php }; ?>
+        <div class="input-description-wide">
+            <?php printLocaleDescriptionPage($locales, $page); ?>
+        </div>
         <div>
             <?php osc_run_hook('page_meta'); ?>
         </div>
