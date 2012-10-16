@@ -21,6 +21,7 @@
 	//	3. ibrowser/temp (chmod 0755 or 0777)
         date_default_timezone_set('Europe/Madrid');
 	//  see readme.txt for further instructions
+        define('OC_ADMIN', true);
 	include dirname(__FILE__) . '/../../../../../../../../config.php';
         include dirname(__FILE__) . '/../../../../../../../../oc-load.php';
         // check admin logged
@@ -28,16 +29,7 @@
             die();
         }
 
-//        // set admin language - iBrowser
-//        if(osc_current_user_locale() != '') {
-//            $osc_language = substr(osc_current_admin_locale(), 0, 2);
-//            // REMOVE
-//            error_log( "locale iBrowser -> ". osc_current_user_locale() ." ". $osc_language);
-//            $cfg['lang'] = $osc_language;
-//        } else {
-//            $cfg['lang'] = 'en'; // default language; e.g. 'en'
-//        }
-//        // /language
+        $cfg['lang'] = 'en'; // default language; e.g. 'en'
 
 	//-------------------------------------------------------------------------
 	$cfg['valid']  		= array('gif', 'jpg', 'jpeg', 'png');						// valid extentions for image files
