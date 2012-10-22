@@ -1407,7 +1407,7 @@ function osc_tinymce_ibrowser_language() {
 <script>
 
 </script>
-<?
+<?php
 }
 /*
 //<script>
