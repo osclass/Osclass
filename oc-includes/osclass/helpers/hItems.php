@@ -412,12 +412,16 @@
      *
      * @return int
      */
-    function osc_item_views() {
+    function osc_item_views($viewAll = false) {
         $item = osc_item();
-        if(isset($item['i_num_views'])) {
-            return (int) osc_item_field("i_num_views") ;
-        } else {
+        if($viewAll) {
             return ItemStats::newInstance()->getViews(osc_item_id());
+        } else {
+            if(isset($item['i_num_views'])) {
+                return (int) osc_item_field("i_num_views") ;
+            } else {
+                return ItemStats::newInstance()->getViews(osc_item_id());
+            }
         }
     }
 
@@ -600,9 +604,11 @@
     function osc_item_comments_page() {
         $page = Params::getParam('comments-page');
         if($page=='') {
-            $page = 0;
+            return 0;
         }
-        return (int) $page;
+        if($page>0) {
+            return (int) $page-1;
+        }
     }
     
     ///////////////////////

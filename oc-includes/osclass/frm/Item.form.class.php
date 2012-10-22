@@ -43,9 +43,9 @@
                     $categories = osc_get_categories() ;
                 }
             }
-            
+
             if ($item == null) { $item = osc_item() ; }
-            
+
             echo '<select name="catId" id="catId">' ;
             if(isset($default_item)) {
                 echo '<option value="">' . $default_item . '</option>' ;
@@ -54,7 +54,7 @@
             }
 
             if(count($categories)==1) { $parent_selectable = 1; };
-            
+
             foreach($categories as $c) {
                 if ( !osc_selectable_parent_categories() && !$parent_selectable ) {
                     echo '<optgroup label="' . $c['s_name'] . '">' ;
@@ -72,7 +72,7 @@
             echo '</select>' ;
             return true ;
         }
-    
+
         // OK
         static public function subcategory_select($categories, $item, $default_item = null, $deep = 0)
         {
@@ -114,12 +114,12 @@
                     if($userId != '' && $userId == $user['pk_i_id']){$bool = true;}
                     if((isset($item["fk_i_user_id"]) && $item["fk_i_user_id"] == $user['pk_i_id'])){$bool = true;}
                     echo '<option value="' . $user['pk_i_id'] . '"' . ( $bool ? 'selected="selected"' : '' ) . '>';
-                    
+
                     if( isset($user['s_name']) && !empty($user['s_name']) ) {
                         echo $user['s_name'];
                     } else {
-                        echo $user['s_email']; 
-                    }   
+                        echo $user['s_email'];
+                    }
                     echo '</option>' ;
                 }
             echo '</select>' ;
@@ -128,7 +128,7 @@
         // OK
         static public function title_input($name, $locale = 'en_US', $value = '')
         {
-            
+
             parent::generic_input_text($name . '[' . $locale . ']', $value) ;
             return true ;
         }
@@ -143,7 +143,7 @@
             if($locales==null) { $locales = osc_get_locales(); }
             if($item==null) { $item = osc_item(); }
             $num_locales = count($locales);
-            
+
             if($num_locales>1) { echo '<div class="tabber">'; };
             foreach($locales as $locale) {
                 if($num_locales>1) { echo '<div class="tabbertab">'; };
@@ -223,7 +223,7 @@
                 return true ;
             }
         }
-        // OK 
+        // OK
         static public function country_text($item = null) {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('country') != "" ) {
@@ -250,9 +250,9 @@
             } else {
                 if($regions==null) { $regions = array(); };
             }
-            
+
             if($item==null) { $item = osc_item(); };
-            
+
             if( count($regions) >= 1 ) {
                 if( Session::newInstance()->_getForm('regionId') != "" ) {
                     $item['fk_i_region_id'] = Session::newInstance()->_getForm('regionId');
@@ -270,7 +270,7 @@
                 return true ;
             }
         }
-        
+
         // OK
         static public function city_select($cities = null, $item = null) {
             if( Session::newInstance()->_getForm('city') != ''){
@@ -296,7 +296,7 @@
                 return true ;
             }
         }
-       
+
         static public function region_text($item = null) {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('region') != "" ) {
@@ -326,7 +326,7 @@
             parent::generic_input_hidden('cityAreaId', (isset($item['fk_i_city_area_id']) && $item['fk_i_city_area_id']!=null)?$item['fk_i_city_area_id']:'');
             return true ;
         }
-        // OK 
+        // OK
         static public function address_text($item = null) {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('address') != "" ) {
@@ -379,6 +379,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
 
+        $('#countryName').attr( "autocomplete", "off" );
         $('#region').attr( "autocomplete", "off" );
         $('#city').attr( "autocomplete", "off" );
 
@@ -386,9 +387,23 @@
             $('#regionId').val('');
             $('#region').val('');
             $('#cityId').val('');
-            $('#city').val('');            
+            $('#city').val('');
         });
 
+        $('#countryName').live('keyup.autocomplete', function(){
+            $('#countryId').val('');
+            $( this ).autocomplete({
+                source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_countries",
+                minLength: 0,
+                select: function( event, ui ) {
+                    $('#countryId').val(ui.item.id);
+                    $('#regionId').val('');
+                    $('#region').val('');
+                    $('#cityId').val('');
+                    $('#city').val('');
+                }
+            });
+        });
 
         $('#region').live('keyup.autocomplete', function(){
             $('#regionId').val('');
@@ -442,7 +457,7 @@
                     digits: true
                 },
                 <?php if(osc_price_enabled_at_items()) { ?>
-                price: {                   
+                price: {
                     maxlength: 50
                 },
                 currency: "required",
@@ -522,7 +537,7 @@
         }
         return html;
     }
-    
+
     function delete_image(id, item_id,name, secret) {
         //alert(id + " - "+ item_id + " - "+name+" - "+secret);
         var result = confirm('<?php echo osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) ; ?>');
@@ -545,13 +560,13 @@
             });
         }
     }
-    
-    
+
+
 </script>
 <?php
         }
-        
-        
+
+
         static public function location_javascript($path = "front") {
 ?>
 <script type="text/javascript">
@@ -576,7 +591,7 @@
                     dataType: 'json',
                     success: function(data){
                         var length = data.length;
-                        
+
                         if(length > 0) {
 
                             result += '<option value=""><?php _e("Select a region..."); ?></option>';
@@ -589,17 +604,17 @@
 
                             $("#city").before('<select name="cityId" id="cityId" ></select>');
                             $("#city").remove();
-                            
+
                             $("#regionId").val("");
 
                         } else {
 
                             $("#regionId").before('<input type="text" name="region" id="region" />');
                             $("#regionId").remove();
-                            
+
                             $("#cityId").before('<input type="text" name="city" id="city" />');
                             $("#cityId").remove();
-                            
+
                         }
 
                         $("#regionId").html(result);
@@ -612,7 +627,7 @@
                  // add empty select
                  $("#region").before('<select name="regionId" id="regionId" ><option value=""><?php _e("Select a region..."); ?></option></select>');
                  $("#region").remove();
-                 
+
                  $("#city").before('<select name="cityId" id="cityId" ><option value=""><?php _e("Select a city..."); ?></option></select>');
                  $("#city").remove();
 
@@ -644,7 +659,7 @@
             var result = '';
 
             if(pk_c_code != '') {
-                
+
                 $("#cityId").attr('disabled',false);
                 $.ajax({
                     type: "POST",
@@ -678,7 +693,7 @@
         }
 
         if($("#countryId").length != 0) {
-            if( $("#countryId").attr('type').match(/select-one/) ) {
+            if( $("#countryId").prop('type').match(/select-one/) ) {
                 if( $("#countryId").attr('value') == "") {
                     $("#regionId").attr('disabled',true);
                 }
@@ -809,7 +824,7 @@
         }
         return html;
     }
-    
+
     function delete_image(id, item_id,name, secret) {
         //alert(id + " - "+ item_id + " - "+name+" - "+secret);
         var result = confirm('<?php echo osc_esc_js( __("This action can't be undone. Are you sure you want to continue?") ) ; ?>');
@@ -832,12 +847,12 @@
             });
         }
     }
-    
-    
+
+
 </script>
 <?php
         }
-        
+
 
         static public function photos($resources = null) {
             if($resources==null) { $resources = osc_get_item_resources(); };

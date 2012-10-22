@@ -119,7 +119,7 @@ $(document).ready(function(){
                             </label>
                         </div>
                         <div class="form-label-checkbox-offset">
-                            <?php printf( __('Before a comment appears, comment author must have at least %s previously approved comments'), '<input type="text" class="input-small" name="num_moderate_comments" value="' . ( (osc_moderate_comments() == -1 ) ? '' : osc_esc_html( osc_moderate_comments() ) ) . '" />' ) ; ?>
+                            <?php printf( __('Before a comment appears, comment author must have at least %s previously approved comments'), '<input type="text" class="input-small" name="num_moderate_comments" value="' . ( (osc_moderate_comments() == -1 ) ? '0' : osc_esc_html( osc_moderate_comments() ) ) . '" />' ) ; ?>
                             <div class="help-box"><?php _e('If the value is zero, an administrator must always approve comments') ; ?></div>
                         </div>
                     </div>

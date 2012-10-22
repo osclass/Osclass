@@ -22,16 +22,16 @@
 
 
 /**
- * check if the item is expired 
+ * check if the item is expired
  */
 function osc_isExpired($dt_expiration) {
     $now       = date("Ymdhis");
-    
+
     $dt_expiration = str_replace(' ', '', $dt_expiration);
     $dt_expiration = str_replace('-', '', $dt_expiration);
     $dt_expiration = str_replace(':', '', $dt_expiration);
 
-    if ($dt_expiration > $now) { 
+    if ($dt_expiration > $now) {
         return false;
     } else {
         return true;
@@ -50,7 +50,7 @@ function osc_deleteResource( $id , $admin) {
     $resource = ItemResource::newInstance()->findByPrimaryKey($id) ;
     if( !is_null($resource) ){
         Log::newInstance()->insertLog('item', 'delete resource', $resource['pk_i_id'], $id, $admin?'admin':'user', $admin ? osc_logged_admin_id() : osc_logged_user_id()) ;
-        
+
         $backtracel = '';
         foreach(debug_backtrace() as $k=>$v){
             if($v['function'] == "include" || $v['function'] == "include_once" || $v['function'] == "require_once" || $v['function'] == "require"){
@@ -59,7 +59,7 @@ function osc_deleteResource( $id , $admin) {
                 $backtracel .= "#".$k." ".$v['function']." called@ [".$v['file'].":".$v['line']."] / ";
             }
         }
-        
+
         Log::newInstance()->insertLog('item', 'delete resource backtrace', $resource['pk_i_id'], $backtracel, $admin?'admin':'user', $admin ? osc_logged_admin_id() : osc_logged_user_id()) ;
 
         @unlink(osc_base_path() . $resource['s_path'] .$resource['pk_i_id'].".".$resource['s_extension']);
@@ -239,7 +239,7 @@ function osc_doRequest($url, $_data) {
         // open a socket connection on port 80
         // use localhost in case of issues with NATs (hairpinning)
         $fp = @fsockopen($host, 80);
-        
+
         if($fp!==false) {
             $out  = "POST $path HTTP/1.1\r\n";
             $out .= "Host: $host\r\n";
@@ -298,6 +298,12 @@ function osc_sendMail($params) {
         $mail->Host = ( isset($params['host']) ) ? $params['host'] : osc_mailserver_host() ;
         $mail->Port = ( isset($params['port']) ) ? $params['port'] : osc_mailserver_port() ;
         $mail->From = ( isset($params['from']) ) ? $params['from'] : 'osclass@' . osc_get_domain() ;
+        if( osc_mailserver_username() !== '' ) {
+            $mail->From = osc_mailserver_username();
+        }
+        if( array_key_exists('username', $params) ) {
+            $mail->From = $params['username'];
+        }
         $mail->FromName = ( isset($params['from_name']) ) ? $params['from_name'] : osc_page_title() ;
         $mail->Subject = ( isset($params['subject']) ) ? $params['subject'] : '' ;
         $mail->Body = ( isset($params['body']) ) ? $params['body'] : '' ;
@@ -354,7 +360,7 @@ function osc_mailBeauty($text, $params) {
         $_SERVER['REMOTE_ADDR']
     );
     $text = str_ireplace($kwords, $rwords, $text) ;
-    
+
     return $text ;
 }
 
@@ -435,19 +441,19 @@ function osc_copyemz($file1,$file2){
     } else {
         $status=true;
     }
-                   
+
     return $status;
-} 
+}
 
 /**
  * Dump osclass database into path file
  *
  * @param type $path
  * @param type $file
- * @return type 
+ * @return type
  */
 function osc_dbdump($path, $file) {
-    
+
     require_once LIB_PATH . 'osclass/model/Dump.php';
     if ( !is_writable($path) ) return -4 ;
     if($path == '') return -1 ;
@@ -458,7 +464,7 @@ function osc_dbdump($path, $file) {
 
     $path .= $file ;
     $result = $dump->showTables();
-    
+
     if(!$result) {
         $_str = '' ;
         $_str .= '/* no tables in ' . DB_NAME . ' */' ;
@@ -470,7 +476,7 @@ function osc_dbdump($path, $file) {
 
         return -3 ;
     }
-    
+
     $_str = '' ;
     $_str .= '/* OSCLASS MYSQL Autobackup (' . date('Y-m-d H:i:s') . ') */' ;
     $_str .= "\n" ;
@@ -484,7 +490,7 @@ function osc_dbdump($path, $file) {
         $tableName = current($_table);
         $tables[$tableName] = $tableName;
     }
-    
+
     $tables_order = array('t_locale', 't_country', 't_currency', 't_region', 't_city', 't_city_area', 't_widget', 't_admin', 't_user', 't_user_description', 't_category', 't_category_description', 't_category_stats', 't_item', 't_item_description', 't_item_location', 't_item_stats', 't_item_resource', 't_item_comment', 't_preference', 't_user_preferences', 't_pages', 't_pages_description', 't_plugin_category', 't_cron', 't_alerts', 't_keywords', 't_meta_fields', 't_meta_categories', 't_item_meta');
     // Backup default OSClass tables in order, so no problem when importing them back
     foreach($tables_order as $table) {
@@ -494,13 +500,13 @@ function osc_dbdump($path, $file) {
             unset($tables[DB_TABLE_PREFIX . $table]) ;
         }
     }
-    
+
     // Backup the rest of tables
     foreach($tables as $table) {
         $dump->table_structure($path, $table) ;
         $dump->table_data($path, $table) ;
     }
-    
+
     return 1 ;
 }
 
@@ -508,8 +514,8 @@ function osc_dbdump($path, $file) {
 
 /**
  * Returns true if there is curl on system environment
- * 
- * @return type 
+ *
+ * @return type
  */
 function testCurl() {
     if ( ! function_exists( 'curl_init' ) || ! function_exists( 'curl_exec' ) )
@@ -521,7 +527,7 @@ function testCurl() {
 /**
  * Returns true if there is fsockopen on system environment
  *
- * @return type 
+ * @return type
  */
 function testFsockopen() {
     if ( ! function_exists( 'fsockopen' ) )
@@ -535,55 +541,55 @@ function testFsockopen() {
  * @since 3.0
  */
 if( !function_exists('http_chunked_decode') ) {
-    /** 
-     * dechunk an http 'transfer-encoding: chunked' message 
-     * 
-     * @param string $chunk the encoded message 
-     * @return string the decoded message.  If $chunk wasn't encoded properly it will be returned unmodified. 
-     */ 
-    function http_chunked_decode($chunk) { 
-        $pos = 0; 
-        $len = strlen($chunk); 
-        $dechunk = null; 
+    /**
+     * dechunk an http 'transfer-encoding: chunked' message
+     *
+     * @param string $chunk the encoded message
+     * @return string the decoded message.  If $chunk wasn't encoded properly it will be returned unmodified.
+     */
+    function http_chunked_decode($chunk) {
+        $pos = 0;
+        $len = strlen($chunk);
+        $dechunk = null;
 
-        while(($pos < $len) 
-            && ($chunkLenHex = substr($chunk,$pos, ($newlineAt = strpos($chunk,"\n",$pos+1))-$pos))) 
-        { 
-            if (! is_hex($chunkLenHex)) { 
-                trigger_error('Value is not properly chunk encoded', E_USER_WARNING); 
-                return $chunk; 
-            } 
+        while(($pos < $len)
+            && ($chunkLenHex = substr($chunk,$pos, ($newlineAt = strpos($chunk,"\n",$pos+1))-$pos)))
+        {
+            if (! is_hex($chunkLenHex)) {
+                trigger_error('Value is not properly chunk encoded', E_USER_WARNING);
+                return $chunk;
+            }
 
-            $pos = $newlineAt + 1; 
-            $chunkLen = hexdec(rtrim($chunkLenHex,"\r\n")); 
-            $dechunk .= substr($chunk, $pos, $chunkLen); 
-            $pos = strpos($chunk, "\n", $pos + $chunkLen) + 1; 
-        } 
-        return $dechunk; 
-    } 
+            $pos = $newlineAt + 1;
+            $chunkLen = hexdec(rtrim($chunkLenHex,"\r\n"));
+            $dechunk .= substr($chunk, $pos, $chunkLen);
+            $pos = strpos($chunk, "\n", $pos + $chunkLen) + 1;
+        }
+        return $dechunk;
+    }
 }
 
-/** 
- * determine if a string can represent a number in hexadecimal 
- * 
+/**
+ * determine if a string can represent a number in hexadecimal
+ *
  * @since 3.0
- * @param string $hex 
- * @return boolean true if the string is a hex, otherwise false 
- */ 
-function is_hex($hex) { 
-    // regex is for weenies 
-    $hex = strtolower(trim(ltrim($hex,"0"))); 
-    if (empty($hex)) { $hex = 0; }; 
-    $dec = hexdec($hex); 
-    return ($hex == dechex($dec)); 
+ * @param string $hex
+ * @return boolean true if the string is a hex, otherwise false
+ */
+function is_hex($hex) {
+    // regex is for weenies
+    $hex = strtolower(trim(ltrim($hex,"0")));
+    if (empty($hex)) { $hex = 0; };
+    $dec = hexdec($hex);
+    return ($hex == dechex($dec));
 }
 
 /**
  * Process response and return headers and body
- * 
+ *
  * @since 3.0
  * @param type $content
- * @return type 
+ * @return type
  */
 function processResponse($content)
 {
@@ -594,7 +600,7 @@ function processResponse($content)
     if (!is_string($headers)) {
         return array();
     }
-    
+
     return array('headers' => $headers, 'body' => $body);
 }
 
@@ -602,9 +608,9 @@ function processResponse($content)
  * Parse headers and return into array format
  *
  * @param type $headers
- * @return type 
+ * @return type
  */
-function processHeaders($headers) 
+function processHeaders($headers)
 {
     $headers = str_replace("\r\n", "\n", $headers);
     $headers = preg_replace('/\n[ \t]/', ' ', $headers);
@@ -625,11 +631,11 @@ function processHeaders($headers)
  *
  * @since 3.0
  * @param type $sourceFile
- * @param type $fileout 
+ * @param type $fileout
  */
-function download_fsockopen($sourceFile, $fileout = null) 
+function download_fsockopen($sourceFile, $fileout = null)
 {
-    // parse URL 
+    // parse URL
     $aUrl = parse_url($sourceFile);
     $host = $aUrl['host'];
     if ('localhost' == strtolower($host))
@@ -639,10 +645,10 @@ function download_fsockopen($sourceFile, $fileout = null)
 
     if (empty($link))
         $link .= '/';
-            
+
     $fp = @fsockopen($host, 80, $errno, $errstr, 30);
     if (!$fp) {
-        
+
     } else {
         $out = "GET $link HTTP/1.1\r\n";
         $out .= "Host: $host\r\n";
@@ -654,11 +660,11 @@ function download_fsockopen($sourceFile, $fileout = null)
         while (!feof($fp)) {
             $contents.= fgets($fp, 1024);
         }
-        // check redirections ? 
+        // check redirections ?
         // if (redirections) then do request again
         $aResult = processResponse($contents);
         $headers = processHeaders($aResult['headers']);
-        
+
         $location = @$headers['location'];
         if (isset($location) && $location != "") {
             $aUrl = parse_url($headers['location']);
@@ -671,7 +677,7 @@ function download_fsockopen($sourceFile, $fileout = null)
 
             if (empty($requestPath))
                 $requestPath .= '/';
-            
+
             download_fsockopen($host, $requestPath, $fileout);
         } else {
             $body = $aResult['body'];
@@ -691,7 +697,7 @@ function download_fsockopen($sourceFile, $fileout = null)
     }
 }
 
-function osc_downloadFile($sourceFile, $downloadedFile) 
+function osc_downloadFile($sourceFile, $downloadedFile)
 {
     if ( testCurl() ) {
         @set_time_limit(0);
@@ -716,7 +722,7 @@ function osc_downloadFile($sourceFile, $downloadedFile)
     }
 }
 
-function osc_file_get_contents($url) 
+function osc_file_get_contents($url)
 {
     if( testCurl() ) {
         $ch = curl_init() ;
@@ -739,11 +745,10 @@ function osc_file_get_contents($url)
  * Check if we loaded some specific module of apache
  *
  * @param string $mod
- * 
+ *
  * @return bool
  */
 function apache_mod_loaded($mod) {
-
     if(function_exists('apache_get_modules')) {
         $modules = apache_get_modules();
         if(in_array($mod, $modules)) { return true; }
@@ -751,8 +756,8 @@ function apache_mod_loaded($mod) {
         ob_start();
         phpinfo(INFO_MODULES);
         $content = ob_get_contents();
-        if(stripos($content, $mod)!==FALSE) { return true; }
         ob_end_clean();
+        if(stripos($content, $mod)!==FALSE) { return true; }
     }
     return false;
 }
@@ -768,7 +773,7 @@ function osc_changeVersionTo($version = null) {
         Preference::newInstance()->update(array('s_value' => $version), array( 's_section' => 'osclass', 's_name' => 'version'));
         //XXX: I don't know if it's really needed. Only for reload the values of the preferences
         Preference::newInstance()->toArray() ;
-    }    
+    }
 }
 
 function strip_slashes_extended($array) {
@@ -828,7 +833,7 @@ function _unzip_file_ziparchive($file, $to) {
     if($zip->numFiles==0) {
         return 2;
     }
-    
+
 
     for ($i = 0; $i < $zip->numFiles; $i++) {
         $file = $zip->statIndex($i);
@@ -870,7 +875,7 @@ function _unzip_file_ziparchive($file, $to) {
  *
  * @param string $zip_file Full path of the zip file
  * @param string $to Full path where it is going to be unzipped
- * @return int 
+ * @return int
  */
 function _unzip_file_pclzip($zip_file, $to) {
     // first, we load the library
@@ -891,7 +896,7 @@ function _unzip_file_pclzip($zip_file, $to) {
         if (substr($file['filename'], 0, 9) === '__MACOSX/') {
             continue;
         }
-        
+
         if ($file['folder']) {
             @mkdir($to . $file['filename'], 0777);
             continue;
@@ -943,7 +948,7 @@ function _zip_folder_ziparchive($archive_folder, $archive_name) {
         while (count($dirs)) {
             $dir = current($dirs);
             $zip -> addEmptyDir(str_replace(ABS_PATH, '', $dir));
-      
+
             $dh = opendir($dir);
             while (false !== ($_file = readdir($dh))) {
                 if ($_file != '.' && $_file != '..') {
@@ -980,11 +985,11 @@ function _zip_folder_pclzip($archive_folder, $archive_name) {
     $zip = new PclZip($archive_name);
     if($zip) {
         $dir = preg_replace('/[\/]{2,}/', '/', $archive_folder."/");
-   
+
         $v_dir = osc_base_path();
         $v_remove = $v_dir;
 
-        // To support windows and the C: root you need to add the 
+        // To support windows and the C: root you need to add the
         // following 3 lines, should be ignored on linux
         if (substr($v_dir, 1,1) == ':') {
             $v_remove = substr($v_dir, 2);
@@ -997,7 +1002,7 @@ function _zip_folder_pclzip($archive_folder, $archive_name) {
     } else {
         return false;
     }
-    
+
 }
 
 function osc_check_recaptcha() {
@@ -1008,7 +1013,7 @@ function osc_check_recaptcha() {
                                         ,$_SERVER["REMOTE_ADDR"]
                                         ,Params::getParam("recaptcha_challenge_field")
                                         ,Params::getParam("recaptcha_response_field"));
-                                        
+
         return $resp->is_valid;
     }
 
@@ -1082,7 +1087,7 @@ function osc_change_permissions( $dir = ABS_PATH ) {
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/downloads")) {
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/uploads")) {
                     } else {
-                        $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file)); 
+                        $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
                         if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
                     }
                 } else {
@@ -1204,7 +1209,7 @@ function _need_update($uri, $version) {
         }
     }
 }
-// END -- Market util functions 
+// END -- Market util functions
 
 /**
  * Update category stats
@@ -1255,20 +1260,20 @@ function osc_update_cat_stats() {
 
 /**
  * Recount items for a given a category id
- * 
- * @param int $id 
+ *
+ * @param int $id
  */
 function osc_update_cat_stats_id($id)
 {
     // get sub categorias
     if( !Category::newInstance()->isRoot($id) ) {
         $auxCat = Category::newInstance()->findRootCategory($id);
-        $id = $auxCat['pk_i_id']; 
+        $id = $auxCat['pk_i_id'];
     }
-    
+
     $aCategories    = Category::newInstance()->findSubcategories($id);
     $categoryTotal  = 0;
-    
+
     if( count($aCategories) > 0 ) {
         // sumar items de la categoría
         foreach($aCategories as $category) {
@@ -1281,7 +1286,7 @@ function osc_update_cat_stats_id($id)
         $total     = Item::newInstance()->numItems($category, true, true) ;
         $categoryTotal += $total;
     }
-    
+
     $sql = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_category_stats (fk_i_category_id, i_num_items) VALUES ';
     $sql .= " (".$id.", ".$categoryTotal.")";
     $result = CategoryStats::newInstance()->dao->query($sql);

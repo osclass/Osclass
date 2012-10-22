@@ -127,7 +127,7 @@
                                 <?php while ( osc_has_item_comments() ) { ?>
                                     <div class="comment">
                                         <h3><strong><?php echo osc_comment_title() ; ?></strong> <em><?php _e("by", 'modern') ; ?> <?php echo osc_comment_author_name() ; ?>:</em></h3>
-                                        <p><?php echo osc_comment_body() ; ?> </p>
+                                        <p><?php echo nl2br( osc_comment_body() ) ; ?> </p>
                                         <?php if ( osc_comment_user_id() && (osc_comment_user_id() == osc_logged_user_id()) ) { ?>
                                         <p>
                                             <a rel="nofollow" href="<?php echo osc_delete_comment_url(); ?>" title="<?php _e('Delete your comment', 'modern'); ?>"><?php _e('Delete', 'modern'); ?></a>
@@ -135,7 +135,7 @@
                                         <?php } ?>
                                     </div>
                                 <?php } ?>
-                                <div class="pagination">
+                                <div class="paginate" style="text-align: right;">
                                     <?php echo osc_comments_pagination(); ?>
                                 </div>
                             </div>

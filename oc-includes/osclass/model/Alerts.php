@@ -98,7 +98,7 @@
             $result = $this->dao->get() ;
             
             if( $result == false ) { 
-                return false;
+                return array();
             } else {
                 return $result->result();
             }
@@ -121,7 +121,7 @@
             $result = $this->dao->get();
             
             if( $result == false ) { 
-                return false;
+                return array();
             } else {
                 return $result->result();
             }
@@ -209,7 +209,7 @@
             $result = $this->dao->get();
             
             if( $result == false ) { 
-                return false;
+                return array();
             } else {
                 return $result->result();
             }
@@ -235,7 +235,7 @@
             $result = $this->dao->get();
             
             if( $result == false ) { 
-                return false;
+                return array();
             } else {
                 return $result->result();
             }
@@ -261,7 +261,7 @@
             $result = $this->dao->get();
             
             if( $result == false ) { 
-                return false;
+                return array();
             } else {
                 return $result->result();
             }

@@ -61,7 +61,7 @@
 
                 $('input[name="user"]').attr( "autocomplete", "off" );
                 $('#user,#fUser').autocomplete({
-                    source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax"+$('input[name="user"]').val(), // &term=
+                    source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax", //+$('input[name="user"]').val(), // &term=
                     minLength: 0,
                     select: function( event, ui ) {
                         if(ui.item.id=='') 
@@ -218,7 +218,7 @@
             <div class="row-wrapper">
                 <div class="form-row">
                     <div class="form-label">
-                        <?php _e('User') ; ?>
+                        <?php _e('Email') ; ?>
                     </div>
                     <div class="form-controls">
                         <input id="user" name="user" type="text" value="<?php echo osc_esc_html(Params::getParam('user')); ?>" />
@@ -316,7 +316,7 @@
                 <?php if($opt == 'oItemId') { $classItemId = ''; } ?>
                 <select id="filter-select" name="shortcut-filter" class="select-box-extra select-box-input">
                     <option value="oPattern" <?php if($opt == 'oPattern'){ echo 'selected="selected"'; } ?>><?php _e('Pattern') ; ?></option>
-                    <option value="oUser" <?php if($opt == 'oUser'){ echo 'selected="selected"'; } ?>><?php _e('User') ; ?></option>
+                    <option value="oUser" <?php if($opt == 'oUser'){ echo 'selected="selected"'; } ?>><?php _e('Email') ; ?></option>
                     <option value="oItemId" <?php if($opt == 'oItemId'){ echo 'selected="selected"'; } ?>><?php _e('Item ID') ; ?></option>
                 </select><input 
                     id="fPattern" type="text" name="sSearch"

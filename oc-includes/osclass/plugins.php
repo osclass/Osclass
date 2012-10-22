@@ -59,6 +59,7 @@
                         foreach(self::$hooks[$hook][$priority] as $fxName) {
                             if(is_callable($fxName)) {
                                 $content = call_user_func_array($fxName, $args);
+                                $args[0] = $content;
                             }
                         }
                     }

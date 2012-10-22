@@ -37,18 +37,18 @@ option.pad { margin-left:10px;}
 }
 .flashmessage-warning {
     background-color: #FCF8E3;
-    border-bottom: solid 2px #FBEED5;
+    border: solid 2px #FBEED5;
     color: #C09853;
 }
 .flashmessage-error {
-    background-color: #F2DEDE;
-    border-bottom: solid 2px #EED3D7;
-    color: #B94A48;
+    background-color: red;
+    border: none;
+    color: #fff;
 }
 .flashmessage-info,
 .flashmessage-ok {
     background-color: #D9EDF7;
-    border-bottom: solid 2px #BCE8F1;
+    border: solid 2px #BCE8F1;
     color: #3A87AD;
 }
 .flashmessage .ico-close {
@@ -73,6 +73,14 @@ option.pad { margin-left:10px;}
 .flashmessage-success .close,
 .flashmessage-information .close {
     color: #3A87AD;
+}
+.forcemessages-inline{
+    clear:both;
+    width: 960px;
+    margin-bottom:15px;
+}
+.forcemessages-inline .flashmessage{
+    position: relative;
 }
 /* Header */
 #header { border-bottom: 1px solid #BBB; clear:both; float:left; margin:25px 0 0 0; padding:0 0 30px 0; position: relative; width:960px; }
@@ -146,10 +154,10 @@ ul.breadcrumb li { float: left; padding: 0 2px; }
 .home #main .categories .category li { border-bottom:1px dotted #DDD; color:#CCC; font-size:11px; padding:5px 0; }
 .home #main .latest_ads { padding-left:10px; clear:both; }
 .home #main .latest_ads table { clear:both; width:100%; }
-.home #main .latest_ads table td { border-bottom:1px dotted #dddddd; padding:8px; vertical-align:top; } 
+.home #main .latest_ads table td { border-bottom:1px dotted #dddddd; padding:8px; vertical-align:top; }
 .home #main .latest_ads table tr.odd td { background:#f8f8f8; }
 .home #main .latest_ads table tr:hover td { background:#fefbea; }
-.home #main .latest_ads table td.photo { padding-left:2px; } 
+.home #main .latest_ads table td.photo { padding-left:2px; }
 .home #main .latest_ads table td.photo img { background:#FFF; border:1px solid #DDD; padding:1px; }
 .home #main .latest_ads table td.text h3 { font-size:14px; font-weight:normal; margin-bottom: 4px; }
 .home #main .latest_ads table td.text h4 { color:#000; font-size:11px; font-weight:bold; margin-bottom: 3px; }
@@ -187,10 +195,10 @@ ul.breadcrumb li { float: left; padding: 0 2px; }
 .ad_list #list_head .see_by a { text-decoration: none; }
 .ad_list #list_head .see_by a.current { background:url(images/order_by_current.gif) no-repeat right 45%; padding-right:12px; }
 .ad_list table { clear:both; width:100%; }
-.ad_list table td { border-bottom:1px dotted #dddddd; padding:8px; vertical-align:top; } 
+.ad_list table td { border-bottom:1px dotted #dddddd; padding:8px; vertical-align:top; }
 .ad_list table tr.odd td { background:#f8f8f8; }
 .ad_list table tr:hover td { background:#fefbea; }
-.ad_list table td.photo { padding-left:2px; } 
+.ad_list table td.photo { padding-left:2px; }
 .ad_list table td.photo img { background:#FFF; border:1px solid #DDD; padding:1px; }
 .ad_list table td.text h3 { font-size:14px; font-weight:normal; margin-bottom: 4px; }
 .ad_list table td.text h4 { color:#000; font-size:11px; font-weight:bold; margin-bottom: 3px; }
@@ -297,7 +305,7 @@ ul.breadcrumb li { float: left; padding: 0 2px; }
 .item #comments .pagination { text-align: right; margin-right: 10px; margin-bottom: 15px; }
 .item #comments .pagination a { border: 1px dotted #AAA; padding: 5px 8px; }
 .item #comments .pagination a.searchPaginationSelected { background-color: #f7f7f7; }
-.item #comments .pagination a.searchPaginationNext, .item #comments a.searchPaginationPrev, 
+.item #comments .pagination a.searchPaginationNext, .item #comments a.searchPaginationPrev,
 .item #comments .pagination a.searchPaginationFirst, .item #comments a.searchPaginationLast { border: 0px; text-decoration: none; }
 .item #comments .pagination a.searchPaginationNext:hover, .item #comments a.searchPaginationPrev:hover,
 .item #comments .pagination a.searchPaginationFirst:hover, .item #comments a.searchPaginationLast:hover { background-color: #ffffff; }
@@ -440,9 +448,9 @@ http://pixelmatrixdesign.com/uniform/
 div.selector { border:1px solid #b4b4b4; line-height: 26px; height: 26px; margin-right:10px; }
 div.selector span {  background:url(images/select_arrow.gif) no-repeat right 11px; height: 26px; line-height: 26px; }
 div.selector select { top: 0px; left: 0px; }
-div.selector.hover, 
+div.selector.hover,
 div.selector:hover {  }
-div.selector.hover span, 
+div.selector.hover span,
 div.selector:hover span { background-position: right -29px; }
 div.selector.focus:active,
 div.selector.focus.active,
@@ -498,7 +506,7 @@ div.auto div.selector select{ min-width:0; font-family: Arial, "Helvetica Neue",
 div.auto div.selector span { color: #000; width: auto; }
 
 /*
-CORE FUNCTIONALITY 
+CORE FUNCTIONALITY
 Not advised to edit stuff below this line
 -----------------------------------------------------
 */

@@ -49,19 +49,40 @@
         <script type="text/javascript">
             document.write('<style type="text/css"> .tabber{ display:none; } </style>') ;
             $(document).ready(function(){
-                $("#userId").bind('change', function() {
-                    if($(this).val() == '') {
-                        $("#contact_info").show() ;
-                    } else {
+                // -----
+//                $("#userId").bind('change', function() {
+//                    if($(this).val() == '') {
+//                        $("#contact_info").show() ;
+//                    } else {
+//                        $("#contact_info").hide() ;
+//                    }
+//                }) ;
+//
+//                if( $("#userId").val() == '') {
+//                    $("#contact_info").show() ;
+//                } else {
+//                    $("#contact_info").hide() ;
+//                }
+                // -----
+                $('input[name="user"]').attr( "autocomplete", "off" );
+                $('#user,#fUser').autocomplete({
+                    source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax",
+                    minLength: 0,
+                    select: function( event, ui ) {
+                        if(ui.item.id=='') {
+                            $("#contact_info").show() ;
+                            return false;
+                        }
+                        $('#userId').val(ui.item.id);
+                        $('#fUserId').val(ui.item.id);
                         $("#contact_info").hide() ;
                     }
-                }) ;
-
-                if( $("#userId").val() == '') {
-                    $("#contact_info").show() ;
-                } else {
-                    $("#contact_info").hide() ;
-                }
+//                    ,search: function() {
+//                        $('#userId').val('');
+//                        $('#fUserId').val('');
+//                    }
+                });
+                // ----
 
                 <?php if(osc_locale_thousands_sep()!='' || osc_locale_dec_point() != '') { ?>
                 $("#price").blur(function(event) {
@@ -172,7 +193,10 @@ osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
                     <div id="right-side">
                         <div class="well ui-rounded-corners">
                             <h3 class="label">User</h3>
-                            <?php ItemForm::user_select(null, null, __('Non-registered user')) ; ?>
+                            <?php //ItemForm::user_select(null, null, __('Non-registered user')) ; ?>
+<!--                         input autocomplete   -->
+<!--                            <input id="fUser" name="user" type="text" class="fUser input-text input-actions" value="<?php echo osc_esc_html(Params::getParam('user')); ?>" />
+                            <input id="fUserId" name="userId" type="hidden" value="<?php echo osc_esc_html(Params::getParam('userId')); ?>" />-->
                             <div id="contact_info">
                                 <div class="input-has-placeholder input-separate-top">
                                     <label><?php _e('Name') ; ?></label>
