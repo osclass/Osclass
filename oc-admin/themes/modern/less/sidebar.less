@@ -31,6 +31,10 @@
     position:            relative;
     list-style:          none;
 }
+#sidebar .oscmenu > li > ul{
+    overflow: auto;
+    max-height: 400%;
+}
 #sidebar .oscmenu .current{
     background:          @color-gray-soft;
     -webkit-box-shadow: inset 0px 0px 10px 0px @color-gray-ash;
@@ -58,7 +62,7 @@ body.compact #sidebar .oscmenu .current{
         border:              solid 1px @color-gray-soft;
         background-color:    @color-white;
         .rounded-corners;
-        -webkit-box-shadow:  1px 1px 0px 0px @color-gray-ash;   
+        -webkit-box-shadow:  1px 1px 0px 0px @color-gray-ash;
         box-shadow:          1px 1px 0px 0px @color-gray-ash;
         font-size:           12px;
         display:             none;
@@ -117,7 +121,7 @@ body.compact #sidebar .oscmenu .current{
     border:              solid 1px @color-gray-soft;
     background-color:    @color-white;
     .rounded-corners;
-    -webkit-box-shadow:  1px 1px 0px 0px @color-gray-ash;   
+    -webkit-box-shadow:  1px 1px 0px 0px @color-gray-ash;
     box-shadow:          1px 1px 0px 0px @color-gray-ash;
 }
     #submenu-sidebar ul{
@@ -156,7 +160,7 @@ body.compact #sidebar .oscmenu .current{
         border:              solid 1px @color-gray-soft;
         background-color:    @color-white;
         .rounded-corners;
-        -webkit-box-shadow:  1px 1px 0px 0px @color-gray-ash;   
+        -webkit-box-shadow:  1px 1px 0px 0px @color-gray-ash;
         box-shadow:          1px 1px 0px 0px @color-gray-ash;
         font-size:           12px;
     }
