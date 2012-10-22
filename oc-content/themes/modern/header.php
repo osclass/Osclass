@@ -18,8 +18,6 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
-
-    osc_show_flash_message() ;
 ?>
 <!-- container -->
 <div class="container">
@@ -96,3 +94,6 @@
 <?php
     }
 ?>
+<div class="forcemessages-inline">
+    <?php osc_show_flash_message(); ?>
+</div>
