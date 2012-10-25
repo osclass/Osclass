@@ -1,3 +1,18 @@
+OSClass 3.0.2 2012-10-22
+------------------------
+- Use email from SMTP Settings if it's defined
+- Implode categories in search url parameter
+- If the submenu is too big in oc-admin now it can be scrollable
+- Javascript validation when changing the user email
+- Search a listing by email even if the listing is from a non-registered user
+- Search users by email in manage users
+- Javascript error in countrID selector
+- Enhancement: Show total views from osc_item_views helper
+- Bug: _whereIn method in DBCommandClass
+- Bug: javascript error in manage custom fields
+- Bug: Do not select by default the country in the filters of manage listings
+- Bug: Show "Showing X to X of X results" if there is only one page in oc-admin pagination
+
 OSClass 3.0.1 2012-08-13
 ------------------------
 - Bug: changed from ENT_COMPACT to ENT_COMPAT
@@ -320,7 +335,7 @@ OSClass 1.1 2010-11-29
 OSClass 1.1 RC 2010-11-22
 -------------------------
 - Fixed installation and locations (in oc-admin) problems. Now, even though allow_url_fopen is disabled, it works well.
-- Now if you activate a new language and you haven't translated categories yet, it shows in other language that is available. 
+- Now if you activate a new language and you haven't translated categories yet, it shows in other language that is available.
 - SMTP is working well now.
 - Added default currency feature
 - Small bugs fixed
