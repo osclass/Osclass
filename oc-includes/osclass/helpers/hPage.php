@@ -191,7 +191,7 @@
     function osc_get_static_page($internal_name, $locale = '') {
         if ($locale == "") $locale = osc_current_user_locale() ;
         $page = Page::newInstance()->findByInternalName($internal_name, $locale);
-        View::newInstance()->_exportVariableToView('page_meta', json_decode($page['s_meta'], true));
+        View::newInstance()->_exportVariableToView('page_meta', json_decode(@$page['s_meta'], true));
         return View::newInstance()->_exportVariableToView('page', $page);
     }
 
