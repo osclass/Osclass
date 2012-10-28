@@ -277,7 +277,7 @@
                         },
                         rewrite_user_activate_alert: {
                             required: '<?php echo osc_esc_js( __("Activate alert url: this field is required")); ?>.',
-                            minlength: '<?php echo osc_esc_js( __("Activate aler url: this field is required")); ?>.'
+                            minlength: '<?php echo osc_esc_js( __("Activate alert url: this field is required")); ?>.'
                         },
                         rewrite_user_profile: {
                             required: '<?php echo osc_esc_js( __("User profile url: this field is required")); ?>.',
