@@ -55,7 +55,7 @@
                 $("#dialog-language-delete").dialog({
                     autoOpen: false,
                     modal: true,
-                    title: '<?php echo osc_esc_js( __('Delete listing') ); ?>'
+                    title: '<?php echo osc_esc_js( __('Delete language') ); ?>'
                 });
 
                 // dialog bulk actions
