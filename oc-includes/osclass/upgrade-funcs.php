@@ -35,7 +35,7 @@
             $c_db = $conn->getOsclassDb() ;
             $comm = new DBCommandClass( $c_db ) ;
 
-            $error_queries = $comm->updateDB( str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ) ;   
+            $error_queries = $comm->updateDB( str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ) ;
         }
 
         if( Params::getParam('skipdb') == '' ){
@@ -86,7 +86,7 @@
             Item::newInstance()->update(array("b_active" => ($item['e_status'] == 'ACTIVE' ? 1 : 0 ) , 'b_enabled' => 1)
                                        ,array('pk_i_id'  => $item['pk_i_id']));
         }
-        unset($items); 
+        unset($items);
 
         // populate i_items/i_comments/b_active/b_enabled (t_user)
         $users = User::newInstance()->listAll();
@@ -146,12 +146,12 @@ CREATE TABLE %st_item_description_tmp (
         $comm->query(sprintf("RENAME TABLE `%st_item_description_tmp` TO `%st_item_description`", DB_TABLE_PREFIX, DB_TABLE_PREFIX));
         $comm->query(sprintf("ALTER TABLE %st_item_description ADD FULLTEXT s_description (s_description, s_title);", DB_TABLE_PREFIX));
 
-        // remove old tables if have the same number of rows 
+        // remove old tables if have the same number of rows
         $nItemDesc      = $comm->query(sprintf('SELECT count(*) as total FROM %st_item_description', DB_TABLE_PREFIX));
         $nItemDesc      = $nItemDesc->row();
         $nItemDescOld   = $comm->query(sprintf('SELECT count(*) as total FROM %st_item_description_old', DB_TABLE_PREFIX));
         $nItemDescOld   = $nItemDescOld->row();
-        
+
         if( $nItemDesc['total'] == $nItemDescOld['total'] ) {
             $comm->query(sprintf('DROP TABLE %st_item_description_old' ,DB_TABLE_PREFIX) );
         }
@@ -257,9 +257,9 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('last_version_check', time());
         osc_set_preference('update_core_json', '');
 
-        $update_dt_expiration = sprintf('update %st_item as a 
+        $update_dt_expiration = sprintf('update %st_item as a
                     left join %st_category  as b on b.pk_i_id = a.fk_i_category_id
-                    set a.dt_expiration = date_add(a.dt_pub_date, INTERVAL b.i_expiration_days DAY) 
+                    set a.dt_expiration = date_add(a.dt_pub_date, INTERVAL b.i_expiration_days DAY)
                     where b.i_expiration_days > 0', DB_TABLE_PREFIX, DB_TABLE_PREFIX );
         $comm->query( $update_dt_expiration ) ;
 
@@ -269,7 +269,7 @@ CREATE TABLE %st_item_description_tmp (
         foreach($aCountry as $country) {
             // insert into country_stats with i_num_items = 0
             $comm->query( sprintf('INSERT INTO %st_country_stats (fk_c_country_code, i_num_items) VALUES (\'%s\', 0)', DB_TABLE_PREFIX, $country['pk_c_code']) ) ;
-            $rs = $comm->query( sprintf('SELECT pk_i_id FROM %st_region WHERE fk_c_country_code = \'%s\'', DB_TABLE_PREFIX, $country['pk_c_code']) ); 
+            $rs = $comm->query( sprintf('SELECT pk_i_id FROM %st_region WHERE fk_c_country_code = \'%s\'', DB_TABLE_PREFIX, $country['pk_c_code']) );
             $aRegion = $rs->result();
             foreach($aRegion as $region) {
                 // insert into region_stats with i_num_items = 0
@@ -299,7 +299,7 @@ CREATE TABLE %st_item_description_tmp (
         unset($aAlerts);
 
         $aAlerts = Alerts::newInstance()->findByType('WEEKLY');
-        foreach($aAlerts as $weekly) { 
+        foreach($aAlerts as $weekly) {
             convertAlert($weekly);
         }
         unset($aAlerts);
@@ -387,6 +387,7 @@ CREATE TABLE %st_item_description_tmp (
 
     if(osc_version() < 310) {
         $comm->query(sprintf("ALTER TABLE  %st_alerts ADD  `pk_i_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY", DB_TABLE_PREFIX));
+        $comm->query(sprintf("ALTER TABLE  %st_pages ADD  `s_meta` TEXT NULL", DB_TABLE_PREFIX));
         $comm->query(sprintf("UPDATE %st_alerts SET dt_date = '%s' ", DB_TABLE_PREFIX, date("Y-m-d H:i:s")));
 
         // remove files moved to controller folder
@@ -428,9 +429,9 @@ CREATE TABLE %st_item_description_tmp (
             $data = unserialize($data);
             // if search model, convert alert
             if(get_class($data) == 'Search') {
-                // get json 
+                // get json
                 $json = $data->toJson(true);
-                // insert new alert with json 
+                // insert new alert with json
                 $aCondition = array(
                     's_email'       => $alert['s_email'],
                     'b_active'      => $alert['b_active'],
@@ -440,7 +441,7 @@ CREATE TABLE %st_item_description_tmp (
                     $aCondition['fk_i_user_id'] = (int)$alert['fk_i_user_id'];
                 }
                 if($alert['s_secret']!='') {
-                    $aCondition['s_secret']     = $alert['s_secret']; 
+                    $aCondition['s_secret']     = $alert['s_secret'];
                 }
                 Alerts::newInstance()->update(array('s_search' => base64_encode($json)), $aCondition);
             }

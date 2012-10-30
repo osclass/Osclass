@@ -352,7 +352,12 @@ function osc_sendMail($params) {
     if( array_key_exists('from', $params) ) {
         $from = $params['from'];
     }
-
+    if( osc_mailserver_username() !== '' ) {
+        $from = osc_mailserver_username();
+    }
+    if( array_key_exists('username', $params) ) {
+        $from = $params['username'];
+    }
     $from_name = osc_page_title();
     if( array_key_exists('from_name', $params) ) {
         $from_name = $params['from_name'];
@@ -1088,7 +1093,7 @@ function _zip_folder_pclzip($archive_folder, $archive_name) {
         if (substr($v_dir, 1,1) == ':') {
             $v_remove = substr($v_dir, 2);
         }
-        $v_list = $zip->create($v_dir, PCLZIP_OPT_REMOVE_PATH, $v_remove);
+        $v_list = $zip->create($dir, PCLZIP_OPT_REMOVE_PATH, $v_remove);
         if ($v_list == 0) {
             return false;
         }
@@ -1407,7 +1412,7 @@ function osc_tinymce_ibrowser_language() {
 <script>
 
 </script>
-<?
+<?php
 }
 /*
 //<script>

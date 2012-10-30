@@ -159,15 +159,8 @@
                         <?php UserForm::mobile_text($user) ; ?>
                     </div>
                 </div>
-
                 <div class="form-row">
                     <div class="form-label"><?php _e('Phone') ; ?></div>
-                    <div class="form-controls">
-                        <?php UserForm::mobile_text($user) ; ?>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-label"><?php _e('Cell phone') ; ?></div>
                     <div class="form-controls">
                         <?php UserForm::phone_land_text($user) ; ?>
                     </div>

@@ -136,6 +136,7 @@ function printLocaleTitlePage($locales = null,$page = null) {
     if($locales==null) { $locales = osc_get_locales(); }
     $aFieldsDescription = Session::newInstance()->_getForm("aFieldsDescription");
     $num_locales = count($locales);
+    echo '<label for="title">' . __('Title') . ' *</label>';
 
     foreach($locales as $locale) {
         $title = '';
@@ -147,10 +148,9 @@ function printLocaleTitlePage($locales = null,$page = null) {
         }
         $name = $locale['pk_c_code'] . '#s_title';
 
-        echo '<div><label for="title">' . __('Title') . ' *</label>';
         echo '<div class="input-has-placeholder input-title-wide"><label for="title">' . __('Enter title here') . ' *</label>';
         echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($title, ENT_COMPAT, "UTF-8")) . '"  />' ;
-        echo '</div></div>';
+        echo '</div>';
     }
 }
 function printLocaleDescription($locales = null, $item = null) {
