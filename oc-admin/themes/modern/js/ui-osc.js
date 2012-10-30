@@ -85,7 +85,7 @@ $(function(){
         return false;
     });
     //Selects
-	$('select').each(function(){
+    $('select').each(function(){
         selectUi($(this));
     });
     //Set Layout
