@@ -575,7 +575,7 @@
                                             }
                                             Session::newInstance()->_clearVariables();
                                             osc_add_flash_ok_message( _m('A new listing has been added'), 'admin') ;
-                                            $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                                            $this->redirectTo( $url ) ;
                                         } else {
                                             osc_add_flash_error_message( $success, 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items&action=post" ) ;
