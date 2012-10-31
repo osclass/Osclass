@@ -27,7 +27,7 @@
 function osc_isExpired($dt_expiration) {
     $now       = date("YmdHis");
 
-   $dt_expiration = str_replace(' ', '', $dt_expiration);
+    $dt_expiration = str_replace(' ', '', $dt_expiration);
     $dt_expiration = str_replace('-', '', $dt_expiration);
     $dt_expiration = str_replace(':', '', $dt_expiration);
 
