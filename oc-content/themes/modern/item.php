@@ -216,7 +216,7 @@
                                 <label for="yourName"><?php _e('Your name', 'modern') ; ?>:</label> <?php ContactForm::your_name(); ?>
                                 <label for="yourEmail"><?php _e('Your e-mail address', 'modern') ; ?>:</label> <?php ContactForm::your_email(); ?>
                                 <label for="phoneNumber"><?php _e('Phone number', 'modern') ; ?> (<?php _e('optional', 'modern'); ?>):</label> <?php ContactForm::your_phone_number(); ?>
-                                <?php osc_run_hook('item_contact_form'); ?>
+                                <?php osc_run_hook('item_contact_form', osc_item_id()); ?>
                                 <label for="message"><?php _e('Message', 'modern') ; ?>:</label> <?php ContactForm::your_message(); ?>
                                 <input type="hidden" name="action" value="contact_post" />
                                 <input type="hidden" name="page" value="item" />
