@@ -84,7 +84,11 @@
         $gt = Translation::newInstance()->_get($domain);
 
         if(!$gt) {
-            return $key;
+            if($count>1) {
+                return $plural_key;
+            } else {
+                return $single_key;
+            }
         }
         $string = $gt->ngettext($single_key, $plural_key, $count);
         return osc_apply_filter('ngettext', $string);
