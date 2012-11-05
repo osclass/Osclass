@@ -98,4 +98,19 @@ $categories = array(
     array('pk_i_id' => 95,  'i_position' => 21, 'fk_i_parent_id' => 8,    's_name' => __('Other Jobs'))
 );
 
+
+$item = array(
+    'catId' => 9,
+    'title' => __('Example Ad'),
+    'description' => __('Description of the example ad. Insert here some usefull description of your ad.'),
+    'contactName' => __('Example author'),
+    'contactEmail' => __('osclass@example.com'),
+    'country' => __('Example country'),
+    'region' => __('Example region'),
+    'city' => __('Example city'),
+);
+
+
+
+
 ?>

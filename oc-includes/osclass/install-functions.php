@@ -55,33 +55,33 @@ function get_relative_url( ) {
 function get_requirements( ) {
     $array = array(
         'PHP version >= 5.x' => array(
-            'requirement' => __('PHP version >= 5.x'), 
-            'fn' => version_compare(PHP_VERSION, '5.0.0', '>='), 
+            'requirement' => __('PHP version >= 5.x'),
+            'fn' => version_compare(PHP_VERSION, '5.0.0', '>='),
             'solution' => __('PHP5 is required to run OSClass. You may talk with your hosting to upgrade your PHP version.')),
 
         'MySQLi extension for PHP' => array(
-            'requirement' => __('MySQLi extension for PHP'), 
-            'fn' => extension_loaded('mysqli'), 
+            'requirement' => __('MySQLi extension for PHP'),
+            'fn' => extension_loaded('mysqli'),
             'solution' => __('MySQLi extension is required. How to <a target="_blank" href="http://www.php.net/manual/en/mysqli.setup.php">install/configure</a>.')),
 
         'GD extension for PHP' => array(
-            'requirement' => __('GD extension for PHP'), 
-            'fn' => extension_loaded('gd'), 
+            'requirement' => __('GD extension for PHP'),
+            'fn' => extension_loaded('gd'),
             'solution' => __('GD extension is required. How to <a target="_blank" href="http://www.php.net/manual/en/image.setup.php">install/configure</a>.')),
 
         'Folder <code>oc-content/uploads</code> exists' => array(
-            'requirement' => __('Folder <code>oc-content/uploads</code> exists'), 
-            'fn' => file_exists( ABS_PATH . 'oc-content/uploads/' ), 
+            'requirement' => __('Folder <code>oc-content/uploads</code> exists'),
+            'fn' => file_exists( ABS_PATH . 'oc-content/uploads/' ),
             'solution' => sprintf(__('You have to create <code>uploads</code> folder, i.e.: <code>mkdir %soc-content/uploads/</code>' ), ABS_PATH)),
 
         'Folder <code>oc-content/uploads</code> is writable' => array(
-            'requirement' => __('<code>oc-content/uploads</code> folder is writable'), 
-            'fn' => is_writable( ABS_PATH . 'oc-content/uploads/' ), 
+            'requirement' => __('<code>oc-content/uploads</code> folder is writable'),
+            'fn' => is_writable( ABS_PATH . 'oc-content/uploads/' ),
             'solution' => sprintf(__('<code>uploads</code> folder has to be writable, i.e.: <code>chmod a+w %soc-content/uploads/</code>'), ABS_PATH)),
 
         'Folder <code>oc-content/languages</code> exists' => array(
-            'requirement' => __('<code>oc-content/languages</code> folder exists'), 
-            'fn' => file_exists( ABS_PATH . 'oc-content/languages/' ), 
+            'requirement' => __('<code>oc-content/languages</code> folder exists'),
+            'fn' => file_exists( ABS_PATH . 'oc-content/languages/' ),
             'solution' => sprintf(__('You have to create the <code>languages</code> folder, i.e.: <code>mkdir %soc-content/languages/</code>'), ABS_PATH))
     );
 
@@ -93,27 +93,27 @@ function get_requirements( ) {
             $config_writable = true;
         }
         $array['File <code>config.php</code> is writable'] = array(
-            'requirement' => __('<code>config.php</code> file is writable'), 
-            'fn' => $config_writable, 
+            'requirement' => __('<code>config.php</code> file is writable'),
+            'fn' => $config_writable,
             'solution' => sprintf(__('<code>config.php</code> file has to be writable, i.e.: <code>chmod a+w %sconfig.php</code>'), ABS_PATH));
     } else {
         if (is_writable(ABS_PATH) ) {
             $root_writable = true;
         }
         $array['Root directory is writable'] = array(
-            'requirement' => __('Root directory is writable'), 
-            'fn' => $root_writable, 
+            'requirement' => __('Root directory is writable'),
+            'fn' => $root_writable,
             'solution' => sprintf(__('Root folder has to be writable, i.e.: <code>chmod a+w %s</code>'), ABS_PATH));
 
         if( file_exists(ABS_PATH . 'config-sample.php') ) {
             $config_sample = true;
         }
         $array['File <code>config-sample.php</code> exists'] = array(
-            'requirement' => __('<code>config-sample.php</code> file exists'), 
-            'fn' => $config_sample, 
+            'requirement' => __('<code>config-sample.php</code> file exists'),
+            'fn' => $config_sample,
             'solution' => __('<code>config-sample.php</code> file is required, you should re-download OSClass.'));
     }
-    
+
     return $array;
 }
 
@@ -325,8 +325,8 @@ function oc_install( ) {
         $values['s_stop_words'] = $locales[osc_current_admin_locale()]['stop_words'] ;
     }
     $localeManager->insert($values) ;
-    
-    
+
+
     $required_files = array(
             ABS_PATH . 'oc-includes/osclass/installer/basic_data.sql',
             ABS_PATH . 'oc-includes/osclass/installer/pages.sql',
@@ -361,12 +361,12 @@ function oc_install( ) {
             break;
         }
     }
-    
+
     osc_set_preference('language', osc_current_admin_locale());
     osc_set_preference('admin_language', osc_current_admin_locale());
-    
+
     oc_install_example_data();
-    
+
 
     if( reportToOsclass() ) {
         set_allow_report_osclass( true ) ;
@@ -386,29 +386,66 @@ function oc_install( ) {
  */
 function oc_install_example_data() {
     require_once LIB_PATH . 'osclass/formatting.php';
-    require LIB_PATH . 'osclass/installer/categories.php';
+    require LIB_PATH . 'osclass/installer/basic_data.php';
     require_once LIB_PATH . 'osclass/model/Category.php';
     $mCat = Category::newInstance();
-    
+
     if(!function_exists('osc_apply_filter')) {
         function osc_apply_filter($dummyfilter, $str) {
             return $str;
         }
     }
-    
-    
+
+
     foreach($categories as $category) {
-        
+
         $fields['pk_i_id']              = $category['pk_i_id'];
         $fields['fk_i_parent_id']       = $category['fk_i_parent_id'];
         $fields['i_position']           = $category['i_position'];
         $fields['i_expiration_days']    = 0;
-        $fields['b_enabled']            = 0;
+        $fields['b_enabled']            = 1;
 
         $aFieldsDescription[osc_current_admin_locale()]['s_name'] = $category['s_name'];
 
         $mCat->insert($fields, $aFieldsDescription);
     }
+
+    require_once LIB_PATH . 'osclass/model/Item.php';
+    require_once LIB_PATH . 'osclass/model/ItemComment.php';
+    require_once LIB_PATH . 'osclass/model/ItemLocation.php';
+    require_once LIB_PATH . 'osclass/model/ItemResource.php';
+    require_once LIB_PATH . 'osclass/model/ItemStats.php';
+    require_once LIB_PATH . 'osclass/model/User.php';
+    require_once LIB_PATH . 'osclass/model/Country.php';
+    require_once LIB_PATH . 'osclass/model/Region.php';
+    require_once LIB_PATH . 'osclass/model/City.php';
+    require_once LIB_PATH . 'osclass/model/CityArea.php';
+    require_once LIB_PATH . 'osclass/model/Field.php';
+    require_once LIB_PATH . 'osclass/model/Log.php';
+
+    require_once LIB_PATH . 'osclass/model/CategoryStats.php';
+    require_once LIB_PATH . 'osclass/model/CountryStats.php';
+    require_once LIB_PATH . 'osclass/model/RegionStats.php';
+    require_once LIB_PATH . 'osclass/model/CityStats.php';
+
+    require_once LIB_PATH . 'osclass/helpers/hSecurity.php';
+    require_once LIB_PATH . 'osclass/helpers/hValidate.php';
+    require_once LIB_PATH . 'osclass/helpers/hUsers.php';
+    require_once LIB_PATH . 'osclass/ItemActions.php';
+
+    $mItem = new ItemActions(true);
+
+    foreach($item as $k => $v) {
+        if($k=='description' || $k=='title') {
+            Params::setParam($k, array(osc_current_admin_locale() => $v));
+        } else {
+            Params::setParam($k, $v);
+        }
+    }
+
+    $mItem->prepareData(true);
+    $success = $mItem->add();
+
 }
 
 
@@ -535,7 +572,7 @@ function finish_installation( $password ) {
     require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
     require_once LIB_PATH . 'osclass/compatibility.php';
     require_once LIB_PATH . 'osclass/plugins.php';
-    
+
     $data = array();
 
     $mAdmin = new Admin() ;
@@ -549,22 +586,6 @@ function finish_installation( $password ) {
             ,'e_type' => 'BOOLEAN'
         )
     );
-
-    // update categories
-    $mCategories = new Category();
-    if(Params::getParam('submit') != '') {
-        $categories = Params::getParam('categories');
-        if(is_array($categories)) {
-            foreach($categories as $category_id) {
-                $mCategories->update(array('b_enabled' => '1')
-                                    ,array('pk_i_id'   => $category_id));
-            }
-        }
-    }
-    $aCategoriesToDelete = $mCategories->listWhere("a.b_enabled = 0");
-    foreach($aCategoriesToDelete as $aCategory) {
-        $mCategories->deleteByPrimaryKey($aCategory['pk_i_id']);
-    }
 
     $admin = $mAdmin->findByPrimaryKey(1) ;
 
@@ -665,19 +686,19 @@ function display_target() {
     $country_list = json_decode(substr($country_list, 1, strlen($country_list)-2), true);
 
     $region_list = array();
-    
+
     $country_ip = '';
     if(preg_match('|([a-z]{2})-([A-Z]{2})|', @$_SERVER['HTTP_ACCEPT_LANGUAGE'], $match)) {
         $country_ip = $match[2];
         $region_list = osc_file_get_contents('http://geo.osclass.org/newgeo.services.php?action=regions&country='.$match[2]);
         $region_list = json_decode(substr($region_list, 1, strlen($region_list)-2), true);
     }
-    
+
     if(!isset($country_list[0]) || !isset($country_list[0]['s_name'])) {
         $internet_error = true;
     }
-    
-    
+
+
 ?>
 <form id="target_form" name="target_form" action="#" method="post" onsubmit="return false;">
     <h2 class="target"><?php _e('Information needed'); ?></h2>
@@ -741,19 +762,19 @@ function display_target() {
                         <option value="<?php echo $c['code']; ?>" <?php if($c['code']==$country_ip) { echo 'selected="selected"'; }; ?>><?php echo $c['s_name']; ?></option>
                     <?php }; ?>
                 </select>
-                
+
                 <select name="region_select" id="region_select" style="display: none;">
                     <option value="all"><?php _e("All regions"); ?></option>
                 </select>
-                
+
                 <select name="city_select" id="city_select" style="display: none;">
                     <option value="all"><?php _e("All cities"); ?></option>
                 </select>
-                
+
                 <div id="no_region_text" style="display: none;"><?php _e("There are no regions available for this country"); ?></div>
 
                 <div id="no_city_text" style="display: none;"><?php _e("There are no cities available for this region"); ?></div>
-                
+
 
             </div>
             <?php } else { ?>
@@ -789,85 +810,6 @@ function display_database_error($error ,$step) {
 <?php
 }
 
-function display_categories($error, $password) {
-    require_once ABS_PATH . 'config.php';
-    require_once LIB_PATH . 'osclass/model/Category.php';
-
-    $categories = Category::newInstance()->toTreeAll();
-    $numCols = 3;
-    $catsPerCol = ceil(count($categories)/$numCols) ;
-?>
-<?php if($error) { ?>
-
-    <h2 class="target"><?php _e('Error'); ?></h2>
-    <p class="bottom space-left-10">
-        <?php echo $error;?>
-    </p>
-
-<?php } ?>
-<form id="category_form" action="install.php?step=5" method="post">
-    <input type="hidden" name="password" value="<?php echo osc_esc_html( $password ) ; ?>" />
-    <h2 class="target"><?php _e('Categories'); ?></h2>
-    <div class="form-table">
-        <?php if(Params::getParam('error_location') == 1) { ?>
-        <script type="text/javascript">
-            setTimeout (function(){
-                $('.error-location').fadeOut('slow');
-            }, 2500);
-        </script>
-        <div class="error-location">
-            <?php _e('The selected location could not been installed'); ?>
-        </div>
-        <?php } ?>
-        <div class="select-categories">
-            &nbsp;
-            <div class="right">
-                <a href="#" onclick="check_all('category_form', true); return false;">Check all</a>
-                ·
-                <a href="#" onclick="check_all('category_form', false); return false;">Uncheck all</a>
-            </div>
-            <div class="left">
-                <h3><?php _e('Select your classified categories');?> <span style="font-size:11px;"><?php _e('or');?></span> <a href="install.php?step=5"><?php _e('Skip');?></a><img src="<?php echo get_absolute_url() ?>oc-includes/images/question.png" class="question-skip vtip" title="<?php _e('You can add/remove categories after the installation, using the admin dashboard');?>" alt="" /></h3>
-            </div>
-        </div>
-        <table class="list-categories">
-            <tr>
-                <?php for ($j = 0 ; $j < $numCols ; $j++) {?>
-                        <td>
-                            <?php for ($i = $catsPerCol*$j ; $i < $catsPerCol*($j+1) ; $i++) {?>
-                            <?php if (isset($categories[$i]) && is_array($categories[$i])) {?>
-                            <div class="cat-title">
-                                <label for="category-<?php echo $categories[$i]['pk_i_id']?>">
-                                    <input id="category-<?php echo $categories[$i]['pk_i_id']?>" class="left" type="checkbox" name="categories[]" value="<?php echo $categories[$i]['pk_i_id']?>" onclick="javascript:check_cat('<?php echo $categories[$i]['pk_i_id']?>', this.checked);" checked />
-                                    <span><?php echo $categories[$i]['s_name']?></span>
-                                </label>
-                            </div>
-                            <div id="cat<?php echo $categories[$i]['pk_i_id'];?>" class="sub-cat-title">
-                                <?php foreach($categories[$i]['categories'] as $sc) { ?>
-                                <div id="category" class="space">
-                                    <label for="category-<?php echo $sc['pk_i_id']?>" class="space">
-                                        <input id="category-<?php echo $sc['pk_i_id']?>" type="checkbox" name="categories[]" value="<?php echo $sc['pk_i_id']?>" onclick="javascript:check('category-<?php echo $categories[$i]['pk_i_id']?>')" checked />
-                                        <?php echo $sc['s_name']; ?>
-                                    </label>
-                                </div>
-                                <?php } ?>
-                            </div>
-                            <?php } ?>
-                        <?php } ?>
-                        </td>
-                <?php } ?>
-            </tr>
-        </table>
-    </div>
-    <div class="clear"></div>
-    <p class="margin20">
-        <input type="submit" class="button" name="submit" value="Next" />
-    </p>
-    <div class="clear"></div>
-</form>
-<?php
-}
-
 function ping_search_engines($bool){
     $mPreference = Preference::newInstance() ;
     if($bool == 1){
@@ -899,6 +841,16 @@ function ping_search_engines($bool){
 function display_finish($password) {
     $data = finish_installation( $password );
 ?>
+        <?php if(Params::getParam('error_location') == 1) { ?>
+        <script type="text/javascript">
+            setTimeout (function(){
+                $('.error-location').fadeOut('slow');
+            }, 2500);
+        </script>
+        <div class="error-location">
+            <?php _e('The selected location could not been installed'); ?>
+        </div>
+        <?php } ?>
 <h2 class="target"><?php _e('Congratulations!');?></h2>
 <p class="space-left-10"><?php _e("OSClass has been installed. Were you expecting more steps? Sorry to disappoint!");?></p>
 <p class="space-left-10"><?php echo sprintf(__('An e-mail with the password for oc-admin has been sent to: %s'), $data['s_email']);?></p>

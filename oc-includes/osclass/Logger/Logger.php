@@ -20,7 +20,7 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    abstract class Log
+    abstract class Logger
     {
         private function __construct() {}
 
