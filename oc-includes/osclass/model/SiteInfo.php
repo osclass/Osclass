@@ -76,7 +76,7 @@
          */
         public function toArray()
         {
-            $domain = $_SERVER['HTTP_HOST'] ;
+            $domain = 'http://' . $_SERVER['HTTP_HOST'] . '/';
             $this->siteInfo = $this->findByPrimaryKey($domain) ;
         }
 
@@ -107,7 +107,7 @@
         {
             $this->daoMetadata->select($this->getFields()) ;
             $this->daoMetadata->from($this->getTableName()) ;
-            $this->daoMetadata->like('s_site', $value, 'both') ;
+            $this->daoMetadata->where('s_site', $value) ;
             $result = $this->daoMetadata->get() ;
 
             if( $result == false ) {
