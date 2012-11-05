@@ -20,27 +20,26 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    class AdminThemes {
-
+    class AdminThemes extends Themes
+    {
         private static $instance ;
-        private $theme ;
-        private $theme_url ;
-        private $theme_path ;
-        private $theme_exists ;
 
-        public static function newInstance() {
+        public static function newInstance()
+        {
             if(!self::$instance instanceof self) {
                 self::$instance = new self ;
             }
             return self::$instance ;
         }
 
-        public function __construct() {
-            $this->setCurrentTheme( osc_admin_theme() ) ;
+        public function __construct()
+        {
+            parent::__construct();
+            $this->setCurrentTheme( osc_admin_theme() );
         }
 
-        /* PRIVATE */
-        private function setCurrentThemeUrl() {
+        public function setCurrentThemeUrl()
+        {
             if ($this->theme_exists) {
                 $this->theme_url = osc_admin_base_url() . 'themes/' . $this->theme . '/' ;
             } else {
@@ -48,7 +47,8 @@
             }
         }
 
-        private function setCurrentThemePath() {
+        public function setCurrentThemePath()
+        {
             if (file_exists(osc_admin_base_path() . 'themes/' . $this->theme . '/')) {
                 $this->theme_exists = true ;
                 $this->theme_path = osc_admin_base_path() . 'themes/' . $this->theme . '/' ;
@@ -57,33 +57,6 @@
                 $this->theme_path = osc_admin_base_path() . 'gui/' ;
             }
         }
-
-        /* PUBLIC */
-        public function setCurrentTheme($theme) {
-            $this->theme = $theme ;
-            $this->setCurrentThemePath() ;
-            $this->setCurrentThemeUrl() ;
-        }
-
-        public function getCurrentTheme() {
-            return $this->theme ;
-        }
-
-        public function getCurrentThemeUrl() {
-            return $this->theme_url ;
-        }
-
-        public function getCurrentThemePath() {
-            return $this->theme_path ;
-        }
-
-        public function getCurrentThemeStyles() {
-            return $this->theme_url . 'css/' ;
-        }
-
-        public function getCurrentThemeJs() {
-            return $this->theme_url . 'js/' ;
-        }
     }
 
-?>
+    /* file end: ./oc-includes/osclass/AdminThemes.php */

@@ -16,6 +16,12 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    osc_enqueue_script('jquery-validate');
+    osc_enqueue_script('admin-listing-form');
+
+    // cateogry js
+    $categories = Category::newInstance()->toTree();
+
     $new_item = __get('new_item');
     function customText($return = 'title'){
         $new_item = __get('new_item') ;
@@ -44,26 +50,30 @@
     osc_add_filter('admin_title', 'customPageTitle');
 
     //customize Head
-    function customHead() { ?>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
+    function customHead() {
+    $categoryID = Params::getParam('catId');
+    if( osc_item_category_id() != null ) {
+        $categoryID = osc_item_category_id();
+    }
+
+    if( Session::newInstance()->_getForm('catId') != '' ) {
+        $categoryID = Session::newInstance()->_getForm('catId');
+    }
+
+    $subcategoryID = '';
+    if( !Category::newInstance()->isRoot($categoryID) ) {
+        $subcategoryID = $categoryID;
+        $category      = Category::newInstance()->findRootCategory($categoryID) ;
+        $categoryID    = $category['pk_i_id'];
+    }
+    ?>
         <script type="text/javascript">
+            osc.item_post = {};
+            osc.item_post.category_id    = '<?php echo $categoryID; ?>';
+            osc.item_post.subcategory_id = '<?php echo $subcategoryID; ?>';
+
             document.write('<style type="text/css"> .tabber{ display:none; } </style>') ;
             $(document).ready(function(){
-                // -----
-//                $("#userId").bind('change', function() {
-//                    if($(this).val() == '') {
-//                        $("#contact_info").show() ;
-//                    } else {
-//                        $("#contact_info").hide() ;
-//                    }
-//                }) ;
-//
-//                if( $("#userId").val() == '') {
-//                    $("#contact_info").show() ;
-//                } else {
-//                    $("#contact_info").hide() ;
-//                }
-                // -----
                 $('input[name="user"]').attr( "autocomplete", "off" );
                 $('#user,#fUser').autocomplete({
                     source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax",
@@ -77,12 +87,7 @@
                         $('#fUserId').val(ui.item.id);
                         $("#contact_info").hide() ;
                     }
-//                    ,search: function() {
-//                        $('#userId').val('');
-//                        $('#fUserId').val('');
-//                    }
                 });
-                // ----
 
                 <?php if(osc_locale_thousands_sep()!='' || osc_locale_dec_point() != '') { ?>
                 $("#price").blur(function(event) {
@@ -104,7 +109,7 @@
             });
         </script>
         <?php ItemForm::location_javascript_new('admin') ; ?>
-        <?php if( osc_images_enabled_at_items() ) ItemForm::photos_javascript() ; ?>
+        <?php if( osc_images_enabled_at_items() ) ItemForm::photos_javascript(); ?>
         <?php
     }
     osc_add_hook('admin_header','customHead');
@@ -116,7 +121,7 @@
     function render_offset(){
         return 'row-offset';
     }
-osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+    osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <div id="pretty-form">
 <div class="grid-row no-bottom-margin">
     <div class="row-wrapper">
@@ -148,17 +153,38 @@ osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
                         <input type="hidden" name="action" value="post_item" />
                     <?php } else { ?>
                         <input type="hidden" name="action" value="item_edit_post" />
-                        <input type="hidden" name="id" value="<?php echo osc_item_id() ; ?>" />
-                        <input type="hidden" name="secret" value="<?php echo osc_item_secret() ; ?>" />
+                        <input type="hidden" name="id" value="<?php echo osc_item_id(); ?>" />
+                        <input type="hidden" name="secret" value="<?php echo osc_item_secret(); ?>" />
                     <?php } ?>
-                    <?php /********************************* */ ?>
-
-                    <?php /********************************* */ ?>
                     <div id="left-side">
                         <?php printLocaleTitle(osc_get_locales()); ?>
                         <div>
-                            <label><?php _e('Category') ; ?></label>
-                            <?php ItemForm::category_select() ; ?>
+                            <label><?php _e('Category'); ?></label>
+                            <?php /* category */ ?>
+                            <select id="parentCategory" name="">
+                                <option value=""><?php _e('Select Category'); ?></option>
+                                <?php foreach($categories as $category) { ?>
+                                <option value="<?php echo $category['pk_i_id']; ?>"><?php echo $category['s_name']; ?></option>
+                                <?php } ?>
+                            </select>
+                            <select id="childCategory" name="catId">
+                                <option value=""><?php _e('Select Subcategory'); ?></option>
+                            </select>
+                            <script type="text/javascript" charset="utf-8">
+                            <?php
+                                foreach($categories as $c) {
+                                    if( count($c['categories']) > 0 ) {
+                                        $subcategory = array();
+                                        for($i = 0; $i < count($c['categories']); $i++) {
+                                            $subcategory[] = array($c['categories'][$i]['pk_i_id'], $c['categories'][$i]['s_name']);
+                                        }
+                                        printf('categories_%1$s = %2$s;', $c['pk_i_id'], json_encode($subcategory));
+                                        echo PHP_EOL;
+                                    }
+                                }
+                            ?>
+                            </script>
+                            <?php /* category */ ?>
                         </div>
                         <div class="input-description-wide">
                             <?php printLocaleDescription(osc_get_locales()); ?>
@@ -237,8 +263,9 @@ osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
                         <?php } ?>
                         <input type="submit" value="<?php echo osc_esc_html(customText('button')); ?>" class="btn btn-submit" />
                     </div>
-                    </form>
+                </form>
         </div>
     </div>
 </div>
 </div>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

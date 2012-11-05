@@ -22,7 +22,7 @@
 
     /**
      * Model database for ItemLocation table
-     * 
+     *
      * @package OSClass
      * @subpackage Model
      * @since unknown
@@ -32,7 +32,7 @@
         /**
          * It references to self object: ItemLocation.
          * It is used as a singleton
-         * 
+         *
          * @access private
          * @since unknown
          * @var ItemResource
@@ -42,7 +42,7 @@
         /**
          * It creates a new ItemLocation object class ir if it has been created
          * before, it return the previous object
-         * 
+         *
          * @access public
          * @since unknown
          * @return ItemLocation

@@ -10,7 +10,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'language', 'en_US', 'STRING')
     ,('osclass', 'pageDesc', '', 'STRING')
     ,('osclass', 'maxSizeKb', 2048, 'INTEGER')
-    ,('osclass', 'allowedExt', 'png,gif,jpg', 'STRING')
+    ,('osclass', 'allowedExt', 'png,gif,jpg,jpeg', 'STRING')
     ,('osclass', 'dimThumbnail', '240x200', 'STRING')
     ,('osclass', 'dimPreview', '480x340', 'STRING')
     ,('osclass', 'dimNormal', '640x480', 'STRING')

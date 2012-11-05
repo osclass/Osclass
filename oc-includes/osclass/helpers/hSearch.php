@@ -53,7 +53,7 @@
                     ,__('Higher price first')  => array('sOrder' => 'i_price', 'iOrderType' => 'desc')
                 );
     }
-    
+
     /**
      * Gets current search page
      *
@@ -132,7 +132,7 @@
 
     /**
      * Gets current search users
-     * 
+     *
      * @return string
      */
     function osc_search_user() {
@@ -454,7 +454,7 @@
         }
         return View::newInstance()->_count('list_countries') ;
     }
-    
+
     /**
      * Gets the total number of regions in list_regions
      *
@@ -694,6 +694,51 @@
             return View::newInstance()->_get('canonical');
         }
         return '';
+    }
+
+
+    function osc_get_raw_search($conditions) {
+        $keys = array("aCategories", "countries", "regions", "cities", "city_areas");
+        $mCategory = Category::newInstance();
+        foreach($keys as $key) {
+            if(isset($conditions[$key]) && is_array($conditions[$key]) && !empty($conditions[$key])) {
+                foreach($conditions[$key] as $k => $v) {
+                    if(preg_match('|([0-9]+)|', $v, $match)) {
+                        if($key=="aCategories") {
+                            $conditions[$key][$k] = $mCategory->findNameByPrimaryKey($match[1]);
+                        } else {
+                            $conditions[$key][$k] = $match[1];
+                        }
+                    }
+                }
+            } else {
+                unset($conditions[$key]);
+            }
+        }
+
+        if(!isset($conditions['price_min']) || $conditions['price_min']==0) {
+            unset($conditions['price_min']);
+        }
+
+        if(!isset($conditions['price_max']) || $conditions['price_max']==0) {
+            unset($conditions['price_max']);
+        }
+
+        if(!isset($conditions['sPattern']) || $conditions['sPattern']=='') {
+            unset($conditions['sPattern']);
+        }
+
+        unset($conditions['withPattern']);
+        unset($conditions['tables']);
+        unset($conditions['tables_join']);
+        unset($conditions['no_catched_tables']);
+        unset($conditions['no_catched_conditions']);
+        unset($conditions['user_ids']);
+        unset($conditions['order_column']);
+        unset($conditions['order_direction']);
+        unset($conditions['limit_init']);
+        unset($conditions['results_per_page']);
+        return $conditions;
     }
 
 ?>

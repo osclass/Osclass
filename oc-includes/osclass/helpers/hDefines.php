@@ -47,7 +47,7 @@
 
     /**
      * Gets the root url of oc-admin for your installation
-     * 
+     *
      * @param boolean $with_index true if index.php in the url is needed
      * @return string
      */
@@ -62,7 +62,7 @@
         if ($with_index) $path .= "index.php" ;
         return($path) ;
     }
-    
+
     /**
     * Gets the root path for your installation
     *
@@ -233,7 +233,21 @@
         return WebThemes::newInstance()->getCurrentThemeJs() . $file ;
     }
 
-    
+    /**
+     * Gets the complete path of a given common asset
+     *
+     * @since 3.0
+     * @param string $file
+     * @return string
+     */
+    function osc_assets_url($file = '') {
+        if( stripos($file, '../') !== false ) {
+            $file = '';
+        }
+
+        return osc_base_url() . 'oc-includes/osclass/assets/' . $file;
+    }
+
     /////////////////////////////////////
     //functions for the public website //
     /////////////////////////////////////
@@ -251,7 +265,7 @@
         }
         return $path ;
     }
-    
+
     /**
      * Create automatically the url to post an item in a category
      *
@@ -411,7 +425,7 @@
         return osc_item_url($locale) . "?comment=" . osc_comment_id();
     }
 
-    
+
     /**
      * Create automatically the url of the item details page
      *
@@ -471,7 +485,7 @@
 
     /**
      * Create the no friendly url of the item using the id of the item
-     * 
+     *
      * @param int $id the primary key of the item
      * @param $locale
      * @return string
@@ -484,7 +498,7 @@
 
         return $path ;
     }
-    
+
     /**
      * Create automatically the url to for admin to edit an item
      *
@@ -494,7 +508,7 @@
     function osc_item_admin_edit_url($id) {
         return osc_admin_base_url(true) . '?page=items&action=item_edit&id=' . $id ;
     }
-     
+
     /**
      * Gets current user alerts' url
      *
@@ -515,10 +529,11 @@
      * @param string $secret
      * @return string
      */
-    function osc_user_unsubscribe_alert_url($email = '', $secret = '') {
+    function osc_user_unsubscribe_alert_url( $id = '', $email = '', $secret = '') {
         if($secret=='') { $secret = osc_alert_secret(); }
+        if($id=='') { $id = osc_alert_id(); }
         if($email=='') { $email = osc_user_email(); }
-        return osc_base_url(true) . '?page=user&action=unsub_alert&email='.urlencode($email).'&secret='.$secret ;
+        return osc_base_url(true) . '?page=user&action=unsub_alert&email='.urlencode($email).'&secret='.$secret.'&id='.$id ;
     }
 
     /**
@@ -528,11 +543,11 @@
      * @param string $email
      * @return string
      */
-    function osc_user_activate_alert_url( $secret , $email ) {
+    function osc_user_activate_alert_url( $id, $secret , $email ) {
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . osc_get_preference('rewrite_user_activate_alert') . '/' . $secret . '/' . urlencode($email) ;
+            return osc_base_url() . osc_get_preference('rewrite_user_activate_alert') . '/' . $id . '/' . $secret . '/' . urlencode($email) ;
         } else {
-            return osc_base_url(true) . '?page=user&action=activate_alert&email=' . urlencode($email) . '&secret=' . $secret ;
+            return osc_base_url(true) . '?page=user&action=activate_alert&email=' . urlencode($email) . '&secret=' . $secret .'&id='.$id ;
         }
 
     }
@@ -612,7 +627,7 @@
             return osc_base_url(true) . '?page=user&action=change_password' ;
         }
     }
-    
+
     /**
      * Gets url for recovering password
      *
@@ -625,7 +640,7 @@
             return osc_base_url(true) . '?page=login&action=recover' ;
         }
     }
-    
+
     /**
      * Gets url for confirm the forgot password process
      *
@@ -665,11 +680,11 @@
             return osc_base_url(true) . '?page=language&locale=' . $locale ;
         }
     }
-    
+
     /////////////////////////////////////
     //       functions for items       //
     /////////////////////////////////////
-    
+
     /**
      * Gets url for editing an item
      *
@@ -678,7 +693,7 @@
      * @return string
      */
     function osc_item_edit_url($secret = '', $id = '') {
-        if ($id == '') $id = osc_item_id();
+        if ($id == '') { $id = osc_item_id(); };
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . osc_get_preference('rewrite_item_edit') . '/' . $id . '/' . $secret ;
         } else {
@@ -694,14 +709,14 @@
      * @return string
      */
     function osc_item_delete_url($secret = '', $id = '') {
-        if ($id == '') $id = osc_item_id();
+        if ($id == '') { $id = osc_item_id(); };
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . osc_get_preference('rewrite_item_delete') . '/' . $id . '/' . $secret ;
         } else {
             return osc_base_url(true) . '?page=item&action=item_delete&id=' . $id . ($secret != '' ? '&secret=' . $secret : '') ;
         }
     }
-    
+
     /**
      * Gets url for activate an item
      *
@@ -710,14 +725,14 @@
      * @return string
      */
     function osc_item_activate_url($secret = '', $id = '') {
-        if ($id == '') $id = osc_item_id();
+        if ($id == '') { $id = osc_item_id(); };
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . osc_get_preference('rewrite_item_activate') . '/' . $id . '/' . $secret ;
         } else {
             return osc_base_url(true) . '?page=item&action=activate&id=' . $id . ($secret != '' ? '&secret=' . $secret : '') ;
         }
     }
-    
+
     /**
      * Gets url for deleting a resource of an item
      *
@@ -764,7 +779,7 @@
             return Country::newInstance()->listAll() ;
         }
     }
-    
+
     /**
      * Gets list of regions (from a country)
      *
@@ -782,7 +797,7 @@
             }
         }
     }
-    
+
     /**
      * Gets list of cities (from a region)
      *
@@ -800,7 +815,7 @@
             }
         }
     }
-    
+
     /**
      * Gets list of currencies
      *
@@ -894,7 +909,7 @@
         }
         return false;
     }
-    
+
     /**
      * Get if user is on publish page
      *
@@ -908,7 +923,7 @@
         }
         return false;
     }
-    
+
     /**
      * Get if user is on login form
      *
@@ -922,10 +937,10 @@
         }
         return false;
     }
-    
+
     /**
      * Get if the user is on custom page
-     * 
+     *
      * @return boolean
      */
     function osc_is_custom_page($file = null) {
@@ -936,7 +951,7 @@
         }
         return false;
     }
-    
+
     /**
      * Get location
      *
@@ -958,16 +973,16 @@
 
     /**
      * Check is an admin is a super admin or only a moderator
-     * 
+     *
      * @return boolean
      */
     function osc_is_moderator() {
         $admin = Admin::newInstance()->findByPrimaryKey(osc_logged_admin_id());
-        
+
         if( isset($admin['b_moderator']) && $admin['b_moderator']!=0 ) {
             return true;
         }
-        
+
         return false;
     }
 
@@ -977,8 +992,8 @@
         return $result['host'];
     }
 
-    function osc_breadcrumb($separator = '&raquo;', $echo = true) {
-        $br = new Breadcrumb();
+    function osc_breadcrumb($separator = '&raquo;', $echo = true, $lang = array()) {
+        $br = new Breadcrumb($lang);
         $br->init();
         if( $echo ) {
             echo $br->render($separator);

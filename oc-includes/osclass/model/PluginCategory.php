@@ -21,19 +21,19 @@
      */
 
     /**
-     * 
+     *
      */
     class PluginCategory extends DAO
     {
         /**
          *
-         * @var type 
+         * @var type
          */
         private static $instance ;
 
         /**
          *
-         * @return type 
+         * @return type
          */
         public static function newInstance()
         {
@@ -44,7 +44,7 @@
         }
 
         /**
-         * 
+         *
          */
         public function __construct()
         {
@@ -56,11 +56,11 @@
 
         /**
          * Return all information given a category id
-         * 
+         *
          * @access public
          * @since unknown
          * @param type $categoryId
-         * @return type 
+         * @return type
          */
         function findByCategoryId($categoryId)
         {
@@ -79,7 +79,7 @@
 
         /**
          * Return list of categories asociated with a plugin
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $plugin
@@ -107,12 +107,12 @@
 
         /**
          * Check if a category is asociated with a plugin
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $pluginName
          * @param int $categoryId
-         * @return bool 
+         * @return bool
          */
         function isThisCategory($pluginName, $categoryId)
         {

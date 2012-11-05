@@ -16,7 +16,10 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-       function customPageHeader() { ?>
+
+    osc_enqueue_script('jquery-validate');
+
+    function customPageHeader() { ?>
         <h1><?php _e('Settings') ; ?></h1>
 <?php
     }
@@ -28,21 +31,14 @@
     osc_add_filter('admin_title', 'customPageTitle');
 
     //customize Head
-    function customHead() { ?>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
-        <?php LanguageForm::js_validation(); ?>
-        <script type="text/javascript">
-            $(document).ready(function(){
-            });
-        </script>
-        <?php
+    function customHead() {
+        LanguageForm::js_validation();
     }
     osc_add_hook('admin_header','customHead');
-    
+
     $aLocale = __get('aLocale') ;
-    
-?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+
+    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <h2 class="render-title"><?php _e('Edit language'); ?></h2>
 <div id="language-form">
     <ul id="error_list"></ul>

@@ -1,6 +1,6 @@
 <?php
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      OSClass – software for creating and publishing online classified
      *                           advertising platforms
      *
      *                        Copyright (C) 2010 OSCLASS
@@ -38,11 +38,11 @@
                     <input type="hidden" name="code" value="<?php echo osc_esc_html(Params::getParam('code')); ?>" />
                     <fieldset>
                         <p>
-                            <label for="new_email"><?php _e('New pasword', 'modern') ; ?></label><br />
+                            <label for="new_email"><?php _e('New password', 'modern') ; ?></label><br />
                             <input type="password" name="new_password" value="" />
                         </p>
                         <p>
-                            <label for="new_email"><?php _e('Repeat new pasword', 'modern') ; ?></label><br />
+                            <label for="new_email"><?php _e('Repeat new password', 'modern') ; ?></label><br />
                             <input type="password" name="new_password2" value="" />
                         </p>
                         <button type="submit"><?php _e('Change password', 'modern') ; ?></button>

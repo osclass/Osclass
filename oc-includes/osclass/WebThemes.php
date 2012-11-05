@@ -17,14 +17,9 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    class WebThemes
+    class WebThemes extends Themes
     {
         private static $instance ;
-        private $path ;
-        private $theme ;
-        private $theme_url ;
-        private $theme_path ;
-        private $theme_exists ;
 
         private $pages = array( '404',
                                 'contact',
@@ -68,6 +63,7 @@
 
         public function __construct()
         {
+            parent::__construct();
             $this->path = osc_themes_path();
 
             if( Params::getParam('theme') != '' && Session::newInstance()->_get('adminId') != '' ) {
@@ -82,8 +78,7 @@
             }
         }
 
-        /* PRIVATE */
-        private function setCurrentThemePath()
+        public function setCurrentThemePath()
         {
             if ( file_exists( $this->path . $this->theme . '/' ) ) {
                 $this->theme_exists = true ;
@@ -94,7 +89,7 @@
             }
         }
 
-        private function setCurrentThemeUrl()
+        public function setCurrentThemeUrl()
         {
             if ( $this->theme_exists ) {
                 $this->theme_url = osc_base_url() . str_replace(osc_base_path(), '', $this->theme_path) ;
@@ -133,31 +128,6 @@
             if( file_exists($functions_path) ) {
                 require_once $functions_path;
             }
-        }
-
-        public function getCurrentTheme()
-        {
-            return $this->theme ;
-        }
-
-        public function getCurrentThemeUrl()
-        {
-            return $this->theme_url ;
-        }
-
-        public function getCurrentThemePath()
-        {
-            return $this->theme_path ;
-        }
-
-        public function getCurrentThemeStyles()
-        {
-            return $this->theme_url . 'css/' ;
-        }
-
-        public function getCurrentThemeJs()
-        {
-            return $this->theme_url . 'js/' ;
         }
 
         /**
@@ -245,7 +215,7 @@
             if($info['name']!='') {
                 return $info;
             }
-            
+
             // OLD CODE INFO
             require_once $path;
             $fxName = $theme . '_theme_info';
@@ -262,7 +232,23 @@
         {
             return !in_array($internal_name, $this->pages);
         }
+        
+        function getAvailableTemplates($theme = null)
+        {
+            if($theme==null) { $theme = $this->theme; };
+            
+            $templates = array();
+            $dir = opendir( $this->path . $theme . "/" );
+            while ($file = readdir($dir)) {
+                if (preg_match('/^template-[a-zA-Z0-9_\.]+$/', $file)) {
+                    $templates[] = $file;
+                }
+            }
+            closedir($dir);
+            return $templates;
+            
+        }
+        
     }
 
     /* file end: ./oc-includes/osclass/WebThemes.php */
-?>

@@ -19,7 +19,7 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
-    
+
     /**
      * Model database for CityStats table
      *
@@ -57,7 +57,7 @@
 
         /**
          * Set data related to t_city_stats table
-         * 
+         *
          * @access public
          * @since 2.4
          */
@@ -68,42 +68,42 @@
             $this->setPrimaryKey('fk_i_city_id') ;
             $this->setFields( array('fk_i_city_id', 'i_num_items') ) ;
         }
-        
+
         /**
          * Increase number of city items, given a city id
          *
          * @access public
          * @since 2.4
-         * @param int $cityId City id 
+         * @param int $cityId City id
          * @return int number of affected rows, id error occurred return false
          */
-        public function increaseNumItems($cityId) 
+        public function increaseNumItems($cityId)
         {
             if(!is_numeric($cityId)) {
                 return false;
             }
             return $this->dao->query(sprintf('INSERT INTO %s (fk_i_city_id, i_num_items) VALUES (%d, 1) ON DUPLICATE KEY UPDATE i_num_items = i_num_items + 1', $this->getTableName(), $cityId));
         }
-        
+
         /**
          * Increase number of city items, given a city id
-         * 
+         *
          * @access public
          * @since 2.4
-         * @param int $cityId City id 
+         * @param int $cityId City id
          * @return int number of affected rows, id error occurred return false
          */
-        public function decreaseNumItems($cityId) 
+        public function decreaseNumItems($cityId)
         {
             if(!is_numeric($cityId)) {
                 return false;
             }
-            
+
             $this->dao->select( 'i_num_items' ) ;
             $this->dao->from( $this->getTableName() ) ;
             $this->dao->where( $this->getPrimaryKey(), $cityId ) ;
             $result       = $this->dao->get() ;
-            $cityStat = $result->row() ; 
+            $cityStat = $result->row() ;
 
             if( isset( $cityStat['i_num_items'] ) ) {
                 $this->dao->from( $this->getTableName() ) ;
@@ -112,7 +112,7 @@
                 $this->dao->where( 'fk_i_city_id', $cityId ) ;
 
                 return $this->dao->update() ;
-            } 
+            }
 
             return false;
         }
@@ -124,7 +124,7 @@
          * @since 2.4
          * @param type $cityID
          * @param type $numItems
-         * @return type 
+         * @return type
          */
         public function setNumItems($cityID, $numItems)
         {
@@ -133,27 +133,27 @@
 
         /**
          * Find stats by city id
-         * 
+         *
          * @access public
          * @since 2.4
          * @param int $cityId city id
          * @return array
          */
-        public function findByCityId($cityId) 
+        public function findByCityId($cityId)
         {
             return $this->findByPrimaryKey($cityId);
         }
-        
+
         /**
          *
          * @param type $regionId
-         * @return type 
+         * @return type
          */
         public function deleteByRegion($regionId)
         {
             return $this->dao->query('DELETE FROM '.DB_TABLE_PREFIX.'t_city_stats WHERE fk_i_city_id IN (SELECT pk_i_id FROM '.DB_TABLE_PREFIX.'t_city WHERE fk_i_region_id = '.$regionId.');');
         }
-        
+
         /**
          * Return a list of cities and counter items.
          * Can be filtered by region and num_items,
@@ -165,7 +165,7 @@
          * @param string $order
          * @return array
          */
-        public function listCities($region = null, $zero = ">", $order = "city_name ASC") 
+        public function listCities($region = null, $zero = ">", $order = "city_name ASC")
         {
             $this->dao->select($this->getTableName().'.fk_i_city_id as city_id, '.$this->getTableName().'.i_num_items as items, '.DB_TABLE_PREFIX.'t_city.s_name as city_name') ;
             $this->dao->from( $this->getTableName() ) ;
@@ -173,19 +173,19 @@
             $this->dao->where('i_num_items '.$zero.' 0' ) ;
             if( is_numeric($region) ) {
                 $this->dao->where(DB_TABLE_PREFIX.'t_city.fk_i_region_id = '.$region) ;
-            }       
+            }
             $this->dao->orderBy($order) ;
-            
+
             $rs = $this->dao->get() ;
-            
+
             if($rs === false) {
                 return array() ;
             }
             return $rs->result() ;
         }
-        
+
         /**
-         * Calculate the total items that belong to city id 
+         * Calculate the total items that belong to city id
          *
          * @param type $cityId
          * @return int total items
@@ -196,20 +196,20 @@
             $sql .= 'WHERE '.DB_TABLE_PREFIX.'t_item_location.fk_i_city_id = '.$cityId.' AND ' ;
             $sql .= DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id AND ' ;
             $sql .= DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id AND ' ;
-            $sql .= DB_TABLE_PREFIX.'t_item.b_active = 1 AND '.DB_TABLE_PREFIX.'t_item.b_enabled = 1 AND '.DB_TABLE_PREFIX.'t_item.b_spam = 0 AND ' ;            
+            $sql .= DB_TABLE_PREFIX.'t_item.b_active = 1 AND '.DB_TABLE_PREFIX.'t_item.b_enabled = 1 AND '.DB_TABLE_PREFIX.'t_item.b_spam = 0 AND ' ;
             $sql .= '('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_item.dt_expiration >= \''.date('Y-m-d H:i:s').'\' ) AND ' ;
             $sql .= DB_TABLE_PREFIX.'t_category.b_enabled = 1 ' ;
-            
+
             $return = $this->dao->query($sql);
             if($return === false) {
                 return 0;
             }
-            
+
             if($return->numRows() > 0) {
                 $aux = $return->result() ;
                 return $aux[0]['total'] ;
             }
-            
+
             return 0;
         }
     }

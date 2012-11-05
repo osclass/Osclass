@@ -65,6 +65,7 @@ require_once LIB_PATH . 'osclass/classes/database/DBConnectionClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DBCommandClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DBRecordsetClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DAO.php';
+require_once LIB_PATH . 'osclass/model/SiteInfo.php';
 require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
 require_once LIB_PATH . 'osclass/model/Preference.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php';
@@ -108,6 +109,7 @@ require_once LIB_PATH . 'osclass/core/WebSecBaseModel.php';
 require_once LIB_PATH . 'osclass/core/AdminSecBaseModel.php';
 require_once LIB_PATH . 'osclass/core/Translation.php';
 
+require_once LIB_PATH . 'osclass/Themes.php';
 require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/WebThemes.php';
 require_once LIB_PATH . 'osclass/compatibility.php';
@@ -121,6 +123,7 @@ require_once LIB_PATH . 'osclass/ItemActions.php';
 require_once LIB_PATH . 'osclass/emails.php';
 require_once LIB_PATH . 'osclass/model/Admin.php';
 require_once LIB_PATH . 'osclass/model/Alerts.php';
+require_once LIB_PATH . 'osclass/model/AlertsStats.php';
 require_once LIB_PATH . 'osclass/model/Cron.php';
 require_once LIB_PATH . 'osclass/model/Category.php';
 require_once LIB_PATH . 'osclass/model/CategoryStats.php';
@@ -142,7 +145,6 @@ require_once LIB_PATH . 'osclass/model/ItemLocation.php';
 require_once LIB_PATH . 'osclass/model/Widget.php';
 require_once LIB_PATH . 'osclass/model/Search.php';
 require_once LIB_PATH . 'osclass/model/LatestSearches.php';
-require_once LIB_PATH . 'osclass/model/SiteInfo.php';
 require_once LIB_PATH . 'osclass/model/Field.php';
 require_once LIB_PATH . 'osclass/model/Log.php';
 require_once LIB_PATH . 'osclass/model/CountryStats.php';
@@ -160,8 +162,10 @@ require_once LIB_PATH . 'osclass/classes/Watermark.php';
 require_once LIB_PATH . 'osclass/classes/Rewrite.php';
 require_once LIB_PATH . 'osclass/classes/Stats.php';
 require_once LIB_PATH . 'osclass/classes/AdminMenu.php';
+require_once LIB_PATH . 'osclass/classes/datatables/DataTable.php';
 require_once LIB_PATH . 'osclass/classes/AdminToolbar.php';
 require_once LIB_PATH . 'osclass/classes/Breadcrumb.php';
+require_once LIB_PATH . 'osclass/classes/EmailVariables.php';
 require_once LIB_PATH . 'osclass/alerts.php';
 
 require_once LIB_PATH . 'osclass/frm/Form.form.class.php';
@@ -189,15 +193,16 @@ Session::newInstance()->session_start() ;
 if( OC_ADMIN ) {
     // init admin menu
     AdminMenu::newInstance()->init();
+    $functions_path = AdminThemes::newInstance()->getCurrentThemePath() . 'functions.php';
+    if( file_exists($functions_path) ) {
+        require_once $functions_path ;
+    }
 } else {
     // init Rewrite class only if it's the frontend
     Rewrite::newInstance()->init();
 }
 
-Plugins::init() ;
-
-
-if(osc_timezone() != '') {
+if( osc_timezone() != '' ) {
     date_default_timezone_set(osc_timezone());
 }
 
@@ -229,10 +234,40 @@ function osc_show_maintenance_css() {
 function osc_meta_generator() {
     echo '<meta name="generator" content="OSClass ' . OSCLASS_VERSION . '" />';
 }
+osc_add_hook('header', 'osc_show_maintenance');
+osc_add_hook('header', 'osc_show_maintenance_css');
+osc_add_hook('header', 'osc_meta_generator');
+osc_add_hook('header', 'osc_load_scripts', 10);
+osc_add_hook('header', 'osc_load_styles', 10);
 
-osc_add_hook("header", "osc_show_maintenance");
-osc_add_hook("header", "osc_show_maintenance_css");
-osc_add_hook("header", "osc_meta_generator");
+// cron
+// hourly
+osc_add_hook('cron_hourly', 'purge_latest_searches_hourly');
+// daily
+osc_add_hook('cron_daily', 'osc_update_cat_stats');
+osc_add_hook('cron_daily', 'update_location_stats');
+osc_add_hook('cron_daily', 'purge_latest_searches_daily');
+osc_add_hook('cron_daily', 'daily_alert');
+// weekly
+osc_add_hook('cron_weekly', 'purge_latest_searches_weekly');
 
+// register scripts
+osc_register_script('jquery', osc_assets_url('js/jquery.min.js'));
+osc_register_script('jquery-ui', osc_assets_url('js/jquery-ui.min.js'), 'jquery');
+osc_register_script('jquery-json', osc_assets_url('js/jquery.json.js'), 'jquery');
+osc_register_script('jquery-treeview', osc_assets_url('js/jquery.treeview.js'), 'jquery');
+osc_register_script('jquery-nested', osc_assets_url('js/jquery.ui.nestedSortable.js'), 'jquery');
+osc_register_script('jquery-validate', osc_assets_url('js/jquery.validate.min.js'), 'jquery');
+osc_register_script('tabber', osc_assets_url('js/tabber-minimized.js'), 'jquery');
+osc_register_script('tiny_mce', osc_assets_url('js/tiny_mce/tiny_mce.js'));
+osc_register_script('colorpicker', osc_assets_url('js/colorpicker/js/colorpicker.js'));
+
+Plugins::init();
+
+if( !class_exists('PHPMailer') ) {
+    require_once osc_lib_path() . 'phpmailer/class.phpmailer.php';
+}
+if( !class_exists('SMTP') ) {
+    require_once osc_lib_path() . 'phpmailer/class.smtp.php';
+}
 /* file end: ./oc-load.php */
-?>

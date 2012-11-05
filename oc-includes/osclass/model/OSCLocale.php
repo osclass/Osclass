@@ -27,7 +27,7 @@
     {
         /**
          *
-         * @var type 
+         * @var type
          */
         private static $instance ;
 
@@ -40,7 +40,7 @@
         }
 
         /**
-         * 
+         *
          */
         function __construct()
         {
@@ -66,7 +66,7 @@
             );
             $this->setFields($array_fields) ;
         }
-        
+
         /**
          * Return all locales enabled.
          *
@@ -76,7 +76,7 @@
          * @param boole $indexedByKk
          * @return array
          */
-        function listAllEnabled($isBo = false, $indexedByPk = false) 
+        function listAllEnabled($isBo = false, $indexedByPk = false)
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
@@ -112,7 +112,7 @@
          * @param string $code
          * @return array
          */
-        function findByCode($code) 
+        function findByCode($code)
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;

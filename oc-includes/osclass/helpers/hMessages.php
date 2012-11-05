@@ -95,7 +95,7 @@
         $message = Session::newInstance()->_getMessage($section) ;
 
         echo '<div id="flash_js"></div>';
-        
+
         if (isset($message['msg']) && $message['msg'] != '') {
             echo '<div id="' . $id . '" class="' . strtolower($class) . ' ' . strtolower($class) . '-' .$message['type'] . '"><a class="btn ico btn-mini ico-close">x</a>' ;
             echo osc_apply_filter('flash_message_text', $message['msg']) ;
@@ -104,13 +104,17 @@
             echo '<div id="' . $id . '" class="' . $class . '">' ;
             echo osc_apply_filter('flash_message_text', $message) ;
             echo '</div>' ;
+        } else {
+            echo '<div id="' . $id . '" class="' . $class . '" style="display:none;">' ;
+            echo osc_apply_filter('flash_message_text', '') ;
+            echo '</div>' ;
         }
 
         Session::newInstance()->_dropMessage($section) ;
     }
 
     /**
-     * 
+     *
      *
      * @param string $section
      * @return string Message

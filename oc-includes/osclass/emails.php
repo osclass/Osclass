@@ -28,7 +28,7 @@
         $_title = osc_apply_filter('email_title', osc_apply_filter('email_alert_validation_title', $page_description[$prefLocale]['s_title']));
         $_body  = osc_apply_filter('email_description', osc_apply_filter('email_alert_validation_description', $page_description[$prefLocale]['s_text']));
 
-        $validation_link = osc_user_activate_alert_url( $secret, $email );
+        $validation_link = osc_user_activate_alert_url( $alert['pk_i_id'], $secret, $email );
 
         $words   = array() ;
         $words[] = array(
@@ -64,14 +64,14 @@
 
         $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_hourly_title', $page_description[$prefLocale]['s_title']));
         $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_hourly_description', $page_description[$prefLocale]['s_text']));
-        
+
         if( $user['fk_i_user_id'] != 0 ) {
             $user = User::newInstance()->findByPrimaryKey($user['fk_i_user_id']);
         } else {
             $user['s_name'] = $user['s_email'];
         }
 
-        $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_secret']);
+        $unsub_link = osc_user_unsubscribe_alert_url($s_search['pk_i_id'], $user['s_email'], $s_search['s_secret']);
         $unsub_link = '<a href="' . $unsub_link . '">' . __('unsubscribe alert') . '</a>';
 
         $words   = array();
@@ -110,14 +110,14 @@
 
         $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_daily_title', $page_description[$prefLocale]['s_title']));
         $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_daily_description', $page_description[$prefLocale]['s_text']));
-        
+
         if( $user['fk_i_user_id'] != 0 ) {
             $user = User::newInstance()->findByPrimaryKey($user['fk_i_user_id']);
         } else {
             $user['s_name'] = $user['s_email'];
         }
 
-        $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_secret']);
+        $unsub_link = osc_user_unsubscribe_alert_url($s_search['pk_i_id'], $user['s_email'], $s_search['s_secret']);
         $unsub_link = '<a href="' . $unsub_link . '">' . __('unsubscribe alert') . '</a>';
 
         $words   = array();
@@ -163,7 +163,7 @@
             $user['s_name'] = $user['s_email'];
         }
 
-        $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_secret']);
+        $unsub_link = osc_user_unsubscribe_alert_url($s_search['pk_i_id'], $user['s_email'], $s_search['s_secret']);
         $unsub_link = '<a href="' . $unsub_link . '">' . __('unsubscribe alert') . '</a>';
 
         $words   = array() ;
@@ -209,7 +209,7 @@
             $user['s_name'] = $user['s_email'];
         }
 
-        $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_secret']);
+        $unsub_link = osc_user_unsubscribe_alert_url($s_search['pk_i_id'], $user['s_email'], $s_search['s_secret']);
         $unsub_link = '<a href="' . $unsub_link . '">' . __('unsubscribe alert') . '</a>';
 
         $words   = array() ;
@@ -346,7 +346,7 @@
         osc_sendMail($emailParams);
     }
     osc_add_hook('hook_email_new_item_non_register_user', 'fn_email_new_item_non_register_user');
-    
+
     function fn_email_user_forgot_password($user, $password_url) {
         $aPage = Page::newInstance()->findByInternalName('email_user_forgot_password');
         $locale = osc_current_user_locale() ;
@@ -558,13 +558,13 @@
         $body  = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_send_friend_description', $content['s_text'])), $words) ;
 
         $params = array(
-            'from'      => $aItem['yourEmail'],
-            'from_name' => $aItem['yourName'],
+            'from'      => osc_contact_email(),
+            'from_name' => osc_page_title(),
+            'reply_to'  => $aItem['yourEmail'],
             'subject'   => $title,
             'to'        => $aItem['friendEmail'],
             'to_name'   => $aItem['friendName'],
-            'body'      => $body,
-            'alt_body'   => $body
+            'body'      => $body
         );
 
         if( osc_notify_contact_friends() ) {
@@ -649,7 +649,6 @@
             $attachment   = Params::getFiles('attachment');
             $resourceName = $attachment['name'] ;
             $tmpName      = $attachment['tmp_name'] ;
-            $resourceType = $attachment['type'] ;
             $path         = osc_content_path() . 'uploads/' . time() . '_' . $resourceName ;
 
             if( !is_writable(osc_content_path() . 'uploads/') ) {
@@ -670,7 +669,7 @@
         @unlink($path) ;
     }
     osc_add_hook('hook_email_item_inquiry', 'fn_email_item_inquiry');
-    
+
     function fn_email_new_comment_admin($aItem) {
         $authorName  = trim($aItem['authorName']);
         $authorName  = strip_tags($authorName);
@@ -681,15 +680,13 @@
         $body        = nl2br(strip_tags($body));
         $title       = $aItem['title'] ;
         $itemId      = $aItem['id'] ;
-        $userId      = $aItem['userId'] ;
         $admin_email = osc_contact_email() ;
-        $prefLocale  = osc_language() ;
 
         $item = Item::newInstance()->findByPrimaryKey($itemId) ;
         View::newInstance()->_exportVariableToView('item', $item);
         $itemURL = osc_item_url() ;
         $itemURL = '<a href="'.$itemURL.'" >'.$itemURL.'</a>';
-        
+
         $mPages = new Page() ;
         $aPage = $mPages->findByInternalName('email_new_comment_admin') ;
         $locale = osc_current_user_locale() ;
@@ -724,9 +721,6 @@
         );
         $title_email = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_comment_admin_title', $content['s_title'])), $words);
         $body_email = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_comment_admin_description', $content['s_text'])), $words);
-
-        $from = osc_contact_email() ;
-        $from_name = osc_page_title() ;
 
         $emailParams = array(
             'subject'   => $title_email,
@@ -830,8 +824,6 @@
     function fn_email_admin_new_item($item) {
         View::newInstance()->_exportVariableToView('item', $item);
         $title  = osc_item_title();
-        $contactEmail   = $item['s_contact_email'];
-        $contactName    = $item['s_contact_name'];
         $mPages = new Page();
         $locale = osc_current_user_locale();
         $aPage = $mPages->findByInternalName('email_admin_new_item') ;
@@ -1114,9 +1106,7 @@
         $body        = nl2br(strip_tags($body));
         $title       = $aItem['title'] ;
         $itemId      = $aItem['id'] ;
-        $userId      = $aItem['userId'] ;
         $admin_email = osc_contact_email() ;
-        $prefLocale  = osc_language() ;
 
         $item = Item::newInstance()->findByPrimaryKey($itemId) ;
         View::newInstance()->_exportVariableToView('item', $item);

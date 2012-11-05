@@ -108,7 +108,7 @@
         if ( !View::newInstance()->_exists('locales') ) {
             View::newInstance()->_exportVariableToView('locales', OSCLocale::newInstance()->listAllEnabled() ) ;
         }
-        
+
         return View::newInstance()->_next('locales') ;
     }
 

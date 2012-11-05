@@ -25,7 +25,7 @@
  * check if the item is expired
  */
 function osc_isExpired($dt_expiration) {
-    $now       = date("Ymdhis");
+    $now       = date("YmdHis");
 
     $dt_expiration = str_replace(' ', '', $dt_expiration);
     $dt_expiration = str_replace('-', '', $dt_expiration);
@@ -44,6 +44,9 @@ function osc_isExpired($dt_expiration) {
  * @return boolean
  */
 function osc_deleteResource( $id , $admin) {
+    if( defined('DEMO') ) {
+        return false;
+    }
     if( is_array( $id ) ){
         $id = $id[0];
     }
@@ -147,7 +150,7 @@ function osc_plugin_path($file) {
 function osc_plugin_url($file) {
     // Sanitize windows paths and duplicated slashes
     $dir = preg_replace('|/+|','/', str_replace('\\','/',dirname($file)));
-    $dir = WEB_PATH . 'oc-content/plugins/' . preg_replace('#^.*oc-content\/plugins\/#','',$dir) . "/";
+    $dir = osc_base_url() . 'oc-content/plugins/' . preg_replace('#^.*oc-content\/plugins\/#','',$dir) . "/";
     return $dir;
 }
 
@@ -260,84 +263,179 @@ function osc_sendMail($params) {
         return false;
     }
 
+    $mail = new PHPMailer(true);
+    $mail->ClearAddresses();
+    $mail->ClearAllRecipients();
+    $mail->ClearAttachments();
+    $mail->ClearBCCs();
+    $mail->ClearCCs();
+    $mail->ClearCustomHeaders();
+    $mail->ClearReplyTos();
+
+    $mail = osc_apply_filter('init_send_mail', $mail);
+
+    if( osc_mailserver_pop() ) {
+        require_once osc_lib_path() . 'phpmailer/class.pop3.php';
+        $pop = new POP3();
+
+        $pop3_host = osc_mailserver_host();
+        if( array_key_exists('host', $params) ) {
+            $pop3_host = $params['host'];
+        }
+
+        $pop3_port = osc_mailserver_port();
+        if( array_key_exists('port', $params) ) {
+            $pop3_port = $params['port'];
+        }
+
+        $pop3_username = osc_mailserver_username();
+        if( array_key_exists('username', $params) ) {
+            $pop3_username = $params['username'];
+        }
+
+        $pop3_password = osc_mailserver_password();
+        if( array_key_exists('password', $params) ) {
+            $pop3_password = $params['password'];
+        }
+
+        $pop->Authorise($pop3_host, $pop3_port, 30, $pop3_username, $pop3_password, 0);
+    }
+
+    if( osc_mailserver_auth() ) {
+        $mail->IsSMTP();
+        $mail->SMTPAuth = true;
+    } else if( osc_mailserver_pop() ) {
+        $mail->IsSMTP();
+    }
+
+    $smtpSecure = osc_mailserver_ssl();
+    if( array_key_exists('password', $params) ) {
+        $smtpSecure = $params['ssl'];
+    }
+    if( $smtpSecure != '' ) {
+        $mail->SMTPSecure = $smtpSecure;
+    }
+
+    $stmpUsername = osc_mailserver_username();
+    if( array_key_exists('username', $params) ) {
+        $stmpUsername = $params['username'];
+    }
+    if( $stmpUsername != '' ) {
+        $mail->Username = $stmpUsername;
+    }
+
+    $smtpPassword = osc_mailserver_password();
+    if( array_key_exists('password', $params) ) {
+        $smtpPassword = $params['password'];
+    }
+    if( $smtpPassword != '' ) {
+        $mail->Password = $smtpPassword;
+    }
+
+    $smtpHost = osc_mailserver_host();
+    if( array_key_exists('host', $params) ) {
+        $smtpHost = $params['host'];
+    }
+    if( $smtpHost != '' ) {
+        $mail->Host = $smtpHost;
+    }
+
+    $smtpPort = osc_mailserver_port();
+    if( array_key_exists('port', $params) ) {
+        $smtpPort = $params['port'];
+    }
+    if( $smtpPort != '' ) {
+        $mail->Port = $smtpPort;
+    }
+
+    $from = 'osclass@' . osc_get_domain();
+    if( array_key_exists('from', $params) ) {
+        $from = $params['from'];
+    }
+    if( osc_mailserver_username() !== '' ) {
+        $from = osc_mailserver_username();
+    }
+    if( array_key_exists('username', $params) ) {
+        $from = $params['username'];
+    }
+    $from_name = osc_page_title();
+    if( array_key_exists('from_name', $params) ) {
+        $from_name = $params['from_name'];
+    }
+
+    $mail->From     = osc_apply_filter('mail_from', $from);
+    $mail->FromName = osc_apply_filter('mail_from_name', $from_name);
+
+    $to      = $params['to'];
+    $to_name = '';
+    if( array_key_exists('to_name', $params) ) {
+        $to_name = $params['to_name'];
+    }
+
+    if( !is_array($to) ) {
+        $to = array($to => $to_name);
+    }
+
+    foreach($to as $to_email => $to_name) {
+        try {
+            $mail->addAddress($to_email, $to_name);
+        } catch (phpmailerException $e) {
+            continue;
+        }
+    }
+
     if( key_exists('add_bcc', $params) ) {
         if( !is_array($params['add_bcc']) && $params['add_bcc'] != '' ) {
             $params['add_bcc'] = array($params['add_bcc']) ;
         }
-    }
 
-    require_once osc_lib_path() . 'phpmailer/class.phpmailer.php' ;
-
-    if( osc_mailserver_pop() ) {
-        require_once osc_lib_path() . 'phpmailer/class.pop3.php' ;
-        $pop = new POP3() ;
-        $pop->Authorise(
-                ( isset($params['host']) ) ? $params['host'] : osc_mailserver_host(),
-                ( isset($params['port']) ) ? $params['port'] : osc_mailserver_port(),
-                30,
-                ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username(),
-                ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username(),
-                0
-        ) ;
-    }
-
-    $mail = new PHPMailer(true) ;
-    try {
-        $mail->CharSet = 'utf-8' ;
-
-        if( osc_mailserver_auth() ) {
-            $mail->IsSMTP() ;
-            $mail->SMTPAuth = true ;
-        } else if( osc_mailserver_pop() ) {
-            $mail->IsSMTP() ;
-        }
-
-        $mail->SMTPSecure = ( isset($params['ssl']) ) ? $params['ssl'] : osc_mailserver_ssl() ;
-        $mail->Username = ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username() ;
-        $mail->Password = ( isset($params['password']) ) ? $params['password'] : osc_mailserver_password() ;
-        $mail->Host = ( isset($params['host']) ) ? $params['host'] : osc_mailserver_host() ;
-        $mail->Port = ( isset($params['port']) ) ? $params['port'] : osc_mailserver_port() ;
-        $mail->From = ( isset($params['from']) ) ? $params['from'] : 'osclass@' . osc_get_domain() ;
-        if( osc_mailserver_username() !== '' ) {
-            $mail->From = osc_mailserver_username();
-        }
-        if( array_key_exists('username', $params) ) {
-            $mail->From = $params['username'];
-        }
-        $mail->FromName = ( isset($params['from_name']) ) ? $params['from_name'] : osc_page_title() ;
-        $mail->Subject = ( isset($params['subject']) ) ? $params['subject'] : '' ;
-        $mail->Body = ( isset($params['body']) ) ? $params['body'] : '' ;
-        $mail->AltBody = ( isset($params['alt_body']) ) ? $params['alt_body'] : '' ;
-        $to = ( isset($params['to']) ) ? $params['to'] : '' ;
-        $to_name = ( isset($params['to_name']) ) ? $params['to_name'] : '' ;
-
-        if( key_exists('add_bcc', $params) ) {
-            foreach( $params['add_bcc'] as $bcc ) {
+        foreach($params['add_bcc'] as $bcc) {
+            try {
                 $mail->AddBCC($bcc) ;
+            } catch ( phpmailerException $e ) {
+                continue;
             }
         }
-
-        if( isset($params['reply_to']) ) {
-            $mail->AddReplyTo($params['reply_to']) ;
-        }
-
-        if( isset($params['attachment']) ) {
-            $mail->AddAttachment($params['attachment']) ;
-        }
-
-        $mail->IsHTML(true) ;
-        $mail->AddAddress($to, $to_name) ;
-        $mail->Send() ;
-        return true ;
-    } catch (phpmailerException $e) {
-        error_log("phpmailerException in osc_sendMail() Error: ".$mail->ErrorInfo, 0);
-        return false ;
-    } catch (Exception $e) {
-        error_log("Exception in osc_sendMail() Error".$mail->ErrorInfo, 0);
-        return false ;
     }
 
-    return false ;
+    if( array_key_exists('reply_to', $params) ) {
+        try {
+            $mail->AddReplyTo($params['reply_to']) ;
+        } catch (phpmailerException $e) {
+            continue;
+        }
+    }
+
+    $mail->Subject = $params['subject'];
+    $mail->Body    = $params['body'];
+
+    if( array_key_exists('attachment', $params) ) {
+        if( !is_array($params['attachment']) ) {
+            $params['attachment'] = array( $params['attachment'] );
+        }
+
+        foreach($params['attachment'] as $attachment) {
+            try {
+                $mail->AddAttachment($attachment) ;
+            } catch (phpmailerException $e) {
+                continue;
+            }
+        }
+    }
+
+    $mail->CharSet = 'utf-8';
+    $mail->IsHTML(true);
+
+    $mail = osc_apply_filter('pre_send_mail', $mail);
+
+    // send email!
+    try {
+        $mail->Send();
+    } catch (phpmailerException $e) {
+        return false;
+    }
+
+    return true;
 }
 
 function osc_mailBeauty($text, $params) {
@@ -708,6 +806,7 @@ function osc_downloadFile($sourceFile, $downloadedFile)
             @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
             curl_setopt($ch, CURLOPT_FILE, $fp);
             @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($ch, CURLOPT_REFERER, osc_base_url());
             curl_exec($ch);
             curl_close($ch);
             fclose($fp);
@@ -730,8 +829,8 @@ function osc_file_get_contents($url)
         curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' OSClass (v.' . osc_version() . ')') ;
         if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1) ;
         @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_REFERER, osc_base_url());
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
         $data = curl_exec($ch);
         curl_close($ch);
     } else if( testFsockopen() ) {
@@ -994,7 +1093,7 @@ function _zip_folder_pclzip($archive_folder, $archive_name) {
         if (substr($v_dir, 1,1) == ':') {
             $v_remove = substr($v_dir, 2);
         }
-        $v_list = $zip->create($v_dir, PCLZIP_OPT_REMOVE_PATH, $v_remove);
+        $v_list = $zip->create($dir, PCLZIP_OPT_REMOVE_PATH, $v_remove);
         if ($v_list == 0) {
             return false;
         }
@@ -1292,4 +1391,185 @@ function osc_update_cat_stats_id($id)
     $result = CategoryStats::newInstance()->dao->query($sql);
 }
 
+function get_ip() {
+    if( !empty($_SERVER['HTTP_CLIENT_IP']) ) {
+        return $_SERVER['HTTP_CLIENT_IP'];
+    }
+
+    if( !empty($_SERVER['HTTP_X_FORWARDED_FOR']) ) {
+        $ip_array = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        foreach($ip_array as $ip) {
+            return trim($ip);
+        }
+    }
+
+    return $_SERVER['REMOTE_ADDR'];
+}
+
+// iBrowser -> tinymce language
+function osc_tinymce_ibrowser_language() {
+?>
+<script>
+
+</script>
+<?php
+}
+/*
+//<script>
+//    tinyMCE.addI18n({en:{
+//        common:{
+//            edit_confirm:"<?php _e('Do you want to use the WYSIWYG mode for this textarea?'); ?>",
+//            apply:"<?php _e('Apply'); ?>",
+//            insert:"<?php _e('Insert'); ?>",
+//            update:"<?php _e('Update'); ?>",
+//            cancel:"<?php _e('Cancel'); ?>",
+//            close:"<?php _e('Close'); ?>",
+//            browse:"<?php _e('Browse'); ?>",
+//            class_name:"Class",
+//            not_set:"<?php _e('-- Not set --'); ?>",
+//            clipboard_msg:"<?php _e('Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?'); ?>",
+//            clipboard_no_support:"<?php _e('Currently not supported by your browser, use keyboard shortcuts instead.'); ?>",
+//            popup_blocked:"<?php _e('Sorry, but we have noticed that your popup-blocker has disabled a window that provides application functionality. You will need to disable popup blocking on this site in order to fully utilize this tool.'); ?>",
+//            invalid_data:"<?php _e('Error: Invalid values entered, these are marked in red.'); ?>",
+//            more_colors:"<?php _e('More colors'); ?>"
+//        },
+//        contextmenu:{
+//            align:"<?php _e('Alignment'); ?>",
+//            left:"<?php _e('Left'); ?>",
+//            center:"<?php _e('Center'); ?>",
+//            right:"<?php _e('Right'); ?>",
+//            full:"<?php _e('Full'); ?>"
+//        },
+//        insertdatetime:{
+//            date_fmt:"%Y-%m-%d",
+//            time_fmt:"%H:%M:%S",
+//            insertdate_desc:"<?php _e('Insert date'); ?>",
+//            inserttime_desc:"<?php _e('Insert time'); ?>",
+//            months_long:"<?php _e('January,February,March,April,May,June,July,August,September,October,November,December'); ?>",
+//            months_short:"<?php _e('Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'); ?>",
+//            day_long:"<?php _e('Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday'); ?>",
+//            day_short:"<?php _e('Sun,Mon,Tue,Wed,Thu,Fri,Sat,Sun'); ?>"
+//        },
+//        print:{
+//            print_desc:"<?php _e('Print'); ?>"
+//        },
+//        preview:{
+//            preview_desc:"<?php _e('Preview'); ?>"
+//        },
+//        directionality:{
+//            ltr_desc:"<?php _e('Direction left to right'); ?>",
+//            rtl_desc:"<?php _e('Direction right to left'); ?>"
+//        },
+//        layer:{
+//            insertlayer_desc:"<?php _e('Insert new layer'); ?>",
+//            forward_desc:"<?php _e('Move forward'); ?>",
+//            backward_desc:"<?php _e('Move backward'); ?>",
+//            absolute_desc:"<?php _e('Toggle absolute positioning'); ?>",
+//            content:"<?php _e('New layer...'); ?>"
+//        },
+//        save:{
+//            save_desc:"<?php _e('Save'); ?>",
+//            cancel_desc:"<?php _e('Cancel all changes'); ?>"
+//        },
+//        nonbreaking:{
+//            nonbreaking_desc:"<?php _e('Insert non-breaking space character'); ?>"
+//        },
+//        iespell:{
+//            iespell_desc:"<?php _e('Run spell checking'); ?>",
+//            download:"<?php _e('ieSpell not detected. Do you want to install it now?'); ?>"
+//        },
+//        advhr:{
+//            advhr_desc:"<?php _e('Horizontal rule'); ?>"
+//        },
+//        emotions:{
+//            emotions_desc:"<?php _e('Emotions'); ?>"
+//        },
+//        searchreplace:{
+//            search_desc:"<?php _e('Find'); ?>",
+//            replace_desc:"<?php _e('Find/Replace'); ?>"
+//        },
+//        advimage:{
+//            image_desc:"<?php _e('Insert/edit image'); ?>"
+//        },
+//        advlink:{
+//            link_desc:"<?php _e('Insert/edit link'); ?>"
+//        },
+//        xhtmlxtras:{
+//            cite_desc:"<?php _e('Citation'); ?>",
+//            abbr_desc:"<?php _e('Abbreviation'); ?>",
+//            acronym_desc:"<?php _e('Acronym'); ?>",
+//            del_desc:"<?php _e('Deletion'); ?>",
+//            ins_desc:"<?php _e('Insertion'); ?>",
+//            attribs_desc:"<?php _e('Insert/Edit Attributes'); ?>"
+//        },
+//        style:{
+//            desc:"<?php _e('Edit CSS Style'); ?>"
+//        },
+//        paste:{
+//            paste_text_desc:"<?php _e('Paste as Plain Text'); ?>",
+//            paste_word_desc:"<?php _e('Paste from Word'); ?>",
+//            selectall_desc:"<?php _e('Select All'); ?>"
+//        },
+//        paste_dlg:{
+//            text_title:"<?php _e('Use CTRL+V on your keyboard to paste the text into the window.'); ?>",
+//            text_linebreaks:"<?php _e('Keep linebreaks'); ?>",
+//            word_title:"<?php _e('Use CTRL+V on your keyboard to paste the text into the window.'); ?>"
+//        },
+//        table:{
+//            desc:"<?php _e('Inserts a new table'); ?>",
+//            row_before_desc:"<?php _e('Insert row before'); ?>",
+//            row_after_desc:"<?php _e('Insert row after'); ?>",
+//            delete_row_desc:"<?php _e('Delete row'); ?>",
+//            col_before_desc:"<?php _e('Insert column before'); ?>",
+//            col_after_desc:"<?php _e('Insert column after'); ?>",
+//            delete_col_desc:"<?php _e('Remove column'); ?>",
+//            split_cells_desc:"<?php _e('Split merged table cells'); ?>",
+//            merge_cells_desc:"<?php _e('Merge table cells'); ?>",
+//            row_desc:"<?php _e('Table row properties'); ?>",
+//            cell_desc:"<?php _e('Table cell properties'); ?>",
+//            props_desc:"<?php _e('Table properties'); ?>",
+//            paste_row_before_desc:"<?php _e('Paste table row before'); ?>",
+//            paste_row_after_desc:"<?php _e('Paste table row after'); ?>",
+//            cut_row_desc:"<?php _e('Cut table row'); ?>",
+//            copy_row_desc:"<?php _e('Copy table row'); ?>",
+//            del:"<?php _e('Delete table'); ?>",
+//            row:"<?php _e('Row'); ?>",
+//            col:"<?php _e('Column'); ?>",
+//            cell:"<?php _e('Cell'); ?>"
+//        },
+//        autosave:{
+//            unload_msg:"<?php _e('The changes you made will be lost if you navigate away from this page.'); ?>"
+//        },
+//        fullscreen:{
+//            desc:"<?php _e('Toggle fullscreen mode'); ?>"
+//        },
+//        media:{
+//            desc:"<?php _e('Insert / edit embedded media'); ?>",
+//            edit:"<?php _e('Edit embedded media'); ?>"
+//        },
+//        fullpage:{
+//            desc:"<?php _e('Document properties'); ?>"
+//        },
+//        template:{
+//            desc:"<?php _e('Insert predefined template content'); ?>"
+//        },
+//        visualchars:{
+//            desc:"<?php _e('Visual control characters on/off.'); ?>"
+//        },
+//        spellchecker:{
+//            desc:"<?php _e('Toggle spellchecker'); ?>",
+//            menu:"<?php _e('Spellchecker settings'); ?>",
+//            ignore_word:"<?php _e('Ignore word'); ?>",
+//            ignore_words:"<?php _e('Ignore all'); ?>",
+//            langs:"<?php _e('Languages'); ?>",
+//            wait:"<?php _e('Please wait...'); ?>",
+//            sug:"<?php _e('Suggestions'); ?>",
+//            no_sug:"<?php _e('No suggestions'); ?>",
+//            no_mpell:"<?php _e('No misspellings found.'); ?>"
+//        },
+//        pagebreak:{
+//            desc:"<?php _e('Insert page break.'); ?>"
+//        }}});
+//    </script>
+*/
 ?>

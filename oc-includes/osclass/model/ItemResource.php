@@ -22,7 +22,7 @@
 
     /**
      * Model database for ItemResource table
-     * 
+     *
      * @package OSClass
      * @subpackage Model
      * @since unknown
@@ -32,7 +32,7 @@
         /**
          * It references to self object: ItemResource.
          * It is used as a singleton
-         * 
+         *
          * @access private
          * @since unknown
          * @var ItemResource
@@ -42,10 +42,10 @@
         /**
          * It creates a new ItemResource object class ir if it has been created
          * before, it return the previous object
-         * 
+         *
          * @access public
          * @since unknown
-         * @return ItemResource 
+         * @return ItemResource
          */
         public static function newInstance()
         {
@@ -72,7 +72,7 @@
          * @access public
          * @since unknown
          * @param int $itemId Item id
-         * @return array of resources 
+         * @return array of resources
          */
         function getAllResources()
         {
@@ -95,7 +95,7 @@
          * @access public
          * @since 2.3.7
          * @param int $itemId Item id
-         * @return array of resources 
+         * @return array of resources
          */
         function getAllResourcesFromItem($itemId) {
             $this->dao->select() ;
@@ -141,17 +141,17 @@
 
         /**
          * Check if resource id and name exist
-         * 
+         *
          * @deprecated since 2.3
          * @param int $resourceId
          * @param string $code
-         * @return bool 
+         * @return bool
          */
         function getResourceSecure($resourceId, $code)
         {
             return $this->existResource($resourceId, $code);
         }
-        
+
         /**
          * Check if resource id and name exist
          *
@@ -159,7 +159,7 @@
          * @since unknown
          * @param int $resourceId
          * @param string $code
-         * @return bool 
+         * @return bool
          */
         function existResource($resourceId, $code)
         {
@@ -188,7 +188,7 @@
          * @access public
          * @since unknown
          * @param int $itemId Item id
-         * @return int 
+         * @return int
          */
         function countResources($itemId = null)
         {
@@ -223,7 +223,7 @@
          * @param int $length ending
          * @param string $order column order default='pk_i_id'
          * @param string $type order type [DESC|ASC]
-         * @return array of resources 
+         * @return array of resources
          */
         function getResources($itemId = NULL, $start = 0, $length = 10, $order = 'r.pk_i_id', $type = 'DESC')
         {
@@ -261,15 +261,15 @@
 
         /**
          * Delete all resources where id is in $ids
-         * 
-         * @param array $ids 
+         *
+         * @param array $ids
          */
         public function deleteResourcesIds($ids)
         {
             $this->dao->whereIn('pk_i_id', $ids) ;
             return $this->dao->delete( $this->getTableName() );
         }
-        
+
         /**
          * Return table item name
          *

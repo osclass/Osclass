@@ -21,13 +21,13 @@
      */
 
     /**
-     * 
+     *
      */
     class Widget extends DAO
     {
         /**
          *
-         * @var type 
+         * @var type
          */
         private static $instance ;
 
@@ -40,7 +40,7 @@
         }
 
         /**
-         * 
+         *
          */
         function __construct()
         {

@@ -16,6 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    osc_enqueue_script('jquery-treeview');
+
     $categories  = __get('categories');
     $selected    = __get('selected');
     $plugin_data = __get('plugin_data');
@@ -28,7 +30,6 @@
 
     //customize Head
     function customHead() { ?>
-    <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.treeview.js') ; ?>"></script>
     <script type="text/javascript">
         // check all the categories
         function checkAll(id, check) {

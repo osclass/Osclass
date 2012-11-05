@@ -51,6 +51,8 @@
                         Session::newInstance()->_dropKeepForm();
                     }
 
+                    $templates = WebThemes::newInstance()->getAvailableTemplates();
+                    $this->_exportVariableToView('templates', $templates);
                     $this->_exportVariableToView("page", $this->pageManager->findByPrimaryKey(Params::getParam("id")));
                     $this->doView("pages/frm.php");
                     break;
@@ -58,6 +60,9 @@
                     $id = Params::getParam("id");
                     $s_internal_name = Params::getParam("s_internal_name");
                     $s_internal_name = osc_sanitizeString($s_internal_name) ;
+                    
+                    $meta = Params::getParam('meta');
+                    $this->pageManager->updateMeta($id, json_encode($meta));
 
                     $aFieldsDescription = array();
                     $postParams = Params::getParamsAsArray('', false);
@@ -107,12 +112,16 @@
                         Session::newInstance()->_dropKeepForm();
                     }
 
+                    $templates = WebThemes::newInstance()->getAvailableTemplates();
+                    $this->_exportVariableToView('templates', $templates);
                     $this->_exportVariableToView("page", array());
                     $this->doView("pages/frm.php");
                     break;
                 case 'add_post':
                     $s_internal_name = Params::getParam("s_internal_name");
-                    $s_internal_name = osc_sanitizeString($s_internal_name) ;
+                    $s_internal_name = osc_sanitizeString($s_internal_name);
+                    
+                    $meta = Params::getParam('meta');
 
                     $aFieldsDescription = array();
                     $postParams = Params::getParamsAsArray('', false);
@@ -136,7 +145,7 @@
                         osc_add_flash_error_message(_m('You have to set a different internal name'), 'admin');
                         $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=add");
                     }
-                    $aFields = array('s_internal_name' => $s_internal_name, 'b_indelible' => '0');
+                    $aFields = array('s_internal_name' => $s_internal_name, 'b_indelible' => '0', 's_meta' => json_encode($meta));
                     Session::newInstance()->_setForm('s_internal_name',$s_internal_name);
 
                     $page = $this->pageManager->findByInternalName($s_internal_name);
@@ -202,18 +211,41 @@
                     $this->redirectTo(osc_admin_base_url(true) . "?page=pages");
                     break;
                 default:
-                    if( Params::getParam('iDisplayLength') == '' ) {
-                        Params::setParam('iDisplayLength', 10 );
+                    require_once osc_lib_path()."osclass/classes/datatables/PagesDataTable.php";
+
+                    // set default iDisplayLength 
+                    if( Params::getParam('iDisplayLength') != '' ) {
+                        Cookie::newInstance()->push('listing_iDisplayLength', Params::getParam('iDisplayLength'));
+                        Cookie::newInstance()->set();
+                    } else {
+                        // set a default value if it's set in the cookie
+                        if( Cookie::newInstance()->get_value('listing_iDisplayLength') != '' ) {
+                            Params::setParam('iDisplayLength', Cookie::newInstance()->get_value('listing_iDisplayLength'));
+                        } else {
+                            Params::setParam('iDisplayLength', 10 );
+                        }
                     }
                     $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
 
-                    require_once(osc_admin_base_path() . 'ajax/pages_processing.php');
-                    $params = Params::getParamsAsArray('get');
-                    $pages_processing = new PagesProcessing( $params );
-                    $aData = $pages_processing->result( $params );
+                    // Table header order by related
+                    if( Params::getParam('sort') == '') {
+                        Params::setParam('sort', 'date') ;
+                    }
+                    if( Params::getParam('direction') == '') {
+                        Params::setParam('direction', 'desc');
+                    }
 
                     $page  = (int)Params::getParam('iPage');
-                    if(count($aData['aaData']) == 0 && $page!=1) {
+                    if($page==0) { $page = 1; };
+                    Params::setParam('iPage', $page);
+
+                    $params = Params::getParamsAsArray("get") ;
+
+                    $pagesDataTable = new PagesDataTable();
+                    $pagesDataTable->table($params);
+                    $aData = $pagesDataTable->getData();
+
+                    if(count($aData['aRows']) == 0 && $page!=1) {
                         $total = (int)$aData['iTotalDisplayRecords'];
                         $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
 
@@ -230,7 +262,9 @@
                         }
                     }
 
-                    $this->_exportVariableToView('aPages', $aData);
+
+                    $this->_exportVariableToView('aData', $aData) ;
+                    $this->_exportVariableToView('aRawRows', $pagesDataTable->rawRows());
 
                     $this->doView("pages/index.php");
                 break;
@@ -240,8 +274,10 @@
         //hopefully generic...
         function doView($file)
         {
+            osc_run_hook("before_admin_html");
             osc_current_admin_theme_path($file) ;
             Session::newInstance()->_clearVariables();
+            osc_run_hook("after_admin_html");
         }
     }
 

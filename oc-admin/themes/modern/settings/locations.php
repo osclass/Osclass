@@ -16,6 +16,9 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    osc_enqueue_script('jquery-validate');
+    osc_enqueue_script('admin-location');
+
     $aCountries = __get('aCountries');
     //customize Head
     function customHead(){
@@ -51,7 +54,6 @@
                 return false;
             }
         </script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('location.js') ; ?>"></script>
         <?php
     }
     osc_add_hook('admin_header','customHead');
@@ -133,6 +135,7 @@
             <input type="hidden" name="country_c_parent" value="" />
             <input type="hidden" name="country_parent" value="" />
             <input type="hidden" name="r_manual" value="1" />
+            <input type="hidden" name="region_id" id="region_id" value="" />
             <table>
                 <tr>
                     <td><?php _e('Region'); ?>: </td>
@@ -184,6 +187,7 @@
             <input type="hidden" name="country_parent" value="" />
             <input type="hidden" name="region_parent" value="" />
             <input type="hidden" name="ci_manual" value="1" />
+            <input type="hidden" name="city_id" id="city_id" value="" />
             <table>
                 <tr>
                     <td><?php _e('City'); ?>: </td>
@@ -284,7 +288,7 @@
         </div>
     </div>
     <div class="clear"></div>
-    <form id="dialog-location-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+    <form id="dialog-location-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide">
         <input type="hidden" name="page" value="settings" />
         <input type="hidden" name="action" value="locations" />
         <input type="hidden" name="type" value="" />

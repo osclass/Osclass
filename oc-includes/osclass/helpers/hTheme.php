@@ -29,13 +29,13 @@
     function osc_admin_render_theme_url($file = '') {
         return osc_admin_base_url(true).'?page=appearance&action=render&file=' . $file;
     }
-    
-    
+
+
     /**
      * Render the specified file
      *
      * @param string $file must be a relative path, from PLUGINS_PATH
-     */    
+     */
     function osc_render_file($file = '') {
         if($file=='') {
             $file = __get('file');
@@ -45,8 +45,8 @@
         $file = str_replace("../", "", str_replace("://", "", preg_replace("|http([s]*)|", "", $file)));
         include osc_plugins_path().$file;
     }
-    
-    
+
+
     /**
      * Gets urls for render custom files in front-end
      *
@@ -58,12 +58,12 @@
         $file = str_replace("../", "", str_replace("://", "", preg_replace("|http([s]*)|", "", $file)));
         return osc_base_url(true).'?page=custom&file=' . $file;
     }
-    
+
     /**
      * Re-send the flash messages of the given section. Usefull for custom theme/plugins files.
      *
      * @param string $$section
-     */    
+     */
     function osc_resend_flash_messages($section = "pubMessages") {
         $message = Session::newInstance()->_getMessage($section);
         if($message["type"]=="info") {
@@ -74,4 +74,108 @@
             osc_add_flash_error_message($message['msg'], $section);
         }
     }
-?>
+
+    /**
+     * Enqueue script
+     *
+     * @param type $id
+     */
+    function osc_enqueue_script($id) {
+        if( OC_ADMIN ) {
+            AdminThemes::newInstance()->enqueueScript($id);
+        } else {
+            WebThemes::newInstance()->enqueueScript($id);
+        }
+    }
+
+    /**
+     * Remove script from the queue, so it will not be loaded
+     *
+     * @param type $id
+     */
+    function osc_remove_script($id) {
+        if( OC_ADMIN ) {
+            AdminThemes::newInstance()->removeScript($id);
+        } else {
+            WebThemes::newInstance()->removeScript($id);
+        }
+    }
+
+    /**
+     * Add script to be loaded
+     *
+     * @param $id keyname to identify the script
+     * @param $url url of the .js file
+     * @param $dependencies mixed, could be an array or a string
+     */
+    function osc_register_script($id, $url, $dependencies = null) {
+        if( OC_ADMIN ) {
+            AdminThemes::newInstance()->registerScript($id, $url, $dependencies);
+        } else {
+            WebThemes::newInstance()->registerScript($id, $url, $dependencies);
+        }
+    }
+
+    /**
+     * Remove script from the queue, so it will not be loaded
+     *
+     * @param type $id
+     */
+    function osc_unregister_script($id) {
+        if( OC_ADMIN ) {
+            AdminThemes::newInstance()->unregisterScript($id);
+        } else {
+            WebThemes::newInstance()->unregisterScript($id);
+        }
+    }
+
+    /**
+     * Print the HTML tags to make the script load
+     */
+    function osc_load_scripts() {
+        if( OC_ADMIN ) {
+            AdminThemes::newInstance()->printScripts();
+        } else {
+            WebThemes::newInstance()->printScripts();
+        }
+    }
+
+    /**
+     * Add style to be loaded
+     *
+     * @param $id keyname to identify the style
+     * @param $url url of the .css file
+     */
+    function osc_enqueue_style($id, $url) {
+        if( OC_ADMIN ) {
+            AdminThemes::newInstance()->addStyle($id, $url);
+        } else {
+            WebThemes::newInstance()->addStyle($id, $url);
+        }
+    }
+
+    /**
+     * Remove style from the queue, so it will not be loaded
+     *
+     * @param type $id
+     */
+    function osc_remove_style($id) {
+        if( OC_ADMIN ) {
+            AdminThemes::newInstance()->removeStyle($id);
+        } else {
+            WebThemes::newInstance()->removeStyle($id);
+        }
+    }
+
+    /**
+     * Print the HTML tags to make the style load
+     */
+    function osc_load_styles() {
+        if( OC_ADMIN ) {
+            AdminThemes::newInstance()->printStyles();
+        } else {
+            WebThemes::newInstance()->printStyles();
+        }
+    }
+
+    /* file end: ./oc-includes/osclass/hTheme.php */

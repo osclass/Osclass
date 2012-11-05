@@ -16,6 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    osc_enqueue_script('jquery-treeview');
+
     $fields     = __get('fields') ;
     $categories = __get('categories') ;
     $selected   = __get('default_selected') ;
@@ -35,7 +37,6 @@
 osc_add_hook('admin_page_header','customPageHeader');
 //customize Head
 function customHead() { ?>
-<script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.treeview.js') ; ?>"></script>
 <script type="text/javascript">
     function show_iframe(class_name, id) {
         if($('.content_list_'+id+' .custom-field-frame').length == 0){

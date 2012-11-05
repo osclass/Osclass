@@ -146,11 +146,10 @@ switch( $step ) {
                     <h1 id="logo">
                         <img src="<?php echo get_absolute_url(); ?>oc-includes/images/osclass-logo.png" alt="OSClass" title="OSClass" />
                     </h1>
-                    <?php if(in_array($step, array(2,3,4))) { ?>
+                    <?php if(in_array($step, array(2,3))) { ?>
                     <ul id="nav">
                         <li class="<?php if($step == 2) { ?>actual<?php } elseif($step < 2) { ?>next<?php } else { ?>past<?php }?>">1 - Database</li>
                         <li class="<?php if($step == 3) { ?>actual<?php } elseif($step < 3) { ?>next<?php } else { ?>past<?php }?>">2 - Target</li>
-                        <li class="<?php if($step == 4) { ?>actual<?php } elseif($step < 4) { ?>next<?php } else { ?>past<?php }?>">3 - Categories</li>
                     </ul>
                     <div class="clear"></div>
                     <?php } ?>
@@ -223,8 +222,6 @@ switch( $step ) {
                             display_database_error($error, ($step - 1));
                         }
                     } elseif($step == 4) {
-                        display_categories($error, $password);
-                    } elseif($step == 5) {
                         // ping engines
                         ping_search_engines( $_COOKIE['osclass_ping_engines'] ) ;
                         setcookie('osclass_save_stats', '', time() - 3600);
@@ -236,7 +233,7 @@ switch( $step ) {
                 <div id="footer">
                     <ul>
                         <li>
-                            <a href="<?php echo get_absolute_url(); ?>readme.php" target="_blank"><?php _e('Readme'); ?></a>
+                            <a href="<?php echo get_absolute_url(); ?>/oc-includes/osclass/installer/readme.php" target="_blank"><?php _e('Readme'); ?></a>
                         </li>
                         <li>
                             <a href="http://admin.osclass.org/feedback.php" target="_blank"><?php _e('Feedback'); ?></a>

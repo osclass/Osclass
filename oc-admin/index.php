@@ -24,15 +24,25 @@
 
     require_once ABS_PATH . 'oc-load.php' ;
 
-    $adminThemes = new AdminThemes() ;
-    $functions_path = $adminThemes->getCurrentThemePath() . 'functions.php';
-    if( file_exists($functions_path) ) {
-        require_once $functions_path ;
-    }
-
     if( file_exists(ABS_PATH . '.maintenance') ) {
         define('__OSC_MAINTENANCE__', true);
     }
+
+    // register admin scripts
+    osc_register_script('admin-osc', osc_current_admin_theme_js_url('osc.js'));
+    osc_register_script('admin-ui-osc', osc_current_admin_theme_js_url('ui-osc.js'), 'jquery');
+    osc_register_script('admin-location', osc_current_admin_theme_js_url('location.js'), 'jquery');
+    osc_register_script('admin-listing-form', osc_current_admin_theme_js_url('listing_form.js'), 'jquery');
+
+    // enqueue scripts
+    osc_enqueue_script('jquery');
+    osc_enqueue_script('jquery-ui');
+    osc_enqueue_script('admin-osc');
+    osc_enqueue_script('admin-ui-osc');
+
+    // enqueue css styles
+    osc_enqueue_style('jquery-ui', osc_assets_url('css/jquery-ui/jquery-ui.css'));
+    osc_enqueue_style('admin-css', osc_current_admin_theme_styles_url('main.css'));
 
     switch( Params::getParam('page') )
     {
@@ -119,4 +129,3 @@
     }
 
     /* file end: ./oc-admin/index.php */
-?>

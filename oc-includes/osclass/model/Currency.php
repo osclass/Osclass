@@ -22,7 +22,7 @@
 
     /**
      * Model database for Currency table
-     * 
+     *
      * @package OSClass
      * @subpackage Model
      * @since unknown
@@ -32,7 +32,7 @@
         /**
          * It references to self object: Currency.
          * It is used as a singleton
-         * 
+         *
          * @access private
          * @since unknown
          * @var Currency
@@ -42,7 +42,7 @@
         /**
          * It creates a new Currency object class ir if it has been created
          * before, it return the previous object
-         * 
+         *
          * @access public
          * @since unknown
          * @return Currency
@@ -65,17 +65,17 @@
             $this->setPrimaryKey('pk_c_code') ;
             $this->setFields(array('pk_c_code', 's_name', 's_description', 'b_enabled')) ;
         }
-        
+
         /**
          * Find currency by currency code
-         * 
+         *
          * @deprecated
          * @access public
          * @since unknown
          * @param int $id
          * @return array
          */
-        public function findBycode($id) 
+        public function findBycode($id)
         {
             return $this->findByPrimaryKey($id);
         }

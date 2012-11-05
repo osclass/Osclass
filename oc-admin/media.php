@@ -72,18 +72,41 @@
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=media' ) ;
                 break ;
                 default:
-                                        if( Params::getParam('iDisplayLength') == '' ) {
-                                            Params::setParam('iDisplayLength', 10 ) ;
+                                        require_once osc_lib_path()."osclass/classes/datatables/MediaDataTable.php";
+
+                                        // set default iDisplayLength 
+                                        if( Params::getParam('iDisplayLength') != '' ) {
+                                            Cookie::newInstance()->push('listing_iDisplayLength', Params::getParam('iDisplayLength'));
+                                            Cookie::newInstance()->set();
+                                        } else {
+                                            // set a default value if it's set in the cookie
+                                            if( Cookie::newInstance()->get_value('listing_iDisplayLength') != '' ) {
+                                                Params::setParam('iDisplayLength', Cookie::newInstance()->get_value('listing_iDisplayLength'));
+                                            } else {
+                                                Params::setParam('iDisplayLength', 10 );
+                                            }
                                         }
                                         $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
-                                        
-                                        require_once osc_admin_base_path() . 'ajax/media_processing.php';
-                                        $params = Params::getParamsAsArray("get") ;
-                                        $media_processing = new MediaProcessingAjax( $params );
-                                        $aData = $media_processing->result( $params ) ;
-                                        
+
+                                        // Table header order by related
+                                        if( Params::getParam('sort') == '') {
+                                            Params::setParam('sort', 'date') ;
+                                        }
+                                        if( Params::getParam('direction') == '') {
+                                            Params::setParam('direction', 'desc');
+                                        }
+
                                         $page  = (int)Params::getParam('iPage');
-                                        if(count($aData['aaData']) == 0 && $page!=1) {
+                                        if($page==0) { $page = 1; };
+                                        Params::setParam('iPage', $page);
+
+                                        $params = Params::getParamsAsArray("get") ;
+
+                                        $mediaDataTable = new MediaDataTable();
+                                        $mediaDataTable->table($params);
+                                        $aData = $mediaDataTable->getData();
+
+                                        if(count($aData['aRows']) == 0 && $page!=1) {
                                             $total = (int)$aData['iTotalDisplayRecords'];
                                             $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
 
@@ -99,8 +122,10 @@
                                                 $this->redirectTo($url) ;
                                             }
                                         }
-                                        
-                                        $this->_exportVariableToView('aMedia', $aData) ;
+
+
+                                        $this->_exportVariableToView('aData', $aData) ;
+                                        $this->_exportVariableToView('aRawRows', $mediaDataTable->rawRows());
                                         
                                         $this->doView('media/index.php') ;
                 break ;
@@ -110,8 +135,10 @@
         //hopefully generic...
         function doView($file)
         {
+            osc_run_hook("before_admin_html");
             osc_current_admin_theme_path($file) ;
-            Session::newInstance()->_clearVariables() ;
+            Session::newInstance()->_clearVariables();
+            osc_run_hook("after_admin_html");
         }
     }
 

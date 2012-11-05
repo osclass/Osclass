@@ -16,13 +16,14 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    osc_enqueue_script('jquery-validate');
+
     //getting variables for this view
     $themes = __get("themes") ;
     $info   = WebThemes::newInstance()->loadThemeInfo(osc_theme());
 
     //customize Head
-    function customHead(){
-        echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.validate.min.js').'"></script>'; ?>
+    function customHead() { ?>
         <script type="text/javascript">
             $(document).ready(function() {
                 // dialog delete
@@ -163,7 +164,7 @@
     </div>
     <!-- /themes list -->
 </div>
-<form id="dialog-delete-theme" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+<form id="dialog-delete-theme" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide">
     <input type="hidden" name="page" value="appearance" />
     <input type="hidden" name="action" value="delete" />
     <input type="hidden" name="webtheme" value="" />

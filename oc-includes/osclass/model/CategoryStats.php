@@ -19,7 +19,7 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
-    
+
     /**
      * Model database for CategoryStats table
      *
@@ -65,16 +65,16 @@
             $this->setPrimaryKey('fk_i_category_id') ;
             $this->setFields( array('fk_i_category_id', 'i_num_items') ) ;
         }
-        
+
         /**
          * Increase number of category items, given a category id
          *
          * @access public
          * @since unknown
-         * @param int $categoryId Category id 
+         * @param int $categoryId Category id
          * @return int number of affected rows, id error occurred return false
          */
-        public function increaseNumItems($categoryId) 
+        public function increaseNumItems($categoryId)
         {
             if(!is_numeric($categoryId)) {
                 return false;
@@ -94,22 +94,22 @@
             }
             return $return;
         }
-        
+
         /**
          * Increase number of category items, given a category id
-         * 
+         *
          * @access public
          * @since unknown
-         * @param int $categoryId Category id 
+         * @param int $categoryId Category id
          * @return int number of affected rows, id error occurred return false
          */
-        public function decreaseNumItems($categoryId) 
+        public function decreaseNumItems($categoryId)
         {
             $this->dao->select( 'i_num_items' ) ;
             $this->dao->from( $this->getTableName() ) ;
             $this->dao->where( $this->getPrimaryKey(), $categoryId ) ;
             $result       = $this->dao->get() ;
-            $categoryStat = $result->row() ; 
+            $categoryStat = $result->row() ;
             $return       = 0 ;
 
             if( isset( $categoryStat['i_num_items'] ) ) {
@@ -152,26 +152,26 @@
 
         /**
          * Find stats by category id
-         * 
+         *
          * @access public
          * @since unknown
-         * @param int $categoryId Category id 
+         * @param int $categoryId Category id
          * @return array CategoryStats
          */
-        public function findByCategoryId($categoryId) 
+        public function findByCategoryId($categoryId)
         {
             return $this->findByPrimaryKey($categoryId);
         }
-        
+
         /**
          * Count items,  given a category id
-         * 
+         *
          * @access public
          * @since unknown
          * @param type $categoryId Category id
          * @return int number of items into category
          */
-        public function countItemsFromCategory($categoryId) 
+        public function countItemsFromCategory($categoryId)
         {
             $this->dao->select('i_num_items') ;
             $this->dao->from($this->getTableName()) ;
@@ -180,17 +180,17 @@
             $data = $result->row() ;
             if($data==null) { return 0; } else { return $data['i_num_items']; };
         }
-        
+
         /**
-         * Get number of items 
+         * Get number of items
          *
          * @access public
          * @since unknown
-         * @staticvar string $numItemsMap 
+         * @staticvar string $numItemsMap
          * @param array $cat category array
          * @return int
          */
-        public function getNumItems($cat) 
+        public function getNumItems($cat)
         {
             static $numItemsMap = null;
             if(is_null($numItemsMap)) {
@@ -209,11 +209,11 @@
          * @since unknown
          * @return array
          */
-        public function toNumItemsMap() 
+        public function toNumItemsMap()
         {
             $map = array();
             $all = $this->listAll();
-	
+
             if( empty($all) ) return array();
 
             $roots = Category::newInstance()->findRootCategories();

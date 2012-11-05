@@ -27,7 +27,7 @@
         }*/
 
         static public function your_name() {
-            
+
             if( Session::newInstance()->_getForm("yourName") != "" ){
                 $yourName = Session::newInstance()->_getForm("yourName");
                 parent::generic_input_text("yourName", $yourName, null, false);
@@ -38,7 +38,7 @@
         }
 
         static public function your_email() {
-            
+
             if( Session::newInstance()->_getForm("yourEmail") != "" ){
                 $yourEmail = Session::newInstance()->_getForm("yourEmail");
                 parent::generic_input_text("yourEmail", $yourEmail, null, false);
@@ -119,7 +119,7 @@
                     email: "<?php _e("Invalid friend's email address"); ?>."
                 },
                 message: "<?php _e("Message: this field is required"); ?>."
-                
+
             },
             //onfocusout: function(element) { $(element).valid(); },
             errorLabelContainer: "#error_list",
@@ -130,9 +130,9 @@
         });
     });
 </script>
-<?php 
+<?php
         }
-        
+
     }
 
 ?>

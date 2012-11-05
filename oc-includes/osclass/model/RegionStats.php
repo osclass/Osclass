@@ -19,7 +19,7 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
-    
+
     /**
      * Model database for RegionStats table
      *
@@ -67,16 +67,16 @@
             $this->setPrimaryKey('fk_i_region_id') ;
             $this->setFields( array('fk_i_region_id', 'i_num_items') ) ;
         }
-        
+
         /**
          * Increase number of region items, given a region id
          *
          * @access public
          * @since 2.4
-         * @param int $regionId Region id 
+         * @param int $regionId Region id
          * @return int number of affected rows, id error occurred return false
          */
-        public function increaseNumItems($regionId) 
+        public function increaseNumItems($regionId)
         {
             if(!is_numeric($regionId)) {
                 return false;
@@ -84,16 +84,16 @@
             $sql = sprintf('INSERT INTO %s (fk_i_region_id, i_num_items) VALUES (%d, 1) ON DUPLICATE KEY UPDATE i_num_items = i_num_items + 1', $this->getTableName(), $regionId);
             return $this->dao->query($sql);
         }
-        
+
         /**
          * Decrease number of region items, given a region id
-         * 
+         *
          * @access public
          * @since 2.4
-         * @param int $regionId Region id 
+         * @param int $regionId Region id
          * @return int number of affected rows, id error occurred return false
          */
-        public function decreaseNumItems($regionId) 
+        public function decreaseNumItems($regionId)
         {
             if(!is_numeric($regionId)) {
                 return false;
@@ -102,7 +102,7 @@
             $this->dao->from( $this->getTableName() ) ;
             $this->dao->where( $this->getPrimaryKey(), $regionId ) ;
             $result         = $this->dao->get() ;
-            $regionStat     = $result->row() ; 
+            $regionStat     = $result->row() ;
 
             if( isset( $regionStat['i_num_items'] ) ) {
                 $this->dao->from( $this->getTableName() ) ;
@@ -111,19 +111,19 @@
                 $this->dao->where( 'fk_i_region_id', $regionId ) ;
 
                 return $this->dao->update() ;
-            } 
-            
+            }
+
             return false;
         }
 
         /**
          * Set i_num_items, given a region id
-         * 
+         *
          * @access public
          * @since 2.4
          * @param type $regionID
          * @param type $numItems
-         * @return type 
+         * @return type
          */
         public function setNumItems($regionID, $numItems)
         {
@@ -133,60 +133,60 @@
 
         /**
          * Find stats by region id
-         * 
+         *
          * @access public
          * @since 2.4
-         * @param int $regionId region id 
+         * @param int $regionId region id
          * @return array
          */
-        
-        public function findByRegionId($regionId) 
+
+        public function findByRegionId($regionId)
         {
             return $this->findByPrimaryKey($regionId);
-        }   
-        
-        /** 
+        }
+
+        /**
          * Return a list of regions and counter items.
          * Can be filtered by country and num_items,
          * and ordered by region_name or items counter.
          * $order = 'region_name ASC' OR $oder = 'items DESC'
-         * 
+         *
          * @access public
          * @since 2.4
          * @param string $country
          * @param string $zero
          * @param string $order
-         * @return array 
+         * @return array
          */
-        public function listRegions($country = '%%%%', $zero = ">", $order = "region_name ASC") 
+        public function listRegions($country = '%%%%', $zero = ">", $order = "region_name ASC")
         {
             $order_split = explode(' ', $order) ;
-            
+
             $this->dao->from( DB_TABLE_PREFIX.'t_region , '.$this->getTableName() ) ;
             $this->dao->where( $this->getTableName().'.fk_i_region_id = '.DB_TABLE_PREFIX.'t_region.pk_i_id' ) ;
-            
+
             if( $order_split[0] == 'region_name' ) {
                 $this->dao->select('STRAIGHT_JOIN '.$this->getTableName().'.fk_i_region_id as region_id, '.$this->getTableName().'.i_num_items as items, '.DB_TABLE_PREFIX.'t_region.s_name as region_name') ;
             } else if( $order_split[0] == 'items') {
                 $this->dao->select($this->getTableName().'.fk_i_region_id as region_id, '.$this->getTableName().'.i_num_items as items, '.DB_TABLE_PREFIX.'t_region.s_name as region_name') ;
-            }            
+            }
 
             $this->dao->where('i_num_items '.$zero.' 0' ) ;
             if( $country != '%%%%') {
                 $this->dao->where(DB_TABLE_PREFIX.'t_region.fk_c_country_code = \''.$this->dao->connId->real_escape_string($country).'\' ') ;
             }
             $this->dao->orderBy($order) ;
-            
+
             $rs = $this->dao->get() ;
-            
+
             if($rs === false) {
                 return array() ;
             }
             return $rs->result() ;
         }
-        
+
         /**
-         * Calculate the total items that belong to region 
+         * Calculate the total items that belong to region
          *
          * @param type $regionId
          * @return int total items
@@ -205,15 +205,15 @@
             if($return === false) {
                 return 0;
             }
-            
+
             if($return->numRows() > 0) {
                 $aux = $return->result() ;
                 return $aux[0]['total'] ;
             }
-            
+
             return 0;
         }
-        
+
     }
 
     /* file end: ./oc-includes/osclass/model/RegionStats.php */

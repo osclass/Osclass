@@ -250,6 +250,7 @@
 
         static function activate($path)
         {
+            $data = array();
             $data['s_value'] = osc_active_plugins() ;
             $plugins_list    = unserialize($data['s_value']);
 

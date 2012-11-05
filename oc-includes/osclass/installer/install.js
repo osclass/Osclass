@@ -64,16 +64,6 @@ function validate_form() {
         num_error = num_error + 1;
     }
 
-    if( $('#skip-location-h').val() == 0 ) {
-        if($("#d_country span").length < 1) {
-            $("#d_country").css('border', '2px solid red');
-            num_error = num_error + 1;
-        }
-    } else {
-        if( !$('#skip-location').attr('checked') ) {
-            num_error = num_error + 1;
-        }
-    }
     
     var pattern_notnull=/^[a-zA-Z0-9]+$/;
     if( !pattern_notnull.test(admin_user.value) ) {
@@ -88,9 +78,6 @@ function validate_form() {
     var input = $("#target_form input");
     $("#lightbox").css('display','');
 
-    if( $('input[name=c_country]:checked').val() == 'International' ) {
-        alert('You\'ve chosen worlwide, it might take a while')
-    }
 
     $.ajax({
         type: 'POST',
@@ -99,7 +86,7 @@ function validate_form() {
         data: input,
         timeout: 600000,
         success: function(data) {
-            if(data.status == 200) {
+            if(data.status == true) {
                 var form = document.createElement("form");
                 form.setAttribute("method", 'POST');
                 form.setAttribute("action", 'install.php');
@@ -137,216 +124,6 @@ function validate_form() {
     return false;
 }
 
-$(function(){
-    //choose country
-    $("#d_country").click(function(){
-       $("#t_country").focus();
-       $("#d_country").css('border', '');
-    });
-
-    if($("#t_country").length != 0) {
-        $("#t_country").autocomplete({
-            open: function(event, ui) {
-                $('#a_country ul').attr('style','');
-                $('#country-error').css('display','none');
-                $('#region-info').css('display','none');
-            },
-
-            source: function(text, add){
-                $.jsonp({
-                    "url": "http://geo.osclass.org/geo.services.php?callback=?&action=country&max=5",
-                    "data": text,
-                    "success": function(json) {
-                        var suggestions = [];
-                        if( json.length > 0 ) {
-                            $.each(json, function(i, val){
-                                suggestions.push(val.name);
-                            });
-                        } else {
-                            suggestions.push('No matches found');
-                        }
-                        add(suggestions);
-                    },
-                    "error": function(d,msg) {
-                        no_internet();
-                    }
-                });
-            },
-
-            select: function(e, ui) {
-                if(!ui.item.value.match(/No matches found/)) {
-                    var country = ui.item.value,
-                        span = $("<span>").text(country),
-                        a = $("<a>").addClass("remove").attr({
-                            href: "javascript:",
-                            title: "Remove " + country
-                        }).text("x").appendTo(span);
-                        input = $("<input>").attr({
-                            type: "hidden",
-                            name: "country[]",
-                            value: country
-                        }).appendTo(span);
-                    span.insertBefore("#t_country");
-                    $("#region-div").css('display','block');
-                    $("#region-box").css('display','none');
-                }
-            },
-
-            close: function(event, ui) {
-                $("#t_country").val("");
-                $("#t_country").attr('size', 1);
-                if ($("#d_country span").length > 1) {
-                    $("#region-div").css('display','none');
-                    $("#country-error").css('display','block');
-                    var l_span = $("#d_location span");
-                    l_span.remove();
-                } else if($("#d_country span").length == 1) {
-                    $('#region-info').css('display','block');
-                }
-            },
-
-            appendTo: '#a_country',
-
-            delay: 400,
-
-            selectFirst: true
-        });
-    }
-    
-    $(".remove", document.getElementById("d_country")).live("click", function(){
-        if($(this).attr('title').match(/Remove All countries and territories/)) {
-            $("input[value=Country]").attr('checked',true);
-            $("#t_country").removeAttr("disabled");
-            $("#t_country").focus();
-        }
-        $(this).parent().remove();
-        var l_span = $("#d_location span");
-        l_span.remove();
-        if($("#d_country span").length === 0) {
-            $("#region-div").css('display','none');
-            $("#region-box").css('display','none');
-            $("#t_country").css("top", 0);
-        } else if($("#d_country span").length == 1) {
-            $("#region-div").css('display','block');
-            $("#country-error").css('display','none');
-            $('#region-info').css('display','block');
-        }
-    });
-
-    $('#t_country').keydown(function(event){
-        if( (event.keyCode == 8) && ($('#t_country').val() == 0) ) {
-            var sel_countries = $('#d_country span:last');
-            sel_countries.remove();
-            if($("#d_country span").length === 0) {
-                $("#region-div").css('display','none');
-                $("#region-box").css('display','none');
-                $("#t_country").css("top", 0);
-            } else if($("#d_country span").length == 1) {
-                $("#region-div").css('display','block');
-                $("#country-error").css('display','none');
-                $('#region-info').css('display','block');
-            }
-        }
-    });
-
-    //chouse region or city
-    $("#d_location").click(function(){
-       $("#t_location").focus();
-    });
-
-    if( $("#t_location").length != 0 ) {
-        $("#t_location").autocomplete({
-            open: function(event, ui) {
-                $('#a_location ul').attr('style','');
-            },
-
-            source: function(text, add){
-                var type = '';
-                if($("input[name=c_location]:checked").val().match(/Region/i)) {
-                    type = 'region';
-                } else {
-                    type = 'city';
-                }
-                var country = $("#d_country span input").attr('value');
-                var url = 'http://geo.osclass.org/geo.services.php?callback=?&action=' + type + '&max=5&country=' + country;
-                $.jsonp({
-                    "url": url,
-                    "data": text,
-                    "success": function(json) {
-                        var suggestions = [];
-                        if( json.length > 0 ) {
-                            $.each(json, function(i, val){
-                                suggestions.push(val.name);
-                            });
-                        } else {
-                            suggestions.push('No matches found');
-                        }
-                        add(suggestions);
-                    },
-                    "error": function(d,msg) {
-                        no_internet();
-                    }
-                });
-            },
-
-            select: function(e, ui) {
-                if(!ui.item.value.match(/No matches found/)) {
-                    if($("input[name=c_location]:checked").val().match(/Region/i)) {
-                        var region = ui.item.value,
-                            span = $("<span>").text(region),
-                            a = $("<a>").addClass("remove").attr({
-                                href: "javascript:",
-                                title: "Remove " + region
-                            }).text("x").appendTo(span);
-                            input = $("<input>").attr({
-                                type: "hidden",
-                                name: "region[]",
-                                value: region
-                            }).appendTo(span);
-                        span.insertBefore("#t_location");
-                    } else {
-                        var city = ui.item.value,
-                            span = $("<span>").text(city),
-                            a = $("<a>").addClass("remove").attr({
-                                href: "javascript:",
-                                title: "Remove " + city
-                            }).text("x").appendTo(span);
-                            input = $("<input>").attr({
-                                type: "hidden",
-                                name: "city[]",
-                                value: city
-                            }).appendTo(span);
-                        span.insertBefore("#t_location");
-                    }
-                }
-            },
-
-            close: function(event, ui) {
-                $("#t_location").val("");
-                $("#t_location").attr('size', 1);
-
-            },
-
-            appendTo: '#a_location',
-
-            selectFirst: true
-        });
-    }
-
-    $('#t_location').keydown(function(event){
-        if( (event.keyCode == 8) && ($('#t_location').val() == 0) ) {
-            var sel_regions = $('#d_location span:last');
-            sel_regions.remove();
-        }
-    });
-
-    $(".remove", document.getElementById("d_location")).live("click", function(){
-        $(this).parent().remove();
-        if($("#d_location span").length === 0) {
-            $("#t_location").css("top", 0);
-        }
-    });
-});
 
 function no_internet() {
     $('#t_country').attr('disabled' , true )
@@ -355,8 +132,6 @@ function no_internet() {
     $('#worlwide').attr('disabled', true );
     $('#d_country span').remove();
     $('#location-error').css('display','block');
-    $('#skip-location-d').css('display','block');
-    $('#skip-location-h').attr('value','1');
 }
 
 function more_size(input, event) {
@@ -367,41 +142,73 @@ function more_size(input, event) {
     }
 }
 
-function change_to_international(input) {
-    if(input.checked) {
-        $("#d_country").css('border', '');
-        var c_span = $("#d_country span");
-        c_span.remove();
-        var l_span = $("#d_location span");
-        l_span.remove();
-        var country = 'All countries and territories',
-            span = $("<span>").text(country),
-            a = $("<a>").addClass("remove").attr({
-                href: "javascript:",
-                title: "Remove " + country
-            }).text("x").appendTo(span);
-        span.insertBefore("#t_country");
-        $("#t_country").attr('disabled', true);
-        $("#region-div").css('display','none');
-        $("#region-box").css('display','none');
+function get_regions(country) {
+    $("#country-input").attr("value", country);
+    $("#region-input").attr("value", "all");
+    $("#city-input").attr("value", "all");
+    $('#city_select').hide();
+    $('#no_city_text').hide();
+    $('#skip-location-input').attr('value','0');
+    if(country=="skip") {
+        $('#skip-location-input').attr('value','1');
+    } else if(country=='all') {
+        $('#region_select').hide();
+        $('#no_region_text').hide();
+    } else {
+        var jsondata = new Object();
+        jsondata.country = country;
         $.jsonp({
-            "url": "http://geo.osclass.org/geo.services.php?callback=?&action=country&max=1&term=",
+            "url": "http://geo.osclass.org/newgeo.services.php?callback=?&action=regions",
+            "data": jsondata,
+            "success": function(json) {
+                if( json.length > 0 ) {
+                    $('#region_select').show();
+                    $('#no_region_text').hide();
+                    $(".region_select").remove();
+                    $.each(json, function(i, val){
+                        $("#region_select").append('<option value="'+val.code+'" class="region_select" >'+val.s_name+'</option>');
+                    });
+                } else {
+                    $('#region_select').hide();
+                    $('#no_region_text').show();
+                };
+            },
             "error": function(d,msg) {
-                no_internet();
+                //no_internet();
             }
         });
     }
 }
 
-function change_to_country(input) {
-    if(input.checked) {
-        var c_span = $("#d_country span");
-        c_span.remove();
-        var l_span = $("#d_location span");
-        l_span.remove();
-        $("#t_country").removeAttr("disabled");
-        $("#region-div").css('display','none');
-        $("#region-box").css('display','none');
+function get_cities(region) {
+    $("#region-input").attr("value", region);
+    $("#city-input").attr("value", "all");
+    if(region=='all') {
+        $('#city_select').hide();
+        $('#no_city_text').hide();
+    } else {
+        var jsondata = new Object();
+        jsondata.region = region;
+        $.jsonp({
+            "url": "http://geo.osclass.org/newgeo.services.php?callback=?&action=cities",
+            "data": jsondata,
+            "success": function(json) {
+                if( json.length > 0 ) {
+                    $('#city_select').show();
+                    $('#no_city_text').hide();
+                    $(".city_select").remove();
+                    $.each(json, function(i, val){
+                        $("#city_select").append('<option value="'+val.code+'" class="city_select" >'+val.s_name+'</option>');
+                    });
+                } else {
+                    $('#city_select').hide();
+                    $('#no_city_text').show();
+                };
+            },
+            "error": function(d,msg) {
+                //no_internet();
+            }
+        });
     }
 }
 
@@ -414,6 +221,21 @@ $(document).ready(function(){
     $("#admin_user").focus(function() {
         $('#admin-user-error').attr('style', 'display:none;');
     });
+    
+    $("#country_select").change(function(){
+        get_regions($("#country_select option:selected").attr("value"));
+    });
+
+    $("#region_select").change(function(){
+        get_cities($("#region_select option:selected").attr("value"));
+    });
+    
+    $("#city_select").change(function(){
+        $("#city-input").attr("value", $("#city_select option:selected").attr("value"));
+    });
+
+    get_regions($("#country_select option:selected").attr("value"));
+    
 });
 
 /* Extension of jQuery */

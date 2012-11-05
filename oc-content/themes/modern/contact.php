@@ -41,9 +41,10 @@
                         <label for="message"><?php _e('Message', 'modern') ; ?></label> <?php ContactForm::your_message() ; ?><br />
                         <label for="yourName"><?php _e('Your name', 'modern') ; ?> (<?php _e('optional', 'modern'); ?>)</label> <?php ContactForm::your_name() ; ?><br />
                         <label for="yourEmail"><?php _e('Your e-mail address', 'modern') ; ?></label> <?php ContactForm::your_email(); ?><br />
+                        <?php osc_run_hook('contact_form'); ?>
                         <?php osc_show_recaptcha(); ?>
                         <button type="submit"><?php _e('Send', 'modern') ; ?></button>
-                        <?php osc_run_hook('user_register_form') ; ?>
+                        <?php osc_run_hook('admin_contact_form') ; ?>
                     </fieldset>
                 </form>
             </div>

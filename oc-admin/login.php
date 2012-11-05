@@ -88,6 +88,8 @@
                                         Session::newInstance()->_set('adminEmail', $admin['s_email']) ;
                                         Session::newInstance()->_set('adminLocale', Params::getParam('locale')) ;
 
+                                        osc_run_hook('login_admin');
+
                                         $this->redirectTo( $url_redirect );
                 break ;
                 case('recover'):        // form to recover the password (in this case we have the form in /gui/)
@@ -122,7 +124,7 @@
                                         }
 
                                         osc_add_flash_ok_message( _m('A new password has been sent to your e-mail'), 'admin') ;
-                                        $this->redirectTo( osc_admin_base_url() ) ;
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=login') ;
                 break ;
                 case('forgot'):         // form to recover the password (in this case we have the form in /gui/)
                                         $admin = Admin::newInstance()->findByIdSecret(Params::getParam('adminId'), Params::getParam('code'));
@@ -147,7 +149,7 @@
                                                 ), array('pk_i_id' => $admin['pk_i_id'])
                                             );
                                             osc_add_flash_ok_message( _m('The password has been changed'), 'admin');
-                                            $this->redirectTo(osc_admin_base_url());
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=login');
                                         } else {
                                             osc_add_flash_error_message( _m("Error, the passwords don't match"), 'admin') ;
                                             $this->redirectTo(osc_forgot_admin_password_confirm_url(Params::getParam('adminId'), Params::getParam('code')));
@@ -164,10 +166,19 @@
         //in this case, this function is prepared for the "recover your password" form
         function doView($file)
         {
-            require osc_admin_base_path() . $file ;
-        }
+            $login_admin_title = osc_apply_filter('login_admin_title', 'Osclass');
+            $login_admin_url   = osc_apply_filter('login_admin_url', 'http://osclass.org/');
+            $login_admin_image = osc_apply_filter('login_admin_image', osc_admin_base_url() . 'images/osclass-logo.gif');
 
+            View::newInstance()->_exportVariableToView('login_admin_title', $login_admin_title);
+            View::newInstance()->_exportVariableToView('login_admin_url', $login_admin_url);
+            View::newInstance()->_exportVariableToView('login_admin_image', $login_admin_image);
+
+            osc_run_hook("before_admin_html");
+            require osc_admin_base_path() . $file;
+            osc_run_hook("after_admin_html");
+
+        }
     }
 
     /* file end: ./oc-admin/login.php */
-?>

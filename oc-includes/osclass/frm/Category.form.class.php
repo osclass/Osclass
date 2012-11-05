@@ -101,7 +101,7 @@
                     $name = $locale['pk_c_code'] . '#s_name';
                     $nameTextarea = $locale['pk_c_code'] . '#s_description';
                     $valueTextarea = (isset($category['locale'][$locale['pk_c_code']])) ? $category['locale'][$locale['pk_c_code']]['s_description'] : "";
-                    
+
                     $contentTemp  = '<div id="'.$category['pk_i_id'].'-'.$locale['pk_c_code'].'" class="category-details-form">';
                     $contentTemp .= '<div class="FormElement"><label>' . __('Name') . '</label><input id="' . $name .'" type="text" name="' . $name .'" value="' . osc_esc_html(htmlentities($value, ENT_COMPAT, "UTF-8")) . '"/></div>' ;
                     $contentTemp .= '<div class="FormElement"><label>' . __('Description') . '</label>';

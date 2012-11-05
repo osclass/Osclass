@@ -61,7 +61,7 @@
                 Session::newInstance()->_set('userEmail', $user['s_email']) ;
                 $phone = ($user['s_phone_mobile'])? $user['s_phone_mobile'] : $user['s_phone_land'];
                 Session::newInstance()->_set('userPhone', $phone) ;
-            
+
                 return true ;
             } else {
                 return false;
@@ -241,7 +241,7 @@
     function osc_user_access_date() {
         return (int) osc_user_field("dt_access_date");
     }
-    
+
     /**
      * Gets last access ip
      *
@@ -250,7 +250,7 @@
     function osc_user_access_ip() {
         return (int) osc_user_field("s_access_ip");
     }
-    
+
     /**
      * Gets website of current user
      *
@@ -404,7 +404,7 @@
     function osc_user_comments_validated() {
         return osc_user_field("i_comments");
     }
-    
+
     /**
      * Gets number of users
      *
@@ -422,7 +422,7 @@
                 return User::newInstance()->countUsers();
                 break;
         }
-    }    
+    }
     /////////////
     // ALERTS  //
     /////////////
@@ -484,6 +484,46 @@
     }
 
     /**
+     * Gets id of current alert
+     * @return string
+     */
+    function osc_alert_id() {
+        return (string) osc_alert_field('pk_i_id');
+    }
+
+    /**
+     * Gets aate of current alert
+     * @return string
+     */
+    function osc_alert_date() {
+        return (string) osc_alert_field('dt_date');
+    }
+
+    /**
+     * Gets unsub date of current alert
+     * @return string
+     */
+    function osc_alert_unsub_date() {
+        return (string) osc_alert_field('dt_unsub_date');
+    }
+
+    /**
+     * Gets type of current alert
+     * @return string
+     */
+    function osc_alert_type() {
+        return (string) osc_alert_field('e_type');
+    }
+
+    /**
+     * Gets active of current alert
+     * @return boolean
+     */
+    function osc_alert_is_active() {
+        return (bool) osc_alert_field('b_active');
+    }
+
+    /**
      * Gets the search object of a specific alert
      *
      * @return Search
@@ -491,10 +531,10 @@
     function osc_alert_search_object() {
         return osc_unserialize(base64_decode(osc_alert_field('s_search')));
     }
-    
+
     /**
      * Gets next user in users array
-     * 
+     *
      * @return <type>
      */
     function osc_prepare_user_info() {

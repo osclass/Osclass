@@ -541,15 +541,6 @@ table.list-categories td {
     color:red;
 }
 
-#skip-location-d {
-    float: left;
-    margin-top: 14px;
-}
-
-#skip-location-d input {
-    margin-right: 8px;
-}
-
 .page-error {
     background: #FFFFFF;
     border: 1px solid #DFDFDF;

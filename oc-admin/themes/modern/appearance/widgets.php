@@ -16,6 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    osc_enqueue_script('jquery-validate');
+
     $info = __get("info");
 
     function addHelp() {
@@ -32,8 +34,7 @@
     }
 
     //customize Head
-    function customHead(){
-        echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.validate.min.js').'"></script>'; ?>
+    function customHead() { ?>
         <script type="text/javascript">
             $(document).ready(function() {
                 $("#dialog-widget-delete").dialog({
@@ -102,7 +103,7 @@
         </div>
     </div>
 </div>
-<form id="dialog-widget-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+<form id="dialog-widget-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide">
     <input type="hidden" name="page" value="appearance" />
     <input type="hidden" name="action" value="delete_widget" />
     <input type="hidden" name="id" value="" />

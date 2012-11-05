@@ -16,6 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    osc_enqueue_script('jquery-validate');
+
     function addHelp() {
         echo '<p>' . __('Manage all the listings on your site: edit, delete or block the latest listings published. You can also filter by several parameters: user, region, city, etc.') . '</p>';
     }
@@ -37,9 +39,8 @@
     osc_add_filter('admin_title', 'customPageTitle');
 
     //customize Head
-    function customHead() { ?>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
-        <?php ItemForm::location_javascript_new('admin') ; ?>
+    function customHead() {
+        ItemForm::location_javascript_new('admin') ; ?>
         <script type="text/javascript">
             // autocomplete users
             $(document).ready(function(){
@@ -53,7 +54,7 @@
                     } else if(option == 'oUser'){
                         $('#fUser').removeClass('hide');
                         $('#fPattern, #fItemId').addClass('hide');
-                    } else {   
+                    } else {
                         $('#fItemId').removeClass('hide');
                         $('#fPattern, #fUser').addClass('hide');
                     }
@@ -61,10 +62,10 @@
 
                 $('input[name="user"]').attr( "autocomplete", "off" );
                 $('#user,#fUser').autocomplete({
-                    source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax", //+$('input[name="user"]').val(), // &term=
+                    source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax",
                     minLength: 0,
                     select: function( event, ui ) {
-                        if(ui.item.id=='') 
+                        if(ui.item.id=='')
                             return false;
                         $('#userId').val(ui.item.id);
                         $('#fUserId').val(ui.item.id);
@@ -122,7 +123,7 @@
                     $('#display-filters').dialog('open');
                     return false;
                 });
-                
+
                 // check_all bulkactions
                 $("#check_all").change(function(){
                     var isChecked = $(this+':checked').length;
@@ -147,22 +148,18 @@
     }
     osc_add_hook('admin_header','customHead');
 
-    $users       = __get('users') ;
-    $stat        = __get('stat') ;
-    $categories  = __get('categories') ;
-    $countries   = __get('countries') ;
-    $regions     = __get('regions') ;
-    $cities      = __get('cities') ;
-    $withFilters = __get('withFilters') ;
+    $categories  = __get('categories');
+    $withFilters = __get('withFilters');
 
     $iDisplayLength = __get('iDisplayLength');
 
-    $aData      = __get('aItems') ;
-
-    $url_date   = __get('url_date') ;
-
+    $aData      = __get('aData');
+    $aRawRows   = __get('aRawRows');
     $sort       = Params::getParam('sort');
     $direction  = Params::getParam('direction');
+
+    $columns    = $aData['aColumns'];
+    $rows       = $aData['aRows'];
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
@@ -318,17 +315,17 @@
                     <option value="oPattern" <?php if($opt == 'oPattern'){ echo 'selected="selected"'; } ?>><?php _e('Pattern') ; ?></option>
                     <option value="oUser" <?php if($opt == 'oUser'){ echo 'selected="selected"'; } ?>><?php _e('Email') ; ?></option>
                     <option value="oItemId" <?php if($opt == 'oItemId'){ echo 'selected="selected"'; } ?>><?php _e('Item ID') ; ?></option>
-                </select><input 
+                </select><input
                     id="fPattern" type="text" name="sSearch"
-                    value="<?php echo osc_esc_html(Params::getParam('sSearch')); ?>" 
-                    class="input-text input-actions input-has-select <?php echo $classPattern; ?>"/><input 
-                    id="fUser" name="user" type="text" 
-                    class="fUser input-text input-actions input-has-select <?php echo $classUser; ?>" 
-                    value="<?php echo osc_esc_html(Params::getParam('user')); ?>" /><input 
-                    id="fUserId" name="userId" type="hidden" 
-                    value="<?php echo osc_esc_html(Params::getParam('userId')); ?>" /><input 
-                    id="fItemId" type="text" name="itemId" 
-                    value="<?php echo osc_esc_html(Params::getParam('itemId')); ?>" 
+                    value="<?php echo osc_esc_html(Params::getParam('sSearch')); ?>"
+                    class="input-text input-actions input-has-select <?php echo $classPattern; ?>"/><input
+                    id="fUser" name="user" type="text"
+                    class="fUser input-text input-actions input-has-select <?php echo $classUser; ?>"
+                    value="<?php echo osc_esc_html(Params::getParam('user')); ?>" /><input
+                    id="fUserId" name="userId" type="hidden"
+                    value="<?php echo osc_esc_html(Params::getParam('userId')); ?>" /><input
+                    id="fItemId" type="text" name="itemId"
+                    value="<?php echo osc_esc_html(Params::getParam('itemId')); ?>"
                     class="input-text input-actions input-has-select <?php echo $classItemId; ?>"/>
 
                 <input type="submit" class="btn submit-right" value="<?php echo osc_esc_html( __('Find') ) ; ?>">
@@ -358,41 +355,29 @@
             <table class="table" cellpadding="0" cellspacing="0">
                 <thead>
                     <tr>
-                        <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
-                        <th class="col-title"><?php _e('Title') ; ?></th>
-                        <th><?php _e('User') ; ?></th>
-                        <th><?php _e('Category') ; ?></th>
-                        <th><?php _e('Country') ; ?></th>
-                        <th><?php _e('Region') ; ?></th>
-                        <th><?php _e('City') ; ?></th>
-                        <th class="col-date <?php if($sort=='date'){ if($direction=='desc'){ echo 'sorting_desc'; } else { echo 'sorting_asc'; } } ?>">
-                            <a href="<?php echo $url_date; ?>"><?php _e('Date') ; ?></a>
-                        </th>
+                        <?php foreach($columns as $k => $v) {
+                            echo '<th class="col-'.$k.' '.($sort==$k?($direction=='desc'?'sorting_desc':'sorting_asc'):'').'">'.$v.'</th>';
+                        }; ?>
                     </tr>
                 </thead>
                 <tbody>
-                <?php if( count($aData['aaData']) > 0 ) { ?>
-                <?php foreach($aData['aaData'] as $key => $array) { ?>
-                    <?php $class = ''; $aI = $aData['aaObject'][$key]; if(!$aI['b_active']) $class = 'status-spam'; ?>
-                    <?php if(!$aI['b_active']) $class = 'status-spam'; ?>
-                    <?php if(!$aI['b_enabled']) $class = 'status-spam'; ?>
-                    <?php if($aI['b_spam']) $class = 'status-spam'; ?>
-                    <?php if($aI['b_premium']) $class = 'status-premium'; ?>
-                    <tr class="<?php echo $class;?>">
-                    <?php foreach($array as $key => $value) { ?>
-                        <?php if( $key == 0 ) { ?>
-                        <td class="col-bulkactions">
-                        <?php } else { ?>
-                        <td>
-                        <?php } ?>
-                        <?php echo $value; ?>
-                        </td>
-                    <?php } ?>
-                    </tr>
-                <?php } ?>
+                <?php if( count($rows) > 0 ) { ?>
+                    <?php foreach($rows as $key => $row) {
+                        $class = ''; $aI = $aRawRows[$key];
+                        if(!$aI['b_active']) $class = 'status-spam';
+                        if(!$aI['b_active']) $class = 'status-spam';
+                        if(!$aI['b_enabled']) $class = 'status-spam';
+                        if($aI['b_spam']) $class = 'status-spam';
+                        if($aI['b_premium']) $class = 'status-premium';/**/ ?>
+                        <tr class="<?php echo $class;?>">
+                            <?php foreach($row as $k => $v) { ?>
+                                <td class="col-<?php echo $k; ?>"><?php echo $v; ?></td>
+                            <?php }; ?>
+                        </tr>
+                    <?php }; ?>
                 <?php } else { ?>
                     <tr>
-                        <td colspan="8" class="text-center">
+                        <td colspan="<?php echo count($columns); ?>" class="text-center">
                         <p><?php _e('No data available in table'); ?></p>
                         </td>
                     </tr>
@@ -403,15 +388,15 @@
         </div>
     </form>
 </div>
-<?php 
+<?php
     function showingResults(){
-        $aData = __get('aItems');
-        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;
+        $aData = __get("aData");
+        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aRows']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;
     }
     osc_add_hook('before_show_pagination_admin','showingResults');
     osc_show_pagination_admin($aData);
 ?>
-<form id="dialog-item-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+<form id="dialog-item-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide">
     <input type="hidden" name="page" value="items" />
     <input type="hidden" name="action" value="delete" />
     <input type="hidden" name="id[]" value="" />
