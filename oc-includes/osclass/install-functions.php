@@ -421,6 +421,7 @@ function oc_install_example_data() {
     require_once LIB_PATH . 'osclass/model/City.php';
     require_once LIB_PATH . 'osclass/model/CityArea.php';
     require_once LIB_PATH . 'osclass/model/Field.php';
+    require_once LIB_PATH . 'osclass/model/Page.php';
     require_once LIB_PATH . 'osclass/model/Log.php';
 
     require_once LIB_PATH . 'osclass/model/CategoryStats.php';
@@ -444,7 +445,20 @@ function oc_install_example_data() {
     }
 
     $mItem->prepareData(true);
-    $success = $mItem->add();
+    $successItem = $mItem->add();
+
+    $successPageresult = Page::newInstance()->insert(
+            array(
+                's_internal_name' => $page['s_internal_name'],
+                'b_indelible' => 0,
+                's_meta' => json_encode('')
+            ),
+            array(
+                osc_current_admin_locale() => array(
+                    's_title' => $page['s_title'],
+                    's_text' => $page['s_text']
+                )
+            ));
 
 }
 

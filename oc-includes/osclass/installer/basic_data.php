@@ -111,6 +111,12 @@ $item = array(
 );
 
 
+$page = array(
+    's_title' => __('Example page title'),
+    's_text' => __('This is an example page description. This is a good place to put your Terms of Service or any other help information.'),
+    's_internal_name' => 'example_page'
+);
+
 
 
 ?>
