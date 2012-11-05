@@ -20,7 +20,7 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    class LogOsclassInstaller extends Log
+    class LogOsclassInstaller extends Logger
     {
         private static $_instance;
 
