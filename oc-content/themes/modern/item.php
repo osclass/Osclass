@@ -18,13 +18,18 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
+
+    osc_register_script('fancybox', osc_current_web_theme_js_url('fancybox/jquery.fancybox.js'));
+
+    osc_enqueue_script('fancybox');
+    osc_enqueue_script('jquery-validate');
+
+    osc_enqueue_style('fancybox', osc_current_web_theme_js_url('fancybox/jquery.fancybox.css'));
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('fancybox/jquery.fancybox.js') ; ?>"></script>
-        <link href="<?php echo osc_current_web_theme_js_url('fancybox/jquery.fancybox.css') ; ?>" rel="stylesheet" type="text/css" />
 
         <script type="text/javascript">
             $(document).ready(function(){
@@ -44,7 +49,6 @@
         </script>
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content="index, follow" />
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
         <?php osc_current_web_theme_path('header.php') ; ?>
