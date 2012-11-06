@@ -48,7 +48,7 @@
                     } else {
                         steps.innerHTML += '<?php echo osc_esc_js( __('New version to update:')) ; ?> ' + data.version + "<br />" ;
                         <?php if(Params::getParam('confirm')=='true') {?>
-                            steps.innerHTML += '<img id="loading_image" src="<?php echo osc_current_admin_theme_url('images/loading.gif') ; ?>" /><?php echo osc_esc_js(__('Upgrading your OSClass installation (this could take a while): ')); ?>' ;
+                            steps.innerHTML += '<img id="loading_image" src="<?php echo osc_current_admin_theme_url('images/loading.gif') ; ?>" /><?php echo osc_esc_js(__('Upgrading your OSClass installation (this could take a while):')); ?>' ;
 
                             var tempAr = data.url.split('/') ;
                             fileToUnzip = tempAr.pop() ;
@@ -123,4 +123,4 @@
                 </div>
                 <!-- /settings form -->
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
