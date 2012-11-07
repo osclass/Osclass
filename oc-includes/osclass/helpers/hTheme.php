@@ -178,4 +178,22 @@
         }
     }
 
+    function osc_print_bulk_actions($id, $name, $options, $class = '') {
+        echo '<select id="'.$id.'" name="'.$name.'" '.($class!=''?'class="'.$class.'"':'').'>';
+        foreach($options as $o) {
+            $opt = '';
+            $label = '';
+            foreach($o as $k => $v) {
+                if($k!='label') {
+                    $opt .= $k.'="'.$v.'" ';
+                } else {
+                    $label = $v;
+                }
+            }
+            echo '<option '.$opt.'>'.$label.'</option>';
+        }
+        echo '</select>';
+    }
+
+
     /* file end: ./oc-includes/osclass/hTheme.php */

@@ -337,18 +337,8 @@
         <input type="hidden" name="action" value="bulk_actions" />
         <div id="bulk-actions">
             <label>
-                <select id="bulk_actions" name="bulk_actions" class="select-box-extra">
-                    <option value=""><?php _e('Bulk actions') ; ?></option>
-                    <option value="delete_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected listings?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ; ?></option>
-                    <option value="activate_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected listings?'), strtolower(__('Activate'))); ?>"><?php _e('Activate') ; ?></option>
-                    <option value="deactivate_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected listings?'), strtolower(__('Deactivate'))); ?>"><?php _e('Deactivate') ; ?></option>
-                    <option value="disable_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected listings?'), strtolower(__('Block'))); ?>"><?php _e('Block') ; ?></option>
-                    <option value="enable_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected listings?'), strtolower(__('Unblock'))); ?>"><?php _e('Unblock') ; ?></option>
-                    <option value="premium_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected listings?'), strtolower(__('Mark as premium'))); ?>"><?php _e('Mark as premium') ; ?></option>
-                    <option value="depremium_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected listings?'), strtolower(__('Unmark as premium'))); ?>"><?php _e('Unmark as premium') ; ?></option>
-                    <option value="spam_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected listings?'), strtolower(__('Mark as spam'))); ?>"><?php _e('Mark as spam') ; ?></option>
-                    <option value="despam_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected listings?'), strtolower(__('Unmark as spam'))); ?>"><?php _e('Unmark as spam') ; ?></option>
-                </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                <?php osc_print_bulk_actions('bulk_actions', 'bulk_actions', __get('bulk_options'), 'select-box-extra'); ?>
+                <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
             </label>
         </div>
         <div class="table-contains-actions">

@@ -100,7 +100,7 @@
     osc_add_hook('admin_header','customHead');
 
     $iDisplayLength = __get('iDisplayLength');
-    $aData          = __get('aLanguages'); 
+    $aData          = __get('aLanguages');
 
     osc_current_admin_theme_path( 'parts/header.php' );
 ?>
@@ -108,21 +108,15 @@
 <div class="relative">
     <div id="language-toolbar" class="table-toolbar">
         <div class="float-right">
-            
+
         </div>
     </div>
     <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post" data-dialog-open="false">
         <input type="hidden" name="page" value="languages" />
         <div id="bulk-actions">
             <label>
-                <select id="bulk_actions" name="action" class="select-box-extra">
-                    <option value=""><?php _e('Bulk Actions') ; ?></option>
-                    <option value="enable_selected" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected languages?'), strtolower(__('Enable (Website)'))); ?>"><?php _e('Enable (Website)') ; ?></option>
-                    <option value="disable_selected" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected languages?'), strtolower(__('Disable (Website)'))); ?>"><?php _e('Disable (Website)') ; ?></option>
-                    <option value="enable_bo_selected" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected languages?'), strtolower(__('Enable (oc-admin)'))); ?>"><?php _e('Enable (oc-admin)') ; ?></option>
-                    <option value="disable_bo_selected" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected languages?'), strtolower(__('Disable (oc-admin)'))); ?>"><?php _e('Disable (oc-admin)') ; ?></option>
-                    <option value="delete" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected languages?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ?></option>
-                </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                <?php osc_print_bulk_actions('bulk_actions', 'action', __get('bulk_options'), 'select-box-extra'); ?>
+                <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
             </label>
         </div>
         <div class="table-contains-actions">
@@ -165,7 +159,7 @@
         </div>
     </form>
 </div>
-<?php 
+<?php
     osc_show_pagination_admin($aData);
 ?>
 <form id="dialog-language-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide">
