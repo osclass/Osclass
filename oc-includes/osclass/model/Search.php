@@ -1109,7 +1109,7 @@
          */
         public function listCountries($zero = ">", $order = "items DESC")
         {
-           return CountryStats::newInstance()->listCities($zero, $order);
+           return CountryStats::newInstance()->listCountries($zero, $order);
         }
 
         /**
