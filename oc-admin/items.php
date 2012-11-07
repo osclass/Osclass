@@ -265,6 +265,11 @@
                                                     osc_add_flash_ok_message( sprintf(_mn('%d listing has been unmarked', '%d listings have been unmarked', $numSuccess), $numSuccess), 'admin') ;
                                                 }
                                             break;
+                                            default:
+                                                if(Params::getParam("bulk_actions")!="") {
+                                                    osc_run_hook("item_bulk_".Params::getParam("bulk_actions"), Params::getParam('id'));
+                                                }
+                                            break;
                                         }
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;

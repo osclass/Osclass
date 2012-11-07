@@ -54,6 +54,11 @@
                                                 osc_add_flash_ok_message( _m('Resource deleted'), 'admin') ;
                                             break ;
                                             default:
+
+                                                if(Params::getParam("bulk_actions")!="") {
+                                                    osc_run_hook("media_bulk_".Params::getParam("bulk_actions"), Params::getParam('id'));
+                                                }
+
                                             break ;
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=media' ) ;
@@ -74,7 +79,7 @@
                 default:
                                         require_once osc_lib_path()."osclass/classes/datatables/MediaDataTable.php";
 
-                                        // set default iDisplayLength 
+                                        // set default iDisplayLength
                                         if( Params::getParam('iDisplayLength') != '' ) {
                                             Cookie::newInstance()->push('listing_iDisplayLength', Params::getParam('iDisplayLength'));
                                             Cookie::newInstance()->set();
@@ -117,7 +122,7 @@
                                                 $this->redirectTo($url) ;
                                             }
 
-                                            if($page > 1) {   
+                                            if($page > 1) {
                                                 $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
                                                 $this->redirectTo($url) ;
                                             }
@@ -126,7 +131,7 @@
 
                                         $this->_exportVariableToView('aData', $aData) ;
                                         $this->_exportVariableToView('aRawRows', $mediaDataTable->rawRows());
-                                        
+
                                         $this->doView('media/index.php') ;
                 break ;
             }

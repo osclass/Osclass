@@ -302,6 +302,11 @@
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
                 break ;
                 default:
+
+                                            if(Params::getParam("action")!="") {
+                                                osc_run_hook("language_bulk_".Params::getParam("action"), Params::getParam('id'));
+                                            }
+
                                             // -----
                                             if( Params::getParam('iDisplayLength') == '' ) {
                                                 Params::setParam('iDisplayLength', 10 ) ;
@@ -314,7 +319,7 @@
                                                 $p_iPage = Params::getParam('iPage');
                                             }
                                             Params::setParam('iPage', $p_iPage);
-                                            
+
                                             $aLanguages     = OSCLocale::newInstance()->listAll() ;
 
                                             // pagination
@@ -346,7 +351,7 @@
                                                     $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
                                                 }
                                                 $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
-                                                
+
                                                 $row[] = $l['s_name'] . $actions ;
                                                 $row[] = $l['s_short_name'] ;
                                                 $row[] = $l['s_description'] ;
@@ -360,7 +365,7 @@
                                             $array['iTotalDisplayRecords']  = count($aLanguages);
                                             $array['iDisplayLength']        = $limit;
                                             $array['aaData'] = $aData;
-                                            
+
                                             $page  = (int)Params::getParam('iPage');
                                             if(count($array['aaData']) == 0 && $page!=1) {
                                                 $total = (int)$array['iTotalDisplayRecords'];
@@ -373,14 +378,14 @@
                                                     $this->redirectTo($url) ;
                                                 }
 
-                                                if($page > 1) {   
+                                                if($page > 1) {
                                                     $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
                                                     $this->redirectTo($url) ;
                                                 }
                                             }
-                                            
+
                                             $this->_exportVariableToView('aLanguages', $array) ;
-                                            
+
                                             $this->doView('languages/index.php') ;
                 break ;
             }

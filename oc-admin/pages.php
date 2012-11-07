@@ -60,7 +60,7 @@
                     $id = Params::getParam("id");
                     $s_internal_name = Params::getParam("s_internal_name");
                     $s_internal_name = osc_sanitizeString($s_internal_name) ;
-                    
+
                     $meta = Params::getParam('meta');
                     $this->pageManager->updateMeta($id, json_encode($meta));
 
@@ -120,7 +120,7 @@
                 case 'add_post':
                     $s_internal_name = Params::getParam("s_internal_name");
                     $s_internal_name = osc_sanitizeString($s_internal_name);
-                    
+
                     $meta = Params::getParam('meta');
 
                     $aFieldsDescription = array();
@@ -211,9 +211,14 @@
                     $this->redirectTo(osc_admin_base_url(true) . "?page=pages");
                     break;
                 default:
+
+                    if(Params::getParam("action")!="") {
+                        osc_run_hook("page_bulk_".Params::getParam("action"), Params::getParam('id'));
+                    }
+
                     require_once osc_lib_path()."osclass/classes/datatables/PagesDataTable.php";
 
-                    // set default iDisplayLength 
+                    // set default iDisplayLength
                     if( Params::getParam('iDisplayLength') != '' ) {
                         Cookie::newInstance()->push('listing_iDisplayLength', Params::getParam('iDisplayLength'));
                         Cookie::newInstance()->set();
@@ -256,7 +261,7 @@
                             $this->redirectTo($url) ;
                         }
 
-                        if($page > 1) {   
+                        if($page > 1) {
                             $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
                             $this->redirectTo($url) ;
                         }

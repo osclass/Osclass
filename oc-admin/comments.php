@@ -99,6 +99,11 @@
                                                                             }
                                                                             osc_add_flash_ok_message( _m('The comments have been blocked'), 'admin') ;
                                                     break;
+                                                    default:
+                                                        if(Params::getParam("bulk_actions")!="") {
+                                                            osc_run_hook("item_bulk_".Params::getParam("bulk_actions"), Params::getParam('id'));
+                                                        }
+                                                    break;
                                                 }
                                             }
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
@@ -151,8 +156,8 @@
                                             $this->_exportVariableToView('comment', $comment) ;
                                             $this->doView('comments/frm.php') ;
                 break;
-                case('comment_edit_post'):  
-                    
+                case('comment_edit_post'):
+
                                             $msg = '';
                                             if(!osc_validate_email(Params::getParam('authorEmail'),true)) {
                                                 $msg .= _m('Email is not correct')."<br/>";
@@ -160,12 +165,12 @@
                                             if(!osc_validate_text(Params::getParam('body'),1 , true)) {
                                                 $msg .= _m('Comment is required')."<br/>";
                                             }
-                                            
+
                                             if($msg!='') {
                                                 osc_add_flash_error_message( $msg, 'admin' ) ;
                                                 $this->redirectTo( osc_admin_base_url(true) . "?page=comments&action=comment_edit&id=".Params::getParam('id') ) ;
                                             }
-                    
+
                                             $this->itemCommentManager->update(
                                                 array(
                                                     's_title'        => Params::getParam('title'),
@@ -188,10 +193,10 @@
                                             osc_run_hook( 'delete_comment', Params::getParam('id') ) ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
                 break ;
-                default:                    
+                default:
                                             require_once osc_lib_path()."osclass/classes/datatables/CommentsDataTable.php";
 
-                                            // set default iDisplayLength 
+                                            // set default iDisplayLength
                                             if( Params::getParam('iDisplayLength') != '' ) {
                                                 Cookie::newInstance()->push('listing_iDisplayLength', Params::getParam('iDisplayLength'));
                                                 Cookie::newInstance()->set();
@@ -234,7 +239,7 @@
                                                     $this->redirectTo($url) ;
                                                 }
 
-                                                if($page > 1) {   
+                                                if($page > 1) {
                                                     $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
                                                     $this->redirectTo($url) ;
                                                 }
@@ -243,7 +248,7 @@
 
                                             $this->_exportVariableToView('aData', $aData) ;
                                             $this->_exportVariableToView('aRawRows', $commentsDataTable->rawRows());
-                                            
+
                                             $this->doView('comments/index.php') ;
                 break ;
             }

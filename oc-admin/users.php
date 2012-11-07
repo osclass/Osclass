@@ -192,7 +192,7 @@
                                         if( $iUpdated == 0 ) {
                                             $msg = _m('No users have been deactivated') ;
                                         } else {
-                                            $msg = sprintf( _mn('One user has been deactivated', '%s users have been deactivated', $iUpdated), $iUpdated ); 
+                                            $msg = sprintf( _mn('One user has been deactivated', '%s users have been deactivated', $iUpdated), $iUpdated );
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin') ;
@@ -287,7 +287,7 @@
                                             Log::newInstance()->insertLog('user', 'delete_alerts', $id, $id, 'admin', osc_logged_admin_id()) ;
                                             $iDeleted += $mAlerts->delete(array('pk_i_id' => $id));
                                         }
-                                            
+
                                         if( $iDeleted == 0 ) {
                                             $msg = _m('No alerts have been deleted') ;
                                         } else {
@@ -306,7 +306,7 @@
                                         $status = Params::getParam("status");
                                         $iUpdated = 0 ;
                                         $alertId   = Params::getParam('alert_id') ;
-                                        
+
                                         if( !is_array($alertId) ) {
                                             osc_add_flash_error_message( _m("Alert id isn't in the correct format"), 'admin') ;
                                             if(Params::getParam('user_id')=='') {
@@ -325,7 +325,7 @@
                                             }
                                         }
 
-                                        
+
                                         if($status==1) {
                                             if( $iUpdated == 0 ) {
                                                 $msg = _m('No alerts have been activated') ;
@@ -386,7 +386,7 @@
                 case('alerts'):                // manage alerts view
                                         require_once osc_lib_path()."osclass/classes/datatables/AlertsDataTable.php";
 
-                                        // set default iDisplayLength 
+                                        // set default iDisplayLength
                                         if( Params::getParam('iDisplayLength') != '' ) {
                                             Cookie::newInstance()->push('listing_iDisplayLength', Params::getParam('iDisplayLength'));
                                             Cookie::newInstance()->set();
@@ -429,7 +429,7 @@
                                                 $this->redirectTo($url) ;
                                             }
 
-                                            if($page > 1) {   
+                                            if($page > 1) {
                                                 $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
                                                 $this->redirectTo($url) ;
                                             }
@@ -438,14 +438,18 @@
 
                                         $this->_exportVariableToView('aData', $aData) ;
                                         $this->_exportVariableToView('aRawRows', $alertsDataTable->rawRows());
-                                        
+
                                         $this->doView("users/alerts.php") ;
                 break ;
                 default:                // manage users view
 
+                                        if(Params::getParam("action")!="") {
+                                            osc_run_hook("user_bulk_".Params::getParam("action"), Params::getParam('id'));
+                                        }
+
                                         require_once osc_lib_path()."osclass/classes/datatables/UsersDataTable.php";
 
-                                        // set default iDisplayLength 
+                                        // set default iDisplayLength
                                         if( Params::getParam('iDisplayLength') != '' ) {
                                             Cookie::newInstance()->push('listing_iDisplayLength', Params::getParam('iDisplayLength'));
                                             Cookie::newInstance()->set();
@@ -472,11 +476,11 @@
                                         Params::setParam('iPage', $page);
 
                                         $params = Params::getParamsAsArray("get") ;
-                                        
+
                                         $usersDataTable = new UsersDataTable();
                                         $usersDataTable->table($params);
                                         $aData = $usersDataTable->getData();
-                                        
+
                                         if(count($aData['aRows']) == 0 && $page!=1) {
                                             $total = (int)$aData['iTotalDisplayRecords'];
                                             $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
@@ -488,7 +492,7 @@
                                                 $this->redirectTo($url) ;
                                             }
 
-                                            if($page > 1) {   
+                                            if($page > 1) {
                                                 $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
                                                 $this->redirectTo($url) ;
                                             }
