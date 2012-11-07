@@ -147,10 +147,8 @@
         <input type="hidden" name="page" value="pages" />
         <div id="bulk-actions">
             <label>
-                <select id="bulk_actions" name="action" class="select-box-extra">
-                    <option value=""><?php _e('Bulk actions'); ?></option>
-                    <option value="delete" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected pages?'), strtolower(__('Delete'))); ?>"><?php _e('Delete'); ?></option>
-                </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ); ?>" />
+                <?php osc_print_bulk_actions('bulk_actions', 'action', __get('bulk_options'), 'select-box-extra'); ?>
+                <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ); ?>" />
             </label>
         </div>
         <div class="table-contains-actions">
@@ -184,7 +182,7 @@
         </div>
     </form>
 </div>
-<?php 
+<?php
     function showingResults(){
         $aData = __get('aData');
         echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aRows']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;

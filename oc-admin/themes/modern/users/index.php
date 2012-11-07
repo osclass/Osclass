@@ -46,7 +46,7 @@
                     source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax", //+$('input[name="user"]').val(), // &term=
                     minLength: 0,
                     select: function( event, ui ) {
-                        if(ui.item.id=='') 
+                        if(ui.item.id=='')
                             return false;
                         $('#userId').val(ui.item.id);
                         $('#fUserId').val(ui.item.id);
@@ -56,7 +56,7 @@
                         $('#fUserId').val('');
                     }
                 });
-                
+
                 // check_all bulkactions
                 $("#check_all").change(function(){
                     var isChecked = $(this+':checked').length;
@@ -116,7 +116,7 @@
         <?php
     }
     osc_add_hook('admin_header','customHead');
-   
+
     $aData      = __get('aData');
     $aRawRows   = __get('aRawRows');
     $sort       = Params::getParam('sort');
@@ -125,7 +125,7 @@
     $columns    = $aData['aColumns'];
     $rows       = $aData['aRows'];
 ?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?> 
+<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <h2 class="render-title"><?php _e('Manage users'); ?> <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=create' ; ?>" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
 <div class="relative">
     <div id="users-toolbar" class="table-toolbar">
@@ -140,20 +140,11 @@
     </div>
     <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
         <input type="hidden" name="page" value="users" />
-        
+
         <div id="bulk-actions">
             <label>
-                <select name="action" id="bulk_actions" class="select-box-extra">
-                    <option value=""><?php _e('Bulk Actions') ; ?></option>
-                    <option value="activate" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Activate'))); ?>"><?php _e('Activate') ; ?></option>
-                    <option value="deactivate" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Deactivate'))); ?>"><?php _e('Deactivate') ; ?></option>
-                    <option value="enable" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Unblock'))); ?>"><?php _e('Unblock') ; ?></option>
-                    <option value="disable" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Block'))); ?>"><?php _e('Block') ; ?></option>
-                    <option value="delete" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ; ?></option>
-                    <?php if( osc_user_validation_enabled() ) { ?>
-                        <option value="resend_activation" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Resend the activation to'))); ?>"><?php _e('Resend activation') ; ?></option>
-                    <?php } ?>
-                </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                <?php osc_print_bulk_actions('bulk_actions', 'action', __get('bulk_options'), 'select-box-extra'); ?>
+                <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
             </label>
         </div>
         <div class="table-contains-actions">
@@ -187,7 +178,7 @@
         </div>
     </form>
 </div>
-<?php 
+<?php
     function showingResults(){
         $aData = __get("aData");
         echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aRows']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;

@@ -116,10 +116,8 @@
         <input type="hidden" name="action" value="bulk_actions" />
         <div id="bulk-actions">
             <label>
-                <select id="bulk_actions" name="bulk_actions" class="select-box-extra">
-                    <option value=""><?php _e('Bulk actions'); ?></option>
-                    <option value="delete_all"  data-dialog-content="<?php printf(__('Are you sure you want to %s the selected media files?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ?></option>
-                </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                <?php osc_print_bulk_actions('bulk_actions', 'bulk_actions', __get('bulk_options'), 'select-box-extra'); ?>
+                <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
             </label>
         </div>
         <table class="table" cellpadding="0" cellspacing="0">

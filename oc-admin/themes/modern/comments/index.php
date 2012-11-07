@@ -125,14 +125,8 @@
         <input type="hidden" name="action" value="bulk_actions" />
         <div id="bulk-actions">
             <label>
-                <select id="bulk_actions" name="bulk_actions" class="select-box-extra">
-                    <option value=""><?php _e('Bulk actions') ; ?></option>
-                    <option value="delete_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected comments?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ; ?></option>
-                    <option value="activate_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected comments?'), strtolower(__('Activate'))); ?>"><?php _e('Activate') ; ?></option>
-                    <option value="deactivate_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected comments?'), strtolower(__('Deactivate'))); ?>"><?php _e('Deactivate') ; ?></option>
-                    <option value="disable_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected comments?'), strtolower(__('Block'))); ?>"><?php _e('Block') ; ?></option>
-                    <option value="enable_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected comments?'), strtolower(__('Unblock'))); ?>"><?php _e('Unblock') ; ?></option>
-                </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                <?php osc_print_bulk_actions('bulk_actions', 'bulk_actions', __get('bulk_options'), 'select-box-extra'); ?>
+                <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
             </label>
         </div>
         <div class="table-contains-actions">
@@ -148,8 +142,8 @@
                 <?php if( count($rows) > 0 ) { ?>
                     <?php foreach($rows as $key => $row) {
                         $aC = $aRawRows[$key];
-                        $class = ''; 
-                        if(!$aC['b_enabled'] || !$aC['b_active'] || $aC['b_spam']) $class = 'status-spam'; 
+                        $class = '';
+                        if(!$aC['b_enabled'] || !$aC['b_active'] || $aC['b_spam']) $class = 'status-spam';
                     ?>
                         <tr class="<?php echo $class; ?>">
                             <?php foreach($row as $k => $v) { ?>
@@ -170,7 +164,7 @@
         </div>
     </form>
 </div>
-<?php 
+<?php
     function showingResults(){
         $aData = __get('aData');
         echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aRows']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;

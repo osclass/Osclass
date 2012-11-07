@@ -271,6 +271,13 @@
                     $this->_exportVariableToView('aData', $aData) ;
                     $this->_exportVariableToView('aRawRows', $pagesDataTable->rawRows());
 
+                    $bulk_options = array(
+                        array('value' => '', 'data-dialog-content' => '', 'label' => __('Bulk actions')),
+                        array('value' => 'delete', 'data-dialog-content' => sprintf(__('Are you sure you want to %s the selected pages?'), strtolower(__('Delete'))), 'label' => __('Delete'))
+                    );
+                    $bulk_options = osc_apply_filter("page_bulk_filter", $bulk_options);
+                    $this->_exportVariableToView('bulk_options', $bulk_options);
+
                     $this->doView("pages/index.php");
                 break;
             }
