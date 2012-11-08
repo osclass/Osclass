@@ -720,19 +720,28 @@
          *
          * @access public
          * @since unknown
-         * @param integer$pk_i_id
-         * @param integer$order
+         * @param integer $pk_i_id
+         * @param integer $order
          * @return mixed false on fail, int of num. of affected rows
          */
         public function updateOrder($pk_i_id, $order)
         {
-            $array_set = array(
-                'i_position'    => $order
-            );
-            $array_where = array(
-                'pk_i_id'  => $pk_i_id
-            );
-            return $this->dao->update($this->tableName, $array_set, $array_where);
+            return $this->dao->update($this->tableName, array('i_position' => $order), array('pk_i_id' => $pk_i_id));
+
+        }
+
+        /**
+         * Update categories' order
+         *
+         * @access public
+         * @since unknown
+         * @param integer $pk_i_id
+         * @param integer $expiration
+         * @return mixed false on fail, int of num. of affected rows
+         */
+        public function updateExpiration($pk_i_id, $expiration)
+        {
+            return $this->dao->update($this->tableName, array('i_expiration_days' => $expiration), array('pk_i_id'  => $pk_i_id));
 
         }
 
@@ -741,21 +750,14 @@
          *
          * @access public
          * @since unknown
-         * @param integer$pk_i_id
+         * @param integer $pk_i_id
          * @param string $locale
          * @param string $name
          * @return mixed false on fail, int of num. of affected rows
          */
         public function updateName($pk_i_id, $locale, $name)
         {
-            $array_set = array(
-                's_name'    => $name
-            );
-            $array_where = array(
-                'fk_i_category_id'  => $pk_i_id,
-                'fk_c_locale_code'  => $locale
-            );
-            return $this->dao->update(DB_TABLE_PREFIX.'t_category_description', $array_set, $array_where);
+            return $this->dao->update(DB_TABLE_PREFIX.'t_category_description', array('s_name' => $name), array('fk_i_category_id' => $pk_i_id,'fk_c_locale_code' => $locale));
         }
 
         /**
