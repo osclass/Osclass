@@ -117,7 +117,7 @@ require_once LIB_PATH . 'osclass/utils.php';
 require_once LIB_PATH . 'osclass/formatting.php';
 require_once LIB_PATH . 'osclass/feeds.php';
 require_once LIB_PATH . 'osclass/locales.php';
-require_once LIB_PATH . 'osclass/plugins.php';
+require_once LIB_PATH . 'osclass/classes/Plugins.php';
 require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
 require_once LIB_PATH . 'osclass/ItemActions.php';
 require_once LIB_PATH . 'osclass/emails.php';

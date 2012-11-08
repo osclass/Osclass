@@ -406,7 +406,11 @@ CREATE TABLE %st_item_description_tmp (
         @unlink(osc_base_path() . 'readme.php');
     }
 
-    osc_changeVersionTo(310);
+    if(osc_version() < 320) {
+        @unlink(osc_lib_path() . 'osclass/plugins.php');
+    }
+
+    osc_changeVersionTo(320);
 
     echo '<div class="well ui-rounded-corners separate-top-medium">';
     echo '<p>'.__('OSClass &raquo; Updated correctly').'</p>' ;

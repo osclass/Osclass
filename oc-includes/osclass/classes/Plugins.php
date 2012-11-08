@@ -44,15 +44,15 @@
         }
 
         static function applyFilter($hook)
-        {   
+        {
             $args   = func_get_args();
-            $hook   = array_shift($args); 
+            $hook   = array_shift($args);
             if(isset($args[0])) {
                 $content = $args[0];
             } else {
                 $content = '';
             }
-            
+
             if(isset(self::$hooks[$hook])) {
                 for($priority = 0;$priority<=10;$priority++) {
                     if(isset(self::$hooks[$hook][$priority]) && is_array(self::$hooks[$hook][$priority])) {
@@ -86,7 +86,7 @@
             return false ;
         }
 
-        static function listAll()
+        static function listAll($sort = true)
         {
             $plugins = array();
             $pluginsPath = osc_plugins_path();
@@ -103,7 +103,41 @@
                 }
             }
             closedir($dir);
+
+            if($sort) {
+                $enabled = self::listEnabled();
+                $installed = self::listInstalled();
+                $extended_list = array();
+                foreach($plugins as $p) {
+                    $extended_list[$p] = self::getInfo($p);
+                }
+                uasort($extended_list, "self::strnatcmpCustom");
+                $plugins = array();
+                // Enabled
+                foreach($extended_list as $k => $v) {
+                    if(in_array($k, $enabled)) {
+                        $plugins[] = $k;
+                        unset($extended_list[$k]);
+                    }
+                }
+                // Installed but disabled
+                foreach($extended_list as $k => $v) {
+                    if(in_array($k, $installed)) {
+                        $plugins[] = $k;
+                        unset($extended_list[$k]);
+                    }
+                }
+                // Not installed
+                foreach($extended_list as $k => $v) {
+                    $plugins[] = $k;
+                }
+            }
+
             return $plugins;
+        }
+
+        static function strnatcmpCustom($a, $b) {
+            return strnatcasecmp($a['plugin_name'], $b['plugin_name']);
         }
 
         static function loadActive()
