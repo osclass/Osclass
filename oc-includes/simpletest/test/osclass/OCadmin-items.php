@@ -4,11 +4,11 @@ require_once dirname(__FILE__).'/../../../../oc-load.php';
 //require_once('FrontendTest.php');
 
 class OCadmin_items extends OCadminTest {
-    
+
     /*
      * Login oc-admin
      * Insert item
-     * 
+     *
      */
     function testInsertItem()
     {
@@ -71,11 +71,11 @@ class OCadmin_items extends OCadminTest {
         $this->loginWith() ;
         $this->settings() ;
     }
-    
+
     /**
      * Test item's views
      */
-    function testStats() 
+    function testStats()
     {
         $this->loginWith();
         $this->insertItem();
@@ -88,26 +88,26 @@ class OCadmin_items extends OCadminTest {
         $result = $dao->dao->get();
         $item  = $result->row();
         View::newInstance()->_exportVariableToView("item", $item);
-        
-        
+
+
         $dao->dao->select();
         $dao->dao->from(DB_TABLE_PREFIX.'t_item_stats');
         $dao->dao->where('fk_i_item_id', $item['pk_i_id']);
         $dao->dao->orderBy('dt_date', 'DESC');
         $dao->dao->limit(1);
-        
+
         $result = $dao->dao->get();
         if($result != false) {
             $stats  = $result->row();
             $this->assertTrue($stats['i_num_views']==0, "ITEM STATS BEFORE");
         }
-        
-        
+
+
         $random = rand(1, 10);
         for($k = 0;$k<$random; $k++) {
             $this->selenium->open(osc_item_url());
         }
-        
+
         $dao->dao->select();
         $dao->dao->from(DB_TABLE_PREFIX.'t_item_stats');
         $dao->dao->where('fk_i_item_id', $item['pk_i_id']);
@@ -115,17 +115,17 @@ class OCadmin_items extends OCadminTest {
         $dao->dao->limit(1);
         $result = $dao->dao->get();
         $stats  = $result->row();
-        
+
         $this->assertTrue($stats['i_num_views']==0, "ITEM STATS ADMIN (should be 0)");
 
-        
+
         $this->logout();
 
         $random = rand(1, 10);
         for($k = 0;$k<$random; $k++) {
             $this->selenium->open(osc_item_url());
         }
-        
+
         $dao->dao->select();
         $dao->dao->from(DB_TABLE_PREFIX.'t_item_stats');
         $dao->dao->where('fk_i_item_id', $item['pk_i_id']);
@@ -133,10 +133,10 @@ class OCadmin_items extends OCadminTest {
         $dao->dao->limit(1);
         $result = $dao->dao->get();
         $stats  = $result->row();
-        
+
         $this->assertTrue($stats['i_num_views']==$random, "ITEM STATS USER (should be ".$random.")");
-        
-        
+
+
         $this->loginWith() ;
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='items_manage']");
@@ -146,15 +146,15 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li/a[text()='Delete']");
         sleep(1);
         $this->selenium->click("//input[@id='item-delete-submit']");
-        
+
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The listing has been deleted"), "Can't delete item. ERROR");
 
 
     }
-    
-    
+
+
      /*      PRIVATE FUNCTIONS       */
     private function addUserForTesting()
     {
@@ -182,7 +182,7 @@ class OCadmin_items extends OCadminTest {
         $input['b_enabled']         = 1;
         $input['b_active']          = 1;
         $input['s_email']           = $this->_email;
-        
+
         $input['s_password']        = sha1($this->_password);
 
         $this->array = $input;
@@ -259,10 +259,10 @@ class OCadmin_items extends OCadminTest {
             sleep(0.5);
             $this->selenium->type("//div[@id='p-0']/input", LIB_PATH."simpletest/test/osclass/img_test2.gif");
         }
-        
+
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
-        
+
         $this->assertTrue($this->selenium->isTextPresent("A new listing has been added"), "Can't insert a new item. ERROR");
     }
 
@@ -303,7 +303,7 @@ class OCadmin_items extends OCadminTest {
 
         $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li[@class='show-more']/ul/li/a[text()='Deactivate']");
         $this->selenium->waitForPageToLoad("10000");
-        
+
         $this->assertTrue($this->selenium->isTextPresent("The listing has been deactivated"), "Can't deactivate item. ERROR");
     }
 
@@ -334,7 +334,7 @@ class OCadmin_items extends OCadminTest {
 
         $this->assertTrue($this->selenium->isTextPresent("Changes have been applied"), "Can't mark as premium item. ERROR");
     }
-    
+
     private function unmarkAsPremium()
     {
         $this->selenium->open( osc_admin_base_url(true) );
@@ -387,7 +387,7 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
 
         sleep(2); // time enough to load table data
-        
+
         $this->selenium->click("//table/tbody/tr/td[contains(.,'title_item')]/div/ul/li/a[text()='Delete']");
         $this->selenium->click("//input[@id='item-delete-submit']");
         sleep(1);
@@ -400,12 +400,12 @@ class OCadmin_items extends OCadminTest {
     {
         // insert item
         $this->insertItem() ;
-        
+
         $mItem = new Item();
 
         $item = $mItem->findByEmail( 'test@mail.com' );
         $item = $item[0];
-        
+
         // force moderation comments
         $enabled_comments = Preference::newInstance()->findValueByName('enabled_comments');
         if( $enabled_comments == 0 ) {
@@ -427,28 +427,28 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->type("title"           , "I like it");
         $this->selenium->type("body"            , "Can you provide more info please :)");
 
-        $this->selenium->click("//div[@id='comments']/form/fieldset/div/span/button"); // OJO 
+        $this->selenium->click("//div[@id='comments']/form/fieldset/div/span/button"); // OJO
         $this->selenium->waitForPageToLoad("30000");
-        
+
         // test oc-admin
         $this->loginWith();
 
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='items_comments']");
         $this->selenium->waitForPageToLoad("10000");
-        
+
         $this->selenium->mouseOver("//table/tbody/tr/td[contains(text(),'Test B user')]");
         $this->selenium->click("//table/tbody/tr/td[contains(text(),'Test B user')]/div/ul/li[@class='show-more']/ul/li/a[text()='Activate']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The comment has been approved"), "Can't activate comment. ERROR" );
-        
+
         $this->selenium->mouseOver("//table/tbody/tr/td[contains(text(),'Test B user')]");
         $this->selenium->click("//table/tbody/tr/td[contains(text(),'Test B user')]/div/ul/li[@class='show-more']/ul/li/a[text()='Deactivate']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The comment has been disapproved"), "Can't deactivate comment. ERROR" );
-        
+
         $this->selenium->mouseOver("//table/tbody/tr/td[contains(text(),'Test B user')]");
         $this->selenium->click("//table/tbody/tr/td[contains(text(),'Test B user')]/div/ul/li/a[text()='Edit']");
         $this->selenium->waitForPageToLoad("10000");
@@ -467,7 +467,7 @@ class OCadmin_items extends OCadminTest {
         sleep(1);
         $this->selenium->click("//input[@id='comment-delete-submit']");
         $this->selenium->waitForPageToLoad("10000");
-        
+
         $this->assertTrue($this->selenium->isTextPresent("The comment has been deleted"), "Can't delete a comment. ERROR") ;
 
         // DELETE ITEM
@@ -476,11 +476,11 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
 
         sleep(2); // time enough to load table data
-        
+
         $this->selenium->mouseOver("//table/tbody/tr/td[contains(text(),'title item')]");
         $this->selenium->click("//table/tbody/tr/td[contains(.,'title item')]/div/ul/li/a[text()='Delete']");
         $this->selenium->click("//input[@id='item-delete-submit']");
-        
+
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The listing has been deleted"), "Can't delete item. ERROR");
@@ -505,7 +505,7 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->click("//a[@id='items_media']");
         $this->selenium->waitForPageToLoad("10000");
 //        $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 2 of 2 entries"), "Inconsistent . ERROR" );
-        
+
         // only can delete resources
         $this->selenium->click("xpath=//a[position()=1 and contains(.,'Delete')]");
         sleep(4);
@@ -568,7 +568,7 @@ class OCadmin_items extends OCadminTest {
         $this->checkWebsite_moderate_items('0');
 // logged_user_item_validation
         Preference::newInstance()->replace('logged_user_item_validation', '0',"osclass", 'INTEGER') ;
-        $this->checkWebsite_logged_user_item_validation('0');        
+        $this->checkWebsite_logged_user_item_validation('0');
         Preference::newInstance()->replace('logged_user_item_validation', '1',"osclass", 'INTEGER') ;
         $this->checkWebsite_logged_user_item_validation('1');
 // items_wait_time
@@ -597,7 +597,7 @@ class OCadmin_items extends OCadminTest {
         Preference::newInstance()->replace('numImages@items', '1',"osclass", 'INTEGER') ;
         $this->checkWebsite_enableField_images_items('1','1');
         Preference::newInstance()->replace('numImages@items', '4',"osclass", 'INTEGER') ;
-        
+
         $mItem = new Item();
         $aItems = $mItem->findByEmail( 'foobar@mail.com' );
         foreach($aItems as $item) {
@@ -633,10 +633,10 @@ class OCadmin_items extends OCadminTest {
         } else {
             $this->logOutWebsite();
         }
-        
+
         if($bool == 0) {
             $this->post_item_website();
-            $this->assertTrue($this->selenium->isTextPresent("Your listing has been published") || $this->selenium->isTextPresent('Check your inbox to verify your email address'),"Can post an item (all can post items). ERROR" ) ;
+            $this->assertTrue($this->selenium->isTextPresent("Your listing has been published") || $this->selenium->isTextPresent('Check your inbox to verify your listing'),"Can post an item (all can post items). ERROR" ) ;
         } else if($bool == 1 && !$loginUser) {
             $this->selenium->open(osc_base_url(true) );
             // i need click twice, if not don't appear flash message
@@ -647,7 +647,7 @@ class OCadmin_items extends OCadminTest {
             $this->assertTrue($this->selenium->isTextPresent("Only registered users are allowed to post listings"),"No user can post a item. ERROR" ) ;
         } else if($bool == 1 && $loginUser) {
             $this->post_item_website();
-            $this->assertTrue($this->selenium->isTextPresent("Your listing has been published") || $this->selenium->isTextPresent('Check your inbox to verify your email address'),"User cannot post an item. ERROR" ) ;
+            $this->assertTrue($this->selenium->isTextPresent("Your listing has been published") || $this->selenium->isTextPresent('Check your inbox to verify your listing'),"User cannot post an item. ERROR" ) ;
         }
 
         if($loginUser){
@@ -673,7 +673,7 @@ class OCadmin_items extends OCadminTest {
         // test website
         $this->selenium->open( osc_item_post_url() );
         $exist_recaptcha = $this->selenium->isElementPresent("//table[@id='recaptcha_table']");
-        
+
         // recaptcha enabled
         if($bool == 1){
             $this->assertTrue($exist_recaptcha, "Recaptcha is not present ! ERROR") ;
@@ -696,7 +696,7 @@ class OCadmin_items extends OCadminTest {
         $this->addUserForTesting();
         // loginWebsite
         $this->loginWebsite();
-        
+
         $this->post_item_website();
         if($moderation == -1) {
             $this->assertTrue($this->selenium->isTextPresent("Your listing has been published"),"Item need validation moderate_items = -1 (NEVER MODERATE). ERROR" );
@@ -714,10 +714,10 @@ class OCadmin_items extends OCadminTest {
         } else if($moderation == 0) {
             $this->assertTrue($this->selenium->isTextPresent("Check your inbox to validate your listing"),"Need validation but message don't appear" );
         }
-        
+
         $user = User::newInstance()->findByEmail($this->_email);
         User::newInstance()->deleteUser($user['pk_i_id']);
-        
+
     }
 
     private function checkWebsite_logged_user_item_validation($bool)
@@ -785,7 +785,7 @@ class OCadmin_items extends OCadminTest {
         // visit fisrt item
         $this->selenium->click('link=foo title');
         $this->selenium->waitForPageToLoad("10000");
-        
+
         $div_present = $this->selenium->isElementPresent("xpath=//div[@id='contact']/form[@name='contact_form']");
 
         if($bool == 1){
