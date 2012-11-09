@@ -31,6 +31,22 @@
                     modal: true,
                     title: '<?php echo osc_esc_js( __('Delete location') ); ?>'
                 });
+
+                $(".trc").on("mouseover", function() {
+                    $(this).find(".checkboxc").css({ 'visibility': ''});
+                });
+
+                $(".trc").on("mouseout", function() {
+                    if (!$(this).find(".checkboxc input").is(':checked')) {
+                        $(this).find(".checkboxc").css({ 'visibility': 'hidden'});
+                    };
+                    if($(".checkboxc input:checked").size()>0) {
+                        $("#b_remove_country").show();
+                    } else {
+                        $("#b_remove_country").hide();
+                    };
+                });
+
             });
 
             var base_url           = '<?php echo osc_admin_base_url(); ?>';
@@ -245,14 +261,17 @@
     <div class="grid-row grid-first-row grid-33">
         <div class="row-wrapper">
             <div class="widget-box">
-                <div class="widget-box-title"><h3><?php _e('Countries'); ?> <a id="b_new_country" class="btn float-right" href="javascript:void(0);"><?php _e('Add new'); ?></a></h3></div>
+                <div class="widget-box-title"><h3><?php _e('Countries'); ?> <a id="b_new_country" class="btn float-right" href="javascript:void(0);"><?php _e('Add new'); ?></a> <a id="b_remove_country" style="display:none;" class="btn float-right" href="javascript:void(0);"><?php _e('Remove selected'); ?></a></h3></div>
                 <div class="widget-box-content">
                     <div id="l_countries">
                         <?php foreach( $aCountries as $country ) { ?>
                         <div>
                             <div class="float-left">
-                                <div>
-                                    <a class="close" onclick="return delete_dialog(\'' . $country['pk_c_code'] . '\', 'delete_country');" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations&type=delete_country&id=<?php echo $country['pk_c_code']; ?>">
+                                <div class="trc">
+                                    <span class="checkboxc" style="visibility:hidden;">
+                                        <input type="checkbox" name="country[]" value="<?php echo $country['pk_c_code']; ?>" >
+                                    </span>
+                                    <a class="close" onclick="return delete_dialog('<?php echo $country['pk_c_code']; ?>', 'delete_country');" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations&type=delete_country&id=<?php echo $country['pk_c_code']; ?>">
                                         <img src="<?php echo osc_admin_base_url() ; ?>images/close.png" alt="<?php echo osc_esc_html(__('Close')); ?>" title="<?php echo osc_esc_html(__('Close')); ?>" />
                                     </a>
                                     <a class="edit" href="javascript:void(0);" style="padding-right: 15px;" onclick="edit_countries($(this));" data="<?php echo osc_esc_html($country['s_name']);?>" code="<?php echo $country['pk_c_code'];?>"><?php echo $country['s_name'] ; ?></a>
