@@ -30,7 +30,7 @@
     /**
      * Gets cookie's life
      *
-     * @return int 
+     * @return int
      */
     function osc_time_cookie() {
         return ( 31536000 ) ; // one year in seconds
@@ -39,7 +39,7 @@
     /**
      * Gets if comments are enabled or not
      *
-     * @return boolean 
+     * @return boolean
      */
     function osc_comments_enabled() {
         return (getBoolPreference('enabled_comments')) ;
@@ -48,7 +48,7 @@
     /**
      * Gets comments per page
      *
-     * @return int 
+     * @return int
      */
     function osc_comments_per_page() {
         return (getPreference('comments_per_page')) ;
@@ -57,7 +57,7 @@
     /**
      * Gets comments per page
      *
-     * @return int 
+     * @return int
      */
     function osc_timezone() {
         return (getPreference('timezone')) ;
@@ -80,11 +80,11 @@
     function osc_reg_user_can_contact() {
         return (getPreference('reg_user_can_contact')) ;
     }
-    
+
     /**
      * Gets if users are enabled or not
      *
-     * @return boolean 
+     * @return boolean
      */
     function osc_users_enabled() {
         return (getBoolPreference('enabled_users')) ;
@@ -93,7 +93,7 @@
     /**
      * Gets if user registration is enabled
      *
-     * @return boolean 
+     * @return boolean
      */
     function osc_user_registration_enabled() {
         return (getBoolPreference('enabled_user_registration')) ;
@@ -102,7 +102,7 @@
     /**
      * Gets is user validation is enabled or not
      *
-     * @return boolean 
+     * @return boolean
      */
     function osc_user_validation_enabled() {
         return (getBoolPreference('enabled_user_validation')) ;
@@ -111,7 +111,7 @@
     /**
      * Gets if validation for logged users is required or not
      *
-     * @return boolean 
+     * @return boolean
      */
     function osc_logged_user_item_validation() {
         return (getBoolPreference('logged_user_item_validation')) ;
@@ -120,7 +120,7 @@
     /**
      * Gets how many comments should be posted before auto-moderation
      *
-     * @return int 
+     * @return int
      */
     function osc_moderate_comments() {
         return (getPreference('moderate_comments')) ;
@@ -129,7 +129,7 @@
     /**
      * Gets if notification of new comments is enabled or not to admin
      *
-     * @return boolean 
+     * @return boolean
      */
     function osc_notify_new_comment() {
         return (getBoolPreference('notify_new_comment')) ;
@@ -138,7 +138,7 @@
     /**
      * Gets if notification of new comments is enabled or notto users
      *
-     * @return boolean 
+     * @return boolean
      */
     function osc_notify_new_comment_user() {
         return (getBoolPreference('notify_new_comment_user')) ;
@@ -147,7 +147,7 @@
     /**
      * Gets if nice urls are enabled or not
      *
-     * @return boolean 
+     * @return boolean
      */
     function osc_rewrite_enabled() {
         return (getBoolPreference('rewriteEnabled')) ;
@@ -156,7 +156,7 @@
     /**
      * Gets if mod rewrite is loaded or not (if apache runs on cgi mode, mod rewrite will not be detected)
      *
-     * @return boolean 
+     * @return boolean
      */
     function osc_mod_rewrite_loaded() {
         return (getBoolPreference('mod_rewrite_loaded')) ;
@@ -165,7 +165,7 @@
     /**
      * Gets if original images should be kept
      *
-     * @return boolean 
+     * @return boolean
      */
     function osc_keep_original_image() {
         return (getBoolPreference('keep_original_image')) ;
@@ -174,7 +174,7 @@
     /**
      * Gets if autocron is enabled
      *
-     * @return boolean 
+     * @return boolean
      */
     function osc_auto_cron() {
         return (getBoolPreference('auto_cron')) ;
@@ -183,7 +183,7 @@
     /**
      * Gets if recaptcha for items is enabled or not
      *
-     * @return boolean 
+     * @return boolean
      */
     function osc_recaptcha_items_enabled() {
         return (getBoolPreference('enabled_recaptcha_items')) ;
@@ -197,20 +197,20 @@
     function osc_items_wait_time() {
         return (getPreference('items_wait_time'));
     }
-    
+
     /**
      * Gets how many items should be moderated to enable auto-moderation
      *
-     * @return int 
+     * @return int
      */
     function osc_moderate_items() {
         return (getPreference('moderate_items')) ;
     }
-    
+
     /**
      * Gets if only registered users can publish new items or anyone could
      *
-     * @return boolean 
+     * @return boolean
      */
     function osc_reg_user_post() {
         return (getBoolPreference('reg_user_post')) ;
@@ -219,7 +219,7 @@
     /**
      * Gets if the prices are o not enabled on the item's form
      *
-     * @return boolean 
+     * @return boolean
      */
     function osc_price_enabled_at_items() {
         return (getBoolPreference('enableField#f_price@items')) ;
@@ -228,7 +228,7 @@
     /**
      * Gets if images are o not enabled in item's form
      *
-     * @return boolean 
+     * @return boolean
      */
     function osc_images_enabled_at_items() {
         return (getBoolPreference('enableField#images@items')) ;
@@ -237,7 +237,7 @@
     /**
      * Gets how many images are allowed per item (o for unlimited)
      *
-     * @return int 
+     * @return int
      */
     function osc_max_images_per_item() {
         return (getPreference('numImages@items')) ;
@@ -246,7 +246,7 @@
     /**
      * Gets if notification are sent to admin when a send-a-friend message is sent
      *
-     * @return boolean 
+     * @return boolean
      */
     function osc_notify_contact_friends() {
         return(getBoolPreference('notify_contact_friends')) ;
@@ -255,7 +255,7 @@
     /**
      * Gets if notification are sent to admin when a contact message is sent
      *
-     * @return boolean 
+     * @return boolean
      */
     function osc_notify_contact_item() {
         return(getBoolPreference('notify_contact_item')) ;
@@ -305,7 +305,7 @@
     function osc_mailserver_auth() {
         return(getBoolPreference('mailserver_auth')) ;
     }
-    
+
     /**
      * Gets if the mailserver requires authetification
      *
@@ -314,7 +314,7 @@
     function osc_mailserver_pop() {
         return(getBoolPreference('mailserver_pop')) ;
     }
-    
+
 
     //OTHER FUNCTIONS TO GET INFORMATION OF PREFERENCES
     /**
@@ -397,7 +397,7 @@
     function osc_themes_last_version_check() {
         return (getPreference('themes_last_version_check')) ;
     }
-    
+
     /**
      * Gets when was the last version check
      *
@@ -406,7 +406,7 @@
     function osc_plugins_last_version_check() {
         return (getPreference('plugins_last_version_check')) ;
     }
-    
+
     /**
      * Gets json response when checking if there is available a new version
      *
@@ -487,7 +487,7 @@
     function osc_contact_email() {
         return(getPreference('contactEmail')) ;
     }
-    
+
     /**
      * Gets date format
      *
@@ -554,7 +554,7 @@
     /**
      * Gets OSClass' market URL
      *
-     * @return string 
+     * @return string
      */
     function osc_market_url($type = '', $code = '') {
         $url = getPreference('marketURL');
@@ -582,16 +582,16 @@
         }
         return $url;
     }
-    
+
     /**
      * Gets if third party sources are allowed to install new plugins and themes
      *
-     * @return int 
+     * @return int
      */
     function osc_market_external_sources() {
         return(getBoolPreference('marketAllowExternalSources')) ;
     }
-    
+
     /**
      * Gets recaptcha public key
      *
@@ -690,7 +690,7 @@
     function osc_default_order_type_at_search() {
         return(getPreference('defaultOrderType@search')) ;
     }
-    
+
     /**
      * Gets default show as at search
      *
@@ -748,7 +748,7 @@
     function osc_item_spam_delay() {
         return 60; // need to be changed
     }
-    
+
     /**
      * Gets how many seconds between comment post to not consider it SPAM
      *
@@ -757,7 +757,7 @@
     function osc_comment_spam_delay() {
         return 60; // need to be changed
     }
-    
+
     /**
      * Gets if parent categories are enabled or not
      *
@@ -819,10 +819,10 @@
     function osc_reset_preferences() {
         return Preference::newInstance()->toArray();
     }
-    
+
     /**
      * Return if need mark images with text
-     * 
+     *
      * @return boolean
      */
     function osc_is_watermark_text() {
@@ -836,7 +836,7 @@
 
     /**
      * Return if need mark images with image
-     * 
+     *
      * @return boolean
      */
     function osc_is_watermark_image() {
@@ -859,7 +859,7 @@
 
     /**
      * Return watermark text
-     * 
+     *
      * @return string
      */
     function osc_watermark_text() {
@@ -868,7 +868,7 @@
 
     /**
      * Return watermark place
-     * 
+     *
      * @return string
      */
     function osc_watermark_place() {

@@ -188,7 +188,7 @@
                 } else {
                     $p_sUser = explode(",", $p_sUser);
                 }
-            } 
+            }
 
             $p_sPattern   = strip_tags(Params::getParam('sPattern'));
 

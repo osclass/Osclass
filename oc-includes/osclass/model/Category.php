@@ -27,7 +27,7 @@
     {
         /**
          *
-         * @var type 
+         * @var type
          */
         private static $instance ;
         private $language ;
@@ -77,13 +77,13 @@
 
         /**
          * Comodin function to serve multiple queries
-         * 
+         *
          * *Note: param needs to be escaped, inside function will not be escaped
-         * 
+         *
          * @access public
          * @since unknown
-         * @param mixed 
-         * @return array 
+         * @param mixed
+         * @return array
          */
         public function listWhere($where = '')
         {
@@ -99,7 +99,7 @@
             $this->dao->groupBy( 'pk_i_id' ) ;
             $this->dao->orderBy( 'i_position', 'ASC' ) ;
             $rs = $this->dao->get() ;
-            
+
             if( $rs === false ) {
                 return array() ;
             }
@@ -113,12 +113,12 @@
 
         /**
          * List all enabled categories
-         * 
+         *
          * @access public
          * @since unknown
-         * @return array 
+         * @return array
          */
-        public function listEnabled() 
+        public function listEnabled()
         {
             $this->dao->select( sprintf("a.*, b.*, c.i_num_items, FIELD(fk_c_locale_code, '%s') as locale_order", $this->dao->connId->real_escape_string(osc_current_user_locale()) ) ) ;
             $this->dao->from( $this->getTableName().' as a' ) ;
@@ -129,13 +129,13 @@
             $this->dao->orderBy('locale_order', 'DESC') ;
             $subquery = $this->dao->_getSelect() ;
             $this->dao->_resetSelect() ;
-            
+
             $this->dao->select();
             $this->dao->from( sprintf( '(%s) dummytable', $subquery ) ) ; // $subselect.'  dummytable') ;
             $this->dao->groupBy('pk_i_id') ;
             $this->dao->orderBy('i_position', 'ASC') ;
             $rs = $this->dao->get() ;
-            
+
             if( $rs === false ) {
                 return array() ;
             }
@@ -143,17 +143,17 @@
             if( $rs->numRows() == 0 ) {
                 return array() ;
             }
-            
+
             return $rs->result();
         }
 
         /**
          * Return categories in a tree
-         * 
+         *
          * @access public
          * @since unknown
          * @param bool $empty
-         * @return array 
+         * @return array
          */
         public function toTree($empty = true)
         {
@@ -192,13 +192,13 @@
 
         /**
          * Helps create the tree
-         * 
+         *
          * @access private
          * @since unknown
          * @param array $branch
          * @param array $categories
          * @param array $relation
-         * @return array 
+         * @return array
          */
         private function sideTree($branch, $categories, $relation)
         {
@@ -219,10 +219,10 @@
 
         /**
          * Find root categories
-         * 
+         *
          * @access public
          * @since unknown
-         * @return array 
+         * @return array
          */
         public function findRootCategories()
         {
@@ -235,10 +235,10 @@
 
         /**
          * Find root enabled categories
-         * 
+         *
          * @access public
          * @since unknown
-         * @return array 
+         * @return array
          */
         public function findRootCategoriesEnabled()
         {
@@ -252,11 +252,11 @@
 
         /**
          * Returna  tree of a given category as the root
-         * 
+         *
          * @access public
          * @since unknown
          * @param integer$category
-         * @return array 
+         * @return array
          */
         public function toSubTree($category = null)
         {
@@ -275,10 +275,10 @@
 
         /**
          * Lit all categories
-         * 
+         *
          * @access public
          * @since unknown
-         * @return array 
+         * @return array
          */
         public function listAll($description = true)
         {
@@ -291,10 +291,10 @@
 
         /**
          * Return a tree of ALL (enabled & disabled) categories
-         * 
+         *
          * @access public
          * @since unknown
-         * @return array 
+         * @return array
          */
         public function toTreeAll()
         {
@@ -321,11 +321,11 @@
 
         /**
          * Given a category, return the branch from the root to the category
-         * 
+         *
          * @access public
          * @since unknown
          * @param integer$category
-         * @return array 
+         * @return array
          */
         public function toRootTree($cat = null)
         {
@@ -349,11 +349,11 @@
 
         /**
          * Return the root category of a one given
-         * 
+         *
          * @access public
          * @since unknown
          * @param integer $categoryID
-         * @return array 
+         * @return array
          */
         public function findRootCategory($categoryID)
         {
@@ -373,11 +373,11 @@
 
         /**
          * Find a category find its slug
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $slug
-         * @return array 
+         * @return array
          */
         public function findBySlug($slug)
         {
@@ -395,11 +395,11 @@
 
         /**
          * Same as toRootTree but reverse the results
-         * 
+         *
          * @access public
          * @since unknown
          * @param integer$category_id
-         * @return array 
+         * @return array
          */
         public function hierarchy($category_id)
         {
@@ -408,7 +408,7 @@
 
         /**
          * Check if it's a root category
-         * 
+         *
          * @access public
          * @since unknown
          * @param integer$category_id
@@ -432,11 +432,11 @@
 
         /**
          * returns the children of a given category
-         * 
+         *
          * @access public
          * @since unknown
          * @param integer$cat_id
-         * @return array 
+         * @return array
          */
         public function findSubcategories($categoryID)
         {
@@ -449,13 +449,13 @@
 
         /**
          * Return a category given an id
-         * This overwrite findByPrimaryKey of DAO model because we store the 
+         * This overwrite findByPrimaryKey of DAO model because we store the
          * categories on an array for the tree and it's faster than a SQL query
-         * 
+         *
          * @access public
          * @since unknown
          * @param int $categoryID primary key
-         * @return array 
+         * @return array
          */
         public function findByPrimaryKey($categoryID)
         {
@@ -512,7 +512,7 @@
 
         /**
          * Return a category's name given an id
-         * 
+         *
          * @access public
          * @since 3.1
          * @param int $categoryID primary key
@@ -546,7 +546,7 @@
 
         /**
          * delete a category and all information linked to it
-         * 
+         *
          * @access public
          * @since unknown
          * @param integer$pk primary key
@@ -578,7 +578,7 @@
 
         /**
          * Update a category
-         * 
+         *
          * @access public
          * @since unknown
          * @param array $fields
@@ -596,25 +596,25 @@
             //UPDATE for category
             $res = $this->dao->update($this->getTableName(), $fields, array('pk_i_id' => $pk)) ;
             if($res >= 0) {
-                // update dt_expiration (tablel t_item) using category.i_expiration_days 
+                // update dt_expiration (tablel t_item) using category.i_expiration_days
                 if($fields['i_expiration_days'] > 0) {
-                    $update_dt_expiration = sprintf('update %st_item as a 
+                    $update_dt_expiration = sprintf('update %st_item as a
                         left join %st_category  as b on b.pk_i_id = a.fk_i_category_id
-                        set a.dt_expiration = date_add(a.dt_pub_date, INTERVAL b.i_expiration_days DAY) 
+                        set a.dt_expiration = date_add(a.dt_pub_date, INTERVAL b.i_expiration_days DAY)
                         where a.fk_i_category_id = %d ', DB_TABLE_PREFIX, DB_TABLE_PREFIX, $pk );
-                    
+
                     $this->dao->query($update_dt_expiration);
                 // update dt_expiration (table t_item) using the max date value
                 } else if( $fields['i_expiration_days'] == 0) {
-                    $update_dt_expiration = sprintf("update %st_item as a 
+                    $update_dt_expiration = sprintf("update %st_item as a
                         set a.dt_expiration = '9999-12-31 23:59:59'
                         where a.fk_i_category_id = %s", DB_TABLE_PREFIX, $pk );
-                    
+
                     $this->dao->query($update_dt_expiration);
                 }
-                 
+
                 $affectedRows = $res;
-                
+
                 foreach ($aFieldsDescription as $k => $fieldsDescription) {
                     //UPDATE for description of categories
                     $fieldsDescription['fk_i_category_id'] = $pk;
@@ -660,7 +660,7 @@
             } else {
                 $return = $res;
             }
-            
+
             if($return) {
                 return $affectedRows;
             } else {
@@ -670,7 +670,7 @@
 
         /**
          * Inser a new category
-         * 
+         *
          * @access public
          * @since unknown
          * @param array $fields
@@ -702,7 +702,7 @@
 
         /**
          * Insert the description of a category
-         * 
+         *
          * @access public
          * @since unknown
          * @param array $fields_description
@@ -717,47 +717,49 @@
 
         /**
          * Update categories' order
-         * 
+         *
          * @access public
          * @since unknown
-         * @param integer$pk_i_id
-         * @param integer$order
+         * @param integer $pk_i_id
+         * @param integer $order
          * @return mixed false on fail, int of num. of affected rows
          */
         public function updateOrder($pk_i_id, $order)
         {
-            $array_set = array(
-                'i_position'    => $order
-            );
-            $array_where = array(
-                'pk_i_id'  => $pk_i_id
-            );
-            return $this->dao->update($this->tableName, $array_set, $array_where);
+            return $this->dao->update($this->tableName, array('i_position' => $order), array('pk_i_id' => $pk_i_id));
+
+        }
+
+        /**
+         * Update categories' order
+         *
+         * @access public
+         * @since unknown
+         * @param integer $pk_i_id
+         * @param integer $expiration
+         * @return mixed false on fail, int of num. of affected rows
+         */
+        public function updateExpiration($pk_i_id, $expiration)
+        {
+            return $this->dao->update($this->tableName, array('i_expiration_days' => $expiration), array('pk_i_id'  => $pk_i_id));
 
         }
 
         /**
          * update name of a category
-         * 
+         *
          * @access public
          * @since unknown
-         * @param integer$pk_i_id
+         * @param integer $pk_i_id
          * @param string $locale
          * @param string $name
          * @return mixed false on fail, int of num. of affected rows
          */
         public function updateName($pk_i_id, $locale, $name)
         {
-            $array_set = array(
-                's_name'    => $name
-            );
-            $array_where = array(
-                'fk_i_category_id'  => $pk_i_id,
-                'fk_c_locale_code'  => $locale
-            );
-            return $this->dao->update(DB_TABLE_PREFIX.'t_category_description', $array_set, $array_where);
+            return $this->dao->update(DB_TABLE_PREFIX.'t_category_description', array('s_name' => $name), array('fk_i_category_id' => $pk_i_id,'fk_c_locale_code' => $locale));
         }
-        
+
         /**
          * Formats a value before being inserted in DB.
          */

@@ -264,14 +264,14 @@
             title: addNewCountryText,
         });
     }
-    
+
     function renderEditCountry(){
         var buttonsActions = {};
-        buttonsActions[editText] = function() { 
-            $("#d_edit_country_form").submit(); 
+        buttonsActions[editText] = function() {
+            $("#d_edit_country_form").submit();
         }
-        buttonsActions[cancelText] = function() { 
-            $(this).dialog("close"); 
+        buttonsActions[cancelText] = function() {
+            $(this).dialog("close");
         }
         $( "#d_edit_country" ).dialog({
             width: 250,

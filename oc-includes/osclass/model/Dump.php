@@ -22,7 +22,7 @@
 
     /**
      * Model database for Dump database tables
-     * 
+     *
      * @package OSClass
      * @subpackage Model
      * @since unknown
@@ -32,10 +32,10 @@
         /**
          * It references to self object: Dump.
          * It is used as a singleton
-         * 
+         *
          * @access private
          * @since unknown
-         * @var Dump 
+         * @var Dump
          */
         private static $instance ;
 
@@ -48,7 +48,7 @@
         }
 
         /**
-         * Set data 
+         * Set data
          */
         function __construct()
         {
@@ -69,29 +69,29 @@
                 return array();
             }
         }
-        
+
         /**
          * Dump into path the table structure of $table
          *
          * @param string $path
          * @param string $table
-         * @return bool 
+         * @return bool
          */
-        function table_structure($path, $table) 
+        function table_structure($path, $table)
         {
             if ( !is_writable($path) ) return false ;
 
             $_str = "/* Table structure for table `" . $table . "` */\n" ;
 
             $sql = 'show create table `' . $table . '`;' ;
-            
+
             $result = $this->dao->query($sql);
             if($result) {
                 $result =  $result->result();
             } else {
                 $result =  array();
             }
-            
+
             foreach($result as $_line) {
                 $_str .= str_replace('CREATE TABLE', 'CREATE TABLE IF NOT EXISTS', $_line['Create Table'] . ';');
                 $_str .= "\n\n" ;
@@ -103,13 +103,13 @@
 
             return true ;
         }
-       
+
         /**
          * Dump all table rows into path
-         * 
+         *
          * @param type $path
          * @param type $table
-         * @return bool 
+         * @return bool
          */
         function table_data($path, $table)
         {
@@ -123,7 +123,7 @@
             } else {
                 $result = array();
             }
-            
+
             $_str = '' ;
             if($res) {
                 $num_rows   = $res->numRows();
@@ -136,7 +136,7 @@
 
                     $field_type = array() ;
                     $i = 0 ;
-                    
+
                     while ($meta = $res->resultId->fetch_field()) {
                         array_push($field_type, $meta->type);
                     }
@@ -162,7 +162,7 @@
                                 }
                             }
                             $_str .= ')' ;
-                            
+
                             if($index < $num_rows-1) {
                                 $_str .= ',' ;
                             } else {
@@ -184,7 +184,7 @@
 
             return true ;
         }
-        
+
         /**
          * Specific dump for t_category table
          *
@@ -194,7 +194,7 @@
          * @param type $fields
          * @param type $index
          * @param type $num_rows
-         * @param type $_str 
+         * @param type $_str
          */
         private function _dump_table_category($result, $num_fields, $field_type, $fields, $index, $num_rows, &$_str)
         {
@@ -207,7 +207,7 @@
                     $unshort_rows[$row['pk_i_id']] = $row;
                 }
             }
-            
+
             while(!empty($unshort_rows)) {
                 foreach($unshort_rows as $k => $v) {
                     foreach($short_rows as $r) {
@@ -218,7 +218,7 @@
                     }
                 }
             }
-            
+
             foreach($short_rows as $row) {
                 $_str .= "(" ;
                 for( $i = 0 ; $i < $num_fields ; $i++ ) {
@@ -233,7 +233,7 @@
                     }
                 }
                 $_str .= ')' ;
-                
+
                 if($index < $num_rows-1) {
                     $_str .= ',' ;
                 } else {
@@ -244,15 +244,15 @@
                 $index++ ;
             }
         }
-    
+
         /**
          * Add quotes if it's necessary
-         * 
+         *
          * data type =>  http://www.php.net/manual/es/mysqli-result.fetch-field.php#106064
-         * 
+         *
          * @param type $type
          * @param type $_str
-         * @param type $value 
+         * @param type $value
          */
         private function _quotes($type, &$_str, $value)
         {
@@ -266,7 +266,7 @@
 //            CHAR: 254 - VARCHAR: 253 - ENUM: 254 - SET: 254 - BINARY: 254
 //            VARBINARY: 253 - TINYBLOB: 252 - BLOB: 252 - MEDIUMBLOB: 252
 //            TINYTEXT: 252 - TEXT: 252 - MEDIUMTEXT: 252 - LONGTEXT: 252
-            
+
             $aNumeric = array(16, 1, 2, 9, 3, 8, 4, 5, 246 );
             $aDates   = array(10, 12, 7, 11, 13 );
             $aString  = array(254, 253, 252 );

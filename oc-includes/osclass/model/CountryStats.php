@@ -19,7 +19,7 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
-    
+
     /**
      * Model database for CountryStats table
      *
@@ -57,7 +57,7 @@
 
         /**
          * Set data related to t_country_stats table
-         * 
+         *
          * @access public
          * @since 2.4
          */
@@ -68,16 +68,16 @@
             $this->setPrimaryKey('fk_c_country_code') ;
             $this->setFields( array('fk_c_country_code', 'i_num_items') ) ;
         }
-        
+
         /**
          * Increase number of country items, given a country id
          *
          * @access public
          * @since 2.4
-         * @param int $countryCode Country code 
+         * @param int $countryCode Country code
          * @return int number of affected rows, id error occurred return false
          */
-        public function increaseNumItems($countryCode) 
+        public function increaseNumItems($countryCode)
         {
             $lenght = strlen($countryCode);
             if($lenght > 2 || $lenght=='' ) {
@@ -86,16 +86,16 @@
             $sql = sprintf('INSERT INTO %s (fk_c_country_code, i_num_items) VALUES (\'%s\', 1) ON DUPLICATE KEY UPDATE i_num_items = i_num_items + 1', $this->getTableName(), $countryCode);
             return $this->dao->query($sql);
         }
-        
+
         /**
          * Increase number of country items, given a Country code
-         * 
+         *
          * @access public
          * @since 2.4
-         * @param int $countrycode Country code 
+         * @param int $countrycode Country code
          * @return int number of affected rows, id error occurred return false
          */
-        public function decreaseNumItems($countryCode) 
+        public function decreaseNumItems($countryCode)
         {
             $lenght = strlen($countryCode);
             if($lenght > 2 || $lenght=='' ) {
@@ -105,7 +105,7 @@
             $this->dao->from( $this->getTableName() ) ;
             $this->dao->where( $this->getPrimaryKey(), $countryCode ) ;
             $result       = $this->dao->get() ;
-            $countryStat  = $result->row() ; 
+            $countryStat  = $result->row() ;
             $return       = 0 ;
 
             if( isset( $countryStat['i_num_items'] ) ) {
@@ -115,8 +115,8 @@
                 $this->dao->where( 'fk_c_country_code', $countryCode ) ;
 
                 return $this->dao->update() ;
-            } 
-            
+            }
+
             return false;
         }
 
@@ -127,7 +127,7 @@
          * @since 2.4
          * @param type $countryCode
          * @param type $numItems
-         * @return type 
+         * @return type
          */
         public function setNumItems($countryCode, $numItems)
         {
@@ -136,18 +136,18 @@
 
         /**
          * Find stats by country code
-         * 
+         *
          * @access public
          * @since 2.4
-         * @param int $countryCode country id 
-         * @return array 
+         * @param int $countryCode country id
+         * @return array
          */
-        public function findByCountryCode($countryCode) 
+        public function findByCountryCode($countryCode)
         {
             return $this->findByPrimaryKey($countryCode);
         }
-        
-        
+
+
         /**
          * Return a list of countries and counter items.
          * Can be filtered by num_items,
@@ -158,7 +158,7 @@
          * @since 2.4
          * @param string $zero
          * @param string $order
-         * @return array 
+         * @return array
          */
         public function listCountries($zero = ">", $order = "country_name ASC")
         {
@@ -167,17 +167,17 @@
             $this->dao->join(DB_TABLE_PREFIX.'t_country', $this->getTableName().'.fk_c_country_code = '.DB_TABLE_PREFIX.'t_country.pk_c_code') ;
             $this->dao->where('i_num_items '.$zero.' 0' ) ;
             $this->dao->orderBy($order) ;
-            
+
             $rs = $this->dao->get() ;
-            
+
             if($rs === false) {
                 return array() ;
             }
             return $rs->result() ;
         }
-        
+
         /**
-         * Calculate the total items that belong to countryCode 
+         * Calculate the total items that belong to countryCode
          * @access public
          * @since 2.4
          * @param type $countryCode
@@ -197,12 +197,12 @@
             if($return === false) {
                 return 0;
             }
-            
+
             if($return->numRows() > 0) {
                 $aux = $return->result() ;
                 return $aux[0]['total'] ;
             }
-            
+
             return 0;
         }
     }

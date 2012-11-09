@@ -90,6 +90,19 @@ function admin_footer_html() { ?>
 }
 osc_add_hook('admin_content_footer', 'admin_footer_html');
 
+function admin_theme_js() { ?>
+    <!-- scripts
+    ================================================== -->
+    <?php osc_load_scripts();
+}
+osc_add_hook('admin_header', 'admin_theme_js', 1);
+function admin_theme_css() { ?>
+    <!-- styles
+    ================================================== -->
+    <?php osc_load_styles();
+}
+osc_add_hook('admin_header', 'admin_theme_css', 2);
+
 function printLocaleTabs($locales = null) {
     if($locales==null) { $locales = osc_get_locales(); }
     $num_locales = count($locales);
@@ -123,6 +136,7 @@ function printLocaleTitlePage($locales = null,$page = null) {
     if($locales==null) { $locales = osc_get_locales(); }
     $aFieldsDescription = Session::newInstance()->_getForm("aFieldsDescription");
     $num_locales = count($locales);
+    echo '<label for="title">' . __('Title') . ' *</label>';
 
     foreach($locales as $locale) {
         $title = '';
@@ -134,10 +148,9 @@ function printLocaleTitlePage($locales = null,$page = null) {
         }
         $name = $locale['pk_c_code'] . '#s_title';
 
-        echo '<div><label for="title">' . __('Title') . ' *</label>';
         echo '<div class="input-has-placeholder input-title-wide"><label for="title">' . __('Enter title here') . ' *</label>';
         echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($title, ENT_COMPAT, "UTF-8")) . '"  />' ;
-        echo '</div></div>';
+        echo '</div>';
     }
 }
 function printLocaleDescription($locales = null, $item = null) {
@@ -177,37 +190,4 @@ function printLocaleDescriptionPage($locales = null, $page = null) {
     }
 }
 
-function jsLocaleSelector() {
-    $locales = osc_get_locales();
-    $codes = array();
-    foreach($locales as $locale) {
-        $codes[] = '\''.osc_esc_js($locale['pk_c_code']).'\'';
-    }
-    ?>
-    <script type="text/javascript">
-        var locales = new Object;
-        locales.current = '<?php echo osc_esc_js($locales[0]['pk_c_code']); ?>';
-        locales.codes = new Array(<?php echo join(',',$codes); ?>);
-
-        locales.string = '[name*="'+locales.codes.join('"],[name*="')+'"],.'+locales.codes.join(',.');
-        $(function(){
-            $('#language-tab li a').click(function(){
-                $('#language-tab li').removeClass('ui-state-active').removeClass('ui-tabs-selected');
-                $(this).parent().addClass('ui-tabs-selected ui-state-active');
-                var currentLocale = $(this).attr('href').replace('#','');
-                $(locales.string).parent().hide();
-                $('[name*="'+currentLocale+'"], .'+currentLocale).parent().show();
-                locales.current = currentLocale;
-                return false;
-            }).triggerHandler('click');
-        });
-        function tabberAutomatic(){
-            $('.tabber:hidden').show();
-            $('.tabber h2').remove();
-            $(locales.string).parent().hide();
-            $('[name*="'+locales.current+'"],.'+locales.current).parent().show();
-        }
-    </script>
-    <?php
-}
-osc_add_hook('admin_header','jsLocaleSelector');
+/* end of file */

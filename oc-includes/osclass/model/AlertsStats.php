@@ -22,7 +22,7 @@
 
     /**
      * Model database for AlertsStats table
-     * 
+     *
      * @package OSClass
      * @subpackage Model
      * @since 3.1
@@ -32,7 +32,7 @@
         /**
          * It references to self object: AlertsStats.
          * It is used as a singleton
-         * 
+         *
          * @access private
          * @since 3.1
          * @var AlertsStats
@@ -42,10 +42,10 @@
         /**
          * It creates a new AlertsStats object class ir if it has been created
          * before, it return the previous object
-         * 
+         *
          * @access public
          * @since 3.1
-         * @return AlertsStats 
+         * @return AlertsStats
          */
         public static function newInstance()
         {

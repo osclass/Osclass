@@ -84,7 +84,7 @@
                                 </tr>
                                 <tr class="even">
                                     <td><?php _e('URL') ; ?></td>
-                                    <td><a id="market_url" href="#"><?php _e("Download manually"); ?></span></td>
+                                    <td><span><a id="market_url" href="#"><?php _e("Download manually"); ?></a></span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -117,7 +117,7 @@
                     function(data) {
                         var content = data.message ;
                         if(data.error == 0) { // no errors
-                            content += '<h3><?php echo osc_esc_js(__('The theme have been downloaded correctly, proceed to activate or preview it.')); ?></h3>';
+                            content += '<h3><?php echo osc_esc_js(__('The theme has been downloaded correctly, proceed to activate or preview it.')); ?></h3>';
                             content += "<p>";
                             content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php echo osc_esc_js(__('Ok')); ?></a>';
                             content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php echo osc_esc_js(__('Close')); ?></a>';

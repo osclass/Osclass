@@ -22,7 +22,7 @@
 
     /**
      * Model database for Country table
-     * 
+     *
      * @package OSClass
      * @subpackage Model
      * @since unknown
@@ -31,7 +31,7 @@
     {
         /**
          *
-         * @var Country 
+         * @var Country
          */
         private static $instance ;
 
@@ -44,7 +44,7 @@
         }
 
         /**
-         * 
+         *
          */
         function __construct()
         {
@@ -56,7 +56,7 @@
 
         /**
          * Find a country by its ISO code
-         * 
+         *
          * @access public
          * @since unknown
          * @param type $code
@@ -68,13 +68,13 @@
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('pk_c_code', $code) ;
             $result = $this->dao->get() ;
-            
-            return $result->row(); 
+
+            return $result->row();
         }
 
         /**
          * Find a country by its name
-         * 
+         *
          * @access public
          * @since unknown
          * @param type $name
@@ -91,7 +91,7 @@
 
         /**
          * List all the countries
-         * 
+         *
          * @access public
          * @since unknown
          * @param type $language
@@ -104,7 +104,7 @@
 
         /**
          * Function that work with the ajax file
-         * 
+         *
          * @access public
          * @since unknown
          * @param type $query
@@ -119,11 +119,11 @@
             $result = $this->dao->get() ;
             return $result->result();
         }
-        
-        
+
+
         /**
          *  Delete a country with its regions, cities,..
-         * 
+         *
          *  @access public
          *  @since 2.4
          *  @param $pk

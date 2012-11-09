@@ -414,6 +414,13 @@
                         }
                     }
 
+                    if(Params::getParam('apply_changes_to_subcategories')==1) {
+                        $subcategories = $categoryManager->findSubcategories($id);
+                        foreach($subcategories as $subc) {
+                            $categoryManager->updateExpiration($subc['pk_i_id'], $fields['i_expiration_days']);
+                        };
+                    };
+
                     if($error==0) {
                         $msg = __("Category updated correctly");
                     } else if($error==1) {
@@ -475,7 +482,7 @@
                     $email = Params::getParam("email");
                     $title = Params::getParam("title");
                     $body  = urldecode(Params::getParam("body"));
-                    
+
                     $emailParams = array(
                         'subject'  => $title,
                         'to'       => $email,
@@ -684,7 +691,7 @@
                                 break;
                             }
                         }
-                        
+
                         /***********************
                          **** DOWNLOAD FILE ****
                          ***********************/
@@ -771,7 +778,7 @@
                                                         Plugins::runHook($plugin.'_enable') ;
                                                     }
                                                 }
-                                                
+
                                             }
                                             // recount plugins&themes for update
                                             if($section == 'plugins') {
@@ -779,7 +786,7 @@
                                             } else if($section == 'themes') {
                                                 osc_check_themes_update(true);
                                             }
-                                            
+
                                             if ($rm_errors == 0) {
                                                 $message = __('Everything looks good!');
                                                 $error = 0;
@@ -843,14 +850,14 @@
                         $data = array('error' => 1, 'error_msg' => __('No code was submitted'));
                     }
                     echo json_encode($data);
-                    break;                   
+                    break;
                 case 'local_market': // AVOID CROSS DOMAIN PROBLEMS OF AJAX REQUEST
                     $marketPage = Params::getParam("mPage");
                     if($marketPage>=1) $marketPage-- ;
-                    
+
                     $out    = osc_file_get_contents(osc_market_url(Params::getParam("section"))."page/".$marketPage);
                     $array  = json_decode($out, true);
-                    // do pagination 
+                    // do pagination
                     $pageActual = $array['page'];
                     $totalPages = ceil( $array['total'] / $array['sizePage'] );
                     $params     = array(

@@ -18,7 +18,11 @@
 
     osc_enqueue_script('tiny_mce');
 
-    $page    = __get('page');
+    $page       = __get('page');
+    $templates  = __get('templates');
+    $meta       = json_decode(@$page['s_meta'], true);
+
+    $template_selected = (isset($meta['template']) && $meta['template']!='')?$meta['template']:'default';
     $locales = OSCLocale::newInstance()->listAllEnabled();
 
     function customFrmText($return = 'title') {
@@ -58,14 +62,19 @@
                 theme : "advanced",
                 skin: "cirkuit",
                 width: "100%",
-                height: "340px",
-                theme_advanced_buttons3 : "",
+                height: "440px",
+                language: 'en',
                 theme_advanced_toolbar_align : "left",
                 theme_advanced_toolbar_location : "top",
-                plugins : "color",
+                plugins : "ibrowser",
                 entity_encoding : "raw",
                 theme_advanced_buttons1_add : "forecolorpicker,fontsizeselect",
-                theme_advanced_disable : "styleselect,anchor,image"
+                theme_advanced_buttons2_add: "media,ibrowser",
+                theme_advanced_buttons3: "",
+                theme_advanced_disable : "styleselect,anchor",
+                relative_urls : false,
+                remove_script_host : false,
+                convert_urls : false
             });
         </script>
         <?php
@@ -80,19 +89,31 @@
         <input type="hidden" name="page" value="pages" />
         <input type="hidden" name="action" value="<?php echo customFrmText('action_frm'); ?>" />
         <?php PageForm::primary_input_hidden($page); ?>
-        <div id="left-side">
-            <?php printLocaleTitlePage($locales, $page); ?>
+        <?php printLocaleTitlePage($locales, $page); ?>
+        <div>
+            <label><?php _e('Internal name'); ?></label>
+            <?php PageForm::internal_name_input_text($page); ?>
+            <div class="flashmessage flashmessage-warning flashmessage-inline">
+                <p><?php _e('Used to quickly identify this page'); ?></p>
+            </div>
+            <span class="help"></span>
+        </div>
+        <?php if(count($templates)>0) { ?>
             <div>
-                <label><?php _e('Internal name'); ?></label>
-                <?php PageForm::internal_name_input_text($page); ?>
-                <div class="flashmessage flashmessage-warning flashmessage-inline">
-                    <p><?php _e('Used to quickly identify this page'); ?></p>
-                </div>
-                <span class="help"></span>
+                <label><?php _e('Page template'); ?></label>
+                <select name="meta[template]">
+                    <option value="default" <?php if($template_selected=='default') { echo 'selected="selected"'; }; ?>><?php _e('Default template'); ?></option>
+                    <?php foreach($templates as $template) { ?>
+                        <option value="<?php echo $template?>" <?php if($template_selected==$template) { echo 'selected="selected"'; }; ?>><?php echo $template; ?></option>
+                    <?php }; ?>
+                </select>
             </div>
-            <div class="input-description-wide">
-                <?php printLocaleDescriptionPage($locales, $page); ?>
-            </div>
+        <?php }; ?>
+        <div class="input-description-wide">
+            <?php printLocaleDescriptionPage($locales, $page); ?>
+        </div>
+        <div>
+            <?php osc_run_hook('page_meta'); ?>
         </div>
         <div class="clear"></div>
         <div class="form-actions">

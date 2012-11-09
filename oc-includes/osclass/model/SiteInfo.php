@@ -21,29 +21,29 @@
      */
 
     /**
-     * 
+     *
      */
     class SiteInfo extends DAO
     {
         /**
          *
-         * @var type 
+         * @var type
          */
         private static $instance ;
         /**
          *
-         * @var type 
+         * @var type
          */
         private $daoMetadata ;
         /**
          *
-         * @var type 
+         * @var type
          */
         private $siteInfo ;
 
         /**
          *
-         * @return type 
+         * @return type
          */
         public static function newInstance()
         {
@@ -55,12 +55,12 @@
         }
 
         /**
-         * 
+         *
          */
         public function __construct()
         {
             $this->setTableName('tbl_sites') ;
-            $this->setPrimaryKey('s_site') ; 
+            $this->setPrimaryKey('s_site') ;
             $this->setFields( array('s_site', 'dt_date', 'fk_i_user_id', 's_db_name', 's_db_host', 's_db_user', 's_db_password') ) ;
 
             $conn = new DBConnectionClass(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
@@ -72,11 +72,11 @@
         }
 
         /**
-         * 
+         *
          */
         public function toArray()
         {
-            $domain = $_SERVER['HTTP_HOST'] ;
+            $domain = 'http://' . $_SERVER['HTTP_HOST'] . '/';
             $this->siteInfo = $this->findByPrimaryKey($domain) ;
         }
 
@@ -85,7 +85,7 @@
          * @access public
          * @since unknown
          * @param type $key
-         * @return type 
+         * @return type
          */
         public function get($key)
         {
@@ -101,13 +101,13 @@
          * @access public
          * @since unknown
          * @param type $value
-         * @return type 
+         * @return type
          */
         public function findByPrimaryKey($value)
         {
             $this->daoMetadata->select($this->getFields()) ;
             $this->daoMetadata->from($this->getTableName()) ;
-            $this->daoMetadata->like('s_site', $value, 'both') ;
+            $this->daoMetadata->where('s_site', $value) ;
             $result = $this->daoMetadata->get() ;
 
             if( $result == false ) {
@@ -118,11 +118,11 @@
         }
 
         /**
-         * 
+         *
          * @access public
          * @since unknown
          * @param type $table
-         * @return type 
+         * @return type
          */
         public function setTableName($table)
         {

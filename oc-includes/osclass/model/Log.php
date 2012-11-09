@@ -27,7 +27,7 @@
     {
         /**
          *
-         * @var type 
+         * @var type
          */
         private static $instance ;
 
@@ -40,7 +40,7 @@
         }
 
         /**
-         * 
+         *
          */
         function __construct()
         {
@@ -58,7 +58,7 @@
             );
             $this->setFields($array_fields) ;
         }
-        
+
         /**
          * Insert a log row.
          *
@@ -70,19 +70,19 @@
          * @param string $data
          * @param string $who
          * @param integer $who_id
-         * @return boolean 
+         * @return boolean
          */
-        public function insertLog($section, $action, $id, $data, $who, $whoId) 
+        public function insertLog($section, $action, $id, $data, $who, $whoId)
         {
             $array_set = array(
                 'dt_date'       => date('Y-m-d H:i:s'),
-                's_section'     => $section, 
-                's_action'      => $action, 
+                's_section'     => $section,
+                's_action'      => $action,
                 'fk_i_id'       => $id,
-                's_data'        => $data, 
+                's_data'        => $data,
                 's_ip'          => $_SERVER['REMOTE_ADDR'],
-                's_who'         => $who, 
-                'fk_i_who_id'   => $whoId 
+                's_who'         => $who,
+                'fk_i_who_id'   => $whoId
             );
             return $this->dao->insert($this->getTableName(), $array_set);
         }

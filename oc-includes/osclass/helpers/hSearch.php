@@ -53,7 +53,7 @@
                     ,__('Higher price first')  => array('sOrder' => 'i_price', 'iOrderType' => 'desc')
                 );
     }
-    
+
     /**
      * Gets current search page
      *
@@ -132,7 +132,7 @@
 
     /**
      * Gets current search users
-     * 
+     *
      * @return string
      */
     function osc_search_user() {
@@ -319,6 +319,9 @@
                             break;
                         case 'sCategory':
                             $k = osc_get_preference('rewrite_search_category');
+                            if(is_array($v)) {
+                                $v = implode(",", $v);
+                            }
                             break;
                         case 'sUser':
                             $k = osc_get_preference('rewrite_search_user');
@@ -451,7 +454,7 @@
         }
         return View::newInstance()->_count('list_countries') ;
     }
-    
+
     /**
      * Gets the total number of regions in list_regions
      *
@@ -693,7 +696,7 @@
         return '';
     }
 
-    
+
     function osc_get_raw_search($conditions) {
         $keys = array("aCategories", "countries", "regions", "cities", "city_areas");
         $mCategory = Category::newInstance();
@@ -716,15 +719,15 @@
         if(!isset($conditions['price_min']) || $conditions['price_min']==0) {
             unset($conditions['price_min']);
         }
-        
+
         if(!isset($conditions['price_max']) || $conditions['price_max']==0) {
             unset($conditions['price_max']);
         }
-        
+
         if(!isset($conditions['sPattern']) || $conditions['sPattern']=='') {
             unset($conditions['sPattern']);
         }
-        
+
         unset($conditions['withPattern']);
         unset($conditions['tables']);
         unset($conditions['tables_join']);
@@ -737,5 +740,5 @@
         unset($conditions['results_per_page']);
         return $conditions;
     }
-    
+
 ?>

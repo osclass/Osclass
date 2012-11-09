@@ -30,7 +30,7 @@
      * Translate strings
      *
      * @since unknown
-     * 
+     *
      * @param string $key
      * @param string $domain
      * @return string
@@ -49,7 +49,7 @@
      * Translate strings and echo them
      *
      * @since unknown
-     * 
+     *
      * @param string $key
      * @param string $domain
      */
@@ -61,7 +61,7 @@
      * Translate string (flash messages)
      *
      * @since unknown
-     * 
+     *
      * @param string $key
      * @return string
      */
@@ -84,7 +84,11 @@
         $gt = Translation::newInstance()->_get($domain);
 
         if(!$gt) {
-            return $key;
+            if($count>1) {
+                return $plural_key;
+            } else {
+                return $single_key;
+            }
         }
         $string = $gt->ngettext($single_key, $plural_key, $count);
         return osc_apply_filter('ngettext', $string);

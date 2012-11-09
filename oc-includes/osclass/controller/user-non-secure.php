@@ -85,7 +85,7 @@
                     $email  = Params::getParam('email');
                     $secret = Params::getParam('secret');
                     $id     = Params::getParam('id');
-                    
+
                     $alert  = Alerts::newInstance()->findByPrimaryKey($id);
                     $result = 0;
                     if(!empty($alert)) {
@@ -115,13 +115,13 @@
                     View::newInstance()->_exportVariableToView( 'user', $user ) ;
                     $mSearch = Search::newInstance();
                     $mSearch->fromUser($userID);
-                    
+
                     $items = $mSearch->doSearch();
                     $count = $mSearch->count();
-                    
+
                     View::newInstance()->_exportVariableToView( 'items', $items ) ;
                     View::newInstance()->_exportVariableToView( 'search_total_items', $count ) ;
-                    
+
                     $this->doView('user-public-profile.php') ;
                 break;
                 case 'contact_post':
@@ -129,7 +129,7 @@
                     View::newInstance()->_exportVariableToView('user', $user) ;
                     if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
                         if(!osc_check_recaptcha()) {
-                            osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;                    
+                            osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;
                             Session::newInstance()->_setForm("yourEmail",   Params::getParam('yourEmail'));
                             Session::newInstance()->_setForm("yourName",    Params::getParam('yourName'));
                             Session::newInstance()->_setForm("phoneNumber", Params::getParam('phoneNumber'));

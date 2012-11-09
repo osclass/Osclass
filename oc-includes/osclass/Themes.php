@@ -31,7 +31,7 @@
         protected $scripts;
         protected $queue;
         protected $styles;
-        
+
         protected $resolved;
         protected $unresolved;
 
@@ -80,9 +80,9 @@
 
         /**
          * Add style to be loaded
-         * 
+         *
          * @param type $id
-         * @param type $url 
+         * @param type $url
          */
         public function addStyle($id, $url)
         {
@@ -91,8 +91,8 @@
 
         /**
          * Remove style to not be loaded
-         * 
-         * @param type $id 
+         *
+         * @param type $id
          */
         public function removeStyle($id)
         {
@@ -100,7 +100,15 @@
         }
 
         /**
-         * Print the HTML tags to load the styles 
+         * Get the css styles urls
+         */
+        public function getStyles()
+        {
+            return $this->styles;
+        }
+
+        /**
+         * Print the HTML tags to load the styles
          */
         public function printStyles()
         {
@@ -116,8 +124,8 @@
 
         /**
          * Remove script to not be loaded
-         * 
-         * @param type $id 
+         *
+         * @param type $id
          */
         public function removeScript($id)
         {
@@ -126,7 +134,7 @@
 
         /**
          * Add script to be loaded
-         * 
+         *
          * @param type $id
          * @param type $url
          * @param type $dependencies mixed, it could be an array or a string
@@ -142,8 +150,8 @@
 
         /**
          * Remove script to not be loaded
-         * 
-         * @param type $id 
+         *
+         * @param type $id
          */
         public function unregisterScript($id)
         {
@@ -176,22 +184,34 @@
         }
 
         /**
+         *  Get the scripts urls
+         */
+        public function getScripts()
+        {
+            $scripts = array();
+            $this->orderScripts();
+            foreach($this->resolved as $id) {
+                if( isset($this->scripts[$id]['url']) ) {
+                    $scripts[] = $this->scripts[$id]['url'];
+                }
+            }
+            return $scripts;
+        }
+
+        /**
          *  Print the HTML tags to load the scripts
          */
         public function printScripts()
         {
-            $this->orderScripts();
-            foreach($this->resolved as $id) {
-                if(isset($this->scripts[$id]['url'])) {
-                    echo '<script type="text/javascript" src="'.$this->scripts[$id]['url'].'"></script>' . PHP_EOL;
-                }
+            foreach($this->getScripts() as $script) {
+                echo '<script type="text/javascript" src="' . $script . '"></script>' . PHP_EOL;
             }
         }
 
         /**
          * Algorithm to solve the dependencies of the scripts
-         * 
-         * @param type $node 
+         *
+         * @param type $node
          */
         private function solveDeps($node)
         {

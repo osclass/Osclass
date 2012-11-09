@@ -28,12 +28,12 @@
 
     /**
      * Sanitize a website URL.
-     * 
+     *
      * @param string $value value to sanitize
      * @return string sanitized
      */
     function osc_sanitize_url($value) {
-        if(!function_exists('filter_var')) { 
+        if(!function_exists('filter_var')) {
             return preg_replace('|([^a-zA-Z0-9\$\-\_\.\+!\*\'\(\),{}\|\^~\[\]`"#%;\/\?:@=<>\\\&]*)|', '', $value);
         } else {
             return filter_var($value, FILTER_SANITIZE_URL);
@@ -45,18 +45,18 @@
      * Sanitize capitalization for a string.
      * Capitalize first letter of each name.
      * If all-caps, remove all-caps.
-     * 
+     *
      * @param string $value value to sanitize
      * @return string sanitized
      */
     function osc_sanitize_name($value) {
         return ucwords( osc_sanitize_allcaps( trim( $value ) ) );
-    }	
+    }
 
 
     /**
      * Sanitize string that's all-caps
-     * 
+     *
      * @param string $value value to sanitize
      * @return string sanitized
      */
@@ -70,7 +70,7 @@
 
     /**
      * Sanitize number (with no periods)
-     * 
+     *
      * @param string $value value to sanitize
      * @return string sanitized
      */
@@ -85,12 +85,12 @@
     /**
      * Format phone number. Supports 10-digit with extensions,
      * and defaults to international if cannot match US number.
-     * 
+     *
      * @param string $value value to sanitize
      * @return string sanitized
      */
     function osc_sanitize_phone($value) {
-        if (empty($value))	return;
+        if (empty($value))  return;
 
         // Remove strings that aren't letter and number.
         $value = preg_replace("/[^a-z0-9]/", "", strtolower($value));
@@ -101,7 +101,7 @@
         }
 
         // Check for phone ext.
-        if (!preg_match("/^[0-9]$/", $value)) {	
+        if (!preg_match("/^[0-9]$/", $value)) {
             $value = preg_replace("/^([0-9]{10})([a-z]+)([0-9]+)/", "$1ext$3", $value); // Replace 'x|ext|extension' with 'ext'.
             list($value, $ext) = explode("ext", $value); // Split number & ext.
         }
@@ -114,18 +114,18 @@
         }
 
         return ($ext)? $value." x".$ext : $value;
-    } 
-    
+    }
+
     /**
      * Escape html
      *
      * Formats text so that it can be safely placed in a form field in the event it has HTML tags.
      *
-     * @access	public
+     * @access  public
      * @version 2.4
-     * @param	string
-     * @return	string
-     */	
+     * @param   string
+     * @return  string
+     */
     function osc_esc_html($str = '') {
         if ($str === '') {
             return '';
