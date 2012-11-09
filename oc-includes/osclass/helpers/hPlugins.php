@@ -37,7 +37,7 @@
         $args = func_get_args();
         call_user_func_array(array('Plugins', 'runHook'), $args);
     }
-    
+
     /**
      * Apply a filter to a text
      *
@@ -49,7 +49,7 @@
         $args = func_get_args();
         return call_user_func_array(array('Plugins', 'applyFilter'), $args);
     }
-    
+
     /**
      * Add a hook
      *
@@ -73,7 +73,7 @@
     function osc_add_filter($hook, $function, $priority = 5) {
         Plugins::addHook($hook, $function, $priority);
     }
-    
+
     /**
      * Remove a hook's function
      *
@@ -95,7 +95,7 @@
     function osc_remove_filter($hook, $function) {
         Plugins::removeHook($hook, $function);
     }
-    
+
     /**
      * If the plugin is attached to the category
      *
@@ -106,7 +106,7 @@
     function osc_is_this_category($name, $id) {
         return Plugins::isThisCategory($name, $id);
     }
-    
+
     /**
      * Returns plugin's information
      *
@@ -116,7 +116,7 @@
     function osc_plugin_get_info($plugin) {
         return Plugins::getInfo($plugin);
     }
-    
+
     /**
      * Check if there's a new version of the plugin
      *
@@ -126,7 +126,7 @@
     function osc_plugin_check_update($plugin) {
         return Plugins::checkUpdate($plugin);
     }
-    
+
     /**
      * Register a plugin file to be loaded
      *
@@ -146,7 +146,7 @@
     function osc_get_plugins() {
         return Plugins::getActive();
     }
-    
+
     /**
      * Gets if a plugin is installed or not
      *
@@ -156,7 +156,7 @@
     function osc_plugin_is_installed($plugin) {
         return Plugins::isInstalled($plugin);
     }
-    
+
     /**
      * Gets if a plugin is enabled or not
      *
@@ -166,7 +166,7 @@
     function osc_plugin_is_enabled($plugin) {
         return Plugins::isEnabled($plugin);
     }
-    
+
     /**
      * Show the default configure view for plugins (attach them to categories)
      *
@@ -176,7 +176,7 @@
     function osc_plugin_configure_view($plugin) {
         return Plugins::configureView($plugin);
     }
-    
+
     /**
      * Gets the path to a plugin's resource
      *
@@ -186,7 +186,7 @@
     function osc_plugin_resource($file) {
         return Plugins::resource($file);
     }
-    
+
     /**
      * Gets plugin's configure url
      *

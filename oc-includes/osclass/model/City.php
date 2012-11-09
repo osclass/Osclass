@@ -22,7 +22,7 @@
 
     /**
      * Model database for City table
-     * 
+     *
      * @package OSClass
      * @subpackage Model
      * @since unknown
@@ -32,20 +32,20 @@
         /**
          * It references to self object: City.
          * It is used as a singleton
-         * 
+         *
          * @access private
          * @since unknown
-         * @var City 
+         * @var City
          */
         private static $instance ;
 
         /**
          * It creates a new City object class ir if it has been created
          * before, it return the previous object
-         * 
+         *
          * @access public
          * @since unknown
-         * @return City 
+         * @return City
          */
         public static function newInstance()
         {
@@ -68,7 +68,7 @@
 
         /**
          * Get the cities having part of the city name and region (it can be null)
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $query The beginning of the city name to look for
@@ -96,7 +96,7 @@
 
         /**
          * Get the cities from an specific region id. It's deprecated, use findByRegion
-         * 
+         *
          * @access public
          * @since unknown
          * @deprecated deprecated since 2.3
@@ -111,7 +111,7 @@
 
         /**
          * Get the cities from an specific region id
-         * 
+         *
          * @access public
          * @since 2.3
          * @param int $regionId Region id
@@ -135,12 +135,12 @@
 
         /**
          * Get the citiy by its name and region
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $query
          * @param int $regionId
-         * @return array 
+         * @return array
          */
         function findByName($cityName, $regionId = null)
         {
@@ -163,10 +163,10 @@
 
         /**
          * Get all the rows from the table t_city
-         * 
+         *
          * @access public
          * @since unknown
-         * @return array 
+         * @return array
          */
         function listAll()
         {

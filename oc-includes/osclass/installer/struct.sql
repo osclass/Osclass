@@ -14,8 +14,8 @@ CREATE TABLE /*TABLE_PREFIX*/t_locale (
     i_num_dec TINYINT(4) NULL DEFAULT 2,
     s_date_format VARCHAR(20) NOT NULL,
     s_stop_words TEXT NULL,
-    b_enabled TINYINT(1) NOT NULL DEFAULT 1, 
-    b_enabled_bo TINYINT(1) NOT NULL DEFAULT 1, 
+    b_enabled TINYINT(1) NOT NULL DEFAULT 1,
+    b_enabled_bo TINYINT(1) NOT NULL DEFAULT 1,
 
         PRIMARY KEY (pk_c_code),
         UNIQUE KEY (s_short_name)
@@ -48,7 +48,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_region (
         PRIMARY KEY (pk_i_id),
         INDEX (fk_c_country_code),
         INDEX idx_s_name (s_name),
-        FOREIGN KEY (fk_c_country_code) REFERENCES /*TABLE_PREFIX*/t_country (pk_c_code) 
+        FOREIGN KEY (fk_c_country_code) REFERENCES /*TABLE_PREFIX*/t_country (pk_c_code)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 
@@ -74,7 +74,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_city_area (
         PRIMARY KEY (pk_i_id),
         INDEX (fk_i_city_id),
         INDEX idx_s_name (s_name),
-        FOREIGN KEY (fk_i_city_id) REFERENCES /*TABLE_PREFIX*/t_city (pk_i_id) 
+        FOREIGN KEY (fk_i_city_id) REFERENCES /*TABLE_PREFIX*/t_city (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_widget (
@@ -118,7 +118,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     s_pass_date DATETIME NULL ,
     s_pass_ip VARCHAR(15) NULL,
     fk_c_country_code CHAR(2) NULL,
-    s_country VARCHAR(40) NULL, 
+    s_country VARCHAR(40) NULL,
     s_address VARCHAR(100) NULL,
     s_zip VARCHAR(15) NULL,
     fk_i_region_id INT(10) UNSIGNED NULL,
@@ -151,7 +151,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_user_description (
 
         PRIMARY KEY (fk_i_user_id, fk_c_locale_code),
         FOREIGN KEY (fk_i_user_id) REFERENCES /*TABLE_PREFIX*/t_user (pk_i_id),
-        FOREIGN KEY (fk_c_locale_code) REFERENCES /*TABLE_PREFIX*/t_locale (pk_c_code) 
+        FOREIGN KEY (fk_c_locale_code) REFERENCES /*TABLE_PREFIX*/t_locale (pk_c_code)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_user_email_tmp (
@@ -174,7 +174,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_category (
         PRIMARY KEY (pk_i_id),
         INDEX (fk_i_parent_id),
         INDEX (i_position),
-        FOREIGN KEY (fk_i_parent_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id) 
+        FOREIGN KEY (fk_i_parent_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_category_description (
@@ -186,7 +186,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_category_description (
 
         PRIMARY KEY (fk_i_category_id, fk_c_locale_code),
         FOREIGN KEY (fk_i_category_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id),
-        FOREIGN KEY (fk_c_locale_code) REFERENCES /*TABLE_PREFIX*/t_locale (pk_c_code) 
+        FOREIGN KEY (fk_c_locale_code) REFERENCES /*TABLE_PREFIX*/t_locale (pk_c_code)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_category_stats (
@@ -328,6 +328,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_pages (
     dt_pub_date DATETIME NOT NULL,
     dt_mod_date DATETIME NULL,
     i_order INT(3) NOT NULL DEFAULT 0,
+    s_meta TEXT NULL,
 
         PRIMARY KEY (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';

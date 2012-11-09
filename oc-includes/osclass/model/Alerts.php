@@ -27,7 +27,7 @@
     {
         /**
          *
-         * @var type 
+         * @var type
          */
         private static $instance ;
 
@@ -40,7 +40,7 @@
         }
 
         /**
-         * 
+         *
          */
         function __construct()
         {
@@ -64,13 +64,13 @@
         /**
          * Searches for user alerts, given an user id.
          * If user id not exist return empty array.
-         *  
+         *
          * @access public
          * @since unknown
          * @param string $userId
-         * @return array  
+         * @return array
          */
-        function findByUser($userId, $unsub = false) 
+        function findByUser($userId, $unsub = false)
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
@@ -80,17 +80,17 @@
             }
             $result = $this->dao->get() ;
 
-            if( $result == false ) { 
+            if( $result == false ) {
                 return false;
             } else {
                 return $result->result();
             }
         }
-        
+
         /**
          * Searches for user alerts, given an user id.
          * If user id not exist return empty array.
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $email
@@ -105,22 +105,22 @@
                 $this->dao->where('dt_unsub_date IS NULL');
             }
             $result = $this->dao->get() ;
-            
-            if( $result == false ) { 
+
+            if( $result == false ) {
                 return array();
             } else {
                 return $result->result();
             }
         }
-        
+
         /**
          * Searches for alerts, given a type.
          * If type don't match return empty array.
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $type
-         * @return array 
+         * @return array
          */
         function findByType($type, $active = false, $unsub = false)
         {
@@ -135,17 +135,17 @@
             }
             $result = $this->dao->get();
 
-            if( $result == false ) { 
+            if( $result == false ) {
                 return array();
             } else {
                 return $result->result();
             }
         }
-        
+
         /**
          * Searches for alerts, given a type group by s_search.
          * If type don't match return empty array.
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $type
@@ -165,14 +165,14 @@
             }
             $this->dao->groupBy('s_search');
             $result = $this->dao->get();
-            
-            if( $result == false ) { 
+
+            if( $result == false ) {
                 return false;
             } else {
                 return $result->result();
             }
         }
-        
+
         /**
          * Searches for alerts, given a type group and a s_search.
          * If type don't match return empty array.
@@ -182,7 +182,7 @@
          * @param string $search
          * @param string $type
          * @return array
-         * 
+         *
          * WARNIGN doble where!
          */
         function findBySearchAndType($search, $type, $unsub = false)
@@ -195,14 +195,14 @@
                 $this->dao->where('dt_unsub_date IS NULL');
             }
             $result = $this->dao->get();
-            
-            if( $result == false ) { 
+
+            if( $result == false ) {
                 return false;
             } else {
                 return $result->result();
             }
         }
-        
+
         // a.s_email, a.fk_i_user_id @TODO
         /**
          * Searches for users, given a type group and a s_search.
@@ -225,12 +225,12 @@
                 $this->dao->where('dt_unsub_date IS NULL');
             }
             if($active){
-                $this->dao->where('b_active', 1); 
+                $this->dao->where('b_active', 1);
             }
             $this->dao->groupBy('s_search');
             $result = $this->dao->get();
-            
-            if( $result == false ) { 
+
+            if( $result == false ) {
                 return array();
             } else {
                 return $result->result();
@@ -258,14 +258,14 @@
                 $this->dao->where('dt_unsub_date IS NULL');
             }
             $result = $this->dao->get();
-            
-            if( $result == false ) { 
+
+            if( $result == false ) {
                 return array();
             } else {
                 return $result->result();
             }
         }
-        
+
         /**
          * Searches for alerts, given a type group and an email
          * If type don't match return empty array.
@@ -287,14 +287,14 @@
             }
             $this->dao->where($conditions);
             $result = $this->dao->get();
-            
-            if( $result == false ) { 
+
+            if( $result == false ) {
                 return array();
             } else {
                 return $result->result();
             }
         }
-        
+
         /**
          * Create a new alert
          *
@@ -320,7 +320,7 @@
                 $this->dao->where('fk_i_user_id', $userid);
             }
             $results = $this->dao->get();
-            
+
             if($results->numRows() == 0) {
                 $this->dao->insert($this->getTableName(), array(
                     'fk_i_user_id' => $userid
@@ -333,7 +333,7 @@
             }
             return false;
         }
-        
+
         /**
          * Activate an alert
          *
@@ -346,7 +346,7 @@
         {
             return $this->dao->update($this->getTableName(), array('b_active' => 1), array('pk_i_id' => $id));
         }
-        
+
         /**
          * Dectivate an alert
          *
@@ -359,7 +359,7 @@
         {
             return $this->dao->update($this->getTableName(), array('b_active' => 0), array('pk_i_id' => $id));
         }
-        
+
         /**
          * Unsub from an alert
          *
@@ -372,8 +372,8 @@
         {
             return $this->dao->update($this->getTableName(), array('dt_unsub_date' => date("Y-m-d H:i:s")), array('pk_i_id' => $id));
         }
-        
-        
+
+
         /**
          * Search alerts
          *
@@ -385,7 +385,7 @@
          * @param string $order_by_type
          * @param string $search
          * @return array
-         */        
+         */
         public function search($start = 0, $end = 10, $order_column = 'dt_date', $order_direction = 'DESC', $name = '')
         {
             // SET data, so we always return a valid object
@@ -422,12 +422,12 @@
             }
 
             return $alerts ;
-            
+
         }
-        
-        
-        
-        
+
+
+
+
     }
 
     /* file end: ./oc-includes/osclass/model/Alerts.php */

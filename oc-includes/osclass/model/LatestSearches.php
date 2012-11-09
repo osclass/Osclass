@@ -27,7 +27,7 @@
     {
         /**
          *
-         * @var type 
+         * @var type
          */
         private static $instance ;
 
@@ -40,7 +40,7 @@
         }
 
         /**
-         * 
+         *
          */
         function __construct()
         {
@@ -52,10 +52,10 @@
             );
             $this->setFields($array_fields) ;
         }
-        
+
         /**
          * Get last searches, given a limit.
-         * 
+         *
          * @access public
          * @since unknown
          * @param int $limit
@@ -69,26 +69,26 @@
             $this->dao->orderBy('d_date', 'DESC') ;
             $this->dao->limit($limit) ;
             $result = $this->dao->get() ;
-            
-            if( $result == false ) { 
+
+            if( $result == false ) {
                 return false;
             } else {
                 return $result->result() ;
             }
         }
-        
+
         /**
          * Get last searches, given since time.
-         * 
+         *
          * @access public
          * @since unknown
          * @param int $time
          * @return array
          */
-        function getSearchesByDate($time = null) 
+        function getSearchesByDate($time = null)
         {
             if($time==null) { $time = time() - (7*24*3600); };
-            
+
             $this->dao->select('d_date, s_search, COUNT(s_search) as i_total') ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('d_date', date('Y-m-d H:i:s', $time)) ;
@@ -96,8 +96,8 @@
             $this->dao->orderBy('d_date', 'DESC') ;
             $this->dao->limit($limit) ;
             $result = $this->dao->get() ;
-            
-            if( $result == false ) { 
+
+            if( $result == false ) {
                 return false;
             } else {
                 return $result->result() ;
@@ -106,13 +106,13 @@
 
         /**
          * Purge all searches by date.
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $date
          * @return bool
          */
-        function purgeDate($date = null) 
+        function purgeDate($date = null)
         {
             if($date == null) {
                 return false ;
@@ -122,7 +122,7 @@
             $this->dao->where( 'd_date <= ' . $this->dao->escape($date) ) ;
             return $this->dao->delete() ;
         }
-        
+
         /**
          * Purge n last searches.
          *

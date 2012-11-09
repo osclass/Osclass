@@ -61,7 +61,7 @@
                 Session::newInstance()->_set('userEmail', $user['s_email']) ;
                 $phone = ($user['s_phone_mobile'])? $user['s_phone_mobile'] : $user['s_phone_land'];
                 Session::newInstance()->_set('userPhone', $phone) ;
-            
+
                 return true ;
             } else {
                 return false;
@@ -241,7 +241,7 @@
     function osc_user_access_date() {
         return (int) osc_user_field("dt_access_date");
     }
-    
+
     /**
      * Gets last access ip
      *
@@ -250,7 +250,7 @@
     function osc_user_access_ip() {
         return (int) osc_user_field("s_access_ip");
     }
-    
+
     /**
      * Gets website of current user
      *
@@ -404,7 +404,7 @@
     function osc_user_comments_validated() {
         return osc_user_field("i_comments");
     }
-    
+
     /**
      * Gets number of users
      *
@@ -422,7 +422,7 @@
                 return User::newInstance()->countUsers();
                 break;
         }
-    }    
+    }
     /////////////
     // ALERTS  //
     /////////////
@@ -531,10 +531,10 @@
     function osc_alert_search_object() {
         return osc_unserialize(base64_decode(osc_alert_field('s_search')));
     }
-    
+
     /**
      * Gets next user in users array
-     * 
+     *
      * @return <type>
      */
     function osc_prepare_user_info() {

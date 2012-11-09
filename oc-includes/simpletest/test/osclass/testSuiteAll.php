@@ -3,10 +3,12 @@ require_once(dirname(__FILE__).'/../../test_case.php');
 class AllTests extends TestSuite {
     function AllTests() {
         global $test_str;
+        global $php_sapi;
         $this->TestSuite('All tests');
         $tests = array();
 
         if(PHP_SAPI==='cli') {
+            $php_sapi = 'cli';
             foreach($_SERVER['argv'] as $k => $v) {
                 $tmp_arg = explode("=", $v);
                 $k = str_replace("--", "", $tmp_arg[0]);
@@ -27,6 +29,7 @@ class AllTests extends TestSuite {
                 }
             }
         } else {
+            $php_sapi = 'web';
             foreach($_REQUEST as $k => $v) {
                 if($k=='installer' || $k=='frontend' || $k=='admin') {
                     if($v=='' || $v==null) {

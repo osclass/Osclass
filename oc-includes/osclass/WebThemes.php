@@ -232,6 +232,23 @@
         {
             return !in_array($internal_name, $this->pages);
         }
+        
+        function getAvailableTemplates($theme = null)
+        {
+            if($theme==null) { $theme = $this->theme; };
+            
+            $templates = array();
+            $dir = opendir( $this->path . $theme . "/" );
+            while ($file = readdir($dir)) {
+                if (preg_match('/^template-[a-zA-Z0-9_\.]+$/', $file)) {
+                    $templates[] = $file;
+                }
+            }
+            closedir($dir);
+            return $templates;
+            
+        }
+        
     }
 
     /* file end: ./oc-includes/osclass/WebThemes.php */

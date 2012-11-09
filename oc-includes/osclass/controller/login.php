@@ -78,10 +78,10 @@
                                             osc_add_flash_error_message( _m('The password is incorrect')) ;
                                             $this->redirectTo(osc_user_login_url());
                                         }
-                                        
+
                                         $uActions = new UserActions(false);
                                         $logged = $uActions->bootstrap_login($user['pk_i_id']) ;
-                                        
+
                                         if($logged==0) {
                                             osc_add_flash_error_message(_m("The user doesn't exist")) ;
                                         } else if($logged==1) {
@@ -104,7 +104,7 @@
                                                 Cookie::newInstance()->push('oc_userId', $user['pk_i_id']) ;
                                                 Cookie::newInstance()->push('oc_userSecret', $secret) ;
                                                 Cookie::newInstance()->set() ;
-                                                
+
                                             }
 
                                             $this->redirectTo( $url_redirect ) ;

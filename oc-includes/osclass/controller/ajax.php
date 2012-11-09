@@ -236,7 +236,7 @@
             Session::newInstance()->_dropKeepForm();
             Session::newInstance()->_clearVariables();
         }
-        
+
         //hopefully generic...
         function doView($file)
         {

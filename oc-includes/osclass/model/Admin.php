@@ -22,7 +22,7 @@
 
     /**
      * Model database for Admin table
-     * 
+     *
      * @package OSClass
      * @subpackage Model
      * @since unknown
@@ -32,10 +32,10 @@
         /**
          * It references to self object: Admin.
          * It is used as a singleton
-         * 
+         *
          * @access private
          * @since unknown
-         * @var Admin 
+         * @var Admin
          */
         private static $instance ;
 
@@ -55,7 +55,7 @@
             parent::__construct();
             $this->setTableName('t_admin') ;
             $this->setPrimaryKey('pk_i_id') ;
-            
+
             $return = $this->dao->query('SHOW COLUMNS FROM ' . $this->getTableName() . ' where Field = "b_moderator" ');
 
             if( $return->numRows() > 0 ) {
@@ -68,13 +68,13 @@
         /**
          * Searches for admin information, given an email address.
          * If email not exist return false.
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $email
          * @return array
          */
-        function findByEmail($email) 
+        function findByEmail($email)
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
@@ -87,41 +87,41 @@
 
             return $result->row() ;
         }
-        
+
         /**
          * Searches for admin information, given a username.
          * If admin not exist return false.
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $username
          * @return array
          */
-        function findByUsername($username) 
+        function findByUsername($username)
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_username', $username) ;
             $result = $this->dao->get() ;
-            
+
             if( $result->numRows == 0 ) {
                 return false ;
             }
 
             return $result->row() ;
         }
-        
+
         /**
          * Searches for admin information, given a username and password
          * If credential don't match return false.
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $userName
          * @param string $password
-         * @return array 
+         * @return array
          */
-        function findByCredentials($userName, $password) 
+        function findByCredentials($userName, $password)
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
@@ -136,18 +136,18 @@
 
             return $result->row() ;
         }
-        
+
         /**
          * Searches for admin information, given a admin id and secret.
          * If credential don't match return false.
-         * 
+         *
          * @access public
          * @since unknown
          * @param integer $id
          * @param string $secret
          * @return array
          */
-        function findByIdSecret($id, $secret) 
+        function findByIdSecret($id, $secret)
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
@@ -162,18 +162,18 @@
 
             return $result->row() ;
         }
-        
+
         /**
          * Searches for admin information, given a admin id and password.
          * If credential don't match return false.
-         * 
+         *
          * @access public
          * @since unknown
          * @param integer $id
          * @param string $password
          * @return array
          */
-        function findByIdPassword($id, $password) 
+        function findByIdPassword($id, $password)
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
@@ -191,7 +191,7 @@
 
         /**
          * Perform a batch delete (for more than one admin ID)
-         * 
+         *
          * @access public
          * @since 2.3.4
          * @param array $id

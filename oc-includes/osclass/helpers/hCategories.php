@@ -62,7 +62,7 @@
         }
         return  View::newInstance()->_get('categories') ;
     }
-    
+
     /* #dev.conquer: review that. If the result of toTree had the same format as items or comments, it would be the same as osc_field */
     function osc_field_toTree($item, $field) {
         if(isset($item[$field])) {
@@ -132,7 +132,7 @@
         $category = View::newInstance()->_current('categories') ;
         if ( $category == '' ) return -1 ;
         if ( !isset($category['categories']) ) return 0 ;
-        if ( !is_array($category['categories']) ) return 0 ; 
+        if ( !is_array($category['categories']) ) return 0 ;
         if ( count($category['categories']) == 0 ) return 0;
         if ( !View::newInstance()->_exists('subcategories') ) {
             View::newInstance()->_exportVariableToView('subcategories', $category['categories']) ;
@@ -192,7 +192,7 @@
         if ($locale == "") $locale = osc_current_user_locale() ;
         return osc_category_field("pk_i_id", $locale) ;
     }
-    
+
     /**
      * Gets the slug of the current category. WARNING: This slug could NOT be used as a valid W3C HTML tag attribute as it could have other characters besides [A-Za-z0-9-_] We only did a urlencode to the variable
      *
@@ -217,16 +217,16 @@
 
     /**
      * Reset the pointer of the array to the first category
-     * 
+     *
      * @return void
      */
     function osc_goto_first_category() {
         View::newInstance()->_reset('categories') ;
     }
-    
+
     /**
      * Gets list of non-empty categories
-     * 
+     *
      * @return void
      */
     function osc_get_non_empty_categories() {
@@ -234,10 +234,10 @@
         View::newInstance()->_exportVariableToView('categories', $aCategories );
         return  View::newInstance()->_get('categories') ;
     }
-    
+
     /**
      * Prints category select
-     * 
+     *
      * @return void
      */
     function osc_categories_select($name = 'sCategory', $category = null, $default_str = null) {
@@ -247,7 +247,7 @@
 
     /**
      * Get th category by id or slug
-     * 
+     *
      * @since 3.0
      * @param $by two possibilities: slug or id
      * @param $what the id or slug category we're looking for

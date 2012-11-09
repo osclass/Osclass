@@ -20,10 +20,10 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    class CommentForm extends Form 
+    class CommentForm extends Form
     {
 
-        static public function primary_input_hidden($comment = null) 
+        static public function primary_input_hidden($comment = null)
         {
             $commentId = null;
             if( isset($comment['pk_i_id']) ) {
@@ -37,7 +37,7 @@
             }
         }
 
-        static public function title_input_text($comment = null) 
+        static public function title_input_text($comment = null)
         {
             $commentTitle = '';
             if( isset($comment['s_title']) ) {
@@ -49,7 +49,7 @@
             parent::generic_input_text("title", $commentTitle, null, false) ;
         }
 
-        static public function author_input_text($comment = null) 
+        static public function author_input_text($comment = null)
         {
             $commentAuthorName = '';
             if( isset($comment['s_author_name']) ) {
@@ -61,7 +61,7 @@
             parent::generic_input_text("authorName", $commentAuthorName, null, false) ;
         }
 
-        static public function email_input_text($comment = null) 
+        static public function email_input_text($comment = null)
         {
             $commentAuthorEmail = '';
             if( isset($comment['s_author_email']) ) {
@@ -73,7 +73,7 @@
             parent::generic_input_text("authorEmail", $commentAuthorEmail, null, false) ;
         }
 
-        static public function body_input_textarea($comment = null) 
+        static public function body_input_textarea($comment = null)
         {
             $commentBody = '';
             if( isset($comment['s_body']) ) {
@@ -126,10 +126,10 @@
         });
     });
 </script>
-<?php 
+<?php
         }
-        
-        
+
+
     }
 
 ?>

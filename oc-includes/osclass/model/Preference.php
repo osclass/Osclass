@@ -21,13 +21,13 @@
      */
 
     /**
-     * 
+     *
      */
     class Preference extends DAO
     {
         /**
          *
-         * @var type 
+         * @var type
          */
         private static $instance ;
         /**
@@ -45,7 +45,7 @@
         }
 
         /**
-         * 
+         *
          */
         function __construct()
         {
@@ -58,11 +58,11 @@
 
         /**
          * Find a value by its name
-         * 
+         *
          * @access public
          * @since unknown
          * @param type $name
-         * @return type 
+         * @return type
          */
         function findValueByName($name)
         {
@@ -89,9 +89,9 @@
          * @access public
          * @since unknown
          * @param string $name
-         * @return array 
+         * @return array
          */
-        public function findBySection($name) 
+        public function findBySection($name)
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
@@ -108,14 +108,14 @@
 
             return $result->result() ;
         }
-        
+
         /**
          * Modify the structure of table.
          *
          * @access public
          * @since unknown
          */
-        public function toArray() 
+        public function toArray()
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
@@ -139,21 +139,21 @@
 
         /**
          * Get value, given a preference name and a section name.
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $key
          * @param string $section
          * @return string
          */
-        public function get($key, $section = "osclass") 
+        public function get($key, $section = "osclass")
         {
             if ( !isset($this->pref[$section][$key]) ) {
                 return '' ;
             }
             return $this->pref[$section][$key] ;
         }
-        
+
         /**
          * Set preference value, given a preference name and a section name.
          *
@@ -161,13 +161,13 @@
          * @since unknown
          * @param string $key
          * @param string$value
-         * @param string $section 
+         * @param string $section
          */
-        public function set($key, $value, $section = "osclass") 
+        public function set($key, $value, $section = "osclass")
         {
             $this->pref[$section][$key] = $value ;
         }
-        
+
         /**
          * Replace preference value, given preference name, preference section and type value.
          *
@@ -176,10 +176,10 @@
          * @param string $key
          * @param string $value
          * @param string $section
-         * @param string $type 
+         * @param string $type
          * @return boolean
          */
-        public function replace($key, $value, $section = 'osclass', $type = 'STRING') 
+        public function replace($key, $value, $section = 'osclass', $type = 'STRING')
         {
             $array_replace = array(
                 's_name'    => $key,

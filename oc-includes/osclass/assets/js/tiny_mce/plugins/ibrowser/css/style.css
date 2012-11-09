@@ -1,0 +1,657 @@
+/* ================================================
+// PHP image browser - iBrowser 
+// ================================================
+// iBrowser - style definitions
+// ================================================
+// Developed: net4visions.com
+// Copyright: net4visions.com
+// License: GPL - see license.txt
+// (c)2005 All rights reserved.
+// ================================================
+// Revision: 1.0                   Date: 12/10/2005
+// ================================================*/
+
+body {
+   margin: 5px;
+   padding: 0px;
+   color: #333333;
+	background-color: #efefef;
+	scrollbar-3dlight-color:#f5f5f5;
+	scrollbar-arrow-color:#666666;
+	scrollbar-base-color:#F0F0EE;
+	scrollbar-darkshadow-color:#DDDDDD;
+	scrollbar-face-color:#E0E0DD;
+	scrollbar-highlight-color:#F0F0EE;
+	scrollbar-shadow-color:#F0F0EE;
+	scrollbar-track-color:#F5F5F5;
+}
+/* ---------------------------------------------------------------
+- font settings
+*/
+body, form, table {
+	font-size:10px;	
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-weight: normal;	
+}
+body {
+	color: #000000;
+	background-color: #efefef;
+	filter:progid:dximagetransform.microsoft.gradient(gradienttype=0,startcolorstr=#D7D7D7,endcolorstr=#FCFBFF);	
+}
+body p {
+	line-height: 18px;
+	margin-top: 0px;
+}
+/* ---------------------------------------------------------------
+- links
+*/
+a:link, a:visited, a:active {
+	color: #666666;
+	background-color: transparent;
+}
+a:hover {
+	color: #000000;
+	background-color: transparent;
+	text-decoration: none;
+}
+/* ---------------------------------------------------------------
+- page layout
+*/
+/* outer div */
+#outerDivWrap {   	
+	width: 640px;
+}
+/* main- and sub content */
+#mainDivWrap {
+	margin-left: 110px;
+}
+/* menu- and main div */
+#menuDiv, #mainDiv { /* Firefox */
+	min-height: 320px;	
+}
+*html #menuDiv, *html #mainDiv { /* IE */
+	height: 320px;
+}
+/* footer div */
+#ftDivWrap {	
+	margin-left: 110px;	
+	margin-top: 10px;
+	padding: 10px;
+}
+#ftDiv {
+	text-align: center;
+}
+/* menu wrap */
+#menuDivWrap {	
+	width: 100px;	
+	position: absolute;
+	z-index:1;
+}
+/* border and padding */
+div.brdPad {
+	padding: 10px;
+	border: 1px solid #003399;	
+}
+/* headers */
+#outerDivWrap .headerDiv {
+	background-image:url(../images/buttonbar.gif);
+	background-repeat:repeat-x;
+	color: #003399;
+	background-color: #96b3de; 
+}
+#menuDivWrap .headerDiv, #mainDivWrap .headerDiv, #dialog .headerDiv {
+	background-image:url(../images/buttonbar_gs.gif);
+	background-repeat:repeat-x;
+	color: #003399;
+	background-color: #ff9900;		
+}
+div.headerDiv {	
+	padding-left: 10px;
+	padding-right: 10px;
+	border: 1px solid #003399;
+	border-bottom: none;
+	line-height: 22px;	
+	font-weight: bold;
+	vertical-align: middle;	
+}
+/* columns */
+div.colLeft {		
+	float: left;
+	width: 300px;	
+	margin-right: 10px;	
+}
+div.colRight {	
+	margin-left: 310px;
+	width: 176px;	
+}
+* html div.colLeft {
+	margin-right: 7px;
+}
+* html div.colRight {
+	margin-left: 307px;
+}
+/* float wrap */
+div.floatWrap {
+	display: inline-block;
+	margin-bottom: 10px;	
+}
+/* IE Win only Hack \*/
+* html div.floatWrap {
+	height: 1%;
+}
+div.floatWrap {
+	display: block;
+}
+/* end IE Hack */
+div.floatWrap:after {
+	content: ".";
+	display: block;
+	height: 0px;
+	clear: both;
+	visibility: hidden;	
+}
+/* ---------------------------------------------------------------
+- main menu buttons
+*/
+#menuBarDiv {
+	color:#000000;	
+	background-color:transparent;
+	border-top:1px solid threedshadow;
+	border-bottom:1px solid threedhighlight;
+	border-left:1px solid threedshadow;
+	border-right:1px solid threedhighlight;	
+}
+#menuBarDiv ul {
+	list-style-type:none;
+	margin: 0px;
+	padding: 0px;	
+}
+#menuBarDiv li {	
+	text-align: center;
+	height: 75px;
+	cursor: pointer;	
+}
+#menuBarDiv li img {
+	margin-top: 10px;	
+}
+#menuBarDiv li div {
+	margin-bottom: 0px;	
+}
+/* ---------------------------------------------------------------
+- menu buttons
+*/
+li.btnUp {	
+	border: 1px solid threedface;
+	/* background-color: threedface; */
+	background-color: #efefef;
+	filter:progid:dximagetransform.microsoft.gradient(gradienttype=0,startcolorstr=#FCFBFF,endcolorstr=#D7D7D7);	
+}
+li.btnDown {	
+	border-top: 1px solid buttonshadow;
+	border-left: 1px solid buttonshadow;
+	border-bottom: 1px solid buttonhighlight;
+	border-right: 1px solid buttonhighlight;
+	background-color: #efefef;	
+	filter:progid:dximagetransform.microsoft.gradient(gradienttype=0,startcolorstr=#D7D7D7,endcolorstr=#FCFBFF);	
+}
+li.btnOver {	
+	border-bottom: 1px solid buttonshadow;
+	border-right: 1px solid buttonshadow;
+	border-top: 1px solid buttonhighlight;
+	border-left: 1px solid buttonhighlight;
+	background-color: threedface;	
+	filter:progid:dximagetransform.microsoft.gradient(gradienttype=0,startcolorstr=#D7D7D7,endcolorstr=#FCFBFF);	
+}
+/* ---------------------------------------------------------------
+- form settings
+*/
+form, fieldset, label, input, select {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: normal;
+}
+fieldset {
+	border: none;
+	padding: 0px;
+	margin: 0px;
+}
+div.rowDiv {
+	clear: left;
+	float: none;		
+}
+div.rowDiv label, div.rowDiv input, div.rowDiv select, span.frmText {
+	display: block;
+	float: left;
+	margin-bottom: 2px;
+}
+div.rowDiv label {
+	width: 100px;
+	margin-right: 5px;
+	padding-top: 3px;
+	padding-bottom: 3px;	
+}
+div.rowDiv label span.title {
+	color: #666666;
+	background-color:transparent;
+	font-weight: bold;
+}
+div.rowDiv input, div.rowDiv select {
+	border: 1px solid #cccccc;
+	color: #333333;
+	background-color: #ffffff;
+}
+div.rowDiv input {
+	height: 14px;
+}
+* html div.rowDiv input {	
+	height: 19px;		
+}
+div.rowDiv input.chkBox {
+	border: none;
+	background-color: transparent;
+}
+* html div.rowDiv input.chkBox {
+	margin-left: -3px;
+}
+div.rowDiv input.readonly {
+	color: #666666;
+	background-color: #efefef;	
+	border: 1px solid #cccccc;	
+}
+div.rowDiv input[type="file"] { /* firefox */
+	background-color: #efefef;
+	height: auto;
+}
+div.rowDiv span.frmText {
+	margin-left: 5px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+div.rowDiv input.fldlg, div.rowDiv select.fldlg {
+	width: 355px;
+}
+* html div.rowDiv input.fldlg, * html div.rowDiv select.fldlg {
+	width: 357px;
+}
+div.rowDiv input.fldmlg {
+	width: 334px;
+}
+*html div.rowDiv input.fldmlg {
+	width: 336px;
+}
+div.rowDiv input.fldm, div.rowDiv select.fldm {
+	width: 98px;
+}
+*html div.rowDiv input.fldm, *html div.rowDiv select.fldm {
+	width: 100px;
+}
+div.rowDiv input.fldsm, div.rowDiv select.fldsm {
+	width: 58px;
+}
+* html div.rowDiv input.fldsm, * html div.rowDiv select.fldsm {
+	width: 60px;
+}
+/* save/cancel buttons */
+input.btn {	
+	width: 70px;
+	color: #666666;
+	border: 1px solid #cccccc;	
+	cursor: pointer;	
+	padding-top: 1px;
+	padding-bottom: 1px;	
+	filter:progid:dximagetransform.microsoft.gradient(gradienttype=0,startcolorstr=#D7D7D7,endcolorstr=#FCFBFF);
+	margin-left: 0px;	
+}
+/* ---------------------------------------------------------------
+- preview frames
+*/
+#inPrevDiv, #atPrevDiv {
+	width: 150px;
+	height: 150px;	
+	margin: 0px;
+	border: 1px solid #cccccc;	
+	color: #333333;
+	background-color: #ffffff;
+	overflow: hidden;	
+}
+/* attributes preview */
+#atPrevDiv {
+	line-height: normal;	
+}
+#atPrevDiv p {
+	padding: 5px;
+	margin: 0px;
+	font-size: 8px;	
+	line-height: normal;
+}
+* html #inPrevDiv, * html #atPrevDiv {
+	float: left;
+}
+/* ---------------------------------------------------------------
+- image selection
+*/
+#inSelDiv {
+	width: 274px;
+	height: 150px;	
+	margin: 0px;
+	border: 1px solid #cccccc;
+	float: left;	
+}
+/* ---------------------------------------------------------------
+- image list (frame)
+*/
+div#iselDiv { /* IE, Firefox */
+	color: #000000;	
+	background-color: #ffffff;	
+	margin: 0px;
+	height: 150px;
+	width: 274px;
+	overflow: auto;	
+}
+* html div#iselDiv {
+	margin-left: -1px;
+}
+div#iselDiv ul {
+	white-space: nowrap;
+	line-height: 12px;
+	list-style: none;
+	cursor: pointer;
+	margin: 0px;
+	padding: 0px;
+	margin-top: 2px;	
+	margin-bottom: 2px;
+}
+li.cimgover {
+	color: #000000;
+	background-color: #e4e4e4;
+}
+li.cimgout {
+	color: #000000;
+	background-color: #ffffff;
+}
+li.cimgdown {
+	color: #000000;
+	background-color: #e4e4e4;
+}
+li.cimgup {
+	color: #000000;
+	background-color: #ffffff;
+}
+/* ---------------------------------------------------------------
+- select image formats
+*/
+#fmtDiv {	
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-right: 0px;	
+	width: 357px;
+	height: auto;	
+	clear: none;
+	float: left;
+}
+#fmtDiv div {
+	float:left;
+	clear: none;
+	margin-right: 10px;
+	margin-bottom: 5px;
+	white-space: nowrap;	
+	width: 90px;
+	display: block;	
+	overflow: hidden;	
+}
+#fmtDiv input.chkBox {	
+	margin-left: 0px;	
+}
+* html #fmtDiv input.chkBox {
+	margin-left: -3px;
+}
+#fmtDiv img {
+	cursor: pointer;
+	margin-left: 5px; 
+}
+#fileDiv {
+	margin-top: 10px;
+}
+/* ---------------------------------------------------------------
+- load message
+*/
+#dialogLoadMessage {
+	position:absolute; 
+	z-index:1000; 
+	display:block;
+	width:100%; 
+	height:100%;
+}
+#loadMessage {
+	background-color:#96b3de; 
+	border:1px solid #003399; 
+	padding: 10px; 
+	width: 150px; 
+	color:#ffffff; 
+	font-family: verdana,arial,helvetica,sans-serif; 
+	font-size:12px; 
+	font-weight:bold
+}
+/* ---------------------------------------------------------------
+- info div
+*/
+#infoDiv {	
+	position: absolute;	
+	width:140px;	
+	z-index:1;		
+	left: 0px;
+	top: 0px;
+	border: 1px solid #cccccc;
+	color: #000000;
+	background-color: #f1f1f1;
+	padding: 5px;
+	font-size: 9px;	
+	filter:alpha(opacity=90); 
+	-moz-opacity:0.9;
+}
+* html div#infoDiv {
+	width: 150px;
+}
+#infoDiv div {	
+	clear: both;
+	margin-bottom: 2px;	
+}
+#infoDiv label  {
+	width: 55px;
+	display: block;	
+	float: left;
+	overflow: hidden;	
+	padding: 0px;	
+}
+#infoDiv span {
+	width: 75px;
+	display: block;	
+	text-align: right;	
+	overflow: hidden;	
+}
+/* ---------------------------------------------------------------
+- popupWrap
+*/
+div#poDelDiv {
+	clear: left;
+}
+div.poPrevDiv {
+	background-color: #ffffff;
+	border: 1px solid #cccccc;	
+	width: 80px;
+	height: 60px;
+	float: right;	
+	overflow: hidden;
+	margin-bottom: 2px;	
+}
+/* ---------------------------------------------------------------
+- version info
+*/
+span.ver {
+	font-size: 9px;
+	color: #adadad;
+	background-color: transparent;
+}
+/* ---------------------------------------------------------------
+- show/hide 
+*/
+.showit {
+	display: inline-block;
+}
+.hideit {
+	display: none;
+}
+/* ---------------------------------------------------------------
+- padding
+*/
+.pad5 {
+	padding-left: 5px;
+}
+.pad10 {
+	padding-left: 10px;
+}
+.pad20 {
+	padding-left: 20px;
+}
+.pad30 {
+	padding-left: 30px;
+}
+/* ---------------------------------------------------------------
+- margin
+*/
+.mtop5 {
+	margin-top: 5px;
+}
+.mtop10 {
+	margin-top: 10px;
+}
+.mtop15 {
+	margin-top: 15px;
+}
+.mbottom5 {
+	margin-bottom: 5px;
+}
+/* ---------------------------------------------------------------
+- clear floats
+*/
+.clrFloat {
+	clear: both;	
+	visibility: hidden;	
+}
+.clrFloatRight {
+	clear: right;
+	visibility: hidden;
+}
+/* ---------------------------------------------------------------
+- image buttons
+*/
+div.btnRight {	
+	float: right;	
+}
+div.btnRight img {
+	cursor: pointer;
+	margin-left: 5px;
+	margin-top: 1px;		
+}
+/* - help button - */
+div.btnRight img.hlpBtn {
+	cursor: help;
+	margin-left: 8px;	
+}
+div.btnRight span img {
+	margin-bottom: 5px;	
+}
+/* ---------------------------------------------------------------
+- image orientation
+*/
+img.left {
+	float: left;
+	margin-bottom: 5px;
+	margin-right: 5px;
+}
+img.right {
+	float: right;
+	margin-bottom: 5px;
+	margin-left: 5px;
+}
+/* --------------------------------------------------------------- 
+- symbols (special characters
+*/
+.charmap, .charmapOver {
+	color: #000000;
+	border: 1px solid #cccccc;	
+	cursor: pointer;
+	text-align: center;
+	vertical-align: middle;	
+}
+.charmapOver {
+	border: 1px solid #ff9900;	
+	background-color: #efefef;
+}
+a.charmap {
+	color: #000000;
+	text-decoration: none
+}
+/* - character preview - */
+td.charPrev {
+	 font-size: 25px;
+	 height: 60px;
+	 background-color: #ffffff;
+	 border: 1px solid #cccccc;
+	 text-align: center;
+	 vertical-align: middle;
+}
+/* --------------------------------------------------------------- 
+- hilight color
+*/
+.hilight {
+	color: #FF9933;
+}
+/* --------------------------------------------------------------- 
+- image caption
+*/
+span.capDivRightBrd {
+	float: right;
+	border: 1px solid #cccccc;
+	background-color: #f0f0ee;
+	padding: 5px;	
+	height: auto;
+	margin-left: 10px;
+	margin-bottom: 5px;
+}
+span.capDivRight {
+	float: right;
+	padding: 5px;	
+	height: auto;
+	margin-left: 10px;
+	margin-bottom: 5px;
+}
+span.capDivLeftBrd {
+	float: left;
+	border: 1px solid #cccccc;
+	background-color: #f0f0ee;
+	padding: 5px;	
+	height: auto;
+	margin-right: 10px;
+	margin-bottom: 5px;
+}
+span.capDivLeft {
+	float: left;
+	padding: 5px;	
+	height: auto;
+	margin-right: 10px;
+	margin-bottom: 5px;
+}
+span.caption {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-align: center;	
+	line-height: 12px;	
+	color: #666666;
+	background-color: transparent;
+	margin: 0px;
+	margin-top: 5px;	
+	padding: 0px;
+	display: block;	
+}
+/* EOF STYLES */

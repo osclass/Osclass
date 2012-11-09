@@ -19,7 +19,8 @@ class MyReporter extends SimpleReporter {
     function __construct($character_set = 'ISO-8859-1') {
         parent::__construct();
         $this->character_set = $character_set;
-        if(PHP_SAPI==='cli') {
+        global $php_sapi;
+        if($php_sapi==='cli') {
             $this->fails = "";
         } else {
             $this->fails  = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">";
@@ -41,7 +42,8 @@ class MyReporter extends SimpleReporter {
      *    @access public
      */
     function paintHeader($test_name) {
-        if(PHP_SAPI==='cli') {
+        global $php_sapi;
+        if($php_sapi==='cli') {
             print "** START TEST ** ".$test_name. " ** START TEST **".PHP_EOL;
             flush();
         } else {
@@ -95,9 +97,9 @@ class MyReporter extends SimpleReporter {
     function paintFooter($test_name) {
         
         // add end </html>
-        global $test_str;
-        
-        if(PHP_SAPI==='cli') {
+        global $test_str;        
+        global $php_sapi;
+        if($php_sapi==='cli') {
             print " * * *  REPORTER  * * * ".PHP_EOL;
             print "[".$test_name."] ".$this->getTestCaseProgress() . "/" . $this->getTestCaseCount().PHP_EOL;
             print "\033[1;32m".$this->getPassCount()." ~~ PASSES\033[0m".PHP_EOL;
@@ -165,7 +167,8 @@ class MyReporter extends SimpleReporter {
         $fail .= " -&gt; " . $this->htmlEntities($message);
         $fail .= "<br />\n";
         $this->fails .= $fail;
-        if(PHP_SAPI==='cli') {
+        global $php_sapi;
+        if($php_sapi==='cli') {
             array_shift($breadcrumb);
             $failcli = implode(" > ", $breadcrumb);
             $failcli .= " > " . $this->htmlEntities($message);
@@ -178,7 +181,8 @@ class MyReporter extends SimpleReporter {
 
     function  paintPass($message) {
         parent::paintPass($message);
-        if(PHP_SAPI==='cli') {
+        global $php_sapi;
+        if($php_sapi==='cli') {
             print "\033[1;32m~~ PASS ~~ \033[0m".$this->htmlEntities($message).PHP_EOL;
             flush();
         } else {
@@ -191,7 +195,8 @@ class MyReporter extends SimpleReporter {
 
     function  paintCaseStart($test_name) {
         parent::paintCaseStart($test_name);
-        if(PHP_SAPI==='cli') {
+        global $php_sapi;
+        if($php_sapi==='cli') {
             print " * * [$test_name] * * ".PHP_EOL;
         } else {
             print "<h2>$test_name</h2>";
@@ -201,7 +206,8 @@ class MyReporter extends SimpleReporter {
 
     function  paintMethodStart($test_name) {
         parent::paintMethodStart($test_name);
-        if(PHP_SAPI==='cli') {
+        global $php_sapi;
+        if($php_sapi==='cli') {
             print " * $test_name * ".PHP_EOL;
         } else {
             print "<h4>$test_name</h4>";
@@ -215,7 +221,8 @@ class MyReporter extends SimpleReporter {
      */
     function paintError($message) {
         parent::paintError($message);
-        if(PHP_SAPI==='cli') {
+        global $php_sapi;
+        if($php_sapi==='cli') {
             $breadcrumb = $this->getTestList();
             array_shift($breadcrumb);
             print "\033[1;33m%% EXCEPTION %%\033[0m ".implode(" > ", $breadcrumb)." > ".$this->htmlEntities($message).PHP_EOL;
@@ -235,7 +242,8 @@ class MyReporter extends SimpleReporter {
      */
     function paintException($exception) {
         parent::paintException($exception);
-        if(PHP_SAPI==='cli') {
+        global $php_sapi;
+        if($php_sapi==='cli') {
             $breadcrumb = $this->getTestList();
             array_shift($breadcrumb);
             $message = 'Unexpected exception of type [' . get_class($exception) .
@@ -263,7 +271,8 @@ class MyReporter extends SimpleReporter {
      */
     function paintSkip($message) {
         parent::paintSkip($message);
-        if(PHP_SAPI==='cli') {
+        global $php_sapi;
+        if($php_sapi==='cli') {
             $breadcrumb = $this->getTestList();
             array_shift($breadcrumb);
             print "\033[1;35m%% SKKIPED %%\033[0m ".implode(" > ", $breadcrumb)." > ".$this->htmlEntities($message).PHP_EOL;

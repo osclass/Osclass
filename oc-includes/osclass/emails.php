@@ -64,7 +64,7 @@
 
         $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_hourly_title', $page_description[$prefLocale]['s_title']));
         $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_hourly_description', $page_description[$prefLocale]['s_text']));
-        
+
         if( $user['fk_i_user_id'] != 0 ) {
             $user = User::newInstance()->findByPrimaryKey($user['fk_i_user_id']);
         } else {
@@ -110,7 +110,7 @@
 
         $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_daily_title', $page_description[$prefLocale]['s_title']));
         $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_daily_description', $page_description[$prefLocale]['s_text']));
-        
+
         if( $user['fk_i_user_id'] != 0 ) {
             $user = User::newInstance()->findByPrimaryKey($user['fk_i_user_id']);
         } else {
@@ -346,7 +346,7 @@
         osc_sendMail($emailParams);
     }
     osc_add_hook('hook_email_new_item_non_register_user', 'fn_email_new_item_non_register_user');
-    
+
     function fn_email_user_forgot_password($user, $password_url) {
         $aPage = Page::newInstance()->findByInternalName('email_user_forgot_password');
         $locale = osc_current_user_locale() ;
@@ -580,7 +580,8 @@
         $yourEmail  = $aItem['yourEmail'] ;
         $yourName   = $aItem['yourName'] ;
         $phoneNumber= $aItem['phoneNumber'] ;
-        $message    = $aItem['message'] ;
+        // contact - strip_tags + nl2br
+        $message    = nl2br( strip_tags( $aItem['message'] ) );
 
         $path = null ;
         $item = Item::newInstance()->findByPrimaryKey( $id ) ;
@@ -648,7 +649,6 @@
             $attachment   = Params::getFiles('attachment');
             $resourceName = $attachment['name'] ;
             $tmpName      = $attachment['tmp_name'] ;
-            $resourceType = $attachment['type'] ;
             $path         = osc_content_path() . 'uploads/' . time() . '_' . $resourceName ;
 
             if( !is_writable(osc_content_path() . 'uploads/') ) {
@@ -669,25 +669,24 @@
         @unlink($path) ;
     }
     osc_add_hook('hook_email_item_inquiry', 'fn_email_item_inquiry');
-    
+
     function fn_email_new_comment_admin($aItem) {
         $authorName  = trim($aItem['authorName']);
         $authorName  = strip_tags($authorName);
         $authorEmail = trim($aItem['authorEmail']);
         $authorEmail = strip_tags($authorEmail);
         $body        = trim($aItem['body']);
-        $body        = strip_tags($body);
+        // only \n -> <br/>
+        $body        = nl2br(strip_tags($body));
         $title       = $aItem['title'] ;
         $itemId      = $aItem['id'] ;
-        $userId      = $aItem['userId'] ;
         $admin_email = osc_contact_email() ;
-        $prefLocale  = osc_language() ;
 
         $item = Item::newInstance()->findByPrimaryKey($itemId) ;
         View::newInstance()->_exportVariableToView('item', $item);
         $itemURL = osc_item_url() ;
         $itemURL = '<a href="'.$itemURL.'" >'.$itemURL.'</a>';
-        
+
         $mPages = new Page() ;
         $aPage = $mPages->findByInternalName('email_new_comment_admin') ;
         $locale = osc_current_user_locale() ;
@@ -722,9 +721,6 @@
         );
         $title_email = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_comment_admin_title', $content['s_title'])), $words);
         $body_email = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_comment_admin_description', $content['s_text'])), $words);
-
-        $from = osc_contact_email() ;
-        $from_name = osc_page_title() ;
 
         $emailParams = array(
             'subject'   => $title_email,
@@ -828,8 +824,6 @@
     function fn_email_admin_new_item($item) {
         View::newInstance()->_exportVariableToView('item', $item);
         $title  = osc_item_title();
-        $contactEmail   = $item['s_contact_email'];
-        $contactName    = $item['s_contact_name'];
         $mPages = new Page();
         $locale = osc_current_user_locale();
         $aPage = $mPages->findByInternalName('email_admin_new_item') ;
@@ -1108,12 +1102,11 @@
         $authorEmail = trim($aItem['authorEmail']);
         $authorEmail = strip_tags($authorEmail);
         $body        = trim($aItem['body']);
-        $body        = strip_tags($body);
+        // only \n -> <br/>
+        $body        = nl2br(strip_tags($body));
         $title       = $aItem['title'] ;
         $itemId      = $aItem['id'] ;
-        $userId      = $aItem['userId'] ;
         $admin_email = osc_contact_email() ;
-        $prefLocale  = osc_language() ;
 
         $item = Item::newInstance()->findByPrimaryKey($itemId) ;
         View::newInstance()->_exportVariableToView('item', $item);
