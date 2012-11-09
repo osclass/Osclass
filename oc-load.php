@@ -109,6 +109,11 @@ require_once LIB_PATH . 'osclass/core/WebSecBaseModel.php';
 require_once LIB_PATH . 'osclass/core/AdminSecBaseModel.php';
 require_once LIB_PATH . 'osclass/core/Translation.php';
 
+require_once LIB_PATH . 'osclass/helpers/hSphinxSEInfo.php';
+require_once LIB_PATH . 'osclass/classes/database/DAOSphinx.php';
+require_once LIB_PATH . 'osclass/classes/database/DBCommandClassSphinx.php';
+require_once LIB_PATH . 'osclass/classes/database/DBConnectionClassSphinx.php';
+
 require_once LIB_PATH . 'osclass/Themes.php';
 require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/WebThemes.php';
@@ -143,7 +148,10 @@ require_once LIB_PATH . 'osclass/model/User.php';
 require_once LIB_PATH . 'osclass/model/UserEmailTmp.php';
 require_once LIB_PATH . 'osclass/model/ItemLocation.php';
 require_once LIB_PATH . 'osclass/model/Widget.php';
-require_once LIB_PATH . 'osclass/model/Search.php';
+
+require_once LIB_PATH . 'osclass/model/SphinxSearch.php';
+//require_once LIB_PATH . 'osclass/model/Search.php';
+
 require_once LIB_PATH . 'osclass/model/LatestSearches.php';
 require_once LIB_PATH . 'osclass/model/Field.php';
 require_once LIB_PATH . 'osclass/model/Log.php';
