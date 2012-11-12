@@ -135,28 +135,42 @@
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
                                             case('delete_country'): // delete country
-                                                                    $countryId = Params::getParam('id');
+                                                                    $countryIds = Params::getParam('id');
 
-                                                                    Item::newInstance()->deleteByRegion($countryId);
-                                                                    $mRegions = new Region();
-                                                                    $mCities = new City();
+                                                                    if(is_array($countryIds)) {
+                                                                        $ok_delete = true;
+                                                                        $locations = 0;
+                                                                        foreach($countryIds as $countryId) {
+                                                                            Item::newInstance()->deleteByRegion($countryId);
+                                                                            $mRegions = new Region();
+                                                                            $mCities = new City();
 
-                                                                    $aCountries = $mCountries->findByCode($countryId);
-                                                                    $aRegions = $mRegions->findByCountry($aCountries['pk_c_code']);
-                                                                    foreach($aRegions as $region) {
-                                                                        // remove city_stats
-                                                                        CityStats::newInstance()->deleteByRegion($region['pk_i_id']) ;
-                                                                        // remove region_stats
-                                                                        RegionStats::newInstance()->delete( array('fk_i_region_id' => $region['pk_i_id']) ) ;
-                                                                    }
-                                                                    //remove country stats
-                                                                    CountryStats::newInstance()->delete( array('fk_c_country_code' => $aCountries['pk_c_code'] ) ) ;
-                                                                    $ok = $mCountries->deleteByPrimaryKey($aCountries['pk_c_code']);
-
-                                                                    if($ok) {
-                                                                        osc_add_flash_ok_message(sprintf(_m('%s has been deleted'), $aCountries['s_name']), 'admin');
+                                                                            $aCountries = $mCountries->findByCode($countryId);
+                                                                            if($aCountries) {
+                                                                                $aRegions = $mRegions->findByCountry($aCountries['pk_c_code']);
+                                                                                foreach($aRegions as $region) {
+                                                                                    // remove city_stats
+                                                                                    CityStats::newInstance()->deleteByRegion($region['pk_i_id']) ;
+                                                                                    // remove region_stats
+                                                                                    RegionStats::newInstance()->delete( array('fk_i_region_id' => $region['pk_i_id']) ) ;
+                                                                                }
+                                                                                //remove country stats
+                                                                                CountryStats::newInstance()->delete( array('fk_c_country_code' => $aCountries['pk_c_code'] ) ) ;
+                                                                                $ok = $mCountries->deleteByPrimaryKey($aCountries['pk_c_code']);
+                                                                                if($ok) {
+                                                                                    $locations++;
+                                                                                } else {
+                                                                                    $ok_delete = false;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        if($ok_delete) {
+                                                                            osc_add_flash_ok_message(sprintf(_n('%s has been deleted', '%s locations have been deleted', $locations), $aCountries['s_name'], $locations), 'admin');
+                                                                        } else {
+                                                                            osc_add_flash_error_message(_m('There was a problem deleting locations'), 'admin');
+                                                                        }
                                                                     } else {
-                                                                        osc_add_flash_error_message(sprintf(_m('There was a problem deleting %s'), $aCountries['s_name']), 'admin');
+                                                                        osc_add_flash_error_message(_m('No country was selected'), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
@@ -234,21 +248,37 @@
                                                                     $mRegion  = new Region();
                                                                     $mCities  = new City();
 
-                                                                    $regionId = Params::getParam('id');
+                                                                    $regionIds = Params::getParam('id');
 
-                                                                    if($regionId != '') {
-                                                                        Item::newInstance()->deleteByRegion($regionId);
-                                                                        $aRegion = $mRegion->findByPrimaryKey($regionId);
-                                                                        $country = Country::newInstance()->findByCode($aRegion['fk_c_country_code']);
+                                                                    if(is_array($regionIds)) {
+                                                                        $ok_delete = true;
+                                                                        $locations = 0;
+                                                                        foreach($regionIds as $regionId) {
+                                                                            if($regionId != '') {
+                                                                                Item::newInstance()->deleteByRegion($regionId);
+                                                                                $aRegion = $mRegion->findByPrimaryKey($regionId);
+                                                                                $country = Country::newInstance()->findByCode($aRegion['fk_c_country_code']);
 
-                                                                        // remove city_stats
-                                                                        CityStats::newInstance()->deleteByRegion($regionId) ;
-                                                                        $mCities->delete(array('fk_i_region_id' => $regionId));
-                                                                        // remove region_stats
-                                                                        RegionStats::newInstance()->delete( array('fk_i_region_id' => $regionId) ) ;
-                                                                        $mRegion->delete(array('pk_i_id' => $regionId));
-
-                                                                        osc_add_flash_ok_message(sprintf(_m('%s has been deleted'), $aRegion['s_name']), 'admin');
+                                                                                // remove city_stats
+                                                                                CityStats::newInstance()->deleteByRegion($regionId) ;
+                                                                                $mCities->delete(array('fk_i_region_id' => $regionId));
+                                                                                // remove region_stats
+                                                                                RegionStats::newInstance()->delete( array('fk_i_region_id' => $regionId) ) ;
+                                                                                $ok = $mRegion->delete(array('pk_i_id' => $regionId));
+                                                                                if($ok) {
+                                                                                    $locations++;
+                                                                                } else {
+                                                                                    $ok_delete = false;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        if($ok_delete) {
+                                                                            osc_add_flash_ok_message(sprintf(_n('%s has been deleted', '%s locations have been deleted', $locations), $aRegion['s_name'], $locations), 'admin');
+                                                                        } else {
+                                                                            osc_add_flash_error_message(_m('There was a problem deleting locations'), 'admin');
+                                                                        }
+                                                                    } else {
+                                                                        osc_add_flash_error_message(_m('No region was selected'), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']);
                                             break;
@@ -328,16 +358,32 @@
                                             case('delete_city'):    // delete city
                                                                     $mRegion = new Region();
                                                                     $mCities = new City();
-                                                                    $cityId  = Params::getParam('id');
-                                                                    Item::newInstance()->deleteByCity($cityId);
-                                                                    $aCity   = $mCities->findByPrimaryKey($cityId);
-                                                                    // remove region_stats
-                                                                    $region  = $mRegion->findByPrimaryKey($aCity['fk_i_region_id']);
-                                                                    $country = Country::newInstance()->findByCode($region['fk_c_country_code']);
-                                                                    CityStats::newInstance()->delete( array('fk_i_city_id' => $cityId) ) ;
-                                                                    $mCities->delete(array('pk_i_id' => $cityId));
-
-                                                                    osc_add_flash_ok_message(sprintf(_m('%s has been deleted'), $aCity['s_name']), 'admin');
+                                                                    $cityIds  = Params::getParam('id');
+                                                                    if(is_array($cityIds)) {
+                                                                        $ok_delete = true;
+                                                                        $locations = 0;
+                                                                        foreach($cityIds as $cityId) {
+                                                                            Item::newInstance()->deleteByCity($cityId);
+                                                                            $aCity   = $mCities->findByPrimaryKey($cityId);
+                                                                            // remove region_stats
+                                                                            $region  = $mRegion->findByPrimaryKey($aCity['fk_i_region_id']);
+                                                                            $country = Country::newInstance()->findByCode($region['fk_c_country_code']);
+                                                                            CityStats::newInstance()->delete( array('fk_i_city_id' => $cityId) ) ;
+                                                                            $ok = $mCities->delete(array('pk_i_id' => $cityId));
+                                                                            if($ok) {
+                                                                                $locations++;
+                                                                            } else {
+                                                                                $ok_delete = false;
+                                                                            }
+                                                                        }
+                                                                        if($ok_delete) {
+                                                                            osc_add_flash_ok_message(sprintf(_n('%s has been deleted', '%s locations have been deleted', $locations), $aCity['s_name'], $locations), 'admin');
+                                                                        } else {
+                                                                            osc_add_flash_error_message(_m('There was a problem deleting locations'), 'admin');
+                                                                        }
+                                                                    } else {
+                                                                        osc_add_flash_error_message(_m('No city was selected'), 'admin');
+                                                                    }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']."&region=".@$region['pk_i_id']);
                                             break;
                                         }
