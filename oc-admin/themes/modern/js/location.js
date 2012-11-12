@@ -66,8 +66,7 @@
                     var more_region = $('<div>').css('float','right');
                     var link = $('<a>').addClass('view-more');
 
-                    s_country.append('<a class="close" onclick="return delete_dialog(\'' + val.pk_i_id + '\', \'delete_region\');" href="' + base_url + 'index.php?page=settings&action=locations&type=delete_region&id=' + val.pk_i_id + '"><img src="' + base_url + 'images/close.png" alt="' + s_close + '" title="' + s_close + '" /></a>');
-                    s_country.append('<a href="javascript:void(0);" class="edit" onclick="edit_region($(this), ' + val.pk_i_id + ');" style="padding-right: 15px;">' + val.s_name + '</a>');
+                    s_country.append('<div class="trr"><span class="checkboxr" style="visibility:hidden;"><input type="checkbox" name="region[]" value="'+val.pk_i_id+'" ></span><a class="close" onclick="return delete_dialog(\'' + val.pk_i_id + '\', \'delete_region\');" href="' + base_url + 'index.php?page=settings&action=locations&type=delete_region&id[]=' + val.pk_i_id + '"><img src="' + base_url + 'images/close.png" alt="' + s_close + '" title="' + s_close + '" /></a><a href="javascript:void(0);" class="edit" onclick="edit_region($(this), ' + val.pk_i_id + ');" style="padding-right: 15px;">' + val.s_name + '</a></div>');
                     link.attr('href', 'javascript:void(0)');
                     link.click(function(){
                         show_city(val.pk_i_id);
@@ -77,6 +76,24 @@
                     container.append(s_country).append(more_region);
                     div_regions.append(container);
                     div_regions.append(clear);
+                });
+
+                $(".trr").off("mouseenter");
+                $(".trr").off("mouseleave");
+
+                $(".trr").on("mouseenter", function() {
+                    $(this).find(".checkboxr").css({ 'visibility': ''});
+                });
+
+                $(".trr").on("mouseleave", function() {
+                    if (!$(this).find(".checkboxr input").is(':checked')) {
+                        $(this).find(".checkboxr").css({ 'visibility': 'hidden'});
+                    };
+                    if($(".checkboxr input:checked").size()>0) {
+                        $("#b_remove_region").show();
+                    } else {
+                        $("#b_remove_region").hide();
+                    };
                 });
                 resetLayout();
             }
@@ -98,11 +115,27 @@
                     var clear = $('<div>').css('clear','both');
                     var container = $('<div>');
                     var s_region = $('<div>').css('float','left');
-                    s_region.append('<a class="delete" class="close" onclick="return delete_dialog(\'' + val.pk_i_id + '\', \'delete_city\');"  href="' + base_url + 'index.php?page=settings&action=locations&type=delete_city&id=' + val.pk_i_id + '"><img src="' + base_url + 'images/close.png" alt="' + s_close + '" title="' + s_close + '" /></a>');//OJO ELIMINADI ID REPEDITO
-                    s_region.append('<a href="javascript:void(0);" class="edit" onclick="edit_city($(this), ' + val.pk_i_id + ');" style="padding-right: 15px;">' + val.s_name + '</a>');
+                    s_region.append('<div class="trct"><span class="checkboxct" style="visibility:hidden;"><input type="checkbox" name="city[]" value="'+val.pk_i_id+'" ></span><a class="delete" class="close" onclick="return delete_dialog(\'' + val.pk_i_id + '\', \'delete_city\');"  href="' + base_url + 'index.php?page=settings&action=locations&type=delete_city&id=' + val.pk_i_id + '"><img src="' + base_url + 'images/close.png" alt="' + s_close + '" title="' + s_close + '" /></a><a href="javascript:void(0);" class="edit" onclick="edit_city($(this), ' + val.pk_i_id + ');" style="padding-right: 15px;">' + val.s_name + '</a></div>');
                     container.append(s_region);
                     div_regions.append(container);
                     div_regions.append(clear);
+                });
+                $(".trct").off("mouseenter");
+                $(".trct").off("mouseleave");
+
+                $(".trct").on("mouseenter", function() {
+                    $(this).find(".checkboxct").css({ 'visibility': ''});
+                });
+
+                $(".trct").on("mouseleave", function() {
+                    if (!$(this).find(".checkboxct input").is(':checked')) {
+                        $(this).find(".checkboxct").css({ 'visibility': 'hidden'});
+                    };
+                    if($(".checkboxct input:checked").size()>0) {
+                        $("#b_remove_city").show();
+                    } else {
+                        $("#b_remove_city").hide();
+                    };
                 });
                 resetLayout();
             }

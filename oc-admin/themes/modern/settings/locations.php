@@ -32,11 +32,11 @@
                     title: '<?php echo osc_esc_js( __('Delete location') ); ?>'
                 });
 
-                $(".trc").on("mouseover", function() {
+                $(".trc").on("mouseenter", function() {
                     $(this).find(".checkboxc").css({ 'visibility': ''});
                 });
 
-                $(".trc").on("mouseout", function() {
+                $(".trc").on("mouseleave", function() {
                     if (!$(this).find(".checkboxc input").is(':checked')) {
                         $(this).find(".checkboxc").css({ 'visibility': 'hidden'});
                     };
@@ -45,6 +45,38 @@
                     } else {
                         $("#b_remove_country").hide();
                     };
+                });
+
+                $("#b_remove_country").on("click", function() {
+                    $("#dialog-location-delete input[name='id[]']").remove();
+                    $(".checkboxc input:checked").each(function() {
+                        $("#dialog-location-delete").append('<input type="hidden" name="id[]" value="'+$(this).attr("value")+'" />');
+                    });
+                    $("#dialog-location-delete input[name='type']").attr('value', 'delete_country');
+
+                    $("#dialog-location-delete").dialog('open');
+                    return false;
+                });
+
+                $("#b_remove_region").on("click", function() {
+                    $("#dialog-location-delete input[name='id[]']").remove();
+                    $(".checkboxr input:checked").each(function() {
+                        $("#dialog-location-delete").append('<input type="hidden" name="id[]" value="'+$(this).attr("value")+'" />');
+                    });
+                    $("#dialog-location-delete input[name='type']").attr('value', 'delete_region');
+
+                    $("#dialog-location-delete").dialog('open');
+                    return false;
+                });
+
+                $("#b_remove_city").on("click", function() {
+                    $("#dialog-location-delete input[name='id[]']").remove();
+                    $(".checkboxct input:checked").each(function() {
+                        $("#dialog-location-delete").append('<input type="hidden" name="id[]" value="'+$(this).attr("value")+'" />');
+                    });
+                    $("#dialog-location-delete input[name='type']").attr('value', 'delete_city');
+                    $("#dialog-location-delete").dialog('open');
+                    return false;
                 });
 
             });
@@ -65,7 +97,7 @@
             // dialog delete function
             function delete_dialog(item_id, item_type) {
                 $("#dialog-location-delete input[name='type']").attr('value', item_type);
-                $("#dialog-location-delete input[name='id']").attr('value', item_id);
+                $("#dialog-location-delete input[name='id[]']").attr('value', item_id);
                 $("#dialog-location-delete").dialog('open');
                 return false;
             }
@@ -271,7 +303,7 @@
                                     <span class="checkboxc" style="visibility:hidden;">
                                         <input type="checkbox" name="country[]" value="<?php echo $country['pk_c_code']; ?>" >
                                     </span>
-                                    <a class="close" onclick="return delete_dialog('<?php echo $country['pk_c_code']; ?>', 'delete_country');" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations&type=delete_country&id=<?php echo $country['pk_c_code']; ?>">
+                                    <a class="close" onclick="return delete_dialog('<?php echo $country['pk_c_code']; ?>', 'delete_country');" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations&type=delete_country&id[]=<?php echo $country['pk_c_code']; ?>">
                                         <img src="<?php echo osc_admin_base_url() ; ?>images/close.png" alt="<?php echo osc_esc_html(__('Close')); ?>" title="<?php echo osc_esc_html(__('Close')); ?>" />
                                     </a>
                                     <a class="edit" href="javascript:void(0);" style="padding-right: 15px;" onclick="edit_countries($(this));" data="<?php echo osc_esc_html($country['s_name']);?>" code="<?php echo $country['pk_c_code'];?>"><?php echo $country['s_name'] ; ?></a>
@@ -291,7 +323,7 @@
     <div class="grid-row grid-first-row grid-33">
         <div class="row-wrapper">
             <div class="widget-box">
-                <div class="widget-box-title"><h3><?php _e('Regions') ; ?><a id="b_new_region" href="javascript:void(0);" class="btn float-right hide"><?php _e('Add new'); ?></a></h3></div>
+                <div class="widget-box-title"><h3><?php _e('Regions') ; ?><a id="b_new_region" href="javascript:void(0);" class="btn float-right hide"><?php _e('Add new'); ?></a> <a id="b_remove_region" style="display:none;" class="btn float-right" href="javascript:void(0);"><?php _e('Remove selected'); ?></a></h3></div>
                 <div class="widget-box-content">
                     <div id="i_regions"></div>
                 </div>
@@ -301,7 +333,7 @@
     <div class="grid-row grid-first-row grid-33">
         <div class="row-wrapper">
             <div class="widget-box">
-                <div class="widget-box-title"><h3><?php _e('Cities') ; ?><a id="b_new_city" href="javascript:void(0);" class="btn float-right hide"><?php _e('Add new'); ?></a></h3></div>
+                <div class="widget-box-title"><h3><?php _e('Cities') ; ?><a id="b_new_city" href="javascript:void(0);" class="btn float-right hide"><?php _e('Add new'); ?></a> <a id="b_remove_city" style="display:none;" class="btn float-right" href="javascript:void(0);"><?php _e('Remove selected'); ?></a></h3></div>
                 <div class="widget-box-content"><div id="i_cities"></div></div>
             </div>
         </div>
@@ -311,7 +343,7 @@
         <input type="hidden" name="page" value="settings" />
         <input type="hidden" name="action" value="locations" />
         <input type="hidden" name="type" value="" />
-        <input type="hidden" name="id" value="" />
+        <input type="hidden" name="id[]" value="" />
         <div class="form-horizontal">
             <div class="form-row">
                 <?php _e("This action can't be undone. Items associated to this location will be deleted. Are you sure you want to continue?"); ?>
