@@ -585,7 +585,7 @@ function finish_installation( $password ) {
     require_once LIB_PATH . 'osclass/model/Item.php';
     require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
     require_once LIB_PATH . 'osclass/compatibility.php';
-    require_once LIB_PATH . 'osclass/plugins.php';
+    require_once LIB_PATH . 'osclass/classes/Plugins.php';
 
     $data = array();
 
