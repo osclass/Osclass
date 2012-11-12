@@ -84,7 +84,7 @@
                                 </tr>
                                 <tr class="even">
                                     <td><?php _e('URL') ; ?></td>
-                                    <td><span><a id="market_url" href="#"><?php _e("Download manually"); ?></a></span></td>
+                                    <td><span id="market_url_span"><a id="market_url" href="#"><?php _e("Download manually"); ?></a></span></td>
                                 </tr>
                             </tbody>
                         </table>
