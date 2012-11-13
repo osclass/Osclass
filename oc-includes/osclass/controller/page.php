@@ -65,12 +65,17 @@
             }
 
             $meta = json_decode($page['s_meta'], true);
-            
+
             // load the right template file
             if( file_exists(osc_themes_path() . osc_theme() . '/page-' . $page['s_internal_name'] . '.php') ) {
                 $this->doView('page-' . $page['s_internal_name'] . '.php');
             } else if( isset($meta['template']) && file_exists(osc_themes_path() . osc_theme() . '/' . $meta['template']) ) {
                 $this->doView($meta['template']);
+            } else if( isset($meta['template']) && file_exists(osc_plugins_path() . '/' . $meta['template']) ) {
+                osc_run_hook('before_html') ;
+                require osc_plugins_path() . '/' . $meta['template'];
+                Session::newInstance()->_clearVariables() ;
+                osc_run_hook('after_html') ;
             } else {
                 $this->doView('page.php');
             }
