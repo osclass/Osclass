@@ -267,6 +267,8 @@ ul.breadcrumb li { float: left; padding: 0 2px; }
 #item_head #report strong {background:url(images/language_arrow.gif) no-repeat right center; color:#999; font-size:11px; font-weight:normal; padding-right:9px; }
 #item_head #report span { background:#FFF; border:1px solid #333; display:none; left:7px; padding:10px 15px; position:absolute; top:19px; -moz-border-radius:5px; border-radius:5px; }
 #item_head #report span a { display:block; font-size:11px; margin:4px 0;}
+#item_head #edit_item_view { float:right; padding:5px 0 0 20px; position:relative; width: 90px; }
+#item_head #edit_item_view strong { color:#999; font-size:11px; font-weight:normal; padding-right:9px; }
 .item #main { float:left; width:600px; }
 .item #main h2 { border-bottom:1px solid #DDD; color:#000; font-size:14px; margin-bottom: 15px; padding-bottom:5px;}
 .item #sidebar { float:right; padding-top:22px; width:330px; }
