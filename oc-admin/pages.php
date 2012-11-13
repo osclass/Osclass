@@ -51,7 +51,7 @@
                         Session::newInstance()->_dropKeepForm();
                     }
 
-                    $templates = WebThemes::newInstance()->getAvailableTemplates();
+                    $templates = osc_apply_filter('page_templates', WebThemes::newInstance()->getAvailableTemplates());
                     $this->_exportVariableToView('templates', $templates);
                     $this->_exportVariableToView("page", $this->pageManager->findByPrimaryKey(Params::getParam("id")));
                     $this->doView("pages/frm.php");
@@ -112,7 +112,7 @@
                         Session::newInstance()->_dropKeepForm();
                     }
 
-                    $templates = WebThemes::newInstance()->getAvailableTemplates();
+                    $templates = osc_apply_filter('page_templates', WebThemes::newInstance()->getAvailableTemplates());
                     $this->_exportVariableToView('templates', $templates);
                     $this->_exportVariableToView("page", array());
                     $this->doView("pages/frm.php");
