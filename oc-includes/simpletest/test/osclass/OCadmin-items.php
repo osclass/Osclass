@@ -86,9 +86,12 @@ class OCadmin_items extends OCadminTest {
         $dao->dao->limit(1);
 
         $result = $dao->dao->get();
-        $item  = $result->row();
-        View::newInstance()->_exportVariableToView("item", $item);
-
+        if($result) {
+            $item  = $result->row();
+            View::newInstance()->_exportVariableToView("item", $item);
+        } else {
+            $this->assertTrue(false, "THERE ARE NO ITEMS");
+        }
 
         $dao->dao->select();
         $dao->dao->from(DB_TABLE_PREFIX.'t_item_stats');
@@ -97,9 +100,11 @@ class OCadmin_items extends OCadminTest {
         $dao->dao->limit(1);
 
         $result = $dao->dao->get();
-        if($result != false) {
-            $stats  = $result->row();
+        if($result) {
+            $stats = $result->row();
             $this->assertTrue($stats['i_num_views']==0, "ITEM STATS BEFORE");
+        } else {
+            $this->assertTrue(false, "THERE ARE NO ITEMS STATS");
         }
 
 
@@ -114,9 +119,12 @@ class OCadmin_items extends OCadminTest {
         $dao->dao->orderBy('dt_date', 'DESC');
         $dao->dao->limit(1);
         $result = $dao->dao->get();
-        $stats  = $result->row();
-
-        $this->assertTrue($stats['i_num_views']==0, "ITEM STATS ADMIN (should be 0)");
+        if($result) {
+            $stats  = $result->row();
+            $this->assertTrue($stats['i_num_views']==0, "ITEM STATS ADMIN (should be 0)");
+        } else {
+            $this->assertTrue(false, "THERE ARE NO ITEMS STATS");
+        }
 
 
         $this->logout();
@@ -132,9 +140,12 @@ class OCadmin_items extends OCadminTest {
         $dao->dao->orderBy('dt_date', 'DESC');
         $dao->dao->limit(1);
         $result = $dao->dao->get();
-        $stats  = $result->row();
-
-        $this->assertTrue($stats['i_num_views']==$random, "ITEM STATS USER (should be ".$random.")");
+        if($result) {
+            $stats  = $result->row();
+            $this->assertTrue($stats['i_num_views']==$random, "ITEM STATS USER (should be ".$random.")");
+        } else {
+            $this->assertTrue(false, "THERE ARE NO ITEMS STATS");
+        }
 
 
         $this->loginWith() ;
