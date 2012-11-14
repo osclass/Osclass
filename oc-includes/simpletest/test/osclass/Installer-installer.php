@@ -12,7 +12,9 @@ class Installer_installer extends InstallerTest {
         if( !file_exists($config_file) ) {
             $this->can_continue = true;
 
-
+print_r("########");
+print_r(osc_get_absolute_url() . "oc-includes/osclass/install.php");
+print_r("########");
             $this->selenium->open( osc_get_absolute_url() . "oc-includes/osclass/install.php" );
 
             // Test locale
