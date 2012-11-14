@@ -134,7 +134,7 @@ class Installer_installer extends InstallerTest {
     function testRemoveExampleAd()
     {
         require_once dirname(__FILE__).'/../../../../oc-load.php';
-        $aItems = Item::newInstance()->findByEmail($this->_email) ;
+        $aItems = Item::newInstance()->listAll();
         foreach( $aItems as $item ) {
             $url = osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] );
             //echo $url."<br>";
