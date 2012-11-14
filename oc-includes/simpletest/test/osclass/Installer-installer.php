@@ -131,5 +131,16 @@ class Installer_installer extends InstallerTest {
         }
     }
 
+    function testRemoveExampleAd()
+    {
+        $aItems = Item::newInstance()->findByEmail($this->_email) ;
+        foreach( $aItems as $item ) {
+            $url = osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] );
+            //echo $url."<br>";
+            $this->selenium->open( $url );
+            $this->assertTrue($this->selenium->isTextPresent("Your listing has been deleted"), "Delete item.");
+        }
+    }
+
 }
 ?>
