@@ -2,8 +2,9 @@
 //echo "data...<br>";
 $aData = array();
 $email = '';
-// Cars 
+// Cars
 $aux = array(
+    "parentCatId"   => 'Vehicles',
     "catId"         => 'Cars',
     'title'         => 'Cars - 2004 BMV X5 4.4i SUV',
     'description'   => 'Price $15,999.00 Year 2004 Make BMW Model X5 4.4i sport utility 4D Color Silver Vin. # 5UXFB535X4LV08178 Engine V8 4.4L Fuel Type Gasoline Mileage 102,236 Transmission Auto This vehicle is in excellent condition. Finance is also available to a qualified customer. Call Best Auto Sales at 714-222-5363 or Visit us on Garden Grove Blvd Garden Grove, CA 92844 Ask for Brandon Chun',
@@ -15,6 +16,7 @@ $aux = array(
 array_push($aData, $aux);
 
 $aux = array(
+    "parentCatId"   => 'Vehicles',
     "catId"         => 'Cars',
     'title'         => '2008 Toyota RAV4 Limited 4WD V6 (Centerville / Lebanon) $23500',
     'description'   => '2008 Toyota RAV4 Limited 4WD V6
@@ -35,6 +37,7 @@ Thank you for your interest.',
 array_push($aData, $aux);
 
 $aux = array(
+    "parentCatId"   => 'Vehicles',
     "catId"         => 'Cars',
     'title'         => '2000 Ford Focus',
     'description'   => '2000 Ford Focus ZX3 Hatchback 2D Good Condition Clean Great Car Mileage: 175000 Passed BMV Emissions Clear Title Call me or Text if interested- Crystal 219',
@@ -46,6 +49,7 @@ $aux = array(
 array_push($aData, $aux);
 
 $aux = array(
+    "parentCatId"   => 'Vehicles',
     "catId"         => 'Cars',
     'title'         => '2000 Nissan Maxima ',
     'description'   => "2000 Nissan Maxima GLE 69k Miles Auto Leather Climate Control Heated Seats ABS Alloy Wheels Sunroof CD Bose Power Seat Extra Clean $7998 circlecar.com Kirk or Eric 317.---.---5 CLICK ABOVE FOR LINK TO NADA GUIDE PAGE Why buy from us? Carfax all BMV paperwork 31-day temp tag. Licensed and insured Indiana car dealer. Talk with the owner's not a salesperson. We are not a 'buy here pay here' dealer.",
@@ -58,6 +62,7 @@ array_push($aData, $aux);
 
 // Motorcycles
 $aux = array(
+    "parentCatId"   => 'Vehicles',
     "catId"         => 'Motorcycles',
     'title'         => 'Moto Guzzi California cerca de Fontecarmoa (San Pedro)',
     'description'   => 'Moto del 2001. Va perfecta. Motor 1100, 74 c.v .inyección. Como extras incluye: Parabrisas y maletas rígidas originales Guzzi, protector motor y portabultos trasero. El precio no incluye transferencia. Vendo por necesidad de dinero. ',
@@ -69,6 +74,7 @@ $aux = array(
 array_push($aData, $aux);
 
 $aux = array(
+    "parentCatId"   => 'Vehicles',
     "catId"         => 'Motorcycles',
     'title'         => 'Peugeot Fazer 600 S2 cerca de Abanto',
     'description'   => 'ruedas nuevas 3.000 kilometros
@@ -90,6 +96,7 @@ Con garantia de la casa
 array_push($aData, $aux);
 
 $aux = array(
+    "parentCatId"   => 'Vehicles',
     "catId"         => 'Motorcycles',
     'title'         => 'Yamaha R 1 en Vilanova I La Geltru',
     'description'   => 'vendo yamaha r1 del año 2002 con menos de 30.000kms, esta impecable solo hay que verla, la vendo por problemas economicos fue un capricho, pero la he usado muy pocas veces, es una buena maquina para disfrutar de las curvas y no ha dado nunca ningun problema, el precio es negociable debido a la presion economica. ',
@@ -101,6 +108,7 @@ $aux = array(
 array_push($aData, $aux);
 
 $aux = array(
+    "parentCatId"   => 'Vehicles',
     "catId"         => 'Motorcycles',
     'title'         => 'Moto DTR 125 c.c Yamaha',
     'description'   => 'Vendo moto Yamaha 125 c.c, unico dueño. 1300 euros
@@ -114,6 +122,7 @@ array_push($aData, $aux);
 
 // Other Vehicles
 $aux = array(
+    "parentCatId"   => 'Vehicles',
     "catId"         => 'Other Vehicles',
     'title'         => 'SCCOTER-MOTO PARA MINUSVALIDO GUIDOSIMPLEX MODELO AMIGO',
     'description'   => 'Scooter eléctrico transportable de cuatro ruedas, ajustable y de fácil acceso. Cuatro meses, prácticamente nueva. En perfecto estado, a toda prueba y en periodo de garantía. Ver foto, características y medidas en http://www.im-guidosimplex.com/amigo.html Teléfono 600457567. ',
@@ -125,6 +134,7 @@ $aux = array(
 array_push($aData, $aux);
 
 $aux = array(
+    "parentCatId"   => 'Vehicles',
     "catId"         => 'Other Vehicles',
     'title'         => 'PLYMOUTH P23 1951 año 8000€',
     'description'   => 'VENDO UN PLYMOUTH P23, DEL AÑO 1951.ARANCA, EL MOTOR FUNCCIONA, TIENE DOCUMENTACION DE ESTADOS UNIDOS. PRECIO: 8000€ FELIXSERVIS
@@ -147,6 +157,7 @@ AdTech Ad
 array_push($aData, $aux);
 
 $aux = array(
+    "parentCatId"   => 'Vehicles',
     "catId"         => 'Other Vehicles',
     'title'         => 'Avion ULM TL96 cerca de Biniagual',
     'description'   => 'MOTOR ROTAX 912 100CV (298H)
@@ -175,6 +186,7 @@ array_push($aData, $aux);
 //Language Classes
 
 $aux = array(
+    "parentCatId"   => 'Classes',
     "catId"         => 'Language Classes',
     'title'         => 'German Training Coordination Agent (Barcelona centre) en Barcelona',
     'description'   => 'SELLBYTEL is one of the leading European service providers for Customer Management Solutions with more than 4.000 employees at 22 locations worldwide. Our clients belong to the top 500 business companies in the sectors IT and hi-tech, telecommunications, automotive, financial services, health care and commerce. We are a dynamic company in constant growth. Please find more about us on our corporate website. ',
@@ -186,6 +198,7 @@ $aux = array(
 array_push($aData, $aux);
 
 $aux = array(
+    "parentCatId"   => 'Classes',
     "catId"         => 'Language Classes',
     'title'         => 'Private English language lessons from a CELTA qualified teacher en Barcelona',
     'description'   => 'My name is Benjamin, I am a 22 year old English teacher. I am a native speaker and a qualified CELTA teacher.',
@@ -197,6 +210,7 @@ $aux = array(
 array_push($aData, $aux);
 
 $aux = array(
+    "parentCatId"   => 'Classes',
     "catId"         => 'Language Classes',
     'title'         => 'SPANISH LESSONS',
     'description'   => 'Hello, I am offering private classes I am native Spanish speaker, with 4 years of experience teaching Spanish. I have different teaching methods and will structure classes depending on your knowledge of the language and also depending on what you would like to learn or improve: grammar, comprehension, writing, vocabulary, pronunciation ... If you need my help, please write to me. See you soon!

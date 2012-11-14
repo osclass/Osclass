@@ -4,7 +4,7 @@ require_once dirname(__FILE__).'/../../../../oc-load.php';
 //require_once('FrontendTest.php');
 
 class OCadmin_tools extends OCadminTest {
-    
+
     /*
      * Login oc-admin
      * Import sql
@@ -21,7 +21,7 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue($this->selenium->isTextPresent("Import complete"), "Import a sql file.");
-        
+
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Tools");
         $this->selenium->click("link=Import data");
@@ -31,10 +31,10 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue($this->selenium->isTextPresent("Import complete"), "Import a sql file.");
     }
-    
+
     /*
      * Login oc-admin
-     * Import bad file. 
+     * Import bad file.
      */
     function testImportDataFail()
     {
@@ -47,8 +47,8 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue($this->selenium->isTextPresent("There was a problem importing data to the database"), "Import image as sql.");
-    }  
-    
+    }
+
     /*
      * Login oc-admin
      * Backup database
@@ -68,7 +68,7 @@ class OCadmin_tools extends OCadminTest {
             unlink($filename);
         }
     }
-    
+
     /*
      * Login oc-admin
      * Backup oclass
@@ -88,8 +88,8 @@ class OCadmin_tools extends OCadminTest {
             unlink($filename);
         }
     }
-    
-    
+
+
     function testMaintenance()
     {
         $this->loginWith();
@@ -102,10 +102,10 @@ class OCadmin_tools extends OCadminTest {
             $this->selenium->waitForPageToLoad("300000");
             $this->assertTrue($this->selenium->isTextPresent("Maintenance mode is ON"), "Enabling maintenance mode");
         }
-        
+
         $this->selenium->open( osc_base_url(true) );
         $this->assertTrue($this->selenium->isTextPresent("The website is currently undergoing maintenance"), "Check maintenance mode on public website");
-        
+
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='tools_maintenance']");
@@ -113,13 +113,13 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->click("//input[@value='Disable maintenance mode']");
         $this->selenium->waitForPageToLoad("300000");
         $this->assertTrue($this->selenium->isTextPresent("Maintenance mode is OFF"), "Disabling maintenance mode");
-        
+
     }
-    
-    
+
+
     function testLocations()
     {
-        
+
         $this->loginWith();
         $this->removeLoadedItems(false);
         $this->loadItems();
@@ -136,7 +136,7 @@ class OCadmin_tools extends OCadminTest {
             $max_time_limit++;
         }
         $this->assertTrue($this->selenium->isTextPresent("100 % Complete"), "Re-calculating location stats");
-        
+
         $countries = CountryStats::newInstance()->listCountries(">=");
         foreach($countries as $c) {
             if($c['country_code']=="ES") {
@@ -158,7 +158,7 @@ class OCadmin_tools extends OCadminTest {
                 $this->assertTrue(($r['items']==0), $r['region_name']." items (should be 0, ".$r['items']." found)");
             }
         }
-        
+
         $cities = CityStats::newInstance()->listCities(null, ">=");
         foreach($cities as $c) {
             if($c['city_name']=="Terrassa") {
@@ -173,12 +173,12 @@ class OCadmin_tools extends OCadminTest {
                 $this->assertTrue(($c['items']==0), $c['city_name']." items (should be 0, ".$c['items']." found)");
             }
         }
-        
+
         $this->removeLoadedItems();
-        
+
     }
-    
-    
+
+
     /*
      * Test if the http_referer functionality is working on admin
      */
@@ -187,10 +187,10 @@ class OCadmin_tools extends OCadminTest {
         $this->HTTPReferer( osc_admin_base_url(true)."?page=items" , "Manage listings");
         $this->HTTPReferer( osc_admin_base_url(true)."?page=stats&action=comments" , "Comment Statistics");
     }
-    
-    function HTTPReferer($url, $text) 
+
+    function HTTPReferer($url, $text)
     {
-        
+
         // CORRECT LOGIN
         $this->logout();
         $this->selenium->open( $url );
@@ -200,7 +200,7 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->click('submit');
         $this->selenium->waitForPageToLoad(1000);
         $this->assertTrue($this->selenium->isTextPresent($text), "HTTP REFERER CORRECT");
-        
+
         // INCORRECT LOGIN (ONE TIME)
         $this->logout();
         $this->selenium->open( $url );
@@ -215,7 +215,7 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->click('submit');
         $this->selenium->waitForPageToLoad(1000);
         $this->assertTrue($this->selenium->isTextPresent($text), "HTTP REFERER INCORRECT ONE TIME");
-        
+
         // INCORRECT LOGIN (TWICE)
         $this->logout();
         $this->selenium->open( $url );
@@ -237,8 +237,8 @@ class OCadmin_tools extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent($text), "HTTP REFERER INCORRECT TWICE");
 
     }
-    
-    
+
+
     /*
      * Load items for test propouse.
      */
@@ -251,29 +251,29 @@ class OCadmin_tools extends OCadminTest {
         $old_items_wait_time        = $uSettings->set_items_wait_time(0);
         $old_enabled_recaptcha_items = $uSettings->set_enabled_recaptcha_items(0);
         $old_moderate_items         = $uSettings->set_moderate_items(-1);
-        
+
         foreach($aData as $item){
-            $this->insertItem(  $item['catId'], $item['title'], 
+            $this->insertItem(  $item['parentCatId'], $item['catId'], $item['title'],
                                 $item['description'], $item['price'],
                                 $item['regionId'], $item['cityId'],  $item['cityArea'],
-                                $item['photo'], $item['contactName'], 
+                                $item['photo'], $item['contactName'],
                                 $this->_email);
         }
-        
+
         $uSettings->set_reg_user_post( $old_reg_user_port );
         $uSettings->set_items_wait_time( $old_items_wait_time );
         $uSettings->set_enabled_recaptcha_items( $old_enabled_recaptcha_items );
         $uSettings->set_moderate_items( $old_moderate_items );
-        
+
         unset($uSettings);
     }
-    
+
     function removeLoadedItems($check = true)
     {
             $this->selenium->open( osc_admin_base_url(true) );
             $this->selenium->click("//a[@id='items_manage']");
             $this->selenium->waitForPageToLoad("10000");
-            
+
             $this->selenium->click("check_all");
             sleep(4);
             $this->selenium->select("//select[@id='bulk_actions']", "label=regexp:\\s*Delete");
@@ -287,8 +287,8 @@ class OCadmin_tools extends OCadminTest {
                 $this->assertTrue($this->selenium->isTextPresent("listings have been deleted"), "Can't delete item. ERROR");
             }
     }
-    
-    public function insertItem($cat, $title, $description, $price, $regionId, $cityId, $cityArea, $bPhotos, $user, $email , $logged = 0)
+
+    public function insertItem($pcat, $cat, $title, $description, $price, $regionId, $cityId, $cityArea, $bPhotos, $user, $email , $logged = 0)
     {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='items_manage']");
@@ -300,6 +300,7 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->type("contactName" , $user);
         $this->selenium->type("contactEmail", $email);
 
+        $this->selenium->select("parentCatId", "label=regexp:\\s*".$pcat);
         $this->selenium->select("catId", "label=regexp:\\s*".$cat);
         $this->selenium->type("title[en_US]", $title);
         $this->selenium->type("description[en_US]", $description);
@@ -321,12 +322,12 @@ class OCadmin_tools extends OCadminTest {
             sleep(0.5);
             $this->selenium->type("//div[@id='p-0']/input", LIB_PATH."simpletest/test/osclass/img_test2.gif");
         }
-        
+
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
-        
+
         $this->assertTrue($this->selenium->isTextPresent("A new listing has been added"), "Can't insert a new item. ERROR");
-    }    
-    
+    }
+
 }
 ?>
