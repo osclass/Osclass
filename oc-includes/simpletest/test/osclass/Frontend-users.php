@@ -94,7 +94,7 @@ class Frontend_users extends FrontendTest {
         sleep(1);
         $count = 0;
         $count = (int)$this->selenium->getXpathCount("//div[@id='main']/div[@class='item']");
-        $this->assertTrue($count==1 , "Users Manage Items with one item");
+        $this->assertTrue($count==1 , "Users Manage Items with one item (Should be 1, counted ".$count.")");
     }
 
     /*
