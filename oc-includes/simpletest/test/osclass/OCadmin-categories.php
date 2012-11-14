@@ -4,7 +4,7 @@ require_once dirname(__FILE__).'/../../../../oc-load.php';
 //require_once('FrontendTest.php');
 
 class OCadmin_categories extends OCadminTest {
-    
+
     /*           TESTS          */
     /**
      * Test expiration of items by i_expiration_days at t_category
@@ -13,7 +13,7 @@ class OCadmin_categories extends OCadminTest {
      * - check dt_expiration of this items that belonging to updated category
      */
     function testCategory_updateExpiration()
-    
+
     {
         $this->loginWith() ;
         $this->selenium->open( osc_admin_base_url(true) );
@@ -21,13 +21,13 @@ class OCadmin_categories extends OCadminTest {
         $this->selenium->click("//a[@id='categories']");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue($this->selenium->isTextPresent("Categories"),"Categories ...");
-        
+
         // add item at subcategory 'Cars'
         $this->_addItem();
         $itemId = $this->_lastItemId();
         // hardcoded - update dt_pub_date
         Item::newInstance()->update(array('dt_pub_date' => '2010-01-01 10:10:10'), array('pk_i_id' => $itemId));
-        
+
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Categories");
         $this->selenium->click("//a[@id='categories_manage']");
@@ -39,14 +39,14 @@ class OCadmin_categories extends OCadminTest {
         $this->selenium->type('i_expiration_days', 5);
         $this->selenium->click("xpath=//input[@value='Save changes']");
         sleep(2);
-        
-        // check 
+
+        // check
         $item = $this->_lastItem();
         $this->assertTrue($item['dt_expiration'] == '2010-01-06 10:10:10', 'Check dt_expiration at t_item');
-        
+
         Item::newInstance()->deleteByPrimaryKey($itemId);
     }
-    
+
     function _addItem()
     {
         $this->selenium->open( osc_admin_base_url(true) );
@@ -59,6 +59,7 @@ class OCadmin_categories extends OCadminTest {
         $this->selenium->type("contactName" , "contact name");
         $this->selenium->type("contactEmail", "test@mail.com");
 
+        $this->selenium->select("parentCatId", "label=regexp:\\s*Vehicles");
         $this->selenium->select("catId", "label=regexp:\\s*Cars");
         $this->selenium->type("title[en_US]", "title item");
         $this->selenium->type("description[en_US]", "description test description test description test");
@@ -74,10 +75,10 @@ class OCadmin_categories extends OCadminTest {
         $this->selenium->click('id=ui-active-menuitem');
 
         $this->selenium->type("address", "address item");
-        
+
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
-        
+
         $this->assertTrue($this->selenium->isTextPresent("A new listing has been added"), "Can't insert a new item. ERROR");
     }
 }
