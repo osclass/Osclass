@@ -161,7 +161,7 @@
                         <div>
                             <label><?php _e('Category'); ?></label>
                             <?php /* category */ ?>
-                            <select id="parentCategory" name="">
+                            <select id="parentCategory" name="parentCatId">
                                 <option value=""><?php _e('Select Category'); ?></option>
                                 <?php foreach($categories as $category) { ?>
                                 <option value="<?php echo $category['pk_i_id']; ?>"><?php echo $category['s_name']; ?></option>

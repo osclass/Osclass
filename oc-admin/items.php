@@ -490,6 +490,7 @@
                                         $this->_exportVariableToView("item", $item);
                                         $this->_exportVariableToView("new_item", FALSE);
 
+                                        osc_run_hook("before_item_edit", $item);
                                         $this->doView('items/frm.php');
                 break;
                 case 'item_edit_post':
@@ -510,6 +511,7 @@
                                         }
 
                                         $success = $mItems->edit();
+                                        osc_run_hook('edited_item', Item::newInstance()->findByPrimaryKey(Params::getParam('id')));
 
                                         if($success==1){
                                             osc_add_flash_ok_message( _m('Changes saved correctly'), 'admin');
@@ -550,6 +552,7 @@
                                         }
 
                                         $this->_exportVariableToView("new_item", TRUE);
+                                        osc_run_hook('post_item');
                                         $this->doView('items/frm.php');
                 break;
                 case 'post_item':       //post item
@@ -581,6 +584,11 @@
                                             }
                                             Session::newInstance()->_clearVariables();
                                             osc_add_flash_ok_message( _m('A new listing has been added'), 'admin');
+
+                                            $itemId = Params::getParam('itemId');
+                                            $item = $this->itemManager->findByPrimaryKey($itemId);
+                                            osc_run_hook('posted_item', $item);
+                                            
                                             $this->redirectTo( $url );
                                         } else {
                                             osc_add_flash_error_message( $success, 'admin');
