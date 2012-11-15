@@ -150,17 +150,15 @@
          * @param type $url
          * @param type $id_submenu
          * @param type $capability
-         * @param type $icon_url
          */
-        public function add_submenu( $menu_id, $submenu_title, $url, $submenu_id, $capability = null, $icon_url = null )
+        public function add_submenu( $menu_id, $submenu_title, $url, $submenu_id, $capability = null)
         {
             $array = array(
                 $submenu_title,
                 $url,
                 $submenu_id,
                 $menu_id,
-                $capability,
-                $icon_url
+                $capability
             );
             $this->aMenu[$menu_id]['sub'][$submenu_id] = $array;
         }
@@ -174,6 +172,38 @@
         public function remove_submenu( $menu_id, $submenu_id )
         {
             unset( $this->aMenu[$menu_id]['sub'][$submenu_id] ) ;
+        }
+
+        /**
+         * Add submenu under menu id $menu_id
+         *
+         * @param type $menu_id
+         * @param type $submenu_title
+         * @param type $id_submenu
+         * @param type $capability
+         * @since 3.1
+         */
+        public function add_submenu_divider( $menu_id, $submenu_title, $submenu_id, $capability = null)
+        {
+            $array = array(
+                $submenu_title,
+                "divider_" . $submenu_id,
+                $menu_id,
+                $capability
+            );
+            $this->aMenu[$menu_id]['sub']["divider_" . $submenu_id] = $array;
+        }
+
+        /**
+         * Remove submenu with id $id_submenu under menu id $id_menu
+         *
+         * @param type $id_menu
+         * @param type $id_submenu
+         * @since 3.1
+         */
+        public function remove_submenu_divider( $menu_id, $submenu_id )
+        {
+            unset( $this->aMenu[$menu_id]['sub']["divider_" . $submenu_id] ) ;
         }
 
         /**
