@@ -29,6 +29,8 @@
         {
             switch($this->action) {
                 case('logout'):         // unset only the required parameters in Session
+                                        osc_run_hook("logout");
+
                                         Session::newInstance()->_drop('userId') ;
                                         Session::newInstance()->_drop('userName') ;
                                         Session::newInstance()->_drop('userEmail') ;

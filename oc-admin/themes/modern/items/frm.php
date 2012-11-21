@@ -17,7 +17,6 @@
      */
 
     osc_enqueue_script('jquery-validate');
-    osc_enqueue_script('admin-listing-form');
 
     // cateogry js
     $categories = Category::newInstance()->toTree();
@@ -51,26 +50,8 @@
 
     //customize Head
     function customHead() {
-    $categoryID = Params::getParam('catId');
-    if( osc_item_category_id() != null ) {
-        $categoryID = osc_item_category_id();
-    }
-
-    if( Session::newInstance()->_getForm('catId') != '' ) {
-        $categoryID = Session::newInstance()->_getForm('catId');
-    }
-
-    $subcategoryID = '';
-    if( !Category::newInstance()->isRoot($categoryID) ) {
-        $subcategoryID = $categoryID;
-        $category      = Category::newInstance()->findRootCategory($categoryID) ;
-        $categoryID    = $category['pk_i_id'];
-    }
     ?>
         <script type="text/javascript">
-            osc.item_post = {};
-            osc.item_post.category_id    = '<?php echo $categoryID; ?>';
-            osc.item_post.subcategory_id = '<?php echo $subcategoryID; ?>';
 
             document.write('<style type="text/css"> .tabber{ display:none; } </style>') ;
             $(document).ready(function(){
@@ -160,31 +141,7 @@
                         <?php printLocaleTitle(osc_get_locales()); ?>
                         <div>
                             <label><?php _e('Category'); ?></label>
-                            <?php /* category */ ?>
-                            <select id="parentCategory" name="parentCatId">
-                                <option value=""><?php _e('Select Category'); ?></option>
-                                <?php foreach($categories as $category) { ?>
-                                <option value="<?php echo $category['pk_i_id']; ?>"><?php echo $category['s_name']; ?></option>
-                                <?php } ?>
-                            </select>
-                            <select id="childCategory" name="catId">
-                                <option value=""><?php _e('Select Subcategory'); ?></option>
-                            </select>
-                            <script type="text/javascript" charset="utf-8">
-                            <?php
-                                foreach($categories as $c) {
-                                    if( count($c['categories']) > 0 ) {
-                                        $subcategory = array();
-                                        for($i = 0; $i < count($c['categories']); $i++) {
-                                            $subcategory[] = array($c['categories'][$i]['pk_i_id'], $c['categories'][$i]['s_name']);
-                                        }
-                                        printf('categories_%1$s = %2$s;', $c['pk_i_id'], json_encode($subcategory));
-                                        echo PHP_EOL;
-                                    }
-                                }
-                            ?>
-                            </script>
-                            <?php /* category */ ?>
+                            <?php ItemForm::category_two_selects(); ?>
                         </div>
                         <div class="input-description-wide">
                             <?php printLocaleDescription(osc_get_locales()); ?>
