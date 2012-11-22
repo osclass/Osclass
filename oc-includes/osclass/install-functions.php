@@ -812,9 +812,9 @@ function display_categories($error, $password) {
         <div class="select-categories">
             &nbsp;
             <div class="right">
-                <a href="#" onclick="check_all('category_form', true); return false;">Check all</a>
+                <a href="#" onclick="check_all('category_form', true); return false;"><?php _e('Check all') ; ?></a>
                 ·
-                <a href="#" onclick="check_all('category_form', false); return false;">Uncheck all</a>
+                <a href="#" onclick="check_all('category_form', false); return false;"><?php _e('Uncheck all') ; ?></a>
             </div>
             <div class="left">
                 <h3><?php _e('Select your classified categories');?> <span style="font-size:11px;"><?php _e('or');?></span> <a href="install.php?step=5"><?php _e('Skip');?></a><img src="<?php echo get_absolute_url() ?>oc-includes/images/question.png" class="question-skip vtip" title="<?php _e('You can add/remove categories after the installation, using the admin dashboard');?>" alt="" /></h3>
