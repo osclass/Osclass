@@ -1,9 +1,9 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -621,9 +621,9 @@
                                             }
                                             $deleted = @unlink(ABS_PATH . '.maintenance');
                                             if ($rm_errors == 0) {
-                                                $message = __('Everything looks good! Your OSClass installation is up-to-date');
+                                                $message = __('Everything looks good! Your Osclass installation is up-to-date');
                                             } else {
-                                                $message = __('Nearly everything looks good! Your OSClass installation is up-to-date, but there were some errors removing temporary files. Please manually remove the "oc-temp" folder');
+                                                $message = __('Nearly everything looks good! Your Osclass installation is up-to-date, but there were some errors removing temporary files. Please manually remove the "oc-temp" folder');
                                                 $error = 6; // Some errors removing files
                                             }
                                         } else {

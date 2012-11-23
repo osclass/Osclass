@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -211,7 +211,7 @@
                                         } else {
                                             $path = osc_base_path() ;
                                         }
-                                        $filename = 'OSClass_mysqlbackup.' . date('YmdHis') . '.sql' ;
+                                        $filename = 'Osclass_mysqlbackup.' . date('YmdHis') . '.sql' ;
 
                                         switch ( osc_dbdump($path, $filename) ) {
                                             case(-1):   $msg = _m('Path is empty') ;
@@ -239,7 +239,7 @@
                                         }
                                         //databasse dump...
 
-                                        $filename = 'OSClass_mysqlbackup.' . date('YmdHis') . '.sql';
+                                        $filename = 'Osclass_mysqlbackup.' . date('YmdHis') . '.sql';
                                         $path = sys_get_temp_dir()."/";
 
                                         switch ( osc_dbdump($path, $filename) ) {
@@ -280,7 +280,7 @@
                                             osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
                                         }
-                                        $filename = "OSClass_backup." . date('YmdHis') . ".zip" ;
+                                        $filename = "Osclass_backup." . date('YmdHis') . ".zip" ;
                                         $path = sys_get_temp_dir()."/";
 
                                         if ( osc_zip_folder(osc_base_path(),$path. $filename) ) {
@@ -313,9 +313,9 @@
                                             if(substr(trim($archive_name), -1, 1) != "/") {
                                                  $archive_name .= '/' ;
                                             }
-                                            $archive_name = Params::getParam('bck_dir') . '/OSClass_backup.' . date('YmdHis') . '.zip' ;
+                                            $archive_name = Params::getParam('bck_dir') . '/Osclass_backup.' . date('YmdHis') . '.zip' ;
                                         } else {
-                                            $archive_name = osc_base_path() . "OSClass_backup." . date('YmdHis') . ".zip" ;
+                                            $archive_name = osc_base_path() . "Osclass_backup." . date('YmdHis') . ".zip" ;
                                         }
                                         $archive_folder = osc_base_path() ;
 

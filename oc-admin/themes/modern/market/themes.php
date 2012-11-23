@@ -1,8 +1,8 @@
 <?php
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -26,7 +26,7 @@
     $main_version = substr(osc_version(),0, $version_length-2).".".substr(osc_version(),$version_length-2, 1);
 
     function addHelp() {
-        echo '<p>' . sprintf(__('Browse and download available OSClass themes from a constantly-updated selection. Remember, you must install the theme after you download it. If you want to design a theme for OSClass, follow these instructions: %s'), '<a href="http://doc.osclass.org/How_to_create_a_theme" target="_blank">http://doc.osclass.org/How_to_create_a_theme</a>') . '</p>';
+        echo '<p>' . sprintf(__('Browse and download available Osclass themes from a constantly-updated selection. Remember, you must install the theme after you download it. If you want to design a theme for Osclass, follow these instructions: %s'), '<a href="http://doc.osclass.org/How_to_create_a_theme" target="_blank">http://doc.osclass.org/How_to_create_a_theme</a>') . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -217,7 +217,7 @@
                             $("#market_version").html(data.s_version);
                             $("#market_author").html(data.s_contact_name);
                             if(data.s_compatible.indexOf("<?php echo $main_version; ?>")==-1) {
-                                $("#market_compatible").html(data.s_compatible + " - "  + "<?php echo osc_esc_js(sprintf(__('Warning! This theme is not compatible with your current version of OSClass (%s)'), $main_version)); ?>");
+                                $("#market_compatible").html(data.s_compatible + " - "  + "<?php echo osc_esc_js(sprintf(__('Warning! This theme is not compatible with your current version of Osclass (%s)'), $main_version)); ?>");
                                 $("#market_compatible").parent().parent().addClass("flashmessage-error");
                             } else {
                                 $("#market_compatible").html(data.s_compatible);
@@ -233,7 +233,7 @@
 
                             $('#market_installer').dialog({
                                 modal:true,
-                                title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
+                                title: '<?php echo osc_esc_js( __('Osclass Market') ) ; ?>',
                                 width:485
                             });
                         }

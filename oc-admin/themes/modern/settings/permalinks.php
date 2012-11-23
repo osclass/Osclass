@@ -1,8 +1,8 @@
 <?php
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -367,7 +367,7 @@
     <!-- settings form -->
                     <div id="mail-settings">
                         <h2 class="render-title"><?php _e('Permalinks') ; ?></h2>
-                        <?php _e('By default OSClass uses web URLs which have question marks and lots of numbers in them. However, OSClass offers you friendly urls. This can improve the aesthetics, usability, and forward-compatibility of your links'); ?>
+                        <?php _e('By default Osclass uses web URLs which have question marks and lots of numbers in them. However, Osclass offers you friendly urls. This can improve the aesthetics, usability, and forward-compatibility of your links'); ?>
                         <ul id="error_list"></ul>
                         <form name="settings_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                             <input type="hidden" name="page" value="settings" />

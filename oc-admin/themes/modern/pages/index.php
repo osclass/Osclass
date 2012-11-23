@@ -1,8 +1,8 @@
 <?php
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -17,7 +17,7 @@
      */
 
     function addHelp() {
-        echo '<p>' . __('With OSClass you can create static pages on which information can be stored, such as "About Us" or "Info" pages. From here you can create, edit or delete your site\'s static pages.') . '</p>';
+        echo '<p>' . __('With Osclass you can create static pages on which information can be stored, such as "About Us" or "Info" pages. From here you can create, edit or delete your site\'s static pages.') . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 

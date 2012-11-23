@@ -1,9 +1,9 @@
 <?php
     /**
      * Helper Users
-     * @package OSClass
+     * @package Osclass
      * @subpackage Helpers
-     * @author OSClass
+     * @author Osclass
      */
 
     /**

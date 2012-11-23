@@ -1,9 +1,9 @@
 <?php
 /*
- *      OSCLass – software for creating and publishing online classified
+ *      Osclass – software for creating and publishing online classified
  *                           advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ *                        Copyright (C) 2012 OSCLASS
  *
  *       This program is free software: you can redistribute it and/or
  *     modify it under the terms of the GNU Affero General Public License
@@ -46,7 +46,7 @@ function get_relative_url( ) {
 }
 
 /*
- * Get the requirements to install OSClass
+ * Get the requirements to install Osclass
  *
  * @since 1.2
  *
@@ -57,7 +57,7 @@ function get_requirements( ) {
         'PHP version >= 5.x' => array(
             'requirement' => __('PHP version >= 5.x'),
             'fn' => version_compare(PHP_VERSION, '5.0.0', '>='),
-            'solution' => __('PHP5 is required to run OSClass. You may talk with your hosting to upgrade your PHP version.')),
+            'solution' => __('PHP5 is required to run Osclass. You may talk with your hosting to upgrade your PHP version.')),
 
         'MySQLi extension for PHP' => array(
             'requirement' => __('MySQLi extension for PHP'),
@@ -111,7 +111,7 @@ function get_requirements( ) {
         $array['File <code>config-sample.php</code> exists'] = array(
             'requirement' => __('<code>config-sample.php</code> file exists'),
             'fn' => $config_sample,
-            'solution' => __('<code>config-sample.php</code> file is required, you should re-download OSClass.'));
+            'solution' => __('<code>config-sample.php</code> file is required, you should re-download Osclass.'));
     }
 
     return $array;
@@ -119,7 +119,7 @@ function get_requirements( ) {
 
 
 /**
- * Check if some of the requirements to install OSClass are correct or not
+ * Check if some of the requirements to install Osclass are correct or not
  *
  * @since 1.2
  *
@@ -157,7 +157,7 @@ function set_allow_report_osclass($value) {
 }
 
 /*
- * Install OSClass database
+ * Install Osclass database
  *
  * @since 1.2
  *
@@ -482,11 +482,11 @@ function create_config_file($dbname, $username, $password, $dbhost, $tableprefix
     $config_text = <<<CONFIG
 <?php
 /**
- * The base MySQL settings of OSClass
+ * The base MySQL settings of Osclass
  */
 define('MULTISITE', 0);
 
-/** MySQL database name for OSClass */
+/** MySQL database name for Osclass */
 define('DB_NAME', '$dbname');
 
 /** MySQL database username */
@@ -627,7 +627,7 @@ function display_database_config() {
                 <tr>
                     <th align="left"><label for="dbname"><?php _e('Database name'); ?></label></th>
                     <td><input type="text" id="dbname" name="dbname" value="osclass" size="25" /></td>
-                    <td class="small"><?php _e('The name of the database you want to run OSClass in'); ?></td>
+                    <td class="small"><?php _e('The name of the database you want to run Osclass in'); ?></td>
                 </tr>
                 <tr>
                     <th align="left"><label for="username"><?php _e('User Name'); ?></label></th>
@@ -642,7 +642,7 @@ function display_database_config() {
                 <tr>
                     <th align="left"><label for="tableprefix"><?php _e('Table prefix'); ?></label></th>
                     <td><input type="text" id="tableprefix" name="tableprefix" value="oc_" size="25" /></td>
-                    <td class="small"><?php _e('If you want to run multiple OSClass installations in a single database, change this'); ?></td>
+                    <td class="small"><?php _e('If you want to run multiple Osclass installations in a single database, change this'); ?></td>
                 </tr>
             </tbody>
         </table>
@@ -866,7 +866,7 @@ function display_finish($password) {
         </div>
         <?php } ?>
 <h2 class="target"><?php _e('Congratulations!');?></h2>
-<p class="space-left-10"><?php _e("OSClass has been installed. Were you expecting more steps? Sorry to disappoint!");?></p>
+<p class="space-left-10"><?php _e("Osclass has been installed. Were you expecting more steps? Sorry to disappoint!");?></p>
 <p class="space-left-10"><?php echo sprintf(__('An e-mail with the password for oc-admin has been sent to: %s'), $data['s_email']);?></p>
 <div style="clear:both;"></div>
 <div class="form-table finish">

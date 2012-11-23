@@ -1,8 +1,8 @@
 <?php
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -66,7 +66,7 @@
                                 <div class="form-controls">
                                     <input type="text" class="input-large" name="bck_dir" value="<?php echo osc_esc_html(osc_base_path()); ?>" />
                                     <div class="help-box">
-                                        <?php _e("<strong>WARNING</strong>: If you don't specify a backup folder, the backup files will be created in the root of your OSClass installation.") ; ?>
+                                        <?php _e("<strong>WARNING</strong>: If you don't specify a backup folder, the backup files will be created in the root of your Osclass installation.") ; ?>
                                         <br />
                                         <?php _e("This is the folder in which your backups will be created. We recommend that you choose a non-public path.") ; ?>
                                     </div>

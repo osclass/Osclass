@@ -1,8 +1,8 @@
 <?php
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -278,7 +278,7 @@
                                 <div class="help-box"><img width="100px" src="<?php echo osc_base_url()."oc-content/uploads/watermark.png" ?>" /></div>
                             <?php }; ?>
                             <div class="help-box"><?php _e("It has to be a .PNG image") ; ?></div>
-                            <div class="help-box"><?php _e("OSClass doesn't check the watermark image size") ; ?></div>
+                            <div class="help-box"><?php _e("Osclass doesn't check the watermark image size") ; ?></div>
                         </div>
                     </div>
                     <div class="form-row">

@@ -1,8 +1,8 @@
 <?php
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -17,7 +17,7 @@
      */
 
     function addHelp() {
-        echo '<p>' . __('Browse and download available OSClass plugins, from a constantly-updated selection. After downloading a plugin, you have to install it and configure it to get it up and running.') . '</p>';
+        echo '<p>' . __('Browse and download available Osclass plugins, from a constantly-updated selection. After downloading a plugin, you have to install it and configure it to get it up and running.') . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -249,7 +249,7 @@
                     $("#market_version").html(data.s_version);
                     $("#market_author").html(data.s_contact_name);
                     if(data.s_compatible.indexOf("<?php echo $main_version; ?>")==-1) {
-                        $("#market_compatible").html(data.s_compatible + " - "  + "<?php echo osc_esc_js(sprintf(__('Warning! This plugin is not compatible with your current version of OSClass (%s)'), $main_version)); ?>");
+                        $("#market_compatible").html(data.s_compatible + " - "  + "<?php echo osc_esc_js(sprintf(__('Warning! This plugin is not compatible with your current version of Osclass (%s)'), $main_version)); ?>");
                         $("#market_compatible").parent().parent().addClass("flashmessage-error");
                     } else {
                         $("#market_compatible").html(data.s_compatible);
@@ -264,7 +264,7 @@
 
                     $('#market_installer').dialog({
                         modal:true,
-                        title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
+                        title: '<?php echo osc_esc_js( __('Osclass Market') ) ; ?>',
                         width:485
                     });
                 }

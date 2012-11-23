@@ -1,9 +1,9 @@
 <?php
 
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -20,7 +20,7 @@
     /**
      * Database connection object
      * 
-     * @package OSClass
+     * @package Osclass
      * @subpackage Database
      * @since 2.3
      */
@@ -44,7 +44,7 @@
          */
         private $dbHost ;
         /**
-         * Database name where it's installed OSClass
+         * Database name where it's installed Osclass
          * 
          * @access private
          * @since 2.3
@@ -69,7 +69,7 @@
         private $dbPassword ;
 
         /**
-         * Database connection object to OSClass database
+         * Database connection object to Osclass database
          * 
          * @access private
          * @since 2.3
@@ -253,7 +253,7 @@
         }
 
         /**
-         * Connect to OSClass database
+         * Connect to Osclass database
          * 
          * @access public
          * @since 2.3
@@ -317,7 +317,7 @@
         }
 
         /**
-         * Select OSClass database in $db var
+         * Select Osclass database in $db var
          * 
          * @access private
          * @since 2.3
@@ -341,7 +341,7 @@
         }
 
         /**
-         * It reconnects to OSClass database. First, it releases the database link connection and it connects again
+         * It reconnects to Osclass database. First, it releases the database link connection and it connects again
          * 
          * @access private
          * @since 2.3
@@ -365,7 +365,7 @@
         }
 
         /**
-         * Release the OSClass database connection
+         * Release the Osclass database connection
          * 
          * @access private
          * @since 2.3

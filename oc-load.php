@@ -1,9 +1,9 @@
 <?php
 /*
- *      OSCLass – software for creating and publishing online classified
+ *      Osclass – software for creating and publishing online classified
  *                           advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ *                        Copyright (C) 2012 OSCLASS
  *
  *       This program is free software: you can redistribute it and/or
  *     modify it under the terms of the GNU Affero General Public License
@@ -34,8 +34,8 @@ define('TRANSLATIONS_PATH', CONTENT_PATH . 'languages/') ;
 if( !file_exists(ABS_PATH . 'config.php') ) {
     require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
 
-    $title   = 'OSClass &raquo; Error' ;
-    $message = 'There doesn\'t seem to be a <code>config.php</code> file. OSClass isn\'t installed. <a href="http://forums.osclass.org/">Need more help?</a></p>' ;
+    $title   = 'Osclass &raquo; Error' ;
+    $message = 'There doesn\'t seem to be a <code>config.php</code> file. Osclass isn\'t installed. <a href="http://forums.osclass.org/">Need more help?</a></p>' ;
     $message .= '<p><a class="button" href="' . osc_get_absolute_url() .'oc-includes/osclass/install.php">Install</a></p>' ;
 
     osc_die($title, $message) ;
@@ -70,12 +70,12 @@ require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
 require_once LIB_PATH . 'osclass/model/Preference.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php';
 
-// check if OSClass is installed
+// check if Osclass is installed
 if( !getBoolPreference('osclass_installed') ) {
     require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
 
-    $title    = 'OSClass &raquo; Error' ;
-    $message  = 'OSClass isn\'t installed. <a href="http://forums.osclass.org/">Need more help?</a></p>' ;
+    $title    = 'Osclass &raquo; Error' ;
+    $message  = 'Osclass isn\'t installed. <a href="http://forums.osclass.org/">Need more help?</a></p>' ;
     $message .= '<p><a class="button" href="' . osc_get_absolute_url() .'oc-includes/osclass/install.php">Install</a></p>' ;
 
     osc_die($title, $message) ;
@@ -232,7 +232,7 @@ function osc_show_maintenance_css() {
     <?php }
 }
 function osc_meta_generator() {
-    echo '<meta name="generator" content="OSClass ' . OSCLASS_VERSION . '" />';
+    echo '<meta name="generator" content="Osclass ' . OSCLASS_VERSION . '" />';
 }
 osc_add_hook('header', 'osc_show_maintenance');
 osc_add_hook('header', 'osc_show_maintenance_css');

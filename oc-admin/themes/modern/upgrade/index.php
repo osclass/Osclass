@@ -1,8 +1,8 @@
 <?php
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -57,11 +57,11 @@
         <div id="result">
             <div id="output" style="display:none">
                 <img id="loading_immage" src="<?php echo osc_current_admin_theme_url('images/loading.gif') ; ?>" title="" alt="" />
-                <?php _e('Upgrading your OSClass installation (this could take a while): ', 'admin') ; ?>
+                <?php _e('Upgrading your Osclass installation (this could take a while): ', 'admin') ; ?>
             </div>
             <div id="tohide">
                 <p>
-                    <?php _e('You have uploaded a new version of OSClass, you need to upgrade OSClass for it to work correctly.'); ?>
+                    <?php _e('You have uploaded a new version of Osclass, you need to upgrade Osclass for it to work correctly.'); ?>
                 </p>
                 <a class="btn" href="<?php echo osc_admin_base_url(true); ?>?page=upgrade&confirm=true"><?php _e('Upgrade now'); ?></a>
             </div>

@@ -94,13 +94,13 @@ function basic_info() {
     ) ;
     
     $body  = sprintf(__('Welcome %s,'),Params::getParam('webtitle'))."<br/><br/>" ;
-    $body .= sprintf(__('Your OSClass installation at %s is up and running. You can access the administration panel with these details:'), WEB_PATH)."<br/>";
+    $body .= sprintf(__('Your Osclass installation at %s is up and running. You can access the administration panel with these details:'), WEB_PATH)."<br/>";
     $body .= '<ul>';
     $body .= '<li>'.sprintf(__('username: %s'), $admin).'</li>';
     $body .= '<li>'.sprintf(__('password: %s'), $password).'</li>';
     $body .= '</ul>' ;
     $body .= __('Regards,')."<br/>";
-    $body .= __('The <a href="http://osclass.org/">OSClass</a> team') ;
+    $body .= __('The <a href="http://osclass.org/">Osclass</a> team') ;
 
     $sitename = strtolower( $_SERVER['SERVER_NAME'] ) ;
     if ( substr( $sitename, 0, 4 ) == 'www.' ) {
@@ -113,9 +113,9 @@ function basic_info() {
         $mail->CharSet  = "utf-8" ;
         $mail->Host     = "localhost" ;
         $mail->From     = 'osclass@' . $sitename ;
-        $mail->FromName = 'OSClass' ;
-        $mail->Subject  = 'OSClass successfully installed!' ;
-        $mail->AddAddress(Params::getParam('email'), 'OSClass administrator') ;
+        $mail->FromName = 'Osclass' ;
+        $mail->Subject  = 'Osclass successfully installed!' ;
+        $mail->AddAddress(Params::getParam('email'), 'Osclass administrator') ;
         $mail->Body     = $body ;
         $mail->AltBody  = $body ;
         if( !$mail->Send() ) {

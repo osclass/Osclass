@@ -14,7 +14,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xml:lang="en-US">
     <head>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-            <title>OSClass - Readme</title>
+            <title>Osclass - Readme</title>
             <link rel="stylesheet" type="text/css" media="all" href="<?php echo osc_getAbsoluteWebURL(); ?>/oc-includes/osclass/installer/install.css" />
     </head>
     <body>
@@ -23,7 +23,7 @@
                 <div id="header" class="readme">
                     <h1 id="logo">
                         <a href="http://osclass.org/" target="_blank">
-                            <img src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-includes/images/osclass-logo.png" alt="OSClass" title="OSClass" />
+                            <img src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-includes/images/osclass-logo.png" alt="Osclass" title="Osclass" />
                         </a>
                         <br/>
                         Version 3.0.2
@@ -34,7 +34,7 @@
                         <h2 class="title">Introduction</h2>
                         <div class="space-left-10">
                             <p>
-                                OSClass is an open source project for classifieds. In a few steps you can build
+                                Osclass is an open source project for classifieds. In a few steps you can build
                                 a classified site. Some features: easy installation, multi-language, extensibility through plugins,
                                 search engines friendly (sitemap, robots, urls seo-friendly) and a lot more features.
                             </p>
@@ -45,9 +45,9 @@
                         <div class="space-left-10">
                             <p>Here’s a quick step-by-step guide of the installation process:</p>
                             <ol>
-                                <li>Download and unzip the OSClass package.</li>
-                                <li>Move the OSClass unzipped files to the desired location on your server.</li>
-                                <li>Execute the OSClass installation script by accessing <code>oc-includes/osclass/install.php</code> from your browser:
+                                <li>Download and unzip the Osclass package.</li>
+                                <li>Move the Osclass unzipped files to the desired location on your server.</li>
+                                <li>Execute the Osclass installation script by accessing <code>oc-includes/osclass/install.php</code> from your browser:
                                     <ul>
                                         <li>If you’ve installed it in the domain’s root directory, you’ll have to go to: <code>http://example.com/oc-includes/osclass/install.php</code></li>
                                         <li>If you’ve installed it in a subdirectory inside the domain, <em>classifieds</em>, for example, go to: <code>http://example.com/classifieds/oc-includes/osclass/install.php</code></li>
@@ -68,14 +68,14 @@
                      <div id="upgrade">
                         <h2 class="title">How to upgrade</h2>
                         <p>
-                            OSClass will show an autoupgrade message at admin panel if a new (and stable) version is available. Only need follow instructions for begin the upgrade.
-                            We recommend to do a backup before you attempt to upgrade your OSClass installation, you could perform that from the admin panel (if you modified any
+                            Osclass will show an autoupgrade message at admin panel if a new (and stable) version is available. Only need follow instructions for begin the upgrade.
+                            We recommend to do a backup before you attempt to upgrade your Osclass installation, you could perform that from the admin panel (if you modified any
                             core file, it will probably be replaced by new version software. Be carefull).
                         </p>
                         <div class="space-left-10"><h3 style="border-bottom: 1px solid grey;color: #444444;">Autoupgrade</h3>
                             <p>The Autoupgrade feature will perform the following steps for you :
                                 <ul>
-                                    <li>Step 1: Check if there's a new version os OSClass.</li>
+                                    <li>Step 1: Check if there's a new version os Osclass.</li>
                                     <li>Step 2: Download it.</li>
                                     <li>Step 3: Unzip it.</li>
                                     <li>Step 4: Remove old files, copy new ones (remember: if you edited any core file, it will probable be replaced by a new one).</li>
@@ -89,11 +89,11 @@
                         </p>
                         <div class="space-left-10"><h3 style="border-bottom: 1px solid grey;color: #444444;">Manual upgrade</h3>
                             <p>
-                                You could also upgrade OSClass downloading the upgrade package, unzip it and replace the files on your server with the ones on the package.
+                                You could also upgrade Osclass downloading the upgrade package, unzip it and replace the files on your server with the ones on the package.
                                 Then run manually oc-includes/osclass/upgrade-funcs.php for do upgrade complete.
                             </p>
                         </div>
-                        <p>If you experienced any problem during the process, please don't hesitate in contact us in <a href="http://forums.osclass.org/">OSClass Support Forums</a>.
+                        <p>If you experienced any problem during the process, please don't hesitate in contact us in <a href="http://forums.osclass.org/">Osclass Support Forums</a>.
                             We recommend to perform a backup of database and files before each upgrade. You could backup your data from the "Backup" option in the admin panel.
                             If you want to run the autoupgrade manually you could do that from the following URL : http://www.yourdomain.com/path/to/osclass/oc-admin/tools.php?action=upgrade
                         </p>
@@ -103,15 +103,15 @@
                         <div class="space-left-10">
                             <p>If you have any questions that aren't addressed in this document, please look at the online resources:</p>
                             <dl class="space-left-25">
-                                <dt><a href="http://doc.osclass.org/" target="_blank">OSClass Wiki</a></dt>
+                                <dt><a href="http://doc.osclass.org/" target="_blank">Osclass Wiki</a></dt>
                                 <dd>
-                                    The wiki is where all information about OSClass is placed.
+                                    The wiki is where all information about Osclass is placed.
                                 </dd>
-                                <dt><a href="http://osclass.org/blog/" target="_blank">OSClass Blog</a></dt>
+                                <dt><a href="http://osclass.org/blog/" target="_blank">Osclass Blog</a></dt>
                                 <dd>
-                                    This is where you'll find the latest updates and news related to OSClass.
+                                    This is where you'll find the latest updates and news related to Osclass.
                                 </dd>
-                                <dt><a href="http://forums.osclass.org/" target="_blank">OSClass Support Forums</a></dt>
+                                <dt><a href="http://forums.osclass.org/" target="_blank">Osclass Support Forums</a></dt>
                                 <dd>
                                     If you've looked everywhere and still can't find an answer.
                                     To help them help you be sure to use a descriptive thread title
@@ -122,7 +122,7 @@
                     </div>
                     <div id="license">
                         <h2 class="title">License</h2>
-                        <p class="space-left-10">OSClass is released under the GPLv3 (see <a href="<?php echo osc_getAbsoluteWebURL(); ?>/licenses.txt" target="_blank">licenses.txt</a>).</p>
+                        <p class="space-left-10">Osclass is released under the GPLv3 (see <a href="<?php echo osc_getAbsoluteWebURL(); ?>/licenses.txt" target="_blank">licenses.txt</a>).</p>
                     </div>
                 </div>
                 <div id="footer">

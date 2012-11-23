@@ -1,8 +1,8 @@
 <?php
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -83,7 +83,7 @@
         </p>
         <?php } ?>
         <p>
-            <?php _e('You can recalculate your location stats. This is useful if you upgrade from versions older than OSClass 2.4'); ?>.
+            <?php _e('You can recalculate your location stats. This is useful if you upgrade from versions older than Osclass 2.4'); ?>.
         </p>
         <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
             <input type="hidden" name="action" value="locations_post" />

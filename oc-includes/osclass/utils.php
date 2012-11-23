@@ -1,10 +1,10 @@
 <?php
 
 /*
- *      OSCLass – software for creating and publishing online classified
+ *      Osclass – software for creating and publishing online classified
  *                           advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ *                        Copyright (C) 2012 OSCLASS
  *
  *       This program is free software: you can redistribute it and/or
  *     modify it under the terms of the GNU Affero General Public License
@@ -246,7 +246,7 @@ function osc_doRequest($url, $_data) {
         if($fp!==false) {
             $out  = "POST $path HTTP/1.1\r\n";
             $out .= "Host: $host\r\n";
-            $out .= "Referer: OSClass (v.". osc_version() .")\r\n";
+            $out .= "Referer: Osclass (v.". osc_version() .")\r\n";
             $out .= "Content-type: application/x-www-form-urlencoded\r\n";
             $out .= "Content-Length: ".strlen($data)."\r\n";
             $out .= "Connection: Close\r\n\r\n";
@@ -590,7 +590,7 @@ function osc_dbdump($path, $file) {
     }
 
     $tables_order = array('t_locale', 't_country', 't_currency', 't_region', 't_city', 't_city_area', 't_widget', 't_admin', 't_user', 't_user_description', 't_category', 't_category_description', 't_category_stats', 't_item', 't_item_description', 't_item_location', 't_item_stats', 't_item_resource', 't_item_comment', 't_preference', 't_user_preferences', 't_pages', 't_pages_description', 't_plugin_category', 't_cron', 't_alerts', 't_keywords', 't_meta_fields', 't_meta_categories', 't_item_meta');
-    // Backup default OSClass tables in order, so no problem when importing them back
+    // Backup default Osclass tables in order, so no problem when importing them back
     foreach($tables_order as $table) {
         if(array_key_exists(DB_TABLE_PREFIX . $table, $tables)) {
             $dump->table_structure($path, DB_TABLE_PREFIX . $table) ;
@@ -826,7 +826,7 @@ function osc_file_get_contents($url)
     if( testCurl() ) {
         $ch = curl_init() ;
         curl_setopt($ch, CURLOPT_URL, $url) ;
-        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' OSClass (v.' . osc_version() . ')') ;
+        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')') ;
         if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1) ;
         @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_REFERER, osc_base_url());

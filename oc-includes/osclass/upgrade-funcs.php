@@ -1,8 +1,8 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -41,7 +41,7 @@
         if( Params::getParam('skipdb') == '' ){
             if(!$error_queries[0]) {
                 $skip_db_link = osc_admin_base_url(true) . "?page=upgrade&action=upgrade-funcs&skipdb=true";
-                $title    = __('OSClass &raquo; Has some errors') ;
+                $title    = __('Osclass &raquo; Has some errors') ;
                 $message  = __("We've encountered some problems while updating the database structure. The following queries failed:");
                 $message .= "<br/><br/>" . implode("<br>", $error_queries[2]);
                 $message .= "<br/><br/>" . sprintf(__("These errors could be false-positive errors. If you're sure that is the case, you can <a href=\"%s\">continue with the upgrade</a>, or <a href=\"http://forums.osclass.org/\">ask in our forums</a>."), $skip_db_link);
@@ -413,8 +413,8 @@ CREATE TABLE %st_item_description_tmp (
     osc_changeVersionTo(320);
 
     echo '<div class="well ui-rounded-corners separate-top-medium">';
-    echo '<p>'.__('OSClass &raquo; Updated correctly').'</p>' ;
-    echo '<p>'.__('OSClass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
+    echo '<p>'.__('Osclass &raquo; Updated correctly').'</p>' ;
+    echo '<p>'.__('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
     foreach($aMessages as $msg) {
         echo "<p>".$msg."</p>";
     }

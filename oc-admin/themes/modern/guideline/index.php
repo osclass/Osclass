@@ -31,7 +31,7 @@
     <div id="content">
         <div id="content-render">
 			<div id="content-head">
-			    <h1 class="guideline">OSClass Guideline</h1>
+			    <h1 class="guideline">Osclass Guideline</h1>
 			</div>
             <?php include "parts/menu.php"; ?>
 			<div id="content-page">

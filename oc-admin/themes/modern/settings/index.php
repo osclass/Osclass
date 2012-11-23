@@ -1,8 +1,8 @@
 <?php
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -119,7 +119,7 @@
     }
 
     function addHelp() {
-        echo '<p>' . __("Change the basic configuration of your OSClass. From here, you can modify variables such as the site’s name, the default currency or how lists of listings are displayed. <strong>Be careful</strong> when modifying default values if you're not sure what you're doing!") . '</p>';
+        echo '<p>' . __("Change the basic configuration of your Osclass. From here, you can modify variables such as the site’s name, the default currency or how lists of listings are displayed. <strong>Be careful</strong> when modifying default values if you're not sure what you're doing!") . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -303,7 +303,7 @@
                             <div class="form-label-checkbox">
                                 <label>
                                     <input type="checkbox" <?php echo ( osc_auto_cron() ? 'checked="checked"' : '' ) ; ?> name="auto_cron" />
-                            <?php printf(__('Allow OSClass to run a built-in <a href="%s" target="_blank">cron</a> automatically without setting crontab'), 'http://en.wikipedia.org/wiki/Cron' ) ; ?>
+                            <?php printf(__('Allow Osclass to run a built-in <a href="%s" target="_blank">cron</a> automatically without setting crontab'), 'http://en.wikipedia.org/wiki/Cron' ) ; ?>
                                 </label>
                             </div>
                             <span class="help-box"><?php _e('It is <b>recommended</b> to have this option enabled, because some features require it.') ; ?></span>

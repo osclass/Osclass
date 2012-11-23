@@ -1,9 +1,9 @@
 <?php
 /*
- *      OSCLass – software for creating and publishing online classified
+ *      Osclass – software for creating and publishing online classified
  *                           advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ *                        Copyright (C) 2012 OSCLASS
  *
  *       This program is free software: you can redistribute it and/or
  *     modify it under the terms of the GNU Affero General Public License
@@ -83,8 +83,8 @@ if( !is_numeric($step) ) {
 }
 
 if( is_osclass_installed( ) ) {
-    $message = __("Looks like you've already installed OSClass. To reinstall please clear your old database tables first.");
-    osc_die('OSClass &raquo; Error', $message) ;
+    $message = __("Looks like you've already installed Osclass. To reinstall please clear your old database tables first.");
+    osc_die('Osclass &raquo; Error', $message) ;
 }
 
 switch( $step ) {
@@ -129,7 +129,7 @@ switch( $step ) {
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xml:lang="en-US">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title><?php _e('OSClass Installation'); ?></title>
+        <title><?php _e('Osclass Installation'); ?></title>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/jquery.js" type="text/javascript"></script>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/jquery-ui.js" type="text/javascript"></script>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/vtip/vtip.js" type="text/javascript"></script>
@@ -144,7 +144,7 @@ switch( $step ) {
             <div id="container">
                 <div id="header" class="installation">
                     <h1 id="logo">
-                        <img src="<?php echo get_absolute_url(); ?>oc-includes/images/osclass-logo.png" alt="OSClass" title="OSClass" />
+                        <img src="<?php echo get_absolute_url(); ?>oc-includes/images/osclass-logo.png" alt="Osclass" title="Osclass" />
                     </h1>
                     <?php if(in_array($step, array(2,3))) { ?>
                     <ul id="nav">
@@ -199,7 +199,7 @@ switch( $step ) {
                                 <input type="checkbox" name="save_stats" id="save_stats" checked="checked" value="1" />
                                 <input type="hidden" name="step" value="2" />
                                 <label for="save_stats">
-                                    <?php _e('Help make OSClass better by automatically sending usage statistics and crash reports to OSClass.');?>
+                                    <?php _e('Help make Osclass better by automatically sending usage statistics and crash reports to Osclass.');?>
                                 </label>
                             </div>
                         </div>
