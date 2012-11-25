@@ -31,11 +31,11 @@
             });
 
             var base_url           = '<?php echo osc_admin_base_url(); ?>';
-            var s_close            = '<?php echo osc_esc_js(_e('Close')); ?>';
-            var s_view_more        = '<?php echo osc_esc_js(_e('View more')); ?>';
-            var addText            = '<?php echo osc_esc_js(_e('Add')); ?>';
-            var cancelText         = '<?php echo osc_esc_js(_e('Cancel')); ?>';
-            var editText           = '<?php echo osc_esc_js(_e('Edit')); ?>';
+            var s_close            = '<?php echo osc_esc_js(__('Close')); ?>';
+            var s_view_more        = '<?php echo osc_esc_js(__('View more')); ?>';
+            var addText            = '<?php echo osc_esc_js(__('Add')); ?>';
+            var cancelText         = '<?php echo osc_esc_js(__('Cancel')); ?>';
+            var editText           = '<?php echo osc_esc_js(__('Edit')); ?>';
             var editNewCountryText = '<?php echo osc_esc_js(__('Edit country')) ; ?>';
             var addNewCountryText  = '<?php echo osc_esc_js(__('Add new country')) ; ?>';
             var editNewRegionText  = '<?php echo osc_esc_js(__('Edit region')) ; ?>';
@@ -96,8 +96,8 @@
             </p>
              <div class="form-actions">
                 <div class="wrapper">
-                    <button class="btn btn-red close-dialog" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                    <button type="submit" class="btn btn-submit" ><?php echo osc_esc_html( __('Add country') ) ; ?></button>
+                    <button class="btn btn-red close-dialog" ><?php _e('Cancel') ; ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php _e('Add country') ; ?></button>
                 </div>
             </div>
         </form>
@@ -116,8 +116,8 @@
             </p>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button class="btn btn-red close-dialog" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                    <button type="submit" class="btn btn-submit" ><?php echo osc_esc_html( __('Edit country') ) ; ?></button>
+                    <button class="btn btn-red close-dialog" ><?php _e('Cancel') ; ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php _e('Edit country') ; ?></button>
                 </div>
             </div>
         </form>
@@ -141,8 +141,8 @@
             </table>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button class="btn btn-red close-dialog" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                    <button type="submit" class="btn btn-submit" ><?php echo osc_esc_html( __('Add region') ) ; ?></button>
+                    <button class="btn btn-red close-dialog" ><?php _e('Cancel') ; ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php _e('Add region') ; ?></button>
                 </div>
             </div>
         </form>
@@ -165,8 +165,8 @@
             </table>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button class="btn btn-red close-dialog" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                    <button type="submit" class="btn btn-submit" ><?php echo osc_esc_html( __('Edit region') ) ; ?></button>
+                    <button class="btn btn-red close-dialog" ><?php _e('Cancel') ; ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php _e('Edit region') ; ?></button>
                 </div>
             </div>
         </form>
@@ -192,8 +192,8 @@
             </table>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button class="btn btn-red close-dialog" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                    <button type="submit" class="btn btn-submit" ><?php echo osc_esc_html( __('Add city') ) ; ?></button>
+                    <button class="btn btn-red close-dialog" ><?php _e('Cancel') ; ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php _e('Add city') ; ?></button>
                 </div>
             </div>
         </form>
@@ -216,8 +216,8 @@
             </table>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button class="btn btn-red close-dialog" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                    <button type="submit" class="btn btn-submit" ><?php echo osc_esc_html( __('Edit city') ) ; ?></button>
+                    <button class="btn btn-red close-dialog" ><?php _e('Cancel') ; ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php _e('Edit city') ; ?></button>
                 </div>
             </div>
         </form>
