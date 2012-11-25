@@ -102,8 +102,8 @@
             </div>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button id="market_cancel" class="btn btn-red" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                    <button id="market_install" class="btn btn-submit" ><?php echo osc_esc_html( __('Continue install') ) ; ?></button>
+                    <button id="market_cancel" class="btn btn-red" ><?php _e('Cancel') ; ?></button>
+                    <button id="market_install" class="btn btn-submit" ><?php _e('Continue install') ; ?></button>
                 </div>
             </div>
         </form>
