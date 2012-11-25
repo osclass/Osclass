@@ -269,7 +269,7 @@
                     content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=plugins&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php echo osc_esc_js(__('Close')); ?></a>';
                     content += "</p>";
                 } else {
-                    content += '<a class="btn btn-mini btn-green" onclick=\'$(".ui-dialog-content").dialog("close");\'><?php _e('Close'); ?>...</a>';
+                    content += '<a class="btn btn-mini btn-green" onclick=\'$(".ui-dialog-content").dialog("close");\'><?php echo osc_esc_js(__('Close')); ?>...</a>';
                 }
                 $("#downloading .osc-modal-content").html(content);
             });
