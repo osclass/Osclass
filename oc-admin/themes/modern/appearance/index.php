@@ -145,7 +145,7 @@
                                 </tr>
                                 <tr class="even">
                                     <td><?php _e('URL') ; ?></td>
-                                    <td><a id="market_url" href="#"><?php _e("Download manually"); ?></span></td>
+                                    <td><span id="market_url_span"><a id="market_url" href="#"><?php _e("Download manually"); ?></a></span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -153,8 +153,8 @@
                     </div>
                     <div class="form-actions">
                         <div class="wrapper">
-                            <button id="market_cancel" class="btn btn-red" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                            <button id="market_install" class="btn btn-submit" ><?php echo osc_esc_html( __('Continue install') ) ; ?></button>
+                            <button id="market_cancel" class="btn btn-red" ><?php _e('Cancel'); ?></button>
+                            <button id="market_install" class="btn btn-submit" ><?php _e('Continue install'); ?></button>
                         </div>
                     </div>
                 </form>
