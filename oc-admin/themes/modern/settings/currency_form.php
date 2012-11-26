@@ -126,7 +126,7 @@
                 </div>
                 <div class="form-actions">
                     <?php if( $typeForm == 'edit_post' ) { ?>
-                    <input class="btn btn-red" type="button" value="Cancel" onclick="location.href='<?php echo osc_admin_base_url(true); ?>?page=settings&amp;action=currencies'">
+                    <input class="btn btn-red" type="button" value="<?php echo osc_esc_html( __('Cancel')); ?>" onclick="location.href='<?php echo osc_admin_base_url(true); ?>?page=settings&amp;action=currencies'">
                     <?php } ?>
                     <input type="submit" value="<?php echo osc_esc_html(customText('button')) ; ?>" class="btn btn-submit" />
                 </div>
