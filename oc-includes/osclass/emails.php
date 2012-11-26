@@ -64,7 +64,7 @@
 
         $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_hourly_title', $page_description[$prefLocale]['s_title']));
         $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_hourly_description', $page_description[$prefLocale]['s_text']));
-        
+
         if( $user['fk_i_user_id'] != 0 ) {
             $user = User::newInstance()->findByPrimaryKey($user['fk_i_user_id']);
         } else {
@@ -110,7 +110,7 @@
 
         $_title = osc_apply_filter('email_title', osc_apply_filter('alert_email_daily_title', $page_description[$prefLocale]['s_title']));
         $_body  = osc_apply_filter('email_description', osc_apply_filter('alert_email_daily_description', $page_description[$prefLocale]['s_text']));
-        
+
         if( $user['fk_i_user_id'] != 0 ) {
             $user = User::newInstance()->findByPrimaryKey($user['fk_i_user_id']);
         } else {
@@ -346,7 +346,7 @@
         osc_sendMail($emailParams);
     }
     osc_add_hook('hook_email_new_item_non_register_user', 'fn_email_new_item_non_register_user');
-    
+
     function fn_email_user_forgot_password($user, $password_url) {
         $aPage = Page::newInstance()->findByInternalName('email_user_forgot_password');
         $locale = osc_current_user_locale() ;
@@ -670,7 +670,7 @@
         @unlink($path) ;
     }
     osc_add_hook('hook_email_item_inquiry', 'fn_email_item_inquiry');
-    
+
     function fn_email_new_comment_admin($aItem) {
         $authorName  = trim($aItem['authorName']);
         $authorName  = strip_tags($authorName);
@@ -689,7 +689,7 @@
         View::newInstance()->_exportVariableToView('item', $item);
         $itemURL = osc_item_url() ;
         $itemURL = '<a href="'.$itemURL.'" >'.$itemURL.'</a>';
-        
+
         $mPages = new Page() ;
         $aPage = $mPages->findByInternalName('email_new_comment_admin') ;
         $locale = osc_current_user_locale() ;
@@ -801,7 +801,7 @@
             $all,
             $item['s_description'],
             $item['s_country'],
-            osc_prepare_price($item['i_price']),
+            osc_format_price($item['i_price']),
             $item['s_region'],
             $item['s_city'],
             $item['pk_i_id'],
@@ -896,7 +896,7 @@
             $all,
             $item['s_description'],
             $item['s_country'],
-            osc_prepare_price($item['i_price']),
+            osc_format_price($item['i_price']),
             $item['s_region'],
             $item['s_city'],
             $item['pk_i_id'],
@@ -987,7 +987,7 @@
             $all,
             $item['s_description'],
             $item['s_country'],
-            osc_prepare_price($item['i_price']),
+            osc_format_price($item['i_price']),
             $item['s_region'],
             $item['s_city'],
             $item['pk_i_id'],
