@@ -390,7 +390,6 @@
                     $result = $mItem->contact();
 
                     osc_run_hook('post_item_contact_post', $item);
-
                     if(is_string($result)){
                         osc_add_flash_error_message( $result ) ;
                     } else {
