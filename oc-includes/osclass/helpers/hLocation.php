@@ -125,7 +125,7 @@
      */
     function osc_has_city_areas($city = '%%%%') {
         if ( !View::newInstance()->_exists('city_areas') ) {
-            View::newInstance()->_exportVariableToView('city_areas', Search::newInstance()->listCityAreas($region, ">=", "city_area_name ASC" ) ) ;
+            View::newInstance()->_exportVariableToView('city_areas', Search::newInstance()->listCityAreas($city, ">=", "city_area_name ASC" ) ) ;
         }
         $result = View::newInstance()->_next('city_areas');
 
@@ -176,7 +176,7 @@
      */
     function osc_count_city_areas($city = '%%%%') {
         if ( !View::newInstance()->_exists('city_areas') ) {
-            View::newInstance()->_exportVariableToView('city_areas', Search::newInstance()->listCityAreas($region, ">=", "city_area_name ASC" ) ) ;
+            View::newInstance()->_exportVariableToView('city_areas', Search::newInstance()->listCityAreas($city, ">=", "city_area_name ASC" ) ) ;
         }
         return View::newInstance()->_count('city_areas') ;
     }
