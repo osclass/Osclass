@@ -404,13 +404,14 @@ CREATE TABLE %st_item_description_tmp (
         @unlink(osc_base_path() . 'user-non-secure.php');
         @unlink(osc_base_path() . 'user.php');
         @unlink(osc_base_path() . 'readme.php');
-    }
 
-    if(osc_version() < 320) {
         @unlink(osc_lib_path() . 'osclass/plugins.php');
+
+        $comm->query(sprintf('UPDATE %st_user t, (SELECT pk_i_id FROM %st_user) t1 SET t.s_username = CONCAT("user", t1.pk_i_id) WHERE t.pk_i_id = t1.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+        osc_set_preference('', 'admin,administrator,user');
     }
 
-    osc_changeVersionTo(320);
+    osc_changeVersionTo(310);
 
     echo '<div class="well ui-rounded-corners separate-top-medium">';
     echo '<p>'.__('Osclass &raquo; Updated correctly').'</p>' ;
