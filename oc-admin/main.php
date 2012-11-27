@@ -62,6 +62,32 @@
                                         $users[$user['d_date']] = $user['num'] ;
                                     }
 
+                                    if(function_exists('disk_free_space')) {
+                                        $freedisk = disk_free_space(osc_content_path()."uploads/");
+                                        if($freedisk!==false && $freedisk<10240) {
+                                            osc_add_flash_error_message(_m('You have very few free space left, users will not be able to upload pictures'), 'admin');
+                                        }
+                                    }
+
+                                    // show messages subscribed
+                                    $status_subscribe = Params::getParam('subscribe_osclass');
+                                    if( $status_subscribe != '' ) {
+                                        switch( $status_subscribe ) {
+                                            case -1:
+                                                osc_add_flash_error_message(_m('Entered an invalid email'), 'admin');
+                                            break;
+                                            case 0:
+                                                osc_add_flash_warning_message(_m("You're already subscribed"), 'admin');
+                                            break;
+                                            case 1:
+                                                osc_add_flash_ok_message(_m('Subscribed correctly'), 'admin');
+                                            break;
+                                            default:
+                                                osc_add_flash_warning_message(_m("Error subscribing"), 'admin');
+                                            break;
+                                        }
+                                    }
+
                                     $this->_exportVariableToView("item_stats", $items);
                                     $this->_exportVariableToView("user_stats", $users);
                                     //calling the view...

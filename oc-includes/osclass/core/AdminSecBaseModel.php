@@ -61,25 +61,6 @@
                 }
             }
 
-            // show messages subscribed
-            $status_subscribe = Params::getParam('subscribe_osclass');
-            if( $status_subscribe != '' ) {
-                switch( $status_subscribe ) {
-                    case -1:
-                        osc_add_flash_error_message(_m('Entered an invalid email'), 'admin');
-                    break;
-                    case 0:
-                        osc_add_flash_warning_message(_m("You're already subscribed"), 'admin');
-                    break;
-                    case 1:
-                        osc_add_flash_ok_message(_m('Subscribed correctly'), 'admin');
-                    break;
-                    default:
-                        osc_add_flash_warning_message(_m("Error subscribing"), 'admin');
-                    break;
-                }
-            }
-
             // show donation successful
             if( Params::getParam('donation') == 'successful' ) {
                 osc_add_flash_ok_message(_m('Thank you very much for your donation'), 'admin');
