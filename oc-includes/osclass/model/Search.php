@@ -1203,7 +1203,11 @@
             }
 
             $result = $this->dao->get();
-            return $result->result();
+            if($result) {
+                return $result->result();
+            } else {
+                return array();
+            }
         }
 
         /**
