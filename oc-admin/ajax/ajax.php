@@ -522,6 +522,16 @@
                         }
                     }
                 break;
+
+                case 'check_username_availability':
+                    $user = User::newInstance()->findByUsername(Params::getParam('s_username'));
+                    if(isset($user['s_username'])) {
+                        echo json_encode(array('exists' => 1));
+                    } else {
+                        echo json_encode(array('exists' => 0));
+                    }
+                break;
+
                 /******************************
                  ** COMPLETE UPGRADE PROCESS **
                  ******************************/

@@ -61,7 +61,6 @@
                     $('li.parent').each(function() {
                         var totalInputSub = $(this).find('ul.sub>li>input').size();
                         var totalInputSubChecked = $(this).find('ul.sub>li>input:checked').size();
-
                         $(this).find('ul.sub>li>input').each(function(){
                             $(this).hide();
                             var id = $(this).attr('id');
@@ -85,7 +84,7 @@
                                     var aux = $('<div class="chbx checked"><span></span></div>').attr('id', id);   
                                     $(input).before(aux);
                                 } else {
-                                    var aux = $('<div class="chbx"><span></span></div>').attr('id', id);   
+                                    var aux = $('<div class="chbx"><span></span></div>').attr('id', id);
                                     $(input).before(aux);
                                 }
                             } else {
@@ -98,7 +97,7 @@
                             $(input).before(aux);
                         }else if(totalInputSubChecked < totalInputSub) {
                             var aux = $('<div class="chbx semi-checked"><span></span></div>').attr('id', id);
-                            $(input).before();
+                            $(input).before(aux);
                         }
                     });
 

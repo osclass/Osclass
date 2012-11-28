@@ -33,7 +33,7 @@
      * @return int
      */
     function osc_time_cookie() {
-        return ( 31536000 ) ; // one year in seconds
+        return ( 31536000 ); // one year in seconds
     }
 
     /**
@@ -42,7 +42,7 @@
      * @return boolean
      */
     function osc_comments_enabled() {
-        return (getBoolPreference('enabled_comments')) ;
+        return (getBoolPreference('enabled_comments'));
     }
 
     /**
@@ -51,7 +51,7 @@
      * @return int
      */
     function osc_comments_per_page() {
-        return (getPreference('comments_per_page')) ;
+        return (getPreference('comments_per_page'));
     }
 
     /**
@@ -60,7 +60,7 @@
      * @return int
      */
     function osc_timezone() {
-        return (getPreference('timezone')) ;
+        return (getPreference('timezone'));
     }
 
     /**
@@ -69,7 +69,7 @@
      * @return boolean
      */
     function osc_reg_user_post_comments() {
-        return (getPreference('reg_user_post_comments')) ;
+        return (getPreference('reg_user_post_comments'));
     }
 
     /**
@@ -78,7 +78,16 @@
      * @return boolean
      */
     function osc_reg_user_can_contact() {
-        return (getPreference('reg_user_can_contact')) ;
+        return (getPreference('reg_user_can_contact'));
+    }
+
+    /**
+     * Gets list of blacklsited terms for usernames
+     *
+     * @return string
+     */
+    function osc_username_blacklist() {
+        return (getPreference('username_blacklist'));
     }
 
     /**
@@ -87,7 +96,7 @@
      * @return boolean
      */
     function osc_users_enabled() {
-        return (getBoolPreference('enabled_users')) ;
+        return (getBoolPreference('enabled_users'));
     }
 
     /**
@@ -96,7 +105,7 @@
      * @return boolean
      */
     function osc_user_registration_enabled() {
-        return (getBoolPreference('enabled_user_registration')) ;
+        return (getBoolPreference('enabled_user_registration'));
     }
 
     /**
@@ -105,7 +114,7 @@
      * @return boolean
      */
     function osc_user_validation_enabled() {
-        return (getBoolPreference('enabled_user_validation')) ;
+        return (getBoolPreference('enabled_user_validation'));
     }
 
     /**
@@ -114,7 +123,7 @@
      * @return boolean
      */
     function osc_logged_user_item_validation() {
-        return (getBoolPreference('logged_user_item_validation')) ;
+        return (getBoolPreference('logged_user_item_validation'));
     }
 
     /**
@@ -123,7 +132,7 @@
      * @return int
      */
     function osc_moderate_comments() {
-        return (getPreference('moderate_comments')) ;
+        return (getPreference('moderate_comments'));
     }
 
     /**
@@ -132,7 +141,7 @@
      * @return boolean
      */
     function osc_notify_new_comment() {
-        return (getBoolPreference('notify_new_comment')) ;
+        return (getBoolPreference('notify_new_comment'));
     }
 
     /**
@@ -141,7 +150,7 @@
      * @return boolean
      */
     function osc_notify_new_comment_user() {
-        return (getBoolPreference('notify_new_comment_user')) ;
+        return (getBoolPreference('notify_new_comment_user'));
     }
 
     /**
@@ -150,7 +159,7 @@
      * @return boolean
      */
     function osc_rewrite_enabled() {
-        return (getBoolPreference('rewriteEnabled')) ;
+        return (getBoolPreference('rewriteEnabled'));
     }
 
     /**
@@ -159,7 +168,7 @@
      * @return boolean
      */
     function osc_mod_rewrite_loaded() {
-        return (getBoolPreference('mod_rewrite_loaded')) ;
+        return (getBoolPreference('mod_rewrite_loaded'));
     }
 
     /**
@@ -168,7 +177,7 @@
      * @return boolean
      */
     function osc_keep_original_image() {
-        return (getBoolPreference('keep_original_image')) ;
+        return (getBoolPreference('keep_original_image'));
     }
 
     /**
@@ -177,7 +186,7 @@
      * @return boolean
      */
     function osc_auto_cron() {
-        return (getBoolPreference('auto_cron')) ;
+        return (getBoolPreference('auto_cron'));
     }
 
     /**
@@ -186,7 +195,7 @@
      * @return boolean
      */
     function osc_recaptcha_items_enabled() {
-        return (getBoolPreference('enabled_recaptcha_items')) ;
+        return (getBoolPreference('enabled_recaptcha_items'));
     }
 
     /**
@@ -204,7 +213,7 @@
      * @return int
      */
     function osc_moderate_items() {
-        return (getPreference('moderate_items')) ;
+        return (getPreference('moderate_items'));
     }
 
     /**
@@ -213,7 +222,7 @@
      * @return boolean
      */
     function osc_reg_user_post() {
-        return (getBoolPreference('reg_user_post')) ;
+        return (getBoolPreference('reg_user_post'));
     }
 
     /**
@@ -222,7 +231,7 @@
      * @return boolean
      */
     function osc_price_enabled_at_items() {
-        return (getBoolPreference('enableField#f_price@items')) ;
+        return (getBoolPreference('enableField#f_price@items'));
     }
 
     /**
@@ -231,7 +240,7 @@
      * @return boolean
      */
     function osc_images_enabled_at_items() {
-        return (getBoolPreference('enableField#images@items')) ;
+        return (getBoolPreference('enableField#images@items'));
     }
 
     /**
@@ -240,7 +249,7 @@
      * @return int
      */
     function osc_max_images_per_item() {
-        return (getPreference('numImages@items')) ;
+        return (getPreference('numImages@items'));
     }
 
     /**
@@ -249,7 +258,7 @@
      * @return boolean
      */
     function osc_notify_contact_friends() {
-        return(getBoolPreference('notify_contact_friends')) ;
+        return(getBoolPreference('notify_contact_friends'));
     }
 
     /**
@@ -258,7 +267,7 @@
      * @return boolean
      */
     function osc_notify_contact_item() {
-        return(getBoolPreference('notify_contact_item')) ;
+        return(getBoolPreference('notify_contact_item'));
     }
 
     /**
@@ -267,7 +276,7 @@
      * @return boolean
      */
     function osc_item_attachment() {
-        return(getBoolPreference('item_attachment')) ;
+        return(getBoolPreference('item_attachment'));
     }
 
     /**
@@ -276,7 +285,7 @@
      * @return boolean
      */
     function osc_contact_attachment() {
-        return(getBoolPreference('contact_attachment')) ;
+        return(getBoolPreference('contact_attachment'));
     }
 
     /**
@@ -285,7 +294,7 @@
      * @return boolean
      */
     function osc_notify_new_item() {
-        return(getBoolPreference('notify_new_item')) ;
+        return(getBoolPreference('notify_new_item'));
     }
 
     /**
@@ -294,7 +303,7 @@
      * @return boolean
      */
     function osc_notify_new_user() {
-        return(getBoolPreference('notify_new_user')) ;
+        return(getBoolPreference('notify_new_user'));
     }
 
     /**
@@ -303,7 +312,7 @@
      * @return boolean
      */
     function osc_mailserver_auth() {
-        return(getBoolPreference('mailserver_auth')) ;
+        return(getBoolPreference('mailserver_auth'));
     }
 
     /**
@@ -312,7 +321,7 @@
      * @return boolean
      */
     function osc_mailserver_pop() {
-        return(getBoolPreference('mailserver_pop')) ;
+        return(getBoolPreference('mailserver_pop'));
     }
 
 
@@ -323,7 +332,7 @@
      * @return string
      */
     function osc_rewrite_rules() {
-        return (getPreference('rewrite_rules')) ;
+        return (getPreference('rewrite_rules'));
     }
 
     /**
@@ -332,7 +341,7 @@
      * @return int
      */
     function osc_max_size_kb() {
-        return (getPreference('maxSizeKb')) ;
+        return (getPreference('maxSizeKb'));
     }
 
     /**
@@ -341,7 +350,7 @@
      * @return string
      */
     function osc_allowed_extension() {
-        return (getPreference('allowedExt')) ;
+        return (getPreference('allowedExt'));
     }
 
     /**
@@ -350,7 +359,7 @@
      * @return string
      */
     function osc_use_imagick() {
-        return (getBoolPreference('use_imagick')) ;
+        return (getBoolPreference('use_imagick'));
     }
 
     /**
@@ -359,7 +368,7 @@
      * @return string
      */
     function osc_thumbnail_dimensions() {
-        return (getPreference('dimThumbnail')) ;
+        return (getPreference('dimThumbnail'));
     }
 
     /**
@@ -368,7 +377,7 @@
      * @return string
      */
     function osc_preview_dimensions() {
-        return (getPreference('dimPreview')) ;
+        return (getPreference('dimPreview'));
     }
 
     /**
@@ -377,7 +386,7 @@
      * @return string
      */
     function osc_normal_dimensions() {
-        return (getPreference('dimNormal')) ;
+        return (getPreference('dimNormal'));
     }
 
     /**
@@ -386,7 +395,7 @@
      * @return string
      */
     function osc_last_version_check() {
-        return (getPreference('last_version_check')) ;
+        return (getPreference('last_version_check'));
     }
 
     /**
@@ -395,7 +404,7 @@
      * @return string
      */
     function osc_themes_last_version_check() {
-        return (getPreference('themes_last_version_check')) ;
+        return (getPreference('themes_last_version_check'));
     }
 
     /**
@@ -404,7 +413,7 @@
      * @return string
      */
     function osc_plugins_last_version_check() {
-        return (getPreference('plugins_last_version_check')) ;
+        return (getPreference('plugins_last_version_check'));
     }
 
     /**
@@ -413,7 +422,7 @@
      * @return string
      */
     function osc_update_core_json() {
-        return (getPreference('update_core_json')) ;
+        return (getPreference('update_core_json'));
     }
 
     /**
@@ -422,7 +431,7 @@
      * @return int
      */
     function osc_version() {
-        return (getPreference('version')) ;
+        return (getPreference('version'));
     }
 
     /**
@@ -431,7 +440,7 @@
      * @return string
      */
     function osc_page_title() {
-        return (getPreference('pageTitle')) ;
+        return (getPreference('pageTitle'));
     }
 
     /**
@@ -440,7 +449,7 @@
      * @return string
      */
     function osc_language() {
-        return(getPreference('language')) ;
+        return(getPreference('language'));
     }
 
     /**
@@ -449,7 +458,7 @@
      * @return string
      */
     function osc_admin_language() {
-        return(getPreference('admin_language')) ;
+        return(getPreference('admin_language'));
     }
 
     /**
@@ -458,7 +467,7 @@
      * @return string
      */
     function osc_theme() {
-        return(getPreference('theme')) ;
+        return(getPreference('theme'));
     }
 
     /**
@@ -467,7 +476,7 @@
      * @return string
      */
     function osc_admin_theme() {
-        return(getPreference('admin_theme')) ;
+        return(getPreference('admin_theme'));
     }
 
     /**
@@ -476,7 +485,7 @@
      * @return string
      */
     function osc_page_description() {
-        return(getPreference('pageDesc')) ;
+        return(getPreference('pageDesc'));
     }
 
     /**
@@ -485,7 +494,7 @@
      * @return string
      */
     function osc_contact_email() {
-        return(getPreference('contactEmail')) ;
+        return(getPreference('contactEmail'));
     }
 
     /**
@@ -494,7 +503,7 @@
      * @return string
      */
     function osc_date_format() {
-        return(getPreference('dateFormat')) ;
+        return(getPreference('dateFormat'));
     }
 
     /**
@@ -503,7 +512,7 @@
      * @return string
      */
     function osc_time_format() {
-        return(getPreference('timeFormat')) ;
+        return(getPreference('timeFormat'));
     }
 
     /**
@@ -512,7 +521,7 @@
      * @return string
      */
     function osc_week_starts_at() {
-        return(getPreference('weekStart')) ;
+        return(getPreference('weekStart'));
     }
 
     /**
@@ -521,7 +530,7 @@
      * @return int
      */
     function osc_num_rss_items() {
-        return(getPreference('num_rss_items')) ;
+        return(getPreference('num_rss_items'));
     }
 
     /**
@@ -530,7 +539,7 @@
      * @return string
      */
     function osc_currency() {
-        return(getPreference('currency')) ;
+        return(getPreference('currency'));
     }
 
     /**
@@ -539,7 +548,7 @@
      * @return string
      */
     function osc_akismet_key() {
-        return(getPreference('akismetKey')) ;
+        return(getPreference('akismetKey'));
     }
 
     /**
@@ -548,7 +557,7 @@
      * @return string
      */
     function osc_recaptcha_private_key() {
-        return(getPreference('recaptchaPrivKey')) ;
+        return(getPreference('recaptchaPrivKey'));
     }
 
     /**
@@ -589,7 +598,7 @@
      * @return int
      */
     function osc_market_external_sources() {
-        return(getBoolPreference('marketAllowExternalSources')) ;
+        return(getBoolPreference('marketAllowExternalSources'));
     }
 
     /**
@@ -598,7 +607,7 @@
      * @return string
      */
     function osc_recaptcha_public_key() {
-        return(getPreference('recaptchaPubKey')) ;
+        return(getPreference('recaptchaPubKey'));
     }
 
     /**
@@ -607,7 +616,7 @@
      * @return string
      */
     function osc_mailserver_type() {
-        return(getPreference('mailserver_type')) ;
+        return(getPreference('mailserver_type'));
     }
 
     /**
@@ -616,7 +625,7 @@
      * @return string
      */
     function osc_mailserver_host() {
-        return(getPreference('mailserver_host')) ;
+        return(getPreference('mailserver_host'));
     }
 
     /**
@@ -625,7 +634,7 @@
      * @return int
      */
     function osc_mailserver_port() {
-        return(getPreference('mailserver_port')) ;
+        return(getPreference('mailserver_port'));
     }
 
     /**
@@ -634,7 +643,7 @@
      * @return string
      */
     function osc_mailserver_username() {
-        return(getPreference('mailserver_username')) ;
+        return(getPreference('mailserver_username'));
     }
 
     /**
@@ -643,7 +652,7 @@
      * @return string
      */
     function osc_mailserver_password() {
-        return(getPreference('mailserver_password')) ;
+        return(getPreference('mailserver_password'));
     }
 
     /**
@@ -652,7 +661,7 @@
      * @return boolean
      */
     function osc_mailserver_ssl() {
-        return(getPreference('mailserver_ssl')) ;
+        return(getPreference('mailserver_ssl'));
     }
 
     /**
@@ -661,7 +670,7 @@
      * @return string
      */
     function osc_active_plugins() {
-        return(getPreference('active_plugins')) ;
+        return(getPreference('active_plugins'));
     }
 
     /**
@@ -670,7 +679,7 @@
      * @return string
      */
     function osc_installed_plugins() {
-        return(getPreference('installed_plugins')) ;
+        return(getPreference('installed_plugins'));
     }
 
     /**
@@ -679,7 +688,7 @@
      * @return string
      */
     function osc_default_order_field_at_search() {
-        return(getPreference('defaultOrderField@search')) ;
+        return(getPreference('defaultOrderField@search'));
     }
 
     /**
@@ -688,7 +697,7 @@
      * @return string
      */
     function osc_default_order_type_at_search() {
-        return(getPreference('defaultOrderType@search')) ;
+        return(getPreference('defaultOrderType@search'));
     }
 
     /**
@@ -697,7 +706,7 @@
      * @return string
      */
     function osc_default_show_as_at_search() {
-        return(getPreference('defaultShowAs@search')) ;
+        return(getPreference('defaultShowAs@search'));
     }
 
     /**
@@ -706,7 +715,7 @@
      * @return int
      */
     function osc_max_results_per_page_at_search() {
-        return(getPreference('maxResultsPerPage@search')) ;
+        return(getPreference('maxResultsPerPage@search'));
     }
 
     /**
@@ -715,7 +724,7 @@
      * @return int
      */
     function osc_default_results_per_page_at_search() {
-        return(getPreference('defaultResultsPerPage@search')) ;
+        return(getPreference('defaultResultsPerPage@search'));
     }
 
     /**
@@ -724,7 +733,7 @@
      * @return int
      */
     function osc_max_latest_items() {
-        return(getPreference('maxLatestItems@home')) ;
+        return(getPreference('maxLatestItems@home'));
     }
 
     /**
@@ -733,11 +742,11 @@
      * @return boolean
      */
     function osc_save_latest_searches() {
-        return(getBoolPreference('save_latest_searches')) ;
+        return(getBoolPreference('save_latest_searches'));
     }
 
     function osc_purge_latest_searches() {
-        return(getPreference('purge_latest_searches')) ;
+        return(getPreference('purge_latest_searches'));
     }
 
     /**
@@ -764,7 +773,7 @@
      * @return boolean
      */
     function osc_selectable_parent_categories() {
-        return(getPreference('selectable_parent_categories')) ;
+        return(getPreference('selectable_parent_categories'));
     }
 
     /**
@@ -773,7 +782,7 @@
      * @return int
      */
     function osc_max_latest_items_at_home() {
-        return(getPreference('maxLatestItems@home')) ;
+        return(getPreference('maxLatestItems@home'));
     }
 
     /**
@@ -883,12 +892,12 @@
      * @return boolean
      */
     function getBoolPreference($key) {
-        $_P = Preference::newInstance() ;
+        $_P = Preference::newInstance();
 
         if($_P->get($key)) {
-            return true ;
+            return true;
         } else {
-            return false ;
+            return false;
         }
     }
 
@@ -901,7 +910,7 @@
      * @return string
      */
     function getPreference($key, $section = 'osclass') {
-        $_P = Preference::newInstance() ;
-        return($_P->get($key, $section)) ;
+        $_P = Preference::newInstance();
+        return($_P->get($key, $section));
     }
 ?>

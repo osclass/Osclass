@@ -72,6 +72,15 @@
                         </label>
                     </div>
                 </div>
+                <div class="form-row">
+                    <div class="form-label"> <?php _e('Username blacklist') ; ?></div>
+                    <div class="form-controls">
+                        <label id="username_blacklist" class="form-label-input">
+                            <input type="text" id="username_blacklist" name="username_blacklist" value="<?php echo osc_esc_html(osc_username_blacklist()); ?>" />
+                            <span class="help-box"><?php _e('List of terms not allowed in usernames, separated by commas') ; ?></span>
+                        </label>
+                    </div>
+                </div>
                 <div class="form-actions">
                     <input type="submit" id="save_changes" value="<?php echo osc_esc_html( __('Save changes') ) ; ?>" class="btn btn-submit" />
                 </div>

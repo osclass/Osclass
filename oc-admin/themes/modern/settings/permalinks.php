@@ -161,6 +161,10 @@
                             required: true,
                             minlength: 1
                         },
+                        rewrite_user_change_username: {
+                            required: true,
+                            minlength: 1
+                        },
                         rewrite_user_change_email_confirm: {
                             required: true,
                             minlength: 1
@@ -306,6 +310,10 @@
                         rewrite_user_change_email: {
                             required: '<?php echo osc_esc_js( __("Change email url: this field is required")); ?>.',
                             minlength: '<?php echo osc_esc_js( __("Change email url: this field is required")); ?>.'
+                        },
+                        rewrite_user_change_username: {
+                            required: '<?php echo osc_esc_js( __("Change username url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Change username url: this field is required")); ?>.'
                         },
                         rewrite_user_change_email_confirm: {
                             required: '<?php echo osc_esc_js( __("Change email confirm url: this field is required")); ?>.',

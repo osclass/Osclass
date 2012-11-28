@@ -216,6 +216,15 @@
     }
 
     /**
+     * Gets username of current user
+     *
+     * @return string
+     */
+    function osc_user_username() {
+        return (string) osc_user_field("s_username");
+    }
+
+    /**
      * Gets registration date of current user
      *
      * @return string

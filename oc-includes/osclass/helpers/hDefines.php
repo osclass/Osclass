@@ -601,6 +601,19 @@
     }
 
     /**
+     * Gets url to change username
+     *
+     * @return string
+     */
+    function osc_change_user_username_url() {
+        if ( osc_rewrite_enabled() ) {
+            return osc_base_url() . osc_get_preference('rewrite_user_change_username');
+        } else {
+            return osc_base_url(true) . '?page=user&action=change_username' ;
+        }
+    }
+
+    /**
      * Gets confirmation url of change email
      *
      * @param int $userId

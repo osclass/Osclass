@@ -29,17 +29,15 @@
         <meta name="googlebot" content="noindex, nofollow" />
         <script type="text/javascript">
             $(document).ready(function() {
-                $('form#change-email').validate({
+                $('form#change-username').validate({
                     rules: {
-                        new_email: {
-                            required: true,
-                            email: true
+                        s_username: {
+                            required: true
                         }
                     },
                     messages: {
-                        new_email: {
-                            required: '?php echo osc_esc_js(__("Email: this field is required", "modern")); ?>.',
-                            email: '<?php echo osc_esc_js(__("Invalid email address", "modern")); ?>.'
+                        s_username: {
+                            required: '<?php echo osc_esc_js(__("Username: this field is required", "modern")); ?>.'
                         }
                     },
                     errorLabelContainer: "#error_list",
@@ -47,6 +45,28 @@
                 invalidHandler: function(form, validator) {
                     $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
                 }});
+
+                var cInterval;
+                $("#s_username").keydown(function(event) {
+                    if($("#s_username").attr("value")!='') {
+                        clearInterval(cInterval);
+                        cInterval = setInterval(function(){
+                            $.getJSON(
+                                "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_username_availability",
+                                {"s_username": $("#s_username").attr("value")},
+                                function(data){
+                                    clearInterval(cInterval);
+                                    if(data.exists==0) {
+                                        $("#available").text('<?php echo osc_esc_js(__("The username is available", "modern")); ?>');
+                                    } else {
+                                        $("#available").text('<?php echo osc_esc_js(__("The username is NOT available", "modern")); ?>');
+                                    }
+                                }
+                            );
+                        }, 1000);
+                    }
+                });
+
             });
         </script>
     </head>
@@ -60,20 +80,21 @@
                 <?php echo osc_private_user_menu() ; ?>
             </div>
             <div id="main" class="modify_profile">
-                <h2><?php _e('Change your e-mail', 'modern') ; ?></h2>
+                <h2><?php _e('Change your username', 'modern') ; ?></h2>
                 <ul id="error_list"></ul>
-                <form id="change-email" action="<?php echo osc_base_url(true) ; ?>" method="post">
+                <form id="change-username" action="<?php echo osc_base_url(true) ; ?>" method="post">
                     <input type="hidden" name="page" value="user" />
-                    <input type="hidden" name="action" value="change_email_post" />
+                    <input type="hidden" name="action" value="change_username_post" />
                     <fieldset>
                         <p>
-                            <label for="email"><?php _e('Current e-mail', 'modern') ; ?></label>
-                            <span><?php echo osc_logged_user_email(); ?></span>
+                            <label for="s_username"><?php _e('Username', 'modern') ; ?></label>
+                            <input type="text" name="s_username" id="s_username" value="" />
                         </p>
                         <p>
-                            <label for="new_email"><?php _e('New e-mail', 'modern') ; ?> *</label>
-                            <input type="text" name="new_email" id="new_email" value="" />
+                            <span class="help-box" ><?php _e('WARNING: Once set, you will not be able to change your username again. Choose wisely.', 'modern'); ?></span>
                         </p>
+                        <div style="clear:both;"></div>
+                        <div id="available"></div>
                         <div style="clear:both;"></div>
                         <button type="submit"><?php _e('Update', 'modern') ; ?></button>
                     </fieldset>

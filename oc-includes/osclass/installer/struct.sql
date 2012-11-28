@@ -106,6 +106,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     dt_reg_date DATETIME NOT NULL,
     dt_mod_date DATETIME NULL,
     s_name VARCHAR(100) NOT NULL,
+    s_username VARCHAR(100) NULL,
     s_password VARCHAR(40) NOT NULL,
     s_secret VARCHAR(40) NULL,
     s_email VARCHAR(100) NULL,

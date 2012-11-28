@@ -360,6 +360,11 @@
                                         $enabledUsers            = (($enabledUsers != '') ? true : false);
                                         $notifyNewUser           = Params::getParam('notify_new_user');
                                         $notifyNewUser           = (($notifyNewUser != '') ? true : false);
+                                        $usernameBlacklistTmp    = explode(",", Params::getParam('username_blacklist'));
+                                        foreach($usernameBlacklistTmp as $k => $v) {
+                                            $usernameBlacklistTmp[$k] = strtolower(trim($v));
+                                        }
+                                        $usernameBlacklist = implode(",", $usernameBlacklistTmp);
 
                                         $iUpdated += Preference::newInstance()->update(
                                                 array('s_value' => $enabledUserValidation),
@@ -376,6 +381,10 @@
                                         $iUpdated += Preference::newInstance()->update(
                                                 array('s_value' => $notifyNewUser),
                                                 array('s_name'  => 'notify_new_user')
+                                        );
+                                        $iUpdated += Preference::newInstance()->update(
+                                                array('s_value' => $usernameBlacklist),
+                                                array('s_name'  => 'username_blacklist')
                                         );
 
                                         if( $iUpdated > 0 ) {
