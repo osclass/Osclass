@@ -30,7 +30,7 @@ require_once LIB_PATH . 'osclass/formatting.php';
 require_once LIB_PATH . 'osclass/install-functions.php';
 require_once LIB_PATH . 'osclass/utils.php';
 require_once LIB_PATH . 'osclass/core/Translation.php';
-require_once LIB_PATH . 'osclass/plugins.php';
+require_once LIB_PATH . 'osclass/classes/Plugins.php';
 
 if( is_osclass_installed() ) {
     die() ;
@@ -92,7 +92,7 @@ function basic_info() {
             ,'e_type'   => 'STRING'
         )
     ) ;
-    
+
     $body  = sprintf(__('Welcome %s,'),Params::getParam('webtitle'))."<br/><br/>" ;
     $body .= sprintf(__('Your Osclass installation at %s is up and running. You can access the administration panel with these details:'), WEB_PATH)."<br/>";
     $body .= '<ul>';
@@ -121,7 +121,7 @@ function basic_info() {
         if( !$mail->Send() ) {
             return array('email_status' => Params::getParam('email') . "<br>" . $mail->ErrorInfo, 's_password'   => $password ) ;
         }
-        
+
         return array('email_status' => '', 's_password'   => $password ) ;
     } catch(phpmailerException $exception) {
         return array('email_status' => Params::getParam('email') . "<br>" . $exception->errorMessage(), 's_password'   => $password ) ;
@@ -129,11 +129,11 @@ function basic_info() {
 }
 
 function install_locations ( ) {
-    
+
     $country = Params::getParam("country-input");
     $region = Params::getParam("region-input");
     $city = Params::getParam("city-input");
-    
+
     if($country!='all') {
         if($region!='all') {
             if($city!='all') {
@@ -155,7 +155,7 @@ function install_locations ( ) {
     $comm = new DBCommandClass($c_db) ;
     $comm->query("SET FOREIGN_KEY_CHECKS = 0");
     $imported = $comm->importSQL($data_sql);
-    $comm->query("SET FOREIGN_KEY_CHECKS = 1");    
+    $comm->query("SET FOREIGN_KEY_CHECKS = 1");
     return $imported;
 }
 
