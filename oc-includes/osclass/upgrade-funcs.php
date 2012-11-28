@@ -407,8 +407,10 @@ CREATE TABLE %st_item_description_tmp (
 
         @unlink(osc_lib_path() . 'osclass/plugins.php');
 
-        $comm->query(sprintf('UPDATE %st_user t, (SELECT pk_i_id FROM %st_user) t1 SET t.s_username = CONCAT("user", t1.pk_i_id) WHERE t.pk_i_id = t1.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
-        osc_set_preference('', 'admin,administrator,user');
+        $comm->query(sprintf('UPDATE %st_user t, (SELECT pk_i_id FROM %st_user) t1 SET t.s_username = t1.pk_i_id WHERE t.pk_i_id = t1.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+        osc_set_preference('username_blacklist', 'admin,user', 'osclass', 'STRING');
+        osc_set_preference('rewrite_user_change_username', 'user/change_username');
+
     }
 
     osc_changeVersionTo(310);
