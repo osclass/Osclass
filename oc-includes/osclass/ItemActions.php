@@ -1271,7 +1271,7 @@
 
                             $freedisk = 4*osc_max_size_kb();
                             if(function_exists('disk_free_space')) {
-                                $freedisk = disk_free_space(osc_content_path() . 'uploads/');
+                                $freedisk = @disk_free_space(osc_content_path() . 'uploads/');
                             }
 
                             if($freedisk!=false) {
