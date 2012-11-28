@@ -133,6 +133,7 @@
                                                 $this->doView('user-change_username.php');
                 break;
                 case('change_username_post'):        //change password
+                                                osc_run_hook('before_username_change', Session::newInstance()->_get('userId'), Params::getParam('s_username'));
                                                 if(Params::getParam('s_username')!='') {
                                                     $user = User::newInstance()->findByUsername(Params::getParam('s_username'));
                                                     if(isset($user['s_username'])) {
@@ -142,6 +143,7 @@
                                                                  array('s_username' => Params::getParam('s_username'))
                                                                 ,array('pk_i_id' => Session::newInstance()->_get('userId')));
                                                         osc_add_flash_ok_message(_m('The username was updated'));
+                                                        osc_run_hook('after_username_change', Session::newInstance()->_get('userId'), Params::getParam('s_username'));
                                                         $this->redirectTo(osc_user_profile_url());
                                                     }
                                                 } else {
