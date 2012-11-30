@@ -29,7 +29,7 @@
         
         function __construct() { }
 
-        static function getParam($param, $htmlencode = false, $xss_check = true, $quotes_encode = false)
+        static function getParam($param, $htmlencode = false, $xss_check = true, $quotes_encode = true)
         {
             if ($param == "") return '' ;
             if (!isset($_REQUEST[$param])) return '' ;
