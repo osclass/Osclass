@@ -129,22 +129,35 @@
                                                     }
                                                 }
                 break;
-                case('change_username'):        //change password
+                case('change_username'):        //change username
                                                 $this->doView('user-change_username.php');
                 break;
-                case('change_username_post'):        //change password
-                                                osc_run_hook('before_username_change', Session::newInstance()->_get('userId'), Params::getParam('s_username'));
-                                                if(Params::getParam('s_username')!='') {
-                                                    $user = User::newInstance()->findByUsername(Params::getParam('s_username'));
+                case('change_username_post'):   //change username
+                                                $username = osc_sanitize_string(trim(Params::getParam('s_username')));
+                                                osc_run_hook('before_username_change', Session::newInstance()->_get('userId'), $username);
+                                                if($username!='') {
+                                                    $user = User::newInstance()->findByUsername($username);
                                                     if(isset($user['s_username'])) {
                                                         osc_add_flash_error_message(_m('The specified username is already in use'));
                                                     } else {
-                                                        User::newInstance()->update(
-                                                                 array('s_username' => Params::getParam('s_username'))
-                                                                ,array('pk_i_id' => Session::newInstance()->_get('userId')));
-                                                        osc_add_flash_ok_message(_m('The username was updated'));
-                                                        osc_run_hook('after_username_change', Session::newInstance()->_get('userId'), Params::getParam('s_username'));
-                                                        $this->redirectTo(osc_user_profile_url());
+                                                        $blacklist = explode(",", osc_username_blacklist());
+                                                        $found_username = false;
+                                                        foreach($blacklist as $bl) {
+                                                            if(stripos($input['s_username'], $bl)!==false) {
+                                                                $found_username = true;
+                                                                break;
+                                                            }
+                                                        }
+                                                        if(!$found_username) {
+                                                            User::newInstance()->update(
+                                                                     array('s_username' => $username)
+                                                                    ,array('pk_i_id' => Session::newInstance()->_get('userId')));
+                                                            osc_add_flash_ok_message(_m('The username was updated'));
+                                                            osc_run_hook('after_username_change', Session::newInstance()->_get('userId'), Params::getParam('s_username'));
+                                                            $this->redirectTo(osc_user_profile_url());
+                                                        } else {
+                                                            osc_add_flash_error_message(_m('The specified username is not valid, it contains some invalid words'));
+                                                        }
                                                     }
                                                 } else {
                                                     osc_add_flash_error_message(_m('The specified username could not be empty'));
