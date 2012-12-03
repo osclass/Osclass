@@ -73,7 +73,7 @@
             }
 
             if( is_numeric($error) && $error > 0) {
-                osc_run_hook('user_register_failed');
+                osc_run_hook('user_register_failed', $error);
                 return $error;
             }
 
