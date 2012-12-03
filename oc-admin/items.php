@@ -585,10 +585,6 @@
                                             Session::newInstance()->_clearVariables();
                                             osc_add_flash_ok_message( _m('A new listing has been added'), 'admin');
 
-                                            $itemId = Params::getParam('itemId');
-                                            $item = $this->itemManager->findByPrimaryKey($itemId);
-                                            osc_run_hook('posted_item', $item);
-                                            
                                             $this->redirectTo( $url );
                                         } else {
                                             osc_add_flash_error_message( $success, 'admin');

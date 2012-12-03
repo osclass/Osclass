@@ -152,11 +152,9 @@
                         }
 
                         $itemId         = Params::getParam('itemId');
-                        $item           = $this->itemManager->findByPrimaryKey($itemId);
 
                         $category = Category::newInstance()->findByPrimaryKey(Params::getParam('catId'));
                         View::newInstance()->_exportVariableToView('category', $category);
-                        osc_run_hook('posted_item', $item);
                         $this->redirectTo(osc_search_category_url());
                     }
                 break;

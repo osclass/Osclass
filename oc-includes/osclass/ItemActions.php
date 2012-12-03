@@ -33,7 +33,6 @@
          */
         public function add()
         {
-            $success     = true;
             $aItem       = $this->data;
 
             $code        = osc_genRandomPassword();
@@ -133,7 +132,7 @@
 
             // Handle error
             if ($flash_error) {
-                return $flash_error;
+                $success = $flash_error;
             } else {
                 if($aItem['price']!='') {
                     $aItem['currency'] = $aItem['currency'];
@@ -210,7 +209,6 @@
                         $mField->replace($itemId, $k, $v);
                     }
                 }
-                osc_run_hook('item_form_post', $aItem['catId'], $itemId);
 
                 // We need at least one record in t_item_stats
                 $mStats = new ItemStats();
@@ -219,14 +217,13 @@
                 $item = $this->manager->findByPrimaryKey($itemId);
                 $aItem['item'] = $item;
 
-                osc_run_hook('after_item_post') ;
 
                 Session::newInstance()->_set('last_publish_time', time());
                 if(!$this->is_admin) {
                     $this->sendEmails($aItem);
                 }
                 if($active=='INACTIVE') {
-                    return 1;
+                    $success = 1;
                 } else {
                     $aAux = array(
                         'fk_i_user_id'      => $aItem['userId'],
@@ -236,8 +233,16 @@
                         'fk_i_city_id'      => $location['fk_i_city_id']
                     );
                     $this->_increaseStats($aAux);
-                    return 2;
+                    $success = 2;
                 }
+
+                // THIS HOOK IS DEPRECATED
+                osc_run_hook('item_form_post', $aItem['catId'], $itemId);
+                // THIS HOOK IS DEPRECATED
+                osc_run_hook('after_item_post') ;
+                // THIS HOOK IS FINE
+                osc_run_hook('posted_item', $item);
+
             }
             return $success;
         }

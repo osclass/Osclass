@@ -1166,28 +1166,28 @@ function osc_change_permissions( $dir = ABS_PATH ) {
                 if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
                     if(!is_writable(str_replace("//", "/", $dir . "/" . $file))) {
                         $res = @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
+                        if(!$res) { return false; };
                     }
-                    if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
                     if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/themes")) {
                         if($file=="modern" || $file=="index.php") {
                             $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                            if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
+                            if(!$res) { return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/plugins")) {
                         if($file=="google_maps" || $file=="google_analytics" || $file=="index.php") {
                             $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                            if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
+                            if(!$res) { return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/languages")) {
                         if($file=="en_US" || $file=="index.php") {
                             $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                            if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
+                            if(!$res) { return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/downloads")) {
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/uploads")) {
                     } else {
                         $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                        if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
+                        if(!$res) { return false; };
                     }
                 } else {
                     if(!is_writable(str_replace("//", "/", $dir . "/" . $file))) {
