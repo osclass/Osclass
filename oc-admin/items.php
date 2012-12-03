@@ -511,7 +511,6 @@
                                         }
 
                                         $success = $mItems->edit();
-                                        osc_run_hook('edited_item', Item::newInstance()->findByPrimaryKey(Params::getParam('id')));
 
                                         if($success==1){
                                             osc_add_flash_ok_message( _m('Changes saved correctly'), 'admin');

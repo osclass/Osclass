@@ -236,11 +236,11 @@
                     $success = 2;
                 }
 
-                // THIS HOOK IS DEPRECATED
+                // THIS HOOK IS DEPRECATED, IT WILL NOT BE AVAILABLE IN 3.2
                 osc_run_hook('item_form_post', $aItem['catId'], $itemId);
-                // THIS HOOK IS DEPRECATED
+                // THIS HOOK IS DEPRECATED, IT WILL NOT BE AVAILABLE IN 3.2
                 osc_run_hook('after_item_post') ;
-                // THIS HOOK IS FINE
+                // THIS HOOK IS FINE, YAY!
                 osc_run_hook('posted_item', $item);
 
             }
@@ -333,7 +333,7 @@
 
             // Handle error
             if ($flash_error) {
-                return $flash_error ;
+                $success = $flash_error ;
             } else {
                 $location = array(
                     'fk_c_country_code' => $aItem['countryId'],
@@ -419,11 +419,14 @@
 
                 unset($old_item) ;
 
+                // THIS HOOK IS DEPRECATED, IT WILL NOT BE AVAILABLE IN 3.2
                 osc_run_hook('item_edit_post', $aItem['catId'], $aItem['idItem']);
-                return $result;
+                // THIS HOOK IS FINE, YAY!
+                osc_run_hook('edited_item', Item::newInstance()->findByPrimaryKey($id));
+                $success = $result;
             }
 
-            return 0;
+            return $success;
         }
 
         /**
