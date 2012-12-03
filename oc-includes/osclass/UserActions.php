@@ -31,42 +31,50 @@
         //add...
         function add()
         {
-            if( (osc_recaptcha_private_key() != '') && !$this->is_admin ) {
+            $error = false;
+            if( !$error && (osc_recaptcha_private_key() != '') && !$this->is_admin ) {
                 if( !$this->recaptcha() ) {
-                    return 4;
+                    $error = 4;
                 }
             }
 
-            if( Params::getParam('s_password', false, false) == '' ) {
-                return 6;
+            if( !$error && Params::getParam('s_password', false, false) == '' ) {
+                $error = 6;
             }
 
-            if( Params::getParam('s_password', false, false) != Params::getParam('s_password2', false, false) ) {
-                return 7;
+            if( !$error && Params::getParam('s_password', false, false) != Params::getParam('s_password2', false, false) ) {
+                $error = 7;
             }
 
             $input = $this->prepareData(true);
 
-            if( !osc_validate_email($input['s_email']) ) {
-                return 5;
+            if( !$error && !osc_validate_email($input['s_email']) ) {
+                $error = 5;
             }
 
             $email_taken = $this->manager->findByEmail($input['s_email']);
-            if( $email_taken != null ) {
-                return 3;
+            if( !$error && $email_taken != null ) {
+                $error = 3;
             }
 
-            if($input['s_username']!='') {
+            if(!$error && $input['s_username']!='') {
                 $username_taken = $this->manager->findByUsername($input['s_username']);
-                if( $username_taken != null ) {
-                    return 8;
+                if( !$error && $username_taken != null ) {
+                    osc_run_hook('register_email_taken', $input['s_email']);
+                    $error = 8;
                 }
                 $blacklist = explode(",", osc_username_blacklist());
                 foreach($blacklist as $bl) {
                     if(stripos($input['s_username'], $bl)!==false) {
-                        return 9;
+                        $error = 9;
+                        break;
                     }
                 }
+            }
+
+            if( is_numeric($error) && $error > 0) {
+                osc_run_hook('user_register_failed');
+                return $error;
             }
 
             $this->manager->insert($input);
