@@ -61,6 +61,12 @@
                 if( $username_taken != null ) {
                     return 8;
                 }
+                $blacklist = explode(",", osc_username_blacklist());
+                foreach($blacklist as $bl) {
+                    if(stripos($input['s_username'], $bl)!==false) {
+                        return 9;
+                    }
+                }
             }
 
             $this->manager->insert($input);
@@ -241,7 +247,7 @@
             $input['s_website']      = Params::getParam('s_website');
             $input['s_phone_land']   = Params::getParam('s_phone_land');
             $input['s_phone_mobile'] = Params::getParam('s_phone_mobile');
-            $input['s_username']     = Params::getParam('s_username');
+            $input['s_username']     = osc_sanitize_string(trim(Params::getParam('s_username')));
 
             //locations...
             $country = Country::newInstance()->findByCode( Params::getParam('countryId') );

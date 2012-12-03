@@ -40,6 +40,15 @@
         }
     }
 
+    /**
+     * Sanitize a string.
+     *
+     * @param string $value value to sanitize
+     * @return string sanitized
+     */
+    function osc_sanitize_string($value) {
+        return osc_sanitizeString($value);
+    }
 
     /**
      * Sanitize capitalization for a string.
