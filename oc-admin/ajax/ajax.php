@@ -581,6 +581,8 @@
                                         }
                                     }
                                     closedir($handle);
+                                    //TRY TO REMOVE THE ZIP PACKAGE
+                                    @unlink(osc_content_path() . 'downloads/' . $filename);
 
                                     if ($fail == 0) { // Everything is OK, continue
                                         /************************
@@ -756,9 +758,11 @@
 
                                         // Additional actions is not important for the rest of the proccess
                                         // We will inform the user of the problems but the upgrade could continue
+                                        // Also remove the zip package
                                         /****************************
                                          ** REMOVE TEMPORARY FILES **
                                          ****************************/
+                                        @unlink(osc_content_path() . 'downloads/' . $filename);
                                         $path = osc_content_path() . 'downloads/oc-temp';
                                         $rm_errors = 0;
                                         $dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::CHILD_FIRST);
