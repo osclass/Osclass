@@ -62,27 +62,15 @@
                     $this->_exportVariableToView('canonical', osc_base_url() . $search_uri);
                 }
 
-                $params = preg_split('|_|', preg_replace('|.*?/|', '', $search_uri));
-                if( preg_match('|r([0-9]+)$|', $params[0], $r) ) {
+                $search_uri = preg_replace('|.*?/|', '', $search_uri);
+                if( preg_match('|-r([0-9]+)$|', $search_uri, $r) ) {
                     $region = Region::newInstance()->findByPrimaryKey($r[1]);
                     Params::setParam('sRegion', $region['pk_i_id']);
-                } else if( preg_match('|c([0-9]+)$|', $params[0], $c) ) {
+                } else if( preg_match('|-c([0-9]+)$|', $search_uri, $c) ) {
                     $city = City::newInstance()->findByPrimaryKey($c[1]);
                     Params::setParam('sCity', $city['pk_i_id']);
                 } else {
                     Params::setParam('sCategory', $search_uri);
-                }
-                if( count($params) == 2 ) {
-                    $location = $params[1];
-                    if( preg_match('|r([0-9]+)$|', $location, $r) ) {
-                        $region = Region::newInstance()->findByPrimaryKey($r[1]);
-                        Params::setParam('sRegion', $region['pk_i_id']);
-                    }
-                    if( preg_match('|c([0-9]+)$|', $location, $c) ) {
-                        $city = City::newInstance()->findByPrimaryKey($c[1]);
-                        Params::setParam('sCity', $city['pk_i_id']);
-                    }
-                    Params::setParam('sCategory', $params[0]);
                 }
             }
         }
@@ -91,7 +79,6 @@
         function doModel()
         {
             osc_run_hook('before_search');
-            $mCategories = Category::newInstance() ;
 
             if(osc_rewrite_enabled()) {
                 // IF rewrite is not enabled, skip this part, preg_match is always time&resources consuming task

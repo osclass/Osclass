@@ -422,7 +422,7 @@
                 // THIS HOOK IS DEPRECATED, IT WILL NOT BE AVAILABLE IN 3.2
                 osc_run_hook('item_edit_post', $aItem['catId'], $aItem['idItem']);
                 // THIS HOOK IS FINE, YAY!
-                osc_run_hook('edited_item', Item::newInstance()->findByPrimaryKey($id));
+                osc_run_hook('edited_item', Item::newInstance()->findByPrimaryKey($aItem['idItem']));
                 $success = $result;
             }
 
