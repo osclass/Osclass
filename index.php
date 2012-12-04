@@ -30,7 +30,10 @@
         $cli_params = getopt('p:t:');
         Params::setParam('page', $cli_params['p']);
         Params::setParam('cron-type', $cli_params['t']);
-        if( !in_array(Params::getParam('page'), array('cron')) && !in_array(Params::getParam('cron-type'), array('hourly', 'daily', 'weekly')) ) {
+        if(Params::getParam('page')=='upgrade') {
+            require_once(osc_lib_path() . 'osclass/upgrade-funcs.php');
+            exit(1);
+        } else if( !in_array(Params::getParam('page'), array('cron')) && !in_array(Params::getParam('cron-type'), array('hourly', 'daily', 'weekly')) ) {
             exit(1);
         }
     }
