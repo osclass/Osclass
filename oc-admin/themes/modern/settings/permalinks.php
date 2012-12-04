@@ -617,6 +617,12 @@
                                             <input type="text" class="input-large" name="rewrite_user_change_email_confirm" value="<?php echo osc_esc_html(osc_get_preference('rewrite_user_change_email_confirm')); ?>" />
                                         </div>
                                     </div>
+                                    <div class="form-row">
+                                        <div class="form-label"><?php _e('User change username') ; ?></div>
+                                        <div class="form-controls">
+                                            <input type="text" class="input-large" name="rewrite_user_change_username" value="<?php echo osc_esc_html(osc_get_preference('rewrite_user_change_username')); ?>" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <?php if( osc_rewrite_enabled() ) { ?>

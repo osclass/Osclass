@@ -21,9 +21,9 @@
     {
         function __construct()
         {
-            parent::__construct() ;
+            parent::__construct();
             if( !osc_users_enabled() && ($this->action != 'activate_alert' && $this->action != 'unsub_alert') ) {
-                osc_add_flash_error_message( _m('Users not enabled') ) ;
+                osc_add_flash_error_message( _m('Users not enabled') );
                 $this->redirectTo(osc_base_url());
             }
         }
@@ -34,12 +34,12 @@
             switch( $this->action ) {
                 case 'change_email_confirm':    //change email confirm
                                                 if ( Params::getParam('userId') && Params::getParam('code') ) {
-                                                    $userManager = new User() ;
-                                                    $user = $userManager->findByPrimaryKey( Params::getParam('userId') ) ;
+                                                    $userManager = new User();
+                                                    $user = $userManager->findByPrimaryKey( Params::getParam('userId') );
 
                                                     if( $user['s_pass_code'] == Params::getParam('code') && $user['b_enabled']==1) {
-                                                        $userEmailTmp = UserEmailTmp::newInstance()->findByPk( Params::getParam('userId') ) ;
-                                                        $code = osc_genRandomPassword(50) ;
+                                                        $userEmailTmp = UserEmailTmp::newInstance()->findByPk( Params::getParam('userId') );
+                                                        $code = osc_genRandomPassword(50);
                                                         $userManager->update(
                                                              array('s_email' => $userEmailTmp['s_new_email'])
                                                             ,array('pk_i_id' => $userEmailTmp['fk_i_user_id'])
@@ -47,17 +47,17 @@
                                                         Item::newInstance()->update(array('s_contact_email' => $userEmailTmp['s_new_email']), array('fk_i_user_id' => $userEmailTmp['fk_i_user_id']));
                                                         ItemComment::newInstance()->update(array('s_author_email' => $userEmailTmp['s_new_email']), array('fk_i_user_id' => $userEmailTmp['fk_i_user_id']));
                                                         Alerts::newInstance()->update(array('s_email' => $userEmailTmp['s_new_email']), array('fk_i_user_id' => $userEmailTmp['fk_i_user_id']));
-                                                        Session::newInstance()->_set('userEmail', $userEmailTmp['s_new_email']) ;
+                                                        Session::newInstance()->_set('userEmail', $userEmailTmp['s_new_email']);
                                                         UserEmailTmp::newInstance()->delete(array('s_new_email' => $userEmailTmp['s_new_email']));
                                                         osc_add_flash_ok_message( _m('Your email has been changed successfully'));
-                                                        $this->redirectTo( osc_user_profile_url() ) ;
+                                                        $this->redirectTo( osc_user_profile_url() );
                                                     } else {
                                                         osc_add_flash_error_message( _m('Sorry, the link is not valid'));
-                                                        $this->redirectTo( osc_base_url() ) ;
+                                                        $this->redirectTo( osc_base_url() );
                                                     }
                                                 } else {
                                                     osc_add_flash_error_message( _m('Sorry, the link is not valid'));
-                                                    $this->redirectTo( osc_base_url() ) ;
+                                                    $this->redirectTo( osc_base_url() );
                                                 }
                 break;
                 case 'activate_alert':
@@ -103,33 +103,35 @@
                     $this->redirectTo(osc_base_url());
                 break;
                 case 'pub_profile':
-                    $userID = Params::getParam('id') ;
-
-                    $user = User::newInstance()->findByPrimaryKey( $userID ) ;
+                    if(Params::getParam('username')!='') {
+                        $user = User::newInstance()->findByUsername(Params::getParam('username'));
+                    } else {
+                        $user = User::newInstance()->findByPrimaryKey(Params::getParam('id'));
+                    }
                     // user doesn't exist, show 404 error
                     if( !$user ) {
-                        $this->do404() ;
-                        return ;
+                        $this->do404();
+                        return;
                     }
 
-                    View::newInstance()->_exportVariableToView( 'user', $user ) ;
+                    View::newInstance()->_exportVariableToView( 'user', $user );
                     $mSearch = Search::newInstance();
-                    $mSearch->fromUser($userID);
+                    $mSearch->fromUser($user['pk_i_id']);
 
                     $items = $mSearch->doSearch();
                     $count = $mSearch->count();
 
-                    View::newInstance()->_exportVariableToView( 'items', $items ) ;
-                    View::newInstance()->_exportVariableToView( 'search_total_items', $count ) ;
+                    View::newInstance()->_exportVariableToView( 'items', $items );
+                    View::newInstance()->_exportVariableToView( 'search_total_items', $count );
 
-                    $this->doView('user-public-profile.php') ;
+                    $this->doView('user-public-profile.php');
                 break;
                 case 'contact_post':
-                    $user = User::newInstance()->findByPrimaryKey( Params::getParam('id') ) ;
-                    View::newInstance()->_exportVariableToView('user', $user) ;
+                    $user = User::newInstance()->findByPrimaryKey( Params::getParam('id') );
+                    View::newInstance()->_exportVariableToView('user', $user);
                     if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
                         if(!osc_check_recaptcha()) {
-                            osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;
+                            osc_add_flash_error_message( _m('The Recaptcha code is wrong'));
                             Session::newInstance()->_setForm("yourEmail",   Params::getParam('yourEmail'));
                             Session::newInstance()->_setForm("yourName",    Params::getParam('yourName'));
                             Session::newInstance()->_setForm("phoneNumber", Params::getParam('phoneNumber'));
@@ -153,7 +155,7 @@
         function doView($file)
         {
             osc_run_hook("before_html");
-            osc_current_web_theme_path($file) ;
+            osc_current_web_theme_path($file);
             Session::newInstance()->_clearVariables();
             osc_run_hook("after_html");
         }

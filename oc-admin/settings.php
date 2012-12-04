@@ -682,6 +682,13 @@ HTACCESS;
                                                 Preference::newInstance()->update(array('s_value' => $rewrite_user_change_email)
                                                                                  ,array('s_name' => 'rewrite_user_change_email'));
                                             }
+                                            $rewrite_user_change_username = substr(str_replace('//', '/', Params::getParam('rewrite_user_change_username').'/'), 0, -1);
+                                            if(!osc_validate_text($rewrite_user_change_username)) {
+                                                $errors += 1;
+                                            } else {
+                                                Preference::newInstance()->update(array('s_value' => $rewrite_user_change_username)
+                                                                                 ,array('s_name' => 'rewrite_user_change_username'));
+                                            }
                                             $rewrite_user_change_email_confirm = substr(str_replace('//', '/', Params::getParam('rewrite_user_change_email_confirm').'/'), 0, -1);
                                             if(!osc_validate_text($rewrite_user_change_email_confirm)) {
                                                 $errors += 1;
@@ -754,12 +761,14 @@ HTACCESS;
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_activate_alert').'/([0-9]+)/([a-zA-Z0-9]+)/(.+)$', 'index.php?page=user&action=activate_alert&id=$1&email=$3&secret=$2');
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_profile').'/?$', 'index.php?page=user&action=profile');
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_profile').'/([0-9]+)/?$', 'index.php?page=user&action=pub_profile&id=$1');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_profile').'/(.+)/?$', 'index.php?page=user&action=pub_profile&username=$1');
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_items').'/?$', 'index.php?page=user&action=items');
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_alerts').'/?$', 'index.php?page=user&action=alerts');
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_recover').'/?$', 'index.php?page=login&action=recover');
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_forgot').'/([0-9]+)/(.*)/?$', 'index.php?page=login&action=forgot&userId=$1&code=$2');
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_change_password').'/?$', 'index.php?page=user&action=change_password');
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_change_email').'/?$', 'index.php?page=user&action=change_email');
+                                            $rewrite->addRule('^'.osc_get_preference('rewrite_user_change_username').'/?$', 'index.php?page=user&action=change_username');
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_change_email_confirm').'/([0-9]+)/(.*?)/?$', 'index.php?page=user&action=change_email_confirm&userId=$1&code=$2');
 
                                             // Page rules
