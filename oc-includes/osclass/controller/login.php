@@ -107,7 +107,7 @@
 
                                             }
 
-                                            $this->redirectTo( $url_redirect ) ;
+                                            $this->redirectTo( osc_apply_filter('correct_login_url_redirect', $url_redirect) ) ;
 
                                         } else {
                                             osc_add_flash_error_message(_m('This should never happen'));
