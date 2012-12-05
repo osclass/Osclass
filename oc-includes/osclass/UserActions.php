@@ -72,10 +72,14 @@
                 }
             }
 
+            // hook pre add or edit
+            osc_run_hook('pre_user_post') ;
+            
             if( is_numeric($error) && $error > 0) {
                 osc_run_hook('user_register_failed', $error);
                 return $error;
             }
+
 
             $this->manager->insert($input);
             $userId = $this->manager->dao->insertedId();
@@ -132,7 +136,12 @@
         //edit...
         function edit($userId)
         {
+
             $input = $this->prepareData(false);
+
+            // hook pre add or edit
+            osc_run_hook('pre_user_post') ;
+
             $this->manager->update($input, array('pk_i_id' => $userId));
 
             if($this->is_admin) {
