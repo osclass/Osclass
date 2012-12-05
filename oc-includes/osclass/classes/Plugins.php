@@ -111,7 +111,7 @@
                 foreach($plugins as $p) {
                     $extended_list[$p] = self::getInfo($p);
                 }
-                uasort($extended_list, "self::strnatcmpCustom");
+                uasort($extended_list, array("self", "strnatcmpCustom"));
                 $plugins = array();
                 // Enabled
                 foreach($extended_list as $k => $v) {
