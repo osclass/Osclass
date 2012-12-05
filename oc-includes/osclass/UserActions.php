@@ -31,7 +31,8 @@
         //add...
         function add()
         {
-            $error = false;
+            $success    = 0;
+            $error      = false;
             if( !$error && (osc_recaptcha_private_key() != '') && !$this->is_admin ) {
                 if( !$this->recaptcha() ) {
                     $error = 4;
@@ -74,7 +75,7 @@
 
             // hook pre add or edit
             osc_run_hook('pre_user_post') ;
-            
+
             if( is_numeric($error) && $error > 0) {
                 osc_run_hook('user_register_failed', $error);
                 return $error;
@@ -122,15 +123,17 @@
 
             if( osc_user_validation_enabled() && !$this->is_admin ) {
                 osc_run_hook('hook_email_user_validation', $user, $input);
-                return 1;
+                $success = 1;
+            } else {
+                $this->manager->update(
+                                 array('b_active' => '1')
+                                ,array('pk_i_id'  => $userId)
+                );
+                $success = 2;
             }
 
-            $this->manager->update(
-                             array('b_active' => '1')
-                            ,array('pk_i_id'  => $userId)
-            );
-
-            return 2;
+            osc_run_hook('user_register_completed', $userId);
+            return $success;
         }
 
         //edit...
