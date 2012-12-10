@@ -1,0 +1,81 @@
+.mk-item{
+    .border-radius(5px);
+    background-color: #fff;
+
+    -webkit-box-shadow:  0px 0px 5px 0px #bababa;
+        box-shadow:  0px 0px 5px 0px #bababa;
+
+    width:300px;
+    height: 110px;
+    color:@title-color;
+    float:left;
+    margin-right:30px;
+    margin-bottom:30px;
+}
+.mk-item .banner{
+    width:100px;
+    height: 110px;
+    position: absolute;
+    background-color: #f2f2f2;
+    .border-radius(5px 0 0 5px);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.mk-item .mk-info{
+    width:170px;
+    height: 80px;
+    padding:15px 15px 15px 115px;
+    position: relative;
+}
+.mk-item .mk-info div{
+    position: absolute;
+    bottom:15px; right:15px;
+    width:170px;
+}
+.mk-item .mk-info h3{
+    font-weight: 200;
+    font-size:18px;
+    margin:0;
+}
+.mk-item .mk-info i{
+    font-weight: 200;
+    font-size:13px;
+    font-style: normal;
+}
+.mk-item .mk-info span{
+    display: block;
+    float:left;
+}
+.mk-item .mk-info .more{
+    background-color: #2fbfd1;
+    .border-radius(3px);
+    padding:5px 10px;
+    color:#fff;
+}
+.mk-item .mk-info .downloads{
+    float:right;
+    font-size:13px; line-height: 13px;
+}
+.mk-item .mk-info .downloads b,
+.mk-item .mk-info .downloads strong{
+    display: block;
+    font-size:14px;
+}
+.mk-item-theme{
+    height: 225px;
+}
+.mk-item-theme .mk-info{
+    width: 270px;
+    height: 40px;
+    padding: 170px 15px 15px;
+}
+.mk-item-theme .mk-info .more{
+    display:none;
+}
+.mk-item-theme .banner{
+    width: 300px;
+    height: 155px;
+    .border-radius(5px 5px 0 0);
+}
