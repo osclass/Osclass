@@ -39,7 +39,6 @@
     ?>
     <h2 class="section-title"><?php _e('Recommended themes for You'); ?></h2>
     <?php
-
     $marketPage = 0;
     $out    = osc_file_get_contents(osc_market_url('themes')."page/".$marketPage);
     $array  = json_decode($out, true);
@@ -54,4 +53,5 @@
     ?>
     <h2 class="section-title"><?php _e('Languages'); ?></h2>
 </div>
+
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

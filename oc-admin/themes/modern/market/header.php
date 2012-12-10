@@ -1,5 +1,7 @@
 <?php
     osc_enqueue_style('market', osc_current_admin_theme_styles_url('market.css'));
+    osc_register_script('market-js', osc_current_admin_theme_js_url('market.js'));
+    osc_enqueue_script('market-js');
 
     /*
     */
@@ -8,11 +10,23 @@
         $marketPage = Params::getParam("mPage");
         if($marketPage>=1) $marketPage-- ;
         $action = Params::getParam("action");
+        if($action){
+            $out    = osc_file_get_contents(osc_market_url($action)."page/".$marketPage);
+            echo '<script type="text/javascript">var marketData='.$out.'; </script>';
+        } else {
+            $themes    = osc_file_get_contents(osc_market_url('themes')."page/".$marketPage);
+            $plugins    = osc_file_get_contents(osc_market_url('plugins')."page/".$marketPage);
 
-        $out    = osc_file_get_contents(osc_market_url($action)."page/".$marketPage);
-        echo '<script type="text/javascript">var marketData='.$out.'</script>';
+            $themes = json_decode($themes,true);
+            $plugins = json_decode($plugins,true);
+            echo '<script type="text/javascript">var marketData='.json_encode($themes+$plugins).'; </script>';
+        }
         $js_lang = array(
                 'by'                => __('by'),
+                'ok'                => __('Ok'),
+                'wait_download'     => __('Please wait until the download is completed'),
+                'downloading'       => __('Downloading'),
+                'close'             => __('Close'),
                 'download'          => __('Download'),
                 'downloads'         => __('Downloads'),
                 'requieres_version' => __('Requires at least'),
@@ -30,6 +44,7 @@
         ?>
         <script type="text/javascript">
             var theme = window.theme || {};
+            theme.adminBaseUrl = "<?php echo osc_admin_base_url(true); ?>";
             theme.langs = <?php echo json_encode($js_lang); ?>
         </script>
         <?php

@@ -69,6 +69,7 @@
     ?>
 </div>
 <script type="text/javascript">
+/*
 $(function(){
     $(".ui-dialog-content a.more").live("click", function(){
 
@@ -160,6 +161,6 @@ $(function(){
                     }
             });
     });
-});
+});*/
 </script>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
