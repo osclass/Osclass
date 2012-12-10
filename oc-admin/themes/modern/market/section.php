@@ -122,6 +122,12 @@ $(function(){
         } else {
             banner = item.s_image;
         }
+        screenshots = '';
+        if(section == 'theme'){
+            screenshots = '<tr>'
+                +'<td colspan="3"><h4>'+theme.langs.screenshots+'</h4></td>'
+            +'</tr>'
+        }
         print =  '<div class="mk-item mk-item-'+section+'">'
                 +'<div class="banner" style="background-image:url('+banner+');"></div>'
                 +'<div class="mk-info">'
@@ -142,9 +148,7 @@ $(function(){
                             +'<span class="block"><strong>'+theme.langs.downloads+'</strong> '+'22.000'+'</span>'
                         +'</td>'
                     +'</tr>'
-                    +'<tr>'
-                        +'<td colspan="3"><h4>'+theme.langs.screenshots+'</h4></td>'
-                    +'</tr>'
+                    +screenshots
                 +'</table>'
                 +'</div>'
             +'</div>';
