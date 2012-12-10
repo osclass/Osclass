@@ -37,7 +37,7 @@
                     $this->doView("market/themes.php");
                 break;
                 default:
-                    $this->doView("market/plugins.php");
+                    $this->doView("market/index.php");
                 break;
             }
         }
