@@ -20,20 +20,52 @@
     }
     osc_add_hook('help_box','addHelp');
     osc_current_admin_theme_path('market/header.php');
+    switch (Params::getParam("action")) {
+        case 'plugins':
+            $section = 'plugins';
+            break;
+
+        case 'themes':
+            $section = 'themes';
+            break;
+
+        default:
+            $section = false;
+            break;
+    }
+    $title = array(
+        'plugins' => __('Recommended plugins for You'),
+        'themes'  => __('Recommended themes for You')
+        );
 ?>
 <div>
-    <h2 class="section-title"><?php _e('Recommended plugins for You'); ?></h2>
+    <h2 class="section-title"><?php echo $title[$section]; ?></h2>
     <?php
 
     $marketPage = Params::getParam("mPage");
                     if($marketPage>=1) $marketPage-- ;
 
-    $out    = osc_file_get_contents(osc_market_url('plugins')."page/".$marketPage);
+    $out    = osc_file_get_contents(osc_market_url($section)."page/".$marketPage);
     $array  = json_decode($out, true);
-    foreach($array['plugins'] as $item){
+
+
+    $pageActual = $array['page'];
+    $totalPages = ceil( $array['total'] / $array['sizePage'] );
+    $params     = array(
+        'total'    => $totalPages,
+        'selected' => $pageActual,
+        'url'      => osc_admin_base_url(true).'?page=market'.'&amp;action='.$section.'&amp;mPage={PAGE}',
+        'sides'    => 5
+    );
+    // set pagination
+    $pagination = new Pagination($params);
+    $aux = $pagination->doPagination();
+
+    foreach($array[$section] as $item){
         drawMarketItem($item);
         $i++;
     }
+    echo '<div class="clear"></div><div class="has-pagination">'.$aux.'</div>';
     ?>
 </div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

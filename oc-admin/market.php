@@ -31,10 +31,10 @@
             //specific things for this class
             switch ($this->action) {
                 case('plugins'):
-                    $this->doView("market/plugins.php");
+                    $this->doView("market/section.php");
                 break;
                 case('themes'):
-                    $this->doView("market/themes.php");
+                    $this->doView("market/section.php");
                 break;
                 default:
                     $this->doView("market/index.php");
