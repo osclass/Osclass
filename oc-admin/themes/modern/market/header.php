@@ -85,7 +85,8 @@
 
     function customPageHeader() {
         $action = Params::getParam("action"); ?>
-        <h1><?php _e('Market') ; ?></h1>
+        <h1><?php _e('Discover how to improve your Osclass!') ; ?></h1>
+        <h2>Osclass offers many templates and plugins.<br/>Turn your Osclass installation into a classifieds site in a minute!</h2>
         <ul class="tabs">
             <li <?php if($action == ''){ echo 'class="active"';} ?>><a href="<?php echo osc_admin_base_url(true).'?page=market'; ?>"><?php _e('Market'); ?></a></li>
             <li <?php if($action == 'plugins'){ echo 'class="active"';} ?>><a href="<?php echo osc_admin_base_url(true).'?page=market&action=plugins'; ?>"><?php _e('Plugins'); ?></a></li>

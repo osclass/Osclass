@@ -79,10 +79,12 @@ $(function(){
                 +'</table>'
                 +'</div>'
             +'</div>';
-        $(print).dialog({modal:true,
+        $(print).dialog({
                 dialogClass:'market-dialog',
                 width:sizes[section+'s'].width,
-                open: function (){
+                overlay: { opacity: 0.5, background: 'black'},
+                modal:true,
+                 open: function (){
                     $(this).find('select, input, textarea, a').first().blur();
                     }
             });
