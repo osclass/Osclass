@@ -56,7 +56,24 @@
         }
     }
     ?>
-    <h2 class="section-title"><?php _e('Languages'); ?></h2>
+</div>
+<div class="grid-market">
+    <?php
+    $out    = osc_file_get_contents(osc_market_url('languages')."page/".$marketPage);
+    $array  = json_decode($out, true);
+    ?>
+    <h2 class="section-title"><?php _e('Languages'); ?> <a href="<?php echo osc_admin_base_url(true).'?page=market&action=languages'; ?>"><?php echo sprintf(__('View all (%s)'), $array['total']); ?></a></h2>
+    <?php
+    $marketPage = 0;
+    $i = 0;
+    foreach($array['languages'] as $item){
+        drawMarketItem($item);
+        $i++;
+        if($i == 6){
+            break;
+        }
+    }
+    ?>
 </div>
 
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

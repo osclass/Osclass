@@ -28,14 +28,18 @@
         case 'themes':
             $section = 'themes';
             break;
+        case 'languages':
+            $section = 'languages';
+            break;
 
         default:
             $section = false;
             break;
     }
     $title = array(
-        'plugins' => __('Recommended plugins for You'),
-        'themes'  => __('Recommended themes for You')
+        'plugins'    => __('Recommended plugins for You'),
+        'themes'     => __('Recommended themes for You'),
+        'languages'  => __('Languages for this version')
         );
 ?>
 <div class="grid-market">

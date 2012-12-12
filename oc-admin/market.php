@@ -36,6 +36,9 @@
                 case('themes'):
                     $this->doView("market/section.php");
                 break;
+                case('languages'):
+                    $this->doView("market/section.php");
+                break;
                 default:
                     $this->doView("market/index.php");
                 break;

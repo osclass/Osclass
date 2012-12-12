@@ -48,7 +48,6 @@ $(function(){
                 var compatibleText = '';
                 var compatibleClass = '';
 
-                console.log(data.s_compatible.indexOf(osc_market.main_version));
                 if(data.s_compatible.indexOf(osc_market.main_version) == -1) {
                     compatibleText = data.s_compatible + " - "  + theme.langs.not_compatible;
                     compatibleClass = 'not-compatible';
