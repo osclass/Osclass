@@ -1,3 +1,11 @@
+body.market .mk-item-parent:nth-child(3n+1) {
+    margin-right: 0;
+}
+body.market .mk-item-parent{
+    margin-right: 30px;
+    float:left;
+    display: block;
+}
 .mk-item{
     .border-radius(5px);
     background-color: #fff;
@@ -8,14 +16,19 @@
     width:300px;
     height: 110px;
     color:@title-color;
-    float:left;
-    margin-right:30px;
+    margin-right:0px;
     margin-bottom:30px;
 }
 a:hover .mk-item{
+    text-decoration: none;
 
     -webkit-box-shadow:  0px 0px 10px 0px #2FBFD1;
         box-shadow:  0px 0px 10px 0px #2FBFD1;
+}
+a.has-update:hover .mk-item{
+    text-decoration: none;
+    -webkit-box-shadow:  0px 0px 10px 0px #ffb400;
+        box-shadow:  0px 0px 10px 0px #ffb400;
 }
 .mk-item .banner{
     width:100px;
@@ -30,6 +43,7 @@ a:hover .mk-item{
     background-position: center;
 }
 .mk-item .mk-info{
+    text-decoration: none;
     width:170px;
     height: 80px;
     padding:15px 15px 15px 115px;
@@ -85,8 +99,29 @@ a:hover .mk-item{
     height: 155px;
     .border-radius(5px 5px 0 0);
 }
+.mk-item .flag{
+    width: 30px;
+    height: 30px;
+    right: 0;
+    top: 0;
+    position: absolute;
+    background-image: url(../images/market-split.png);
 
+    display: none;
 
+    .border-radius(0 5px 0 0);
+}
+.mk-item-theme .flag{
+    top: 155px;
+    .border-radius(0);
+}
+.has-update .flag{
+    display: block;
+}
+.is-featured .flag{
+    display: block;
+    background-position: top right;
+}
 
 
 /* DIALOGS */

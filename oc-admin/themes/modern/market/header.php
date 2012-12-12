@@ -52,18 +52,28 @@
 
 
     function drawMarketItem($item){
-        $thumbnail = '';
+        //constants
+        $updateClass      = '';
+        $updateData       = '';
+        $thumbnail        = '';
+        $type             = strtolower($item['e_type']);
+        $items_to_update  = json_decode(getPreference($type.'s_to_update'),true);
+
         if($item['s_thumbnail']){
             $thumbnail = $item['s_thumbnail'];
         }
         if($item['s_banner']){
             $thumbnail = 'http://market.osclass.org/oc-content/uploads/market/'.$item['s_banner'];
         }
+        if (in_array($item['s_update_url'],$items_to_update)) {
+            $updateClass = ' has-update';
+            $updateData  = ' data-update="true"';
+        }
         $item['total_downloads'] = 335;
-        echo '<a href="#'.$item['s_update_url'].'">';
-        echo '<div class="mk-item mk-item-'.strtolower($item['e_type']).'" data-type="'.strtolower($item['e_type']).'">';
+        echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent'.$updateClass.'">';
+        echo '<div class="mk-item mk-item-'.$type.'" data-type="'.$type.'"'.$updateData.'>';
         echo '    <div class="banner" style="background-image:url('.$thumbnail.');"></div>';
-        echo '    <div class="mk-info">';
+        echo '    <div class="mk-info"><i class="flag"></i>';
         echo '        <h3>'.$item['s_title'].'</h3>';
         echo '        <i>by '.$item['s_contact_name'].'</i>';
         echo '        <div>';

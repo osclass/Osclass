@@ -38,7 +38,7 @@
         'themes'  => __('Recommended themes for You')
         );
 ?>
-<div>
+<div class="grid-market">
     <h2 class="section-title"><?php echo $title[$section]; ?></h2>
     <?php
 

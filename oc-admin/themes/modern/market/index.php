@@ -21,7 +21,7 @@
     osc_add_hook('help_box','addHelp');
     osc_current_admin_theme_path('market/header.php');
 ?>
-<div>
+<div class="grid-market">
     <h2 class="section-title"><?php _e('Recommended plugins for You'); ?></h2>
     <?php
 
@@ -37,6 +37,8 @@
         }
     }
     ?>
+</div>
+<div class="grid-market">
     <h2 class="section-title"><?php _e('Recommended themes for You'); ?></h2>
     <?php
     $marketPage = 0;
