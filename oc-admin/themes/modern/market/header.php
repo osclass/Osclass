@@ -1,13 +1,18 @@
 <?php
+
     osc_enqueue_style('market', osc_current_admin_theme_styles_url('market.css'));
     osc_register_script('market-js', osc_current_admin_theme_js_url('market.js'));
     osc_enqueue_script('market-js');
 
     /*
     */
-    osc_add_hook('admin_header','addMarketJSON');
-    function addMarketJSON(){
+    osc_add_hook('admin_header','add_market_jsvariables');
+    function add_market_jsvariables(){
         $marketPage = Params::getParam("mPage");
+        $version_length = strlen(osc_version());
+        $main_version = substr(osc_version(),0, $version_length-2).".".substr(osc_version(),$version_length-2, 1);
+
+
         if($marketPage>=1) $marketPage-- ;
         $action = Params::getParam("action");
         if($action){
@@ -28,11 +33,13 @@
                 'downloading'       => __('Downloading'),
                 'close'             => __('Close'),
                 'download'          => __('Download'),
+                'update'            => __('Update'),
                 'downloads'         => __('Downloads'),
                 'requieres_version' => __('Requires at least'),
                 'compatible_with'   => __('Compatible up to'),
                 'screenshots'       => __('Screenshots'),
                 'download_manually' => __('Download manually'),
+                'not_compatible'  => sprintf(__('Warning! This theme is not compatible with your current version of Osclass (%s)'), $main_version),
                 'themes' => array(
                                 'download_ok' => __('The theme has been downloaded correctly, proceed to activate or preview it.')
                             ),
@@ -45,7 +52,10 @@
         <script type="text/javascript">
             var theme = window.theme || {};
             theme.adminBaseUrl = "<?php echo osc_admin_base_url(true); ?>";
-            theme.langs = <?php echo json_encode($js_lang); ?>
+            theme.langs = <?php echo json_encode($js_lang); ?>;
+
+            var osc_market = {};
+            osc_market.main_version = <?php echo $main_version; ?>;
         </script>
         <?php
     }
@@ -56,6 +66,7 @@
         $updateClass      = '';
         $updateData       = '';
         $thumbnail        = '';
+        $featuredClass    = '';
         $type             = strtolower($item['e_type']);
         $items_to_update  = json_decode(getPreference($type.'s_to_update'),true);
 
@@ -65,20 +76,23 @@
         if($item['s_banner']){
             $thumbnail = 'http://market.osclass.org/oc-content/uploads/market/'.$item['s_banner'];
         }
+        if ($item['b_featured']) {
+            $featuredClass = ' is-featured';
+        }
         if (in_array($item['s_update_url'],$items_to_update)) {
             $updateClass = ' has-update';
             $updateData  = ' data-update="true"';
         }
         $item['total_downloads'] = 335;
-        echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent'.$updateClass.'">';
-        echo '<div class="mk-item mk-item-'.$type.'" data-type="'.$type.'"'.$updateData.'>';
+        echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent'.$updateClass.$featuredClass.'" data-type="'.$type.'"'.$updateData.'>';
+        echo '<div class="mk-item mk-item-'.$type.'">';
         echo '    <div class="banner" style="background-image:url('.$thumbnail.');"></div>';
         echo '    <div class="mk-info"><i class="flag"></i>';
         echo '        <h3>'.$item['s_title'].'</h3>';
         echo '        <i>by '.$item['s_contact_name'].'</i>';
         echo '        <div>';
         echo '            <span class="more">'.__('View more').'</span>';
-        echo '            <span class="downloads"><strong>'.$item['total_downloads'].'</strong>'.__('downloads').'</span>';
+        echo '            <span class="downloads"><strong>'.$item['i_total_downloads'].'</strong>'.__('downloads').'</span>';
         echo '        </div>';
         echo '    </div>';
         echo '</div>';

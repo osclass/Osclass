@@ -122,8 +122,6 @@ a.has-update:hover .mk-item{
     display: block;
     background-position: top right;
 }
-
-
 /* DIALOGS */
 .market-dialog{
     padding:0;
@@ -135,13 +133,39 @@ a.has-update:hover .mk-item{
     -webkit-box-shadow:  0px 0px 5px 0px  rgba(0,0,0,0.5);
         box-shadow:  0px 0px 5px 0px rgba(0,0,0,0.5);
 }
+.market-dialog .flashmessage{
+    display: block;
+position: absolute;
+top: 100%;
+z-index: 88888;
+}
 .market-dialog .ui-dialog-titlebar{
     background: none;
     height: 0;
     padding: 0;
 }
+.not-compatible .ui-dialog-titlebar{
+    background: 0;
+    height: auto;
+    padding:10px;
+    background-color: #FF4242;
+}
 .market-dialog .ui-dialog-title{
     display: none;
+}
+.not-compatible span.ui-dialog-title{
+    display: block;
+    font-size:14px;
+    color:#fff;
+    text-align: center;
+    float:none;
+}
+.not-compatible .mk-item,
+.not-compatible .banner{
+    .border-radius(0);
+}
+.not-compatible a.ui-dialog-titlebar-close {
+    margin-top: -10px;
 }
 .market-dialog .ui-dialog-titlebar-close {
     z-index: 10;
