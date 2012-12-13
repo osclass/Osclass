@@ -100,8 +100,6 @@
 
             Log::newInstance()->insertLog('user', 'add', $userId, $input['s_email'], $this->is_admin ? 'admin' : 'user', $this->is_admin ? osc_logged_admin_id() : $userId);
 
-            osc_run_hook('user_register_completed', $userId);
-
             // update items with s_contact_email the same as new user email
             $aItems = Item::newInstance()->findByEmail( $input['s_email'] );
             foreach( $aItems as $aux ) {
