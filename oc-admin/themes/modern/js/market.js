@@ -1,9 +1,8 @@
-$(function(){
-    $(".ui-dialog-content a.more").live("click", function(){
-        $(".ui-dialog-content").dialog("close");
-        $('<div id="downloading"><div class="osc-modal-content">'+theme.langs.wait_download+'</div></div>').dialog({title:theme.langs.downloading+'...',modal:true});
-        var marketCode = $(this).attr('data-code');
-        var marketType = $(this).attr('data-type')+'s';
+function installMarketItem(thatItem){
+    $(".ui-dialog-content").dialog("close");
+    $('<div id="downloading"><div class="osc-modal-content">'+theme.langs.wait_download+'</div></div>').dialog({title:theme.langs.downloading+'...',modal:true});
+        var marketCode = thatItem.attr('data-code');
+        var marketType = thatItem.attr('data-type')+'s';
         $.getJSON(
         theme.adminBaseUrl+"?page=ajax&action=market",
         {"code" : marketCode, "section" : marketType},
@@ -21,6 +20,34 @@ $(function(){
             }
             $("#downloading .osc-modal-content").html(content);
         });
+}
+$(function(){
+    $(".ui-dialog-content a.more").live("click", function(){
+        var notCompatible = $(this).parents('.ui-dialog').hasClass('not-compatible');
+        var thatDialog = $(this);
+
+        $(".ui-dialog-content").dialog("close");
+        if(notCompatible){
+                content   = $('<div id="not-compatible-prompt"></div>');
+                container = $('<div id="not-compatible-prompt"></div>');
+                actions   = $('<p></p>');
+                btnOk     = $('<a class="btn btn-mini">'+theme.langs.proceed_anyway_btn+'</a>');
+                btnClose  = $('<a class="btn btn-mini btn-red">'+theme.langs.close+'</a>');
+
+                btnOk.click(function(){
+                    installMarketItem(thatDialog);
+                });
+
+                btnClose.click(function(){
+                    $(".ui-dialog-content").dialog("close");
+                });
+
+                content.append(container.append(theme.langs.proceed_anyway).append(actions.append(btnClose).append(btnOk)));
+
+            $(content).dialog({title:theme.langs.srue,modal:true});
+        } else {
+            installMarketItem(thatDialog);
+        }
         return false;
     });
 
@@ -34,6 +61,7 @@ $(function(){
             if(data!=null) {
                 var sizes = {
                          plugins:{width:645}
+                        ,languages:{width:645}
                         ,themes:{width:445}
                     }
                 var section = thatItem.attr('data-type');
