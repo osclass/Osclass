@@ -42,7 +42,6 @@
 <div class="grid-market">
     <?php
     $out    = osc_file_get_contents(osc_market_url('themes')."page/".$marketPage);
-    print_r(osc_market_url('themes')."page/".$marketPage);
     $array  = json_decode($out, true);
     ?>
     <h2 class="section-title"><?php _e('Recommended themes for You'); ?> <a href="<?php echo osc_admin_base_url(true).'?page=market&action=themes'; ?>"><?php echo sprintf(__('View all (%s)'), $array['total']); ?></a></h2>

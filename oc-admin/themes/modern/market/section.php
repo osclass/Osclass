@@ -67,7 +67,6 @@
 
     foreach($array[$section] as $item){
         drawMarketItem($item);
-        $i++;
     }
     echo '<div class="clear"></div><div class="has-pagination">'.$aux.'</div>';
     ?>

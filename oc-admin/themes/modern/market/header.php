@@ -72,9 +72,11 @@
         if ($item['b_featured']) {
             $featuredClass = ' is-featured';
         }
-        if (in_array($item['s_update_url'],$items_to_update)) {
-            $updateClass = ' has-update';
-            $updateData  = ' data-update="true"';
+        if($type != 'language'){
+            if (in_array($item['s_update_url'],$items_to_update)) {
+                $updateClass = ' has-update';
+                $updateData  = ' data-update="true"';
+            }
         }
         $item['total_downloads'] = 335;
         echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent'.$updateClass.$featuredClass.'" data-type="'.$type.'"'.$updateData.'>';
