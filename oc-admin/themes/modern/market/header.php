@@ -15,17 +15,7 @@
 
         if($marketPage>=1) $marketPage-- ;
         $action = Params::getParam("action");
-        if($action){
-            $out    = osc_file_get_contents(osc_market_url($action)."page/".$marketPage);
-            echo '<script type="text/javascript">var marketData='.$out.'; </script>';
-        } else {
-            $themes    = osc_file_get_contents(osc_market_url('themes')."page/".$marketPage);
-            $plugins    = osc_file_get_contents(osc_market_url('plugins')."page/".$marketPage);
 
-            $themes = json_decode($themes,true);
-            $plugins = json_decode($plugins,true);
-            echo '<script type="text/javascript">var marketData='.json_encode($themes+$plugins).'; </script>';
-        }
         $js_lang = array(
                 'by'                => __('by'),
                 'ok'                => __('Ok'),
