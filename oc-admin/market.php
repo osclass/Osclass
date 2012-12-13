@@ -31,11 +31,7 @@
             //specific things for this class
             switch ($this->action) {
                 case('plugins'):
-                    $this->doView("market/section.php");
-                break;
                 case('themes'):
-                    $this->doView("market/section.php");
-                break;
                 case('languages'):
                     $this->doView("market/section.php");
                 break;
