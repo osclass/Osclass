@@ -4,8 +4,6 @@
     osc_register_script('market-js', osc_current_admin_theme_js_url('market.js'));
     osc_enqueue_script('market-js');
 
-    /*
-    */
     osc_add_hook('admin_header','add_market_jsvariables');
     function add_market_jsvariables(){
         $marketPage = Params::getParam("mPage");
@@ -50,6 +48,28 @@
             var osc_market = {};
             osc_market.main_version = <?php echo $main_version; ?>;
         </script>
+        <?php
+        $sections = array();
+        switch (Params::getParam("action")) {
+            case 'plugins':
+                $sections[] = 'plugins';
+                break;
+
+            case 'themes':
+                $sections[] = 'themes';
+                break;
+            case 'languages':
+                $sections[] = 'languages';
+                break;
+
+            default:
+                $sections = array('plugins','themes','languages');
+                break;
+        }
+        foreach($sections as $section){
+            echo '<script src="'.osc_admin_base_url(true).'?page=ajax&action=market_data&section='.$section.'" type="text/javascript"></script>';
+        }
+        ?>
         <?php
     }
 

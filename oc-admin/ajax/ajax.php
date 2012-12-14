@@ -865,6 +865,23 @@
                     }
                     echo json_encode($data);
                     break;
+                case 'market_data':
+                    $section  = Params::getParam('section');
+                    $page     = Params::getParam("mPage");
+                    $callback = Params::getParam("mPage");
+                    if($page>=1) $page-- ;
+                    $url    = osc_market_url($section)."/page/".$page;
+                    $data = array();
+
+                    $data = json_decode(osc_file_get_contents($url), true);
+
+                    //echo $data;
+                    if( !isset($data[$section])) {
+                        $data = array('error' => 1, 'error_msg' => __('No market data'));
+                    }
+                    echo 'var market_data = window.market_data || {}; market_data.'.$section.' = '.json_encode($data).';';
+
+                    break;
                 case 'local_market': // AVOID CROSS DOMAIN PROBLEMS OF AJAX REQUEST
                     $marketPage = Params::getParam("mPage");
                     if($marketPage>=1) $marketPage-- ;
