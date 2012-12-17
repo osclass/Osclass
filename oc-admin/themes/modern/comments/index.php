@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -142,10 +142,10 @@
                 <tbody>
                 <?php if( count($aData['aaData']) > 0 ) { ?>
                 <?php foreach( $aData['aaData'] as $key => $array ) { ?>
-                    <?php 
-                    $aC = $aData['aaObject'][$key]; 
-                    $class = ''; 
-                    if(!$aC['b_enabled'] || !$aC['b_active'] || $aC['b_spam']) $class = 'status-spam'; 
+                    <?php
+                    $aC = $aData['aaObject'][$key];
+                    $class = '';
+                    if(!$aC['b_enabled'] || !$aC['b_active'] || $aC['b_spam']) $class = 'status-spam';
                     ?>
                     <tr class="<?php echo $class; ?>">
                     <?php foreach($array as $key => $value) { ?>
@@ -172,7 +172,7 @@
         </div>
     </form>
 </div>
-<?php 
+<?php
     function showingResults(){
         $aData = __get('aComments');
         echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;

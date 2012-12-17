@@ -1,3 +1,4 @@
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ; ?>
         	</div></div><div class="clear"></div></div><!-- #grid-system -->
         	</div><!-- #content-page -->
             <div class="clear"></div>
@@ -38,7 +39,7 @@
     </script>
     <!-- Placed at the end of the document so the pages load faster -->
     <?php
-    /* 
+    /*
     Only if is iOS
     <script>
     $('a[href!="#"]').click(function(){

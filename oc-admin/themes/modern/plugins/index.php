@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -82,17 +82,17 @@
     osc_add_hook('admin_header','customHead');
 
     $iDisplayLength = __get('iDisplayLength');
-    $aData          = __get('aPlugins'); 
+    $aData          = __get('aPlugins');
 
     $tab_index = 1;
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="tabs" class="ui-osc-tabs ui-tabs-right">
     <ul>
-        <?php 
+        <?php
             $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
             $bPluginsToUpdate = is_array($aPluginsToUpdate)?true:false;
-            if($bPluginsToUpdate && count($aPluginsToUpdate) > 0) { 
+            if($bPluginsToUpdate && count($aPluginsToUpdate) > 0) {
                 $tab_index = 2;
         ?>
         <li><a href="#update-plugins"><?php _e('Updates'); ?></a></li>
@@ -143,11 +143,11 @@
     </div>
     <?php if($bPluginsToUpdate && count($aPluginsToUpdate) > 0) { ?>
     <div id="update-plugins">
-        <?php 
+        <?php
             $aIndex = array();
             if($bPluginsToUpdate) {
                 $array_aux  = array_keys($aData['aaInfo']);
-                
+
                 foreach($aPluginsToUpdate as $slug) {
                     $key = array_search($slug, $array_aux);
                     if($key) {

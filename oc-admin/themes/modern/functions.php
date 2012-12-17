@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
 osc_add_filter('admin_body_class', 'admin_modeCompact_class');
 function admin_modeCompact_class($args){
     $compactMode = osc_get_preference('compact_mode','modern_admin_theme');

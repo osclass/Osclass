@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -58,7 +58,7 @@
     osc_add_hook('admin_header','customHead');
 
     $iDisplayLength = __get('iDisplayLength');
-    $aData          = __get('aPlugins'); 
+    $aData          = __get('aPlugins');
 
     $version_length = strlen(osc_version());
     $main_version   = substr(osc_version(), 0, $version_length - 2) . "." . substr(osc_version(), $version_length - 2, 1);
@@ -68,7 +68,7 @@
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="tabs" class="ui-osc-tabs ui-tabs-right">
     <ul>
-        <?php 
+        <?php
             $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
             $bPluginsToUpdate = is_array($aPluginsToUpdate)?true:false;
             if($bPluginsToUpdate && count($aPluginsToUpdate) > 0) {
@@ -137,7 +137,7 @@
 
         $("#market_install").on("click", function(){
             $(".ui-dialog-content").dialog("close");
-            $('<div id="downloading"><div class="osc-modal-content"><?php echo osc_esc_js(__('Please wait until the download is completed')); ?></div></div>').dialog({ 
+            $('<div id="downloading"><div class="osc-modal-content"><?php echo osc_esc_js(__('Please wait until the download is completed')); ?></div></div>').dialog({
                 title:'<?php echo osc_esc_js(__('Downloading')); ?>...',
                 modal:true
             });
@@ -162,7 +162,7 @@
         });
 
         function getMarketContent(fPage) {
-            // get page 
+            // get page
             var page = 1;
             if(fPage!="") {
                 page = fPage;

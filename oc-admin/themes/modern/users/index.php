@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -46,7 +46,7 @@
                     source: "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=userajax", //+$('input[name="user"]').val(), // &term=
                     minLength: 0,
                     select: function( event, ui ) {
-                        if(ui.item.id=='') 
+                        if(ui.item.id=='')
                             return false;
                         $('#userId').val(ui.item.id);
                         $('#fUserId').val(ui.item.id);
@@ -56,7 +56,7 @@
                         $('#fUserId').val('');
                     }
                 });
-                
+
                 // check_all bulkactions
                 $("#check_all").change(function(){
                     var isChecked = $(this+':checked').length;
@@ -116,11 +116,11 @@
         <?php
     }
     osc_add_hook('admin_header','customHead');
-   
+
     $iDisplayLength = __get('iDisplayLength');
-    $aData          = __get('aUsers'); 
+    $aData          = __get('aUsers');
 ?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?> 
+<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <h2 class="render-title"><?php _e('Manage users'); ?> <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=create' ; ?>" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
 <div class="relative">
     <div id="users-toolbar" class="table-toolbar">
@@ -135,7 +135,7 @@
     </div>
     <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
         <input type="hidden" name="page" value="users" />
-        
+
         <div id="bulk-actions">
             <label>
                 <select name="action" id="bulk_actions" class="select-box-extra">
@@ -190,7 +190,7 @@
         </div>
     </form>
 </div>
-<?php 
+<?php
     function showingResults(){
         $aData = __get('aUsers');
         echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;

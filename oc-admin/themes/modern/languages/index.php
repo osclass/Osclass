@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -100,7 +100,7 @@
     osc_add_hook('admin_header','customHead');
 
     $iDisplayLength = __get('iDisplayLength');
-    $aData          = __get('aLanguages'); 
+    $aData          = __get('aLanguages');
 
     osc_current_admin_theme_path( 'parts/header.php' );
 ?>
@@ -108,7 +108,7 @@
 <div class="relative">
     <div id="language-toolbar" class="table-toolbar">
         <div class="float-right">
-            
+
         </div>
     </div>
     <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post" data-dialog-open="false">
@@ -165,7 +165,7 @@
         </div>
     </form>
 </div>
-<?php 
+<?php
     osc_show_pagination_admin($aData);
 ?>
 <form id="dialog-language-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">

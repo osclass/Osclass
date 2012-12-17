@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -127,7 +127,7 @@
                 function(data){
                     $("#downloading .osc-modal-content").html(data.message);
                     setTimeout(function(){
-                      $(".ui-dialog-content").dialog("close");  
+                      $(".ui-dialog-content").dialog("close");
                   },1000);
                 });
                 return false;
@@ -193,7 +193,7 @@
             );
 
             return false;
-        });        
+        });
     </script>
 </div>
 <?php osc_current_admin_theme_path('parts/footer.php') ; ?>

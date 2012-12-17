@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -184,7 +184,7 @@
         </div>
     </form>
 </div>
-<?php 
+<?php
     osc_show_pagination_admin($aData);
 ?>
 <form id="dialog-page-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete page')); ?>">

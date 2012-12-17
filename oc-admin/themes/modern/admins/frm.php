@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -44,7 +44,7 @@
         <?php
     }
     osc_add_hook('admin_header','customHead');
-    
+
     $aux = customFrmText();
 
     function customPageTitle($string) {

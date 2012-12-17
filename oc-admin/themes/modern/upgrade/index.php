@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -46,12 +46,12 @@
                 <?php } ?>
             });
         </script>
-    <?php } 
-    
+    <?php }
+
     osc_add_hook('admin_header','customHead');
-    
+
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-    
+
     <div id="backup-settings">
         <h2 class="render-title"><?php _e('Upgrade') ; ?></h2>
         <div id="result">
@@ -65,6 +65,6 @@
                 </p>
                 <a class="btn" href="<?php echo osc_admin_base_url(true); ?>?page=upgrade&confirm=true"><?php _e('Upgrade now'); ?></a>
             </div>
-        </div>  
+        </div>
     </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

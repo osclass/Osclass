@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -38,7 +38,7 @@
     //customize Head
     function customHead() { ?>
         <script type="text/javascript">
-            
+
             $(document).ready(function(){
                 // check_all bulkactions
                 $("#check_all").change(function(){
@@ -99,7 +99,7 @@
         <?php
     }
     osc_add_hook('admin_header','customHead');
-   
+
     $aCurrencies = __get('aCurrencies') ;
 
     $aData = array() ;
@@ -121,7 +121,7 @@
 <h2 class="render-title"><?php _e('Currencies') ; ?> <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=currencies&type=add" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
 <div class="relative">
     <div id="currencies-toolbar" class="table-toolbar">
-    </div>    
+    </div>
     <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
         <input type="hidden" name="page" value="settings" />
         <input type="hidden" name="action" value="currencies" />
@@ -140,7 +140,7 @@
                     <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
                     <th><?php _e('Code') ; ?></th>
                     <th><?php _e('Name') ; ?></th>
-                    <th><?php _e('Description') ; ?></th>   
+                    <th><?php _e('Description') ; ?></th>
                 </tr>
             </thead>
             <tbody>

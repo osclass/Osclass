@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -42,14 +42,14 @@
                     title: '<?php echo osc_esc_js( __('Delete widget') ); ?>'
                 });
             });
-            
+
             // dialog delete function
             function delete_dialog(widget_id) {
                 $("#dialog-widget-delete input[name='id']").attr('value', widget_id);
                 $("#dialog-widget-delete").dialog('open');
                 return false;
             }
-            
+
         </script>
         <?php
     }
