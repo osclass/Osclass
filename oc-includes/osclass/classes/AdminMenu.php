@@ -63,6 +63,10 @@
 
             $this->add_menu( __('Categories'), osc_admin_base_url(true) .'?page=categories', 'categories', 'administrator') ;
 
+            $this->add_menu( __('Market'), osc_admin_base_url(true) .'?page=market', 'market', 'administrator') ;
+            $this->add_submenu( 'market', __('Themes'), osc_admin_base_url(true) .'?page=market&action=themes', 'market_view_themes', 'administrator') ;
+            $this->add_submenu( 'market', __('Plugins'), osc_admin_base_url(true).'?page=market&action=plugins', 'market_view_plugins', 'administrator') ;
+
             $this->add_menu( __('Appearance'), osc_admin_base_url(true) .'?page=appearance', 'appearance', 'administrator') ;
             $this->add_submenu( 'appearance', __('Manage themes'), osc_admin_base_url(true) .'?page=appearance', 'appearance_manage', 'administrator') ;
             $this->add_submenu( 'appearance', __('Market'), osc_admin_base_url(true).'?page=market&action=themes', 'appearance_market', 'administrator') ;
