@@ -60,16 +60,19 @@ $(function(){
                         ,themes:{width:445}
                     }
                 var section = thatItem.attr('data-type');
+                var bg = thatItem.attr('data-gr');
+                var letter = thatItem.attr('data-letter');
                 itemTemp = $('a[data-type="'+section+'"]').index($(this));
                 var item = market_data[section+'s'][section+'s'][itemTemp];
                 var description = $(item.s_description).text();
                 var dots = '';
                 var versions = item.s_compatible.split(',');
-                var banner = '';
+                var banner = false;
                 var screenshots = '';
                 var textButton = '';
                 var compatibleText = '';
                 var compatibleClass = '';
+                var str_letter = '';
 
                 if(item.s_compatible.indexOf(osc_market.main_version) == -1) {
                     compatibleText = item.s_compatible + " - "  + theme.langs.not_compatible;
@@ -80,10 +83,15 @@ $(function(){
                 if(description.length > 120){
                     dots = '...';
                 }
+                if(item.s_image) {
+                    banner = item.s_image;
+                }
                 if(item.s_banner != null){
                     banner = 'http://market.osclass.org/oc-content/uploads/market/'+item.s_banner;
-                } else {
-                    banner = item.s_image;
+                }
+                if(!banner){
+                    banner = theme.themUrl+'images/gr-'+bg+'.png';
+                    str_letter = letter;
                 }
                 if(section == 'theme'){
                     screenshots = '<tr>'
@@ -91,7 +99,7 @@ $(function(){
                     +'</tr>'
                 }
                 print = '<div class="mk-item mk-item-'+section+'">'
-                        +'<div class="banner" style="background-image:url('+banner+');"></div>'
+                        +'<div class="banner" style="background-image:url('+banner+');">'+str_letter+'</div>'
                         +'<div class="mk-info">'
                         +'<table>'
                             +'<tr>'

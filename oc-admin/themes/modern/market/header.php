@@ -43,6 +43,7 @@
         <script type="text/javascript">
             var theme = window.theme || {};
             theme.adminBaseUrl = "<?php echo osc_admin_base_url(true); ?>";
+            theme.themUrl = "<?php echo osc_current_admin_theme_url(); ?>";
             theme.langs = <?php echo json_encode($js_lang); ?>;
 
             var osc_market = {};
@@ -73,15 +74,23 @@
         <?php
     }
 
+    function gradienColors(){
+        $letters = str_split('abgi');
+        shuffle($letters);
+        return $letters;
+    }
 
-    function drawMarketItem($item){
+    function drawMarketItem($item,$color = false){
         //constants
         $updateClass      = '';
         $updateData       = '';
-        $thumbnail        = '';
+        $thumbnail        = false;
         $featuredClass    = '';
+        $style            = '';
+        $letterDraw       = '';
         $type             = strtolower($item['e_type']);
         $items_to_update  = json_decode(getPreference($type.'s_to_update'),true);
+
 
         if($item['s_thumbnail']){
             $thumbnail = $item['s_thumbnail'];
@@ -98,10 +107,15 @@
                 $updateData  = ' data-update="true"';
             }
         }
+        if(!$thumbnail && $color){
+            $thumbnail = osc_current_admin_theme_url('images/gr-'.$color.'.png');
+            $letterDraw = $item['s_update_url'][0];
+        }
+        $style = 'background-image:url('.$thumbnail.');';
         $item['total_downloads'] = 335;
-        echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent'.$updateClass.$featuredClass.'" data-type="'.$type.'"'.$updateData.'>';
+        echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent'.$updateClass.$featuredClass.'" data-type="'.$type.'"'.$updateData.' data-gr="'.$color.'" data-letter="'.$item['s_update_url'][0].'">';
         echo '<div class="mk-item mk-item-'.$type.'">';
-        echo '    <div class="banner" style="background-image:url('.$thumbnail.');"></div>';
+        echo '    <div class="banner" style="'.$style.'">'.$letterDraw.'</div>';
         echo '    <div class="mk-info"><i class="flag"></i>';
         echo '        <h3>'.$item['s_title'].'</h3>';
         echo '        <i>by '.$item['s_contact_name'].'</i>';

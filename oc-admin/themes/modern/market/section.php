@@ -65,8 +65,12 @@
     $pagination = new Pagination($params);
     $aux = $pagination->doPagination();
 
+    $colors = array_merge(gradienColors(),array_merge(gradienColors(),gradienColors()));
+    $i = 0;
     foreach($array[$section] as $item){
-        drawMarketItem($item);
+        drawMarketItem($item,$colors[$i]);
+
+        $i++;
     }
     echo '<div class="clear"></div><div class="has-pagination">'.$aux.'</div>';
     ?>
