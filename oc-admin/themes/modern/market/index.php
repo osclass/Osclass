@@ -20,18 +20,21 @@
     }
     osc_add_hook('help_box','addHelp');
     osc_current_admin_theme_path('market/header.php');
+
 ?>
 <div class="grid-market">
     <?php
-    $out    = osc_file_get_contents(osc_market_url('plugins')."page/".$marketPage);
+    $out    = osc_file_get_contents(osc_market_url('plugins')."page/0");
     $array  = json_decode($out, true);
+
     ?>
     <h2 class="section-title"><?php _e('Recommended plugins for You'); ?><a href="<?php echo osc_admin_base_url(true).'?page=market&action=plugins'; ?>"><?php echo sprintf(__('View all (%s)'), $array['total']); ?></a></h2>
     <?php
     $marketPage = 0;
     $i = 0;
+    $colors = array_merge(gradienColors(),array_merge(gradienColors(),gradienColors()));
     foreach($array['plugins'] as $item){
-        drawMarketItem($item);
+        drawMarketItem($item,$colors[$i]);
         $i++;
         if($i == 6){
             break;
@@ -41,15 +44,16 @@
 </div>
 <div class="grid-market">
     <?php
-    $out    = osc_file_get_contents(osc_market_url('themes')."page/".$marketPage);
+    $out    = osc_file_get_contents(osc_market_url('themes')."page/0");
     $array  = json_decode($out, true);
     ?>
     <h2 class="section-title"><?php _e('Recommended themes for You'); ?> <a href="<?php echo osc_admin_base_url(true).'?page=market&action=themes'; ?>"><?php echo sprintf(__('View all (%s)'), $array['total']); ?></a></h2>
     <?php
     $marketPage = 0;
     $i = 0;
+    $colors = gradienColors();
     foreach($array['themes'] as $item){
-        drawMarketItem($item);
+        drawMarketItem($item,$colors[$i]);
         $i++;
         if($i == 6){
             break;
@@ -59,15 +63,17 @@
 </div>
 <div class="grid-market">
     <?php
-    $out    = osc_file_get_contents(osc_market_url('languages')."page/".$marketPage);
+    $out    = osc_file_get_contents(osc_market_url('languages')."page/0");
     $array  = json_decode($out, true);
     ?>
     <h2 class="section-title"><?php _e('Languages'); ?> <a href="<?php echo osc_admin_base_url(true).'?page=market&action=languages'; ?>"><?php echo sprintf(__('View all (%s)'), $array['total']); ?></a></h2>
     <?php
     $marketPage = 0;
     $i = 0;
+    $colors = gradienColors();
+
     foreach($array['languages'] as $item){
-        drawMarketItem($item);
+        drawMarketItem($item,$colors[$i]);
         $i++;
         if($i == 6){
             break;
