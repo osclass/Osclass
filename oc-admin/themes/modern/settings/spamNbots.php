@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
      * Osclass – software for creating and publishing online classified advertising platforms
      *
@@ -124,4 +124,4 @@
         </form>
     </div>
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

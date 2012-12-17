@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
      * Osclass – software for creating and publishing online classified advertising platforms
      *
@@ -23,10 +23,10 @@
         return 'row-offset';
     }
 
-    function customHead() { 
+    function customHead() {
         $all = Preference::newInstance()->findValueByName('location_todo');
         if( $all == '' ) $all = 0;
-        $worktodo   = LocationsTmp::newInstance()->count() ; 
+        $worktodo   = LocationsTmp::newInstance()->count() ;
         ?>
         <script type="text/javascript">
             function reload() {

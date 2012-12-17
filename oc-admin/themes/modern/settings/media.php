@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
      * Osclass – software for creating and publishing online classified advertising platforms
      *
@@ -297,7 +297,7 @@
                 <h2 class="render-title"><?php _e('Regenerate images') ; ?></h2>
                 <div class="form-row">
                     <div class="form-controls">
-                    <p>    
+                    <p>
                         <?php _e("You can regenerate different image dimensions. If you have changed the dimension of thumbnails, preview or normal images, you might want to regenerate your images.") ; ?>
                     </p>
                     <a class="btn" href="<?php echo osc_admin_base_url(true) . '?page=settings&action=images_post'; ?>"><?php  _e('Regenerate') ; ?></a>
@@ -324,4 +324,4 @@
         </div>
     </div>
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

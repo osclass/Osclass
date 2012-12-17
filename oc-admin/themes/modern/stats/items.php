@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
      * Osclass – software for creating and publishing online classified advertising platforms
      *
@@ -85,7 +85,7 @@
             // Set a callback to run when the Google Visualization API is loaded.
             google.setOnLoadCallback(drawChart);
 
-            // Callback that creates and populates a data table, 
+            // Callback that creates and populates a data table,
             // instantiates the pie chart, passes in the data and
             // draws it.
             function drawChart() {

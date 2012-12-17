@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
      * Osclass – software for creating and publishing online classified advertising platforms
      *
@@ -15,7 +15,7 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
-    
+
     $field      = __get('field') ;
     $categories = __get('categories') ;
     $selected   = __get('selected') ;
@@ -110,14 +110,14 @@
                 // Mostramos un mensaje con la respuesta de PHP
                 success: function(data) {
                     var ret = eval( "(" + data + ")");
-                  
+
                     var message = "";
                     if(ret.error) {
-                        
-                        message += ret.error; 
+
+                        message += ret.error;
 
                     }
-                    if(ret.ok){ 
+                    if(ret.ok){
                         $('#settings_form').fadeOut('fast', function(){
                             $('#settings_form').remove();
                         });
@@ -133,8 +133,8 @@
                     $(".jsMessage").fadeIn('fast') ;
                     $(".jsMessage p").html('<?php echo osc_esc_js(__('Ajax error, try again.')); ?>') ;
                 }
-                
-            })        
+
+            })
             return false ;
         }) ;
 

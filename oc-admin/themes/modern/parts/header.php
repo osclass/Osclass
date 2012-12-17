@@ -1,3 +1,4 @@
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ; ?>
 <!DOCTYPE html>
 <html lang="<?php echo substr(osc_current_admin_locale(), 0, 2); ?>">
 <head>

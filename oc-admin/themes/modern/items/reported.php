@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
      * Osclass – software for creating and publishing online classified advertising platforms
      *
@@ -50,7 +50,7 @@
                         }
                     });
                 });
-                
+
                 // dialog delete
                 $("#dialog-item-delete").dialog({
                     autoOpen: false,
@@ -88,7 +88,7 @@
                 });
                 // /dialog bulk actions
             });
-            
+
             // dialog delete function
             function delete_dialog(item_id) {
                 $("#dialog-item-delete input[name='id[]']").attr('value', item_id);
@@ -178,7 +178,7 @@
         </div>
     </form>
 </div>
-<?php 
+<?php
     osc_show_pagination_admin($aData);
 ?>
 <form id="dialog-item-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide">

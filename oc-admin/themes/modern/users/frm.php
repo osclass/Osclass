@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
      * Osclass – software for creating and publishing online classified advertising platforms
      *
@@ -23,7 +23,7 @@
     $regions   = __get('regions') ;
     $cities    = __get('cities') ;
     $locales   = __get('locales') ;
-    
+
     function customFrmText(){
         $user      = __get('user') ;
         $return = array();
@@ -56,7 +56,7 @@
     osc_add_filter('admin_title', 'customPageTitle');
 
     //customize Head
-    function customHead() { 
+    function customHead() {
         $user = __get('user');
 
         if(isset($user['pk_i_id'])) {
@@ -69,7 +69,7 @@
         <?php
     }
     osc_add_hook('admin_header','customHead');
-    
+
     $aux    = customFrmText();
 ?>
 <?php osc_current_admin_theme_path('parts/header.php') ; ?>
