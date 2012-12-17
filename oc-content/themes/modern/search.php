@@ -80,8 +80,8 @@
                         id = id+'_';
                         if(totalInputSub == totalInputSubChecked) {
                             if(totalInputSub == 0) {
-                                if( $(this).find("input[name='sCategory[]']:checked").size() > 0) {    
-                                    var aux = $('<div class="chbx checked"><span></span></div>').attr('id', id);   
+                                if( $(this).find("input[name='sCategory[]']:checked").size() > 0) {
+                                    var aux = $('<div class="chbx checked"><span></span></div>').attr('id', id);
                                     $(input).before(aux);
                                 } else {
                                     var aux = $('<div class="chbx"><span></span></div>').attr('id', id);
@@ -104,7 +104,7 @@
                     $('li.parent').prepend('<span style="width:6px;display:inline-block;" class="toggle">+</span>');
                     $('ul.sub').toggle();
 
-                    $('span.toggle').click(function(){ 
+                    $('span.toggle').click(function(){
                         $(this).parent().find('ul.sub').toggle();
                         if($(this).text()=='+'){
                             $(this).html('-');
@@ -151,7 +151,7 @@
                         } else {
                             // is subcategory checkbox or is category parent without subcategories
                             var parentLi = $(this).closest('li.parent');
-                            
+
                             // subcategory
                             if($(parentLi).find('ul.sub').size() > 0) {
                                 var totalInputSub           = $(parentLi).find('ul.sub>li>input').size();
@@ -164,16 +164,16 @@
                                 $(divInput).removeClass('checked');
                                 $(divInput).removeClass('semi-checked');
 
-                                if(totalInputSub == totalInputSubChecked) {    
+                                if(totalInputSub == totalInputSubChecked) {
                                     $(divInput).addClass('checked');
                                     $(input).attr('checked', true);
                                 }else if(totalInputSubChecked == 0) {
                                     // no input checked;
                                 }else if(totalInputSubChecked < totalInputSub) {
                                     $(divInput).addClass('semi-checked');
-                                }   
+                                }
                             } else {
-                                // parent category 
+                                // parent category
                             }
                         }
                     });
@@ -247,6 +247,7 @@
                             <div class="row one_input">
                                 <h6><?php _e('City', 'modern'); ?></h6>
                                 <input type="text" id="sCity" name="sCity" value="<?php echo osc_esc_html( osc_search_city() ); ?>" />
+                                <input type="hidden" id="sRegion" name="sRegion" value="" />
                             </div>
                         </fieldset>
 
@@ -320,6 +321,7 @@
                         source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location",
                         minLength: 2,
                         select: function( event, ui ) {
+                            $("#sRegion").attr("value", ui.item.region);
                             log( ui.item ?
                                 "<?php _e('Selected', 'modern'); ?>: " + ui.item.value + " aka " + ui.item.id :
                                 "<?php _e('Nothing selected, input was', 'modern'); ?> " + this.value );

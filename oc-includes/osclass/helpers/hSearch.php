@@ -515,7 +515,7 @@
      * @return string
      */
     function osc_list_country_url() {
-        return osc_search_url(array('sCountry' => osc_list_country_name()));
+        return osc_search_url(array('sCountry' => osc_list_country_code()));
     }
 
     // region attributes
@@ -560,7 +560,7 @@
             $url .= osc_sanitizeString(osc_list_region_name()) . '-r' . osc_list_region_id();
             return $url;
         } else {
-            return osc_search_url( array( 'sRegion' => osc_list_region_name() ) );
+            return osc_search_url( array( 'sRegion' => osc_list_region_id() ) );
         }
     }
 
@@ -606,7 +606,7 @@
             $url .= osc_sanitizeString(osc_list_city_name()) . '-c' . osc_list_city_id();
             return $url;
         } else {
-            return osc_search_url(array('sCity' => osc_list_city_name()));
+            return osc_search_url(array('sCity' => osc_list_city_id()));
         }
     }
 
