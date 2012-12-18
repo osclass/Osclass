@@ -94,9 +94,15 @@ $(function(){
                     str_letter = letter;
                 }
                 if(section == 'theme'){
+                    if(item.a_images.length > 0){
                     screenshots = '<tr>'
-                        +'<td colspan="3"><h4>'+theme.langs.screenshots+'</h4></td>'
-                    +'</tr>'
+                        +'<td colspan="3"><h4>'+theme.langs.screenshots+'</h4>';
+                        for(i = 0; i < item.a_images.length; i++){
+                            screenshots += '<a href="" class="screnshot"><img src="'+item.a_images[i]['s_thumbnail']+'" /></a>';
+                            if(i == 2) break;
+                        }
+                     screenshots += '</td></tr>';
+                    }
                 }
                 print = '<div class="mk-item mk-item-'+section+'">'
                         +'<div class="banner" style="background-image:url('+banner+');">'+str_letter+'</div>'
@@ -122,7 +128,9 @@ $(function(){
                         +'</table>'
                         +'</div>'
                     +'</div>';
-                $(print).dialog({
+                var $print = $(print);
+                    $print.find('.screnshot:last img').addClass('last');
+                $print.dialog({
                         dialogClass:'market-dialog '+compatibleClass,
                         title: compatibleText,
                         width:sizes[section+'s'].width,

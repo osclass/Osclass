@@ -51,6 +51,7 @@
         </script>
         <?php
         $sections = array();
+        $featured = '';
         switch (Params::getParam("action")) {
             case 'plugins':
                 $sections[] = 'plugins';
@@ -65,10 +66,11 @@
 
             default:
                 $sections = array('plugins','themes','languages');
+                $featured = 'true';
                 break;
         }
         foreach($sections as $section){
-            echo '<script src="'.osc_admin_base_url(true).'?page=ajax&action=market_data&section='.$section.'" type="text/javascript"></script>';
+            echo '<script src="'.osc_admin_base_url(true).'?page=ajax&amp;action=market_data&amp;section='.$section.'&amp;featured='.$featured.'" type="text/javascript"></script>';
         }
         ?>
         <?php
