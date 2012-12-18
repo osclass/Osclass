@@ -383,6 +383,7 @@ CREATE TABLE %st_item_description_tmp (
         $comm->query(sprintf("ALTER TABLE %st_user DROP s_pass_answer", DB_TABLE_PREFIX));
         $comm->query(sprintf("ALTER TABLE %st_user DROP s_pass_question", DB_TABLE_PREFIX));
         osc_set_preference('marketURL', 'http://market.osclass.org/api/');
+        osc_set_preference('marketAllowExternalSources', '0', 'BOOLEAN');
     }
 
     if(osc_version() < 310) {
