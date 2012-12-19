@@ -1353,7 +1353,4 @@ function osc_csrfguard_start() {
     register_shutdown_function('osc_csrfguard_inject');
 }
 
-osc_csrfguard_start();
-
-
 ?>

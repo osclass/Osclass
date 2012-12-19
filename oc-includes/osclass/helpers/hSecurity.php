@@ -60,12 +60,12 @@
 
     function osc_csrf_check() {
         if(Params::getParam('CSRFName')=='' || Params::getParam('CSRFToken')=='') {
-            trigger_error( __("Probable invalid request."),E_USER_ERROR);
+            exit(__("Probable invalid request."));
         }
         $name = Params::getParam('CSRFName');
         $token = Params::getParam('CSRFToken');
         if (!osc_csrfguard_validate_token($name, $token)) {
-            trigger_error(__("Invalid CSRF token."),E_USER_ERROR);
+            exit(__("Invalid CSRF token."));
         }
     }
 
