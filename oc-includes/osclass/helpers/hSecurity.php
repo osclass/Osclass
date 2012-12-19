@@ -55,7 +55,7 @@
     function osc_csrf_token_url() {
         $name = osc_csrf_name()."_".mt_rand(0,mt_getrandmax());
         $token = osc_csrfguard_generate_token($name);
-        return "CSRFName='".$name."&CSRFToken='".$token;
+        return "CSRFName=".$name."&CSRFToken=".$token;
     }
 
     function osc_csrf_check() {

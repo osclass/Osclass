@@ -51,8 +51,8 @@
             $this->order_by['column_name'] = $this->column_names[3] ;
             $this->order_by['type'] = 'desc' ;
 
-            $this->comments       = ItemComment::newInstance()->search($this->resourceID, $this->start, $this->limit, 
-                    ( $this->order_by['column_name'] ? $this->order_by['column_name'] : 'pk_i_id' ), 
+            $this->comments       = ItemComment::newInstance()->search($this->resourceID, $this->start, $this->limit,
+                    ( $this->order_by['column_name'] ? $this->order_by['column_name'] : 'pk_i_id' ),
                     ( $this->order_by['type'] ? $this->order_by['type'] : 'desc' ),
                     $this->showAll) ;
 
@@ -61,7 +61,7 @@
             } else {
                 $this->total          = ItemComment::newInstance()->countAll( '( c.b_active = 0 OR c.b_enabled = 0 OR c.b_spam = 1 )' );
             }
-            
+
             if( $this->resourceID == null ) {
                 $this->total_filtered = $this->total ;
             } else {
@@ -75,7 +75,7 @@
         }
 
         private function getDBParams()
-        {   
+        {
             $p_iPage        = 1;
             if( !is_numeric(Params::getParam('iPage')) || Params::getParam('iPage') < 1 ) {
                 Params::setParam('iPage', $p_iPage );
@@ -119,7 +119,7 @@
 
             $this->result['aaObject'] = $this->comments;
 
-            $count = 0 ;
+            $token_url = osc_csrf_token_url();
             foreach($this->comments as $comment) {
                 $row = array() ;
                 $options = array() ;
@@ -128,14 +128,14 @@
                 View::newInstance()->_exportVariableToView('item', Item::newInstance()->findByPrimaryKey($comment['fk_i_item_id']));
 
                 if( $comment['b_active'] ) {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') . '</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'].'&amp;'.$token_url . '&amp;value=INACTIVE">' . __('Deactivate') . '</a>' ;
                 } else {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] .'&amp;value=ACTIVE">' . __('Activate') . '</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'].'&amp;'.$token_url .'&amp;value=ACTIVE">' . __('Activate') . '</a>' ;
                 }
                 if( $comment['b_enabled'] ) {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=DISABLE">' . __('Block') . '</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'].'&amp;'.$token_url . '&amp;value=DISABLE">' . __('Block') . '</a>' ;
                 } else {
-                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'] . '&amp;value=ENABLE">' . __('Unblock') . '</a>' ;
+                    $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=status&amp;id=' . $comment['pk_i_id'].'&amp;'.$token_url . '&amp;value=ENABLE">' . __('Unblock') . '</a>' ;
                 }
 
                 $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=comment_edit&amp;id=' . $comment['pk_i_id'] . '" id="dt_link_edit">' . __('Edit') . '</a>' ;
@@ -143,11 +143,11 @@
 
                 // more actions
                 $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL ;
-                foreach( $options_more as $actual ) { 
+                foreach( $options_more as $actual ) {
                     $moreOptions .= '<li>'.$actual."</li>".PHP_EOL;
                 }
                 $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL ;
-                
+
                 // create list of actions
                 $auxOptions = '<ul>'.PHP_EOL ;
                 foreach( $options as $actual ) {
@@ -155,9 +155,9 @@
                 }
                 $auxOptions  .= $moreOptions ;
                 $auxOptions  .= '</ul>'.PHP_EOL ;
-                
+
                 $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
-                
+
                 $row[] = '<input type="checkbox" name="id[]" value="' . $comment['pk_i_id']  . '" />' ;
                 if( empty($comment['s_author_name']) ) {
                     $user = User::newInstance()->findByPrimaryKey( $comment['fk_i_user_id'] );
@@ -167,14 +167,13 @@
                 $row[] = $comment['s_body'] ;
                 $row[] = $comment['dt_pub_date'] ;
 
-                $count++ ;
                 $this->result['aaData'][] = $row ;
             }
         }
-        
+
         /**
          * Set toJson variable with the JSON representation of $result
-         * 
+         *
          * @access private
          * @since unknown
          * @param array $result
@@ -186,9 +185,9 @@
 
         /**
          * Dump $result to JSON and echo the result
-         * 
+         *
          * @access private
-         * @since unknown 
+         * @since unknown
          */
         private function dumpResult()
         {
@@ -198,9 +197,9 @@
 
         /**
          * Dump $result
-         * 
+         *
          * @access private
-         * @since unknown 
+         * @since unknown
          */
         public function dumpToDatatables()
         {
@@ -210,9 +209,9 @@
 
         /**
          * Dump $result to JSON and return the result
-         * 
+         *
          * @access private
-         * @since unknown 
+         * @since unknown
          */
         public function result()
         {
