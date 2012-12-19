@@ -54,6 +54,7 @@
                                         osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin') ;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=admins') ;
                                     }
+                                    osc_csrf_check();
                                     // adding a new admin
                                     $sPassword = Params::getParam('s_password', false, false) ;
                                     $sName     = Params::getParam('s_name') ;
@@ -70,7 +71,7 @@
                                     $sEmail    = trim($sEmail) ;
                                     $sUserName = strip_tags($sUserName) ;
                                     $sUserName = trim($sUserName) ;
-                                    
+
                                     // Checks for legit data
                                     if( !osc_validate_email($sEmail, true) ) {
                                         osc_add_flash_warning_message( _m("Email invalid"), 'admin') ;
@@ -138,6 +139,7 @@
                                         osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin') ;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=admins') ;
                                     }
+                                    osc_csrf_check();
                                     // updating a new admin
                                     $iUpdated = 0 ;
                                     $adminId  = Params::getParam('id') ;
@@ -230,7 +232,7 @@
                                     if($adminId!=osc_logged_admin_id()) {
                                         $array['b_moderator'] = $bModerator;
                                     }
-                                    
+
                                     $array['s_name']     = Params::getParam('s_name') ;
                                     $array['s_username'] = $sUserName ;
                                     $array['s_email']    = $sEmail ;
@@ -251,10 +253,11 @@
                                         osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin') ;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=admins') ;
                                     }
+                                    osc_csrf_check();
                                     // deleting and admin
                                     $isDeleted = false ;
                                     $adminId   = Params::getParam('id') ;
- 
+
                                     if( !is_array($adminId) ) {
                                         osc_add_flash_error_message( _m("The admin id isn't in the correct format"), 'admin') ;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=admins') ;
@@ -275,7 +278,7 @@
                                     }
                                     $this->redirectTo(osc_admin_base_url(true) . '?page=admins') ;
                 break ;
-                default:            
+                default:
                                     if( Params::getParam('iDisplayLength') == '' ) {
                                         Params::setParam('iDisplayLength', 10 ) ;
                                     }
@@ -287,7 +290,7 @@
                                     Params::setParam('iPage', $p_iPage);
 
                                     $admins = $this->adminManager->listAll() ;
-                                    
+
                                     // pagination
                                     $start = ($p_iPage-1) * Params::getParam('iDisplayLength');
                                     $limit = Params::getParam('iDisplayLength');
@@ -302,9 +305,9 @@
                                     $max = ($start+$limit);
                                     if($max > $count) $max = $count;
                                     for($i = $start; $i < $max; $i++) {
-                                    
+
                                         $admin = $admins[$i];
-                                    
+
                                         $options = array();
                                         $options[] = '<a href="' . osc_admin_base_url(true) . '?page=admins&action=edit&amp;id='  . $admin['pk_i_id'] . '">' . __('Edit') . '</a>';
                                         $options[] = '<a onclick="return delete_dialog(\'' . $admin['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=admins&action=delete&amp;id[]=' . $admin['pk_i_id'] . '">' . __('Delete') . '</a>';
@@ -313,7 +316,7 @@
                                             $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
                                         }
                                         $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
-                                        
+
                                         $row = array() ;
                                         $row[] = '<input type="checkbox" name="id[]" value="' . $admin['pk_i_id'] . '" />' ;
                                         $row[] = $admin['s_username'] . $actions ;
@@ -339,12 +342,12 @@
                                             $this->redirectTo($url) ;
                                         }
 
-                                        if($page > 1) {   
+                                        if($page > 1) {
                                             $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
                                             $this->redirectTo($url) ;
                                         }
                                     }
-                                            
+
                                     $this->_exportVariableToView('aAdmins', $array) ;
                                     // calling manage admins view
                                     $this->doView('admins/index.php') ;

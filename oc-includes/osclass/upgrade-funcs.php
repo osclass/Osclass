@@ -385,6 +385,10 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('marketURL', 'http://market.osclass.org/api/');
     }
 
+    if(osc_version() < 302) {
+        osc_set_preference('csrf_name', 'CSRF'.mt_rand(0,mt_getrandmax()));
+    }
+
     osc_changeVersionTo(302);
 
     echo '<div class="well ui-rounded-corners separate-top-medium">';

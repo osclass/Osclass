@@ -55,6 +55,7 @@
                     $this->doView("pages/frm.php");
                     break;
                 case 'edit_post':
+                    osc_csrf_check();
                     $id = Params::getParam("id");
                     $s_internal_name = Params::getParam("s_internal_name");
                     $s_internal_name = osc_sanitizeString($s_internal_name) ;
@@ -111,6 +112,7 @@
                     $this->doView("pages/frm.php");
                     break;
                 case 'add_post':
+                    osc_csrf_check();
                     $s_internal_name = Params::getParam("s_internal_name");
                     $s_internal_name = osc_sanitizeString($s_internal_name) ;
 
@@ -155,6 +157,7 @@
                     $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=add");
                     break;
                 case 'delete':
+                    osc_csrf_check();
                     $id = Params::getParam("id");
                     $page_deleted_correcty = 0;
                     $page_deleted_error = 0;
@@ -224,7 +227,7 @@
                             $this->redirectTo($url) ;
                         }
 
-                        if($page > 1) {   
+                        if($page > 1) {
                             $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
                             $this->redirectTo($url) ;
                         }

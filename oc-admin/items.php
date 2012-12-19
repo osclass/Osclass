@@ -42,11 +42,13 @@
                 osc_add_flash_error_message(_m("You don't have enough permissions"), "admin");
                 $this->redirectTo(osc_admin_base_url()) ;
             }
-            
+
             //specific things for this class
             switch ($this->action)
             {
-                case 'bulk_actions':    $mItems  = new ItemActions( true ) ;
+                case 'bulk_actions':
+                                        osc_csrf_check();
+                                        $mItems  = new ItemActions( true ) ;
                                         switch ( Params::getParam('bulk_actions') )
                                         {
                                             case 'enable_all':
@@ -143,7 +145,7 @@
                                                         }
                                                     }
                                                     osc_add_flash_ok_message( sprintf(_mn('%d change has been made', '%d changes have been made', $numSuccess), $numSuccess), 'admin') ;
-                                                }        
+                                                }
                                             break;
                                             case 'delete_all':
                                                 $id = Params::getParam('id') ;
@@ -269,9 +271,10 @@
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'delete':          //delete
+                                        osc_csrf_check();
                                         $id      = Params::getParam('id') ;
                                         $success = false ;
-                                        
+
                                         foreach( $id as $i ) {
                                             if ( $i ) {
                                                 $aItem   = $this->itemManager->findByPrimaryKey( $i ) ;
@@ -285,10 +288,11 @@
                                         } else {
                                             osc_add_flash_error_message( _m("The listing couldn't be deleted"), 'admin') ;
                                         }
-                                        
+
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'status':          //status
+                                        osc_csrf_check();
                                         $id = Params::getParam('id') ;
                                         $value = Params::getParam('value') ;
 
@@ -302,7 +306,7 @@
 
                                         if (!in_array($value, array('ACTIVE', 'INACTIVE','ENABLE','DISABLE')))
                                             return false;
-                                        
+
                                         $item = $this->itemManager->findByPrimaryKey($id);
                                         $mItems  = new ItemActions( true ) ;
 
@@ -350,10 +354,11 @@
 
                                                 break;
                                         }
-                                      
+
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'status_premium':  //status premium
+                                        osc_csrf_check();
                                         $id = Params::getParam('id') ;
                                         $value = Params::getParam('value') ;
 
@@ -369,16 +374,17 @@
                                             return false;
 
                                         $mItems = new ItemActions(true);
-                                        
+
                                         if ($mItems->premium($id, $value==1?true:false) ) {
                                             osc_add_flash_ok_message( _m('Changes have been applied'), 'admin');
                                         } else {
                                             osc_add_flash_error_message( _m('An error has occurred'), 'admin');
                                         }
-                                        
+
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'status_spam':  //status spam
+                                        osc_csrf_check();
                                         $id = Params::getParam('id') ;
                                         $value = Params::getParam('value') ;
 
@@ -394,16 +400,17 @@
                                             return false;
 
                                         $mItems = new ItemActions(true);
-                                        
+
                                         if( $mItems->spam($id, $value==1?true:false) ){
                                             osc_add_flash_ok_message( _m('Changes have been applied'), 'admin');
                                         } else {
                                             osc_add_flash_error_message( _m('An error has occurred'), 'admin');
-                                        }  
-                                        
+                                        }
+
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'clear_stat':
+                                        osc_csrf_check();
                                         $id     = Params::getParam('id') ;
                                         $stat   = Params::getParam('stat') ;
 
@@ -417,7 +424,7 @@
 
                                         if (!is_numeric($id))
                                             return false;
-                                       
+
                                         $success = $this->itemManager->clearStat($id , $stat ) ;
 
                                         if($success) {
@@ -425,7 +432,7 @@
                                         } else {
                                             osc_add_flash_error_message( _m("The listing hasn't been unmarked as")." $stat", 'admin') ;
                                         }
-                                        
+
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'item_edit':       // edit item
@@ -456,17 +463,17 @@
                                         } else {
                                             $actions[] = '<a class="btn float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $item['pk_i_id'] . '&amp;value=1">' . __('Mark as spam') .'</a>' ;
                                         }
-                                        
+
                                         $this->_exportVariableToView("actions", $actions);
-                                        
+
                                         $form     = count(Session::newInstance()->_getForm());
                                         $keepForm = count(Session::newInstance()->_getKeepForm());
-                                        
+
                                         if($form==0 || $form==$keepForm) {
                                             Session::newInstance()->_dropKeepForm();
                                         }
 
-                                        // save referer if belongs to manage items 
+                                        // save referer if belongs to manage items
                                         // redirect only if ManageItems or ReportedListngs
                                         if( isset($_SERVER['HTTP_REFERER']) ) {
                                             $referer = $_SERVER['HTTP_REFERER'] ;
@@ -481,15 +488,16 @@
                                                 }
                                             }
                                         }
-                                        
+
                                         $this->_exportVariableToView("item", $item);
                                         $this->_exportVariableToView("new_item", FALSE);
 
                                         $this->doView('items/frm.php') ;
                 break;
                 case 'item_edit_post':
+                                        osc_csrf_check();
                                         $mItems = new ItemActions(true);
-                    
+
                                         $mItems->prepareData(false);
                                         // set all parameters into session
                                         foreach( $mItems->data as $key => $value ) {
@@ -503,9 +511,9 @@
                                                 Session::newInstance()->_keepForm('meta_'.$key);
                                             }
                                         }
-                    
+
                                         $success = $mItems->edit();
-                                        
+
                                         if($success==1){
                                             osc_add_flash_ok_message( _m('Changes saved correctly'), 'admin') ;
                                             $url = osc_admin_base_url(true) . "?page=items" ;
@@ -521,6 +529,7 @@
                                         }
                 break;
                 case 'deleteResource':  //delete resource
+                                        osc_csrf_check();
                                         $id = Params::getParam('id') ;
                                         $name = Params::getParam('name') ;
                                         $fkid = Params::getParam('fkid') ;
@@ -548,14 +557,15 @@
                                         $this->doView('items/frm.php') ;
                 break;
                 case 'post_item':       //post item
+                                        osc_csrf_check();
                                         $mItem = new ItemActions(true);
-                    
+
                                         $mItem->prepareData(true);
                                         // set all parameters into session
                                         foreach( $mItem->data as $key => $value ) {
                                             Session::newInstance()->_setForm($key,$value);
                                         }
-                                        
+
                                         $meta = Params::getParam('meta');
 
                                         if(is_array($meta)) {
@@ -564,9 +574,9 @@
                                                 Session::newInstance()->_keepForm('meta_'.$key);
                                             }
                                         }
-                    
+
                                         $success = $mItem->add();
-                                        
+
                                         if( $success==1 || $success==2 ) {
                                             Session::newInstance()->_clearVariables();
                                             osc_add_flash_ok_message( _m('A new listing has been added'), 'admin') ;
@@ -580,6 +590,7 @@
                                         $this->doView('items/settings.php');
                 break;
                 case('settings_post'):     // update item settings
+                                        osc_csrf_check();
                                         $iUpdated                   = 0;
                                         $enabledRecaptchaItems      = Params::getParam('enabled_recaptcha_items');
                                         $enabledRecaptchaItems      = (($enabledRecaptchaItems == '1') ? true : false);
@@ -607,9 +618,9 @@
                                         $regUserCanContact          = (($regUserCanContact != '') ? true : false);
                                         $contactItemAttachment      = Params::getParam('item_attachment');
                                         $contactItemAttachment      = (($contactItemAttachment != '') ? true : false);
-                                        
-                                        
-                                        
+
+
+
                                         $msg = '';
                                         if(!osc_validate_int(Params::getParam("items_wait_time"))) {
                                             $msg .= _m("Wait time must only contain numeric characters")."<br/>";
@@ -624,8 +635,8 @@
                                             osc_add_flash_error_message( $msg, 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=items&action=settings');
                                         }
-                                        
-                                        
+
+
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledRecaptchaItems)
                                                                                       ,array('s_name'  => 'enabled_recaptcha_items'));
@@ -705,12 +716,12 @@
                                                 $this->redirectTo($url) ;
                                             }
 
-                                            if($page > 1) {   
+                                            if($page > 1) {
                                                 $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
                                                 $this->redirectTo($url) ;
                                             }
                                         }
-                                        
+
                                         $url_base = osc_admin_base_url(true).'?page=items&action=items_reported' ;
                                         $arg_spam   = '&sort=spam'; $arg_bad    = '&sort=bad';
                                         $arg_rep    = '&sort=rep';  $arg_off    = '&sort=off';
@@ -738,19 +749,19 @@
                                             default:
                                                 break;
                                         }
-                                        
+
                                         $this->_exportVariableToView('url_spam', $url_base.$arg_spam) ;
                                         $this->_exportVariableToView('url_bad', $url_base.$arg_bad) ;
                                         $this->_exportVariableToView('url_rep', $url_base.$arg_rep) ;
                                         $this->_exportVariableToView('url_off', $url_base.$arg_off) ;
                                         $this->_exportVariableToView('url_exp', $url_base.$arg_exp) ;
                                         $this->_exportVariableToView('url_date', $url_base.$arg_date) ;
-                                        
+
                                         $this->_exportVariableToView('aItems', $aData) ;
                                         //calling the view...
                                         $this->doView('items/reported.php') ;
                 break;
-                default:                // default 
+                default:                // default
                                         $catId = Params::getParam('catId') ;
 
                                         $countries = Country::newInstance()->listAll() ;
@@ -763,7 +774,7 @@
                                             $cities = City::newInstance()->findByRegion($regions[0]['pk_i_id']) ;
                                         }
 
-                                        // set default iDisplayLength 
+                                        // set default iDisplayLength
                                         if( Params::getParam('iDisplayLength') != '' ) {
                                             Cookie::newInstance()->push('listing_iDisplayLength', Params::getParam('iDisplayLength'));
                                             Cookie::newInstance()->set();
@@ -809,7 +820,7 @@
                                                 $this->redirectTo($url) ;
                                             }
 
-                                            if($page > 1) {   
+                                            if($page > 1) {
                                                 $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
                                                 $this->redirectTo($url) ;
                                             }
@@ -820,7 +831,7 @@
                                         // there are filters activated
                                         $this->_exportVariableToView('withFilters', $items_processing->filters() ) ;
 
-                                        //preparing variables for the view                
+                                        //preparing variables for the view
                                         $this->_exportVariableToView("users", User::newInstance()->listAll());
                                         $this->_exportVariableToView("catId", $catId) ;
                                         $this->_exportVariableToView("stat", Params::getParam('stat')) ;

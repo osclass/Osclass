@@ -32,6 +32,7 @@
         {
             switch( $this->action ) {
                 case('login_post'):     //post execution for the login
+                                        osc_csrf_check();
                                         $url_redirect  = osc_get_http_referer();
                                         $page_redirect = '';
                                         if(preg_match('|[\?&]page=([^&]+)|', $url_redirect.'&', $match)) {
@@ -97,6 +98,7 @@
                                             osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                                             $this->redirectTo( osc_admin_base_url() );
                                         }
+                                        osc_csrf_check();
 
                                         // post execution to recover the password
                                         $admin = Admin::newInstance()->findByEmail( Params::getParam('email') ) ;
@@ -134,6 +136,7 @@
                                         $this->doView( 'gui/forgot_password.php' ) ;
                 break;
                 case('forgot_post'):
+                                        osc_csrf_check();
                                         $admin = Admin::newInstance()->findByIdSecret(Params::getParam('adminId'), Params::getParam('code'));
                                         if( !$admin ) {
                                             osc_add_flash_error_message( _m('Sorry, the link is not valid'), 'admin') ;

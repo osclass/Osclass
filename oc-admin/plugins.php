@@ -44,6 +44,7 @@
                         osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                         $this->redirectTo(osc_admin_base_url(true) . '?page=plugins');
                     }
+                    osc_csrf_check();
 
                     $package = Params::getFiles("package");
                     if(isset($package['size']) && $package['size']!=0) {
@@ -79,6 +80,7 @@
                         osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                         $this->redirectTo(osc_admin_base_url(true) . '?page=plugins');
                     }
+                    osc_csrf_check();
                     $pn = Params::getParam('plugin') ;
 
                     // set header just in case it's triggered some fatal error
@@ -114,6 +116,7 @@
                         osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                         $this->redirectTo(osc_admin_base_url(true) . '?page=plugins');
                     }
+                    osc_csrf_check();
 
                     if( Plugins::uninstall(Params::getParam("plugin")) ) {
                         osc_add_flash_ok_message( _m('Plugin uninstalled'), 'admin') ;
@@ -128,6 +131,7 @@
                         osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                         $this->redirectTo(osc_admin_base_url(true) . '?page=plugins');
                     }
+                    osc_csrf_check();
 
                     if( Plugins::activate(Params::getParam('plugin')) ) {
                         osc_add_flash_ok_message( _m('Plugin enabled'), 'admin') ;
@@ -142,6 +146,7 @@
                         osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                         $this->redirectTo(osc_admin_base_url(true) . '?page=plugins');
                     }
+                    osc_csrf_check();
 
                     if( Plugins::deactivate(Params::getParam('plugin')) ) {
                         osc_add_flash_ok_message( _m('Plugin disabled'), 'admin') ;
@@ -159,7 +164,7 @@
                     break;
                 case 'admin_post':
                     Plugins::runHook('admin_post');
-
+                    break;
                 case 'renderplugin':
                     $file = Params::getParam("file");
                     if($file!="") {
@@ -194,6 +199,7 @@
                     }
                 break;
                 case 'configure_post':
+                    osc_csrf_check();
                     $plugin_short_name = Params::getParam("plugin_short_name");
                     $categories        = Params::getParam("categories");
                     if( $plugin_short_name != "" ) {
@@ -230,17 +236,17 @@
 //                            osc_add_flash_error_message( __('Error occurred') . ' ' . $slug , 'admin');
 //                        }
 //                    }
-                    
+
                     if(Params::getParam('checkUpdated') != '') {
                         osc_admin_toolbar_update_plugins(true);
                     }
-                    
+
                     if( Params::getParam('iDisplayLength') == '' ) {
                         Params::setParam('iDisplayLength', 10 ) ;
                     }
                     // ?
                     $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
-                    
+
                     $p_iPage      = 1;
                     if( is_numeric(Params::getParam('iPage')) && Params::getParam('iPage') >= 1 ) {
                         $p_iPage = Params::getParam('iPage');
@@ -248,18 +254,18 @@
                     Params::setParam('iPage', $p_iPage);
                     $aPlugin    = Plugins::listAll();
                     $active_plugins = osc_get_plugins() ;
-                    
+
                     // pagination
                     $start = ($p_iPage-1) * Params::getParam('iDisplayLength');
                     $limit = Params::getParam('iDisplayLength');
                     $count = count( $aPlugin );
-                    
+
                     $displayRecords = $limit;
                     if( ($start+$limit ) > $count ) {
                         $displayRecords = ($start+$limit) - $count;
                     }
                     // --------------------------------------------------------
-                    
+
                     $aData = array();
                     $aInfo = array();
                     $max = ($start+$limit);
@@ -284,7 +290,7 @@
                         $sUpdate = '' ;
                         // get plugins to update from t_preference
                         if($bPluginsToUpdate) {
-                            if(in_array(@$pInfo['plugin_update_uri'],$aPluginsToUpdate )){ 
+                            if(in_array(@$pInfo['plugin_update_uri'],$aPluginsToUpdate )){
                                 $sUpdate = '<a class="market_update market-popup" href="#' . htmlentities($pInfo['plugin_update_uri']) . '">' . __("There's a new update available") . '</a>' ;
                             }
                         }
@@ -323,13 +329,13 @@
                             $aInfo[$i] = $pInfo;
                         }
                     }
-                    
+
                     $array['iTotalRecords']         = $displayRecords;
                     $array['iTotalDisplayRecords']  = count($aPlugin);
                     $array['iDisplayLength']        = $limit;
                     $array['aaData'] = $aData;
                     $array['aaInfo'] = $aInfo;
-                    
+
                     // --------------------------------------------------------
                     $page  = (int)Params::getParam('iPage');
                     if(count($array['aaData']) == 0 && $page!=1) {
@@ -343,13 +349,13 @@
                             $this->redirectTo($url) ;
                         }
 
-                        if($page > 1) {   
+                        if($page > 1) {
                             $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
                             $this->redirectTo($url) ;
                         }
                     }
-                    
-                    
+
+
                     $this->_exportVariableToView('aPlugins', $array) ;
                     $this->doView("plugins/index.php");
                 break;
@@ -358,7 +364,7 @@
 
         //hopefully generic...
         function doView($file)
-        { 
+        {
             osc_current_admin_theme_path($file) ;
             Session::newInstance()->_clearVariables();
         }

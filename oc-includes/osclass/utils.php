@@ -1293,8 +1293,10 @@ function osc_update_cat_stats_id($id)
 }
 
 
-
-function osc_csrf_generate_token($unique_form_name) {
+/***********************
+ * CSRFGUARD functions *
+ ***********************/
+function osc_csrfguard_generate_token($unique_form_name) {
     if(function_exists("hash_algos") and in_array("sha512",hash_algos())) {
         $token = hash("sha512",mt_rand(0,mt_getrandmax()));
     } else {
@@ -1314,11 +1316,9 @@ function osc_csrf_generate_token($unique_form_name) {
 }
 
 
-function osc_csrf_validate_token($unique_form_name,$token_value) {
+function osc_csrfguard_validate_token($unique_form_name,$token_value) {
     $token = Session::newInstance()->_get($unique_form_name);
-    if ($token===false) {
-        return true;
-    } else if($token===$token_value) {
+    if($token===$token_value) {
         $result = true;
     } else {
         $result = false;
@@ -1328,45 +1328,32 @@ function osc_csrf_validate_token($unique_form_name,$token_value) {
 }
 
 
-function osc_csrf_replace_forms($form_data_html) {
+function osc_csrfguard_replace_forms($form_data_html) {
     $count = preg_match_all("/<form(.*?)>(.*?)<\\/form>/is", $form_data_html, $matches, PREG_SET_ORDER);
     if(is_array($matches)) {
         foreach ($matches as $m) {
             if (strpos($m[1],"nocsrf")!==false) { continue; }
-            $name = "CSRFGuard_".mt_rand(0,mt_getrandmax());
-            $token = csrfguard_generate_token($name);
-            $form_data_html=str_replace($m[0],
-            "<form{$m[1]}>
-            <input type='hidden' name='CSRFName' value='{$name}' />
-            <input type='hidden' name='CSRFToken' value='{$token}' />{$m[2]}</form>",$form_data_html);
+            $form_data_html=str_replace($m[0], "<form{$m[1]}>".osc_csrf_token_form()."{$m[2]}</form>", $form_data_html);
         }
     }
     return $form_data_html;
 }
 
 
-function osc_csrf_inject() {
+function osc_csrfguard_inject() {
+    global $mtime;
     $data = ob_get_clean();
-    $data = csrfguard_replace_forms($data);
+    $data = osc_csrfguard_replace_forms($data);
     echo $data;
 }
 
 
-function osc_csrf_start() {
-    if (count($_POST)) {
-        if ( !isset($_POST['CSRFName']) or !isset($_POST['CSRFToken']) ) {
-            trigger_error("No CSRFName found, probable invalid request.",E_USER_ERROR);
-        }
-        $name =$_POST['CSRFName'];
-        $token=$_POST['CSRFToken'];
-        if (!csrfguard_validate_token($name, $token)) {
-            trigger_error("Invalid CSRF token.",E_USER_ERROR);
-        }
-    }
+function osc_csrfguard_start() {
     ob_start();
-    register_shutdown_function(csrfguard_inject);
+    register_shutdown_function('osc_csrfguard_inject');
 }
 
+osc_csrfguard_start();
 
 
 ?>

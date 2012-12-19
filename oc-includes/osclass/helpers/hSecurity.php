@@ -44,4 +44,29 @@
         return $pass;
     }
 
+
+    function osc_csrf_token_form() {
+        $name = osc_csrf_name()."_".mt_rand(0,mt_getrandmax());
+        $token = osc_csrfguard_generate_token($name);
+        return "<input type='hidden' name='CSRFName' value='".$name."' />
+        <input type='hidden' name='CSRFToken' value='".$token."' />";
+    }
+
+    function osc_csrf_token_url() {
+        $name = osc_csrf_name()."_".mt_rand(0,mt_getrandmax());
+        $token = osc_csrfguard_generate_token($name);
+        return "CSRFName='".$name."&CSRFToken='".$token;
+    }
+
+    function osc_csrf_check() {
+        if(Params::getParam('CSRFName')=='' || Params::getParam('CSRFToken')=='') {
+            trigger_error( __("Probable invalid request."),E_USER_ERROR);
+        }
+        $name = Params::getParam('CSRFName');
+        $token = Params::getParam('CSRFToken');
+        if (!osc_csrfguard_validate_token($name, $token)) {
+            trigger_error(__("Invalid CSRF token."),E_USER_ERROR);
+        }
+    }
+
 ?>
