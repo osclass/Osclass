@@ -1279,7 +1279,7 @@
                 } else if(preg_match("/$item_location_id\s*=\s*$item_id/", $condition, $matches_1)      || preg_match("/$item_id\s*=\s*$item_location_id/", $condition, $matches_2)) {
                 } else if(preg_match("/$item_id\s*=\s*$item_resource_id/", $condition, $matches_1)      || preg_match("/$item_resource_id\s*=\s*$item_id/", $condition, $matches_2)) {
                     // nothing to do, catch table
-                } else if(preg_match_all('/(oc_t_item\.fk_i_category_id = (\d*))/', $condition, $matches) ) {
+                } else if(preg_match_all('/('.DB_TABLE_PREFIX.'t_item\.fk_i_category_id = (\d*))/', $condition, $matches) ) {
                     $aData['aCategories'] = $matches[2];
                 } else {
                     $aData['no_catched_conditions'][] = $condition;

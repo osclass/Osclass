@@ -37,7 +37,7 @@
                                             osc_add_flash_error_message(_m('Users are not enabled'));
                                             $this->redirectTo(osc_base_url());
                                         }
-
+                                        osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $user = User::newInstance()->findByEmail( Params::getParam('email') ) ;
 
@@ -78,10 +78,10 @@
                                             osc_add_flash_error_message( _m('The password is incorrect')) ;
                                             $this->redirectTo(osc_user_login_url());
                                         }
-                                        
+
                                         $uActions = new UserActions(false);
                                         $logged = $uActions->bootstrap_login($user['pk_i_id']) ;
-                                        
+
                                         if($logged==0) {
                                             osc_add_flash_error_message(_m("The user doesn't exist")) ;
                                         } else if($logged==1) {
@@ -104,7 +104,7 @@
                                                 Cookie::newInstance()->push('oc_userId', $user['pk_i_id']) ;
                                                 Cookie::newInstance()->push('oc_userSecret', $secret) ;
                                                 Cookie::newInstance()->set() ;
-                                                
+
                                             }
 
                                             $this->redirectTo( $url_redirect ) ;
@@ -123,6 +123,7 @@
                                         $this->doView( 'user-recover.php' ) ;
                 break ;
                 case('recover_post'):   //post execution to recover the password
+                                        osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
 
                                         // e-mail is incorrect
@@ -159,6 +160,7 @@
                                         }
                 break;
                 case('forgot_post'):
+                                        osc_csrf_check();
                                         if( (Params::getParam('new_password', false, false) == '') || (Params::getParam('new_password2', false, false) == '') ) {
                                             osc_add_flash_warning_message( _m('Password cannot be blank')) ;
                                             $this->redirectTo(osc_forgot_user_password_confirm_url(Params::getParam('userId'), Params::getParam('code')));

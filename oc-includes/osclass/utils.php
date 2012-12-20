@@ -1312,18 +1312,23 @@ function osc_csrfguard_generate_token($unique_form_name) {
         }
     }
     Session::newInstance()->_set($unique_form_name, $token);
+    Session::newInstance()->_set("lf_".$unique_form_name, time());
     return $token;
 }
 
 
-function osc_csrfguard_validate_token($unique_form_name,$token_value) {
+function osc_csrfguard_validate_token($unique_form_name, $token_value, $drop = true) {
     $token = Session::newInstance()->_get($unique_form_name);
     if($token===$token_value) {
         $result = true;
     } else {
         $result = false;
     }
-    Session::newInstance()->_drop($unique_form_name);
+    // Ajax request should not drop the token for 1 hour, yeah it's not the most secure thing out there,
+    if($drop || ((int)Session::newInstance()->_get("lf_".$unique_form_name)-time())>(3600)) {
+        Session::newInstance()->_drop($unique_form_name);
+        Session::newInstance()->_drop("lf_".$unique_form_name);
+    }
     return $result;
 }
 
