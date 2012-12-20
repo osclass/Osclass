@@ -882,7 +882,7 @@
                     $data = array();
 
                     $data = json_decode(osc_file_get_contents($url), true);
-                                        error_log(print_r($url,true));
+                                        error_log($url);
 
                     //print_r($data);
                     //echo $data;
