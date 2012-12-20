@@ -64,6 +64,7 @@
                                         $this->doView("users/frm.php") ;
                 break ;
                 case('create_post'):    // creating the user...
+                                        osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $userActions = new UserActions(true) ;
                                         $success     = $userActions->add() ;
@@ -114,6 +115,7 @@
                                         $this->doView("users/frm.php") ;
                 break ;
                 case('edit_post'):      // edit post
+                                        osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $userActions = new UserActions(true) ;
                                         $success = $userActions->edit( Params::getParam("id") ) ;
@@ -131,6 +133,7 @@
                 break ;
                 case('resend_activation'):
                                         //activate
+                                        osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $iUpdated = 0;
                                         $userId   = Params::getParam('id');
@@ -153,6 +156,7 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                 break ;
                 case('activate'):       //activate
+                                        osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $iUpdated = 0 ;
                                         $userId   = Params::getParam('id') ;
@@ -176,6 +180,7 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                 break ;
                 case('deactivate'):     //deactivate
+                                        osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $iUpdated = 0 ;
                                         $userId   = Params::getParam('id') ;
@@ -192,13 +197,14 @@
                                         if( $iUpdated == 0 ) {
                                             $msg = _m('No users have been deactivated') ;
                                         } else {
-                                            $msg = sprintf( _mn('One user has been deactivated', '%s users have been deactivated', $iUpdated), $iUpdated ); 
+                                            $msg = sprintf( _mn('One user has been deactivated', '%s users have been deactivated', $iUpdated), $iUpdated );
                                         }
 
                                         osc_add_flash_ok_message($msg, 'admin') ;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                 break ;
                 case('enable'):
+                                        osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $iUpdated = 0 ;
                                         $userId   = Params::getParam('id') ;
@@ -222,6 +228,7 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                 break ;
                 case('disable'):
+                                        osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $iUpdated = 0 ;
                                         $userId   = Params::getParam('id') ;
@@ -245,6 +252,7 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users') ;
                 break ;
                 case('delete'):         //delete
+                                        osc_csrf_check();
                                         $iDeleted = 0 ;
                                         $userId   = Params::getParam('id') ;
                                         if( !is_array($userId) ) {
@@ -273,6 +281,7 @@
                                         $this->doView('users/settings.php') ;
                 break ;
                 case('settings_post'):  // updating users
+                                        osc_csrf_check();
                                         $iUpdated                = 0 ;
                                         $enabledUserValidation   = Params::getParam('enabled_user_validation') ;
                                         $enabledUserValidation   = (($enabledUserValidation != '') ? true : false) ;
@@ -306,7 +315,7 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=settings') ;
                 break ;
                 default:                // manage users view
-                                        // set default iDisplayLength 
+                                        // set default iDisplayLength
                                         if( Params::getParam('iDisplayLength') == '' ) {
                                             Params::setParam('iDisplayLength', 10 ) ;
                                         }
@@ -317,11 +326,11 @@
                                         Params::setParam('iPage', $p_iPage);
                                         $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
                                         $this->_exportVariableToView('sSearch', Params::getParam('sSearch'));
-                                        
+
                                         require_once osc_admin_base_path() . 'ajax/users_processing.php';
                                         $users_processing = new UsersProcessingAjax(Params::getParamsAsArray("get"));
                                         $aData = $users_processing->result() ;
-                                        
+
                                         $page  = (int)Params::getParam('iPage');
                                         if(count($aData['aaData']) == 0 && $page!=1) {
                                             $total = (int)$aData['iTotalDisplayRecords'];
@@ -334,15 +343,15 @@
                                                 $this->redirectTo($url) ;
                                             }
 
-                                            if($page > 1) {   
+                                            if($page > 1) {
                                                 $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
                                                 $this->redirectTo($url) ;
                                             }
                                         }
-                                        
+
                                         $this->_exportVariableToView('aUsers', $aData) ;
                                         $this->_exportVariableToView('locales', OSCLocale::newInstance()->listAllEnabled() );
-                                        
+
                                         $this->doView("users/index.php") ;
                 break ;
             }

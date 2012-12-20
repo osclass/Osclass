@@ -35,6 +35,7 @@
                                         $this->doView('settings/comments.php');
                 break;
                 case('comments_post'):  // updating comment
+                                        osc_csrf_check();
                                         $iUpdated         = 0;
                                         $enabledComments  = Params::getParam('enabled_comments');
                                         $enabledComments  = (($enabledComments != '') ? true : false);
@@ -91,6 +92,7 @@
 
                                         switch ($location_action) {
                                             case('add_country'):    // add country
+                                                                    osc_csrf_check();
                                                                     $countryCode = strtoupper(Params::getParam('c_country'));
                                                                     $countryName = Params::getParam('country');
 
@@ -165,6 +167,7 @@
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
                                             case('edit_country'):   // edit country
+                                                                    osc_csrf_check();
                                                                     $ok = $mCountries->update(array('s_name'=> Params::getParam('e_country')), array('pk_c_code' => Params::getParam('country_code')));
 
                                                                     if( $ok ) {
@@ -175,6 +178,7 @@
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
                                             case('delete_country'): // delete country
+                                                                    osc_csrf_check();
                                                                     $countryId = Params::getParam('id');
 
                                                                     Item::newInstance()->deleteByRegion($countryId);
@@ -201,6 +205,7 @@
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
                                             case('add_region'):     // add region
+                                                                    osc_csrf_check();
                                                                     if( !Params::getParam('r_manual') ) {
                                                                         $this->install_location_by_region();
                                                                     } else {
@@ -226,6 +231,7 @@
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$countryCode."&country=".@$country['s_name']);
                                             break;
                                             case('edit_region'):    // edit region
+                                                                    osc_csrf_check();
                                                                     $mRegions  = new Region();
                                                                     $newRegion = Params::getParam('e_region');
                                                                     $regionId  = Params::getParam('region_id');
@@ -250,6 +256,7 @@
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']);
                                             break;
                                             case('delete_region'):  // delete region
+                                                                    osc_csrf_check();
                                                                     $mRegion  = new Region();
                                                                     $mCities  = new City();
 
@@ -273,6 +280,7 @@
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']);
                                             break;
                                             case('add_city'):       // add city
+                                                                    osc_csrf_check();
                                                                     $mRegion  = new Region();
                                                                     $mCities     = new City();
                                                                     $regionId    = Params::getParam('region_parent');
@@ -298,6 +306,7 @@
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']."&region=".$regionId);
                                             break;
                                             case('edit_city'):      // edit city
+                                                                    osc_csrf_check();
                                                                     $mRegion  = new Region();
                                                                     $mCities = new City();
                                                                     $newCity = Params::getParam('e_city');
@@ -323,6 +332,7 @@
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations&country_code='.@$country['pk_c_code']."&country=".@$country['s_name']."&region=".@$region['pk_i_id']);
                                             break;
                                             case('delete_city'):    // delete city
+                                                                    osc_csrf_check();
                                                                     $mRegion  = new Region();
                                                                     $mCities = new City();
                                                                     $cityId  = Params::getParam('id');
@@ -355,6 +365,7 @@
                                         $this->doView('settings/permalinks.php');
                 break;
                 case('permalinks_post'):// updating permalinks option
+                                        osc_csrf_check();
                                         $htaccess_file  = osc_base_path() . '.htaccess' ;
                                         $rewriteEnabled = (Params::getParam('rewrite_enabled') ? true : false) ;
 
@@ -826,6 +837,7 @@ HTACCESS;
                                         $this->doView('settings/spamNbots.php');
                 break;
                 case('akismet_post'):   // updating spam and bots option
+                                        osc_csrf_check();
                                         $updated    = 0;
                                         $akismetKey = Params::getParam('akismetKey');
                                         $akismetKey = trim($akismetKey);
@@ -841,6 +853,7 @@ HTACCESS;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=spamNbots');
                 break;
                 case('recaptcha_post'): // updating spam and bots option
+                                        osc_csrf_check();
                                         $iUpdated = 0 ;
                                         $recaptchaPrivKey = Params::getParam('recaptchaPrivKey') ;
                                         $recaptchaPrivKey = trim($recaptchaPrivKey) ;
@@ -874,6 +887,7 @@ HTACCESS;
                                                                 $this->doView('settings/currency_form.php') ;
                                             break ;
                                             case('add_post'):   // adding a new currency
+                                                                osc_csrf_check();
                                                                 $currencyCode        = Params::getParam('pk_c_code') ;
                                                                 $currencyName        = Params::getParam('s_name') ;
                                                                 $currencyDescription = Params::getParam('s_description') ;
@@ -927,6 +941,7 @@ HTACCESS;
                                                                 $this->doView('settings/currency_form.php');
                                             break ;
                                             case('edit_post'):  // updating currency
+                                                                osc_csrf_check();
                                                                 $currencyName        = Params::getParam('s_name');
                                                                 $currencyDescription = Params::getParam('s_description');
                                                                 $currencyCode        = Params::getParam('pk_c_code');
@@ -958,6 +973,7 @@ HTACCESS;
                                                                 $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies') ;
                                             break ;
                                             case('delete'):     // deleting a currency
+                                                                osc_csrf_check();
                                                                 $rowChanged    = 0 ;
                                                                 $aCurrencyCode = Params::getParam('code') ;
 
@@ -1026,6 +1042,7 @@ HTACCESS;
                                             osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin') ;
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver') ;
                                         }
+                                        osc_csrf_check();
                                         // updating mailserver
                                         $iUpdated           = 0 ;
                                         $mailserverAuth     = Params::getParam('mailserver_auth') ;
@@ -1076,6 +1093,7 @@ HTACCESS;
                                         $this->doView('settings/media.php') ;
                 break;
                 case('media_post'):     // updating the media config
+                                        osc_csrf_check();
                                         $status = 'ok' ;
                                         $error  = '' ;
 
@@ -1240,6 +1258,7 @@ HTACCESS;
                                             osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin') ;
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media') ;
                                         }
+                                        osc_csrf_check();
 
                                         $wat = new Watermark();
                                         $aResources = ItemResource::newInstance()->getAllResources();
@@ -1322,6 +1341,7 @@ HTACCESS;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media') ;
                 break;
                 case('update'):         // update index view
+                                        osc_csrf_check();
                                         $iUpdated          = 0 ;
                                         $sPageTitle        = Params::getParam('pageTitle');
                                         $sPageDesc         = Params::getParam('pageDesc');
@@ -1385,7 +1405,7 @@ HTACCESS;
                                             array('s_value'   => $sPageDesc),
                                             array('s_section' => 'osclass', 's_name' => 'pageDesc')
                                         );
-                                        
+
                                         if( !defined('DEMO') ) {
                                             $iUpdated += Preference::newInstance()->update(
                                                 array('s_value'   => $sContactEmail),
@@ -1470,18 +1490,19 @@ HTACCESS;
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings');
                 break;
-                case('check_updates'): 
+                case('check_updates'):
                                         osc_admin_toolbar_update_themes(true);
                                         osc_admin_toolbar_update_plugins(true);
-                                        
+
                                         osc_add_flash_ok_message( _m('Last check') . ':   ' . date("Y-m-d H:i") , 'admin');
-                                        
+
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings');
                 break;
                 case('latestsearches'):       //calling the comments settings view
                                         $this->doView('settings/searches.php');
                 break;
                 case('latestsearches_post'):  // updating comment
+                                        osc_csrf_check();
                                         if( Params::getParam('save_latest_searches') == 'on' ) {
                                             Preference::newInstance()->update(
                                                     array('s_value' => 1),

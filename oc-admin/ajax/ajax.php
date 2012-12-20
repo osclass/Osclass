@@ -109,6 +109,7 @@
                     $comments_processing->dumpToDatatables() ;
                     break;
                 case 'categories_order': // Save the order of the categories
+                    osc_csrf_check(false);
                     $aIds        = Params::getParam('list') ;
                     $orderParent = 0 ;
                     $orderSub    = 0 ;
@@ -205,6 +206,7 @@
                     $this->doView("fields/iframe.php");
                     break;
                 case 'field_categories_post':
+                    osc_csrf_check(false);
                     $error = 0;
                     $field = Field::newInstance()->findByName(Params::getParam("s_name"));
 
@@ -259,6 +261,7 @@
 
                     break;
                 case 'delete_field':
+                    osc_csrf_check(false);
                     $res = Field::newInstance()->deleteByPrimaryKey(Params::getParam('id'));
 
                     if( $res > 0 ) {
@@ -270,6 +273,7 @@
                     echo json_encode($result);
                 break;
                 case 'add_field':
+                    osc_csrf_check(false);
                     $s_name = __('NEW custom field');
                     $slug_tmp = $slug = preg_replace('|([-]+)|', '-', preg_replace('|[^a-z0-9_-]|', '-', strtolower($s_name)));
                     $slug_k = 0;
@@ -291,6 +295,7 @@
                     }
                     break;
                 case 'enable_category':
+                    osc_csrf_check(false);
                     $id       = strip_tags( Params::getParam('id') ) ;
                     $enabled  = (Params::getParam('enabled') != '') ? Params::getParam('enabled') : 0 ;
                     $error    = 0 ;
@@ -359,6 +364,7 @@
 
                     break ;
                 case 'delete_category':
+                    osc_csrf_check(false);
                     $id = Params::getParam("id");
                     $error = 0;
 
@@ -381,6 +387,7 @@
 
                     break;
                 case 'edit_category_post':
+                    osc_csrf_check(false);
                     $id = Params::getParam("id");
                     $fields['i_expiration_days'] = (Params::getParam("i_expiration_days") != '') ? Params::getParam("i_expiration_days") : 0;
 
@@ -471,6 +478,7 @@
                     echo json_encode($array) ;
                     break;
                 case 'order_pages':
+                    osc_csrf_check(false);
                     $order = Params::getParam("order");
                     $id    = Params::getParam("id");
                     if($order != '' && $id != '') {
@@ -497,6 +505,7 @@
                  ** COMPLETE UPGRADE PROCESS **
                  ******************************/
                 case 'upgrade': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
+                    osc_csrf_check(false);
                     $message = "";
                     $error = 0;
                     $sql_error_msg = "";
@@ -637,6 +646,7 @@
                  ** COMPLETE MARKET PROCESS **
                  *******************************/
                 case 'market': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
+                    osc_csrf_check(false);
                     $section = Params::getParam('section');
                     $code    = Params::getParam('code');
                     $plugin  = false;
@@ -662,7 +672,7 @@
                                 break;
                             }
                         }
-                        
+
                         /***********************
                          **** DOWNLOAD FILE ****
                          ***********************/
@@ -749,7 +759,7 @@
                                                         Plugins::runHook($plugin.'_enable') ;
                                                     }
                                                 }
-                                                
+
                                             }
                                             // recount plugins&themes for update
                                             if($section == 'plugins') {
@@ -757,7 +767,7 @@
                                             } else if($section == 'themes') {
                                                 osc_check_themes_update(true);
                                             }
-                                            
+
                                             if ($rm_errors == 0) {
                                                 $message = __('Everything looks good!');
                                                 $error = 0;
@@ -821,14 +831,14 @@
                         $data = array('error' => 1, 'error_msg' => __('No code was submitted'));
                     }
                     echo json_encode($data);
-                    break;                   
+                    break;
                 case 'local_market': // AVOID CROSS DOMAIN PROBLEMS OF AJAX REQUEST
                     $marketPage = Params::getParam("mPage");
                     if($marketPage>=1) $marketPage-- ;
-                    
+
                     $out    = osc_file_get_contents(osc_market_url(Params::getParam("section"))."page/".$marketPage);
                     $array  = json_decode($out, true);
-                    // do pagination 
+                    // do pagination
                     $pageActual = $array['page'];
                     $totalPages = ceil( $array['total'] / $array['sizePage'] );
                     $params     = array(
@@ -845,6 +855,7 @@
                     echo json_encode($array);
                     break;
                 case 'location_stats':
+                    osc_csrf_check(false);
                     $workToDo = LocationsTmp::newInstance()->count() ;
                     if( $workToDo > 0 ) {
                         // there are wotk to do

@@ -62,10 +62,11 @@
                                         $this->_exportVariableToView('cities', $aCities) ;
                                         $this->_exportVariableToView('user', $user) ;
                                         $this->_exportVariableToView('locales', OSCLocale::newInstance()->listAllEnabled() ) ;
-                                        
+
                                         $this->doView('user-profile.php') ;
                 break ;
                 case('profile_post'):   //profile post...
+                                        osc_csrf_check();
                                         $userId = Session::newInstance()->_get('userId') ;
 
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
@@ -81,15 +82,15 @@
                                         foreach($aAlerts as $k => $a) {
                                             $json               = base64_decode($a['s_search']) ;
                                             $array_conditions   = (array)json_decode($json);
-                                            
+
 //                                            $search = Search::newInstance();
                                             $search = new Search();
                                             $search->setJsonAlert($array_conditions);
                                             $search->limit(0, 3) ;
-                                            
+
                                             $aAlerts[$k]['items'] = $search->doSearch() ;
                                         }
-                                            
+
                                         $this->_exportVariableToView('alerts', $aAlerts) ;
                                         View::newInstance()->_reset('alerts') ;
                                         $this->_exportVariableToView('user', $user) ;
@@ -99,6 +100,7 @@
                                                 $this->doView('user-change_email.php') ;
                 break;
                 case('change_email_post'):      //change email post
+                                                osc_csrf_check();
                                                 if(!preg_match("/^[_a-z0-9-\+]+(\.[_a-z0-9-\+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/", Params::getParam('new_email'))) {
                                                     osc_add_flash_error_message( _m('The specified e-mail is not valid')) ;
                                                     $this->redirectTo( osc_change_user_email_url() ) ;
@@ -133,6 +135,7 @@
                                                 $this->doView('user-change_password.php') ;
                 break;
                 case 'change_password_post':    //change password post
+                                                osc_csrf_check();
                                                 $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId') ) ;
 
                                                 if( (Params::getParam('password', false, false) == '') || (Params::getParam('new_password', false, false) == '') || (Params::getParam('new_password2', false, false) == '') ) {

@@ -41,6 +41,11 @@
                                             $this->doView('languages/add.php') ;
                 break ;
                 case('add_post'):           // adding a new language
+                                            if( defined('DEMO') ) {
+                                                osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                                                $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
+                                            }
+                                            osc_csrf_check();
                                             $filePackage = Params::getFiles('package') ;
                                             if( isset($filePackage['size']) && $filePackage['size'] != 0 ) {
                                                 $path         = osc_translations_path();
@@ -94,6 +99,7 @@
                                             $this->doView('languages/frm.php') ;
                 break ;
                 case('edit_post'):          // edit language post
+                                            osc_csrf_check();
                                             $iUpdated               = 0;
                                             $languageCode           = Params::getParam('pk_c_code');
                                             $enabledWebstie         = Params::getParam('b_enabled');
@@ -172,6 +178,7 @@
                                             $this->redirectTo(osc_admin_base_url(true).'?page=languages') ;
                 break ;
                 case('enable_selected'):
+                                            osc_csrf_check();
                                             $msg      = _m('Selected languages have been enabled for the website') ;
                                             $iUpdated = 0 ;
                                             $aValues  = array('b_enabled' => 1) ;
@@ -194,6 +201,7 @@
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
                 break ;
                 case('disable_selected'):
+                                            osc_csrf_check();
                                             $msg         = _m('Selected languages have been disabled for the website') ;
                                             $msg_warning = '' ;
                                             $iUpdated    = 0 ;
@@ -227,6 +235,7 @@
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
                 break ;
                 case('enable_bo_selected'):
+                                            osc_csrf_check();
                                             $msg      = _m('Selected languages have been enabled for the backoffice (oc-admin)') ;
                                             $iUpdated = 0 ;
                                             $aValues  = array('b_enabled_bo' => 1) ;
@@ -249,6 +258,7 @@
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
                 break ;
                 case('disable_bo_selected'):
+                                            osc_csrf_check();
                                             $msg         = _m('Selected languages have been disabled for the backoffice (oc-admin)') ;
                                             $msg_warning = '' ;
                                             $iUpdated    = 0 ;
@@ -281,7 +291,9 @@
 
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
                 break ;
-                case('delete'):             if( is_array(Params::getParam('id') ) ) {
+                case('delete'):
+                                            osc_csrf_check();
+                                            if( is_array(Params::getParam('id') ) ) {
                                                 $default_lang = osc_language() ;
                                                 foreach( Params::getParam('id') as $code ) {
                                                     if( $default_lang != $code ) {
@@ -314,7 +326,7 @@
                                                 $p_iPage = Params::getParam('iPage');
                                             }
                                             Params::setParam('iPage', $p_iPage);
-                                            
+
                                             $aLanguages     = OSCLocale::newInstance()->listAll() ;
 
                                             // pagination
@@ -346,7 +358,7 @@
                                                     $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
                                                 }
                                                 $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
-                                                
+
                                                 $row[] = $l['s_name'] . $actions ;
                                                 $row[] = $l['s_short_name'] ;
                                                 $row[] = $l['s_description'] ;
@@ -360,7 +372,7 @@
                                             $array['iTotalDisplayRecords']  = count($aLanguages);
                                             $array['iDisplayLength']        = $limit;
                                             $array['aaData'] = $aData;
-                                            
+
                                             $page  = (int)Params::getParam('iPage');
                                             if(count($array['aaData']) == 0 && $page!=1) {
                                                 $total = (int)$array['iTotalDisplayRecords'];
@@ -373,14 +385,14 @@
                                                     $this->redirectTo($url) ;
                                                 }
 
-                                                if($page > 1) {   
+                                                if($page > 1) {
                                                     $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
                                                     $this->redirectTo($url) ;
                                                 }
                                             }
-                                            
+
                                             $this->_exportVariableToView('aLanguages', $array) ;
-                                            
+
                                             $this->doView('languages/index.php') ;
                 break ;
             }

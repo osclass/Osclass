@@ -1292,4 +1292,70 @@ function osc_update_cat_stats_id($id)
     $result = CategoryStats::newInstance()->dao->query($sql);
 }
 
+
+/***********************
+ * CSRFGUARD functions *
+ ***********************/
+function osc_csrfguard_generate_token($unique_form_name) {
+    if(function_exists("hash_algos") and in_array("sha512",hash_algos())) {
+        $token = hash("sha512",mt_rand(0,mt_getrandmax()));
+    } else {
+        $token = '';
+        for ($i=0;$i<128;++$i) {
+            $r=mt_rand(0,35);
+            if($r<26) {
+                $c=chr(ord('a')+$r);
+            } else {
+                $c=chr(ord('0')+$r-26);
+            }
+            $token.=$c;
+        }
+    }
+    Session::newInstance()->_set($unique_form_name, $token);
+    Session::newInstance()->_set("lf_".$unique_form_name, time());
+    return $token;
+}
+
+
+function osc_csrfguard_validate_token($unique_form_name, $token_value, $drop = true) {
+    $token = Session::newInstance()->_get($unique_form_name);
+    if($token===$token_value) {
+        $result = true;
+    } else {
+        $result = false;
+    }
+    // Ajax request should not drop the token for 1 hour, yeah it's not the most secure thing out there,
+    if($drop || ((int)Session::newInstance()->_get("lf_".$unique_form_name)-time())>(3600)) {
+        Session::newInstance()->_drop($unique_form_name);
+        Session::newInstance()->_drop("lf_".$unique_form_name);
+    }
+    return $result;
+}
+
+
+function osc_csrfguard_replace_forms($form_data_html) {
+    $count = preg_match_all("/<form(.*?)>(.*?)<\\/form>/is", $form_data_html, $matches, PREG_SET_ORDER);
+    if(is_array($matches)) {
+        foreach ($matches as $m) {
+            if (strpos($m[1],"nocsrf")!==false) { continue; }
+            $form_data_html=str_replace($m[0], "<form{$m[1]}>".osc_csrf_token_form()."{$m[2]}</form>", $form_data_html);
+        }
+    }
+    return $form_data_html;
+}
+
+
+function osc_csrfguard_inject() {
+    global $mtime;
+    $data = ob_get_clean();
+    $data = osc_csrfguard_replace_forms($data);
+    echo $data;
+}
+
+
+function osc_csrfguard_start() {
+    ob_start();
+    register_shutdown_function('osc_csrfguard_inject');
+}
+
 ?>

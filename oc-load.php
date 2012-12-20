@@ -195,6 +195,7 @@ if( OC_ADMIN ) {
 }
 
 Plugins::init() ;
+osc_csrfguard_start();
 
 
 if(osc_timezone() != '') {
