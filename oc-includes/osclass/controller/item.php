@@ -499,7 +499,7 @@
                         $this->redirectTo( osc_base_url(true) );
                     }
 
-                    if(!osc_is_admin_user_logged_in()) {
+                    if(!osc_is_admin_user_logged_in() && !($item['fk_i_user_id']!='' && $item['fk_i_user_id']==osc_logged_user_id())) {
                         require_once(osc_lib_path() . 'osclass/user-agents.php');
                         foreach($user_agents as $ua) {
                             if(preg_match('|'.$ua.'|', @$_SERVER['HTTP_USER_AGENT'])) {
