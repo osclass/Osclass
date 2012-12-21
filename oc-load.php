@@ -19,48 +19,48 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '3.0.2') ;
+define('OSCLASS_VERSION', '3.0.2');
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
 }
 
-define('LIB_PATH', ABS_PATH . 'oc-includes/') ;
-define('CONTENT_PATH', ABS_PATH . 'oc-content/') ;
-define('THEMES_PATH', CONTENT_PATH . 'themes/') ;
-define('PLUGINS_PATH', CONTENT_PATH . 'plugins/') ;
-define('TRANSLATIONS_PATH', CONTENT_PATH . 'languages/') ;
+define('LIB_PATH', ABS_PATH . 'oc-includes/');
+define('CONTENT_PATH', ABS_PATH . 'oc-content/');
+define('THEMES_PATH', CONTENT_PATH . 'themes/');
+define('PLUGINS_PATH', CONTENT_PATH . 'plugins/');
+define('TRANSLATIONS_PATH', CONTENT_PATH . 'languages/');
 
 if( !file_exists(ABS_PATH . 'config.php') ) {
-    require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
+    require_once LIB_PATH . 'osclass/helpers/hErrors.php';
 
-    $title   = 'Osclass &raquo; Error' ;
-    $message = 'There doesn\'t seem to be a <code>config.php</code> file. Osclass isn\'t installed. <a href="http://forums.osclass.org/">Need more help?</a></p>' ;
-    $message .= '<p><a class="button" href="' . osc_get_absolute_url() .'oc-includes/osclass/install.php">Install</a></p>' ;
+    $title   = 'Osclass &raquo; Error';
+    $message = 'There doesn\'t seem to be a <code>config.php</code> file. Osclass isn\'t installed. <a href="http://forums.osclass.org/">Need more help?</a></p>';
+    $message .= '<p><a class="button" href="' . osc_get_absolute_url() .'oc-includes/osclass/install.php">Install</a></p>';
 
-    osc_die($title, $message) ;
+    osc_die($title, $message);
 }
 
 // load database configuration
-require_once ABS_PATH . 'config.php' ;
-require_once LIB_PATH . 'osclass/default-constants.php' ;
+require_once ABS_PATH . 'config.php';
+require_once LIB_PATH . 'osclass/default-constants.php';
 
 // Sets PHP error handling
 if( OSC_DEBUG ) {
-    ini_set( 'display_errors', 1 ) ;
-    error_reporting( E_ALL | E_STRICT ) ;
+    ini_set( 'display_errors', 1 );
+    error_reporting( E_ALL | E_STRICT );
 
     if( OSC_DEBUG_LOG ) {
-        ini_set( 'display_errors', 0 ) ;
-        ini_set( 'log_errors', 1 ) ;
-        ini_set( 'error_log', CONTENT_PATH . 'debug.log' ) ;
+        ini_set( 'display_errors', 0 );
+        ini_set( 'log_errors', 1 );
+        ini_set( 'error_log', CONTENT_PATH . 'debug.log' );
     }
 } else {
-    error_reporting( E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_ERROR | E_WARNING | E_PARSE | E_USER_ERROR | E_USER_WARNING ) ;
+    error_reporting( E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_ERROR | E_WARNING | E_PARSE | E_USER_ERROR | E_USER_WARNING );
 }
 
 require_once LIB_PATH . 'osclass/db.php';
-require_once LIB_PATH . 'osclass/Logger/LogDatabase.php' ;
+require_once LIB_PATH . 'osclass/Logger/LogDatabase.php';
 require_once LIB_PATH . 'osclass/classes/database/DBConnectionClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DBCommandClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DBRecordsetClass.php';
@@ -72,13 +72,13 @@ require_once LIB_PATH . 'osclass/helpers/hPreference.php';
 
 // check if Osclass is installed
 if( !getBoolPreference('osclass_installed') ) {
-    require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
+    require_once LIB_PATH . 'osclass/helpers/hErrors.php';
 
-    $title    = 'Osclass &raquo; Error' ;
-    $message  = 'Osclass isn\'t installed. <a href="http://forums.osclass.org/">Need more help?</a></p>' ;
-    $message .= '<p><a class="button" href="' . osc_get_absolute_url() .'oc-includes/osclass/install.php">Install</a></p>' ;
+    $title    = 'Osclass &raquo; Error';
+    $message  = 'Osclass isn\'t installed. <a href="http://forums.osclass.org/">Need more help?</a></p>';
+    $message .= '<p><a class="button" href="' . osc_get_absolute_url() .'oc-includes/osclass/install.php">Install</a></p>';
 
-    osc_die($title, $message) ;
+    osc_die($title, $message);
 }
 
 require_once LIB_PATH . 'osclass/helpers/hDefines.php';
@@ -187,15 +187,15 @@ require_once LIB_PATH . 'osclass/helpers/hAdminMenu.php';
 
 define('__OSC_LOADED__', true);
 
-// Moved from BaseModel, since we need some session magic on index.php ;)
-Session::newInstance()->session_start() ;
+// Moved from BaseModel, since we need some session magic on index.php;)
+Session::newInstance()->session_start();
 
 if( OC_ADMIN ) {
     // init admin menu
     AdminMenu::newInstance()->init();
     $functions_path = AdminThemes::newInstance()->getCurrentThemePath() . 'functions.php';
     if( file_exists($functions_path) ) {
-        require_once $functions_path ;
+        require_once $functions_path;
     }
 } else {
     // init Rewrite class only if it's the frontend
@@ -263,6 +263,8 @@ osc_register_script('tiny_mce', osc_assets_url('js/tiny_mce/tiny_mce.js'));
 osc_register_script('colorpicker', osc_assets_url('js/colorpicker/js/colorpicker.js'));
 
 Plugins::init();
+osc_csrfguard_start();
+
 
 if( !class_exists('PHPMailer') ) {
     require_once osc_lib_path() . 'phpmailer/class.phpmailer.php';

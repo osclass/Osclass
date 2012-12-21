@@ -39,7 +39,9 @@
 
             //specific things for this class
             switch($this->action) {
-                case('bulk_actions'):       $id = Params::getParam('id');
+                case('bulk_actions'):
+                                            osc_csrf_check();
+                                            $id = Params::getParam('id');
                                             if( $id ) {
                                                 switch( Params::getParam('bulk_actions') ) {
                                                     case('delete_all'):     $this->itemCommentManager->delete(array(
@@ -108,7 +110,9 @@
                                             }
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" );
                 break;
-                case('status'):             $id = Params::getParam('id');
+                case('status'):
+                                            osc_csrf_check();
+                                            $id = Params::getParam('id');
                                             $value = Params::getParam('value');
 
                                             if (!$id) return false;
@@ -157,6 +161,7 @@
                                             $this->doView('comments/frm.php');
                 break;
                 case('comment_edit_post'):
+                                            osc_csrf_check();
 
                                             $msg = '';
                                             if(!osc_validate_email(Params::getParam('authorEmail'),true)) {
@@ -188,7 +193,9 @@
                                             osc_add_flash_ok_message( _m('Great! We just updated your comment'), 'admin' );
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" );
                 break;
-                case('delete'):             $this->itemCommentManager->deleteByPrimaryKey( Params::getParam('id') );
+                case('delete'):
+                                            osc_csrf_check();
+                                            $this->itemCommentManager->deleteByPrimaryKey( Params::getParam('id') );
                                             osc_add_flash_ok_message( _m('The comment has been deleted'), 'admin');
                                             osc_run_hook( 'delete_comment', Params::getParam('id') );
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" );

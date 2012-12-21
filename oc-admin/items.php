@@ -46,7 +46,9 @@
             //specific things for this class
             switch ($this->action)
             {
-                case 'bulk_actions':    $mItems  = new ItemActions( true );
+                case 'bulk_actions':
+                                        osc_csrf_check();
+                                        $mItems  = new ItemActions( true );
                                         switch ( Params::getParam('bulk_actions') )
                                         {
                                             case 'enable_all':
@@ -142,6 +144,7 @@
                                                             $numSuccess++;
                                                         }
                                                     }
+
                                                     osc_add_flash_ok_message( sprintf(_mn('%d change has been made', '%d changes have been made', $numSuccess), $numSuccess), 'admin');
                                                 }
                                             break;
@@ -274,6 +277,7 @@
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'delete':          //delete
+                                        osc_csrf_check();
                                         $id      = Params::getParam('id');
                                         $success = false;
 
@@ -294,6 +298,7 @@
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'status':          //status
+                                        osc_csrf_check();
                                         $id = Params::getParam('id');
                                         $value = Params::getParam('value');
 
@@ -359,6 +364,7 @@
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'status_premium':  //status premium
+                                        osc_csrf_check();
                                         $id = Params::getParam('id');
                                         $value = Params::getParam('value');
 
@@ -384,6 +390,7 @@
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'status_spam':  //status spam
+                                        osc_csrf_check();
                                         $id = Params::getParam('id');
                                         $value = Params::getParam('value');
 
@@ -409,6 +416,7 @@
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'clear_stat':
+                                        osc_csrf_check();
                                         $id     = Params::getParam('id');
                                         $stat   = Params::getParam('stat');
 
@@ -494,6 +502,7 @@
                                         $this->doView('items/frm.php');
                 break;
                 case 'item_edit_post':
+                                        osc_csrf_check();
                                         $mItems = new ItemActions(true);
 
                                         $mItems->prepareData(false);
@@ -527,6 +536,7 @@
                                         }
                 break;
                 case 'deleteResource':  //delete resource
+                                        osc_csrf_check();
                                         $id = Params::getParam('id');
                                         $name = Params::getParam('name');
                                         $fkid = Params::getParam('fkid');
@@ -555,6 +565,7 @@
                                         $this->doView('items/frm.php');
                 break;
                 case 'post_item':       //post item
+                                        osc_csrf_check();
                                         $mItem = new ItemActions(true);
 
                                         $mItem->prepareData(true);
@@ -594,6 +605,7 @@
                                         $this->doView('items/settings.php');
                 break;
                 case('settings_post'):     // update item settings
+                                        osc_csrf_check();
                                         $iUpdated                   = 0;
                                         $enabledRecaptchaItems      = Params::getParam('enabled_recaptcha_items');
                                         $enabledRecaptchaItems      = (($enabledRecaptchaItems == '1') ? true : false);

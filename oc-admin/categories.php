@@ -42,6 +42,7 @@
             switch ($this->action)
             {
                 case('add_post_default'): // add default category and reorder parent categories
+                                        osc_csrf_check();
                                         $fields['fk_i_parent_id'] = NULL;
                                         $fields['i_expiration_days'] = 0;
                                         $fields['i_position'] = 0;
@@ -62,7 +63,7 @@
                                         $this->categoryManager->updateOrder($categoryId,'0');
 
                                         $this->redirectTo(osc_admin_base_url(true).'?page=categories');
-                break; 
+                break;
                 default:                //
                                         $this->_exportVariableToView("categories", $this->categoryManager->toTreeAll() );
                                         $this->doView("categories/index.php") ;

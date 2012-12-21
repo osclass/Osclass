@@ -64,6 +64,7 @@
                                         $this->doView("users/frm.php");
                 break;
                 case('create_post'):    // creating the user...
+                                        osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php';
                                         $userActions = new UserActions(true);
                                         $success     = $userActions->add();
@@ -114,6 +115,7 @@
                                         $this->doView("users/frm.php");
                 break;
                 case('edit_post'):      // edit post
+                                        osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php';
                                         $userActions = new UserActions(true);
                                         $success = $userActions->edit( Params::getParam("id") );
@@ -131,6 +133,7 @@
                 break;
                 case('resend_activation'):
                                         //activate
+                                        osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php';
                                         $iUpdated = 0;
                                         $userId   = Params::getParam('id');
@@ -153,6 +156,7 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 case('activate'):       //activate
+                                        osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php';
                                         $iUpdated = 0;
                                         $userId   = Params::getParam('id');
@@ -176,9 +180,11 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 case('deactivate'):     //deactivate
+                                        osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php';
                                         $iUpdated = 0;
                                         $userId   = Params::getParam('id');
+
                                         if( !is_array($userId) ) {
                                             osc_add_flash_error_message( _m("User id isn't in the correct format"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=users');
@@ -199,6 +205,7 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 case('enable'):
+                                        osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php';
                                         $iUpdated = 0;
                                         $userId   = Params::getParam('id');
@@ -222,6 +229,7 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 case('disable'):
+                                        osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php';
                                         $iUpdated = 0;
                                         $userId   = Params::getParam('id');
@@ -245,8 +253,10 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 case('delete'):         //delete
+                                        osc_csrf_check();
                                         $iDeleted = 0;
                                         $userId   = Params::getParam('id');
+
                                         if( !is_array($userId) ) {
                                             osc_add_flash_error_message( _m("User id isn't in the correct format"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=users');
@@ -351,6 +361,7 @@
                                         $this->doView('users/settings.php');
                 break;
                 case('settings_post'):  // updating users
+                                        osc_csrf_check();
                                         $iUpdated                = 0;
                                         $enabledUserValidation   = Params::getParam('enabled_user_validation');
                                         $enabledUserValidation   = (($enabledUserValidation != '') ? true : false);

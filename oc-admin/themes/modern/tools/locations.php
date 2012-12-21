@@ -36,7 +36,7 @@
             function ajax_() {
                 $.ajax({
                     type: "POST",
-                    url: '<?php echo osc_admin_base_url(true)?>?page=ajax&action=location_stats',
+                    url: '<?php echo osc_admin_base_url(true)?>?page=ajax&action=location_stats&<?php echo osc_csrf_token_url(); ?>',
                     dataType: 'json',
                     success: function(data) {
                         if(data.status=='done') {

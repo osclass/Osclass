@@ -38,6 +38,7 @@
                         osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                         $this->redirectTo(osc_admin_base_url(true) . '?page=appearance');
                     }
+                    osc_csrf_check();
                     $filePackage = Params::getFiles('package');
                     if(isset($filePackage['size']) && $filePackage['size']!=0) {
                         $path = osc_themes_path() ;
@@ -73,6 +74,7 @@
                         osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                         $this->redirectTo(osc_admin_base_url(true) . '?page=appearance');
                     }
+                    osc_csrf_check();
                     $theme = Params::getParam('webtheme');
                     if($theme!='') {
                         if($theme!=  osc_current_web_theme()) {
@@ -110,6 +112,7 @@
                     $this->doView('appearance/add_widget.php');
                 break;
                 case('delete_widget'):
+                    osc_csrf_check();
                     Widget::newInstance()->delete(
                         array('pk_i_id' => Params::getParam('id') )
                     );
@@ -117,6 +120,7 @@
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
                 break;
                 case('edit_widget_post'):
+                    osc_csrf_check();
                     if(!osc_validate_text(Params::getParam("description"))) {
                         osc_add_flash_error_message( _m('Description field is required'), 'admin');
                         $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
@@ -138,6 +142,7 @@
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
                     break;
                 case('add_widget_post'):
+                    osc_csrf_check();
                     if(!osc_validate_text(Params::getParam("description"))) {
                         osc_add_flash_error_message( _m('Description field is required'), 'admin');
                         $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
@@ -156,6 +161,7 @@
                 break;
                 /* /widget */
                 case('activate'):
+                    osc_csrf_check();
                     Preference::newInstance()->update(
                             array('s_value' => Params::getParam('theme')),
                             array('s_section' => 'osclass', 's_name' => 'theme')
@@ -179,12 +185,12 @@
 //                            osc_add_flash_error_message( __('Error occurred') . ' ( ' . $slug .' ) ', 'admin');
 //                        }
 //                    }
-                    
+
                     // force the recount of themes that need to be updated
                     if(Params::getParam('checkUpdated') != '') {
                         osc_admin_toolbar_update_themes(true);
                     }
-                    
+
                     $themes = WebThemes::newInstance()->getListThemes();
 
                     //preparing variables for the view

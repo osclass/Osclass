@@ -54,6 +54,7 @@
                                         osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=admins');
                                     }
+                                    osc_csrf_check();
                                     // adding a new admin
                                     $sPassword = Params::getParam('s_password', false, false);
                                     $sName     = Params::getParam('s_name');
@@ -138,6 +139,7 @@
                                         osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=admins');
                                     }
+                                    osc_csrf_check();
                                     // updating a new admin
                                     $iUpdated = 0;
                                     $adminId  = Params::getParam('id');
@@ -251,6 +253,7 @@
                                         osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=admins');
                                     }
+                                    osc_csrf_check();
                                     // deleting and admin
                                     $isDeleted = false;
                                     $adminId   = Params::getParam('id');
