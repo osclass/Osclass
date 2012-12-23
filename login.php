@@ -106,7 +106,8 @@
                                                 Cookie::newInstance()->set() ;
                                                 
                                             }
-
+                                            
+                                            osc_run_hook("after_login");
                                             $this->redirectTo( $url_redirect ) ;
 
                                         } else {
