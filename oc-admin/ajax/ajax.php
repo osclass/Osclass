@@ -700,7 +700,7 @@
                      ************************/
                     if ($code != '' && $section != '') {
 
-                        if(stripos("http://", $code)===FALSE) {
+                        if(stripos($code, "http://")===FALSE) {
                             // OSCLASS OFFICIAL REPOSITORY
                             $url = osc_market_url($section, $code);
                             $data = json_decode(osc_file_get_contents($url), true);
@@ -855,7 +855,7 @@
                      *** CHECK VALID CODE ***
                      ************************/
                     if ($code != '' && $section != '') {
-                        if(stripos("http://", $code)===FALSE) {
+                        if(stripos($code, "http://")===FALSE) {
                             // OSCLASS OFFICIAL REPOSITORY
                             $data = json_decode(osc_file_get_contents(osc_market_url($section, $code)), true);
                         } else {

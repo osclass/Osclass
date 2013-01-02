@@ -1282,7 +1282,7 @@ function _get_market_url($type, $update_uri) {
 
     if(in_array($type, array('plugins', 'themes', 'languages') ) ) {
         $uri = '';
-        if(stripos("http://", $update_uri)===FALSE ) {
+        if(stripos($update_uri, "http://")===FALSE ) {
             // OSCLASS OFFICIAL REPOSITORY
             $uri = osc_market_url($type, $update_uri);
         } else {
