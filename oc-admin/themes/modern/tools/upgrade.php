@@ -52,7 +52,7 @@
 
                             var tempAr = data.url.split('/') ;
                             fileToUnzip = tempAr.pop() ;
-                            $.get('<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=upgrade' , function(data) {
+                            $.get('<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=upgrade&<?php echo osc_csrf_token_url(); ?>' , function(data) {
                                 var loading_image = document.getElementById('loading_image') ;
                                 loading_image.style.display = "none" ;
                                 steps.innerHTML += data+"<br />" ;

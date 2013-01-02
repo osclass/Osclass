@@ -41,6 +41,7 @@
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=import') ;
                                         }
                                         // calling
+                                        osc_csrf_check();
                                         $sql = Params::getFiles('sql') ;
                                         if( isset($sql['size']) && $sql['size'] != 0 ) {
                                             $content_file = file_get_contents($sql['tmp_name']) ;
@@ -66,6 +67,7 @@
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=images');
                                         }
 
+                                        osc_csrf_check();
                                         $preferences = Preference::newInstance()->toArray() ;
 
                                         $wat = new Watermark();
@@ -202,6 +204,7 @@
                                             osc_add_flash_warning_message( _m("This action cannot be done because it is a demo site"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
                                         }
+                                        osc_csrf_check();
                                         //databasse dump...
                                         if( Params::getParam('bck_dir') != '' ) {
                                             $path = trim( Params::getParam('bck_dir') ) ;
@@ -308,6 +311,7 @@
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
                                         }
                                         //zip of the code just to back it up
+                                        osc_csrf_check();
                                         if( Params::getParam('bck_dir') != '' ) {
                                             $archive_name = trim( Params::getParam('bck_dir') ) ;
                                             if(substr(trim($archive_name), -1, 1) != "/") {
@@ -336,6 +340,7 @@
                                             $this->doView('tools/maintenance.php') ;
                                             break ;
                                         }
+                                        osc_csrf_check();
                                         $mode = Params::getParam('mode') ;
                                         if( $mode == 'on' ) {
                                             $maintenance_file = osc_base_path() . '.maintenance' ;

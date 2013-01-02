@@ -45,6 +45,7 @@
                                         $this->doView('user-register.php') ;
                 break;
                 case('register_post'):  //register user
+                                        osc_csrf_check();
                                         if( !osc_users_enabled() ) {
                                             osc_add_flash_error_message( _m('Users are not enabled') ) ;
                                             $this->redirectTo( osc_base_url() ) ;

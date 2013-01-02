@@ -24,7 +24,7 @@
     {
         function __construct()
         {
-            parent::__construct() ;
+            parent::__construct();
 
             // check if is moderator and can enter to this page
             if( $this->isModerator() ) {
@@ -34,20 +34,20 @@
                 }
             }
 
-            osc_run_hook( 'init_admin' ) ;
+            osc_run_hook( 'init_admin' );
 
             // check if exist a new version each day
             if( (time() - osc_last_version_check()) > (24 * 3600) ) {
-                $data = osc_file_get_contents('http://osclass.org/latest_version.php?callback=?') ;
-                $data = preg_replace('|^\?\((.*?)\);$|', '$01', $data) ;
-                $json = json_decode($data) ;
+                $data = osc_file_get_contents('http://osclass.org/latest_version.php?callback=?');
+                $data = preg_replace('|^\?\((.*?)\);$|', '$01', $data);
+                $json = json_decode($data);
                 if( $json->version > osc_version() ) {
-                    osc_set_preference( 'update_core_json', $data ) ;
+                    osc_set_preference( 'update_core_json', $data );
                 } else {
-                    osc_set_preference( 'update_core_json', '' ) ;
+                    osc_set_preference( 'update_core_json', '' );
                 }
-                osc_set_preference( 'last_version_check', time() ) ;
-                osc_reset_preferences() ;
+                osc_set_preference( 'last_version_check', time() );
+                osc_reset_preferences();
             }
 
             $config_version = str_replace('.', '', OSCLASS_VERSION);
@@ -75,7 +75,7 @@
 
         function isLogged()
         {
-            return osc_is_admin_user_logged_in() ;
+            return osc_is_admin_user_logged_in();
         }
 
         function isModerator()
@@ -86,24 +86,23 @@
         function logout()
         {
             //destroying session
-            Session::newInstance()->session_destroy() ;
-            Session::newInstance()->_drop('adminId') ;
-            Session::newInstance()->_drop('adminUserName') ;
-            Session::newInstance()->_drop('adminName') ;
-            Session::newInstance()->_drop('adminEmail') ;
-            Session::newInstance()->_drop('adminLocale') ;
+            Session::newInstance()->_drop('adminId');
+            Session::newInstance()->_drop('adminUserName');
+            Session::newInstance()->_drop('adminName');
+            Session::newInstance()->_drop('adminEmail');
+            Session::newInstance()->_drop('adminLocale');
 
-            Cookie::newInstance()->pop('oc_adminId') ;
-            Cookie::newInstance()->pop('oc_adminSecret') ;
-            Cookie::newInstance()->pop('oc_adminLocale') ;
-            Cookie::newInstance()->set() ;
+            Cookie::newInstance()->pop('oc_adminId');
+            Cookie::newInstance()->pop('oc_adminSecret');
+            Cookie::newInstance()->pop('oc_adminLocale');
+            Cookie::newInstance()->set();
         }
 
         function showAuthFailPage()
         {
             Session::newInstance()->session_start();
             Session::newInstance()->_setReferer(osc_base_url() . preg_replace('|^' . REL_WEB_URL . '|', '', $_SERVER['REQUEST_URI']));
-            $this->redirectTo( osc_admin_base_url(true)."?page=login" ) ;
+            $this->redirectTo( osc_admin_base_url(true)."?page=login" );
         }
     }
 

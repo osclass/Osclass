@@ -64,6 +64,15 @@
     }
 
     /**
+     * Gets csrf session name
+     *
+     * @return int
+     */
+    function osc_csrf_name() {
+        return (getPreference('csrf_name')) ;
+    }
+
+    /**
      * Gets if only users can post comments
      *
      * @return boolean
