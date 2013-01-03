@@ -70,7 +70,7 @@
                 break;
         }
         foreach($sections as $section){
-            echo '<script src="'.osc_admin_base_url(true).'?page=ajax&amp;action=market_data&amp;section='.$section.'&amp;featured='.$featured.'" type="text/javascript"></script>';
+            echo '<script src="'.osc_admin_base_url(true).'?page=ajax&amp;action=market_data&amp;section='.$section.'&amp;featured='.$featured.'&amp;mPage='.Params::getParam('mPage').'" type="text/javascript"></script>';
         }
         ?>
         <?php
