@@ -687,7 +687,7 @@
                  ** COMPLETE MARKET PROCESS **
                  *******************************/
                 case 'market': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
-                    osc_csrf_check(false);
+//                    osc_csrf_check(false);
                     $section = Params::getParam('section');
                     $code    = Params::getParam('code');
                     $plugin  = false;
@@ -699,7 +699,7 @@
                      *** CHECK VALID CODE ***
                      ************************/
                     if ($code != '' && $section != '') {
-
+                        error_log( "ajax market, " . $code);
                         if(stripos($code, "http://")===FALSE) {
                             // OSCLASS OFFICIAL REPOSITORY
                             $url = osc_market_url($section, $code);
