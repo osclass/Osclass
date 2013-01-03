@@ -755,6 +755,13 @@
                                      **********************/
                                     $fail = -1;
                                     if ($handle = opendir(osc_content_path() . 'downloads/oc-temp')) {
+                                        $current_user   = posix_getpwuid(posix_geteuid());
+                                        $ownerFolder    = posix_getpwuid(fileowner(ABS_PATH . "oc-content/".$folder));
+                                        if($current_user['uid'] != $ownerFolder['uid']) {
+//                                            possible copy issues
+//                                            error_log('file -> '.$ownerFile['uid'] .', folder ->'. $ownerFolder['uid']);
+                                        }
+
                                         $fail = 0;
                                         while (false !== ($_file = readdir($handle))) {
                                             if ($_file != '.' && $_file != '..') {
