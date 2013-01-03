@@ -78,11 +78,26 @@ function get_requirements( ) {
             'requirement' => __('<code>oc-content/uploads</code> folder is writable'),
             'fn' => is_writable( ABS_PATH . 'oc-content/uploads/' ),
             'solution' => sprintf(__('<code>uploads</code> folder has to be writable, i.e.: <code>chmod a+w %soc-content/uploads/</code>'), ABS_PATH)),
+        // oc-content/downlods
+        'Folder <code>oc-content/downloads</code> exists' => array(
+            'requirement' => __('Folder <code>oc-content/downloads</code> exists'),
+            'fn' => file_exists( ABS_PATH . 'oc-content/downloads/' ),
+            'solution' => sprintf(__('You have to create <code>downloads</code> folder, i.e.: <code>mkdir %soc-content/downloads/</code>' ), ABS_PATH)),
 
+        'Folder <code>oc-content/downloads</code> is writable' => array(
+            'requirement' => __('<code>oc-content/downloads</code> folder is writable'),
+            'fn' => is_writable( ABS_PATH . 'oc-content/downloads/' ),
+            'solution' => sprintf(__('<code>downloads</code> folder has to be writable, i.e.: <code>chmod a+w %soc-content/downloads/</code>'), ABS_PATH)),
+        // oc-content/languages
         'Folder <code>oc-content/languages</code> exists' => array(
-            'requirement' => __('<code>oc-content/languages</code> folder exists'),
+            'requirement' => __('Folder <code>oc-content/languages</code> folder exists'),
             'fn' => file_exists( ABS_PATH . 'oc-content/languages/' ),
-            'solution' => sprintf(__('You have to create the <code>languages</code> folder, i.e.: <code>mkdir %soc-content/languages/</code>'), ABS_PATH))
+            'solution' => sprintf(__('You have to create the <code>languages</code> folder, i.e.: <code>mkdir %soc-content/languages/</code>'), ABS_PATH)),
+
+        'Folder <code>oc-content/languages</code> is writable' => array(
+            'requirement' => __('<code>oc-content/languages</code> folder is writable'),
+            'fn' => is_writable( ABS_PATH . 'oc-content/languages/' ),
+            'solution' => sprintf(__('<code>languages</code> folder has to be writable, i.e.: <code>chmod a+w %soc-content/languages/</code>'), ABS_PATH)),
     );
 
     $config_writable = false;
