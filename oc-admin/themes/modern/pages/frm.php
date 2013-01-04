@@ -112,6 +112,18 @@
         <div class="input-description-wide">
             <?php printLocaleDescriptionPage($locales, $page); ?>
         </div>
+        <?php if($page['b_indelible'] == 0) { ?>
+        <div>
+			<label><?php _e('Show a link in footer'); ?></label>
+			<?php if( isset($page['pk_i_id']) ) {
+						$checked = false;
+				  }else {
+						$checked = true;
+				  } 
+			?>
+			<?php PageForm::link_check_box($page, $checked); ?>
+        </div>
+        <?php } ?>
         <div>
             <?php osc_run_hook('page_meta'); ?>
         </div>
