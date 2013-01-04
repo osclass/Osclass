@@ -1,7 +1,7 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /**
-     * Osclass – software for creating and publishing online classified advertising platforms
+     * Osclass - software for creating and publishing online classified advertising platforms
      *
      * Copyright (C) 2012 OSCLASS
      *
@@ -699,7 +699,6 @@
                      *** CHECK VALID CODE ***
                      ************************/
                     if ($code != '' && $section != '') {
-                        error_log( "ajax market, " . $code);
                         if(stripos($code, "http://")===FALSE) {
                             // OSCLASS OFFICIAL REPOSITORY
                             $url = osc_market_url($section, $code);
@@ -755,17 +754,15 @@
                                      **********************/
                                     $fail = -1;
                                     if ($handle = opendir(osc_content_path() . 'downloads/oc-temp')) {
+                                        $folder_dest    = ABS_PATH . "oc-content/".$folder;
+
                                         $current_user   = posix_getpwuid(posix_geteuid());
-                                        $ownerFolder    = posix_getpwuid(fileowner(ABS_PATH . "oc-content/".$folder));
-                                        if($current_user['uid'] != $ownerFolder['uid']) {
-//                                            possible copy issues
-//                                            error_log('file -> '.$ownerFile['uid'] .', folder ->'. $ownerFolder['uid']);
-                                        }
+                                        $ownerFolder    = posix_getpwuid(fileowner($folder_dest));
 
                                         $fail = 0;
                                         while (false !== ($_file = readdir($handle))) {
                                             if ($_file != '.' && $_file != '..') {
-                                                $copyprocess = osc_copy(osc_content_path() . "downloads/oc-temp/" . $_file, ABS_PATH . "oc-content/" . $folder . $_file);
+                                                $copyprocess = osc_copy(osc_content_path() . "downloads/oc-temp/" . $_file, $folder_dest . $_file);
                                                 if ($copyprocess == false) {
                                                     $fail = 1;
                                                 };
@@ -827,6 +824,10 @@
                                             }
                                         } else {
                                             $message = __('Problems when copying files. Please check your permissions. ');
+                                            if($current_user['uid'] != $ownerFolder['uid']) {
+                                                $current_group  = posix_getgrgid( $current_user['gid']);
+                                                $message .= '<p><strong>' . sprintf(__('NOTE: Web user and destination folder user is not the same, you might have an issue there. chown %s:%s %s'), $current_user['name'], $current_group['name'], $folder_dest).'</strong></p>';
+                                            }
                                             $error = 4; // Problems copying files. Maybe permissions are not correct
                                         }
                                     } else {
@@ -899,7 +900,6 @@
                     $data = array();
 
                     $data = json_decode(osc_file_get_contents($url), true);
-                                        error_log($url);
 
                     //print_r($data);
                     //echo $data;
