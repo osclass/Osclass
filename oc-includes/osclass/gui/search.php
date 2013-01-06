@@ -260,6 +260,10 @@
                                         <input type="checkbox" name="bPic" id="withPicture" value="1" <?php echo (osc_search_has_pic() ? 'checked="checked"' : ''); ?> />
                                         <label for="withPicture"><?php _e('Show only listings with pictures', 'modern') ; ?></label>
                                     </li>
+                                    <li>
+                                        <input type="checkbox" name="bPremium" id="onlyPremium" value="1" <?php echo (osc_search_only_premium() ? 'checked="checked"' : ''); ?> />
+                                        <label for="onlyPremium"><?php _e('Show only premium listings', 'modern') ; ?></label>
+                                    </li>
                                 </ul>
                             </div>
                             <?php } ?>
