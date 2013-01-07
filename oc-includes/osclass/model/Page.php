@@ -51,6 +51,7 @@
                 'pk_i_id',
                 's_internal_name',
                 'b_indelible',
+                'b_link',
                 'dt_pub_date',
                 'dt_mod_date',
                 'i_order',
@@ -177,14 +178,14 @@
          * @return array Return all the pages that have been found with the criteria selected. If there's no pages, the
          * result is an empty array.
          */
-        public function listAll($indelible = null, $b_link = 1, $locale = null, $start = null, $limit = null)
+        public function listAll($indelible = null, $b_link = null, $locale = null, $start = null, $limit = null)
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
             if( !is_null($indelible) ) {
                 $this->dao->where('b_indelible', $indelible) ;
             }
-            if( $b_link == 1 ) {
+            if( $b_link!=null) {
                 $this->dao->where('b_link', $b_link) ;
             }
             $this->dao->orderBy('i_order', 'ASC') ;
