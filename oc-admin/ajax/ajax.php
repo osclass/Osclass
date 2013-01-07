@@ -84,30 +84,6 @@
                         break;
                     }
                 break;
-                case 'items': // Return items (use external file oc-admin/ajax/item_processing.php)
-                    require_once osc_admin_base_path() . 'ajax/items_processing.php';
-                    $items_processing = new ItemsProcessingAjax(Params::getParamsAsArray("get"));
-                    // HACK DELETE ON 3.0
-                    $items_processing->dumpToDatatables();
-                    break;
-                case 'users': // Return users (use external file oc-admin/ajax/users_processing.php)
-                    require_once osc_admin_base_path() . 'ajax/users_processing.php';
-                    $users_processing = new UsersProcessingAjax(Params::getParamsAsArray("get"));
-                    // HACK DELETE ON 3.0
-                    $users_processing->dumpToDatatables();
-                    break;
-                case 'media': // Return media (use external file oc-admin/ajax/media_processing.php)
-                    require_once osc_admin_base_path() . 'ajax/media_processing.php';
-                    $media_processing = new MediaProcessingAjax(Params::getParamsAsArray("get"));
-                    // HACK DELETE ON 3.0
-                    $media_processing->dumpToDatatables();
-                    break;
-                case 'comments': // Return comments (use external file oc-admin/ajax/comments_processing.php)
-                    require_once osc_admin_base_path() . 'ajax/comments_processing.php';
-                    $comments_processing = new CommentsProcessingAjax(Params::getParamsAsArray("get"));
-                    // HACK DELETE ON 3.0
-                    $comments_processing->dumpToDatatables();
-                    break;
                 case 'categories_order': // Save the order of the categories
                     osc_csrf_check(false);
                     $aIds        = Params::getParam('list');
