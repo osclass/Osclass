@@ -1,5 +1,10 @@
 <?php
 
+    // check requirements
+    if( !is_writable( ABS_PATH . 'oc-content/downloads/' ) ) {
+        osc_add_flash_error_message( sprintf(_m('<code>downloads</code> folder has to be writable, i.e.: <code>chmod a+w %soc-content/downloads/</code>'), ABS_PATH), 'admin');
+    }
+
     osc_enqueue_style('market', osc_current_admin_theme_styles_url('market.css'));
     osc_register_script('market-js', osc_current_admin_theme_js_url('market.js'));
     osc_enqueue_script('market-js');
@@ -70,7 +75,7 @@
                 break;
         }
         foreach($sections as $section){
-            echo '<script src="'.osc_admin_base_url(true).'?page=ajax&amp;action=market_data&amp;section='.$section.'&amp;featured='.$featured.'" type="text/javascript"></script>';
+            echo '<script src="'.osc_admin_base_url(true).'?page=ajax&amp;action=market_data&amp;section='.$section.'&amp;featured='.$featured.'&amp;mPage='.Params::getParam('mPage').'" type="text/javascript"></script>';
         }
         ?>
         <?php
