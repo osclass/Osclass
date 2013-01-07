@@ -59,6 +59,7 @@
                 case 'edit_post':
                     osc_csrf_check();
                     $id = Params::getParam("id");
+                    $b_link = (Params::getParam("b_link") != '') ? 1 : 0;
                     $s_internal_name = Params::getParam("s_internal_name");
                     $s_internal_name = osc_sanitizeString($s_internal_name);
 
@@ -95,6 +96,7 @@
                         if(!$this->pageManager->internalNameExists($id, $s_internal_name)) {
                             if(!$this->pageManager->isIndelible($id)) {
                                 $this->pageManager->updateInternalName($id, $s_internal_name);
+                                $this->pageManager->updateLink($id,$b_link);
                             }
                             Session::newInstance()->_clearVariables();
                             osc_add_flash_ok_message(_m('The page has been updated'), 'admin');
@@ -121,6 +123,7 @@
                 case 'add_post':
                     osc_csrf_check();
                     $s_internal_name = Params::getParam("s_internal_name");
+                    $b_link = (Params::getParam("b_link") != '') ? 1 : 0;
                     $s_internal_name = osc_sanitizeString($s_internal_name);
 
                     $meta = Params::getParam('meta');
@@ -147,7 +150,7 @@
                         osc_add_flash_error_message(_m('You have to set a different internal name'), 'admin');
                         $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=add");
                     }
-                    $aFields = array('s_internal_name' => $s_internal_name, 'b_indelible' => '0', 's_meta' => json_encode($meta));
+                    $aFields = array('s_internal_name' => $s_internal_name, 'b_indelible' => '0', 's_meta' => json_encode($meta), 'b_link' => $b_link);
                     Session::newInstance()->_setForm('s_internal_name',$s_internal_name);
 
                     $page = $this->pageManager->findByInternalName($s_internal_name);

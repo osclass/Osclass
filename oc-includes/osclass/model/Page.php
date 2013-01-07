@@ -177,12 +177,15 @@
          * @return array Return all the pages that have been found with the criteria selected. If there's no pages, the
          * result is an empty array.
          */
-        public function listAll($indelible = null, $locale = null, $start = null, $limit = null)
+        public function listAll($indelible = null, $b_link = 1, $locale = null, $start = null, $limit = null)
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
             if( !is_null($indelible) ) {
                 $this->dao->where('b_indelible', $indelible) ;
+            }
+            if( $b_link == 1 ) {
+                $this->dao->where('b_link', $b_link) ;
             }
             $this->dao->orderBy('i_order', 'ASC') ;
             if( !is_null($limit) ) {
@@ -406,6 +409,7 @@
                 ,'dt_mod_date' => date('Y-m-d H:i:s')
                 ,'i_order' => ($order+1)
                 ,'s_meta' => $aFields['s_meta']
+                ,'b_link' => $aFields['b_link']
             ));
 
 
@@ -517,6 +521,24 @@
         public function updateInternalName($id, $intName)
         {
             $fields = array('s_internal_name' => $intName,
+                             'dt_mod_date'    => date('Y-m-d H:i:s'));
+            $where  = array('pk_i_id' => $id);
+
+            return $this->dao->update($this->tableName, $fields, $where);
+        }
+        
+        /**
+         * It changes the b_link of a page. Here you don't check if in indelible or not the page.
+         *
+         * @access public
+         * @since unknown
+         * @param int $id The id of the page to be changed.
+         * @param string $bLink The show link status.
+         * @return int Number of affected rows.
+         */
+        public function updateLink($id, $bLink)
+        {
+            $fields = array('b_link' => $bLink,
                              'dt_mod_date'    => date('Y-m-d H:i:s'));
             $where  = array('pk_i_id' => $id);
 
