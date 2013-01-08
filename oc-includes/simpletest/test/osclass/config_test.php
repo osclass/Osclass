@@ -28,6 +28,8 @@ if(file_exists(dirname(__FILE__)."/custom_config.php")) {
     
     $talker_room = "";
     $talker_token = "";
+
+    $entry_point = "http://localhost/";
     
 };
 ?>

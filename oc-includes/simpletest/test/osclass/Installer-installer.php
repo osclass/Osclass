@@ -8,11 +8,11 @@ class Installer_installer extends InstallerTest {
         flush();
         $this->clean();
 
-        $config_file = osc_get_absolute_url() . "config.php";
+        $config_file = ABS_PATH . "config.php";
         if( !file_exists($config_file) ) {
             $this->can_continue = true;
 
-            $this->selenium->open( osc_get_absolute_url() . "oc-includes/osclass/install.php" );
+            $this->selenium->open( $entry_point . "oc-includes/osclass/install.php" );
 
             // Test locale
             $this->selenium->type("install_locale", "en_US");
@@ -75,11 +75,11 @@ class Installer_installer extends InstallerTest {
         flush();
         $this->clean();
 
-        $config_file = osc_get_absolute_url() . "config.php";
+        $config_file = ABS_PATH . "config.php";
         if( !file_exists($config_file) ) {
             $this->can_continue = true;
 
-            $this->selenium->open( osc_get_absolute_url() . "oc-includes/osclass/install.php" );
+            $this->selenium->open( $entry_point . "oc-includes/osclass/install.php" );
 
             // Test locale
             $this->selenium->type("install_locale", "es_ES");
