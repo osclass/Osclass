@@ -8,7 +8,7 @@ class Installer_installer extends InstallerTest {
         flush();
         $this->clean();
 
-        $config_file = ABS_PATH . "config.php";
+        $config_file = osc_get_absolute_url() . "config.php";
         if( !file_exists($config_file) ) {
             $this->can_continue = true;
 
@@ -75,7 +75,7 @@ class Installer_installer extends InstallerTest {
         flush();
         $this->clean();
 
-        $config_file = ABS_PATH . "config.php";
+        $config_file = osc_get_absolute_url() . "config.php";
         if( !file_exists($config_file) ) {
             $this->can_continue = true;
 
