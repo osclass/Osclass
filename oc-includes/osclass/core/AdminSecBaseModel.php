@@ -100,9 +100,13 @@
 
         function showAuthFailPage()
         {
-            Session::newInstance()->session_start();
-            Session::newInstance()->_setReferer(osc_base_url() . preg_replace('|^' . REL_WEB_URL . '|', '', $_SERVER['REQUEST_URI']));
-            $this->redirectTo( osc_admin_base_url(true)."?page=login" );
+            if(Params::getParam('page')=='ajax') {
+                echo json_encode(array('error' => 1, 'msg' => __('Session timed out')));
+            } else {
+                Session::newInstance()->session_start();
+                Session::newInstance()->_setReferer(osc_base_url() . preg_replace('|^' . REL_WEB_URL . '|', '', $_SERVER['REQUEST_URI']));
+                $this->redirectTo( osc_admin_base_url(true)."?page=login" );
+            }
         }
     }
 
