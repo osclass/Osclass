@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -24,9 +24,9 @@
      * AlertsDataTable class
      * 
      * @since 3.1
-     * @package OSClass
+     * @package Osclass
      * @subpackage classes
-     * @author OSClass
+     * @author Osclass
      */
     class AlertsDataTable extends DataTable
     {

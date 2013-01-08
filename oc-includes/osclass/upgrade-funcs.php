@@ -1,8 +1,8 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -41,7 +41,7 @@
         if( Params::getParam('skipdb') == '' ){
             if(!$error_queries[0]) {
                 $skip_db_link = osc_admin_base_url(true) . "?page=upgrade&action=upgrade-funcs&skipdb=true";
-                $title    = __('OSClass &raquo; Has some errors') ;
+                $title    = __('Osclass &raquo; Has some errors') ;
                 $message  = __("We've encountered some problems while updating the database structure. The following queries failed:");
                 $message .= "<br/><br/>" . implode("<br>", $error_queries[2]);
                 $message .= "<br/><br/>" . sprintf(__("These errors could be false-positive errors. If you're sure that is the case, you can <a href=\"%s\">continue with the upgrade</a>, or <a href=\"http://forums.osclass.org/\">ask in our forums</a>."), $skip_db_link);
@@ -383,10 +383,11 @@ CREATE TABLE %st_item_description_tmp (
         $comm->query(sprintf("ALTER TABLE %st_user DROP s_pass_answer", DB_TABLE_PREFIX));
         $comm->query(sprintf("ALTER TABLE %st_user DROP s_pass_question", DB_TABLE_PREFIX));
         osc_set_preference('marketURL', 'http://market.osclass.org/api/');
+        osc_set_preference('marketAllowExternalSources', '0', 'BOOLEAN');
     }
 
     if(osc_version() < 310) {
-        $comm->query(sprintf("ALTER TABLE  %st_alerts ADD  `pk_i_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY", DB_TABLE_PREFIX));
+        //$comm->query(sprintf("ALTER TABLE  %st_alerts ADD  `pk_i_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY", DB_TABLE_PREFIX));
         $comm->query(sprintf("ALTER TABLE  %st_pages ADD  `s_meta` TEXT NULL", DB_TABLE_PREFIX));
         $comm->query(sprintf("UPDATE %st_alerts SET dt_date = '%s' ", DB_TABLE_PREFIX, date("Y-m-d H:i:s")));
 
@@ -404,17 +405,21 @@ CREATE TABLE %st_item_description_tmp (
         @unlink(osc_base_path() . 'user-non-secure.php');
         @unlink(osc_base_path() . 'user.php');
         @unlink(osc_base_path() . 'readme.php');
-    }
 
-    if(osc_version() < 320) {
         @unlink(osc_lib_path() . 'osclass/plugins.php');
+
+        $comm->query(sprintf('UPDATE %st_user t, (SELECT pk_i_id FROM %st_user) t1 SET t.s_username = t1.pk_i_id WHERE t.pk_i_id = t1.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+        osc_set_preference('username_blacklist', 'admin,user', 'osclass', 'STRING');
+        osc_set_preference('rewrite_user_change_username', 'user/change_username');
+        osc_set_preference('csrf_name', 'CSRF'.mt_rand(0,mt_getrandmax()));
+
     }
 
-    osc_changeVersionTo(320);
+    osc_changeVersionTo(310);
 
     echo '<div class="well ui-rounded-corners separate-top-medium">';
-    echo '<p>'.__('OSClass &raquo; Updated correctly').'</p>' ;
-    echo '<p>'.__('OSClass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
+    echo '<p>'.__('Osclass &raquo; Updated correctly').'</p>' ;
+    echo '<p>'.__('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
     foreach($aMessages as $msg) {
         echo "<p>".$msg."</p>";
     }

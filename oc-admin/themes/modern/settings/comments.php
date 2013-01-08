@@ -1,8 +1,8 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -161,4 +161,4 @@ $(document).ready(function(){
         </fieldset>
     </form>
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

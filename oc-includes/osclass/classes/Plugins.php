@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -111,7 +111,7 @@
                 foreach($plugins as $p) {
                     $extended_list[$p] = self::getInfo($p);
                 }
-                uasort($extended_list, "self::strnatcmpCustom");
+                uasort($extended_list, array("self", "strnatcmpCustom"));
                 $plugins = array();
                 // Enabled
                 foreach($extended_list as $k => $v) {

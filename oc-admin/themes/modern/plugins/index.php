@@ -1,8 +1,8 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -82,17 +82,17 @@
     osc_add_hook('admin_header','customHead');
 
     $iDisplayLength = __get('iDisplayLength');
-    $aData          = __get('aPlugins'); 
+    $aData          = __get('aPlugins');
 
     $tab_index = 1;
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <div id="tabs" class="ui-osc-tabs ui-tabs-right">
     <ul>
-        <?php 
+        <?php
             $aPluginsToUpdate = json_decode( getPreference('plugins_to_update') );
             $bPluginsToUpdate = is_array($aPluginsToUpdate)?true:false;
-            if($bPluginsToUpdate && count($aPluginsToUpdate) > 0) { 
+            if($bPluginsToUpdate && count($aPluginsToUpdate) > 0) {
                 $tab_index = 2;
         ?>
         <li><a href="#update-plugins"><?php _e('Updates'); ?></a></li>
@@ -143,11 +143,11 @@
     </div>
     <?php if($bPluginsToUpdate && count($aPluginsToUpdate) > 0) { ?>
     <div id="update-plugins">
-        <?php 
+        <?php
             $aIndex = array();
             if($bPluginsToUpdate) {
                 $array_aux  = array_keys($aData['aaInfo']);
-                
+
                 foreach($aPluginsToUpdate as $slug) {
                     $key = array_search($slug, $array_aux);
                     if($key) {
@@ -210,7 +210,7 @@
                         </tr>
                         <tr class="even">
                             <td><?php _e('URL') ; ?></td>
-                            <td><a id="market_url" href="#"><?php _e("Download manually"); ?></span></td>
+                            <td><span id="market_url_span"><a id="market_url" href="#"><?php _e("Download manually"); ?></a></span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -218,8 +218,8 @@
             </div>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button id="market_cancel" class="btn btn-red" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                    <button id="market_install" class="btn btn-submit" ><?php echo osc_esc_html( __('Continue install') ) ; ?></button>
+                    <button id="market_cancel" class="btn btn-red" ><?php _e('Cancel') ; ?></button>
+                    <button id="market_install" class="btn btn-submit" ><?php _e('Continue install') ; ?></button>
                 </div>
             </div>
         </form>
@@ -269,7 +269,7 @@
                     content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=plugins&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php echo osc_esc_js(__('Close')); ?></a>';
                     content += "</p>";
                 } else {
-                    content += '<a class="btn btn-mini btn-green" onclick=\'$(".ui-dialog-content").dialog("close");\'><?php _e('Close'); ?>...</a>';
+                    content += '<a class="btn btn-mini btn-green" onclick=\'$(".ui-dialog-content").dialog("close");\'><?php echo osc_esc_js(__('Close')); ?>...</a>';
                 }
                 $("#downloading .osc-modal-content").html(content);
             });
@@ -293,7 +293,7 @@
 
                     $('#market_installer').dialog({
                         modal:true,
-                        title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
+                        title: '<?php echo osc_esc_js( __('Osclass Market') ) ; ?>',
                         width:485
                     });
                 }

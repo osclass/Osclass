@@ -1,3 +1,4 @@
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ; ?>
             </div></div><div class="clear"></div></div><!-- #grid-system -->
             </div><!-- #content-page -->
             <div class="clear"></div>

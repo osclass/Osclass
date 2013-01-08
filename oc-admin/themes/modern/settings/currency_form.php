@@ -1,8 +1,8 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -126,7 +126,7 @@
                 </div>
                 <div class="form-actions">
                     <?php if( $typeForm == 'edit_post' ) { ?>
-                    <input class="btn btn-red" type="button" value="Cancel" onclick="location.href='<?php echo osc_admin_base_url(true); ?>?page=settings&amp;action=currencies'">
+                    <input class="btn btn-red" type="button" value="<?php echo osc_esc_html( __('Cancel')); ?>" onclick="location.href='<?php echo osc_admin_base_url(true); ?>?page=settings&amp;action=currencies'">
                     <?php } ?>
                     <input type="submit" value="<?php echo osc_esc_html(customText('button')) ; ?>" class="btn btn-submit" />
                 </div>

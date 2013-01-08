@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -60,6 +60,32 @@
                                     }
                                     foreach($stats_users as $user) {
                                         $users[$user['d_date']] = $user['num'] ;
+                                    }
+
+                                    if(function_exists('disk_free_space')) {
+                                        $freedisk = @disk_free_space(osc_content_path()."uploads/");
+                                        if($freedisk!==false && $freedisk<52428800) { //52428800 = 50*1024*1024
+                                            osc_add_flash_error_message(_m('You have very few free space left, users will not be able to upload pictures'), 'admin');
+                                        }
+                                    }
+
+                                    // show messages subscribed
+                                    $status_subscribe = Params::getParam('subscribe_osclass');
+                                    if( $status_subscribe != '' ) {
+                                        switch( $status_subscribe ) {
+                                            case -1:
+                                                osc_add_flash_error_message(_m('Entered an invalid email'), 'admin');
+                                            break;
+                                            case 0:
+                                                osc_add_flash_warning_message(_m("You're already subscribed"), 'admin');
+                                            break;
+                                            case 1:
+                                                osc_add_flash_ok_message(_m('Subscribed correctly'), 'admin');
+                                            break;
+                                            default:
+                                                osc_add_flash_warning_message(_m("Error subscribing"), 'admin');
+                                            break;
+                                        }
                                     }
 
                                     $this->_exportVariableToView("item_stats", $items);

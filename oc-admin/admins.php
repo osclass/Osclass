@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -54,6 +54,7 @@
                                         osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=admins');
                                     }
+                                    osc_csrf_check();
                                     // adding a new admin
                                     $sPassword = Params::getParam('s_password', false, false);
                                     $sName     = Params::getParam('s_name');
@@ -138,6 +139,7 @@
                                         osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=admins');
                                     }
+                                    osc_csrf_check();
                                     // updating a new admin
                                     $iUpdated = 0;
                                     $adminId  = Params::getParam('id');
@@ -251,6 +253,7 @@
                                         osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=admins');
                                     }
+                                    osc_csrf_check();
                                     // deleting and admin
                                     $isDeleted = false;
                                     $adminId   = Params::getParam('id');

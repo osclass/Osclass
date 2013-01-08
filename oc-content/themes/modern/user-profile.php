@@ -1,9 +1,9 @@
 <?php
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -69,6 +69,15 @@
                         <div class="row">
                             <label for="name"><?php _e('Name', 'modern') ; ?></label>
                             <?php UserForm::name_text(osc_user()) ; ?>
+                        </div>
+                        <div class="row">
+                            <label for="email"><?php _e('Username', 'modern') ; ?></label>
+                            <span class="update">
+                                <?php echo osc_user_username() ; ?><br />
+                                <?php if(osc_user_username()==osc_user_id()) { ?>
+                                    <a href="<?php echo osc_change_user_username_url() ; ?>"><?php _e('Modify username', 'modern') ; ?></a>
+                                <?php }; ?>
+                            </span>
                         </div>
                         <div class="row">
                             <label for="email"><?php _e('E-mail', 'modern') ; ?></label>

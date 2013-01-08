@@ -1,8 +1,8 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -137,7 +137,7 @@
                                     <div class="flashmessage flashmessage-inline warning">
                                         <p><?php _e("Apache Module <b>mod_ssl</b> is not loaded") ; ?></p>
                                     </div>
-                                    <?php } ?>                                    
+                                    <?php } ?>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -163,4 +163,4 @@
                 </div>
                 <!-- /settings form -->
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

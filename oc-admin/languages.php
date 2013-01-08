@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -41,7 +41,13 @@
                                             $this->doView('languages/add.php');
                 break;
                 case('add_post'):           // adding a new language
+                                            if( defined('DEMO') ) {
+                                                osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
+                                                $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
+                                            }
+                                            osc_csrf_check();
                                             $filePackage = Params::getFiles('package');
+
                                             if( isset($filePackage['size']) && $filePackage['size'] != 0 ) {
                                                 $path         = osc_translations_path();
                                                 (int) $status = osc_unzip_file($filePackage['tmp_name'], $path);
@@ -94,6 +100,7 @@
                                             $this->doView('languages/frm.php');
                 break;
                 case('edit_post'):          // edit language post
+                                            osc_csrf_check();
                                             $iUpdated               = 0;
                                             $languageCode           = Params::getParam('pk_c_code');
                                             $enabledWebstie         = Params::getParam('b_enabled');
@@ -172,6 +179,7 @@
                                             $this->redirectTo(osc_admin_base_url(true).'?page=languages');
                 break;
                 case('enable_selected'):
+                                            osc_csrf_check();
                                             $msg      = _m('Selected languages have been enabled for the website');
                                             $iUpdated = 0;
                                             $aValues  = array('b_enabled' => 1);
@@ -194,6 +202,7 @@
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
                 break;
                 case('disable_selected'):
+                                            osc_csrf_check();
                                             $msg         = _m('Selected languages have been disabled for the website');
                                             $msg_warning = '';
                                             $iUpdated    = 0;
@@ -227,6 +236,7 @@
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
                 break;
                 case('enable_bo_selected'):
+                                            osc_csrf_check();
                                             $msg      = _m('Selected languages have been enabled for the backoffice (oc-admin)');
                                             $iUpdated = 0;
                                             $aValues  = array('b_enabled_bo' => 1);
@@ -249,6 +259,7 @@
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
                 break;
                 case('disable_bo_selected'):
+                                            osc_csrf_check();
                                             $msg         = _m('Selected languages have been disabled for the backoffice (oc-admin)');
                                             $msg_warning = '';
                                             $iUpdated    = 0;
@@ -281,7 +292,9 @@
 
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
                 break;
-                case('delete'):             if( is_array(Params::getParam('id') ) ) {
+                case('delete'):
+                                            osc_csrf_check();
+                                            if( is_array(Params::getParam('id') ) ) {
                                                 $default_lang = osc_language();
                                                 foreach( Params::getParam('id') as $code ) {
                                                     if( $default_lang != $code ) {

@@ -1,9 +1,9 @@
 <?php
 /*
- *      OSCLass – software for creating and publishing online classified
+ *      Osclass – software for creating and publishing online classified
  *                           advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ *                        Copyright (C) 2012 OSCLASS
  *
  *       This program is free software: you can redistribute it and/or
  *     modify it under the terms of the GNU Affero General Public License
@@ -162,6 +162,7 @@ function meta_title() {
                 case('profile'):         $text = __('Update my profile'); break;
                 case('pub_profile'):     $text = __('Public profile') . ' - ' . osc_user_name(); break;
                 case('change_email'):    $text = __('Change my email'); break;
+                case('change_username'): $text = __('Change my username'); break;
                 case('change_password'): $text = __('Change my password'); break;
                 case('forgot'):          $text = __('Recover my password'); break;
             }
@@ -362,10 +363,10 @@ function osc_footer_link_title() {
  * @access private
  * @return bool
  */
-function _osc_admin_toolbar_init() 
+function _osc_admin_toolbar_init()
 {
     $adminToolbar = AdminToolbar::newInstance() ;
-    
+
     $adminToolbar->init() ;
     $adminToolbar->add_menus() ;
     return true;
@@ -376,17 +377,17 @@ osc_add_hook( 'init_admin', '_osc_admin_toolbar_init') ;
 /**
  * Draws admin toolbar
  */
-function osc_draw_admin_toolbar() 
+function osc_draw_admin_toolbar()
 {
     $adminToolbar = AdminToolbar::newInstance() ;
 
-    // run hook for adding 
+    // run hook for adding
     osc_run_hook('add_admin_toolbar_menus') ;
     $adminToolbar->render() ;
 }
 
 /**
- * Add webtitle with link to frontend 
+ * Add webtitle with link to frontend
  */
 function osc_admin_toolbar_menu()
 {
@@ -403,7 +404,7 @@ function osc_admin_toolbar_menu()
  * Add logout link
  */
 function osc_admin_toolbar_logout()
-{   
+{
     AdminToolbar::newInstance()->add_menu( array(
                 'id'        => 'logout',
                 'title'     => __('Logout'),
@@ -413,12 +414,12 @@ function osc_admin_toolbar_logout()
 }
 
 function osc_admin_toolbar_comments()
-{   
+{
     $total = ItemComment::newInstance()->countAll( '( c.b_active = 0 OR c.b_enabled = 0 OR c.b_spam = 1 )' );
     if( $total > 0 ) {
         $title = '<i class="circle circle-green">'.$total.'</i>'.__('New comments');
 
-        AdminToolbar::newInstance()->add_menu( 
+        AdminToolbar::newInstance()->add_menu(
                 array('id'    => 'comments',
                       'title' => $title,
                       'href'  => osc_admin_base_url(true) . "?page=comments",
@@ -428,12 +429,12 @@ function osc_admin_toolbar_comments()
 }
 
 function osc_admin_toolbar_spam()
-{   
+{
     $total = Item::newInstance()->countByMarkas( 'spam' );
     if( $total > 0 ) {
         $title = '<i class="circle circle-red">'.$total.'</i>'.__('Spam');
 
-        AdminToolbar::newInstance()->add_menu( 
+        AdminToolbar::newInstance()->add_menu(
                 array('id'    => 'spam',
                       'title' => $title,
                       'href'  => osc_admin_base_url(true) . "?page=items&action=items_reported&sort=spam",
@@ -442,7 +443,7 @@ function osc_admin_toolbar_spam()
     }
 }
 
-function osc_check_plugins_update( $force = false ) 
+function osc_check_plugins_update( $force = false )
 {
     $total = 0;
     $array = array();
@@ -459,7 +460,7 @@ function osc_check_plugins_update( $force = false )
             }
             $array_downloaded[] = @$info['plugin_update_uri'];
         }
-        
+
         osc_set_preference( 'plugins_to_update' , json_encode($array) );
         osc_set_preference( 'plugins_downloaded', json_encode($array_downloaded) );
         osc_set_preference( 'plugins_update_count', $total );
@@ -468,12 +469,12 @@ function osc_check_plugins_update( $force = false )
     } else {
         $total = getPreference('plugins_update_count');
     }
-    
+
     return $total;
 }
 
 function osc_admin_toolbar_update_plugins($force = false)
-{   
+{
     if( !osc_is_moderator() ) {
         $total = osc_check_plugins_update( $force );
 
@@ -481,8 +482,8 @@ function osc_admin_toolbar_update_plugins($force = false)
             AdminToolbar::newInstance()->remove_menu('update_plugin');
         }
         if($total > 0) {
-            $title = '<i class="circle circle-gray">'.$total.'</i>'.__('Plugin updates'); 
-            AdminToolbar::newInstance()->add_menu( 
+            $title = '<i class="circle circle-gray">'.$total.'</i>'.__('Plugin updates');
+            AdminToolbar::newInstance()->add_menu(
                     array('id'    => 'update_plugin',
                           'title' => $title,
                           'href'  => osc_admin_base_url(true) . "?page=plugins#update-plugins",
@@ -492,7 +493,7 @@ function osc_admin_toolbar_update_plugins($force = false)
     }
 }
 
-function osc_check_themes_update( $force = false ) 
+function osc_check_themes_update( $force = false )
 {
     $total = 0;
     $array = array();
@@ -516,7 +517,7 @@ function osc_check_themes_update( $force = false )
     } else {
         $total = getPreference('themes_update_count');
     }
-    
+
     return $total;
 }
 
@@ -529,8 +530,8 @@ function osc_admin_toolbar_update_themes($force = false)
             AdminToolbar::newInstance()->remove_menu('update_theme');
         }
         if($total > 0) {
-            $title = '<i class="circle circle-gray">'.$total.'</i>'.__('Theme updates'); 
-            AdminToolbar::newInstance()->add_menu( 
+            $title = '<i class="circle circle-gray">'.$total.'</i>'.__('Theme updates');
+            AdminToolbar::newInstance()->add_menu(
                     array('id'    => 'update_theme',
                           'title' => $title,
                           'href'  => osc_admin_base_url(true) . "?page=appearance",

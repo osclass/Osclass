@@ -1,9 +1,9 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -33,7 +33,6 @@
          */
         public function add()
         {
-            $success     = true;
             $aItem       = $this->data;
 
             $code        = osc_genRandomPassword();
@@ -133,7 +132,7 @@
 
             // Handle error
             if ($flash_error) {
-                return $flash_error;
+                $success = $flash_error;
             } else {
                 if($aItem['price']!='') {
                     $aItem['currency'] = $aItem['currency'];
@@ -210,7 +209,6 @@
                         $mField->replace($itemId, $k, $v);
                     }
                 }
-                osc_run_hook('item_form_post', $aItem['catId'], $itemId);
 
                 // We need at least one record in t_item_stats
                 $mStats = new ItemStats();
@@ -219,14 +217,13 @@
                 $item = $this->manager->findByPrimaryKey($itemId);
                 $aItem['item'] = $item;
 
-                osc_run_hook('after_item_post') ;
 
                 Session::newInstance()->_set('last_publish_time', time());
                 if(!$this->is_admin) {
                     $this->sendEmails($aItem);
                 }
                 if($active=='INACTIVE') {
-                    return 1;
+                    $success = 1;
                 } else {
                     $aAux = array(
                         'fk_i_user_id'      => $aItem['userId'],
@@ -236,8 +233,16 @@
                         'fk_i_city_id'      => $location['fk_i_city_id']
                     );
                     $this->_increaseStats($aAux);
-                    return 2;
+                    $success = 2;
                 }
+
+                // THIS HOOK IS DEPRECATED, IT WILL NOT BE AVAILABLE IN 3.2
+                osc_run_hook('item_form_post', $aItem['catId'], $itemId);
+                // THIS HOOK IS DEPRECATED, IT WILL NOT BE AVAILABLE IN 3.2
+                osc_run_hook('after_item_post') ;
+                // THIS HOOK IS FINE, YAY!
+                osc_run_hook('posted_item', $item);
+
             }
             return $success;
         }
@@ -328,7 +333,7 @@
 
             // Handle error
             if ($flash_error) {
-                return $flash_error ;
+                $success = $flash_error ;
             } else {
                 $location = array(
                     'fk_c_country_code' => $aItem['countryId'],
@@ -414,11 +419,14 @@
 
                 unset($old_item) ;
 
+                // THIS HOOK IS DEPRECATED, IT WILL NOT BE AVAILABLE IN 3.2
                 osc_run_hook('item_edit_post', $aItem['catId'], $aItem['idItem']);
-                return $result;
+                // THIS HOOK IS FINE, YAY!
+                osc_run_hook('edited_item', Item::newInstance()->findByPrimaryKey($aItem['idItem']));
+                $success = $result;
             }
 
-            return 0;
+            return $success;
         }
 
         /**
@@ -1269,60 +1277,92 @@
                     if($numImagesItems==0 || ($numImagesItems>0 && $numImages<$numImagesItems)) {
                         if ($error == UPLOAD_ERR_OK) {
 
-                            $numImages++;
-
-                            $tmpName = $aResources['tmp_name'][$key] ;
-                            $itemResourceManager->insert(array(
-                                'fk_i_item_id' => $itemId
-                            )) ;
-                            $resourceId = $itemResourceManager->dao->insertedId();
-
-                            // Create normal size
-                            $normal_path = $path = osc_content_path() . 'uploads/' . $resourceId . '.jpg' ;
-                            $size = explode('x', osc_normal_dimensions()) ;
-                            ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
-
-                            if( osc_is_watermark_text() ) {
-                                $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , 'image/jpeg' );
-                            } elseif ( osc_is_watermark_image() ){
-                                $wat->doWatermarkImage( $path, 'image/jpeg');
+                            $freedisk = 4*osc_max_size_kb();
+                            if(function_exists('disk_free_space')) {
+                                $freedisk = @disk_free_space(osc_content_path() . 'uploads/');
                             }
 
-                            // Create preview
-                            $path = osc_content_path(). 'uploads/' . $resourceId . '_preview.jpg' ;
-                            $size = explode('x', osc_preview_dimensions()) ;
-                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path) ;
+                            if($freedisk!=false) {
+                                $tmpName = $aResources['tmp_name'][$key] ;
 
-                            // Create thumbnail
-                            $path = osc_content_path(). 'uploads/' . $resourceId . '_thumbnail.jpg' ;
-                            $size = explode('x', osc_thumbnail_dimensions()) ;
-                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path) ;
+                                $total_size = 0;
 
-                            if( osc_keep_original_image() ) {
-                                $path = osc_content_path() . 'uploads/' . $resourceId.'_original.jpg' ;
-                                move_uploaded_file($tmpName, $path) ;
+                                // Create normal size
+                                $normal_path = $path = $tmpName."_normal";
+                                $size = explode('x', osc_normal_dimensions()) ;
+                                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
+
+                                if( osc_is_watermark_text() ) {
+                                    $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , 'image/jpeg' );
+                                } elseif ( osc_is_watermark_image() ){
+                                    $wat->doWatermarkImage( $path, 'image/jpeg');
+                                }
+                                $sizeTmp = filesize($path);
+                                $total_size += $sizeTmp!==false?$sizeTmp:osc_max_size_kb();
+
+                                // Create preview
+                                $path = $tmpName."_preview";
+                                $size = explode('x', osc_preview_dimensions()) ;
+                                ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path) ;
+                                $sizeTmp = filesize($path);
+                                $total_size += $sizeTmp!==false?$sizeTmp:osc_max_size_kb();
+
+                                // Create thumbnail
+                                $path = $tmpName."_thumbnail";
+                                $size = explode('x', osc_thumbnail_dimensions()) ;
+                                ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path) ;
+                                $sizeTmp = filesize($path);
+                                $total_size += $sizeTmp!==false?$sizeTmp:osc_max_size_kb();
+
+                                if( osc_keep_original_image() ) {
+                                    $sizeTmp = filesize($tmpName);
+                                    $total_size += $sizeTmp!==false?$sizeTmp:osc_max_size_kb();
+                                }
+
+                                if($total_size<=$freedisk) {
+
+                                    $numImages++;
+
+                                    $itemResourceManager->insert(array(
+                                        'fk_i_item_id' => $itemId
+                                    )) ;
+                                    $resourceId = $itemResourceManager->dao->insertedId();
+
+                                    osc_copy($tmpName.'_normal', osc_content_path() . 'uploads/' . $resourceId . '.jpg');
+                                    osc_copy($tmpName.'_preview', osc_content_path() . 'uploads/' . $resourceId . '_preview.jpg');
+                                    osc_copy($tmpName.'_thumbnail', osc_content_path() . 'uploads/' . $resourceId . '_thumbnail.jpg');
+                                    if( osc_keep_original_image() ) {
+                                        $path = osc_content_path() . 'uploads/' . $resourceId.'_original.jpg' ;
+                                        move_uploaded_file($tmpName, $path) ;
+                                    }
+
+                                    $s_path = 'oc-content/uploads/' ;
+                                    $resourceType = 'image/jpeg' ;
+                                    $itemResourceManager->update(
+                                                            array(
+                                                                's_path'            => $s_path
+                                                                ,'s_name'           => osc_genRandomPassword()
+                                                                ,'s_extension'      => 'jpg'
+                                                                ,'s_content_type'   => $resourceType
+                                                            )
+                                                            ,array(
+                                                                'pk_i_id'       => $resourceId
+                                                                ,'fk_i_item_id' => $itemId
+                                                            )
+                                    ) ;
+                                    osc_run_hook('uploaded_file', ItemResource::newInstance()->findByPrimaryKey($resourceId));
+                                } else {
+                                    return 2; // IMAGES ARE BIGGER THAN SPACE
+                                }
+                            } else {
+                                return 1; // NO SPACE LEFT
                             }
-
-                            $s_path = 'oc-content/uploads/' ;
-                            $resourceType = 'image/jpeg' ;
-                            $itemResourceManager->update(
-                                                    array(
-                                                        's_path'            => $s_path
-                                                        ,'s_name'           => osc_genRandomPassword()
-                                                        ,'s_extension'      => 'jpg'
-                                                        ,'s_content_type'   => $resourceType
-                                                    )
-                                                    ,array(
-                                                        'pk_i_id'       => $resourceId
-                                                        ,'fk_i_item_id' => $itemId
-                                                    )
-                            ) ;
-                            osc_run_hook('uploaded_file', ItemResource::newInstance()->findByPrimaryKey($resourceId));
                         }
                     }
                 }
                 unset($itemResourceManager);
             }
+            return 0; // NO PROBLEMS
         }
 
         public function sendEmails($aItem){

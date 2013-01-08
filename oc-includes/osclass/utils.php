@@ -1,10 +1,10 @@
 <?php
 
 /*
- *      OSCLass – software for creating and publishing online classified
+ *      Osclass – software for creating and publishing online classified
  *                           advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ *                        Copyright (C) 2012 OSCLASS
  *
  *       This program is free software: you can redistribute it and/or
  *     modify it under the terms of the GNU Affero General Public License
@@ -246,7 +246,7 @@ function osc_doRequest($url, $_data) {
         if($fp!==false) {
             $out  = "POST $path HTTP/1.1\r\n";
             $out .= "Host: $host\r\n";
-            $out .= "Referer: OSClass (v.". osc_version() .")\r\n";
+            $out .= "Referer: Osclass (v.". osc_version() .")\r\n";
             $out .= "Content-type: application/x-www-form-urlencoded\r\n";
             $out .= "Content-Length: ".strlen($data)."\r\n";
             $out .= "Connection: Close\r\n\r\n";
@@ -590,7 +590,7 @@ function osc_dbdump($path, $file) {
     }
 
     $tables_order = array('t_locale', 't_country', 't_currency', 't_region', 't_city', 't_city_area', 't_widget', 't_admin', 't_user', 't_user_description', 't_category', 't_category_description', 't_category_stats', 't_item', 't_item_description', 't_item_location', 't_item_stats', 't_item_resource', 't_item_comment', 't_preference', 't_user_preferences', 't_pages', 't_pages_description', 't_plugin_category', 't_cron', 't_alerts', 't_keywords', 't_meta_fields', 't_meta_categories', 't_item_meta');
-    // Backup default OSClass tables in order, so no problem when importing them back
+    // Backup default Osclass tables in order, so no problem when importing them back
     foreach($tables_order as $table) {
         if(array_key_exists(DB_TABLE_PREFIX . $table, $tables)) {
             $dump->table_structure($path, DB_TABLE_PREFIX . $table) ;
@@ -649,7 +649,6 @@ if( !function_exists('http_chunked_decode') ) {
         $pos = 0;
         $len = strlen($chunk);
         $dechunk = null;
-
         while(($pos < $len)
             && ($chunkLenHex = substr($chunk,$pos, ($newlineAt = strpos($chunk,"\n",$pos+1))-$pos)))
         {
@@ -748,8 +747,10 @@ function download_fsockopen($sourceFile, $fileout = null)
     if (!$fp) {
 
     } else {
+        $ua  = $_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')';
         $out = "GET $link HTTP/1.1\r\n";
         $out .= "Host: $host\r\n";
+        $out .= "User-Agent: $ua\r\n";
         $out .= "Connection: Close\r\n\r\n";
         $out .= "\r\n";
         fwrite($fp, $out);
@@ -799,11 +800,11 @@ function osc_downloadFile($sourceFile, $downloadedFile)
 {
     if ( testCurl() ) {
         @set_time_limit(0);
-
         $fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
         if($fp) {
             $ch = curl_init($sourceFile);
             @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+            curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')') ;
             curl_setopt($ch, CURLOPT_FILE, $fp);
             @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_REFERER, osc_base_url());
@@ -826,7 +827,7 @@ function osc_file_get_contents($url)
     if( testCurl() ) {
         $ch = curl_init() ;
         curl_setopt($ch, CURLOPT_URL, $url) ;
-        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' OSClass (v.' . osc_version() . ')') ;
+        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')') ;
         if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1) ;
         @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_REFERER, osc_base_url());
@@ -1166,28 +1167,28 @@ function osc_change_permissions( $dir = ABS_PATH ) {
                 if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
                     if(!is_writable(str_replace("//", "/", $dir . "/" . $file))) {
                         $res = @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
+                        if(!$res) { return false; };
                     }
-                    if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
                     if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/themes")) {
                         if($file=="modern" || $file=="index.php") {
                             $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                            if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
+                            if(!$res) { return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/plugins")) {
                         if($file=="google_maps" || $file=="google_analytics" || $file=="index.php") {
                             $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                            if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
+                            if(!$res) { return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/languages")) {
                         if($file=="en_US" || $file=="index.php") {
                             $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                            if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
+                            if(!$res) { return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/downloads")) {
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/uploads")) {
                     } else {
                         $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                        if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
+                        if(!$res) { return false; };
                     }
                 } else {
                     if(!is_writable(str_replace("//", "/", $dir . "/" . $file))) {
@@ -1282,7 +1283,7 @@ function _get_market_url($type, $update_uri) {
 
     if(in_array($type, array('plugins', 'themes', 'languages') ) ) {
         $uri = '';
-        if(stripos("http://", $update_uri)===FALSE ) {
+        if(stripos($update_uri, "http://")===FALSE ) {
             // OSCLASS OFFICIAL REPOSITORY
             $uri = osc_market_url($type, $update_uri);
         } else {
@@ -1406,170 +1407,70 @@ function get_ip() {
     return $_SERVER['REMOTE_ADDR'];
 }
 
-// iBrowser -> tinymce language
-function osc_tinymce_ibrowser_language() {
-?>
-<script>
 
-</script>
-<?php
+/***********************
+ * CSRFGUARD functions *
+ ***********************/
+function osc_csrfguard_generate_token($unique_form_name) {
+    if(function_exists("hash_algos") and in_array("sha512",hash_algos())) {
+        $token = hash("sha512",mt_rand(0,mt_getrandmax()));
+    } else {
+        $token = '';
+        for ($i=0;$i<128;++$i) {
+            $r=mt_rand(0,35);
+            if($r<26) {
+                $c=chr(ord('a')+$r);
+            } else {
+                $c=chr(ord('0')+$r-26);
+            }
+            $token.=$c;
+        }
+    }
+    Session::newInstance()->_set($unique_form_name, $token);
+    Session::newInstance()->_set("lf_".$unique_form_name, time());
+    return $token;
 }
-/*
-//<script>
-//    tinyMCE.addI18n({en:{
-//        common:{
-//            edit_confirm:"<?php _e('Do you want to use the WYSIWYG mode for this textarea?'); ?>",
-//            apply:"<?php _e('Apply'); ?>",
-//            insert:"<?php _e('Insert'); ?>",
-//            update:"<?php _e('Update'); ?>",
-//            cancel:"<?php _e('Cancel'); ?>",
-//            close:"<?php _e('Close'); ?>",
-//            browse:"<?php _e('Browse'); ?>",
-//            class_name:"Class",
-//            not_set:"<?php _e('-- Not set --'); ?>",
-//            clipboard_msg:"<?php _e('Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?'); ?>",
-//            clipboard_no_support:"<?php _e('Currently not supported by your browser, use keyboard shortcuts instead.'); ?>",
-//            popup_blocked:"<?php _e('Sorry, but we have noticed that your popup-blocker has disabled a window that provides application functionality. You will need to disable popup blocking on this site in order to fully utilize this tool.'); ?>",
-//            invalid_data:"<?php _e('Error: Invalid values entered, these are marked in red.'); ?>",
-//            more_colors:"<?php _e('More colors'); ?>"
-//        },
-//        contextmenu:{
-//            align:"<?php _e('Alignment'); ?>",
-//            left:"<?php _e('Left'); ?>",
-//            center:"<?php _e('Center'); ?>",
-//            right:"<?php _e('Right'); ?>",
-//            full:"<?php _e('Full'); ?>"
-//        },
-//        insertdatetime:{
-//            date_fmt:"%Y-%m-%d",
-//            time_fmt:"%H:%M:%S",
-//            insertdate_desc:"<?php _e('Insert date'); ?>",
-//            inserttime_desc:"<?php _e('Insert time'); ?>",
-//            months_long:"<?php _e('January,February,March,April,May,June,July,August,September,October,November,December'); ?>",
-//            months_short:"<?php _e('Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'); ?>",
-//            day_long:"<?php _e('Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday'); ?>",
-//            day_short:"<?php _e('Sun,Mon,Tue,Wed,Thu,Fri,Sat,Sun'); ?>"
-//        },
-//        print:{
-//            print_desc:"<?php _e('Print'); ?>"
-//        },
-//        preview:{
-//            preview_desc:"<?php _e('Preview'); ?>"
-//        },
-//        directionality:{
-//            ltr_desc:"<?php _e('Direction left to right'); ?>",
-//            rtl_desc:"<?php _e('Direction right to left'); ?>"
-//        },
-//        layer:{
-//            insertlayer_desc:"<?php _e('Insert new layer'); ?>",
-//            forward_desc:"<?php _e('Move forward'); ?>",
-//            backward_desc:"<?php _e('Move backward'); ?>",
-//            absolute_desc:"<?php _e('Toggle absolute positioning'); ?>",
-//            content:"<?php _e('New layer...'); ?>"
-//        },
-//        save:{
-//            save_desc:"<?php _e('Save'); ?>",
-//            cancel_desc:"<?php _e('Cancel all changes'); ?>"
-//        },
-//        nonbreaking:{
-//            nonbreaking_desc:"<?php _e('Insert non-breaking space character'); ?>"
-//        },
-//        iespell:{
-//            iespell_desc:"<?php _e('Run spell checking'); ?>",
-//            download:"<?php _e('ieSpell not detected. Do you want to install it now?'); ?>"
-//        },
-//        advhr:{
-//            advhr_desc:"<?php _e('Horizontal rule'); ?>"
-//        },
-//        emotions:{
-//            emotions_desc:"<?php _e('Emotions'); ?>"
-//        },
-//        searchreplace:{
-//            search_desc:"<?php _e('Find'); ?>",
-//            replace_desc:"<?php _e('Find/Replace'); ?>"
-//        },
-//        advimage:{
-//            image_desc:"<?php _e('Insert/edit image'); ?>"
-//        },
-//        advlink:{
-//            link_desc:"<?php _e('Insert/edit link'); ?>"
-//        },
-//        xhtmlxtras:{
-//            cite_desc:"<?php _e('Citation'); ?>",
-//            abbr_desc:"<?php _e('Abbreviation'); ?>",
-//            acronym_desc:"<?php _e('Acronym'); ?>",
-//            del_desc:"<?php _e('Deletion'); ?>",
-//            ins_desc:"<?php _e('Insertion'); ?>",
-//            attribs_desc:"<?php _e('Insert/Edit Attributes'); ?>"
-//        },
-//        style:{
-//            desc:"<?php _e('Edit CSS Style'); ?>"
-//        },
-//        paste:{
-//            paste_text_desc:"<?php _e('Paste as Plain Text'); ?>",
-//            paste_word_desc:"<?php _e('Paste from Word'); ?>",
-//            selectall_desc:"<?php _e('Select All'); ?>"
-//        },
-//        paste_dlg:{
-//            text_title:"<?php _e('Use CTRL+V on your keyboard to paste the text into the window.'); ?>",
-//            text_linebreaks:"<?php _e('Keep linebreaks'); ?>",
-//            word_title:"<?php _e('Use CTRL+V on your keyboard to paste the text into the window.'); ?>"
-//        },
-//        table:{
-//            desc:"<?php _e('Inserts a new table'); ?>",
-//            row_before_desc:"<?php _e('Insert row before'); ?>",
-//            row_after_desc:"<?php _e('Insert row after'); ?>",
-//            delete_row_desc:"<?php _e('Delete row'); ?>",
-//            col_before_desc:"<?php _e('Insert column before'); ?>",
-//            col_after_desc:"<?php _e('Insert column after'); ?>",
-//            delete_col_desc:"<?php _e('Remove column'); ?>",
-//            split_cells_desc:"<?php _e('Split merged table cells'); ?>",
-//            merge_cells_desc:"<?php _e('Merge table cells'); ?>",
-//            row_desc:"<?php _e('Table row properties'); ?>",
-//            cell_desc:"<?php _e('Table cell properties'); ?>",
-//            props_desc:"<?php _e('Table properties'); ?>",
-//            paste_row_before_desc:"<?php _e('Paste table row before'); ?>",
-//            paste_row_after_desc:"<?php _e('Paste table row after'); ?>",
-//            cut_row_desc:"<?php _e('Cut table row'); ?>",
-//            copy_row_desc:"<?php _e('Copy table row'); ?>",
-//            del:"<?php _e('Delete table'); ?>",
-//            row:"<?php _e('Row'); ?>",
-//            col:"<?php _e('Column'); ?>",
-//            cell:"<?php _e('Cell'); ?>"
-//        },
-//        autosave:{
-//            unload_msg:"<?php _e('The changes you made will be lost if you navigate away from this page.'); ?>"
-//        },
-//        fullscreen:{
-//            desc:"<?php _e('Toggle fullscreen mode'); ?>"
-//        },
-//        media:{
-//            desc:"<?php _e('Insert / edit embedded media'); ?>",
-//            edit:"<?php _e('Edit embedded media'); ?>"
-//        },
-//        fullpage:{
-//            desc:"<?php _e('Document properties'); ?>"
-//        },
-//        template:{
-//            desc:"<?php _e('Insert predefined template content'); ?>"
-//        },
-//        visualchars:{
-//            desc:"<?php _e('Visual control characters on/off.'); ?>"
-//        },
-//        spellchecker:{
-//            desc:"<?php _e('Toggle spellchecker'); ?>",
-//            menu:"<?php _e('Spellchecker settings'); ?>",
-//            ignore_word:"<?php _e('Ignore word'); ?>",
-//            ignore_words:"<?php _e('Ignore all'); ?>",
-//            langs:"<?php _e('Languages'); ?>",
-//            wait:"<?php _e('Please wait...'); ?>",
-//            sug:"<?php _e('Suggestions'); ?>",
-//            no_sug:"<?php _e('No suggestions'); ?>",
-//            no_mpell:"<?php _e('No misspellings found.'); ?>"
-//        },
-//        pagebreak:{
-//            desc:"<?php _e('Insert page break.'); ?>"
-//        }}});
-//    </script>
-*/
+
+
+function osc_csrfguard_validate_token($unique_form_name, $token_value, $drop = true) {
+    $token = Session::newInstance()->_get($unique_form_name);
+    if($token===$token_value) {
+        $result = true;
+    } else {
+        $result = false;
+    }
+    // Ajax request should not drop the token for 1 hour, yeah it's not the most secure thing out there,
+    if($drop || ((int)Session::newInstance()->_get("lf_".$unique_form_name)-time())>(3600)) {
+        Session::newInstance()->_drop($unique_form_name);
+        Session::newInstance()->_drop("lf_".$unique_form_name);
+    }
+    return $result;
+}
+
+
+function osc_csrfguard_replace_forms($form_data_html) {
+    $count = preg_match_all("/<form(.*?)>(.*?)<\\/form>/is", $form_data_html, $matches, PREG_SET_ORDER);
+    if(is_array($matches)) {
+        foreach ($matches as $m) {
+            if (strpos($m[1],"nocsrf")!==false) { continue; }
+            $form_data_html=str_replace($m[0], "<form{$m[1]}>".osc_csrf_token_form()."{$m[2]}</form>", $form_data_html);
+        }
+    }
+    return $form_data_html;
+}
+
+
+function osc_csrfguard_inject() {
+    global $mtime;
+    $data = ob_get_clean();
+    $data = osc_csrfguard_replace_forms($data);
+    echo $data;
+}
+
+
+function osc_csrfguard_start() {
+    ob_start();
+    register_shutdown_function('osc_csrfguard_inject');
+}
+
 ?>

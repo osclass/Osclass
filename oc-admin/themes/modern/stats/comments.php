@@ -1,8 +1,8 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -69,7 +69,7 @@
             // Set a callback to run when the Google Visualization API is loaded.
             google.setOnLoadCallback(drawChart);
 
-            // Callback that creates and populates a data table, 
+            // Callback that creates and populates a data table,
             // instantiates the pie chart, passes in the data and
             // draws it.
             function drawChart() {
@@ -177,7 +177,7 @@
                         </thead>
                         <tbody>
                         <?php foreach($latest_comments as $c) { ?>
-                        <tr>    
+                        <tr>
                             <td><a href="<?php echo osc_admin_base_url(true); ?>?page=comments&amp;action=comment_edit&amp;id=<?php echo $c['pk_i_id']; ?>"><?php echo $c['pk_i_id']; ?></a></td>
                             <td><a href="<?php echo osc_admin_base_url(true); ?>?page=comments&amp;action=comment_edit&amp;id=<?php echo $c['pk_i_id']; ?>"><?php echo $c['s_title']; ?></a></td>
                             <td><a href="<?php echo osc_admin_base_url(true); ?>?page=comments&amp;action=comment_edit&amp;id=<?php echo $c['pk_i_id']; ?>"><?php echo $c['s_author_name'] . " - " . $c['s_author_email']; ?></a></td>
@@ -189,8 +189,8 @@
                     <?php } else { ?>
                         <p><?php _e("There're no statistics yet") ; ?></p>
                     <?php } ?>
-                        
-                    
+
+
                 </div>
             </div>
         </div>

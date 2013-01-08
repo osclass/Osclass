@@ -1,9 +1,9 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -31,13 +31,12 @@
             //specific things for this class
             switch ($this->action) {
                 case('plugins'):
-                    $this->doView("market/plugins.php");
-                break;
                 case('themes'):
-                    $this->doView("market/themes.php");
+                case('languages'):
+                    $this->doView("market/section.php");
                 break;
                 default:
-                    $this->doView("market/plugins.php");
+                    $this->doView("market/index.php");
                 break;
             }
         }

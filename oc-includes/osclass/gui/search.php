@@ -1,9 +1,9 @@
 <?php
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -61,7 +61,6 @@
                     $('li.parent').each(function() {
                         var totalInputSub = $(this).find('ul.sub>li>input').size();
                         var totalInputSubChecked = $(this).find('ul.sub>li>input:checked').size();
-
                         $(this).find('ul.sub>li>input').each(function(){
                             $(this).hide();
                             var id = $(this).attr('id');
@@ -81,11 +80,11 @@
                         id = id+'_';
                         if(totalInputSub == totalInputSubChecked) {
                             if(totalInputSub == 0) {
-                                if( $(this).find("input[name='sCategory[]']:checked").size() > 0) {    
-                                    var aux = $('<div class="chbx checked"><span></span></div>').attr('id', id);   
+                                if( $(this).find("input[name='sCategory[]']:checked").size() > 0) {
+                                    var aux = $('<div class="chbx checked"><span></span></div>').attr('id', id);
                                     $(input).before(aux);
                                 } else {
-                                    var aux = $('<div class="chbx"><span></span></div>').attr('id', id);   
+                                    var aux = $('<div class="chbx"><span></span></div>').attr('id', id);
                                     $(input).before(aux);
                                 }
                             } else {
@@ -98,14 +97,14 @@
                             $(input).before(aux);
                         }else if(totalInputSubChecked < totalInputSub) {
                             var aux = $('<div class="chbx semi-checked"><span></span></div>').attr('id', id);
-                            $(input).before();
+                            $(input).before(aux);
                         }
                     });
 
                     $('li.parent').prepend('<span style="width:6px;display:inline-block;" class="toggle">+</span>');
                     $('ul.sub').toggle();
 
-                    $('span.toggle').click(function(){ 
+                    $('span.toggle').click(function(){
                         $(this).parent().find('ul.sub').toggle();
                         if($(this).text()=='+'){
                             $(this).html('-');
@@ -152,7 +151,7 @@
                         } else {
                             // is subcategory checkbox or is category parent without subcategories
                             var parentLi = $(this).closest('li.parent');
-                            
+
                             // subcategory
                             if($(parentLi).find('ul.sub').size() > 0) {
                                 var totalInputSub           = $(parentLi).find('ul.sub>li>input').size();
@@ -165,16 +164,16 @@
                                 $(divInput).removeClass('checked');
                                 $(divInput).removeClass('semi-checked');
 
-                                if(totalInputSub == totalInputSubChecked) {    
+                                if(totalInputSub == totalInputSubChecked) {
                                     $(divInput).addClass('checked');
                                     $(input).attr('checked', true);
                                 }else if(totalInputSubChecked == 0) {
                                     // no input checked;
                                 }else if(totalInputSubChecked < totalInputSub) {
                                     $(divInput).addClass('semi-checked');
-                                }   
+                                }
                             } else {
-                                // parent category 
+                                // parent category
                             }
                         }
                     });
@@ -231,7 +230,7 @@
             </div>
             <div id="sidebar">
                 <div class="filters">
-                    <form action="<?php echo osc_base_url(true); ?>" method="get" onsubmit="return doSearch()">
+                    <form action="<?php echo osc_base_url(true); ?>" method="get" onsubmit="return doSearch()" class="nocsrf">
                         <input type="hidden" name="page" value="search" />
                         <input type="hidden" name="sOrder" value="<?php echo osc_search_order(); ?>" />
                         <input type="hidden" name="iOrderType" value="<?php $allowedTypesForSorting = Search::getAllowedTypesForSorting() ; echo $allowedTypesForSorting[osc_search_order_type()]; ?>" />
@@ -248,6 +247,7 @@
                             <div class="row one_input">
                                 <h6><?php _e('City', 'modern'); ?></h6>
                                 <input type="text" id="sCity" name="sCity" value="<?php echo osc_esc_html( osc_search_city() ); ?>" />
+                                <input type="hidden" id="sRegion" name="sRegion" value="" />
                             </div>
                         </fieldset>
 
@@ -321,6 +321,7 @@
                         source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location",
                         minLength: 2,
                         select: function( event, ui ) {
+                            $("#sRegion").attr("value", ui.item.region);
                             log( ui.item ?
                                 "<?php _e('Selected', 'modern'); ?>: " + ui.item.value + " aka " + ui.item.id :
                                 "<?php _e('Nothing selected, input was', 'modern'); ?> " + this.value );

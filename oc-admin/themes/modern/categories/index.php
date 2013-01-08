@@ -1,8 +1,8 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -93,12 +93,12 @@
                     toleranceElement: '> div',
                     create: function(event, ui) {
                     },
-                    start: function(event, ui) { 
+                    start: function(event, ui) {
                         list_original = $('.sortable').nestedSortable('serialize') ;
                         $(ui.helper).addClass('footest');
                         $(ui.helper).prepend('<div style="opacity: 1 !important; padding:5px;" class="alert-custom"><?php echo osc_esc_js(__('Note: You must expand the category in order to make it a subcategory.')); ?></div>');
                     },
-                    stop: function(event, ui) { 
+                    stop: function(event, ui) {
                         var list = '' ;
                         list = $('.sortable').nestedSortable('serialize') ;
                         var array_list = $('.sortable').nestedSortable('toArray') ;
@@ -336,7 +336,7 @@ function drawCategory($category,$isSubcategory = false){
         <div class="actions-cat">
             <a onclick="show_iframe('content_list_<?php echo $category['pk_i_id'];?>','<?php echo $category['pk_i_id'] ; ?>');"><?php _e('Edit') ; ?></a>
             &middot;
-            <a class="enable" onclick="enable_cat('<?php echo $category['pk_i_id']; ?>')"><?php $category['b_enabled'] == 1 ? _e('Disable') : _e('Enable'); ?></a> 
+            <a class="enable" onclick="enable_cat('<?php echo $category['pk_i_id']; ?>')"><?php $category['b_enabled'] == 1 ? _e('Disable') : _e('Enable'); ?></a>
             &middot;
             <a onclick="delete_category(<?php echo $category['pk_i_id']; ?>)"><?php _e('Delete') ; ?></a>
         </div>

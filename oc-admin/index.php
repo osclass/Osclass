@@ -1,9 +1,9 @@
 <?php
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -32,7 +32,6 @@
     osc_register_script('admin-osc', osc_current_admin_theme_js_url('osc.js'));
     osc_register_script('admin-ui-osc', osc_current_admin_theme_js_url('ui-osc.js'), 'jquery');
     osc_register_script('admin-location', osc_current_admin_theme_js_url('location.js'), 'jquery');
-    osc_register_script('admin-listing-form', osc_current_admin_theme_js_url('listing_form.js'), 'jquery');
 
     // enqueue scripts
     osc_enqueue_script('jquery');

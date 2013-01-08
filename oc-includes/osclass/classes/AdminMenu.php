@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -24,9 +24,9 @@
      * AdminMenu class
      *
      * @since 3.0
-     * @package OSClass
+     * @package Osclass
      * @subpackage classes
-     * @author OSClass
+     * @author Osclass
      */
     class AdminMenu
     {
@@ -63,6 +63,10 @@
 
             $this->add_menu( __('Categories'), osc_admin_base_url(true) .'?page=categories', 'categories', 'administrator') ;
 
+            $this->add_menu( __('Market'), osc_admin_base_url(true) .'?page=market', 'market', 'administrator') ;
+            $this->add_submenu( 'market', __('Themes'), osc_admin_base_url(true) .'?page=market&action=themes', 'market_view_themes', 'administrator') ;
+            $this->add_submenu( 'market', __('Plugins'), osc_admin_base_url(true).'?page=market&action=plugins', 'market_view_plugins', 'administrator') ;
+
             $this->add_menu( __('Appearance'), osc_admin_base_url(true) .'?page=appearance', 'appearance', 'administrator') ;
             $this->add_submenu( 'appearance', __('Manage themes'), osc_admin_base_url(true) .'?page=appearance', 'appearance_manage', 'administrator') ;
             $this->add_submenu( 'appearance', __('Market'), osc_admin_base_url(true).'?page=market&action=themes', 'appearance_market', 'administrator') ;
@@ -95,7 +99,7 @@
 
             $this->add_menu( __('Users'), osc_admin_base_url(true) .'?page=users', 'users', 'moderator') ;
             $this->add_submenu( 'users', __('Users'), osc_admin_base_url(true) .'?page=users', 'users_manage', 'administrator') ;
-            $this->add_submenu( 'users', __('User settings'), osc_admin_base_url(true) .'?page=users&action=settings', 'users_settings', 'administrator') ;
+            $this->add_submenu( 'users', __('User Settings'), osc_admin_base_url(true) .'?page=users&action=settings', 'users_settings', 'administrator') ;
             $this->add_submenu( 'users', __('Administrators'), osc_admin_base_url(true) .'?page=admins', 'users_administrators_manage', 'administrator') ;
             $this->add_submenu( 'users', __('Your Profile'), osc_admin_base_url(true) .'?page=admins&action=edit', 'users_administrators_profile', 'moderator') ;
             $this->add_submenu( 'users', __('Alerts'), osc_admin_base_url(true) .'?page=users&action=alerts', 'users_alerts', 'moderator') ;
@@ -103,7 +107,7 @@
             $this->add_menu( __('Tools'), osc_admin_base_url(true) .'?page=tools&action=import', 'tools', 'administrator') ;
             $this->add_submenu( 'tools', __('Import data'), osc_admin_base_url(true) .'?page=tools&action=import', 'tools_import', 'administrator') ;
             $this->add_submenu( 'tools', __('Backup data'), osc_admin_base_url(true) .'?page=tools&action=backup', 'tools_backup', 'administrator') ;
-            $this->add_submenu( 'tools', __('Upgrade OSClass'), osc_admin_base_url(true) .'?page=tools&action=upgrade', 'tools_upgrade', 'administrator') ;
+            $this->add_submenu( 'tools', __('Upgrade Osclass'), osc_admin_base_url(true) .'?page=tools&action=upgrade', 'tools_upgrade', 'administrator') ;
             $this->add_submenu( 'tools', __('Location stats'), osc_admin_base_url(true) .'?page=tools&action=locations', 'tools_location', 'administrator') ;
             $this->add_submenu( 'tools', __('Category stats'), osc_admin_base_url(true) .'?page=tools&action=category', 'tools_category', 'administrator') ;
             $this->add_submenu( 'tools', __('Maintenance mode'), osc_admin_base_url(true) .'?page=tools&action=maintenance', 'tools_maintenance', 'administrator') ;
@@ -150,17 +154,15 @@
          * @param type $url
          * @param type $id_submenu
          * @param type $capability
-         * @param type $icon_url
          */
-        public function add_submenu( $menu_id, $submenu_title, $url, $submenu_id, $capability = null, $icon_url = null )
+        public function add_submenu( $menu_id, $submenu_title, $url, $submenu_id, $capability = null)
         {
             $array = array(
                 $submenu_title,
                 $url,
                 $submenu_id,
                 $menu_id,
-                $capability,
-                $icon_url
+                $capability
             );
             $this->aMenu[$menu_id]['sub'][$submenu_id] = $array;
         }
@@ -174,6 +176,38 @@
         public function remove_submenu( $menu_id, $submenu_id )
         {
             unset( $this->aMenu[$menu_id]['sub'][$submenu_id] ) ;
+        }
+
+        /**
+         * Add submenu under menu id $menu_id
+         *
+         * @param type $menu_id
+         * @param type $submenu_title
+         * @param type $id_submenu
+         * @param type $capability
+         * @since 3.1
+         */
+        public function add_submenu_divider( $menu_id, $submenu_title, $submenu_id, $capability = null)
+        {
+            $array = array(
+                $submenu_title,
+                "divider_" . $submenu_id,
+                $menu_id,
+                $capability
+            );
+            $this->aMenu[$menu_id]['sub']["divider_" . $submenu_id] = $array;
+        }
+
+        /**
+         * Remove submenu with id $id_submenu under menu id $id_menu
+         *
+         * @param type $id_menu
+         * @param type $id_submenu
+         * @since 3.1
+         */
+        public function remove_submenu_divider( $menu_id, $submenu_id )
+        {
+            unset( $this->aMenu[$menu_id]['sub']["divider_" . $submenu_id] ) ;
         }
 
         /**

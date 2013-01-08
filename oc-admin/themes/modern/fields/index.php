@@ -1,8 +1,8 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -41,7 +41,7 @@ function customHead() { ?>
     function show_iframe(class_name, id) {
         if($('.content_list_'+id+' .custom-field-frame').length == 0){
             $('.custom-field-frame').remove();
-            var name = 'frame_'+ id ; 
+            var name = 'frame_'+ id ;
             var id_  = 'frame_'+ id ;
             var url  = '<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=field_categories_iframe&id=' + id ;
             $.ajax({
@@ -97,16 +97,16 @@ function customHead() { ?>
                 success: function(res){
                     var ret = eval( "(" + res + ")");
                     var message = "";
-                    if(ret.error) { 
-                        message += ret.error; 
+                    if(ret.error) {
+                        message += ret.error;
                     }
                     if(ret.ok){
                         message += ret.ok;
-                        
+
                         $('#list_'+id).fadeOut("slow");
                         $('#list_'+id).remove();
                     }
-                    
+
                     $(".jsMessage").css('display', 'block') ;
                     $(".jsMessage p").html(message) ;
                 },

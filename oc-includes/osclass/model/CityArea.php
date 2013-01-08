@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -23,7 +23,7 @@
     /**
      * Model database for CityArea table
      *
-     * @package OSClass
+     * @package Osclass
      * @subpackage Model
      * @since unknown
      */
@@ -115,6 +115,25 @@
 
             return $result->result();
         }
+
+        /**
+         *  Delete a city area
+         *
+         *  @access public
+         *  @since 3.1
+         *  @param $pk
+         *  @return int number of failed deletions or 0 in case of none
+         */
+        function deleteByPrimaryKey($pk) {
+            Item::newInstance()->deleteByCityArea($pk);
+            User::newInstance()->update(array('fk_i_city_area_id' => null, 's_city_area' => ''), array('fk_i_city_area_id' => $pk));
+            if(!$this->delete(array('pk_i_id' => $pk))) {
+                return 1;
+            }
+            return 0;
+        }
+
+
     }
 
     /* file end: ./oc-includes/osclass/model/CityArea.php */

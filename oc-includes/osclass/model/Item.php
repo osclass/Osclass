@@ -1,10 +1,10 @@
 <?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -23,7 +23,7 @@
     /**
      * Model database for Item table
      *
-     * @package OSClass
+     * @package Osclass
      * @subpackage Model
      * @since unknown
      */
@@ -674,6 +674,28 @@
 
             $res = parent::deleteByPrimaryKey($id);
             return $res ;
+        }
+
+        /**
+         * Delete by city area
+         *
+         * @access public
+         * @since 3.1
+         * @param int $cityAreaId city area id
+         * @return bool
+         */
+        public function deleteByCityArea($cityAreaId)
+        {
+            $this->dao->select('fk_i_item_id');
+            $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
+            $this->dao->where('fk_i_city__area_id', $cityAreaId) ;
+            $result = $this->dao->get() ;
+            $items  = $result->result() ;
+            $arows = 0;
+            foreach($items as $i) {
+                $arows += $this->deleteByPrimaryKey($i['fk_i_item_id']);
+            }
+            return $arows;
         }
 
         /**

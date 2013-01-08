@@ -1,8 +1,8 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -240,7 +240,7 @@
     <div class="grid-row grid-first-row grid-50">
         <div class="row-wrapper">
             <div class="widget-box  widget-box-project">
-                <div class="widget-box-title"><h3><?php _e('OSClass'); ?></h3></div>
+                <div class="widget-box-title"><h3><?php _e('Osclass'); ?></h3></div>
                 <div class="widget-box-content widget-box-content-no-wrapp">
                     <h4 class="first-title"><?php _e('Newsletter'); ?></h4>
                     <form name="subscribe_form" action="http://osclass.org/" method="post" class="dash-widget-form">
@@ -266,14 +266,14 @@
                         <input type="hidden" name="cmd" value="_donations">
                         <input type="hidden" name="rm" value="2">
                         <input type="hidden" name="business" value="info@osclass.org">
-                        <input type="hidden" name="item_name" value="OSClass project">
+                        <input type="hidden" name="item_name" value="Osclass project">
                         <input type="hidden" name="return" value="http://osclass.org/paypal/">
                         <input type="hidden" name="currency_code" value="USD">
                         <input type="hidden" name="lc" value="US" />
                         <input type="hidden" name="custom" value="<?php echo osc_admin_base_url(); ?>?donation=successful&source=dashboard">
                         <fieldset>
                             <div class="form">
-                                <p><?php _e('OSClass is a free, open-source project, sustained by the community. Money received from donations will be used to further development and improve the project.'); ?></p>
+                                <p><?php _e('Osclass is a free, open-source project, sustained by the community. Money received from donations will be used to further development and improve the project.'); ?></p>
                                 <div class="form-row">
                                     <div class="form-controls">
                                         <select name="amount" class="select-box-medium">
@@ -311,7 +311,7 @@
                         <?php } ?>
                         </ul>
                     <?php } else { ?>
-                        <?php _e('Unable to fetch news from OSClass. Please try again later') ; ?>
+                        <?php _e('Unable to fetch news from Osclass. Please try again later') ; ?>
                     <?php } ?>
                     <h4><?php _e('Twitter'); ?></h4>
                     <?php if( is_array($twitterRSS) ) { ?>

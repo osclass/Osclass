@@ -1,8 +1,8 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -278,7 +278,7 @@
                                 <div class="help-box"><img width="100px" src="<?php echo osc_base_url()."oc-content/uploads/watermark.png" ?>" /></div>
                             <?php }; ?>
                             <div class="help-box"><?php _e("It has to be a .PNG image") ; ?></div>
-                            <div class="help-box"><?php _e("OSClass doesn't check the watermark image size") ; ?></div>
+                            <div class="help-box"><?php _e("Osclass doesn't check the watermark image size") ; ?></div>
                         </div>
                     </div>
                     <div class="form-row">
@@ -297,7 +297,7 @@
                 <h2 class="render-title"><?php _e('Regenerate images') ; ?></h2>
                 <div class="form-row">
                     <div class="form-controls">
-                    <p>    
+                    <p>
                         <?php _e("You can regenerate different image dimensions. If you have changed the dimension of thumbnails, preview or normal images, you might want to regenerate your images.") ; ?>
                     </p>
                     <a class="btn" href="<?php echo osc_admin_base_url(true) . '?page=settings&action=images_post'; ?>"><?php  _e('Regenerate') ; ?></a>
@@ -324,4 +324,4 @@
         </div>
     </div>
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>                
+<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

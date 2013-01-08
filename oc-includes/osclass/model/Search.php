@@ -1,10 +1,10 @@
 <?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -362,12 +362,7 @@
                         if(is_numeric($c)) {
                             $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $c);
                         } else {
-                            $_city_area = CityArea::newInstance()->findByName($c) ;
-                            if( !empty($_city_area) ) {
-                                $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $_city_area['pk_i_id']);
-                            } else {
-                                $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%%%s%%' ", DB_TABLE_PREFIX, $c);
-                            }
+                            $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%%%s%%' ", DB_TABLE_PREFIX, $c);
                         }
                     }
                 }
@@ -377,13 +372,7 @@
                     if(is_numeric($city_area)) {
                         $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $city_area);
                     } else {
-                        echo "debug";
-                        $_city_area = CityArea::newInstance()->findByName($city_area) ;
-                        if( !empty($_city_area) ) {
-                            $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $_city_area['pk_i_id']);
-                        } else {
-                            $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%%%s%%' ", DB_TABLE_PREFIX, $city_area);
-                        }
+                        $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%%%s%%' ", DB_TABLE_PREFIX, $city_area);
                     }
                 }
             }
@@ -405,12 +394,7 @@
                         if(is_numeric($c)) {
                             $this->cities[] = sprintf("%st_item_location.fk_i_city_id = %d ", DB_TABLE_PREFIX, $c);
                         } else {
-                            $_city = City::newInstance()->findByName($c) ;
-                            if( !empty($_city) ) {
-                                $this->cities[] = sprintf("%st_item_location.fk_i_city_id = %d ", DB_TABLE_PREFIX, $_city);
-                            } else {
-                                $this->cities[] = sprintf("%st_item_location.s_city LIKE '%%%s%%' ", DB_TABLE_PREFIX, $c);
-                            }
+                            $this->cities[] = sprintf("%st_item_location.s_city LIKE '%%%s%%' ", DB_TABLE_PREFIX, $c);
                         }
                     }
                 }
@@ -420,12 +404,7 @@
                     if(is_numeric($city)) {
                         $this->cities[] = sprintf("%st_item_location.fk_i_city_id = %d ", DB_TABLE_PREFIX, $city);
                     } else {
-                        $_city = City::newInstance()->findByName($city) ;
-                        if( !empty($_city) ) {
-                            $this->cities[] = sprintf("%st_item_location.fk_i_city_id = %d ", DB_TABLE_PREFIX, $_city['pk_i_id']);
-                        } else {
-                            $this->cities[] = sprintf("%st_item_location.s_city LIKE '%%%s%%' ", DB_TABLE_PREFIX, $city);
-                        }
+                        $this->cities[] = sprintf("%st_item_location.s_city LIKE '%%%s%%' ", DB_TABLE_PREFIX, $city);
                     }
                 }
             }
@@ -447,12 +426,7 @@
                         if(is_numeric($r)) {
                             $this->regions[] = sprintf("%st_item_location.fk_i_region_id = %d ", DB_TABLE_PREFIX, $r);
                         } else {
-                            $_region = Region::newInstance()->findByName($r) ;
-                            if( !empty($_region) ) {
-                                $this->regions[] = sprintf("%st_item_location.fk_i_region_id = %d ", DB_TABLE_PREFIX, $_region['pk_i_id']);
-                            } else {
-                                $this->regions[] = sprintf("%st_item_location.s_region LIKE '%%%s%%' ", DB_TABLE_PREFIX, $r);
-                            }
+                            $this->regions[] = sprintf("%st_item_location.s_region LIKE '%%%s%%' ", DB_TABLE_PREFIX, $r);
                         }
                     }
                 }
@@ -462,12 +436,7 @@
                     if(is_numeric($region)) {
                         $this->regions[] = sprintf("%st_item_location.fk_i_region_id = %d ", DB_TABLE_PREFIX, $region);
                     } else {
-                        $_region = Region::newInstance()->findByName($region) ;
-                        if( !empty($_region) ) {
-                            $this->regions[] = sprintf("%st_item_location.fk_i_region_id = %d ", DB_TABLE_PREFIX, $_region['pk_i_id']);
-                        } else {
-                            $this->regions[] = sprintf("%st_item_location.s_region LIKE '%%%s%%' ", DB_TABLE_PREFIX, $region);
-                        }
+                        $this->regions[] = sprintf("%st_item_location.s_region LIKE '%%%s%%' ", DB_TABLE_PREFIX, $region);
                     }
                 }
             }
@@ -489,12 +458,7 @@
                         if(strlen($c)==2) {
                             $this->countries[] = sprintf("%st_item_location.fk_c_country_code = '%s' ", DB_TABLE_PREFIX, strtolower($c));
                         } else {
-                            $_country = Country::newInstance()->findByName($c) ;
-                            if( !empty($_country) ) {
-                                $this->countries[] = sprintf("%st_item_location.fk_c_country_code = '%s' ", DB_TABLE_PREFIX, strtolower($_country['pk_c_code']));
-                            } else {
-                                $this->countries[] = sprintf("%st_item_location.s_country LIKE '%%%s%%' ", DB_TABLE_PREFIX, $c);
-                            }
+                            $this->countries[] = sprintf("%st_item_location.s_country LIKE '%%%s%%' ", DB_TABLE_PREFIX, $c);
                         }
                     }
                 }
@@ -504,12 +468,7 @@
                     if(strlen($country)==2) {
                         $this->countries[] = sprintf("%st_item_location.fk_c_country_code = '%s' ", DB_TABLE_PREFIX, strtolower($country));
                     } else {
-                        $_country = Country::newInstance()->findByName($country) ;
-                        if( !empty($_country) ) {
-                            $this->countries[] = sprintf("%st_item_location.fk_c_country_code = '%s' ", DB_TABLE_PREFIX, strtolower($_country['pk_c_code']));
-                        } else {
-                            $this->countries[] = sprintf("%st_item_location.s_country LIKE '%%%s%%' ", DB_TABLE_PREFIX, $country);
-                        }
+                        $this->countries[] = sprintf("%st_item_location.s_country LIKE '%%%s%%' ", DB_TABLE_PREFIX, $country);
                     }
                 }
             }
@@ -1188,7 +1147,11 @@
             }
 
             $result = $this->dao->get();
-            return $result->result();
+            if($result) {
+                return $result->result();
+            } else {
+                return array();
+            }
         }
 
         /**
@@ -1260,7 +1223,7 @@
                 } else if(preg_match("/$item_location_id\s*=\s*$item_id/", $condition, $matches_1)      || preg_match("/$item_id\s*=\s*$item_location_id/", $condition, $matches_2)) {
                 } else if(preg_match("/$item_id\s*=\s*$item_resource_id/", $condition, $matches_1)      || preg_match("/$item_resource_id\s*=\s*$item_id/", $condition, $matches_2)) {
                     // nothing to do, catch table
-                } else if(preg_match_all('/(oc_t_item\.fk_i_category_id = (\d*))/', $condition, $matches) ) {
+                } else if(preg_match_all('/('.DB_TABLE_PREFIX.'t_item\.fk_i_category_id = (\d*))/', $condition, $matches) ) {
                     $aData['aCategories'] = $matches[2];
                 } else {
                     $aData['no_catched_conditions'][] = $condition;

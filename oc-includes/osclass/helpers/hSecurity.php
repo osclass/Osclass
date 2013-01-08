@@ -1,10 +1,10 @@
 <?php
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -23,9 +23,9 @@
 
     /**
     * Helper Security
-    * @package OSClass
+    * @package Osclass
     * @subpackage Helpers
-    * @author OSClass
+    * @author Osclass
     */
 
     /**
@@ -42,6 +42,31 @@
             $pass .= $dict[rand(0, count($dict) - 1)];
 
         return $pass;
+    }
+
+
+    function osc_csrf_token_form() {
+        $name = osc_csrf_name()."_".mt_rand(0,mt_getrandmax());
+        $token = osc_csrfguard_generate_token($name);
+        return "<input type='hidden' name='CSRFName' value='".$name."' />
+        <input type='hidden' name='CSRFToken' value='".$token."' />";
+    }
+
+    function osc_csrf_token_url() {
+        $name = osc_csrf_name()."_".mt_rand(0,mt_getrandmax());
+        $token = osc_csrfguard_generate_token($name);
+        return "CSRFName=".$name."&CSRFToken=".$token;
+    }
+
+    function osc_csrf_check($drop = true) {
+        if(Params::getParam('CSRFName')=='' || Params::getParam('CSRFToken')=='') {
+            exit(__("Probable invalid request."));
+        }
+        $name = Params::getParam('CSRFName');
+        $token = Params::getParam('CSRFToken');
+        if (!osc_csrfguard_validate_token($name, $token, $drop)) {
+            exit(__("Invalid CSRF token."));
+        }
     }
 
 ?>

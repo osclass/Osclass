@@ -1,9 +1,9 @@
 <?php
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -21,12 +21,12 @@
 
     $locales   = __get('locales') ;
     $user = osc_user();
+    osc_enqueue_style('jquery-ui-custom', osc_current_web_theme_styles_url('jquery-ui/jquery-ui-1.8.20.custom.css'));
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
-        <link href="<?php echo osc_current_web_theme_styles_url('jquery-ui/jquery-ui-1.8.20.custom.css'); ?>" rel="stylesheet">
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
     </head>
@@ -47,7 +47,7 @@
                         $("#delete_account").click(function(){
                             $("#dialog-delete-account").dialog('open');
                         });
-                        
+
                         $("#dialog-delete-account").dialog({
                             autoOpen: false,
                             modal: true,
@@ -69,6 +69,15 @@
                         <div class="row">
                             <label for="name"><?php _e('Name', 'modern') ; ?></label>
                             <?php UserForm::name_text(osc_user()) ; ?>
+                        </div>
+                        <div class="row">
+                            <label for="email"><?php _e('Username', 'modern') ; ?></label>
+                            <span class="update">
+                                <?php echo osc_user_username() ; ?><br />
+                                <?php if(osc_user_username()==osc_user_id()) { ?>
+                                    <a href="<?php echo osc_change_user_username_url() ; ?>"><?php _e('Modify username', 'modern') ; ?></a>
+                                <?php }; ?>
+                            </span>
                         </div>
                         <div class="row">
                             <label for="email"><?php _e('E-mail', 'modern') ; ?></label>

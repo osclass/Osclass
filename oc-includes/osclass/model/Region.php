@@ -1,10 +1,10 @@
 <?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -23,7 +23,7 @@
     /**
      * Model database for Region table
      *
-     * @package OSClass
+     * @package Osclass
      * @subpackage Model
      * @since unknown
      */
@@ -133,6 +133,33 @@
 
             return array() ;
         }
+
+
+        /**
+         *  Delete a region with its cities and city areas
+         *
+         *  @access public
+         *  @since 3.1
+         *  @param $pk
+         *  @return int number of failed deletions or 0 in case of none
+         */
+        function deleteByPrimaryKey($pk) {
+            $mCities = City::NewInstance();
+            $aCities = $mCities->findByRegion($pk);
+            $result = 0;
+            foreach($aCities as $city) {
+                $result += $mCities->deleteByPrimaryKey($city['pk_i_id']);
+            }
+            Item::newInstance()->deleteByRegion($pk);
+            RegionStats::newInstance()->delete(array('fk_i_region_id' => $pk));
+            User::newInstance()->update(array('fk_i_region_id' => null, 's_region' => ''), array('fk_i_region_id' => $pk));
+            if(!$this->delete(array('pk_i_id' => $pk))) {
+                $result++;
+            }
+            return $result;
+        }
+
+
     }
 
     /* file end: ./oc-includes/osclass/model/Region.php */

@@ -1,9 +1,9 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -37,7 +37,7 @@
                                             osc_add_flash_error_message(_m('Users are not enabled'));
                                             $this->redirectTo(osc_base_url());
                                         }
-
+                                        osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $user = User::newInstance()->findByEmail( Params::getParam('email') ) ;
 
@@ -107,7 +107,9 @@
 
                                             }
 
-                                            $this->redirectTo( $url_redirect ) ;
+                                            osc_run_hook("after_login", $user);
+
+                                            $this->redirectTo( osc_apply_filter('correct_login_url_redirect', $url_redirect) ) ;
 
                                         } else {
                                             osc_add_flash_error_message(_m('This should never happen'));
@@ -123,6 +125,7 @@
                                         $this->doView( 'user-recover.php' ) ;
                 break ;
                 case('recover_post'):   //post execution to recover the password
+                                        osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
 
                                         // e-mail is incorrect
@@ -159,6 +162,7 @@
                                         }
                 break;
                 case('forgot_post'):
+                                        osc_csrf_check();
                                         if( (Params::getParam('new_password', false, false) == '') || (Params::getParam('new_password2', false, false) == '') ) {
                                             osc_add_flash_warning_message( _m('Password cannot be blank')) ;
                                             $this->redirectTo(osc_forgot_user_password_confirm_url(Params::getParam('userId'), Params::getParam('code')));

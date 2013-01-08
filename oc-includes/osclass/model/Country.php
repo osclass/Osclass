@@ -1,10 +1,10 @@
 <?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -23,7 +23,7 @@
     /**
      * Model database for Country table
      *
-     * @package OSClass
+     * @package Osclass
      * @subpackage Model
      * @since unknown
      */
@@ -127,36 +127,67 @@
          *  @access public
          *  @since 2.4
          *  @param $pk
-         *  @return boolean
+         *  @return int number of failed deletions or 0 in case of none
          */
         function deleteByPrimaryKey($pk) {
             $mRegions = Region::NewInstance();
             $aRegions = $mRegions->findByCountry($pk);
-            $mCities = City::newInstance();
-            $mCityAreas = CityArea::newInstance();
-            $result = true;
+            $result = 0;
             foreach($aRegions as $region) {
+                $result += $mRegions->deleteByPrimaryKey($region['pk_i_id']);
+            }
+            Item::newInstance()->deleteByCountry($pk);
+            CountryStats::newInstance()->delete(array('fk_c_country_code' => $pk));
+            User::newInstance()->update(array('fk_c_country_code' => null, 's_country' => ''), array('fk_c_country_code' => $pk));
+            if(!$this->delete(array('pk_c_code' => $pk))) {
+                $result++;
+            }
+            return $result;
+        }
+/*
+
                 $aCities = $mCities->findByRegion($region['pk_i_id']);
                 foreach($aCities as $city) {
                     $aCityAreas = $mCityAreas->findByCity($city['pk_i_id']);
                     foreach($aCityAreas as $cityArea) {
+                        $userMgr->update(array('fk_i_city_area_id' => null, 's_city_area' => ''), array('fk_i_city_id' => $cityArea['pk_i_id']));
                         if(!$mCityAreas->delete(array('pk_i_id' => $cityArea['pk_i_id']))) {
                             $result = false;
                         };
                     }
+                    $userMgr->update(array('fk_i_city_id' => null, 's_city' => ''), array('fk_i_city_id' => $city['pk_i_id']));
                     if(!$mCities->delete(array('pk_i_id' => $city['pk_i_id']))) {
                         $result = false;
                     };
                 }
+                $userMgr->update(array('fk_i_region_id' => null, 's_region' => ''), array('fk_i_region_id' => $region['pk_i_id']));
                 if(!$mRegions->delete(array('pk_i_id' => $region['pk_i_id']))) {
                     $result = false;
                 };
             }
-            if(!$this->delete(array('pk_c_code' => $pk))) {
-                $result = false;
-            }
             return $result;
         }
+
+        Item::newInstance()->deleteByCountry($countryId);
+        $mRegions = new Region();
+        $mCities = new City();
+
+        $aCountries = $mCountries->findByCode($countryId);
+        if($aCountries) {
+            $aRegions = $mRegions->findByCountry($aCountries['pk_c_code']);
+            foreach($aRegions as $region) {
+                // remove city_stats
+                CityStats::newInstance()->deleteByRegion($region['pk_i_id']);
+                // remove region_stats
+                RegionStats::newInstance()->delete( array('fk_i_region_id' => $region['pk_i_id']) );
+            }
+            //remove country stats
+            CountryStats::newInstance()->delete( array('fk_c_country_code' => $aCountries['pk_c_code'] ) );
+
+
+       */
+
+
     }
 
     /* file end: ./oc-includes/osclass/model/Country.php */

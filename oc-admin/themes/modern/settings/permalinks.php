@@ -1,8 +1,8 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -161,6 +161,10 @@
                             required: true,
                             minlength: 1
                         },
+                        rewrite_user_change_username: {
+                            required: true,
+                            minlength: 1
+                        },
                         rewrite_user_change_email_confirm: {
                             required: true,
                             minlength: 1
@@ -307,6 +311,10 @@
                             required: '<?php echo osc_esc_js( __("Change email url: this field is required")); ?>.',
                             minlength: '<?php echo osc_esc_js( __("Change email url: this field is required")); ?>.'
                         },
+                        rewrite_user_change_username: {
+                            required: '<?php echo osc_esc_js( __("Change username url: this field is required")); ?>.',
+                            minlength: '<?php echo osc_esc_js( __("Change username url: this field is required")); ?>.'
+                        },
                         rewrite_user_change_email_confirm: {
                             required: '<?php echo osc_esc_js( __("Change email confirm url: this field is required")); ?>.',
                             minlength: '<?php echo osc_esc_js( __("Change email confirm url: this field is required")); ?>.'
@@ -367,7 +375,7 @@
     <!-- settings form -->
                     <div id="mail-settings">
                         <h2 class="render-title"><?php _e('Permalinks') ; ?></h2>
-                        <?php _e('By default OSClass uses web URLs which have question marks and lots of numbers in them. However, OSClass offers you friendly urls. This can improve the aesthetics, usability, and forward-compatibility of your links'); ?>
+                        <?php _e('By default Osclass uses web URLs which have question marks and lots of numbers in them. However, Osclass offers you friendly urls. This can improve the aesthetics, usability, and forward-compatibility of your links'); ?>
                         <ul id="error_list"></ul>
                         <form name="settings_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                             <input type="hidden" name="page" value="settings" />
@@ -607,6 +615,12 @@
                                         <div class="form-label"><?php _e('User change email confirm') ; ?></div>
                                         <div class="form-controls">
                                             <input type="text" class="input-large" name="rewrite_user_change_email_confirm" value="<?php echo osc_esc_html(osc_get_preference('rewrite_user_change_email_confirm')); ?>" />
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-label"><?php _e('User change username') ; ?></div>
+                                        <div class="form-controls">
+                                            <input type="text" class="input-large" name="rewrite_user_change_username" value="<?php echo osc_esc_html(osc_get_preference('rewrite_user_change_username')); ?>" />
                                         </div>
                                     </div>
                                 </div>

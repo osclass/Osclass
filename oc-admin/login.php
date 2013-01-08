@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -32,6 +32,7 @@
         {
             switch( $this->action ) {
                 case('login_post'):     //post execution for the login
+                                        osc_csrf_check();
                                         $url_redirect  = osc_get_http_referer();
                                         $page_redirect = '';
                                         if(preg_match('|[\?&]page=([^&]+)|', $url_redirect.'&', $match)) {
@@ -88,7 +89,7 @@
                                         Session::newInstance()->_set('adminEmail', $admin['s_email']) ;
                                         Session::newInstance()->_set('adminLocale', Params::getParam('locale')) ;
 
-                                        osc_run_hook('login_admin');
+                                        osc_run_hook('login_admin', $admin);
 
                                         $this->redirectTo( $url_redirect );
                 break ;
@@ -99,6 +100,7 @@
                                             osc_add_flash_warning_message( _m("This action can't be done because it's a demo site"), 'admin');
                                             $this->redirectTo( osc_admin_base_url() );
                                         }
+                                        osc_csrf_check();
 
                                         // post execution to recover the password
                                         $admin = Admin::newInstance()->findByEmail( Params::getParam('email') ) ;
@@ -136,6 +138,7 @@
                                         $this->doView( 'gui/forgot_password.php' ) ;
                 break;
                 case('forgot_post'):
+                                        osc_csrf_check();
                                         $admin = Admin::newInstance()->findByIdSecret(Params::getParam('adminId'), Params::getParam('code'));
                                         if( !$admin ) {
                                             osc_add_flash_error_message( _m('Sorry, the link is not valid'), 'admin') ;

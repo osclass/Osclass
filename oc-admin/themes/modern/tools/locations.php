@@ -1,8 +1,8 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -23,10 +23,10 @@
         return 'row-offset';
     }
 
-    function customHead() { 
+    function customHead() {
         $all = Preference::newInstance()->findValueByName('location_todo');
         if( $all == '' ) $all = 0;
-        $worktodo   = LocationsTmp::newInstance()->count() ; 
+        $worktodo   = LocationsTmp::newInstance()->count() ;
         ?>
         <script type="text/javascript">
             function reload() {
@@ -36,7 +36,7 @@
             function ajax_() {
                 $.ajax({
                     type: "POST",
-                    url: '<?php echo osc_admin_base_url(true)?>?page=ajax&action=location_stats',
+                    url: '<?php echo osc_admin_base_url(true)?>?page=ajax&action=location_stats&<?php echo osc_csrf_token_url(); ?>',
                     dataType: 'json',
                     success: function(data) {
                         if(data.status=='done') {
@@ -83,7 +83,7 @@
         </p>
         <?php } ?>
         <p>
-            <?php _e('You can recalculate your location stats. This is useful if you upgrade from versions older than OSClass 2.4'); ?>.
+            <?php _e('You can recalculate your location stats. This is useful if you upgrade from versions older than Osclass 2.4'); ?>.
         </p>
         <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
             <input type="hidden" name="action" value="locations_post" />

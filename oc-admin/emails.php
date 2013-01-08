@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -51,11 +51,12 @@
                     if($form == 0 || $form == $keepForm) {
                         Session::newInstance()->_dropKeepForm();
                     }
-                    
+
                     $this->_exportVariableToView("email", $this->emailManager->findByPrimaryKey(Params::getParam("id")));
                     $this->doView("emails/frm.php");
                     break;
                 case 'edit_post':
+                    osc_csrf_check();
                     $id = Params::getParam("id");
                     $s_internal_name = Params::getParam("s_internal_name");
 
@@ -68,10 +69,10 @@
                             $aFieldsDescription[$m[1]][$m[2]] = $v;
                         }
                     }
-                    
+
                     Session::newInstance()->_setForm('s_internal_name',$s_internal_name);
                     Session::newInstance()->_setForm('aFieldsDescription',$aFieldsDescription);
-                    
+
                     if($not_empty) {
                         foreach($aFieldsDescription as $k => $_data) {
                             $this->emailManager->updateDescription($id, $k, $_data['s_title'], $_data['s_text']);
@@ -121,7 +122,7 @@
                     if($max > $count) $max = $count;
                     for($i = $start; $i < $max; $i++) {
                         $email = $emails[$i];
-                    
+
                         if(isset($email['locale'][$prefLocale]) && !empty($email['locale'][$prefLocale]['s_title'])) {
                             $title = $email['locale'][$prefLocale];
                         } else {
@@ -129,13 +130,13 @@
                         }
                         $options = array();
                         $options[] = '<a href="' . osc_admin_base_url(true) . '?page=emails&amp;action=edit&amp;id=' . $email["pk_i_id"] . '">' . __('Edit') . '</a>';
-                        
+
                         $auxOptions = '<ul>'.PHP_EOL ;
                         foreach( $options as $actual ) {
                             $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
                         }
                         $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
-                                                
+
                         $row = array() ;
                         $row[] = $email['s_internal_name'] . $actions ;
                         $row[] = $title['s_title'] ;
@@ -159,14 +160,14 @@
                             $this->redirectTo($url) ;
                         }
 
-                        if($page > 1) {   
+                        if($page > 1) {
                             $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
                             $this->redirectTo($url) ;
                         }
                     }
-                    
+
                     $this->_exportVariableToView('aEmails', $array) ;
-                    
+
                     $this->doView("emails/index.php");
             }
         }

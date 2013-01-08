@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -21,15 +21,15 @@
      */
 
     require_once LIB_PATH . 'htmlpurifier/HTMLPurifier.auto.php';
-    
+
     class Params
-    {    
+    {
         private static $purifier;
         private static $config;
-        
+
         function __construct() { }
 
-        static function getParam($param, $htmlencode = false, $xss_check = true)
+        static function getParam($param, $htmlencode = false, $xss_check = true, $quotes_encode = true)
         {
             if ($param == "") return '' ;
             if (!isset($_REQUEST[$param])) return '' ;
@@ -37,7 +37,11 @@
             $value = self::_purify($_REQUEST[$param], $xss_check) ;
 
             if ($htmlencode) {
-                return htmlspecialchars(stripslashes($value), ENT_QUOTES);
+                if($quotes_encode) {
+                    return htmlspecialchars(stripslashes($value), ENT_QUOTES);
+                } else {
+                    return htmlspecialchars(stripslashes($value), ENT_NOQUOTES);
+                }
             }
 
             if(get_magic_quotes_gpc()) {
@@ -67,16 +71,16 @@
         static function getParamsAsArray($what = "", $xss_check = true)
         {
             switch ($what) {
-                case("get"):    
+                case("get"):
                     $value = $_GET;
                 break;
-                case("post"):   
+                case("post"):
                     $value = $_POST;
                 break;
                 case("cookie"):
                     return $_COOKIE;
                 break;
-                default:        
+                default:
                     $value = $_REQUEST;
                 break;
             }

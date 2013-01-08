@@ -1,8 +1,8 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -17,7 +17,7 @@
      */
 
     function addHelp() {
-        echo '<p>' . __('Manually upload OSClass plugins in .zip format. If you prefer, you can manually upload the decompressed plugin to <em>oc-content/plugins</em>.') . '</p>';
+        echo '<p>' . __('Manually upload Osclass plugins in .zip format. If you prefer, you can manually upload the decompressed plugin to <em>oc-content/plugins</em>.') . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -94,7 +94,7 @@
                         </tr>
                         <tr class="even">
                             <td><?php _e('URL') ; ?></td>
-                            <td><a id="market_url" href="#"><?php _e("Download manually"); ?></span></td>
+                            <td><span id="market_url_span"><a id="market_url" href="#"><?php _e("Download manually"); ?></a></span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -102,8 +102,8 @@
             </div>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button id="market_cancel" class="btn btn-red" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                    <button id="market_install" class="btn btn-submit" ><?php echo osc_esc_html( __('Continue install') ) ; ?></button>
+                    <button id="market_cancel" class="btn btn-red" ><?php _e('Cancel') ; ?></button>
+                    <button id="market_install" class="btn btn-submit" ><?php _e('Continue install') ; ?></button>
                 </div>
             </div>
         </form>
@@ -127,7 +127,7 @@
                 function(data){
                     $("#downloading .osc-modal-content").html(data.message);
                     setTimeout(function(){
-                      $(".ui-dialog-content").dialog("close");  
+                      $(".ui-dialog-content").dialog("close");
                   },1000);
                 });
                 return false;
@@ -185,7 +185,7 @@
 
                         $('#market_installer').dialog({
                             modal:true,
-                            title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
+                            title: '<?php echo osc_esc_js( __('Osclass Market') ) ; ?>',
                             width:485
                         });
                     }
@@ -193,7 +193,7 @@
             );
 
             return false;
-        });        
+        });
     </script>
 </div>
 <?php osc_current_admin_theme_path('parts/footer.php') ; ?>

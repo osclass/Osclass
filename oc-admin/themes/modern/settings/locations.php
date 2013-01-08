@@ -1,8 +1,8 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -82,11 +82,11 @@
             });
 
             var base_url           = '<?php echo osc_admin_base_url(); ?>';
-            var s_close            = '<?php echo osc_esc_js(_e('Close')); ?>';
-            var s_view_more        = '<?php echo osc_esc_js(_e('View more')); ?>';
-            var addText            = '<?php echo osc_esc_js(_e('Add')); ?>';
-            var cancelText         = '<?php echo osc_esc_js(_e('Cancel')); ?>';
-            var editText           = '<?php echo osc_esc_js(_e('Edit')); ?>';
+            var s_close            = '<?php echo osc_esc_js(__('Close')); ?>';
+            var s_view_more        = '<?php echo osc_esc_js(__('View more')); ?>';
+            var addText            = '<?php echo osc_esc_js(__('Add')); ?>';
+            var cancelText         = '<?php echo osc_esc_js(__('Cancel')); ?>';
+            var editText           = '<?php echo osc_esc_js(__('Edit')); ?>';
             var editNewCountryText = '<?php echo osc_esc_js(__('Edit country')) ; ?>';
             var addNewCountryText  = '<?php echo osc_esc_js(__('Add new country')) ; ?>';
             var editNewRegionText  = '<?php echo osc_esc_js(__('Edit region')) ; ?>';
@@ -107,7 +107,7 @@
     osc_add_hook('admin_header','customHead');
 
     function addHelp() {
-        echo '<p>' . __("Add, edit or delete the countries, regions and cities installed on your OSClass. <strong>Be careful</strong>: modifying locations can cause your statistics to be incorrect until they're recalculated. Modify only if you're sure what you're doing!") . '</p>';
+        echo '<p>' . __("Add, edit or delete the countries, regions and cities installed on your Osclass. <strong>Be careful</strong>: modifying locations can cause your statistics to be incorrect until they're recalculated. Modify only if you're sure what you're doing!") . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -146,8 +146,8 @@
             </p>
              <div class="form-actions">
                 <div class="wrapper">
-                    <button class="btn btn-red close-dialog" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                    <button type="submit" class="btn btn-submit" ><?php echo osc_esc_html( __('Add country') ) ; ?></button>
+                    <button class="btn btn-red close-dialog" ><?php _e('Cancel') ; ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php _e('Add country') ; ?></button>
                 </div>
             </div>
         </form>
@@ -166,8 +166,8 @@
             </p>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button class="btn btn-red close-dialog" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                    <button type="submit" class="btn btn-submit" ><?php echo osc_esc_html( __('Edit country') ) ; ?></button>
+                    <button class="btn btn-red close-dialog" ><?php _e('Cancel') ; ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php _e('Edit country') ; ?></button>
                 </div>
             </div>
         </form>
@@ -192,8 +192,8 @@
             </table>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button class="btn btn-red close-dialog" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                    <button type="submit" class="btn btn-submit" ><?php echo osc_esc_html( __('Add region') ) ; ?></button>
+                    <button class="btn btn-red close-dialog" ><?php _e('Cancel') ; ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php _e('Add region') ; ?></button>
                 </div>
             </div>
         </form>
@@ -216,8 +216,8 @@
             </table>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button class="btn btn-red close-dialog" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                    <button type="submit" class="btn btn-submit" ><?php echo osc_esc_html( __('Edit region') ) ; ?></button>
+                    <button class="btn btn-red close-dialog" ><?php _e('Cancel') ; ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php _e('Edit region') ; ?></button>
                 </div>
             </div>
         </form>
@@ -244,8 +244,8 @@
             </table>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button class="btn btn-red close-dialog" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                    <button type="submit" class="btn btn-submit" ><?php echo osc_esc_html( __('Add city') ) ; ?></button>
+                    <button class="btn btn-red close-dialog" ><?php _e('Cancel') ; ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php _e('Add city') ; ?></button>
                 </div>
             </div>
         </form>
@@ -268,8 +268,8 @@
             </table>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button class="btn btn-red close-dialog" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                    <button type="submit" class="btn btn-submit" ><?php echo osc_esc_html( __('Edit city') ) ; ?></button>
+                    <button class="btn btn-red close-dialog" ><?php _e('Cancel') ; ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php _e('Edit city') ; ?></button>
                 </div>
             </div>
         </form>
@@ -346,7 +346,7 @@
         <input type="hidden" name="id[]" value="" />
         <div class="form-horizontal">
             <div class="form-row">
-                <?php _e("This action can't be undone. Items associated to this location will be deleted. Are you sure you want to continue?"); ?>
+                <?php _e("This action can't be undone. Items associated to this location will be deleted. Users from this location will be unlinked, but not deleted. Are you sure you want to continue?");?>
             </div>
             <div class="form-actions">
                 <div class="wrapper">

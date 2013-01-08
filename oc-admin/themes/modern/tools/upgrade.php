@@ -1,8 +1,8 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -44,15 +44,15 @@
 
                 $.getJSON("http://osclass.org/latest_version.php?callback=?", function(data) {
                     if(data.version <= version) {
-                        steps.innerHTML += '<?php echo osc_esc_js( __('Congratulations! Your OSClass installation is up to date!')) ; ?>';
+                        steps.innerHTML += '<?php echo osc_esc_js( __('Congratulations! Your Osclass installation is up to date!')) ; ?>';
                     } else {
                         steps.innerHTML += '<?php echo osc_esc_js( __('New version to update:')) ; ?> ' + data.version + "<br />" ;
                         <?php if(Params::getParam('confirm')=='true') {?>
-                            steps.innerHTML += '<img id="loading_image" src="<?php echo osc_current_admin_theme_url('images/loading.gif') ; ?>" /><?php echo osc_esc_js(__('Upgrading your OSClass installation (this could take a while):')); ?>' ;
+                            steps.innerHTML += '<img id="loading_image" src="<?php echo osc_current_admin_theme_url('images/loading.gif') ; ?>" /><?php echo osc_esc_js(__('Upgrading your Osclass installation (this could take a while):')); ?>' ;
 
                             var tempAr = data.url.split('/') ;
                             fileToUnzip = tempAr.pop() ;
-                            $.get('<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=upgrade' , function(data) {
+                            $.get('<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=upgrade&<?php echo osc_csrf_token_url(); ?>' , function(data) {
                                 var loading_image = document.getElementById('loading_image') ;
                                 loading_image.style.display = "none" ;
                                 steps.innerHTML += data+"<br />" ;
@@ -74,7 +74,7 @@
     }
 
     function addHelp() {
-        echo '<p>' . __("Check to see if you're using the latest version of OSClass. If you're not, the system will let you know so you can update and use the newest features.") . '</p>';
+        echo '<p>' . __("Check to see if you're using the latest version of Osclass. If you're not, the system will let you know so you can update and use the newest features.") . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
@@ -103,11 +103,11 @@
                                 <div class="tools upgrade">
                                 <?php if( $ok ) { ?>
                                     <p class="text">
-                                        <?php printf( __('Your OSClass installation can be auto-upgraded. Please, back up your database and the folder oc-content before attempting to upgrade your OSClass installation. You can also upgrade OSClass manaully, more information in the %s'), '<a href="http://doc.osclass.org/">Wiki</a>') ; ?>
+                                        <?php printf( __('Your Osclass installation can be auto-upgraded. Please, back up your database and the folder oc-content before attempting to upgrade your Osclass installation. You can also upgrade Osclass manaully, more information in the %s'), '<a href="http://doc.osclass.org/">Wiki</a>') ; ?>
                                     </p>
                                 <?php } else { ?>
                                     <p class="text">
-                                        <?php _e("Your OSClass installation can't be auto-upgraded. Files and folders need to be writable. You can apply write permissions via SSH with the command \"chmod -R a+w *\" (without quotes) or via an FTP client, it depends on the program so we can not provide more information. You can also upgrade OSClass by downloading the upgrade package, unzipping it and replacing the files on your server with the ones in the package.") ; ?>
+                                        <?php _e("Your Osclass installation can't be auto-upgraded. Files and folders need to be writable. You can apply write permissions via SSH with the command \"chmod -R a+w *\" (without quotes) or via an FTP client, it depends on the program so we can not provide more information. You can also upgrade Osclass by downloading the upgrade package, unzipping it and replacing the files on your server with the ones in the package.") ; ?>
                                     </p>
                                 <?php } ?>
                                     <div id="steps_div">

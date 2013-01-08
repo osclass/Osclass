@@ -1,9 +1,9 @@
 <?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
 
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -45,6 +45,7 @@
                                         $this->doView('user-register.php') ;
                 break;
                 case('register_post'):  //register user
+                                        osc_csrf_check();
                                         if( !osc_users_enabled() ) {
                                             osc_add_flash_error_message( _m('Users are not enabled') ) ;
                                             $this->redirectTo( osc_base_url() ) ;
@@ -77,6 +78,8 @@
                                             break;
                                             case 7: osc_add_flash_warning_message( _m("Passwords don't match")) ;
                                                     $this->doView('user-register.php') ;
+                                            case 8: osc_add_flash_warning_message( _m("Username is already taken")) ;
+                                                    $this->doView('user-register.php') ;
                                             break;
                                         }
                 break;
@@ -102,15 +105,15 @@
                                                 ,array('pk_i_id' => $id, 's_secret' => $code)
                                         ) ;
 
-                                        osc_run_hook('hook_email_user_registration', $user);
-                                        osc_run_hook('validate_user', $user) ;
-
                                         // Auto-login
                                         Session::newInstance()->_set('userId', $user['pk_i_id']) ;
                                         Session::newInstance()->_set('userName', $user['s_name']) ;
                                         Session::newInstance()->_set('userEmail', $user['s_email']) ;
                                         $phone = ($user['s_phone_mobile']) ? $user['s_phone_mobile'] : $user['s_phone_land'];
                                         Session::newInstance()->_set('userPhone', $phone) ;
+
+                                        osc_run_hook('hook_email_user_registration', $user);
+                                        osc_run_hook('validate_user', $user) ;
 
                                         osc_add_flash_ok_message( _m('Your account has been validated')) ;
                                         $this->redirectTo( osc_base_url() ) ;

@@ -1,9 +1,9 @@
 <?php
     /**
      * Helper Users
-     * @package OSClass
+     * @package Osclass
      * @subpackage Helpers
-     * @author OSClass
+     * @author Osclass
      */
 
     /**
@@ -118,7 +118,8 @@
         }
         if ($id != '') {
             if ( osc_rewrite_enabled() ) {
-                $path = osc_base_url() . 'user/profile/' . $id;
+                $user = User::newInstance()->findByPrimaryKey($id);
+                $path = osc_base_url() . 'user/profile/' . $user['s_username'];
             } else {
                 $path = sprintf(osc_base_url(true) . '?page=user&action=pub_profile&id=%d', $id) ;
             }
@@ -213,6 +214,15 @@
      */
     function osc_user_email() {
         return (string) osc_user_field("s_email");
+    }
+
+    /**
+     * Gets username of current user
+     *
+     * @return string
+     */
+    function osc_user_username() {
+        return (string) osc_user_field("s_username");
     }
 
     /**

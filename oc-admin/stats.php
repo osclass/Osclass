@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -174,7 +174,7 @@
                                             }
                                         }
 
-                                        
+
                                         $alerts = array() ;
                                         $subscribers = array() ;
                                         if( Params::getParam('type_stat') == 'week' ) {
@@ -199,7 +199,8 @@
                                                 $alerts[date( 'Y-m-d', mktime(0, 0, 0, date("m"), date("d") - $k, date("Y")) )] = 0 ;
                                             }
                                         }
-                                        $max = 0 ;
+                                        $max        = 0 ;
+                                        $max_alerts = 0;
                                         foreach($stats_alerts as $alert) {
                                             $alerts[$alert['d_date']] = $alert['num'] ;
                                             if( $alert['num'] > $max ) {
@@ -213,19 +214,19 @@
                                                 $max_subs = $subscriber['num'] ;
                                             }
                                         }
-                                        
-                                        
+
+
                                         $this->_exportVariableToView("reports", $reports) ;
                                         $this->_exportVariableToView("items", $items) ;
                                         $this->_exportVariableToView("latest_items", Stats::newInstance()->latest_items()) ;
                                         $this->_exportVariableToView("max", $max) ;
                                         $this->_exportVariableToView("max_views", $max_views) ;
-                                        
+
                                         $this->_exportVariableToView("subscribers", $subscribers) ;
                                         $this->_exportVariableToView("alerts", $alerts) ;
                                         $this->_exportVariableToView("max_alerts", $max_alerts) ;
                                         $this->_exportVariableToView("max_subs", $max_subs) ;
-                                        
+
                                         $this->doView("stats/items.php") ;
                 break ;
                 case('users'):          // manage stats view

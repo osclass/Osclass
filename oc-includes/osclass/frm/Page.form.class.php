@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -37,6 +37,15 @@
                 $internal_name = Session::newInstance()->_getForm('s_internal_name');
             }
             parent::generic_input_text('s_internal_name', $internal_name, null, (isset($page['b_indelible']) && $page['b_indelible'] == 1) ? true : false) ;
+        }
+        
+        static public function link_checkbox($page = null) {
+            $checked = true;
+            if( is_array($page) && isset($page['b_link']) && $page['b_link']==0 ) {
+                $checked = false;
+            }
+
+            parent::generic_input_checkbox('b_link', "1", $checked);
         }
 
         static public function multilanguage_name_description($locales, $page = null) {

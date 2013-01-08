@@ -1,9 +1,9 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -795,7 +795,7 @@
             $all,
             $item['s_description'],
             $item['s_country'],
-            osc_prepare_price($item['i_price']),
+            osc_format_price($item['i_price']),
             $item['s_region'],
             $item['s_city'],
             $item['pk_i_id'],
@@ -888,7 +888,7 @@
             $all,
             $item['s_description'],
             $item['s_country'],
-            osc_prepare_price($item['i_price']),
+            osc_format_price($item['i_price']),
             $item['s_region'],
             $item['s_city'],
             $item['pk_i_id'],
@@ -979,7 +979,7 @@
             $all,
             $item['s_description'],
             $item['s_country'],
-            osc_prepare_price($item['i_price']),
+            osc_format_price($item['i_price']),
             $item['s_region'],
             $item['s_city'],
             $item['pk_i_id'],

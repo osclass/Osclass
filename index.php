@@ -1,9 +1,9 @@
 <?php
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -20,7 +20,7 @@
      */
 
     define('ABS_PATH', dirname($_SERVER['SCRIPT_FILENAME']) . '/');
-    if( !array_key_exists('HTTP_HOST', $_SERVER) ) {
+    if(PHP_SAPI==='cli') {
         define('CLI', true);
     }
 
@@ -30,7 +30,10 @@
         $cli_params = getopt('p:t:');
         Params::setParam('page', $cli_params['p']);
         Params::setParam('cron-type', $cli_params['t']);
-        if( !in_array(Params::getParam('page'), array('cron')) && !in_array(Params::getParam('cron-type'), array('hourly', 'daily', 'weekly')) ) {
+        if(Params::getParam('page')=='upgrade') {
+            require_once(osc_lib_path() . 'osclass/upgrade-funcs.php');
+            exit(1);
+        } else if( !in_array(Params::getParam('page'), array('cron')) && !in_array(Params::getParam('cron-type'), array('hourly', 'daily', 'weekly')) ) {
             exit(1);
         }
     }
@@ -65,7 +68,7 @@
     if(osc_is_web_user_logged_in()) {
         User::newInstance()->lastAccess(osc_logged_user_id(), date('Y-m-d H:i:s'), $_SERVER['REMOTE_ADDR'], 3600);
     }
-    
+
     switch( Params::getParam('page') )
     {
         case ('cron'):      // cron system

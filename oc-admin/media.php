@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -40,6 +40,7 @@
             //specific things for this class
             switch($this->action) {
                 case('bulk_actions'):
+                                        osc_csrf_check();
                                         switch ( Params::getParam('bulk_actions') ) {
                                             case 'delete_all':
                                                 $ids = Params::getParam("id");
@@ -64,6 +65,7 @@
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=media' );
                 break;
                 case('delete'):
+                                        osc_csrf_check();
                                         $ids = Params::getParam('id');
                                         if( is_array($ids) ) {
                                             foreach($ids as $id) {

@@ -1,10 +1,10 @@
 <?php
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -23,9 +23,9 @@
 
     /**
     * Helper Defines
-    * @package OSClass
+    * @package Osclass
     * @subpackage Helpers
-    * @author OSClass
+    * @author Osclass
     */
 
     /**
@@ -597,6 +597,19 @@
             return osc_base_url() . osc_get_preference('rewrite_user_change_email');
         } else {
             return osc_base_url(true) . '?page=user&action=change_email' ;
+        }
+    }
+
+    /**
+     * Gets url to change username
+     *
+     * @return string
+     */
+    function osc_change_user_username_url() {
+        if ( osc_rewrite_enabled() ) {
+            return osc_base_url() . osc_get_preference('rewrite_user_change_username');
+        } else {
+            return osc_base_url(true) . '?page=user&action=change_username' ;
         }
     }
 

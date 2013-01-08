@@ -1,10 +1,10 @@
 <?php
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -22,9 +22,9 @@
 
     /**
     * Helper Location
-    * @package OSClass
+    * @package Osclass
     * @subpackage Helpers
-    * @author OSClass
+    * @author Osclass
     */
 
     /**
@@ -125,7 +125,7 @@
      */
     function osc_has_city_areas($city = '%%%%') {
         if ( !View::newInstance()->_exists('city_areas') ) {
-            View::newInstance()->_exportVariableToView('city_areas', Search::newInstance()->listCityAreas($region, ">=", "city_area_name ASC" ) ) ;
+            View::newInstance()->_exportVariableToView('city_areas', Search::newInstance()->listCityAreas($city, ">=", "city_area_name ASC" ) ) ;
         }
         $result = View::newInstance()->_next('city_areas');
 
@@ -176,7 +176,7 @@
      */
     function osc_count_city_areas($city = '%%%%') {
         if ( !View::newInstance()->_exists('city_areas') ) {
-            View::newInstance()->_exportVariableToView('city_areas', Search::newInstance()->listCityAreas($region, ">=", "city_area_name ASC" ) ) ;
+            View::newInstance()->_exportVariableToView('city_areas', Search::newInstance()->listCityAreas($city, ">=", "city_area_name ASC" ) ) ;
         }
         return View::newInstance()->_count('city_areas') ;
     }

@@ -1,10 +1,10 @@
 <?php
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -22,9 +22,9 @@
 
     /**
     * Helper Pages
-    * @package OSClass
+    * @package Osclass
     * @subpackage Helpers
-    * @author OSClass
+    * @author Osclass
     */
 
     /**
@@ -215,7 +215,7 @@
      */
     function osc_has_static_pages() {
         if ( !View::newInstance()->_exists('pages') ) {
-            View::newInstance()->_exportVariableToView('pages', Page::newInstance()->listAll(false) ) ;
+            View::newInstance()->_exportVariableToView('pages', Page::newInstance()->listAll(false, 1) ) ;
         }
 
         $page = View::newInstance()->_next('pages');

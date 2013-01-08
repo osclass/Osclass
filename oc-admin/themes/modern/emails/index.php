@@ -1,8 +1,8 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -34,7 +34,7 @@
     }
     osc_add_filter('admin_title', 'customPageTitle');
 
-    $aData = __get('aEmails'); 
+    $aData = __get('aEmails');
 
     osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
 <h2 class="render-title"><?php _e('Emails templates'); ?></h2>
@@ -68,7 +68,7 @@
     </table>
     <div id="table-row-actions"></div> <!-- used for table actions -->
 </div>
-<?php 
+<?php
     osc_show_pagination_admin($aData);
 ?>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

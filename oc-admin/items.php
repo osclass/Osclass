@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -46,7 +46,9 @@
             //specific things for this class
             switch ($this->action)
             {
-                case 'bulk_actions':    $mItems  = new ItemActions( true );
+                case 'bulk_actions':
+                                        osc_csrf_check();
+                                        $mItems  = new ItemActions( true );
                                         switch ( Params::getParam('bulk_actions') )
                                         {
                                             case 'enable_all':
@@ -142,6 +144,7 @@
                                                             $numSuccess++;
                                                         }
                                                     }
+
                                                     osc_add_flash_ok_message( sprintf(_mn('%d change has been made', '%d changes have been made', $numSuccess), $numSuccess), 'admin');
                                                 }
                                             break;
@@ -274,6 +277,7 @@
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'delete':          //delete
+                                        osc_csrf_check();
                                         $id      = Params::getParam('id');
                                         $success = false;
 
@@ -294,6 +298,7 @@
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'status':          //status
+                                        osc_csrf_check();
                                         $id = Params::getParam('id');
                                         $value = Params::getParam('value');
 
@@ -359,6 +364,7 @@
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'status_premium':  //status premium
+                                        osc_csrf_check();
                                         $id = Params::getParam('id');
                                         $value = Params::getParam('value');
 
@@ -384,6 +390,7 @@
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'status_spam':  //status spam
+                                        osc_csrf_check();
                                         $id = Params::getParam('id');
                                         $value = Params::getParam('value');
 
@@ -409,6 +416,7 @@
                                         $this->redirectTo( $_SERVER['HTTP_REFERER'] );
                 break;
                 case 'clear_stat':
+                                        osc_csrf_check();
                                         $id     = Params::getParam('id');
                                         $stat   = Params::getParam('stat');
 
@@ -494,6 +502,7 @@
                                         $this->doView('items/frm.php');
                 break;
                 case 'item_edit_post':
+                                        osc_csrf_check();
                                         $mItems = new ItemActions(true);
 
                                         $mItems->prepareData(false);
@@ -511,7 +520,6 @@
                                         }
 
                                         $success = $mItems->edit();
-                                        osc_run_hook('edited_item', Item::newInstance()->findByPrimaryKey(Params::getParam('id')));
 
                                         if($success==1){
                                             osc_add_flash_ok_message( _m('Changes saved correctly'), 'admin');
@@ -528,6 +536,7 @@
                                         }
                 break;
                 case 'deleteResource':  //delete resource
+                                        osc_csrf_check();
                                         $id = Params::getParam('id');
                                         $name = Params::getParam('name');
                                         $fkid = Params::getParam('fkid');
@@ -556,6 +565,7 @@
                                         $this->doView('items/frm.php');
                 break;
                 case 'post_item':       //post item
+                                        osc_csrf_check();
                                         $mItem = new ItemActions(true);
 
                                         $mItem->prepareData(true);
@@ -585,10 +595,6 @@
                                             Session::newInstance()->_clearVariables();
                                             osc_add_flash_ok_message( _m('A new listing has been added'), 'admin');
 
-                                            $itemId = Params::getParam('itemId');
-                                            $item = $this->itemManager->findByPrimaryKey($itemId);
-                                            osc_run_hook('posted_item', $item);
-                                            
                                             $this->redirectTo( $url );
                                         } else {
                                             osc_add_flash_error_message( $success, 'admin');
@@ -599,6 +605,7 @@
                                         $this->doView('items/settings.php');
                 break;
                 case('settings_post'):     // update item settings
+                                        osc_csrf_check();
                                         $iUpdated                   = 0;
                                         $enabledRecaptchaItems      = Params::getParam('enabled_recaptcha_items');
                                         $enabledRecaptchaItems      = (($enabledRecaptchaItems == '1') ? true : false);
