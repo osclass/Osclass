@@ -15,7 +15,8 @@ class Frontend_page extends FrontendTest {
     {
         // insert page HARDCODED
         $aFields = array( 's_internal_name' => 'internal name'
-                            , 'b_indelible' => '0');
+                            , 'b_indelible' => 0
+                            , 'b_link' => 1);
 
         $aFieldsDescription = array();
         $aFieldsDescription['en_US']['s_title'] = 'TITLE NEW PAGE';
