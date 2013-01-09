@@ -21,7 +21,7 @@ class Frontend_items extends FrontendTest {
         $bool_reg_user_post               = $uSettings->set_reg_user_post(0);
         $bool_enabled_user_validation     = $uSettings->set_moderate_items(-1);
 
-        $this->insertItem($item['catId'], $item['title'],
+        $this->insertItem($item['parentCatId'], $item['catId'], $item['title'],
                                 $item['description'], $item['price'],
                                 $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'],
@@ -29,7 +29,7 @@ class Frontend_items extends FrontendTest {
         $this->assertTrue($this->selenium->isTextPresent("Your listing has been published"),"Items, insert item, no user, no validation.") ;
 
         $uSettings->set_moderate_items(111);
-        $this->insertItem($item['catId'], $item['title'],
+        $this->insertItem($item['parentCatId'], $item['catId'], $item['title'],
                                 $item['description'], $item['price'],
                                 $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'],
@@ -78,7 +78,7 @@ class Frontend_items extends FrontendTest {
         $this->loginWith();
 
         $old_logged_user_item_validation = $uSettings->set_logged_user_item_validation(1);
-        $this->insertItem($item['catId'], $item['title'],
+        $this->insertItem($item['parentCatId'], $item['catId'], $item['title'],
                                 $item['description'], $item['price'],
                                 $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'],
@@ -102,7 +102,7 @@ class Frontend_items extends FrontendTest {
         $bool_enabled_user_validation     = $uSettings->set_moderate_items(-1);
 
         $old_logged_user_item_validation = $uSettings->set_logged_user_item_validation(1);
-        $this->insertItem($item['catId'], $item['title'],
+        $this->insertItem($item['parentCatId'], $item['catId'], $item['title'],
                                 $item['description'], $item['price'],
                                 $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'],
@@ -151,7 +151,7 @@ class Frontend_items extends FrontendTest {
 
         $old_logged_user_item_validation = $uSettings->set_logged_user_item_validation(1);
         osc_reset_preferences();
-        $this->insertItem($item['catId'], $item['title'],
+        $this->insertItem($item['parentCatId'], $item['catId'], $item['title'],
                                 $item['description'], $item['price'],
                                 $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'],
@@ -160,7 +160,7 @@ class Frontend_items extends FrontendTest {
 
         $uSettings->set_logged_user_item_validation(0);
         osc_reset_preferences();
-        $this->insertItem($item['catId'], $item['title'],
+        $this->insertItem($item['parentCatId'], $item['catId'], $item['title'],
                                 $item['description'], $item['price'],
                                 $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'],
@@ -213,7 +213,7 @@ class Frontend_items extends FrontendTest {
         $bool_enabled_user_validation     = $uSettings->set_moderate_items(-1);
 
         $old_logged_user_item_validation = $uSettings->set_logged_user_item_validation(1);
-        $this->insertItem($item['catId'], $item['title'],
+        $this->insertItem($item['parentCatId'], $item['catId'], $item['title'],
                                 $item['description'], $item['price'],
                                 $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'],
@@ -424,7 +424,7 @@ class Frontend_items extends FrontendTest {
         $bool_enabled_user_validation     = $uSettings->set_moderate_items(2);
 
         $old_logged_user_item_validation = $uSettings->set_logged_user_item_validation(1);
-        $this->insertItem($item['catId'], $item['title'],
+        $this->insertItem($item['parentCatId'], $item['catId'], $item['title'],
                                 $item['description'], $item['price'],
                                 $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'],

@@ -79,7 +79,7 @@ class Frontend_users extends FrontendTest {
         // add item as registered user
         require 'ItemData.php';
         $item = $aData[0];
-        $this->insertItem($item['catId'], $item['title'],
+        $this->insertItem($item['parentCatId'], $item['catId'], $item['title'],
                                 $item['description'], $item['price'],
                                 $item['regionId'], $item['cityId'], $item['cityArea'],
                                 $item['photo'], $item['contactName'],

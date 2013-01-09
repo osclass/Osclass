@@ -246,6 +246,7 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->type("contactEmail", "test@mail.com");
 
         $this->selenium->select("parentCatId", "label=regexp:\\s*Vehicles");
+        sleep(2);
         $this->selenium->select("catId", "label=regexp:\\s*Cars");
         $this->selenium->type("title[en_US]", "title item");
         $this->selenium->type("description[en_US]", "description test description test description test");

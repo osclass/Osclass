@@ -28,7 +28,7 @@ class Frontend_search extends FrontendTest {
         $old_moderate_items         = $uSettings->set_moderate_items(-1);
         
         foreach($aData as $item){
-            $this->insertItem(  $item['catId'], $item['title'], 
+            $this->insertItem(  $item['parentCatId'], $item['catId'], $item['title'],
                                 $item['description'], $item['price'],
                                 $item['regionId'], $item['cityId'],  $item['cityArea'],
                                 $item['photo'], $item['contactName'], 
@@ -185,7 +185,7 @@ class Frontend_search extends FrontendTest {
         $this->loginWith('testusersearch@osclass.org', 'password');
         for($i=0; $i<2; $i++){
             $item = $aData[$i];
-            $this->insertItem(  $item['catId'], $item['title'], 
+            $this->insertItem(  $item['parentCatId'], $item['catId'], $item['title'],
                                 $item['description'], $item['price'],
                                 $item['regionId'], $item['cityId'], $item['cityArea'], 
                                 $item['photo'], $item['contactName'], 

@@ -106,13 +106,15 @@ abstract class FrontendTest extends MyWebTestCase {
         User::newInstance()->deleteUser($user['pk_i_id']);
     }
     
-    public function insertItem($cat, $title, $description, $price, $regionId, $cityId, $cityArea, $aPhotos, $user, $email , $logged = 0)
+    public function insertItem($parentCar, $cat, $title, $description, $price, $regionId, $cityId, $cityArea, $aPhotos, $user, $email , $logged = 0)
     {
         $this->selenium->open( osc_base_url() );
 
         $this->selenium->click("link=Publish your ad for free");
         $this->selenium->waitForPageToLoad("30000");
 
+        $this->selenium->select("parentCatId", "label=regexp:\\s*$parentCat");
+        sleep(2);
         $this->selenium->select("catId", "label=regexp:\\s*$cat");
         $this->selenium->type("title[en_US]", $title);
         $this->selenium->type("description[en_US]", $description);
