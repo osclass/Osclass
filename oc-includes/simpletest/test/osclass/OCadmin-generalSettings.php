@@ -605,7 +605,7 @@ class OCadmin_generalSettings extends OCadmintest {
         // delete country
         $this->selenium->click("xpath=//a[@class='close']");
         sleep(2);
-        $this->selenium->click("xpath=//a[@id='location-delete-submit']");
+        $this->selenium->click("xpath=//input[@id='location-delete-submit']");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete Country" ) ;
         osc_reset_preferences();
@@ -773,7 +773,7 @@ class OCadmin_generalSettings extends OCadmintest {
         // DELETE THE LOCATION
         $this->selenium->click("xpath=//a[@class='close'][1]");
         sleep(2);
-        $this->selenium->click("xpath=//a[@id='location-delete-submit']");
+        $this->selenium->click("xpath=//input[@id='location-delete-submit']");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Delete Country" ) ;
 
