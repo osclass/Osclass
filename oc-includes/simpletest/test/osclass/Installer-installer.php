@@ -58,7 +58,7 @@ class Installer_installer extends InstallerTest {
             $this->selenium->click("link=Next");
             $this->selenium->waitForPageToLoad("600000");
             // step 4
-            $this->assertTrue($this->selenium->isTextPresent("OSClass has been installed."), "OSClass has NOT been installed!");
+            $this->assertTrue($this->selenium->isTextPresent("Osclass has been installed."), "Osclass has NOT been installed!");
         } else {
             echo "<div style='background-color: red; color: white;padding-left:15px;'>$config_file EXIST, CANNOT INSTALL OSCLASS IF EXIST</div>";
             $this->can_continue = false;
@@ -124,7 +124,7 @@ class Installer_installer extends InstallerTest {
             $this->selenium->click("link=Next");
             $this->selenium->waitForPageToLoad("600000");
             // step 4
-            $this->assertTrue($this->selenium->isTextPresent("OSClass has been installed."), "OSClass has NOT been installed!");
+            $this->assertTrue($this->selenium->isTextPresent("Osclass has been installed."), "Osclass has NOT been installed!");
         } else {
             echo "<div style='background-color: red; color: white;padding-left:15px;'>$config_file EXIST, CANNOT INSTALL OSCLASS IF EXIST</div>";
             $this->can_continue = false;
