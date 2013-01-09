@@ -127,7 +127,7 @@ class OCadmin_appearance extends OCadminTest {
                 //$this->assertTrue($this->selenium->isTextPresent($description), "Theme present at Manage themes.");
             }
         } else {
-            $this->asserTrue(false, 'There aren\'t themes on market');
+            $this->assertTrue(false, 'There aren\'t themes on market');
         }
     }
 
