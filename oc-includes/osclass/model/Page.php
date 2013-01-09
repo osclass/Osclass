@@ -75,14 +75,12 @@
             $this->dao->where('pk_i_id', $id) ;
             $result = $this->dao->get() ;
 
-            $row = $result->row() ;
-
             if( $result == false ) {
-                return false ;
+                return array();
             }
 
             if( $result->numRows() == 0 ) {
-                return false ;
+                return array();
             }
 
             $row = $result->row() ;
