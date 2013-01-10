@@ -181,6 +181,32 @@
 
             return $result->result() ;
         }
+
+        /**
+         *  Delete a city with its city areas
+         *
+         *  @access public
+         *  @since 3.1
+         *  @param $pk
+         *  @return int number of failed deletions or 0 in case of none
+         */
+        function deleteByPrimaryKey($pk) {
+            $mCityAreas = CityArea::NewInstance();
+            $aCityAreas = $mCityAreas->findByCity($pk);
+            $result = 0;
+            foreach($aCityAreas as $cityarea) {
+                $result += $mCityAreas->deleteByPrimaryKey($cityarea['pk_i_id']);
+            }
+            Item::newInstance()->deleteByCity($pk);
+            CityStats::newInstance()->delete(array('fk_i_city_id' => $pk));
+            User::newInstance()->update(array('fk_i_city_id' => null, 's_city' => ''), array('fk_i_city_id' => $pk));
+            if(!$this->delete(array('pk_i_id' => $pk))) {
+                $result++;
+            }
+            return $result;
+        }
+
+
     }
 
     /* file end: ./oc-includes/osclass/model/City.php */

@@ -346,7 +346,7 @@
         <input type="hidden" name="id[]" value="" />
         <div class="form-horizontal">
             <div class="form-row">
-                <?php _e("This action can't be undone. Items associated to this location will be deleted. Are you sure you want to continue?"); ?>
+                <?php _e("This action can't be undone. Items associated to this location will be deleted. Users from this location will be unlinked, but not deleted. Are you sure you want to continue?");?>
             </div>
             <div class="form-actions">
                 <div class="wrapper">

@@ -113,6 +113,10 @@
             <?php printLocaleDescriptionPage($locales, $page); ?>
         </div>
         <div>
+			<label><?php _e('Show a link in footer'); ?></label>
+			<?php PageForm::link_checkbox($page); ?>
+        </div>
+        <div>
             <?php osc_run_hook('page_meta'); ?>
         </div>
         <div class="clear"></div>

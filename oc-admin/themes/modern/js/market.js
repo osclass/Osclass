@@ -107,6 +107,9 @@ $(function(){
                      screenshots += '</td></tr>';
                     }
                 }
+                if(section == 'language'){
+                    str_letter =  item.s_update_url;
+                }
                 print = '<div class="mk-item mk-item-'+section+'">'
                         +'<div class="banner" style="background-image:url('+banner+');">'+str_letter+'</div>'
                         +'<div class="mk-info">'

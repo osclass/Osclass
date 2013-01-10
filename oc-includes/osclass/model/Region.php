@@ -133,6 +133,33 @@
 
             return array() ;
         }
+
+
+        /**
+         *  Delete a region with its cities and city areas
+         *
+         *  @access public
+         *  @since 3.1
+         *  @param $pk
+         *  @return int number of failed deletions or 0 in case of none
+         */
+        function deleteByPrimaryKey($pk) {
+            $mCities = City::NewInstance();
+            $aCities = $mCities->findByRegion($pk);
+            $result = 0;
+            foreach($aCities as $city) {
+                $result += $mCities->deleteByPrimaryKey($city['pk_i_id']);
+            }
+            Item::newInstance()->deleteByRegion($pk);
+            RegionStats::newInstance()->delete(array('fk_i_region_id' => $pk));
+            User::newInstance()->update(array('fk_i_region_id' => null, 's_region' => ''), array('fk_i_region_id' => $pk));
+            if(!$this->delete(array('pk_i_id' => $pk))) {
+                $result++;
+            }
+            return $result;
+        }
+
+
     }
 
     /* file end: ./oc-includes/osclass/model/Region.php */

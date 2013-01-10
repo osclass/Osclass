@@ -677,6 +677,28 @@
         }
 
         /**
+         * Delete by city area
+         *
+         * @access public
+         * @since 3.1
+         * @param int $cityAreaId city area id
+         * @return bool
+         */
+        public function deleteByCityArea($cityAreaId)
+        {
+            $this->dao->select('fk_i_item_id');
+            $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
+            $this->dao->where('fk_i_city__area_id', $cityAreaId) ;
+            $result = $this->dao->get() ;
+            $items  = $result->result() ;
+            $arows = 0;
+            foreach($items as $i) {
+                $arows += $this->deleteByPrimaryKey($i['fk_i_item_id']);
+            }
+            return $arows;
+        }
+
+        /**
          * Delete by city
          *
          * @access public

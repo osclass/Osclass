@@ -215,7 +215,7 @@
      */
     function osc_has_static_pages() {
         if ( !View::newInstance()->_exists('pages') ) {
-            View::newInstance()->_exportVariableToView('pages', Page::newInstance()->listAll(false) ) ;
+            View::newInstance()->_exportVariableToView('pages', Page::newInstance()->listAll(false, 1) ) ;
         }
 
         $page = View::newInstance()->_next('pages');

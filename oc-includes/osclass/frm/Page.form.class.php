@@ -38,6 +38,15 @@
             }
             parent::generic_input_text('s_internal_name', $internal_name, null, (isset($page['b_indelible']) && $page['b_indelible'] == 1) ? true : false) ;
         }
+        
+        static public function link_checkbox($page = null) {
+            $checked = true;
+            if( is_array($page) && isset($page['b_link']) && $page['b_link']==0 ) {
+                $checked = false;
+            }
+
+            parent::generic_input_checkbox('b_link', "1", $checked);
+        }
 
         static public function multilanguage_name_description($locales, $page = null) {
             $num_locales = count($locales);

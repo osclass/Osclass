@@ -326,6 +326,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_pages (
     pk_i_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     s_internal_name VARCHAR(50) NULL,
     b_indelible TINYINT(1) NOT NULL DEFAULT 0,
+    b_link TINYINT(1) NOT NULL DEFAULT 1,
     dt_pub_date DATETIME NOT NULL,
     dt_mod_date DATETIME NULL,
     i_order INT(3) NOT NULL DEFAULT 0,

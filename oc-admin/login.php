@@ -89,7 +89,7 @@
                                         Session::newInstance()->_set('adminEmail', $admin['s_email']) ;
                                         Session::newInstance()->_set('adminLocale', Params::getParam('locale')) ;
 
-                                        osc_run_hook('login_admin');
+                                        osc_run_hook('login_admin', $admin);
 
                                         $this->redirectTo( $url_redirect );
                 break ;
