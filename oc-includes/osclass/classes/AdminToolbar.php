@@ -22,7 +22,7 @@
 
     /**
      * AdminToolbar class
-     * 
+     *
      * @since 3.0
      * @package Osclass
      * @subpackage classes
@@ -45,8 +45,8 @@
             return self::$instance ;
         }
 
-        public function init(){} 
-        
+        public function init(){}
+
         /**
          * Add toolbar menus and add menus running hook add_admin_toolbar_menus
          */
@@ -56,17 +56,18 @@
             osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_menu'    , 0 );
             osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_comments', 0 );
             osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_spam'    , 0 );
-            
-            osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_update_themes' , 0 );
-            osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_update_plugins' , 0 );
-            
+
+            osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_update_themes'      , 0 );
+            osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_update_plugins'     , 0 );
+            osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_update_languages'   , 0 );
+
             osc_add_hook( 'add_admin_toolbar_menus', 'osc_admin_toolbar_logout'  , 0 );
-            
+
             osc_run_hook( 'add_admin_toolbar_menus' );
         }
         /**
          * Add a node to the menu.
-         * 
+         *
          * @todo implement parent nodes
          *
          * @param array $args - The arguments for each node.
@@ -76,24 +77,24 @@
          * - meta       - array     - Meta data including the following keys: html, class, onclick, target, title, tabindex.
          * - target     - string    - _blank
          */
-        function add_menu( $array ) 
+        function add_menu( $array )
         {
                 $this->nodes[ $array['id'] ] = (object) $array;
         }
-        
+
         /**
          * Remove entry with id $id
-         * 
-         * @param type $id 
+         *
+         * @param type $id
          */
         function remove_menu( $id )
         {
             unset( $this->nodes[ $id ] );
         }
-        
+
         /**
          * Render admin toolbar
-         * 
+         *
          * <div>
          *   <a></a>
          * </div>
@@ -106,7 +107,7 @@
                     $meta = "";
                     if( isset($value->meta) ) {
                         foreach($value->meta as $k => $v)
-                            $meta .= $k.'="'.$v.'" ' ; 
+                            $meta .= $k.'="'.$v.'" ' ;
                     }
                     echo '<a id="osc_toolbar_'.$value->id.'" '.$meta.' href="'.$value->href.'" ' . ((isset($value->target)) ? 'target="' . $value->target . '"' : '') . '>'.$value->title.'</a>';
                 }

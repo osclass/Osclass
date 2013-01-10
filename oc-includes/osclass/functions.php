@@ -540,4 +540,52 @@ function osc_admin_toolbar_update_themes($force = false)
         }
     }
 }
+
+// languages todo
+function osc_check_languages_update( $force = false )
+{
+    $total = 0;
+    $array = array();
+    $array_downloaded = array();
+    // check if exist a new version each day
+    if( (time() - osc_languages_last_version_check()) > (24 * 3600) || $force ) {
+        $languages  = OSCLocale::newInstance()->listAll();
+        foreach($languages as $lang) {
+            if(osc_check_language_update($lang['pk_c_code'], $lang['s_version'] )) {
+                $array[] = $lang['pk_c_code'];
+                $total++;
+            }
+            $array_downloaded[] = $lang['pk_c_code'];
+        }
+        osc_set_preference( 'languages_to_update' , json_encode($array) );
+        osc_set_preference( 'languages_downloaded', json_encode($array_downloaded) );
+        osc_set_preference( 'languages_update_count', $total );
+        osc_set_preference( 'languages_last_version_check', time() );
+        osc_reset_preferences();
+    } else {
+        $total = getPreference('languages_update_count');
+    }
+
+    return $total;
+}
+
+function osc_admin_toolbar_update_languages($force = false)
+{
+    if( !osc_is_moderator() ) {
+        $total = osc_check_languages_update( $force );
+
+        if($force) {
+            AdminToolbar::newInstance()->remove_menu('update_language');
+        }
+        if($total > 0) {
+            $title = '<i class="circle circle-gray">'.$total.'</i>'.__('Language updates');
+            AdminToolbar::newInstance()->add_menu(
+                    array('id'    => 'update_language',
+                          'title' => $title,
+                          'href'  => osc_admin_base_url(true) . "?page=languages",
+                          'meta'  => array('class' => 'action-btn action-btn-black')
+                    ) );
+        }
+    }
+}
 ?>
