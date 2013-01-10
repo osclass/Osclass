@@ -191,7 +191,7 @@ $aux = array(
     'title'         => 'German Training Coordination Agent (Barcelona centre) en Barcelona',
     'description'   => 'SELLBYTEL is one of the leading European service providers for Customer Management Solutions with more than 4.000 employees at 22 locations worldwide. Our clients belong to the top 500 business companies in the sectors IT and hi-tech, telecommunications, automotive, financial services, health care and commerce. We are a dynamic company in constant growth. Please find more about us on our corporate website. ',
     'price'         => '',
-    'regionId'      => 'Alicante'  ,'cityId'        => 'Agres',
+    'regionId'      => 'Valencia'  ,'cityId'        => 'Agres',
     'cityArea'      => 'city area test'           ,'address'       => '',
     'photo'         => array(),'contactName'   => 'contact ad 1','contactEmail'  => $email
 );
@@ -203,7 +203,7 @@ $aux = array(
     'title'         => 'Private English language lessons from a CELTA qualified teacher en Barcelona',
     'description'   => 'My name is Benjamin, I am a 22 year old English teacher. I am a native speaker and a qualified CELTA teacher.',
     'price'         => '15',
-    'regionId'      => 'Alicante'  ,'cityId'        => 'Agres',
+    'regionId'      => 'Valencia'  ,'cityId'        => 'Agres',
     'cityArea'      => ''           ,'address'       => '',
     'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => $email
 );
@@ -222,7 +222,7 @@ PUBLICIDAD (acerca de)
 AdTech Ad
 ',
     'price'         => '30',
-    'regionId'      => 'Alicante'  ,'cityId'        => 'Agres',
+    'regionId'      => 'Valencia'  ,'cityId'        => 'Agres',
     'cityArea'      => ''           ,'address'       => '',
     'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => $email
 );
