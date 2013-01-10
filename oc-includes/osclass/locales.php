@@ -78,6 +78,12 @@ function osc_checkLocales() {
                     return false ;
                 }
             }
+        } else {
+            // update language version
+            OSCLocale::newInstance()->update(
+                    array('s_version' => $locale['version']),
+                    array('pk_c_code' => $locale['code'])
+                    );
         }
     }
 
