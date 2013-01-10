@@ -611,6 +611,43 @@
     }
 
     /**
+     * Get Osclass' market url for count items in categories
+     *
+     * @return string
+     */
+    function osc_market_count_url($type, $num = '') {
+        $url = getPreference('marketURL');
+        return $url . 'count/';
+    }
+
+    /**
+     * Osclass' market url for get featured items in categories
+     *
+     * @return string
+     */
+    function osc_market_featured_url($type, $num = '') {
+        $url = getPreference('marketURL');
+        $url .= 'featured/';
+        switch ($type) {
+            case 'plugins':
+                $url .= 'plugins/';
+                break;
+            case 'themes':
+                $url .= 'themes/';
+                break;
+            case 'languages':
+                $url .= 'languages/';
+                break;
+            default:
+                break;
+        }
+        if($num!='') {
+            $url .= 'num/'. $num;
+        }
+        return $url;
+    }
+
+    /**
      * Gets if third party sources are allowed to install new plugins and themes
      *
      * @return int

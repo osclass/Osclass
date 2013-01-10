@@ -1251,7 +1251,9 @@ function rglob($pattern, $flags = 0, $path = '') {
     return $files;
 }
 
-// Market util functions
+/*
+ *  Market util functions
+ */
 
 function osc_check_plugin_update($update_uri, $version = null) {
     $uri = _get_market_url('plugins', $update_uri);
