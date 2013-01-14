@@ -93,7 +93,7 @@
                     $options[] = '<a href="' . osc_static_page_url() . '" target="_blank">' . __('View page') . '</a>' ;
                     $options[] = '<a href="' . osc_admin_base_url(true) . '?page=pages&amp;action=edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>' ;
                     if( !$aRow['b_indelible'] ) {
-                        $options[] = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=pages&amp;action=delete&amp;id=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
+                        $options[] = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=pages&amp;action=delete&amp;id=' . $aRow['pk_i_id'] . '&amp;' . osc_csrf_token_url() . '">' . __('Delete') . '</a>' ;
                     }
 
                     $auxOptions = '<ul>'.PHP_EOL ;
