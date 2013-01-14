@@ -709,14 +709,20 @@
                                     }
                                 }
                             }
+
+                            $url_source_file = '';
                             if($data['s_download']!='') {
                                 $filename = basename(str_replace("/download", "", $data['s_download']));
+                                $url_source_file = $data['s_download'];
                             } else {
                                 $filename = $data['s_update_url']."_".$data['s_version'].".zip";
+                                $url_source_file = $data['s_source_file'];
                             }
-//                            error_log('Source file: ' . $data['s_source_file']);
+
+//                            error_log('Source file: ' . $url_source_file);
 //                            error_log('Filename: ' . $filename);
-                            $result   = osc_downloadFile($data['s_source_file'], $filename);
+
+                            $result   = osc_downloadFile($url_source_file, $filename);
 
                             if ($result) { // Everything is OK, continue
                                 /**********************
@@ -789,6 +795,15 @@
                                                 osc_check_plugins_update(true);
                                             } else if($section == 'themes') {
                                                 osc_check_themes_update(true);
+                                            } else if($section == 'languages') {
+                                                // load oc-content/
+                                                if( osc_checkLocales() ) {
+                                                    $message .= __('The language has been installed correctly');
+                                                } else {
+                                                    $message .= __('There was a problem adding the language');
+                                                    $error = 8;
+                                                }
+                                                osc_check_languages_update();
                                             }
 
                                             if ($rm_errors == 0) {

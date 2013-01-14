@@ -70,13 +70,47 @@
                 theme_advanced_buttons3 : "",
                 theme_advanced_toolbar_align : "left",
                 theme_advanced_toolbar_location : "top",
-                plugins : "media",
+                plugins : "adimage,advlink,media,contextmenu",
                 entity_encoding : "raw",
-                theme_advanced_buttons1_add : "media",
+                theme_advanced_buttons1_add : "forecolorpicker,fontsizeselect",
+                theme_advanced_buttons2_add: "media",
                 theme_advanced_disable : "styleselect",
-                extended_valid_elements : "script[type|src|charset|defer]"
+                extended_valid_elements : "script[type|src|charset|defer]",
+                relative_urls : false,
+                remove_script_host : false,
+                convert_urls : false
             });
+
+            function ajaxfilemanager(field_name, url, type, win) {
+                var ajaxfilemanagerurl = "<?php echo osc_base_url(); ?>/oc-includes/osclass/assets/js/tiny_mce/plugins/ajaxfilemanager/ajaxfilemanager.php";
+                var view = 'detail';
+                switch (type) {
+                    case "image":
+                        view = 'thumbnail';
+                        break;
+                    case "media":
+                        break;
+                    case "flash":
+                        break;
+                    case "file":
+                        break;
+                    default:
+                        return false;
+                }
+                tinyMCE.activeEditor.windowManager.open({
+                    url: "<?php echo osc_base_url(); ?>/oc-includes/osclass/assets/js/tiny_mce/plugins/ajaxfilemanager/ajaxfilemanager.php?view=" + view,
+                    width: 782,
+                    height: 440,
+                    inline : "yes",
+                    close_previous : "no"
+                },{
+                    window : win,
+                    input : field_name
+                });
+            }
+
         </script>
+
         <script type="text/javascript">
             $(document).ready(function(){
                 // Code for form validation

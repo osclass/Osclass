@@ -820,6 +820,7 @@ function osc_downloadFile($sourceFile, $downloadedFile)
         download_fsockopen($sourceFile, $downloadedFile);
         return true;
     }
+    return false;
 }
 
 function osc_file_get_contents($url)
@@ -1250,7 +1251,9 @@ function rglob($pattern, $flags = 0, $path = '') {
     return $files;
 }
 
-// Market util functions
+/*
+ *  Market util functions
+ */
 
 function osc_check_plugin_update($update_uri, $version = null) {
     $uri = _get_market_url('plugins', $update_uri);
@@ -1271,7 +1274,13 @@ function osc_check_theme_update($update_uri, $version = null) {
 function osc_check_language_update($update_uri, $version = null) {
     $uri = _get_market_url('languages', $update_uri);
     if($uri != false) {
-        return _need_update($uri, $version);
+        // if language version on market is newer
+        if( _need_update($uri, $version) ) {
+            // if language is compatible with osclass version
+            if( _need_update($uri, OSCLASS_VERSION, '<=') ) {
+                return true;
+            }
+        }
     }
     return false;
 }
@@ -1299,12 +1308,13 @@ function _get_market_url($type, $update_uri) {
     }
 }
 
-function _need_update($uri, $version) {
+function _need_update($uri, $version, $operator = '>') {
     if(false===($json=@osc_file_get_contents($uri))) {
         return false;
     } else {
         $data = json_decode($json , true);
-        if(isset($data['s_version']) && $data['s_version']>$version) {
+        if(isset($data['s_version']) && version_compare($data['s_version'], $version, $operator)) {
+            error_log('_need_update '.$data['s_version'].' '.$operator.' '.$version);
             return true;
         }
     }

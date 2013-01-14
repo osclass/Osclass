@@ -33,14 +33,17 @@
                 'screenshots'        => __('Screenshots'),
                 'download_manually'  => __('Download manually'),
                 'proceed_anyway'     => sprintf(__('Warning! This package is not compatible with your current version of Osclass (%s)'), $main_version),
-                'srue'               => __('Are you sure?'),
+                'sure'               => __('Are you sure?'),
                 'proceed_anyway_btn' => __('Ok, proceed anyway'),
                 'not_compatible'     => sprintf(__('Warning! This theme is not compatible with your current version of Osclass (%s)'), $main_version),
-                'themes' => array(
+                'themes'    => array(
                                 'download_ok' => __('The theme has been downloaded correctly, proceed to activate or preview it.')
                             ),
-                'plugins' => array(
+                'plugins'   => array(
                                 'download_ok' => __('The plugin has been downloaded correctly, proceed to install and configure.')
+                            ),
+                'languages' => array(
+                                'download_ok' => __('The language has been downloaded correctly, proceed to activate.')
                             )
 
             );

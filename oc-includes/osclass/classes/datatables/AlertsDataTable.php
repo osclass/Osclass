@@ -71,7 +71,8 @@
         private function processData($alerts)
         {
             if(!empty($alerts) && !empty($alerts['alerts'])) {
-            
+
+                $csrf_token_url = osc_csrf_token_url();
                 foreach($alerts['alerts'] as $aRow) {
                     $row = array() ;
                     $options        = array() ;
@@ -82,9 +83,9 @@
 
 
                     if( $aRow['b_active'] == 1 ) {
-                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=status_alerts&amp;alert_id[]=' . $aRow['pk_i_id'] . '&amp;status=0" >' . __('Deactivate') . '</a>' ;
+                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=status_alerts&amp;alert_id[]=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;status=0" >' . __('Deactivate') . '</a>' ;
                     } else {
-                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=status_alerts&amp;alert_id[]=' . $aRow['pk_i_id'] . '&amp;status=1" >' . __('Activate') . '</a>' ;
+                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=status_alerts&amp;alert_id[]=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;status=1" >' . __('Activate') . '</a>' ;
                     }
 
 
