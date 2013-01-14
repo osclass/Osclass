@@ -413,6 +413,8 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('rewrite_user_change_username', 'user/change_username');
         osc_set_preference('csrf_name', 'CSRF'.mt_rand(0,mt_getrandmax()));
 
+        @mkdir(CONTENT_PATH.'uploads/page-images');
+
     }
 
     osc_changeVersionTo(310);
