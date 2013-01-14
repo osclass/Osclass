@@ -10,7 +10,7 @@ class OCadmin_tools extends OCadminTest {
      * Import sql
      * Remove imported data
      */
-    function testImportData()
+    function atestImportData()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -36,7 +36,7 @@ class OCadmin_tools extends OCadminTest {
      * Login oc-admin
      * Import bad file.
      */
-    function testImportDataFail()
+    function atestImportDataFail()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
@@ -64,7 +64,7 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->waitForPageToLoad("600000");
         $this->assertTrue($this->selenium->isTextPresent("Backup completed successfully"), "Backup database.");
         // REMOVE FILE
-        foreach (glob(osc_base_path() . "OSClass_mysqlbackup.*") as $filename) {
+        foreach (glob(osc_base_path() . "Osclass_mysqlbackup.*") as $filename) {
             unlink($filename);
         }
     }
@@ -84,7 +84,7 @@ class OCadmin_tools extends OCadminTest {
         $this->selenium->waitForPageToLoad("600000");
         $this->assertTrue($this->selenium->isTextPresent("Archived successfully!"), "Backup osclass.");
         // REMOVE FILE
-        foreach (glob(osc_base_path() . "OSClass_backup.*") as $filename) {
+        foreach (glob(osc_base_path() . "Osclass_backup.*") as $filename) {
             unlink($filename);
         }
     }
@@ -117,7 +117,7 @@ class OCadmin_tools extends OCadminTest {
     }
 
 
-    function testLocations()
+    function atestLocations()
     {
 
         $this->loginWith();
@@ -182,7 +182,7 @@ class OCadmin_tools extends OCadminTest {
     /*
      * Test if the http_referer functionality is working on admin
      */
-    function testHTTPReferer()
+    function atestHTTPReferer()
     {
         $this->HTTPReferer( osc_admin_base_url(true)."?page=items" , "Manage listings");
         $this->HTTPReferer( osc_admin_base_url(true)."?page=stats&action=comments" , "Comment Statistics");
