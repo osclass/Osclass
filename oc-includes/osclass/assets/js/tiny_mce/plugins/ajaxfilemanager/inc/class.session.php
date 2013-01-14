@@ -48,11 +48,11 @@ class MySession
 	        }
     		if(!$dir->isReadable(CONFIG_SYS_DIR_SESSION_PATH))
     		{
-    			die('Permission denied: ' . CONFIG_SYS_DIR_SESSION_PATH . " is not readable.");
+    			die('Permission denied: ' . str_replace("../", "", CONFIG_SYS_DIR_SESSION_PATH) . " is not readable.");
     		}    		
     		if(!$dir->isWritable(CONFIG_SYS_DIR_SESSION_PATH))
     		{
-    			die('Permission denied: ' . CONFIG_SYS_DIR_SESSION_PATH . " is not writable.");
+    			die('Permission denied: ' . str_replace("../", "", CONFIG_SYS_DIR_SESSION_PATH) . " is not writable.");
     		}
     	$this->dir = backslashToSlash(addTrailingSlash(CONFIG_SYS_DIR_SESSION_PATH));
         $this->lifeTime = get_cfg_var("session.gc_maxlifetime");  
