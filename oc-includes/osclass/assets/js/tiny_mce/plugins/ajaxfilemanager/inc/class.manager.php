@@ -154,7 +154,7 @@ class manager
 		{
 			while(false !== ($file = readdir($dirHandler)))
 			{
-				if($file != '.' && $file != '..')
+				if($file != '.' && $file != '..' && substr(strtolower($file), -4)!='.php')
 				{
 					$flag = $this->flags['no'];
 				

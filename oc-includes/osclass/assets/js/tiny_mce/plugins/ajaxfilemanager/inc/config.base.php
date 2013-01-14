@@ -57,7 +57,7 @@ error_reporting(E_ALL);
 	define('CONFIG_SYS_DEFAULT_PATH', '../../../../../../../oc-content/uploads/page-images/'); //accept relative path only
 	define('CONFIG_SYS_ROOT_PATH', '../../../../../../../oc-content/uploads/page-images/'); //accept relative path only
 	define('CONFIG_SYS_FOLDER_SHOWN_ON_TOP', true); //show your folders on the top of list if true or order by name
-	define("CONFIG_SYS_DIR_SESSION_PATH", 'session/');
+	define("CONFIG_SYS_DIR_SESSION_PATH", '../../../../../../../oc-content/uploads/page-images/');
 	define("CONFIG_SYS_PATTERN_FORMAT", 'list'); //three options: reg ,csv, list, this option define the parttern format for the following patterns
 		/**
 		 * reg => regulare expression
@@ -77,7 +77,7 @@ error_reporting(E_ALL);
 	//define('CONFIG_UPLOAD_MAXSIZE', 2048); //by bytes
 	//define('CONFIG_UPLOAD_VALID_EXTS', 'txt');//
 
-	define('CONFIG_EDITABLE_VALID_EXTS', 'txt,htm,html,xml,js,css'); //make you include all these extension in CONFIG_UPLOAD_VALID_EXTS if you want all valid
+	define('CONFIG_EDITABLE_VALID_EXTS', 'txt,xml,css'); //make you include all these extension in CONFIG_UPLOAD_VALID_EXTS if you want all valid
 	
 	define('CONFIG_OVERWRITTEN', false); //overwirte when processing paste
 	define('CONFIG_UPLOAD_VALID_EXTS', 'gif,jpg,png,txt'); // 
