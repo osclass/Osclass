@@ -101,12 +101,15 @@
         $type             = strtolower($item['e_type']);
         $items_to_update  = json_decode(getPreference($type.'s_to_update'),true);
 
-
         if($item['s_thumbnail']){
             $thumbnail = $item['s_thumbnail'];
         }
         if($item['s_banner']){
-            $thumbnail = 'http://market.osclass.org/oc-content/uploads/market/'.$item['s_banner'];
+            if(@$item['s_banner_path']!=''){
+                $thumbnail = $item['s_banner_path'] . $item['s_banner'];
+            } else {
+                $thumbnail = 'http://market.osclass.org/oc-content/uploads/market/'.$item['s_banner'];
+            }
         }
         if ($item['b_featured']) {
             $featuredClass = ' is-featured';

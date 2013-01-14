@@ -745,7 +745,7 @@ function download_fsockopen($sourceFile, $fileout = null)
 
     $fp = @fsockopen($host, 80, $errno, $errstr, 30);
     if (!$fp) {
-
+        return false;
     } else {
         $ua  = $_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')';
         $out = "GET $link HTTP/1.1\r\n";
@@ -759,6 +759,9 @@ function download_fsockopen($sourceFile, $fileout = null)
         while (!feof($fp)) {
             $contents.= fgets($fp, 1024);
         }
+
+        fclose($fp);
+
         // check redirections ?
         // if (redirections) then do request again
         $aResult = processResponse($contents);
@@ -788,11 +791,11 @@ function download_fsockopen($sourceFile, $fileout = null)
                 $ff = @fopen($fileout, 'w+');
                 fwrite($ff, $body);
                 fclose($ff);
+                return true;
             } else {
                 return $body;
             }
         }
-        fclose($fp);
     }
 }
 
