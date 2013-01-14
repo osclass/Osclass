@@ -426,6 +426,15 @@
     }
 
     /**
+     * Gets when was the last version check
+     *
+     * @return string
+     */
+    function osc_languages_last_version_check() {
+        return (getPreference('languages_last_version_check'));
+    }
+
+    /**
      * Gets json response when checking if there is available a new version
      *
      * @return string
@@ -597,6 +606,43 @@
                 break;
             default:
                 break;
+        }
+        return $url;
+    }
+
+    /**
+     * Get Osclass' market url for count items in categories
+     *
+     * @return string
+     */
+    function osc_market_count_url($type, $num = '') {
+        $url = getPreference('marketURL');
+        return $url . 'count/';
+    }
+
+    /**
+     * Osclass' market url for get featured items in categories
+     *
+     * @return string
+     */
+    function osc_market_featured_url($type, $num = '') {
+        $url = getPreference('marketURL');
+        $url .= 'featured/';
+        switch ($type) {
+            case 'plugins':
+                $url .= 'plugins/';
+                break;
+            case 'themes':
+                $url .= 'themes/';
+                break;
+            case 'languages':
+                $url .= 'languages/';
+                break;
+            default:
+                break;
+        }
+        if($num!='') {
+            $url .= 'num/'. $num;
         }
         return $url;
     }

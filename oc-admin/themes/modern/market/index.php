@@ -20,14 +20,13 @@
     }
     osc_add_hook('help_box','addHelp');
     osc_current_admin_theme_path('market/header.php');
-    $count = json_decode(osc_file_get_contents('http://market.osclass.org.devel/oc-content/plugins/market/market.php?section=count'),true);
+    $count = json_decode( osc_file_get_contents(osc_market_count_url()), true);
 
 ?>
 <div class="grid-market">
     <?php
-    $out    = osc_file_get_contents('http://market.osclass.org.devel/oc-content/plugins/market/market.php?section=featured&type=plugins&num=6'); //changeme CARLOS
+    $out    = osc_file_get_contents(osc_market_featured_url('plugins', 6) );
     $array  = json_decode($out, true);
-
     ?>
     <h2 class="section-title"><?php _e('Recommended plugins for You'); ?><a href="<?php echo osc_admin_base_url(true).'?page=market&action=plugins'; ?>"><?php echo sprintf(__('View all (%s)'), $count['pluginsTotal']); ?></a></h2>
     <?php
@@ -45,7 +44,7 @@
 </div>
 <div class="grid-market">
     <?php
-    $out    = osc_file_get_contents('http://market.osclass.org.devel/oc-content/plugins/market/market.php?section=featured&type=themes&num=6'); //changeme CARLOS
+    $out    = osc_file_get_contents(osc_market_featured_url('themes', 6) );
     $array  = json_decode($out, true);
     ?>
     <h2 class="section-title"><?php _e('Recommended themes for You'); ?> <a href="<?php echo osc_admin_base_url(true).'?page=market&action=themes'; ?>"><?php echo sprintf(__('View all (%s)'), $count['themesTotal']); ?></a></h2>
@@ -64,7 +63,7 @@
 </div>
 <div class="grid-market">
     <?php
-    $out    = osc_file_get_contents('http://market.osclass.org.devel/oc-content/plugins/market/market.php?section=languages&type=themes&num=6'); //changeme CARLOS
+    $out    = osc_file_get_contents(osc_market_featured_url('languages', 6) );
     $array  = json_decode($out, true);
     ?>
     <h2 class="section-title"><?php _e('Languages'); ?> <a href="<?php echo osc_admin_base_url(true).'?page=market&action=languages'; ?>"><?php echo sprintf(__('View all (%s)'), $count['languagesTotal']); ?></a></h2>

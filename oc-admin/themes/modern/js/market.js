@@ -44,7 +44,7 @@ $(function(){
 
                 content.append(container.append(theme.langs.proceed_anyway).append(actions.append(btnClose).append(btnOk)));
 
-            $(content).dialog({title:theme.langs.srue,modal:true});
+            $(content).dialog({title:theme.langs.sure,modal:true});
         } else {
             installMarketItem(thatDialog);
         }
@@ -65,9 +65,9 @@ $(function(){
                 itemTemp = $('a[data-type="'+section+'"]').index($(this));
                 var item = market_data[section+'s'][section+'s'][itemTemp];
                 var description = $(item.s_description).text();
-                console.log(item);
-                console.log(description);
-                console.log(item.s_description);
+//                console.log(item);
+//                console.log(description);
+//                console.log(item.s_description);
                 var dots = '';
                 var versions = item.s_compatible.split(',');
                 var banner = false;
