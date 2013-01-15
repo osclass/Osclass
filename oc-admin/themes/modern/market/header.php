@@ -51,6 +51,7 @@
         <script type="text/javascript">
             var theme = window.theme || {};
             theme.adminBaseUrl = "<?php echo osc_admin_base_url(true); ?>";
+            theme.marketAjaxUrl = "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market&<?php echo osc_csrf_token_url(); ?>";
             theme.themUrl = "<?php echo osc_current_admin_theme_url(); ?>";
             theme.langs = <?php echo json_encode($js_lang); ?>;
 

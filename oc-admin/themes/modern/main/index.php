@@ -297,30 +297,7 @@
             <div class="widget-box">
                 <div class="widget-box-title"><h3><?php _e('Latest news'); ?></h3></div>
                 <div class="widget-box-content widget-box-content-no-wrapp">
-                    <h4 class="first-title"><?php _e('Blog'); ?></h4>
-                    <?php if( is_array($newsList) ) { ?>
-                        <ul class="list-latests">
-                        <?php foreach ($newsList as $list) { ?>
-                        <?php $new = ( strtotime($list['pubDate']) > strtotime('-1 week') ? true : false ) ; ?>
-                            <li>
-                                <a href="<?php echo $list['link'] ; ?>" target="_blank"><?php echo $list['title'] ; ?></a>
-                                <?php if( $new ) { ?>
-                                    <span style="color:red; font-size:10px; font-weight:bold;"><?php _e('new') ; ?></span>
-                                <?php } ?>
-                            </li>
-                        <?php } ?>
-                        </ul>
-                    <?php } else { ?>
-                        <?php _e('Unable to fetch news from Osclass. Please try again later') ; ?>
-                    <?php } ?>
-                    <h4><?php _e('Twitter'); ?></h4>
-                    <?php if( is_array($twitterRSS) ) { ?>
-                        <ul class="list-latests">
-                        <?php foreach( $twitterRSS as $tweet ) { ?>
-                            <li><a href="<?php echo $tweet['link']; ?>" target="_blank"><?php echo str_replace('osclass: ', '', $tweet['title']); ?></a></li>
-                        <?php } ?>
-                        </ul>
-                    <?php } ?>
+                    <script type="text/javascript" id="banner_market" src="<?php echo osc_admin_base_url(true); ?>?page=ajax&action=dashboardbox_market&nexTo=#banner_market"></script>
                 </div>
             </div>
         </div>

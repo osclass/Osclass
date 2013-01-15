@@ -12,9 +12,8 @@ function installMarketItem(thatItem){
         } else if(marketType=='languages') {
             pageRedirect = 'languages';
         }
-        console.log('-> ' + pageRedirect);
         $.getJSON(
-        theme.adminBaseUrl+"?page=ajax&action=market",
+        theme.marketAjaxUrl,
         {"code" : marketCode, "section" : marketType},
         function(data) {
             var content  = data.message ;
@@ -75,9 +74,6 @@ $(function(){
                 itemTemp = $('a[data-type="'+section+'"]').index($(this));
                 var item = market_data[section+'s'][section+'s'][itemTemp];
                 var description = $(item.s_description).text();
-//                console.log(item);
-//                console.log(description);
-//                console.log(item.s_description);
                 var dots = '';
                 var versions = item.s_compatible.split(',');
                 var banner = false;
