@@ -615,7 +615,7 @@
      *
      * @return string
      */
-    function osc_market_count_url($type, $num = '') {
+    function osc_market_count_url() {
         $url = getPreference('marketURL');
         return $url . 'count/';
     }

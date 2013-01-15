@@ -3,6 +3,16 @@ function installMarketItem(thatItem){
     $('<div id="downloading"><div class="osc-modal-content">'+theme.langs.wait_download+'</div></div>').dialog({title:theme.langs.downloading+'...',modal:true});
         var marketCode = thatItem.attr('data-code');
         var marketType = thatItem.attr('data-type')+'s';
+        // page to redirect once is installed
+        var pageRedirect = 'plugins';
+        if(marketType=='plugins') {
+            pageRedirect = 'plugins';
+        } else if(marketType=='themes') {
+            pageRedirect = 'appearance';
+        } else if(marketType=='languages') {
+            pageRedirect = 'languages';
+        }
+        console.log('-> ' + pageRedirect);
         $.getJSON(
         theme.adminBaseUrl+"?page=ajax&action=market",
         {"code" : marketCode, "section" : marketType},
@@ -12,7 +22,7 @@ function installMarketItem(thatItem){
             if(data.error == 0) { // no errors
                 content += '<h3>'+messages.download_ok+'</h3>';
                 content += "<p>";
-                content += '<a class="btn btn-mini btn-green" href="'+theme.adminBaseUrl+'?page=appearance&marketError='+data.error+'&slug='+data.data['s_update_url']+'">'+theme.langs.ok+'</a>';
+                content += '<a class="btn btn-mini btn-green" href="'+theme.adminBaseUrl+'?page='+pageRedirect+'&marketError='+data.error+'&slug='+data.data['s_update_url']+'">'+theme.langs.ok+'</a>';
                 content += '<a class="btn btn-mini" href="javascript:location.reload(true)">'+theme.langs.close+'</a>';
                 content += "</p>";
             } else {
