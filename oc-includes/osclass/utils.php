@@ -789,9 +789,13 @@ function download_fsockopen($sourceFile, $fileout = null)
             }
             if($fileout!=null) {
                 $ff = @fopen($fileout, 'w+');
-                fwrite($ff, $body);
-                fclose($ff);
-                return true;
+                if($ff!==FALSE) {
+                    fwrite($ff, $body);
+                    fclose($ff);
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
                 return $body;
             }
