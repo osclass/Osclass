@@ -663,7 +663,7 @@
                  ** COMPLETE MARKET PROCESS **
                  *******************************/
                 case 'market': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
-//                    osc_csrf_check(false);
+                    osc_csrf_check(false);
                     $section = Params::getParam('section');
                     $code    = Params::getParam('code');
                     $plugin  = false;
