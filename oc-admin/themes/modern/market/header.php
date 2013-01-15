@@ -101,6 +101,7 @@
         $letterDraw       = '';
         $type             = strtolower($item['e_type']);
         $items_to_update  = json_decode(getPreference($type.'s_to_update'),true);
+        $items_downloaded = json_decode(getPreference($type.'s_downloaded'),true);
 
         if($item['s_thumbnail']){
             $thumbnail = $item['s_thumbnail'];
@@ -115,20 +116,28 @@
         if ($item['b_featured']) {
             $featuredClass = ' is-featured';
         }
+
+        $downloaded = false;
         if($type != 'language'){
-            if (in_array($item['s_update_url'],$items_to_update)) {
-                $updateClass = ' has-update';
-                $updateData  = ' data-update="true"';
+            if(in_array($item['s_update_url'], $items_downloaded)) {
+                if (in_array($item['s_update_url'], $items_to_update)) {
+                    $updateClass = ' has-update';
+                    $updateData  = ' data-update="true"';
+                } else {
+                    // market item downloaded !
+                    $downloaded = true;
+                }
             }
         }
-        if(!$thumbnail && $color){
 
+        if(!$thumbnail && $color){
             $thumbnail = osc_current_admin_theme_url('images/gr-'.$color.'.png');
             $letterDraw = $item['s_update_url'][0];
             if($type == 'language'){
                 $letterDraw = $item['s_update_url'];
             }
         }
+
         $style = 'background-image:url('.$thumbnail.');';
         $item['total_downloads'] = 335;
         echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent'.$updateClass.$featuredClass.'" data-type="'.$type.'"'.$updateData.' data-gr="'.$color.'" data-letter="'.$item['s_update_url'][0].'">';
@@ -140,6 +149,9 @@
         echo '        <div>';
         echo '            <span class="more">'.__('View more').'</span>';
         echo '            <span class="downloads"><strong>'.$item['i_total_downloads'].'</strong>'.__('downloads').'</span>';
+        if($downloaded) {
+            echo '            <span class="downloaded"><strong> '.__('Downloaded!!!').' </strong>'.__('downloads').'</span>';
+        }
         echo '        </div>';
         echo '    </div>';
         echo '</div>';
