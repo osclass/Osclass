@@ -922,7 +922,7 @@
                     // encode to json
                     echo json_encode($array);
                     break;
-                case 'market_banner':
+                case 'dashboardbox_market':
                     $nextTo = Params::getParam("nextTo");
                     if($nextTo == ''){
                         $nextTo = '#banner_market';

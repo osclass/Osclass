@@ -297,7 +297,7 @@
             <div class="widget-box">
                 <div class="widget-box-title"><h3><?php _e('Latest news'); ?></h3></div>
                 <div class="widget-box-content widget-box-content-no-wrapp">
-                    <script type="text/javascript" id="banner_market" src="<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market_banner&nexTo=#banner_market"></script>
+                    <script type="text/javascript" id="banner_market" src="<?php echo osc_admin_base_url(true); ?>?page=ajax&action=dashboardbox_market&nexTo=#banner_market"></script>
                 </div>
             </div>
         </div>
