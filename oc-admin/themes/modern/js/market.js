@@ -1,6 +1,6 @@
 function installMarketItem(thatItem){
     $(".ui-dialog-content").dialog("close");
-    $('<div id="downloading"><div class="osc-modal-content">'+theme.langs.wait_download+'</div></div>').dialog({title:theme.langs.downloading+'...',modal:true});
+    $('<div id="downloading"><div class="osc-modal-content">'+theme.langs.wait_download+'</div></div>').dialog({title:theme.langs.downloading+'...',modal:true,width:'auto',position: ['center']});
         var marketCode = thatItem.attr('data-code');
         var marketType = thatItem.attr('data-type')+'s';
         // page to redirect once is installed
@@ -28,6 +28,7 @@ function installMarketItem(thatItem){
                 content += '<a class="btn btn-mini" href="javascript:location.reload(true)">'+theme.langs.close+'</a>';
             }
             $("#downloading .osc-modal-content").html(content);
+            $("#downloading").dialog("option", "position", "center");
         });
 }
 $(function(){
