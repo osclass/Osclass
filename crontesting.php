@@ -21,6 +21,8 @@
     system("git merge --no-ff develop; echo $?", $rv);
     if($rv!=0) { echo "CRON FAILED"; exit; };
 
+    system("killall firefox-bin");
+
     system("php oc-includes/simpletest/test/osclass/test_all.php --installer --frontend --admin");
 
 ?>
