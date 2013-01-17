@@ -40,6 +40,9 @@
                                         //osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $user = User::newInstance()->findByEmail( Params::getParam('email') ) ;
+                                        if (!$user) {
+                                            $user = User::newInstance()->findByUsername( Params::getParam('email') );
+                                        }
 
                                         $url_redirect = osc_get_http_referer();
                                         $page_redirect = '';
