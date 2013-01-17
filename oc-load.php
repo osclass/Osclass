@@ -150,6 +150,7 @@ require_once LIB_PATH . 'osclass/model/Log.php';
 require_once LIB_PATH . 'osclass/model/CountryStats.php';
 require_once LIB_PATH . 'osclass/model/RegionStats.php';
 require_once LIB_PATH . 'osclass/model/CityStats.php';
+require_once LIB_PATH . 'osclass/model/BanRule.php';
 
 require_once LIB_PATH . 'osclass/model/LocationsTmp.php';
 
@@ -181,6 +182,7 @@ require_once LIB_PATH . 'osclass/frm/Alert.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Field.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Admin.form.class.php';
 require_once LIB_PATH . 'osclass/frm/ManageItems.form.class.php';
+require_once LIB_PATH . 'osclass/frm/BanRule.form.class.php';
 
 require_once LIB_PATH . 'osclass/functions.php';
 require_once LIB_PATH . 'osclass/helpers/hAdminMenu.php';

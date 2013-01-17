@@ -461,6 +461,135 @@
 
                                         $this->doView("users/alerts.php");
                 break;
+                case('ban'):             // manage ban rules view
+
+                                        if(Params::getParam("action")!="") {
+                                            osc_run_hook("ban_rules_bulk_".Params::getParam("action"), Params::getParam('id'));
+                                        }
+
+                                        require_once osc_lib_path()."osclass/classes/datatables/BanRulesDataTable.php";
+
+                                        // set default iDisplayLength
+                                        if( Params::getParam('iDisplayLength') != '' ) {
+                                            Cookie::newInstance()->push('listing_iDisplayLength', Params::getParam('iDisplayLength'));
+                                            Cookie::newInstance()->set();
+                                        } else {
+                                            // set a default value if it's set in the cookie
+                                            if( Cookie::newInstance()->get_value('listing_iDisplayLength') != '' ) {
+                                                Params::setParam('iDisplayLength', Cookie::newInstance()->get_value('listing_iDisplayLength'));
+                                            } else {
+                                                Params::setParam('iDisplayLength', 10 );
+                                            }
+                                        }
+                                        $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
+
+                                        // Table header order by related
+                                        if( Params::getParam('sort') == '') {
+                                            Params::setParam('sort', 'date');
+                                        }
+                                        if( Params::getParam('direction') == '') {
+                                            Params::setParam('direction', 'desc');
+                                        }
+
+                                        $page  = (int)Params::getParam('iPage');
+                                        if($page==0) { $page = 1; };
+                                        Params::setParam('iPage', $page);
+
+                                        $params = Params::getParamsAsArray("get");
+
+                                        $banRulesDataTable = new BanRulesDataTable();
+                                        $banRulesDataTable->table($params);
+                                        $aData = $banRulesDataTable->getData();
+
+                                        if(count($aData['aRows']) == 0 && $page!=1) {
+                                            $total = (int)$aData['iTotalDisplayRecords'];
+                                            $maxPage = ceil( $total / (int)$aData['iDisplayLength'] );
+
+                                            $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
+
+                                            if($maxPage==0) {
+                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage=1', $url);
+                                                $this->redirectTo($url);
+                                            }
+
+                                            if($page > 1) {
+                                                $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url);
+                                                $this->redirectTo($url);
+                                            }
+                                        }
+
+
+                                        $this->_exportVariableToView('aData', $aData);
+                                        $this->_exportVariableToView('aRawRows', $banRulesDataTable->rawRows());
+
+                                        $bulk_options = array(
+                                            array('value' => '', 'data-dialog-content' => '', 'label' => __('Bulk actions')),
+                                            array('value' => 'delete', 'data-dialog-content' => sprintf(__('Are you sure you want to %s the selected ban rules?'), strtolower(__('Delete'))), 'label' => __('Delete'))
+                                        );
+
+                                        $bulk_options = osc_apply_filter("ban_rule_bulk_filter", $bulk_options);
+                                        $this->_exportVariableToView('bulk_options', $bulk_options);
+
+
+                                        //calling the view...
+                                        $this->doView('users/ban.php');
+                break;
+                case('edit_ban_rule'):
+                                        $this->_exportVariableToView('rule', BanRule::newInstance()->findByPrimaryKey(Params::getParam('id')));
+                                        $this->doView('users/ban_frm.php');
+                break;
+                case('edit_ban_rule_post'):
+                                        osc_csrf_check();
+                                        if(Params::getParam('s_ip')=='' && Params::getParam('s_email')=='') {
+                                            osc_add_flash_warning_message( _m("Both rules can not be empty"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=ban');
+                                        }
+
+                                        BanRule::newInstance()->update(array('s_name' => Params::getParam('s_name'), 's_ip' => Params::getParam('s_ip'), 's_email' => Params::getParam('s_email')), array('pk_i_id' => Params::getParam('id')));
+                                        osc_add_flash_ok_message(_m('Rule updated correctly'), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=ban');
+                break;
+                case('create_ban_rule'):
+                                        $this->_exportVariableToView('rule', null);
+                                        $this->doView('users/ban_frm.php');
+                break;
+                case('create_ban_rule_post'):
+                                        osc_csrf_check();
+                                        if(Params::getParam('s_ip')=='' && Params::getParam('s_email')=='') {
+                                            osc_add_flash_warning_message( _m("Both rules can not be empty"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=ban');
+                                        }
+
+                                        BanRule::newInstance()->insert(array('s_name' => Params::getParam('s_name'), 's_ip' => Params::getParam('s_ip'), 's_email' => Params::getParam('s_email')));
+                                        osc_add_flash_ok_message(_m('Rule saved correctly'), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=ban');
+                break;
+                case('delete_ban_rule'):         //delete ban rules
+                                        osc_csrf_check();
+                                        $iDeleted = 0;
+                                        $ruleId   = Params::getParam('id');
+
+                                        if( !is_array($ruleId) ) {
+                                            osc_add_flash_error_message( _m("User id isn't in the correct format"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=ban');
+                                        }
+
+                                        $ruleMgr = BanRule::newInstance();
+                                        foreach($ruleId as $id) {
+                                            if($ruleMgr->deleteByPrimaryKey($id)) {
+                                                $iDeleted++;
+                                            }
+                                        }
+
+                                        if( $iDeleted == 0 ) {
+                                            $msg = _m('No rules have been deleted');
+                                        } else {
+                                            $msg = sprintf( _mn('One ban rule has been deleted', '%s ban rules have been deleted', $iDeleted), $iDeleted );
+                                        }
+
+                                        osc_add_flash_ok_message($msg, 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=ban');
+                break;
                 default:                // manage users view
 
                                         if(Params::getParam("action")!="") {
