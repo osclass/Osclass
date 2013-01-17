@@ -37,7 +37,7 @@
                                             osc_add_flash_error_message(_m('Users are not enabled'));
                                             $this->redirectTo(osc_base_url());
                                         }
-                                        osc_csrf_check();
+                                        //osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $user = User::newInstance()->findByEmail( Params::getParam('email') ) ;
 
@@ -62,8 +62,8 @@
                                                     }
                                                 }
                                             }
-                                        } else if(preg_match('|[\?&]page=([^&]+)|', $url_redirect.'&', $match)) {
-                                            $page_redirect = $match[1];
+                                        //} else if(preg_match('|[\?&]page=([^&]+)|', $url_redirect.'&', $match)) {
+                                        //    $page_redirect = $match[1];
                                         }
                                         if($url_redirect=='') {
                                             $url_redirect = osc_user_dashboard_url();
@@ -76,6 +76,15 @@
 
                                         if ( $user["s_password"] != sha1( Params::getParam('password', false, false) ) ) {
                                             osc_add_flash_error_message( _m('The password is incorrect')) ;
+                                            $this->redirectTo(osc_user_login_url());
+                                        }
+
+                                        $banned = osc_is_banned(Params::getParam('email'));
+                                        if($banned==1) {
+                                            osc_add_flash_error_message( _m('Your current email is not allowed'));
+                                            $this->redirectTo(osc_user_login_url());
+                                        } else if($banned==2) {
+                                            osc_add_flash_error_message( _m('Your current IP is not allowed'));
                                             $this->redirectTo(osc_user_login_url());
                                         }
 

@@ -45,6 +45,12 @@
     }
 
 
+    /**
+     * Create a CSRF token to be placed in a form
+     *
+     * @since 3.1
+     * @return string
+     */
     function osc_csrf_token_form() {
         $name = osc_csrf_name()."_".mt_rand(0,mt_getrandmax());
         $token = osc_csrfguard_generate_token($name);
@@ -52,12 +58,23 @@
         <input type='hidden' name='CSRFToken' value='".$token."' />";
     }
 
+    /**
+     * Create a CSRF token to be placed in a url
+     *
+     * @since 3.1
+     * @return string
+     */
     function osc_csrf_token_url() {
         $name = osc_csrf_name()."_".mt_rand(0,mt_getrandmax());
         $token = osc_csrfguard_generate_token($name);
         return "CSRFName=".$name."&CSRFToken=".$token;
     }
 
+    /**
+     * Check is CSRF token is valid, die in other case
+     *
+     * @since 3.1
+     */
     function osc_csrf_check($drop = true) {
         if(Params::getParam('CSRFName')=='' || Params::getParam('CSRFToken')=='') {
             exit(__("Probable invalid request."));
@@ -67,6 +84,74 @@
         if (!osc_csrfguard_validate_token($name, $token, $drop)) {
             exit(__("Invalid CSRF token."));
         }
+    }
+
+    /**
+     * Check is an email and IP are banned
+     *
+     * @param string $email
+     * @param string $ip
+     * @since 3.1
+     * @return int 0: not banned, 1: email is banned, 2: IP is banned
+     */
+    function osc_is_banned($email = null, $ip = null) {
+        if($ip==null) {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+        $rules = BanRule::newInstance()->listAll();
+        $result = osc_is_ip_banned($ip, $rules);
+        if(!$result && $email!=null) {
+            return osc_is_email_banned($email, $rules)?1:0; // 1:Email is banned, 0:not banned
+        }
+        return 2; //IP is banned
+    }
+
+    /**
+     * Check is an email and IP are banned
+     *
+     * @param string $ip
+     * @param string $rules (optional, to savetime and resources)
+     * @since 3.1
+     * @return boolean
+     */
+    function osc_is_ip_banned($ip, $rules = null) {
+        if($rules==null) {
+            $rules = BanRule::newInstance()->listAll();
+        }
+        foreach($rules as $rule) {
+            $rule = str_replace("*", ".*", str_replace(".", "\.", $rule['s_ip']));
+            $rule = '|^'.$rule.'$|';
+            if(preg_match($rule, $ip)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check is an email and IP are banned
+     *
+     * @param string $email
+     * @param string $rules (optional, to savetime and resources)
+     * @since 3.1
+     * @return boolean
+     */
+    function osc_is_email_banned($email, $rules = null) {
+        if($rules==null) {
+            $rules = BanRule::newInstance()->listAll();
+        }
+        foreach($rules as $rule) {
+            $rule = str_replace("*", ".*", str_replace(".", "\.", $rule['s_email']));
+            if(substr($rule,0,1)=="!") {
+                $rule = '|^((?!'.$rule.').*)$|';
+            } else {
+                $rule = '|^'.$rule.'$|';
+            }
+            if(preg_match($rule, $email)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 ?>
