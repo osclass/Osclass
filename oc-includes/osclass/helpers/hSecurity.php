@@ -118,12 +118,31 @@
         if($rules==null) {
             $rules = BanRule::newInstance()->listAll();
         }
-        foreach($rules as $rule) {
-            $rule = str_replace("*", ".*", str_replace(".", "\.", $rule['s_ip']));
-            $rule = '|^'.$rule.'$|';
-            if(preg_match($rule, $ip)) {
-                return true;
+        $ip_blocks = explode(".", $ip);
+        if(count($ip_blocks)==4) {
+            foreach($rules as $rule) {
+                if($rule['s_ip']!='') {
+                    $blocks = explode(".", $rule['s_ip']);
+                    if(count($blocks)==4) {
+                        $matched = true;
+                        for($k=0;$k<4;$k++) {
+                            if(preg_match('|([0-9]+)-([0-9]+)|', $blocks[$k], $match)) {
+                                if($ip_blocks[$k]<$match[1] || $ip_blocks[$k]>$match[2]) {
+                                    $matched = false;
+                                    break;
+                                }
+                            } else if($blocks[$k]!="*" && $blocks[$k]!=$ip_blocks[$k]) {
+                                $matched = false;
+                                break;
+                            }
+                        }
+                        if($matched) {
+                            return true;
+                        }
+                    }
+                }
             }
+            return false;
         }
         return false;
     }
@@ -142,13 +161,15 @@
         }
         foreach($rules as $rule) {
             $rule = str_replace("*", ".*", str_replace(".", "\.", $rule['s_email']));
-            if(substr($rule,0,1)=="!") {
-                $rule = '|^((?!'.$rule.').*)$|';
-            } else {
-                $rule = '|^'.$rule.'$|';
-            }
-            if(preg_match($rule, $email)) {
-                return true;
+            if($rule!='') {
+                if(substr($rule,0,1)=="!") {
+                    $rule = '|^((?!'.$rule.').*)$|';
+                } else {
+                    $rule = '|^'.$rule.'$|';
+                }
+                if(preg_match($rule, $email)) {
+                    return true;
+                }
             }
         }
         return false;

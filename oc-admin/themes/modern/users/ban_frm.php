@@ -57,7 +57,7 @@
     $aux    = customFrmText();
 ?>
 <?php osc_current_admin_theme_path('parts/header.php') ; ?>
-<h2 class="render-title"><?php echo $aux['title'] ; ?></h3>
+<h2 class="render-title"><?php echo $aux['title'] ; ?></h2>
     <div class="settings-user">
         <ul id="error_list"></ul>
         <form name="register" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
@@ -77,12 +77,14 @@
                     <div class="form-label"><?php _e('IP rule') ; ?></div>
                     <div class="form-controls">
                         <?php BanRuleForm::ip_text($rule) ; ?>
+                        <span class="help-box"><?php _e('(e.g. 192.168.10-20.*)') ; ?></span>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-label"><?php _e('E-mail rule') ; ?></div>
                     <div class="form-controls">
                         <?php BanRuleForm::email_text($rule) ; ?>
+                        <span class="help-box"><?php _e('(e.g. *@badsite.com)') ; ?></span>
                     </div>
                 </div>
                 <div class="clear"></div>
