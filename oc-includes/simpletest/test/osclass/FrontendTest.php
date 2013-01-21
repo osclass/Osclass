@@ -106,7 +106,7 @@ abstract class FrontendTest extends MyWebTestCase {
         User::newInstance()->deleteUser($user['pk_i_id']);
     }
     
-    public function insertItem($parentCar, $cat, $title, $description, $price, $regionId, $cityId, $cityArea, $aPhotos, $user, $email , $logged = 0)
+    public function insertItem($parentCat, $cat, $title, $description, $price, $regionId, $cityId, $cityArea, $aPhotos, $user, $email , $logged = 0)
     {
         $this->selenium->open( osc_base_url() );
 
