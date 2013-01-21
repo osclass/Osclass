@@ -114,7 +114,7 @@
         });
     </script>
 <?php }; ?>
-<h2 class="render-title"><?php echo $aux['title'] ; ?></h3>
+<h2 class="render-title"><?php echo $aux['title'] ; ?></h2>
 
 
     <!-- add user form -->

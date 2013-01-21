@@ -1,4 +1,4 @@
-<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -20,20 +20,24 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    set_time_limit(0);
+    class BanRuleForm extends Form {
 
-    if( !defined('__FROM_CRON__') ) {
-        define('__FROM_CRON__', true) ;
-    }
-
-    function purge_latest_searches_hourly() {
-        $purge = osc_purge_latest_searches();
-        if( $purge == 'hour' ) {
-            LatestSearches::newInstance()->purgeDate( date('Y-m-d H:i:s', ( time() - 3600) ) );
-        } else if( !in_array($purge, array('forever', 'day', 'week')) ) {
-            LatestSearches::newInstance()->purgeNumber($purge);
+        static public function primary_input_hidden($rule) {
+            parent::generic_input_hidden("id", (isset($rule["pk_i_id"]) ? $rule['pk_i_id'] : '') );
         }
+
+        static public function name_text($rule = null) {
+            parent::generic_input_text("s_name", isset($rule['s_name'])? $rule['s_name'] : '', null, false);
+        }
+
+        static public function ip_text($rule = null) {
+            parent::generic_input_text("s_ip", isset($rule['s_ip'])? $rule['s_ip'] : '', null, false);
+        }
+
+        static public function email_text($rule = null) {
+            parent::generic_input_text("s_email", isset($rule['s_email'])? $rule['s_email'] : '', null, false);
+        }
+
     }
 
-    osc_run_hook('cron_hourly');
-    /* file end: ./oc-includes/osclass/cron.hourly.php */
+?>

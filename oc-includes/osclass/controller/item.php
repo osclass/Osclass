@@ -137,6 +137,15 @@
                         }
                     }
 
+                    $banned = osc_is_banned($mItems->data['contactEmail']);
+                    if($banned==1) {
+                        osc_add_flash_error_message( _m('Your current email is not allowed'));
+                        $this->redirectTo( osc_item_post_url() );
+                    } else if($banned==2) {
+                        osc_add_flash_error_message( _m('Your current IP is not allowed'));
+                        $this->redirectTo( osc_item_post_url() );
+                    }
+
                     // POST ITEM ( ADD ITEM )
                     $success = $mItems->add();
 

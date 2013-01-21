@@ -335,21 +335,18 @@
         }
         // OK
         static public function region_select($regions = null, $item = null) {
-            // if have input text instead of select
-            if( Session::newInstance()->_getForm('region') != ''){
-                $regions = null;
-            } else {
-                if($regions==null) { $regions = array(); };
-            }
 
             if($item==null) { $item = osc_item(); };
+
+            if( Session::newInstance()->_getForm('countryId') != "" ) {
+                $regions = Region::newInstance()->findByCountry(Session::newInstance()->_getForm('countryId'));
+            } else if($regions==null) {
+                $regions = Region::newInstance()->findByCountry($item['fk_c_country_code']);
+            }
 
             if( count($regions) >= 1 ) {
                 if( Session::newInstance()->_getForm('regionId') != "" ) {
                     $item['fk_i_region_id'] = Session::newInstance()->_getForm('regionId');
-                }
-                if( Session::newInstance()->_getForm('countryId') != "" ) {
-                    $regions = Region::newInstance()->findByCountry(Session::newInstance()->_getForm('countryId'));
                 }
                 parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select a region...'), (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : null);
                 return true;
@@ -364,18 +361,18 @@
 
         // OK
         static public function city_select($cities = null, $item = null) {
-            if( Session::newInstance()->_getForm('city') != ''){
-                $cities = null;
-            } else {
-                if($cities==null) { $cities = array(); };
-            }
+
             if($item==null) { $item = osc_item(); };
+
+            if( Session::newInstance()->_getForm('regionId') != "" ) {
+                $cities = City::newInstance()->findByRegion( Session::newInstance()->_getForm('regionId') );
+            } else if($cities==null) {
+                $cities = City::newInstance()->findByRegion( $item['fk_i_region_id'] );
+            }
+
             if( count($cities) >= 1 ) {
                 if( Session::newInstance()->_getForm('cityId') != "" ) {
                     $item['fk_i_city_id'] = Session::newInstance()->_getForm('cityId');
-                }
-                if( Session::newInstance()->_getForm('regionId') != "" ) {
-                    $cities = City::newInstance()->findByRegion( Session::newInstance()->_getForm('regionId') );
                 }
                 parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select a city...'), (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : null);
                 return true;
