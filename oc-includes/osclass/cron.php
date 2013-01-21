@@ -29,12 +29,13 @@
         $i_next = strtotime($cron['d_next_exec']);
 
         if( (CLI && (Params::getParam('cron-type') === 'hourly')) || ((($i_now - $i_next) >= 0) && !CLI) ) {
-            require_once osc_lib_path() . 'osclass/cron.hourly.php' ;
-
             // update the next execution time in t_cron
             $d_next = date('Y-m-d H:i:s', $i_now + 3600) ;
             Cron::newInstance()->update(array('d_last_exec' => $d_now, 'd_next_exec' => $d_next),
                                         array('e_type'      => 'HOURLY')) ;
+
+            // Run cron AFTER updating the next execution time to avoid double run of cron
+            require_once osc_lib_path() . 'osclass/cron.hourly.php' ;
         }
     }
 
@@ -44,12 +45,13 @@
         $i_next = strtotime($cron['d_next_exec']) ;
 
         if( (CLI && (Params::getParam('cron-type') === 'daily')) || ((($i_now - $i_next) >= 0) && !CLI) ) {
-            require_once LIB_PATH . 'osclass/cron.daily.php' ;
-
             // update the next execution time in t_cron
             $d_next = date('Y-m-d H:i:s', $i_now + (24 * 3600)) ;
             Cron::newInstance()->update(array('d_last_exec' => $d_now, 'd_next_exec' => $d_next),
                                         array('e_type'      => 'DAILY')) ;
+
+            // Run cron AFTER updating the next execution time to avoid double run of cron
+            require_once LIB_PATH . 'osclass/cron.daily.php' ;
         }
     }
 
@@ -59,12 +61,13 @@
         $i_next = strtotime($cron['d_next_exec']) ;
 
         if( (CLI && (Params::getParam('cron-type') === 'weekly')) || ((($i_now - $i_next) >= 0) && !CLI) ) {
-            require_once LIB_PATH . 'osclass/cron.weekly.php' ;
-
             // update the next execution time in t_cron
             $d_next = date('Y-m-d H:i:s', $i_now + (7 * 24 * 3600)) ;
             Cron::newInstance()->update(array('d_last_exec' => $d_now, 'd_next_exec' => $d_next),
                                         array('e_type'      => 'WEEKLY')) ;
+
+            // Run cron AFTER updating the next execution time to avoid double run of cron
+            require_once LIB_PATH . 'osclass/cron.weekly.php' ;
         }
     }
 
