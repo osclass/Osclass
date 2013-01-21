@@ -877,23 +877,19 @@
                 case 'market_data':
                     $section  = Params::getParam('section');
                     $page     = Params::getParam("mPage");
-                    $callback = Params::getParam("mPage");
                     $featured = Params::getParam("featured");
 
                     if($page>=1) $page--;
 
                     $url  = osc_market_url($section)."/page/".$page;
-
+                    
                     if($featured != ''){
-                        $url = 'http://market.osclass.org.devel/oc-content/plugins/market/market.php?section=featured&type='.$section.'&num=6'; //changeme CARLOS
-                        //osc_market_url($section)."/featured/".$page;
+                        $url = osc_market_featured_url($section);
                     }
                     $data = array();
 
                     $data = json_decode(osc_file_get_contents($url), true);
 
-                    //print_r($data);
-                    //echo $data;
                     if( !isset($data[$section])) {
                         $data = array('error' => 1, 'error_msg' => __('No market data'));
                     }
