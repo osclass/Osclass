@@ -152,7 +152,7 @@ class OCadmin_tools extends OCadminTest {
                 $this->assertTrue(($r['items']==8), "Barcelona items (should be 8, ".$r['items']." found)");
             } else if($r['region_name']=="Madrid") {
                 $this->assertTrue(($r['items']==3), "Madrid items (should be 3, ".$r['items']." found)");
-            } else if($r['region_name']=="Alicante") {
+            } else if($r['region_name']=="Valencia") {
                 $this->assertTrue(($r['items']==3), "Alicante items (should be 3, ".$r['items']." found)");
             } else {
                 $this->assertTrue(($r['items']==0), $r['region_name']." items (should be 0, ".$r['items']." found)");
