@@ -167,7 +167,7 @@ class Frontend_search extends FrontendTest {
         $this->selenium->click("xpath=//span/button[text()='Apply']");
         $this->selenium->waitForPageToLoad("30000");
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
-        $this->assertTrue($count == 9 , "Search by [ Show only items with pictures ].");
+        $this->assertTrue($count == 7 , "Search by [ Show only items with pictures ].");
     }
     
     /*
@@ -215,10 +215,10 @@ class Frontend_search extends FrontendTest {
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
         $this->assertTrue($count == 10 , "Search by [ sCountry es ].");
         
-        $searchRegion   = osc_search_url(array('sRegion'    => 'Alicante'));
+        $searchRegion   = osc_search_url(array('sRegion'    => 'Valencia'));
         $this->selenium->open( $searchRegion );
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
-        $this->assertTrue($count == 3 , "Search by [ sRegion Alicante ].");
+        $this->assertTrue($count == 3 , "Search by [ sRegion Valencia ].");
         
         $searchCity     = osc_search_url(array('sCity'      => 'Balsareny'));
         $this->selenium->open( $searchCity );
