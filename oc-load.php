@@ -242,17 +242,6 @@ osc_add_hook('header', 'osc_meta_generator');
 osc_add_hook('header', 'osc_load_scripts', 10);
 osc_add_hook('header', 'osc_load_styles', 10);
 
-// cron
-// hourly
-osc_add_hook('cron_hourly', 'purge_latest_searches_hourly');
-// daily
-osc_add_hook('cron_daily', 'osc_update_cat_stats');
-osc_add_hook('cron_daily', 'update_location_stats');
-osc_add_hook('cron_daily', 'purge_latest_searches_daily');
-osc_add_hook('cron_daily', 'daily_alert');
-// weekly
-osc_add_hook('cron_weekly', 'purge_latest_searches_weekly');
-
 // register scripts
 osc_register_script('jquery', osc_assets_url('js/jquery.min.js'));
 osc_register_script('jquery-ui', osc_assets_url('js/jquery-ui.min.js'), 'jquery');

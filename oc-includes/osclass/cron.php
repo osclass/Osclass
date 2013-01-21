@@ -35,7 +35,13 @@
                                         array('e_type'      => 'HOURLY')) ;
 
             // Run cron AFTER updating the next execution time to avoid double run of cron
-            require_once osc_lib_path() . 'osclass/cron.hourly.php' ;
+            $purge = osc_purge_latest_searches();
+            if( $purge == 'hour' ) {
+                LatestSearches::newInstance()->purgeDate( date('Y-m-d H:i:s', ( time() - 3600) ) );
+            } else if( !in_array($purge, array('forever', 'day', 'week')) ) {
+                LatestSearches::newInstance()->purgeNumber($purge);
+            }
+            osc_run_hook('cron_hourly');
         }
     }
 
@@ -51,7 +57,14 @@
                                         array('e_type'      => 'DAILY')) ;
 
             // Run cron AFTER updating the next execution time to avoid double run of cron
-            require_once LIB_PATH . 'osclass/cron.daily.php' ;
+            $purge = osc_purge_latest_searches();
+            if( $purge == 'day' ) {
+                LatestSearches::newInstance()->purgeDate( date('Y-m-d H:i:s', ( time() - (24 * 3600) ) ) );
+            }
+            osc_runAlert('DAILY');
+            osc_update_location_stats();
+            osc_update_cat_stats();
+            osc_run_hook('cron_daily');
         }
     }
 
@@ -67,7 +80,11 @@
                                         array('e_type'      => 'WEEKLY')) ;
 
             // Run cron AFTER updating the next execution time to avoid double run of cron
-            require_once LIB_PATH . 'osclass/cron.weekly.php' ;
+            $purge = osc_purge_latest_searches();
+            if( $purge == 'week' ) {
+                LatestSearches::newInstance()->purgeDate( date('Y-m-d H:i:s', ( time() - (7 * 24 * 3600) ) ) );
+            }
+            osc_run_hook('cron_weekly');
         }
     }
 
