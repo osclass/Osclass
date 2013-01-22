@@ -7,9 +7,9 @@ class Frontend_users extends FrontendTest {
     /*
      * Register a user without email validation.
      */
-    function testUsers_AddNewUser()
+    function atestUsers_AddNewUser()
     {
-        // same as Frontend-register.php function testRegisterNewUser_NoValidation()
+        // same as Frontend-register.php function atestRegisterNewUser_NoValidation()
         $uSettings = new utilSettings();
 
         $old_enabled_users           = $uSettings->set_enabled_users(1);
@@ -29,7 +29,7 @@ class Frontend_users extends FrontendTest {
     /**
      * - check empty list of items at dashboard user
      */
-    function testEmptyDashboard()
+    function atestEmptyDashboard()
     {
         $this->loginWith();
         $url = osc_user_dashboard_url();
@@ -41,7 +41,7 @@ class Frontend_users extends FrontendTest {
     /*
      * - check empty list of items at dashboard user
      */
-    function testEmptyManageItems()
+    function atestEmptyManageItems()
     {
         $this->loginWith();
         $url = osc_user_dashboard_url();
@@ -56,7 +56,7 @@ class Frontend_users extends FrontendTest {
     /*
      * - check empty list of alert at dashboard user
      */
-    function testEmptyAlerts()
+    function atestEmptyAlerts()
     {
         $this->loginWith();
         $url = osc_user_dashboard_url();
@@ -73,7 +73,7 @@ class Frontend_users extends FrontendTest {
      * - check dashboard user
      * - check Manage items
      */
-    function testDashboardAndManageItems()
+    function atestDashboardAndManageItems()
     {
         $this->loginWith();
         // add item as registered user
@@ -102,7 +102,7 @@ class Frontend_users extends FrontendTest {
      * - check alerts
      * - test delete/unsubscribe alert
      */
-    function testAlerts_create()
+    function atestAlerts_create()
     {
         $this->loginWith();
         // add alert
@@ -111,7 +111,7 @@ class Frontend_users extends FrontendTest {
     }
 
     // check alert
-    function testAlerts()
+    function atestAlerts()
     {
         $this->loginWith();
         $this->selenium->open( osc_user_dashboard_url() );
@@ -140,6 +140,7 @@ class Frontend_users extends FrontendTest {
         $this->loginWith();
         $this->selenium->open( osc_user_profile_url() );
         $user = User::newInstance()->findByEmail(osc_logged_user_email());
+        print_r($user);
         // fill all information
         $this->selenium->type('s_name'          , 'updated usertest');
         $this->selenium->type('s_phone_mobile'  , '666006600');
@@ -181,7 +182,7 @@ class Frontend_users extends FrontendTest {
      *  - Passwords do not match.
      * Logout user
      */
-    function testUsers_ChangePassword()
+    function atestUsers_ChangePassword()
     {
         $this->loginWith();
         $this->assertTrue($this->selenium->isTextPresent("User account manager"), 'Login at website.');
@@ -228,7 +229,7 @@ class Frontend_users extends FrontendTest {
      * Logout
      * Remove user2
      */
-    function testUser_ChangeEmail()
+    function atestUser_ChangeEmail()
     {
         $uSettings = new utilSettings();
 
@@ -289,7 +290,7 @@ class Frontend_users extends FrontendTest {
     /*
      * Remove user1
      */
-    function testUser_RemoveNewUser()
+    function atestUser_RemoveNewUser()
     {
         $this->removeUserByMail($this->_email);
     }
