@@ -139,7 +139,7 @@ class Frontend_users extends FrontendTest {
 
         $this->loginWith();
         $this->selenium->open( osc_user_profile_url() );
-        $user = User::newInstance()->findByEmail(osc_logged_user_email());
+        $user = User::newInstance()->findByEmail($this->email);
         print_r($user);
         // fill all information
         $this->selenium->type('s_name'          , 'updated usertest');
