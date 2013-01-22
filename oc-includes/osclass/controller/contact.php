@@ -34,7 +34,7 @@
                                         $subject   = Params::getParam('subject');
                                         $message   = Params::getParam('message');
 
-                                        if( (osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field") ) {
+                                        if( (osc_recaptcha_private_key() != '') ) {
                                             if( !osc_check_recaptcha() ) {
                                                 osc_add_flash_error_message( _m('The Recaptcha code is wrong'));
                                                 Session::newInstance()->_setForm('yourName', $yourName);
