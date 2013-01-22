@@ -87,8 +87,12 @@
                                             break;
                                             case 7: osc_add_flash_warning_message( _m("Passwords don't match")) ;
                                                     $this->doView('user-register.php') ;
+                                            break;
                                             case 8: osc_add_flash_warning_message( _m("Username is already taken")) ;
-                                                    $this->doView('user-register.php') ;
+                                                $this->doView('user-register.php') ;
+                                            break;
+                                            case 9: osc_add_flash_warning_message( _m("The specified username is not valid, it contains some invalid words")) ;
+                                                $this->doView('user-register.php') ;
                                             break;
                                         }
                 break;
