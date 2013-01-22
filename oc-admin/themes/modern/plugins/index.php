@@ -259,7 +259,7 @@
             $(".ui-dialog-content").dialog("close");
             $('<div id="downloading"><div class="osc-modal-content"><?php _e('Please wait until the download is completed'); ?></div></div>').dialog({title:'<?php _e('Downloading'); ?>...',modal:true});
             $.getJSON(
-            "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
+            "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market&<?php echo osc_csrf_token_url(); ?>",
             {"code" : $("#market_code").attr("value"), "section" : 'plugins'},
             function(data){
                 var content = data.message ;
