@@ -105,7 +105,7 @@
                                         // post execution to recover the password
                                         $admin = Admin::newInstance()->findByEmail( Params::getParam('email') ) ;
                                         if( $admin ) {
-                                            if( (osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field") ) {
+                                            if( (osc_recaptcha_private_key() != '') ) {
                                                 if( !osc_check_recaptcha() ) {
                                                     osc_add_flash_error_message( _m('The reCAPTCHA code is wrong'), 'admin') ;
                                                     $this->redirectTo( osc_admin_base_url(true).'?page=login&action=recover' );
