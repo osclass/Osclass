@@ -163,7 +163,6 @@ class Frontend_users extends FrontendTest {
 
         // test public user profile + logged in
         $this->logout();
-        $user = User::newInstance()->findByEmail($this->_email);
         $this->selenium->open( osc_user_public_profile_url($user['pk_i_id']) );
 
         // check values
