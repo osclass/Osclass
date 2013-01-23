@@ -159,7 +159,7 @@ class OCadmin_tools extends OCadminTest {
             }
         }
 
-        $cities = CityStats::newInstance()->listCities(null, ">=");
+        $cities = CityStats::newInstance()->listCities(null, ">");
         foreach($cities as $c) {
             if($c['city_name']=="Terrassa") {
                 $this->assertTrue(($c['items']==4), "Terrassa items (should be 4, ".$c['items']." found)");
