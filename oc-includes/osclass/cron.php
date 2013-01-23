@@ -29,12 +29,19 @@
         $i_next = strtotime($cron['d_next_exec']);
 
         if( (CLI && (Params::getParam('cron-type') === 'hourly')) || ((($i_now - $i_next) >= 0) && !CLI) ) {
-            require_once osc_lib_path() . 'osclass/cron.hourly.php' ;
-
             // update the next execution time in t_cron
             $d_next = date('Y-m-d H:i:s', $i_now + 3600) ;
             Cron::newInstance()->update(array('d_last_exec' => $d_now, 'd_next_exec' => $d_next),
                                         array('e_type'      => 'HOURLY')) ;
+
+            // Run cron AFTER updating the next execution time to avoid double run of cron
+            $purge = osc_purge_latest_searches();
+            if( $purge == 'hour' ) {
+                LatestSearches::newInstance()->purgeDate( date('Y-m-d H:i:s', ( time() - 3600) ) );
+            } else if( !in_array($purge, array('forever', 'day', 'week')) ) {
+                LatestSearches::newInstance()->purgeNumber($purge);
+            }
+            osc_run_hook('cron_hourly');
         }
     }
 
@@ -44,12 +51,20 @@
         $i_next = strtotime($cron['d_next_exec']) ;
 
         if( (CLI && (Params::getParam('cron-type') === 'daily')) || ((($i_now - $i_next) >= 0) && !CLI) ) {
-            require_once LIB_PATH . 'osclass/cron.daily.php' ;
-
             // update the next execution time in t_cron
             $d_next = date('Y-m-d H:i:s', $i_now + (24 * 3600)) ;
             Cron::newInstance()->update(array('d_last_exec' => $d_now, 'd_next_exec' => $d_next),
                                         array('e_type'      => 'DAILY')) ;
+
+            // Run cron AFTER updating the next execution time to avoid double run of cron
+            $purge = osc_purge_latest_searches();
+            if( $purge == 'day' ) {
+                LatestSearches::newInstance()->purgeDate( date('Y-m-d H:i:s', ( time() - (24 * 3600) ) ) );
+            }
+            osc_runAlert('DAILY');
+            osc_update_location_stats();
+            osc_update_cat_stats();
+            osc_run_hook('cron_daily');
         }
     }
 
@@ -59,12 +74,17 @@
         $i_next = strtotime($cron['d_next_exec']) ;
 
         if( (CLI && (Params::getParam('cron-type') === 'weekly')) || ((($i_now - $i_next) >= 0) && !CLI) ) {
-            require_once LIB_PATH . 'osclass/cron.weekly.php' ;
-
             // update the next execution time in t_cron
             $d_next = date('Y-m-d H:i:s', $i_now + (7 * 24 * 3600)) ;
             Cron::newInstance()->update(array('d_last_exec' => $d_now, 'd_next_exec' => $d_next),
                                         array('e_type'      => 'WEEKLY')) ;
+
+            // Run cron AFTER updating the next execution time to avoid double run of cron
+            $purge = osc_purge_latest_searches();
+            if( $purge == 'week' ) {
+                LatestSearches::newInstance()->purgeDate( date('Y-m-d H:i:s', ( time() - (7 * 24 * 3600) ) ) );
+            }
+            osc_run_hook('cron_weekly');
         }
     }
 

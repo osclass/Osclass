@@ -384,7 +384,7 @@ function osc_sendMail($params) {
         }
     }
 
-    if( key_exists('add_bcc', $params) ) {
+    if( array_key_exists('add_bcc', $params) ) {
         if( !is_array($params['add_bcc']) && $params['add_bcc'] != '' ) {
             $params['add_bcc'] = array($params['add_bcc']) ;
         }
@@ -402,7 +402,7 @@ function osc_sendMail($params) {
         try {
             $mail->AddReplyTo($params['reply_to']) ;
         } catch (phpmailerException $e) {
-            continue;
+            //continue;
         }
     }
 
@@ -745,7 +745,7 @@ function download_fsockopen($sourceFile, $fileout = null)
 
     $fp = @fsockopen($host, 80, $errno, $errstr, 30);
     if (!$fp) {
-
+        return false;
     } else {
         $ua  = $_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')';
         $out = "GET $link HTTP/1.1\r\n";
@@ -759,6 +759,9 @@ function download_fsockopen($sourceFile, $fileout = null)
         while (!feof($fp)) {
             $contents.= fgets($fp, 1024);
         }
+
+        fclose($fp);
+
         // check redirections ?
         // if (redirections) then do request again
         $aResult = processResponse($contents);
@@ -786,13 +789,17 @@ function download_fsockopen($sourceFile, $fileout = null)
             }
             if($fileout!=null) {
                 $ff = @fopen($fileout, 'w+');
-                fwrite($ff, $body);
-                fclose($ff);
+                if($ff!==FALSE) {
+                    fwrite($ff, $body);
+                    fclose($ff);
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
                 return $body;
             }
         }
-        fclose($fp);
     }
 }
 
@@ -1401,6 +1408,60 @@ function osc_update_cat_stats_id($id)
     $sql .= " (".$id.", ".$categoryTotal.")";
     $result = CategoryStats::newInstance()->dao->query($sql);
 }
+
+
+/**
+ * Update locations stats. I moved this function from cron.daily.php:update_location_stats
+ *
+ * @since 3.1
+ */
+function osc_update_location_stats() {
+    $aCountries     = Country::newInstance()->listAll();
+    $aCountryValues = array();
+
+    $aRegions       = array();
+    $aRegionValues  = array();
+
+    $aCities        = array();
+    $aCityValues    = array();
+
+    foreach($aCountries as $country){
+        $id = $country['pk_c_code'];
+        $numItems = CountryStats::newInstance()->calculateNumItems( $id );
+        array_push($aCountryValues, "('$id', $numItems)" );
+        unset($numItems);
+
+        $aRegions = Region::newInstance()->findByCountry($id);
+        foreach($aRegions as $region) {
+            $id = $region['pk_i_id'];
+            $numItems = RegionStats::newInstance()->calculateNumItems( $id );
+            array_push($aRegionValues, "($id, $numItems)" );
+            unset($numItems);
+
+            $aCities = City::newInstance()->findByRegion($id);
+            foreach($aCities as $city) {
+                $id = $city['pk_i_id'];
+                $numItems = CityStats::newInstance()->calculateNumItems( $id );
+                array_push($aCityValues, "($id, $numItems)" );
+                unset($numItems);
+            }
+        }
+    }
+
+    // insert Country stats
+    $sql_country  = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_country_stats (fk_c_country_code, i_num_items) VALUES ';
+    $sql_country .= implode(',', $aCountryValues);
+    CountryStats::newInstance()->dao->query($sql_country);
+    // insert Region stats
+    $sql_region   = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_region_stats (fk_i_region_id, i_num_items) VALUES ';
+    $sql_region  .= implode(',', $aRegionValues);
+    RegionStats::newInstance()->dao->query($sql_region);
+    // insert City stats
+    $sql_city     = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_city_stats (fk_i_city_id, i_num_items) VALUES ';
+    $sql_city    .= implode(',', $aCityValues);
+    CityStats::newInstance()->dao->query($sql_city);
+}
+
 
 function get_ip() {
     if( !empty($_SERVER['HTTP_CLIENT_IP']) ) {

@@ -133,7 +133,7 @@
                 case 'contact_post':
                     $user = User::newInstance()->findByPrimaryKey( Params::getParam('id') );
                     View::newInstance()->_exportVariableToView('user', $user);
-                    if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
+                    if ((osc_recaptcha_private_key() != '')) {
                         if(!osc_check_recaptcha()) {
                             osc_add_flash_error_message( _m('The Recaptcha code is wrong'));
                             Session::newInstance()->_setForm("yourEmail",   Params::getParam('yourEmail'));

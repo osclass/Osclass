@@ -25,7 +25,7 @@
 
         function __construct()
         {
-            parent::__construct() ;
+            parent::__construct();
             $this->mSearch = Search::newInstance();
             $this->uri = preg_replace('|^' . REL_WEB_URL . '|', '', $_SERVER['REQUEST_URI']);
 
@@ -126,7 +126,7 @@
             $p_sCategory  = Params::getParam('sCategory');
             if(!is_array($p_sCategory)) {
                 if($p_sCategory == '') {
-                    $p_sCategory = array() ;
+                    $p_sCategory = array();
                 } else {
                     $p_sCategory = explode(",",$p_sCategory);
                 }
@@ -135,7 +135,7 @@
             $p_sCityArea    = Params::getParam('sCityArea');
             if(!is_array($p_sCityArea)) {
                 if($p_sCityArea == '') {
-                    $p_sCityArea = array() ;
+                    $p_sCityArea = array();
                 } else {
                     $p_sCityArea = explode(",", $p_sCityArea);
                 }
@@ -144,7 +144,7 @@
             $p_sCity      = Params::getParam('sCity');
             if(!is_array($p_sCity)) {
                 if($p_sCity == '') {
-                    $p_sCity = array() ;
+                    $p_sCity = array();
                 } else {
                     $p_sCity = explode(",", $p_sCity);
                 }
@@ -153,7 +153,7 @@
             $p_sRegion    = Params::getParam('sRegion');
             if(!is_array($p_sRegion)) {
                 if($p_sRegion == '') {
-                    $p_sRegion = array() ;
+                    $p_sRegion = array();
                 } else {
                     $p_sRegion = explode(",", $p_sRegion);
                 }
@@ -162,7 +162,7 @@
             $p_sCountry   = Params::getParam('sCountry');
             if(!is_array($p_sCountry)) {
                 if($p_sCountry == '') {
-                    $p_sCountry = array() ;
+                    $p_sCountry = array();
                 } else {
                     $p_sCountry = explode(",", $p_sCountry);
                 }
@@ -187,7 +187,7 @@
             }
 
             $p_bPic       = Params::getParam('bPic');
-            ($p_bPic == 1) ? $p_bPic = 1 : $p_bPic = 0 ;
+            ($p_bPic == 1) ? $p_bPic = 1 : $p_bPic = 0;
 
             $p_sPriceMin  = Params::getParam('sPriceMin');
             $p_sPriceMax  = Params::getParam('sPriceMax');
@@ -196,13 +196,13 @@
             $p_sOrder     = Params::getParam('sOrder');
 
             if(!in_array($p_sOrder, Search::getAllowedColumnsForSorting())) {
-                $p_sOrder = osc_default_order_field_at_search() ;
+                $p_sOrder = osc_default_order_field_at_search();
             }
             $old_order = $p_sOrder;
 
             //ONLY 0 ( => 'asc' ), 1 ( => 'desc' ) AS ALLOWED VALUES
             $p_iOrderType = Params::getParam('iOrderType');
-            $allowedTypesForSorting = Search::getAllowedTypesForSorting() ;
+            $allowedTypesForSorting = Search::getAllowedTypesForSorting();
             $orderType = osc_default_order_type_at_search();
             foreach($allowedTypesForSorting as $k => $v) {
                 if($p_iOrderType==$v) {
@@ -225,26 +225,26 @@
             $p_sShowAs    = Params::getParam('sShowAs');
             $aValidShowAsValues = array('list', 'gallery');
             if (!in_array($p_sShowAs, $aValidShowAsValues)) {
-                $p_sShowAs = osc_default_show_as_at_search() ;
+                $p_sShowAs = osc_default_show_as_at_search();
             }
 
             // search results: it's blocked with the maxResultsPerPage@search defined in t_preferences
-            $p_iPageSize  = intval(Params::getParam('iPagesize')) ;
+            $p_iPageSize  = intval(Params::getParam('iPagesize'));
             if($p_iPageSize > 0) {
-                if($p_iPageSize > osc_max_results_per_page_at_search()) $p_iPageSize = osc_max_results_per_page_at_search() ;
+                if($p_iPageSize > osc_max_results_per_page_at_search()) $p_iPageSize = osc_max_results_per_page_at_search();
             } else {
-                $p_iPageSize = osc_default_results_per_page_at_search() ;
+                $p_iPageSize = osc_default_results_per_page_at_search();
             }
 
             //FILTERING CATEGORY
-            $bAllCategoriesChecked = false ;
-
+            $bAllCategoriesChecked = false;
+            $successCat = false;
             if(count($p_sCategory) > 0) {
                 foreach($p_sCategory as $category) {
-                    $this->mSearch->addCategory($category);
+                    $successCat = ($successCat || $this->mSearch->addCategory($category));
                 }
             } else {
-                $bAllCategoriesChecked = true ;
+                $bAllCategoriesChecked = true;
             }
 
             //FILTERING CITY_AREA
@@ -296,14 +296,14 @@
 
             // FILTERING IF WE ONLY WANT ITEMS WITH PICS
             if($p_bPic) {
-                $this->mSearch->withPicture(true) ;
+                $this->mSearch->withPicture(true);
             }
 
             //FILTERING BY RANGE PRICE
             $this->mSearch->priceRange($p_sPriceMin, $p_sPriceMax);
 
             //ORDERING THE SEARCH RESULTS
-            $this->mSearch->order( $p_sOrder, $allowedTypesForSorting[$p_iOrderType]) ;
+            $this->mSearch->order( $p_sOrder, $allowedTypesForSorting[$p_iOrderType]);
 
             //SET PAGE
             $this->mSearch->page($p_iPage, $p_iPageSize);
@@ -315,11 +315,11 @@
                 $aItems      = $this->mSearch->doSearch();
                 $iTotalItems = $this->mSearch->count();
 
-                $iStart    = $p_iPage * $p_iPageSize ;
-                $iEnd      = min(($p_iPage+1) * $p_iPageSize, $iTotalItems) ;
-                $iNumPages = ceil($iTotalItems / $p_iPageSize) ;
+                $iStart    = $p_iPage * $p_iPageSize;
+                $iEnd      = min(($p_iPage+1) * $p_iPageSize, $iTotalItems);
+                $iNumPages = ceil($iTotalItems / $p_iPageSize);
 
-                osc_run_hook('search', $this->mSearch) ;
+                osc_run_hook('search', $this->mSearch);
 
                 //preparing variables...
                 $regionName = $p_sRegion;
@@ -337,36 +337,39 @@
                     }
                 }
 
-                //$this->_exportVariableToView('non_empty_categories', $aCategories) ;
-                $this->_exportVariableToView('search_start', $iStart) ;
-                $this->_exportVariableToView('search_end', $iEnd) ;
-                $this->_exportVariableToView('search_category', $p_sCategory) ;
+                //$this->_exportVariableToView('non_empty_categories', $aCategories);
+                $this->_exportVariableToView('search_start', $iStart);
+                $this->_exportVariableToView('search_end', $iEnd);
+                $this->_exportVariableToView('search_category', $p_sCategory);
                 // hardcoded - non pattern and order by relevance
                 $p_sOrder = $old_order;
-                $this->_exportVariableToView('search_order_type', $p_iOrderType) ;
-                $this->_exportVariableToView('search_order', $p_sOrder) ;
+                $this->_exportVariableToView('search_order_type', $p_iOrderType);
+                $this->_exportVariableToView('search_order', $p_sOrder);
 
-                $this->_exportVariableToView('search_pattern', $p_sPattern) ;
-                $this->_exportVariableToView('search_from_user', $p_sUser) ;
-                $this->_exportVariableToView('search_total_pages', $iNumPages) ;
-                $this->_exportVariableToView('search_page', $p_iPage) ;
-                $this->_exportVariableToView('search_has_pic', $p_bPic) ;
-                $this->_exportVariableToView('search_region', $regionName) ;
-                $this->_exportVariableToView('search_city', $cityName) ;
-                $this->_exportVariableToView('search_price_min', $p_sPriceMin) ;
-                $this->_exportVariableToView('search_price_max', $p_sPriceMax) ;
-                $this->_exportVariableToView('search_total_items', $iTotalItems) ;
-                $this->_exportVariableToView('items', $aItems) ;
-                $this->_exportVariableToView('search_show_as', $p_sShowAs) ;
-                $this->_exportVariableToView('search', $this->mSearch) ;
+                $this->_exportVariableToView('search_pattern', $p_sPattern);
+                $this->_exportVariableToView('search_from_user', $p_sUser);
+                $this->_exportVariableToView('search_total_pages', $iNumPages);
+                $this->_exportVariableToView('search_page', $p_iPage);
+                $this->_exportVariableToView('search_has_pic', $p_bPic);
+                $this->_exportVariableToView('search_region', $regionName);
+                $this->_exportVariableToView('search_city', $cityName);
+                $this->_exportVariableToView('search_price_min', $p_sPriceMin);
+                $this->_exportVariableToView('search_price_max', $p_sPriceMax);
+                $this->_exportVariableToView('search_total_items', $iTotalItems);
+                $this->_exportVariableToView('items', $aItems);
+                $this->_exportVariableToView('search_show_as', $p_sShowAs);
+                $this->_exportVariableToView('search', $this->mSearch);
 
                 // json
                 $json = $this->mSearch->toJson();
 
-                $this->_exportVariableToView('search_alert', base64_encode($json)) ;
+                $this->_exportVariableToView('search_alert', base64_encode($json));
 
                 //calling the view...
-                $this->doView('search.php') ;
+                if(count($aItems)==0 || !$successCat) {
+                    header('HTTP/1.1 404 Not Found');
+                }
+                $this->doView('search.php');
 
             } else {
                 $this->mSearch->page(0, osc_num_rss_items());
@@ -374,7 +377,7 @@
                 $iTotalItems = $this->mSearch->count();
                 $aItems = $this->mSearch->doSearch();
 
-                $this->_exportVariableToView('items', $aItems) ;
+                $this->_exportVariableToView('items', $aItems);
                 if($p_sFeed=='' || $p_sFeed=='rss') {
                     // FEED REQUESTED!
                     header('Content-type: text/xml; charset=utf-8');
@@ -411,7 +414,7 @@
                     osc_run_hook('feed', $feed);
                     $feed->dumpXML();
                 } else {
-                    osc_run_hook('feed_' . $p_sFeed, $aItems) ;
+                    osc_run_hook('feed_' . $p_sFeed, $aItems);
                 }
             }
         }
@@ -420,7 +423,7 @@
         function doView($file)
         {
             osc_run_hook("before_html");
-            osc_current_web_theme_path($file) ;
+            osc_current_web_theme_path($file);
             Session::newInstance()->_clearVariables();
             osc_run_hook("after_html");
         }

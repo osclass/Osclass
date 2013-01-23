@@ -53,6 +53,15 @@
 
                                         osc_run_hook('before_user_register') ;
 
+                                        $banned = osc_is_banned(Params::getParam('s_email'));
+                                        if($banned==1) {
+                                            osc_add_flash_error_message( _m('Your current email is not allowed'));
+                                            $this->redirectTo(osc_register_account_url());
+                                        } else if($banned==2) {
+                                            osc_add_flash_error_message( _m('Your current IP is not allowed'));
+                                            $this->redirectTo(osc_register_account_url());
+                                        }
+
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $userActions = new UserActions(false) ;
                                         $success     = $userActions->add() ;
@@ -78,8 +87,12 @@
                                             break;
                                             case 7: osc_add_flash_warning_message( _m("Passwords don't match")) ;
                                                     $this->doView('user-register.php') ;
+                                            break;
                                             case 8: osc_add_flash_warning_message( _m("Username is already taken")) ;
-                                                    $this->doView('user-register.php') ;
+                                                $this->doView('user-register.php') ;
+                                            break;
+                                            case 9: osc_add_flash_warning_message( _m("The specified username is not valid, it contains some invalid words")) ;
+                                                $this->doView('user-register.php') ;
                                             break;
                                         }
                 break;

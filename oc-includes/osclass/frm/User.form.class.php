@@ -30,6 +30,10 @@
             parent::generic_input_text("s_name", isset($user['s_name'])? $user['s_name'] : '', null, false);
         }
 
+        static public function username_text($user = null) {
+            parent::generic_input_text("s_username", isset($user['s_username'])? $user['s_username'] : '', null, false);
+        }
+
         static public function email_login_text($user = null) {
             parent::generic_input_text("email", isset($user['s_email'])? $user['s_email'] : '', null, false);
         }

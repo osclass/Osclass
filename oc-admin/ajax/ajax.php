@@ -508,11 +508,24 @@
                 break;
 
                 case 'check_username_availability':
-                    $user = User::newInstance()->findByUsername(Params::getParam('s_username'));
-                    if(isset($user['s_username'])) {
-                        echo json_encode(array('exists' => 1));
+                    $username = Params::getParam('s_username');
+                    $found = false;
+                    $blacklist = explode(",", osc_username_blacklist());
+                    foreach($blacklist as $bl) {
+                        if(stripos($username, $bl)!==false) {
+                            $found = true;
+                            break;
+                        }
+                    }
+                    if(!$found) {
+                        $user = User::newInstance()->findByUsername($username);
+                        if(isset($user['s_username'])) {
+                            echo json_encode(array('exists' => 1));
+                        } else {
+                            echo json_encode(array('exists' => 0));
+                        }
                     } else {
-                        echo json_encode(array('exists' => 0));
+                        echo json_encode(array('exists' => 1));
                     }
                 break;
 
@@ -663,7 +676,7 @@
                  ** COMPLETE MARKET PROCESS **
                  *******************************/
                 case 'market': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
-//                    osc_csrf_check(false);
+                    osc_csrf_check(false);
                     $section = Params::getParam('section');
                     $code    = Params::getParam('code');
                     $plugin  = false;
@@ -817,7 +830,7 @@
                                             $message = __('Problems when copying files. Please check your permissions. ');
                                             if($current_user['uid'] != $ownerFolder['uid']) {
                                                 $current_group  = posix_getgrgid( $current_user['gid']);
-                                                $message .= '<p><strong>' . sprintf(__('NOTE: Web user and destination folder user is not the same, you might have an issue there. chown %s:%s %s'), $current_user['name'], $current_group['name'], $folder_dest).'</strong></p>';
+                                                $message .= '<p><strong>' . sprintf(__('NOTE: Web user and destination folder user is not the same, you might have an issue there. <br/>Do this in your console:<br/>chown -R %s:%s %s'), $current_user['name'], $current_group['name'], $folder_dest).'</strong></p>';
                                             }
                                             $error = 4; // Problems copying files. Maybe permissions are not correct
                                         }
@@ -877,7 +890,6 @@
                 case 'market_data':
                     $section  = Params::getParam('section');
                     $page     = Params::getParam("mPage");
-                    $callback = Params::getParam("mPage");
                     $featured = Params::getParam("featured");
 
                     if($page>=1) $page--;
@@ -885,15 +897,12 @@
                     $url  = osc_market_url($section)."/page/".$page;
 
                     if($featured != ''){
-                        $url = 'http://market.osclass.org.devel/oc-content/plugins/market/market.php?section=featured&type='.$section.'&num=6'; //changeme CARLOS
-                        //osc_market_url($section)."/featured/".$page;
+                        $url = osc_market_featured_url($section);
                     }
                     $data = array();
 
                     $data = json_decode(osc_file_get_contents($url), true);
 
-                    //print_r($data);
-                    //echo $data;
                     if( !isset($data[$section])) {
                         $data = array('error' => 1, 'error_msg' => __('No market data'));
                     }
@@ -921,6 +930,17 @@
                     $array['pagination_content'] = $aux;
                     // encode to json
                     echo json_encode($array);
+                    break;
+                case 'dashboardbox_market':
+                    $nextTo = Params::getParam("nextTo");
+                    if($nextTo == ''){
+                        $nextTo = '#banner_market';
+                    }
+                        echo '$(function(){';
+                        echo 'var baseAdmin = "'.osc_admin_base_url(true).'"; ';
+                        echo '$(unescape(\'\x3Cstyle\x3E#banner-randomid{background-color:#4d4d4d;color:#fff;padding:15px;width:380px;overflow:hidden;height:220px}#banner-randomid .title{font-size:20px;font-weight:200;text-align:center;padding-bottom:17px}#banner-randomid a.box{border-radius:5px;padding:2px 15px 15px;background:#7ed1e1;color:white;font-size:60px;font-weight:200;font-family:\"HelveticaNeue-Light\",\"Helvetica Neue Light\",\"Helvetica Neue\",Helvetica,Arial,Verdana,sans-serif;display:block;float:left;margin-left:40px;width:100px}#banner-randomid a.box span{font-size:16px;display:block;line-height:16px;margin-top:-6px}#banner-randomid a.box:hover{text-decoration:none}#banner-randomid a.browse{margin-left:40px;padding-top:5px;display:block;clear:both;color:#bababa;text-decoration:underline;float:left;width:130px}#banner-randomid a.right{float:right;margin-right:40px;margin-left:0;clear:none}\x3C\x2Fdiv\x3E\')).insertAfter(\''.$nextTo.'\');';
+                        echo '$(unescape(\'\x3Cdiv id=\"banner-randomid\"\x3E\x3Cdiv class=\"title\"\x3EGet a new look for your website and do the impossible with hundreds of themes and plugins available for free!\x3C\x2Fdiv\x3E\x3Ca href=\"\'+baseAdmin+\'?page=market&action=themes\" class=\"box\"\x3E365\x3Cspan\x3Ethemes\x3C\x2Fspan\x3E\x3C\x2Fa\x3E \x3Ca href=\"\'+baseAdmin+\'?page=market&action=plugins\" class=\"right box\"\x3E365\x3Cspan\x3Ethemes\x3C\x2Fspan\x3E\x3C\x2Fa\x3E\x3Ca href=\"\'+baseAdmin+\'?page=market&action=themes\" class=\"browse\"\x3Ebrowse all themes\x3C\x2Fa\x3E \x3Ca href=\"\'+baseAdmin+\'?page=market&action=plugins\" class=\"browse right\"\x3Ebrowse all themes\x3C\x2Fa\x3E\x3C\x2Fdiv\x3E\')).insertAfter(\''.$nextTo.'\');';
+                        echo '});';
                     break;
                 case 'location_stats':
                     osc_csrf_check(false);

@@ -158,10 +158,9 @@ a.has-update:hover .mk-item {
   font-weight: 200;
   font-size: 13px;
   font-style: normal;
-  /*border-radius:0 0 0 4px;
-    -moz-border-radius:0 0 0 4px;
-    -webkit-border-radius:0 0 0 4px;*/
-
+  border-radius: 0 0 0 4px;
+  -moz-border-radius: 0 0 0 4px;
+  -webkit-border-radius: 0 0 0 4px;
 }
 .mk-item .mk-info span {
   display: block;
@@ -211,9 +210,9 @@ a.has-update:hover .mk-item {
   position: absolute;
   background-image: url(../images/market-split.png);
   display: none;
-  -webkit-border-radius: 0 3px 0 0;
-  -moz-border-radius: 0 3px 0 0;
-  border-radius: 0 3px 0 0;
+  -webkit-border-radius: 0 5px 0 0;
+  -moz-border-radius: 0 5px 0 0;
+  border-radius: 0 5px 0 0;
 }
 .mk-item-theme .flag {
   top: 155px;
@@ -227,19 +226,11 @@ a.has-update:hover .mk-item {
 }
 .is-featured .flag {
   display: block;
-  background-position: -30px 0;
+  background-position: 0 -15px;
 }
-.is-featured-is-downloaded .flag {
+.is-featured-downloaded .flag {
   display: block;
-  background-position: -60px 0;
-}
-.is-downloaded .flag {
-  display: block;
-  background-position: -90px 0;
-}
-.is-featured-has-update .flag {
-  display: block;
-  background-position: -120px 0;
+  background-position: 0 -30px;
 }
 /* DIALOGS */
 .market-dialog {

@@ -152,6 +152,7 @@ require_once LIB_PATH . 'osclass/model/Log.php';
 require_once LIB_PATH . 'osclass/model/CountryStats.php';
 require_once LIB_PATH . 'osclass/model/RegionStats.php';
 require_once LIB_PATH . 'osclass/model/CityStats.php';
+require_once LIB_PATH . 'osclass/model/BanRule.php';
 
 require_once LIB_PATH . 'osclass/model/LocationsTmp.php';
 
@@ -183,6 +184,7 @@ require_once LIB_PATH . 'osclass/frm/Alert.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Field.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Admin.form.class.php';
 require_once LIB_PATH . 'osclass/frm/ManageItems.form.class.php';
+require_once LIB_PATH . 'osclass/frm/BanRule.form.class.php';
 
 require_once LIB_PATH . 'osclass/functions.php';
 require_once LIB_PATH . 'osclass/helpers/hAdminMenu.php';
@@ -241,17 +243,6 @@ osc_add_hook('header', 'osc_show_maintenance_css');
 osc_add_hook('header', 'osc_meta_generator');
 osc_add_hook('header', 'osc_load_scripts', 10);
 osc_add_hook('header', 'osc_load_styles', 10);
-
-// cron
-// hourly
-osc_add_hook('cron_hourly', 'purge_latest_searches_hourly');
-// daily
-osc_add_hook('cron_daily', 'osc_update_cat_stats');
-osc_add_hook('cron_daily', 'update_location_stats');
-osc_add_hook('cron_daily', 'purge_latest_searches_daily');
-osc_add_hook('cron_daily', 'daily_alert');
-// weekly
-osc_add_hook('cron_weekly', 'purge_latest_searches_weekly');
 
 // register scripts
 osc_register_script('jquery', osc_assets_url('js/jquery.min.js'));

@@ -114,7 +114,7 @@
         });
     </script>
 <?php }; ?>
-<h2 class="render-title"><?php echo $aux['title'] ; ?></h3>
+<h2 class="render-title"><?php echo $aux['title'] ; ?></h2>
 
 
     <!-- add user form -->
@@ -145,6 +145,12 @@
                     <div class="form-label"><?php _e('Name') ; ?></div>
                     <div class="form-controls">
                         <?php UserForm::name_text($user) ; ?>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label"><?php _e('Username') ; ?></div>
+                    <div class="form-controls">
+                        <?php UserForm::username_text($user) ; ?>
                     </div>
                 </div>
                 <div class="form-row">

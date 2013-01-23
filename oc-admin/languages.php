@@ -345,6 +345,9 @@
                                                 $displayRecords = ($start+$limit) - $count;
                                             }
                                             // ----
+                                            $aLanguagesToUpdate = json_decode( getPreference('languages_to_update') );
+                                            $bLanguagesToUpdate = is_array($aLanguagesToUpdate)?true:false;
+                                            // ----
                                             $aData = array();
                                             $max = ($start+$limit);
                                             if($max > $count) $max = $count;
@@ -365,7 +368,15 @@
                                                 }
                                                 $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL;
 
-                                                $row[] = $l['s_name'] . $actions;
+                                                $sUpdate = '';
+                                                // get languages to update from t_preference
+                                                if($bLanguagesToUpdate) {
+                                                    if(in_array($l['pk_c_code'],$aLanguagesToUpdate )){
+                                                        $sUpdate = '<a class="btn btn-mini market_update market-popup" href="#' . htmlentities($l['pk_c_code']) . '">' . __("Update here") . '</a>';
+                                                    }
+                                                }
+
+                                                $row[] = $l['s_name'] . $sUpdate . $actions;
                                                 $row[] = $l['s_short_name'];
                                                 $row[] = $l['s_description'];
                                                 $row[] = ( $l['b_enabled'] ? __('Yes') : __('No') );

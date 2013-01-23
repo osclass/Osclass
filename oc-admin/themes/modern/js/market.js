@@ -1,10 +1,19 @@
 function installMarketItem(thatItem){
     $(".ui-dialog-content").dialog("close");
-    $('<div id="downloading"><div class="osc-modal-content">'+theme.langs.wait_download+'</div></div>').dialog({title:theme.langs.downloading+'...',modal:true});
+    $('<div id="downloading"><div class="osc-modal-content">'+theme.langs.wait_download+'</div></div>').dialog({title:theme.langs.downloading+'...',modal:true,width:'auto',position: ['center']});
         var marketCode = thatItem.attr('data-code');
         var marketType = thatItem.attr('data-type')+'s';
+        // page to redirect once is installed
+        var pageRedirect = 'plugins';
+        if(marketType=='plugins') {
+            pageRedirect = 'plugins';
+        } else if(marketType=='themes') {
+            pageRedirect = 'appearance';
+        } else if(marketType=='languages') {
+            pageRedirect = 'languages';
+        }
         $.getJSON(
-        theme.adminBaseUrl+"?page=ajax&action=market",
+        theme.marketAjaxUrl,
         {"code" : marketCode, "section" : marketType},
         function(data) {
             var content  = data.message ;
@@ -12,13 +21,14 @@ function installMarketItem(thatItem){
             if(data.error == 0) { // no errors
                 content += '<h3>'+messages.download_ok+'</h3>';
                 content += "<p>";
-                content += '<a class="btn btn-mini btn-green" href="'+theme.adminBaseUrl+'?page=appearance&marketError='+data.error+'&slug='+data.data['s_update_url']+'">'+theme.langs.ok+'</a>';
+                content += '<a class="btn btn-mini btn-green" href="'+theme.adminBaseUrl+'?page='+pageRedirect+'&marketError='+data.error+'&slug='+data.data['s_update_url']+'">'+theme.langs.ok+'</a>';
                 content += '<a class="btn btn-mini" href="javascript:location.reload(true)">'+theme.langs.close+'</a>';
                 content += "</p>";
             } else {
                 content += '<a class="btn btn-mini" href="javascript:location.reload(true)">'+theme.langs.close+'</a>';
             }
             $("#downloading .osc-modal-content").html(content);
+            $("#downloading").dialog("option", "position", "center");
         });
 }
 $(function(){
@@ -65,9 +75,6 @@ $(function(){
                 itemTemp = $('a[data-type="'+section+'"]').index($(this));
                 var item = market_data[section+'s'][section+'s'][itemTemp];
                 var description = $(item.s_description).text();
-//                console.log(item);
-//                console.log(description);
-//                console.log(item.s_description);
                 var dots = '';
                 var versions = item.s_compatible.split(',');
                 var banner = false;

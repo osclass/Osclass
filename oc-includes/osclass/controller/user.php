@@ -145,7 +145,7 @@
                                                         $blacklist = explode(",", osc_username_blacklist());
                                                         $found_username = false;
                                                         foreach($blacklist as $bl) {
-                                                            if(stripos($user['s_username'], $bl)!==false) {
+                                                            if(stripos($username, $bl)!==false) {
                                                                 $found_username = true;
                                                                 break;
                                                             }

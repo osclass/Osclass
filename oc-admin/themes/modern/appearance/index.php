@@ -193,7 +193,7 @@
             $(".ui-dialog-content").dialog("close");
             $('<div id="downloading"><div class="osc-modal-content"><?php echo osc_esc_js(__('Please wait until the download is completed')); ?></div></div>').dialog({title:'<?php echo osc_esc_js(__('Downloading')); ?>...',modal:true});
             $.getJSON(
-            "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
+            "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market&<?php echo osc_csrf_token_url(); ?>",
             {"code" : $("#market_code").attr("value"), "section" : 'themes'},
             function(data){
                 var content = data.message ;

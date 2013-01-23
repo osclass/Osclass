@@ -69,6 +69,9 @@ a.has-update:hover .mk-item{
     font-weight: 200;
     font-size:13px;
     font-style: normal;
+    /*border-radius:0 0 0 4px;
+    -moz-border-radius:0 0 0 4px;
+    -webkit-border-radius:0 0 0 4px;*/
 }
 .mk-item .mk-info span{
     display: block;
@@ -115,7 +118,7 @@ a.has-update:hover .mk-item{
 
     display: none;
 
-    .border-radius(0 5px 0 0);
+    .border-radius(0 3px 0 0);
 }
 .mk-item-theme .flag{
     top: 155px;
@@ -123,10 +126,23 @@ a.has-update:hover .mk-item{
 }
 .has-update .flag{
     display: block;
+    background-position: 0 0px;
 }
 .is-featured .flag{
     display: block;
-    background-position: top right;
+    background-position:-30px 0;
+}
+.is-featured-is-downloaded .flag{
+    display: block;
+    background-position:-60px 0;
+}
+.is-downloaded .flag{
+    display: block;
+    background-position:-90px 0;
+}
+.is-featured-has-update .flag{
+    display: block;
+    background-position:-120px 0;
 }
 /* DIALOGS */
 .market-dialog{

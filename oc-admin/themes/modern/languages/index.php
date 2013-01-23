@@ -178,6 +178,7 @@
         </div>
     </div>
 </form>
+
 <div id="dialog-bulk-actions" title="<?php _e('Bulk actions'); ?>" class="has-form-actions hide">
     <div class="form-horizontal">
         <div class="form-row"></div>
@@ -190,4 +191,97 @@
         </div>
     </div>
 </div>
+
+<div id="market_installer" class="has-form-actions hide">
+    <form action="" method="post">
+        <input type="hidden" name="market_code" id="market_code" value="" />
+        <div class="osc-modal-content-market">
+            <img src="" id="market_thumb" class="float-left"/>
+            <table class="table" cellpadding="0" cellspacing="0">
+                <tbody>
+                    <tr class="table-first-row">
+                        <td><?php _e('Name') ; ?></td>
+                        <td><span id="market_name"><?php _e("Loading data"); ?></span></td>
+                    </tr>
+                    <tr class="even">
+                        <td><?php _e('Version') ; ?></td>
+                        <td><span id="market_version"><?php _e("Loading data"); ?></span></td>
+                    </tr>
+                    <tr>
+                        <td><?php _e('Author') ; ?></td>
+                        <td><span id="market_author"><?php _e("Loading data"); ?></span></td>
+                    </tr>
+                    <tr class="even">
+                        <td><?php _e('URL') ; ?></td>
+                        <td><span id="market_url_span"><a id="market_url" href="#"><?php _e("Download manually"); ?></a></span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="clear"></div>
+        </div>
+        <div class="form-actions">
+            <div class="wrapper">
+                <button id="market_cancel" class="btn btn-red" ><?php _e('Cancel'); ?></button>
+                <button id="market_install" class="btn btn-submit" ><?php _e('Continue install'); ?></button>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $("#market_cancel").on("click", function(){
+            $(".ui-dialog-content").dialog("close");
+            return false;
+        });
+
+        $("#market_install").on("click", function(){
+            $(".ui-dialog-content").dialog("close");
+            $('<div id="downloading"><div class="osc-modal-content"><?php echo osc_esc_js(__('Please wait until the download is completed')); ?></div></div>').dialog({title:'<?php echo osc_esc_js(__('Downloading')); ?>...',modal:true});
+            $.getJSON(
+            "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market&<?php echo osc_csrf_token_url(); ?>",
+            {"code" : $("#market_code").attr("value"), "section" : 'languages'},
+            function(data){
+                var content = data.message ;
+                if(data.error == 0) { // no errors
+                    content += '<h3><?php echo osc_esc_js(__('The theme has been downloaded correctly, proceed to activate or preview it.')); ?></h3>';
+                    content += "<p>";
+                    content += '<a class="btn btn-mini btn-green" href="<?php echo osc_admin_base_url(true); ?>?page=languages&marketError='+data.error+'&slug='+data.data['s_update_url']+'"><?php echo osc_esc_js(__('Ok')); ?></a>';
+                    content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php echo osc_esc_js(__('Close')); ?></a>';
+                    content += "</p>";
+                } else {
+                    content += '<a class="btn btn-mini" href="javascript:location.reload(true)"><?php echo osc_esc_js(__('Close')); ?></a>';
+                }
+                $("#downloading .osc-modal-content").html(content);
+            });
+            return false;
+        });
+    });
+
+    $('.market-popup').live('click',function(){
+        $.getJSON(
+            "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
+            {"code" : $(this).attr('href').replace('#',''), 'section' : 'languages'},
+            function(data){
+                if(data!=null) {
+                    $("#market_thumb").attr('src',data.s_thumbnail);
+                    $("#market_code").attr("value", data.s_update_url);
+                    $("#market_name").html(data.s_title);
+                    $("#market_version").html(data.s_version);
+                    $("#market_author").html(data.s_contact_name);
+                    $("#market_url").attr('href',data.s_source_file);
+                    $('#market_install').html("<?php echo osc_esc_js( __('Update') ) ; ?>");
+
+                    $('#market_installer').dialog({
+                        modal:true,
+                        title: '<?php echo osc_esc_js( __('Osclass Market') ) ; ?>',
+                        width:485
+                    });
+                }
+            }
+        );
+
+        return false;
+    });
+</script>
+
 <?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>

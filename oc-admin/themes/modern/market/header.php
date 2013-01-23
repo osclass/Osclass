@@ -51,6 +51,7 @@
         <script type="text/javascript">
             var theme = window.theme || {};
             theme.adminBaseUrl = "<?php echo osc_admin_base_url(true); ?>";
+            theme.marketAjaxUrl = "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market&<?php echo osc_csrf_token_url(); ?>";
             theme.themUrl = "<?php echo osc_current_admin_theme_url(); ?>";
             theme.langs = <?php echo json_encode($js_lang); ?>;
 
@@ -100,34 +101,53 @@
         $letterDraw       = '';
         $type             = strtolower($item['e_type']);
         $items_to_update  = json_decode(getPreference($type.'s_to_update'),true);
-
+        $items_downloaded = json_decode(getPreference($type.'s_downloaded'),true);
 
         if($item['s_thumbnail']){
             $thumbnail = $item['s_thumbnail'];
         }
         if($item['s_banner']){
-            $thumbnail = 'http://market.osclass.org/oc-content/uploads/market/'.$item['s_banner'];
-        }
-        if ($item['b_featured']) {
-            $featuredClass = ' is-featured';
-        }
-        if($type != 'language'){
-            if (in_array($item['s_update_url'],$items_to_update)) {
-                $updateClass = ' has-update';
-                $updateData  = ' data-update="true"';
+            if(@$item['s_banner_path']!=''){
+                $thumbnail = $item['s_banner_path'] . $item['s_banner'];
+            } else {
+                $thumbnail = 'http://market.osclass.org/oc-content/uploads/market/'.$item['s_banner'];
             }
         }
-        if(!$thumbnail && $color){
 
+
+        $downloaded = false;
+        if($type != 'language'){
+            if(in_array($item['s_update_url'], $items_downloaded)) {
+                if (in_array($item['s_update_url'], $items_to_update)) {
+                    $updateClass = 'has-update';
+                    $updateData  = ' data-update="true"';
+                } else {
+                    // market item downloaded !
+                    $downloaded = true;
+                }
+            }
+        }
+
+        if(!$thumbnail && $color){
             $thumbnail = osc_current_admin_theme_url('images/gr-'.$color.'.png');
             $letterDraw = $item['s_update_url'][0];
             if($type == 'language'){
                 $letterDraw = $item['s_update_url'];
             }
         }
+        if ($item['b_featured']) {
+            $featuredClass = ' is-featured';
+            if($downloaded || $updateClass){
+                $featuredClass .= '-';
+            }
+        }
+        if($downloaded) {
+            $featuredClass .= 'is-downloaded';
+        }
+
         $style = 'background-image:url('.$thumbnail.');';
         $item['total_downloads'] = 335;
-        echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent'.$updateClass.$featuredClass.'" data-type="'.$type.'"'.$updateData.' data-gr="'.$color.'" data-letter="'.$item['s_update_url'][0].'">';
+        echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent '.$featuredClass.$updateClass.'" data-type="'.$type.'"'.$updateData.' data-gr="'.$color.'" data-letter="'.$item['s_update_url'][0].'">';
         echo '<div class="mk-item mk-item-'.$type.'">';
         echo '    <div class="banner" style="'.$style.'">'.$letterDraw.'</div>';
         echo '    <div class="mk-info"><i class="flag"></i>';

@@ -67,7 +67,7 @@
 
     $colors = array_merge(gradienColors(),array_merge(gradienColors(),gradienColors()));
     $i = 0;
-    foreach($array[$section] as $item){
+    foreach($array[$section] as $item) {
         drawMarketItem($item,$colors[$i]);
 
         $i++;

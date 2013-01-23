@@ -625,7 +625,7 @@
                     if(!in_array($branch['pk_i_id'], $this->categories)) {
                         $this->categories[] = $branch['pk_i_id'] ;
                         if(isset($branch['categories'])) {
-                            $list = $this->pruneBranches($branch['categories']);
+                            $this->pruneBranches($branch['categories']);
                         }
                     }
                 }
@@ -642,7 +642,7 @@
         public function addCategory($category = null)
         {
             if( $category == null ) {
-                return '' ;
+                return false;
             }
 
             if( !is_numeric($category) ) {
@@ -651,7 +651,7 @@
                 $category  = Category::newInstance()->findBySlug($aCategory[count($aCategory)-1]) ;
 
                 if( count($category) == 0 ) {
-                    return '' ;
+                    return false;
                 }
 
                 $category  = $category['pk_i_id'] ;
@@ -662,6 +662,7 @@
                 $this->categories[] = $category ;
             }
             $this->pruneBranches($tree);
+            return true;
         }
 
         /**

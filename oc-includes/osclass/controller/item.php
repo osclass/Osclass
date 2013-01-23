@@ -117,7 +117,7 @@
                         }
                     }
 
-                    if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
+                    if (osc_recaptcha_private_key() != '') {
                         if(!osc_check_recaptcha()) {
                             osc_add_flash_error_message( _m('The Recaptcha code is wrong') );
                             $this->redirectTo( osc_item_post_url() );
@@ -135,6 +135,15 @@
                             osc_add_flash_error_message( _m('A user with that email address already exists, if it is you, please log in'));
                             $this->redirectTo(osc_user_login_url());
                         }
+                    }
+
+                    $banned = osc_is_banned($mItems->data['contactEmail']);
+                    if($banned==1) {
+                        osc_add_flash_error_message( _m('Your current email is not allowed'));
+                        $this->redirectTo( osc_item_post_url() );
+                    } else if($banned==2) {
+                        osc_add_flash_error_message( _m('Your current IP is not allowed'));
+                        $this->redirectTo( osc_item_post_url() );
                     }
 
                     // POST ITEM ( ADD ITEM )
@@ -212,7 +221,7 @@
                             }
                         }
 
-                        if( (osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field") ) {
+                        if(osc_recaptcha_private_key() != '') {
                             if( !osc_check_recaptcha() ) {
                                 osc_add_flash_error_message( _m('The Recaptcha code is wrong') );
                                 $this->redirectTo( osc_item_edit_url($secret, $id) );
@@ -320,7 +329,7 @@
                     Session::newInstance()->_setForm("friendEmail", Params::getParam('friendEmail'));
                     Session::newInstance()->_setForm("message_body",Params::getParam('message'));
 
-                    if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
+                    if ((osc_recaptcha_private_key() != '')) {
                         if(!osc_check_recaptcha()) {
                             osc_add_flash_error_message( _m('The Recaptcha code is wrong') );
                             $this->redirectTo(osc_item_send_friend_url() );
@@ -367,7 +376,7 @@
                     osc_csrf_check();
                     $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
                     $this->_exportVariableToView('item', $item);
-                    if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
+                    if ((osc_recaptcha_private_key() != '')) {
                         if(!osc_check_recaptcha()) {
                             osc_add_flash_error_message( _m('The Recaptcha code is wrong') );
                             Session::newInstance()->_setForm("yourEmail",   Params::getParam('yourEmail'));
