@@ -817,7 +817,7 @@
                                             $message = __('Problems when copying files. Please check your permissions. ');
                                             if($current_user['uid'] != $ownerFolder['uid']) {
                                                 $current_group  = posix_getgrgid( $current_user['gid']);
-                                                $message .= '<p><strong>' . sprintf(__('NOTE: Web user and destination folder user is not the same, you might have an issue there. <br/>Do this in your console:<br/>chown %s:%s %s'), $current_user['name'], $current_group['name'], $folder_dest).'</strong></p>';
+                                                $message .= '<p><strong>' . sprintf(__('NOTE: Web user and destination folder user is not the same, you might have an issue there. <br/>Do this in your console:<br/>chown -R %s:%s %s'), $current_user['name'], $current_group['name'], $folder_dest).'</strong></p>';
                                             }
                                             $error = 4; // Problems copying files. Maybe permissions are not correct
                                         }
@@ -882,7 +882,7 @@
                     if($page>=1) $page--;
 
                     $url  = osc_market_url($section)."/page/".$page;
-                    
+
                     if($featured != ''){
                         $url = osc_market_featured_url($section);
                     }
