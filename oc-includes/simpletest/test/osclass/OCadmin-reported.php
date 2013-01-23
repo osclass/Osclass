@@ -308,7 +308,10 @@ class OCadmin_reported extends OCadminTest {
         $this->selenium->type("contactName" , "contact name");
         $this->selenium->type("contactEmail", "test@mail.com");
 
+        $this->selenium->select("parentCatId", "label=regexp:\\s*Vehicles");
+        sleep(2);
         $this->selenium->select("catId", "label=regexp:\\s*Cars");
+
         $this->selenium->type("title[en_US]", "title item");
         $this->selenium->type("description[en_US]", "description test description test description test");
         $this->selenium->type("price", "12".osc_locale_thousands_sep()."34".osc_locale_thousands_sep()."56".osc_locale_dec_point()."78".osc_locale_dec_point()."90");
