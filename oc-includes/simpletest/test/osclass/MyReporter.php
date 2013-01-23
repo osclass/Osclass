@@ -131,7 +131,7 @@ class MyReporter extends SimpleReporter {
         $body .= "*" . $this->getFailCount() . "* fails and ";
         $body .= "*" . $this->getExceptionCount() . "* exceptions.\r\n\r";
         $talker_text = $body;
-        $body .= "<br/>";
+        $body .= "<br /><br />";
         
         $this->fails .= "</body></html>";
         $body .= $this->fails;
