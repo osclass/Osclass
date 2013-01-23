@@ -43,7 +43,7 @@
             $this->start = intval( $start ) ;
             $this->limit = intval( $params['iDisplayLength'] ) ;
             
-            $pages = Page::newInstance()->listAll(0, null, $this->start, $this->limit) ;
+            $pages = Page::newInstance()->listAll(0, null, null, $this->start, $this->limit) ;
             $this->processData($pages);
             
             $this->total = Page::newInstance()->count(0) ;

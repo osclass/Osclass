@@ -148,6 +148,12 @@
                     </div>
                 </div>
                 <div class="form-row">
+                    <div class="form-label"><?php _e('Username') ; ?></div>
+                    <div class="form-controls">
+                        <?php UserForm::username_text($user) ; ?>
+                    </div>
+                </div>
+                <div class="form-row">
                     <div class="form-label"><?php _e('E-mail') ; ?> <em><?php _e('(required)') ; ?></em></div>
                     <div class="form-controls">
                         <?php UserForm::email_text($user) ; ?>
