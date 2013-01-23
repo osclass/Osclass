@@ -113,15 +113,13 @@
                 $thumbnail = 'http://market.osclass.org/oc-content/uploads/market/'.$item['s_banner'];
             }
         }
-        if ($item['b_featured']) {
-            $featuredClass = ' is-featured';
-        }
+
 
         $downloaded = false;
         if($type != 'language'){
             if(in_array($item['s_update_url'], $items_downloaded)) {
                 if (in_array($item['s_update_url'], $items_to_update)) {
-                    $updateClass = ' has-update';
+                    $updateClass = 'has-update';
                     $updateData  = ' data-update="true"';
                 } else {
                     // market item downloaded !
@@ -137,10 +135,19 @@
                 $letterDraw = $item['s_update_url'];
             }
         }
+        if ($item['b_featured']) {
+            $featuredClass = ' is-featured';
+            if($downloaded || $updateClass){
+                $featuredClass .= '-';
+            }
+        }
+        if($downloaded) {
+            $featuredClass .= 'is-downloaded';
+        }
 
         $style = 'background-image:url('.$thumbnail.');';
         $item['total_downloads'] = 335;
-        echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent'.$updateClass.$featuredClass.'" data-type="'.$type.'"'.$updateData.' data-gr="'.$color.'" data-letter="'.$item['s_update_url'][0].'">';
+        echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent '.$featuredClass.$updateClass.'" data-type="'.$type.'"'.$updateData.' data-gr="'.$color.'" data-letter="'.$item['s_update_url'][0].'">';
         echo '<div class="mk-item mk-item-'.$type.'">';
         echo '    <div class="banner" style="'.$style.'">'.$letterDraw.'</div>';
         echo '    <div class="mk-info"><i class="flag"></i>';
@@ -149,9 +156,6 @@
         echo '        <div>';
         echo '            <span class="more">'.__('View more').'</span>';
         echo '            <span class="downloads"><strong>'.$item['i_total_downloads'].'</strong>'.__('downloads').'</span>';
-        if($downloaded) {
-            echo '            <span class="downloaded"><strong> '.__('Downloaded!!!').' </strong>'.__('downloads').'</span>';
-        }
         echo '        </div>';
         echo '    </div>';
         echo '</div>';
