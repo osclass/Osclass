@@ -165,7 +165,7 @@ class MyReporter extends SimpleReporter {
         array_shift($breadcrumb);
         $fail .= implode(" -&gt; ", $breadcrumb);
         $fail .= " -&gt; " . $this->htmlEntities($message);
-        $fail .= "<br /><br />\n";
+        $fail .= "<br />\n";
         $this->fails .= $fail;
         global $php_sapi;
         if($php_sapi==='cli') {

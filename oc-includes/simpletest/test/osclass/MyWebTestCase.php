@@ -19,7 +19,7 @@ class MyWebTestCase extends WebTestCase {
         $img  = $path.$date;
         
         if(!$res) {
-            $a = "<a target='_blank' href='http://images_test.vm-test-osclass.office/img/$date'>Image test failed</a>";
+            $a = "<a target='_blank' href='http://images_test.vm-test-osclass.office/img/$date'>Image test failed</a><br /><br />";
             $this->reporter->addFail($message . " " . $a);
             $cmd = "DISPLAY=:1 import -window root ".$img;
             system($cmd);
