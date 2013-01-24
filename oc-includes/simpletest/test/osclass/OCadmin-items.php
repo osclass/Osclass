@@ -649,7 +649,7 @@ class OCadmin_items extends OCadminTest {
 
         if($bool == 0) {
             $this->post_item_website();
-            $this->assertTrue($this->selenium->isTextPresent("Your listing has been published") || $this->selenium->isTextPresent('Check your inbox to verify your listing'),"Can post an item (all can post items). ERROR" ) ;
+            $this->assertTrue($this->selenium->isTextPresent("Your listing has been published") || $this->selenium->isTextPresent('Check your inbox to validate your listing'),"Can post an item (all can post items). ERROR" ) ;
         } else if($bool == 1 && !$loginUser) {
             $this->selenium->open(osc_base_url(true) );
             // i need click twice, if not don't appear flash message
