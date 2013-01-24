@@ -27,6 +27,7 @@
                 'close'              => __('Close'),
                 'download'           => __('Download'),
                 'update'             => __('Update'),
+                'last_update'        => __('Last update'),
                 'downloads'          => __('Downloads'),
                 'requieres_version'  => __('Requires at least'),
                 'compatible_with'    => __('Compatible up to'),
@@ -36,15 +37,15 @@
                 'sure'               => __('Are you sure?'),
                 'proceed_anyway_btn' => __('Ok, proceed anyway'),
                 'not_compatible'     => sprintf(__('Warning! This theme is not compatible with your current version of Osclass (%s)'), $main_version),
-                'themes'    => array(
-                                'download_ok' => __('The theme has been downloaded correctly, proceed to activate or preview it.')
-                            ),
-                'plugins'   => array(
-                                'download_ok' => __('The plugin has been downloaded correctly, proceed to install and configure.')
-                            ),
-                'languages' => array(
-                                'download_ok' => __('The language has been downloaded correctly, proceed to activate.')
-                            )
+                'themes'             => array(
+                                         'download_ok' => __('The theme has been downloaded correctly, proceed to activate or preview it.')
+                                     ),
+                'plugins'            => array(
+                                         'download_ok' => __('The plugin has been downloaded correctly, proceed to install and configure.')
+                                     ),
+                'languages'          => array(
+                                         'download_ok' => __('The language has been downloaded correctly, proceed to activate.')
+                                     )
 
             );
         ?>
