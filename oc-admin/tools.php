@@ -340,9 +340,9 @@
                                             $this->doView('tools/maintenance.php') ;
                                             break ;
                                         }
-                                        osc_csrf_check();
                                         $mode = Params::getParam('mode') ;
                                         if( $mode == 'on' ) {
+                                            osc_csrf_check();
                                             $maintenance_file = osc_base_path() . '.maintenance' ;
                                             $fileHandler = @fopen($maintenance_file, 'w') ;
                                             if( $fileHandler ) {
@@ -353,6 +353,7 @@
                                             fclose($fileHandler) ;
                                             $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=maintenance' ) ;
                                         } else if( $mode == 'off' ) {
+                                            osc_csrf_check();
                                             $deleted = @unlink(osc_base_path() . '.maintenance') ;
                                             if( $deleted ) {
                                                 osc_add_flash_ok_message( _m('Maintenance mode is OFF'), 'admin') ;
