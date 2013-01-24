@@ -611,6 +611,107 @@ class OCadmin_generalSettings extends OCadmintest {
         osc_reset_preferences();
     }
 
+    /*
+     * Login into oc-admin.
+     * GeneralSettings->Last Searches
+     * - switch inputs.
+     * Logout.
+     */
+
+    function testLastSearches()
+    {
+
+        $this->loginWith();
+        sleep(2);
+        $this->assertTrue(!$this->selenium->isTextPresent('Log in'), "Login oc-admin.");
+
+        $uSettings = new utilSettings();
+
+        // TEST CHECKBOX TO ENABLE(DISABLE
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='settings_searches']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $check = $uSettings->findValueByName('save_latest_searches');
+        if($check == 1){ $check = 'on';} else { $check = 'off'; }
+
+        $this->assertEqual($check, $this->selenium->getValue("save_latest_searches"), "Save or not latest searches.");
+
+        $this->selenium->click("save_latest_searches");
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("30000");
+
+        $check = $uSettings->findValueByName('save_latest_searches');
+        if($check == 1){ $check = 'on';} else { $check = 'off'; }
+
+        $this->assertEqual($check, $this->selenium->getValue("save_latest_searches"), "Save or not latest searches.");
+
+        $this->selenium->click("save_latest_searches");
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("30000");
+
+        $check = $uSettings->findValueByName('save_latest_searches');
+        if($check == 1){ $check = 'on';} else { $check = 'off'; }
+
+        $this->assertEqual($check, $this->selenium->getValue("save_latest_searches"), "Save or not latest searches.");
+
+
+        $this->selenium->click("//input[@value='hour']");
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("30000");
+        $this->assertEqual("hour", $this->selenium->getValue("customPurge"), "Set to hour");
+
+        $this->selenium->click("//input[@value='day']");
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("30000");
+        $this->assertEqual("day", $this->selenium->getValue("customPurge"), "Set to day");
+
+        $this->selenium->click("//input[@value='week']");
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("30000");
+        $this->assertEqual("week", $this->selenium->getValue("customPurge"), "Set to week");
+
+        $this->selenium->click("//input[@value='forever']");
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("30000");
+        $this->assertEqual("forever", $this->selenium->getValue("customPurge"), "Set to forever");
+
+        $this->selenium->click("//input[@value='1000']");
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("30000");
+        $this->assertEqual("1000", $this->selenium->getValue("customPurge"), "Set to 1000");
+
+        $this->selenium->click("//input[@value='custom']");
+        $this->selenium->type("custom_queries", "");
+        $this->selenium->keyUp("custom_queries", "");
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue($this->selenium->isTextPresent("Custom number: this field cannot be left empty."), "Last Searches JS, update.");
+        $this->selenium->click("//input[@value='custom']");
+        $this->selenium->type("custom_queries", "123");
+        $this->selenium->keyUp("custom_queries", "3");
+        sleep(4);
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("30000");
+        $this->assertEqual("123", $this->selenium->getValue("customPurge"), "Set to 123");
+
+        $this->selenium->type("custom_queries", "");
+        $this->selenium->keyUp("custom_queries", "");
+        sleep(4);
+        $this->selenium->click("//input[@type='submit']");
+        sleep(4);
+        $this->assertTrue($this->selenium->isTextPresent("Custom number: this field cannot be left empty."), "Last Searches JS, update.");
+
+        $this->selenium->click("//input[@value='week']");
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("30000");
+        $this->assertEqual("week", $this->selenium->getValue("customPurge"), "Set to week");
+
+
+        unset($uSettings);
+        osc_reset_preferences();
+    }
+
 
 
     /*
@@ -1092,106 +1193,6 @@ class OCadmin_generalSettings extends OCadmintest {
         osc_reset_preferences();
     }
 
-
-    /*
-     * Login into oc-admin.
-     * GeneralSettings->Last Searches
-     * - switch inputs.
-     * Logout.
-     */
-
-    function testLastSearches()
-    {
-        $uSettings = new utilSettings();
-
-        $this->loginWith();
-        $this->assertTrue(!$this->selenium->isTextPresent('Log in'), "Login oc-admin.");
-
-
-        // TEST CHECKBOX TO ENABLE(DISABLE
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='settings_searches']");
-        $this->selenium->waitForPageToLoad("10000");
-
-        $check = $uSettings->findValueByName('save_latest_searches');
-        if($check == 1){ $check = 'on';} else { $check = 'off'; }
-
-        $this->assertEqual($check, $this->selenium->getValue("save_latest_searches"), "Save or not latest searches.");
-
-        $this->selenium->click("save_latest_searches");
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("30000");
-
-        $check = $uSettings->findValueByName('save_latest_searches');
-        if($check == 1){ $check = 'on';} else { $check = 'off'; }
-
-        $this->assertEqual($check, $this->selenium->getValue("save_latest_searches"), "Save or not latest searches.");
-
-        $this->selenium->click("save_latest_searches");
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("30000");
-
-        $check = $uSettings->findValueByName('save_latest_searches');
-        if($check == 1){ $check = 'on';} else { $check = 'off'; }
-
-        $this->assertEqual($check, $this->selenium->getValue("save_latest_searches"), "Save or not latest searches.");
-
-
-        $this->selenium->click("//input[@value='hour']");
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("30000");
-        $this->assertEqual("hour", $this->selenium->getValue("customPurge"), "Set to hour");
-
-        $this->selenium->click("//input[@value='day']");
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("30000");
-        $this->assertEqual("day", $this->selenium->getValue("customPurge"), "Set to day");
-
-        $this->selenium->click("//input[@value='week']");
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("30000");
-        $this->assertEqual("week", $this->selenium->getValue("customPurge"), "Set to week");
-
-        $this->selenium->click("//input[@value='forever']");
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("30000");
-        $this->assertEqual("forever", $this->selenium->getValue("customPurge"), "Set to forever");
-
-        $this->selenium->click("//input[@value='1000']");
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("30000");
-        $this->assertEqual("1000", $this->selenium->getValue("customPurge"), "Set to 1000");
-
-        $this->selenium->click("//input[@value='custom']");
-        $this->selenium->type("custom_queries", "");
-        $this->selenium->keyUp("custom_queries", "");
-        $this->selenium->click("//input[@type='submit']");
-        sleep(4);
-        $this->assertTrue($this->selenium->isTextPresent("Custom number: this field cannot be left empty."), "Last Searches JS, update.");
-        $this->selenium->click("//input[@value='custom']");
-        $this->selenium->type("custom_queries", "123");
-        $this->selenium->keyUp("custom_queries", "3");
-        sleep(4);
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("30000");
-        $this->assertEqual("123", $this->selenium->getValue("customPurge"), "Set to 123");
-
-        $this->selenium->type("custom_queries", "");
-        $this->selenium->keyUp("custom_queries", "");
-        sleep(4);
-        $this->selenium->click("//input[@type='submit']");
-        sleep(4);
-        $this->assertTrue($this->selenium->isTextPresent("Custom number: this field cannot be left empty."), "Last Searches JS, update.");
-
-        $this->selenium->click("//input[@value='week']");
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("30000");
-        $this->assertEqual("week", $this->selenium->getValue("customPurge"), "Set to week");
-
-
-        unset($uSettings);
-        osc_reset_preferences();
-    }
 
     function generateCustomDate() {
         $str = ":_-/dDjlNSwzWFmMntLoyYaABgGhHieIOPTZ";
