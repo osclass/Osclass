@@ -50,10 +50,10 @@
         ?>
         <script type="text/javascript">
             var theme = window.theme || {};
-            theme.adminBaseUrl = "<?php echo osc_admin_base_url(true); ?>";
+            theme.adminBaseUrl  = "<?php echo osc_admin_base_url(true); ?>";
             theme.marketAjaxUrl = "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market&<?php echo osc_csrf_token_url(); ?>";
-            theme.themUrl = "<?php echo osc_current_admin_theme_url(); ?>";
-            theme.langs = <?php echo json_encode($js_lang); ?>;
+            theme.themUrl       = "<?php echo osc_current_admin_theme_url(); ?>";
+            theme.langs         = <?php echo json_encode($js_lang); ?>;
 
             var osc_market = {};
             osc_market.main_version = <?php echo $main_version; ?>;
@@ -78,8 +78,32 @@
                 $featured = 'true';
                 break;
         }
+
+        // sorting options
+        $_order          = 'desc';
+        $sorting_segment = 'updated&amp;order='.$_order;
+
+        $sort            = Params::getParam("sort");
+        $order           = Params::getParam("order");
+
+        if($sort!='') {
+            if($order=='') {
+                $order = $_order;
+            }
+            switch ($sort) {
+                case 'downloads':
+                    $sorting_segment = 'downloads&amp;order='.$order;
+                break;
+                case 'updated':
+                    $sorting_segment = 'updated&amp;order='.$order;
+                break;
+                default:
+                break;
+            }
+        }
+
         foreach($sections as $section){
-            echo '<script src="'.osc_admin_base_url(true).'?page=ajax&amp;action=market_data&amp;section='.$section.'&amp;featured='.$featured.'&amp;mPage='.Params::getParam('mPage').'" type="text/javascript"></script>';
+            echo '<script src="'.osc_admin_base_url(true).'?page=ajax&amp;action=market_data&amp;section='.$section.'&amp;featured='.$featured.'&amp;mPage='.Params::getParam('mPage').'&amp;sort='.$sorting_segment.'" type="text/javascript"></script>';
         }
         ?>
         <?php

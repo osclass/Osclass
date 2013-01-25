@@ -892,13 +892,32 @@
                     $page     = Params::getParam("mPage");
                     $featured = Params::getParam("featured");
 
+                    $sort     = Params::getParam("sort");
+                    $order    = Params::getParam("order");
+
+                    // for the moment this value is static
+                    $length   = 9;
+
                     if($page>=1) $page--;
 
-                    $url  = osc_market_url($section)."/page/".$page;
+                    $url  = osc_market_url($section)."page/".$page.'/';
+
+                    if($length!='' && is_numeric($length)) {
+                        $url .= 'length/'.$length.'/';
+                    }
+
+                    if($sort!='') {
+                        $url .= 'order/'.$sort;
+                        if($order!='') {
+                            $url .= '/'.$order;
+                        }
+                    }
+
 
                     if($featured != ''){
                         $url = osc_market_featured_url($section);
                     }
+                    error_log('url {ajax:market_data} (header) '.$url);
                     $data = array();
 
                     $data = json_decode(osc_file_get_contents($url), true);
