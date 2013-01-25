@@ -80,14 +80,14 @@ class AllTests extends TestSuite {
             if(isset($tests['frontend']['search']) || $tests['frontend']=='') {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-search.php');
             }
+            if(isset($tests['frontend']['users']) || $tests['frontend']=='') {
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-users.php');
+            }
             if(isset($tests['frontend']['items']) || $tests['frontend']=='') {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-items.php');
             }
             if(isset($tests['frontend']['page']) || $tests['frontend']=='') {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-page.php');      
-            }
-            if(isset($tests['frontend']['users']) || $tests['frontend']=='') {
-                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-users.php');
             }
         }
 
@@ -110,14 +110,14 @@ class AllTests extends TestSuite {
             if(isset($tests['frontend']['search']) || $tests['frontend']=='') {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-search.php');
             }
+            if(isset($tests['frontend']['users']) || $tests['frontend']=='') {
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-users.php');
+            }
             if(isset($tests['frontend']['items']) || $tests['frontend']=='') {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-items.php');
             }
             if(isset($tests['frontend']['page']) || $tests['frontend']=='') {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-page.php');      
-            }
-            if(isset($tests['frontend']['users']) || $tests['frontend']=='') {
-                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-users.php');
             }
             // deactivate permalinks
             $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-offPermalinks.php');
