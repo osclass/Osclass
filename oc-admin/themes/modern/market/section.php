@@ -98,11 +98,8 @@
     <span style="<?php if($sort=='downloads'){ echo "font-weight: bold;";}?>" class="<?php echo ($order_download=='desc'?'sorting_desc':'sorting_asc') ?>"><a href="<?php echo $sort_download; ?>"><?php _e('Downloads'); ?> </a></span>  <span style="<?php if($sort=='updated'){ echo "font-weight: bold;";}?>" class="<?php echo ($order_updated=='desc'?'sorting_desc':'sorting_asc') ?>"><a href="<?php echo $sort_updated; ?>"><?php _e('Last updates'); ?> </a></span>
     </h2>
     <?php
-
     // pageSize or length attribute is hardcoded
     $out    = osc_file_get_contents($url);
-
-    error_log('url {section} : '.$url);
     $array  = json_decode($out, true);
 
     $pageActual = $array['page'];
@@ -121,7 +118,6 @@
     $i = 0;
     foreach($array[$section] as $item) {
         drawMarketItem($item,$colors[$i]);
-
         $i++;
     }
     echo '<div class="clear"></div><div class="has-pagination">'.$aux.'</div>';

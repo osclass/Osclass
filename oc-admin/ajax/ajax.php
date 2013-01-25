@@ -913,11 +913,10 @@
                         }
                     }
 
-
                     if($featured != ''){
                         $url = osc_market_featured_url($section);
                     }
-                    error_log('url {ajax:market_data} (header) '.$url);
+
                     $data = array();
 
                     $data = json_decode(osc_file_get_contents($url), true);
