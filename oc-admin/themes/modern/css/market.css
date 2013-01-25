@@ -158,6 +158,9 @@ a.has-update:hover .mk-item {
   font-weight: 200;
   font-size: 13px;
   font-style: normal;
+  border-radius: 0 0 0 4px;
+  -moz-border-radius: 0 0 0 4px;
+  -webkit-border-radius: 0 0 0 4px;
 }
 .mk-item .mk-info span {
   display: block;
@@ -219,10 +222,15 @@ a.has-update:hover .mk-item {
 }
 .has-update .flag {
   display: block;
+  background-position: 0 0px;
 }
 .is-featured .flag {
   display: block;
-  background-position: top right;
+  background-position: 0 -15px;
+}
+.is-featured-downloaded .flag {
+  display: block;
+  background-position: 0 -30px;
 }
 /* DIALOGS */
 .market-dialog {

@@ -135,6 +135,7 @@ $(function(){
                                     +'<span class="block"><strong>'+theme.langs.requieres_version+'</strong> '+versions[0]+'</span>'
                                     +'<span class="block"><strong>'+theme.langs.compatible_with+'</strong> '+versions[(versions.length-1)]+'</span>'
                                     +'<span class="block"><strong>'+theme.langs.downloads+'</strong> '+item.i_total_downloads+'</span>'
+                                    +'<span class="block"><strong>'+theme.langs.last_update+'</strong> '+item.dt_mod_date+'</span>'
                                 +'</td>'
                             +'</tr>'
                             +screenshots

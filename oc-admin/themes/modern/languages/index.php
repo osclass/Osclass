@@ -257,7 +257,7 @@
         });
     });
 
-    $('.market-popup').live('click',function(){
+    $('.btn-market-popup').live('click',function(){
         $.getJSON(
             "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
             {"code" : $(this).attr('href').replace('#',''), 'section' : 'languages'},

@@ -277,7 +277,8 @@
         private function processDataReported($items)
         {
             if(!empty($items)) {
-            
+
+                $csrf_token_url = osc_csrf_token_url();
                 foreach($items as $aRow) {
                     View::newInstance()->_exportVariableToView('item', $aRow);
                     $row     = array() ;
@@ -289,25 +290,25 @@
                         $title .= '...' ;
                     }
 
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;stat=all">' . __('Clear All') .'</a>' ;
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=all">' . __('Clear All') .'</a>' ;
                     if( $aRow['i_num_spam'] > 0 ) {
-                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;stat=spam">' . __('Clear Spam') .'</a>' ;
+                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=spam">' . __('Clear Spam') .'</a>' ;
                     } 
                     if( $aRow['i_num_bad_classified'] > 0 ) {
-                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;stat=bad">' . __('Clear Misclassified') .'</a>' ;
+                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=bad">' . __('Clear Misclassified') .'</a>' ;
                     }
                     if( $aRow['i_num_repeated'] > 0 ) {
-                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;stat=duplicated">' . __('Clear Duplicated') .'</a>' ;
+                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=duplicated">' . __('Clear Duplicated') .'</a>' ;
                     }
                     if( $aRow['i_num_offensive'] > 0 ) {
-                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;stat=offensive">' . __('Clear Offensive') .'</a>' ;
+                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=offensive">' . __('Clear Offensive') .'</a>' ;
                     }
                     if( $aRow['i_num_expired'] > 0 ) {
-                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;stat=expired">' . __('Clear Expired') .'</a>' ;
+                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=expired">' . __('Clear Expired') .'</a>' ;
                     }
                     if(count($options) > 0) {
                         $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=item_edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>' ;
-                        $options[] = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=items&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
+                        $options[] = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=items&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '">' . __('Delete') . '</a>' ;
                     }
 
                     // create list of actions
