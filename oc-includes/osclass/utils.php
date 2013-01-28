@@ -1321,7 +1321,7 @@ function _need_update($uri, $version, $operator = '>') {
     } else {
         $data = json_decode($json , true);
         if(isset($data['s_version']) && version_compare($data['s_version'], $version, $operator)) {
-            error_log('_need_update '.$data['s_version'].' '.$operator.' '.$version);
+//            error_log('_need_update '.$data['s_version'].' '.$operator.' '.$version);
             return true;
         }
     }
