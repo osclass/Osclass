@@ -83,8 +83,7 @@ $(function(){
                 var compatibleText = '';
                 var compatibleClass = '';
                 var str_letter = '';
-
-                if(item.s_compatible.indexOf(osc_market.main_version) == -1) {
+                if(item.s_compatible.indexOf(osc_market.main_version) == -1) {  //to do CARLOS
                     compatibleText = item.s_compatible + " - "  + theme.langs.not_compatible;
                     compatibleClass = 'not-compatible';
                     textButton = theme.langs.update;
