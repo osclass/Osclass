@@ -112,7 +112,7 @@ $(function(){
                         screenshots = '<tr>'
                             +'<td colspan="3"><h4>'+theme.langs.screenshots+' '+preview+'</h4>';
                             for(i = 0; i < item.a_images.length; i++){
-                                screenshots += '<a href="'+item.a_images[i]['s_image']+'" class="screnshot"><img src="'+item.a_images[i]['s_thumbnail']+'" /></a>';
+                                screenshots += '<a rel="image_group'+item.fk_i_market_id+'" href="'+item.a_images[i]['s_image']+'" class="screnshot"><img src="'+item.a_images[i]['s_thumbnail']+'" /></a>';
                                 if(i == 2) break;
                             }
                          screenshots += '</td></tr>';
@@ -149,17 +149,21 @@ $(function(){
                         +'</div>'
                     +'</div>';
                 var $print = $(print);
-                    $print.find('.screnshot:last img').addClass('last');
-                    $print.find('a.screnshot').click(function(){
-                        $('<img />').attr("src", $(this).attr('href')).load(function(){
-                            $(this).dialog({
-                                dialogClass:'market-dialog '+compatibleClass,
-                                width:'auto',
-                                modal:true
-                            });
-                        });
-                        return false;
-                    });
+                $print.find('.screnshot:last img').addClass('last');
+
+                $print.find('a.screnshot').fancybox({
+                    openEffect : 'none',
+                    closeEffect : 'none',
+                    nextEffect : 'fade',
+                    prevEffect : 'fade',
+                    loop : false,
+                    helpers : {
+                        title : {
+                        type : 'inside'
+                        }
+                    }
+                });
+                
                 $print.dialog({
                         dialogClass:'market-dialog '+compatibleClass,
                         title: compatibleText,

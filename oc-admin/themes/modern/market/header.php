@@ -5,6 +5,11 @@
         osc_add_flash_error_message( sprintf(_m('<code>downloads</code> folder has to be writable, i.e.: <code>chmod a+w %soc-content/downloads/</code>'), ABS_PATH), 'admin');
     }
 
+    // fancybox
+    osc_register_script('fancybox', osc_current_web_theme_js_url('fancybox/jquery.fancybox.js'));
+    osc_enqueue_script('fancybox');
+    osc_enqueue_style('fancybox', osc_current_web_theme_js_url('fancybox/jquery.fancybox.css'));
+
     osc_enqueue_style('market', osc_current_admin_theme_styles_url('compile.css'));
     osc_register_script('market-js', osc_current_admin_theme_js_url('market.js'));
     osc_enqueue_script('market-js');
