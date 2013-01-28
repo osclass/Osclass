@@ -256,7 +256,7 @@ function drawMarketItem($item,$color = false){
     echo '        <h3>'.$item['s_title'].'</h3>';
     echo '        <span class="downloads"><strong>'.$item['i_total_downloads'].'</strong> '.__('downloads').'</span>';
     echo '        <i>by '.$item['s_contact_name'].'</i>';
-    echo '        <div>';
+    echo '        <div class="market-actions">';
     echo '            <span class="more">'.__('View more').'</span>';
     echo '            <span class="download-btn'.$compatible.'" data-code="'.$item['s_update_url'].'" data-type="'.$type.'"'.'>'.__('Download').'</span>';
     echo '        </div>';
