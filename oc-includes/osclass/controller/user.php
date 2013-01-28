@@ -142,15 +142,7 @@
                                                     if(isset($user['s_username'])) {
                                                         osc_add_flash_error_message(_m('The specified username is already in use'));
                                                     } else {
-                                                        $blacklist = explode(",", osc_username_blacklist());
-                                                        $found_username = false;
-                                                        foreach($blacklist as $bl) {
-                                                            if(stripos($username, $bl)!==false) {
-                                                                $found_username = true;
-                                                                break;
-                                                            }
-                                                        }
-                                                        if(!$found_username) {
+                                                        if(!osc_is_username_blacklisted($username)) {
                                                             User::newInstance()->update(
                                                                      array('s_username' => $username)
                                                                     ,array('pk_i_id' => Session::newInstance()->_get('userId')));
