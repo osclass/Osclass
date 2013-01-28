@@ -175,4 +175,25 @@
         return false;
     }
 
+    /**
+     * Check is an username is blacklisted
+     *
+     * @param string $username
+     * @since 3.1
+     * @return boolean
+     */
+    function osc_is_username_blacklisted($username) {
+        // Avoid numbers only usernames, this will collide with future users leaving the username field empty
+        if(preg_replace('|(\d+)|', '', $username)=='') {
+         return true;
+        }
+        $blacklist = explode(",", osc_username_blacklist());
+        foreach($blacklist as $bl) {
+            if(stripos($username, $bl)!==false) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 ?>

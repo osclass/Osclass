@@ -64,12 +64,8 @@
                 if( !$error && $username_taken != null ) {
                     $error = 8;
                 }
-                $blacklist = explode(",", osc_username_blacklist());
-                foreach($blacklist as $bl) {
-                    if(stripos($input['s_username'], $bl)!==false) {
-                        $error = 9;
-                        break;
-                    }
+                if(osc_is_username_blacklisted($input['s_username'])) {
+                    $error = 9;
                 }
             }
 
