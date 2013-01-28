@@ -104,18 +104,25 @@ $(function(){
                 }
                 if(section == 'theme'){
                     if(item.a_images.length > 0){
-                    screenshots = '<tr>'
-                        +'<td colspan="3"><h4>'+theme.langs.screenshots+'</h4>';
-                        for(i = 0; i < item.a_images.length; i++){
-                            screenshots += '<a href="'+item.a_images[i]['s_image']+'" class="screnshot"><img src="'+item.a_images[i]['s_thumbnail']+'" /></a>';
-                            if(i == 2) break;
+                        var preview = '';
+                        if(item.s_preview != '') {
+                            preview = '<a target="_blank" class="btn" href="'+item.s_preview+'">'+theme.langs.preview_theme+'</a>';
                         }
-                     screenshots += '</td></tr>';
+
+                        screenshots = '<tr>'
+                            +'<td colspan="3"><h4>'+theme.langs.screenshots+'</h4>'+preview;
+                            for(i = 0; i < item.a_images.length; i++){
+                                screenshots += '<a href="'+item.a_images[i]['s_image']+'" class="screnshot"><img src="'+item.a_images[i]['s_thumbnail']+'" /></a>';
+                                if(i == 2) break;
+                            }
+                         screenshots += '</td></tr>';
                     }
                 }
                 if(section == 'language'){
                     str_letter =  item.s_update_url;
                 }
+                var _mod_date = new Date(item.dt_mod_date);
+                var date_mod = _mod_date.getFullYear()+'-'+_mod_date.getMonth()+'-'+_mod_date.getDate();
                 print = '<div class="mk-item mk-item-'+section+'">'
                         +'<div class="banner" style="background-image:url('+banner+');">'+str_letter+'</div>'
                         +'<div class="mk-info">'
@@ -134,7 +141,7 @@ $(function(){
                                     +'<span class="block"><strong>'+theme.langs.requieres_version+'</strong> '+versions[0]+'</span>'
                                     +'<span class="block"><strong>'+theme.langs.compatible_with+'</strong> '+versions[(versions.length-1)]+'</span>'
                                     +'<span class="block"><strong>'+theme.langs.downloads+'</strong> '+item.i_total_downloads+'</span>'
-                                    +'<span class="block"><strong>'+theme.langs.last_update+'</strong> '+item.dt_mod_date+'</span>'
+                                    +'<span class="block"><strong>'+theme.langs.last_update+'</strong> '+date_mod+'</span>'
                                 +'</td>'
                             +'</tr>'
                             +screenshots

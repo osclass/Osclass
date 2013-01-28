@@ -32,6 +32,7 @@
                 'requieres_version'  => __('Requires at least'),
                 'compatible_with'    => __('Compatible up to'),
                 'screenshots'        => __('Screenshots'),
+                'preview_theme'      => __('Preview theme'),
                 'download_manually'  => __('Download manually'),
                 'proceed_anyway'     => sprintf(__('Warning! This package is not compatible with your current version of Osclass (%s)'), $main_version),
                 'sure'               => __('Are you sure?'),
@@ -171,7 +172,6 @@
         }
 
         $style = 'background-image:url('.$thumbnail.');';
-        $item['total_downloads'] = 335;
         echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent '.$featuredClass.$updateClass.'" data-type="'.$type.'"'.$updateData.' data-gr="'.$color.'" data-letter="'.$item['s_update_url'][0].'">';
         echo '<div class="mk-item mk-item-'.$type.'">';
         echo '    <div class="banner" style="'.$style.'">'.$letterDraw.'</div>';
