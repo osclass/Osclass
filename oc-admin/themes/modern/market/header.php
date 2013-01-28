@@ -27,6 +27,7 @@
         $js_lang = array(
                 'by'                 => __('by'),
                 'ok'                 => __('Ok'),
+                'error_item'         => __('There was a problem, try again later please'),
                 'wait_download'      => __('Please wait until the download is completed'),
                 'downloading'        => __('Downloading'),
                 'close'              => __('Close'),
@@ -65,54 +66,6 @@
             var osc_market = {};
             osc_market.main_version = <?php echo $main_version; ?>;
         </script>
-        <?php
-        $sections = array();
-        $featured = '';
-        switch (Params::getParam("action")) {
-            case 'plugins':
-                $sections[] = 'plugins';
-                break;
-
-            case 'themes':
-                $sections[] = 'themes';
-                break;
-            case 'languages':
-                $sections[] = 'languages';
-                break;
-
-            default:
-                $sections = array('plugins','themes','languages');
-                $featured = 'true';
-                break;
-        }
-
-        // sorting options
-        $_order          = 'desc';
-        $sorting_segment = 'updated&amp;order='.$_order;
-
-        $sort            = Params::getParam("sort");
-        $order           = Params::getParam("order");
-
-        if($sort!='') {
-            if($order=='') {
-                $order = $_order;
-            }
-            switch ($sort) {
-                case 'downloads':
-                    $sorting_segment = 'downloads&amp;order='.$order;
-                break;
-                case 'updated':
-                    $sorting_segment = 'updated&amp;order='.$order;
-                break;
-                default:
-                break;
-            }
-        }
-
-        foreach($sections as $section){
-            echo '<script src="'.osc_admin_base_url(true).'?page=ajax&amp;action=market_data&amp;section='.$section.'&amp;featured='.$featured.'&amp;mPage='.Params::getParam('mPage').'&amp;sort='.$sorting_segment.'" type="text/javascript"></script>';
-        }
-        ?>
         <?php
     }
 
