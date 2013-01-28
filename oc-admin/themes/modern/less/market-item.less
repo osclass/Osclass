@@ -67,7 +67,7 @@ a.has-update:hover .mk-item{
 }
 .mk-item .mk-info i{
     font-weight: 200;
-    font-size:13px;
+    font-size:12px;
     font-style: normal;
     /*border-radius:0 0 0 4px;
     -moz-border-radius:0 0 0 4px;
@@ -77,20 +77,29 @@ a.has-update:hover .mk-item{
     display: block;
     float:left;
 }
-.mk-item .mk-info .more{
-    background-color: #2fbfd1;
+.mk-item .mk-info .more,
+.mk-item .mk-info .download-btn{
+    background-color: @color-gray-dim;
     .border-radius(3px);
-    padding:5px 10px;
+    padding:5px 8px;
     color:#fff;
+    float:left;
+    font-size:13px;
+}
+.mk-item .mk-info .download-btn{
+    background-color: #2fbfd1;
+    margin-left: 5px;
 }
 .mk-item .mk-info .downloads{
-    float:right;
-    font-size:13px; line-height: 13px;
+    display:block;
+    float:none;
+    font-size:12px;
+    line-height: 12px;
+    margin-bottom:-2px;
 }
 .mk-item .mk-info .downloads b,
 .mk-item .mk-info .downloads strong{
-    display: block;
-    font-size:14px;
+    //font-weight: normal;
 }
 .mk-item-theme{
     height: 225px;
@@ -266,6 +275,8 @@ z-index: 88888;
     text-align: center;
     padding:7px 0;
     margin-bottom:8px;
+    float:none;
+    background-color: #2fbfd1;
 }
 .market-dialog .mk-info .block{
     display: block;

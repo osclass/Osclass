@@ -10,7 +10,6 @@
     osc_enqueue_script('fancybox');
     osc_enqueue_style('fancybox', osc_current_web_theme_js_url('fancybox/jquery.fancybox.css'));
 
-    osc_enqueue_style('market', osc_current_admin_theme_styles_url('compile.css'));
     osc_register_script('market-js', osc_current_admin_theme_js_url('market.js'));
     osc_enqueue_script('market-js');
 
@@ -68,81 +67,10 @@
         </script>
         <?php
     }
-
     function gradienColors(){
         $letters = str_split('abgi');
         shuffle($letters);
         return $letters;
-    }
-
-    function drawMarketItem($item,$color = false){
-        //constants
-        $updateClass      = '';
-        $updateData       = '';
-        $thumbnail        = false;
-        $featuredClass    = '';
-        $style            = '';
-        $letterDraw       = '';
-        $type             = strtolower($item['e_type']);
-        $items_to_update  = json_decode(getPreference($type.'s_to_update'),true);
-        $items_downloaded = json_decode(getPreference($type.'s_downloaded'),true);
-
-        if($item['s_thumbnail']){
-            $thumbnail = $item['s_thumbnail'];
-        }
-        if($item['s_banner']){
-            if(@$item['s_banner_path']!=''){
-                $thumbnail = $item['s_banner_path'] . $item['s_banner'];
-            } else {
-                $thumbnail = 'http://market.osclass.org/oc-content/uploads/market/'.$item['s_banner'];
-            }
-        }
-
-
-        $downloaded = false;
-        if($type != 'language'){
-            if(in_array($item['s_update_url'], $items_downloaded)) {
-                if (in_array($item['s_update_url'], $items_to_update)) {
-                    $updateClass = 'has-update';
-                    $updateData  = ' data-update="true"';
-                } else {
-                    // market item downloaded !
-                    $downloaded = true;
-                }
-            }
-        }
-
-        if(!$thumbnail && $color){
-            $thumbnail = osc_current_admin_theme_url('images/gr-'.$color.'.png');
-            $letterDraw = $item['s_update_url'][0];
-            if($type == 'language'){
-                $letterDraw = $item['s_update_url'];
-            }
-        }
-        if ($item['b_featured']) {
-            $featuredClass = ' is-featured';
-            if($downloaded || $updateClass){
-                $featuredClass .= '-';
-            }
-        }
-        if($downloaded) {
-            $featuredClass .= 'is-downloaded';
-        }
-
-        $style = 'background-image:url('.$thumbnail.');';
-        echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent '.$featuredClass.$updateClass.'" data-type="'.$type.'"'.$updateData.' data-gr="'.$color.'" data-letter="'.$item['s_update_url'][0].'">';
-        echo '<div class="mk-item mk-item-'.$type.'">';
-        echo '    <div class="banner" style="'.$style.'">'.$letterDraw.'</div>';
-        echo '    <div class="mk-info"><i class="flag"></i>';
-        echo '        <h3>'.$item['s_title'].'</h3>';
-        echo '        <i>by '.$item['s_contact_name'].'</i>';
-        echo '        <div>';
-        echo '            <span class="more">'.__('View more').'</span>';
-        echo '            <span class="downloads"><strong>'.$item['i_total_downloads'].'</strong>'.__('downloads').'</span>';
-        echo '        </div>';
-        echo '    </div>';
-        echo '</div>';
-        echo '</a>';
     }
     if(!function_exists('addBodyClass')){
         function addBodyClass($array){

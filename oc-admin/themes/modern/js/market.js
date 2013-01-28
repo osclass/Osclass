@@ -31,38 +31,44 @@ function installMarketItem(thatItem){
             $("#downloading").dialog("option", "position", "center");
         });
 }
+function checkCompatibility(thatDialog,$element){
+    var notCompatible = $element.hasClass('not-compatible');
+    if(notCompatible){
+            content   = $('<div id="not-compatible-prompt"></div>');
+            container = $('<div id="not-compatible-prompt"></div>');
+            actions   = $('<p></p>');
+            btnOk     = $('<a class="btn btn-mini">'+theme.langs.proceed_anyway_btn+'</a>');
+            btnClose  = $('<a class="btn btn-mini btn-red">'+theme.langs.close+'</a>');
+
+            btnOk.click(function(){
+                installMarketItem(thatDialog);
+            });
+
+            btnClose.click(function(){
+                $(".ui-dialog-content").dialog("close");
+            });
+
+            content.append(container.append(theme.langs.proceed_anyway).append(actions.append(btnClose).append(btnOk)));
+
+            $(content).dialog({title:theme.langs.sure,modal:true});
+    } else {
+        installMarketItem(thatDialog);
+    }
+}
 $(function(){
     $(".ui-dialog-content a.more").live("click", function(){
-        var notCompatible = $(this).parents('.ui-dialog').hasClass('not-compatible');
+        var notCompatible = $(this).parents('.ui-dialog');
         var thatDialog = $(this);
 
         $(".ui-dialog-content").dialog("close");
-        if(notCompatible){
-                content   = $('<div id="not-compatible-prompt"></div>');
-                container = $('<div id="not-compatible-prompt"></div>');
-                actions   = $('<p></p>');
-                btnOk     = $('<a class="btn btn-mini">'+theme.langs.proceed_anyway_btn+'</a>');
-                btnClose  = $('<a class="btn btn-mini btn-red">'+theme.langs.close+'</a>');
 
-                btnOk.click(function(){
-                    installMarketItem(thatDialog);
-                });
-
-                btnClose.click(function(){
-                    $(".ui-dialog-content").dialog("close");
-                });
-
-                content.append(container.append(theme.langs.proceed_anyway).append(actions.append(btnClose).append(btnOk)));
-
-            $(content).dialog({title:theme.langs.sure,modal:true});
-        } else {
-            installMarketItem(thatDialog);
-        }
+        checkCompatibility(thatDialog,notCompatible);
         return false;
     });
 
 
-    $('.mk-item-parent').click(function(){
+    $('.mk-item-parent').click(function(event){
+        event.preventDefault();
         var thatItem = $(this);
         var sizes = {
              plugins:{width:645}
@@ -193,5 +199,10 @@ $(function(){
         );
         return false;
 
+    });
+    $('.mk-item-parent .download-btn').bind('click', function(e) {
+        e.stopPropagation();
+        checkCompatibility($(this),$(this));
+        console.log('LOL');
     });
 });
