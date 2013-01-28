@@ -124,11 +124,11 @@ $(function(){
                         if(item.a_images.length > 0){
                             var preview = '';
                             if(item.s_preview != '') {
-                                preview = '<a target="_blank" class="btn-market-update" href="'+item.s_preview+'">'+theme.langs.preview_theme+'</a>';
+                                preview = '<a target="_blank" class="btn-market-preview" href="'+item.s_preview+'">'+theme.langs.preview_theme+'</a>';
                             }
 
                             screenshots = '<tr>'
-                                +'<td colspan="3"><h4>'+theme.langs.screenshots+' '+preview+'</h4>';
+                                +'<td colspan="3"><h4>'+theme.langs.screenshots+'</h4>';
                                 for(i = 0; i < item.a_images.length; i++){
                                     screenshots += '<a rel="image_group'+item.fk_i_market_id+'" href="'+item.a_images[i]['s_image']+'" class="screnshot"><img src="'+item.a_images[i]['s_thumbnail']+'" /></a>';
                                     if(i == 2) break;
@@ -150,16 +150,17 @@ $(function(){
                                         +'<h3>'+item.s_title+'</h3>'
                                         +'<i>'+theme.langs.by+' '+item.s_contact_name+'</i>'
                                         +'<div class="description">'+description.substring(0,150)+dots+'</div>'
+                                        +'<p>'+preview+'</p>'
                                     +'</td>'
                                     +'<td class="spacer">'
                                     +'</td>'
                                     +'<td class="actions">'
                                         +'<a class="more" data-code="'+item.s_update_url+'" data-type="'+section+'">'+theme.langs.download+' v.'+item.s_version+'</a>'
-                                        +'<a href="'+item.s_download+'" class="manual">'+theme.langs.download_manually+'</a>'
                                         +'<span class="block"><strong>'+theme.langs.requieres_version+'</strong> '+versions[0]+'</span>'
                                         +'<span class="block"><strong>'+theme.langs.compatible_with+'</strong> '+versions[(versions.length-1)]+'</span>'
                                         +'<span class="block"><strong>'+theme.langs.downloads+'</strong> '+item.i_total_downloads+'</span>'
                                         +'<span class="block"><strong>'+theme.langs.last_update+'</strong> '+date_mod+'</span>'
+                                        +'<a href="'+item.s_download+'" class="manual">'+theme.langs.download_manually+'</a>'
                                     +'</td>'
                                 +'</tr>'
                                 +screenshots
