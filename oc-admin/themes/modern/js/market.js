@@ -31,8 +31,9 @@ function installMarketItem(thatItem){
             $("#downloading").dialog("option", "position", "center");
         });
 }
-function checkCompatibility(thatDialog,$element){
-    var notCompatible = $element.hasClass('not-compatible');
+function checkCompatibility(thatDialog){
+    console.log(thatDialog);
+    var notCompatible = thatDialog.hasClass('not-compatible');
     if(notCompatible){
             content   = $('<div id="not-compatible-prompt"></div>');
             container = $('<div id="not-compatible-prompt"></div>');
@@ -62,7 +63,7 @@ $(function(){
 
         $(".ui-dialog-content").dialog("close");
 
-        checkCompatibility(thatDialog,notCompatible);
+        checkCompatibility(thatDialog);
         return false;
     });
 
@@ -100,7 +101,7 @@ $(function(){
                     var compatibleText = '';
                     var compatibleClass = '';
                     var str_letter = '';
-                    if(item.s_compatible.indexOf(osc_market.main_version) == -1) {  //to do CARLOS
+                    if(thatItem.hasClass('not-compatible')) {
                         compatibleText = item.s_compatible + " - "  + theme.langs.not_compatible;
                         compatibleClass = 'not-compatible';
                         textButton = theme.langs.update;
@@ -202,7 +203,7 @@ $(function(){
     });
     $('.mk-item-parent .download-btn').bind('click', function(e) {
         e.stopPropagation();
-        checkCompatibility($(this),$(this));
+        checkCompatibility($(this));
         console.log('LOL');
     });
 });

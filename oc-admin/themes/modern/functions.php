@@ -249,7 +249,7 @@ function drawMarketItem($item,$color = false){
     }
 
     $style = 'background-image:url('.$thumbnail.');';
-    echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent '.$featuredClass.$updateClass.'" data-type="'.$type.'"'.$updateData.' data-gr="'.$color.'" data-letter="'.$item['s_update_url'][0].'">';
+    echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent '.$featuredClass.$updateClass.$compatible.'" data-type="'.$type.'"'.$updateData.' data-gr="'.$color.'" data-letter="'.$item['s_update_url'][0].'">';
     echo '<div class="mk-item mk-item-'.$type.'">';
     echo '    <div class="banner" style="'.$style.'">'.$letterDraw.'</div>';
     echo '    <div class="mk-info"><i class="flag"></i>';
@@ -271,34 +271,22 @@ function check_market_compatibility($versions,$debug_market = false){
             $versions = $versions.',4.0';
         }
     }
-    $debug = array();
-        $debug['versions'] = $versions;
 
-    $versions = split(',',$versions);
-
-        $debug['versions_array'] = $versions;
+    $versions = explode(',',$versions);
 
     $current_version = osc_version();
-        $debug['current_version'] = $current_version;
 
     $version_length = strlen($current_version);
 
     $main_version = substr($current_version,0, $version_length-2).".".substr($current_version,$version_length-2, 1);
-        $debug['main_version'] = $main_version;
 
     $compatible = false;
 
     $max = max($versions);
     $min = min($versions);
-        $debug['max'] = $max;
-        $debug['min'] = $min;
 
     if($main_version >= $min && $main_version <= $max){
         $compatible = true;
-    }
-    $debug['compatible'] = $compatible;
-    if($debug_market){
-        error_log(print_r($debug, 1));
     }
 
 
