@@ -5,7 +5,11 @@
         osc_add_flash_error_message( sprintf(_m('<code>downloads</code> folder has to be writable, i.e.: <code>chmod a+w %soc-content/downloads/</code>'), ABS_PATH), 'admin');
     }
 
-    osc_enqueue_style('market', osc_current_admin_theme_styles_url('compile.css'));
+    // fancybox
+    osc_register_script('fancybox', osc_current_web_theme_js_url('fancybox/jquery.fancybox.js'));
+    osc_enqueue_script('fancybox');
+    osc_enqueue_style('fancybox', osc_current_web_theme_js_url('fancybox/jquery.fancybox.css'));
+
     osc_register_script('market-js', osc_current_admin_theme_js_url('market.js'));
     osc_enqueue_script('market-js');
 
@@ -22,144 +26,51 @@
         $js_lang = array(
                 'by'                 => __('by'),
                 'ok'                 => __('Ok'),
+                'error_item'         => __('There was a problem, try again later please'),
                 'wait_download'      => __('Please wait until the download is completed'),
                 'downloading'        => __('Downloading'),
                 'close'              => __('Close'),
                 'download'           => __('Download'),
                 'update'             => __('Update'),
+                'last_update'        => __('Last update'),
                 'downloads'          => __('Downloads'),
                 'requieres_version'  => __('Requires at least'),
                 'compatible_with'    => __('Compatible up to'),
                 'screenshots'        => __('Screenshots'),
+                'preview_theme'      => __('Preview theme'),
                 'download_manually'  => __('Download manually'),
                 'proceed_anyway'     => sprintf(__('Warning! This package is not compatible with your current version of Osclass (%s)'), $main_version),
                 'sure'               => __('Are you sure?'),
                 'proceed_anyway_btn' => __('Ok, proceed anyway'),
                 'not_compatible'     => sprintf(__('Warning! This theme is not compatible with your current version of Osclass (%s)'), $main_version),
-                'themes'    => array(
-                                'download_ok' => __('The theme has been downloaded correctly, proceed to activate or preview it.')
-                            ),
-                'plugins'   => array(
-                                'download_ok' => __('The plugin has been downloaded correctly, proceed to install and configure.')
-                            ),
-                'languages' => array(
-                                'download_ok' => __('The language has been downloaded correctly, proceed to activate.')
-                            )
+                'themes'             => array(
+                                         'download_ok' => __('The theme has been downloaded correctly, proceed to activate or preview it.')
+                                     ),
+                'plugins'            => array(
+                                         'download_ok' => __('The plugin has been downloaded correctly, proceed to install and configure.')
+                                     ),
+                'languages'          => array(
+                                         'download_ok' => __('The language has been downloaded correctly, proceed to activate.')
+                                     )
 
             );
         ?>
         <script type="text/javascript">
             var theme = window.theme || {};
-            theme.adminBaseUrl = "<?php echo osc_admin_base_url(true); ?>";
+            theme.adminBaseUrl  = "<?php echo osc_admin_base_url(true); ?>";
             theme.marketAjaxUrl = "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market&<?php echo osc_csrf_token_url(); ?>";
-            theme.themUrl = "<?php echo osc_current_admin_theme_url(); ?>";
-            theme.langs = <?php echo json_encode($js_lang); ?>;
+            theme.themUrl       = "<?php echo osc_current_admin_theme_url(); ?>";
+            theme.langs         = <?php echo json_encode($js_lang); ?>;
 
             var osc_market = {};
             osc_market.main_version = <?php echo $main_version; ?>;
         </script>
         <?php
-        $sections = array();
-        $featured = '';
-        switch (Params::getParam("action")) {
-            case 'plugins':
-                $sections[] = 'plugins';
-                break;
-
-            case 'themes':
-                $sections[] = 'themes';
-                break;
-            case 'languages':
-                $sections[] = 'languages';
-                break;
-
-            default:
-                $sections = array('plugins','themes','languages');
-                $featured = 'true';
-                break;
-        }
-        foreach($sections as $section){
-            echo '<script src="'.osc_admin_base_url(true).'?page=ajax&amp;action=market_data&amp;section='.$section.'&amp;featured='.$featured.'&amp;mPage='.Params::getParam('mPage').'" type="text/javascript"></script>';
-        }
-        ?>
-        <?php
     }
-
     function gradienColors(){
         $letters = str_split('abgi');
         shuffle($letters);
         return $letters;
-    }
-
-    function drawMarketItem($item,$color = false){
-        //constants
-        $updateClass      = '';
-        $updateData       = '';
-        $thumbnail        = false;
-        $featuredClass    = '';
-        $style            = '';
-        $letterDraw       = '';
-        $type             = strtolower($item['e_type']);
-        $items_to_update  = json_decode(getPreference($type.'s_to_update'),true);
-        $items_downloaded = json_decode(getPreference($type.'s_downloaded'),true);
-
-        if($item['s_thumbnail']){
-            $thumbnail = $item['s_thumbnail'];
-        }
-        if($item['s_banner']){
-            if(@$item['s_banner_path']!=''){
-                $thumbnail = $item['s_banner_path'] . $item['s_banner'];
-            } else {
-                $thumbnail = 'http://market.osclass.org/oc-content/uploads/market/'.$item['s_banner'];
-            }
-        }
-
-
-        $downloaded = false;
-        if($type != 'language'){
-            if(in_array($item['s_update_url'], $items_downloaded)) {
-                if (in_array($item['s_update_url'], $items_to_update)) {
-                    $updateClass = 'has-update';
-                    $updateData  = ' data-update="true"';
-                } else {
-                    // market item downloaded !
-                    $downloaded = true;
-                }
-            }
-        }
-
-        if(!$thumbnail && $color){
-            $thumbnail = osc_current_admin_theme_url('images/gr-'.$color.'.png');
-            $letterDraw = $item['s_update_url'][0];
-            if($type == 'language'){
-                $letterDraw = $item['s_update_url'];
-            }
-        }
-        if ($item['b_featured']) {
-            $featuredClass = ' is-featured';
-            if($downloaded || $updateClass){
-                $featuredClass .= '-';
-            }
-        }
-        if($downloaded) {
-            $featuredClass .= 'is-downloaded';
-        }
-
-        $style = 'background-image:url('.$thumbnail.');';
-        $item['total_downloads'] = 335;
-        echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent '.$featuredClass.$updateClass.'" data-type="'.$type.'"'.$updateData.' data-gr="'.$color.'" data-letter="'.$item['s_update_url'][0].'">';
-        echo '<div class="mk-item mk-item-'.$type.'">';
-        echo '    <div class="banner" style="'.$style.'">'.$letterDraw.'</div>';
-        echo '    <div class="mk-info"><i class="flag"></i>';
-        echo '        <h3>'.$item['s_title'].'</h3>';
-        echo '        <i>by '.$item['s_contact_name'].'</i>';
-        echo '        <div>';
-        echo '            <span class="more">'.__('View more').'</span>';
-        echo '            <span class="downloads"><strong>'.$item['i_total_downloads'].'</strong>'.__('downloads').'</span>';
-        echo '        </div>';
-        echo '    </div>';
-        echo '</div>';
-        echo '</a>';
     }
     if(!function_exists('addBodyClass')){
         function addBodyClass($array){

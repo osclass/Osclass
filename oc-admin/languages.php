@@ -372,7 +372,7 @@
                                                 // get languages to update from t_preference
                                                 if($bLanguagesToUpdate) {
                                                     if(in_array($l['pk_c_code'],$aLanguagesToUpdate )){
-                                                        $sUpdate = '<a class="btn btn-mini market_update market-popup" href="#' . htmlentities($l['pk_c_code']) . '">' . __("Update here") . '</a>';
+                                                        $sUpdate = '<a class="btn-market-update btn-market-popup" href="#' . htmlentities($l['pk_c_code']) . '">' . __("Update here") . '</a>';
                                                     }
                                                 }
 

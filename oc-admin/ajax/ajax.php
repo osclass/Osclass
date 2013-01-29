@@ -509,15 +509,7 @@
 
                 case 'check_username_availability':
                     $username = Params::getParam('s_username');
-                    $found = false;
-                    $blacklist = explode(",", osc_username_blacklist());
-                    foreach($blacklist as $bl) {
-                        if(stripos($username, $bl)!==false) {
-                            $found = true;
-                            break;
-                        }
-                    }
-                    if(!$found) {
+                    if(!osc_is_username_blacklisted($username)) {
                         $user = User::newInstance()->findByUsername($username);
                         if(isset($user['s_username'])) {
                             echo json_encode(array('exists' => 1));
@@ -892,13 +884,31 @@
                     $page     = Params::getParam("mPage");
                     $featured = Params::getParam("featured");
 
+                    $sort     = Params::getParam("sort");
+                    $order    = Params::getParam("order");
+
+                    // for the moment this value is static
+                    $length   = 9;
+
                     if($page>=1) $page--;
 
-                    $url  = osc_market_url($section)."/page/".$page;
+                    $url  = osc_market_url($section)."page/".$page.'/';
+
+                    if($length!='' && is_numeric($length)) {
+                        $url .= 'length/'.$length.'/';
+                    }
+
+                    if($sort!='') {
+                        $url .= 'order/'.$sort;
+                        if($order!='') {
+                            $url .= '/'.$order;
+                        }
+                    }
 
                     if($featured != ''){
                         $url = osc_market_featured_url($section);
                     }
+
                     $data = array();
 
                     $data = json_decode(osc_file_get_contents($url), true);

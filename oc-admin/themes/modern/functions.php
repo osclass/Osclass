@@ -190,4 +190,106 @@ function printLocaleDescriptionPage($locales = null, $page = null) {
     }
 }
 
+function drawMarketItem($item,$color = false){
+    //constants
+    $updateClass      = '';
+    $updateData       = '';
+    $thumbnail        = false;
+    $featuredClass    = '';
+    $style            = '';
+    $letterDraw       = '';
+    $compatible       = '';
+    $type             = strtolower($item['e_type']);
+    $items_to_update  = json_decode(getPreference($type.'s_to_update'),true);
+    $items_downloaded = json_decode(getPreference($type.'s_downloaded'),true);
+
+    if($item['s_thumbnail']){
+        $thumbnail = $item['s_thumbnail'];
+    }
+    if($item['s_banner']){
+        if(@$item['s_banner_path']!=''){
+            $thumbnail = $item['s_banner_path'] . $item['s_banner'];
+        } else {
+            $thumbnail = 'http://market.osclass.org/oc-content/uploads/market/'.$item['s_banner'];
+        }
+    }
+
+
+    $downloaded = false;
+    if($type != 'language'){
+        if(in_array($item['s_update_url'], $items_downloaded)) {
+            if (in_array($item['s_update_url'], $items_to_update)) {
+                $updateClass = 'has-update';
+                $updateData  = ' data-update="true"';
+            } else {
+                // market item downloaded !
+                $downloaded = true;
+            }
+        }
+    }
+    //Check if is compatibleosc_version()
+    if(!check_market_compatibility($item['s_compatible'],true)){
+        $compatible = ' not-compatible';
+    }
+    if(!$thumbnail && $color){
+        $thumbnail = osc_current_admin_theme_url('images/gr-'.$color.'.png');
+        $letterDraw = $item['s_update_url'][0];
+        if($type == 'language'){
+            $letterDraw = $item['s_update_url'];
+        }
+    }
+    if ($item['b_featured']) {
+        $featuredClass = ' is-featured';
+        if($downloaded || $updateClass){
+            $featuredClass .= '-';
+        }
+    }
+    if($downloaded) {
+        $featuredClass .= 'is-downloaded';
+    }
+
+    $style = 'background-image:url('.$thumbnail.');';
+    echo '<a href="#'.$item['s_update_url'].'" class="mk-item-parent '.$featuredClass.$updateClass.$compatible.'" data-type="'.$type.'"'.$updateData.' data-gr="'.$color.'" data-letter="'.$item['s_update_url'][0].'">';
+    echo '<div class="mk-item mk-item-'.$type.'">';
+    echo '    <div class="banner" style="'.$style.'">'.$letterDraw.'</div>';
+    echo '    <div class="mk-info"><i class="flag"></i>';
+    echo '        <h3>'.$item['s_title'].'</h3>';
+    echo '        <span class="downloads"><strong>'.$item['i_total_downloads'].'</strong> '.__('downloads').'</span>';
+    echo '        <i>by '.$item['s_contact_name'].'</i>';
+    echo '        <div class="market-actions">';
+    echo '            <span class="more">'.__('View more').'</span>';
+    echo '            <span class="download-btn'.$compatible.'" data-code="'.$item['s_update_url'].'" data-type="'.$type.'"'.'>'.__('Download').'</span>';
+    echo '        </div>';
+    echo '    </div>';
+    echo '</div>';
+    echo '</a>';
+}
+
+function check_market_compatibility($versions,$debug_market = false){
+    if($debug_market){
+        if($versions != '3.0'){
+            $versions = $versions.',4.0';
+        }
+    }
+
+    $versions = explode(',',$versions);
+
+    $current_version = osc_version();
+
+    $version_length = strlen($current_version);
+
+    $main_version = substr($current_version,0, $version_length-2).".".substr($current_version,$version_length-2, 1);
+
+    $compatible = false;
+
+    $max = max($versions);
+    $min = min($versions);
+
+    if($main_version >= $min && $main_version <= $max){
+        $compatible = true;
+    }
+
+
+    return $compatible;
+}
 /* end of file */
