@@ -25,7 +25,7 @@
         <h1><?php _e('Users') ; ?>
             <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=settings' ; ?>" class="btn ico ico-32 ico-engine float-right"></a>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
-            <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=create_ban_rule' ; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add new rule');
+            <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=create_ban_rule' ; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add new');
                 ?></a>
         </h1>
 <?php
@@ -112,7 +112,7 @@
 
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<h2 class="render-title"><?php _e('Manage ban rules'); ?> <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=create_ban_rule' ; ?>" class="btn btn-mini"><?php _e('Add new rule'); ?></a></h2>
+<h2 class="render-title"><?php _e('Manage ban rules'); ?> <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=create_ban_rule' ; ?>" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
 <div class="relative">
     <div id="users-toolbar" class="table-toolbar">
         <div class="float-right">
