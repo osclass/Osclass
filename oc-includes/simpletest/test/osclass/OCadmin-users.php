@@ -9,7 +9,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Create a new user
      */
-    function atestUserInsert()
+    function testUserInsert()
     {
         $this->loginWith() ;
         $this->insertUser() ;
@@ -20,7 +20,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Edit an user
      */
-    public function atestUserEdit()
+    public function testUserEdit()
     {
         $this->loginWith() ;
         $this->insertUser() ;
@@ -32,7 +32,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Validations
      */
-    public function atestExtraValidations()
+    public function testExtraValidations()
     {
         $this->loginWith() ;
         $this->insertUser() ;
@@ -45,7 +45,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Test settings (users enabled, validation,...)
      */
-    public function atestSettings()
+    public function testSettings()
     {
         $this->loginWith() ;
         $this->settings();
@@ -55,7 +55,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Test bulk actions
      */
-    public function atestBulkActions()
+    public function testBulkActions()
     {
         $this->loginWith() ;
 
@@ -197,7 +197,7 @@ class OCadmin_users extends OCadminTest {
     public function testBanSystem()
     {
         $this->loginWith() ;
-
+        // CREATE RULE
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='users_ban']");
         $this->selenium->waitForPageToLoad("10000");
@@ -212,6 +212,41 @@ class OCadmin_users extends OCadminTest {
 
         $this->assertTrue( $this->selenium->isTextPresent("Rule saved correctly") , "Can't add ban rule. ERROR");
 
+        // TEST RULE
+
+        $this->selenium->open( osc_base_url() );
+        $this->selenium->click("link=Register for a free account");
+        $this->selenium->waitForPageToLoad("30000");
+
+        $this->selenium->type('s_name'      , 'testuser');
+        $this->selenium->type('s_password'  , 'asdfasdf');
+        $this->selenium->type('s_password2' , 'asdfasdf');
+        $this->selenium->type('s_email'     , 'test@osclass.org');
+
+        $this->selenium->click("xpath=//span/button[text()='Create']");
+        $this->selenium->waitForPageToLoad("30000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("Your current email is not allowed") , "Can register email so to ban rule failed. ERROR");
+
+        $this->selenium->type('s_name'      , 'testuser');
+        $this->selenium->type('s_password'  , 'asdfasdf');
+        $this->selenium->type('s_password2' , 'asdfasdf');
+        $this->selenium->type('s_email'     , 'testok@osclass.org');
+
+        $this->selenium->click("xpath=//span/button[text()='Create']");
+        $this->selenium->waitForPageToLoad("30000");
+
+        $this->assertTrue( ($this->selenium->isTextPresent("Your account has been created successfully") || $this->selenium->isTextPresent("The user has been created")), "Can't register email due to ban rule. ERROR");
+
+        $this->deleteUser('osclass.org');
+
+
+        // TEST WAYS TO REMOVE RULES
+        $this->loginWith() ;
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='users_ban']");
+        $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//input[@id='check_all']");
         $this->selenium->select("//select[@name='action']", "label=Delete");
         $this->selenium->click("//input[@id='bulk_apply']");
@@ -242,7 +277,7 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->mouseOver("//td[contains(.,'Ban rule #1')]");
         $this->selenium->click("//div[@class='actions']/ul/li/a[text()='Delete']");
         sleep(2);
-        $this->selenium->click("//input[@id='page-delete-submit']");
+        $this->selenium->click("//input[@id='ban-delete-submit']");
         $this->selenium->waitForPageToLoad("30000");
 
         if( $this->selenium->isTextPresent('One ban rule has been deleted') ){
@@ -260,7 +295,7 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->type("s_name", "Ban rule #1");
         $this->selenium->type("s_email", "*t@osclass.org");
 
-        $this->selenium->click("//input[@id='ban-delete-submit']");
+        $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("Rule saved correctly") , "Can't add ban rule. ERROR");
@@ -472,14 +507,14 @@ class OCadmin_users extends OCadminTest {
     /*
      * Delete an user
      */
-    private function deleteUser()
+    private function deleteUser($email = 'mail.com')
     {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='users_manage']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'mail.com')]");
-        $this->selenium->click("xpath=//table/tbody/tr[contains(.,'mail.com')]/td/div/ul/li/a[text()='Delete']");
+        $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'$email')]");
+        $this->selenium->click("xpath=//table/tbody/tr[contains(.,'$email')]/td/div/ul/li/a[text()='Delete']");
         $this->selenium->click("//input[@id='user-delete-submit']");
 
         $this->selenium->waitForPageToLoad("10000");
