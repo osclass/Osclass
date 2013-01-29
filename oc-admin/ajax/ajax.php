@@ -508,16 +508,16 @@
                 break;
 
                 case 'check_username_availability':
-                    $username = Params::getParam('s_username');
+                    $username = osc_sanitize_username(Params::getParam('s_username'));
                     if(!osc_is_username_blacklisted($username)) {
                         $user = User::newInstance()->findByUsername($username);
                         if(isset($user['s_username'])) {
-                            echo json_encode(array('exists' => 1));
+                            echo json_encode(array('exists' => 1, 's_username' => $username));
                         } else {
-                            echo json_encode(array('exists' => 0));
+                            echo json_encode(array('exists' => 0, 's_username' => $username));
                         }
                     } else {
-                        echo json_encode(array('exists' => 1));
+                        echo json_encode(array('exists' => 1, 's_username' => $username));
                     }
                 break;
 

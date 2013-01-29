@@ -76,6 +76,15 @@
         return $value;
     }
 
+    /**
+     * Sanitize a username
+     *
+     * @param string $value
+     * @return string sanitized
+     */
+    function osc_sanitize_username($value) {
+        return preg_replace("/(_+)/", "_", preg_replace("/([^0-9A-Za-z_]*)/", "", str_replace(" ", "_", trim($value))));
+    }
 
     /**
      * Sanitize number (with no periods)
