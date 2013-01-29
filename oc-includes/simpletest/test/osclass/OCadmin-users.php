@@ -219,10 +219,64 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->click("//a[@id='bulk-actions-submit']");
         $this->selenium->waitForPageToLoad("30000");
         // "regexpi:This is SeleniumWiki.com"
-        if( $this->selenium->isTextPresent( "regexpi:rules have been deleted correctly") ){
+        if( $this->selenium->isTextPresent( "regexpi:rules have been deleted") || $this->selenium->isTextPresent( "regexpi:rule has been deleted") ){
             $this->assertTrue("Deleted ok");
         } else {
             $this->assertFalse("TEXT NOT PRESENT - X rules have been deleted correctly");
+        }
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='users_ban']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("link=Add new");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->type("s_name", "Ban rule #1");
+        $this->selenium->type("s_email", "*t@osclass.org");
+
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("Rule saved correctly") , "Can't add ban rule. ERROR");
+
+        $this->selenium->mouseOver("//td[contains(.,'Ban rule #1')]");
+        $this->selenium->click("//div[@class='actions']/ul/li/a[text()='Delete']");
+        sleep(2);
+        $this->selenium->click("//input[@id='page-delete-submit']");
+        $this->selenium->waitForPageToLoad("30000");
+
+        if( $this->selenium->isTextPresent('One ban rule has been deleted') ){
+            $this->assertTrue("text present");
+        } else {
+            $this->assertFalse("TEXT NOT PRESENT - One ban rule has been deleted - ");
+        }
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='users_ban']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("link=Add new");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->type("s_name", "Ban rule #1");
+        $this->selenium->type("s_email", "*t@osclass.org");
+
+        $this->selenium->click("//input[@id='ban-delete-submit']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("Rule saved correctly") , "Can't add ban rule. ERROR");
+
+        $this->selenium->click("//table/tbody/tr[contains(.,'Ban rule #1')]/td/input");
+
+        $this->selenium->select("//select[@name='action']", "label=Delete");
+        $this->selenium->click("//input[@id='bulk_apply']");
+        sleep(2);
+        $this->selenium->click("//a[@id='bulk-actions-submit']");
+        $this->selenium->waitForPageToLoad("30000");
+
+        if( $this->selenium->isTextPresent( "One ban rule has been deleted") ){
+            $this->assertTrue("Deleted ok");
+        } else {
+            $this->assertFalse("TEXT NOT PRESENT - One ban rule has been deleted");
         }
 
         flush();
