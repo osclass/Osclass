@@ -54,7 +54,7 @@
                 });
 
                 // dialog delete
-                $("#dialog-user-delete").dialog({
+                $("#dialog-ban-delete").dialog({
                     autoOpen: false,
                     modal: true
                 });
@@ -92,8 +92,8 @@
 
             // dialog delete function
             function delete_dialog(item_id) {
-                $("#dialog-user-delete input[name='id[]']").attr('value', item_id);
-                $("#dialog-user-delete").dialog('open');
+                $("#dialog-ban-delete input[name='id[]']").attr('value', item_id);
+                $("#dialog-ban-delete").dialog('open');
                 return false;
             }
         </script>
@@ -166,7 +166,7 @@
     osc_add_hook('before_show_pagination_admin','showingResults');
     osc_show_pagination_admin($aData);
 ?>
-<form id="dialog-user-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete rule')); ?>">
+<form id="dialog-ban-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete rule')); ?>">
     <input type="hidden" name="page" value="users" />
     <input type="hidden" name="action" value="delete_ban_rule" />
     <input type="hidden" name="id[]" value="" />
@@ -176,8 +176,8 @@
         </div>
         <div class="form-actions">
             <div class="wrapper">
-            <a class="btn" href="javascript:void(0);" onclick="$('#dialog-user-delete').dialog('close');"><?php _e('Cancel'); ?></a>
-            <input id="user-delete-submit" type="submit" value="<?php echo osc_esc_html( __('Delete') ); ?>" class="btn btn-red" />
+            <a class="btn" href="javascript:void(0);" onclick="$('#dialog-ban-delete').dialog('close');"><?php _e('Cancel'); ?></a>
+            <input id="ban-delete-submit" type="submit" value="<?php echo osc_esc_html( __('Delete') ); ?>" class="btn btn-red" />
             </div>
         </div>
     </div>
