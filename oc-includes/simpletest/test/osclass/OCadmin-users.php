@@ -204,65 +204,26 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->click("link=Add new");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->click("enabled_users");
-        $this->selenium->click("enabled_user_validation");
-        $this->selenium->click("enabled_user_registration");
+        $this->selenium->type("s_name", "Ban rule #1");
+        $this->selenium->type("s_email", "*t@osclass.org");
 
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("User settings have been updated") , "Can't update user settings. ERROR");
+        $this->assertTrue( $this->selenium->isTextPresent("Rule saved correctly") , "Can't add ban rule. ERROR");
 
-        if( $pref['enabled_users'] == 'on' ){
-            $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']"), 'off' ) ;
+        $this->selenium->click("//input[@id='check_all']");
+        $this->selenium->select("//select[@name='action']", "label=Delete");
+        $this->selenium->click("//input[@id='bulk_apply']");
+        sleep(2);
+        $this->selenium->click("//a[@id='bulk-actions-submit']");
+        $this->selenium->waitForPageToLoad("30000");
+        // "regexpi:This is SeleniumWiki.com"
+        if( $this->selenium->isTextPresent( "regexpi:rules have been deleted correctly") ){
+            $this->assertTrue("Deleted ok");
         } else {
-            $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']"), 'on' ) ;
+            $this->assertFalse("TEXT NOT PRESENT - X rules have been deleted correctly");
         }
-        if( $pref['enabled_user_validation'] == 'on' ){
-            $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']"), 'off' ) ;
-        } else {
-            $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']"), 'on' ) ;
-        }
-        if( $pref['enabled_user_registration'] == 'on' ){
-            $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_registration']"), 'off' ) ;
-        } else {
-            $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_registration']"), 'on' ) ;
-        }
-
-        $this->selenium->click("enabled_users");
-        $this->selenium->click("enabled_user_validation");
-        $this->selenium->click("enabled_user_registration");
-
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']")              ,  $pref['enabled_users'] ) ;
-        $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']")    ,  $pref['enabled_user_validation'] ) ;
-        $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_registration']")  ,  $pref['enabled_user_registration'] ) ;
-
-        $this->assertTrue( $this->selenium->isTextPresent("User settings have been updated") , "Can't update user settings. ERROR");
-
-        /*
-         * Testing deeper
-         */
-
-        // enabled_users
-        Preference::newInstance()->replace('enabled_users', '0',"osclass", 'INTEGER') ;
-        $this->checkWebsite_enabled_users(0);
-        Preference::newInstance()->replace('enabled_users', '1',"osclass", 'INTEGER') ;
-        $this->checkWebsite_enabled_users(1);
-        // enabled_user_validation
-        Preference::newInstance()->replace('enabled_user_validation', '0',"osclass", 'INTEGER') ;
-        $this->checkWebsite_enabled_user_validation(0);
-        Preference::newInstance()->replace('enabled_user_validation', '1',"osclass", 'INTEGER') ;
-        $this->checkWebsite_enabled_user_validation(1);
-        // enabled_user_registration
-        Preference::newInstance()->replace('enabled_user_registration', '0',"osclass", 'INTEGER') ;
-        $this->checkWebsite_enabled_user_registration(0);
-        Preference::newInstance()->replace('enabled_user_registration', '1',"osclass", 'INTEGER') ;
-        $this->checkWebsite_enabled_user_registration(1);
-        osc_reset_preferences();
-
 
         flush();
     }
