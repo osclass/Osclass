@@ -9,7 +9,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Create a new user
      */
-    function testUserInsert()
+    function atestUserInsert()
     {
         $this->loginWith() ;
         $this->insertUser() ;
@@ -20,7 +20,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Edit an user
      */
-    public function testUserEdit()
+    public function atestUserEdit()
     {
         $this->loginWith() ;
         $this->insertUser() ;
@@ -32,7 +32,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Validations
      */
-    public function testExtraValidations()
+    public function atestExtraValidations()
     {
         $this->loginWith() ;
         $this->insertUser() ;
@@ -45,7 +45,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Test settings (users enabled, validation,...)
      */
-    public function testSettings()
+    public function atestSettings()
     {
         $this->loginWith() ;
         $this->settings();
@@ -55,7 +55,7 @@ class OCadmin_users extends OCadminTest {
     /*
      * Test bulk actions
      */
-    public function testBulkActions()
+    public function atestBulkActions()
     {
         $this->loginWith() ;
 
@@ -187,6 +187,82 @@ class OCadmin_users extends OCadminTest {
                 $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']"), 'on' ) ;
             }
         }
+
+        flush();
+    }
+
+    /*
+     * Test settings (users enabled, validation,...)
+     */
+    public function testBanSystem()
+    {
+        $this->loginWith() ;
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='users_ban']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("link=Add new");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->click("enabled_users");
+        $this->selenium->click("enabled_user_validation");
+        $this->selenium->click("enabled_user_registration");
+
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("User settings have been updated") , "Can't update user settings. ERROR");
+
+        if( $pref['enabled_users'] == 'on' ){
+            $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']"), 'off' ) ;
+        } else {
+            $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']"), 'on' ) ;
+        }
+        if( $pref['enabled_user_validation'] == 'on' ){
+            $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']"), 'off' ) ;
+        } else {
+            $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']"), 'on' ) ;
+        }
+        if( $pref['enabled_user_registration'] == 'on' ){
+            $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_registration']"), 'off' ) ;
+        } else {
+            $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_registration']"), 'on' ) ;
+        }
+
+        $this->selenium->click("enabled_users");
+        $this->selenium->click("enabled_user_validation");
+        $this->selenium->click("enabled_user_registration");
+
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_users']")              ,  $pref['enabled_users'] ) ;
+        $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_validation']")    ,  $pref['enabled_user_validation'] ) ;
+        $this->assertEqual( $this->selenium->getValue("//input[@name='enabled_user_registration']")  ,  $pref['enabled_user_registration'] ) ;
+
+        $this->assertTrue( $this->selenium->isTextPresent("User settings have been updated") , "Can't update user settings. ERROR");
+
+        /*
+         * Testing deeper
+         */
+
+        // enabled_users
+        Preference::newInstance()->replace('enabled_users', '0',"osclass", 'INTEGER') ;
+        $this->checkWebsite_enabled_users(0);
+        Preference::newInstance()->replace('enabled_users', '1',"osclass", 'INTEGER') ;
+        $this->checkWebsite_enabled_users(1);
+        // enabled_user_validation
+        Preference::newInstance()->replace('enabled_user_validation', '0',"osclass", 'INTEGER') ;
+        $this->checkWebsite_enabled_user_validation(0);
+        Preference::newInstance()->replace('enabled_user_validation', '1',"osclass", 'INTEGER') ;
+        $this->checkWebsite_enabled_user_validation(1);
+        // enabled_user_registration
+        Preference::newInstance()->replace('enabled_user_registration', '0',"osclass", 'INTEGER') ;
+        $this->checkWebsite_enabled_user_registration(0);
+        Preference::newInstance()->replace('enabled_user_registration', '1',"osclass", 'INTEGER') ;
+        $this->checkWebsite_enabled_user_registration(1);
+        osc_reset_preferences();
+
 
         flush();
     }
