@@ -131,7 +131,7 @@ class AllTests extends TestSuite {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-categories.php');    // OK
             }
             if(isset($tests['admin']['settings']) || $tests['admin']=='') {
-                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-generalSettings.php');    // OK
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-settings.php');    // OK
             }
             if(isset($tests['admin']['administrators']) || $tests['admin']=='') {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-administrators.php');    // NEED DOC     

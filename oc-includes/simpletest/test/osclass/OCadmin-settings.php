@@ -1130,11 +1130,12 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->type("rewrite_user_change_password", "");
         $this->selenium->type("rewrite_user_change_email", "");
         $this->selenium->type("rewrite_user_change_email_confirm", "");
+        $this->selenium->type("rewrite_user_change_username", "");
         $this->selenium->click("//input[@type='submit']");
         sleep(4);
 
 
-        $this->assertTrue( $this->selenium->isTextPresent("All fields are required. 36 fields were not updated") , "Empty permalink" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("All fields are required. 37 fields were not updated") , "Empty permalink" ) ;
 
 
         $this->selenium->type("rewrite_item_url", "item/{ITEM_ID}/{ITEM_TITLE}");
@@ -1152,27 +1153,28 @@ class OCadmin_generalSettings extends OCadmintest {
         $this->selenium->type("rewrite_feed", "feed");
         $this->selenium->type("rewrite_language", "language");
         $this->selenium->type("rewrite_item_mark", "item/mark");
-        $this->selenium->type("rewrite_item_send_friend", "item/send/friend");
+        $this->selenium->type("rewrite_item_send_friend", "item/send-friend");
         $this->selenium->type("rewrite_item_contact", "item/contact");
         $this->selenium->type("rewrite_item_new", "item/new");
         $this->selenium->type("rewrite_item_activate", "item/activate");
         $this->selenium->type("rewrite_item_edit", "item/edit");
         $this->selenium->type("rewrite_item_delete", "item/delete");
-        $this->selenium->type("rewrite_item_resource_delete", "item/resource/delete");
+        $this->selenium->type("rewrite_item_resource_delete", "resource/delete");
         $this->selenium->type("rewrite_user_login", "user/login");
         $this->selenium->type("rewrite_user_dashboard", "user/dashboard");
         $this->selenium->type("rewrite_user_logout", "user/logout");
         $this->selenium->type("rewrite_user_register", "user/register");
         $this->selenium->type("rewrite_user_activate", "user/activate");
-        $this->selenium->type("rewrite_user_activate_alert", "user/activate/alert");
+        $this->selenium->type("rewrite_user_activate_alert", "alert/confirm");
         $this->selenium->type("rewrite_user_profile", "user/profile");
         $this->selenium->type("rewrite_user_items", "user/items");
         $this->selenium->type("rewrite_user_alerts", "user/alerts");
         $this->selenium->type("rewrite_user_recover", "user/recover");
         $this->selenium->type("rewrite_user_forgot", "user/forgot");
-        $this->selenium->type("rewrite_user_change_password", "user/change/pasword");
-        $this->selenium->type("rewrite_user_change_email", "user/change/email");
-        $this->selenium->type("rewrite_user_change_email_confirm", "user/change/email/confirm");
+        $this->selenium->type("rewrite_user_change_password", "password/change");
+        $this->selenium->type("rewrite_user_change_email", "email/change");
+        $this->selenium->type("rewrite_user_change_email_confirm", "email/confirm");
+        $this->selenium->type("rewrite_user_change_username", "username/change");
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue( $this->selenium->isTextPresent("Permalinks structure updated") , "Disable permalinks" ) ;
