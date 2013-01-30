@@ -52,17 +52,62 @@ class OCadmin_pages extends OCadminTest {
      * Create page
      * Edit page
      * Delete page
-     */  
+     */
     function testPageEdit()
     {
         $this->loginWith() ;
         $this->newPageWithData('test_page_example',"cos's test", "cos's test") ;
         $this->assertTrue($this->selenium->isTextPresent('The page has been added'), "Insert page.");
         $this->checkPageData('test_page_example', "cos's test", "cos's test");
-        
+
         $this->editPage('test_page_example', "foo's test\'", "description's \ sto") ;
         $this->checkPageData('new-foo-new', "foo's test\'", "description's \ sto") ;
-        $this->deletePage('new-foo-new') ;
+        $this->deletePage('test_page_example') ;
+    }
+
+    /*
+     * Login oc-admin
+     * Create page
+     * Check it's on the footer
+     * Edit page
+     * Delete page
+     */
+    function testPageLinkOnFooter()
+    {
+        $this->loginWith();
+        $this->newPageWithData('test_page_example',"My page on the footer", "cos's test") ;
+        $this->assertTrue($this->selenium->isTextPresent('The page has been added'), "Insert page.");
+        $this->checkPageData('test_page_example', "My page on the footer", "cos's test");
+
+        $this->selenium->open(osc_base_url());
+        $this->selenium->waitForPageToLoad("10000");
+        $this->assertTrue($this->selenium->isTextPresent('My page on the footer'), "Check page on footer.");
+
+        $this->selenium->open(osc_admin_base_url());
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='pages']");
+        $this->selenium->waitForPageToLoad("30000");
+
+        $this->selenium->mouseOver("//td[contains(.,'test_page_example')]");
+        $this->selenium->click("//div[@class='actions']/ul/li/a[text()='Edit']");
+        $this->selenium->waitForPageToLoad("30000");
+
+        // editing page ...
+        $this->selenium->click("b_link");
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("10000");
+        sleep(1);
+        if( $this->selenium->isTextPresent("The page has been updated") ){
+            $this->assertTrue("text present");
+        } else {
+            $this->assertFalse("TEXT NOT PRESENT - The page has been updated - ");
+        }
+
+        $this->selenium->open(osc_base_url());
+        $this->selenium->waitForPageToLoad("10000");
+        $this->assertTrue(!$this->selenium->isTextPresent('My page on the footer'), "Check page on footer.");
+
+        $this->deletePage('test_page_example') ;
     }
 
     /*
