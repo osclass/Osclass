@@ -389,6 +389,7 @@ CREATE TABLE %st_item_description_tmp (
     if(osc_version() < 310) {
         //$comm->query(sprintf("ALTER TABLE  %st_alerts ADD  `pk_i_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY", DB_TABLE_PREFIX));
         $comm->query(sprintf("ALTER TABLE  %st_pages ADD  `s_meta` TEXT NULL", DB_TABLE_PREFIX));
+        $comm->query(sprintf("ALTER TABLE  %st_pages ADD  `b_link` TINYINT(1) NOT NULL DEFAULT 1", DB_TABLE_PREFIX));
         $comm->query(sprintf("UPDATE %st_alerts SET dt_date = '%s' ", DB_TABLE_PREFIX, date("Y-m-d H:i:s")));
 
         // remove files moved to controller folder
@@ -410,7 +411,7 @@ CREATE TABLE %st_item_description_tmp (
 
         $comm->query(sprintf('UPDATE %st_user t, (SELECT pk_i_id FROM %st_user) t1 SET t.s_username = t1.pk_i_id WHERE t.pk_i_id = t1.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
         osc_set_preference('username_blacklist', 'admin,user', 'osclass', 'STRING');
-        osc_set_preference('rewrite_user_change_username', 'user/change_username');
+        osc_set_preference('rewrite_user_change_username', 'username/change');
         osc_set_preference('csrf_name', 'CSRF'.mt_rand(0,mt_getrandmax()));
 
         @mkdir(CONTENT_PATH.'uploads/page-images');
