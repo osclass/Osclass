@@ -54,17 +54,6 @@
          *
          * @access public
          * @since unknown
-         * @param type $id
-         * @return array
-         */
-        function findByPk($id) {
-            return $this->findByPrimaryKey($id) ;
-        }
-
-        /**
-         *
-         * @access public
-         * @since unknown
          * @param type $userEmailTmp
          * @return array
          */

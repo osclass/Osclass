@@ -94,11 +94,11 @@
             $this->dao->where('fk_i_item_id', $id) ;
             $result = $this->dao->get() ;
 
-            if( $result == false ) {
-                return false;
-            } else {
-                return $result->result() ;
+            if($result == false) {
+                return array();
             }
+
+            return $result->result() ;
         }
 
         /**
@@ -136,11 +136,11 @@
 
             $result = $this->dao->get() ;
 
-            if( $result == false ) {
-                return false;
-            } else {
-                return $result->result();
+            if($result == false) {
+                return array();
             }
+
+            return $result->result();
         }
 
         /**
@@ -205,11 +205,11 @@
             $this->dao->where($conditions) ;
             $result = $this->dao->get() ;
 
-            if( $result == false ) {
-                return false;
-            } else {
-                return $result->result();
+            if($result == false) {
+                return array();
             }
+
+            return $result->result();
         }
 
         /**
@@ -239,6 +239,9 @@
             $this->dao->where($conditions) ;
             $this->dao->orderBy('c.dt_pub_date','DESC') ;
             $aux = $this->dao->get() ;
+            if($aux == false) {
+                return array();
+            }
             $comments = $aux->result() ;
 
             return $this->extendData($comments) ;
@@ -266,6 +269,9 @@
             $this->dao->limit(0,$num);
 
             $result = $this->dao->get();
+            if($result == false) {
+                return array();
+            }
             return $result->result();
         }
 
@@ -287,7 +293,11 @@
                 $this->dao->from(DB_TABLE_PREFIX.'t_item_description') ;
                 $this->dao->where('fk_i_item_id', $item['fk_i_item_id']) ;
                 $aux = $this->dao->get();
-                $descriptions = $aux->result();
+                if($aux == false) {
+                    $descriptions = array();
+                } else {
+                    $descriptions = $aux->result();
+                }
 
                 $item['locale'] = array();
                 foreach($descriptions as $desc) {
@@ -347,10 +357,10 @@
             $this->dao->limit($start, $limit);
 
             $aux = $this->dao->get() ;
-            if($aux) {
-                return $aux->result() ;
+            if($aux == false) {
+                return array();
             }
-            return array();
+            return $aux->result() ;
         }
 
         /**
@@ -376,6 +386,9 @@
 
             $this->dao->where($conditions) ;
             $aux = $this->dao->get() ;
+            if($aux == false) {
+                return array();
+            }
             $row = $aux->row();
             return $row['numrows'];
         }

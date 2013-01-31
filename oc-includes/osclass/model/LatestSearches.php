@@ -72,9 +72,9 @@
 
             if( $result == false ) {
                 return false;
-            } else {
-                return $result->result() ;
             }
+
+            return $result->result() ;
         }
 
         /**
@@ -99,9 +99,9 @@
 
             if( $result == false ) {
                 return false;
-            } else {
-                return $result->result() ;
             }
+
+            return $result->result() ;
         }
 
         /**

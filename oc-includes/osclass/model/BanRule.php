@@ -85,7 +85,7 @@
             }
             $rs = $this->dao->get();
 
-            if( !$rs ) {
+            if( $rs == false ) {
                 return $rules;
             }
 

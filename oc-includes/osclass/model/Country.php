@@ -69,11 +69,10 @@
             $this->dao->where('pk_c_code', $code) ;
             $result = $this->dao->get() ;
 
-            if($result) {
-                return $result->row();
-            } else {
+            if($result == false) {
                 return array();
             }
+            return $result->row();
         }
 
         /**
@@ -90,11 +89,10 @@
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_name', $name) ;
             $result = $this->dao->get() ;
-            if($result) {
-                return $result->row();
-            } else {
+            if($result == false) {
                 return array();
             }
+            return $result->row();
         }
 
         /**
@@ -107,11 +105,10 @@
          */
         public function listAll() {
             $result = $this->dao->query(sprintf('SELECT * FROM %s ORDER BY s_name ASC', $this->getTableName()));
-            if($result) {
-                return $result->result();
-            } else {
+            if($result == false) {
                 return array();
             }
+            return $result->result();
         }
 
         /**
@@ -129,11 +126,10 @@
             $this->dao->like('s_name', $query, 'after') ;
             $this->dao->limit(5);
             $result = $this->dao->get() ;
-            if($result) {
-                return $result->result();
-            } else {
+            if($result == false) {
                 return array();
             }
+            return $result->result();
         }
 
 

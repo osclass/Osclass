@@ -126,7 +126,7 @@
             $this->dao->from($this->getTableName());
             $this->dao->where($this->getPrimaryKey(), $id);
             $result = $this->dao->get();
-            if(!$result) {
+            if($result == false) {
                 return array();
             }
             $row    = $result->row();
