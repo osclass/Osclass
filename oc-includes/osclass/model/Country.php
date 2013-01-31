@@ -69,7 +69,11 @@
             $this->dao->where('pk_c_code', $code) ;
             $result = $this->dao->get() ;
 
-            return $result->row();
+            if($result) {
+                return $result->row();
+            } else {
+                return array();
+            }
         }
 
         /**
@@ -86,7 +90,11 @@
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_name', $name) ;
             $result = $this->dao->get() ;
-            return $result->row();
+            if($result) {
+                return $result->row();
+            } else {
+                return array();
+            }
         }
 
         /**
@@ -99,7 +107,11 @@
          */
         public function listAll() {
             $result = $this->dao->query(sprintf('SELECT * FROM %s ORDER BY s_name ASC', $this->getTableName()));
-            return $result->result();
+            if($result) {
+                return $result->result();
+            } else {
+                return array();
+            }
         }
 
         /**
@@ -117,7 +129,11 @@
             $this->dao->like('s_name', $query, 'after') ;
             $this->dao->limit(5);
             $result = $this->dao->get() ;
-            return $result->result();
+            if($result) {
+                return $result->result();
+            } else {
+                return array();
+            }
         }
 
 
@@ -144,48 +160,6 @@
             }
             return $result;
         }
-/*
-
-                $aCities = $mCities->findByRegion($region['pk_i_id']);
-                foreach($aCities as $city) {
-                    $aCityAreas = $mCityAreas->findByCity($city['pk_i_id']);
-                    foreach($aCityAreas as $cityArea) {
-                        $userMgr->update(array('fk_i_city_area_id' => null, 's_city_area' => ''), array('fk_i_city_id' => $cityArea['pk_i_id']));
-                        if(!$mCityAreas->delete(array('pk_i_id' => $cityArea['pk_i_id']))) {
-                            $result = false;
-                        };
-                    }
-                    $userMgr->update(array('fk_i_city_id' => null, 's_city' => ''), array('fk_i_city_id' => $city['pk_i_id']));
-                    if(!$mCities->delete(array('pk_i_id' => $city['pk_i_id']))) {
-                        $result = false;
-                    };
-                }
-                $userMgr->update(array('fk_i_region_id' => null, 's_region' => ''), array('fk_i_region_id' => $region['pk_i_id']));
-                if(!$mRegions->delete(array('pk_i_id' => $region['pk_i_id']))) {
-                    $result = false;
-                };
-            }
-            return $result;
-        }
-
-        Item::newInstance()->deleteByCountry($countryId);
-        $mRegions = new Region();
-        $mCities = new City();
-
-        $aCountries = $mCountries->findByCode($countryId);
-        if($aCountries) {
-            $aRegions = $mRegions->findByCountry($aCountries['pk_c_code']);
-            foreach($aRegions as $region) {
-                // remove city_stats
-                CityStats::newInstance()->deleteByRegion($region['pk_i_id']);
-                // remove region_stats
-                RegionStats::newInstance()->delete( array('fk_i_region_id' => $region['pk_i_id']) );
-            }
-            //remove country stats
-            CountryStats::newInstance()->delete( array('fk_c_country_code' => $aCountries['pk_c_code'] ) );
-
-
-       */
 
 
     }
