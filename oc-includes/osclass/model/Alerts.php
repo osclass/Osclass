@@ -80,11 +80,10 @@
             }
             $result = $this->dao->get() ;
 
-            if( $result == false ) {
-                return false;
-            } else {
-                return $result->result();
+            if($result == false) {
+                return array();
             }
+            return $result->result();
         }
 
         /**
@@ -106,11 +105,10 @@
             }
             $result = $this->dao->get() ;
 
-            if( $result == false ) {
+            if($result == false) {
                 return array();
-            } else {
-                return $result->result();
             }
+            return $result->result();
         }
 
         /**
@@ -135,11 +133,10 @@
             }
             $result = $this->dao->get();
 
-            if( $result == false ) {
+            if($result == false) {
                 return array();
-            } else {
-                return $result->result();
             }
+            return $result->result();
         }
 
         /**
@@ -166,11 +163,10 @@
             $this->dao->groupBy('s_search');
             $result = $this->dao->get();
 
-            if( $result == false ) {
-                return false;
-            } else {
-                return $result->result();
+            if($result == false) {
+                return array();
             }
+            return $result->result();
         }
 
         /**
@@ -196,11 +192,10 @@
             }
             $result = $this->dao->get();
 
-            if( $result == false ) {
-                return false;
-            } else {
-                return $result->result();
+            if($result == false) {
+                return array();
             }
+            return $result->result();
         }
 
         // a.s_email, a.fk_i_user_id @TODO
@@ -230,11 +225,10 @@
             $this->dao->groupBy('s_search');
             $result = $this->dao->get();
 
-            if( $result == false ) {
+            if($result == false) {
                 return array();
-            } else {
-                return $result->result();
             }
+            return $result->result();
         }
 
         /**
@@ -259,11 +253,10 @@
             }
             $result = $this->dao->get();
 
-            if( $result == false ) {
+            if($result == false) {
                 return array();
-            } else {
-                return $result->result();
             }
+            return $result->result();
         }
 
         /**
@@ -288,11 +281,10 @@
             $this->dao->where($conditions);
             $result = $this->dao->get();
 
-            if( $result == false ) {
+            if($result == false) {
                 return array();
-            } else {
-                return $result->result();
             }
+            return $result->result();
         }
 
         /**

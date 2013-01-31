@@ -104,6 +104,9 @@
             $this->dao->limit($limit) ;
 
             $result = $this->dao->get() ;
+            if($result == false) {
+                return array();
+            }
             $items  = $result->result() ;
 
             return $this->extendData($items);
@@ -161,6 +164,9 @@
             $this->dao->from($this->getTableName().' i, '.DB_TABLE_PREFIX.'t_category c, '.DB_TABLE_PREFIX.'t_category_description cd') ;
             $this->dao->where('c.pk_i_id = i.fk_i_category_id AND cd.fk_i_category_id = i.fk_i_category_id') ;
             $result = $this->dao->get() ;
+            if($result == false) {
+                return array();
+            }
 
             return $result->result() ;
         }
@@ -193,6 +199,9 @@
             $this->dao->where('l.fk_i_item_id = i.pk_i_id') ;
             $this->dao->where($sql) ;
             $result = $this->dao->get() ;
+            if($result == false) {
+                return array();
+            }
             $items  = $result->result() ;
 
             return $this->extendData($items);
@@ -225,6 +234,9 @@
             $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
             $this->dao->where('fk_i_item_id', $id) ;
             $result = $this->dao->get() ;
+            if($result == false) {
+                return array();
+            }
 
             return $result->row();
         }
@@ -297,6 +309,9 @@
             }
 
             $result = $this->dao->get() ;
+            if($result == false) {
+                return 0;
+            }
             $total_ads = $result->row() ;
             return $total_ads['total'];
         }
@@ -384,6 +399,9 @@
             }
 
             $result = $this->dao->get() ;
+            if($result == false) {
+                return array();
+            }
             $items  = $result->result() ;
 
             return $this->extendData($items) ;
@@ -405,6 +423,9 @@
             $this->dao->orderBy('i.pk_i_id', 'DESC') ;
 
             $result = $this->dao->get() ;
+            if($result == false) {
+                return 0;
+            }
             $total_ads = $result->row() ;
             return $total_ads['total'];
         }
@@ -437,6 +458,9 @@
             }
 
             $result = $this->dao->get() ;
+            if($result == false) {
+                return array();
+            }
             $items  = $result->result() ;
             return $this->extendData($items);
         }
@@ -461,6 +485,9 @@
             $this->dao->orderBy('i.pk_i_id', 'DESC') ;
 
             $result = $this->dao->get() ;
+            if($result == false) {
+                return array();
+            }
             $items  = $result->row() ;
             return $items['total'];
         }
@@ -609,6 +636,9 @@
             }
 
             $result = $this->dao->get() ;
+            if($result == false) {
+                return 0;
+            }
             $total_ads = $result->row() ;
             return $total_ads['total'];
         }
@@ -634,6 +664,9 @@
             );
             $this->dao->where($array_where) ;
             $result = $this->dao->get() ;
+            if($result == false) {
+                return array();
+            }
             return $result->result() ;
         }
 

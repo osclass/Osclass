@@ -84,6 +84,11 @@
             $this->dao->where('fk_c_country_code', addslashes($countryId)) ;
             $this->dao->orderBy('s_name', 'ASC') ;
             $result = $this->dao->get() ;
+
+            if($result == false) {
+                return array();
+            }
+
             return $result->result();
         }
 
@@ -106,6 +111,11 @@
             }
             $this->dao->limit(1);
             $result = $this->dao->get() ;
+
+            if($result == false) {
+                return array();
+            }
+
             return $result->row();
         }
 
@@ -127,11 +137,12 @@
             }
             $this->dao->limit(5);
             $result = $this->dao->get() ;
-            if($result) {
-                return $result->result();
+
+            if($result == false) {
+                return array();
             }
 
-            return array() ;
+            return $result->result();
         }
 
 

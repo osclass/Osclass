@@ -138,13 +138,15 @@
             <input type="hidden" name="action" value="locations" />
             <input type="hidden" name="type" value="add_country" />
             <input type="hidden" name="c_manual" value="1" />
-            <label><?php _e('Country code'); ?>: </label><br />
-            <input type="text" id="c_country" name="c_country" value="" /><br />
             <p>
                 <label><?php _e('Country'); ?>: </label><br />
                 <input type="text" id="country" name="country" value="" />
             </p>
-             <div class="form-actions">
+            <p>
+                <label><?php _e('Country code'); ?>: </label><br />
+                <input type="text" id="c_country" name="c_country" value="" /><br />
+            </p>
+            <div class="form-actions">
                 <div class="wrapper">
                     <button class="btn btn-red close-dialog" ><?php _e('Cancel') ; ?></button>
                     <button type="submit" class="btn btn-submit" ><?php _e('Add country') ; ?></button>

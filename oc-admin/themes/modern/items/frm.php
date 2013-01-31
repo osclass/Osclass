@@ -139,7 +139,7 @@
                     <?php } ?>
                     <div id="left-side">
                         <?php printLocaleTitle(osc_get_locales()); ?>
-                        <div>
+                        <div class="category">
                             <label><?php _e('Category'); ?></label>
                             <?php ItemForm::category_two_selects(); ?>
                         </div>

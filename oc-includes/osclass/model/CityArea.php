@@ -72,7 +72,7 @@
          * @access public
          * @since unknown
          * @param string $query
-         * @param int $regionId
+         * @param int $cityId
          * @return array
          */
         function findByName($cityAreaName, $cityId = null)
@@ -81,7 +81,7 @@
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_name', $cityAreaName) ;
             $this->dao->limit(1) ;
-            if( $regionId != null ) {
+            if( $cityId != null ) {
                 $this->dao->where('fk_i_city_id', $cityId) ;
             }
 

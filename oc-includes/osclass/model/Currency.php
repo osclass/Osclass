@@ -66,19 +66,6 @@
             $this->setFields(array('pk_c_code', 's_name', 's_description', 'b_enabled')) ;
         }
 
-        /**
-         * Find currency by currency code
-         *
-         * @deprecated
-         * @access public
-         * @since unknown
-         * @param int $id
-         * @return array
-         */
-        public function findBycode($id)
-        {
-            return $this->findByPrimaryKey($id);
-        }
     }
 
     /* file end: ./oc-includes/osclass/model/Currency.php */

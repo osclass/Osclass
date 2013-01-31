@@ -87,21 +87,22 @@
             }
             $this->dao->orderBy('s_name', 'ASC') ;
             $result = $this->dao->get();
-            if($result) {
-                $aResults = $result->result();
 
-                if ($indexedByPk) {
-                    $aTmp = array() ;
-                    for ($i = 0 ; $i < count($aResults) ; $i++) {
-                        $aTmp[(string)$aResults[$i][$this->getPrimaryKey()]] = $aResults[$i] ;
-                    }
-                    $aResults = $aTmp ;
-                }
-
-                return($aResults) ;
-            } else {
+            if($result == false) {
                 return array();
             }
+
+            $aResults = $result->result();
+
+            if ($indexedByPk) {
+                $aTmp = array() ;
+                for ($i = 0 ; $i < count($aResults) ; $i++) {
+                    $aTmp[(string)$aResults[$i][$this->getPrimaryKey()]] = $aResults[$i] ;
+                }
+                $aResults = $aTmp ;
+            }
+
+            return($aResults) ;
         }
 
         /**
@@ -118,6 +119,11 @@
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('pk_c_code', $code) ;
             $result = $this->dao->get() ;
+
+            if($result == false) {
+                return array();
+            }
+
             return $result->result() ;
         }
 

@@ -38,7 +38,7 @@
                                                     $user = $userManager->findByPrimaryKey( Params::getParam('userId') );
 
                                                     if( $user['s_pass_code'] == Params::getParam('code') && $user['b_enabled']==1) {
-                                                        $userEmailTmp = UserEmailTmp::newInstance()->findByPk( Params::getParam('userId') );
+                                                        $userEmailTmp = UserEmailTmp::newInstance()->findByPrimaryKey( Params::getParam('userId') );
                                                         $code = osc_genRandomPassword(50);
                                                         $userManager->update(
                                                              array('s_email' => $userEmailTmp['s_new_email'])
