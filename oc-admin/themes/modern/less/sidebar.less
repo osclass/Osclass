@@ -33,7 +33,9 @@
 }
 #sidebar .oscmenu > li > ul{
     overflow: auto;
-    max-height: 400%;
+    overflow-y:          hidden;
+    overflow-x:          visible;
+    max-height: 600%;
 }
 #sidebar .oscmenu .current{
     background:          @color-gray-soft;
@@ -70,6 +72,8 @@ body.compact #sidebar .oscmenu .current{
     body.compact .oscmenu ul,
     body.compact #hidden-menus{
         left:                50px !important;
+        overflow-y:          hidden;
+        overflow-x:          visible;
     }
     #sidebar .oscmenu li li,
     body.compact #sidebar .oscmenu li li{

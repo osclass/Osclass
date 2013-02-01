@@ -1258,7 +1258,9 @@ div.widget-box-content-no-wrapp li a {
 }
 #sidebar .oscmenu > li > ul {
   overflow: auto;
-  max-height: 400%;
+  overflow-y: hidden;
+  overflow-x: visible;
+  max-height: 600%;
 }
 #sidebar .oscmenu .current {
   background: #dddddd;
@@ -1297,6 +1299,8 @@ body.compact #sidebar .oscmenu .current {
 body.compact .oscmenu ul,
 body.compact #hidden-menus {
   left: 50px !important;
+  overflow-y: hidden;
+  overflow-x: visible;
 }
 #sidebar .oscmenu li li,
 body.compact #sidebar .oscmenu li li {
@@ -2722,6 +2726,7 @@ body.market .mk-item-parent {
   color: #3b3b3b;
   margin-right: 0px;
   margin-bottom: 30px;
+  overflow: hidden;
 }
 a:hover .mk-item {
   text-decoration: none;
@@ -2758,6 +2763,7 @@ a.has-update:hover .mk-item {
   height: 80px;
   padding: 15px 15px 15px 125px;
   position: relative;
+  overflow: hidden;
 }
 .mk-item .mk-info div {
   position: absolute;
@@ -2997,4 +3003,5 @@ a.has-update:hover .mk-item {
   display: block;
   font-size: 11px;
   margin-bottom: 8px;
+  clear: both;
 }
