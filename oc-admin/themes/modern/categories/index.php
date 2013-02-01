@@ -116,7 +116,7 @@
                         }
                         if(list_original != list) {
                             $.ajax({
-                                url: "<?php echo osc_admin_base_url(true) . "?page=ajax&action=categories_order&"; ?>" + list,
+                                url: "<?php echo osc_admin_base_url(true) . "?page=ajax&action=categories_order&" . osc_csrf_token_url() . "&"; ?>" + list,
                                 context: document.body,
                                 success: function(res){
                                     var ret = eval( "(" + res + ")");
