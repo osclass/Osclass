@@ -24,7 +24,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
     <head>
-        <?php osc_current_web_theme_path('head.php') ; ?>
+        <?php osc_current_web_theme_path('head.php'); ?>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
 
@@ -91,7 +91,7 @@
         <!-- end only item-post.php -->
     </head>
     <body>
-        <?php osc_current_web_theme_path('header.php') ; ?>
+        <?php osc_current_web_theme_path('header.php'); ?>
         <div class="content add_item">
             <h1><strong><?php _e('Publish a listing', 'modern'); ?></strong></h1>
             <ul id="error_list"></ul>
@@ -132,23 +132,23 @@
                         <h2><?php _e('Listing Location', 'modern'); ?></h2>
                         <div class="row">
                             <label for="countryId"><?php _e('Country', 'modern'); ?></label>
-                            <?php ItemForm::country_select(osc_get_countries(), osc_user()) ; ?>
+                            <?php ItemForm::country_select(osc_get_countries(), osc_user()); ?>
                         </div>
                         <div class="row">
                             <label for="regionId"><?php _e('Region', 'modern'); ?></label>
-                            <?php ItemForm::region_text(osc_user()) ; ?>
+                            <?php ItemForm::region_text(osc_user()); ?>
                         </div>
                         <div class="row">
                             <label for="city"><?php _e('City', 'modern'); ?></label>
-                            <?php ItemForm::city_text(osc_user()) ; ?>
+                            <?php ItemForm::city_text(osc_user()); ?>
                         </div>
                         <div class="row">
                             <label for="city"><?php _e('City Area', 'modern'); ?></label>
-                            <?php ItemForm::city_area_text(osc_user()) ; ?>
+                            <?php ItemForm::city_area_text(osc_user()); ?>
                         </div>
                         <div class="row">
                             <label for="address"><?php _e('Address', 'modern'); ?></label>
-                            <?php ItemForm::address_text(osc_user()) ; ?>
+                            <?php ItemForm::address_text(osc_user()); ?>
                         </div>
                     </div>
                     <!-- seller info -->
@@ -157,15 +157,15 @@
                         <h2><?php _e("Seller's information", 'modern'); ?></h2>
                         <div class="row">
                             <label for="contactName"><?php _e('Name', 'modern'); ?></label>
-                            <?php ItemForm::contact_name_text() ; ?>
+                            <?php ItemForm::contact_name_text(); ?>
                         </div>
                         <div class="row">
                             <label for="contactEmail"><?php _e('E-mail', 'modern'); ?> *</label>
-                            <?php ItemForm::contact_email_text() ; ?>
+                            <?php ItemForm::contact_email_text(); ?>
                         </div>
                         <div class="row">
                             <div style="width: 120px;text-align: right;float:left;">
-                                <?php ItemForm::show_email_checkbox() ; ?>
+                                <?php ItemForm::show_email_checkbox(); ?>
                             </div>
                             <label for="showEmail" style="width: 250px;"><?php _e('Show e-mail on the listing page', 'modern'); ?></label>
                         </div>
@@ -184,6 +184,6 @@
                 </fieldset>
             </form>
         </div>
-        <?php osc_current_web_theme_path('footer.php') ; ?>
+        <?php osc_current_web_theme_path('footer.php'); ?>
     </body>
 </html>

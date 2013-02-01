@@ -30,7 +30,7 @@
                     echo '});';
                 echo '</script>';
             }
-            osc_add_hook('footer', 'add_close_button_action') ;
+            osc_add_hook('footer', 'add_close_button_action');
         }
     }
 

@@ -1,4 +1,4 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -37,7 +37,7 @@
          * @since 2.4
          * @var CityStats
          */
-        private static $instance ;
+        private static $instance;
 
         /**
         * It creates a new CityStats object class if it has been created
@@ -50,9 +50,9 @@
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -64,9 +64,9 @@
         function __construct()
         {
             parent::__construct();
-            $this->setTableName('t_city_stats') ;
-            $this->setPrimaryKey('fk_i_city_id') ;
-            $this->setFields( array('fk_i_city_id', 'i_num_items') ) ;
+            $this->setTableName('t_city_stats');
+            $this->setPrimaryKey('fk_i_city_id');
+            $this->setFields( array('fk_i_city_id', 'i_num_items') );
         }
 
         /**
@@ -99,19 +99,19 @@
                 return false;
             }
 
-            $this->dao->select( 'i_num_items' ) ;
-            $this->dao->from( $this->getTableName() ) ;
-            $this->dao->where( $this->getPrimaryKey(), $cityId ) ;
-            $result       = $this->dao->get() ;
-            $cityStat = $result->row() ;
+            $this->dao->select( 'i_num_items' );
+            $this->dao->from( $this->getTableName() );
+            $this->dao->where( $this->getPrimaryKey(), $cityId );
+            $result       = $this->dao->get();
+            $cityStat = $result->row();
 
             if( isset( $cityStat['i_num_items'] ) ) {
-                $this->dao->from( $this->getTableName() ) ;
-                $this->dao->set( 'i_num_items', 'i_num_items - 1', false ) ;
-                $this->dao->where( 'i_num_items > 0' ) ;
-                $this->dao->where( 'fk_i_city_id', $cityId ) ;
+                $this->dao->from( $this->getTableName() );
+                $this->dao->set( 'i_num_items', 'i_num_items - 1', false );
+                $this->dao->where( 'i_num_items > 0' );
+                $this->dao->where( 'fk_i_city_id', $cityId );
 
-                return $this->dao->update() ;
+                return $this->dao->update();
             }
 
             return false;
@@ -167,21 +167,21 @@
          */
         public function listCities($region = null, $zero = ">", $order = "city_name ASC")
         {
-            $this->dao->select($this->getTableName().'.fk_i_city_id as city_id, '.$this->getTableName().'.i_num_items as items, '.DB_TABLE_PREFIX.'t_city.s_name as city_name') ;
-            $this->dao->from( $this->getTableName() ) ;
-            $this->dao->join(DB_TABLE_PREFIX.'t_city', $this->getTableName().'.fk_i_city_id = '.DB_TABLE_PREFIX.'t_city.pk_i_id', 'LEFT') ;
-            $this->dao->where('i_num_items '.$zero.' 0' ) ;
+            $this->dao->select($this->getTableName().'.fk_i_city_id as city_id, '.$this->getTableName().'.i_num_items as items, '.DB_TABLE_PREFIX.'t_city.s_name as city_name');
+            $this->dao->from( $this->getTableName() );
+            $this->dao->join(DB_TABLE_PREFIX.'t_city', $this->getTableName().'.fk_i_city_id = '.DB_TABLE_PREFIX.'t_city.pk_i_id', 'LEFT');
+            $this->dao->where('i_num_items '.$zero.' 0' );
             if( is_numeric($region) ) {
-                $this->dao->where(DB_TABLE_PREFIX.'t_city.fk_i_region_id = '.$region) ;
+                $this->dao->where(DB_TABLE_PREFIX.'t_city.fk_i_region_id = '.$region);
             }
-            $this->dao->orderBy($order) ;
+            $this->dao->orderBy($order);
 
-            $rs = $this->dao->get() ;
+            $rs = $this->dao->get();
 
             if($rs === false) {
-                return array() ;
+                return array();
             }
-            return $rs->result() ;
+            return $rs->result();
         }
 
         /**
@@ -192,13 +192,13 @@
          */
         function calculateNumItems($cityId)
         {
-            $sql  = 'SELECT count(*) as total FROM '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_category ' ;
-            $sql .= 'WHERE '.DB_TABLE_PREFIX.'t_item_location.fk_i_city_id = '.$cityId.' AND ' ;
-            $sql .= DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id AND ' ;
-            $sql .= DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id AND ' ;
-            $sql .= DB_TABLE_PREFIX.'t_item.b_active = 1 AND '.DB_TABLE_PREFIX.'t_item.b_enabled = 1 AND '.DB_TABLE_PREFIX.'t_item.b_spam = 0 AND ' ;
-            $sql .= '('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_item.dt_expiration >= \''.date('Y-m-d H:i:s').'\' ) AND ' ;
-            $sql .= DB_TABLE_PREFIX.'t_category.b_enabled = 1 ' ;
+            $sql  = 'SELECT count(*) as total FROM '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_category ';
+            $sql .= 'WHERE '.DB_TABLE_PREFIX.'t_item_location.fk_i_city_id = '.$cityId.' AND ';
+            $sql .= DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id AND ';
+            $sql .= DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id AND ';
+            $sql .= DB_TABLE_PREFIX.'t_item.b_active = 1 AND '.DB_TABLE_PREFIX.'t_item.b_enabled = 1 AND '.DB_TABLE_PREFIX.'t_item.b_spam = 0 AND ';
+            $sql .= '('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_item.dt_expiration >= \''.date('Y-m-d H:i:s').'\' ) AND ';
+            $sql .= DB_TABLE_PREFIX.'t_category.b_enabled = 1 ';
 
             $return = $this->dao->query($sql);
             if($return === false) {
@@ -206,8 +206,8 @@
             }
 
             if($return->numRows() > 0) {
-                $aux = $return->result() ;
-                return $aux[0]['total'] ;
+                $aux = $return->result();
+                return $aux[0]['total'];
             }
 
             return 0;

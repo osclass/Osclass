@@ -1,4 +1,4 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
      * Osclass – software for creating and publishing online classified advertising platforms
      *
@@ -60,16 +60,16 @@
 
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1><?php _e('Settings') ; ?>
+        <h1><?php _e('Settings'); ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
             <a href="<?php echo osc_admin_base_url(true).'?page=settings&action=currencies&type=add'; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
        </h1>
     <?php
     }
 
-    $typeForm = __get('typeForm') ;
+    $typeForm = __get('typeForm');
     function customText($return = 'title') {
-        $typeForm = __get('typeForm') ;
+        $typeForm = __get('typeForm');
         $text     = array();
         switch( $typeForm ) {
             case('add_post'):
@@ -94,45 +94,45 @@
 
     osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <div id="add-currency-settings">
-    <h2 class="render-title"><?php echo customText('title') ; ?></h2>
+    <h2 class="render-title"><?php echo customText('title'); ?></h2>
     <ul id="error_list"></ul>
-    <form name="currency_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+    <form name="currency_form" action="<?php echo osc_admin_base_url(true); ?>" method="post">
         <input type="hidden" name="page" value="settings" />
         <input type="hidden" name="action" value="currencies" />
         <input type="hidden" name="type" value="<?php echo $typeForm; ?>" />
         <?php if( $typeForm == 'edit_post' ) { ?>
-        <input type="hidden" name="pk_c_code" value="<?php echo osc_esc_html($aCurrency['pk_c_code']) ; ?>" />
+        <input type="hidden" name="pk_c_code" value="<?php echo osc_esc_html($aCurrency['pk_c_code']); ?>" />
         <?php } ?>
         <fieldset>
             <div class="form-horizontal">
                 <div class="form-row">
                     <div class="form-label"><?php _e('Currency Code'); ?></div>
                     <div class="form-controls">
-                        <input type="text" class="input-small" name="pk_c_code" value="<?php echo osc_esc_html($aCurrency['pk_c_code']) ; ?>" <?php if( $typeForm == 'edit_post' ) echo 'disabled="disabled"' ; ?> />
+                        <input type="text" class="input-small" name="pk_c_code" value="<?php echo osc_esc_html($aCurrency['pk_c_code']); ?>" <?php if( $typeForm == 'edit_post' ) echo 'disabled="disabled"'; ?> />
                         <span class="help-box"><?php printf(__('Must be a three-character code according to the <a href="%s" target="_blank">ISO 4217</a>'), 'http://en.wikipedia.org/wiki/ISO_4217'); ?></span>
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-label"><?php _e('Currency symbol') ; ?></div>
+                    <div class="form-label"><?php _e('Currency symbol'); ?></div>
                     <div class="form-controls">
-                        <input type="text" class="input-small" name="s_description" value="<?php echo osc_esc_html($aCurrency['s_description']) ; ?>" />
+                        <input type="text" class="input-small" name="s_description" value="<?php echo osc_esc_html($aCurrency['s_description']); ?>" />
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-label"><?php _e('Name') ; ?></div>
+                    <div class="form-label"><?php _e('Name'); ?></div>
                     <div class="form-controls">
-                        <input type="text" name="s_name" value="<?php echo osc_esc_html($aCurrency['s_name']) ; ?>" />
+                        <input type="text" name="s_name" value="<?php echo osc_esc_html($aCurrency['s_name']); ?>" />
                     </div>
                 </div>
                 <div class="form-actions">
                     <?php if( $typeForm == 'edit_post' ) { ?>
                     <input class="btn btn-red" type="button" value="<?php echo osc_esc_html( __('Cancel')); ?>" onclick="location.href='<?php echo osc_admin_base_url(true); ?>?page=settings&amp;action=currencies'">
                     <?php } ?>
-                    <input type="submit" value="<?php echo osc_esc_html(customText('button')) ; ?>" class="btn btn-submit" />
+                    <input type="submit" value="<?php echo osc_esc_html(customText('button')); ?>" class="btn btn-submit" />
                 </div>
             </div>
         </fieldset>
     </form>
 </div>
 <!-- /settings form -->
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

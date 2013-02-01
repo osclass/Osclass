@@ -1,4 +1,4 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
      * Osclass – software for creating and publishing online classified advertising platforms
      *
@@ -16,8 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $all        = Preference::newInstance()->findValueByName('location_todo') ;
-    $worktodo   = LocationsTmp::newInstance()->count() ;
+    $all        = Preference::newInstance()->findValueByName('location_todo');
+    $worktodo   = LocationsTmp::newInstance()->count();
 
     function render_offset(){
         return 'row-offset';
@@ -26,11 +26,11 @@
     function customHead() {
         $all = Preference::newInstance()->findValueByName('location_todo');
         if( $all == '' ) $all = 0;
-        $worktodo   = LocationsTmp::newInstance()->count() ;
+        $worktodo   = LocationsTmp::newInstance()->count();
         ?>
         <script type="text/javascript">
             function reload() {
-                window.location = '<?php echo osc_admin_base_url(true).'?page=tools&action=locations'; ?>' ;
+                window.location = '<?php echo osc_admin_base_url(true).'?page=tools&action=locations'; ?>';
             }
 
             function ajax_() {
@@ -63,7 +63,7 @@
 
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1><?php _e('Tools') ; ?></h1>
+        <h1><?php _e('Tools'); ?></h1>
     <?php
     }
 
@@ -72,11 +72,11 @@
     }
     osc_add_filter('admin_title', 'customPageTitle');
 
-    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+    osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <div id="locations-stats-setting">
     <!-- settings form -->
     <div id="">
-        <h2 class="render-title"><?php _e('Locations stats') ; ?></h2>
+        <h2 class="render-title"><?php _e('Locations stats'); ?></h2>
         <?php if($worktodo > 0) { ?>
         <p>
             <span id="percent">0</span> % <?php _e("Complete"); ?>
@@ -99,4 +99,4 @@
     </div>
     <!-- /settings form -->
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

@@ -54,12 +54,12 @@
                                         $items[$item['d_date']] = $item['num'];
                                     }
                                     $users = array();
-                                    $stats_users = Stats::newInstance()->new_users_count(date( 'Y-m-d H:i:s',  mktime(0, 0, 0, date("m"), date("d") - 10, date("Y")) ),'day') ;
+                                    $stats_users = Stats::newInstance()->new_users_count(date( 'Y-m-d H:i:s',  mktime(0, 0, 0, date("m"), date("d") - 10, date("Y")) ),'day');
                                     for($k = 10; $k >= 0; $k--) {
-                                        $users[date( 'Y-m-d', mktime(0, 0, 0, date("m"), date("d") - $k, date("Y")) )] = 0 ;
+                                        $users[date( 'Y-m-d', mktime(0, 0, 0, date("m"), date("d") - $k, date("Y")) )] = 0;
                                     }
                                     foreach($stats_users as $user) {
-                                        $users[$user['d_date']] = $user['num'] ;
+                                        $users[$user['d_date']] = $user['num'];
                                     }
 
                                     if(function_exists('disk_free_space')) {
@@ -99,7 +99,7 @@
         function doView($file)
         {
             osc_run_hook("before_admin_html");
-            osc_current_admin_theme_path($file) ;
+            osc_current_admin_theme_path($file);
             Session::newInstance()->_clearVariables();
             osc_run_hook("after_admin_html");
         }

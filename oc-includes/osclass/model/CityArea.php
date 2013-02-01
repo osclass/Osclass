@@ -1,4 +1,4 @@
-<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -37,7 +37,7 @@
          * @since unknown
          * @var CityArea
          */
-        private static $instance ;
+        private static $instance;
 
         /**
          * It creates a new CityArea object class ir if it has been created
@@ -50,9 +50,9 @@
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -61,9 +61,9 @@
         function __construct()
         {
             parent::__construct();
-            $this->setTableName('t_city_area') ;
-            $this->setPrimaryKey('pk_i_id') ;
-            $this->setFields( array('pk_i_id', 'fk_i_city_id', 's_name') ) ;
+            $this->setTableName('t_city_area');
+            $this->setPrimaryKey('pk_i_id');
+            $this->setFields( array('pk_i_id', 'fk_i_city_id', 's_name') );
         }
 
         /**
@@ -77,21 +77,21 @@
          */
         function findByName($cityAreaName, $cityId = null)
         {
-            $this->dao->select($this->getFields()) ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_name', $cityAreaName) ;
-            $this->dao->limit(1) ;
+            $this->dao->select($this->getFields());
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_name', $cityAreaName);
+            $this->dao->limit(1);
             if( $cityId != null ) {
-                $this->dao->where('fk_i_city_id', $cityId) ;
+                $this->dao->where('fk_i_city_id', $cityId);
             }
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
-            return $result->row() ;
+            return $result->row();
         }
 
         /**
@@ -103,14 +103,14 @@
          * @return array
          */
         function findByCity($cityId) {
-            $this->dao->select($this->getFields()) ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('fk_i_city_id', $cityId) ;
+            $this->dao->select($this->getFields());
+            $this->dao->from($this->getTableName());
+            $this->dao->where('fk_i_city_id', $cityId);
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
             return $result->result();

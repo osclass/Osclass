@@ -1,4 +1,4 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
      * Osclass – software for creating and publishing online classified advertising platforms
      *
@@ -87,12 +87,12 @@
             var addText            = '<?php echo osc_esc_js(__('Add')); ?>';
             var cancelText         = '<?php echo osc_esc_js(__('Cancel')); ?>';
             var editText           = '<?php echo osc_esc_js(__('Edit')); ?>';
-            var editNewCountryText = '<?php echo osc_esc_js(__('Edit country')) ; ?>';
-            var addNewCountryText  = '<?php echo osc_esc_js(__('Add new country')) ; ?>';
-            var editNewRegionText  = '<?php echo osc_esc_js(__('Edit region')) ; ?>';
-            var addNewRegionText   = '<?php echo osc_esc_js(__('Add new region')) ; ?>';
-            var editNewCityText    = '<?php echo osc_esc_js(__('Edit city')) ; ?>';
-            var addNewCityText     = '<?php echo osc_esc_js(__('Add new city')) ; ?>';
+            var editNewCountryText = '<?php echo osc_esc_js(__('Edit country')); ?>';
+            var addNewCountryText  = '<?php echo osc_esc_js(__('Add new country')); ?>';
+            var editNewRegionText  = '<?php echo osc_esc_js(__('Edit region')); ?>';
+            var addNewRegionText   = '<?php echo osc_esc_js(__('Add new region')); ?>';
+            var editNewCityText    = '<?php echo osc_esc_js(__('Edit city')); ?>';
+            var addNewCityText     = '<?php echo osc_esc_js(__('Add new city')); ?>';
 
             // dialog delete function
             function delete_dialog(item_id, item_type) {
@@ -113,7 +113,7 @@
 
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1><?php _e('Settings') ; ?>
+        <h1><?php _e('Settings'); ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
         </h1>
 <?php
@@ -123,10 +123,10 @@
         return sprintf(__('Locations &raquo; %s'), $string);
     }
     osc_add_filter('admin_title', 'customPageTitle');
-    osc_current_admin_theme_path('parts/header.php') ; ?>
+    osc_current_admin_theme_path('parts/header.php'); ?>
 <!-- container -->
-<h1 class="render-title"><?php _e('Locations') ; ?></h1>
-<?php osc_show_flash_message('admin') ; ?>
+<h1 class="render-title"><?php _e('Locations'); ?></h1>
+<?php osc_show_flash_message('admin'); ?>
         </div>
     </div>
 <!-- grid close -->
@@ -148,8 +148,8 @@
             </p>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button class="btn btn-red close-dialog" ><?php _e('Cancel') ; ?></button>
-                    <button type="submit" class="btn btn-submit" ><?php _e('Add country') ; ?></button>
+                    <button class="btn btn-red close-dialog" ><?php _e('Cancel'); ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php _e('Add country'); ?></button>
                 </div>
             </div>
         </form>
@@ -168,8 +168,8 @@
             </p>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button class="btn btn-red close-dialog" ><?php _e('Cancel') ; ?></button>
-                    <button type="submit" class="btn btn-submit" ><?php _e('Edit country') ; ?></button>
+                    <button class="btn btn-red close-dialog" ><?php _e('Cancel'); ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php _e('Edit country'); ?></button>
                 </div>
             </div>
         </form>
@@ -194,8 +194,8 @@
             </table>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button class="btn btn-red close-dialog" ><?php _e('Cancel') ; ?></button>
-                    <button type="submit" class="btn btn-submit" ><?php _e('Add region') ; ?></button>
+                    <button class="btn btn-red close-dialog" ><?php _e('Cancel'); ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php _e('Add region'); ?></button>
                 </div>
             </div>
         </form>
@@ -218,8 +218,8 @@
             </table>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button class="btn btn-red close-dialog" ><?php _e('Cancel') ; ?></button>
-                    <button type="submit" class="btn btn-submit" ><?php _e('Edit region') ; ?></button>
+                    <button class="btn btn-red close-dialog" ><?php _e('Cancel'); ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php _e('Edit region'); ?></button>
                 </div>
             </div>
         </form>
@@ -246,8 +246,8 @@
             </table>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button class="btn btn-red close-dialog" ><?php _e('Cancel') ; ?></button>
-                    <button type="submit" class="btn btn-submit" ><?php _e('Add city') ; ?></button>
+                    <button class="btn btn-red close-dialog" ><?php _e('Cancel'); ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php _e('Add city'); ?></button>
                 </div>
             </div>
         </form>
@@ -270,8 +270,8 @@
             </table>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button class="btn btn-red close-dialog" ><?php _e('Cancel') ; ?></button>
-                    <button type="submit" class="btn btn-submit" ><?php _e('Edit city') ; ?></button>
+                    <button class="btn btn-red close-dialog" ><?php _e('Cancel'); ?></button>
+                    <button type="submit" class="btn btn-submit" ><?php _e('Edit city'); ?></button>
                 </div>
             </div>
         </form>
@@ -306,13 +306,13 @@
                                         <input type="checkbox" name="country[]" value="<?php echo $country['pk_c_code']; ?>" >
                                     </span>
                                     <a class="close" onclick="return delete_dialog('<?php echo $country['pk_c_code']; ?>', 'delete_country');" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations&type=delete_country&id[]=<?php echo $country['pk_c_code']; ?>">
-                                        <img src="<?php echo osc_admin_base_url() ; ?>images/close.png" alt="<?php echo osc_esc_html(__('Close')); ?>" title="<?php echo osc_esc_html(__('Close')); ?>" />
+                                        <img src="<?php echo osc_admin_base_url(); ?>images/close.png" alt="<?php echo osc_esc_html(__('Close')); ?>" title="<?php echo osc_esc_html(__('Close')); ?>" />
                                     </a>
-                                    <a class="edit" href="javascript:void(0);" style="padding-right: 15px;" onclick="edit_countries($(this));" data="<?php echo osc_esc_html($country['s_name']);?>" code="<?php echo $country['pk_c_code'];?>"><?php echo $country['s_name'] ; ?></a>
+                                    <a class="edit" href="javascript:void(0);" style="padding-right: 15px;" onclick="edit_countries($(this));" data="<?php echo osc_esc_html($country['s_name']);?>" code="<?php echo $country['pk_c_code'];?>"><?php echo $country['s_name']; ?></a>
                                 </div>
                             </div>
                             <div class="float-right">
-                                <a class="view-more" href="javascript:void(0)" onclick="show_region('<?php echo $country['pk_c_code']; ?>', '<?php echo osc_esc_js($country['s_name']) ; ?>')"><?php _e('View more'); ?> &raquo;</a>
+                                <a class="view-more" href="javascript:void(0)" onclick="show_region('<?php echo $country['pk_c_code']; ?>', '<?php echo osc_esc_js($country['s_name']); ?>')"><?php _e('View more'); ?> &raquo;</a>
                             </div>
                             <div class="clear"></div>
                         </div>
@@ -325,7 +325,7 @@
     <div class="grid-row grid-first-row grid-33">
         <div class="row-wrapper">
             <div class="widget-box">
-                <div class="widget-box-title"><h3><?php _e('Regions') ; ?><a id="b_new_region" href="javascript:void(0);" class="btn float-right hide"><?php _e('Add new'); ?></a> <a id="b_remove_region" style="display:none;" class="btn float-right" href="javascript:void(0);"><?php _e('Remove selected'); ?></a></h3></div>
+                <div class="widget-box-title"><h3><?php _e('Regions'); ?><a id="b_new_region" href="javascript:void(0);" class="btn float-right hide"><?php _e('Add new'); ?></a> <a id="b_remove_region" style="display:none;" class="btn float-right" href="javascript:void(0);"><?php _e('Remove selected'); ?></a></h3></div>
                 <div class="widget-box-content">
                     <div id="i_regions"></div>
                 </div>
@@ -335,7 +335,7 @@
     <div class="grid-row grid-first-row grid-33">
         <div class="row-wrapper">
             <div class="widget-box">
-                <div class="widget-box-title"><h3><?php _e('Cities') ; ?><a id="b_new_city" href="javascript:void(0);" class="btn float-right hide"><?php _e('Add new'); ?></a> <a id="b_remove_city" style="display:none;" class="btn float-right" href="javascript:void(0);"><?php _e('Remove selected'); ?></a></h3></div>
+                <div class="widget-box-title"><h3><?php _e('Cities'); ?><a id="b_new_city" href="javascript:void(0);" class="btn float-right hide"><?php _e('Add new'); ?></a> <a id="b_remove_city" style="display:none;" class="btn float-right" href="javascript:void(0);"><?php _e('Remove selected'); ?></a></h3></div>
                 <div class="widget-box-content"><div id="i_cities"></div></div>
             </div>
         </div>
@@ -358,4 +358,4 @@
             </div>
         </div>
     </form>
-<?php osc_current_admin_theme_path('parts/footer.php') ; ?>
+<?php osc_current_admin_theme_path('parts/footer.php'); ?>

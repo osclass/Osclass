@@ -22,7 +22,7 @@
     osc_add_hook('help_box','addHelp');
 
     function customPageHeader(){ ?>
-        <h1><?php _e('Alerts') ; ?>
+        <h1><?php _e('Alerts'); ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
         </h1>
 <?php
@@ -121,7 +121,7 @@
     $columns    = $aData['aColumns'];
     $rows       = $aData['aRows'];
 ?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?> 
+<?php osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <h2 class="render-title"><?php _e('Manage alerts'); ?></h2>
 <div class="relative">
     <div id="users-toolbar" class="table-toolbar">
@@ -133,11 +133,11 @@
                     id="fPattern" type="text" name="sSearch"
                     value="<?php echo osc_esc_html(Params::getParam('sSearch')); ?>" 
                     class="input-text input-actions"/>
-                <input type="submit" class="btn submit-right" value="<?php echo osc_esc_html( __('Find') ) ; ?>">
+                <input type="submit" class="btn submit-right" value="<?php echo osc_esc_html( __('Find') ); ?>">
             </form>
         </div>
     </div>
-    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>" method="post">
         <input type="hidden" name="page" value="users" />
         <input type="hidden" name="action" id="action" value="status_alerts" />
         <input type="hidden" name="status" id="status" value="0" />
@@ -145,11 +145,11 @@
         <div id="bulk-actions">
             <label>
                 <select name="alert_action" id="bulk_actions" class="select-box-extra">
-                    <option value=""><?php _e('Bulk Actions') ; ?></option>
-                    <option value="activate" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected alerts?'), strtolower(__('Activate'))); ?>"><?php _e('Activate') ; ?></option>
-                    <option value="deactivate" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected alerts?'), strtolower(__('Deactivate'))); ?>"><?php _e('Deactivate') ; ?></option>
-                    <option value="delete" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected alerts?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ; ?></option>
-                </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                    <option value=""><?php _e('Bulk Actions'); ?></option>
+                    <option value="activate" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected alerts?'), strtolower(__('Activate'))); ?>"><?php _e('Activate'); ?></option>
+                    <option value="deactivate" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected alerts?'), strtolower(__('Deactivate'))); ?>"><?php _e('Deactivate'); ?></option>
+                    <option value="delete" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected alerts?'), strtolower(__('Delete'))); ?>"><?php _e('Delete'); ?></option>
+                </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ); ?>" />
             </label>
         </div>
         <div class="table-contains-actions">
@@ -186,7 +186,7 @@
 <?php 
     function showingResults(){
         $aData = __get('aData');
-        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aRows']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;
+        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aRows']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>';
     }
     osc_add_hook('before_show_pagination_admin','showingResults');
     osc_show_pagination_admin($aData);
@@ -221,4 +221,4 @@
     </div>
 </div>
 <div id="more-tooltip"></div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

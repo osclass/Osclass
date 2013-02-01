@@ -21,36 +21,36 @@
     {
         function __construct()
         {
-            parent::__construct() ;
+            parent::__construct();
             //specific things for this class
         }
 
         //Business Layer...
         function doModel()
         {
-            $file = Params::getParam('file') ;
+            $file = Params::getParam('file');
 
             // valid file?
             if( stripos($file, '../') !== false ) {
-                $this->do404() ;
-                return ;
+                $this->do404();
+                return;
             }
 
             // check if the file exists
             if( !file_exists(osc_plugins_path() . $file) ) {
-                $this->do404() ;
-                return ;
+                $this->do404();
+                return;
             }
 
-            $this->_exportVariableToView('file', $file) ;
-            $this->doView('custom.php') ;
+            $this->_exportVariableToView('file', $file);
+            $this->doView('custom.php');
         }
 
         //hopefully generic...
         function doView($file)
         {
             osc_run_hook("before_html");
-            osc_current_web_theme_path($file) ;
+            osc_current_web_theme_path($file);
             Session::newInstance()->_clearVariables();
             osc_run_hook("after_html");
         }

@@ -1,11 +1,11 @@
     function check_form_country() {
         var error = 0;
         if ( $("#c_country").val().length != 2 ) {
-            $("#c_country").css('border','1px solid red') ;
+            $("#c_country").css('border','1px solid red');
             error = error + 1;
         }
         if ( $("#country").val().length < 2 ) {
-            $("#country").css('border','1px solid red') ;
+            $("#country").css('border','1px solid red');
             error = error + 1;
         }
         if(error > 0) {
@@ -161,7 +161,7 @@
             }
         });
 
-        var countries ;
+        var countries;
         $("#country").autocomplete({
             source: function( text, add ) {
                 $.ajax({
@@ -200,7 +200,7 @@
             selectFirst: true
         });
 
-        var regions ;
+        var regions;
         $("#region").autocomplete({
             source: function( text, add ) {
                 text.country = $('input[name=country_c_parent]').val();
@@ -240,7 +240,7 @@
             selectFirst: true
         });
 
-        var cities ;
+        var cities;
         $("#city").autocomplete({
             source: function( text, add ) {
                 text.region = $('input[name=region_parent]').val();

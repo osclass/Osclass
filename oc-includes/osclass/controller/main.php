@@ -21,7 +21,7 @@
     {
         function __construct()
         {
-            parent::__construct() ;
+            parent::__construct();
         }
 
         //Business Layer...
@@ -31,18 +31,18 @@
                 case('logout'):         // unset only the required parameters in Session
                                         osc_run_hook("logout");
 
-                                        Session::newInstance()->_drop('userId') ;
-                                        Session::newInstance()->_drop('userName') ;
-                                        Session::newInstance()->_drop('userEmail') ;
-                                        Session::newInstance()->_drop('userPhone') ;
+                                        Session::newInstance()->_drop('userId');
+                                        Session::newInstance()->_drop('userName');
+                                        Session::newInstance()->_drop('userEmail');
+                                        Session::newInstance()->_drop('userPhone');
 
-                                        Cookie::newInstance()->pop('oc_userId') ;
-                                        Cookie::newInstance()->pop('oc_userSecret') ;
-                                        Cookie::newInstance()->set() ;
+                                        Cookie::newInstance()->pop('oc_userId');
+                                        Cookie::newInstance()->pop('oc_userSecret');
+                                        Cookie::newInstance()->set();
 
-                                        $this->redirectTo( osc_base_url() ) ;
+                                        $this->redirectTo( osc_base_url() );
                 break;
-                default:                $this->doView('main.php') ;
+                default:                $this->doView('main.php');
             }
         }
 
@@ -50,7 +50,7 @@
         function doView($file)
         {
             osc_run_hook("before_html");
-            osc_current_web_theme_path($file) ;
+            osc_current_web_theme_path($file);
             Session::newInstance()->_clearVariables();
             osc_run_hook("after_html");
         }

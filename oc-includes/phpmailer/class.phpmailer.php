@@ -1036,7 +1036,7 @@ class PHPMailer {
 
     $line = explode($this->LE, $message);
     $message = '';
-    for ($i = 0 ;$i < count($line); $i++) {
+    for ($i = 0;$i < count($line); $i++) {
       $line_part = explode(' ', $line[$i]);
       $buf = '';
       for ($e = 0; $e<count($line_part); $e++) {
@@ -2447,8 +2447,8 @@ class PHPMailer {
     foreach ($lines as $key => $line) {
       list($heading, $value) = explode(":", $line, 2);
       $heading = strtolower($heading);
-      $value = preg_replace("/\s+/", " ", $value) ; // Compress useless spaces
-      $lines[$key] = $heading.":".trim($value) ; // Don't forget to remove WSP around the value
+      $value = preg_replace("/\s+/", " ", $value); // Compress useless spaces
+      $lines[$key] = $heading.":".trim($value); // Don't forget to remove WSP around the value
     }
     $s = implode("\r\n", $lines);
     return $s;
@@ -2484,7 +2484,7 @@ class PHPMailer {
     $DKIMsignatureType    = 'rsa-sha1'; // Signature & hash algorithms
     $DKIMcanonicalization = 'relaxed/simple'; // Canonicalization of header/body
     $DKIMquery            = 'dns/txt'; // Query method
-    $DKIMtime             = time() ; // Signature Timestamp = seconds since 00:00:00 - Jan 1, 1970 (UTC time zone)
+    $DKIMtime             = time(); // Signature Timestamp = seconds since 00:00:00 - Jan 1, 1970 (UTC time zone)
     $subject_header       = "Subject: $subject";
     $headers              = explode($this->LE, $headers_line);
     foreach($headers as $header) {
@@ -2496,10 +2496,10 @@ class PHPMailer {
     }
     $from     = str_replace('|', '=7C', $this->DKIM_QP($from_header));
     $to       = str_replace('|', '=7C', $this->DKIM_QP($to_header));
-    $subject  = str_replace('|', '=7C', $this->DKIM_QP($subject_header)) ; // Copied header fields (dkim-quoted-printable
+    $subject  = str_replace('|', '=7C', $this->DKIM_QP($subject_header)); // Copied header fields (dkim-quoted-printable
     $body     = $this->DKIM_BodyC($body);
-    $DKIMlen  = strlen($body) ; // Length of body
-    $DKIMb64  = base64_encode(pack("H*", sha1($body))) ; // Base64 of packed binary SHA-1 hash of body
+    $DKIMlen  = strlen($body); // Length of body
+    $DKIMb64  = base64_encode(pack("H*", sha1($body))); // Base64 of packed binary SHA-1 hash of body
     $ident    = ($this->DKIM_identity == '')? '' : " i=" . $this->DKIM_identity . ";";
     $dkimhdrs = "DKIM-Signature: v=1; a=" . $DKIMsignatureType . "; q=" . $DKIMquery . "; l=" . $DKIMlen . "; s=" . $this->DKIM_selector . ";\r\n".
                 "\tt=" . $DKIMtime . "; c=" . $DKIMcanonicalization . ";\r\n".

@@ -1,4 +1,4 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
      * Osclass – software for creating and publishing online classified advertising platforms
      *
@@ -16,16 +16,16 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $items        = __get("items") ;
-    $max          = __get("max") ;
-    $reports      = __get("reports") ;
-    $max_views    = __get("max_views") ;
-    $latest_items = __get("latest_items") ;
+    $items        = __get("items");
+    $max          = __get("max");
+    $reports      = __get("reports");
+    $max_views    = __get("max_views");
+    $latest_items = __get("latest_items");
     
-    $alerts       = __get("alerts") ;
-    $max_alerts   = __get("max_alerts") ;
-    $subscribers  = __get("subscribers") ;
-    $max_subs     = __get("max_subs") ;
+    $alerts       = __get("alerts");
+    $max_alerts   = __get("max_alerts");
+    $subscribers  = __get("subscribers");
+    $max_subs     = __get("max_subs");
 
     $type         = Params::getParam('type_stat');
 
@@ -52,7 +52,7 @@
 
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1><?php _e('Statistics') ; ?>
+        <h1><?php _e('Statistics'); ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
         </h1>
     <?php
@@ -64,16 +64,16 @@
     osc_add_filter('admin_title', 'customPageTitle');
 
     function customHead() {
-        $items        = __get("items") ;
-        $max          = __get("max") ;
-        $reports      = __get("reports") ;
-        $max_views    = __get("max_views") ;
-        $latest_items = __get("latest_items") ;
+        $items        = __get("items");
+        $max          = __get("max");
+        $reports      = __get("reports");
+        $max_views    = __get("max_views");
+        $latest_items = __get("latest_items");
         
-        $alerts       = __get("alerts") ;
-        $max_alerts   = __get("max_alerts") ;
-        $subscribers  = __get("subscribers") ;
-        $max_subs     = __get("max_subs") ;
+        $alerts       = __get("alerts");
+        $max_alerts   = __get("max_alerts");
+        $subscribers  = __get("subscribers");
+        $max_subs     = __get("max_subs");
 
 ?>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -106,35 +106,35 @@
                 data4.addColumn('number', '<?php echo osc_esc_js(__('Subscribers')); ?>');
                 
                 <?php /*ITEMS */
-                $k = 0 ;
-                echo "data.addRows(" . count($items) . ");" ;
+                $k = 0;
+                echo "data.addRows(" . count($items) . ");";
                 foreach($items as $date => $num) {
                     echo "data.setValue(" . $k . ', 0, "' . $date . '");';
                     echo "data.setValue(" . $k . ", 1, " . $num . ");";
-                    $k++ ;
+                    $k++;
                 }
-                $k = 0 ;
-                echo "data2.addRows(" . count($reports) . ");" ;
+                $k = 0;
+                echo "data2.addRows(" . count($reports) . ");";
                 foreach($reports as $date => $data) {
-                    echo "data2.setValue(" . $k . ', 0, "' . $date . '");' ;
-                    echo "data2.setValue(" . $k . ", 1, " . $data['views'] . ");" ;
-                    $k++ ;
+                    echo "data2.setValue(" . $k . ', 0, "' . $date . '");';
+                    echo "data2.setValue(" . $k . ", 1, " . $data['views'] . ");";
+                    $k++;
                 }
 
                 /* ALERTS */
-                $k = 0 ;
-                echo "data3.addRows(" . count($alerts) . ");" ;
+                $k = 0;
+                echo "data3.addRows(" . count($alerts) . ");";
                 foreach($alerts as $date => $num) {
                     echo "data3.setValue(" . $k . ', 0, "' . $date . '");';
                     echo "data3.setValue(" . $k . ", 1, " . $num . ");";
-                    $k++ ;
+                    $k++;
                 }
-                $k = 0 ;
-                echo "data4.addRows(" . count($subscribers) . ");" ;
+                $k = 0;
+                echo "data4.addRows(" . count($subscribers) . ");";
                 foreach($subscribers as $date => $num) {
-                    echo "data4.setValue(" . $k . ', 0, "' . $date . '");' ;
-                    echo "data4.setValue(" . $k . ", 1, " . $num . ");" ;
-                    $k++ ;
+                    echo "data4.setValue(" . $k . ', 0, "' . $date . '");';
+                    echo "data4.setValue(" . $k . ", 1, " . $num . ");";
+                    $k++;
                 }
                 ?>
 
@@ -297,7 +297,7 @@
     }
     osc_add_hook('admin_header', 'customHead');
 ?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+<?php osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <div class="grid-system" id="stats-page">
     <div class="grid-row grid-50 no-bottom-margin">
         <div class="row-wrapper">
@@ -306,9 +306,9 @@
     </div>
     <div class="grid-row grid-50 no-bottom-margin">
         <div class="row-wrapper">
-            <a id="monthly" class="btn float-right <?php if($type=='month') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=month"><?php _e('Last 10 months') ; ?></a>
-            <a id="weekly"  class="btn float-right <?php if($type=='week') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=week"><?php _e('Last 10 weeks') ; ?></a>
-            <a id="daily"   class="btn float-right <?php if($type==''||$type=='day') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=day"><?php _e('Last 10 days') ; ?></a>
+            <a id="monthly" class="btn float-right <?php if($type=='month') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=month"><?php _e('Last 10 months'); ?></a>
+            <a id="weekly"  class="btn float-right <?php if($type=='week') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=week"><?php _e('Last 10 weeks'); ?></a>
+            <a id="daily"   class="btn float-right <?php if($type==''||$type=='day') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=items&amp;type_stat=day"><?php _e('Last 10 days'); ?></a>
         </div>
     </div>
     <div class="grid-row grid-50 clear">
@@ -321,7 +321,7 @@
                     <b class="stats-title"><?php _e('Number of new listings'); ?></b>
                     <div id="placeholder" class="graph-placeholder" style="height:150px">
                         <?php if( count($items) == 0 ) {
-                            _e("There're no statistics yet") ;
+                            _e("There're no statistics yet");
                         } ?>
                     </div>
                 </div>
@@ -338,7 +338,7 @@
                     <b class="stats-title"><?php _e("Total number of listings' views"); ?></b>
                     <div id="placeholder_total" class="graph-placeholder" style="height:150px">
                         <?php if( count($reports) == 0 ) {
-                            _e("There're no statistics yet") ;
+                            _e("There're no statistics yet");
                         } ?>
                     </div>
                 </div>
@@ -356,7 +356,7 @@
                     <b class="stats-title"><?php _e('Number of new alerts'); ?></b>
                     <div id="placeholder_alerts" class="graph-placeholder" style="height:150px">
                         <?php if( count($alerts) == 0 ) {
-                            _e("There're no statistics yet") ;
+                            _e("There're no statistics yet");
                         } ?>
                     </div>
                 </div>
@@ -373,7 +373,7 @@
                     <b class="stats-title"><?php _e("Number of new subscribers"); ?></b>
                     <div id="placeholder_subscribers" class="graph-placeholder" style="height:150px">
                         <?php if( count($subscribers) == 0 ) {
-                            _e("There're no statistics yet") ;
+                            _e("There're no statistics yet");
                         } ?>
                     </div>
                 </div>
@@ -382,4 +382,4 @@
     </div>
     <div class="clear"></div>
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

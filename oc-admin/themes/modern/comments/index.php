@@ -1,4 +1,4 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
      * Osclass – software for creating and publishing online classified advertising platforms
      *
@@ -22,8 +22,8 @@
     osc_add_hook('help_box','addHelp');
 
     function customPageHeader(){ ?>
-        <h1><?php _e('Listing') ; ?>
-            <a href="<?php echo osc_admin_base_url(true) . '?page=settings&action=comments' ; ?>" class="btn ico ico-32 ico-engine float-right"><?php _e('Settings'); ?></a>
+        <h1><?php _e('Listing'); ?>
+            <a href="<?php echo osc_admin_base_url(true) . '?page=settings&action=comments'; ?>" class="btn ico ico-32 ico-engine float-right"><?php _e('Settings'); ?></a>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
         </h1>
 <?php
@@ -108,8 +108,8 @@
     $columns    = $aData['aColumns'];
     $rows       = $aData['aRows'];
 
-    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<h2 class="render-title"><?php _e('Comments') ; ?></h2>
+    osc_current_admin_theme_path( 'parts/header.php' ); ?>
+<h2 class="render-title"><?php _e('Comments'); ?></h2>
 <div class="relative">
     <div id="listing-toolbar">
         <div class="float-right">
@@ -120,13 +120,13 @@
             <?php } ?>
         </div>
     </div>
-    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post" data-dialog-open="false">
+    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>" method="post" data-dialog-open="false">
         <input type="hidden" name="page" value="comments" />
         <input type="hidden" name="action" value="bulk_actions" />
         <div id="bulk-actions">
             <label>
                 <?php osc_print_bulk_actions('bulk_actions', 'bulk_actions', __get('bulk_options'), 'select-box-extra'); ?>
-                <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ); ?>" />
             </label>
         </div>
         <div class="table-contains-actions">
@@ -154,7 +154,7 @@
                 <?php } else { ?>
                     <tr>
                         <td colspan="4" class="text-center">
-                        <p><?php _e('No data available in table') ; ?></p>
+                        <p><?php _e('No data available in table'); ?></p>
                         </td>
                     </tr>
                 <?php } ?>
@@ -167,7 +167,7 @@
 <?php
     function showingResults(){
         $aData = __get('aData');
-        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aRows']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;
+        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aRows']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>';
     }
     osc_add_hook('before_show_pagination_admin','showingResults');
     osc_show_pagination_admin($aData);

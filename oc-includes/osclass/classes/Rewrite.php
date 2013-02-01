@@ -22,7 +22,7 @@
 
     class Rewrite
     {
-        private static $instance ;
+        private static $instance;
         private $rules;
         private $request_uri;
         private $uri;
@@ -38,22 +38,22 @@
             $this->location = '';
             $this->section = '';
             $this->http_referer = '';
-            //parent::__construct() ;
+            //parent::__construct();
         }
 
         public static function newInstance()
         {
             if(!self::$instance instanceof self) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         public function getTableName() {}
 
         public function getRules()
         {
-            return unserialize(osc_rewrite_rules()) ;
+            return unserialize(osc_rewrite_rules());
         }
 
         public function setRules()

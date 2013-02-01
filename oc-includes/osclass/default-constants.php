@@ -25,55 +25,55 @@
     }
 
     if( !defined('OC_ADMIN') ) {
-        define('OC_ADMIN', false) ;
+        define('OC_ADMIN', false);
     }
 
     if( !defined('LIB_PATH') ) {
-        define('LIB_PATH', ABS_PATH . 'oc-includes/') ;
+        define('LIB_PATH', ABS_PATH . 'oc-includes/');
     }
 
     if( !defined('CONTENT_PATH') ) {
-        define('CONTENT_PATH', ABS_PATH . 'oc-content/') ;
+        define('CONTENT_PATH', ABS_PATH . 'oc-content/');
     }
 
     if( !defined('THEMES_PATH') ) {
-        define('THEMES_PATH', CONTENT_PATH . 'themes/') ;
+        define('THEMES_PATH', CONTENT_PATH . 'themes/');
     }
 
     if( !defined('PLUGINS_PATH') ) {
-        define('PLUGINS_PATH', CONTENT_PATH . 'plugins/') ;
+        define('PLUGINS_PATH', CONTENT_PATH . 'plugins/');
     }
 
     if( !defined('TRANSLATIONS_PATH') ) {
-        define('TRANSLATIONS_PATH', CONTENT_PATH . 'languages/') ;
+        define('TRANSLATIONS_PATH', CONTENT_PATH . 'languages/');
     }
 
     if( !defined('OSC_DEBUG_DB') ) {
-        define('OSC_DEBUG_DB', false) ;
+        define('OSC_DEBUG_DB', false);
     }
 
     if( !defined('OSC_DEBUG_DB_LOG') ) {
-        define('OSC_DEBUG_DB_LOG', false) ;
+        define('OSC_DEBUG_DB_LOG', false);
     }
 
     if( !defined('OSC_DEBUG_DB_EXPLAIN') ) {
-        define('OSC_DEBUG_DB_EXPLAIN', false) ;
+        define('OSC_DEBUG_DB_EXPLAIN', false);
     }
 
     if( !defined('OSC_DEBUG') ) {
-        define('OSC_DEBUG', false) ;
+        define('OSC_DEBUG', false);
     }
 
     if( !defined('OSC_DEBUG_LOG') ) {
-        define('OSC_DEBUG_LOG', false) ;
+        define('OSC_DEBUG_LOG', false);
     }
 
     if( !defined('OSC_MEMORY_LIMIT') ) {
-        define('OSC_MEMORY_LIMIT', '32M') ;
+        define('OSC_MEMORY_LIMIT', '32M');
     }
 
     if( function_exists('memory_get_usage') && ( (int) @ini_get('memory_limit') < abs(intval(OSC_MEMORY_LIMIT)) ) ) {
-        @ini_set('memory_limit', OSC_MEMORY_LIMIT) ;
+        @ini_set('memory_limit', OSC_MEMORY_LIMIT);
     }
 
     if( !defined('CLI') ) {

@@ -11,19 +11,19 @@ require_once LIB_PATH . 'osclass/classes/database/DBConnectionClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DBCommandClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DBRecordsetClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DAO.php';
-require_once LIB_PATH . 'osclass/Logger/Logger.php' ;
-require_once LIB_PATH . 'osclass/Logger/LogDatabase.php' ;
-require_once LIB_PATH . 'osclass/Logger/LogOsclass.php' ;
+require_once LIB_PATH . 'osclass/Logger/Logger.php';
+require_once LIB_PATH . 'osclass/Logger/LogDatabase.php';
+require_once LIB_PATH . 'osclass/Logger/LogOsclass.php';
 require_once LIB_PATH . 'osclass/core/Session.php';
 require_once LIB_PATH . 'osclass/core/Params.php';
-require_once LIB_PATH . 'osclass/model/Preference.php' ;
+require_once LIB_PATH . 'osclass/model/Preference.php';
 require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
 require_once LIB_PATH . 'osclass/helpers/hDefines.php';
 require_once LIB_PATH . 'osclass/helpers/hErrors.php';
 require_once LIB_PATH . 'osclass/helpers/hLocale.php';
-require_once LIB_PATH . 'osclass/helpers/hPreference.php' ;
+require_once LIB_PATH . 'osclass/helpers/hPreference.php';
 require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
-require_once LIB_PATH . 'osclass/helpers/hTranslations.php' ;
+require_once LIB_PATH . 'osclass/helpers/hTranslations.php';
 require_once LIB_PATH . 'osclass/compatibility.php';
 require_once LIB_PATH . 'osclass/default-constants.php';
 require_once LIB_PATH . 'osclass/formatting.php';
@@ -33,7 +33,7 @@ require_once LIB_PATH . 'osclass/core/Translation.php';
 require_once LIB_PATH . 'osclass/classes/Plugins.php';
 
 if( is_osclass_installed() ) {
-    die() ;
+    die();
 }
 
 $json_message = array();
@@ -45,24 +45,24 @@ $json_message['password']       = $result['s_password'];
 
 
 if($_POST['skip-location-input']==0 && $_POST['country-input']!='skip') {
-    $msg = install_locations() ;
+    $msg = install_locations();
     $json_message['status'] = $msg;
 }
 
 echo json_encode($json_message);
 
 function basic_info() {
-    require_once LIB_PATH . 'osclass/model/Admin.php' ;
-    require_once LIB_PATH . 'osclass/helpers/hSecurity.php' ;
+    require_once LIB_PATH . 'osclass/model/Admin.php';
+    require_once LIB_PATH . 'osclass/helpers/hSecurity.php';
 
-    $admin = Params::getParam('s_name') ;
+    $admin = Params::getParam('s_name');
     if( $admin == '' ) {
-        $admin = 'admin' ;
+        $admin = 'admin';
     }
 
-    $password = Params::getParam('s_passwd', false, false) ;
+    $password = Params::getParam('s_passwd', false, false);
     if( $password == '' ) {
-        $password = osc_genRandomPassword() ;
+        $password = osc_genRandomPassword();
     }
 
     Admin::newInstance()->insert(
@@ -72,9 +72,9 @@ function basic_info() {
             ,'s_password' => sha1($password)
             ,'s_email'    => Params::getParam('email')
         )
-    ) ;
+    );
 
-    $mPreference = Preference::newInstance() ;
+    $mPreference = Preference::newInstance();
     $mPreference->insert (
         array(
             's_section' => 'osclass'
@@ -82,7 +82,7 @@ function basic_info() {
             ,'s_value'  => Params::getParam('webtitle')
             ,'e_type'   => 'STRING'
         )
-    ) ;
+    );
 
     $mPreference->insert (
         array(
@@ -91,40 +91,40 @@ function basic_info() {
             ,'s_value'  => Params::getParam('email')
             ,'e_type'   => 'STRING'
         )
-    ) ;
+    );
 
-    $body  = sprintf(__('Welcome %s,'),Params::getParam('webtitle'))."<br/><br/>" ;
+    $body  = sprintf(__('Welcome %s,'),Params::getParam('webtitle'))."<br/><br/>";
     $body .= sprintf(__('Your Osclass installation at %s is up and running. You can access the administration panel with these details:'), WEB_PATH)."<br/>";
     $body .= '<ul>';
     $body .= '<li>'.sprintf(__('username: %s'), $admin).'</li>';
     $body .= '<li>'.sprintf(__('password: %s'), $password).'</li>';
-    $body .= '</ul>' ;
+    $body .= '</ul>';
     $body .= __('Regards,')."<br/>";
-    $body .= __('The <a href="http://osclass.org/">Osclass</a> team') ;
+    $body .= __('The <a href="http://osclass.org/">Osclass</a> team');
 
-    $sitename = strtolower( $_SERVER['SERVER_NAME'] ) ;
+    $sitename = strtolower( $_SERVER['SERVER_NAME'] );
     if ( substr( $sitename, 0, 4 ) == 'www.' ) {
-        $sitename = substr( $sitename, 4 ) ;
+        $sitename = substr( $sitename, 4 );
     }
 
     try{
-        require_once LIB_PATH . 'phpmailer/class.phpmailer.php' ;
-        $mail = new PHPMailer(true) ;
-        $mail->CharSet  = "utf-8" ;
-        $mail->Host     = "localhost" ;
-        $mail->From     = 'osclass@' . $sitename ;
-        $mail->FromName = 'Osclass' ;
-        $mail->Subject  = 'Osclass successfully installed!' ;
-        $mail->AddAddress(Params::getParam('email'), 'Osclass administrator') ;
-        $mail->Body     = $body ;
-        $mail->AltBody  = $body ;
+        require_once LIB_PATH . 'phpmailer/class.phpmailer.php';
+        $mail = new PHPMailer(true);
+        $mail->CharSet  = "utf-8";
+        $mail->Host     = "localhost";
+        $mail->From     = 'osclass@' . $sitename;
+        $mail->FromName = 'Osclass';
+        $mail->Subject  = 'Osclass successfully installed!';
+        $mail->AddAddress(Params::getParam('email'), 'Osclass administrator');
+        $mail->Body     = $body;
+        $mail->AltBody  = $body;
         if( !$mail->Send() ) {
-            return array('email_status' => Params::getParam('email') . "<br>" . $mail->ErrorInfo, 's_password'   => $password ) ;
+            return array('email_status' => Params::getParam('email') . "<br>" . $mail->ErrorInfo, 's_password'   => $password );
         }
 
-        return array('email_status' => '', 's_password'   => $password ) ;
+        return array('email_status' => '', 's_password'   => $password );
     } catch(phpmailerException $exception) {
-        return array('email_status' => Params::getParam('email') . "<br>" . $exception->errorMessage(), 's_password'   => $password ) ;
+        return array('email_status' => Params::getParam('email') . "<br>" . $exception->errorMessage(), 's_password'   => $password );
     }
 }
 
@@ -150,9 +150,9 @@ function install_locations ( ) {
 
     $data_sql = osc_file_get_contents('http://geo.osclass.org/newgeo.download.php?'.$sql);
 
-    $conn = DBConnectionClass::newInstance() ;
-    $c_db = $conn->getOsclassDb() ;
-    $comm = new DBCommandClass($c_db) ;
+    $conn = DBConnectionClass::newInstance();
+    $c_db = $conn->getOsclassDb();
+    $comm = new DBCommandClass($c_db);
     $comm->query("SET FOREIGN_KEY_CHECKS = 0");
     $imported = $comm->importSQL($data_sql);
     $comm->query("SET FOREIGN_KEY_CHECKS = 1");

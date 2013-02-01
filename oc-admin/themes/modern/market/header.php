@@ -20,7 +20,7 @@
         $main_version = substr(osc_version(),0, $version_length-2).".".substr(osc_version(),$version_length-2, 1);
 
 
-        if($marketPage>=1) $marketPage-- ;
+        if($marketPage>=1) $marketPage--;
         $action = Params::getParam("action");
 
         $js_lang = array(
@@ -83,7 +83,7 @@
 
     function customPageHeader() {
         $action = Params::getParam("action"); ?>
-        <h1><?php _e('Discover how to improve your Osclass!') ; ?></h1>
+        <h1><?php _e('Discover how to improve your Osclass!'); ?></h1>
         <h2>Osclass offers many templates and plugins.<br/>Turn your Osclass installation into a classifieds site in a minute!</h2>
         <ul class="tabs">
             <li <?php if($action == ''){ echo 'class="active"';} ?>><a href="<?php echo osc_admin_base_url(true).'?page=market'; ?>"><?php _e('Market'); ?></a></li>
@@ -99,5 +99,5 @@
         return __('Market');
     }
     osc_add_filter('admin_title', 'customPageTitle');
-    osc_current_admin_theme_path( 'parts/header.php' ) ;
+    osc_current_admin_theme_path( 'parts/header.php' );
 ?>

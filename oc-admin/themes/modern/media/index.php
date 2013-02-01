@@ -1,4 +1,4 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
      * Osclass – software for creating and publishing online classified advertising platforms
      *
@@ -22,8 +22,8 @@
     osc_add_hook('help_box','addHelp');
 
     function customPageHeader(){ ?>
-        <h1><?php _e('Manage Media') ; ?>
-            <a href="<?php echo osc_admin_base_url(true) . '?page=settings&action=media' ; ?>" class="btn ico ico-32 ico-engine float-right"></a>
+        <h1><?php _e('Manage Media'); ?>
+            <a href="<?php echo osc_admin_base_url(true) . '?page=settings&action=media'; ?>" class="btn ico ico-32 ico-engine float-right"></a>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
         </h1>
 <?php
@@ -107,17 +107,17 @@
     $columns    = $aData['aColumns'];
     $rows       = $aData['aRows'];
 ?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+<?php osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <div class="relative">
     <div id="media-toolbar" class="table-toolbar">
     </div>
-    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>" method="post">
         <input type="hidden" name="page" value="media" />
         <input type="hidden" name="action" value="bulk_actions" />
         <div id="bulk-actions">
             <label>
                 <?php osc_print_bulk_actions('bulk_actions', 'bulk_actions', __get('bulk_options'), 'select-box-extra'); ?>
-                <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ); ?>" />
             </label>
         </div>
         <table class="table" cellpadding="0" cellspacing="0">
@@ -140,7 +140,7 @@
             <?php } else { ?>
                 <tr>
                     <td colspan="5" class="text-center">
-                    <p><?php _e('No data available in table') ; ?></p>
+                    <p><?php _e('No data available in table'); ?></p>
                     </td>
                 </tr>
             <?php } ?>
@@ -151,7 +151,7 @@
 <?php
     function showingResults(){
         $aData = __get('aData');
-        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aRows']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;
+        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aRows']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>';
     }
     osc_add_hook('before_show_pagination_admin','showingResults');
     osc_show_pagination_admin($aData);

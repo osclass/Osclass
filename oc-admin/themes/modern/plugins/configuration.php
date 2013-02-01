@@ -1,4 +1,4 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
      * Osclass – software for creating and publishing online classified advertising platforms
      *
@@ -34,14 +34,14 @@
         // check all the categories
         function checkAll(id, check) {
             aa = $('#' + id + ' input[type=checkbox]').each(function() {
-                $(this).attr('checked', check) ;
-            }) ;
+                $(this).attr('checked', check);
+            });
         }
 
         function checkCat(id, check) {
             aa = $('#cat' + id + ' input[type=checkbox]').each(function() {
-                $(this).attr('checked', check) ;
-            }) ;
+                $(this).attr('checked', check);
+            });
         }
 
         $(document).ready(function(){
@@ -74,8 +74,8 @@
                 <div><?php _e('Select the categories where you want to apply these attribute:'); ?></div>
                 <div class="separate-top">
                     <div class="form-label">
-                        <a href="javascript:void(0);" onclick="checkAll('plugin_tree', true) ; return false ;"><?php _e('Check all'); ?></a> &middot;
-                        <a href="javascript:void(0);" onclick="checkAll('plugin_tree', false) ; return false ;"><?php _e('Uncheck all'); ?></a>
+                        <a href="javascript:void(0);" onclick="checkAll('plugin_tree', true); return false;"><?php _e('Check all'); ?></a> &middot;
+                        <a href="javascript:void(0);" onclick="checkAll('plugin_tree', false); return false;"><?php _e('Uncheck all'); ?></a>
                     </div>
                     <div class="form-controls">
                         <ul id="plugin_tree">

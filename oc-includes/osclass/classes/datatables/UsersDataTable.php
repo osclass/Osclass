@@ -42,14 +42,14 @@
             $this->withUserId = false;
             $this->search = '';
             $this->addTableHeader();
-            $this->getDBParams($params) ;
+            $this->getDBParams($params);
 
             if($this->withUserId) {
-                $list_users  = User::newInstance()->searchByPrimaryKey($this->start, $this->limit, $this->userId, $this->order_by['column_name'], $this->order_by['type'] ) ;
+                $list_users  = User::newInstance()->searchByPrimaryKey($this->start, $this->limit, $this->userId, $this->order_by['column_name'], $this->order_by['type'] );
             } else if($this->search != ''){
-                $list_users  = User::newInstance()->searchByEmail($this->start, $this->limit, $this->search, $this->order_by['column_name'], $this->order_by['type'] ) ;
+                $list_users  = User::newInstance()->searchByEmail($this->start, $this->limit, $this->search, $this->order_by['column_name'], $this->order_by['type'] );
             } else {
-                $list_users  = User::newInstance()->search($this->start, $this->limit, $this->order_by['column_name'], $this->order_by['type'] ) ;
+                $list_users  = User::newInstance()->search($this->start, $this->limit, $this->order_by['column_name'], $this->order_by['type'] );
             }
             
             $this->processData($list_users['users']);
@@ -87,53 +87,53 @@
 
                 $csrf_token_url = osc_csrf_token_url();
                 foreach($users as $aRow) {
-                    $row = array() ;
-                    $options        = array() ;
-                    $options_more   = array() ;
+                    $row = array();
+                    $options        = array();
+                    $options_more   = array();
                     // first column
 
-                    $options[]  = '<a href="' . osc_admin_base_url(true) . '?page=users&action=edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>' ;
-                    $options[]  = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=users&action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
+                    $options[]  = '<a href="' . osc_admin_base_url(true) . '?page=users&action=edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>';
+                    $options[]  = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=users&action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>';
 
                     if( $aRow['b_active'] == 1 ) {
-                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=deactivate&amp;id[]=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '">' . __('Deactivate') . '</a>' ;
+                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=deactivate&amp;id[]=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '">' . __('Deactivate') . '</a>';
                     } else {
-                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=activate&amp;id[]=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url .'">' . __('Activate') . '</a>' ;
+                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=activate&amp;id[]=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url .'">' . __('Activate') . '</a>';
                     }
                     if( $aRow['b_enabled'] == 1 ) {
-                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=disable&amp;id[]=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '">' . __('Block') . '</a>' ;
+                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=disable&amp;id[]=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '">' . __('Block') . '</a>';
                     } else {
-                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=enable&amp;id[]=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '">' . __('Unblock') . '</a>' ;
+                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=enable&amp;id[]=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '">' . __('Unblock') . '</a>';
                     }
                     if( osc_user_validation_enabled() && ( $aRow['b_active'] == 0 ) ) {
-                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=resend_activation&amp;id[]=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '">' . __('Re-send activation email') . '</a>' ;
+                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=users&action=resend_activation&amp;id[]=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '">' . __('Re-send activation email') . '</a>';
                     }
 
                     $options_more = osc_apply_filter('more_actions_manage_users', $options_more, $aRow);
                     // more actions
-                    $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL ;
+                    $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL;
                     foreach( $options_more as $actual ) { 
                         $moreOptions .= '<li>'.$actual."</li>".PHP_EOL;
                     }
-                    $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL ;
+                    $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL;
 
                     $options = osc_apply_filter('actions_manage_users', $options, $aRow);
                     // create list of actions
-                    $auxOptions = '<ul>'.PHP_EOL ;
+                    $auxOptions = '<ul>'.PHP_EOL;
                     foreach( $options as $actual ) {
                         $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
                     }
-                    $auxOptions  .= $moreOptions ;
-                    $auxOptions  .= '</ul>'.PHP_EOL ;
+                    $auxOptions  .= $moreOptions;
+                    $auxOptions  .= '</ul>'.PHP_EOL;
 
-                    $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
+                    $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL;
 
-                    $row['bulkactions'] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" /></div>' ;
-                    $row['email'] = '<a href="' . osc_admin_base_url(true) . '?page=items&userId='. $aRow['pk_i_id'] .'&user='. $aRow['s_name'] .'">' . $aRow['s_email'] . '</a>'. $actions  ;
-                    $row['username'] = $aRow['s_username'] ;
-                    $row['name'] = $aRow['s_name'] ;
-                    $row['date'] = $aRow['dt_reg_date'] ;
-                    $row['update_date'] = $aRow['dt_mod_date'] ;
+                    $row['bulkactions'] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" /></div>';
+                    $row['email'] = '<a href="' . osc_admin_base_url(true) . '?page=items&userId='. $aRow['pk_i_id'] .'&user='. $aRow['s_name'] .'">' . $aRow['s_email'] . '</a>'. $actions;
+                    $row['username'] = $aRow['s_username'];
+                    $row['name'] = $aRow['s_name'];
+                    $row['date'] = $aRow['dt_reg_date'];
+                    $row['update_date'] = $aRow['dt_mod_date'];
 
                     $row = osc_apply_filter('users_processing_row', $row, $aRow);
 
@@ -148,14 +148,14 @@
         {
             
             if( !isset($_get['iDisplayStart']) ) {
-                $_get['iDisplayStart'] = 0 ;
+                $_get['iDisplayStart'] = 0;
             }
             $p_iPage      = 1;
             if( !is_numeric(Params::getParam('iPage')) || Params::getParam('iPage') < 1 ) {
                 Params::setParam('iPage', $p_iPage );
-                $this->iPage = $p_iPage ;
+                $this->iPage = $p_iPage;
             } else {
-                $this->iPage = Params::getParam('iPage') ;
+                $this->iPage = Params::getParam('iPage');
             }
             
             $this->order_by['column_name'] = 'pk_i_id';
@@ -174,14 +174,14 @@
                     $this->order_by['column_name'] = $this->column_names[$v];
                 }
                 if( $k == 'sSortDir_0' ) {
-                    $this->order_by['type'] = $v ;
+                    $this->order_by['type'] = $v;
                 }
             }
             // set start and limit using iPage param
             $start = ($this->iPage - 1) * $_get['iDisplayLength'];
             
-            $this->start = intval( $start ) ;
-            $this->limit = intval( $_get['iDisplayLength'] ) ;
+            $this->start = intval( $start );
+            $this->limit = intval( $_get['iDisplayLength'] );
 
             
         }

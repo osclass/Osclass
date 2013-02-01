@@ -25,27 +25,27 @@
     }
 
     require_once ABS_PATH . 'oc-load.php';
-    require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
+    require_once LIB_PATH . 'osclass/helpers/hErrors.php';
 
     if( !defined('AUTO_UPGRADE') ) {
         if(file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
             $sql  = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
 
             $conn = DBConnectionClass::newInstance();
-            $c_db = $conn->getOsclassDb() ;
-            $comm = new DBCommandClass( $c_db ) ;
+            $c_db = $conn->getOsclassDb();
+            $comm = new DBCommandClass( $c_db );
 
-            $error_queries = $comm->updateDB( str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ) ;
+            $error_queries = $comm->updateDB( str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) );
         }
 
         if( Params::getParam('skipdb') == '' ){
             if(!$error_queries[0]) {
                 $skip_db_link = osc_admin_base_url(true) . "?page=upgrade&action=upgrade-funcs&skipdb=true";
-                $title    = __('Osclass &raquo; Has some errors') ;
+                $title    = __('Osclass &raquo; Has some errors');
                 $message  = __("We've encountered some problems while updating the database structure. The following queries failed:");
                 $message .= "<br/><br/>" . implode("<br>", $error_queries[2]);
                 $message .= "<br/><br/>" . sprintf(__("These errors could be false-positive errors. If you're sure that is the case, you can <a href=\"%s\">continue with the upgrade</a>, or <a href=\"http://forums.osclass.org/\">ask in our forums</a>."), $skip_db_link);
-                osc_die($title, $message) ;
+                osc_die($title, $message);
             }
         }
     }
@@ -53,8 +53,8 @@
     Preference::newInstance()->update(array('s_value' => time()), array( 's_section' => 'osclass', 's_name' => 'last_version_check'));
 
     $conn = DBConnectionClass::newInstance();
-    $c_db = $conn->getOsclassDb() ;
-    $comm = new DBCommandClass( $c_db ) ;
+    $c_db = $conn->getOsclassDb();
+    $comm = new DBCommandClass( $c_db );
 
     if(osc_version() < 210) {
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'save_latest_searches', '0', 'BOOLEAN')", DB_TABLE_PREFIX));
@@ -94,10 +94,10 @@
             $comments  = count(ItemComment::newInstance()->findByAuthorID($user['pk_i_id']) );
             $items    = count(Item::newInstance()->findByUserIDEnabled($user['pk_i_id']));
             User::newInstance()->update(array( 'i_items' => $items, 'i_comments' => $comments )
-                                       ,array( 'pk_i_id' => $user['pk_i_id'] ) ) ;
+                                       ,array( 'pk_i_id' => $user['pk_i_id'] ) );
             // CHANGE FROM b_enabled to b_active
             User::newInstance()->update(array( 'b_active' => $user['b_enabled'], 'b_enabled' => 1 )
-                                       ,array( 'pk_i_id'  => $user['pk_i_id'] ) ) ;
+                                       ,array( 'pk_i_id'  => $user['pk_i_id'] ) );
         }
         unset($users);
 
@@ -169,12 +169,12 @@ CREATE TABLE %st_item_description_tmp (
         $comm->query(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'timezone', '%s', 'STRING')", DB_TABLE_PREFIX, $timezone));
 
         // alert table pages order improvement
-        $comm->query(sprintf("ALTER TABLE %st_pages ADD COLUMN i_order INT(3) NOT NULL DEFAULT 0  AFTER dt_mod_date ;", DB_TABLE_PREFIX));
+        $comm->query(sprintf("ALTER TABLE %st_pages ADD COLUMN i_order INT(3) NOT NULL DEFAULT 0  AFTER dt_mod_date;", DB_TABLE_PREFIX));
         // order pages
         $result = $comm->query(sprintf("SELECT pk_i_id FROM %st_pages WHERE b_indelible = 0", DB_TABLE_PREFIX) );
         $aPages = $result->result();
         foreach($aPages as $key => $page) {
-            $comm->query(sprintf("UPDATE %st_pages SET i_order = %d WHERE pk_i_id = %d ;", DB_TABLE_PREFIX, $key, $page['pk_i_id']) );
+            $comm->query(sprintf("UPDATE %st_pages SET i_order = %d WHERE pk_i_id = %d;", DB_TABLE_PREFIX, $key, $page['pk_i_id']) );
         }
 
         $comm->query(sprintf("INSERT INTO %st_pages (s_internal_name, b_indelible, dt_pub_date) VALUES ('email_item_validation_non_register_user', 1, '%s' )", DB_TABLE_PREFIX, date('Y-m-d H:i:s')));
@@ -194,9 +194,9 @@ CREATE TABLE %st_item_description_tmp (
         $items  = $result->result();
         foreach($items as $item) {
             if( $item['f_price'] == null ) {
-                $sql = sprintf( "UPDATE %st_item SET i_price = NULL WHERE pk_i_id = %d", DB_TABLE_PREFIX, $item['pk_i_id']) ;
+                $sql = sprintf( "UPDATE %st_item SET i_price = NULL WHERE pk_i_id = %d", DB_TABLE_PREFIX, $item['pk_i_id']);
             } else {
-                $sql = sprintf( "UPDATE %st_item SET i_price = %f WHERE pk_i_id = %d", DB_TABLE_PREFIX, (1000000 * $item['f_price']), $item['pk_i_id'] )  ;
+                $sql = sprintf( "UPDATE %st_item SET i_price = %f WHERE pk_i_id = %d", DB_TABLE_PREFIX, (1000000 * $item['f_price']), $item['pk_i_id'] );
             }
             $comm->query( $sql );
         }
@@ -210,7 +210,7 @@ CREATE TABLE %st_item_description_tmp (
 
     if( osc_version() < 240 ) {
         // We no longer use s_what column in /*TABLE_PREFIX*/t_item_description
-        $comm->query( sprintf('ALTER TABLE %st_item_description DROP COLUMN s_what', DB_TABLE_PREFIX) ) ;
+        $comm->query( sprintf('ALTER TABLE %st_item_description DROP COLUMN s_what', DB_TABLE_PREFIX) );
 
         @unlink(osc_admin_base_path()."/themes/modern/tools/images.php");
 
@@ -261,24 +261,24 @@ CREATE TABLE %st_item_description_tmp (
                     left join %st_category  as b on b.pk_i_id = a.fk_i_category_id
                     set a.dt_expiration = date_add(a.dt_pub_date, INTERVAL b.i_expiration_days DAY)
                     where b.i_expiration_days > 0', DB_TABLE_PREFIX, DB_TABLE_PREFIX );
-        $comm->query( $update_dt_expiration ) ;
+        $comm->query( $update_dt_expiration );
 
         // we need populate location table stats
         $rs = $comm->query( sprintf('SELECT pk_c_code FROM %st_country', DB_TABLE_PREFIX) );
         $aCountry = $rs->result();
         foreach($aCountry as $country) {
             // insert into country_stats with i_num_items = 0
-            $comm->query( sprintf('INSERT INTO %st_country_stats (fk_c_country_code, i_num_items) VALUES (\'%s\', 0)', DB_TABLE_PREFIX, $country['pk_c_code']) ) ;
+            $comm->query( sprintf('INSERT INTO %st_country_stats (fk_c_country_code, i_num_items) VALUES (\'%s\', 0)', DB_TABLE_PREFIX, $country['pk_c_code']) );
             $rs = $comm->query( sprintf('SELECT pk_i_id FROM %st_region WHERE fk_c_country_code = \'%s\'', DB_TABLE_PREFIX, $country['pk_c_code']) );
             $aRegion = $rs->result();
             foreach($aRegion as $region) {
                 // insert into region_stats with i_num_items = 0
-                $comm->query( sprintf('INSERT INTO %st_region_stats (fk_i_region_id, i_num_items) VALUES (%s, 0)', DB_TABLE_PREFIX, $region['pk_i_id']) ) ;
+                $comm->query( sprintf('INSERT INTO %st_region_stats (fk_i_region_id, i_num_items) VALUES (%s, 0)', DB_TABLE_PREFIX, $region['pk_i_id']) );
                 $rs = $comm->query( sprintf('SELECT pk_i_id FROM %st_city WHERE fk_i_region_id = %s', DB_TABLE_PREFIX, $region['pk_i_id']) );
                 $aCity = $rs->result();
                 foreach($aCity as $city) {
                     // insert into city_stats with i_num_items = 0
-                    $comm->query( sprintf('INSERT INTO %st_city_stats (fk_i_city_id, i_num_items) VALUES (%s, 0)', DB_TABLE_PREFIX, $city['pk_i_id']) ) ;
+                    $comm->query( sprintf('INSERT INTO %st_city_stats (fk_i_city_id, i_num_items) VALUES (%s, 0)', DB_TABLE_PREFIX, $city['pk_i_id']) );
                 }
             }
         }
@@ -421,7 +421,7 @@ CREATE TABLE %st_item_description_tmp (
     osc_changeVersionTo(310);
 
     echo '<div class="well ui-rounded-corners separate-top-medium">';
-    echo '<p>'.__('Osclass &raquo; Updated correctly').'</p>' ;
+    echo '<p>'.__('Osclass &raquo; Updated correctly').'</p>';
     echo '<p>'.__('Osclass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>').'</p>';
     foreach($aMessages as $msg) {
         echo "<p>".$msg."</p>";

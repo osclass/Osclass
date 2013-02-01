@@ -757,7 +757,7 @@ function enableContextMenu(jquerySelectors)
 																					param += ",screenX = 0,screenY=0";
 																				}else if(typeof(window.screenTop) != 'undefined' )
 																				{
-																					param += ",left = 0,top=0" ;
+																					param += ",left = 0,top=0";
 																				}		 
 																				var newWindow = window.open(url + ((url.lastIndexOf("?") > - 1)?"&":"?") + "path="  + files[num].path,'', param);
 																				newWindow.focus( );																						

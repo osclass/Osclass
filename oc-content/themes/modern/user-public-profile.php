@@ -47,12 +47,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
     <head>
-        <?php osc_current_web_theme_path('head.php') ; ?>
+        <?php osc_current_web_theme_path('head.php'); ?>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
     </head>
     <body>
-        <?php osc_current_web_theme_path('header.php') ; ?>
+        <?php osc_current_web_theme_path('header.php'); ?>
         <div class="content item user_public_profile">
             <div id="item_head">
                 <div class="inner">
@@ -75,29 +75,29 @@
                     <h2><?php _e('Latest listings', 'modern'); ?></h2>
                     <table border="0" cellspacing="0">
                         <tbody>
-                            <?php $class = "even" ; ?>
+                            <?php $class = "even"; ?>
                             <?php while(osc_has_items()) { ?>
                                 <tr class="<?php echo $class; ?>" >
                                     <?php if( osc_images_enabled_at_items() ) { ?>
                                      <td class="photo">
                                          <?php if(osc_count_item_resources()) { ?>
-                                            <a href="<?php echo osc_item_url() ; ?>"><img src="<?php echo osc_resource_thumbnail_url() ; ?>" width="75" height="56" title="<?php echo osc_item_title(); ?>" alt="<?php echo osc_item_title(); ?>" /></a>
+                                            <a href="<?php echo osc_item_url(); ?>"><img src="<?php echo osc_resource_thumbnail_url(); ?>" width="75" height="56" title="<?php echo osc_item_title(); ?>" alt="<?php echo osc_item_title(); ?>" /></a>
                                         <?php } else { ?>
-                                            <img src="<?php echo osc_current_web_theme_url('images/no_photo.gif') ; ?>" title="" alt="" />
+                                            <img src="<?php echo osc_current_web_theme_url('images/no_photo.gif'); ?>" title="" alt="" />
                                         <?php } ?>
                                      </td>
                                      <?php } ?>
                                      <td class="text">
                                          <h3>
-                                             <a href="<?php echo osc_item_url() ; ?>"><?php echo osc_item_title() ; ?></a>
+                                             <a href="<?php echo osc_item_url(); ?>"><?php echo osc_item_title(); ?></a>
                                          </h3>
                                          <p>
-                                             <strong><?php if( osc_price_enabled_at_items() ) { echo osc_item_formated_price() ; ?> - <?php } echo osc_item_city(); ?> (<?php echo osc_item_region(); ?>) - <?php echo osc_format_date(osc_item_pub_date()); ?></strong>
+                                             <strong><?php if( osc_price_enabled_at_items() ) { echo osc_item_formated_price(); ?> - <?php } echo osc_item_city(); ?> (<?php echo osc_item_region(); ?>) - <?php echo osc_format_date(osc_item_pub_date()); ?></strong>
                                          </p>
-                                         <p><?php echo osc_highlight( strip_tags( osc_item_description() ) ) ; ?></p>
+                                         <p><?php echo osc_highlight( strip_tags( osc_item_description() ) ); ?></p>
                                      </td>
                                  </tr>
-                                <?php $class = ($class == 'even') ? 'odd' : 'even' ; ?>
+                                <?php $class = ($class == 'even') ? 'odd' : 'even'; ?>
                             <?php } ?>
                         </tbody>
                     </table>
@@ -110,19 +110,19 @@
                 <?php if(osc_logged_user_id()!=  osc_user_id()) { ?>
                 <?php     if(osc_reg_user_can_contact() && osc_is_web_user_logged_in() || !osc_reg_user_can_contact() ) { ?>
                 <div id="contact">
-                    <h2><?php _e("Contact publisher", 'modern') ; ?></h2>
+                    <h2><?php _e("Contact publisher", 'modern'); ?></h2>
                     <ul id="error_list"></ul>
                     <?php ContactForm::js_validation(); ?>
-                    <form action="<?php echo osc_base_url(true) ; ?>" method="post" name="contact_form" id="contact_form">
+                    <form action="<?php echo osc_base_url(true); ?>" method="post" name="contact_form" id="contact_form">
                         <input type="hidden" name="action" value="contact_post" />
                         <input type="hidden" name="page" value="user" />
                         <input type="hidden" name="id" value="<?php echo osc_user_id();?>" />
-                        <?php osc_prepare_user_info() ; ?>
+                        <?php osc_prepare_user_info(); ?>
                         <fieldset>
-                            <label for="yourName"><?php _e('Your name', 'modern') ; ?>:</label> <?php ContactForm::your_name(); ?>
-                            <label for="yourEmail"><?php _e('Your e-mail address', 'modern') ; ?>:</label> <?php ContactForm::your_email(); ?>
-                            <label for="phoneNumber"><?php _e('Phone number', 'modern') ; ?> (<?php _e('optional', 'modern'); ?>):</label> <?php ContactForm::your_phone_number(); ?>
-                            <label for="message"><?php _e('Message', 'modern') ; ?>:</label> <?php ContactForm::your_message(); ?>
+                            <label for="yourName"><?php _e('Your name', 'modern'); ?>:</label> <?php ContactForm::your_name(); ?>
+                            <label for="yourEmail"><?php _e('Your e-mail address', 'modern'); ?>:</label> <?php ContactForm::your_email(); ?>
+                            <label for="phoneNumber"><?php _e('Phone number', 'modern'); ?> (<?php _e('optional', 'modern'); ?>):</label> <?php ContactForm::your_phone_number(); ?>
+                            <label for="message"><?php _e('Message', 'modern'); ?>:</label> <?php ContactForm::your_message(); ?>
                             <?php if( osc_recaptcha_public_key() ) { ?>
                             <script type="text/javascript">
                                 var RecaptchaOptions = {
@@ -139,7 +139,7 @@
                             </div>
                             <?php } ?>
                             <?php osc_show_recaptcha(); ?>
-                            <button type="submit"><?php _e('Send', 'modern') ; ?></button>
+                            <button type="submit"><?php _e('Send', 'modern'); ?></button>
                         </fieldset>
                     </form>
                 </div>
@@ -147,6 +147,6 @@
                 <?php } ?>
             </div>
         </div>
-        <?php osc_current_web_theme_path('footer.php') ; ?>
+        <?php osc_current_web_theme_path('footer.php'); ?>
     </body>
 </html>

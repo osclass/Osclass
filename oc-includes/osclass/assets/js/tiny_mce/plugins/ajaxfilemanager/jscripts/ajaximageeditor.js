@@ -665,7 +665,7 @@ function toggleDisabledButton(buttonId, forceDisable)
 	var newClass = '';
 	var changeRequired = true;
 	var toBeDisabled = false;
-	var currentClass = $(disabledButton).attr('class') ;
+	var currentClass = $(disabledButton).attr('class');
 	if(typeof(forceDisable) == 'boolean')
 	{
 		

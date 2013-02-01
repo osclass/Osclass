@@ -1,4 +1,4 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -33,14 +33,14 @@
          *
          * @var type
          */
-        private static $instance ;
+        private static $instance;
 
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -49,9 +49,9 @@
         function __construct()
         {
             parent::__construct();
-            $this->setTableName('t_region') ;
-            $this->setPrimaryKey('pk_i_id') ;
-            $this->setFields( array('pk_i_id', 'fk_c_country_code', 's_name', 'b_active') ) ;
+            $this->setTableName('t_region');
+            $this->setPrimaryKey('pk_i_id');
+            $this->setFields( array('pk_i_id', 'fk_c_country_code', 's_name', 'b_active') );
         }
 
         /**
@@ -66,7 +66,7 @@
          */
         public function getByCountry($countryId)
         {
-            return $this->findByCountry($countryId) ;
+            return $this->findByCountry($countryId);
         }
 
         /**
@@ -79,11 +79,11 @@
          */
         public function findByCountry($countryId)
         {
-            $this->dao->select('*') ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('fk_c_country_code', addslashes($countryId)) ;
-            $this->dao->orderBy('s_name', 'ASC') ;
-            $result = $this->dao->get() ;
+            $this->dao->select('*');
+            $this->dao->from($this->getTableName());
+            $this->dao->where('fk_c_country_code', addslashes($countryId));
+            $this->dao->orderBy('s_name', 'ASC');
+            $result = $this->dao->get();
 
             if($result == false) {
                 return array();
@@ -103,14 +103,14 @@
          */
         public function findByName($name, $country = null)
         {
-            $this->dao->select('*') ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_name', $name) ;
+            $this->dao->select('*');
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_name', $name);
             if($country!=null) {
-                $this->dao->where('fk_c_country_code', $country) ;
+                $this->dao->where('fk_c_country_code', $country);
             }
             $this->dao->limit(1);
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if($result == false) {
                 return array();
@@ -129,14 +129,14 @@
          */
         public function ajax($query, $country = null)
         {
-            $this->dao->select('pk_i_id as id, s_name as label, s_name as value') ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->like('s_name', $query, 'after') ;
+            $this->dao->select('pk_i_id as id, s_name as label, s_name as value');
+            $this->dao->from($this->getTableName());
+            $this->dao->like('s_name', $query, 'after');
             if($country != null) {
-                $this->dao->where('fk_c_country_code', strtolower($country)) ;
+                $this->dao->where('fk_c_country_code', strtolower($country));
             }
             $this->dao->limit(5);
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if($result == false) {
                 return array();

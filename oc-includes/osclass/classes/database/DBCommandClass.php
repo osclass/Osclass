@@ -33,7 +33,7 @@
          * @since 2.3
          * @var mysqli 
          */
-        var $connId ;
+        var $connId;
         /**
          * Database result object
          * 
@@ -41,110 +41,110 @@
          * @since 2.3
          * @var MySQLi_Result 
          */
-        var $resultId ;
+        var $resultId;
         
         /**
          *
          * @var array 
          */
-        var $queries ;
+        var $queries;
         /**
          *
          * @var array 
          */
-        var $queryTimes ;
+        var $queryTimes;
         /**
          *
          * @var int 
          */
-        var $queryCount ;
+        var $queryCount;
 
         /**
          *
          * @var int 
          */
-        var $errorLevel ;
+        var $errorLevel;
         /**
          *
          * @var string 
          */
-        var $errorDesc ;
+        var $errorDesc;
 
         /**
          *
          * @var array 
          */
-        var $aSelect ;
-        /* var $aDistinct ; */
+        var $aSelect;
+        /* var $aDistinct; */
         /**
          *
          * @var array 
          */
-        var $aFrom ;
+        var $aFrom;
         /**
          *
          * @var array 
          */
-        var $aJoin ;
+        var $aJoin;
         /**
          *
          * @var array 
          */
-        var $aWhere ;
+        var $aWhere;
         /**
          *
          * @var array 
          */
-        var $aLike ;
+        var $aLike;
         /**
          *
          * @var array 
          */
-        var $aGroupby ;
+        var $aGroupby;
         /**
          *
          * @var array 
          */
-        var $aHaving ;
-        /* var $aKeys ; */
+        var $aHaving;
+        /* var $aKeys; */
         /**
          *
          * @var mixed 
          */
-        var $aLimit ;
+        var $aLimit;
         /**
          *
          * @var mixed 
          */
-        var $aOffset ;
+        var $aOffset;
         /**
          *
          * @var mixed 
          */
-        var $aOrder ;
+        var $aOrder;
         /**
          *
          * @var array 
          */
-        var $aOrderby ;
+        var $aOrderby;
         /**
          *
          * @var array 
          */
-        var $aSet ;
+        var $aSet;
         /**
          *
          * @var array 
          */
-        var $aWherein ;
-        /* var $aAliasedTables ; */
-        /* var $aStoreArray ; */
+        var $aWherein;
+        /* var $aAliasedTables; */
+        /* var $aStoreArray; */
 
         /**
          * 
          * @var LogDatabase 
          */
-        var $log ;
+        var $log;
 
         /**
          * Initializate variables
@@ -153,30 +153,30 @@
          */
         function __construct(&$connId)
         {
-            $this->connId     = &$connId ;
-            $this->resultId   = 0 ;
+            $this->connId     = &$connId;
+            $this->resultId   = 0;
 
-            $this->queries    = array() ;
-            $this->queryTimes = array() ;
-            $this->queryCount = 0 ;
+            $this->queries    = array();
+            $this->queryTimes = array();
+            $this->queryCount = 0;
 
-            $this->errorLevel = 0 ;
-            $this->errorDesc  = "" ;
+            $this->errorLevel = 0;
+            $this->errorDesc  = "";
 
-            $this->aSelect    = array() ;
-            $this->aFrom      = array() ;
-            $this->aJoin      = array() ;
-            $this->aWhere     = array() ;
-            $this->aLike      = array() ;
-            $this->aGroupby   = array() ;
-            $this->aHaving    = array() ;
-            $this->aLimit     = false ;
-            $this->aOffset    = false ;
-            $this->aOrder     = false ;
-            $this->aOrderby   = array() ;
-            $this->aWherein   = array() ;
+            $this->aSelect    = array();
+            $this->aFrom      = array();
+            $this->aJoin      = array();
+            $this->aWhere     = array();
+            $this->aLike      = array();
+            $this->aGroupby   = array();
+            $this->aHaving    = array();
+            $this->aLimit     = false;
+            $this->aOffset    = false;
+            $this->aOrder     = false;
+            $this->aOrderby   = array();
+            $this->aWherein   = array();
 
-            $this->log        = LogDatabase::newInstance() ;
+            $this->log        = LogDatabase::newInstance();
         }
 
         /**
@@ -184,8 +184,8 @@
          */
         function __destruct()
         {
-            unset($this->connId) ;
-            unset($this->resultId) ;
+            unset($this->connId);
+            unset($this->resultId);
         }
 
         /**
@@ -199,9 +199,9 @@
         public static function newInstance()
         {
             if(!self::$instance instanceof self) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -215,18 +215,18 @@
         function select($select = '*')
         {
             if( is_string($select) ) {
-                $select = explode(',', $select) ;
+                $select = explode(',', $select);
             }
 
             foreach($select as $s) {
-                $s = trim($s) ;
+                $s = trim($s);
 
                 if($s != '') {
-                    $this->aSelect[] = $s ;
+                    $this->aSelect[] = $s;
                 }
             }
 
-            return $this ;
+            return $this;
         }
 
         /**
@@ -239,17 +239,17 @@
         {
             if( !is_array($from) ) {
                 if( strpos($from, ',') !== false) {
-                    $from = explode(',', $from) ;
+                    $from = explode(',', $from);
                 } else {
-                    $from = array($from) ;
+                    $from = array($from);
                 }
             }
 
             foreach($from as $f) {
-                $this->aFrom[] = $f ;
+                $this->aFrom[] = $f;
             }
 
-            return $this ;
+            return $this;
         }
 
         /**
@@ -265,19 +265,19 @@
         function join($table, $cond, $type = '')
         {
             if($type != '') {
-                $type = strtoupper(trim($type)) ;
+                $type = strtoupper(trim($type));
 
                 if( !in_array($type, array('LEFT', 'RIGHT', 'OUTER', 'INNER', 'LEFT OUTER', 'RIGHT OUTER')) ) {
-                    $type = '' ;
+                    $type = '';
                 } else {
-                    $type .= ' ' ;
+                    $type .= ' ';
                 }
             }
 
-            $join = $type . ' JOIN ' . $table . ' ON ' . $cond ;
-            $this->aJoin[] = $join ;
+            $join = $type . ' JOIN ' . $table . ' ON ' . $cond;
+            $this->aJoin[] = $join;
 
-            return $this ;
+            return $this;
         }
 
         /**
@@ -291,7 +291,7 @@
          */
         function where($key, $value = null)
         {
-            return $this->_where($key, $value, 'AND ') ;
+            return $this->_where($key, $value, 'AND ');
         }
 
         /**
@@ -305,7 +305,7 @@
          */
         function orWhere($key, $value = null)
         {
-            return $this->_where($key, $value, 'OR ') ;
+            return $this->_where($key, $value, 'OR ');
         }
 
         /**
@@ -321,25 +321,25 @@
         function _where($key, $value = null, $type = 'AND ')
         {
             if( !is_array($key) ) {
-                $key = array($key => $value) ;
+                $key = array($key => $value);
             }
 
             foreach($key as $k => $v) {
-                $prefix = (count($this->aWhere) > 0) ? $type : '' ;
+                $prefix = (count($this->aWhere) > 0) ? $type : '';
                 
                 if( !$this->_hasOperator($k) ) {
-                    $k .= ' =' ;
+                    $k .= ' =';
                 }
                 
                 if(!is_null($v)) {
-                    $v = ' ' . $this->escape($v) ;
+                    $v = ' ' . $this->escape($v);
                 }
 
-                $prefix . $k . $v ;
-                $this->aWhere[] = $prefix . $k . $v ;
+                $prefix . $k . $v;
+                $this->aWhere[] = $prefix . $k . $v;
             }
 
-            return $this ;
+            return $this;
         }
 
         /**
@@ -353,7 +353,7 @@
          */
         function whereIn($key = null, $values = null)
         {
-            return $this->_whereIn($key, $values, false, 'AND ') ;
+            return $this->_whereIn($key, $values, false, 'AND ');
         }
 
         /**
@@ -367,7 +367,7 @@
          */
         function orWhereIn($key = null, $values = null)
         {
-            return $this->_whereIn($key, $values, false, 'OR ') ;
+            return $this->_whereIn($key, $values, false, 'OR ');
         }
 
         /**
@@ -381,7 +381,7 @@
          */
         function whereNotIn($key = null, $values = null)
         {
-            return $this->_whereIn($key, $values, true, 'AND ') ;
+            return $this->_whereIn($key, $values, true, 'AND ');
         }
 
         /**
@@ -395,7 +395,7 @@
          */
         function orWhereNotIn($key = null, $values = null)
         {
-            return $this->_whereIn($key, $values, true, 'OR ') ;
+            return $this->_whereIn($key, $values, true, 'OR ');
         }
 
         /**
@@ -412,22 +412,22 @@
         function _whereIn($key = null, $values = null, $not = false, $type = 'AND ')
         {
             if( !is_array($values) ) {
-                $values = array($values) ;
+                $values = array($values);
             }
 
-            $not = ($not) ? ' NOT' : '' ;
+            $not = ($not) ? ' NOT' : '';
 
             foreach($values as $value) {
-                $this->aWherein[] = $this->escape($value) ;
+                $this->aWherein[] = $this->escape($value);
             }
 
-            $prefix  = (count($this->aWhere) > 0) ? $type : '' ;
+            $prefix  = (count($this->aWhere) > 0) ? $type : '';
 
-            $whereIn = $prefix . $key . $not . ' IN (' . implode(', ', $this->aWherein) . ') ' ;
+            $whereIn = $prefix . $key . $not . ' IN (' . implode(', ', $this->aWherein) . ') ';
 
-            $this->aWhere[] = $whereIn ;
-            $this->aWherein = array() ;
-            return $this ;
+            $this->aWhere[] = $whereIn;
+            $this->aWherein = array();
+            return $this;
         }
 
         /**
@@ -503,29 +503,29 @@
          */
         function _like($field, $match = '', $type = 'AND ', $side = 'both', $not = '')
         {
-            $likeStatement = '' ;
+            $likeStatement = '';
 
             if( !is_array($field) ) {
-                $field = array($field => $match) ;
+                $field = array($field => $match);
             }
 
             foreach($field as $k => $v) {
                 $prefix = (count($this->aLike) == 0) ? '' : $type;
-                $v      = $this->escapeStr($v, true) ;
+                $v      = $this->escapeStr($v, true);
 
                 switch ($side) {
-                    case 'before':  $likeStatement = "$prefix $k $not LIKE '%$v'" ;
+                    case 'before':  $likeStatement = "$prefix $k $not LIKE '%$v'";
                     break;
-                    case 'after':   $likeStatement = "$prefix $k $not LIKE '$v%'" ;
+                    case 'after':   $likeStatement = "$prefix $k $not LIKE '$v%'";
                     break;
-                    default:        $likeStatement = "$prefix $k $not LIKE '%$v%'" ;
+                    default:        $likeStatement = "$prefix $k $not LIKE '%$v%'";
                     break;
                 }
 
-                $this->aLike[] = $likeStatement ;
+                $this->aLike[] = $likeStatement;
             }
 
-            return $this ;
+            return $this;
         }
 
         /**
@@ -539,18 +539,18 @@
         function groupBy($by)
         {
             if( is_string($by) ) {
-                $by = explode(',', $by) ;
+                $by = explode(',', $by);
             }
 
             foreach($by as $val) {
-                $val = trim($val) ;
+                $val = trim($val);
 
                 if( $val != '' ) {
-                    $this->aGroupby[] = $val ;
+                    $this->aGroupby[] = $val;
                 }
             }
 
-            return $this ;
+            return $this;
         }
 
         /**
@@ -584,19 +584,19 @@
         function _having($key, $value = '', $type = 'AND ')
         {
             if( !is_array($key) ) {
-                $key = array($key => $value) ;
+                $key = array($key => $value);
             }
 
             foreach($key as $k => $v) {
                 $prefix = (count($this->aHaving) == 0) ? '' : $type;
 
                 if( !$this->_hasOperator($k) ) {
-                    $k .= ' = ' ;
+                    $k .= ' = ';
                 }
                 
-                $v = ' ' . $this->escapeStr($v) ;
+                $v = ' ' . $this->escapeStr($v);
                 
-                $this->aHaving[] = $prefix . $k . $v ;
+                $this->aHaving[] = $prefix . $k . $v;
             }
         }
 
@@ -611,13 +611,13 @@
         function orderBy($orderby, $direction = '')
         {
             if(strtolower($direction) == 'random') {
-                $direction = ' RAND()' ;
+                $direction = ' RAND()';
             } elseif( trim($direction) != '' ) {
-                $direction = (in_array(strtoupper(trim($direction)), array('ASC', 'DESC'))) ? ' ' . $direction : ' ASC' ;
+                $direction = (in_array(strtoupper(trim($direction)), array('ASC', 'DESC'))) ? ' ' . $direction : ' ASC';
             }
 
-            $this->aOrderby[] = $orderby . $direction ;
-            return $this ;
+            $this->aOrderby[] = $orderby . $direction;
+            return $this;
         }
 
         /**
@@ -631,13 +631,13 @@
          */
         function limit($value, $offset = '')
         {
-            $this->aLimit = $value ;
+            $this->aLimit = $value;
 
             if( $offset != '' ) {
-                $this->aOffset = $offset ;
+                $this->aOffset = $offset;
             }
 
-            return $this ;
+            return $this;
         }
 
         /**
@@ -650,8 +650,8 @@
          */
         function offset($offset)
         {
-            $this->aOffset = $offset ;
-            return $this ;
+            $this->aOffset = $offset;
+            return $this;
         }
 
         /**
@@ -666,24 +666,24 @@
         function insert($table = '', $set = null)
         {
             if( !is_null($set) ) {
-                $this->set($set) ;
+                $this->set($set);
             }
 
             if( count($this->aSet) == 0 ) {
-                return false ;
+                return false;
             }
 
             if( $table == '') {
                 if( !isset($this->aFrom[0]) ) {
-                    return false ;
+                    return false;
                 }
 
-                $table = $this->aFrom[0] ;
+                $table = $this->aFrom[0];
             }
             
-            $sql = $this->_insert($table, array_keys($this->aSet), array_values($this->aSet)) ;
-            $this->_resetWrite() ;
-            return $this->query($sql) ;
+            $sql = $this->_insert($table, array_keys($this->aSet), array_values($this->aSet));
+            $this->_resetWrite();
+            return $this->query($sql);
         }
 
         /**
@@ -713,24 +713,24 @@
         function replace($table = '', $set = null)
         {
             if( !is_null($set) ) {
-                $this->set($set) ;
+                $this->set($set);
             }
 
             if( count($this->aSet) == 0 ) {
-                return false ;
+                return false;
             }
 
             if( $table == '') {
                 if( !isset($this->aFrom[0]) ) {
-                    return false ;
+                    return false;
                 }
 
-                $table = $this->aFrom[0] ;
+                $table = $this->aFrom[0];
             }
 
-            $sql = $this->_replace($table, array_keys($this->aSet), array_values($this->aSet)) ;
-            $this->_resetWrite() ;
-            return $this->query($sql) ;
+            $sql = $this->_replace($table, array_keys($this->aSet), array_values($this->aSet));
+            $this->_resetWrite();
+            return $this->query($sql);
         }
 
         /**
@@ -761,35 +761,35 @@
         function update($table = '', $set = null, $where = null)
         {
             if( !is_null($set) ) {
-                $this->set($set) ;
+                $this->set($set);
             }
 
             if( count($this->aSet) == 0 ) {
-                return false ;
+                return false;
             }
 
             if( $table == '') {
                 if( !isset($this->aFrom[0]) ) {
-                    return false ;
+                    return false;
                 }
 
-                $table = $this->aFrom[0] ;
+                $table = $this->aFrom[0];
             }
 
             if( $where != null ) {
-                $this->where($where) ;
+                $this->where($where);
             }
 
-            $sql = $this->_update($table, $this->aSet, $this->aWhere) ;
+            $sql = $this->_update($table, $this->aSet, $this->aWhere);
 
-            $this->_resetWrite() ;
-            $result = $this->query($sql) ;
+            $this->_resetWrite();
+            $result = $this->query($sql);
 
             if( $result == false ) {
-                return false ;
+                return false;
             }
 
-            return $this->affectedRows() ;
+            return $this->affectedRows();
         }
 
         /**
@@ -805,14 +805,14 @@
         function _update($table, $values, $where)
         {
             foreach($values as $k => $v) {
-                $valstr[] = $k . ' = ' . $v ;
+                $valstr[] = $k . ' = ' . $v;
             }
 
-            $sql = 'UPDATE ' . $table . ' SET ' . implode(', ', $valstr) ;
+            $sql = 'UPDATE ' . $table . ' SET ' . implode(', ', $valstr);
 
-            $sql .= ($where != '' && count($where) > 0) ? " WHERE " . implode(" ", $where) : '' ;
+            $sql .= ($where != '' && count($where) > 0) ? " WHERE " . implode(" ", $where) : '';
 
-            return $sql ;
+            return $sql;
         }
 
         /**
@@ -828,30 +828,30 @@
         {
             if( $table == '') {
                 if( !isset($this->aFrom[0]) ) {
-                    return false ;
+                    return false;
                 }
 
-                $table = $this->aFrom[0] ;
+                $table = $this->aFrom[0];
             }
 
             if( $where != null ) {
-                $this->where($where) ;
+                $this->where($where);
             }
 
             if( count($this->aWhere) == 0 && count($this->aWherein) == 0 && count($this->aLike) == 0 ) {
-                return false ;
+                return false;
             }
 
-            $sql = $this->_delete($table, $this->aWhere, $this->aLike) ;
+            $sql = $this->_delete($table, $this->aWhere, $this->aLike);
             
-            $this->_resetWrite() ;
-            $result = $this->query($sql) ;
+            $this->_resetWrite();
+            $result = $this->query($sql);
 
             if( $result == false ) {
-                return false ;
+                return false;
             }
 
-            return $this->affectedRows() ;
+            return $this->affectedRows();
         }
 
         /**
@@ -866,19 +866,19 @@
          */
         function _delete($table, $where, $like)
         {
-            $conditions = '' ;
+            $conditions = '';
 
             if( count($where) > 0 || count($like) > 0 ) {
-                $conditions  = "\nWHERE " ;
-                $conditions .= implode("\n", $where) ;
+                $conditions  = "\nWHERE ";
+                $conditions .= implode("\n", $where);
 
                 if( count($where) > 0 && count($like) > 0 ) {
-                    $conditions .= ' AND ' ;
+                    $conditions .= ' AND ';
                 }
-                $conditions .= implode("\n", $like) ;
+                $conditions .= implode("\n", $like);
             }
 
-            $sql = 'DELETE FROM ' . $table . $conditions ;
+            $sql = 'DELETE FROM ' . $table . $conditions;
             return $sql;
         }
 
@@ -896,19 +896,19 @@
         function get($table = '', $limit = null, $offset = null)
         {
             if($table != '') {
-                $this->from($table) ;
+                $this->from($table);
             }
 
             if( !is_null($limit) ) {
-                $this->limit($limit, $offset) ;
+                $this->limit($limit, $offset);
             }
 
-            $sql = $this->_getSelect() ;
+            $sql = $this->_getSelect();
 
-            $result = $this->query($sql) ;
-            $this->_resetSelect() ;
+            $result = $this->query($sql);
+            $this->_resetSelect();
             
-            return $result ;
+            return $result;
         }
 
         /**
@@ -922,72 +922,72 @@
         function query($sql)
         {
             if($sql == '') {
-                return false ;
+                return false;
             }
 
             if( OSC_DEBUG_DB_EXPLAIN && $this->isSelectType($sql) ) {
-                $this->query_debug($sql) ;
+                $this->query_debug($sql);
             }
 
-            $this->queries[] = $sql ;
-            $timeStart = list($sm, $ss) = explode(' ', microtime()) ;
+            $this->queries[] = $sql;
+            $timeStart = list($sm, $ss) = explode(' ', microtime());
 
-            $this->resultId = $this->_execute($sql) ;
+            $this->resultId = $this->_execute($sql);
 
-            $this->errorReport() ;
+            $this->errorReport();
             if( false === $this->resultId ) {
                 if( OSC_DEBUG_DB ) {
-                    $this->log->addMessage($sql, 0, $this->errorLevel, $this->errorDesc) ;
+                    $this->log->addMessage($sql, 0, $this->errorLevel, $this->errorDesc);
                 }
-                return false ;
+                return false;
             }
 
-            $timeEnd = list($em, $es) = explode(' ', microtime()) ;
-            $this->queryTimes[] = ($em + $es) - ($sm + $ss) ;
+            $timeEnd = list($em, $es) = explode(' ', microtime());
+            $this->queryTimes[] = ($em + $es) - ($sm + $ss);
 
-            $this->queryCount++ ;
+            $this->queryCount++;
 
             if( OSC_DEBUG_DB ) {
-                $this->log->addMessage($sql, ($em + $es) - ($sm + $ss), $this->errorLevel, $this->errorDesc) ;
+                $this->log->addMessage($sql, ($em + $es) - ($sm + $ss), $this->errorLevel, $this->errorDesc);
             }
 
             if( $this->isWriteType($sql) === true ) {
-                return true ;
+                return true;
             }
 
-            $rs           = new DBRecordsetClass() ;
-            $rs->connId   = $this->connId ;
-            $rs->resultId = $this->resultId ;
-            $rs->numRows  = $rs->numRows() ;
+            $rs           = new DBRecordsetClass();
+            $rs->connId   = $this->connId;
+            $rs->resultId = $this->resultId;
+            $rs->numRows  = $rs->numRows();
             
-            return $rs ;
+            return $rs;
         }
 
         function query_debug($sql)
         {
             if($sql == '') {
-                return false ;
+                return false;
             }
 
-            $sql  = 'EXPLAIN ' . $sql ;
-            $rsID = $this->_execute($sql) ;
+            $sql  = 'EXPLAIN ' . $sql;
+            $rsID = $this->_execute($sql);
 
             if( false === $rsID ) {
-                return false ;
+                return false;
             }
 
-            $rs           = new DBRecordsetClass() ;
-            $rs->connId   = $this->connId ;
-            $rs->resultId = $rsID ;
-            $rs->numRows  = $rs->numRows() ;
+            $rs           = new DBRecordsetClass();
+            $rs->connId   = $this->connId;
+            $rs->resultId = $rsID;
+            $rs->numRows  = $rs->numRows();
 
             if( $rs->numRows() == 0 ) {
-                return false ;
+                return false;
             }
 
-            $this->log->addExplainMessage($sql, $rs->result()) ;
+            $this->log->addExplainMessage($sql, $rs->result());
 
-            return true ;
+            return true;
         }
 
         /**
@@ -1000,7 +1000,7 @@
          */
         function _execute($sql)
         {
-            return $this->connId->query($sql) ;
+            return $this->connId->query($sql);
         }
 
         /**
@@ -1014,24 +1014,24 @@
          */
         function importSQL($sql)
         {
-            $sql     = str_replace( '/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ;
+            $sql     = str_replace( '/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql);
             $sql     = preg_replace('#/\*(?:[^*]*(?:\*(?!/))*)*\*/#','',($sql));
-            $queries = explode( ';', $sql ) ;
+            $queries = explode( ';', $sql );
 
             if( count($queries) == 0 ) {
-                return false ;
+                return false;
             }
 
             foreach($queries as $q) {
-                $q = trim($q) ;
+                $q = trim($q);
                 if( !empty($q) ) {
                     if( !$this->query($q) ) {
-                        return false ;
+                        return false;
                     }
                 }
             }
 
-            return true ;
+            return true;
         }
         
         /**
@@ -1064,7 +1064,7 @@
          */
         private function existTableIntoStruct($table, $struct_queries)
         {
-            return array_key_exists(strtolower($table), $struct_queries) ;
+            return array_key_exists(strtolower($table), $struct_queries);
         }
         
         /**
@@ -1195,7 +1195,7 @@
                 foreach($tbl_indexes as $tbl_index) {
                     $indexes_array[$tbl_index['Key_name']]['columns'][] = array('fieldname' => $tbl_index['Column_name'], 'subpart' => $tbl_index['Sub_part']);
                     $indexes_array[$tbl_index['Key_name']]['unique'] = ($tbl_index['Non_unique'] == 0)?true:false;
-                    $indexes_array[$tbl_index['Key_name']]['index_type'] = $tbl_index['Index_type'] ;
+                    $indexes_array[$tbl_index['Key_name']]['index_type'] = $tbl_index['Index_type'];
                 }
                 
                 foreach($indexes_array as $k => $v) {
@@ -1280,7 +1280,7 @@
             if( count($foreignRepited) > 0 ) {
                 foreach( $foreignRepited as $_key ) {
                     echo "ALTER TABLE ".$table." DROP FOREIGN KEY ".$_key ."<br>";
-                    $struct_queries[] = "ALTER TABLE ".$table." DROP FOREIGN KEY ".$_key ;
+                    $struct_queries[] = "ALTER TABLE ".$table." DROP FOREIGN KEY ".$_key;
                 }
             }
             
@@ -1346,25 +1346,25 @@
                 if( $this->existTableIntoStruct($table, $struct_queries) ) {
                     $lastTable = NULL;
                     $normal_fields = $indexes = $constrains = array();
-                    $fields = $this->getTableFieldsFromStruct($table, $struct_queries) ;
+                    $fields = $this->getTableFieldsFromStruct($table, $struct_queries);
                     if($fields) {
                         // classify fields (into sql file)
-                        $this->classifyFieldsSql($fields, $normal_fields, $indexes, $constrains, $lastTable) ;
+                        $this->classifyFieldsSql($fields, $normal_fields, $indexes, $constrains, $lastTable);
                         // Take fields from the DB (now into database)
                         $result = $this->query('DESCRIBE '.$table);
                         $tbl_fields = $result->result();
                         // compare and create alter statments
-                        $this->createAlterTable($tbl_fields, $table, $normal_fields, $struct_queries) ;
+                        $this->createAlterTable($tbl_fields, $table, $normal_fields, $struct_queries);
                         // Go for the index part
                         $result = $this->query("SHOW INDEX FROM ".$table);
-                        $tbl_indexes = $result->result() ;
+                        $tbl_indexes = $result->result();
                         // compare table index and struct.sql index for the same table, and only add the new ones
-                        $this->createNewIndex($tbl_indexes, $indexes, $table, $struct_queries) ;
+                        $this->createNewIndex($tbl_indexes, $indexes, $table, $struct_queries);
                         // show create table TABLE_NAME constrains
                         $result = $this->query("SHOW CREATE TABLE ".$table);
                         $tbl_constraint = $result->row();
                         // create foreign keys
-                        $this->createForeignKey($tbl_constraint, $table, $struct_queries, $constrains) ;
+                        $this->createForeignKey($tbl_constraint, $table, $struct_queries, $constrains);
                         // No need to create the table, so we delete it SQL
                         unset($struct_queries[strtolower($table)]);
                         error_log(' --- struct_queries ---');
@@ -1381,7 +1381,7 @@
             foreach($queries as $query) {
                 // hack for 2.4
                 if( stripos($query, 'country ADD PRIMARY KEY') ) {
-                   continue ;
+                   continue;
                 }
                 $res = $this->query($query);
                 if(!$res) {
@@ -1414,18 +1414,18 @@
         function set($key, $value = '', $escape = true)
         {
             if( !is_array($key) ) {
-                $key = array($key => $value) ;
+                $key = array($key => $value);
             }
 
             foreach($key as $k => $v) {
                 if( $escape ) {
-                    $this->aSet[$k] = $this->escape($v) ;
+                    $this->aSet[$k] = $this->escape($v);
                 } else {
-                    $this->aSet[$k] = $v ;
+                    $this->aSet[$k] = $v;
                 }
             }
 
-            return $this ;
+            return $this;
         }
 
         /**
@@ -1437,80 +1437,80 @@
          */
         function _getSelect()
         {
-            $sql = 'SELECT ' ;
+            $sql = 'SELECT ';
 
             // "SELECT" portion of the query
             if( count($this->aSelect) == 0 ) {
-                $sql .= '*' ;
+                $sql .= '*';
             } else {
-                $sql .= implode(', ', $this->aSelect) ;
+                $sql .= implode(', ', $this->aSelect);
             }
 
             // "FROM" portion of the query
             if( count($this->aFrom) > 0 ) {
-                $sql .= "\nFROM " ;
+                $sql .= "\nFROM ";
                 if( !is_array($this->aFrom) ) {
-                    $this->a_from = array($this->aFrom) ;
+                    $this->a_from = array($this->aFrom);
                 }
-                $sql .= '(' . implode(', ', $this->aFrom) . ')' ;
+                $sql .= '(' . implode(', ', $this->aFrom) . ')';
             }
 
             // "JOIN" portion of the query
             if( count($this->aJoin) > 0 ) {
-                $sql .= "\n" ;
-                $sql .= implode("\n", $this->aJoin) ;
+                $sql .= "\n";
+                $sql .= implode("\n", $this->aJoin);
             }
 
             // "WHERE" portion of the query
             if( count($this->aWhere) > 0 || count($this->aLike) > 0 ) {
-                $sql .= "\n" ;
-                $sql .= "WHERE " ;
+                $sql .= "\n";
+                $sql .= "WHERE ";
             }
 
-            $sql .= implode("\n", $this->aWhere) ;
+            $sql .= implode("\n", $this->aWhere);
 
             // "LIKE" portion of the query
             if( count($this->aLike) > 0 ) {
                 if( count($this->aWhere) > 0 ) {
-                    $sql .= "\nAND" ;
+                    $sql .= "\nAND";
                 }
 
-                $sql .= implode("\n", $this->aLike) ;
+                $sql .= implode("\n", $this->aLike);
             }
 
             // "GROUP BY" portion of the query
             if( count($this->aGroupby) > 0 ) {
-                $sql .= "\nGROUP BY " ;
-                $sql .= implode(', ', $this->aGroupby) ;
+                $sql .= "\nGROUP BY ";
+                $sql .= implode(', ', $this->aGroupby);
             }
 
             // "HAVING" portion of the query
             if( count($this->aHaving) > 0 ) {
-                $sql .= "\nHAVING " ;
-                $sql .= implode(', ', $this->aHaving) ;
+                $sql .= "\nHAVING ";
+                $sql .= implode(', ', $this->aHaving);
             }
 
             // "ORDER BY" portion of the query
             if( count($this->aOrderby) > 0 ) {
-                $sql .= "\nORDER BY " ;
-                $sql .= implode(', ', $this->aOrderby) ;
+                $sql .= "\nORDER BY ";
+                $sql .= implode(', ', $this->aOrderby);
 
                 if($this->aOrder !== false) {
-                    $sql .= ($this->aOrder == 'desc') ? ' DESC' : ' ASC' ;
+                    $sql .= ($this->aOrder == 'desc') ? ' DESC' : ' ASC';
                 }
             }
 
             // "LIMIT" portion of the query
             if( is_numeric($this->aLimit) ) {
-                $sql .= "\n" ;
-                $sql .= "LIMIT " . $this->aLimit ;
+                $sql .= "\n";
+                $sql .= "LIMIT " . $this->aLimit;
 
                 if( $this->aOffset > 0 ) {
-                    $sql .= ", " . $this->aOffset ;
+                    $sql .= ", " . $this->aOffset;
                 }
             }
 
-            return $sql ;
+            return $sql;
         }
 
         /**
@@ -1522,7 +1522,7 @@
          */
         function affectedRows()
         {
-            return $this->connId->affected_rows ;
+            return $this->connId->affected_rows;
         }
 
         /**
@@ -1534,7 +1534,7 @@
          */
         function lastQuery()
         {
-            return end($this->queries) ;
+            return end($this->queries);
         }
 
         /**
@@ -1546,7 +1546,7 @@
          */
         function insertedId()
         {
-            return $this->connId->insert_id ;
+            return $this->connId->insert_id;
         }
 
         /**
@@ -1559,7 +1559,7 @@
          */
         function _hasOperator($str)
         {
-            $str = trim($str) ;
+            $str = trim($str);
 
             if ( ! preg_match('/(\s|<|>|!|=|is null|is not null)/i', $str)) {
                 return false;
@@ -1613,14 +1613,14 @@
         function escape($str)
         {
             if( is_string($str) ) {
-                $str = "'" . $this->escapeStr($str) . "'" ;
+                $str = "'" . $this->escapeStr($str) . "'";
             } elseif ( is_bool($str) ) {
-                $str = ($str === false) ? 0 : 1 ;
+                $str = ($str === false) ? 0 : 1;
             } elseif( is_null($str) ) {
-                $str = 'NULL' ;
+                $str = 'NULL';
             }
 
-            return $str ;
+            return $str;
         }
 
         /**
@@ -1634,16 +1634,16 @@
         function escapeStr($str, $like = false)
         {
             if( is_object($this->connId) ) {
-                $str = $this->connId->real_escape_string($str) ;
+                $str = $this->connId->real_escape_string($str);
             } else {
-                $str = addslashes($str) ;
+                $str = addslashes($str);
             }
 
             if( $like ) {
-                $str = str_replace(array('%', '_'), array('\\%', '\\_'), $str) ;
+                $str = str_replace(array('%', '_'), array('\\%', '\\_'), $str);
             }
             
-            return $str ;
+            return $str;
         }
 
         /**
@@ -1660,9 +1660,9 @@
                             'aLike'    => array(),
                             'aOrderby' => array(),
                             'aLimit'   => false,
-                            'aOrder'   => false ) ;
+                            'aOrder'   => false );
 
-            $this->_resetRun($aReset) ;
+            $this->_resetRun($aReset);
         }
 
         /**
@@ -1685,9 +1685,9 @@
                             'aWherein' => array(),
                             'aLimit'   => false,
                             'aOffset'  => false,
-                            'aOrder'   => false ) ;
+                            'aOrder'   => false );
 
-            $this->_resetRun($aReset) ;
+            $this->_resetRun($aReset);
         }
 
         /**
@@ -1711,8 +1711,8 @@
          */
         function errorReport()
         {
-            $this->errorLevel = $this->connId->errno ;
-            $this->errorDesc  = $this->connId->error ;
+            $this->errorLevel = $this->connId->errno;
+            $this->errorDesc  = $this->connId->error;
         }
 
         /**
@@ -1724,7 +1724,7 @@
          */
         function getErrorLevel()
         {
-            return $this->errorLevel ;
+            return $this->errorLevel;
         }
 
         /**
@@ -1736,7 +1736,7 @@
          */
         function getErrorDesc()
         {
-            return $this->errorDesc ;
+            return $this->errorDesc;
         }
     }
 

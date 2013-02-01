@@ -31,10 +31,10 @@
 
         static function getParam($param, $htmlencode = false, $xss_check = true, $quotes_encode = true)
         {
-            if ($param == "") return '' ;
-            if (!isset($_REQUEST[$param])) return '' ;
+            if ($param == "") return '';
+            if (!isset($_REQUEST[$param])) return '';
 
-            $value = self::_purify($_REQUEST[$param], $xss_check) ;
+            $value = self::_purify($_REQUEST[$param], $xss_check);
 
             if ($htmlencode) {
                 if($quotes_encode) {
@@ -53,8 +53,8 @@
 
         static function existParam($param)
         {
-            if ($param == "") return false ;
-            if (!isset($_REQUEST[$param])) return false ;
+            if ($param == "") return false;
+            if (!isset($_REQUEST[$param])) return false;
             return true;
         }
 
@@ -85,10 +85,10 @@
                 break;
             }
 
-            $value = self::_purify($value, $xss_check) ;
+            $value = self::_purify($value, $xss_check);
 
             if(get_magic_quotes_gpc()) {
-                return strip_slashes_extended($value) ;
+                return strip_slashes_extended($value);
             }
 
             return $value;
@@ -103,7 +103,7 @@
 
         static function _view()
         {
-            print_r(self::getParamsAsArray()) ;
+            print_r(self::getParamsAsArray());
         }
 
         static private function _purify($value, $xss_check)

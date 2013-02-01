@@ -28,31 +28,31 @@
          * Log a message with the INFO level.
          * @param <type> $message
          */
-        abstract function info($message = '', $caller = null ) ;
+        abstract function info($message = '', $caller = null );
 
         /**
          * Log a message with the WARN level.
          * @param <type> $message
          */
-        abstract function warn($message = '', $caller = null ) ;
+        abstract function warn($message = '', $caller = null );
 
         /**
          * Log a message with the ERROR level.
          * @param <type> $message
          */
-        abstract function error($message = '', $caller = null ) ;
+        abstract function error($message = '', $caller = null );
 
         /**
          * Log a message with the DEBUG level.
          * @param <type> $message
          */
-        abstract function debug($message = '', $caller = null ) ;
+        abstract function debug($message = '', $caller = null );
 
         /**
          * Log a message object with the FATAL level including the caller.
          * @param <type> $message
          */
-        abstract function fatal($message = '', $caller = null ) ;
+        abstract function fatal($message = '', $caller = null );
     }
 
     /* file end: ./oc-includes/osclass/Logger/Logger.php */

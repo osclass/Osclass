@@ -16,7 +16,7 @@ function installMarketItem(thatItem){
         theme.marketAjaxUrl,
         {"code" : marketCode, "section" : marketType},
         function(data) {
-            var content  = data.message ;
+            var content  = data.message;
             var messages = theme.langs[marketType];
             if(data.error == 0) { // no errors
                 content += '<h3>'+messages.download_ok+'</h3>';
@@ -120,9 +120,10 @@ $(function(){
                         banner = theme.themUrl+'images/gr-'+bg+'.png';
                         str_letter = letter;
                     }
+
+                    var preview = '';
                     if(section == 'theme'){
                         if(item.a_images.length > 0){
-                            var preview = '';
                             if(item.s_preview != '') {
                                 preview = '<a target="_blank" class="btn-market-preview" href="'+item.s_preview+'">'+theme.langs.preview_theme+'</a>';
                             }

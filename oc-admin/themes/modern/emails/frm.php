@@ -1,4 +1,4 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
      * Osclass – software for creating and publishing online classified advertising platforms
      *
@@ -82,7 +82,7 @@
                     modal: true,
                     width: 360,
                     minHeight: 42,
-                    title: '<?php echo osc_esc_js( __('Send email') ) ; ?>'
+                    title: '<?php echo osc_esc_js( __('Send email') ); ?>'
                 });
                 $('#btn-display-test-it').click(function(){
                     $('#dialog-test-it').dialog('open');
@@ -146,10 +146,10 @@
                         <div id="left-side">
                             <?php printLocaleTitlePage($locales, $email); ?>
                             <div>
-                                <label><?php _e('Internal name') ; ?></label>
-                                <?php PageForm::internal_name_input_text($email) ; ?>
+                                <label><?php _e('Internal name'); ?></label>
+                                <?php PageForm::internal_name_input_text($email); ?>
                                 <div class="flashmessage flashmessage-warning flashmessage-inline">
-                                    <p><?php _e('Used to identify the email template') ; ?></p>
+                                    <p><?php _e('Used to identify the email template'); ?></p>
                                 </div>
                             </div>
                             <div class="input-description-wide">
@@ -180,4 +180,4 @@
     <input type="text" name="test_email" class="input-actions"/>
     <input type="submit" id="btn-test-it" href="#" class="btn btn-blue submit-right" value="<?php _e('Send email'); ?>"/>
 </div>
-<?php osc_current_admin_theme_path('parts/footer.php') ; ?>
+<?php osc_current_admin_theme_path('parts/footer.php'); ?>

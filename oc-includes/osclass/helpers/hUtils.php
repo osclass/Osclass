@@ -33,7 +33,7 @@
      * @return array
      */
      function __get($key) {
-         return View::newInstance()->_get($key) ;
+         return View::newInstance()->_get($key);
      }
 
     /**
@@ -43,7 +43,7 @@
      * @return mixed
      */
     function osc_get_param($key) {
-        return Params::getParam($key) ;
+        return Params::getParam($key);
     }
 
     /**
@@ -59,23 +59,23 @@
         if(!is_null($item)) {
             if($locale == "") {
                 if(isset($item[$field])) {
-                    return $item[$field] ;
+                    return $item[$field];
                 }
             } else {
                 if(isset($item["locale"]) && !empty($item['locale']) && isset($item["locale"][$locale]) && isset($item["locale"][$locale][$field])) {
-                    return $item["locale"][$locale][$field] ;
+                    return $item["locale"][$locale][$field];
                 }else{
                     if(isset($item["locale"])){
                         foreach($item["locale"] as $locale => $data) {
                             if( isset($item["locale"][$locale][$field] ) ) {
-                                return $item["locale"][$locale][$field] ;
+                                return $item["locale"][$locale][$field];
                             }
                         }
                     }
                 }
             }
         }
-        return '' ;
+        return '';
     }
 
     /**
@@ -87,7 +87,7 @@
     function osc_show_widgets($location) {
         $widgets = Widget::newInstance()->findByLocation($location);
         foreach ($widgets as $w)
-            echo $w['s_content'] ;
+            echo $w['s_content'];
     }
 
     /**
@@ -99,17 +99,17 @@
      */
     function osc_show_recaptcha($section = '') {
         if( osc_recaptcha_public_key() ) {
-            require_once osc_lib_path() . 'recaptchalib.php' ;
+            require_once osc_lib_path() . 'recaptchalib.php';
             switch($section) {
                 case('recover_password'):
                     $time  = Session::newInstance()->_get('recover_time');
                     if((time()-$time)<=1200) {
-                       echo recaptcha_get_html( osc_recaptcha_public_key() )."<br />" ;
+                       echo recaptcha_get_html( osc_recaptcha_public_key() )."<br />";
                     }
                 break;
 
                 default:
-                   echo recaptcha_get_html( osc_recaptcha_public_key() ) ;
+                   echo recaptcha_get_html( osc_recaptcha_public_key() );
                 break;
             }
         }
@@ -167,31 +167,31 @@
     {
         if($options == null) {
             $options = array();
-            $options[] = array('name' => __('Dashboard'), 'url' => osc_user_dashboard_url(), 'class' => 'opt_dashboard') ;
-            $options[] = array('name' => __('Manage your listings'), 'url' => osc_user_list_items_url(), 'class' => 'opt_items') ;
-            $options[] = array('name' => __('Manage your alerts'), 'url' => osc_user_alerts_url(), 'class' => 'opt_alerts') ;
-            $options[] = array('name' => __('My profile'), 'url' => osc_user_profile_url(), 'class' => 'opt_account') ;
-            $options[] = array('name' => __('Logout'), 'url' => osc_user_logout_url(), 'class' => 'opt_logout') ;
+            $options[] = array('name' => __('Dashboard'), 'url' => osc_user_dashboard_url(), 'class' => 'opt_dashboard');
+            $options[] = array('name' => __('Manage your listings'), 'url' => osc_user_list_items_url(), 'class' => 'opt_items');
+            $options[] = array('name' => __('Manage your alerts'), 'url' => osc_user_alerts_url(), 'class' => 'opt_alerts');
+            $options[] = array('name' => __('My profile'), 'url' => osc_user_profile_url(), 'class' => 'opt_account');
+            $options[] = array('name' => __('Logout'), 'url' => osc_user_logout_url(), 'class' => 'opt_logout');
         }
 
         $options = osc_apply_filter('user_menu_filter', $options);
 
-        echo '<script type="text/javascript">' ;
-        echo '$(".user_menu > :first-child").addClass("first") ;' ;
-        echo '$(".user_menu > :last-child").addClass("last") ;' ;
-        echo '</script>' ;
-        echo '<ul class="user_menu">' ;
+        echo '<script type="text/javascript">';
+        echo '$(".user_menu > :first-child").addClass("first");';
+        echo '$(".user_menu > :last-child").addClass("last");';
+        echo '</script>';
+        echo '<ul class="user_menu">';
 
-        $var_l = count($options) ;
-        for($var_o = 0 ; $var_o < ($var_l-1) ; $var_o++) {
-            echo '<li class="' . $options[$var_o]['class'] . '" ><a href="' . $options[$var_o]['url'] . '" >' . $options[$var_o]['name'] . '</a></li>' ;
+        $var_l = count($options);
+        for($var_o = 0; $var_o < ($var_l-1); $var_o++) {
+            echo '<li class="' . $options[$var_o]['class'] . '" ><a href="' . $options[$var_o]['url'] . '" >' . $options[$var_o]['name'] . '</a></li>';
         }
 
-        osc_run_hook('user_menu') ;
+        osc_run_hook('user_menu');
 
-        echo '<li class="' . $options[$var_l-1]['class'] . '" ><a href="' . $options[$var_l-1]['url'] . '" >' . $options[$var_l-1]['name'] . '</a></li>' ;
+        echo '<li class="' . $options[$var_l-1]['class'] . '" ><a href="' . $options[$var_l-1]['url'] . '" >' . $options[$var_l-1]['name'] . '</a></li>';
 
-        echo '</ul>' ;
+        echo '</ul>';
     }
 
     /**
@@ -210,19 +210,19 @@
         $txt = str_replace("\n", '', $txt);
         $txt = trim($txt);
         if( strlen($txt) > $len ) {
-            $txt = mb_substr($txt, 0, $len, 'utf-8') . "..." ;
+            $txt = mb_substr($txt, 0, $len, 'utf-8') . "...";
         }
         $query = osc_search_pattern();
-        $query = trim(preg_replace('/\s+/', ' ', $query)) ;
+        $query = trim(preg_replace('/\s+/', ' ', $query));
 
-        $aQuery = explode(' ', $query) ;
+        $aQuery = explode(' ', $query);
         foreach ($aQuery as $word) {
             $word = trim($word);
             if($word!='') {
-                $txt = preg_replace("/($word)/i", $start_tag . "$01". $end_tag, $txt) ;
+                $txt = preg_replace("/($word)/i", $start_tag . "$01". $end_tag, $txt);
             }
         }
-        return $txt ;
+        return $txt;
     }
 
 

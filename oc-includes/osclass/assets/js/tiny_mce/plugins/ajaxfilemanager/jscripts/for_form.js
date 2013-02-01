@@ -1,7 +1,7 @@
 function selectFile(url)
 {
       window.opener.document.getElementById(elementId).value = url;
-      window.close() ;
+      window.close();
  
 
 }
@@ -11,7 +11,7 @@ function selectFile(url)
 function cancelSelectFile()
 {
   // close popup window
-  window.close() ;
+  window.close();
   return false;
 }
 

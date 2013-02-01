@@ -69,7 +69,7 @@
      * @return int
      */
     function osc_csrf_name() {
-        return (getPreference('csrf_name')) ;
+        return (getPreference('csrf_name'));
     }
 
     /**

@@ -30,21 +30,21 @@
      */
     class EmailVariables
     {
-        private static $instance ;
-        private $variables ;
+        private static $instance;
+        private $variables;
 
         public function __construct()
         {
-            $this->variables = array() ;
+            $this->variables = array();
             $this->init();
         }
 
         public static function newInstance()
         {
             if(!self::$instance instanceof self) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -113,7 +113,7 @@
          */
         public function remove( $key ) 
         {
-            unset( $this->variables[$key] ) ;
+            unset( $this->variables[$key] );
         }
         
         /**
@@ -147,7 +147,7 @@
          */
         public function clear_menu( )
         {
-            $this->variables = array() ;
+            $this->variables = array();
         }
     }
 

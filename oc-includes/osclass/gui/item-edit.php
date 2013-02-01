@@ -24,7 +24,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
     <head>
-        <?php osc_current_web_theme_path('head.php') ; ?>
+        <?php osc_current_web_theme_path('head.php'); ?>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
 
@@ -91,7 +91,7 @@
         <!-- end only item-edit.php -->
     </head>
     <body>
-        <?php osc_current_web_theme_path('header.php') ; ?>
+        <?php osc_current_web_theme_path('header.php'); ?>
         <div class="content add_item">
             <h1><strong><?php _e('Update your listing', 'modern'); ?></strong></h1>
             <ul id="error_list"></ul>
@@ -99,8 +99,8 @@
                 <fieldset>
                     <input type="hidden" name="action" value="item_edit_post" />
                     <input type="hidden" name="page" value="item" />
-                    <input type="hidden" name="id" value="<?php echo osc_item_id() ;?>" />
-                    <input type="hidden" name="secret" value="<?php echo osc_item_secret() ;?>" />
+                    <input type="hidden" name="id" value="<?php echo osc_item_id();?>" />
+                    <input type="hidden" name="secret" value="<?php echo osc_item_secret();?>" />
                         <div class="box general_info">
                             <h2><?php _e('General Information', 'modern'); ?></h2>
                             <div class="row">
@@ -137,23 +137,23 @@
                             <h2><?php _e('Location', 'modern'); ?></h2>
                             <div class="row">
                                 <label><?php _e('Country', 'modern'); ?></label>
-                                <?php ItemForm::country_select() ; ?>
+                                <?php ItemForm::country_select(); ?>
                             </div>
                             <div class="row">
                                 <label><?php _e('Region', 'modern'); ?></label>
-                                <?php ItemForm::region_text() ; ?>
+                                <?php ItemForm::region_text(); ?>
                             </div>
                             <div class="row">
                                 <label><?php _e('City', 'modern'); ?></label>
-                                <?php ItemForm::city_text() ; ?>
+                                <?php ItemForm::city_text(); ?>
                             </div>
                             <div class="row">
                                 <label><?php _e('City area', 'modern'); ?></label>
-                                <?php ItemForm::city_area_text() ; ?>
+                                <?php ItemForm::city_area_text(); ?>
                             </div>
                             <div class="row">
                                 <label><?php _e('Address', 'modern'); ?></label>
-                                <?php ItemForm::address_text() ; ?>
+                                <?php ItemForm::address_text(); ?>
                             </div>
                         </div>
                         <?php ItemForm::plugin_edit_item(); ?>
@@ -169,6 +169,6 @@
                 </fieldset>
             </form>
         </div>
-        <?php osc_current_web_theme_path('footer.php') ; ?>
+        <?php osc_current_web_theme_path('footer.php'); ?>
     </body>
 </html>

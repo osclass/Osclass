@@ -228,7 +228,7 @@ function insertMedia() {
 		fe.style.height = f.height.value + (f.height.value.indexOf('%') == -1 ? 'px' : '');
 		fe.align = f.align.options[f.align.selectedIndex].value;
 	} else {
-		h = '<img src="' + tinyMCEPopup.getWindowArg("plugin_url") + '/img/trans.gif"' ;
+		h = '<img src="' + tinyMCEPopup.getWindowArg("plugin_url") + '/img/trans.gif"';
 
 		switch (f.media_type.options[f.media_type.selectedIndex].value) {
 			case "flash":

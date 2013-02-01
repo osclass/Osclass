@@ -1,4 +1,4 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
      * Osclass – software for creating and publishing online classified advertising platforms
      *
@@ -18,9 +18,9 @@
 
     osc_enqueue_script('jquery-treeview');
 
-    $fields     = __get('fields') ;
-    $categories = __get('categories') ;
-    $selected   = __get('default_selected') ;
+    $fields     = __get('fields');
+    $categories = __get('categories');
+    $selected   = __get('default_selected');
 
     function addHelp() {
         echo '<p>' . __('Create new fields for users to fill out when they publish a listing. You can require extra  information such as the number of bedrooms in real estate listings or fuel type in car listings, for example.') . '</p>';
@@ -41,39 +41,39 @@ function customHead() { ?>
     function show_iframe(class_name, id) {
         if($('.content_list_'+id+' .custom-field-frame').length == 0){
             $('.custom-field-frame').remove();
-            var name = 'frame_'+ id ;
-            var id_  = 'frame_'+ id ;
-            var url  = '<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=field_categories_iframe&id=' + id ;
+            var name = 'frame_'+ id;
+            var id_  = 'frame_'+ id;
+            var url  = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=field_categories_iframe&id=' + id;
             $.ajax({
                 url: url,
                 context: document.body,
                 success: function(res){
-                    $('div.'+class_name).html(res) ;
-                    $('div.'+class_name).fadeIn("fast") ;
+                    $('div.'+class_name).html(res);
+                    $('div.'+class_name).fadeIn("fast");
                 }
-            }) ;
+            });
         } else {
             $('.custom-field-frame').remove();
         }
-        return false ;
+        return false;
     }
 
     function delete_field(id) {
         $("#dialog-delete-field").attr('data-field-id', id);
         $("#dialog-delete-field").dialog('open');
-        return false ;
+        return false;
     }
 
      // check all the categories
     function checkAll(id, check) {
         aa = $('#' + id + ' input[type=checkbox]').each(function() {
-            $(this).attr('checked', check) ;
-        }) ;
+            $(this).attr('checked', check);
+        });
     }
     function checkCat(id, check) {
         aa = $('#cat' + id + ' input[type=checkbox]').each(function() {
-            $(this).attr('checked', check) ;
-        }) ;
+            $(this).attr('checked', check);
+        });
     }
 
     $(document).ready(function() {
@@ -90,7 +90,7 @@ function customHead() { ?>
         });
         $("#field-delete-submit").click(function() {
             var id  = $("#dialog-delete-field").attr('data-field-id');
-            var url = '<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=delete_field&id=' + id;
+            var url = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=delete_field&id=' + id;
             $.ajax({
                 url: url,
                 context: document.body,
@@ -107,12 +107,12 @@ function customHead() { ?>
                         $('#list_'+id).remove();
                     }
 
-                    $(".jsMessage").css('display', 'block') ;
-                    $(".jsMessage p").html(message) ;
+                    $(".jsMessage").css('display', 'block');
+                    $(".jsMessage p").html(message);
                 },
                 error: function(){
-                    $(".jsMessage").css('display', 'block') ;
-                    $(".jsMessage p").html('<?php echo osc_esc_js( __("Ajax error, try again.") ) ; ?>') ;
+                    $(".jsMessage").css('display', 'block');
+                    $(".jsMessage p").html('<?php echo osc_esc_js( __("Ajax error, try again.") ); ?>');
                 }
             });
             $('#dialog-delete-field').dialog('close');
@@ -121,7 +121,7 @@ function customHead() { ?>
 
         $("#add-button, .add-button").bind('click', function() {
             $.ajax({
-                url: '<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=add_field',
+                url: '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=add_field',
                 context: document.body,
                 success: function(res){
                     var ret = eval( "(" + res + ")");
@@ -146,32 +146,32 @@ function customHead() { ?>
                     } else {
                         var message = "";
                         message += '<?php echo osc_esc_js(__('Custom field could not be added')); ?>'
-                        $(".jsMessage").fadeIn('fast') ;
-                        $(".jsMessage p").html(message) ;
+                        $(".jsMessage").fadeIn('fast');
+                        $(".jsMessage p").html(message);
                     }
                 }
-            }) ;
+            });
             return false;
-        }) ;
+        });
 
         $("#new_cat_tree").treeview({
             animated: "fast",
             collapsed: true
-        }) ;
+        });
 
         $("select[name='field_type_new']").bind('change', function() {
             if( $(this).attr('value') == 'DROPDOWN' || $(this).attr('value') == 'RADIO' ) {
-                $('#div_field_options').show() ;
+                $('#div_field_options').show();
             } else {
-                $('#div_field_options').hide() ;
+                $('#div_field_options').hide();
             }
-        }) ;
+        });
 
-        var field_type_new_value = $("select[name='field_type_new']").attr('value') ;
+        var field_type_new_value = $("select[name='field_type_new']").attr('value');
         if( field_type_new_value == 'TEXT' || field_type_new_value == 'TEXTAREA' || field_type_new_value == 'CHECKBOX' || field_type_new_value == 'URL') {
-            $('#div_field_options').hide() ;
+            $('#div_field_options').hide();
         }
-    }) ;
+    });
 </script>
     <?php
 }
@@ -182,35 +182,35 @@ function customHead() { ?>
     }
     osc_add_filter('admin_title', 'customPageTitle');
 
-    osc_current_admin_theme_path('parts/header.php') ;
+    osc_current_admin_theme_path('parts/header.php');
 ?>
 <div class="header_title">
-    <h2 class="render-title"><?php _e('Custom fields') ; ?> <a href="javascript:void(0);" class="btn btn-mini add-button"><?php _e('Add new'); ?></a></h2>
+    <h2 class="render-title"><?php _e('Custom fields'); ?> <a href="javascript:void(0);" class="btn btn-mini add-button"><?php _e('Add new'); ?></a></h2>
 </div>
 <!-- custom fields -->
 <div class="custom-fields">
     <!-- list fields -->
     <div class="list-fields">
         <ul id="ul_fields">
-        <?php $even = true ;
+        <?php $even = true;
         if( count($fields) == 0 ) { ?>
-            <span id="fields-empty"><?php _e("You don't have any custom fields yet") ; ?></span>
+            <span id="fields-empty"><?php _e("You don't have any custom fields yet"); ?></span>
         <?php } else {
             foreach($fields as $field) { ?>
-                <li id="list_<?php echo $field['pk_i_id'] ; ?>" class="field_li <?php echo ( $even ? 'even' : 'odd' ) ; ?>">
-                    <div class="cfield-div" field_id="<?php echo $field['pk_i_id'] ; ?>" >
-                        <div class="name-edit-cfield" id="<?php echo "quick_edit_" . $field['pk_i_id'] ; ?>">
-                            <?php echo $field['s_name'] ; ?>
+                <li id="list_<?php echo $field['pk_i_id']; ?>" class="field_li <?php echo ( $even ? 'even' : 'odd' ); ?>">
+                    <div class="cfield-div" field_id="<?php echo $field['pk_i_id']; ?>" >
+                        <div class="name-edit-cfield" id="<?php echo "quick_edit_" . $field['pk_i_id']; ?>">
+                            <?php echo $field['s_name']; ?>
                         </div>
                         <div class="actions-edit-cfield">
-                            <a href="javascript:void(0);" onclick="javascript:show_iframe('content_list_<?php echo $field['pk_i_id'] ; ?>','<?php echo $field['pk_i_id'] ; ?>');"><?php _e('Edit') ; ?></a>
+                            <a href="javascript:void(0);" onclick="javascript:show_iframe('content_list_<?php echo $field['pk_i_id']; ?>','<?php echo $field['pk_i_id']; ?>');"><?php _e('Edit'); ?></a>
                              &middot;
-                            <a href="javascript:void(0);" onclick="javascript:delete_field('<?php echo $field['pk_i_id'] ; ?>');"><?php _e('Delete') ; ?></a>
+                            <a href="javascript:void(0);" onclick="javascript:delete_field('<?php echo $field['pk_i_id']; ?>');"><?php _e('Delete'); ?></a>
                         </div>
-                        <div class="edit content_list_<?php echo $field['pk_i_id'] ; ?>"></div>
+                        <div class="edit content_list_<?php echo $field['pk_i_id']; ?>"></div>
                     </div>
                 </li>
-                <?php $even = !$even ; }
+                <?php $even = !$even; }
         } ?>
         </ul>
     </div>
@@ -232,4 +232,4 @@ function customHead() { ?>
         </div>
     </div>
 </div>
-<?php osc_current_admin_theme_path('parts/footer.php') ; ?>
+<?php osc_current_admin_theme_path('parts/footer.php'); ?>

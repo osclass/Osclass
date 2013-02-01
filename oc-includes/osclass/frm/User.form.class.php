@@ -75,7 +75,7 @@
         }
 
         static public function info_textarea($name, $locale = 'en_US', $value = '') {
-            parent::generic_textarea($name . '[' . $locale . ']', $value) ;
+            parent::generic_textarea($name . '[' . $locale . ']', $value);
         }
 
         static public function multilanguage_info($locales, $user = null) {
@@ -100,64 +100,64 @@
 
         static public function country_select($countries, $user = null) {
             if( count($countries) >= 1 ) {
-                parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select a country...'), (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : null) ;
+                parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select a country...'), (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : null);
 //            } else if ( count($countries) == 1 ) {
-//                parent::generic_input_hidden('countryId', (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
+//                parent::generic_input_hidden('countryId', (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : $countries[0]['pk_c_code']);
 //                echo '<span>' .$countries[0]['s_name'] . '</span>';
             } else {
-                parent::generic_input_text('country', (isset($user['s_country'])) ? $user['s_country'] : null) ;
+                parent::generic_input_text('country', (isset($user['s_country'])) ? $user['s_country'] : null);
             }
         }
 
         static public function country_text($user = null) {
-            parent::generic_input_text('country', (isset($user['s_country'])) ? $user['s_country'] : null) ;
+            parent::generic_input_text('country', (isset($user['s_country'])) ? $user['s_country'] : null);
         }
 
         static public function region_select($regions, $user = null) {
             if( count($regions) >= 1 ) {
-                parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select a region...'), (isset($user['fk_i_region_id'])) ? $user['fk_i_region_id'] : null) ;
+                parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select a region...'), (isset($user['fk_i_region_id'])) ? $user['fk_i_region_id'] : null);
 //            } else if ( count($regions) == 1 ) {
-//                parent::generic_input_hidden('countryId', (isset($user['fk_i_region_id'])) ? $user['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
+//                parent::generic_input_hidden('countryId', (isset($user['fk_i_region_id'])) ? $user['fk_i_region_id'] : $regions[0]['pk_i_id']);
 //                echo '<span>' .$regions[0]['s_name'] . '</span>';
             } else {
-                parent::generic_input_text('region', (isset($user['s_region'])) ? $user['s_region'] : null) ;
+                parent::generic_input_text('region', (isset($user['s_region'])) ? $user['s_region'] : null);
             }
         }
 
         static public function region_text($user = null) {
-            parent::generic_input_text('region', (isset($user['s_region'])) ? $user['s_region'] : null) ;
+            parent::generic_input_text('region', (isset($user['s_region'])) ? $user['s_region'] : null);
         }
 
         static public function city_select($cities, $user = null) {
             if( count($cities) >= 1 ) {
-                parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select a city...'), (isset($user['fk_i_city_id'])) ? $user['fk_i_city_id'] : null) ;
+                parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select a city...'), (isset($user['fk_i_city_id'])) ? $user['fk_i_city_id'] : null);
 //            } else if ( count($cities) == 1 ) {
-//                parent::generic_input_hidden('cityId', (isset($user['fk_i_city_id'])) ? $user['fk_i_city_id'] : null) ;
+//                parent::generic_input_hidden('cityId', (isset($user['fk_i_city_id'])) ? $user['fk_i_city_id'] : null);
 //                echo '<span>' .$cities[0]['s_name'] . '</span>';
             } else {
-                parent::generic_input_text('city', (isset($user['s_city'])) ? $user['s_city'] : null) ;
+                parent::generic_input_text('city', (isset($user['s_city'])) ? $user['s_city'] : null);
             }
         }
 
         static public function city_text($user = null) {
-            parent::generic_input_text('city', (isset($user['s_city'])) ? $user['s_city'] : null) ;
+            parent::generic_input_text('city', (isset($user['s_city'])) ? $user['s_city'] : null);
         }
 
         static public function city_area_text($user = null) {
-            parent::generic_input_text('cityArea', (isset($user['s_city_area'])) ? $user['s_city_area'] : null) ;
+            parent::generic_input_text('cityArea', (isset($user['s_city_area'])) ? $user['s_city_area'] : null);
         }
 
         static public function address_text($user = null) {
-            parent::generic_input_text('address', (isset($user['s_address'])) ? $user['s_address'] : null) ;
+            parent::generic_input_text('address', (isset($user['s_address'])) ? $user['s_address'] : null);
         }
 
         static public function is_company_select($user = null) {
             $options = array(
                 array( 'i_value' => '0', 's_text' => __('User') )
                 ,array( 'i_value' => '1', 's_text' => __('Company') )
-            ) ;
+            );
 
-            parent::generic_select( 'b_company', $options, 'i_value', 's_text', null, (isset($user['b_company'])) ? $user['b_company'] : null ) ;
+            parent::generic_select( 'b_company', $options, 'i_value', 's_text', null, (isset($user['b_company'])) ? $user['b_company'] : null );
         }
 
         static public function user_select($users){

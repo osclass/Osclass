@@ -839,7 +839,7 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-admin/languages.php:295
 #, php-format
-msgid "Directory '%s' couldn't be removed ;)"
+msgid "Directory '%s' couldn't be removed;)"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/languages.php:298

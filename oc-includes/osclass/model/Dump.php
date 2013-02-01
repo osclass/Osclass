@@ -1,4 +1,4 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -37,14 +37,14 @@
          * @since unknown
          * @var Dump
          */
-        private static $instance ;
+        private static $instance;
 
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -79,11 +79,11 @@
          */
         function table_structure($path, $table)
         {
-            if ( !is_writable($path) ) return false ;
+            if ( !is_writable($path) ) return false;
 
-            $_str = "/* Table structure for table `" . $table . "` */\n" ;
+            $_str = "/* Table structure for table `" . $table . "` */\n";
 
-            $sql = 'show create table `' . $table . '`;' ;
+            $sql = 'show create table `' . $table . '`;';
 
             $result = $this->dao->query($sql);
             if($result) {
@@ -94,14 +94,14 @@
 
             foreach($result as $_line) {
                 $_str .= str_replace('CREATE TABLE', 'CREATE TABLE IF NOT EXISTS', $_line['Create Table'] . ';');
-                $_str .= "\n\n" ;
+                $_str .= "\n\n";
             }
 
-            $f = fopen($path, "a") ;
-            fwrite($f, $_str) ;
-            fclose($f) ;
+            $f = fopen($path, "a");
+            fwrite($f, $_str);
+            fclose($f);
 
-            return true ;
+            return true;
         }
 
         /**
@@ -113,7 +113,7 @@
          */
         function table_data($path, $table)
         {
-            if ( !is_writable($path) ) return false ;
+            if ( !is_writable($path) ) return false;
 
             $this->dao->select();
             $this->dao->from($table);
@@ -124,65 +124,65 @@
                 $result = array();
             }
 
-            $_str = '' ;
+            $_str = '';
             if($res) {
                 $num_rows   = $res->numRows();
                 $num_fields = $res->numFields();
                 $fields     = $res->resultId->fetch_fields();
 
                 if( $num_rows > 0 ) {
-                    $_str .= '/* dumping data for table `' . $table . '` */' ;
-                    $_str .= "\n" ;
+                    $_str .= '/* dumping data for table `' . $table . '` */';
+                    $_str .= "\n";
 
-                    $field_type = array() ;
-                    $i = 0 ;
+                    $field_type = array();
+                    $i = 0;
 
                     while ($meta = $res->resultId->fetch_field()) {
                         array_push($field_type, $meta->type);
                     }
 
-                    $_str .= 'insert into `' . $table . '` values' ;
-                    $_str .= "\n" ;
+                    $_str .= 'insert into `' . $table . '` values';
+                    $_str .= "\n";
 
-                    $index = 0 ;
+                    $index = 0;
                     if($table==DB_TABLE_PREFIX.'t_category') {
                         $this->_dump_table_category($result, $num_fields, $field_type, $fields, $index, $num_rows, $_str);
                     } else {
                         foreach($result as $row) {
-                            $_str .= "(" ;
-                            for( $i = 0 ; $i < $num_fields ; $i++ ) {
+                            $_str .= "(";
+                            for( $i = 0; $i < $num_fields; $i++ ) {
                                 $v = $row[$fields[$i]->name];
                                 if(is_null($v)) {
-                                    $_str .= 'null' ;
+                                    $_str .= 'null';
                                 } else {
                                     $this->_quotes($fields[$i]->type, $_str, $row[$fields[$i]->name]);
                                 }
                                 if($i < $num_fields-1) {
-                                    $_str .= ',' ;
+                                    $_str .= ',';
                                 }
                             }
-                            $_str .= ')' ;
+                            $_str .= ')';
 
                             if($index < $num_rows-1) {
-                                $_str .= ',' ;
+                                $_str .= ',';
                             } else {
-                                $_str .= ';' ;
+                                $_str .= ';';
                             }
-                            $_str .= "\n" ;
+                            $_str .= "\n";
 
-                            $index++ ;
+                            $index++;
                         }
                     }
                 }
             }
 
-            $_str .= "\n" ;
+            $_str .= "\n";
 
-            $f = fopen($path, "a") ;
-            fwrite($f, $_str) ;
-            fclose($f) ;
+            $f = fopen($path, "a");
+            fwrite($f, $_str);
+            fclose($f);
 
-            return true ;
+            return true;
         }
 
         /**
@@ -220,28 +220,28 @@
             }
 
             foreach($short_rows as $row) {
-                $_str .= "(" ;
-                for( $i = 0 ; $i < $num_fields ; $i++ ) {
+                $_str .= "(";
+                for( $i = 0; $i < $num_fields; $i++ ) {
                     $v = $row[$fields[$i]->name];
                     if(is_null($v)) {
-                        $_str .= 'null' ;
+                        $_str .= 'null';
                     } else {
                         $this->_quotes($fields[$i]->type, $_str, $v);
                     }
                     if($i < $num_fields-1) {
-                        $_str .= ',' ;
+                        $_str .= ',';
                     }
                 }
-                $_str .= ')' ;
+                $_str .= ')';
 
                 if($index < $num_rows-1) {
-                    $_str .= ',' ;
+                    $_str .= ',';
                 } else {
-                    $_str .= ';' ;
+                    $_str .= ';';
                 }
-                $_str .= "\n" ;
+                $_str .= "\n";
 
-                $index++ ;
+                $index++;
             }
         }
 
@@ -272,11 +272,11 @@
             $aString  = array(254, 253, 252 );
 
             if(in_array($type, $aNumeric) ) {
-                $_str .= $value ;
+                $_str .= $value;
             } else if(in_array($type, $aDates) ) {
-                $_str .= '\'' . $this->dao->connId->real_escape_string($value) . '\'' ;
+                $_str .= '\'' . $this->dao->connId->real_escape_string($value) . '\'';
             } else if(in_array($type, $aString) ) {
-                $_str .= '\'' . $this->dao->connId->real_escape_string($value) . '\'' ;
+                $_str .= '\'' . $this->dao->connId->real_escape_string($value) . '\'';
             }
         }
     }

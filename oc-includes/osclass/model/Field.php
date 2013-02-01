@@ -1,4 +1,4 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -37,7 +37,7 @@
          * @since unknown
          * @var Field
          */
-        private static $instance ;
+        private static $instance;
 
         /**
          * It creates a new Field object class ir if it has been created
@@ -50,9 +50,9 @@
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -61,9 +61,9 @@
         function __construct()
         {
             parent::__construct();
-            $this->setTableName('t_meta_fields') ;
-            $this->setPrimaryKey('pk_i_id') ;
-            $this->setFields( array('pk_i_id', 's_name', 'e_type', 'b_required', 's_slug', 's_options') ) ;
+            $this->setTableName('t_meta_fields');
+            $this->setPrimaryKey('pk_i_id');
+            $this->setFields( array('pk_i_id', 's_name', 'e_type', 'b_required', 's_slug', 's_options') );
         }
 
         /**
@@ -76,17 +76,17 @@
          */
         public function findByPrimaryKey($id)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('pk_i_id', $id) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $this->dao->where('pk_i_id', $id);
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
-            return $result->row() ;
+            return $result->row();
         }
 
         /**
@@ -99,18 +99,18 @@
          */
         public function findByCategory($id)
         {
-            $this->dao->select('mf.*') ;
-            $this->dao->from(sprintf('%st_meta_fields mf, %st_meta_categories mc', DB_TABLE_PREFIX, DB_TABLE_PREFIX)) ;
-            $this->dao->where('mc.fk_i_category_id', $id) ;
+            $this->dao->select('mf.*');
+            $this->dao->from(sprintf('%st_meta_fields mf, %st_meta_categories mc', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+            $this->dao->where('mc.fk_i_category_id', $id);
             $this->dao->where('mf.pk_i_id = mc.fk_i_field_id');
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
-            return $result->result() ;
+            return $result->result();
         }
 
         /**
@@ -124,16 +124,16 @@
         public function findByCategoryItem($catId, $itemId)
         {
             if( !is_numeric($catId) || (!is_numeric($itemId) && $itemId != null) ) {
-                return array() ;
+                return array();
             }
 
             $result = $this->dao->query(sprintf("SELECT query.*, im.s_value as s_value FROM (SELECT mf.* FROM %st_meta_fields mf, %st_meta_categories mc WHERE mc.fk_i_category_id = %d AND mf.pk_i_id = mc.fk_i_field_id) as query LEFT JOIN %st_item_meta im ON im.fk_i_field_id = query.pk_i_id AND im.fk_i_item_id = %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, $catId, DB_TABLE_PREFIX, $itemId));
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
-            return $result->result() ;
+            return $result->result();
         }
 
         /**
@@ -146,14 +146,14 @@
          */
         public function findByName($name)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_name', $name) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_name', $name);
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
             return $result->row();
@@ -169,14 +169,14 @@
          */
         public function findBySlug($slug)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_slug', $slug) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_slug', $slug);
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
             return $result->row();
@@ -192,14 +192,14 @@
          */
         public function categories($id)
         {
-            $this->dao->select('fk_i_category_id') ;
-            $this->dao->from(sprintf('%st_meta_categories', DB_TABLE_PREFIX)) ;
-            $this->dao->where('fk_i_field_id', $id) ;
+            $this->dao->select('fk_i_category_id');
+            $this->dao->from(sprintf('%st_meta_categories', DB_TABLE_PREFIX));
+            $this->dao->where('fk_i_field_id', $id);
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
             $categories = $result->result();

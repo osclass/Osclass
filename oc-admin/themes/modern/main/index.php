@@ -1,4 +1,4 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
      * Osclass – software for creating and publishing online classified advertising platforms
      *
@@ -29,7 +29,7 @@
 
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader() { ?>
-        <h1><?php _e('Dashboard') ; ?></h1>
+        <h1><?php _e('Dashboard'); ?></h1>
     <?php
     }
 
@@ -50,17 +50,17 @@
 
             function drawChartListing() {
                 var data = new google.visualization.DataTable();
-                data.addColumn('string', '<?php _e('Date') ; ?>');
-                data.addColumn('number', '<?php _e('Listings') ; ?>');
+                data.addColumn('string', '<?php _e('Date'); ?>');
+                data.addColumn('number', '<?php _e('Listings'); ?>');
                 data.addColumn({type:'boolean',role:'certainty'});
-                <?php $k = 0 ;
-                echo "data.addRows(" . count($items) . ");" ;
+                <?php $k = 0;
+                echo "data.addRows(" . count($items) . ");";
                 foreach($items as $date => $num) {
                     echo "data.setValue(" . $k . ', 0, "' . $date . '");';
                     echo "data.setValue(" . $k . ", 1, " . $num . ");";
-                    $k++ ;
+                    $k++;
                 }
-                $k = 0 ;
+                $k = 0;
                 ?>
 
                 // Instantiate and draw our chart, passing in some options.
@@ -105,17 +105,17 @@
 
             function drawChartUser() {
                 var data = new google.visualization.DataTable();
-                data.addColumn('string', '<?php _e('Date') ; ?>');
-                data.addColumn('number', '<?php _e('Users') ; ?>');
+                data.addColumn('string', '<?php _e('Date'); ?>');
+                data.addColumn('number', '<?php _e('Users'); ?>');
                 data.addColumn({type:'boolean',role:'certainty'});
-                <?php $k = 0 ;
-                echo "data.addRows(" . count($users) . ");" ;
+                <?php $k = 0;
+                echo "data.addRows(" . count($users) . ");";
                 foreach($users as $date => $num) {
                     echo "data.setValue(" . $k . ', 0, "' . $date . '");';
                     echo "data.setValue(" . $k . ", 1, " . $num . ");";
-                    $k++ ;
+                    $k++;
                 }
-                $k = 0 ;
+                $k = 0;
                 ?>
 
                 // Instantiate and draw our chart, passing in some options.
@@ -180,7 +180,7 @@
     <div class="grid-row grid-first-row grid-50">
         <div class="row-wrapper">
             <div class="widget-box">
-                <div class="widget-box-title"><h3><?php _e('Listings by category') ; ?></h3></div>
+                <div class="widget-box-title"><h3><?php _e('Listings by category'); ?></h3></div>
                 <div class="widget-box-content">
                     <?php
                     $countEvent = 1;
@@ -191,12 +191,12 @@
                         $even = false;
                         foreach($numItemsPerCategory as $c) {?>
                             <tr<?php if($even == true){ $even = false; echo ' class="even"'; } else { $even = true; } if($countEvent == 1){ echo ' class="table-first-row"';} ?>>
-                                <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;catId=<?php echo $c['pk_i_id'] ; ?>"><?php echo $c['s_name'] ; ?></a></td>
+                                <td><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;catId=<?php echo $c['pk_i_id']; ?>"><?php echo $c['s_name']; ?></a></td>
                                 <td><?php echo $c['i_num_items'] . "&nbsp;" . ( ( $c['i_num_items'] == 1 ) ? __('Listing') : __('Listings') ); ?></td>
                             </tr>
                             <?php foreach($c['categories'] as $subc) {?>
                                 <tr<?php if($even == true){ $even = false; echo ' class="even"'; } else { $even = true; } ?>>
-                                    <td class="children-cat"><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;catId=<?php echo $subc['pk_i_id'];?>"><?php echo $subc['s_name'] ; ?></a></td>
+                                    <td class="children-cat"><a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;catId=<?php echo $subc['pk_i_id'];?>"><?php echo $subc['s_name']; ?></a></td>
                                     <td><?php echo $subc['i_num_items'] . " " . ( ( $subc['i_num_items'] == 1 ) ? __('Listing') : __('Listings') ); ?></td>
                                 </tr>
                             <?php
@@ -210,7 +210,7 @@
                         </tbody>
                     </table>
                     <?php } else { ?>
-                        <?php _e("There aren't any uploaded listing yet") ; ?>
+                        <?php _e("There aren't any uploaded listing yet"); ?>
                     <?php } ?>
                 </div>
             </div>
@@ -305,4 +305,4 @@
     <div class="clear"></div>
 </div>
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

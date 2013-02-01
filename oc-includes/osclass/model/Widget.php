@@ -1,4 +1,4 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -29,14 +29,14 @@
          *
          * @var type
          */
-        private static $instance ;
+        private static $instance;
 
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -45,9 +45,9 @@
         function __construct()
         {
             parent::__construct();
-            $this->setTableName('t_widget') ;
-            $this->setPrimaryKey('pk_i_id') ;
-            $this->setFields( array('pk_i_id','s_description','s_location','e_kind','s_content') ) ;
+            $this->setTableName('t_widget');
+            $this->setPrimaryKey('pk_i_id');
+            $this->setFields( array('pk_i_id','s_description','s_location','e_kind','s_content') );
         }
 
         /**
@@ -59,13 +59,13 @@
          */
         function findByLocation($location)
         {
-            $this->dao->select('*') ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_location', $location) ;
-            $result = $this->dao->get() ;
+            $this->dao->select('*');
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_location', $location);
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
             return $result->result();

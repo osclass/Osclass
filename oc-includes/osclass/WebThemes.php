@@ -19,7 +19,7 @@
 
     class WebThemes extends Themes
     {
-        private static $instance ;
+        private static $instance;
 
         private $pages = array( '404',
                                 'contact',
@@ -56,9 +56,9 @@
         public static function newInstance()
         {
             if(!self::$instance instanceof self) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         public function __construct()
@@ -67,34 +67,34 @@
             $this->path = osc_themes_path();
 
             if( Params::getParam('theme') != '' && Session::newInstance()->_get('adminId') != '' ) {
-                $this->setCurrentTheme( Params::getParam('theme') ) ;
+                $this->setCurrentTheme( Params::getParam('theme') );
             } else {
-                $this->setCurrentTheme( osc_theme() ) ;
+                $this->setCurrentTheme( osc_theme() );
             }
 
             $functions_path = $this->getCurrentThemePath() . 'functions.php';
             if( file_exists($functions_path) ) {
-                require_once $functions_path ;
+                require_once $functions_path;
             }
         }
 
         public function setCurrentThemePath()
         {
             if ( file_exists( $this->path . $this->theme . '/' ) ) {
-                $this->theme_exists = true ;
-                $this->theme_path   = $this->path . $this->theme . '/' ;
+                $this->theme_exists = true;
+                $this->theme_path   = $this->path . $this->theme . '/';
             } else {
-                $this->theme_exists = false ;
-                $this->theme_path   = osc_lib_path() . 'osclass/gui/' ;
+                $this->theme_exists = false;
+                $this->theme_path   = osc_lib_path() . 'osclass/gui/';
             }
         }
 
         public function setCurrentThemeUrl()
         {
             if ( $this->theme_exists ) {
-                $this->theme_url = osc_base_url() . str_replace(osc_base_path(), '', $this->theme_path) ;
+                $this->theme_url = osc_base_url() . str_replace(osc_base_path(), '', $this->theme_path);
             } else {
-                $this->theme_url = osc_base_url() . 'oc-includes/osclass/gui/' ;
+                $this->theme_url = osc_base_url() . 'oc-includes/osclass/gui/';
             }
         }
 
@@ -111,18 +111,18 @@
 
         public function setCurrentTheme($theme)
         {
-            $this->theme = $theme ;
-            $this->setCurrentThemePath() ;
-            $this->setCurrentThemeUrl() ;
+            $this->theme = $theme;
+            $this->setCurrentThemePath();
+            $this->setCurrentThemeUrl();
         }
 
         public function setGuiTheme()
         {
-            $this->theme = '' ;
+            $this->theme = '';
 
             $this->theme_exists = false;
-            $this->theme_path   = osc_lib_path() . 'osclass/gui/' ;
-            $this->theme_url    = osc_base_url() . 'oc-includes/osclass/gui/' ;
+            $this->theme_path   = osc_lib_path() . 'osclass/gui/';
+            $this->theme_url    = osc_base_url() . 'oc-includes/osclass/gui/';
 
             $functions_path = $this->getCurrentThemePath() . 'functions.php';
             if( file_exists($functions_path) ) {

@@ -365,7 +365,7 @@
 
         public function addLevel($level) {
             if( !is_array($level) ) {
-                return ;
+                return;
             }
             $this->aLevel[] = $level;
         }

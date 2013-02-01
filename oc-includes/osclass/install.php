@@ -22,14 +22,14 @@
 error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
 
 define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
-define( 'LIB_PATH', ABS_PATH . 'oc-includes/' ) ;
-define( 'CONTENT_PATH', ABS_PATH . 'oc-content/' ) ;
-define( 'TRANSLATIONS_PATH', CONTENT_PATH . 'languages/' ) ;
+define( 'LIB_PATH', ABS_PATH . 'oc-includes/' );
+define( 'CONTENT_PATH', ABS_PATH . 'oc-content/' );
+define( 'TRANSLATIONS_PATH', CONTENT_PATH . 'languages/' );
 define( 'OSC_INSTALLING', 1 );
 
-require_once LIB_PATH . 'osclass/Logger/Logger.php' ;
-require_once LIB_PATH . 'osclass/Logger/LogDatabase.php' ;
-require_once LIB_PATH . 'osclass/Logger/LogOsclass.php' ;
+require_once LIB_PATH . 'osclass/Logger/Logger.php';
+require_once LIB_PATH . 'osclass/Logger/LogDatabase.php';
+require_once LIB_PATH . 'osclass/Logger/LogOsclass.php';
 require_once LIB_PATH . 'osclass/classes/database/DBConnectionClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DBCommandClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DBRecordsetClass.php';
@@ -54,13 +54,13 @@ require_once LIB_PATH . 'osclass/classes/Plugins.php';
 require_once LIB_PATH . 'osclass/locales.php';
 
 
-Session::newInstance()->session_start() ;
+Session::newInstance()->session_start();
 
 $locales = osc_listLocales();
 
 if(Params::getParam('install_locale')!='') {
-    Session::newInstance()->_set('userLocale', Params::getParam('install_locale')) ;
-    Session::newInstance()->_set('adminLocale', Params::getParam('install_locale')) ;
+    Session::newInstance()->_set('userLocale', Params::getParam('install_locale'));
+    Session::newInstance()->_set('adminLocale', Params::getParam('install_locale'));
 }
 
 if(Session::newInstance()->_get('adminLocale')!='' && key_exists(Session::newInstance()->_get('adminLocale'), $locales)) {
@@ -84,13 +84,13 @@ if( !is_numeric($step) ) {
 
 if( is_osclass_installed( ) ) {
     $message = __("Looks like you've already installed Osclass. To reinstall please clear your old database tables first.");
-    osc_die('Osclass &raquo; Error', $message) ;
+    osc_die('Osclass &raquo; Error', $message);
 }
 
 switch( $step ) {
     case 1:
-        $requirements = get_requirements() ;
-        $error        = check_requirements($requirements) ;
+        $requirements = get_requirements();
+        $error        = check_requirements($requirements);
         break;
     case 2:
         if( Params::getParam('save_stats') == '1'  || isset($_COOKIE['osclass_save_stats'])) {
@@ -161,10 +161,10 @@ switch( $step ) {
                         <div class="form-table">
                             <?php if( count($locales) > 1 ) { ?>
                                 <div>
-                                    <label><?php _e('Choose language') ; ?></label>
+                                    <label><?php _e('Choose language'); ?></label>
                                     <select name="install_locale" id="install_locale" onchange="window.location.href='?install_locale='+document.getElementById(this.id).value">
                                         <?php foreach($locales as $k => $locale) {?>
-                                        <option value="<?php echo osc_esc_html($k) ; ?>" <?php if( $k == $current_locale ) { echo 'selected="selected"' ; } ?>><?php echo $locale['name'] ; ?></option>
+                                        <option value="<?php echo osc_esc_html($k); ?>" <?php if( $k == $current_locale ) { echo 'selected="selected"'; } ?>><?php echo $locale['name']; ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -223,7 +223,7 @@ switch( $step ) {
                         }
                     } elseif($step == 4) {
                         // ping engines
-                        ping_search_engines( $_COOKIE['osclass_ping_engines'] ) ;
+                        ping_search_engines( $_COOKIE['osclass_ping_engines'] );
                         setcookie('osclass_save_stats', '', time() - 3600);
                         setcookie('osclass_ping_engines', '', time() - 3600);
                         display_finish($password);

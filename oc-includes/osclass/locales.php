@@ -36,10 +36,10 @@ function osc_listLocales() {
 }
 
 function osc_checkLocales() {
-    $locales = osc_listLocales() ;
+    $locales = osc_listLocales();
 
     foreach($locales as $locale) {
-        $data = OSCLocale::newInstance()->findByPrimaryKey($locale['code']) ;
+        $data = OSCLocale::newInstance()->findByPrimaryKey($locale['code']);
         if( !is_array($data) ) {
             $values = array(
                 'pk_c_code'         => $locale['code'],
@@ -54,28 +54,28 @@ function osc_checkLocales() {
                 's_stop_words'      => $locale['stop_words'],
                 'b_enabled'         => 0,
                 'b_enabled_bo'      => 1
-            ) ;
-            $result = OSCLocale::newInstance()->insert($values) ;
+            );
+            $result = OSCLocale::newInstance()->insert($values);
 
             if( !$result ) {
-                return false ;
+                return false;
             }
 
             // if it's a demo, we don't import any sql
             if( defined('DEMO') ) {
-                return true ;
+                return true;
             }
 
             // inserting e-mail translations
-            $path = sprintf( '%s%s/mail.sql', osc_translations_path(), $locale['code'] ) ;
+            $path = sprintf( '%s%s/mail.sql', osc_translations_path(), $locale['code'] );
             if( file_exists($path) ) {
-                $sql  = file_get_contents($path) ;
-                $conn = DBConnectionClass::newInstance() ;
-                $c_db = $conn->getOsclassDb() ;
-                $comm = new DBCommandClass( $c_db ) ;
-                $result = $comm->importSQL( $sql ) ;
+                $sql  = file_get_contents($path);
+                $conn = DBConnectionClass::newInstance();
+                $c_db = $conn->getOsclassDb();
+                $comm = new DBCommandClass( $c_db );
+                $result = $comm->importSQL( $sql );
                 if( !$result ) {
-                    return false ;
+                    return false;
                 }
             }
         } else {
@@ -87,7 +87,7 @@ function osc_checkLocales() {
         }
     }
 
-    return true ;
+    return true;
 }
 
 function osc_listLanguageCodes() {

@@ -1,4 +1,4 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -29,14 +29,14 @@
          *
          * @var type
          */
-        private static $instance ;
+        private static $instance;
 
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -45,8 +45,8 @@
         function __construct()
         {
             parent::__construct();
-            $this->setTableName('t_alerts') ;
-            $this->setPrimaryKey('pk_i_id') ;
+            $this->setTableName('t_alerts');
+            $this->setPrimaryKey('pk_i_id');
             $array_fields = array(
                 'pk_i_id'
                 ,'s_email'
@@ -72,13 +72,13 @@
          */
         function findByUser($userId, $unsub = false)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('fk_i_user_id', $userId) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $this->dao->where('fk_i_user_id', $userId);
             if(!$unsub) {
                 $this->dao->where('dt_unsub_date IS NULL');
             }
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if($result == false) {
                 return array();
@@ -97,13 +97,13 @@
          */
         function findByEmail($email, $unsub = false)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_email', $email) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_email', $email);
             if(!$unsub) {
                 $this->dao->where('dt_unsub_date IS NULL');
             }
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if($result == false) {
                 return array();
@@ -122,8 +122,8 @@
          */
         function findByType($type, $active = false, $unsub = false)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
             $this->dao->where('e_type', $type);
             if(!$unsub) {
                 $this->dao->where('dt_unsub_date IS NULL');
@@ -151,8 +151,8 @@
          */
         function findByTypeGroup($type, $active = FALSE, $unsub = false)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
             $this->dao->where('e_type', $type);
             if(!$unsub) {
                 $this->dao->where('dt_unsub_date IS NULL');
@@ -212,8 +212,8 @@
          */
         function findUsersBySearchAndType($search, $type, $active = FALSE, $unsub = false)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
             $this->dao->where('e_type', $type);
             $this->dao->where('s_search', $search);
             if(!$unsub) {
@@ -247,7 +247,7 @@
             $this->dao->from($this->getTableName());
             $conditions = array('e_type'        => $type,
                                 'fk_i_user_id'  => $userId);
-            $this->dao->where($conditions) ;
+            $this->dao->where($conditions);
             if(!$unsub) {
                 $this->dao->where('dt_unsub_date IS NULL');
             }
@@ -381,39 +381,39 @@
         public function search($start = 0, $end = 10, $order_column = 'dt_date', $order_direction = 'DESC', $name = '')
         {
             // SET data, so we always return a valid object
-            $alerts = array() ;
-            $alerts['rows']             = 0 ;
-            $alerts['total_results']    = 0 ;
-            $alerts['alerts']           = array() ;
+            $alerts = array();
+            $alerts['rows']             = 0;
+            $alerts['total_results']    = 0;
+            $alerts['alerts']           = array();
 
-            $this->dao->select('SQL_CALC_FOUND_ROWS *') ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->orderBy($order_column, $order_direction) ;
-            $this->dao->limit($start, $end) ;
+            $this->dao->select('SQL_CALC_FOUND_ROWS *');
+            $this->dao->from($this->getTableName());
+            $this->dao->orderBy($order_column, $order_direction);
+            $this->dao->limit($start, $end);
             if( $name != '' ) {
-                $this->dao->like('s_email', $name) ;
+                $this->dao->like('s_email', $name);
             }
-            $rs = $this->dao->get() ;
+            $rs = $this->dao->get();
 
             if( !$rs ) {
                 return $alerts;
             }
 
-            $alerts['alerts'] = $rs->result() ;
+            $alerts['alerts'] = $rs->result();
 
-            $rsRows = $this->dao->query('SELECT FOUND_ROWS() as total') ;
-            $data   = $rsRows->row() ;
+            $rsRows = $this->dao->query('SELECT FOUND_ROWS() as total');
+            $data   = $rsRows->row();
             if( $data['total'] ) {
-                $alerts['total_results'] = $data['total'] ;
+                $alerts['total_results'] = $data['total'];
             }
 
-            $rsTotal = $this->dao->query('SELECT COUNT(*) as total FROM '.$this->getTableName()) ;
-            $data   = $rsTotal->row() ;
+            $rsTotal = $this->dao->query('SELECT COUNT(*) as total FROM '.$this->getTableName());
+            $data   = $rsTotal->row();
             if( $data['total'] ) {
-                $alerts['rows'] = $data['total'] ;
+                $alerts['rows'] = $data['total'];
             }
 
-            return $alerts ;
+            return $alerts;
 
         }
 

@@ -22,7 +22,7 @@
 
     class Plugins
     {
-        private static $hooks ;
+        private static $hooks;
 
         function __construct() {}
 
@@ -71,19 +71,19 @@
         static function isInstalled($plugin)
         {
             if( in_array($plugin, self::listInstalled()) ) {
-                return true ;
+                return true;
             }
 
-            return false ;
+            return false;
         }
 
         static function isEnabled($plugin)
         {
             if( in_array($plugin, self::listEnabled()) ) {
-                return true ;
+                return true;
             }
 
-            return false ;
+            return false;
         }
 
         static function listAll($sort = true)
@@ -142,7 +142,7 @@
 
         static function loadActive()
         {
-            $data['s_value'] = osc_active_plugins() ;
+            $data['s_value'] = osc_active_plugins();
             $plugins_list = unserialize($data['s_value']);
             if(is_array($plugins_list)) {
                 foreach($plugins_list as $plugin_name) {
@@ -159,11 +159,11 @@
         {
             $p_array = array();
 
-            $data['s_value'] = osc_installed_plugins() ;
-            $plugins_list    = unserialize($data['s_value']) ;
+            $data['s_value'] = osc_installed_plugins();
+            $plugins_list    = unserialize($data['s_value']);
             if( is_array($plugins_list) ) {
                 foreach($plugins_list as $plugin_name) {
-                    $p_array[] = $plugin_name ;
+                    $p_array[] = $plugin_name;
                 }
             }
 
@@ -172,10 +172,10 @@
 
         static function listEnabled()
         {
-            $p_array = array() ;
+            $p_array = array();
 
-            $data['s_value'] = osc_active_plugins() ;
-            $plugins_list = unserialize($data['s_value']) ;
+            $data['s_value'] = osc_active_plugins();
+            $plugins_list = unserialize($data['s_value']);
             if( is_array($plugins_list) ) {
                 foreach($plugins_list as $plugin_name) {
                     $p_array[] = $plugin_name;
@@ -210,130 +210,130 @@
 
         static function install($path)
         {
-            $data['s_value'] = osc_installed_plugins() ;
-            $plugins_list    = unserialize($data['s_value']) ;
+            $data['s_value'] = osc_installed_plugins();
+            $plugins_list    = unserialize($data['s_value']);
 
             if( is_array($plugins_list) ) {
                 // check if the plugin is already installed
                 if( in_array($path, $plugins_list) ) {
-                    return array('error_code' => 'error_installed') ;
+                    return array('error_code' => 'error_installed');
                 }
             }
 
             if( !file_exists(osc_plugins_path() . $path) ) {
-                return array('error_code' => 'error_file') ;
+                return array('error_code' => 'error_file');
             }
 
             // check if there are spaces when you include the plugin
-            ob_start() ;
-            include_once( osc_plugins_path() . $path ) ;
+            ob_start();
+            include_once( osc_plugins_path() . $path );
 
             if ( ob_get_length() > 0 ) {
-                return array('error_code' => 'error_output', 'output' => ob_get_clean()) ;
+                return array('error_code' => 'error_output', 'output' => ob_get_clean());
             }
-            ob_end_clean() ;
+            ob_end_clean();
 
             try {
-                self::runHook('install_' . $path) ;
+                self::runHook('install_' . $path);
             } catch(Exception $e) {
-                return array('error_code' => 'custom_error' ,'msg' => $e->getMessage()) ;
+                return array('error_code' => 'custom_error' ,'msg' => $e->getMessage());
             }
 
             if( !self::activate($path) ) {
-                return array('error_code' => '') ;
+                return array('error_code' => '');
             }
 
-            $plugins_list[]  = $path ;
-            $data['s_value'] = serialize($plugins_list) ;
-            $condition = array( 's_section' => 'osclass', 's_name' => 'installed_plugins') ;
-            Preference::newInstance()->update($data, $condition) ;
+            $plugins_list[]  = $path;
+            $data['s_value'] = serialize($plugins_list);
+            $condition = array( 's_section' => 'osclass', 's_name' => 'installed_plugins');
+            Preference::newInstance()->update($data, $condition);
 
-            return true ;
+            return true;
         }
 
         static function uninstall($path)
         {
-            $data['s_value'] = osc_installed_plugins() ;
-            $plugins_list    = unserialize($data['s_value']) ;
+            $data['s_value'] = osc_installed_plugins();
+            $plugins_list    = unserialize($data['s_value']);
 
             $path = str_replace(osc_plugins_path(), '', $path);
             if( !is_array($plugins_list) ) {
-                return false ;
+                return false;
             }
 
             if( !self::deactivate($path) ) {
-                return false ;
+                return false;
             }
 
-            self::runHook($path . '_uninstall') ;
+            self::runHook($path . '_uninstall');
 
             foreach($plugins_list as $k => $v) {
                 if($v == $path) {
-                    unset($plugins_list[$k]) ;
+                    unset($plugins_list[$k]);
                 }
             }
 
-            $data['s_value'] = serialize($plugins_list) ;
-            $condition = array( 's_section' => 'osclass', 's_name' => 'installed_plugins') ;
-            Preference::newInstance()->update($data, $condition) ;
+            $data['s_value'] = serialize($plugins_list);
+            $condition = array( 's_section' => 'osclass', 's_name' => 'installed_plugins');
+            Preference::newInstance()->update($data, $condition);
 
-            $plugin = self::getInfo($path) ;
-            self::cleanCategoryFromPlugin($plugin['short_name']) ;
-            return true ;
+            $plugin = self::getInfo($path);
+            self::cleanCategoryFromPlugin($plugin['short_name']);
+            return true;
         }
 
         static function activate($path)
         {
             $data = array();
-            $data['s_value'] = osc_active_plugins() ;
+            $data['s_value'] = osc_active_plugins();
             $plugins_list    = unserialize($data['s_value']);
 
             if( is_array($plugins_list) ) {
                 // check if the plugin is already active
                 if( in_array($path, $plugins_list) ) {
-                    return false ;
+                    return false;
                 }
             }
 
-            $plugins_list[]  = $path ;
-            $data['s_value'] = serialize($plugins_list) ;
-            $condition = array( 's_section' => 'osclass', 's_name' => 'active_plugins') ;
-            Preference::newInstance()->update($data, $condition) ;
+            $plugins_list[]  = $path;
+            $data['s_value'] = serialize($plugins_list);
+            $condition = array( 's_section' => 'osclass', 's_name' => 'active_plugins');
+            Preference::newInstance()->update($data, $condition);
 
-            self::reload() ;
+            self::reload();
 
-            self::runHook($path . '_enable') ;
+            self::runHook($path . '_enable');
 
-            return true ;
+            return true;
         }
 
         static function deactivate($path)
         {
-            $data['s_value'] = osc_active_plugins() ;
+            $data['s_value'] = osc_active_plugins();
             $plugins_list = unserialize($data['s_value']);
 
-            $path = str_replace(osc_plugins_path(), '', $path) ;
+            $path = str_replace(osc_plugins_path(), '', $path);
             // check if there is some plugin enabled
             if( !is_array($plugins_list) ) {
-                return false ;
+                return false;
             }
 
             // remove $path from the active plugins list
             foreach($plugins_list as $k => $v) {
                 if($v == $path) {
-                    unset($plugins_list[$k]) ;
+                    unset($plugins_list[$k]);
                 }
             }
 
-            self::runHook($path . '_disable') ;
+            self::runHook($path . '_disable');
 
             // update t_preference field for active plugins
-            $data['s_value'] = serialize($plugins_list) ;
-            $condition = array( 's_section' => 'osclass', 's_name' => 'active_plugins') ;
-            Preference::newInstance()->update($data, $condition) ;
+            $data['s_value'] = serialize($plugins_list);
+            $condition = array( 's_section' => 'osclass', 's_name' => 'active_plugins');
+            Preference::newInstance()->update($data, $condition);
 
-            self::reload() ;
-            return true ;
+            self::reload();
+            return true;
         }
 
         static function isThisCategory($name, $id)
@@ -413,8 +413,8 @@
                     foreach($plugins_list as $p){
                         $data = self::getInfo($p);
                         if($plugin == $data['plugin_name']) {
-                            $plugin = $p ;
-                            break ;
+                            $plugin = $p;
+                            break;
                         }
                     }
                 }
@@ -425,24 +425,24 @@
 
         static function cleanCategoryFromPlugin($plugin)
         {
-            $dao_pluginCategory = new PluginCategory() ;
-            $dao_pluginCategory->delete(array('s_plugin_name' => $plugin)) ;
-            unset($dao_pluginCategory) ;
+            $dao_pluginCategory = new PluginCategory();
+            $dao_pluginCategory->delete(array('s_plugin_name' => $plugin));
+            unset($dao_pluginCategory);
         }
 
         static function addToCategoryPlugin($categories, $plugin)
         {
-            $dao_pluginCategory = new PluginCategory() ;
-            $dao_category = new Category() ;
+            $dao_pluginCategory = new PluginCategory();
+            $dao_category = new Category();
             if(!empty($categories)) {
                 foreach($categories as $catId)
                 {
                     $result = $dao_pluginCategory->isThisCategory($plugin, $catId);
                     if($result==0) {
-                        $fields = array() ;
-                        $fields['s_plugin_name'] = $plugin ;
-                        $fields['fk_i_category_id'] = $catId ;
-                        $dao_pluginCategory->insert($fields) ;
+                        $fields = array();
+                        $fields['s_plugin_name'] = $plugin;
+                        $fields['fk_i_category_id'] = $catId;
+                        $dao_pluginCategory->insert($fields);
 
                         $subs = $dao_category->findSubcategories($catId);
                         if(is_array($subs) && count($subs)>0) {
@@ -450,21 +450,21 @@
                             foreach( $subs as $sub) {
                                 $cats[] = $sub['pk_i_id'];
                             }
-                            self::addToCategoryPlugin($cats, $plugin) ;
+                            self::addToCategoryPlugin($cats, $plugin);
                         }
                     }
                 }
             }
-            unset($dao_pluginCategory) ;
-            unset($dao_category) ;
+            unset($dao_pluginCategory);
+            unset($dao_category);
         }
 
         // Add a hook
         static function addHook($hook, $function, $priority = 5)
         {
-            $hook         = preg_replace('|/+|', '/', str_replace('\\', '/', $hook)) ;
-            $plugin_path  = str_replace('\\', '/', osc_plugins_path()) ;
-            $hook         = str_replace($plugin_path, '', $hook) ;
+            $hook         = preg_replace('|/+|', '/', str_replace('\\', '/', $hook));
+            $plugin_path  = str_replace('\\', '/', osc_plugins_path());
+            $hook         = str_replace($plugin_path, '', $hook);
             $found_plugin = false;
             if(isset(self::$hooks[$hook])) {
                 for($_priority = 0;$_priority<=10;$_priority++) {

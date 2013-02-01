@@ -37,9 +37,9 @@ Plugin update URI: http://www.osclass.org/files/plugins/google_maps/update.php
         }
     }
 
-    osc_add_hook('location', 'google_maps_location') ;
+    osc_add_hook('location', 'google_maps_location');
 
-    osc_add_hook('item_form_post', 'insert_geo_location') ;
-    osc_add_hook('item_edit_post', 'insert_geo_location') ;
+    osc_add_hook('item_form_post', 'insert_geo_location');
+    osc_add_hook('item_edit_post', 'insert_geo_location');
 
 ?>

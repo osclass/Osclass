@@ -38,7 +38,7 @@
 
         public function __construct()
         {
-            $this->os = PHP_OS ;
+            $this->os = PHP_OS;
         }
 
         /**

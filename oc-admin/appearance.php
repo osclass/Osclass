@@ -27,7 +27,7 @@
         //Business Layer...
         function doModel()
         {
-            parent::doModel() ;
+            parent::doModel();
             //specific things for this class
             switch ($this->action) {
                 case('add'):
@@ -41,7 +41,7 @@
                     osc_csrf_check();
                     $filePackage = Params::getFiles('package');
                     if(isset($filePackage['size']) && $filePackage['size']!=0) {
-                        $path = osc_themes_path() ;
+                        $path = osc_themes_path();
                         (int) $status = osc_unzip_file($filePackage['tmp_name'], $path);
                     } else {
                         $status = 3;
@@ -205,7 +205,7 @@
         function doView($file)
         {
             osc_run_hook("before_admin_html");
-            osc_current_admin_theme_path($file) ;
+            osc_current_admin_theme_path($file);
             Session::newInstance()->_clearVariables();
             osc_run_hook("after_admin_html");
         }

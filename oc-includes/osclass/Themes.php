@@ -22,11 +22,11 @@
 
     abstract class Themes
     {
-        private static $instance ;
-        protected $theme ;
-        protected $theme_url ;
-        protected $theme_path ;
-        protected $theme_exists ;
+        private static $instance;
+        protected $theme;
+        protected $theme_url;
+        protected $theme_path;
+        protected $theme_exists;
 
         protected $scripts;
         protected $queue;
@@ -48,34 +48,34 @@
         /* PUBLIC */
         public function setCurrentTheme($theme)
         {
-            $this->theme = $theme ;
-            $this->setCurrentThemePath() ;
-            $this->setCurrentThemeUrl() ;
+            $this->theme = $theme;
+            $this->setCurrentThemePath();
+            $this->setCurrentThemeUrl();
         }
 
         public function getCurrentTheme()
         {
-            return $this->theme ;
+            return $this->theme;
         }
 
         public function getCurrentThemeUrl()
         {
-            return $this->theme_url ;
+            return $this->theme_url;
         }
 
         public function getCurrentThemePath()
         {
-            return $this->theme_path ;
+            return $this->theme_path;
         }
 
         public function getCurrentThemeStyles()
         {
-            return $this->theme_url . 'css/' ;
+            return $this->theme_url . 'css/';
         }
 
         public function getCurrentThemeJs()
         {
-            return $this->theme_url . 'js/' ;
+            return $this->theme_url . 'js/';
         }
 
         /**

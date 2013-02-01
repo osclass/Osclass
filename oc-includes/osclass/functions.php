@@ -56,7 +56,7 @@ function search_title() {
     if($b_category && is_array($category) && count($category) > 0) {
         $cat = Category::newInstance()->findByPrimaryKey($category[0]);
         if( $cat ) {
-            $result .= strtolower($cat['s_name']) . ' ' ;
+            $result .= strtolower($cat['s_name']) . ' ';
         }
     }
 
@@ -100,7 +100,7 @@ function meta_title() {
             $i_page   = Params::getParam('iPage');
 
             if($i_page != '' && $i_page > 1) {
-                $s_page = ' - ' . __('page') . ' ' . $i_page ;
+                $s_page = ' - ' . __('page') . ' ' . $i_page;
             }
 
             $b_show_all = ($region == '' && $city == '' & $pattern == '' && $category == '');
@@ -121,7 +121,7 @@ function meta_title() {
             if($b_category && is_array($category) && count($category) > 0) {
                 $cat = Category::newInstance()->findByPrimaryKey($category[0]);
                 if( $cat ) {
-                    $result .= strtolower($cat['s_name']) . ' ' ;
+                    $result .= strtolower($cat['s_name']) . ' ';
                 }
             }
 
@@ -204,7 +204,7 @@ function meta_description( ) {
         $text = osc_item_category() . ' ' . osc_item_city() . ', ' . osc_highlight(osc_item_description(), 120) . ', ' . osc_item_category() . ' ' . osc_item_city();
     }
 
-    return (osc_apply_filter('meta_description_filter', $text)) ;
+    return (osc_apply_filter('meta_description_filter', $text));
 }
 
 function meta_keywords( ) {
@@ -249,7 +249,7 @@ function meta_keywords( ) {
         $text = implode(', ', $keywords);
     }
 
-    return (osc_apply_filter('meta_keywords_filter', $text)) ;
+    return (osc_apply_filter('meta_keywords_filter', $text));
 }
 
 function osc_search_footer_links() {
@@ -278,9 +278,9 @@ function osc_search_footer_links() {
         $regionID = $aRegion['pk_i_id'];
     }
 
-    $conn = DBConnectionClass::newInstance() ;
+    $conn = DBConnectionClass::newInstance();
     $data = $conn->getOsclassDb();
-    $comm = new DBCommandClass($data) ;
+    $comm = new DBCommandClass($data);
 
     $comm->select('i.fk_i_category_id');
     $comm->select('l.*');
@@ -321,7 +321,7 @@ function osc_footer_link_url() {
     if( osc_search_category_id() ) {
         $bCategory = true;
         $cat = osc_get_category('id', $f['fk_i_category_id']);
-        $url .= $cat['s_slug'] . '_' ;
+        $url .= $cat['s_slug'] . '_';
     }
 
     if( osc_search_region() == '' ) {
@@ -343,7 +343,7 @@ function osc_footer_link_title() {
 
     if( osc_search_category_id() ) {
         $cat = osc_get_category('id', $f['fk_i_category_id']);
-        $text .= strtolower($cat['s_name']) . ' ' ;
+        $text .= strtolower($cat['s_name']) . ' ';
     }
 
     if( osc_search_region() == '' ) {
@@ -365,25 +365,25 @@ function osc_footer_link_title() {
  */
 function _osc_admin_toolbar_init()
 {
-    $adminToolbar = AdminToolbar::newInstance() ;
+    $adminToolbar = AdminToolbar::newInstance();
 
-    $adminToolbar->init() ;
-    $adminToolbar->add_menus() ;
+    $adminToolbar->init();
+    $adminToolbar->add_menus();
     return true;
 }
 // and we hook our function via
-osc_add_hook( 'init_admin', '_osc_admin_toolbar_init') ;
+osc_add_hook( 'init_admin', '_osc_admin_toolbar_init');
 
 /**
  * Draws admin toolbar
  */
 function osc_draw_admin_toolbar()
 {
-    $adminToolbar = AdminToolbar::newInstance() ;
+    $adminToolbar = AdminToolbar::newInstance();
 
     // run hook for adding
-    osc_run_hook('add_admin_toolbar_menus') ;
-    $adminToolbar->render() ;
+    osc_run_hook('add_admin_toolbar_menus');
+    $adminToolbar->render();
 }
 
 /**

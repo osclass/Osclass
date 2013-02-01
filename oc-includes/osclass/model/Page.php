@@ -1,4 +1,4 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -29,14 +29,14 @@
          *
          * @var type
          */
-        private static $instance ;
+        private static $instance;
 
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -44,9 +44,9 @@
          */
         function __construct()
         {
-            parent::__construct() ;
-            $this->setTableName('t_pages') ;
-            $this->setPrimaryKey('pk_i_id') ;
+            parent::__construct();
+            $this->setTableName('t_pages');
+            $this->setPrimaryKey('pk_i_id');
             $array_fields = array(
                 'pk_i_id',
                 's_internal_name',
@@ -55,8 +55,8 @@
                 'dt_pub_date',
                 'dt_mod_date',
                 'i_order',
-                's_meta') ;
-            $this->setFields($array_fields) ;
+                's_meta');
+            $this->setFields($array_fields);
         }
 
         /**
@@ -70,10 +70,10 @@
          */
         function findByPrimaryKey($id, $locale = null)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('pk_i_id', $id) ;
-            $result = $this->dao->get() ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $this->dao->where('pk_i_id', $id);
+            $result = $this->dao->get();
 
             if( $result == false ) {
                 return array();
@@ -83,24 +83,24 @@
                 return array();
             }
 
-            $row = $result->row() ;
+            $row = $result->row();
 
             // page_description
-            $this->dao->select() ;
-            $this->dao->from($this->getDescriptionTableName()) ;
-            $this->dao->where('fk_i_pages_id', $id) ;
+            $this->dao->select();
+            $this->dao->from($this->getDescriptionTableName());
+            $this->dao->where('fk_i_pages_id', $id);
             if( !is_null($locale) ) {
-                $this->dao->where('fk_c_locale_code', $locale) ;
+                $this->dao->where('fk_c_locale_code', $locale);
             }
-            $result   = $this->dao->get() ;
-            $aRows = $result->result() ;
+            $result   = $this->dao->get();
+            $aRows = $result->result();
 
-            $row['locale'] = array() ;
+            $row['locale'] = array();
             foreach($aRows as $r) {
-                $row['locale'][$r['fk_c_locale_code']] = $r ;
+                $row['locale'][$r['fk_c_locale_code']] = $r;
             }
 
-            return $row ;
+            return $row;
         }
 
         /**
@@ -114,22 +114,22 @@
          */
         function findByInternalName($intName, $locale = null)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_internal_name', $intName) ;
-            $result = $this->dao->get() ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_internal_name', $intName);
+            $result = $this->dao->get();
 
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
             if( $result->numRows() == 0 ){
-                return array() ;
+                return array();
             }
 
-            $row = $result->row() ;
-            return $this->extendDescription($row, $locale) ;
+            $row = $result->row();
+            return $this->extendDescription($row, $locale);
         }
 
         /**
@@ -142,26 +142,26 @@
          */
         function findByOrder($order, $locale = null)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
             $array_where = array(
                 'i_order'     => $order,
                 'b_indelible' => 0
             );
-            $this->dao->where($array_where) ;
-            $result = $this->dao->get() ;
+            $this->dao->where($array_where);
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
             if( $result->numRows() == 0 ) {
-                return array() ;
+                return array();
             }
 
-            $row    = $result->row() ;
-            $result = $this->extendDescription($row, $locale) ;
-            return $result ;
+            $row    = $result->row();
+            $result = $this->extendDescription($row, $locale);
+            return $result;
         }
 
         /**
@@ -178,36 +178,36 @@
          */
         public function listAll($indelible = null, $b_link = null, $locale = null, $start = null, $limit = null)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
             if( !is_null($indelible) ) {
-                $this->dao->where('b_indelible', $indelible) ;
+                $this->dao->where('b_indelible', $indelible);
             }
             if( $b_link!=null) {
-                $this->dao->where('b_link', $b_link) ;
+                $this->dao->where('b_link', $b_link);
             }
-            $this->dao->orderBy('i_order', 'ASC') ;
+            $this->dao->orderBy('i_order', 'ASC');
             if( !is_null($limit) ) {
-                $this->dao->limit($limit, $start) ;
+                $this->dao->limit($limit, $start);
             }
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
             if($result) {
-                $aPages = $result->result() ;
+                $aPages = $result->result();
 
                 if( count($aPages) == 0 ) {
-                    return array() ;
+                    return array();
                 }
 
-                $resultPages = array() ;
+                $resultPages = array();
                 foreach($aPages as $aPage) {
-                    $data = $this->extendDescription($aPage, $locale) ;
+                    $data = $this->extendDescription($aPage, $locale);
                     if(count($data) > 0) {
-                        $resultPages[] = $data ;
+                        $resultPages[] = $data;
                     }
-                    unset($data) ;
+                    unset($data);
                 }
 
-                return $resultPages ;
+                return $resultPages;
             } else {
                 return array();
             }
@@ -223,15 +223,15 @@
          */
         public function count($indelible = null)
         {
-            $this->dao->select('count(*) as total') ;
-            $this->dao->from($this->getTableName()) ;
+            $this->dao->select('count(*) as total');
+            $this->dao->from($this->getTableName());
             if( !is_null($indelible) ) {
-                $this->dao->where('b_indelible', $indelible) ;
+                $this->dao->where('b_indelible', $indelible);
             }
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
             if($result) {
-                $aPages = $result->result() ;
+                $aPages = $result->result();
                 return $aPages[0]['total'];
             } else {
                 return 0;
@@ -249,27 +249,27 @@
          */
         public function extendDescription($aPage, $locale = null)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getDescriptionTableName()) ;
-            $this->dao->where("fk_i_pages_id", $aPage['pk_i_id']) ;
+            $this->dao->select();
+            $this->dao->from($this->getDescriptionTableName());
+            $this->dao->where("fk_i_pages_id", $aPage['pk_i_id']);
             if( !is_null($locale) ) {
-                $this->dao->where('fk_c_locale_code', $locale) ;
+                $this->dao->where('fk_c_locale_code', $locale);
             }
-            $results       = $this->dao->get() ;
-            $aDescriptions = $results->result() ;
+            $results       = $this->dao->get();
+            $aDescriptions = $results->result();
 
             if( count($aDescriptions) == 0 ) {
-                return array() ;
+                return array();
             }
 
-            $aPage['locale'] = array() ;
+            $aPage['locale'] = array();
             foreach($aDescriptions as $description) {
                 if( !empty($description['s_title']) || !empty($description['s_text']) ) {
-                    $aPage['locale'][$description['fk_c_locale_code']] = $description ;
+                    $aPage['locale'][$description['fk_c_locale_code']] = $description;
                 }
             }
 
-            return $aPage ;
+            return $aPage;
         }
 
         /**
@@ -341,16 +341,16 @@
             $this->dao->where('i_order < '.$order);
             $this->dao->orderBy('i_order', 'DESC');
             $this->dao->limit(1);
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
             if( $result->numRows() == 0 ) {
-                return array() ;
+                return array();
             }
-            return $result->row() ;
+            return $result->row();
         }
 
         /**
@@ -368,16 +368,16 @@
             $this->dao->where('i_order > '.$order);
             $this->dao->orderBy('i_order', 'ASC');
             $this->dao->limit(1);
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
             if( $result->numRows() == 0 ) {
-                return array() ;
+                return array();
             }
-            return $result->row() ;
+            return $result->row();
         }
 
         /**
@@ -604,7 +604,7 @@
 
         function getDescriptionTableName()
         {
-            return $this->getTablePrefix() . 't_pages_description' ;
+            return $this->getTablePrefix() . 't_pages_description';
         }
     }
 

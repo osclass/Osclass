@@ -20,14 +20,14 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    define('IS_AJAX', true) ;
+    define('IS_AJAX', true);
 
     class CWebAjax extends BaseModel
     {
         function __construct()
         {
-            parent::__construct() ;
-            $this->ajax = true ;
+            parent::__construct();
+            $this->ajax = true;
         }
 
         //Business Layer...
@@ -66,10 +66,10 @@
                     echo json_encode($cities);
                 break;
                 case 'delete_image': // Delete images via AJAX
-                    $id     = Params::getParam('id') ;
-                    $item   = Params::getParam('item') ;
-                    $code   = Params::getParam('code') ;
-                    $secret = Params::getParam('secret') ;
+                    $id     = Params::getParam('id');
+                    $item   = Params::getParam('item');
+                    $code   = Params::getParam('code');
+                    $secret = Params::getParam('secret');
                     $json = array();
 
                     if( Session::newInstance()->_get('userId') != '' ){
@@ -117,7 +117,7 @@
                     }
 
                     // Does id & code combination exist?
-                    $result = ItemResource::newInstance()->existResource($id, $code) ;
+                    $result = ItemResource::newInstance()->existResource($id, $code);
 
                     if ($result > 0) {
                         $resource = ItemResource::newInstance()->findByPrimaryKey($id);
@@ -126,21 +126,21 @@
                             // Delete: file, db table entry
                             if(defined(OC_ADMIN)) {
                                 osc_deleteResource($id, true);
-                                Log::newInstance()->insertLog('ajax', 'deleteimage', $id, $id, 'admin', osc_logged_admin_id()) ;
+                                Log::newInstance()->insertLog('ajax', 'deleteimage', $id, $id, 'admin', osc_logged_admin_id());
                             } else {
                                 osc_deleteResource($id, false);
-                                Log::newInstance()->insertLog('ajax', 'deleteimage', $id, $id, 'user', osc_logged_user_id()) ;
+                                Log::newInstance()->insertLog('ajax', 'deleteimage', $id, $id, 'user', osc_logged_user_id());
                             }
                             ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $item, 's_name' => $code) );
 
-                            $json['msg'] =  _m('The selected photo has been successfully deleted') ;
+                            $json['msg'] =  _m('The selected photo has been successfully deleted');
                             $json['success'] = 'true';
                         } else {
-                            $json['msg'] = _m("The selected photo does not belong to you") ;
+                            $json['msg'] = _m("The selected photo does not belong to you");
                             $json['success'] = 'false';
                         }
                     } else {
-                        $json['msg'] = _m("The selected photo couldn't be deleted") ;
+                        $json['msg'] = _m("The selected photo couldn't be deleted");
                         $json['success'] = 'false';
                     }
 
@@ -189,7 +189,7 @@
                     $hook = Params::getParam('hook');
 
                     if($hook == '') {
-                        echo json_encode(array('error' => 'hook parameter not defined')) ;
+                        echo json_encode(array('error' => 'hook parameter not defined'));
                         break;
                     }
 
@@ -212,13 +212,13 @@
 
                     if($ajaxFile == '') {
                         echo json_encode(array('error' => 'no action defined'));
-                        break ;
+                        break;
                     }
 
                     // valid file?
                     if( stripos($ajaxFile, '../') !== false ) {
                         echo json_encode(array('error' => 'no valid ajaxFile'));
-                        break ;
+                        break;
                     }
 
                     if( !file_exists(osc_plugins_path() . $ajaxFile) ) {
@@ -226,7 +226,7 @@
                         break;
                     }
 
-                    require_once osc_plugins_path() . $ajaxFile ;
+                    require_once osc_plugins_path() . $ajaxFile;
                 break;
                 default:
                     echo json_encode(array('error' => __('no action defined')));
@@ -241,7 +241,7 @@
         function doView($file)
         {
             osc_run_hook("before_html");
-            osc_current_web_theme_path($file) ;
+            osc_current_web_theme_path($file);
             osc_run_hook("after_html");
         }
     }

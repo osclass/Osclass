@@ -1,4 +1,4 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -37,7 +37,7 @@
          * @since 2.4
          * @var CountryStats
          */
-        private static $instance ;
+        private static $instance;
 
         /**
         * It creates a new LocationsTmp object class if it has been created
@@ -50,9 +50,9 @@
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -61,25 +61,25 @@
         function __construct()
         {
             parent::__construct();
-            $this->setTableName('t_locations_tmp') ;
-            $this->setFields( array('id_location', 'e_type') ) ;
+            $this->setTableName('t_locations_tmp');
+            $this->setFields( array('id_location', 'e_type') );
         }
 
         function getLocations($max)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->limit($max) ;
-            $rs = $this->dao->get() ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $this->dao->limit($max);
+            $rs = $this->dao->get();
 
             if($rs === false) {
-                return array() ;
+                return array();
             }
-            return $rs->result() ;
+            return $rs->result();
         }
 
         function delete($where)
         {
-            return $this->dao->delete($this->getTableName(), $where ) ;
+            return $this->dao->delete($this->getTableName(), $where );
         }
     }

@@ -1,4 +1,4 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ; ?>
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.'); ?>
 <!DOCTYPE html>
 <html lang="<?php echo substr(osc_current_admin_locale(), 0, 2); ?>">
 <head>
@@ -43,7 +43,7 @@
                 <a href="#" class="btn ico ico-20 ico-close">x</a>
                 <?php osc_run_hook('help_box'); ?>
             </div>
-            <?php osc_show_flash_message('admin') ; ?>
+            <?php osc_show_flash_message('admin'); ?>
             <div class="jsMessage flashmessage flashmessage-info hide">
                 <a class="btn ico btn-mini ico-close">×</a>
                 <p></p>
