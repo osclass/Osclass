@@ -15,11 +15,11 @@
      */
     function osc_user_field($field, $locale = "") {
         if (View::newInstance()->_exists('users')) {
-            $user = View::newInstance()->_current('users') ;
+            $user = View::newInstance()->_current('users');
         } else {
-            $user = View::newInstance()->_get('user') ;
+            $user = View::newInstance()->_get('user');
         }
-        return osc_field($user, $field, $locale) ;
+        return osc_field($user, $field, $locale);
     }
 
     /**
@@ -29,12 +29,12 @@
      */
     function osc_user() {
         if (View::newInstance()->_exists('users')) {
-            $user = View::newInstance()->_current('users') ;
+            $user = View::newInstance()->_current('users');
         } else {
-            $user = View::newInstance()->_get('user') ;
+            $user = View::newInstance()->_get('user');
         }
 
-        return($user) ;
+        return($user);
     }
 
     /**
@@ -46,7 +46,7 @@
         if (Session::newInstance()->_get("userId") != '') {
             $user = User::newInstance()->findByPrimaryKey(Session::newInstance()->_get("userId"));
             if(isset($user['b_enabled']) && $user['b_enabled']==1) {
-                return true ;
+                return true;
             } else {
                 return false;
             }
@@ -54,21 +54,21 @@
 
         //can already be a logged user or not, we'll take a look into the cookie
         if ( Cookie::newInstance()->get_value('oc_userId') != '' && Cookie::newInstance()->get_value('oc_userSecret') != '') {
-            $user = User::newInstance()->findByIdSecret( Cookie::newInstance()->get_value('oc_userId'), Cookie::newInstance()->get_value('oc_userSecret') ) ;
+            $user = User::newInstance()->findByIdSecret( Cookie::newInstance()->get_value('oc_userId'), Cookie::newInstance()->get_value('oc_userSecret') );
             if(isset($user['b_enabled']) && $user['b_enabled']==1) {
-                Session::newInstance()->_set('userId', $user['pk_i_id']) ;
-                Session::newInstance()->_set('userName', $user['s_name']) ;
-                Session::newInstance()->_set('userEmail', $user['s_email']) ;
+                Session::newInstance()->_set('userId', $user['pk_i_id']);
+                Session::newInstance()->_set('userName', $user['s_name']);
+                Session::newInstance()->_set('userEmail', $user['s_email']);
                 $phone = ($user['s_phone_mobile'])? $user['s_phone_mobile'] : $user['s_phone_land'];
-                Session::newInstance()->_set('userPhone', $phone) ;
+                Session::newInstance()->_set('userPhone', $phone);
 
-                return true ;
+                return true;
             } else {
                 return false;
             }
         }
 
-        return false ;
+        return false;
     }
 
     /**
@@ -77,7 +77,7 @@
      * @return int
      */
     function osc_logged_user_id() {
-        return (int) Session::newInstance()->_get("userId") ;
+        return (int) Session::newInstance()->_get("userId");
     }
 
     /**
@@ -86,7 +86,7 @@
      * @return string
      */
     function osc_logged_user_email() {
-        return (string) Session::newInstance()->_get('userEmail') ;
+        return (string) Session::newInstance()->_get('userEmail');
     }
 
     /**
@@ -95,7 +95,7 @@
      * @return string
      */
     function osc_logged_user_name() {
-        return (string) Session::newInstance()->_get('userName') ;
+        return (string) Session::newInstance()->_get('userName');
     }
 
     /**
@@ -104,7 +104,7 @@
      * @return string
      */
     function osc_logged_user_phone() {
-        return (string) Session::newInstance()->_get('userPhone') ;
+        return (string) Session::newInstance()->_get('userPhone');
     }
 
     /**
@@ -121,12 +121,12 @@
                 $user = User::newInstance()->findByPrimaryKey($id);
                 $path = osc_base_url() . 'user/profile/' . $user['s_username'];
             } else {
-                $path = sprintf(osc_base_url(true) . '?page=user&action=pub_profile&id=%d', $id) ;
+                $path = sprintf(osc_base_url(true) . '?page=user&action=pub_profile&id=%d', $id);
             }
         } else {
-            $path = '' ;
+            $path = '';
         }
-        return $path ;
+        return $path;
     }
 
     /**
@@ -136,9 +136,9 @@
      */
     function osc_is_admin_user_logged_in() {
         if (Session::newInstance()->_get("adminId") != '') {
-            $admin = Admin::newInstance()->findByPrimaryKey( Session::newInstance()->_get("adminId") ) ;
+            $admin = Admin::newInstance()->findByPrimaryKey( Session::newInstance()->_get("adminId") );
             if(isset($admin['pk_i_id'])) {
-                return true ;
+                return true;
             } else {
                 return false;
             }
@@ -146,21 +146,21 @@
 
         //can already be a logged user or not, we'll take a look into the cookie
         if ( Cookie::newInstance()->get_value('oc_adminId') != '' && Cookie::newInstance()->get_value('oc_adminSecret') != '') {
-            $admin = Admin::newInstance()->findByIdSecret( Cookie::newInstance()->get_value('oc_adminId'), Cookie::newInstance()->get_value('oc_adminSecret') ) ;
+            $admin = Admin::newInstance()->findByIdSecret( Cookie::newInstance()->get_value('oc_adminId'), Cookie::newInstance()->get_value('oc_adminSecret') );
             if(isset($admin['pk_i_id'])) {
-                Session::newInstance()->_set('adminId', $admin['pk_i_id']) ;
-                Session::newInstance()->_set('adminUserName', $admin['s_username']) ;
-                Session::newInstance()->_set('adminName', $admin['s_name']) ;
-                Session::newInstance()->_set('adminEmail', $admin['s_email']) ;
-                Session::newInstance()->_set('adminLocale', Cookie::newInstance()->get_value('oc_adminLocale')) ;
+                Session::newInstance()->_set('adminId', $admin['pk_i_id']);
+                Session::newInstance()->_set('adminUserName', $admin['s_username']);
+                Session::newInstance()->_set('adminName', $admin['s_name']);
+                Session::newInstance()->_set('adminEmail', $admin['s_email']);
+                Session::newInstance()->_set('adminLocale', Cookie::newInstance()->get_value('oc_adminLocale'));
 
-                return true ;
+                return true;
             } else {
                 return false;
             }
         }
 
-        return false ;
+        return false;
     }
 
     /**
@@ -169,7 +169,7 @@
      * @return int
      */
     function osc_logged_admin_id() {
-        return (int) Session::newInstance()->_get("adminId") ;
+        return (int) Session::newInstance()->_get("adminId");
     }
 
     /**
@@ -178,7 +178,7 @@
      * @return string
      */
     function osc_logged_admin_username() {
-        return (string) Session::newInstance()->_get('adminUserName') ;
+        return (string) Session::newInstance()->_get('adminUserName');
     }
 
     /**
@@ -186,7 +186,7 @@
      * @return string
      */
     function osc_logged_admin_name() {
-        return (string) Session::newInstance()->_get('adminName') ;
+        return (string) Session::newInstance()->_get('adminName');
     }
 
     /**
@@ -195,7 +195,7 @@
      * @return string
      */
     function osc_logged_admin_email() {
-        return (string) Session::newInstance()->_get('adminEmail') ;
+        return (string) Session::newInstance()->_get('adminEmail');
     }
 
     /**
@@ -276,14 +276,14 @@
      * @return string
      */
     function osc_user_info($locale = "") {
-        if ($locale == "") $locale = osc_current_user_locale() ;
-        $info = osc_user_field("s_info", $locale) ;
+        if ($locale == "") $locale = osc_current_user_locale();
+        $info = osc_user_field("s_info", $locale);
         if($info == '') {
             $info = osc_user_field("s_info", osc_language());
             if($info=='') {
                 $aLocales = osc_get_locales();
                 foreach($aLocales as $locale) {
-                    $info = osc_user_field("s_info", $locale['pk_c_code']) ;
+                    $info = osc_user_field("s_info", $locale['pk_c_code']);
                     if($info!='') {
                         break;
                     }
@@ -444,7 +444,7 @@
      * @return mixed
      */
     function osc_alert_field($field) {
-        return osc_field(View::newInstance()->_current('alerts'), $field, '') ;
+        return osc_field(View::newInstance()->_current('alerts'), $field, '');
     }
 
     /**
@@ -453,7 +453,7 @@
      * @return array
      */
     function osc_has_alerts() {
-        $result = View::newInstance()->_next('alerts') ;
+        $result = View::newInstance()->_next('alerts');
         $alert = osc_alert();
         View::newInstance()->_exportVariableToView("items", isset($alert['items'])?$alert['items']:array());
         return $result;
@@ -464,7 +464,7 @@
      * @return int
      */
     function osc_count_alerts() {
-        return (int) View::newInstance()->_count('alerts') ;
+        return (int) View::newInstance()->_count('alerts');
     }
 
     /**
@@ -549,9 +549,9 @@
      */
     function osc_prepare_user_info() {
         if ( !View::newInstance()->_exists('users') ) {
-            View::newInstance()->_exportVariableToView('users', array ( User::newInstance()->findByPrimaryKey( osc_item_user_id() ) ) ) ;
+            View::newInstance()->_exportVariableToView('users', array ( User::newInstance()->findByPrimaryKey( osc_item_user_id() ) ) );
         }
-        return View::newInstance()->_next('users') ;
+        return View::newInstance()->_next('users');
     }
 
 

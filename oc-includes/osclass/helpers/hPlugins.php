@@ -240,18 +240,18 @@
         $url .= '?page=ajax&action=runhook';
 
         if( $hook != '' ) {
-            $url .= '&hook=' . $hook ;
+            $url .= '&hook=' . $hook;
         }
 
         if( is_array($params) ) {
-            $url_params = array() ;
+            $url_params = array();
             foreach($params as $k => $v) {
-                $url_params[] = sprintf('%s=%s', $k, $v) ;
+                $url_params[] = sprintf('%s=%s', $k, $v);
             }
-            $url .= implode('&', $url_params) ;
+            $url .= implode('&', $url_params);
         }
 
-        return $url ;
+        return $url;
     }
 
     /**
@@ -261,10 +261,10 @@
      * @return string
      */
     function osc_ajax_plugin_url($file = '') {
-        $file        = preg_replace('|/+|', '/', str_replace('\\', '/', $file)) ;
-        $plugin_path = str_replace('\\', '/', osc_plugins_path()) ;
-        $file        = str_replace($plugin_path, '', $file) ;
-        return (osc_base_url(true) . "?page=ajax&action=custom&ajaxfile=" . $file) ;
+        $file        = preg_replace('|/+|', '/', str_replace('\\', '/', $file));
+        $plugin_path = str_replace('\\', '/', osc_plugins_path());
+        $file        = str_replace($plugin_path, '', $file);
+        return (osc_base_url(true) . "?page=ajax&action=custom&ajaxfile=" . $file);
     }
 
     /**
@@ -274,10 +274,10 @@
      * @return string
      */
     function osc_admin_configure_plugin_url($file = '') {
-        $file        = preg_replace('|/+|', '/', str_replace('\\', '/', $file)) ;
-        $plugin_path = str_replace('\\', '/', osc_plugins_path()) ;
-        $file        = str_replace($plugin_path, '', $file) ;
-        return osc_admin_base_url(true) . '?page=plugins&action=configure&plugin=' . $file ;
+        $file        = preg_replace('|/+|', '/', str_replace('\\', '/', $file));
+        $plugin_path = str_replace('\\', '/', osc_plugins_path());
+        $file        = str_replace($plugin_path, '', $file);
+        return osc_admin_base_url(true) . '?page=plugins&action=configure&plugin=' . $file;
     }
 
     /**
@@ -287,10 +287,10 @@
      * @return string
      */
     function osc_admin_render_plugin_url($file = '') {
-        $file        = preg_replace('|/+|', '/', str_replace('\\', '/', $file)) ;
-        $plugin_path = str_replace('\\', '/', osc_plugins_path()) ;
-        $file        = str_replace($plugin_path, '', $file) ;
-        return osc_admin_base_url(true) . '?page=plugins&action=renderplugin&file=' . $file ;
+        $file        = preg_replace('|/+|', '/', str_replace('\\', '/', $file));
+        $plugin_path = str_replace('\\', '/', osc_plugins_path());
+        $file        = str_replace($plugin_path, '', $file);
+        return osc_admin_base_url(true) . '?page=plugins&action=renderplugin&file=' . $file;
     }
 
     /**
@@ -300,8 +300,8 @@
      * @return void
      */
     function osc_admin_render_plugin($file = '') {
-        header('Location: ' . osc_admin_render_plugin_url($file) ) ;
-        exit ;
+        header('Location: ' . osc_admin_render_plugin_url($file) );
+        exit;
     }
 
 ?>

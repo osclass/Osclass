@@ -1,4 +1,4 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -37,7 +37,7 @@
          * @since unknown
          * @var ItemResource
          */
-        private static $instance ;
+        private static $instance;
 
         /**
          * It creates a new ItemResource object class ir if it has been created
@@ -50,9 +50,9 @@
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -60,10 +60,10 @@
          */
         function __construct()
         {
-            parent::__construct() ;
-            $this->setTableName('t_item_resource') ;
-            $this->setPrimaryKey('pk_i_id') ;
-            $this->setFields( array('pk_i_id', 'fk_i_item_id', 's_name', 's_extension', 's_content_type', 's_path') ) ;
+            parent::__construct();
+            $this->setTableName('t_item_resource');
+            $this->setPrimaryKey('pk_i_id');
+            $this->setFields( array('pk_i_id', 'fk_i_item_id', 's_name', 's_extension', 's_content_type', 's_path') );
         }
 
         /**
@@ -76,17 +76,17 @@
          */
         function getAllResources()
         {
-            $this->dao->select('r.*, c.dt_pub_date') ;
-            $this->dao->from($this->getTableName() . ' r') ;
-            $this->dao->join($this->getTableItemName() . ' c', 'c.pk_i_id = r.fk_i_item_id') ;
+            $this->dao->select('r.*, c.dt_pub_date');
+            $this->dao->from($this->getTableName() . ' r');
+            $this->dao->join($this->getTableItemName() . ' c', 'c.pk_i_id = r.fk_i_item_id');
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
-            return $result->result() ;
+            return $result->result();
         }
 
         /**
@@ -98,17 +98,17 @@
          * @return array of resources
          */
         function getAllResourcesFromItem($itemId) {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('fk_i_item_id', (int)$itemId) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $this->dao->where('fk_i_item_id', (int)$itemId);
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
-            return $result->result() ;
+            return $result->result();
         }
 
         /**
@@ -121,22 +121,22 @@
          */
         function getResource($itemId)
         {
-            $this->dao->select( $this->getFields() ) ;
-            $this->dao->from( $this->getTableName() ) ;
-            $this->dao->where('fk_i_item_id', $itemId) ;
-            $this->dao->limit(1) ;
+            $this->dao->select( $this->getFields() );
+            $this->dao->from( $this->getTableName() );
+            $this->dao->where('fk_i_item_id', $itemId);
+            $this->dao->limit(1);
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if($result == false) {
-                return array() ;
+                return array();
             }
 
             if($result->numRows == 0) {
-                return array() ;
+                return array();
             }
 
-            return $result->row() ;
+            return $result->row();
         }
 
         /**
@@ -163,23 +163,23 @@
          */
         function existResource($resourceId, $code)
         {
-            $this->dao->select('COUNT(*) AS numrows') ;
-            $this->dao->from( $this->getTableName() ) ;
-            $this->dao->where('pk_i_id', $resourceId) ;
-            $this->dao->where('s_name', $code) ;
+            $this->dao->select('COUNT(*) AS numrows');
+            $this->dao->from( $this->getTableName() );
+            $this->dao->where('pk_i_id', $resourceId);
+            $this->dao->where('s_name', $code);
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return 0 ;
+                return 0;
             }
 
             if( $result->numRows() != 1 ) {
-                return 0 ;
+                return 0;
             }
 
-            $row = $result->row() ;
-            return $row['numrows'] ;
+            $row = $result->row();
+            return $row['numrows'];
         }
 
         /**
@@ -192,24 +192,24 @@
          */
         function countResources($itemId = null)
         {
-            $this->dao->select('COUNT(*) AS numrows') ;
-            $this->dao->from( $this->getTableName() ) ;
+            $this->dao->select('COUNT(*) AS numrows');
+            $this->dao->from( $this->getTableName() );
             if( !is_null($itemId) && is_numeric($itemId)) {
-                $this->dao->where('fk_i_item_id', $itemId) ;
+                $this->dao->where('fk_i_item_id', $itemId);
             }
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return 0 ;
+                return 0;
             }
 
             if( $result->numRows() != 1 ) {
-                return 0 ;
+                return 0;
             }
 
-            $row = $result->row() ;
-            return $row['numrows'] ;
+            $row = $result->row();
+            return $row['numrows'];
         }
 
         /**
@@ -233,30 +233,30 @@
                     3=> 'r.fk_i_item_id',
                     4=> 'c.dt_pub_date')) ) {
                 // order by is incorrect
-                return array() ;
+                return array();
             }
 
             if( !in_array(strtoupper($type), array('DESC', 'ASC')) ) {
                 // order type is incorrect
-                return array() ;
+                return array();
             }
 
-            $this->dao->select('r.*, c.dt_pub_date') ;
-            $this->dao->from($this->getTableName() . ' r') ;
-            $this->dao->join($this->getTableItemName() . ' c', 'c.pk_i_id = r.fk_i_item_id') ;
+            $this->dao->select('r.*, c.dt_pub_date');
+            $this->dao->from($this->getTableName() . ' r');
+            $this->dao->join($this->getTableItemName() . ' c', 'c.pk_i_id = r.fk_i_item_id');
             if( !is_null($itemId) && is_numeric($itemId) ) {
-                $this->dao->where('r.fk_i_item_id', $itemId) ;
+                $this->dao->where('r.fk_i_item_id', $itemId);
             }
-            $this->dao->orderBy($order, $type) ;
-            $this->dao->limit($start) ;
-            $this->dao->offset($length) ;
-            $result = $this->dao->get() ;
+            $this->dao->orderBy($order, $type);
+            $this->dao->limit($start);
+            $this->dao->offset($length);
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
-            return $result->result() ;
+            return $result->result();
         }
 
         /**
@@ -266,7 +266,7 @@
          */
         public function deleteResourcesIds($ids)
         {
-            $this->dao->whereIn('pk_i_id', $ids) ;
+            $this->dao->whereIn('pk_i_id', $ids);
             return $this->dao->delete( $this->getTableName() );
         }
 
@@ -279,7 +279,7 @@
          */
         function getTableItemName()
         {
-            return $this->getTablePrefix() . 't_item' ;
+            return $this->getTablePrefix() . 't_item';
         }
 
         /**
@@ -291,7 +291,7 @@
          */
         function getTableItemDescription()
         {
-            return $this->getTablePrefix() . 't_item_description' ;
+            return $this->getTablePrefix() . 't_item_description';
         }
     }
 

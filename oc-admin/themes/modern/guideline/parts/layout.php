@@ -33,10 +33,10 @@ osc_add_hook(<span style="color:#666">'admin_page_header'</span>,<span style="co
         <span style="color:#45ae34;font-weight:700">echo</span> <span style="color:#666">'&lt;h1>'</span> <span style="color:#069;font-weight:700">.</span> __(<span style="color:#666">'Custom Layout'</span>) <span style="color:#069;font-weight:700">.</span> <span style="color:#666">'&lt;/h1>'</span>;
     }
 ?>
-&lt;?php osc_current_admin_theme_path( <span style="color:#666">'parts/header.php'</span> ) ; ?>
+&lt;?php osc_current_admin_theme_path( <span style="color:#666">'parts/header.php'</span> ); ?>
     <span style="color:#af82d4">&lt;!-- You content here --></span>
     <span style="color:#af82d4">&lt;!-- #You content here --></span>
-&lt;?php osc_current_admin_theme_path( <span style="color:#666">'parts/footer.php'</span> ) ; ?>
+&lt;?php osc_current_admin_theme_path( <span style="color:#666">'parts/footer.php'</span> ); ?>
 </pre>
             </div>
         </div>

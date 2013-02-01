@@ -1,4 +1,4 @@
-<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -37,7 +37,7 @@
          * @since unknown
          * @var City
          */
-        private static $instance ;
+        private static $instance;
 
         /**
          * It creates a new City object class ir if it has been created
@@ -50,9 +50,9 @@
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -61,9 +61,9 @@
         function __construct()
         {
             parent::__construct();
-            $this->setTableName('t_city') ;
-            $this->setPrimaryKey('pk_i_id') ;
-            $this->setFields( array('pk_i_id', 'fk_i_region_id', 's_name', 'fk_c_country_code', 'b_active') ) ;
+            $this->setTableName('t_city');
+            $this->setPrimaryKey('pk_i_id');
+            $this->setFields( array('pk_i_id', 'fk_i_region_id', 's_name', 'fk_c_country_code', 'b_active') );
         }
 
         /**
@@ -77,21 +77,21 @@
          */
         function ajax($query, $regionId = null)
         {
-            $this->dao->select('a.pk_i_id as id, a.s_name as label, a.s_name as value, aux.s_name as region') ;
-            $this->dao->from($this->getTableName().' as a') ;
+            $this->dao->select('a.pk_i_id as id, a.s_name as label, a.s_name as value, aux.s_name as region');
+            $this->dao->from($this->getTableName().' as a');
             $this->dao->join(Region::newInstance()->getTableName().' as aux', 'aux.pk_i_id = a.fk_i_region_id', 'LEFT');
-            $this->dao->like('a.s_name', $query, 'after') ;
+            $this->dao->like('a.s_name', $query, 'after');
             if( $regionId != null ) {
-                $this->dao->where('a.fk_i_region_id', $regionId) ;
+                $this->dao->where('a.fk_i_region_id', $regionId);
             }
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
-            return $result->result() ;
+            return $result->result();
         }
 
         /**
@@ -106,7 +106,7 @@
          */
         function getByRegion($regionId)
         {
-            return $this->findByRegion($regionId) ;
+            return $this->findByRegion($regionId);
         }
 
         /**
@@ -119,18 +119,18 @@
          */
         function findByRegion($regionId)
         {
-            $this->dao->select($this->getFields()) ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('fk_i_region_id', $regionId) ;
-            $this->dao->orderBy('s_name', 'ASC') ;
+            $this->dao->select($this->getFields());
+            $this->dao->from($this->getTableName());
+            $this->dao->where('fk_i_region_id', $regionId);
+            $this->dao->orderBy('s_name', 'ASC');
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
-            return $result->result() ;
+            return $result->result();
         }
 
         /**
@@ -144,21 +144,21 @@
          */
         function findByName($cityName, $regionId = null)
         {
-            $this->dao->select($this->getFields()) ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_name', $cityName) ;
-            $this->dao->limit(1) ;
+            $this->dao->select($this->getFields());
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_name', $cityName);
+            $this->dao->limit(1);
             if( $regionId != null ) {
-                $this->dao->where('fk_i_region_id', $regionId) ;
+                $this->dao->where('fk_i_region_id', $regionId);
             }
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
-            return $result->row() ;
+            return $result->row();
         }
 
         /**
@@ -170,16 +170,16 @@
          */
         function listAll()
         {
-            $this->dao->select($this->getFields()) ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->orderBy('s_name', 'ASC') ;
-            $result = $this->dao->get() ;
+            $this->dao->select($this->getFields());
+            $this->dao->from($this->getTableName());
+            $this->dao->orderBy('s_name', 'ASC');
+            $result = $this->dao->get();
 
             if($result == false) {
-                return array() ;
+                return array();
             }
 
-            return $result->result() ;
+            return $result->result();
         }
 
         /**

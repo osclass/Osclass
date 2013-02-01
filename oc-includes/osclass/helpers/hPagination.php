@@ -92,7 +92,7 @@
     {
         $pageActual = isset($aData['iPage'])?$aData['iPage']:Params::getParam('iPage');
         $urlActual  = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
-        $urlActual  = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
+        $urlActual  = preg_replace('/&iPage=(\d+)?/', '', $urlActual);
         $pageTotal  = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
         $params     = array(
             'total'    => $pageTotal,

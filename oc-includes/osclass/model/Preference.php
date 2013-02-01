@@ -1,4 +1,4 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -29,19 +29,19 @@
          *
          * @var type
          */
-        private static $instance ;
+        private static $instance;
         /**
          * array for save preferences
          * @var array
          */
-        private $pref ;
+        private $pref;
 
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -50,9 +50,9 @@
         function __construct()
         {
             parent::__construct();
-            $this->setTableName('t_preference') ;
-            /* $this->set_primary_key($key) ; // no primary key in preference table */
-            $this->setFields( array('s_section', 's_name', 's_value', 'e_type') ) ;
+            $this->setTableName('t_preference');
+            /* $this->set_primary_key($key); // no primary key in preference table */
+            $this->setFields( array('s_section', 's_name', 's_value', 'e_type') );
             $this->toArray();
         }
 
@@ -66,21 +66,21 @@
          */
         function findValueByName($name)
         {
-            $this->dao->select('s_value') ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_name', $name) ;
-            $result = $this->dao->get() ;
+            $this->dao->select('s_value');
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_name', $name);
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return false ;
+                return false;
             }
 
             if( $result->numRows() == 0 ) {
-                return false ;
+                return false;
             }
 
-            $row = $result->row() ;
-            return $row['s_value'] ;
+            $row = $result->row();
+            return $row['s_value'];
         }
 
         /**
@@ -93,20 +93,20 @@
          */
         public function findBySection($name)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_section', $name) ;
-            $result = $this->dao->get() ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_section', $name);
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
             if( $result->numRows() == 0 ) {
-                return false ;
+                return false;
             }
 
-            return $result->result() ;
+            return $result->result();
         }
 
         /**
@@ -117,24 +117,24 @@
          */
         public function toArray()
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $result = $this->dao->get() ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return false ;
+                return false;
             }
 
             if( $result->numRows() == 0 ) {
-                return false ;
+                return false;
             }
 
-            $aTmpPref = $result->result() ;
+            $aTmpPref = $result->result();
             foreach($aTmpPref as $tmpPref) {
-                $this->pref[$tmpPref['s_section']][$tmpPref['s_name']] = $tmpPref['s_value'] ;
+                $this->pref[$tmpPref['s_section']][$tmpPref['s_name']] = $tmpPref['s_value'];
             }
 
-            return true ;
+            return true;
         }
 
         /**
@@ -149,9 +149,9 @@
         public function get($key, $section = "osclass")
         {
             if ( !isset($this->pref[$section][$key]) ) {
-                return '' ;
+                return '';
             }
-            return $this->pref[$section][$key] ;
+            return $this->pref[$section][$key];
         }
 
         /**
@@ -165,7 +165,7 @@
          */
         public function set($key, $value, $section = "osclass")
         {
-            $this->pref[$section][$key] = $value ;
+            $this->pref[$section][$key] = $value;
         }
 
         /**
@@ -186,8 +186,8 @@
                 's_value'   => $value,
                 's_section' => $section,
                 'e_type'    => $type
-            ) ;
-            return $this->dao->replace($this->getTableName(), $array_replace) ;
+            );
+            return $this->dao->replace($this->getTableName(), $array_replace);
         }
     }
 

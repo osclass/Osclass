@@ -1,4 +1,4 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -37,7 +37,7 @@
          * @since 2.4
          * @var CountryStats
          */
-        private static $instance ;
+        private static $instance;
 
         /**
         * It creates a new CountryStats object class if it has been created
@@ -50,9 +50,9 @@
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -64,9 +64,9 @@
         function __construct()
         {
             parent::__construct();
-            $this->setTableName('t_country_stats') ;
-            $this->setPrimaryKey('fk_c_country_code') ;
-            $this->setFields( array('fk_c_country_code', 'i_num_items') ) ;
+            $this->setTableName('t_country_stats');
+            $this->setPrimaryKey('fk_c_country_code');
+            $this->setFields( array('fk_c_country_code', 'i_num_items') );
         }
 
         /**
@@ -101,20 +101,20 @@
             if($lenght > 2 || $lenght=='' ) {
                 return false;
             }
-            $this->dao->select( 'i_num_items' ) ;
-            $this->dao->from( $this->getTableName() ) ;
-            $this->dao->where( $this->getPrimaryKey(), $countryCode ) ;
-            $result       = $this->dao->get() ;
-            $countryStat  = $result->row() ;
-            $return       = 0 ;
+            $this->dao->select( 'i_num_items' );
+            $this->dao->from( $this->getTableName() );
+            $this->dao->where( $this->getPrimaryKey(), $countryCode );
+            $result       = $this->dao->get();
+            $countryStat  = $result->row();
+            $return       = 0;
 
             if( isset( $countryStat['i_num_items'] ) ) {
-                $this->dao->from( $this->getTableName() ) ;
-                $this->dao->set( 'i_num_items', 'i_num_items - 1', false ) ;
-                $this->dao->where( 'i_num_items > 0' ) ;
-                $this->dao->where( 'fk_c_country_code', $countryCode ) ;
+                $this->dao->from( $this->getTableName() );
+                $this->dao->set( 'i_num_items', 'i_num_items - 1', false );
+                $this->dao->where( 'i_num_items > 0' );
+                $this->dao->where( 'fk_c_country_code', $countryCode );
 
-                return $this->dao->update() ;
+                return $this->dao->update();
             }
 
             return false;
@@ -162,18 +162,18 @@
          */
         public function listCountries($zero = ">", $order = "country_name ASC")
         {
-            $this->dao->select($this->getTableName().'.fk_c_country_code as country_code, '.$this->getTableName().'.i_num_items as items, '.DB_TABLE_PREFIX.'t_country.s_name as country_name') ;
-            $this->dao->from($this->getTableName() ) ;
-            $this->dao->join(DB_TABLE_PREFIX.'t_country', $this->getTableName().'.fk_c_country_code = '.DB_TABLE_PREFIX.'t_country.pk_c_code') ;
-            $this->dao->where('i_num_items '.$zero.' 0' ) ;
-            $this->dao->orderBy($order) ;
+            $this->dao->select($this->getTableName().'.fk_c_country_code as country_code, '.$this->getTableName().'.i_num_items as items, '.DB_TABLE_PREFIX.'t_country.s_name as country_name');
+            $this->dao->from($this->getTableName() );
+            $this->dao->join(DB_TABLE_PREFIX.'t_country', $this->getTableName().'.fk_c_country_code = '.DB_TABLE_PREFIX.'t_country.pk_c_code');
+            $this->dao->where('i_num_items '.$zero.' 0' );
+            $this->dao->orderBy($order);
 
-            $rs = $this->dao->get() ;
+            $rs = $this->dao->get();
 
             if($rs === false) {
-                return array() ;
+                return array();
             }
-            return $rs->result() ;
+            return $rs->result();
         }
 
         /**
@@ -185,13 +185,13 @@
          */
         function calculateNumItems($countryCode)
         {
-            $sql  = 'SELECT count(*) as total FROM '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_category ' ;
-            $sql .= 'WHERE '.DB_TABLE_PREFIX.'t_item_location.fk_c_country_code = \''.$countryCode.'\' AND ' ;
-            $sql .= DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id AND ' ;
-            $sql .= DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id AND ' ;
-            $sql .= DB_TABLE_PREFIX.'t_item.b_active = 1 AND '.DB_TABLE_PREFIX.'t_item.b_enabled = 1 AND '.DB_TABLE_PREFIX.'t_item.b_spam = 0 AND ' ;
-            $sql .= '('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_item.dt_expiration >= \''.date('Y-m-d H:i:s').'\' ) AND ' ;
-            $sql .= DB_TABLE_PREFIX.'t_category.b_enabled = 1 ' ;
+            $sql  = 'SELECT count(*) as total FROM '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_category ';
+            $sql .= 'WHERE '.DB_TABLE_PREFIX.'t_item_location.fk_c_country_code = \''.$countryCode.'\' AND ';
+            $sql .= DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id AND ';
+            $sql .= DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id AND ';
+            $sql .= DB_TABLE_PREFIX.'t_item.b_active = 1 AND '.DB_TABLE_PREFIX.'t_item.b_enabled = 1 AND '.DB_TABLE_PREFIX.'t_item.b_spam = 0 AND ';
+            $sql .= '('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_item.dt_expiration >= \''.date('Y-m-d H:i:s').'\' ) AND ';
+            $sql .= DB_TABLE_PREFIX.'t_category.b_enabled = 1 ';
 
             $return = $this->dao->query($sql);
             if($return === false) {
@@ -199,8 +199,8 @@
             }
 
             if($return->numRows() > 0) {
-                $aux = $return->result() ;
-                return $aux[0]['total'] ;
+                $aux = $return->result();
+                return $aux[0]['total'];
             }
 
             return 0;

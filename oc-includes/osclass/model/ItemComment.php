@@ -1,4 +1,4 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -37,7 +37,7 @@
          * @since unknown
          * @var Item
          */
-        private static $instance ;
+        private static $instance;
 
         /**
          * It creates a new ItemComment object class ir if it has been created
@@ -50,9 +50,9 @@
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -60,9 +60,9 @@
          */
         function __construct()
         {
-            parent::__construct() ;
-            $this->setTableName('t_item_comment') ;
-            $this->setPrimaryKey('pk_i_id') ;
+            parent::__construct();
+            $this->setTableName('t_item_comment');
+            $this->setPrimaryKey('pk_i_id');
             $array_fields = array(
                 'pk_i_id',
                 'fk_i_item_id',
@@ -76,7 +76,7 @@
                 'b_spam',
                 'fk_i_user_id'
             );
-            $this->setFields($array_fields) ;
+            $this->setFields($array_fields);
         }
 
         /**
@@ -89,16 +89,16 @@
          */
         function findByItemIDAll($id)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('fk_i_item_id', $id) ;
-            $result = $this->dao->get() ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $this->dao->where('fk_i_item_id', $id);
+            $result = $this->dao->get();
 
             if($result == false) {
                 return array();
             }
 
-            return $result->result() ;
+            return $result->result();
         }
 
         /**
@@ -123,18 +123,18 @@
 
             if( $commentsPerPage == null ) { $commentsPerPage = osc_comments_per_page(); }
 
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
             $conditions = array('fk_i_item_id'  => $id,
                                 'b_active'      => 1,
                                 'b_enabled'     => 1);
-            $this->dao->where($conditions) ;
+            $this->dao->where($conditions);
 
             if( ($page !== 'all') || ($commentsPerPage > 0) ) {
                 $this->dao->limit(($page*$commentsPerPage), $commentsPerPage);
             }
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if($result == false) {
                 return array();
@@ -155,7 +155,7 @@
          */
         function total_comments($id)
         {
-            return $this->totalComments($id) ;
+            return $this->totalComments($id);
         }
 
         /**
@@ -168,14 +168,14 @@
          */
         function totalComments($id)
         {
-            $this->dao->select('count(pk_i_id) as total') ;
-            $this->dao->from($this->getTableName()) ;
+            $this->dao->select('count(pk_i_id) as total');
+            $this->dao->from($this->getTableName());
             $conditions = array('fk_i_item_id'  => $id,
                                 'b_active'      => 1,
                                 'b_enabled'     => 1);
-            $this->dao->where($conditions) ;
-            $this->dao->groupBy('fk_i_item_id') ;
-            $result = $this->dao->get() ;
+            $this->dao->where($conditions);
+            $this->dao->groupBy('fk_i_item_id');
+            $result = $this->dao->get();
 
             if( $result == false ) {
                 return false;
@@ -197,13 +197,13 @@
          */
         function findByAuthorID($id)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
             $conditions = array('fk_i_user_id'  => $id,
                                 'b_active'      => 1,
                                 'b_enabled'     => 1);
-            $this->dao->where($conditions) ;
-            $result = $this->dao->get() ;
+            $this->dao->where($conditions);
+            $result = $this->dao->get();
 
             if($result == false) {
                 return array();
@@ -222,11 +222,11 @@
          */
         function getAllComments($itemId = null)
         {
-            $this->dao->select('c.*') ;
-            $this->dao->from($this->getTableName().' c') ;
-            $this->dao->from(DB_TABLE_PREFIX.'t_item i') ;
+            $this->dao->select('c.*');
+            $this->dao->from($this->getTableName().' c');
+            $this->dao->from(DB_TABLE_PREFIX.'t_item i');
 
-            $conditions = array() ;
+            $conditions = array();
             if(is_null($itemId)) {
                 $conditions = 'c.fk_i_item_id = i.pk_i_id';
             } else {
@@ -236,15 +236,15 @@
                 );
             }
 
-            $this->dao->where($conditions) ;
-            $this->dao->orderBy('c.dt_pub_date','DESC') ;
-            $aux = $this->dao->get() ;
+            $this->dao->where($conditions);
+            $this->dao->orderBy('c.dt_pub_date','DESC');
+            $aux = $this->dao->get();
             if($aux == false) {
                 return array();
             }
-            $comments = $aux->result() ;
+            $comments = $aux->result();
 
-            return $this->extendData($comments) ;
+            return $this->extendData($comments);
         }
 
         /**
@@ -259,11 +259,11 @@
         {
             if(!intval($num)) return false;
 
-            $lang = osc_current_user_locale() ;
+            $lang = osc_current_user_locale();
 
-            $this->dao->select('c.*,c.s_title as comment_title, d.s_title') ;
-            $this->dao->from($this->getTableName().' c') ;
-            $this->dao->join(DB_TABLE_PREFIX.'t_item i', 'i.pk_i_id = c.fk_i_item_id') ;
+            $this->dao->select('c.*,c.s_title as comment_title, d.s_title');
+            $this->dao->from($this->getTableName().' c');
+            $this->dao->join(DB_TABLE_PREFIX.'t_item i', 'i.pk_i_id = c.fk_i_item_id');
             $this->dao->join(DB_TABLE_PREFIX.'t_item_description d', 'd.fk_i_item_id = c.fk_i_item_id');
             $this->dao->orderBy('c.pk_i_id', 'DESC');
             $this->dao->limit(0,$num);
@@ -289,9 +289,9 @@
 
             $results = array();
             foreach($items as $item) {
-                $this->dao->select() ;
-                $this->dao->from(DB_TABLE_PREFIX.'t_item_description') ;
-                $this->dao->where('fk_i_item_id', $item['fk_i_item_id']) ;
+                $this->dao->select();
+                $this->dao->from(DB_TABLE_PREFIX.'t_item_description');
+                $this->dao->where('fk_i_item_id', $item['fk_i_item_id']);
                 $aux = $this->dao->get();
                 if($aux == false) {
                     $descriptions = array();
@@ -304,13 +304,13 @@
                     $item['locale'][$desc['fk_c_locale_code']] = $desc;
                 }
                 if(isset($item['locale'][$prefLocale])) {
-                    $item['s_title']       = $item['locale'][$prefLocale]['s_title'] ;
-                    $item['s_description'] = $item['locale'][$prefLocale]['s_description'] ;
+                    $item['s_title']       = $item['locale'][$prefLocale]['s_title'];
+                    $item['s_description'] = $item['locale'][$prefLocale]['s_description'];
                 } else {
                     $data = current($item['locale']);
-                    $item['s_title']       = $data['s_title'] ;
-                    $item['s_description'] = $data['s_description'] ;
-                    unset($data) ;
+                    $item['s_title']       = $data['s_title'];
+                    $item['s_description'] = $data['s_description'];
+                    unset($data);
                 }
                 $results[] = $item;
             }
@@ -332,11 +332,11 @@
          * @return array
          */
         public function search($itemId = null, $start = 0, $limit = 10, $order_by = 'c.pk_i_id', $order = 'DESC', $all = true) {
-            $this->dao->select('c.*') ;
-            $this->dao->from($this->getTableName().' c') ;
-            $this->dao->from(DB_TABLE_PREFIX.'t_item i') ;
+            $this->dao->select('c.*');
+            $this->dao->from($this->getTableName().' c');
+            $this->dao->from(DB_TABLE_PREFIX.'t_item i');
 
-            $conditions = array() ;
+            $conditions = array();
             if(is_null($itemId)) {
                 $conditions = 'c.fk_i_item_id = i.pk_i_id';
             } else {
@@ -353,14 +353,14 @@
                 $this->dao->where($auxCond);
             }
 
-            $this->dao->orderBy($order_by, $order) ;
+            $this->dao->orderBy($order_by, $order);
             $this->dao->limit($start, $limit);
 
-            $aux = $this->dao->get() ;
+            $aux = $this->dao->get();
             if($aux == false) {
                 return array();
             }
-            return $aux->result() ;
+            return $aux->result();
         }
 
         /**
@@ -370,11 +370,11 @@
          * @return int
          */
         public function count($itemId = null) {
-            $this->dao->select('COUNT(*) AS numrows') ;
-            $this->dao->from($this->getTableName().' c') ;
-            $this->dao->from(DB_TABLE_PREFIX.'t_item i') ;
+            $this->dao->select('COUNT(*) AS numrows');
+            $this->dao->from($this->getTableName().' c');
+            $this->dao->from(DB_TABLE_PREFIX.'t_item i');
 
-            $conditions = array() ;
+            $conditions = array();
             if(is_null($itemId)) {
                 $conditions = 'c.fk_i_item_id = i.pk_i_id';
             } else {
@@ -384,8 +384,8 @@
                 );
             }
 
-            $this->dao->where($conditions) ;
-            $aux = $this->dao->get() ;
+            $this->dao->where($conditions);
+            $aux = $this->dao->get();
             if($aux == false) {
                 return array();
             }
@@ -396,8 +396,8 @@
         public function countAll($aConditions = null )
         {
             $this->dao->select('count(*) as total');
-            $this->dao->from($this->getTableName().' c') ;
-            $this->dao->from(DB_TABLE_PREFIX.'t_item i') ;
+            $this->dao->from($this->getTableName().' c');
+            $this->dao->from(DB_TABLE_PREFIX.'t_item i');
 
             $this->dao->where('c.fk_i_item_id = i.pk_i_id');
             if(!is_null($aConditions)) {

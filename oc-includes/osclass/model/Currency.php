@@ -1,4 +1,4 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -37,7 +37,7 @@
          * @since unknown
          * @var Currency
          */
-        private static $instance ;
+        private static $instance;
 
         /**
          * It creates a new Currency object class ir if it has been created
@@ -50,9 +50,9 @@
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -61,9 +61,9 @@
         function __construct()
         {
             parent::__construct();
-            $this->setTableName('t_currency') ;
-            $this->setPrimaryKey('pk_c_code') ;
-            $this->setFields(array('pk_c_code', 's_name', 's_description', 'b_enabled')) ;
+            $this->setTableName('t_currency');
+            $this->setPrimaryKey('pk_c_code');
+            $this->setFields(array('pk_c_code', 's_name', 's_description', 'b_enabled'));
         }
 
     }

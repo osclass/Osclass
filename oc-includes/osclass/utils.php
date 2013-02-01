@@ -50,9 +50,9 @@ function osc_deleteResource( $id , $admin) {
     if( is_array( $id ) ){
         $id = $id[0];
     }
-    $resource = ItemResource::newInstance()->findByPrimaryKey($id) ;
+    $resource = ItemResource::newInstance()->findByPrimaryKey($id);
     if( !is_null($resource) ){
-        Log::newInstance()->insertLog('item', 'delete resource', $resource['pk_i_id'], $id, $admin?'admin':'user', $admin ? osc_logged_admin_id() : osc_logged_user_id()) ;
+        Log::newInstance()->insertLog('item', 'delete resource', $resource['pk_i_id'], $id, $admin?'admin':'user', $admin ? osc_logged_admin_id() : osc_logged_user_id());
 
         $backtracel = '';
         foreach(debug_backtrace() as $k=>$v){
@@ -63,7 +63,7 @@ function osc_deleteResource( $id , $admin) {
             }
         }
 
-        Log::newInstance()->insertLog('item', 'delete resource backtrace', $resource['pk_i_id'], $backtracel, $admin?'admin':'user', $admin ? osc_logged_admin_id() : osc_logged_user_id()) ;
+        Log::newInstance()->insertLog('item', 'delete resource backtrace', $resource['pk_i_id'], $backtracel, $admin?'admin':'user', $admin ? osc_logged_admin_id() : osc_logged_user_id());
 
         @unlink(osc_base_path() . $resource['s_path'] .$resource['pk_i_id'].".".$resource['s_extension']);
         @unlink(osc_base_path() . $resource['s_path'] .$resource['pk_i_id']."_original.".$resource['s_extension']);
@@ -386,12 +386,12 @@ function osc_sendMail($params) {
 
     if( array_key_exists('add_bcc', $params) ) {
         if( !is_array($params['add_bcc']) && $params['add_bcc'] != '' ) {
-            $params['add_bcc'] = array($params['add_bcc']) ;
+            $params['add_bcc'] = array($params['add_bcc']);
         }
 
         foreach($params['add_bcc'] as $bcc) {
             try {
-                $mail->AddBCC($bcc) ;
+                $mail->AddBCC($bcc);
             } catch ( phpmailerException $e ) {
                 continue;
             }
@@ -400,7 +400,7 @@ function osc_sendMail($params) {
 
     if( array_key_exists('reply_to', $params) ) {
         try {
-            $mail->AddReplyTo($params['reply_to']) ;
+            $mail->AddReplyTo($params['reply_to']);
         } catch (phpmailerException $e) {
             //continue;
         }
@@ -416,7 +416,7 @@ function osc_sendMail($params) {
 
         foreach($params['attachment'] as $attachment) {
             try {
-                $mail->AddAttachment($attachment) ;
+                $mail->AddAttachment($attachment);
             } catch (phpmailerException $e) {
                 continue;
             }
@@ -440,7 +440,7 @@ function osc_sendMail($params) {
 
 function osc_mailBeauty($text, $params) {
 
-    $text = str_ireplace($params[0], $params[1], $text) ;
+    $text = str_ireplace($params[0], $params[1], $text);
     $kwords = array(
         '{WEB_URL}',
         '{WEB_TITLE}',
@@ -457,9 +457,9 @@ function osc_mailBeauty($text, $params) {
         date('H:i'),
         $_SERVER['REMOTE_ADDR']
     );
-    $text = str_ireplace($kwords, $rwords, $text) ;
+    $text = str_ireplace($kwords, $rwords, $text);
 
-    return $text ;
+    return $text;
 }
 
 
@@ -553,37 +553,37 @@ function osc_copyemz($file1,$file2){
 function osc_dbdump($path, $file) {
 
     require_once LIB_PATH . 'osclass/model/Dump.php';
-    if ( !is_writable($path) ) return -4 ;
-    if($path == '') return -1 ;
+    if ( !is_writable($path) ) return -4;
+    if($path == '') return -1;
 
     //checking connection
     $dump = Dump::newInstance();
-    if (!$dump) return -2 ;
+    if (!$dump) return -2;
 
-    $path .= $file ;
+    $path .= $file;
     $result = $dump->showTables();
 
     if(!$result) {
-        $_str = '' ;
-        $_str .= '/* no tables in ' . DB_NAME . ' */' ;
-        $_str .= "\n" ;
+        $_str = '';
+        $_str .= '/* no tables in ' . DB_NAME . ' */';
+        $_str .= "\n";
 
-        $f = fopen($path, "a") ;
-        fwrite($f, $_str) ;
-        fclose($f) ;
+        $f = fopen($path, "a");
+        fwrite($f, $_str);
+        fclose($f);
 
-        return -3 ;
+        return -3;
     }
 
-    $_str = '' ;
-    $_str .= '/* OSCLASS MYSQL Autobackup (' . date('Y-m-d H:i:s') . ') */' ;
-    $_str .= "\n" ;
+    $_str = '';
+    $_str .= '/* OSCLASS MYSQL Autobackup (' . date('Y-m-d H:i:s') . ') */';
+    $_str .= "\n";
 
-    $f = fopen($path, "a") ;
-    fwrite($f, $_str) ;
-    fclose($f) ;
+    $f = fopen($path, "a");
+    fwrite($f, $_str);
+    fclose($f);
 
-    $tables = array() ;
+    $tables = array();
     foreach($result as $_table) {
         $tableName = current($_table);
         $tables[$tableName] = $tableName;
@@ -593,19 +593,19 @@ function osc_dbdump($path, $file) {
     // Backup default Osclass tables in order, so no problem when importing them back
     foreach($tables_order as $table) {
         if(array_key_exists(DB_TABLE_PREFIX . $table, $tables)) {
-            $dump->table_structure($path, DB_TABLE_PREFIX . $table) ;
-            $dump->table_data($path, DB_TABLE_PREFIX . $table) ;
-            unset($tables[DB_TABLE_PREFIX . $table]) ;
+            $dump->table_structure($path, DB_TABLE_PREFIX . $table);
+            $dump->table_data($path, DB_TABLE_PREFIX . $table);
+            unset($tables[DB_TABLE_PREFIX . $table]);
         }
     }
 
     // Backup the rest of tables
     foreach($tables as $table) {
-        $dump->table_structure($path, $table) ;
-        $dump->table_data($path, $table) ;
+        $dump->table_structure($path, $table);
+        $dump->table_data($path, $table);
     }
 
-    return 1 ;
+    return 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -811,7 +811,7 @@ function osc_downloadFile($sourceFile, $downloadedFile)
         if($fp) {
             $ch = curl_init($sourceFile);
             @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
-            curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')') ;
+            curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')');
             curl_setopt($ch, CURLOPT_FILE, $fp);
             @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_REFERER, osc_base_url());
@@ -833,10 +833,10 @@ function osc_downloadFile($sourceFile, $downloadedFile)
 function osc_file_get_contents($url)
 {
     if( testCurl() ) {
-        $ch = curl_init() ;
-        curl_setopt($ch, CURLOPT_URL, $url) ;
-        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')') ;
-        if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1) ;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')');
+        if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1);
         @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_REFERER, osc_base_url());
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -880,7 +880,7 @@ function osc_changeVersionTo($version = null) {
     if($version != null) {
         Preference::newInstance()->update(array('s_value' => $version), array( 's_section' => 'osclass', 's_name' => 'version'));
         //XXX: I don't know if it's really needed. Only for reload the values of the preferences
-        Preference::newInstance()->toArray() ;
+        Preference::newInstance()->toArray();
     }
 }
 
@@ -1335,25 +1335,25 @@ function _need_update($uri, $version, $operator = '>') {
  * @return boolean
  */
 function osc_update_cat_stats() {
-    $categoryTotal = array() ;
-    $categoryTree  = array() ;
-    $aCategories   = Category::newInstance()->listAll(false) ;
+    $categoryTotal = array();
+    $categoryTree  = array();
+    $aCategories   = Category::newInstance()->listAll(false);
 
     // append root categories and get the number of items of each category
     foreach($aCategories as $category) {
-        $total     = Item::newInstance()->numItems($category, true, true) ;
-        $category += array('category' => array()) ;
+        $total     = Item::newInstance()->numItems($category, true, true);
+        $category += array('category' => array());
         if( is_null($category['fk_i_parent_id']) ) {
-            $categoryTree += array($category['pk_i_id'] => $category) ;
+            $categoryTree += array($category['pk_i_id'] => $category);
         }
 
-        $categoryTotal += array($category['pk_i_id'] => $total) ;
+        $categoryTotal += array($category['pk_i_id'] => $total);
     }
 
     // append childs to root categories
     foreach($aCategories as $category) {
         if( !is_null($category['fk_i_parent_id']) ) {
-            $categoryTree[$category['fk_i_parent_id']]['category'][] = $category ;
+            $categoryTree[$category['fk_i_parent_id']]['category'][] = $category;
         }
     }
 
@@ -1361,7 +1361,7 @@ function osc_update_cat_stats() {
     foreach($categoryTree as $category) {
         if( count( $category['category'] ) > 0 ) {
             foreach($category['category'] as $subcategory) {
-                $categoryTotal[$category['pk_i_id']] += $categoryTotal[$subcategory['pk_i_id']] ;
+                $categoryTotal[$category['pk_i_id']] += $categoryTotal[$subcategory['pk_i_id']];
             }
         }
     }
@@ -1394,13 +1394,13 @@ function osc_update_cat_stats_id($id)
     if( count($aCategories) > 0 ) {
         // sumar items de la categoría
         foreach($aCategories as $category) {
-            $total     = Item::newInstance()->numItems($category, true, true) ;
+            $total     = Item::newInstance()->numItems($category, true, true);
             $categoryTotal += $total;
         }
-        $categoryTotal += Item::newInstance()->numItems(Category::newInstance()->findByPrimaryKey($id), true, true) ;
+        $categoryTotal += Item::newInstance()->numItems(Category::newInstance()->findByPrimaryKey($id), true, true);
     } else {
         $category  = Category::newInstance()->findByPrimaryKey($id);
-        $total     = Item::newInstance()->numItems($category, true, true) ;
+        $total     = Item::newInstance()->numItems($category, true, true);
         $categoryTotal += $total;
     }
 

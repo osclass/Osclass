@@ -1,4 +1,4 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
      * Osclass – software for creating and publishing online classified advertising platforms
      *
@@ -27,7 +27,7 @@
         <h1><?php _e('Listing'); ?>
             <a href="<?php echo osc_admin_base_url(true); ?>?page=items&amp;action=settings" class="btn ico ico-32 ico-engine float-right"></a>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
-            <a href="<?php echo osc_admin_base_url(true) . '?page=items&action=post' ; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add listing'); ?></a>
+            <a href="<?php echo osc_admin_base_url(true) . '?page=items&action=post'; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add listing'); ?></a>
     </h1>
 <?php
     }
@@ -40,12 +40,12 @@
 
     //customize Head
     function customHead() {
-        ItemForm::location_javascript_new('admin') ; ?>
+        ItemForm::location_javascript_new('admin'); ?>
         <script type="text/javascript">
             // autocomplete users
             $(document).ready(function(){
                 $('#filter-select').change( function () {
-                    var option = $(this).find('option:selected').attr('value') ;
+                    var option = $(this).find('option:selected').attr('value');
                     // clean values
                     $('#fPattern,#fUser,#fItemId').attr('value', '');
                     if(option == 'oPattern') {
@@ -117,7 +117,7 @@
                     autoOpen: false,
                     modal: true,
                     width: 700,
-                    title: '<?php echo osc_esc_js( __('Filters') ) ; ?>'
+                    title: '<?php echo osc_esc_js( __('Filters') ); ?>'
                 });
                 $('#btn-display-filters').click(function(){
                     $('#display-filters').dialog('open');
@@ -161,7 +161,7 @@
     $columns    = $aData['aColumns'];
     $rows       = $aData['aRows'];
 
-    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+    osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
     <input type="hidden" name="page" value="items" />
     <input type="hidden" name="iDisplayLength" value="<?php echo $iDisplayLength;?>" />
@@ -171,7 +171,7 @@
             <div class="row-wrapper">
                 <div class="form-row">
                     <div class="form-label">
-                        <?php _e('Pattern') ; ?>
+                        <?php _e('Pattern'); ?>
                     </div>
                     <div class="form-controls">
                         <input type="text" name="sSearch" id="sSearch" value="<?php echo osc_esc_html(Params::getParam('sSearch')); ?>" />
@@ -179,15 +179,15 @@
                 </div>
                 <div class="form-row">
                     <div class="form-label">
-                        <?php _e('Category') ; ?>
+                        <?php _e('Category'); ?>
                     </div>
                     <div class="form-controls">
-                        <?php ManageItemsForm::category_select($categories, null, null, true) ; ?>
+                        <?php ManageItemsForm::category_select($categories, null, null, true); ?>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-label">
-                        <?php _e('Country') ; ?>
+                        <?php _e('Country'); ?>
                     </div>
                     <div class="form-controls">
                         <?php ManageItemsForm::country_text(); ?>
@@ -195,7 +195,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-label">
-                        <?php _e('Region') ; ?>
+                        <?php _e('Region'); ?>
                     </div>
                     <div class="form-controls">
                         <?php ManageItemsForm::region_text(); ?>
@@ -203,7 +203,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-label">
-                        <?php _e('City') ; ?>
+                        <?php _e('City'); ?>
                     </div>
                     <div class="form-controls">
                         <?php ManageItemsForm::city_text(); ?>
@@ -215,7 +215,7 @@
             <div class="row-wrapper">
                 <div class="form-row">
                     <div class="form-label">
-                        <?php _e('Email') ; ?>
+                        <?php _e('Email'); ?>
                     </div>
                     <div class="form-controls">
                         <input id="user" name="user" type="text" value="<?php echo osc_esc_html(Params::getParam('user')); ?>" />
@@ -224,7 +224,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-label">
-                        <?php _e('Premium') ; ?>
+                        <?php _e('Premium'); ?>
                     </div>
                     <div class="form-controls">
                         <select id="b_premium" name="b_premium">
@@ -236,7 +236,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-label">
-                        <?php _e('Active') ; ?>
+                        <?php _e('Active'); ?>
                     </div>
                     <div class="form-controls">
                         <select id="b_active" name="b_active">
@@ -248,7 +248,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-label">
-                        <?php _e('Block') ; ?>
+                        <?php _e('Block'); ?>
                     </div>
                     <div class="form-controls">
                         <select id="b_enabled" name="b_enabled">
@@ -260,7 +260,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-label">
-                        <?php _e('Spam') ; ?>
+                        <?php _e('Spam'); ?>
                     </div>
                     <div class="form-controls">
                         <select id="b_spam" name="b_spam">
@@ -277,12 +277,12 @@
     </div>
     <div class="form-actions">
         <div class="wrapper">
-        <input id="show-filters" type="submit" value="<?php echo osc_esc_html( __('Apply filters') ) ; ?>" class="btn btn-submit" />
-        <a class="btn" href="<?php echo osc_admin_base_url(true).'?page=items'; ?>"><?php _e('Reset filters') ; ?></a>
+        <input id="show-filters" type="submit" value="<?php echo osc_esc_html( __('Apply filters') ); ?>" class="btn btn-submit" />
+        <a class="btn" href="<?php echo osc_admin_base_url(true).'?page=items'; ?>"><?php _e('Reset filters'); ?></a>
         </div>
     </div>
 </form>
-<h2 class="render-title"><?php _e('Manage listings'); ?> <a href="<?php echo osc_admin_base_url(true) . '?page=items&action=post' ; ?>" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
+<h2 class="render-title"><?php _e('Manage listings'); ?> <a href="<?php echo osc_admin_base_url(true) . '?page=items&action=post'; ?>" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
 <div class="relative">
     <div id="listing-toolbar">
         <div class="float-right">
@@ -302,9 +302,9 @@
                 <input type="hidden" name="page" value="items" />
                 <input type="hidden" name="iDisplayLength" value="<?php echo $iDisplayLength;?>" />
                 <?php if($withFilters) { ?>
-                <a id="btn-hide-filters" class="btn" href="<?php echo osc_admin_base_url(true).'?page=items'; ?>"><?php _e('Reset filters') ; ?></a>
+                <a id="btn-hide-filters" class="btn" href="<?php echo osc_admin_base_url(true).'?page=items'; ?>"><?php _e('Reset filters'); ?></a>
                 <?php } ?>
-                <a id="btn-display-filters" href="#" class="btn <?php if($withFilters) { echo 'btn-red'; } ?>"><?php _e('Show filters') ; ?></a>
+                <a id="btn-display-filters" href="#" class="btn <?php if($withFilters) { echo 'btn-red'; } ?>"><?php _e('Show filters'); ?></a>
 
                 <?php $opt = "oPattern"; if(Params::getParam('shortcut-filter') != '') { $opt = Params::getParam('shortcut-filter'); } ?>
                 <?php $classPattern = 'hide'; $classUser = 'hide'; $classItemId = 'hide'; ?>
@@ -312,9 +312,9 @@
                 <?php if($opt == 'oPattern') { $classPattern = ''; } ?>
                 <?php if($opt == 'oItemId') { $classItemId = ''; } ?>
                 <select id="filter-select" name="shortcut-filter" class="select-box-extra select-box-input">
-                    <option value="oPattern" <?php if($opt == 'oPattern'){ echo 'selected="selected"'; } ?>><?php _e('Pattern') ; ?></option>
-                    <option value="oUser" <?php if($opt == 'oUser'){ echo 'selected="selected"'; } ?>><?php _e('Email') ; ?></option>
-                    <option value="oItemId" <?php if($opt == 'oItemId'){ echo 'selected="selected"'; } ?>><?php _e('Item ID') ; ?></option>
+                    <option value="oPattern" <?php if($opt == 'oPattern'){ echo 'selected="selected"'; } ?>><?php _e('Pattern'); ?></option>
+                    <option value="oUser" <?php if($opt == 'oUser'){ echo 'selected="selected"'; } ?>><?php _e('Email'); ?></option>
+                    <option value="oItemId" <?php if($opt == 'oItemId'){ echo 'selected="selected"'; } ?>><?php _e('Item ID'); ?></option>
                 </select><input
                     id="fPattern" type="text" name="sSearch"
                     value="<?php echo osc_esc_html(Params::getParam('sSearch')); ?>"
@@ -328,17 +328,17 @@
                     value="<?php echo osc_esc_html(Params::getParam('itemId')); ?>"
                     class="input-text input-actions input-has-select <?php echo $classItemId; ?>"/>
 
-                <input type="submit" class="btn submit-right" value="<?php echo osc_esc_html( __('Find') ) ; ?>">
+                <input type="submit" class="btn submit-right" value="<?php echo osc_esc_html( __('Find') ); ?>">
             </form>
         </div>
     </div>
-    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post" data-dialog-open="false">
+    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>" method="post" data-dialog-open="false">
         <input type="hidden" name="page" value="items" />
         <input type="hidden" name="action" value="bulk_actions" />
         <div id="bulk-actions">
             <label>
                 <?php osc_print_bulk_actions('bulk_actions', 'bulk_actions', __get('bulk_options'), 'select-box-extra'); ?>
-                <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ); ?>" />
             </label>
         </div>
         <div class="table-contains-actions">
@@ -381,7 +381,7 @@
 <?php
     function showingResults(){
         $aData = __get("aData");
-        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aRows']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;
+        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aRows']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>';
     }
     osc_add_hook('before_show_pagination_admin','showingResults');
     osc_show_pagination_admin($aData);
@@ -414,4 +414,4 @@
         </div>
     </div>
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

@@ -1,4 +1,4 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
 
 osc_add_filter('admin_body_class', 'admin_modeCompact_class');
 function admin_modeCompact_class($args){
@@ -120,7 +120,7 @@ function printLocaleTitle($locales = null, $item = null) {
     $num_locales = count($locales);
     foreach($locales as $locale) {
         echo '<div class="input-has-placeholder input-title-wide"><label for="title">' . __('Enter title here') . ' *</label>';
-        $title = (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_title'])) ? $item['locale'][$locale['pk_c_code']]['s_title'] : '' ;
+        $title = (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_title'])) ? $item['locale'][$locale['pk_c_code']]['s_title'] : '';
         if( Session::newInstance()->_getForm('title') != "" ) {
             $title_ = Session::newInstance()->_getForm('title');
             if( $title_[$locale['pk_c_code']] != "" ){
@@ -128,7 +128,7 @@ function printLocaleTitle($locales = null, $item = null) {
             }
         }
         $name = 'title'. '[' . $locale['pk_c_code'] . ']';
-        echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($title, ENT_COMPAT, "UTF-8")) . '"  />' ;
+        echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($title, ENT_COMPAT, "UTF-8")) . '"  />';
         echo '</div>';
     }
 }
@@ -149,7 +149,7 @@ function printLocaleTitlePage($locales = null,$page = null) {
         $name = $locale['pk_c_code'] . '#s_title';
 
         echo '<div class="input-has-placeholder input-title-wide"><label for="title">' . __('Enter title here') . ' *</label>';
-        echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($title, ENT_COMPAT, "UTF-8")) . '"  />' ;
+        echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . osc_esc_html(htmlentities($title, ENT_COMPAT, "UTF-8")) . '"  />';
         echo '</div>';
     }
 }
@@ -168,7 +168,7 @@ function printLocaleDescription($locales = null, $item = null) {
                 $description = $description_[$locale['pk_c_code']];
             }
         }
-        echo '<textarea id="' . $name . '" name="' . $name . '" rows="10">' . $description . '</textarea></div>' ;
+        echo '<textarea id="' . $name . '" name="' . $name . '" rows="10">' . $description . '</textarea></div>';
     }
 }
 function printLocaleDescriptionPage($locales = null, $page = null) {
@@ -186,7 +186,7 @@ function printLocaleDescriptionPage($locales = null, $page = null) {
         }
         $name = $locale['pk_c_code'] . '#s_text';
         echo '<div><label for="description">' . __('Description') . ' *</label>';
-        echo '<textarea id="' . $name . '" name="' . $name . '" rows="10">' . $description . '</textarea></div>' ;
+        echo '<textarea id="' . $name . '" name="' . $name . '" rows="10">' . $description . '</textarea></div>';
     }
 }
 

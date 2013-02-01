@@ -195,7 +195,7 @@
 			}
 			
 			_fnCalculateColumnWidths( oSettings );
-			for ( var i=0 , iLen=oSettings.aoColumns.length ; i<iLen ; i++ )
+			for ( var i=0 , iLen=oSettings.aoColumns.length; i<iLen; i++ )
 			{
 				oSettings.aoColumns[i].nTh.style.width = oSettings.aoColumns[i].sWidth;
 			}
@@ -214,7 +214,7 @@
 		{
 			var iColumn = -1;
 			
-			for ( var i=0 ; i<oSettings.aoColumns.length ; i++ )
+			for ( var i=0; i<oSettings.aoColumns.length; i++ )
 			{
 				if ( oSettings.aoColumns[i].bVisible === true )
 				{
@@ -242,7 +242,7 @@
 		function _fnColumnIndexToVisible( oSettings, iMatch )
 		{
 			var iVisible = -1;
-			for ( var i=0 ; i<oSettings.aoColumns.length ; i++ )
+			for ( var i=0; i<oSettings.aoColumns.length; i++ )
 			{
 				if ( oSettings.aoColumns[i].bVisible === true )
 				{
@@ -268,7 +268,7 @@
 		function _fnVisbleColumns( oS )
 		{
 			var iVis = 0;
-			for ( var i=0 ; i<oS.aoColumns.length ; i++ )
+			for ( var i=0; i<oS.aoColumns.length; i++ )
 			{
 				if ( oS.aoColumns[i].bVisible === true )
 				{
@@ -290,7 +290,7 @@
 			var aTypes = DataTable.ext.aTypes;
 			var iLen = aTypes.length;
 			
-			for ( var i=0 ; i<iLen ; i++ )
+			for ( var i=0; i<iLen; i++ )
 			{
 				var sType = aTypes[i]( sData );
 				if ( sType !== null )
@@ -314,9 +314,9 @@
 			var aColumns = sColumns.split(',');
 			var aiReturn = [];
 			
-			for ( var i=0, iLen=oSettings.aoColumns.length ; i<iLen ; i++ )
+			for ( var i=0, iLen=oSettings.aoColumns.length; i<iLen; i++ )
 			{
-				for ( var j=0 ; j<iLen ; j++ )
+				for ( var j=0; j<iLen; j++ )
 				{
 					if ( oSettings.aoColumns[i].sName == aColumns[j] )
 					{
@@ -339,7 +339,7 @@
 		function _fnColumnOrdering ( oSettings )
 		{
 			var sNames = '';
-			for ( var i=0, iLen=oSettings.aoColumns.length ; i<iLen ; i++ )
+			for ( var i=0, iLen=oSettings.aoColumns.length; i<iLen; i++ )
 			{
 				sNames += oSettings.aoColumns[i].sName+',';
 			}
@@ -370,7 +370,7 @@
 			if ( aoColDefs )
 			{
 				/* Loop over the definitions array - loop in reverse so first instance has priority */
-				for ( i=aoColDefs.length-1 ; i>=0 ; i-- )
+				for ( i=aoColDefs.length-1; i>=0; i-- )
 				{
 					/* Each definition can target multiple columns, as it is an array */
 					var aTargets = aoColDefs[i].aTargets;
@@ -379,7 +379,7 @@
 						_fnLog( oSettings, 1, 'aTargets must be an array of targets, not a '+(typeof aTargets) );
 					}
 		
-					for ( j=0, jLen=aTargets.length ; j<jLen ; j++ )
+					for ( j=0, jLen=aTargets.length; j<jLen; j++ )
 					{
 						if ( typeof aTargets[j] === 'number' && aTargets[j] >= 0 )
 						{
@@ -400,7 +400,7 @@
 						else if ( typeof aTargets[j] === 'string' )
 						{
 							/* Class name matching on TH element */
-							for ( k=0, kLen=oSettings.aoColumns.length ; k<kLen ; k++ )
+							for ( k=0, kLen=oSettings.aoColumns.length; k<kLen; k++ )
 							{
 								if ( aTargets[j] == "_all" ||
 								     $(oSettings.aoColumns[k].nTh).hasClass( aTargets[j] ) )
@@ -416,7 +416,7 @@
 			// Statically defined columns array
 			if ( aoCols )
 			{
-				for ( i=0, iLen=aoCols.length ; i<iLen ; i++ )
+				for ( i=0, iLen=aoCols.length; i<iLen; i++ )
 				{
 					fn( i, aoCols[i] );
 				}
@@ -451,7 +451,7 @@
 		
 			/* Create the cells */
 			var nTd, sThisType;
-			for ( var i=0, iLen=oSettings.aoColumns.length ; i<iLen ; i++ )
+			for ( var i=0, iLen=oSettings.aoColumns.length; i<iLen; i++ )
 			{
 				oCol = oSettings.aoColumns[i];
 		
@@ -519,7 +519,7 @@
 			if ( oSettings.bDeferLoading || oSettings.sAjaxSource === null )
 			{
 				nTrs = oSettings.nTBody.childNodes;
-				for ( i=0, iLen=nTrs.length ; i<iLen ; i++ )
+				for ( i=0, iLen=nTrs.length; i<iLen; i++ )
 				{
 					if ( nTrs[i].nodeName.toUpperCase() == "TR" )
 					{
@@ -533,7 +533,7 @@
 						nTds = nTrs[i].childNodes;
 						jInner = 0;
 						
-						for ( j=0, jLen=nTds.length ; j<jLen ; j++ )
+						for ( j=0, jLen=nTds.length; j<jLen; j++ )
 						{
 							sNodeName = nTds[j].nodeName.toUpperCase();
 							if ( sNodeName == "TD" || sNodeName == "TH" )
@@ -552,9 +552,9 @@
 			 */
 			nTrs = _fnGetTrNodes( oSettings );
 			nTds = [];
-			for ( i=0, iLen=nTrs.length ; i<iLen ; i++ )
+			for ( i=0, iLen=nTrs.length; i<iLen; i++ )
 			{
-				for ( j=0, jLen=nTrs[i].childNodes.length ; j<jLen ; j++ )
+				for ( j=0, jLen=nTrs[i].childNodes.length; j<jLen; j++ )
 				{
 					nTd = nTrs[i].childNodes[j];
 					sNodeName = nTd.nodeName.toUpperCase();
@@ -566,7 +566,7 @@
 			}
 			
 			/* Now process by column */
-			for ( iColumn=0, iColumns=oSettings.aoColumns.length ; iColumn<iColumns ; iColumn++ )
+			for ( iColumn=0, iColumns=oSettings.aoColumns.length; iColumn<iColumns; iColumn++ )
 			{
 				oCol = oSettings.aoColumns[iColumn];
 		
@@ -586,7 +586,7 @@
 				/* A single loop to rule them all (and be more efficient) */
 				if ( bAutoType || bRender || bClass || !bVisible )
 				{
-					for ( iRow=0, iRows=oSettings.aoData.length ; iRow<iRows ; iRow++ )
+					for ( iRow=0, iRows=oSettings.aoData.length; iRow<iRows; iRow++ )
 					{
 						oData = oSettings.aoData[iRow];
 						nCell = nTds[ (iRow*iColumns) + iColumn ];
@@ -658,7 +658,7 @@
 			/* Row created callbacks */
 			if ( oSettings.aoRowCreatedCallback.length !== 0 )
 			{
-				for ( i=0, iLen=oSettings.aoData.length ; i<iLen ; i++ )
+				for ( i=0, iLen=oSettings.aoData.length; i<iLen; i++ )
 				{
 					oData = oSettings.aoData[i];
 					_fnCallbackFire( oSettings, 'aoRowCreatedCallback', null, [oData.nTr, oData._aData, i] );
@@ -692,7 +692,7 @@
 		{
 			var anCells = _fnGetTdNodes( oSettings, iRow );
 		
-			for ( var i=0, iLen=oSettings.aoColumns.length ; i<iLen ; i++ )
+			for ( var i=0, iLen=oSettings.aoColumns.length; i<iLen; i++ )
 			{
 				if ( anCells[i] === n )
 				{
@@ -714,7 +714,7 @@
 		function _fnGetRowData( oSettings, iRow, sSpecific )
 		{
 			var out = [];
-			for ( var i=0, iLen=oSettings.aoColumns.length ; i<iLen ; i++ )
+			for ( var i=0, iLen=oSettings.aoColumns.length; i<iLen; i++ )
 			{
 				out.push( _fnGetCellData( oSettings, iRow, i, sSpecific ) );
 			}
@@ -817,7 +817,7 @@
 				 */
 				var a = mSource.split('.');
 				return function (data, type) {
-					for ( var i=0, iLen=a.length ; i<iLen ; i++ )
+					for ( var i=0, iLen=a.length; i<iLen; i++ )
 					{
 						data = data[ a[i] ];
 						if ( data === undefined )
@@ -863,7 +863,7 @@
 				/* Like the get, we need to get data from a nested object.  */
 				var a = mSource.split('.');
 				return function (data, val) {
-					for ( var i=0, iLen=a.length-1 ; i<iLen ; i++ )
+					for ( var i=0, iLen=a.length-1; i<iLen; i++ )
 					{
 						data = data[ a[i] ];
 						if ( data === undefined )
@@ -894,7 +894,7 @@
 		{
 			var aData = [];
 			var iLen = oSettings.aoData.length;
-			for ( var i=0 ; i<iLen; i++ )
+			for ( var i=0; i<iLen; i++ )
 			{
 				aData.push( oSettings.aoData[i]._aData );
 			}
@@ -927,7 +927,7 @@
 		{
 			var iTargetIndex = -1;
 			
-			for ( var i=0, iLen=a.length ; i<iLen ; i++ )
+			for ( var i=0, iLen=a.length; i<iLen; i++ )
 			{
 				if ( a[i] == iTarget )
 				{
@@ -1001,7 +1001,7 @@
 				}
 		
 				/* Process each column */
-				for ( var i=0, iLen=oSettings.aoColumns.length ; i<iLen ; i++ )
+				for ( var i=0, iLen=oSettings.aoColumns.length; i<iLen; i++ )
 				{
 					var oCol = oSettings.aoColumns[i];
 					nTd = document.createElement( oCol.sCellType );
@@ -1058,7 +1058,7 @@
 			if ( iThs !== 0 )
 			{
 				/* We've got a thead from the DOM, so remove hidden columns and apply width to vis cols */
-				for ( i=0, iLen=oSettings.aoColumns.length ; i<iLen ; i++ )
+				for ( i=0, iLen=oSettings.aoColumns.length; i<iLen; i++ )
 				{
 					nTh = oSettings.aoColumns[i].nTh;
 					nTh.setAttribute('role', 'columnheader');
@@ -1085,7 +1085,7 @@
 				/* We don't have a header in the DOM - so we are going to have to create one */
 				var nTr = document.createElement( "tr" );
 				
-				for ( i=0, iLen=oSettings.aoColumns.length ; i<iLen ; i++ )
+				for ( i=0, iLen=oSettings.aoColumns.length; i<iLen; i++ )
 				{
 					nTh = oSettings.aoColumns[i].nTh;
 					nTh.innerHTML = oSettings.aoColumns[i].sTitle;
@@ -1108,7 +1108,7 @@
 			/* Add the extra markup needed by jQuery UI's themes */
 			if ( oSettings.bJUI )
 			{
-				for ( i=0, iLen=oSettings.aoColumns.length ; i<iLen ; i++ )
+				for ( i=0, iLen=oSettings.aoColumns.length; i<iLen; i++ )
 				{
 					nTh = oSettings.aoColumns[i].nTh;
 					
@@ -1125,7 +1125,7 @@
 			
 			if ( oSettings.oFeatures.bSort )
 			{
-				for ( i=0 ; i<oSettings.aoColumns.length ; i++ )
+				for ( i=0; i<oSettings.aoColumns.length; i++ )
 				{
 					if ( oSettings.aoColumns[i].bSortable !== false )
 					{
@@ -1148,7 +1148,7 @@
 			if ( oSettings.nTFoot !== null )
 			{
 				var anCells = _fnGetUniqueThs( oSettings, null, oSettings.aoFooter );
-				for ( i=0, iLen=oSettings.aoColumns.length ; i<iLen ; i++ )
+				for ( i=0, iLen=oSettings.aoColumns.length; i<iLen; i++ )
 				{
 					if ( anCells[i] )
 					{
@@ -1190,13 +1190,13 @@
 			}
 		
 			/* Make a copy of the master layout array, but without the visible columns in it */
-			for ( i=0, iLen=aoSource.length ; i<iLen ; i++ )
+			for ( i=0, iLen=aoSource.length; i<iLen; i++ )
 			{
 				aoLocal[i] = aoSource[i].slice();
 				aoLocal[i].nTr = aoSource[i].nTr;
 		
 				/* Remove any columns which are currently hidden */
-				for ( j=iColumns-1 ; j>=0 ; j-- )
+				for ( j=iColumns-1; j>=0; j-- )
 				{
 					if ( !oSettings.aoColumns[j].bVisible && !bIncludeHidden )
 					{
@@ -1208,7 +1208,7 @@
 				aApplied.push( [] );
 			}
 		
-			for ( i=0, iLen=aoLocal.length ; i<iLen ; i++ )
+			for ( i=0, iLen=aoLocal.length; i<iLen; i++ )
 			{
 				nLocalTr = aoLocal[i].nTr;
 				
@@ -1221,7 +1221,7 @@
 					}
 				}
 		
-				for ( j=0, jLen=aoLocal[i].length ; j<jLen ; j++ )
+				for ( j=0, jLen=aoLocal[i].length; j<jLen; j++ )
 				{
 					iRowspan = 1;
 					iColspan = 1;
@@ -1247,7 +1247,7 @@
 						        aoLocal[i][j].cell == aoLocal[i][j+iColspan].cell )
 						{
 							/* Must update the applied array over the rows for the columns */
-							for ( k=0 ; k<iRowspan ; k++ )
+							for ( k=0; k<iRowspan; k++ )
 							{
 								aApplied[i+k][j+iColspan] = 1;
 							}
@@ -1329,7 +1329,7 @@
 					iEnd = oSettings.aoData.length;
 				}
 				
-				for ( var j=iStart ; j<iEnd ; j++ )
+				for ( var j=iStart; j<iEnd; j++ )
 				{
 					var aoData = oSettings.aoData[ oSettings.aiDisplay[j] ];
 					if ( aoData.nTr === null )
@@ -1360,7 +1360,7 @@
 					/* If there is an open row - and it is attached to this parent - attach it on redraw */
 					if ( iOpenRows !== 0 )
 					{
-						for ( var k=0 ; k<iOpenRows ; k++ )
+						for ( var k=0; k<iOpenRows; k++ )
 						{
 							if ( nRow == oSettings.aoOpenRows[k].nParent )
 							{
@@ -1436,7 +1436,7 @@
 				}
 				
 				/* Put the draw table into the dom */
-				for ( i=0, iLen=anRows.length ; i<iLen ; i++ )
+				for ( i=0, iLen=anRows.length; i<iLen; i++ )
 				{
 					nAddFrag.appendChild( anRows[i] );
 				}
@@ -1518,7 +1518,7 @@
 			/* Loop over the user set positioning and place the elements as needed */
 			var aDom = oSettings.sDom.split('');
 			var nTmp, iPushFeature, cOption, nNewNode, cNext, sAttr, j;
-			for ( var i=0 ; i<aDom.length ; i++ )
+			for ( var i=0; i<aDom.length; i++ )
 			{
 				iPushFeature = 0;
 				cOption = aDom[i];
@@ -1619,7 +1619,7 @@
 				{
 					/* Plug-in features */
 					var aoFeatures = DataTable.ext.aoFeatures;
-					for ( var k=0, kLen=aoFeatures.length ; k<kLen ; k++ )
+					for ( var k=0, kLen=aoFeatures.length; k<kLen; k++ )
 					{
 						if ( cOption == aoFeatures[k].cFeature )
 						{
@@ -1674,18 +1674,18 @@
 			aLayout.splice( 0, aLayout.length );
 			
 			/* We know how many rows there are in the layout - so prep it */
-			for ( i=0, iLen=nTrs.length ; i<iLen ; i++ )
+			for ( i=0, iLen=nTrs.length; i<iLen; i++ )
 			{
 				aLayout.push( [] );
 			}
 			
 			/* Calculate a layout array */
-			for ( i=0, iLen=nTrs.length ; i<iLen ; i++ )
+			for ( i=0, iLen=nTrs.length; i<iLen; i++ )
 			{
 				var iColumn = 0;
 				
 				/* For every cell in the row... */
-				for ( j=0, jLen=nTrs[i].childNodes.length ; j<jLen ; j++ )
+				for ( j=0, jLen=nTrs[i].childNodes.length; j<jLen; j++ )
 				{
 					nCell = nTrs[i].childNodes[j];
 		
@@ -1704,9 +1704,9 @@
 						iColShifted = fnShiftCol( aLayout, i, iColumn );
 						
 						/* If there is col / rowspan, copy the information into the layout grid */
-						for ( l=0 ; l<iColspan ; l++ )
+						for ( l=0; l<iColspan; l++ )
 						{
-							for ( k=0 ; k<iRowspan ; k++ )
+							for ( k=0; k<iRowspan; k++ )
 							{
 								aLayout[i+k][iColShifted+l] = {
 									"cell": nCell,
@@ -1742,9 +1742,9 @@
 				}
 			}
 		
-			for ( var i=0, iLen=aLayout.length ; i<iLen ; i++ )
+			for ( var i=0, iLen=aLayout.length; i<iLen; i++ )
 			{
-				for ( var j=0, jLen=aLayout[i].length ; j<jLen ; j++ )
+				for ( var j=0, jLen=aLayout[i].length; j<jLen; j++ )
 				{
 					if ( aLayout[i][j].unique && 
 						 (!aReturn[j] || !oSettings.bSortCellsTop) )
@@ -1807,7 +1807,7 @@
 			aoData.push( { "name": "iDisplayLength", "value": oSettings.oFeatures.bPaginate !== false ?
 				oSettings._iDisplayLength : -1 } );
 				
-			for ( i=0 ; i<iColumns ; i++ )
+			for ( i=0; i<iColumns; i++ )
 			{
 			  mDataProp = oSettings.aoColumns[i].mDataProp;
 				aoData.push( { "name": "mDataProp_"+i, "value": typeof(mDataProp)==="function" ? 'function' : mDataProp } );
@@ -1818,7 +1818,7 @@
 			{
 				aoData.push( { "name": "sSearch", "value": oSettings.oPreviousSearch.sSearch } );
 				aoData.push( { "name": "bRegex",  "value": oSettings.oPreviousSearch.bRegex } );
-				for ( i=0 ; i<iColumns ; i++ )
+				for ( i=0; i<iColumns; i++ )
 				{
 					aoData.push( { "name": "sSearch_"+i,     "value": oSettings.aoPreSearchCols[i].sSearch } );
 					aoData.push( { "name": "bRegex_"+i,      "value": oSettings.aoPreSearchCols[i].bRegex } );
@@ -1835,11 +1835,11 @@
 					oSettings.aaSortingFixed.concat( oSettings.aaSorting ) :
 					oSettings.aaSorting.slice();
 				
-				for ( i=0 ; i<aaSort.length ; i++ )
+				for ( i=0; i<aaSort.length; i++ )
 				{
 					aDataSort = oSettings.aoColumns[ aaSort[i][0] ].aDataSort;
 					
-					for ( j=0 ; j<aDataSort.length ; j++ )
+					for ( j=0; j<aDataSort.length; j++ )
 					{
 						aoData.push( { "name": "iSortCol_"+iCounter,  "value": aDataSort[j] } );
 						aoData.push( { "name": "sSortDir_"+iCounter,  "value": aaSort[i][1] } );
@@ -1848,7 +1848,7 @@
 				}
 				aoData.push( { "name": "iSortingCols",   "value": iCounter } );
 				
-				for ( i=0 ; i<iColumns ; i++ )
+				for ( i=0; i<iColumns; i++ )
 				{
 					aoData.push( { "name": "bSortable_"+i,  "value": oSettings.aoColumns[i].bSortable } );
 				}
@@ -1916,13 +1916,13 @@
 			}
 			
 			var aData = _fnGetObjectDataFn( oSettings.sAjaxDataProp )( json );
-			for ( var i=0, iLen=aData.length ; i<iLen ; i++ )
+			for ( var i=0, iLen=aData.length; i<iLen; i++ )
 			{
 				if ( bReOrder )
 				{
 					/* If we need to re-order, then create a new array with the correct order and add it */
 					var aDataSorted = [];
-					for ( var j=0, jLen=oSettings.aoColumns.length ; j<jLen ; j++ )
+					for ( var j=0, jLen=oSettings.aoColumns.length; j<jLen; j++ )
 					{
 						aDataSorted.push( aData[i][ aiIndex[j] ] );
 					}
@@ -1979,7 +1979,7 @@
 				var n = oSettings.aanFeatures.f;
 				var val = this.value==="" ? "" : this.value; // mental IE8 fix :-(
 		
-				for ( var i=0, iLen=n.length ; i<iLen ; i++ )
+				for ( var i=0, iLen=n.length; i<iLen; i++ )
 				{
 					if ( n[i] != $(this).parents('div.dataTables_filter')[0] )
 					{
@@ -2041,7 +2041,7 @@
 				fnSaveFilter( oInput );
 		
 				/* Now do the individual column filter */
-				for ( var i=0 ; i<oSettings.aoPreSearchCols.length ; i++ )
+				for ( var i=0; i<oSettings.aoPreSearchCols.length; i++ )
 				{
 					_fnFilterColumn( oSettings, aoPrevSearch[i].sSearch, i, aoPrevSearch[i].bRegex, 
 						aoPrevSearch[i].bSmart, aoPrevSearch[i].bCaseInsensitive );
@@ -2077,10 +2077,10 @@
 		function _fnFilterCustom( oSettings )
 		{
 			var afnFilters = DataTable.ext.afnFiltering;
-			for ( var i=0, iLen=afnFilters.length ; i<iLen ; i++ )
+			for ( var i=0, iLen=afnFilters.length; i<iLen; i++ )
 			{
 				var iCorrector = 0;
-				for ( var j=0, jLen=oSettings.aiDisplay.length ; j<jLen ; j++ )
+				for ( var j=0, jLen=oSettings.aiDisplay.length; j<jLen; j++ )
 				{
 					var iDisIndex = oSettings.aiDisplay[j-iCorrector];
 					
@@ -2115,7 +2115,7 @@
 			var iIndexCorrector = 0;
 			var rpSearch = _fnFilterCreateSearch( sInput, bRegex, bSmart, bCaseInsensitive );
 			
-			for ( var i=oSettings.aiDisplay.length-1 ; i>=0 ; i-- )
+			for ( var i=oSettings.aiDisplay.length-1; i>=0; i-- )
 			{
 				var sData = _fnDataToSearch( _fnGetCellData( oSettings, oSettings.aiDisplay[i], iColumn, 'filter' ),
 					oSettings.aoColumns[iColumn].sType );
@@ -2184,7 +2184,7 @@
 					 * The the oSettings.aiDisplayMaster and asDataSearch arrays have 1 to 1 
 					 * mapping
 					 */
-					for ( i=0 ; i<oSettings.aiDisplayMaster.length ; i++ )
+					for ( i=0; i<oSettings.aiDisplayMaster.length; i++ )
 					{
 						if ( rpSearch.test(oSettings.asDataSearch[i]) )
 						{
@@ -2200,7 +2200,7 @@
 			  	var iIndexCorrector = 0;
 			  	
 			  	/* Search the current results */
-			  	for ( i=0 ; i<oSettings.asDataSearch.length ; i++ )
+			  	for ( i=0; i<oSettings.asDataSearch.length; i++ )
 					{
 			  		if ( ! rpSearch.test(oSettings.asDataSearch[i]) )
 						{
@@ -2229,7 +2229,7 @@
 				var aArray = (iMaster && iMaster===1) ?
 				 	oSettings.aiDisplayMaster : oSettings.aiDisplay;
 				
-				for ( var i=0, iLen=aArray.length ; i<iLen ; i++ )
+				for ( var i=0, iLen=aArray.length; i<iLen; i++ )
 				{
 					oSettings.asDataSearch[i] = _fnBuildSearchRow( oSettings,
 						_fnGetRowData( oSettings, aArray[i], 'filter' ) );
@@ -2253,7 +2253,7 @@
 			}
 			var nTmp = oSettings.__nTmpFilter;
 			
-			for ( var j=0, jLen=oSettings.aoColumns.length ; j<jLen ; j++ )
+			for ( var j=0, jLen=oSettings.aoColumns.length; j<jLen; j++ )
 			{
 				if ( oSettings.aoColumns[j].bSearchable )
 				{
@@ -2431,7 +2431,7 @@
 			}
 			
 			var n = oSettings.aanFeatures.i;
-			for ( var i=0, iLen=n.length ; i<iLen ; i++ )
+			for ( var i=0, iLen=n.length; i<iLen; i++ )
 			{
 				$(n[i]).html( sOut );
 			}
@@ -2502,7 +2502,7 @@
 				_fnCalculateColumnWidths( oSettings );
 			}
 			
-			for ( i=0, iLen=oSettings.aoColumns.length ; i<iLen ; i++ )
+			for ( i=0, iLen=oSettings.aoColumns.length; i<iLen; i++ )
 			{
 				if ( oSettings.aoColumns[i].sWidth !== null )
 				{
@@ -2539,7 +2539,7 @@
 					 	_fnGetObjectDataFn( oSettings.sAjaxDataProp )(json) : json;
 		
 					/* Got the data - add it to the table */
-					for ( i=0 ; i<aData.length ; i++ )
+					for ( i=0; i<aData.length; i++ )
 					{
 						_fnAddData( oSettings, aData[i] );
 					}
@@ -2641,14 +2641,14 @@
 			if ( aLengthMenu.length == 2 && typeof aLengthMenu[0] === 'object' && 
 					typeof aLengthMenu[1] === 'object' )
 			{
-				for ( i=0, iLen=aLengthMenu[0].length ; i<iLen ; i++ )
+				for ( i=0, iLen=aLengthMenu[0].length; i<iLen; i++ )
 				{
 					sStdMenu += '<option value="'+aLengthMenu[0][i]+'">'+aLengthMenu[1][i]+'</option>';
 				}
 			}
 			else
 			{
-				for ( i=0, iLen=aLengthMenu.length ; i<iLen ; i++ )
+				for ( i=0, iLen=aLengthMenu.length; i<iLen; i++ )
 				{
 					sStdMenu += '<option value="'+aLengthMenu[i]+'">'+aLengthMenu[i]+'</option>';
 				}
@@ -2674,7 +2674,7 @@
 				
 				/* Update all other length options for the new display */
 				var n = oSettings.aanFeatures.l;
-				for ( i=0, iLen=n.length ; i<iLen ; i++ )
+				for ( i=0, iLen=n.length; i<iLen; i++ )
 				{
 					if ( n[i] != this.parentNode )
 					{
@@ -2894,7 +2894,7 @@
 			if ( oSettings.oFeatures.bProcessing )
 			{
 				var an = oSettings.aanFeatures.r;
-				for ( var i=0, iLen=an.length ; i<iLen ; i++ )
+				for ( var i=0, iLen=an.length; i<iLen; i++ )
 				{
 					an[i].style.visibility = bShow ? "visible" : "hidden";
 				}
@@ -3133,7 +3133,7 @@
 			}
 			
 			var nThs = _fnGetUniqueThs( o, nTheadSize );
-			for ( i=0, iLen=nThs.length ; i<iLen ; i++ )
+			for ( i=0, iLen=nThs.length; i<iLen; i++ )
 			{
 				iVis = _fnVisibleToColumnIndex( o, i );
 				nThs[i].style.width = o.aoColumns[iVis].sWidth;
@@ -3379,9 +3379,9 @@
 		 */
 		function _fnApplyToChildren( fn, an1, an2 )
 		{
-			for ( var i=0, iLen=an1.length ; i<iLen ; i++ )
+			for ( var i=0, iLen=an1.length; i<iLen; i++ )
 			{
-				for ( var j=0, jLen=an1[i].childNodes.length ; j<jLen ; j++ )
+				for ( var j=0, jLen=an1[i].childNodes.length; j<jLen; j++ )
 				{
 					if ( an1[i].childNodes[j].nodeType == 1 )
 					{
@@ -3448,7 +3448,7 @@
 			var widthAttr = oSettings.nTable.getAttribute('width');
 			
 			/* Convert any user input sizes into pixel sizes */
-			for ( i=0 ; i<iColums ; i++ )
+			for ( i=0; i<iColums; i++ )
 			{
 				if ( oSettings.aoColumns[i].bVisible )
 				{
@@ -3475,7 +3475,7 @@
 			if ( iColums == oHeaders.length && iUserInputs === 0 && iVisibleColumns == iColums &&
 				oSettings.oScroll.sX === "" && oSettings.oScroll.sY === "" )
 			{
-				for ( i=0 ; i<oSettings.aoColumns.length ; i++ )
+				for ( i=0; i<oSettings.aoColumns.length; i++ )
 				{
 					iTmpWidth = $(oHeaders[i]).width();
 					if ( iTmpWidth !== null )
@@ -3521,7 +3521,7 @@
 				/* Apply custom sizing to the cloned header */
 				var nThs = _fnGetUniqueThs( oSettings, nTheadClone );
 				iCorrector = 0;
-				for ( i=0 ; i<iColums ; i++ )
+				for ( i=0; i<iColums; i++ )
 				{
 					var oColumn = oSettings.aoColumns[i];
 					if ( oColumn.bVisible && oColumn.sWidthOrig !== null && oColumn.sWidthOrig !== "" )
@@ -3539,7 +3539,7 @@
 				}
 		
 				/* Find the biggest td for each column and put it into the table */
-				for ( i=0 ; i<iColums ; i++ )
+				for ( i=0; i<iColums; i++ )
 				{
 					if ( oSettings.aoColumns[i].bVisible )
 					{
@@ -3608,7 +3608,7 @@
 				{
 					var iTotal = 0;
 					iCorrector = 0;
-					for ( i=0 ; i<oSettings.aoColumns.length ; i++ )
+					for ( i=0; i<oSettings.aoColumns.length; i++ )
 					{
 						if ( oSettings.aoColumns[i].bVisible )
 						{
@@ -3630,7 +3630,7 @@
 				}
 		
 				iCorrector = 0;
-				for ( i=0 ; i<oSettings.aoColumns.length ; i++ )
+				for ( i=0; i<oSettings.aoColumns.length; i++ )
 				{
 					if ( oSettings.aoColumns[i].bVisible )
 					{
@@ -3717,7 +3717,7 @@
 			var iMax = -1;
 			var iMaxIndex = -1;
 			
-			for ( var i=0 ; i<oSettings.aoData.length ; i++ )
+			for ( var i=0; i<oSettings.aoData.length; i++ )
 			{
 				var s = _fnGetCellData( oSettings, i, iCol, 'display' )+"";
 				s = s.replace( /<.*?>/g, "" );
@@ -3834,7 +3834,7 @@
 				/* If there is a sorting data type, and a fuction belonging to it, then we need to
 				 * get the data from the developer's function and apply it for this column
 				 */
-				for ( i=0 ; i<aaSort.length ; i++ )
+				for ( i=0; i<aaSort.length; i++ )
 				{
 					var iColumn = aaSort[i][0];
 					var iVisColumn = _fnColumnIndexToVisible( oSettings, iColumn );
@@ -3846,7 +3846,7 @@
 						);
 						if ( aData.length === aoData.length )
 						{
-							for ( j=0, jLen=aoData.length ; j<jLen ; j++ )
+							for ( j=0, jLen=aoData.length; j<jLen; j++ )
 							{
 								_fnSetCellData( oSettings, j, iColumn, aData[j] );
 							}
@@ -3861,7 +3861,7 @@
 				/* Create a value - key array of the current row positions such that we can use their
 				 * current position during the sort, if values match, in order to perform stable sorting
 				 */
-				for ( i=0, iLen=oSettings.aiDisplayMaster.length ; i<iLen ; i++ )
+				for ( i=0, iLen=oSettings.aiDisplayMaster.length; i<iLen; i++ )
 				{
 					aiOrig[ oSettings.aiDisplayMaster[i] ] = i;
 				}
@@ -3872,13 +3872,13 @@
 				 */
 				var iSortLen = aaSort.length;
 				var fnSortFormat, aDataSort;
-				for ( i=0, iLen=aoData.length ; i<iLen ; i++ )
+				for ( i=0, iLen=aoData.length; i<iLen; i++ )
 				{
-					for ( j=0 ; j<iSortLen ; j++ )
+					for ( j=0; j<iSortLen; j++ )
 					{
 						aDataSort = aoColumns[ aaSort[j][0] ].aDataSort;
 		
-						for ( k=0, kLen=aDataSort.length ; k<kLen ; k++ )
+						for ( k=0, kLen=aDataSort.length; k<kLen; k++ )
 						{
 							sDataType = aoColumns[ aDataSort[k] ].sType;
 							fnSortFormat = oSort[ (sDataType ? sDataType : 'string')+"-pre" ];
@@ -3909,11 +3909,11 @@
 				 */
 				oSettings.aiDisplayMaster.sort( function ( a, b ) {
 					var k, l, lLen, iTest, aDataSort, sDataType;
-					for ( k=0 ; k<iSortLen ; k++ )
+					for ( k=0; k<iSortLen; k++ )
 					{
 						aDataSort = aoColumns[ aaSort[k][0] ].aDataSort;
 		
-						for ( l=0, lLen=aDataSort.length ; l<lLen ; l++ )
+						for ( l=0, lLen=aDataSort.length; l<lLen; l++ )
 						{
 							sDataType = aoColumns[ aDataSort[l] ].sType;
 							
@@ -3939,7 +3939,7 @@
 				_fnSortingClasses( oSettings );
 			}
 		
-			for ( i=0, iLen=oSettings.aoColumns.length ; i<iLen ; i++ )
+			for ( i=0, iLen=oSettings.aoColumns.length; i<iLen; i++ )
 			{
 				var sTitle = aoColumns[i].sTitle.replace( /<.*?>/g, "" );
 				nTh = aoColumns[i].nTh;
@@ -4028,7 +4028,7 @@
 					{
 						/* Are we already doing some kind of sort on this column? */
 						var bFound = false;
-						for ( var i=0 ; i<oSettings.aaSorting.length ; i++ )
+						for ( var i=0; i<oSettings.aaSorting.length; i++ )
 						{
 							if ( oSettings.aaSorting[i][0] == iDataIndex )
 							{
@@ -4122,7 +4122,7 @@
 			var iColumns = oSettings.aoColumns.length;
 			var oClasses = oSettings.oClasses;
 			
-			for ( i=0 ; i<iColumns ; i++ )
+			for ( i=0; i<iColumns; i++ )
 			{
 				if ( oSettings.aoColumns[i].bSortable )
 				{
@@ -4141,13 +4141,13 @@
 			}
 			
 			/* Apply the required classes to the header */
-			for ( i=0 ; i<oSettings.aoColumns.length ; i++ )
+			for ( i=0; i<oSettings.aoColumns.length; i++ )
 			{
 				if ( oSettings.aoColumns[i].bSortable )
 				{
 					sClass = oSettings.aoColumns[i].sSortingClass;
 					iFound = -1;
-					for ( j=0 ; j<aaSort.length ; j++ )
+					for ( j=0; j<aaSort.length; j++ )
 					{
 						if ( aaSort[j][0] == i )
 						{
@@ -4216,11 +4216,11 @@
 				}
 				else if ( nTds.length >= iColumns )
 				{
-					for ( i=0 ; i<iColumns ; i++ )
+					for ( i=0; i<iColumns; i++ )
 					{
 						if ( nTds[i].className.indexOf(sClass+"1") != -1 )
 						{
-							for ( j=0, jLen=(nTds.length/iColumns) ; j<jLen ; j++ )
+							for ( j=0, jLen=(nTds.length/iColumns); j<jLen; j++ )
 							{
 								nTds[(iColumns*j)+i].className = 
 									$.trim( nTds[(iColumns*j)+i].className.replace( sClass+"1", "" ) );
@@ -4228,7 +4228,7 @@
 						}
 						else if ( nTds[i].className.indexOf(sClass+"2") != -1 )
 						{
-							for ( j=0, jLen=(nTds.length/iColumns) ; j<jLen ; j++ )
+							for ( j=0, jLen=(nTds.length/iColumns); j<jLen; j++ )
 							{
 								nTds[(iColumns*j)+i].className = 
 									$.trim( nTds[(iColumns*j)+i].className.replace( sClass+"2", "" ) );
@@ -4236,7 +4236,7 @@
 						}
 						else if ( nTds[i].className.indexOf(sClass+"3") != -1 )
 						{
-							for ( j=0, jLen=(nTds.length/iColumns) ; j<jLen ; j++ )
+							for ( j=0, jLen=(nTds.length/iColumns); j<jLen; j++ )
 							{
 								nTds[(iColumns*j)+i].className = 
 									$.trim( nTds[(iColumns*j)+i].className.replace( " "+sClass+"3", "" ) );
@@ -4247,10 +4247,10 @@
 				
 				/* Add the new classes to the table */
 				var iClass = 1, iTargetCol;
-				for ( i=0 ; i<aaSort.length ; i++ )
+				for ( i=0; i<aaSort.length; i++ )
 				{
 					iTargetCol = parseInt( aaSort[i][0], 10 );
-					for ( j=0, jLen=(nTds.length/iColumns) ; j<jLen ; j++ )
+					for ( j=0, jLen=(nTds.length/iColumns); j<jLen; j++ )
 					{
 						nTds[(iColumns*j)+iTargetCol].className += " "+sClass+iClass;
 					}
@@ -4290,7 +4290,7 @@
 				"abVisCols":    []
 			};
 		
-			for ( i=0, iLen=oSettings.aoColumns.length ; i<iLen ; i++ )
+			for ( i=0, iLen=oSettings.aoColumns.length; i<iLen; i++ )
 			{
 				oState.abVisCols.push( oSettings.aoColumns[i].bVisible );
 			}
@@ -4349,7 +4349,7 @@
 			 * the init object that the user might have passed in
 			 */
 			oInit.saved_aoColumns = [];
-			for ( var i=0 ; i<oData.abVisCols.length ; i++ )
+			for ( var i=0; i<oData.abVisCols.length; i++ )
 			{
 				oInit.saved_aoColumns[i] = {};
 				oInit.saved_aoColumns[i].bVisible = oData.abVisCols[i];
@@ -4406,7 +4406,7 @@
 			if ( iLength+10 > 4096 ) /* Magic 10 for padding */
 			{
 				var aCookies =document.cookie.split(';');
-				for ( var i=0, iLen=aCookies.length ; i<iLen ; i++ )
+				for ( var i=0, iLen=aCookies.length; i<iLen; i++ )
 				{
 					if ( aCookies[i].indexOf( sBaseName ) != -1 )
 					{
@@ -4447,7 +4447,7 @@
 				sNameEQ = sName + '_' + aParts[aParts.length-1].replace(/[\/:]/g,"").toLowerCase() + '=',
 			 	sCookieContents = document.cookie.split(';');
 			
-			for( var i=0 ; i<sCookieContents.length ; i++ )
+			for( var i=0; i<sCookieContents.length; i++ )
 			{
 				var c = sCookieContents[i];
 				
@@ -4474,7 +4474,7 @@
 		 */
 		function _fnSettingsFromNode ( nTable )
 		{
-			for ( var i=0 ; i<DataTable.settings.length ; i++ )
+			for ( var i=0; i<DataTable.settings.length; i++ )
 			{
 				if ( DataTable.settings[i].nTable === nTable )
 				{
@@ -4496,7 +4496,7 @@
 		{
 			var aNodes = [];
 			var aoData = oSettings.aoData;
-			for ( var i=0, iLen=aoData.length ; i<iLen ; i++ )
+			for ( var i=0, iLen=aoData.length; i<iLen; i++ )
 			{
 				if ( aoData[i].nTr !== null )
 				{
@@ -4530,14 +4530,14 @@
 				iEnd = iIndividualRow+1;
 			}
 		
-			for ( iRow=iStart ; iRow<iEnd ; iRow++ )
+			for ( iRow=iStart; iRow<iEnd; iRow++ )
 			{
 				oData = oSettings.aoData[iRow];
 				if ( oData.nTr !== null )
 				{
 					/* get the TD child nodes - taking into account text etc nodes */
 					anTds = [];
-					for ( iColumn=0, iColumns=oData.nTr.childNodes.length ; iColumn<iColumns ; iColumn++ )
+					for ( iColumn=0, iColumns=oData.nTr.childNodes.length; iColumn<iColumns; iColumn++ )
 					{
 						sNodeName = oData.nTr.childNodes[iColumn].nodeName.toLowerCase();
 						if ( sNodeName == 'td' || sNodeName == 'th' )
@@ -4547,7 +4547,7 @@
 					}
 		
 					iCorrector = 0;
-					for ( iColumn=0, iColumns=oSettings.aoColumns.length ; iColumn<iColumns ; iColumn++ )
+					for ( iColumn=0, iColumns=oSettings.aoColumns.length; iColumn<iColumns; iColumn++ )
 					{
 						if ( oSettings.aoColumns[iColumn].bVisible )
 						{
@@ -4715,7 +4715,7 @@
 			var aoStore = oSettings[sStore];
 			var aRet =[];
 		
-			for ( var i=aoStore.length-1 ; i>=0 ; i-- )
+			for ( var i=aoStore.length-1; i>=0; i-- )
 			{
 				aRet.push( aoStore[i].fn.apply( oSettings.oInstance, aArgs ) );
 			}
@@ -4838,35 +4838,35 @@
 			// senseless otherwise
 			if ( oOpts.page == 'current' )
 			{
-				for ( i=oSettings._iDisplayStart, iLen=oSettings.fnDisplayEnd() ; i<iLen ; i++ )
+				for ( i=oSettings._iDisplayStart, iLen=oSettings.fnDisplayEnd(); i<iLen; i++ )
 				{
 					a.push( oSettings.aoData[ oSettings.aiDisplay[i] ].nTr );
 				}
 			}
 			else if ( oOpts.order == "current" && oOpts.filter == "none" )
 			{
-				for ( i=0, iLen=oSettings.aiDisplayMaster.length ; i<iLen ; i++ )
+				for ( i=0, iLen=oSettings.aiDisplayMaster.length; i<iLen; i++ )
 				{
 					a.push( oSettings.aoData[ oSettings.aiDisplayMaster[i] ].nTr );
 				}
 			}
 			else if ( oOpts.order == "current" && oOpts.filter == "applied" )
 			{
-				for ( i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ )
+				for ( i=0, iLen=oSettings.aiDisplay.length; i<iLen; i++ )
 				{
 					a.push( oSettings.aoData[ oSettings.aiDisplay[i] ].nTr );
 				}
 			}
 			else if ( oOpts.order == "original" && oOpts.filter == "none" )
 			{
-				for ( i=0, iLen=oSettings.aoData.length ; i<iLen ; i++ )
+				for ( i=0, iLen=oSettings.aoData.length; i<iLen; i++ )
 				{
 					a.push( oSettings.aoData[ i ].nTr );
 				}
 			}
 			else if ( oOpts.order == "original" && oOpts.filter == "applied" )
 			{
-				for ( i=0, iLen=oSettings.aoData.length ; i<iLen ; i++ )
+				for ( i=0, iLen=oSettings.aoData.length; i<iLen; i++ )
 				{
 					if ( $.inArray( i, oSettings.aiDisplay ) !== -1 )
 					{
@@ -4944,7 +4944,7 @@
 			var i, iLen, iIndex;
 			var aTrs = this.$( sSelector, oOpts );
 		
-			for ( i=0, iLen=aTrs.length ; i<iLen ; i++ )
+			for ( i=0, iLen=aTrs.length; i<iLen; i++ )
 			{
 				aOut.push( this.fnGetData(aTrs[i]) );
 			}
@@ -5006,7 +5006,7 @@
 			/* Check if we want to add multiple rows or not */
 			if ( typeof mData[0] === "object" && mData[0] !== null )
 			{
-				for ( var i=0 ; i<mData.length ; i++ )
+				for ( var i=0; i<mData.length; i++ )
 				{
 					iTest = _fnAddData( oSettings, mData[i] );
 					if ( iTest == -1 )
@@ -5127,7 +5127,7 @@
 			/* Find settings from table node */
 			var oSettings = _fnSettingsFromNode( this[DataTable.ext.iApiIndex] );
 			
-			for ( var i=0 ; i<oSettings.aoOpenRows.length ; i++ )
+			for ( var i=0; i<oSettings.aoOpenRows.length; i++ )
 			{
 				if ( oSettings.aoOpenRows[i].nParent == nTr )
 				{
@@ -5175,7 +5175,7 @@
 			var oData = oSettings.aoData.splice( iAODataIndex, 1 );
 		
 			/* Update the _DT_RowIndex parameter */
-			for ( i=0, iLen=oSettings.aoData.length ; i<iLen ; i++ )
+			for ( i=0, iLen=oSettings.aoData.length; i<iLen; i++ )
 			{
 				if ( oSettings.aoData[i].nTr !== null )
 				{
@@ -5246,7 +5246,7 @@
 			_fnCallbackFire( oSettings, "aoDestroyCallback", "destroy", [oSettings] );
 			
 			/* Restore hidden columns */
-			for ( i=0, iLen=oSettings.aoColumns.length ; i<iLen ; i++ )
+			for ( i=0, iLen=oSettings.aoColumns.length; i<iLen; i++ )
 			{
 				if ( oSettings.aoColumns[i].bVisible === false )
 				{
@@ -5312,7 +5312,7 @@
 				nOrig.appendChild( oSettings.nTable );
 			}
 		
-			for ( i=0, iLen=oSettings.aoData.length ; i<iLen ; i++ )
+			for ( i=0, iLen=oSettings.aoData.length; i<iLen; i++ )
 			{
 				if ( oSettings.aoData[i].nTr !== null )
 				{
@@ -5334,7 +5334,7 @@
 			$(nBody).children('tr:odd').addClass( oSettings.asDestroyStripes[1] );
 			
 			/* Remove the settings object from the settings array */
-			for ( i=0, iLen=DataTable.settings.length ; i<iLen ; i++ )
+			for ( i=0, iLen=DataTable.settings.length; i<iLen; i++ )
 			{
 				if ( DataTable.settings[i] == oSettings )
 				{
@@ -5435,7 +5435,7 @@
 				if ( bShowGlobal && oSettings.aanFeatures.f )
 				{
 					var n = oSettings.aanFeatures.f;
-					for ( var i=0, iLen=n.length ; i<iLen ; i++ )
+					for ( var i=0, iLen=n.length; i<iLen; i++ )
 					{
 						$(n[i]._DT_Input).val( sInput );
 					}
@@ -5624,7 +5624,7 @@
 			var oSettings = _fnSettingsFromNode( this[DataTable.ext.iApiIndex] );
 			var aoOpenRows = oSettings.aoOpenRows;
 			
-			for ( var i=0 ; i<oSettings.aoOpenRows.length ; i++ )
+			for ( var i=0; i<oSettings.aoOpenRows.length; i++ )
 			{
 				if ( oSettings.aoOpenRows[i].nParent == nTr )
 				{
@@ -5771,7 +5771,7 @@
 			if ( bShow )
 			{
 				var iInsert = 0;
-				for ( i=0 ; i<iCol ; i++ )
+				for ( i=0; i<iCol; i++ )
 				{
 					if ( aoColumns[i].bVisible )
 					{
@@ -5785,7 +5785,7 @@
 				/* Which coloumn should we be inserting before? */
 				if ( !bAppend )
 				{
-					for ( i=iCol ; i<aoColumns.length ; i++ )
+					for ( i=iCol; i<aoColumns.length; i++ )
 					{
 						if ( aoColumns[i].bVisible )
 						{
@@ -5795,7 +5795,7 @@
 					}
 				}
 		
-				for ( i=0, iLen=aoData.length ; i<iLen ; i++ )
+				for ( i=0, iLen=aoData.length; i<iLen; i++ )
 				{
 					if ( aoData[i].nTr !== null )
 					{
@@ -5817,7 +5817,7 @@
 			else
 			{
 				/* Remove a column from display */
-				for ( i=0, iLen=aoData.length ; i<iLen ; i++ )
+				for ( i=0, iLen=aoData.length; i<iLen; i++ )
 				{
 					if ( aoData[i].nTr !== null )
 					{
@@ -5839,7 +5839,7 @@
 			}
 			
 			/* If there are any 'open' rows, then we need to alter the colspan for this col change */
-			for ( i=0, iLen=oSettings.aoOpenRows.length ; i<iLen ; i++ )
+			for ( i=0, iLen=oSettings.aoOpenRows.length; i<iLen; i++ )
 			{
 				oSettings.aoOpenRows[i].nTr.colSpan = _fnVisbleColumns( oSettings );
 			}
@@ -5956,7 +5956,7 @@
 				
 				/* Flag to the function that we are recursing */
 				oSettings.__fnUpdateDeep = true;
-				for ( i=0 ; i<oSettings.aoColumns.length ; i++ )
+				for ( i=0; i<oSettings.aoColumns.length; i++ )
 				{
 					this.fnUpdate( _fnGetCellData( oSettings, iRow, i ), iRow, i, false, false );
 				}
@@ -5968,7 +5968,7 @@
 				oSettings.aoData[iRow]._aData = $.extend( true, {}, mData );
 		
 				oSettings.__fnUpdateDeep = true;
-				for ( i=0 ; i<oSettings.aoColumns.length ; i++ )
+				for ( i=0; i<oSettings.aoColumns.length; i++ )
 				{
 					this.fnUpdate( _fnGetCellData( oSettings, iRow, i ), iRow, i, false, false );
 				}
@@ -6184,7 +6184,7 @@
 			}
 			
 			/* Check to see if we are re-initialising a table */
-			for ( i=0, iLen=DataTable.settings.length ; i<iLen ; i++ )
+			for ( i=0, iLen=DataTable.settings.length; i<iLen; i++ )
 			{
 				/* Base check on table node */
 				if ( DataTable.settings[i].nTable == this )
@@ -6412,7 +6412,7 @@
 			/* Remove row stripe classes if they are already on the table row */
 			var bStripeRemove = false;
 			var anRows = $(this).children('tbody').children('tr');
-			for ( i=0, iLen=oSettings.asStripeClasses.length ; i<iLen ; i++ )
+			for ( i=0, iLen=oSettings.asStripeClasses.length; i<iLen; i++ )
 			{
 				if ( anRows.filter(":lt(2)").hasClass( oSettings.asStripeClasses[i]) )
 				{
@@ -6463,7 +6463,7 @@
 			if ( oInit.aoColumns === null )
 			{
 				aoColumnsInit = [];
-				for ( i=0, iLen=anThs.length ; i<iLen ; i++ )
+				for ( i=0, iLen=anThs.length; i<iLen; i++ )
 				{
 					aoColumnsInit.push( null );
 				}
@@ -6474,7 +6474,7 @@
 			}
 			
 			/* Add the columns */
-			for ( i=0, iLen=aoColumnsInit.length ; i<iLen ; i++ )
+			for ( i=0, iLen=aoColumnsInit.length; i<iLen; i++ )
 			{
 				/* Short cut - use the loop to check if we have column visibility state to restore */
 				if ( oInit.saved_aoColumns !== undefined && oInit.saved_aoColumns.length == iLen )
@@ -6499,7 +6499,7 @@
 			 * Sorting
 			 * Check the aaSorting array
 			 */
-			for ( i=0, iLen=oSettings.aaSorting.length ; i<iLen ; i++ )
+			for ( i=0, iLen=oSettings.aaSorting.length; i<iLen; i++ )
 			{
 				if ( oSettings.aaSorting[i][0] >= oSettings.aoColumns.length )
 				{
@@ -6520,7 +6520,7 @@
 				}
 				
 				/* Set the current sorting index based on aoColumns.asSorting */
-				for ( j=0, jLen=oColumn.asSorting.length ; j<jLen ; j++ )
+				for ( j=0, jLen=oColumn.asSorting.length; j<jLen; j++ )
 				{
 					if ( oSettings.aaSorting[i][1] == oColumn.asSorting[j] )
 					{
@@ -6583,7 +6583,7 @@
 			/* Check if there is data passing into the constructor */
 			if ( bUsePassedData )
 			{
-				for ( i=0 ; i<oInit.aaData.length ; i++ )
+				for ( i=0; i<oInit.aaData.length; i++ )
 				{
 					_fnAddData( oSettings, oInit.aaData[ i ] );
 				}
@@ -6639,7 +6639,7 @@
 		var aThat = sVersion.split('.');
 		var sThis = '', sThat = '';
 		
-		for ( var i=0, iLen=aThat.length ; i<iLen ; i++ )
+		for ( var i=0, iLen=aThat.length; i<iLen; i++ )
 		{
 			sThis += fnZPad( aThis[i], 3 );
 			sThat += fnZPad( aThat[i], 3 );
@@ -6667,7 +6667,7 @@
 	{
 		var o = DataTable.settings;
 	
-		for ( var i=0 ; i<o.length ; i++ )
+		for ( var i=0; i<o.length; i++ )
 		{
 			if ( o[i].nTable === nTable || o[i].nScrollHead === nTable || o[i].nScrollFoot === nTable )
 			{
@@ -6932,7 +6932,7 @@
 		 *        var Char;
 		 *        
 		 *        // Check the numeric part
-		 *        for ( i=1 ; i<sData.length ; i++ ) {
+		 *        for ( i=1; i<sData.length; i++ ) {
 		 *          Char = sData.charAt(i); 
 		 *          if (sValidChars.indexOf(Char) == -1) {
 		 *            return null;
@@ -7155,7 +7155,7 @@
 		 *        
 		 *        // Loop over each instance of the pager
 		 *        var an = oSettings.aanFeatures.p;
-		 *        for ( var i=0, iLen=an.length ; i<iLen ; i++ ) {
+		 *        for ( var i=0, iLen=an.length; i<iLen; i++ ) {
 		 *          var buttons = an[i].getElementsByTagName('span');
 		 *          if ( oSettings._iDisplayStart === 0 ) {
 		 *            buttons[0].className = "paginate_disabled_previous";
@@ -8336,7 +8336,7 @@
 		 *              a=s.split(""), out="", 
 		 *              iLen=s.length;
 		 *            
-		 *            for ( var i=0 ; i&lt;iLen ; i++ ) {
+		 *            for ( var i=0; i&lt;iLen; i++ ) {
 		 *              if ( i%3 === 0 &amp;&amp; i !== 0 ) {
 		 *                out = "'"+out;
 		 *              }
@@ -8357,7 +8357,7 @@
 	
 			var s=(iIn+""), a=s.split(""), out="", iLen=s.length;
 			
-			for ( var i=0 ; i<iLen ; i++ )
+			for ( var i=0; i<iLen; i++ )
 			{
 				if ( i%3 === 0 && i !== 0 )
 				{
@@ -11364,7 +11364,7 @@
 				var an = oSettings.aanFeatures.p;
 	
 				/* Loop over each instance of the pager */
-				for ( var i=0, iLen=an.length ; i<iLen ; i++ )
+				for ( var i=0, iLen=an.length; i<iLen; i++ )
 				{
 					if ( an[i].childNodes.length !== 0 )
 					{
@@ -11502,7 +11502,7 @@
 	
 				
 				/* Build the dynamic list */
-				for ( i=iStartButton ; i<=iEndButton ; i++ )
+				for ( i=iStartButton; i<=iEndButton; i++ )
 				{
 					sList += (iCurrentPage !== i) ?
 						'<a tabindex="'+oSettings.iTabIndex+'" class="'+oClasses.sPageButton+'">'+oSettings.fnFormatNumber(i)+'</a>' :
@@ -11510,7 +11510,7 @@
 				}
 				
 				/* Loop over each instance of the pager */
-				for ( i=0, iLen=an.length ; i<iLen ; i++ )
+				for ( i=0, iLen=an.length; i<iLen; i++ )
 				{
 					if ( an[i].childNodes.length === 0 )
 					{
@@ -11664,7 +11664,7 @@
 			}
 			
 			/* Check all the other characters are valid */
-			for ( var i=1 ; i<sData.length ; i++ ) 
+			for ( var i=1; i<sData.length; i++ )
 			{
 				Char = sData.charAt(i); 
 				if (sValidChars.indexOf(Char) == -1) 

@@ -77,7 +77,7 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
 
         // iterate through all start nodes. Determining the start node
         // is complicated so it has been omitted from the loop construct
-        for ($i = 0, $size = count($tokens) ; $i < $size; ) {
+        for ($i = 0, $size = count($tokens); $i < $size; ) {
 
             //################################################################//
             // Gather information on children
@@ -87,7 +87,7 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
 
             // scroll to the end of this node, report number, and collect
             // all children
-            for ($j = $i, $depth = 0; ; $j++) {
+            for ($j = $i, $depth = 0;; $j++) {
                 if ($tokens[$j] instanceof HTMLPurifier_Token_Start) {
                     $depth++;
                     // skip token assignment on first iteration, this is the

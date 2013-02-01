@@ -1,4 +1,4 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -37,7 +37,7 @@
          * @since unknown
          * @var ItemResource
          */
-        private static $instance ;
+        private static $instance;
 
         /**
          * It creates a new ItemLocation object class ir if it has been created
@@ -50,9 +50,9 @@
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -61,8 +61,8 @@
         function __construct()
         {
             parent::__construct();
-            $this->setTableName('t_item_location') ;
-            $this->setPrimaryKey('fk_i_item_id') ;
+            $this->setTableName('t_item_location');
+            $this->setPrimaryKey('fk_i_item_id');
             $array_fields = array(
                 'fk_i_item_id',
                 'fk_c_country_code',
@@ -78,7 +78,7 @@
                 'd_coord_lat',
                 'd_coord_long'
                 );
-            $this->setFields($array_fields) ;
+            $this->setFields($array_fields);
         }
     }
 

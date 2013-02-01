@@ -20,7 +20,7 @@ function db_admin(){
 
 function check_all (frm, check) {
     var aa = document.getElementById(frm);
-    for (var i = 0 ; i < aa.elements.length ; i++) {
+    for (var i = 0; i < aa.elements.length; i++) {
         aa.elements[i].checked = check;
     }
 }
@@ -29,7 +29,7 @@ function check_cat(id, check) {
     var lay = document.getElementById("cat" + id);
     inp = lay.getElementsByTagName("input");
 
-    for (var i = 0, maxI = inp.length ; i < maxI; ++i) {
+    for (var i = 0, maxI = inp.length; i < maxI; ++i) {
         if(inp[i].type == "checkbox") {
             inp[i].checked = check;
         }

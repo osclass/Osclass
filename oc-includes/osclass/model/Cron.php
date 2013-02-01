@@ -1,4 +1,4 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -29,14 +29,14 @@
          *
          * @var type
          */
-        private static $instance ;
+        private static $instance;
 
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -44,9 +44,9 @@
          */
         function __construct()
         {
-            parent::__construct() ;
-            $this->setTableName('t_cron') ;
-            $this->setFields( array('e_type', 'd_last_exec', 'd_next_exec') ) ;
+            parent::__construct();
+            $this->setTableName('t_cron');
+            $this->setFields( array('e_type', 'd_last_exec', 'd_next_exec') );
         }
 
         /**
@@ -59,16 +59,16 @@
          */
         function getCronByType($type)
         {
-            $this->dao->select('*') ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('e_type', $type) ;
-            $result = $this->dao->get() ;
+            $this->dao->select('*');
+            $this->dao->from($this->getTableName());
+            $this->dao->where('e_type', $type);
+            $result = $this->dao->get();
 
             if( $result->numRows == 0 ) {
-                return false ;
+                return false;
             }
 
-            return $result->row() ;
+            return $result->row();
         }
     }
 

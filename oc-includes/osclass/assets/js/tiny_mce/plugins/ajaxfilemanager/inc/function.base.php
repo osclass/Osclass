@@ -652,7 +652,7 @@ function getRootPath() {
    */
   function getMemoryLimit()
   {
-    $output = @ini_get('memory_limit') or $output = -1 ;
+    $output = @ini_get('memory_limit') or $output = -1;
     if(intval($output) < 0)
     {//unlimited
     	$output = 999999999999999999;
@@ -662,7 +662,7 @@ function getRootPath() {
     	$output = intval($output) * 1024 * 1024 * 1024;
     }elseif(strpos('k', strtolower($output)) !== false)
     {
-    	$output = intval($output) * 1024 ;
+    	$output = intval($output) * 1024;
     }else
     {
     	$output = intval($output) * 1024 * 1024;
@@ -846,7 +846,7 @@ function getRootPath() {
 		{
 		   function mime_content_type ( $f )
 		   {
-		       return trim ( @exec ('file -bi ' . escapeshellarg ( $f ) ) ) ;
+		       return trim ( @exec ('file -bi ' . escapeshellarg ( $f ) ) );
 		   }
 		}		
 		

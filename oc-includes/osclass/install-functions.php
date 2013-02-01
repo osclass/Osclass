@@ -27,10 +27,10 @@
  * @return string The url of the site
  */
 function get_absolute_url( ) {
-    $protocol = ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ) ? 'https' : 'http' ;
-    $pos      = strpos($_SERVER['REQUEST_URI'], 'oc-includes') ;
-    $URI      = rtrim( substr( $_SERVER['REQUEST_URI'], 0, $pos ), '/' ) . '/' ;
-    return $protocol . '://' . $_SERVER['HTTP_HOST'] . $URI ;
+    $protocol = ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ) ? 'https' : 'http';
+    $pos      = strpos($_SERVER['REQUEST_URI'], 'oc-includes');
+    $URI      = rtrim( substr( $_SERVER['REQUEST_URI'], 0, $pos ), '/' ) . '/';
+    return $protocol . '://' . $_SERVER['HTTP_HOST'] . $URI;
 }
 
 /*
@@ -153,7 +153,7 @@ function check_requirements($array) {
  * @return boolean Check if allowed to send stats to Osclass
  */
 function reportToOsclass() {
-    return $_COOKIE['osclass_save_stats'] ;
+    return $_COOKIE['osclass_save_stats'];
 }
 
 /**
@@ -166,9 +166,9 @@ function set_allow_report_osclass($value) {
         's_name'    => 'allow_report_osclass',
         's_value'   => $value,
         'e_type'    => 'BOOLEAN'
-    ) ;
+    );
 
-    Preference::newInstance()->insert($values) ;
+    Preference::newInstance()->insert($values);
 }
 
 /*
@@ -179,100 +179,100 @@ function set_allow_report_osclass($value) {
  * @return mixed Error messages of the installation
  */
 function oc_install( ) {
-    $dbhost      = Params::getParam('dbhost') ;
-    $dbname      = Params::getParam('dbname') ;
-    $username    = Params::getParam('username') ;
-    $password    = Params::getParam('password', false, false) ;
-    $tableprefix = Params::getParam('tableprefix') ;
-    $createdb    = false ;
+    $dbhost      = Params::getParam('dbhost');
+    $dbname      = Params::getParam('dbname');
+    $username    = Params::getParam('username');
+    $password    = Params::getParam('password', false, false);
+    $tableprefix = Params::getParam('tableprefix');
+    $createdb    = false;
 
     if( $tableprefix == '' ) {
-        $tableprefix = 'oc_' ;
+        $tableprefix = 'oc_';
     }
 
     if( Params::getParam('createdb') != '' ) {
-        $createdb = true ;
+        $createdb = true;
     }
 
     if ( $createdb ) {
-        $adminuser = Params::getParam('admin_username') ;
-        $adminpwd  = Params::getParam('admin_password', false, false) ;
+        $adminuser = Params::getParam('admin_username');
+        $adminpwd  = Params::getParam('admin_password', false, false);
 
-        $master_conn = new DBConnectionClass($dbhost, $adminuser, $adminpwd, '') ;
-        $error_num   = $master_conn->getErrorConnectionLevel() ;
+        $master_conn = new DBConnectionClass($dbhost, $adminuser, $adminpwd, '');
+        $error_num   = $master_conn->getErrorConnectionLevel();
 
         if( $error_num > 0 ) {
             if( reportToOsclass() ) {
-                LogOsclassInstaller::instance()->error(sprintf(__('Cannot connect to the database. Error number: %s') , $error_num ), __FILE__."::".__LINE__) ;
+                LogOsclassInstaller::instance()->error(sprintf(__('Cannot connect to the database. Error number: %s') , $error_num ), __FILE__."::".__LINE__);
             }
 
             switch ($error_num) {
-                case 1049:  return array('error' => __("The database doesn't exist. You should check the \"Create DB\" checkbox and fill in a username and password with the right privileges")) ;
+                case 1049:  return array('error' => __("The database doesn't exist. You should check the \"Create DB\" checkbox and fill in a username and password with the right privileges"));
                 break;
-                case 1045:  return array('error' => __('Cannot connect to the database. Check if the user has privileges.')) ;
+                case 1045:  return array('error' => __('Cannot connect to the database. Check if the user has privileges.'));
                 break;
-                case 1044:  return array('error' => __('Cannot connect to the database. Check if the username and password are correct.')) ;
+                case 1044:  return array('error' => __('Cannot connect to the database. Check if the username and password are correct.'));
                 break;
-                case 2005:  return array('error' => __("Can't resolve MySQL host. Check if the host is correct.")) ;
+                case 2005:  return array('error' => __("Can't resolve MySQL host. Check if the host is correct."));
                 break;
-                default:    return array('error' => sprintf(__('Cannot connect to the database. Error number: %s')), $error_num) ;
+                default:    return array('error' => sprintf(__('Cannot connect to the database. Error number: %s')), $error_num);
                 break;
             }
         }
 
-        $m_db = $master_conn->getOsclassDb() ;
-        $comm = new DBCommandClass( $m_db ) ;
-        $comm->query( sprintf("CREATE DATABASE IF NOT EXISTS %s DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI'", $dbname) ) ;
+        $m_db = $master_conn->getOsclassDb();
+        $comm = new DBCommandClass( $m_db );
+        $comm->query( sprintf("CREATE DATABASE IF NOT EXISTS %s DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI'", $dbname) );
 
-        $error_num = $comm->getErrorLevel() ;
+        $error_num = $comm->getErrorLevel();
 
         if( $error_num > 0 ) {
             if( reportToOsclass() ) {
-                LogOsclassInstaller::instance()->error(sprintf(__("Can't create the database. Error number: %s"), $error_num) , __FILE__."::".__LINE__) ;
+                LogOsclassInstaller::instance()->error(sprintf(__("Can't create the database. Error number: %s"), $error_num) , __FILE__."::".__LINE__);
             }
 
             if( in_array( $error_num, array(1006, 1044, 1045) ) ) {
-                return array('error' => __("Can't create the database. Check if the admin username and password are correct.")) ;
+                return array('error' => __("Can't create the database. Check if the admin username and password are correct."));
             }
 
-            return array('error' => sprintf(__("Can't create the database. Error number: %s"),  $error_num)) ;
+            return array('error' => sprintf(__("Can't create the database. Error number: %s"),  $error_num));
         }
 
-        unset($conn) ;
-        unset($comm) ;
-        unset($master_conn) ;
+        unset($conn);
+        unset($comm);
+        unset($master_conn);
     }
 
-    $conn      = new DBConnectionClass($dbhost, $username, $password, $dbname) ;
-    $error_num = $conn->getErrorConnectionLevel() ;
+    $conn      = new DBConnectionClass($dbhost, $username, $password, $dbname);
+    $error_num = $conn->getErrorConnectionLevel();
 
     if( $error_num == 0 ) {
-        $error_num = $conn->getErrorLevel() ;
+        $error_num = $conn->getErrorLevel();
     }
 
     if( $error_num > 0 ) {
         if( reportToOsclass() ) {
-            LogOsclassInstaller::instance()->error(sprintf(__('Cannot connect to the database. Error number: %s'), $error_num) , __FILE__."::".__LINE__) ;
+            LogOsclassInstaller::instance()->error(sprintf(__('Cannot connect to the database. Error number: %s'), $error_num) , __FILE__."::".__LINE__);
         }
 
         switch( $error_num ) {
-            case 1049:  return array('error' => __("The database doesn't exist. You should check the \"Create DB\" checkbox and fill in a username and password with the right privileges")) ;
-            break ;
-            case 1045:  return array('error' => __('Cannot connect to the database. Check if the user has privileges.')) ;
-            break ;
-            case 1044:  return array('error' => __('Cannot connect to the database. Check if the username and password are correct.')) ;
-            break ;
-            case 2005:  return array('error' => __("Can't resolve MySQL host. Check if the host is correct.")) ;
-            break ;
-            default:    return array('error' => sprintf(__('Cannot connect to the database. Error number: %s'), $error_num)) ;
-            break ;
+            case 1049:  return array('error' => __("The database doesn't exist. You should check the \"Create DB\" checkbox and fill in a username and password with the right privileges"));
+            break;
+            case 1045:  return array('error' => __('Cannot connect to the database. Check if the user has privileges.'));
+            break;
+            case 1044:  return array('error' => __('Cannot connect to the database. Check if the username and password are correct.'));
+            break;
+            case 2005:  return array('error' => __("Can't resolve MySQL host. Check if the host is correct."));
+            break;
+            default:    return array('error' => sprintf(__('Cannot connect to the database. Error number: %s'), $error_num));
+            break;
         }
     }
 
     if( file_exists(ABS_PATH . 'config.php') ) {
         if( !is_writable(ABS_PATH . 'config.php') ) {
             if( reportToOsclass() ) {
-                LogOsclassInstaller::instance()->error(__("Can't write in config.php file. Check if the file is writable.") , __FILE__."::".__LINE__) ;
+                LogOsclassInstaller::instance()->error(__("Can't write in config.php file. Check if the file is writable.") , __FILE__."::".__LINE__);
             }
             return array('error' => __("Can't write in config.php file. Check if the file is writable."));
         }
@@ -280,14 +280,14 @@ function oc_install( ) {
     } else {
         if( !file_exists(ABS_PATH . 'config-sample.php') ) {
             if( reportToOsclass() ) {
-                LogOsclassInstaller::instance()->error(__("config-sample.php doesn't exist. Check if everything is decompressed correctly.") , __FILE__."::".__LINE__) ;
+                LogOsclassInstaller::instance()->error(__("config-sample.php doesn't exist. Check if everything is decompressed correctly.") , __FILE__."::".__LINE__);
             }
 
             return array('error' => __("config-sample.php doesn't exist. Check if everything is decompressed correctly."));
         }
         if( !is_writable(ABS_PATH) ) {
             if( reportToOsclass() ) {
-                LogOsclassInstaller::instance()->error(__('Can\'t copy config-sample.php. Check if the root directory is writable.') , __FILE__."::".__LINE__) ;
+                LogOsclassInstaller::instance()->error(__('Can\'t copy config-sample.php. Check if the root directory is writable.') , __FILE__."::".__LINE__);
             }
 
             return array('error' => __('Can\'t copy config-sample.php. Check if the root directory is writable.'));
@@ -297,23 +297,23 @@ function oc_install( ) {
 
     require_once ABS_PATH . 'config.php';
 
-    $sql = file_get_contents( ABS_PATH . 'oc-includes/osclass/installer/struct.sql' ) ;
+    $sql = file_get_contents( ABS_PATH . 'oc-includes/osclass/installer/struct.sql' );
 
-    $c_db = $conn->getOsclassDb() ;
-    $comm = new DBCommandClass( $c_db ) ;
-    $comm->importSQL($sql) ;
+    $c_db = $conn->getOsclassDb();
+    $comm = new DBCommandClass( $c_db );
+    $comm->importSQL($sql);
 
-    $error_num = $comm->getErrorLevel() ;
+    $error_num = $comm->getErrorLevel();
 
     if( $error_num > 0 ) {
         if( reportToOsclass() ) {
-            LogOsclassInstaller::instance()->error(sprintf(__("Can't create the database structure. Error number: %s"), $error_num)  , __FILE__."::".__LINE__) ;
+            LogOsclassInstaller::instance()->error(sprintf(__("Can't create the database structure. Error number: %s"), $error_num)  , __FILE__."::".__LINE__);
         }
 
         switch ($error_num) {
-            case 1050:  return array('error' => __('There are tables with the same name in the database. Change the table prefix or the database and try again.')) ;
+            case 1050:  return array('error' => __('There are tables with the same name in the database. Change the table prefix or the database and try again.'));
             break;
-            default:    return array('error' => sprintf(__("Can't create the database structure. Error number: %s"), $error_num)) ;
+            default:    return array('error' => sprintf(__("Can't create the database structure. Error number: %s"), $error_num));
             break;
         }
     }
@@ -321,7 +321,7 @@ function oc_install( ) {
     require_once LIB_PATH . 'osclass/model/OSCLocale.php';
     $localeManager = OSCLocale::newInstance();
 
-    $locales = osc_listLocales() ;
+    $locales = osc_listLocales();
     $values = array(
         'pk_c_code'         => $locales[osc_current_admin_locale()]['code'],
         's_name'            => $locales[osc_current_admin_locale()]['name'],
@@ -334,12 +334,12 @@ function oc_install( ) {
         's_date_format'     => $locales[osc_current_admin_locale()]['date_format'],
         'b_enabled'         => 1,
         'b_enabled_bo'      => 1
-    ) ;
+    );
 
     if( isset($locales[osc_current_admin_locale()]['stop_words']) ) {
-        $values['s_stop_words'] = $locales[osc_current_admin_locale()]['stop_words'] ;
+        $values['s_stop_words'] = $locales[osc_current_admin_locale()]['stop_words'];
     }
-    $localeManager->insert($values) ;
+    $localeManager->insert($values);
 
 
     $required_files = array(
@@ -352,7 +352,7 @@ function oc_install( ) {
     foreach($required_files as $file) {
         if ( !file_exists($file) ) {
             if( reportToOsclass() ) {
-                LogOsclassInstaller::instance()->error(sprintf(__('The file %s doesn\'t exist'), $file) , __FILE__."::".__LINE__) ;
+                LogOsclassInstaller::instance()->error(sprintf(__('The file %s doesn\'t exist'), $file) , __FILE__."::".__LINE__);
             }
 
             return array('error' => sprintf(__('The file %s doesn\'t exist'), $file) );
@@ -360,13 +360,13 @@ function oc_install( ) {
             $sql .= file_get_contents($file);
         }
     }
-    $comm->importSQL($sql) ;
+    $comm->importSQL($sql);
 
-    $error_num = $comm->getErrorLevel() ;
+    $error_num = $comm->getErrorLevel();
 
     if( $error_num > 0 ) {
         if( reportToOsclass() ) {
-            LogOsclassInstaller::instance()->error(sprintf(__("Can't insert basic configuration. Error number: %s"), $error_num)  , __FILE__."::".__LINE__) ;
+            LogOsclassInstaller::instance()->error(sprintf(__("Can't insert basic configuration. Error number: %s"), $error_num)  , __FILE__."::".__LINE__);
         }
 
         switch ($error_num) {
@@ -384,12 +384,12 @@ function oc_install( ) {
 
 
     if( reportToOsclass() ) {
-        set_allow_report_osclass( true ) ;
+        set_allow_report_osclass( true );
     } else {
-        set_allow_report_osclass( false ) ;
+        set_allow_report_osclass( false );
     }
 
-    return false ;
+    return false;
 }
 
 /*
@@ -573,29 +573,29 @@ function copy_config_file($dbname, $username, $password, $dbhost, $tableprefix) 
 
 function is_osclass_installed( ) {
     if( !file_exists( ABS_PATH . 'config.php' ) ) {
-        return false ;
+        return false;
     }
 
-    require_once ABS_PATH . 'config.php' ;
+    require_once ABS_PATH . 'config.php';
 
-    $conn = new DBConnectionClass( osc_db_host(), osc_db_user(), osc_db_password(), osc_db_name() ) ;
-    $c_db = $conn->getOsclassDb() ;
-    $comm = new DBCommandClass( $c_db ) ;
-    $rs   = $comm->query( sprintf( "SELECT * FROM %st_preference WHERE s_name = 'osclass_installed'", DB_TABLE_PREFIX ) ) ;
+    $conn = new DBConnectionClass( osc_db_host(), osc_db_user(), osc_db_password(), osc_db_name() );
+    $c_db = $conn->getOsclassDb();
+    $comm = new DBCommandClass( $c_db );
+    $rs   = $comm->query( sprintf( "SELECT * FROM %st_preference WHERE s_name = 'osclass_installed'", DB_TABLE_PREFIX ) );
 
     if( $rs == false ) {
-        return false ;
+        return false;
     }
 
     if( $rs->numRows() != 1 ) {
-        return false ;
+        return false;
     }
 
-    return true ;
+    return true;
 }
 
 function finish_installation( $password ) {
-    require_once LIB_PATH . 'osclass/model/Admin.php' ;
+    require_once LIB_PATH . 'osclass/model/Admin.php';
     require_once LIB_PATH . 'osclass/model/Category.php';
     require_once LIB_PATH . 'osclass/model/Item.php';
     require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
@@ -604,9 +604,9 @@ function finish_installation( $password ) {
 
     $data = array();
 
-    $mAdmin = new Admin() ;
+    $mAdmin = new Admin();
 
-    $mPreference = Preference::newInstance() ;
+    $mPreference = Preference::newInstance();
     $mPreference->insert (
         array(
             's_section' => 'osclass'
@@ -616,13 +616,13 @@ function finish_installation( $password ) {
         )
     );
 
-    $admin = $mAdmin->findByPrimaryKey(1) ;
+    $admin = $mAdmin->findByPrimaryKey(1);
 
-    $data['s_email'] = $admin['s_email'] ;
-    $data['admin_user'] = $admin['s_username'] ;
+    $data['s_email'] = $admin['s_email'];
+    $data['admin_user'] = $admin['s_username'];
     $data['password'] = $password;
 
-    return $data ;
+    return $data;
 }
 
 /* Menus */
@@ -840,7 +840,7 @@ function display_database_error($error ,$step) {
 }
 
 function ping_search_engines($bool){
-    $mPreference = Preference::newInstance() ;
+    $mPreference = Preference::newInstance();
     if($bool == 1){
         $mPreference->insert (
             array(
@@ -849,7 +849,7 @@ function ping_search_engines($bool){
                 ,'s_value'  => '1'
                 ,'e_type'   => 'BOOLEAN'
             )
-        ) ;
+        );
         // GOOGLE
         osc_doRequest( 'http://www.google.com/webmasters/sitemaps/ping?sitemap='.urlencode(osc_search_url(array('sFeed' => 'rss') )), array());
         // BING
@@ -864,7 +864,7 @@ function ping_search_engines($bool){
                 ,'s_value'  => '0'
                 ,'e_type'   => 'BOOLEAN'
             )
-        ) ;
+        );
     }
 }
 function display_finish($password) {

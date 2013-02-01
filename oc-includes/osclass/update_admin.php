@@ -43,9 +43,9 @@
     if($admin){
         $result = -1;
         if( $new_username != '' ){
-            $result = $mAdmin->update( array('s_username' => $new_username ), array('pk_i_id' => '1') ) ;
+            $result = $mAdmin->update( array('s_username' => $new_username ), array('pk_i_id' => '1') );
         } elseif ( $new_passwd != '' ) {
-            $result = $mAdmin->update( array('s_password' => sha1($new_passwd) ), array('pk_i_id' => '1') ) ;
+            $result = $mAdmin->update( array('s_password' => sha1($new_passwd) ), array('pk_i_id' => '1') );
         }
 
         switch ($result) {

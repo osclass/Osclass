@@ -428,7 +428,7 @@ $(document).ready(
 						</tr>
 						<tr>
 							<th><?php echo LBL_FOLDER_CREATED; ?></th>
-							<td colspan="3" id="folderCtime"><?php echo (!empty($folderInfo['ctime'])?date(DATE_TIME_FORMAT,$folderInfo['ctime']):'&nbsp;') ; ?></td>
+							<td colspan="3" id="folderCtime"><?php echo (!empty($folderInfo['ctime'])?date(DATE_TIME_FORMAT,$folderInfo['ctime']):'&nbsp;'); ?></td>
 
 						</tr>
 						<tr>

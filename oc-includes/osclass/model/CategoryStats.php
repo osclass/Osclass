@@ -1,4 +1,4 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -37,7 +37,7 @@
          * @since unknown
          * @var CategoryStats
          */
-        private static $instance ;
+        private static $instance;
 
         /**
         * It creates a new CategoryStats object class if it has been created
@@ -50,9 +50,9 @@
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -61,9 +61,9 @@
         function __construct()
         {
             parent::__construct();
-            $this->setTableName('t_category_stats') ;
-            $this->setPrimaryKey('fk_i_category_id') ;
-            $this->setFields( array('fk_i_category_id', 'i_num_items') ) ;
+            $this->setTableName('t_category_stats');
+            $this->setPrimaryKey('fk_i_category_id');
+            $this->setFields( array('fk_i_category_id', 'i_num_items') );
         }
 
         /**
@@ -86,7 +86,7 @@
                 if($result['fk_i_parent_id']!=NULL) {
                     $parent_res = $this->increaseNumItems($result['fk_i_parent_id']);
                     if($parent_res !== false){
-                        $return += $parent_res ;
+                        $return += $parent_res;
                     }else{
                         $return = false;
                     }
@@ -105,49 +105,49 @@
          */
         public function decreaseNumItems($categoryId)
         {
-            $this->dao->select( 'i_num_items' ) ;
-            $this->dao->from( $this->getTableName() ) ;
-            $this->dao->where( $this->getPrimaryKey(), $categoryId ) ;
-            $result       = $this->dao->get() ;
-            $categoryStat = $result->row() ;
-            $return       = 0 ;
+            $this->dao->select( 'i_num_items' );
+            $this->dao->from( $this->getTableName() );
+            $this->dao->where( $this->getPrimaryKey(), $categoryId );
+            $result       = $this->dao->get();
+            $categoryStat = $result->row();
+            $return       = 0;
 
             if( isset( $categoryStat['i_num_items'] ) ) {
-                $this->dao->from( $this->getTableName() ) ;
-                $this->dao->set( 'i_num_items', 'i_num_items - 1', false ) ;
-                $this->dao->where( 'i_num_items > 0' ) ;
-                $this->dao->where( 'fk_i_category_id', $categoryId ) ;
+                $this->dao->from( $this->getTableName() );
+                $this->dao->set( 'i_num_items', 'i_num_items - 1', false );
+                $this->dao->where( 'i_num_items > 0' );
+                $this->dao->where( 'fk_i_category_id', $categoryId );
 
-                $return = $this->dao->update() ;
+                $return = $this->dao->update();
             } else {
                 $array_set = array(
                     'fk_i_category_id'  => $categoryId,
                     'i_num_items'       => 0
-                ) ;
+                );
                 $res = $this->dao->insert($this->getTableName(), $array_set);
                 if($res === false) {
-                    $return = false ;
+                    $return = false;
                 }
             }
 
             if( $return !== false ) {
-                $result = Category::newInstance()->findByPrimaryKey($categoryId) ;
+                $result = Category::newInstance()->findByPrimaryKey($categoryId);
                 if( $result['fk_i_parent_id'] != NULL ) {
-                    $parent_res = $this->decreaseNumItems( $result['fk_i_parent_id'] ) ;
+                    $parent_res = $this->decreaseNumItems( $result['fk_i_parent_id'] );
                     if( $parent_res !== false ) {
-                        $return += $parent_res ;
+                        $return += $parent_res;
                     } else {
-                        $return = false ;
+                        $return = false;
                     }
                 }
             }
 
-            return $return ;
+            return $return;
         }
 
         public function setNumItems($categoryID, $numItems)
         {
-            return $this->dao->query("INSERT INTO ".$this->getTableName()." (fk_i_category_id, i_num_items) VALUES ($categoryID, $numItems) ON DUPLICATE KEY UPDATE i_num_items = ".$numItems) ;
+            return $this->dao->query("INSERT INTO ".$this->getTableName()." (fk_i_category_id, i_num_items) VALUES ($categoryID, $numItems) ON DUPLICATE KEY UPDATE i_num_items = ".$numItems);
         }
 
         /**
@@ -173,11 +173,11 @@
          */
         public function countItemsFromCategory($categoryId)
         {
-            $this->dao->select('i_num_items') ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('fk_i_category_id', $categoryId) ;
-            $result = $this->dao->get() ;
-            $data = $result->row() ;
+            $this->dao->select('i_num_items');
+            $this->dao->from($this->getTableName());
+            $this->dao->where('fk_i_category_id', $categoryId);
+            $result = $this->dao->get();
+            $data = $result->row();
             if($data==null) { return 0; } else { return $data['i_num_items']; };
         }
 

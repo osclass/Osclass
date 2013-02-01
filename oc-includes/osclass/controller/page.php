@@ -19,49 +19,49 @@
 
     class CWebPage extends BaseModel
     {
-        var $pageManager ;
+        var $pageManager;
 
         function __construct()
         {
-            parent::__construct() ;
+            parent::__construct();
 
-            $this->pageManager = Page::newInstance() ;
+            $this->pageManager = Page::newInstance();
         }
 
         function doModel()
         {
-            $id   = Params::getParam('id') ;
-            $page = false ;
+            $id   = Params::getParam('id');
+            $page = false;
 
             if( is_numeric($id) ) {
-                $page = $this->pageManager->findByPrimaryKey($id) ;
+                $page = $this->pageManager->findByPrimaryKey($id);
             } else {
-                $page = $this->pageManager->findByInternalName(Params::getParam('slug')) ;
+                $page = $this->pageManager->findByInternalName(Params::getParam('slug'));
             }
 
             // page not found
             if( $page == false ) {
-                $this->do404() ;
-                return ;
+                $this->do404();
+                return;
             }
 
             // this page shouldn't be shown (i.e.: e-mail templates)
             if( $page['b_indelible'] == 1 ) {
-                $this->do404() ;
-                return ;
+                $this->do404();
+                return;
             }
 
-            $kwords = array('{WEB_URL}', '{WEB_TITLE}') ;
-            $rwords = array(osc_base_url(), osc_page_title()) ;
+            $kwords = array('{WEB_URL}', '{WEB_TITLE}');
+            $rwords = array(osc_base_url(), osc_page_title());
             foreach($page['locale'] as $k => $v) {
                 $page['locale'][$k]['s_title'] = str_ireplace($kwords, $rwords, osc_apply_filter('email_description', $v['s_title']));
                 $page['locale'][$k]['s_text'] = str_ireplace($kwords, $rwords, osc_apply_filter('email_description', $v['s_text']));
             }
 
             // export $page content to View
-            $this->_exportVariableToView('page', $page) ;
+            $this->_exportVariableToView('page', $page);
             if( Params::getParam('lang') != '' ) {
-                Session::newInstance()->_set('userLocale', Params::getParam('lang')) ;
+                Session::newInstance()->_set('userLocale', Params::getParam('lang'));
             }
 
             $meta = json_decode($page['s_meta'], true);
@@ -72,10 +72,10 @@
             } else if( isset($meta['template']) && file_exists(osc_themes_path() . osc_theme() . '/' . $meta['template']) ) {
                 $this->doView($meta['template']);
             } else if( isset($meta['template']) && file_exists(osc_plugins_path() . '/' . $meta['template']) ) {
-                osc_run_hook('before_html') ;
+                osc_run_hook('before_html');
                 require osc_plugins_path() . '/' . $meta['template'];
-                Session::newInstance()->_clearVariables() ;
-                osc_run_hook('after_html') ;
+                Session::newInstance()->_clearVariables();
+                osc_run_hook('after_html');
             } else {
                 $this->doView('page.php');
             }
@@ -83,10 +83,10 @@
 
         function doView($file)
         {
-            osc_run_hook('before_html') ;
-            osc_current_web_theme_path($file) ;
-            Session::newInstance()->_clearVariables() ;
-            osc_run_hook('after_html') ;
+            osc_run_hook('before_html');
+            osc_current_web_theme_path($file);
+            Session::newInstance()->_clearVariables();
+            osc_run_hook('after_html');
         }
     }
 

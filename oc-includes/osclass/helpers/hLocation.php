@@ -34,7 +34,7 @@
      */
     function osc_country() {
         if (View::newInstance()->_exists('countries')) {
-            return View::newInstance()->_current('countries') ;
+            return View::newInstance()->_current('countries');
         } else {
             return null;
         }
@@ -47,7 +47,7 @@
      */
     function osc_region() {
         if (View::newInstance()->_exists('regions')) {
-            return View::newInstance()->_current('regions') ;
+            return View::newInstance()->_current('regions');
         } else {
             return null;
         }
@@ -60,7 +60,7 @@
      */
     function osc_city() {
         if (View::newInstance()->_exists('cities')) {
-            return View::newInstance()->_current('cities') ;
+            return View::newInstance()->_current('cities');
         } else {
             return null;
         }
@@ -73,7 +73,7 @@
      */
     function osc_city_area() {
         if (View::newInstance()->_exists('city_areas')) {
-            return View::newInstance()->_current('city_areas') ;
+            return View::newInstance()->_current('city_areas');
         } else {
             return null;
         }
@@ -86,9 +86,9 @@
      */
     function osc_has_countries() {
         if ( !View::newInstance()->_exists('countries') ) {
-            View::newInstance()->_exportVariableToView('countries', Search::newInstance()->listCountries( ">=", "country_name ASC") ) ;
+            View::newInstance()->_exportVariableToView('countries', Search::newInstance()->listCountries( ">=", "country_name ASC") );
         }
-        return View::newInstance()->_next('countries') ;
+        return View::newInstance()->_next('countries');
     }
 
     /**
@@ -98,9 +98,9 @@
      */
     function osc_has_regions($country = '%%%%') {
         if ( !View::newInstance()->_exists('regions') ) {
-            View::newInstance()->_exportVariableToView('regions', Search::newInstance()->listRegions($country, ">=", "region_name ASC" ) ) ;
+            View::newInstance()->_exportVariableToView('regions', Search::newInstance()->listRegions($country, ">=", "region_name ASC" ) );
         }
-        return View::newInstance()->_next('regions') ;
+        return View::newInstance()->_next('regions');
     }
 
     /**
@@ -110,11 +110,11 @@
      */
     function osc_has_cities($region = '%%%%') {
         if ( !View::newInstance()->_exists('cities') ) {
-            View::newInstance()->_exportVariableToView('cities', Search::newInstance()->listCities($region, ">=", "city_name ASC" ) ) ;
+            View::newInstance()->_exportVariableToView('cities', Search::newInstance()->listCities($region, ">=", "city_name ASC" ) );
         }
         $result = View::newInstance()->_next('cities');
 
-        if (!$result) View::newInstance()->_erase('cities') ;
+        if (!$result) View::newInstance()->_erase('cities');
         return $result;
     }
 
@@ -125,11 +125,11 @@
      */
     function osc_has_city_areas($city = '%%%%') {
         if ( !View::newInstance()->_exists('city_areas') ) {
-            View::newInstance()->_exportVariableToView('city_areas', Search::newInstance()->listCityAreas($city, ">=", "city_area_name ASC" ) ) ;
+            View::newInstance()->_exportVariableToView('city_areas', Search::newInstance()->listCityAreas($city, ">=", "city_area_name ASC" ) );
         }
         $result = View::newInstance()->_next('city_areas');
 
-        if (!$result) View::newInstance()->_erase('city_areas') ;
+        if (!$result) View::newInstance()->_erase('city_areas');
         return $result;
     }
 
@@ -140,9 +140,9 @@
      */
     function osc_count_countries() {
         if ( !View::newInstance()->_exists('contries') ) {
-            View::newInstance()->_exportVariableToView('countries', Search::newInstance()->listCountries( ">=", "country_name ASC" ) ) ;
+            View::newInstance()->_exportVariableToView('countries', Search::newInstance()->listCountries( ">=", "country_name ASC" ) );
         }
-        return View::newInstance()->_count('countries') ;
+        return View::newInstance()->_count('countries');
     }
 
     /**
@@ -152,9 +152,9 @@
      */
     function osc_count_regions($country = '%%%%') {
         if ( !View::newInstance()->_exists('regions') ) {
-            View::newInstance()->_exportVariableToView('regions', Search::newInstance()->listRegions($country,  ">=", "region_name ASC" ) ) ;
+            View::newInstance()->_exportVariableToView('regions', Search::newInstance()->listRegions($country,  ">=", "region_name ASC" ) );
         }
-        return View::newInstance()->_count('regions') ;
+        return View::newInstance()->_count('regions');
     }
 
     /**
@@ -164,9 +164,9 @@
      */
     function osc_count_cities($region = '%%%%') {
         if ( !View::newInstance()->_exists('cities') ) {
-            View::newInstance()->_exportVariableToView('cities', Search::newInstance()->listCities($region, ">=", "city_name ASC" ) ) ;
+            View::newInstance()->_exportVariableToView('cities', Search::newInstance()->listCities($region, ">=", "city_name ASC" ) );
         }
-        return View::newInstance()->_count('cities') ;
+        return View::newInstance()->_count('cities');
     }
 
     /**
@@ -176,9 +176,9 @@
      */
     function osc_count_city_areas($city = '%%%%') {
         if ( !View::newInstance()->_exists('city_areas') ) {
-            View::newInstance()->_exportVariableToView('city_areas', Search::newInstance()->listCityAreas($city, ">=", "city_area_name ASC" ) ) ;
+            View::newInstance()->_exportVariableToView('city_areas', Search::newInstance()->listCityAreas($city, ">=", "city_area_name ASC" ) );
         }
-        return View::newInstance()->_count('city_areas') ;
+        return View::newInstance()->_count('city_areas');
     }
 
     /**
@@ -187,7 +187,7 @@
      * @return string
      */
     function osc_country_name() {
-        return osc_field(osc_country(), 'country_name', '') ;
+        return osc_field(osc_country(), 'country_name', '');
     }
 
     /**
@@ -196,7 +196,7 @@
      * @return int
      */
     function osc_country_items() {
-        return osc_field(osc_country(), 'items', '') ;
+        return osc_field(osc_country(), 'items', '');
     }
 
     /**
@@ -205,7 +205,7 @@
      * @return string
      */
     function osc_region_name() {
-        return osc_field(osc_region(), 'region_name', '') ;
+        return osc_field(osc_region(), 'region_name', '');
     }
 
     /**
@@ -214,7 +214,7 @@
      * @return int
      */
     function osc_region_items() {
-        return osc_field(osc_region(), 'items', '') ;
+        return osc_field(osc_region(), 'items', '');
     }
 
     /**
@@ -223,7 +223,7 @@
      * @return string
      */
     function osc_city_name() {
-        return osc_field(osc_city(), 'city_name', '') ;
+        return osc_field(osc_city(), 'city_name', '');
     }
 
     /**
@@ -232,7 +232,7 @@
      * @return int
      */
     function osc_city_items() {
-        return osc_field(osc_city(), 'items', '') ;
+        return osc_field(osc_city(), 'items', '');
     }
 
     /**
@@ -241,7 +241,7 @@
      * @return string
      */
     function osc_city_area_name() {
-        return osc_field(osc_city_area(), 'city_area_name', '') ;
+        return osc_field(osc_city_area(), 'city_area_name', '');
     }
 
     /**
@@ -250,7 +250,7 @@
      * @return int
      */
     function osc_city_area_items() {
-        return osc_field(osc_city_area(), 'items', '') ;
+        return osc_field(osc_city_area(), 'items', '');
     }
 
     /**

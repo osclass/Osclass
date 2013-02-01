@@ -54,14 +54,14 @@
             $this->mSearch = new Search(true);
             $this->getDBParams($params);
             // only some fields can be ordered
-            $direction  = Params::getParam('direction') ;
+            $direction  = Params::getParam('direction');
             $arrayDirection = array('desc', 'asc');
             if( !in_array($direction, $arrayDirection) ) {
-                Params::setParam('direction', 'desc') ;
+                Params::setParam('direction', 'desc');
                 $direction = 'desc'; 
             }
             
-            $sort = Params::getParam('sort') ;
+            $sort = Params::getParam('sort');
             $arraySortColumns = array(
                 'spam'  => 'i_num_spam',
                 'bad'   => 'i_num_bad_classified',
@@ -72,7 +72,7 @@
                 );
             // column sort
             if( !key_exists($sort, $arraySortColumns) ) {
-                $sort       = 'dt_pub_date' ;
+                $sort       = 'dt_pub_date';
                 $this->mSearch->addHaving('i_num_spam > 0 OR i_num_bad_classified > 0 OR i_num_repeated > 0 OR i_num_offensive > 0 OR i_num_expired > 0');
             } else {
                 $sort = $arraySortColumns[$sort];
@@ -83,7 +83,7 @@
                 }
             }
             
-            $this->mSearch->order( $sort, $direction ) ;
+            $this->mSearch->order( $sort, $direction );
             
             $this->mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
             $this->mSearch->addField('SUM(s.`i_num_spam`) as i_num_spam');
@@ -97,7 +97,7 @@
             
             $this->mSearch->addConditions(sprintf(" %st_item.pk_i_id ", DB_TABLE_PREFIX));
             $this->mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
-            $this->mSearch->addGroupBy(sprintf(" %st_item.pk_i_id ", DB_TABLE_PREFIX)) ;
+            $this->mSearch->addGroupBy(sprintf(" %st_item.pk_i_id ", DB_TABLE_PREFIX));
             // do Search
             $this->processDataReported(Item::newInstance()->extendCategoryName($this->mSearch->doSearch(true)));
             $this->totalFiltered = $this->mSearch->countAll();
@@ -133,7 +133,7 @@
         private function addTableHeaderReported()
         {
 
-            $url_base = osc_admin_base_url(true).'?page=items&action=items_reported' ;
+            $url_base = osc_admin_base_url(true).'?page=items&action=items_reported';
             $arg_spam   = '&sort=spam'; $arg_bad    = '&sort=bad';
             $arg_rep    = '&sort=rep';  $arg_off    = '&sort=off';
             $arg_exp    = '&sort=exp';  $arg_date   = '&sort=date';
@@ -197,73 +197,73 @@
                     // prepare item title
                     $title = mb_substr($aRow['s_title'], 0, 30, 'utf-8');
                     if($title != $aRow['s_title']) {
-                        $title .= '...' ;
+                        $title .= '...';
                     }
                     // show more options
                     $options_more = array();
                     if($aRow['b_active']) {
-                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=INACTIVE">' . __('Deactivate') .'</a>' ;
+                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=INACTIVE">' . __('Deactivate') .'</a>';
                     } else {
-                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=ACTIVE">' . __('Activate') .'</a>' ;
+                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=ACTIVE">' . __('Activate') .'</a>';
                     }
                     if($aRow['b_enabled']) {
-                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=DISABLE">' . __('Block') .'</a>' ;
+                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=DISABLE">' . __('Block') .'</a>';
                     } else {
-                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=ENABLE">' . __('Unblock') .'</a>' ;
+                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=ENABLE">' . __('Unblock') .'</a>';
                     }
                     if($aRow['b_premium']) {
-                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=0">' . __('Unmark as premium') .'</a>' ;
+                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=0">' . __('Unmark as premium') .'</a>';
                     } else {
-                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=1">' . __('Mark as premium') .'</a>' ;
+                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=1">' . __('Mark as premium') .'</a>';
                     }
                     if($aRow['b_spam']) {
-                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=0">' . __('Unmark as spam') .'</a>' ;
+                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=0">' . __('Unmark as spam') .'</a>';
                     } else {
-                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=1">' . __('Mark as spam') .'</a>' ;
+                        $options_more[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;value=1">' . __('Mark as spam') .'</a>';
                     }
 
                     // general options
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=item_edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>' ;
-                    $options[] = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=items&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>' ;
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=item_edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>';
+                    $options[] = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=items&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '">' . __('Delete') . '</a>';
 
                     // only show if there are data
                     if(ItemComment::newInstance()->totalComments( $aRow['pk_i_id'] ) > 0) {
-                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View comments') . '</a>' ;
+                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=comments&amp;action=list&amp;id=' . $aRow['pk_i_id'] . '">' . __('View comments') . '</a>';
                     }
                     if(ItemResource::newInstance()->countResources( $aRow['pk_i_id'] ) > 0) {
-                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=media&amp;action=list&amp;resourceId=' . $aRow['pk_i_id'] . '">' . __('View media') . '</a>' ;
+                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=media&amp;action=list&amp;resourceId=' . $aRow['pk_i_id'] . '">' . __('View media') . '</a>';
                     }
 
                     $options_more = osc_apply_filter('more_actions_manage_items', $options_more, $aRow);
                     // more actions
-                    $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL ;
+                    $moreOptions = '<li class="show-more">'.PHP_EOL.'<a href="#" class="show-more-trigger">'. __('Show more') .'...</a>'. PHP_EOL .'<ul>'. PHP_EOL;
                     foreach( $options_more as $actual) { 
                         $moreOptions .= '<li>'.$actual."</li>".PHP_EOL;
                     }
-                    $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL ;
+                    $moreOptions .= '</ul>'. PHP_EOL .'</li>'.PHP_EOL;
 
                     $options = osc_apply_filter('actions_manage_items', $options, $aRow);
                     // create list of actions
-                    $auxOptions = '<ul>'.PHP_EOL ;
+                    $auxOptions = '<ul>'.PHP_EOL;
                     foreach( $options as $actual) {
                         $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
                     }
                     if(!empty($options_more)) {
-                        $auxOptions  .= $moreOptions ;
+                        $auxOptions  .= $moreOptions;
                     }
-                    $auxOptions  .= '</ul>'.PHP_EOL ;
+                    $auxOptions  .= '</ul>'.PHP_EOL;
 
-                    $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
+                    $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL;
 
                     // fill a row
-                    $row['bulkactions'] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>' ;
-                    $row['title'] = '<a href="' . osc_item_url().'" target="_blank">' . $title. '</a>'. $actions  ;
-                    $row['user'] = $aRow['s_user_name'] ;
-                    $row['category'] = $aRow['s_category_name'] ;
-                    $row['country'] = $aRow['s_country'] ;
-                    $row['region'] = $aRow['s_region'] ;
-                    $row['city'] = $aRow['s_city'] ;
-                    $row['date'] = $aRow['dt_pub_date'] ;
+                    $row['bulkactions'] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>';
+                    $row['title'] = '<a href="' . osc_item_url().'" target="_blank">' . $title. '</a>'. $actions;
+                    $row['user'] = $aRow['s_user_name'];
+                    $row['category'] = $aRow['s_category_name'];
+                    $row['country'] = $aRow['s_country'];
+                    $row['region'] = $aRow['s_region'];
+                    $row['city'] = $aRow['s_city'];
+                    $row['date'] = $aRow['dt_pub_date'];
 
                     $row = osc_apply_filter('items_processing_row', $row, $aRow);
 
@@ -281,55 +281,55 @@
                 $csrf_token_url = osc_csrf_token_url();
                 foreach($items as $aRow) {
                     View::newInstance()->_exportVariableToView('item', $aRow);
-                    $row     = array() ;
-                    $options = array() ;
+                    $row     = array();
+                    $options = array();
                     // -- prepare data --
                     // prepare item title
-                    $title = mb_substr($aRow['s_title'], 0, 30, 'utf-8') ;
+                    $title = mb_substr($aRow['s_title'], 0, 30, 'utf-8');
                     if($title != $aRow['s_title']) {
-                        $title .= '...' ;
+                        $title .= '...';
                     }
 
-                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=all">' . __('Clear All') .'</a>' ;
+                    $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=all">' . __('Clear All') .'</a>';
                     if( $aRow['i_num_spam'] > 0 ) {
-                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=spam">' . __('Clear Spam') .'</a>' ;
+                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=spam">' . __('Clear Spam') .'</a>';
                     } 
                     if( $aRow['i_num_bad_classified'] > 0 ) {
-                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=bad">' . __('Clear Misclassified') .'</a>' ;
+                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=bad">' . __('Clear Misclassified') .'</a>';
                     }
                     if( $aRow['i_num_repeated'] > 0 ) {
-                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=duplicated">' . __('Clear Duplicated') .'</a>' ;
+                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=duplicated">' . __('Clear Duplicated') .'</a>';
                     }
                     if( $aRow['i_num_offensive'] > 0 ) {
-                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=offensive">' . __('Clear Offensive') .'</a>' ;
+                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=offensive">' . __('Clear Offensive') .'</a>';
                     }
                     if( $aRow['i_num_expired'] > 0 ) {
-                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=expired">' . __('Clear Expired') .'</a>' ;
+                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=clear_stat&amp;id=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '&amp;stat=expired">' . __('Clear Expired') .'</a>';
                     }
                     if(count($options) > 0) {
-                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=item_edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>' ;
-                        $options[] = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=items&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '">' . __('Delete') . '</a>' ;
+                        $options[] = '<a href="' . osc_admin_base_url(true) . '?page=items&amp;action=item_edit&amp;id=' . $aRow['pk_i_id'] . '">' . __('Edit') . '</a>';
+                        $options[] = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" href="' . osc_admin_base_url(true) . '?page=items&amp;action=delete&amp;id[]=' . $aRow['pk_i_id'] . '&amp;' . $csrf_token_url . '">' . __('Delete') . '</a>';
                     }
 
                     // create list of actions
-                    $auxOptions = '<ul>'.PHP_EOL ;
+                    $auxOptions = '<ul>'.PHP_EOL;
                     foreach( $options as $actual ) {
                         $auxOptions .= '<li>'.$actual.'</li>'.PHP_EOL;
                     }
-                    $auxOptions  .= '</ul>'.PHP_EOL ;
+                    $auxOptions  .= '</ul>'.PHP_EOL;
 
-                    $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL ;
+                    $actions = '<div class="actions">'.$auxOptions.'</div>'.PHP_EOL;
 
                     // fill a row
-                    $row['bulkactions'] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>' ;
-                    $row['title'] = '<a href="' . osc_item_url().'" target="_blank">' . $title . '</a>'. $actions  ;
-                    $row['user'] = $aRow['s_user_name'] ;
-                    $row['spam'] = $aRow['i_num_spam'] ;
-                    $row['bad'] = $aRow['i_num_bad_classified'] ;
-                    $row['rep'] = $aRow['i_num_repeated'] ;
-                    $row['exp'] = $aRow['i_num_expired'] ;
-                    $row['off'] = $aRow['i_num_offensive'] ;
-                    $row['date'] = $aRow['dt_pub_date'] ;
+                    $row['bulkactions'] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" active="' . $aRow['b_active'] . '" blocked="' . $aRow['b_enabled'] . '"/>';
+                    $row['title'] = '<a href="' . osc_item_url().'" target="_blank">' . $title . '</a>'. $actions;
+                    $row['user'] = $aRow['s_user_name'];
+                    $row['spam'] = $aRow['i_num_spam'];
+                    $row['bad'] = $aRow['i_num_bad_classified'];
+                    $row['rep'] = $aRow['i_num_repeated'];
+                    $row['exp'] = $aRow['i_num_expired'];
+                    $row['off'] = $aRow['i_num_offensive'];
+                    $row['date'] = $aRow['dt_pub_date'];
 
                     $row = osc_apply_filter('items_processing_reported_row', $row, $aRow);
 
@@ -344,10 +344,10 @@
         {
 
             if(!isset($_get['iDisplayStart'])) {
-                $_get['iDisplayStart'] = 0 ;
+                $_get['iDisplayStart'] = 0;
             }
             if(!isset($_get['iDisplayLength'])) {
-                $_get['iDisplayLength'] = 10 ;
+                $_get['iDisplayLength'] = 10;
             }
 
             if(!is_numeric($_get['iPage']) || $_get['iPage'] < 1) {
@@ -455,7 +455,7 @@
             $sort       = $_get['sort'];
             $arraySortColumns = array('date'  => 'dt_pub_date');
             if(!key_exists($sort, $arraySortColumns)) {
-                $sort       = 'dt_pub_date' ;
+                $sort       = 'dt_pub_date';
             } else {
                 $sort = $arraySortColumns[$sort];
             }

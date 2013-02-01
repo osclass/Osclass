@@ -122,7 +122,7 @@ class MySession
 					if($file != '.' && $file != '..' && $file != $this->gcCounterFileName && $file != $this->gcLogFileName && $file != session_id() )
 					{						
 						$path=$this->dir.$file;
-						$output .= $path ;
+						$output .= $path;
 						//check if this is a expired session file
 						if(filemtime($path) + $this->lifeTime < time())
 						{							
@@ -160,7 +160,7 @@ class MySession
 						if($file != '.' && $file != '..')
 						{						
 							$path=CONFIG_SYS_ROOT_PATH.$file;
-							$output .= $path ;
+							$output .= $path;
 							//check if this is a expired session file
 							if(filemtime($path) + $this->lifeTime < time())
 							{							

@@ -22,61 +22,61 @@
 
     abstract class BaseModel
     {
-        protected $page ;
-        protected $action ;
-        protected $ajax ;
-        protected $time ;
+        protected $page;
+        protected $action;
+        protected $ajax;
+        protected $time;
 
         function __construct()
         {
-            $this->page   = Params::getParam('page') ;
-            $this->action = Params::getParam('action') ;
-            $this->ajax   = false ;
-            $this->time   = list($sm, $ss) = explode(' ', microtime()) ;
-            WebThemes::newInstance() ;
-            osc_run_hook( 'init' ) ;
+            $this->page   = Params::getParam('page');
+            $this->action = Params::getParam('action');
+            $this->ajax   = false;
+            $this->time   = list($sm, $ss) = explode(' ', microtime());
+            WebThemes::newInstance();
+            osc_run_hook( 'init' );
         }
 
         function __destruct()
         {
             if( !$this->ajax && OSC_DEBUG ) {
-                echo '<!-- ' . $this->getTime() . ' seg. -->' ;
+                echo '<!-- ' . $this->getTime() . ' seg. -->';
             }
         }
 
         //to export variables at the business layer
         function _exportVariableToView($key, $value)
         {
-            View::newInstance()->_exportVariableToView($key, $value) ;
+            View::newInstance()->_exportVariableToView($key, $value);
         }
 
         //only for debug (deprecated, all inside View.php)
         function _view($key = null)
         {
-            View::newInstance()->_view($key) ;
+            View::newInstance()->_view($key);
         }
 
         //Funciones que se tendran que reescribir en la clase que extienda de esta
-        protected abstract function doModel() ;
-        protected abstract function doView($file) ;
+        protected abstract function doModel();
+        protected abstract function doView($file);
 
         function do404()
         {
             Rewrite::newInstance()->set_location('error');
-            header('HTTP/1.1 404 Not Found') ;
-            osc_current_web_theme_path('404.php') ;
+            header('HTTP/1.1 404 Not Found');
+            osc_current_web_theme_path('404.php');
         }
 
         function redirectTo($url)
         {
-            header('Location: ' . $url) ;
-            exit ;
+            header('Location: ' . $url);
+            exit;
         }
 
         function getTime()
         {
-            $timeEnd = list($em, $es) = explode(' ', microtime()) ;
-            return ($timeEnd[0] + $timeEnd[1]) - ($this->time[0] + $this->time[1]) ;
+            $timeEnd = list($em, $es) = explode(' ', microtime());
+            return ($timeEnd[0] + $timeEnd[1]) - ($this->time[0] + $this->time[1]);
         }
     }
 

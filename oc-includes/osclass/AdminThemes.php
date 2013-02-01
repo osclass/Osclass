@@ -22,14 +22,14 @@
 
     class AdminThemes extends Themes
     {
-        private static $instance ;
+        private static $instance;
 
         public static function newInstance()
         {
             if(!self::$instance instanceof self) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         public function __construct()
@@ -41,20 +41,20 @@
         public function setCurrentThemeUrl()
         {
             if ($this->theme_exists) {
-                $this->theme_url = osc_admin_base_url() . 'themes/' . $this->theme . '/' ;
+                $this->theme_url = osc_admin_base_url() . 'themes/' . $this->theme . '/';
             } else {
-                $this->theme_url = osc_admin_base_url() . 'gui/' ;
+                $this->theme_url = osc_admin_base_url() . 'gui/';
             }
         }
 
         public function setCurrentThemePath()
         {
             if (file_exists(osc_admin_base_path() . 'themes/' . $this->theme . '/')) {
-                $this->theme_exists = true ;
-                $this->theme_path = osc_admin_base_path() . 'themes/' . $this->theme . '/' ;
+                $this->theme_exists = true;
+                $this->theme_path = osc_admin_base_path() . 'themes/' . $this->theme . '/';
             } else {
-                $this->theme_exists = false ;
-                $this->theme_path = osc_admin_base_path() . 'gui/' ;
+                $this->theme_exists = false;
+                $this->theme_path = osc_admin_base_path() . 'gui/';
             }
         }
     }

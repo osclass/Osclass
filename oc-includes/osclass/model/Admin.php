@@ -1,4 +1,4 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -37,14 +37,14 @@
          * @since unknown
          * @var Admin
          */
-        private static $instance ;
+        private static $instance;
 
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -53,15 +53,15 @@
         function __construct()
         {
             parent::__construct();
-            $this->setTableName('t_admin') ;
-            $this->setPrimaryKey('pk_i_id') ;
+            $this->setTableName('t_admin');
+            $this->setPrimaryKey('pk_i_id');
 
             $return = $this->dao->query('SHOW COLUMNS FROM ' . $this->getTableName() . ' where Field = "b_moderator" ');
 
             if( $return->numRows() > 0 ) {
-                $this->setFields( array('pk_i_id', 's_name', 's_username', 's_password', 's_email', 's_secret', 'b_moderator') ) ;
+                $this->setFields( array('pk_i_id', 's_name', 's_username', 's_password', 's_email', 's_secret', 'b_moderator') );
             } else {
-                $this->setFields( array('pk_i_id', 's_name', 's_username', 's_password', 's_email', 's_secret') ) ;
+                $this->setFields( array('pk_i_id', 's_name', 's_username', 's_password', 's_email', 's_secret') );
             }
         }
 
@@ -76,16 +76,16 @@
          */
         function findByEmail($email)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_email', $email) ;
-            $result = $this->dao->get() ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_email', $email);
+            $result = $this->dao->get();
 
             if( $result->numRows == 0 ) {
-                return false ;
+                return false;
             }
 
-            return $result->row() ;
+            return $result->row();
         }
 
         /**
@@ -99,16 +99,16 @@
          */
         function findByUsername($username)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_username', $username) ;
-            $result = $this->dao->get() ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_username', $username);
+            $result = $this->dao->get();
 
             if( $result->numRows == 0 ) {
-                return false ;
+                return false;
             }
 
-            return $result->row() ;
+            return $result->row();
         }
 
         /**
@@ -123,18 +123,18 @@
          */
         function findByCredentials($userName, $password)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
             $conditions = array( 's_username' => $userName,
                                  's_password' => sha1($password) );
             $this->dao->where($conditions);
             $result = $this->dao->get();
 
             if( $result->numRows == 0 ) {
-                return false ;
+                return false;
             }
 
-            return $result->row() ;
+            return $result->row();
         }
 
         /**
@@ -149,18 +149,18 @@
          */
         function findByIdSecret($id, $secret)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
             $conditions = array( 'pk_i_id'  => $id,
                                  's_secret' => $secret);
             $this->dao->where($conditions);
             $result = $this->dao->get();
 
             if( $result->numRows == 0 ) {
-                return false ;
+                return false;
             }
 
-            return $result->row() ;
+            return $result->row();
         }
 
         /**
@@ -175,18 +175,18 @@
          */
         function findByIdPassword($id, $password)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
             $conditions = array( 'pk_i_id'  => $id,
                                  's_password' => $secret);
             $this->dao->where($conditions);
             $result = $this->dao->get();
 
             if( $result->numRows == 0 ) {
-                return false ;
+                return false;
             }
 
-            return $result->row() ;
+            return $result->row();
         }
 
         /**
@@ -199,9 +199,9 @@
          */
         function deleteBatch( $id )
         {
-            $this->dao->from( $this->getTableName() ) ;
-            $this->dao->whereIn( 'pk_i_id', $id ) ;
-            return $this->dao->delete() ;
+            $this->dao->from( $this->getTableName() );
+            $this->dao->whereIn( 'pk_i_id', $id );
+            return $this->dao->delete();
         }
     }
 

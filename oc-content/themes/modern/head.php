@@ -21,7 +21,7 @@
 ?>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 
-<title><?php echo meta_title() ; ?></title>
+<title><?php echo meta_title(); ?></title>
 <meta name="title" content="<?php echo osc_esc_html(meta_title()); ?>" />
 <?php if( meta_description() != '' ) { ?>
 <meta name="description" content="<?php echo osc_esc_html(meta_description()); ?>" />
@@ -38,8 +38,8 @@
 <meta http-equiv="Expires" content="Fri, Jan 01 1970 00:00:00 GMT" />
 
 <script type="text/javascript">
-    var fileDefaultText = '<?php echo osc_esc_js( __('No file selected', 'modern') ) ; ?>';
-    var fileBtnText     = '<?php echo osc_esc_js( __('Choose File', 'modern') ) ; ?>';
+    var fileDefaultText = '<?php echo osc_esc_js( __('No file selected', 'modern') ); ?>';
+    var fileBtnText     = '<?php echo osc_esc_js( __('Choose File', 'modern') ); ?>';
 </script>
 
 <?php
@@ -56,4 +56,4 @@ osc_enqueue_script('tabber');
 osc_enqueue_script('global');
 ?>
 
-<?php osc_run_hook('header') ; ?>
+<?php osc_run_hook('header'); ?>

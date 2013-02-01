@@ -3,8 +3,8 @@ function selectFile(url)
 {
   if(url != '' )
   {     
-      window.opener.SetUrl( url ) ;
-      window.close() ;
+      window.opener.SetUrl( url );
+      window.close();
       
   }else
   {
@@ -20,6 +20,6 @@ function selectFile(url)
 function cancelSelectFile()
 {
   // close popup window
-  window.close() ;
+  window.close();
   return false;
 }

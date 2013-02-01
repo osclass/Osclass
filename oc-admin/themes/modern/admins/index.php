@@ -1,4 +1,4 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
      * Osclass – software for creating and publishing online classified advertising platforms
      *
@@ -27,9 +27,9 @@
     osc_add_filter('admin_title', 'customPageTitle');
 
     function customPageHeader() { ?>
-        <h1><?php _e('Admins') ; ?>
+        <h1><?php _e('Admins'); ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
-            <a href="<?php echo osc_admin_base_url(true); ?>?page=admins&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add admin') ; ?></a>
+            <a href="<?php echo osc_admin_base_url(true); ?>?page=admins&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add admin'); ?></a>
         </h1>
 <?php
     }
@@ -101,19 +101,19 @@
     $iDisplayLength = __get('iDisplayLength');
     $aData          = __get('aAdmins');
 
-    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+    osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <h2 class="render-title"><?php _e('Manage admins'); ?> <a href="<?php echo osc_admin_base_url(true); ?>?page=admins&amp;action=add" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
 <div class="relative">
     <div id="admins-toolbar" class="table-toolbar">
         <div class="float-right">
         </div>
     </div>
-    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>" method="post">
         <input type="hidden" name="page" value="admins" />
         <div id="bulk-actions">
             <label>
                 <?php osc_print_bulk_actions('bulk_actions', 'action', __get('bulk_options'), 'select-box-extra'); ?>
-                <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ); ?>" />
             </label>
         </div>
         <div class="table-contains-actions">
@@ -121,9 +121,9 @@
                 <thead>
                     <tr>
                         <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
-                        <th><?php _e('Username') ; ?></th>
-                        <th><?php _e('Name') ; ?></th>
-                        <th><?php _e('E-mail') ; ?></th>
+                        <th><?php _e('Username'); ?></th>
+                        <th><?php _e('Name'); ?></th>
+                        <th><?php _e('E-mail'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -144,7 +144,7 @@
                 <?php } else { ?>
                 <tr>
                     <td colspan="4" class="text-center">
-                    <p><?php _e('No data available in table') ; ?></p>
+                    <p><?php _e('No data available in table'); ?></p>
                     </td>
                 </tr>
                 <?php } ?>

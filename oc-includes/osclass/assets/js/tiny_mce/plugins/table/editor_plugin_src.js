@@ -2,7 +2,7 @@
  * $Id: editor_plugin_src.js 1209 2009-08-20 12:35:10Z spocke $
  *
  * @author Moxiecode
- * @copyright Copyright © 2004-2008, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2004-2008, Moxiecode Systems AB, All rights reserved.
  */
 
 (function() {
@@ -380,7 +380,7 @@
 						sd = getColRowSpan(td);
 
 						// All ready filled
-						for (xstart = x; grid[y] && grid[y][xstart]; xstart++) ;
+						for (xstart = x; grid[y] && grid[y][xstart]; xstart++);
 
 						// Fill box
 						for (y2=y; y2<y+sd['rowspan']; y2++) {

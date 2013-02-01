@@ -382,7 +382,7 @@
 					$new_y = floor($new_x / $this->_imgInfoOrig['width'] * $this->_imgInfoOrig['height']);
 				}else
 				{
-					$scale = min($new_x/$this->_imgInfoOrig['width'], $new_y/$this->_imgInfoOrig['height']) ;
+					$scale = min($new_x/$this->_imgInfoOrig['width'], $new_y/$this->_imgInfoOrig['height']);
 					$new_x = floor($scale*$this->_imgInfoOrig['width']);
 					$new_y = floor($scale*$this->_imgInfoOrig['height']);
 				}						

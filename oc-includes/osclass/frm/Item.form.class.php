@@ -88,7 +88,7 @@
             $subcategoryID = '';
             if( !Category::newInstance()->isRoot($categoryID) ) {
                 $subcategoryID = $categoryID;
-                $category      = Category::newInstance()->findRootCategory($categoryID) ;
+                $category      = Category::newInstance()->findRootCategory($categoryID);
                 $categoryID    = $category['pk_i_id'];
             }
 

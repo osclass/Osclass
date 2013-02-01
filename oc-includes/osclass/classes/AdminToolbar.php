@@ -30,7 +30,7 @@
      */
     class AdminToolbar
     {
-        private static $instance ;
+        private static $instance;
         private $nodes = array();
 
         public function __construct()
@@ -40,9 +40,9 @@
         public static function newInstance()
         {
             if(!self::$instance instanceof self) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         public function init(){}
@@ -102,16 +102,16 @@
         public function render()
         {
             if( count($this->nodes) > 0) {
-                echo '<div id="header" class="navbar"><div class="header-wrapper">' ;
+                echo '<div id="header" class="navbar"><div class="header-wrapper">';
                 foreach( $this->nodes as $value ) {
                     $meta = "";
                     if( isset($value->meta) ) {
                         foreach($value->meta as $k => $v)
-                            $meta .= $k.'="'.$v.'" ' ;
+                            $meta .= $k.'="'.$v.'" ';
                     }
                     echo '<a id="osc_toolbar_'.$value->id.'" '.$meta.' href="'.$value->href.'" ' . ((isset($value->target)) ? 'target="' . $value->target . '"' : '') . '>'.$value->title.'</a>';
                 }
-                echo '</div></div>' ;
+                echo '</div></div>';
             }
         }
     }

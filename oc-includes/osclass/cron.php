@@ -1,4 +1,4 @@
-<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -20,19 +20,19 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $d_now = date('Y-m-d H:i:s') ;
-    $i_now = strtotime($d_now) ;
+    $d_now = date('Y-m-d H:i:s');
+    $i_now = strtotime($d_now);
 
     // Hourly crons
-    $cron = Cron::newInstance()->getCronByType('HOURLY') ;
+    $cron = Cron::newInstance()->getCronByType('HOURLY');
     if( is_array($cron) ) {
         $i_next = strtotime($cron['d_next_exec']);
 
         if( (CLI && (Params::getParam('cron-type') === 'hourly')) || ((($i_now - $i_next) >= 0) && !CLI) ) {
             // update the next execution time in t_cron
-            $d_next = date('Y-m-d H:i:s', $i_now + 3600) ;
+            $d_next = date('Y-m-d H:i:s', $i_now + 3600);
             Cron::newInstance()->update(array('d_last_exec' => $d_now, 'd_next_exec' => $d_next),
-                                        array('e_type'      => 'HOURLY')) ;
+                                        array('e_type'      => 'HOURLY'));
 
             // Run cron AFTER updating the next execution time to avoid double run of cron
             $purge = osc_purge_latest_searches();
@@ -46,15 +46,15 @@
     }
 
     // Daily crons
-    $cron = Cron::newInstance()->getCronByType('DAILY') ;
+    $cron = Cron::newInstance()->getCronByType('DAILY');
     if( is_array($cron) ) {
-        $i_next = strtotime($cron['d_next_exec']) ;
+        $i_next = strtotime($cron['d_next_exec']);
 
         if( (CLI && (Params::getParam('cron-type') === 'daily')) || ((($i_now - $i_next) >= 0) && !CLI) ) {
             // update the next execution time in t_cron
-            $d_next = date('Y-m-d H:i:s', $i_now + (24 * 3600)) ;
+            $d_next = date('Y-m-d H:i:s', $i_now + (24 * 3600));
             Cron::newInstance()->update(array('d_last_exec' => $d_now, 'd_next_exec' => $d_next),
-                                        array('e_type'      => 'DAILY')) ;
+                                        array('e_type'      => 'DAILY'));
 
             // Run cron AFTER updating the next execution time to avoid double run of cron
             $purge = osc_purge_latest_searches();
@@ -69,15 +69,15 @@
     }
 
     // Weekly crons
-    $cron = Cron::newInstance()->getCronByType('WEEKLY') ;
+    $cron = Cron::newInstance()->getCronByType('WEEKLY');
     if(is_array($cron)) {
-        $i_next = strtotime($cron['d_next_exec']) ;
+        $i_next = strtotime($cron['d_next_exec']);
 
         if( (CLI && (Params::getParam('cron-type') === 'weekly')) || ((($i_now - $i_next) >= 0) && !CLI) ) {
             // update the next execution time in t_cron
-            $d_next = date('Y-m-d H:i:s', $i_now + (7 * 24 * 3600)) ;
+            $d_next = date('Y-m-d H:i:s', $i_now + (7 * 24 * 3600));
             Cron::newInstance()->update(array('d_last_exec' => $d_now, 'd_next_exec' => $d_next),
-                                        array('e_type'      => 'WEEKLY')) ;
+                                        array('e_type'      => 'WEEKLY'));
 
             // Run cron AFTER updating the next execution time to avoid double run of cron
             $purge = osc_purge_latest_searches();
@@ -88,5 +88,5 @@
         }
     }
 
-    osc_run_hook('cron') ;
+    osc_run_hook('cron');
     /* file end: ./oc-includes/osclass/cron.php */

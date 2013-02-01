@@ -16,7 +16,7 @@ function installMarketItem(thatItem){
         theme.marketAjaxUrl,
         {"code" : marketCode, "section" : marketType},
         function(data) {
-            var content  = data.message ;
+            var content  = data.message;
             var messages = theme.langs[marketType];
             if(data.error == 0) { // no errors
                 content += '<h3>'+messages.download_ok+'</h3>';

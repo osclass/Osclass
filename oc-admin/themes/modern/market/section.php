@@ -45,7 +45,7 @@
     // page number
     $marketPage     = Params::getParam("mPage");
     $url_actual     = osc_admin_base_url(true) . '?page=market&action='.$section.'&mPage='.$marketPage;
-    if($marketPage>=1) $marketPage-- ;
+    if($marketPage>=1) $marketPage--;
 
     // api
     $url            = osc_market_url($section)."page/".$marketPage.'/length/9/';
@@ -123,4 +123,4 @@
     echo '<div class="clear"></div><div class="has-pagination">'.$aux.'</div>';
     ?>
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

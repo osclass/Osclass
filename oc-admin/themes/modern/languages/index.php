@@ -1,4 +1,4 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
      * Osclass – software for creating and publishing online classified advertising platforms
      *
@@ -22,9 +22,9 @@
     osc_add_hook('help_box','addHelp');
 
     function customPageHeader(){ ?>
-        <h1><?php _e('Settings') ; ?>
+        <h1><?php _e('Settings'); ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
-            <a href="<?php echo osc_admin_base_url(true) ; ?>?page=languages&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right" ><?php _e('Add language') ; ?></a>
+            <a href="<?php echo osc_admin_base_url(true); ?>?page=languages&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right" ><?php _e('Add language'); ?></a>
         </h1>
 <?php
     }
@@ -104,19 +104,19 @@
 
     osc_current_admin_theme_path( 'parts/header.php' );
 ?>
-<h2 class="render-title"><?php _e('Manage Languages'); ?> <a href="<?php echo osc_admin_base_url(true) ; ?>?page=languages&amp;action=add" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
+<h2 class="render-title"><?php _e('Manage Languages'); ?> <a href="<?php echo osc_admin_base_url(true); ?>?page=languages&amp;action=add" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
 <div class="relative">
     <div id="language-toolbar" class="table-toolbar">
         <div class="float-right">
 
         </div>
     </div>
-    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post" data-dialog-open="false">
+    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>" method="post" data-dialog-open="false">
         <input type="hidden" name="page" value="languages" />
         <div id="bulk-actions">
             <label>
                 <?php osc_print_bulk_actions('bulk_actions', 'action', __get('bulk_options'), 'select-box-extra'); ?>
-                <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ); ?>" />
             </label>
         </div>
         <div class="table-contains-actions">
@@ -124,11 +124,11 @@
                 <thead>
                     <tr>
                         <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
-                        <th><?php _e('Name') ; ?></th>
-                        <th><?php _e('Short name') ; ?></th>
-                        <th><?php _e('Description') ; ?></th>
-                        <th><?php _e('Enabled (website)') ; ?></th>
-                        <th><?php _e('Enabled (oc-admin)') ; ?></th>
+                        <th><?php _e('Name'); ?></th>
+                        <th><?php _e('Short name'); ?></th>
+                        <th><?php _e('Description'); ?></th>
+                        <th><?php _e('Enabled (website)'); ?></th>
+                        <th><?php _e('Enabled (oc-admin)'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -149,7 +149,7 @@
                 <?php } else { ?>
                 <tr>
                     <td colspan="6" class="text-center">
-                    <p><?php _e('No data available in table') ; ?></p>
+                    <p><?php _e('No data available in table'); ?></p>
                     </td>
                 </tr>
                 <?php } ?>
@@ -200,19 +200,19 @@
             <table class="table" cellpadding="0" cellspacing="0">
                 <tbody>
                     <tr class="table-first-row">
-                        <td><?php _e('Name') ; ?></td>
+                        <td><?php _e('Name'); ?></td>
                         <td><span id="market_name"><?php _e("Loading data"); ?></span></td>
                     </tr>
                     <tr class="even">
-                        <td><?php _e('Version') ; ?></td>
+                        <td><?php _e('Version'); ?></td>
                         <td><span id="market_version"><?php _e("Loading data"); ?></span></td>
                     </tr>
                     <tr>
-                        <td><?php _e('Author') ; ?></td>
+                        <td><?php _e('Author'); ?></td>
                         <td><span id="market_author"><?php _e("Loading data"); ?></span></td>
                     </tr>
                     <tr class="even">
-                        <td><?php _e('URL') ; ?></td>
+                        <td><?php _e('URL'); ?></td>
                         <td><span id="market_url_span"><a id="market_url" href="#"><?php _e("Download manually"); ?></a></span></td>
                     </tr>
                 </tbody>
@@ -241,7 +241,7 @@
             "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market&<?php echo osc_csrf_token_url(); ?>",
             {"code" : $("#market_code").attr("value"), "section" : 'languages'},
             function(data){
-                var content = data.message ;
+                var content = data.message;
                 if(data.error == 0) { // no errors
                     content += '<h3><?php echo osc_esc_js(__('The theme has been downloaded correctly, proceed to activate or preview it.')); ?></h3>';
                     content += "<p>";
@@ -269,11 +269,11 @@
                     $("#market_version").html(data.s_version);
                     $("#market_author").html(data.s_contact_name);
                     $("#market_url").attr('href',data.s_source_file);
-                    $('#market_install').html("<?php echo osc_esc_js( __('Update') ) ; ?>");
+                    $('#market_install').html("<?php echo osc_esc_js( __('Update') ); ?>");
 
                     $('#market_installer').dialog({
                         modal:true,
-                        title: '<?php echo osc_esc_js( __('Osclass Market') ) ; ?>',
+                        title: '<?php echo osc_esc_js( __('Osclass Market') ); ?>',
                         width:485
                     });
                 }
@@ -284,4 +284,4 @@
     });
 </script>
 
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

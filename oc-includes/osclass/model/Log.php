@@ -1,4 +1,4 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      Osclass – software for creating and publishing online classified
@@ -29,14 +29,14 @@
          *
          * @var type
          */
-        private static $instance ;
+        private static $instance;
 
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -45,7 +45,7 @@
         function __construct()
         {
             parent::__construct();
-            $this->setTableName('t_log') ;
+            $this->setTableName('t_log');
             $array_fields = array(
                 'dt_date',
                 's_section',
@@ -56,7 +56,7 @@
                 's_who',
                 'fk_i_who_id'
             );
-            $this->setFields($array_fields) ;
+            $this->setFields($array_fields);
         }
 
         /**

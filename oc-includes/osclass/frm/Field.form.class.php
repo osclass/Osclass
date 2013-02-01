@@ -24,18 +24,18 @@
 
         static public function primary_input_hidden($field = null) {
             if(isset($field['pk_i_id'])) {
-                parent::generic_input_hidden("id", $field["pk_i_id"]) ;
+                parent::generic_input_hidden("id", $field["pk_i_id"]);
             }
         }
 
         static public function name_input_text($field = null) {
-            parent::generic_input_text("s_name", (isset($field) && isset($field["s_name"])) ? $field["s_name"] : "", null, false) ;
-            return true ;
+            parent::generic_input_text("s_name", (isset($field) && isset($field["s_name"])) ? $field["s_name"] : "", null, false);
+            return true;
         }
 
         static public function options_input_text($field = null) {
-            parent::generic_input_text("s_options", (isset($field) && isset($field["s_options"])) ? $field["s_options"] : "", null, false) ;
-            return true ;
+            parent::generic_input_text("s_options", (isset($field) && isset($field["s_options"])) ? $field["s_options"] : "", null, false);
+            return true;
         }
 
         static public function required_checkbox($field = null) {
@@ -64,7 +64,7 @@
 
                 if($field['e_type']=="TEXTAREA") {
                     echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
-                    echo '<textarea id="meta_' . $field['s_slug'] . '" name="meta['.$field['pk_i_id'].']" rows="10">' . ((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '</textarea>' ;
+                    echo '<textarea id="meta_' . $field['s_slug'] . '" name="meta['.$field['pk_i_id'].']" rows="10">' . ((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '</textarea>';
                 } else if($field['e_type']=="DROPDOWN") {
                     echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                     if(isset($field) && isset($field['s_options'])) {
@@ -94,8 +94,8 @@
                     echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                 } else {
                     echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
-                    echo '<input id="meta_'.$field['s_slug'].'" type="text" name="meta['.$field['pk_i_id'].']" value="' . osc_esc_html((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '" ' ;
-                    echo '/>' ;
+                    echo '<input id="meta_'.$field['s_slug'].'" type="text" name="meta['.$field['pk_i_id'].']" value="' . osc_esc_html((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '" ';
+                    echo '/>';
                 }
             }
         }

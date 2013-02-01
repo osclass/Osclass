@@ -23,7 +23,7 @@
     class SendFriendForm extends Form {
 
         /*static public function primary_input_hidden($page) {
-            parent::generic_input_hidden("id", $page["pk_i_id"]) ;
+            parent::generic_input_hidden("id", $page["pk_i_id"]);
         }*/
 
         static public function your_name() {
@@ -34,7 +34,7 @@
             } else {
                 parent::generic_input_text("yourName", "", null, false);
             }
-            return true ;
+            return true;
         }
 
         static public function your_email() {
@@ -45,7 +45,7 @@
             } else {
                 parent::generic_input_text("yourEmail", "", null, false);
             }
-            return true ;
+            return true;
         }
 
         static public function friend_name() {
@@ -55,7 +55,7 @@
             } else {
                 parent::generic_input_text("friendName", "", null, false);
             }
-            return true ;
+            return true;
         }
 
         static public function friend_email() {
@@ -65,7 +65,7 @@
             } else {
                 parent::generic_input_text("friendEmail", "", null, false);
             }
-            return true ;
+            return true;
         }
 
         static public function your_message() {
@@ -75,7 +75,7 @@
             } else {
                 parent::generic_textarea("message", "");
             }
-            return true ;
+            return true;
         }
 
         static public function js_validation() {

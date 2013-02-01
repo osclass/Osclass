@@ -37,16 +37,16 @@
         {
             
             $this->addTableHeader();
-            $this->getDBParams($params) ;
+            $this->getDBParams($params);
 
-            $media = ItemResource::newInstance()->getResources($this->resourceID, $this->start, $this->limit, ( $this->order_by['column_name'] ? $this->order_by['column_name'] : 'r.pk_i_id' ), ( $this->order_by['type'] ? $this->order_by['type'] : 'desc' ) ) ;
+            $media = ItemResource::newInstance()->getResources($this->resourceID, $this->start, $this->limit, ( $this->order_by['column_name'] ? $this->order_by['column_name'] : 'r.pk_i_id' ), ( $this->order_by['type'] ? $this->order_by['type'] : 'desc' ) );
             $this->processData($media);
             
-            $this->total = ItemResource::newInstance()->countResources() ;
+            $this->total = ItemResource::newInstance()->countResources();
             if( $this->resourceID == null ) {
-                $this->total_filtered = $this->total ;
+                $this->total_filtered = $this->total;
             } else {
-                $this->total_filtered = ItemResource::newInstance()->countResources( $this->resourceID ) ;
+                $this->total_filtered = ItemResource::newInstance()->countResources( $this->resourceID );
             }
                         
             return $this->getData();
@@ -78,13 +78,13 @@
             if(!empty($media)) {
             
                 foreach($media as $aRow) {
-                    $row = array() ;
+                    $row = array();
 
-                    $row['bulkactions'] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" />' ;
-                    $row['file'] = '<div id="media_list_pic"><img src="' . osc_apply_filter('resource_path', osc_base_url() . $aRow['s_path']) . $aRow['pk_i_id'] . '_thumbnail.' . $aRow['s_extension'] . '" style="max-width: 60px; max-height: 60px;" /></div> <div id="media_list_filename">' . $aRow['s_content_type'] ;
-                    $row['action'] = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" >' . __('Delete') . '</a>' ;
-                    $row['attached_to'] = '<a target="_blank" href="' . osc_item_url_ns($aRow['fk_i_item_id']) . '">item #' . $aRow['fk_i_item_id'] . '</a>' ;
-                    $row['date'] = $aRow['dt_pub_date'] ;
+                    $row['bulkactions'] = '<input type="checkbox" name="id[]" value="' . $aRow['pk_i_id'] . '" />';
+                    $row['file'] = '<div id="media_list_pic"><img src="' . osc_apply_filter('resource_path', osc_base_url() . $aRow['s_path']) . $aRow['pk_i_id'] . '_thumbnail.' . $aRow['s_extension'] . '" style="max-width: 60px; max-height: 60px;" /></div> <div id="media_list_filename">' . $aRow['s_content_type'];
+                    $row['action'] = '<a onclick="return delete_dialog(\'' . $aRow['pk_i_id'] . '\');" >' . __('Delete') . '</a>';
+                    $row['attached_to'] = '<a target="_blank" href="' . osc_item_url_ns($aRow['fk_i_item_id']) . '">item #' . $aRow['fk_i_item_id'] . '</a>';
+                    $row['date'] = $aRow['dt_pub_date'];
 
                     $row = osc_apply_filter('media_processing_row', $row, $aRow);
 
