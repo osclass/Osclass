@@ -102,15 +102,32 @@
 
             if ($item == null) { $item = osc_item(); }
 
+            $subcategory = array();
             ?>
             <select id="parentCategory" name="parentCatId">
                 <option value=""><?php _e('Select Category'); ?></option>
-                <?php foreach($categories as $category) { ?>
-                <option value="<?php echo $category['pk_i_id']; ?>"><?php echo $category['s_name']; ?></option>
-                <?php } ?>
+                <?php foreach($categories as $category) {
+                    $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $category['pk_i_id']) || (isset($categoryID) && $categoryID == $category['pk_i_id']) );
+                    if($selected) { $subcategory = $category; };
+                    echo '<option value="'.$category['pk_i_id'].'" '.($selected ? 'selected="selected"' : '' ).'>'.$category['s_name'].'</option>';
+                } ?>
             </select>
             <select id="catId" name="catId">
-                <option value=""><?php _e('Select Subcategory'); ?></option>
+                <?php
+                    if(!empty($subcategory)) {
+                        if( count($subcategory['categories']) > 0 ) {
+                            echo '<option value="">'.__('Select Subcategory').'</option>';
+                            foreach($subcategory['categories'] as $c) {
+                                $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($subcategoryID) && $subcategoryID == $c['pk_i_id']) );
+                                echo '<option value="'.$c['pk_i_id'].'" '.($selected ? 'selected="selected"' : '' ).'>'.$c['s_name'].'</option>';
+                            }
+                        } else {
+                            echo '<option value="'.$category['pk_i_id'].'" >'.__('No Subcategory').'</option>';
+                        }
+                    } else {
+                        echo '<option value="">'.__('Select Subcategory').'</option>';
+                    }
+                ?>
             </select>
             <script type="text/javascript" charset="utf-8">
             <?php
@@ -150,14 +167,6 @@
                         $("#catId").change();
                     });
 
-                    if( osc.item_post.category_id !== '' ) {
-                        $("#parentCategory").val(osc.item_post.category_id);
-                        $("#parentCategory").change();
-                        if( osc.item_post.subcategory_id !== '' ) {
-                            $("#catId").val(osc.item_post.subcategory_id);
-                            $("#catId").change();
-                        }
-                    }
                 });
 
             </script>
@@ -1019,7 +1028,7 @@
         static public function plugin_post_item($case = 'form') {
 ?>
 <script type="text/javascript">
-    $("#catId").change(function(){
+    $("#catId").change(function(){    console.log("OLA K ASE");
         var cat_id = $(this).val();
         <?php if(OC_ADMIN) { ?>
         var url = '<?php echo osc_admin_base_url(true); ?>';
@@ -1049,7 +1058,7 @@
         <?php } ?>
         var result = '';
 
-        if(cat_id != '') {
+        if(cat_id != '') {    console.log("OLA K TAL");
             $.ajax({
                 type: "POST",
                 url: url,
