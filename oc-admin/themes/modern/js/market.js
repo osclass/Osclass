@@ -1,6 +1,6 @@
 function installMarketItem(thatItem){
     $(".ui-dialog-content").dialog("close");
-    $('<div id="downloading"><div class="osc-modal-content">'+theme.langs.wait_download+'</div></div>').dialog({title:theme.langs.downloading+'...',modal:true,width:'auto',position: ['center']});
+    $('<div id="downloading"><div class="osc-modal-content"><div class="spinner"></div>'+theme.langs.wait_download+'</div></div>').dialog({title:theme.langs.downloading+'...',modal:true,width:'auto',position: ['center']});
         var marketCode = thatItem.attr('data-code');
         var marketType = thatItem.attr('data-type')+'s';
         // page to redirect once is installed
