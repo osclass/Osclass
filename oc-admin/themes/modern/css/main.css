@@ -1266,7 +1266,7 @@ div.widget-box-content-no-wrapp li a {
 }
 #sidebar .oscmenu > li > ul {
   overflow: auto;
-  overflow-y: hidden;
+  overflow-y: visible;
   overflow-x: visible;
   max-height: 600%;
 }
