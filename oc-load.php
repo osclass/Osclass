@@ -115,7 +115,6 @@ require_once LIB_PATH . 'osclass/WebThemes.php';
 require_once LIB_PATH . 'osclass/compatibility.php';
 require_once LIB_PATH . 'osclass/utils.php';
 require_once LIB_PATH . 'osclass/formatting.php';
-require_once LIB_PATH . 'osclass/feeds.php';
 require_once LIB_PATH . 'osclass/locales.php';
 require_once LIB_PATH . 'osclass/classes/Plugins.php';
 require_once LIB_PATH . 'osclass/helpers/hPlugins.php';

@@ -408,6 +408,7 @@ CREATE TABLE %st_item_description_tmp (
         @unlink(osc_base_path() . 'readme.php');
 
         @unlink(osc_lib_path() . 'osclass/plugins.php');
+        @unlink(osc_lib_path() . 'osclass/feeds.php');
 
         $comm->query(sprintf('UPDATE %st_user t, (SELECT pk_i_id FROM %st_user) t1 SET t.s_username = t1.pk_i_id WHERE t.pk_i_id = t1.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
         osc_set_preference('username_blacklist', 'admin,user', 'osclass', 'STRING');
