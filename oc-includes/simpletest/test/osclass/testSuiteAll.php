@@ -164,7 +164,7 @@ class AllTests extends TestSuite {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-stats.php');     // only test that the page load
             }
             if(isset($tests['admin']['moderator']) || $tests['admin']=='') {
-                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin_moderator.php');     // only test that the page load
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-moderator.php');     // only test that the page load
             }
             if(isset($tests['admin']['reported']) || $tests['admin']=='') {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-reported.php');     // only test that the page load
