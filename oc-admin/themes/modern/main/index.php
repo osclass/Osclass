@@ -305,7 +305,6 @@
 </div>
 <script type="text/javascript">
     $(function(){
-        console.log('init');
         $.getJSON(
             '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=dashboardbox_market',
             function(data){

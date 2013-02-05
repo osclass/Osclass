@@ -952,7 +952,7 @@
                     } else {
                         $content = $json;
                     }
-                    $error = 1;
+                    
                     if($error==1) {
                         echo json_encode(array('error' => 1));
                     } else {
