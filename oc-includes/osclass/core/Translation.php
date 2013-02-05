@@ -27,9 +27,9 @@
         private $messages;
         private static $instance;
 
-        public static function newInstance() {
+        public static function newInstance($install = false) {
             if(!self::$instance instanceof self) {
-                self::$instance = new self;
+                self::$instance = new self($install);
             }
             return self::$instance;
         }
