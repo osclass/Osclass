@@ -1028,7 +1028,7 @@
         static public function plugin_post_item($case = 'form') {
 ?>
 <script type="text/javascript">
-    $("#catId").change(function(){    console.log("OLA K ASE");
+    $("#catId").change(function(){
         var cat_id = $(this).val();
         <?php if(OC_ADMIN) { ?>
         var url = '<?php echo osc_admin_base_url(true); ?>';
@@ -1058,7 +1058,7 @@
         <?php } ?>
         var result = '';
 
-        if(cat_id != '') {    console.log("OLA K TAL");
+        if(cat_id != '') {
             $.ajax({
                 type: "POST",
                 url: url,
