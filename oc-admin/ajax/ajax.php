@@ -942,15 +942,25 @@
                     echo json_encode($array);
                     break;
                 case 'dashboardbox_market':
-                    $nextTo = Params::getParam("nextTo");
-                    if($nextTo == ''){
-                        $nextTo = '#banner_market';
+                    $error = 0;
+                    // make market call
+                    $url = getPreference('marketURL') . 'dashboardbox/';
+
+                    $content = '';
+                    if(false===($json=@osc_file_get_contents($url))) {
+                        $error = 1;
+                    } else {
+                        $content = $json;
                     }
-                        echo '$(function(){';
-                        echo 'var baseAdmin = "'.osc_admin_base_url(true).'"; ';
-                        echo '$(unescape(\'\x3Cstyle\x3E#banner-randomid{background-color:#4d4d4d;color:#fff;padding:15px;width:380px;overflow:hidden;height:220px}#banner-randomid .title{font-size:20px;font-weight:200;text-align:center;padding-bottom:17px}#banner-randomid a.box{border-radius:5px;padding:2px 15px 15px;background:#7ed1e1;color:white;font-size:60px;font-weight:200;font-family:\"HelveticaNeue-Light\",\"Helvetica Neue Light\",\"Helvetica Neue\",Helvetica,Arial,Verdana,sans-serif;display:block;float:left;margin-left:40px;width:100px}#banner-randomid a.box span{font-size:16px;display:block;line-height:16px;margin-top:-6px}#banner-randomid a.box:hover{text-decoration:none}#banner-randomid a.browse{margin-left:40px;padding-top:5px;display:block;clear:both;color:#bababa;text-decoration:underline;float:left;width:130px}#banner-randomid a.right{float:right;margin-right:40px;margin-left:0;clear:none}\x3C\x2Fdiv\x3E\')).insertAfter(\''.$nextTo.'\');';
-                        echo '$(unescape(\'\x3Cdiv id=\"banner-randomid\"\x3E\x3Cdiv class=\"title\"\x3EGet a new look for your website and do the impossible with hundreds of themes and plugins available for free!\x3C\x2Fdiv\x3E\x3Ca href=\"\'+baseAdmin+\'?page=market&action=themes\" class=\"box\"\x3E365\x3Cspan\x3Ethemes\x3C\x2Fspan\x3E\x3C\x2Fa\x3E \x3Ca href=\"\'+baseAdmin+\'?page=market&action=plugins\" class=\"right box\"\x3E365\x3Cspan\x3Ethemes\x3C\x2Fspan\x3E\x3C\x2Fa\x3E\x3Ca href=\"\'+baseAdmin+\'?page=market&action=themes\" class=\"browse\"\x3Ebrowse all themes\x3C\x2Fa\x3E \x3Ca href=\"\'+baseAdmin+\'?page=market&action=plugins\" class=\"browse right\"\x3Ebrowse all themes\x3C\x2Fa\x3E\x3C\x2Fdiv\x3E\')).insertAfter(\''.$nextTo.'\');';
-                        echo '});';
+                    $error = 1;
+                    if($error==1) {
+                        echo json_encode(array('error' => 1));
+                    } else {
+                        // replace content with correct urls
+                        $content = str_replace('{URL_MARKET_THEMES}'    , osc_admin_base_url(true).'?page=market&action=themes' , $content);
+                        $content = str_replace('{URL_MARKET_PLUGINS}'   , osc_admin_base_url(true).'?page=market&action=plugins', $content);
+                        echo json_encode(array('html' => $content) );
+                    }
                     break;
                 case 'location_stats':
                     osc_csrf_check(false);
