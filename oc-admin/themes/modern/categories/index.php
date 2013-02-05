@@ -99,6 +99,11 @@
                         $(ui.helper).prepend('<div style="opacity: 1 !important; padding:5px;" class="alert-custom"><?php echo osc_esc_js(__('Note: You must expand the category in order to make it a subcategory.')); ?></div>');
                     },
                     stop: function(event, ui) {
+
+                        $(".jsMessage").fadeIn("fast");
+                        $(".jsMessage p").attr('class', '');
+                        $(".jsMessage p").html('<img height="16" width="16" src="<?php echo osc_current_admin_theme_url('images/loading.gif');?>"> <?php echo osc_esc_js(__('This action could take a while.')); ?>');
+
                         var list = '';
                         list = $('.sortable').nestedSortable('serialize');
                         var array_list = $('.sortable').nestedSortable('toArray');
@@ -168,7 +173,7 @@
                 });
                 $("#category-delete-submit").click(function() {
                     var id  = $("#dialog-delete-category").attr('data-category-id');
-                    var url  = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=delete_category&id=' + id;
+                    var url  = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=delete_category&<?php echo osc_csrf_token_url(); ?>&id=' + id;
 
                     $.ajax({
                         url: url,
@@ -238,7 +243,7 @@
 
                 $(".jsMessage").fadeIn("fast");
                 $(".jsMessage p").attr('class', '');
-                $(".jsMessage p").html('<img height="16" width="16" src="<?php echo osc_current_admin_theme_url('images/spinner_loading.gif');?>"> <?php echo osc_esc_js(__('This action could take a while.')); ?>');
+                $(".jsMessage p").html('<img height="16" width="16" src="<?php echo osc_current_admin_theme_url('images/loading.gif');?>"> <?php echo osc_esc_js(__('This action could take a while.')); ?>');
 
                 if( $('div[category_id=' + id + ']').hasClass('disabled') ) {
                     enabled = 1;
@@ -246,7 +251,7 @@
                     enabled = 0;
                 }
 
-                var url  = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=enable_category&id=' + id + '&enabled=' + enabled;
+                var url  = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=enable_category&<?php echo osc_csrf_token_url(); ?>&id=' + id + '&enabled=' + enabled;
                 $.ajax({
                     url: url,
                     context: document.body,
