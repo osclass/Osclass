@@ -103,8 +103,8 @@
             $this->add_submenu( 'users', __('User Settings'), osc_admin_base_url(true) .'?page=users&action=settings', 'users_settings', 'administrator');
             $this->add_submenu( 'users', __('Administrators'), osc_admin_base_url(true) .'?page=admins', 'users_administrators_manage', 'administrator');
             $this->add_submenu( 'users', __('Your Profile'), osc_admin_base_url(true) .'?page=admins&action=edit', 'users_administrators_profile', 'moderator');
-            $this->add_submenu( 'users', __('Alerts'), osc_admin_base_url(true) .'?page=users&action=alerts', 'users_alerts', 'moderator');
-            $this->add_submenu( 'users', __('Ban rules'), osc_admin_base_url(true) .'?page=users&action=ban', 'users_ban', 'moderator');
+            $this->add_submenu( 'users', __('Alerts'), osc_admin_base_url(true) .'?page=users&action=alerts', 'users_alerts', 'administrator');
+            $this->add_submenu( 'users', __('Ban rules'), osc_admin_base_url(true) .'?page=users&action=ban', 'users_ban', 'administrator');
 
             $this->add_menu( __('Tools'), osc_admin_base_url(true) .'?page=tools&action=import', 'tools', 'administrator');
             $this->add_submenu( 'tools', __('Import data'), osc_admin_base_url(true) .'?page=tools&action=import', 'tools_import', 'administrator');

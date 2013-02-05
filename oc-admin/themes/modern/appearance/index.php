@@ -91,6 +91,7 @@
                 <div class="available-theme">
                     <?php $aThemesToUpdate = json_decode( getPreference('themes_to_update') );
                     $bThemesToUpdate = (is_array($aThemesToUpdate))?true:false;
+                    $csrf_token = osc_csrf_token_url();
                     foreach($themes as $theme) { ?>
                     <?php
                             if( $theme == osc_theme() ) {
@@ -102,9 +103,9 @@
                         <div class="theme-stage">
                             <img src="<?php echo osc_base_url(); ?>/oc-content/themes/<?php echo $theme; ?>/screenshot.png" title="<?php echo $info['name']; ?>" alt="<?php echo $info['name']; ?>" />
                             <div class="theme-actions">
-                                <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=activate&amp;theme=<?php echo $theme; ?>" class="btn btn-mini btn-green"><?php _e('Activate'); ?></a>
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=activate&amp;theme=<?php echo $theme; ?>&amp;<?php echo $csrf_token; ?>" class="btn btn-mini btn-green"><?php _e('Activate'); ?></a>
                                 <a target="_blank" href="<?php echo osc_base_url(true); ?>?theme=<?php echo $theme; ?>" class="btn btn-mini btn-blue"><?php _e('Preview'); ?></a>
-                                <a onclick="return delete_dialog('<?php echo $theme; ?>');" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=delete&amp;webtheme=<?php echo $theme; ?>" class="btn btn-mini float-right delete"><?php _e('Delete'); ?></a>
+                                <a onclick="return delete_dialog('<?php echo $theme; ?>');" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=delete&amp;webtheme=<?php echo $theme; ?>&amp;<?php echo $csrf_token; ?>" class="btn btn-mini float-right delete"><?php _e('Delete'); ?></a>
                                 <?php
                                 if($bThemesToUpdate) {
                                     if(in_array($theme,$aThemesToUpdate )){

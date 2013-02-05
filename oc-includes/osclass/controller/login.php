@@ -37,7 +37,7 @@
                                             osc_add_flash_error_message(_m('Users are not enabled'));
                                             $this->redirectTo(osc_base_url());
                                         }
-                                        //osc_csrf_check();
+                                        osc_csrf_check();
                                         require_once LIB_PATH . 'osclass/UserActions.php';
                                         $user = User::newInstance()->findByEmail( Params::getParam('email') );
                                         if (!$user) {

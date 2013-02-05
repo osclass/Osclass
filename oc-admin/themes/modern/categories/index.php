@@ -29,7 +29,7 @@
     function customPageHeader() { ?>
         <h1><?php _e('Categories'); ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
-            <a href="<?php echo osc_admin_base_url(true); ?>?page=categories&amp;action=add_post_default" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
+            <a href="<?php echo osc_admin_base_url(true); ?>?page=categories&amp;action=add_post_default&<?php echo osc_csrf_token_url(); ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
     </h1>
 <?php
     }
@@ -116,7 +116,7 @@
                         }
                         if(list_original != list) {
                             $.ajax({
-                                url: "<?php echo osc_admin_base_url(true) . "?page=ajax&action=categories_order&"; ?>" + list,
+                                url: "<?php echo osc_admin_base_url(true) . "?page=ajax&action=categories_order&" . osc_csrf_token_url() . "&"; ?>" + list,
                                 context: document.body,
                                 success: function(res){
                                     var ret = eval( "(" + res + ")");

@@ -19,8 +19,6 @@
     $numItemsPerCategory = __get('numItemsPerCategory');
     $numItems            = __get('numItems');
     $numUsers            = __get('numUsers');
-    $newsList            = __get('newsList');
-    $twitterRSS          = __get('twitterRSS');
 
     osc_add_filter('render-wrapper','render_offset');
     function render_offset() {

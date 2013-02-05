@@ -1127,6 +1127,14 @@ ul.showing-results {
   background-color: #bababa;
   margin-left: 0px;
 }
+.spinner {
+  width: 16px;
+  height: 16px;
+  display: block;
+  margin-right: 10px;
+  float: left;
+  background: url('../images/loading.gif');
+}
 .widget-box {
   background-color: #f3f3f3;
   padding: 5px;
@@ -1258,7 +1266,7 @@ div.widget-box-content-no-wrapp li a {
 }
 #sidebar .oscmenu > li > ul {
   overflow: auto;
-  overflow-y: hidden;
+  overflow-y: visible;
   overflow-x: visible;
   max-height: 600%;
 }

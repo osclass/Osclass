@@ -50,6 +50,7 @@
                 case 'item_add': // post
                     if( osc_reg_user_post() && $this->user == null ) {
                         osc_add_flash_warning_message( _m('Only registered users are allowed to post listings') );
+                        Session::newInstance()->_setReferer(osc_item_post_url());
                         $this->redirectTo(osc_user_login_url());
                     }
 
