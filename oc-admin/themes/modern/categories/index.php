@@ -63,9 +63,10 @@
                 border-bottom: 1px solid #EEDC94;
                 color: #404040;
             }
-            .cat-hover{
+            .cat-hover,
+            .cat-hover .category_row{
                 background-color:#fffccc !important;
-                background:#fffccc;
+                background:#fffccc !important;
             }
         </style>
         <script type="text/javascript">
