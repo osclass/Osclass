@@ -60,7 +60,37 @@ class OCadmin_categories extends OCadminTest {
         $this->selenium->click("xpath=//div[@class='category_row' and contains(.,'NEW CATEGORY')]/div[@class='actions-cat']/a[text()='Delete']");
         sleep(2);
         $this->selenium->click("//a[@id='category-delete-submit']");
-        //$this->selenium->waitForPageToLoad("10000");
+        sleep(2);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"),"Create category");
+
+    }
+
+    function testCategory_enableDisableCategory()
+    {
+        $this->loginWith() ;
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Categories");
+        $this->selenium->click("//a[@id='categories']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->assertFalse($this->selenium->isTextPresent("NEW CATEGORY, EDIT ME!"),"Check NEW CATEGORY does not exists");
+        $this->selenium->click("link=Add");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->assertTrue($this->selenium->isTextPresent("NEW CATEGORY, EDIT ME!"),"Create category");
+        $this->assertFalse($this->selenium->isTextPresent("Enable"),"Check enable is not present");
+        $this->selenium->click("xpath=//div[@class='category_row' and contains(.,'NEW CATEGORY')]/div[@class='actions-cat']/a[text()='Disable']");
+        sleep(2);
+        $this->assertTrue($this->selenium->isTextPresent("The category as well as its subcategories have been disabled"),"Category disabled");
+        $this->assertTrue($this->selenium->isTextPresent("Enable"),"Check enable is present");
+        $this->selenium->click("xpath=//div[@class='category_row' and contains(.,'NEW CATEGORY')]/div[@class='actions-cat']/a[text()='Enable']");
+        sleep(2);
+        $this->assertTrue($this->selenium->isTextPresent("The category as well as its subcategories have been enabled"),"Category disabled");
+        $this->assertFalse($this->selenium->isTextPresent("Enable"),"Check enable is present");
+
+
+        $this->selenium->click("xpath=//div[@class='category_row' and contains(.,'NEW CATEGORY')]/div[@class='actions-cat']/a[text()='Delete']");
+        sleep(2);
+        $this->selenium->click("//a[@id='category-delete-submit']");
+
         sleep(2);
         $this->assertTrue($this->selenium->isTextPresent("Saved"),"Create category");
 
