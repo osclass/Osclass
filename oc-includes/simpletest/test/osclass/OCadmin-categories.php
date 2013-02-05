@@ -13,7 +13,6 @@ class OCadmin_categories extends OCadminTest {
      * - check dt_expiration of this items that belonging to updated category
      */
     function testCategory_updateExpiration()
-
     {
         $this->loginWith() ;
         $this->selenium->open( osc_admin_base_url(true) );
@@ -45,6 +44,20 @@ class OCadmin_categories extends OCadminTest {
         $this->assertTrue($item['dt_expiration'] == '2010-01-06 10:10:10', 'Check dt_expiration at t_item');
 
         Item::newInstance()->deleteByPrimaryKey($itemId);
+    }
+
+    function testCategory_create()
+    {
+        $this->loginWith() ;
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Categories");
+        $this->selenium->click("//a[@id='categories']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->assert(!$this->selenium->isTextPresent("NEW CATEGORY, EDIT ME!"),"Create category");
+        $this->selenium->click("link=Add");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->assert($this->selenium->isTextPresent("NEW CATEGORY, EDIT ME!"),"Create category");
+
     }
 
     function _addItem()
