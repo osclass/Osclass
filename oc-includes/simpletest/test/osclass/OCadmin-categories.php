@@ -46,17 +46,23 @@ class OCadmin_categories extends OCadminTest {
         Item::newInstance()->deleteByPrimaryKey($itemId);
     }
 
-    function testCategory_create()
+    function testCategory_createCategory()
     {
         $this->loginWith() ;
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Categories");
         $this->selenium->click("//a[@id='categories']");
         $this->selenium->waitForPageToLoad("10000");
-        $this->assert(!$this->selenium->isTextPresent("NEW CATEGORY, EDIT ME!"),"Create category");
+        $this->assertFalse($this->selenium->isTextPresent("NEW CATEGORY, EDIT ME!"),"Create category");
         $this->selenium->click("link=Add");
         $this->selenium->waitForPageToLoad("10000");
-        $this->assert($this->selenium->isTextPresent("NEW CATEGORY, EDIT ME!"),"Create category");
+        $this->assertTrue($this->selenium->isTextPresent("NEW CATEGORY, EDIT ME!"),"Create category");
+        $this->selenium->click("xpath=//div[@class='category_row' and contains(.,'NEW CATEGORY')]/div[@class='actions-cat']/a[text()='Delete']");
+        sleep(2);
+        $this->selenium->click("//a[@id='category-delete-submit']");
+        //$this->selenium->waitForPageToLoad("10000");
+        sleep(2);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"),"Create category");
 
     }
 
