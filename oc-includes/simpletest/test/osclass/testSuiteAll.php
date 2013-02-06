@@ -128,49 +128,51 @@ class AllTests extends TestSuite {
             require_once(dirname(__FILE__).'/../../../../oc-load.php');
             
             if(isset($tests['admin']['categories']) || $tests['admin']=='') {
-                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-categories.php');    // OK
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-categories.php');
             }
             if(isset($tests['admin']['settings']) || $tests['admin']=='') {
-                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-settings.php');    // OK
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-settings.php');
             }
             if(isset($tests['admin']['administrators']) || $tests['admin']=='') {
-                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-administrators.php');    // NEED DOC     
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-administrators.php');
             }
             if(isset($tests['admin']['emailandalerts']) || $tests['admin']=='') {
-                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-emailsAndAlerts.php');    // NEED DOC
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-emailsAndAlerts.php');
             }
             if(isset($tests['admin']['users']) || $tests['admin']=='') {
-                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-users.php');    // NEED DOC HAS BUGS
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-users.php');
             }
             if(isset($tests['admin']['languages']) || $tests['admin']=='') {
-                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-languages.php'); // CURRENCY FORMAT HAS CHANGED, NEED TO UPDATE TEST, ALSO NEED TO UPDATE PACKAGE .ZIP
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-languages.php');
             }
             if(isset($tests['admin']['tools']) || $tests['admin']=='') {
-                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-tools.php');              // OK NEED TO TEST LOCATION STATS, MAINTENANCE AND UPGRADE?
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-tools.php');
             }
             if(isset($tests['admin']['pages']) || $tests['admin']=='') {
-                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-pages.php');              // OK MAYBE NEED TO TEST MULTI-LOCALE ...
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-pages.php');
             }
             if(isset($tests['admin']['plugins']) || $tests['admin']=='') {
-                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-plugins.php');            // OK - TAKE CARE OF FILES (oc-content/plugins should be writable)
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-plugins.php');
             }
             if(isset($tests['admin']['appearance']) || $tests['admin']=='') {
-                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-appearance.php');         // OK
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-appearance.php');
             }
             if(isset($tests['admin']['items']) || $tests['admin']=='') {
-                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-items.php');     // necesita limpiar código     
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-items.php');
             }
             if(isset($tests['admin']['stats']) || $tests['admin']=='') {
-                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-stats.php');     // only test that the page load
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-stats.php');
             }
             if(isset($tests['admin']['moderator']) || $tests['admin']=='') {
-                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-moderator.php');     // only test that the page load
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-moderator.php');
             }
             if(isset($tests['admin']['reported']) || $tests['admin']=='') {
-                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-reported.php');     // only test that the page load
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-reported.php');
+            }
+            if(isset($tests['admin']['market']) || $tests['admin']=='') {
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-market.php');
             }
         }
-
 
     }
 }

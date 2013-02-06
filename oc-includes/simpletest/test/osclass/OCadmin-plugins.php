@@ -102,7 +102,7 @@ class OCadmin_plugins extends OCadminTest {
     
     
     
-    function testMarket()
+    /*function testMarket()
     {
         
         $pdir = array();
@@ -192,7 +192,7 @@ class OCadmin_plugins extends OCadminTest {
         
 
         
-    }
+    }*/
     
     
     private function deletePlugin() {

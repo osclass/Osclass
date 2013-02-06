@@ -73,7 +73,7 @@ class OCadmin_appearance extends OCadminTest {
     /*
      * Test Market appearance
      */
-    function testMarketDownload()
+    /*function testMarketDownload()
     {
         $this->loginWith();
         // go to market tab and download first element not installed
@@ -129,7 +129,7 @@ class OCadmin_appearance extends OCadminTest {
         } else {
             $this->assertTrue(false, 'There aren\'t themes on market');
         }
-    }
+    }*/
 
     /*
      * Private functions
