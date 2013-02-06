@@ -403,7 +403,6 @@
                             $categoryManager->updateExpiration($subc['pk_i_id'], $fields['i_expiration_days']);
                         };
                     };
-                        die;
                     if($error==0) {
                         $msg = __("Category updated correctly");
                     } else if($error==1) {
