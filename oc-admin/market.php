@@ -96,7 +96,6 @@
 
                     $output_pagination = '';
                     if( is_numeric($array['total']) && $array['total']>0 ) {
-
                         $totalPages = ceil( $array['total'] / $array['sizePage'] );
                         $pageActual = $array['page'];
                         $params     = array(
