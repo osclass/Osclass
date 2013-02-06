@@ -122,22 +122,26 @@
                     $this->doView("market/section.php");
                 break;
                 default:
+                    $aPlugins       = array();
+                    $aThemes        = array();
+                    $aLanguages     = array();
+
                     $out_plugin     = osc_file_get_contents(osc_market_featured_url('plugins', 6) );
                     $array_plugins  = json_decode($out_plugin, true);
-                    if(!isset($array_plugins)) {
-                        $array_plugins = array();
+                    if(isset($array_plugins)) {
+                        $aPlugins = $array_plugins['plugins'];
                     }
 
                     $out_themes     = osc_file_get_contents(osc_market_featured_url('themes', 6) );
                     $array_themes   = json_decode($out_themes, true);
-                    if(!isset($array_themes)) {
-                        $array_themes = array();
+                    if(isset($array_themes)) {
+                        $aThemes    = $array_themes['themes'];
                     }
 
                     $out_languages   = osc_file_get_contents(osc_market_featured_url('languages', 6) );
                     $array_languages = json_decode($out_languages, true);
-                    if(!isset($array_languages)) {
-                        $array_languages = array();
+                    if(isset($array_languages)) {
+                        $aLanguages  = $array_languages['languages'];
                     }
 
                     $count = json_decode( osc_file_get_contents(osc_market_count_url()), true);
@@ -152,9 +156,9 @@
                     }
 
                     $this->_exportVariableToView("count"        , $count);
-                    $this->_exportVariableToView("aPlugins"     , $array_plugins);
-                    $this->_exportVariableToView("aThemes"      , $array_themes);
-                    $this->_exportVariableToView("aLanguages"   , $array_languages);
+                    $this->_exportVariableToView("aPlugins"     , $aPlugins);
+                    $this->_exportVariableToView("aThemes"      , $aThemes);
+                    $this->_exportVariableToView("aLanguages"   , $aLanguages);
 
                     $this->doView("market/index.php");
                 break;
