@@ -293,9 +293,9 @@
     <div class="grid-row grid-50">
         <div class="row-wrapper">
             <div class="widget-box">
-                <div class="widget-box-title"><h3><?php _e('Latest news'); ?></h3></div>
+                <div class="widget-box-title"><h3><?php _e('Market'); ?></h3></div>
                 <div class="widget-box-content widget-box-content-no-wrapp">
-                    <script type="text/javascript" id="banner_market" src="<?php echo osc_admin_base_url(true); ?>?page=ajax&action=dashboardbox_market&nexTo=#banner_market"></script>
+                    <div id="banner_market"></div>
                 </div>
             </div>
         </div>
@@ -303,4 +303,18 @@
     <div class="clear"></div>
 </div>
 </div>
+<script type="text/javascript">
+    $(function(){
+        $.getJSON(
+            '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=dashboardbox_market',
+            function(data){
+                if(data.error==1) {
+                    $('<p style="text-align:center; padding-top:15px;"><?php _e('Has been a problem loading the contents, sorry for the inconvenience'); ?></p>').insertAfter('#banner_market');
+                } else {
+                    $(data.html).insertAfter('#banner_market');
+                }
+            });
+        });
+</script>
+
 <?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

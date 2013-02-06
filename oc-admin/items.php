@@ -449,25 +449,26 @@
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" );
                                         }
 
+                                        $csrf_token = osc_csrf_token_url();
                                         if( $item['b_active'] ) {
-                                            $actions[] = '<a class="btn float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $item['pk_i_id'] . '&amp;value=INACTIVE">' . __('Deactivate') .'</a>';
+                                            $actions[] = '<a class="btn float-left" href="'.osc_admin_base_url(true).'?page=items&amp;action=status&amp;id='.$item['pk_i_id'].'&amp;'.$csrf_token.'&amp;value=INACTIVE">'.__('Deactivate') .'</a>';
                                         } else {
-                                            $actions[] = '<a class="btn btn-red float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $item['pk_i_id'] . '&amp;value=ACTIVE">' . __('Activate') .'</a>';
+                                            $actions[] = '<a class="btn btn-red float-left" href="'.osc_admin_base_url(true).'?page=items&amp;action=status&amp;id='.$item['pk_i_id'].'&amp;'.$csrf_token.'&amp;value=ACTIVE">'.__('Activate') .'</a>';
                                         }
                                         if( $item['b_enabled'] ) {
-                                            $actions[] = '<a class="btn float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $item['pk_i_id'] . '&amp;value=DISABLE">' . __('Block') .'</a>';
+                                            $actions[] = '<a class="btn float-left" href="'.osc_admin_base_url(true).'?page=items&amp;action=status&amp;id='.$item['pk_i_id'].'&amp;'.$csrf_token.'&amp;value=DISABLE">'.__('Block') .'</a>';
                                         } else {
-                                            $actions[] = '<a class="btn btn-red float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status&amp;id=' . $item['pk_i_id'] . '&amp;value=ENABLE">' . __('Unblock') .'</a>';
+                                            $actions[] = '<a class="btn btn-red float-left" href="'.osc_admin_base_url(true).'?page=items&amp;action=status&amp;id='.$item['pk_i_id'].'&amp;'.$csrf_token.'&amp;value=ENABLE">'.__('Unblock') .'</a>';
                                         }
                                         if( $item['b_premium'] ) {
-                                            $actions[] = '<a class="btn float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $item['pk_i_id'] . '&amp;value=0">' . __('Unmark as premium') .'</a>';
+                                            $actions[] = '<a class="btn float-left" href="'.osc_admin_base_url(true).'?page=items&amp;action=status_premium&amp;id='.$item['pk_i_id'].'&amp;'.$csrf_token.'&amp;value=0">'.__('Unmark as premium') .'</a>';
                                         } else {
-                                            $actions[] = '<a class="btn float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_premium&amp;id=' . $item['pk_i_id'] . '&amp;value=1">' . __('Mark as premium') .'</a>';
+                                            $actions[] = '<a class="btn float-left" href="'.osc_admin_base_url(true).'?page=items&amp;action=status_premium&amp;id='.$item['pk_i_id'].'&amp;'.$csrf_token.'&amp;value=1">'.__('Mark as premium') .'</a>';
                                         }
                                         if( $item['b_spam'] ) {
-                                            $actions[] = '<a class="btn btn-red float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $item['pk_i_id'] . '&amp;value=0">' . __('Unmark as spam') .'</a>';
+                                            $actions[] = '<a class="btn btn-red float-left" href="'.osc_admin_base_url(true).'?page=items&amp;action=status_spam&amp;id='.$item['pk_i_id'].'&amp;'.$csrf_token.'&amp;value=0">'.__('Unmark as spam') .'</a>';
                                         } else {
-                                            $actions[] = '<a class="btn float-left" href="' . osc_admin_base_url(true) . '?page=items&amp;action=status_spam&amp;id=' . $item['pk_i_id'] . '&amp;value=1">' . __('Mark as spam') .'</a>';
+                                            $actions[] = '<a class="btn float-left" href="'.osc_admin_base_url(true).'?page=items&amp;action=status_spam&amp;id='.$item['pk_i_id'].'&amp;'.$csrf_token.'&amp;value=1">'.__('Mark as spam') .'</a>';
                                         }
 
                                         $this->_exportVariableToView("actions", $actions);

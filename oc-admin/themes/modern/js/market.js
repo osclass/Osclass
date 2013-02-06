@@ -114,7 +114,8 @@ $(function(){
                         banner = item.s_image;
                     }
                     if(item.s_banner != null){
-                        banner = 'http://market.osclass.org/oc-content/uploads/market/'+item.s_banner;
+//                        banner = 'http://market.osclass.org/oc-content/uploads/market/'+item.s_banner;
+                        banner = item.s_banner_path+item.s_banner;
                     }
                     if(!banner){
                         banner = theme.themUrl+'images/gr-'+bg+'.png';

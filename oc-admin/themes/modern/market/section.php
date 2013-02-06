@@ -20,81 +20,19 @@
     }
     osc_add_hook('help_box','addHelp');
     osc_current_admin_theme_path('market/header.php');
-    switch (Params::getParam("action")) {
-        case 'plugins':
-            $section = 'plugins';
-            break;
 
-        case 'themes':
-            $section = 'themes';
-            break;
-        case 'languages':
-            $section = 'languages';
-            break;
+    $title      = __get('title');
+    $section    = __get('section');
+    $array      = __get('array');
+    $pagination = __get('output_pagination');
 
-        default:
-            $section = false;
-            break;
-    }
-    $title = array(
-        'plugins'    => __('Recommended plugins for You'),
-        'themes'     => __('Recommended themes for You'),
-        'languages'  => __('Languages for this version')
-        );
+    $sort       = __get('sort');
 
-    // page number
-    $marketPage     = Params::getParam("mPage");
-    $url_actual     = osc_admin_base_url(true) . '?page=market&action='.$section.'&mPage='.$marketPage;
-    if($marketPage>=1) $marketPage--;
+    $order_download = __get('order_download');
+    $order_updated  = __get('order_updated');
 
-    // api
-    $url            = osc_market_url($section)."page/".$marketPage.'/length/9/';
-    // default sort
-    $sort_actual    = '';
-    $sort_download  = $url_actual.'&sort=downloads&order=desc';
-    $sort_updated   = $url_actual.'&sort=updated&order=desc';
-
-    // sorting options (default)
-    $_order         = 'desc';
-    $order_download = $_order;
-    $order_updated  = $_order;
-
-    $sort           = Params::getParam("sort");
-    $order          = Params::getParam("order");
-
-    if($sort=='') {
-        $sort = 'updated';
-    }
-    if($order=='') {
-        $order = $_order;
-    }
-
-    $aux = ($order=='desc')?'asc':'desc';
-
-    switch ($sort) {
-        case 'downloads':
-            $sort_actual    = '&sort=downloads&order=';
-            $sort_download  = $url_actual.$sort_actual.$aux;
-            $sort_actual   .= $order;
-            $order_download = $order;
-            // market api call
-            $url .= 'order/downloads/'.$order;
-        break;
-        case 'updated':
-            $sort_actual    = '&sort=updated&order=';
-            $sort_updated   = $url_actual.$sort_actual.$aux;
-            $sort_actual   .= $order;
-            $order_updated  = $order;
-            // market api call
-            $url .= 'order/updated/'.$order;
-        break;
-        default:
-        break;
-    }
-
-    // pageSize or length attribute is hardcoded
-    $out    = osc_file_get_contents($url);
-    $array  = json_decode($out, true);
+    $sort_download  = __get('sort_download');
+    $sort_updated   = __get('sort_updated');
 
 ?>
 <div class="grid-market">
@@ -102,25 +40,20 @@
     <span style="<?php if($sort=='downloads'){ echo "font-weight: bold;";}?>" class="<?php echo ($order_download=='desc'?'sorting_desc':'sorting_asc') ?>"><a href="<?php echo $sort_download; ?>"><?php _e('Downloads'); ?> </a></span>  <span style="<?php if($sort=='updated'){ echo "font-weight: bold;";}?>" class="<?php echo ($order_updated=='desc'?'sorting_desc':'sorting_asc') ?>"><a href="<?php echo $sort_updated; ?>"><?php _e('Last updates'); ?> </a></span>
     </h2>
     <?php
-    $pageActual = $array['page'];
-    $totalPages = ceil( $array['total'] / $array['sizePage'] );
-    $params     = array(
-        'total'    => $totalPages,
-        'selected' => $pageActual,
-        'url'      => osc_admin_base_url(true).'?page=market'.'&amp;action='.$section.'&amp;mPage={PAGE}'.$sort_actual,
-        'sides'    => 5
-    );
-    // set pagination
-    $pagination = new Pagination($params);
-    $aux = $pagination->doPagination();
-
-    $colors = array_merge(gradienColors(),array_merge(gradienColors(),gradienColors()));
-    $i = 0;
-    foreach($array[$section] as $item) {
-        drawMarketItem($item,$colors[$i]);
-        $i++;
-    }
-    echo '<div class="clear"></div><div class="has-pagination">'.$aux.'</div>';
+    // if there are data to be shown
+    if(isset($array[$section]) ) {
+        $colors = array_merge(gradienColors(),array_merge(gradienColors(),gradienColors()));
+        $i = 0;
+        foreach($array[$section] as $item) {
+            drawMarketItem($item,$colors[$i]);
+            $i++;
+        }
+        echo '<div class="clear"></div><div class="has-pagination">'.$pagination.'</div>';
+    } else {
     ?>
+    <div>
+        <?php _e('Cannot get information form market.osclass.org, sorry for the inconvenience'); ?>
+    </div>
+    <?php } ?>
 </div>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>
