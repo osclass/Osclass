@@ -32,7 +32,6 @@ function installMarketItem(thatItem){
         });
 }
 function checkCompatibility(thatDialog){
-    console.log(thatDialog);
     var notCompatible = thatDialog.hasClass('not-compatible');
     if(notCompatible){
             content   = $('<div id="not-compatible-prompt"></div>');
@@ -206,6 +205,5 @@ $(function(){
     $('.mk-item-parent .download-btn').bind('click', function(e) {
         e.stopPropagation();
         checkCompatibility($(this));
-        console.log('LOL');
     });
 });
