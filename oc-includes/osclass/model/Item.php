@@ -565,27 +565,53 @@
          */
         public function updateExpirationDate($id, $i_expiration_days)
         {
-            if($i_expiration_days > 0) {
-                $sql =  sprintf("UPDATE %s SET dt_expiration = ", $this->getTableName());
-                $sql .= sprintf(' date_add(%s.dt_pub_date, INTERVAL %d DAY) ', $this->getTableName(), $i_expiration_days);
-                $sql .= sprintf(' WHERE pk_i_id = %d', $id);
-            } else {
-                $sql = sprintf("UPDATE %s SET dt_expiration = '9999-12-31 23:59:59'  WHERE pk_i_id = %d", $this->getTableName(), $id);
-            }
 
-            $result = $this->dao->query($sql);
+            $this->dao->select('dt_expiration');
+            $this->dao->from($this->getTableName());
+            $this->dao->where('pk_i_id', $id);
+            $result = $this->dao->get();
 
-            if($result && $result>0) {
-                $this->dao->select('dt_expiration');
-                $this->dao->from($this->getTableName());
-                $this->dao->where('pk_i_id', (int)$id );
-                $result = $this->dao->get();
+            if($result!==false) {
+                $item   = $result->row();
+                $expired_old = osc_isExpired($item['dt_expiration']);
+                if($i_expiration_days > 0) {
+                    $sql =  sprintf("UPDATE %s SET dt_expiration = ", $this->getTableName());
+                    $sql .= sprintf(' date_add(%s.dt_pub_date, INTERVAL %d DAY) ', $this->getTableName(), $i_expiration_days);
+                    $sql .= sprintf(' WHERE pk_i_id = %d', $id);
+                } else {
+                    $sql = sprintf("UPDATE %s SET dt_expiration = '9999-12-31 23:59:59'  WHERE pk_i_id = %d", $this->getTableName(), $id);
+                }
 
-                if($result && $result->result()>0) {
+                $result = $this->dao->query($sql);
+
+                if($result && $result>0) {
+                    $this->dao->select('i.dt_expiration, i.fk_i_user_id, i.fk_i_category_id, l.fk_c_country_code, l.fk_i_region_id, l.fk_i_city_id');
+                    $this->dao->from($this->getTableName()." i, ".DB_TABLE_PREFIX.'t_item_location l');
+                    $this->dao->where('i.pk_i_id', $id );
+                    $result = $this->dao->get();
                     $_item = $result->row();
+                    $expired = osc_isExpired($_item['dt_expiration']);
+                    if($expired!=$expired_old) {
+                        if($expired) {
+                            if($item['fk_i_user_id']!=null) {
+                                User::newInstance()->decreaseNumItems($_item['fk_i_user_id']);
+                            }
+                            CategoryStats::newInstance()->decreaseNumItems($_item['fk_i_category_id']);
+                            CountryStats::newInstance()->decreaseNumItems($_item['fk_c_country_code']);
+                            RegionStats::newInstance()->decreaseNumItems($_item['fk_i_region_id']);
+                            CityStats::newInstance()->decreaseNumItems($_item['fk_i_city_id']);
+                        }  else {
+                            if($item['fk_i_user_id']!=null) {
+                                User::newInstance()->increaseNumItems($_item['fk_i_user_id']);
+                            }
+                            CategoryStats::newInstance()->increaseNumItems($_item['fk_i_category_id']);
+                            CountryStats::newInstance()->increaseNumItems($_item['fk_c_country_code']);
+                            RegionStats::newInstance()->increaseNumItems($_item['fk_i_region_id']);
+                            CityStats::newInstance()->increaseNumItems($_item['fk_i_city_id']);
+                        }
+                    }
                     return $_item['dt_expiration'];
                 }
-                return false;
             }
             return false;
         }
