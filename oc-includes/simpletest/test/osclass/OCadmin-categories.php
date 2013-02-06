@@ -47,7 +47,7 @@ class OCadmin_categories extends OCadminTest {
         Item::newInstance()->deleteByPrimaryKey($itemId);
     }
 
-    function atestCategory_createCategory()
+    function testCategory_createCategory()
     {
         $this->loginWith() ;
         $this->selenium->open( osc_admin_base_url(true) );
@@ -66,7 +66,7 @@ class OCadmin_categories extends OCadminTest {
 
     }
 
-    function atestCategory_enableDisableCategory()
+    function testCategory_enableDisableCategory()
     {
         $this->loginWith() ;
         $this->selenium->open( osc_admin_base_url(true) );
