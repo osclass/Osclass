@@ -68,6 +68,7 @@ class OCadmin_categories extends OCadminTest {
 
     function testCategory_enableDisableCategory()
     {
+
         $this->loginWith() ;
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Categories");
