@@ -114,7 +114,7 @@ class OCadmin_market extends OCadminTest {
     private function getPluginName() {
         $this->selenium->click("//div[@class='mk-item mk-item-plugin']/div/div/span[@class='more']");
         sleep(1);
-        $text =  $this->selenium->getText("//div[@class='mk-inffo']/table/tbody/tr/td/h3");
+        $text =  $this->selenium->getText("//div[@class='mk-info']/table/tbody/tr/td/h3");
         $this->selenium->click("link=close");
         return $text;
     }
