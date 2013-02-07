@@ -56,7 +56,7 @@ class OCadmin_market extends OCadminTest {
 
     }
 
-    function testMarketInstall()
+    function testMarketPluginsInstall()
     {
         osc_check_plugins_update(true);
         $old_plugins = json_decode(osc_get_preference('plugins_downloaded'));
@@ -79,8 +79,11 @@ class OCadmin_market extends OCadminTest {
             break;
         }
         $this->assertTrue($textIsPresent, "Plugin failed downloading");
-        $this->selenium->click("//div[@='osc-modal-content']/p/a[contains(.,'Ok')]");
+        sleep(1);
+        $this->selenium->click("//div[@id='downloading']/div/p/a[contains(.,'Ok')]");//"//div[@='osc-modal-content']/p/a[@class='btn btn-mini btn-green']");
 
+
+        // GET INFO OF NEW PLUGIN
         osc_check_plugins_update(true);
         $plugins = json_decode(osc_get_preference('plugins_downloaded'));
         foreach($old_plugins as $p) {
@@ -91,17 +94,36 @@ class OCadmin_market extends OCadminTest {
                 }
             }
         }
-
+        $info = array();
         $plugin = current($plugins);
+
+        $plugin = "new_plugin_1";
+
         $plugins = Plugins::listAll(false);
         foreach($plugins as $p) {
-            $info = Plugins::getInfo($p);
-            if($info['short_name']==$plugin) {
-                $tmp = explode("/", $p);
-                $this->deletePlugin($tmp[0]);
+            $pinfo = Plugins::getInfo($p);
+            if($pinfo['short_name']==$plugin) {
+                $info = $pinfo;
                 break;
             }
         }
+
+
+        // CHECK IT'S ON THE INSTALLED LIST
+        $this->selenium->click("//a[@id='plugins_manage']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->assertTrue($this->selenium->isTextPresent(@$info['plugin_name']), "Plugin does not appear on the list");
+
+
+        // DELETE FOLDER
+        $tmp = explode("/", $info['filename']);
+        $this->deletePlugin($tmp[0]);
+
+        // CHECK IT'S *NOT* ON THE INSTALLED LIST
+        $this->selenium->click("//a[@id='plugins_manage']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->assertFalse($this->selenium->isTextPresent(@$info['plugin_name']), "Plugin does appear on the list");
+
 
     }
 
@@ -132,7 +154,7 @@ class OCadmin_market extends OCadminTest {
                 @chown($path.'/'.$file,getmyuid());
                 @chmod($path.'/'.$file,0777);
                 if( is_dir( $path.'/'.$file ) ){
-                    rchmod( $path.'/'.$file, ($level+1));
+                    $this->rchmod( $path.'/'.$file, ($level+1));
                 }
             }
         }
