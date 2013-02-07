@@ -68,9 +68,9 @@ class OCadmin_market extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("//div[@class='mk-item mk-item-plugin']/div/div/span[@class='more']");
-        sleep(10);
+        sleep(2);
         $this->selenium->click("//div[@class='mk-info']/table/tbody/tr/td[@class='actions']/a[contains(.,'Download')]");
-        sleep(10);
+        sleep(2);
         $textIsPresent = false;
         for($t=0;$t<60;$t++) {
             sleep(1);
@@ -79,8 +79,29 @@ class OCadmin_market extends OCadminTest {
             break;
         }
         $this->assertTrue($textIsPresent, "Plugin failed downloading");
+        $this->selenium->click("//div[@='osc-modal-content']/p/a[contains(.,'Ok')]");
 
+        osc_check_plugins_update(true);
+        $plugins = json_decode(osc_get_preference('plugins_downloaded'));
+        foreach($old_plugins as $p) {
+            foreach($plugins as $k => $v) {
+                if($p==$v) {
+                    unset($plugins[$k]);
+                    break;
+                }
+            }
+        }
 
+        $plugin = current($plugins);
+        $plugins = Plugins::listAll(false);
+        foreach($plugins as $p) {
+            $info = Plugins::getInfo($p);
+            if($info['short_name']==$plugin) {
+                $tmp = explode("/", $p);
+                $this->deletePlugin($tmp[0]);
+                break;
+            }
+        }
 
     }
 
@@ -98,10 +119,24 @@ class OCadmin_market extends OCadminTest {
         return $text;
     }
 
-    private function deletePlugin() {
-        @chmod(CONTENT_PATH."plugins/breadcrumbs/index.php", 0777);
-        @chmod(CONTENT_PATH."plugins/breadcrumbs/", 0777);
-        osc_deleteDir(CONTENT_PATH . "plugins/breadcrumbs/");
+    private function deletePlugin($folder) {
+        $this->rchmod(CONTENT_PATH."plugins/".$folder);
+        osc_deleteDir(CONTENT_PATH."plugins/".$folder);
+    }
+
+    private function rchmod($path = '.', $level = 0 ) {
+        $ignore = array('.', '..');
+        $dh = @opendir( $path );
+        while( false !== ( $file = readdir( $dh ) ) ) {
+            if( !in_array( $file, $ignore ) ){
+                @chown($path.'/'.$file,getmyuid());
+                @chmod($path.'/'.$file,0777);
+                if( is_dir( $path.'/'.$file ) ){
+                    rchmod( $path.'/'.$file, ($level+1));
+                }
+            }
+        }
+        closedir( $dh );
     }
 
 
