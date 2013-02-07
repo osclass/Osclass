@@ -5,13 +5,13 @@ require_once dirname(__FILE__).'/../../../../oc-load.php';
 
 class OCadmin_market extends OCadminTest {
 
-    function atestMarketURLOn()
+    function testMarketURLOn()
     {
         osc_set_preference('marketURL', 'http://market.osclass.org.devel/api/');
     }
 
 
-    function atestMarketPluginsPagination()
+    function testMarketPluginsPagination()
     {
 
         $this->loginWith();
@@ -42,7 +42,7 @@ class OCadmin_market extends OCadminTest {
 
     }
 
-    function atestMarketPluginsViewInfo()
+    function testMarketPluginsViewInfo()
     {
 
         $this->loginWith();
@@ -105,7 +105,7 @@ class OCadmin_market extends OCadminTest {
 
     }
 
-    function atestMarketURLOff()
+    function testMarketURLOff()
     {
         osc_set_preference('marketURL', 'http://market.osclass.org/api/');
     }
