@@ -155,6 +155,7 @@
                         <?php } ?>
 
                         <?php if( osc_images_enabled_at_items() ) { ?>
+                        <div class="photo_container">
                             <label><?php _e('Photos'); ?></label>
                             <?php ItemForm::photos(); ?>
                             <div id="photos">
@@ -165,6 +166,7 @@
                                 <?php } ?>
                             </div>
                             <p><a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo'); ?></a></p>
+                        </div>
                         <?php } ?>
                         <?php if( $new_item ) {
                                 ItemForm::plugin_post_item();
