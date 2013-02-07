@@ -34,7 +34,7 @@ class OCadmin_market extends OCadminTest {
             $count = $this->selenium->getXpathCount("//div[@class='mk-item mk-item-plugin']");
             $this->assertTrue(($count==($match[1]-((ceil($match[1]/9)-1)*9))), "Correct number of market items");
             $p2 = $this->getPluginName();
-            $this->assertFalse(($p1==$p2 || strpos($p2, "OR: Element")), "Same item in both pages, page didn't changed");
+            $this->assertFalse(($p1==$p2 || strpos($p2, "OR: Element")), "Same item in both pages, page didn't changed ( ".$p1." - ".$p2." )");
 
         } else {
             $this->assertTrue(false, "preg_match 'XX plugins' failed");
