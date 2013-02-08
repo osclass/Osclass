@@ -26,19 +26,17 @@
     $aThemes    = __get('aThemes');
     $aLanguages = __get('aLanguages');
 
+    $colors = array_merge(gradienColors(),array_merge(gradienColors(),gradienColors()));
 ?>
 <div class="grid-market">
     <h2 class="section-title"><?php _e('Recommended plugins for You'); ?><a href="<?php echo osc_admin_base_url(true).'?page=market&action=plugins'; ?>"><?php echo sprintf(__('View all (%s)'), $count['pluginsTotal']); ?></a></h2>
     <?php
-    $i = 0;
-    $colors = array_merge(gradienColors(),array_merge(gradienColors(),gradienColors()));
     foreach($aPlugins as $item){
-        drawMarketItem($item,$colors[$i]);
-        $i++;
+        drawMarketItem($item,$colors[array_rand($colors)]);
     }
     if(count($aPlugins)==0) {
     ?>
-    <p><?php _e('Cannot get information form market.osclass.org, sorry for the inconvenience'); ?></p>
+    <p class="flashmessage flashmessage-inline flashmessage-error"><?php _e('Cannot get information form market.osclass.org, sorry for the inconvenience'); ?></p>
     <?php
     }
     ?>
@@ -46,15 +44,12 @@
 <div class="grid-market">
     <h2 class="section-title"><?php _e('Recommended themes for You'); ?> <a href="<?php echo osc_admin_base_url(true).'?page=market&action=themes'; ?>"><?php echo sprintf(__('View all (%s)'), $count['themesTotal']); ?></a></h2>
     <?php
-    $i = 0;
-    $colors = gradienColors();
     foreach($aThemes as $item){
-        drawMarketItem($item,$colors[$i]);
-        $i++;
+        drawMarketItem($item,$colors[array_rand($colors)]);
     }
     if(count($aThemes)==0) {
     ?>
-    <p><?php _e('Cannot get information form market.osclass.org, sorry for the inconvenience'); ?></p>
+    <p class="flashmessage flashmessage-inline flashmessage-error"><?php _e('Cannot get information form market.osclass.org, sorry for the inconvenience'); ?></p>
     <?php
     }
     ?>
@@ -62,15 +57,12 @@
 <div class="grid-market">
     <h2 class="section-title"><?php _e('Languages'); ?> <a href="<?php echo osc_admin_base_url(true).'?page=market&action=languages'; ?>"><?php echo sprintf(__('View all (%s)'), $count['languagesTotal']); ?></a></h2>
     <?php
-    $i = 0;
-    $colors = gradienColors();
     foreach($aLanguages as $item){
-        drawMarketItem($item,$colors[$i]);
-        $i++;
+        drawMarketItem($item,$colors[array_rand($colors)]);
     }
     if(count($aLanguages)==0) {
     ?>
-    <p><?php _e('Cannot get information form market.osclass.org, sorry for the inconvenience'); ?></p>
+    <p class="flashmessage flashmessage-inline flashmessage-error"><?php _e('Cannot get information form market.osclass.org, sorry for the inconvenience'); ?></p>
     <?php
     }
     ?>

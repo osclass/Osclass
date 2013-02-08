@@ -36,14 +36,15 @@
 }
 osc_add_hook('admin_page_header','customPageHeader');
 //customize Head
-function customHead() { ?>
+function customHead() {
+    $csrf_token = osc_csrf_token_url(); ?>
 <script type="text/javascript">
     function show_iframe(class_name, id) {
         if($('.content_list_'+id+' .custom-field-frame').length == 0){
             $('.custom-field-frame').remove();
             var name = 'frame_'+ id;
             var id_  = 'frame_'+ id;
-            var url  = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=field_categories_iframe&id=' + id;
+            var url  = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=field_categories_iframe&<?php echo $csrf_token; ?>&id=' + id;
             $.ajax({
                 url: url,
                 context: document.body,
@@ -90,7 +91,7 @@ function customHead() { ?>
         });
         $("#field-delete-submit").click(function() {
             var id  = $("#dialog-delete-field").attr('data-field-id');
-            var url = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=delete_field&id=' + id;
+            var url = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=delete_field&<?php echo $csrf_token; ?>&id=' + id;
             $.ajax({
                 url: url,
                 context: document.body,
@@ -121,7 +122,7 @@ function customHead() { ?>
 
         $("#add-button, .add-button").bind('click', function() {
             $.ajax({
-                url: '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=add_field',
+                url: '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=add_field&<?php echo $csrf_token; ?>',
                 context: document.body,
                 success: function(res){
                     var ret = eval( "(" + res + ")");

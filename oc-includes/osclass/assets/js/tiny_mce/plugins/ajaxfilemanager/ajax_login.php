@@ -12,8 +12,7 @@ if(isset($_POST['username']))
 {
 	if($auth->login())
 	{
-		header('Location: ' . appendQueryString(CONFIG_URL_HOME, makeQueryString()));
-		exit;		
+		osc_redirect_to(appendQueryString(CONFIG_URL_HOME, makeQueryString()));
 	}
 }
 ?>

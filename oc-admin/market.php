@@ -96,7 +96,6 @@
 
                     $output_pagination = '';
                     if( is_numeric($array['total']) && $array['total']>0 ) {
-
                         $totalPages = ceil( $array['total'] / $array['sizePage'] );
                         $pageActual = $array['page'];
                         $params     = array(
@@ -117,6 +116,10 @@
                     $this->_exportVariableToView("title"     , $title);
                     $this->_exportVariableToView("section"   , $section);
                     $this->_exportVariableToView("array"     , $array);
+
+                    $this->_exportVariableToView("sort_download"     , $sort_download);
+                    $this->_exportVariableToView("sort_updated"      , $sort_updated);
+
                     $this->_exportVariableToView('pagination', $output_pagination);
 
                     $this->doView("market/section.php");

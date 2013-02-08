@@ -1544,4 +1544,13 @@ function osc_csrfguard_start() {
     register_shutdown_function('osc_csrfguard_inject');
 }
 
+function osc_redirect_to($url) {
+    if(ob_get_contents()!=='') {
+        ob_end_flush();
+    }
+    header("Location: ".$url);
+    exit;
+}
+
+
 ?>

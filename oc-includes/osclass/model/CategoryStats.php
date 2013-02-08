@@ -109,6 +109,9 @@
             $this->dao->from( $this->getTableName() );
             $this->dao->where( $this->getPrimaryKey(), $categoryId );
             $result       = $this->dao->get();
+            if($result==false) {
+                return false;
+            }
             $categoryStat = $result->row();
             $return       = 0;
 

@@ -37,7 +37,7 @@ Plugin update URI: http://www.osclass.org/files/plugins/google_analytics/update.
             );
 
             osc_add_flash_ok_message(__('The tracking ID has been updated', 'google_analytics'), 'admin');
-            header('Location: ' . osc_admin_render_plugin_url('google_analytics/admin.php')); exit;
+            osc_redirect_to(osc_admin_render_plugin_url('google_analytics/admin.php'));
         }
     }
     osc_add_hook('init_admin', 'google_analytics_actions');

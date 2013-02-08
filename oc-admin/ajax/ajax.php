@@ -391,7 +391,7 @@
                     if ($error==0 || ($error==1 && $has_one_title==1)) {
                         $categoryManager = Category::newInstance();
                         $res = $categoryManager->updateByPrimaryKey(array('fields' => $fields, 'aFieldsDescription' => $aFieldsDescription), $id);
-
+                        $categoryManager->updateExpiration($id, $fields['i_expiration_days']);
                         if( is_bool($res) ) {
                             $error = 2;
                         }
@@ -403,7 +403,6 @@
                             $categoryManager->updateExpiration($subc['pk_i_id'], $fields['i_expiration_days']);
                         };
                     };
-
                     if($error==0) {
                         $msg = __("Category updated correctly");
                     } else if($error==1) {

@@ -300,8 +300,7 @@
      * @return void
      */
     function osc_admin_render_plugin($file = '') {
-        header('Location: ' . osc_admin_render_plugin_url($file) );
-        exit;
+        osc_redirect_to(osc_admin_render_plugin_url($file));
     }
 
 ?>

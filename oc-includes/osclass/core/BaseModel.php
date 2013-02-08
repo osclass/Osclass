@@ -69,8 +69,7 @@
 
         function redirectTo($url)
         {
-            header('Location: ' . $url);
-            exit;
+            osc_redirect_to($url);
         }
 
         function getTime()

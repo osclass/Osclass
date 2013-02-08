@@ -32,7 +32,7 @@
         {
             // Did user select a specific category to post in?
             $catId = Params::getParam('catId');
-            if(Session::newInstance()->_getForm('catId') != ""){
+            if(Session::newInstance()->_getForm('catId') != "") {
                 $catId = Session::newInstance()->_getForm('catId');
             }
 
@@ -953,13 +953,15 @@
 
         static public function photos($resources = null) {
             if($resources==null) { $resources = osc_get_item_resources(); };
-            if($resources!=null && is_array($resources) && count($resources)>0) {
-                foreach($resources as $_r) { ?>
+            if($resources!=null && is_array($resources) && count($resources)>0) { ?>
+                <div class="photos_div">
+                <?php foreach($resources as $_r) { ?>
                     <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
                         <img src="<?php echo osc_apply_filter('resource_path', osc_base_url() . $_r['s_path']) . $_r['pk_i_id'] . '_thumbnail.' . $_r['s_extension']; ?>" /><a href="javascript:delete_image(<?php echo $_r['pk_i_id'].", ".$_r['fk_i_item_id'].", '".$_r['s_name']."', '".Params::getParam('secret')."'";?>);"  class="delete"><?php _e('Delete'); ?></a>
                     </div>
-                <?php }
-            }
+                <?php } ?>
+                </div>
+        <?php }
         }
 
         static public function photos_javascript() {

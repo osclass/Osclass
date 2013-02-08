@@ -24,7 +24,7 @@
     $title      = __get('title');
     $section    = __get('section');
     $array      = __get('array');
-    $pagination = __get('output_pagination');
+    $pagination = __get('pagination');
 
     $sort       = __get('sort');
 
@@ -42,17 +42,15 @@
     <?php
     // if there are data to be shown
     if(isset($array[$section]) ) {
-        $colors = array_merge(gradienColors(),array_merge(gradienColors(),gradienColors()));
-        $i = 0;
+        $colors = gradienColors();
         foreach($array[$section] as $item) {
-            drawMarketItem($item,$colors[$i]);
-            $i++;
+            drawMarketItem($item,$colors[array_rand($colors)]);
         }
         echo '<div class="clear"></div><div class="has-pagination">'.$pagination.'</div>';
     } else {
     ?>
     <div>
-        <?php _e('Cannot get information form market.osclass.org, sorry for the inconvenience'); ?>
+        <p class="flashmessage flashmessage-inline flashmessage-error"><?php _e('Cannot get information form market.osclass.org, sorry for the inconvenience'); ?></p>
     </div>
     <?php } ?>
 </div>
