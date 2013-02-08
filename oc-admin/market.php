@@ -116,6 +116,10 @@
                     $this->_exportVariableToView("title"     , $title);
                     $this->_exportVariableToView("section"   , $section);
                     $this->_exportVariableToView("array"     , $array);
+
+                    $this->_exportVariableToView("sort_download"     , $sort_download);
+                    $this->_exportVariableToView("sort_updated"      , $sort_updated);
+
                     $this->_exportVariableToView('pagination', $output_pagination);
 
                     $this->doView("market/section.php");

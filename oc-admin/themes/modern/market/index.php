@@ -36,7 +36,7 @@
     }
     if(count($aPlugins)==0) {
     ?>
-    <p><?php _e('Cannot get information form market.osclass.org, sorry for the inconvenience'); ?></p>
+    <p class="flashmessage flashmessage-inline flashmessage-error"><?php _e('Cannot get information form market.osclass.org, sorry for the inconvenience'); ?></p>
     <?php
     }
     ?>
@@ -49,7 +49,7 @@
     }
     if(count($aThemes)==0) {
     ?>
-    <p><?php _e('Cannot get information form market.osclass.org, sorry for the inconvenience'); ?></p>
+    <p class="flashmessage flashmessage-inline flashmessage-error"><?php _e('Cannot get information form market.osclass.org, sorry for the inconvenience'); ?></p>
     <?php
     }
     ?>
@@ -62,7 +62,7 @@
     }
     if(count($aLanguages)==0) {
     ?>
-    <p><?php _e('Cannot get information form market.osclass.org, sorry for the inconvenience'); ?></p>
+    <p class="flashmessage flashmessage-inline flashmessage-error"><?php _e('Cannot get information form market.osclass.org, sorry for the inconvenience'); ?></p>
     <?php
     }
     ?>
