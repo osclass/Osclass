@@ -172,6 +172,9 @@ class AllTests extends TestSuite {
             if(isset($tests['admin']['market']) || $tests['admin']=='') {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-market.php');
             }
+            if(isset($tests['admin']['customfields']) || $tests['admin']=='') {
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-customfields.php');
+            }
         }
 
     }
