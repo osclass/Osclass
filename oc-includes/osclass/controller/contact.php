@@ -29,7 +29,7 @@
         {
             switch($this->action) {
                 case('contact_post'):   //contact_post
-                                        //osc_csrf_check();
+                                        osc_csrf_check();
                                         $yourName  = Params::getParam('yourName');
                                         $yourEmail = Params::getParam('yourEmail');
                                         $subject   = Params::getParam('subject');
