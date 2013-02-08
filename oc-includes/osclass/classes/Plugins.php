@@ -419,7 +419,7 @@
                     }
                 }
             }
-            header('Location: '.osc_plugin_configure_url($plugin));
+            osc_header('Location: '.osc_plugin_configure_url($plugin));
             exit;
         }
 

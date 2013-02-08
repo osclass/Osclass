@@ -69,7 +69,7 @@
 
         function redirectTo($url)
         {
-            header('Location: ' . $url);
+            osc_header('Location: ' . $url);
             exit;
         }
 
