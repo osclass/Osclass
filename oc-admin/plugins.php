@@ -84,7 +84,7 @@
                     $pn = Params::getParam('plugin');
 
                     // set header just in case it's triggered some fatal error
-                    osc_header("Location: " . osc_admin_base_url(true) . "?page=plugins&error=" . $pn, true, '302');
+                    header("Location: " . osc_admin_base_url(true) . "?page=plugins&error=" . $pn, true, '302');
 
                     $installed = Plugins::install($pn);
                     if( is_array($installed) ) {

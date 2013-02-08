@@ -51,7 +51,7 @@
                 osc_set_preference('default_logo', ($defaultLogo ? '1' : '0'), 'modern_theme');
 
                 osc_add_flash_ok_message(__('Theme settings updated correctly', 'modern'), 'admin');
-                osc_header('Location: ' . osc_admin_render_theme_url('oc-content/themes/modern/admin/settings.php')); exit;
+                osc_redirect_to(osc_admin_render_theme_url('oc-content/themes/modern/admin/settings.php'));
             break;
             case('upload_logo'):
                 $package = Params::getFiles('logo');
@@ -64,7 +64,7 @@
                 } else {
                     osc_add_flash_error_message(__("An error has occurred, please try again", 'modern'), 'admin');
                 }
-                osc_header('Location: ' . osc_admin_render_theme_url('oc-content/themes/modern/admin/header.php')); exit;
+                osc_redirect_to(osc_admin_render_theme_url('oc-content/themes/modern/admin/header.php'));
             break;
             case('remove'):
                 if(file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) {
@@ -73,7 +73,7 @@
                 } else {
                     osc_add_flash_error_message(__("Image not found", 'modern'), 'admin');
                 }
-                osc_header('Location: ' . osc_admin_render_theme_url('oc-content/themes/modern/admin/header.php')); exit;
+                osc_redirect_to(osc_admin_render_theme_url('oc-content/themes/modern/admin/header.php'));
             break;
         }
     }

@@ -19,9 +19,8 @@
 			if($fileSize > getMemoryLimit())
 			{//larger then the php memory limit, redirect to the file
 				
-				osc_header('Location: ' . $path);
-				exit;				 
-			}else 
+				osc_redirect_to($path);
+			}else
 			{//open it up and send out with php 
 				downloadFile($path);	
 				 			

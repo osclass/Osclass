@@ -419,8 +419,7 @@
                     }
                 }
             }
-            osc_header('Location: '.osc_plugin_configure_url($plugin));
-            exit;
+            osc_redirect_to(osc_plugin_configure_url($plugin));
         }
 
         static function cleanCategoryFromPlugin($plugin)
