@@ -142,6 +142,7 @@ class OCadmin_market extends OCadminTest {
     }
 
     private function deletePlugin($folder) {
+        if(trim($folder)=='') { return false; }
         $this->rchmod(CONTENT_PATH."plugins/".$folder);
         osc_deleteDir(CONTENT_PATH."plugins/".$folder);
     }
