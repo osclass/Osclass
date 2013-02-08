@@ -29,6 +29,7 @@
         {
             switch($this->action) {
                 case('contact_post'):   //contact_post
+                                        //osc_csrf_check();
                                         $yourName  = Params::getParam('yourName');
                                         $yourEmail = Params::getParam('yourEmail');
                                         $subject   = Params::getParam('subject');
@@ -80,18 +81,19 @@ MESSAGE;
 
                                         if( osc_contact_attachment() ) {
                                             $attachment   = Params::getFiles('attachment');
-                                            $resourceName = $attachment['name'];
-                                            $tmpName      = $attachment['tmp_name'];
-                                            $resourceType = $attachment['type'];
+                                            if(isset($attachment['tmp_name'])) {
+                                                $resourceName = $attachment['name'];
+                                                $tmpName      = $attachment['tmp_name'];
+                                                $resourceType = $attachment['type'];
+                                                $path = osc_content_path() . 'uploads/' . time() . '_' . $resourceName;
+                                                if( !is_writable(osc_content_path() . 'uploads/') ) {
+                                                    osc_add_flash_error_message( _m('There have been some errors sending the message'));
+                                                    $this->redirectTo( osc_contact_url() );
+                                                }
 
-                                            $path = osc_content_path() . 'uploads/' . time() . '_' . $resourceName;
-                                            if( !is_writable(osc_content_path() . 'uploads/') ) {
-                                                osc_add_flash_error_message( _m('There have been some errors sending the message'));
-                                                $this->redirectTo( osc_contact_url() );
-                                            }
-
-                                            if( !move_uploaded_file($tmpName, $path) ) {
-                                                unset($path);
+                                                if( !move_uploaded_file($tmpName, $path) ) {
+                                                    unset($path);
+                                                }
                                             }
                                         }
 
