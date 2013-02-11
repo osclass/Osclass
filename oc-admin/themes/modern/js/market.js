@@ -189,9 +189,9 @@ $(function(){
                         width:sizes[section+'s'].width,
                         overlay: { opacity: 0.5, background: 'black'},
                         modal:true,
-                         open: function (){
-                            $(this).find('select, input, textarea, a').first().blur();
-                            }
+                        open: function (){
+                            $(this).find('a.manual').blur();
+                        }
                     });
                 } else {
                     // error trying to retrieve market api response
