@@ -5,7 +5,7 @@ require_once dirname(__FILE__).'/../../../../oc-load.php';
 
 class OCadmin_customfields extends OCadminTest 
 {   
-    function atestCustomAdd()
+    function testCustomAdd()
     {
         $this->loginWith() ;
         
@@ -13,24 +13,24 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->click("//a[@id='items_cfields']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//a[@id='add-button']");
-        sleep(2);
-        $this->selenium->type("field_name", "extra_field_1");
+        $this->selenium->type("s_name", "extra_field_1");
         $this->selenium->select("field_type", "TEXT");
-        $this->selenium->click("xpath=//span[text()='Advanced options']");
+        $this->selenium->click("//div[@id='advanced_fields_iframe']");
         $this->selenium->type('field_slug','extra_field_1');
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue($this->selenium->isTextPresent("New custom field added"), "Add field");
-        $this->assertTrue($this->selenium->isTextPresent("extra_field_1"), "Add field");
+        $this->selenium->click("//input[@id='cfield_save']");
+        sleep(2);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
+/*        $this->assertTrue($this->selenium->isTextPresent("extra_field_1"), "Add field");
         $this->selenium->click("//a[@id='add-button']");
-        $this->selenium->type("field_name", "extra_field_2");
+        $this->selenium->type("s_name", "extra_field_2");
         $this->selenium->select("field_type", "TEXTAREA");
         $this->selenium->click("xpath=//span[text()='Advanced options']");
         $this->selenium->type('field_slug','extra_field_2');
-        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->click("//input[@id='backup_save']");
         $this->selenium->waitForPageToLoad("10000");
-        $this->assertTrue($this->selenium->isTextPresent("New custom field added"), "Add field");
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
         $this->assertTrue($this->selenium->isTextPresent("extra_field_2"), "Add field");
+*/
     }
 
     function atestCustomEdit()
@@ -86,7 +86,7 @@ class OCadmin_customfields extends OCadminTest
 //        $this->selenium->waitForPageToLoad("10000");
 //
 //        $this->selenium->click("id=button_add");
-//        $this->selenium->type("field_name", "sameField");
+//        $this->selenium->type("s_name", "sameField");
 //        $this->selenium->select("field_type", "TEXT");
 //        $this->selenium->click("id=field_required");
 //
@@ -99,7 +99,7 @@ class OCadmin_customfields extends OCadminTest
 //        $this->assertTrue($this->selenium->isTextPresent("sameField"), "Add field");
 //        // insert same field
 //        $this->selenium->click("id=button_add");
-//        $this->selenium->type("field_name", "sameField");
+//        $this->selenium->type("s_name", "sameField");
 //        $this->selenium->select("field_type", "TEXT");
 //        $this->selenium->click("id=button_save");
 //        $this->selenium->waitForPageToLoad("10000");
