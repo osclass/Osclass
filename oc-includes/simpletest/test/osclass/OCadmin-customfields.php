@@ -5,14 +5,15 @@ require_once dirname(__FILE__).'/../../../../oc-load.php';
 
 class OCadmin_customfields extends OCadminTest 
 {   
-    function testCustomAdd()
+    function atestCustomAdd()
     {
         $this->loginWith() ;
         
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='items_cfields']");
         $this->selenium->waitForPageToLoad("10000");
-        $this->selenium->click("id=add-button");
+        $this->selenium->click("//a[@id='add-button']");
+        sleep(2);
         $this->selenium->type("field_name", "extra_field_1");
         $this->selenium->select("field_type", "TEXT");
         $this->selenium->click("xpath=//span[text()='Advanced options']");
@@ -21,7 +22,7 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue($this->selenium->isTextPresent("New custom field added"), "Add field");
         $this->assertTrue($this->selenium->isTextPresent("extra_field_1"), "Add field");
-        $this->selenium->click("id=add-button");
+        $this->selenium->click("//a[@id='add-button']");
         $this->selenium->type("field_name", "extra_field_2");
         $this->selenium->select("field_type", "TEXTAREA");
         $this->selenium->click("xpath=//span[text()='Advanced options']");
