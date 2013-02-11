@@ -19,7 +19,7 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->type('field_slug','extra_field_1');
         $this->selenium->selectFrame("edit-custom-field-frame");
 
-        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->click("//input[@id='cfield_save']");
         sleep(10);
         $this->selenium->selectWindow(null);
         $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
