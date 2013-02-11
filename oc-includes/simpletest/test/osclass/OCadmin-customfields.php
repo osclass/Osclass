@@ -13,6 +13,7 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->click("//a[@id='items_cfields']");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("//a[@id='add-button']");
+        sleep(4);
         $this->selenium->selectFrame("edit-custom-field-frame");
         $this->selenium->type("s_name", "extra_field_1");
         $this->selenium->select("field_type", "TEXT");
@@ -20,7 +21,7 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->type('field_slug','my_extra_field');
 
         $this->selenium->click("xpath=//input[@id='cfield_save']");
-        sleep(20);
+        sleep(10);
         $this->selenium->selectWindow(null);
         $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
 /*        $this->assertTrue($this->selenium->isTextPresent("extra_field_1"), "Add field");
