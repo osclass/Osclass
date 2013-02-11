@@ -17,8 +17,11 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->select("field_type", "TEXT");
         $this->selenium->click("//div[@id='advanced_fields_iframe']");
         $this->selenium->type('field_slug','extra_field_1');
-        $this->selenium->click("//input[@class='cfield_save']");
+        $this->selenium->selectFrame("edit-custom-field-frame");
+
+        $this->selenium->click("//input[@type='submit']");
         sleep(10);
+        $this->selenium->selectWindow(null);
         $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
 /*        $this->assertTrue($this->selenium->isTextPresent("extra_field_1"), "Add field");
         $this->selenium->click("//a[@id='add-button']");
