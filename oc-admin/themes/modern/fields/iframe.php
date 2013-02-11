@@ -75,7 +75,7 @@
                 </div>
             </div>
             <div class="form-actions">
-                <input type="submit" id="backup_save" value="<?php echo osc_esc_html( __('Save changes') ); ?>" class="btn btn-submit" />
+                <input type="submit" id="cfield_save" value="<?php echo osc_esc_html( __('Save changes') ); ?>" class="btn btn-submit" />
                 <input type="button" value="<?php echo osc_esc_html( __('Cancel') ); ?>" class="btn btn-red" onclick="$('#edit-custom-field-frame').remove();" />
             </div>
         </fieldset>
