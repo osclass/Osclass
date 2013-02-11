@@ -1,0 +1,4964 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: OSClass\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-03-13 10:26+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: _CONEJO <conejo@conejo.me>\n"
+"Language-Team: OSClass <info@osclass.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: /home/conejo/public_html/osclass/OSClass\n"
+
+#: /home/conejo/public_html/osclass/OSClass/ajax.php:227
+#: /home/conejo/public_html/osclass/OSClass/ajax.php:232
+msgid "no action defined"
+msgstr "No se ha especificado una acción"
+
+#: /home/conejo/public_html/osclass/OSClass/contact.php:59
+msgid "Contact form"
+msgstr "Formulario de contacto"
+
+#: /home/conejo/public_html/osclass/OSClass/contact.php:61
+msgid "Administrator"
+msgstr "Administrador"
+
+#: /home/conejo/public_html/osclass/OSClass/index.php:31
+#, php-format
+msgid "We are sorry for any inconvenience. %s is under maintenance mode"
+msgstr "Lo sentimos por el inconveniente, %s nos encontramos en mantenimiento "
+
+#: /home/conejo/public_html/osclass/OSClass/oc-load.php:193
+msgid "The website is currently under maintenance mode"
+msgstr "Página en mantenimiento"
+
+#: /home/conejo/public_html/osclass/OSClass/search.php:304
+msgid "Latest items added"
+msgstr "Últimos anuncios añadidos"
+
+#: /home/conejo/public_html/osclass/OSClass/search.php:306
+msgid "Latest items added in"
+msgstr "Últimos anuncios agregados en"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/plugins/google_analytics/admin.php:10
+msgid "Congratulations. The plugin is now configured"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/plugins/google_analytics/admin.php:24
+msgid "Please enter your Google Analytics"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/plugins/google_analytics/admin.php:24
+msgid "Web property ID"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/plugins/google_analytics/admin.php:24
+msgid "Save"
+msgstr "Guardar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/head.php:34
+msgid "No file selected"
+msgstr "Fichero no seleccionado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/head.php:35
+msgid "Choose File"
+msgstr "Escoge Fichero"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-alerts.php:34
+msgid "User account manager"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-alerts.php:39
+#, fuzzy
+msgid "Your alerts"
+msgstr "Gestiona tus alertas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-alerts.php:41
+#, fuzzy
+msgid "You do not have any alerts yet"
+msgstr "Todavía no hay ningún campo personalizado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-alerts.php:45
+msgid "Alert"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-alerts.php:45
+msgid "This action can't be undone. Are you sure you want to continue?"
+msgstr "Esta acción no puede deshacerse. ¿Estás seguro de querer continuar?"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-alerts.php:45
+msgid "Delete this alert"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-alerts.php:51
+msgid "Publication date"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-alerts.php:52
+msgid "Price"
+msgstr "Precio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/contact.php:36
+#, fuzzy
+msgid "Contact us"
+msgstr "Contacto"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/contact.php:42
+msgid "Subject"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/contact.php:42
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/contact.php:44
+msgid "optional"
+msgstr "opcional"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/contact.php:43
+msgid "Message"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/contact.php:44
+#, fuzzy
+msgid "Your name"
+msgstr "Nombre corto"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/contact.php:45
+#, fuzzy
+msgid "Your e-mail address"
+msgstr "Dirección de correo no válida"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/contact.php:47
+msgid "Send"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/header.php:29
+#, php-format
+msgid "Hi %s"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/header.php:30
+msgid "My account"
+msgstr "Mi cuenta"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/header.php:31
+msgid "Logout"
+msgstr "Desconectarse"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/header.php:35
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:203
+msgid "Login"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/header.php:38
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:204
+msgid "Register for a free account"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/header.php:44
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-recover.php:40
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:213
+msgid "E-mail"
+msgstr "E-mail"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/header.php:46
+msgid "Password"
+msgstr "Escribe tu contraseña"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/header.php:48
+msgid "Remember me"
+msgstr "Nunca cerrar sesión"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/header.php:49
+msgid "Log in"
+msgstr "Entrar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/header.php:51
+#, fuzzy
+msgid "Forgot password?"
+msgstr "¿Has perdido tu contraseña?"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/header.php:61
+msgid "Language"
+msgstr "Idioma"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/header.php:74
+msgid "Publish your ad for free"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/alert-form.php:6
+msgid "You have sucessfully subscribed to the alert"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/alert-form.php:7
+msgid "Invalid email address"
+msgstr "Dirección de correo no válida"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/alert-form.php:8
+msgid "There was a problem with the alert"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/alert-form.php:39
+msgid "Subscribe to this search"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/alert-form.php:55
+msgid "Subscribe now"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-recover.php:35
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-forgot_password.php:35
+#, fuzzy
+msgid "Recover your password"
+msgstr "¿Has perdido tu contraseña?"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-recover.php:42
+#, fuzzy
+msgid "Send me a new password"
+msgstr "Repite nueva contraseña"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-change_email.php:41
+#, fuzzy
+msgid "Change your e-mail"
+msgstr "Introduce tu e-mail"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-change_email.php:47
+#, fuzzy
+msgid "Current e-mail"
+msgstr "Tema actual"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-change_email.php:51
+#, fuzzy
+msgid "New e-mail"
+msgstr "Nuevo anuncio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-change_email.php:55
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-change_password.php:59
+msgid "Update"
+msgstr "Modificar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-send-friend.php:36
+msgid "Send to a friend"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-send-friend.php:43
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-contact.php:45
+msgid "Item"
+msgstr "Anuncio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-send-friend.php:51
+#, fuzzy
+msgid "Your friend's name"
+msgstr "Nombre del campo"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-send-friend.php:52
+#, fuzzy
+msgid "Your friend's e-mail address"
+msgstr "Dirección de correo no válida"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-change_password.php:41
+#, fuzzy
+msgid "Change your password"
+msgstr "Cambiar contraseña"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-change_password.php:47
+msgid "Current password"
+msgstr "Contraseña actual"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-change_password.php:51
+msgid "New password"
+msgstr "Nueva contraseña"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-change_password.php:55
+#, fuzzy
+msgid "Repeat new password"
+msgstr "Repite nueva contraseña"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-forgot_password.php:43
+msgid "New pasword"
+msgstr "Nueva contraseña"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-forgot_password.php:47
+msgid "Repeat new pasword"
+msgstr "Repite nueva contraseña"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-forgot_password.php:50
+msgid "Change password"
+msgstr "Cambiar contraseña"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-dashboard.php:41
+#, php-format
+msgid "Items from %s"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-dashboard.php:43
+#, fuzzy
+msgid "No items have been added yet"
+msgstr "Las categorías se han borrado correctamente"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-dashboard.php:55
+#, fuzzy
+msgid "View item"
+msgstr "Nuevo anuncio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-dashboard.php:57
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-items.php:55
+msgid "Edit"
+msgstr "Editar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-dashboard.php:60
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-items.php:60
+msgid "Activate"
+msgstr "Activar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/search_list.php:41
+msgid "Sponsored ad"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:63
+msgid "Mark as"
+msgstr "Marcar como"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:65
+msgid "spam"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:66
+#, fuzzy
+msgid "misclassified"
+msgstr "Mal clasificado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:67
+#, fuzzy
+msgid "duplicated"
+msgstr "Duplicado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:68
+#, fuzzy
+msgid "expired"
+msgstr "Caducado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:69
+#, fuzzy
+msgid "offensive"
+msgstr "Ofensivo"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:77
+#, fuzzy
+msgid "Published date"
+msgstr "Publicar widget"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:78
+msgid "Modified date"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:81
+msgid "Country"
+msgstr "País"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:82
+msgid "Region"
+msgstr "Provincia"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:83
+msgid "City"
+msgstr "Población"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:84
+msgid "City area"
+msgstr "Distrito"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:85
+msgid "Address"
+msgstr "Dirección postal"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:108
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-contact.php:36
+#, fuzzy
+msgid "Contact seller"
+msgstr "Formulario de contacto"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:112
+msgid "Share"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:118
+#, fuzzy
+msgid "Useful information"
+msgstr "Información general"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:120
+msgid "Avoid scams by acting locally or paying with PayPal"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:121
+msgid "Never pay with Western Union, Moneygram or other anonymous payment services"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:122
+msgid "Don't buy or sell outside of your country. Don't accept cashier cheques from outside your country"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:123
+msgid "This site is never involved in any transaction, and does not handle payments, shipping, guarantee transactions, provide escrow services, or offer \"buyer protection\" or \"seller certification\""
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:129
+msgid "Comments"
+msgstr "Comentarios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:136
+msgid "by"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:140
+#, fuzzy
+msgid "Delete your comment"
+msgstr "Moderar comentarios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:140
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-items.php:57
+msgid "Delete"
+msgstr "Eliminar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:152
+msgid "Leave your comment (spam and offensive messages will be removed)"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:161
+#, fuzzy
+msgid "Your e-mail"
+msgstr "Introduce tu e-mail"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:163
+msgid "Title"
+msgstr "Título"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:164
+msgid "Comment"
+msgstr "Comentario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:177
+msgid "Image"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:189
+#, fuzzy
+msgid "Contact publisher"
+msgstr "Formulario de contacto"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:192
+msgid "The item is expired. You cannot contact the publisher."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:196
+msgid "It's your own item, you cannot contact the publisher."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:200
+msgid "You must login or register a new free account in order to contact the advertiser"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:208
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:210
+msgid "Name"
+msgstr "Nombre"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:216
+msgid "Tel"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:225
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-contact.php:53
+msgid "Phone number"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:240
+msgid "Enter the words above"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item.php:242
+msgid "Help"
+msgstr "Ayuda"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-items.php:41
+#, fuzzy
+msgid "Your items"
+msgstr "Administra tus anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-items.php:41
+#, fuzzy
+msgid "Post a new item"
+msgstr "Añadir nuevo anuncio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-items.php:43
+#, fuzzy
+msgid "You don't have any items yet"
+msgstr "Todavía no hay ningún campo personalizado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-items.php:57
+msgid "This action can not be undone. Are you sure you want to continue?"
+msgstr "Esta acción no se puede deshacer. ¿Estás seguro de que quieres continuar?"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/inc.search.php:22
+msgid "ie. PHP Programmer"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/inc.search.php:65
+msgid "Select a category"
+msgstr "Selecciona una categoría"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/inc.search.php:67
+msgid "Search"
+msgstr "Buscar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-contact.php:44
+msgid "To (seller)"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-contact.php:56
+msgid "Send message"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/functions.php:41
+#, fuzzy
+msgid "Modern theme"
+msgstr "Tema actual"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/functions.php:43
+#, fuzzy
+msgid "Settings theme"
+msgstr "Configuración"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-register.php:37
+msgid "Register an account for free"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-register.php:46
+#, fuzzy
+msgid "Re-type password"
+msgstr "Vuelve a escribir tu contraseña"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-register.php:48
+msgid "Passwords don't match"
+msgstr "Las contraseñas no coinciden"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-register.php:53
+msgid "Create"
+msgstr "Crear"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-login.php:35
+msgid "Access to your account"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-edit.php:78
+#, fuzzy
+msgid "Update your item"
+msgstr "Administra tus anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-edit.php:87
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-post.php:85
+#, fuzzy
+msgid "General Information"
+msgstr "Información general"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-edit.php:89
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-post.php:87
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/search.php:117
+msgid "Category"
+msgstr "Categoría"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-edit.php:105
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-post.php:103
+msgid "Photos"
+msgstr "Fotos"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-edit.php:114
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-post.php:109
+msgid "Add new photo"
+msgstr "Añadir nueva foto"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-edit.php:119
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-public-profile.php:67
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/main.php:121
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/search.php:86
+msgid "Location"
+msgstr "Localización"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-edit.php:150
+msgid "Cancel"
+msgstr "Cancelado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/footer.php:26
+msgid "Contact"
+msgstr "Contacto"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/footer.php:31
+msgid "This website is proudly using the <a title=\"OSClass web\" href=\"http://osclass.org/\">open source classifieds</a> software <strong>OSClass</strong>"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-public-profile.php:57
+#, fuzzy, php-format
+msgid "%s's profile"
+msgstr "Tu perfil"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-public-profile.php:63
+#, fuzzy
+msgid "Profile"
+msgstr "Tu perfil"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-public-profile.php:65
+#, fuzzy
+msgid "Full name"
+msgstr "Nombre real"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-public-profile.php:68
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-profile.php:92
+msgid "Website"
+msgstr "Website"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-public-profile.php:69
+msgid "User Description"
+msgstr "Descripción del usuario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-public-profile.php:73
+msgid "Latest items"
+msgstr "Últimos anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-profile.php:42
+#, fuzzy
+msgid "Update your profile"
+msgstr "Editar tu perfil"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-profile.php:56
+#, fuzzy
+msgid "Modify e-mail"
+msgstr "E-mail del administrador"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-profile.php:56
+#, fuzzy
+msgid "Modify password"
+msgstr "Nueva contraseña"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-profile.php:60
+msgid "User type"
+msgstr "Tipo de usuario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-profile.php:64
+msgid "Cell phone"
+msgstr "Móvil"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/user-profile.php:68
+msgid "Phone"
+msgstr "Teléfono"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/404.php:35
+msgid "Page not found"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-post.php:78
+#, fuzzy
+msgid "Publish an item"
+msgstr "Publicar widget"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-post.php:114
+#, fuzzy
+msgid "Item Location"
+msgstr "Localización"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-post.php:128
+msgid "City Area"
+msgstr "Zona"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-post.php:139
+#, fuzzy
+msgid "Seller's information"
+msgstr "Información general"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-post.php:152
+msgid "Show e-mail on the item page"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/item-post.php:166
+#, fuzzy
+msgid "Publish"
+msgstr "Publicar widget"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/main.php:80
+#, fuzzy
+msgid "Latest Items"
+msgstr "Últimos anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/main.php:82
+#, fuzzy
+msgid "No Latest Items"
+msgstr "Últimos anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/main.php:112
+msgid "See all offers"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/search.php:44
+#, fuzzy
+msgid "Search results"
+msgstr "No hay resultados"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/search.php:47
+msgid "Sort by"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/search.php:66
+#, php-format
+msgid "There are no results matching \"%s\""
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/search.php:82
+msgid "Your search"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/search.php:95
+#, fuzzy
+msgid "Show only"
+msgstr "Mostrar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/search.php:100
+msgid "Show only items with pictures"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/search.php:108
+msgid "Min"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/search.php:110
+msgid "Max"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/search.php:139
+msgid "Apply"
+msgstr "Aplicar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/search.php:156
+#, fuzzy
+msgid "Selected"
+msgstr "Selecciona una región"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/search.php:157
+msgid "Nothing selected, input was"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/admin/admin_settings.php:37
+msgid "The preferred size of the logo is 600x100"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/admin/admin_settings.php:39
+msgid "Note: Uploading another logo will overwrite current logo"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/admin/admin_settings.php:46
+msgid "Logo image"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/admin/admin_settings.php:49
+msgid "Upload"
+msgstr "Subir"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/admin/admin_settings.php:58
+#, fuzzy
+msgid "Remove logo"
+msgstr "Eliminar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/admin/admin_settings.php:62
+msgid "Has not uploaded any logo image"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/admin/admin_settings.php:72
+#, fuzzy, php-format
+msgid "The images folder %s is not writable on your server"
+msgstr "El directorio de plugins \"%s\" no tiene permisos de escritura"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/admin/admin_settings.php:73
+#, fuzzy
+msgid "OSClass can't upload logo image from the administration panel"
+msgstr "No se pueden subir plugins desde el panel de administración"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/admin/admin_settings.php:74
+#, fuzzy
+msgid "Please make the mentioned images folder writable"
+msgstr "Por favor copia el paquete del plugin utilizando FTP / SSH o cambia los permisos de tu directorio de plugins"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/modern/admin/admin_settings.php:79
+msgid "To make a directory writable under UNIX execute this command from the shell"
+msgstr "Para dar permisos de escritura a un directorio desde UNIX debes ejecutar este comando desde la línea de comandos"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/item.php:58
+#, fuzzy
+msgid "State"
+msgstr "Estado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/item.php:176
+msgid "Your name (optional)"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/inc.search.php:2
+msgid "ie. Sales"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/functions.php:22
+#, fuzzy
+msgid "BCute theme"
+msgstr "Tema actual"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/functions.php:40
+#, fuzzy
+msgid "Edit your item"
+msgstr "Modificar anuncio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/functions.php:50
+msgid "Error"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/functions.php:62
+#, fuzzy
+msgid "page"
+msgstr "Añadir página"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/functions.php:72
+#, fuzzy
+msgid "Show all items"
+msgstr "Mostrar filtros"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/functions.php:114
+msgid "Create a new account"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/functions.php:118
+msgid "Dashboard"
+msgstr "Escritorio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/functions.php:119
+#, fuzzy
+msgid "Manage my items"
+msgstr "Gestionar anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/functions.php:120
+#, fuzzy
+msgid "Manage my alerts"
+msgstr "Gestiona tus alertas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/functions.php:121
+msgid "Update my profile"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/functions.php:122
+#, fuzzy
+msgid "Change my email"
+msgstr "Introduce tu e-mail"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/functions.php:123
+#, fuzzy
+msgid "Change my password"
+msgstr "Cambiar contraseña"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/functions.php:124
+#, fuzzy
+msgid "Recover my password"
+msgstr "Escribe de nuevo la nueva contraseña"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/admin/admin_settings.php:8
+#, fuzzy
+msgid "The logo image has been uploaded correctly"
+msgstr "Las tablas de base de datos han sido modificadas correctamente"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/admin/admin_settings.php:10
+msgid "An error has occurred, please try again"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/admin/admin_settings.php:16
+#, fuzzy
+msgid "The logo image has been removed"
+msgstr "Las categorías se han borrado correctamente"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/admin/admin_settings.php:18
+msgid "Image not found"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-content/themes/bcute/admin/admin_settings.php:47
+msgid "Preview"
+msgstr "Previsualización"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:148
+msgid "Some error ocurred"
+msgstr "Algunos errores se presentaron "
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:150
+msgid "Order saved"
+msgstr "Orden almacenada "
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:208
+msgid "Error while updating."
+msgstr "Error mientras actualizaba"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:212
+msgid "Sorry, you already have one field with that name"
+msgstr "Lo sentimos, ya hay un campo con ese nombre"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:218
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:241
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:327
+msgid "Saved"
+msgstr "Guardado "
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:232
+msgid "The custom field have been deleted"
+msgstr "El campo personalizado ha sido eliminado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:235
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:321
+msgid "Error while deleting"
+msgstr "Error mientras borraba"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:257
+#, php-format
+msgid "It doesn't exist a category with this id: %d"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:276
+msgid "The category and its subcategories have been enabled"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:280
+msgid "The category and its subcategories have been disabled"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:291
+msgid "Parent category is disabled, you can not enable that category"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:299
+msgid "The subcategory has been enabled"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:303
+msgid "The subcategory has been disabled"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:318
+msgid "The categories have been deleted"
+msgstr "Las categorías se han borrado correctamente"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:367
+msgid "Category updated correctly"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:371
+msgid "Category updated correctly, but some titles were empty"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:373
+msgid "Sorry, at least a title is needed"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:376
+msgid "Error while updating"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:390
+#, php-format
+msgid "Test email, %s"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:391
+msgid "Test email"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:403
+msgid "Email sent successfully"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:405
+msgid "An error has occurred while sending email"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:448
+msgid "View page"
+msgstr "Ver página"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:566
+msgid "Everything was OK! Your OSClass installation is updated"
+msgstr "¡Todo ha salido bien! Su Instalación de OSClass ha sido actualizada "
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:568
+msgid "Almost everything was OK! Your OSClass installation is updated, but there were some errors removing temporary files. Please, remove manually the \"oc-temp\" folder"
+msgstr "¡Casi todo ha salidos bien! Su Instalación de OSClass esta actualizada, pero se han presentado algunos errores mientras se borraban algunos archivos temporales. Por favor, elimínelos manualmente de la carpeta \\\"oc-temp\\\"\\\""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:573
+msgid "Problems upgrading the database"
+msgstr "Se han presentado problemas en la actualización de la Base de Datos"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:577
+msgid "Problems copying files. Maybe permissions are not correct"
+msgstr "Se han presentado problemas al copiar archivos. Es posible que los permisos no sean los correctos"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:581
+msgid "Nothing to copy"
+msgstr "No hay nada que copiar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:585
+msgid "Unzip failed"
+msgstr "La descompresión ha fallado."
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:589
+msgid "Download failed"
+msgstr "Falló la descarga"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:593
+msgid "Missing download URL"
+msgstr "URL de descarga rota "
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/ajax.php:598
+msgid "We had some errors upgrading your database. The follwing queries failed"
+msgstr "Se han presentado algunos errores actualizando la Base de Datos. Las siguientes consultas fallaron"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/users_processing.php:125
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/items_processing.php:211
+msgid "Deactivate"
+msgstr "Desactivar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/users_processing.php:130
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/items_processing.php:216
+msgid "Block"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/users_processing.php:132
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/items_processing.php:218
+msgid "Unblock"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/users_processing.php:135
+msgid "Re-send activation email"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/items_processing.php:208
+msgid "View comments"
+msgstr "Ver comentarios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/items_processing.php:209
+msgid "View media"
+msgstr "Ver media"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/items_processing.php:221
+msgid "Unmark as premium"
+msgstr "Desmarcar como destacado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/items_processing.php:223
+msgid "Mark as premium"
+msgstr "Marcar como destacado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/items_processing.php:226
+msgid "Unmark as spam"
+msgstr "Desmarcar como spam"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/items_processing.php:228
+msgid "Mark as spam"
+msgstr "Marcar como spam"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/ajax/items_processing.php:234
+#, fuzzy, php-format
+msgid "Clear %s"
+msgstr "Limpiar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/gui/login.php:23
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/gui/forgot_password.php:23
+msgid "OSClass admin panel login"
+msgstr "Panel de administración de OSClass"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/gui/login.php:40
+msgid "Username"
+msgstr "Usuario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/gui/login.php:77
+msgid "Forgot your password?"
+msgstr "¿Has perdido tu contraseña?"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/gui/login.php:80
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/gui/forgot_password.php:67
+msgid "Back to"
+msgstr "Volver a"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/gui/forgot_password.php:37
+msgid "Type your new password"
+msgstr "Escribe tu nueva contraseña"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/gui/recover.php:37
+msgid "Please enter your username or e-mail address"
+msgstr "Por favor, introduce tu usuario o e-mail"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/gui/recover.php:38
+msgid "You will receive a new password via e-mail"
+msgstr "En breves instantes recibirás una nueva contraseña por e-mail"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/gui/recover.php:49
+msgid "Get new password"
+msgstr "Conseguir nueva contraseña"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/head.php:36
+msgid "OSClass Admin Panel"
+msgstr "Panel de administración de OSClass"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/header.php:22
+msgid "Visit website"
+msgstr "Visitar web"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/header.php:25
+msgid "Hi"
+msgstr "Hola"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/header.php:25
+msgid "Your profile"
+msgstr "Tu perfil"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/header.php:25
+msgid "Log Out"
+msgstr "Desconectar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/header.php:25
+msgid "Sign out"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/header.php:32
+#, php-format
+msgid "OSClass %s is available!"
+msgstr "¡OSClass %s está disponible!"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/header.php:32
+msgid "Please upgrade now"
+msgstr "Por favor, actualiza tu versión ahora"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/footer.php:23
+msgid "Thank you for using"
+msgstr "Gracias por usar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/footer.php:24
+msgid "Documentation"
+msgstr "Documentación"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/footer.php:25
+msgid "Forums"
+msgstr "Foros"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/footer.php:26
+msgid "Feedback"
+msgstr "Ayúdanos a mejorar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/pages/index.php:100
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:138
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/index.php:63
+msgid "Next"
+msgstr "Siguiente"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/pages/index.php:101
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:139
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/index.php:64
+msgid "Previous"
+msgstr "Anterior"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/pages/index.php:103
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:141
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/index.php:66
+msgid "No data available in table"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/pages/index.php:104
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:142
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/index.php:67
+#, fuzzy, php-format
+msgid "Showing %s to %s of %s entries"
+msgstr "Mostrando 0 a 0 de 0 entradas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/pages/index.php:105
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:143
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/index.php:68
+#, fuzzy
+msgid "No entries to show"
+msgstr "No hay ningún fichero a eliminar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/pages/index.php:106
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:144
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/index.php:69
+#, fuzzy, php-format
+msgid "(filtered from %s total entries)"
+msgstr "Sólo mostrando _MAX_ entradas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/pages/index.php:107
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:145
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/index.php:70
+msgid "Loading..."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/pages/index.php:108
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:146
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/index.php:71
+#, fuzzy
+msgid "Processing..."
+msgstr "Procesando"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/pages/index.php:110
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:148
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/index.php:73
+msgid "No matching records found"
+msgstr "No hay resultados para la búsqueda"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/pages/index.php:121
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/pages/frm.php:82
+#, fuzzy
+msgid "Internal name"
+msgstr "Nombre real"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/pages/index.php:130
+#, fuzzy
+msgid "Order"
+msgstr "Orden almacenada "
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/pages/index.php:173
+msgid "Pages"
+msgstr "Páginas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/pages/index.php:182
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:353
+msgid "Bulk actions"
+msgstr "Acciones en bloque"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/pages/index.php:188
+msgid "Create page"
+msgstr "Crear nueva página"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/pages/frm.php:24
+msgid "Edit page"
+msgstr "Editar página"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/pages/frm.php:26
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:155
+msgid "Save changes"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/pages/frm.php:29
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/pages/frm.php:31
+msgid "Add page"
+msgstr "Añadir página"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/pages/frm.php:85
+msgid "Used to identify quickly this page"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:147
+#, fuzzy
+msgid "Search by name"
+msgstr "Nombre real"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:163
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/frm.php:80
+msgid "User"
+msgstr "Usuario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:172
+msgid "County"
+msgstr "Condado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:184
+msgid "Date"
+msgstr "Fecha"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:214
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:258
+msgid "Show filters"
+msgstr "Mostrar filtros"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:217
+#, fuzzy
+msgid "Hide filters"
+msgstr "Reiniciar filtros"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:254
+#, fuzzy
+msgid "Manage Items"
+msgstr "Gestionar anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:267
+#, fuzzy
+msgid "Item user"
+msgstr "Anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:298
+msgid "Status"
+msgstr "Estado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:301
+msgid "Premium"
+msgstr "Destacado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:304
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:314
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:324
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:334
+msgid "ALL"
+msgstr "TODO"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:305
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:315
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:325
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:335
+msgid "ON"
+msgstr "ACTIVADO"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:306
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:316
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:326
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:336
+msgid "OFF"
+msgstr "DESACTIVADO"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:311
+msgid "Active"
+msgstr "Activo"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:321
+msgid "Enabled"
+msgstr "Activado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:331
+msgid "Spam"
+msgstr "Spam"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:342
+#, fuzzy
+msgid "Apply filters"
+msgstr "Mostrar filtros"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:368
+msgid "Find by Item id"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/index.php:369
+msgid "Add item"
+msgstr "Añadir anuncio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/frm.php:22
+msgid "New item"
+msgstr "Nuevo anuncio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/frm.php:23
+msgid "Add new item"
+msgstr "Añadir nuevo anuncio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/frm.php:25
+msgid "Edit item"
+msgstr "Modificar anuncio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/frm.php:26
+#, fuzzy
+msgid "Update item"
+msgstr "Fecha de modificación"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/frm.php:82
+msgid "Item posted by"
+msgstr "Anuncio publicado por"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/frm.php:84
+msgid "Non-registered user"
+msgstr "Usuario no registrado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/frm.php:101
+msgid "General information"
+msgstr "Información general"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:46
+#, fuzzy
+msgid "Items Settings"
+msgstr "Configuración"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:57
+msgid "Settings"
+msgstr "Configuración"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:61
+#, fuzzy
+msgid "Only logged in users can post items"
+msgstr "Permitir añadir anuncios sólo a usuarios registrados"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:65
+#, php-format
+msgid "An user has to wait %s seconds between each item added"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:66
+msgid "If the value is zero, there is no waiting"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:71
+#, fuzzy
+msgid "Users have to validate their items"
+msgstr "Los usuarios conectados no necesitan validar los anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:75
+#, fuzzy, php-format
+msgid "After %s validated items the user doesn't longer need to validate the items"
+msgstr "Los usuarios conectados no necesitan validar los anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:76
+msgid "If the value is zero, it means that each item must be validated"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:81
+#, fuzzy
+msgid "Logged in users don't need to validate their items"
+msgstr "Los usuarios conectados no necesitan validar los anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:87
+msgid "Show reCAPTCHA in add/edit item form"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:88
+msgid "<strong>Remember</strong> that you must configure reCAPTCHA first"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:99
+#, fuzzy
+msgid "Only allow registered users to contact publisher"
+msgstr "Solo permitir a los usuarios registrados contactar con el vendedor"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:105
+msgid "Allow attach files in contact publisher form"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:112
+msgid "Notifications"
+msgstr "Notificaciones"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:116
+#, fuzzy
+msgid "Notify admin when a new item is added"
+msgstr "Notificar de nuevos anuncios al administrador"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:122
+msgid "Send a copy to admin of the contact publisher e-mail"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:128
+msgid "Send a copy to admin of the share item e-mail"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:135
+msgid "Optional fields"
+msgstr "Campos opcionales"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:145
+#, fuzzy
+msgid "Attach images"
+msgstr "Habilitar imágenes"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:149
+#, php-format
+msgid "Attach %s images per item"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/items/settings.php:150
+msgid "If the value is zero, it means unlimited number of images"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/main/index.php:47
+msgid "Items by category"
+msgstr "Anuncios por categoría"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/main/index.php:54
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/main/index.php:59
+msgid "Items"
+msgstr "Anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/main/index.php:67
+msgid "There aren't any uploaded items yet"
+msgstr "Todavía no hay ningún anuncio dado de alta en el sistema"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/main/index.php:72
+msgid "Statistics"
+msgstr "Estadisticas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/main/index.php:75
+#, fuzzy, php-format
+msgid "Number of items: %d"
+msgstr "Número de anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/main/index.php:76
+#, fuzzy, php-format
+msgid "Number of public users: %d"
+msgstr "Número de usuarios públicos"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/main/index.php:77
+#, fuzzy, php-format
+msgid "Number of administrators: %d"
+msgstr "Número de administradores"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/main/index.php:82
+msgid "Latest comments"
+msgstr "Últimos comentarios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/main/index.php:88
+msgid "Commented on item"
+msgstr "Hizo un comentario en el anuncio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/main/index.php:93
+msgid "There aren't any comments yet"
+msgstr "Todavía no se ha añadido ningún comentario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/main/index.php:98
+msgid "Latest news from OSClass"
+msgstr "Últimas noticias desde OSClass"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/main/index.php:107
+msgid "new"
+msgstr "nuevo"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/main/index.php:113
+msgid "Unable to fetch news from OSClass. Please try again later"
+msgstr "No se pudieron obtener noticias de OSClass. Por favor, inténtelo de nuevo más tarde"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/configuration.php:65
+#, fuzzy
+msgid "Plugin configuration"
+msgstr "Configuración"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/configuration.php:77
+#, fuzzy
+msgid "Select the categories where you want to apply these attributes (click on their names to expand them):"
+msgstr "Selecciona las categorías en las que deseas aplicar estos atributos (pulsa en sus nombres para ampliar)"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/configuration.php:83
+msgid "Preset categories"
+msgstr "Categorías preseleccionadas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/configuration.php:84
+msgid "Check all"
+msgstr "Todas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/configuration.php:84
+msgid "Uncheck all"
+msgstr "Ninguna"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/index.php:29
+msgid "There's a new version. You should update!"
+msgstr "Existe una nueva versión. Deberías actualizar tu versión"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/index.php:31
+msgid "Configure"
+msgstr "Configurar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/index.php:33
+msgid "Disable"
+msgstr "Desactivado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/index.php:33
+msgid "Enable"
+msgstr "Activar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/index.php:37
+msgid "This action can not be undone. Uninstalling plugins may result in a permanent lost of data. Are you sure you want to continue?"
+msgstr "Esta acción no se puede deshacer. Desinstalar plugins puede dar lugar a una pérdida permanente de datos. ¿Estás seguro de querer continuar?."
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/index.php:37
+msgid "Uninstall"
+msgstr "Desinstalar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/index.php:37
+msgid "Install"
+msgstr "Instalar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/index.php:81
+msgid "Description"
+msgstr "Descripción"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/index.php:125
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/view.php:32
+msgid "Plugins"
+msgstr "Plugins"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/index.php:130
+msgid "Add new plugin"
+msgstr "Añadir nuevo plugin"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/add.php:32
+#, fuzzy
+msgid "Add a plugin"
+msgstr "Añade un nuevo plugin"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/add.php:39
+#, fuzzy, php-format
+msgid "Download more plugins at %s"
+msgstr "Descargue mas lenguajes en %s"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/add.php:46
+#, fuzzy
+msgid "Plugin package (.zip)"
+msgstr "Paquete de plugin"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/add.php:55
+#, fuzzy
+msgid "Cannot install a new plugin"
+msgstr "Añade un nuevo plugin"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/add.php:58
+#, fuzzy
+msgid "The plugin folder is not writable on your server and you cannot upload plugins from the administration panel. Please make the folder writable"
+msgstr "La carpeta de las traducciones no se puede escribir en el servidor y no puede subir las traducciones desde el panel de administración. Por favor haga la carpeta de traducción escribible"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/plugins/add.php:61
+msgid "To make the directory writable under UNIX execute this command from the shell:"
+msgstr "Para hacer el directorio escribible bajo UNIX ejecuta este comando desde la consola:"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/appearance/index.php:31
+msgid "Are you sure you want to cancel?"
+msgstr "¿Estás seguro que quieres cancelar?"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/appearance/index.php:46
+msgid "Add new theme"
+msgstr "Agregar nuevo tema"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/appearance/index.php:47
+msgid "Appearance"
+msgstr "Apariencia"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/appearance/index.php:52
+msgid "Current theme"
+msgstr "Tema actual"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/appearance/index.php:62
+msgid "Available themes"
+msgstr "Temas disponibles"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/appearance/widgets.php:35
+msgid "Widgets"
+msgstr "Widgets"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/appearance/widgets.php:43
+#, fuzzy, php-format
+msgid "Section: %s"
+msgstr "Restricciones"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/appearance/widgets.php:43
+msgid "Add HTML widget"
+msgstr "Añadir Widget HTML"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/appearance/widgets.php:52
+#, fuzzy, php-format
+msgid "Description: %s"
+msgstr "Descripción"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/appearance/add.php:39
+#, fuzzy, php-format
+msgid "Download more themes at %s"
+msgstr "Descargue mas lenguajes en %s"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/appearance/add.php:46
+#, fuzzy
+msgid "Theme package (.zip)"
+msgstr "Paquete de tema"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/appearance/add.php:55
+msgid "Cannot install a new theme"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/appearance/add.php:58
+#, fuzzy
+msgid "The theme folder is not writable on your server and you cannot upload thmes from the administration panel. Please make the translation folder writable"
+msgstr "La carpeta de las traducciones no se puede escribir en el servidor y no puede subir las traducciones desde el panel de administración. Por favor haga la carpeta de traducción escribible"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/appearance/add_widget.php:24
+#, fuzzy
+msgid "Edit widget"
+msgstr "Modificar anuncio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/appearance/add_widget.php:28
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/appearance/add_widget.php:30
+#, fuzzy
+msgid "Add widget"
+msgstr "Añadir Widget HTML"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/appearance/add_widget.php:83
+msgid "Description (only for internal purposes)"
+msgstr "Descripción (sólo para uso interno)"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/appearance/add_widget.php:89
+msgid "HTML Code for the Widget"
+msgstr "Código HTML para el Widget"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/admins/edit.php:35
+msgid "Edit admin"
+msgstr "Modificar administrador"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/admins/edit.php:46
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/admins/add.php:42
+msgid "Name <em>(required)</em>"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/admins/edit.php:52
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/admins/add.php:48
+msgid "Username <em>(required)</em>"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/admins/edit.php:58
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/admins/add.php:54
+msgid "E-mail <em>(required)</em>"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/admins/edit.php:67
+msgid "If you would like to change the password type a new one. Otherwise leave this blank"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/admins/edit.php:77
+#, fuzzy
+msgid "Type your new password again"
+msgstr "Escribe tu nueva contraseña"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/admins/edit.php:81
+#, fuzzy
+msgid "Update admin"
+msgstr "Modificar administrador"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/admins/index.php:98
+msgid "Admins"
+msgstr "Administradores"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/admins/index.php:113
+#, fuzzy
+msgid "Add admin"
+msgstr "Añadir nuevo administrador"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/admins/add.php:32
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/admins/add.php:66
+msgid "Add new admin"
+msgstr "Añadir nuevo administrador"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/admins/add.php:60
+#, fuzzy
+msgid "Password <em>(required)</em>"
+msgstr "Contraseña: este campo es obligatorio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/categories/index.php:92
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/categories/index.php:165
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/categories/index.php:227
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/categories/iframe.php:80
+msgid "Ajax error, try again."
+msgstr "Error de AJAX, Intente de nuevo "
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/categories/index.php:136
+msgid "WARNING: This will also delete the items under that category. This action cann not be undone. Are you sure you want to continue?"
+msgstr "Alerta: Esta acción también borra los elementos de la categoría. Esta acción no se puede deshacer . ¿Está seguro de continuar con la operación?"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/categories/index.php:241
+msgid "Add new category"
+msgstr "Agregar nueva categoría"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/categories/index.php:242
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:50
+msgid "Categories"
+msgstr "Categorías"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/categories/index.php:252
+msgid "Drag&drop the categories to reorder them the way you like. Click on edit link to edit the category"
+msgstr "Arrastre y suelte la categoría para reorganizar como usted quiera. de click en el enlace de editar para editar la categoría "
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/categories/iframe.php:23
+#, fuzzy
+msgid "Edit category"
+msgstr "Categoría errónea"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/categories/iframe.php:30
+msgid "Expirations days"
+msgstr "Días de expiración"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/categories/iframe.php:33
+msgid "If the value is zero it means that there isn't expiration for this category"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/categories/settings.php:32
+#, fuzzy
+msgid "Categories Settings"
+msgstr "Administración de categorias"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/categories/settings.php:45
+msgid "Selectable parent categories"
+msgstr "Categorías seleccionables por raíz"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/categories/settings.php:47
+msgid "Parent categories are selectable when you insert or edit an item"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/emails/index.php:89
+msgid "Emails & alerts"
+msgstr "Emails &amp; alertas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/emails/frm.php:58
+#, fuzzy
+msgid "Edit email template"
+msgstr "Editar e-mail / alerta"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/emails/frm.php:72
+msgid "Used to identify the email template"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:33
+msgid "Manage items"
+msgstr "Gestionar anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:36
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:69
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:198
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:213
+msgid "Add new"
+msgstr "Añadir nuevo"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:42
+msgid "Manage media"
+msgstr "Gestionar media"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:54
+msgid "Manage categories"
+msgstr "Gestionar categorías"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:66
+msgid "Manage pages"
+msgstr "Gestionar páginas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:73
+msgid "Emails & Alerts"
+msgstr "E-mails y Alertas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:77
+msgid "Manage emails & alerts"
+msgstr "Gestionar e-mails y alertas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:81
+msgid "Custom Fields"
+msgstr "Campos personalizados"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:85
+msgid "Manage custom fields"
+msgstr "Administrar campos personalizados"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:96
+msgid "Manage themes"
+msgstr "Gestionar temas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:102
+#, fuzzy
+msgid "Manage widgets"
+msgstr "Gestionar anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:111
+msgid "Manage plugins"
+msgstr "Gestionar plugins"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:119
+msgid "Languages"
+msgstr "Idiomas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:123
+msgid "Manage languages"
+msgstr "Gestionar idiomas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:126
+msgid "Add a language"
+msgstr "Añadir nuevo idioma"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:135
+#, fuzzy
+msgid "General"
+msgstr "Configuración general"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:141
+msgid "Locations"
+msgstr "Localizaciones"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:144
+msgid "Permalinks"
+msgstr "Permalinks"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:147
+msgid "Spam and bots"
+msgstr "Spam y bots"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:150
+msgid "Currencies"
+msgstr "Monedas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:153
+msgid "Mail server"
+msgstr "Servidor de e-mail"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:156
+msgid "Media"
+msgstr "Media"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:159
+#, fuzzy
+msgid "Last searches"
+msgstr "Ultimas Busquedas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:164
+msgid "Tools"
+msgstr "Herramientas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:168
+msgid "Import data"
+msgstr "Importación de datos"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:171
+msgid "Backup data"
+msgstr "Copia de seguridad de los datos"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:174
+msgid "Upgrade OSClass"
+msgstr "Upgradar OSClass"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:177
+#, fuzzy
+msgid "Location stats"
+msgstr "Localizaciones"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:180
+msgid "Maintenance mode"
+msgstr "Modo mantenimiento"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:191
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:225
+msgid "Users"
+msgstr "Usuarios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:195
+msgid "Manage users"
+msgstr "Gestionar usuarios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:206
+msgid "Administrators"
+msgstr "Administradores"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:210
+#, fuzzy
+msgid "Manage administrators"
+msgstr "Añadir nuevo administrador"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:216
+#, fuzzy
+msgid "Your Profile"
+msgstr "Tu perfil"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/include/backoffice_menu.php:234
+msgid "Reports"
+msgstr "Informes"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/theme/view.php:32
+msgid "Theme"
+msgstr "Tema"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/comments/index.php:88
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/comments/frm.php:102
+msgid "Author"
+msgstr "Autor"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/comments/index.php:124
+msgid "Manage Comments"
+msgstr "Gestionar comentarios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/comments/frm.php:33
+msgid "Edit comment"
+msgstr "Editar comentario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/comments/frm.php:39
+msgid "Add a comment"
+msgstr "Añadir comentario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/comments/frm.php:41
+msgid "Add"
+msgstr "Añadir"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/comments/frm.php:47
+msgid "You have to write a title."
+msgstr "Debes escribir un título"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/comments/frm.php:52
+msgid "You have to write a comment."
+msgstr "Debes escribir un comentario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/comments/frm.php:57
+msgid "Author's name can not be empty."
+msgstr "El nombre del autor no puede ser una cadena vacía "
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/comments/frm.php:62
+msgid "Author's email can not be empty."
+msgstr "El e-mail del autor no puede ser una cadena vacía"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/comments/frm.php:89
+msgid "Edit a comment on item:"
+msgstr "Editar un comentario del anuncio:"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/comments/frm.php:92
+msgid "View"
+msgstr "Ver"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/comments/frm.php:104
+msgid "It's a registered user"
+msgstr "Es un usuario registrado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/comments/frm.php:105
+msgid "Edit user"
+msgstr "Editar usuario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/comments/frm.php:110
+msgid "Author's e-mail"
+msgstr "E-mail del autor"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/comments/frm.php:114
+msgid "ACTIVE"
+msgstr "ACTIVO"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/comments/frm.php:114
+msgid "INACTIVE"
+msgstr "INACTIVO"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/comments/frm.php:114
+msgid "De-activate"
+msgstr "Desactivar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/comments/frm.php:118
+msgid "ENABLED"
+msgstr "ACTIVADO"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/comments/frm.php:118
+msgid "DISABLED"
+msgstr "DESACTIVADO"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/media/index.php:62
+msgid "File"
+msgstr "Fichero"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/media/index.php:66
+msgid "Action"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/media/index.php:71
+msgid "Attached to"
+msgstr "Adjuntado a"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/media/index.php:103
+#, fuzzy
+msgid "Manage Media"
+msgstr "Gestionar media"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/users.php:45
+msgid "New users"
+msgstr "Nuevos usuarios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/users.php:61
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/users.php:69
+msgid "Users per country"
+msgstr "Usuarios por país"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/users.php:64
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/users.php:76
+msgid "Unknown"
+msgstr "Desconocido"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/users.php:73
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/users.php:81
+msgid "Users per region"
+msgstr "Usuarios por provincia"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/users.php:94
+#, fuzzy
+msgid "Users Statistics"
+msgstr "Estadisticas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/users.php:101
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/items.php:89
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/comments.php:74
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/reports.php:81
+msgid "Last 10 days"
+msgstr "Últimos 10 días"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/users.php:102
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/items.php:90
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/comments.php:75
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/reports.php:82
+msgid "Last 10 weeks"
+msgstr "Últimas 10 semanas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/users.php:103
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/items.php:91
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/comments.php:76
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/reports.php:83
+msgid "Last 10 months"
+msgstr "Últimos 10 meses"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/users.php:108
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/users.php:115
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/users.php:122
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/users.php:144
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/items.php:96
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/items.php:103
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/items.php:126
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/comments.php:82
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/reports.php:89
+msgid "There're no statistics yet"
+msgstr "Todavia no hay estadísticas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/users.php:127
+msgid "Latest users on the web"
+msgstr "Últimos usuarios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/users.php:132
+msgid "E-Mail"
+msgstr "E-mail"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/users.php:148
+msgid "Avg. items per user"
+msgstr "Promedio de anuncios por usuario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/users.php:149
+#, fuzzy, php-format
+msgid "%s items per user"
+msgstr "Anuncios por usuario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/items.php:47
+msgid "Views"
+msgstr "Visitas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/items.php:82
+#, fuzzy
+msgid "Items Statistics"
+msgstr "Estadisticas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/items.php:93
+msgid "New items"
+msgstr "Nuevos anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/items.php:100
+msgid "Total number of items' views"
+msgstr "Número total de anuncios vistos"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/items.php:107
+msgid "Latest items on the web"
+msgstr "Últimos anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/items.php:121
+msgid "Inactive"
+msgstr "Inactivo"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/comments.php:67
+#, fuzzy
+msgid "Comments Statistics"
+msgstr "Configuración: comentarios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/comments.php:87
+msgid "Latest comments on the web"
+msgstr "Últimos comentarios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/comments.php:106
+#, fuzzy
+msgid "There're no statistics yet."
+msgstr "Todavia no hay estadísticas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/reports.php:42
+msgid "Repeated"
+msgstr "Repetido"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/reports.php:43
+msgid "Bad category"
+msgstr "Categoría errónea"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/reports.php:44
+msgid "Offensive"
+msgstr "Ofensivo"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/reports.php:45
+msgid "Expired"
+msgstr "Caducado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/reports.php:74
+#, fuzzy
+msgid "Reports Statistics"
+msgstr "Estadisticas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/stats/reports.php:86
+msgid "Total number of reports"
+msgstr "Número total de respuestas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/upgrade/index.php:46
+msgid "Upgrade"
+msgstr "Actualizar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/upgrade/index.php:71
+#, fuzzy
+msgid "Upgrading your OSClass installation (this could take a while): "
+msgstr "Actualizando OsClass (esto puede tardar un poco):"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/upgrade/index.php:75
+msgid "You have uploaded a new version of osclass, you need to upgrade osclass for a correct functioning"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/upgrade/index.php:77
+#, fuzzy
+msgid "Upgrade now"
+msgstr "Actualizar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:51
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:61
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:69
+#, fuzzy
+msgid "It's highly recommended to have 'Keep original image' option active when you use watermarks."
+msgstr "Es recomendable seleccionar la opción 'Mantener la imagen original' si activas la marca de agua."
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:84
+#, fuzzy
+msgid "Media Settings"
+msgstr "Configuración: media"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:94
+msgid "Images sizes"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:95
+msgid "The sizes listed below determine the maximum dimensions in pixels to use when uploading a image. Format: <b>Width</b> x <b>Height</b>."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:97
+#, fuzzy
+msgid "Thumbnail size"
+msgstr "Dimensiones de las miniaturas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:103
+#, fuzzy
+msgid "Preview size"
+msgstr "Previsualización"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:109
+#, fuzzy
+msgid "Normal size"
+msgstr "Dimensiones de ficha"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:115
+#, fuzzy
+msgid "Original image"
+msgstr "Mantener tamaño original"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:119
+msgid "Keep original image, unaltered after uploading."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:120
+msgid "It might ocuppy more space than usual."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:124
+msgid "Restrictions"
+msgstr "Restricciones"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:126
+#, fuzzy
+msgid "Maximum size"
+msgstr "Tamaño máximo, en KB"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:129
+#, fuzzy
+msgid "Size in KB"
+msgstr "Tamaño máximo, en KB"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:131
+#, php-format
+msgid "Maximum size PHP configuration allows: %d KB"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:136
+#, fuzzy
+msgid "Allowed formats"
+msgstr "Formato de Fecha"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:139
+msgid "For example: jpg, png, gif"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:143
+msgid "ImageMagick"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:147
+#, fuzzy
+msgid "Use ImageMagick instead of GD library"
+msgstr "Usar imagick en vez de GD"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:150
+msgid "ImageMagick library is not loaded"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:153
+msgid "It's faster and consume less resources than GD library."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:157
+#, fuzzy
+msgid "Watermark"
+msgstr "Texto"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:159
+#, fuzzy
+msgid "Watermark type"
+msgstr "Texto"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:163
+msgid "None"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:167
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:183
+msgid "Text"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:170
+#, php-format
+msgid "Freetype library is required. How to <a target=\"_blank\" href=\"%s\">install/configure</a>"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:181
+#, fuzzy
+msgid "Watermark Text Settings"
+msgstr "Ajustes de la marca de agua"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:189
+msgid "Color"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:195
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:219
+#, fuzzy
+msgid "Position"
+msgstr "Descripción"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:198
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:222
+msgid "Centre"
+msgstr "Centro"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:199
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:223
+msgid "Top Left"
+msgstr "Arriba a la izquierda"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:200
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:224
+msgid "Top Right"
+msgstr "Arriba a la derecha"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:201
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:225
+msgid "Bottom Left"
+msgstr "Abajo a la izquierda"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:202
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:226
+msgid "Bottom Right"
+msgstr "Abajo a la derecha"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:208
+#, fuzzy
+msgid "Watermark Image Settings"
+msgstr "Ajustes de la marca de agua"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:214
+#, fuzzy
+msgid "OSClass doesn't check the watermark image size"
+msgstr "Ten en cuenta que Osclass no alterará el tamaño de la imágen de la marca de agua"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:242
+#, fuzzy
+msgid "Regenerate images"
+msgstr "Regenerar imágenes"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:244
+msgid "You can regenerate your different image dimensions. If you have changed the dimension of thumbnails, preview or normal images, you might want to regenerate your images."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/media.php:247
+#, fuzzy
+msgid "Regenerate"
+msgstr "Regenerar imágenes"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/currency_form.php:23
+#, fuzzy
+msgid "Add Currency"
+msgstr "Editar moneda"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/currency_form.php:24
+#, fuzzy
+msgid "Add new currency"
+msgstr "Añadir nuevo país"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/currency_form.php:26
+#, fuzzy
+msgid "Edit Currency"
+msgstr "Editar moneda"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/currency_form.php:57
+#, fuzzy
+msgid "Currency Code"
+msgstr "Formato de moneda"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/currency_form.php:60
+msgid "It should be a three-character code"
+msgstr "Código de tres carácteres"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/spamNbots.php:32
+#, fuzzy
+msgid "Spam and bots Settings"
+msgstr "Spam y bots"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/spamNbots.php:42
+msgid "Akismet"
+msgstr "Akismet"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/spamNbots.php:44
+msgid "Akismet is a hosted web service that saves you time by automatically detecting comment and trackback spam. It's hosted on our servers, but we give you access to it through plugins and our API."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/spamNbots.php:47
+#, fuzzy
+msgid "Akismet API Key"
+msgstr "Akismet"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/spamNbots.php:57
+#, fuzzy
+msgid "This key is valid"
+msgstr "Este campo es obligatorio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/spamNbots.php:61
+msgid "The key you entered is invalid. Please double-check it"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/spamNbots.php:65
+#, php-format
+msgid "Akismet is disabled, please enter an API key. <a href=\"%s\" target=\"_blank\">(Get your key)</a>"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/spamNbots.php:85
+#, fuzzy
+msgid "reCAPTCHA"
+msgstr "ReCAPTCHA"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/spamNbots.php:87
+#, php-format
+msgid "reCAPTCHA helps prevent automated abuse of your site by using a CAPTCHA to ensure that only humans perform certain actions. <a href=\"%s\" target=\"_blank\">Get your key</a>"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/spamNbots.php:90
+#, fuzzy
+msgid "reCAPTCHA Public key"
+msgstr "clave pública para reCAPTCHA"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/spamNbots.php:96
+#, fuzzy
+msgid "reCAPTCHA Private key"
+msgstr "clave privada para reCAPTCHA"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/spamNbots.php:106
+msgid "If you see the reCAPTCHA form below this text it means that you have entered correctly the public key"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:39
+#, fuzzy
+msgid "Permalinks Settings"
+msgstr "Configuración: enlaces"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:50
+msgid "By default OSClass uses web URLs which have question marks and lots of numbers in them. However, OSClass offers you friendly urls. This can improve the aesthetics, usability, and forward-compatibility of your links"
+msgstr "OSClass por defecto utiliza URLs con \"?\", \"&\" y números en ellas pero también te permite activar URLs semánticas. Esto mejora la estética y la usabilidad del sitio que has construido"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:56
+msgid "Enable friendly urls"
+msgstr "Activar URLs semánticas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:61
+msgid "Rewrite rules"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:63
+#, php-format
+msgid "Item URL. Accepted keywords: %s"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:69
+#, php-format
+msgid "Page URL. Accepted keywords: %s"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:75
+#, php-format
+msgid "Category URL. Accepted keywords: %s"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:81
+#, fuzzy
+msgid "Search URL:"
+msgstr "Buscar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:87
+#, fuzzy
+msgid "Search keyword country"
+msgstr "Usuarios por país"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:93
+#, fuzzy
+msgid "Search keyword region"
+msgstr "Usuarios por provincia"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:99
+msgid "Search keyword city"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:105
+msgid "Search keyword city area"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:111
+#, fuzzy
+msgid "Search keyword category"
+msgstr "Selecciona una categoría"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:117
+msgid "Search keyword user"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:123
+msgid "Search keyword pattern"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:135
+#, fuzzy
+msgid "Feed"
+msgstr "Ayúdanos a mejorar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:147
+#, fuzzy
+msgid "Item mark"
+msgstr "Anuncio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:153
+#, fuzzy
+msgid "Item send friend"
+msgstr "Anuncio publicado por"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:159
+#, fuzzy
+msgid "Item contact"
+msgstr "Contacto"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:165
+#, fuzzy
+msgid "Item new"
+msgstr "Anuncio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:171
+#, fuzzy
+msgid "Item activate"
+msgstr "Desactivar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:177
+#, fuzzy
+msgid "Item edit"
+msgstr "Anuncio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:183
+msgid "Item delete"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:189
+msgid "Item resource delete"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:195
+#, fuzzy
+msgid "User login"
+msgstr "Nombre de usuario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:201
+#, fuzzy
+msgid "User dashboard"
+msgstr "Escritorio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:207
+#, fuzzy
+msgid "User logout"
+msgstr "Tipo de usuario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:213
+#, fuzzy
+msgid "User register"
+msgstr "Tipo de usuario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:219
+#, fuzzy
+msgid "User activate"
+msgstr "Desactivar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:225
+#, fuzzy
+msgid "User activate alert"
+msgstr "Desactivar usuario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:231
+#, fuzzy
+msgid "User profile"
+msgstr "Tu perfil"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:237
+#, fuzzy
+msgid "User items"
+msgstr "Nuevos anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:243
+#, fuzzy
+msgid "User alerts"
+msgstr "Nombre de usuario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:249
+#, fuzzy
+msgid "User recover"
+msgstr "Usuarios por país"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:255
+#, fuzzy
+msgid "User forgot"
+msgstr "Tipo de usuario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:261
+#, fuzzy
+msgid "User change password"
+msgstr "Cambiar contraseña"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:267
+msgid "User change email"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:274
+msgid "User change email confirm"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:291
+#, php-format
+msgid "Apache Module <a href=\"%s\">mod_rewrite</a> is loaded"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:293
+#, php-format
+msgid "Apache Module <a href=\"%s\">mod_rewrite</a> is <b>not</b> loaded"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:296
+msgid "It doesn't exist <em>.htaccess</em> file"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/permalinks.php:299
+msgid "It exists <em>.htaccess</em> file. Below you can see the content of the file:"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/searches.php:32
+#, fuzzy
+msgid "Last searches Settings"
+msgstr "Ultimas Busquedas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/searches.php:42
+#, fuzzy
+msgid "Latest searches"
+msgstr "Ultimas Busquedas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/searches.php:46
+#, fuzzy
+msgid "Save the last user searches"
+msgstr "Guardar las ultimas Busquedas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/searches.php:47
+msgid "It may be useful to know what queries users do."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/searches.php:52
+msgid "How long are stored the queries"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/searches.php:56
+msgid "One hour"
+msgstr "Una hora"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/searches.php:60
+msgid "One day"
+msgstr "Un día"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/searches.php:64
+msgid "One week"
+msgstr "Una semana"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/searches.php:68
+msgid "Forever"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/searches.php:72
+msgid "Store 1000 queries"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/searches.php:76
+#, php-format
+msgid "Store %s queries"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/searches.php:78
+msgid "This feature can generate a lot of data. It's recommended to purge this data periodically."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:38
+#, fuzzy
+msgid "General Settings"
+msgstr "Configuración general"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:48
+msgid "Page title"
+msgstr "Página de título"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:54
+msgid "Page description"
+msgstr "Página de descripción"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:60
+msgid "Admin e-mail"
+msgstr "E-mail del administrador"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:66
+msgid "Default language"
+msgstr "Idioma por defecto"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:76
+msgid "Default currency"
+msgstr "Moneda por defecto"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:86
+msgid "Week starts on"
+msgstr "La semana empieza en"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:89
+msgid "Sunday"
+msgstr "Domingo"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:90
+msgid "Monday"
+msgstr "Lunes"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:91
+msgid "Tuesday"
+msgstr "Martes"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:92
+msgid "Wednesday"
+msgstr "Miércoles"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:93
+msgid "Thursday"
+msgstr "Jueves"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:94
+msgid "Friday"
+msgstr "Viernes"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:95
+msgid "Saturday"
+msgstr "Sábado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:100
+msgid "Timezone"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:105
+msgid "Select a timezone..."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:113
+msgid "Date format"
+msgstr "Formato de Fecha"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:132
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:156
+msgid "Documentation on date and time formatting"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:137
+msgid "Time format"
+msgstr "Formato de hora"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:161
+msgid "RSS shows"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:164
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:171
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:178
+msgid "items at most"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:168
+#, fuzzy
+msgid "The latest items shows"
+msgstr "Últimos anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:175
+msgid "The search page shows"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:181
+#, fuzzy
+msgid "Contact Settings"
+msgstr "Configuración: contactar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:183
+#, fuzzy
+msgid "Attachments"
+msgstr "Adjuntado a"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:187
+msgid "Allow people to attach a file in the contact form"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:191
+#, fuzzy
+msgid "Cron Settings"
+msgstr "Configuración"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:193
+msgid "Automatic cron process"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:197
+#, php-format
+msgid "Allow OSClass to run a built-in <a href=\"%s\">cron</a> automatically without setting crontab"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/index.php:198
+msgid "It is <b>recommended</b> to have this option enabled, because some features require it."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/currencies.php:73
+msgid "Code"
+msgstr "Código"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/mailserver.php:68
+#, fuzzy
+msgid "Mail Settings"
+msgstr "Configuración"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/mailserver.php:73
+msgid "Configuration"
+msgstr "Configuración"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/mailserver.php:79
+msgid "Server type"
+msgstr "Tipo de servidor"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/mailserver.php:82
+msgid "Custom Server"
+msgstr "Personalizar servidor"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/mailserver.php:83
+msgid "GMail Server"
+msgstr "Servidor de GMail"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/mailserver.php:88
+msgid "Hostname"
+msgstr "Nombre de servidor"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/mailserver.php:94
+msgid "Server port"
+msgstr "Puerto"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/mailserver.php:112
+msgid "Encryption"
+msgstr "Encriptado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/mailserver.php:115
+msgid "Options: blank, ssl or tls"
+msgstr "Opciones: vacío, ssl o tls"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/mailserver.php:118
+msgid "Apache Module <b>mod_ssl</b> is not loaded"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/mailserver.php:124
+msgid "SMTP"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/mailserver.php:128
+#, fuzzy
+msgid "SMTP authentication enabled"
+msgstr "Habilitar autentificación SMTP"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/mailserver.php:133
+msgid "POP"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/mailserver.php:137
+msgid "Use POP before SMTP"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/mailserver.php:147
+#, fuzzy, php-format
+msgid "Send an e-mail to </code>%s</code> to test mail server configuration"
+msgstr "Introduce la configuración de tu servidor de correo"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/mailserver.php:147
+#, fuzzy
+msgid "Send e-mail"
+msgstr "E-mail del administrador"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/locations.php:27
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/locations.php:73
+msgid "Close"
+msgstr "Cerrar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/locations.php:28
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/locations.php:79
+msgid "View more"
+msgstr "Ver más"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/locations.php:53
+msgid "Countries"
+msgstr "Países"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/locations.php:94
+msgid "Regions"
+msgstr "Provincias / Regiones"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/locations.php:112
+msgid "Cities"
+msgstr "Ciudades"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/locations.php:132
+msgid "Add new country"
+msgstr "Añadir nuevo país"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/locations.php:140
+msgid "Country code"
+msgstr "Código de país"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/locations.php:142
+msgid "Country code should have two characters"
+msgstr "El código de país debe tener dos carácteres"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/locations.php:173
+msgid "Edit country"
+msgstr "Editar país"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/locations.php:212
+msgid "Add new region"
+msgstr "Añadir nueva región"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/locations.php:239
+msgid "Edit region"
+msgstr "Editar región"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/locations.php:264
+msgid "Add new city"
+msgstr "Añadir nueva ciudad"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/locations.php:292
+msgid "Edit city"
+msgstr "Editar ciudad"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/comments.php:47
+#, fuzzy
+msgid "Comments Settings"
+msgstr "Configuración: comentarios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/comments.php:57
+#, fuzzy
+msgid "Default comment settings"
+msgstr "Configuración: comentarios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/comments.php:61
+msgid "Allow people to post comments on items"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/comments.php:65
+msgid "Users must be registered and logged in to comment "
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/comments.php:69
+msgid "A comment is held for moderation"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/comments.php:74
+#, php-format
+msgid "Before a comment appears, comment author must have %s previously approved comment"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/comments.php:75
+msgid "If the value is zero an administrator must always approve the comment"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/comments.php:80
+#, fuzzy
+msgid "Other comment settings"
+msgstr "Configuración: comentarios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/comments.php:82
+#, php-format
+msgid "Break comments into pages with %s comments per page"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/comments.php:83
+msgid "If the value is zero all the comments are showed"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/comments.php:88
+msgid "E-mail admin whenever"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/comments.php:92
+#, fuzzy
+msgid "There is a new comment"
+msgstr "Todavía no se ha añadido ningún comentario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/comments.php:97
+#, fuzzy
+msgid "E-mail user whenever"
+msgstr "Servidor de e-mail"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/settings/comments.php:101
+#, fuzzy
+msgid "There is a new comment in his item"
+msgstr "Todavía no se ha añadido ningún comentario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/index.php:52
+msgid "WARNING: This will also delete the information related to this field. This action cann not be undone. Are you sure you want to continue?"
+msgstr "ADVERTENCIA: Esto también eliminará la información relacionada con este campo. Esta acción no puede deshacer. ¿Seguro de que deseas continuar?"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/index.php:130
+msgid "Add new field"
+msgstr "Añadir un nuevo campo"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/index.php:131
+#, fuzzy
+msgid "Custom fields"
+msgstr "Campos personalizados"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/index.php:146
+#, fuzzy
+msgid "New custom field"
+msgstr "Añadir un nuevo campo personalizado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/index.php:154
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/iframe.php:38
+msgid "Type"
+msgstr "Tipo"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/index.php:167
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/iframe.php:44
+#, fuzzy
+msgid "Options"
+msgstr "opcional"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/index.php:170
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/iframe.php:47
+msgid "Separate the options by commas"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/index.php:178
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/iframe.php:55
+msgid "This field is required"
+msgstr "Este campo es obligatorio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/index.php:184
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/iframe.php:61
+#, fuzzy
+msgid "Select the categories where you want to apply these attribute:"
+msgstr "Selecciona las categorías en las que deseas aplicar estos atributos"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/index.php:201
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/iframe.php:78
+msgid "Advanced options"
+msgstr "Opciones avanzadas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/index.php:204
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/iframe.php:81
+msgid "Identifier name"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/index.php:207
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/iframe.php:84
+#, fuzzy
+msgid "Only alphanumeric characters are allowed [a-z0-9_-]"
+msgstr "Nombre identificador ( sólo carteres alfanuméricos (a-z 0-9 _-)"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/index.php:211
+#, fuzzy
+msgid "Add custom field"
+msgstr "Añadir un nuevo campo personalizado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/index.php:238
+msgid "You don't have any custom fields yet"
+msgstr "Todavía no hay ningún campo personalizado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/fields/iframe.php:30
+#, fuzzy
+msgid "Edit custom field"
+msgstr "Añadir un nuevo campo personalizado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/index.php:28
+msgid "Disable (website)"
+msgstr "Desactivar (web)"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/index.php:28
+#, fuzzy
+msgid "Enable (website)"
+msgstr "Activado (web)"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/index.php:29
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/index.php:135
+msgid "Disable (oc-admin)"
+msgstr "Desactivar (oc-admin)"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/index.php:29
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/index.php:134
+msgid "Enable (oc-admin)"
+msgstr "Activar (oc-admin)"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/index.php:35
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/index.php:36
+msgid "Yes"
+msgstr "Sí"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/index.php:35
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/index.php:36
+msgid "No"
+msgstr "No"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/index.php:87
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/frm.php:51
+msgid "Short name"
+msgstr "Nombre corto"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/index.php:93
+msgid "Enabled (website)"
+msgstr "Activado (web)"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/index.php:96
+msgid "Enabled (oc-admin)"
+msgstr "Activado (oc-admin)"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/index.php:131
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/users/index.php:113
+msgid "Bulk Actions"
+msgstr "Acciones en lote"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/index.php:132
+msgid "Enable (Website)"
+msgstr "Activar (web)"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/index.php:133
+msgid "Disable (Website)"
+msgstr "Desactivar (web)"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/index.php:140
+#, fuzzy
+msgid "Add language"
+msgstr "Añadir nuevo idioma"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/frm.php:34
+#, fuzzy
+msgid "Edit language"
+msgstr "Añadir nuevo idioma"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/frm.php:63
+msgid "Currency format"
+msgstr "Formato de moneda"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/frm.php:69
+msgid "Number of decimals"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/frm.php:75
+msgid "Decimal point"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/frm.php:81
+msgid "Thousands separator"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/frm.php:93
+msgid "Stopwords"
+msgstr "Stopwords"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/frm.php:101
+msgid "Enabled for the public website"
+msgstr "Activado para la web"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/frm.php:104
+msgid "Enabled for the backoffice (oc-admin)"
+msgstr "Activado para el panel de administración (oc-admin)"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/add.php:39
+#, php-format
+msgid "Download more languages at %s"
+msgstr "Descargue mas lenguajes en %s"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/add.php:46
+#, fuzzy
+msgid "Language package (.zip)"
+msgstr "Paquete de idioma"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/add.php:55
+msgid "Cannot install a new language"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/languages/add.php:58
+msgid "The translations folder is not writable on your server and you cannot upload translations from the administration panel. Please make the translation folder writable"
+msgstr "La carpeta de las traducciones no se puede escribir en el servidor y no puede subir las traducciones desde el panel de administración. Por favor haga la carpeta de traducción escribible"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/users/index.php:75
+msgid "Update Date"
+msgstr "Fecha de modificación"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/users/index.php:119
+#, fuzzy
+msgid "Resend activation"
+msgstr "Restricciones"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/users/index.php:124
+#, fuzzy
+msgid "Add user"
+msgstr "Añadir nuevo usuario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/users/frm.php:29
+#, fuzzy
+msgid "Update user"
+msgstr "Fecha de modificación"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/users/frm.php:32
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/users/frm.php:34
+msgid "Add new user"
+msgstr "Añadir nuevo usuario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/users/frm.php:76
+#, fuzzy
+msgid "Contact info"
+msgstr "Formulario de contacto"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/users/frm.php:78
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/users/frm.php:84
+#, fuzzy
+msgid "(required)"
+msgstr "obligatorio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/users/frm.php:107
+msgid "About yourself"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/users/frm.php:115
+msgid "Additional information"
+msgstr "Información adicional"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/users/frm.php:152
+#, fuzzy
+msgid "(twice, required)"
+msgstr "obligatorio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/users/settings.php:32
+#, fuzzy
+msgid "Users Settings"
+msgstr "Configuración: usuarios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/users/settings.php:46
+msgid "Users enabled"
+msgstr "Usuarios activados"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/users/settings.php:50
+msgid "Anyone can register"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/users/settings.php:54
+#, fuzzy
+msgid "Users need to validate their account"
+msgstr "Los usuarios conectados no necesitan validar los anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/users/settings.php:59
+#, fuzzy
+msgid "Admin notifications"
+msgstr "Notificaciones"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/users/settings.php:63
+msgid "When a new user is registered"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/import.php:32
+#, fuzzy
+msgid "Import"
+msgstr "Importación de datos"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/import.php:38
+#, fuzzy
+msgid "You can modify your database to add, remove or modify its data here. It's usually used to import countries, regions and cities."
+msgstr "Puedes modificar tu base de datos para añadir, eliminar o modificar sus datos aquí. Normalmente se usa para importar países, regiones o ciudades"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/import.php:46
+msgid "File (.sql)"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/upgrade.php:44
+#, fuzzy, php-format
+msgid "Checking for updates (Current version %s)"
+msgstr "Comprobando si hay una nueva versión"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/upgrade.php:48
+msgid "Congratulations! Your OSClass installation is up to date!"
+msgstr "¡Enhorabuena! OsClass está actualizado."
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/upgrade.php:50
+msgid "New version to update:"
+msgstr "Versión a actualizar:"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/upgrade.php:85
+#, php-format
+msgid "Your OSClass installation can be auto-upgraded. Please, backup your database and the folder oc-content before attempting to upgrade your OSClass installation. You can also upgrade OSClass manaully, more information in the %s"
+msgstr "OsClass se puede actualizar automáticamente. Por favor, haz una copia de seguridad de la base de datos y la carpeta oc-content antes de intentar actualizar. También puedes actualizar manualmente, mas información en %s"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/upgrade.php:89
+#, fuzzy
+msgid "Your OSClass installation can not be auto-upgraded. Files and folders need to be writable. You could apply write permissions via SSH with the command \"chmod -R a+w *\" (without quotes) or via a FTP client, it depends on the program so we can not provide more information. You could also upgrade OSClass downloading the upgrade package, unzip it and replace the files on your server with the ones on the package."
+msgstr "OsClass no se puede actualizar. Archivos y carpetas han de tener permisos de escritura. Puedes dar permiso 644 via SSH  con el comando \\\"chmod -R 644 *\\\" (sin comillas) o usando un cliente FTP, depende del programa por lo que no podemos dar más información. También puedes actualizar OSClass descargando el paquete de actualización, descomprimiendo y sustituyendo los archivos en el servidor por los que están en el paquete."
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/backup.php:38
+msgid "Backup"
+msgstr "Backup"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/backup.php:44
+#, fuzzy
+msgid "<strong>WARNING</strong>: If you don't specify a backup folder, the backup files will be created in the root of your OSClass installation."
+msgstr "Puedes respaldar OSClass aquí. ADVERTENCIA: Si no especificas un directorio para el respaldo, los ficheros se crearán en el directorio base de tu instalación de OSClass"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/backup.php:51
+msgid "Backup folder"
+msgstr "Directorio para la copia de seguridad"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/backup.php:55
+#, fuzzy
+msgid "This is the folder in which your backups will be created. We recommend that you choose a non-public path. For more information, please refer to OSClass' documentation."
+msgstr "Este es el directorio en el que se crearán tus copias de seguridad. Te recomendamos que introduzcas un path que no sea público. Para más información puedes dirigirte a la documentación de OSClass"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/backup.php:57
+#, fuzzy
+msgid "Back up database (.sql)"
+msgstr "Copia de seguridad de la base de datos"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/backup.php:59
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/backup.php:64
+msgid "Backup (store on server)"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/backup.php:60
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/backup.php:65
+#, fuzzy
+msgid "Backup (download file)"
+msgstr "Falló la descarga"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/backup.php:62
+msgid "Back up OSClass installation"
+msgstr "Copia de seguridad de OSClass"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/locations.php:60
+msgid "Complete"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/locations.php:64
+msgid "You can recalculate your locations stats. This is useful if you upgrade from versions below osclass 2.4"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/locations.php:70
+msgid "Calculate locations stats"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/maintenance.php:34
+#, fuzzy
+msgid "Maintenance"
+msgstr "Modo mantenimiento"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/maintenance.php:40
+#, fuzzy
+msgid "While in maintenance mode, users can not access your website. Useful if you need to make some changes on your website. Use the following button to toggle ON/OFF maintenance mode."
+msgstr "Mientras esté en modo de mantenimiento, los usuarios no pueden acceder a la web. Útil si necesitas hacer algunos cambios. Utiliza el siguiente botón para alternar ACTIVADO / DESACTIVADO el modo de mantenimiento"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/maintenance.php:43
+#, fuzzy, php-format
+msgid "Maintenance mode is: <strong>%s</strong>"
+msgstr "El modo de mantenimiento esta:"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/maintenance.php:46
+msgid "Disable maintenance mode"
+msgstr "Desactivar el modo de mantenimiento"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-admin/themes/modern/tools/maintenance.php:46
+msgid "Enable maintenance mode"
+msgstr "Activar el modo de mantenimiento"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/upgrade-funcs.php:44
+msgid "OSClass &raquo; Has some errors"
+msgstr "OSClass »Hubo algunos errores"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/upgrade-funcs.php:45
+msgid "We encountered some problems updating the database structure. The following queries failed:"
+msgstr "Hemos encontrado algunos errores actualizando la estructura de la base de datos. Fallan las siguientes consultas:"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/upgrade-funcs.php:47
+#, fuzzy, php-format
+msgid "These errors could be false-positive errors. If you're sure that is the case, you could <a href=\"%s\">continue with the upgrade</a>, or <a href=\"http://forums.osclass.org/\">ask in our forums</a>."
+msgstr "Estos errores pueden ser falsos positivos. Si estás seguro que este es el caso, puedes <a href=\"%5C%22%s%5C%22\">continuar con la actualización</a>, o <a href=\"%5C%22http://forums.osclass.org/%5C%22\">preguntar en nuestros foros</a>."
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/upgrade-funcs.php:287
+msgid "You need to calculate locations stats, please go to admin panel, tools, recalculate location stats or click"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/upgrade-funcs.php:287
+msgid "here"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/upgrade-funcs.php:293
+#, fuzzy
+msgid "OSClass &raquo; Updated correctly"
+msgstr "Las tablas de base de datos han sido modificadas correctamente"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/upgrade-funcs.php:294
+msgid "OSClass has been updated successfully. <a href=\"http://forums.osclass.org/\">Need more help?</a>"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:59
+msgid "PHP version >= 5.x"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:61
+msgid "PHP5 is required to run OSClass. You may talk with your hosting to upgrade your PHP version."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:64
+msgid "MySQLi extension for PHP"
+msgstr "Extensión MySQLi para PHP"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:66
+msgid "MySQLi extension is required. How to <a target=\"_blank\" href=\"http://www.php.net/manual/en/mysqli.setup.php\">install/configure</a>."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:69
+msgid "GD extension for PHP"
+msgstr "Extensión GD para PHP"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:71
+msgid "GD extension is required. How to <a target=\"_blank\" href=\"http://www.php.net/manual/en/image.setup.php\">install/configure</a>."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:74
+msgid "Folder <code>oc-content/uploads</code> exists"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:76
+#, php-format
+msgid "You have to create <code>uploads</code> folder, i.e.: <code>mkdir %soc-content/uploads/</code>"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:79
+msgid "Folder <code>oc-content/uploads</code> is writable"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:81
+#, php-format
+msgid "Folder <code>uploads</code> has to be writable, i.e.: <code>chmod a+w %soc-content/uploads/</code>"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:84
+msgid "Folder <code>oc-content/languages</code> exists"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:86
+#, php-format
+msgid "You have to create <code>languages</code> folder, i.e.: <code>mkdir %soc-content/languages/</code>"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:97
+msgid "File <code>config.php</code> is writable"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:99
+#, php-format
+msgid "Root folder has to be writable, i.e.: <code>chmod a+w %s</code>"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:105
+msgid "Root directory is writable"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:107
+#, php-format
+msgid "File <code>config.php</code> has to be writable, i.e.: <code>chmod a+w %sconfig.php</code>"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:113
+msgid "File <code>config-sample.php</code> exists"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:115
+msgid "File <code>config-sample.php</code> is required, you should download OSClass again."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:192
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:241
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:253
+#, php-format
+msgid "Cannot connect to database. Error number: %s"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:196
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:245
+msgid "The database doesn't exist. You should check the \"Create DB\" checkbox and fill username and password with the right privileges"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:198
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:247
+msgid "Cannot connect to the database. Check if the user has privileges."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:200
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:249
+msgid "Cannot connect to the database. Check if the username and password are correct."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:202
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:251
+msgid "Cannot resolve MySQL host. Check if the host is correct."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:204
+#, php-format
+msgid "Cannot connect to database. Error number: %s."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:217
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:224
+#, php-format
+msgid "Cannot create the database. Error number: %s"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:221
+msgid "Cannot create the database. Check if the admin username and password are correct."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:261
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:263
+msgid "Cannot write in config.php file. Check if the file is writable."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:269
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:272
+msgid "It doesn't exist config-sample.php. Check if you have everything well decompressed."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:276
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:279
+msgid "Can't copy config-sample.php. Check if the root directory is writable."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:296
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:302
+#, php-format
+msgid "Cannot create the database structure. Error number: %s"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:300
+msgid "There are tables with the same name in the database. Change the table prefix or the database and try again."
+msgstr "Hay tablas con el mismo nombre en la base de datos. Cambia el prefijo o la base de datos y prueba de nuevo."
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:341
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:344
+#, php-format
+msgid "The file %s doesn't exist"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:355
+#, php-format
+msgid "Cannot insert basic configuration. Error number: %s"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:359
+msgid "Cannot insert basic configuration. This user has no privileges to 'INSERT' into the database."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:361
+msgid "Cannot insert basic configuration. Error number: "
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:584
+msgid "Database information"
+msgstr "Información de la base de datos"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:589
+#, fuzzy
+msgid "Host"
+msgstr "Nombre de servidor"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:591
+msgid "Server name or IP where the database engine resides"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:594
+#, fuzzy
+msgid "Database name"
+msgstr "Nombre de usuario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:596
+msgid "The name of the database you want to run OSClass in"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:599
+#, fuzzy
+msgid "User Name"
+msgstr "Nombre de usuario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:601
+msgid "Your MySQL username"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:606
+#, fuzzy
+msgid "Your MySQL password"
+msgstr "¿Has perdido tu contraseña?"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:609
+#, fuzzy
+msgid "Table prefix"
+msgstr "Habilitar precio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:611
+msgid "If you want to run multiple OSClass installations in a single database, change this"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:617
+#, fuzzy
+msgid "Advanced"
+msgstr "Opciones avanzadas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:639
+#, fuzzy
+msgid "Create DB<"
+msgstr "Crear"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:640
+msgid "Check here if the database is not created and you want to create it now"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:643
+msgid "DB admin username"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:648
+#, fuzzy
+msgid "DB admin password"
+msgstr "Cambiar contraseña"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:667
+#, fuzzy
+msgid "Information needed"
+msgstr "No se ha especificado una acción"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:669
+#, fuzzy
+msgid "Admin user"
+msgstr "Administradores"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:677
+#, fuzzy
+msgid "Admin user is required"
+msgstr "Este campo es obligatorio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:689
+msgid "A password will be automatically generated for you if you leave this blank."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:690
+msgid "You can modify username and password if you like, only need change the inputs value."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:692
+#, fuzzy
+msgid "Contact information"
+msgstr "Formulario de contacto"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:696
+#, fuzzy
+msgid "Web title"
+msgstr "Página de título"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:701
+#, fuzzy
+msgid "Contact e-mail"
+msgstr "Formulario de contacto"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:703
+#, fuzzy
+msgid "Put your e-mail here"
+msgstr "Introduce tu e-mail"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:708
+msgid "Choose countries/cities where your target users are located"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:710
+msgid "Once you write a country, you'll be able to choose region and city too. Therefore, the intallation'll be more specific."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:719
+msgid "Worldwide"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:728
+msgid "Region/City targeting is only available when you choose only \"one country\""
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:732
+msgid "Click here if you want to specify region/regions or city/cities"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:737
+#, fuzzy
+msgid "By Region"
+msgstr "Provincia"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:739
+#, fuzzy
+msgid "By City"
+msgstr "Población"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:750
+msgid "No internet connection. You can continue the installation and insert countries later."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:760
+msgid "Continue installation process and insert countries later"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:778
+msgid "Go back"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:810
+msgid "The location selected could not been installed"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:821
+#, fuzzy
+msgid "Select your classified categories"
+msgstr "Categorías seleccionables por raíz"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:821
+msgid "or"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:821
+msgid "Skip"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:821
+msgid "You can add/remove categories after the installation, using the admin dashboard"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:893
+#, fuzzy
+msgid "Congratulations!"
+msgstr "Configuración"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:894
+msgid "OSClass has been installed. Were you expecting more steps? Sorry to disappoint."
+msgstr "OSClass se ha instalado. ¿Esperabas más pasos? Sentimos defraudarte."
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:895
+#, php-format
+msgid "An e-mail with the password for oc-admin has sent to: %s"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-functions.php:920
+#, fuzzy
+msgid "Finish and go to the administration panel"
+msgstr "No se pueden subir plugins desde el panel de administración"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/ItemActions.php:60
+msgid "Anonymous"
+msgstr "Anónimo"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/ItemActions.php:824
+msgid "Message: this field is required"
+msgstr "Mensaje: este campo es obligatorio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/ItemActions.php:826
+msgid "Your name: this field is required"
+msgstr "Tu nombre: este campo es obligatorio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/emails.php:581
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/emails.php:584
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/emails.php:924
+msgid "Admin mail system"
+msgstr "Administrador"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/plugins.php:92
+#, php-format
+msgid "Plugin %s is missing the index.php file %s"
+msgstr "El plugin \"%s\" no tiene index.php ( %s )"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install.php:87
+msgid "You appear to have already installed OSClass. To reinstall please clear your old database tables first."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install.php:133
+#, fuzzy
+msgid "OSClass Installation"
+msgstr "Copia de seguridad de OSClass"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install.php:161
+msgid "Welcome"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install.php:165
+msgid "Check the next requirements:"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install.php:167
+msgid "Requirements help:"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install.php:174
+msgid "Need more help?"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install.php:178
+msgid "All right! All the requirements have met:"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install.php:188
+msgid "Allow my site to appear in search engines like Google."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install.php:194
+msgid "Help make OSClass better by automatically sending usage statistics and crash reports to OSClass."
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install.php:198
+#, fuzzy
+msgid "Choose language"
+msgstr "Escoge Fichero"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install.php:209
+msgid "Try again"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install.php:213
+#, fuzzy
+msgid "Run the install"
+msgstr "Desinstalar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install.php:239
+msgid "Readme"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-location.php:94
+#, php-format
+msgid "Welcome %s,"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-location.php:95
+#, php-format
+msgid "Your OSClass installation at %s is up and running. You can access to the administration panel with this data access:"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-location.php:97
+#, fuzzy, php-format
+msgid "username: %s"
+msgstr "Usuario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-location.php:98
+#, fuzzy, php-format
+msgid "password: %s"
+msgstr "Escribe tu contraseña"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-location.php:100
+msgid "Regards,"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/install-location.php:101
+msgid "The <a href='http://osclass.org/'>OSClass</a> team"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:4
+msgid "For sale"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:5
+msgid "Vehicles"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:6
+#, fuzzy
+msgid "Classes"
+msgstr "OSClass"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:7
+#, fuzzy
+msgid "Real estate"
+msgstr "Nombre real"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:8
+msgid "Services"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:9
+#, fuzzy
+msgid "Community"
+msgstr "Comentario"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:10
+msgid "Personals"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:11
+msgid "Jobs"
+msgstr "Trabajos"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:12
+msgid "Animals"
+msgstr "Animales"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:13
+msgid "Art - Collectibles"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:14
+msgid "Barter"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:15
+msgid "Books - Magazines"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:16
+msgid "Cameras - Camera Accessories"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:17
+msgid "CDs - Records"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:18
+msgid "Cell Phones - Accessories"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:19
+msgid "Clothing"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:20
+msgid "Computers - Hardware"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:21
+msgid "DVD"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:22
+msgid "Electronics"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:23
+msgid "For Babies - Infants"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:24
+#, fuzzy
+msgid "Garage Sale"
+msgstr "Gestionar páginas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:25
+msgid "Health - Beauty"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:26
+msgid "Home - Furniture - Garden Supplies"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:27
+msgid "Jewelry - Watches"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:28
+msgid "Musical Instruments"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:29
+msgid "Sporting Goods - Bicycles"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:30
+msgid "Tickets"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:31
+msgid "Toys - Games - Hobbies"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:32
+msgid "Video Games - Consoles"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:33
+msgid "Everything Else"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:34
+msgid "Cars"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:35
+msgid "Car Parts"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:36
+msgid "Motorcycles"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:37
+msgid "Boats - Ships"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:38
+msgid "RVs - Campers - Caravans"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:39
+msgid "Trucks - Commercial Vehicles"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:40
+msgid "Other Vehicles"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:41
+msgid "Computer - Multimedia Classes"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:42
+#, fuzzy
+msgid "Language Classes"
+msgstr "Idiomas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:43
+msgid "Music - Theatre - Dance Classes"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:44
+msgid "Tutoring - Private Lessons"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:45
+#, fuzzy
+msgid "Other Classes"
+msgstr "OSClass"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:46
+msgid "Houses - Apartments for Sale"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:47
+msgid "Houses - Apartments for Rent"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:48
+msgid "Rooms for Rent - Shared"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:49
+msgid "Housing Swap"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:50
+msgid "Vacation Rentals"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:51
+msgid "Parking Spots"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:52
+msgid "Land"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:53
+msgid "Office - Commercial Space"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:54
+msgid "Shops for Rent - Sale"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:55
+msgid "Babysitter - Nanny"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:56
+msgid "Casting - Auditions"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:57
+msgid "Computer"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:58
+msgid "Event Services"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:59
+msgid "Health - Beauty - Fitness"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:60
+msgid "Horoscopes - Tarot"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:61
+msgid "Household - Domestic Help"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:62
+msgid "Moving - Storage"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:63
+msgid "Repair"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:64
+msgid "Writing - Editing - Translating"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:65
+msgid "Other Services"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:66
+msgid "Carpool"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:67
+msgid "Community Activities"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:68
+msgid "Events"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:69
+msgid "Musicians - Artists - Bands"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:70
+msgid "Volunteers"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:71
+msgid "Lost And Found"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:72
+msgid "Women looking for Men"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:73
+msgid "Men looking for Women"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:74
+msgid "Men looking for Men"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:75
+msgid "Women looking for Women"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:76
+msgid "Friendship - Activity Partners"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:77
+msgid "Missed Connections"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:78
+msgid "Accounting - Finance"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:79
+msgid "Advertising - Public Relations"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:80
+msgid "Arts - Entertainment - Publishing"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:81
+msgid "Clerical - Administrative"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:82
+#, fuzzy
+msgid "Customer Service"
+msgstr "Personalizar servidor"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:83
+msgid "Education - Training"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:84
+msgid "Engineering - Architecture"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:85
+msgid "Healthcare"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:86
+msgid "Human Resource"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:87
+msgid "Internet"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:88
+msgid "Legal"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:89
+msgid "Manual Labor"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:90
+msgid "Manufacturing - Operations"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:91
+#, fuzzy
+msgid "Marketing"
+msgstr "Configuración: media"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:92
+msgid "Non-profit - Volunteer"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:93
+#, fuzzy
+msgid "Real Estate"
+msgstr "Nombre real"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:94
+msgid "Restaurant - Food Service"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:95
+msgid "Retail"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:96
+msgid "Sales"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:97
+msgid "Technology"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/installer/categories.php:98
+msgid "Other Jobs"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hItems.php:1015
+msgid "Check with seller"
+msgstr "No disponible"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hItems.php:1016
+msgid "Free"
+msgstr "Gratis"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:126
+msgid "January"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:126
+msgid "February"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:126
+#, fuzzy
+msgid "March"
+msgstr "Buscar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:126
+msgid "April"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:126
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:127
+#, fuzzy
+msgid "May"
+msgstr "Lunes"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:126
+msgid "June"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:126
+msgid "July"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:126
+msgid "August"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:126
+#, fuzzy
+msgid "September"
+msgstr "Nunca cerrar sesión"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:126
+msgid "October"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:126
+msgid "November"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:126
+#, fuzzy
+msgid "December"
+msgstr "Nunca cerrar sesión"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:127
+msgid "Jan"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:127
+msgid "Feb"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:127
+#, fuzzy
+msgid "Mar"
+msgstr "Marcar como"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:127
+msgid "Apr"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:127
+msgid "Jun"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:127
+msgid "Jul"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:127
+msgid "Aug"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:127
+msgid "Sep"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:127
+msgid "Oct"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:127
+#, fuzzy
+msgid "Nov"
+msgstr "No"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:127
+msgid "Dec"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:129
+#, fuzzy
+msgid "Sun"
+msgstr "Domingo"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:129
+#, fuzzy
+msgid "Mon"
+msgstr "Lunes"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:129
+#, fuzzy
+msgid "Tue"
+msgstr "Martes"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:129
+msgid "Wed"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:129
+msgid "Thu"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:129
+#, fuzzy
+msgid "Fri"
+msgstr "Viernes"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:129
+#, fuzzy
+msgid "Sat"
+msgstr "Estado"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:130
+msgid "AM"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:130
+msgid "PM"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:130
+#, fuzzy
+msgid "am"
+msgstr "Nombre"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:130
+#, fuzzy
+msgid "pm"
+msgstr "Spam"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:169
+msgid "Manage your items"
+msgstr "Administra tus anuncios"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hUtils.php:170
+msgid "Manage your alerts"
+msgstr "Gestiona tus alertas"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hSearch.php:52
+msgid "Newly listed"
+msgstr "Nuevo"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hSearch.php:53
+msgid "Lower price first"
+msgstr "Más barato primero"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hSearch.php:54
+msgid "Higher price first"
+msgstr "Más caro primero"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/helpers/hSearch.php:55
+#, fuzzy
+msgid "More relevant first"
+msgstr "Más barato primero"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/model/Item.php:700
+#, php-format
+msgid "%s in"
+msgstr "%s en"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/model/Item.php:709
+msgid "There's no description available in your language"
+msgstr "No hay descripción disponible en tu idioma"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:99
+msgid "Select a country..."
+msgstr "Selecciona un país..."
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:114
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:343
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:367
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:374
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:376
+msgid "Select a region..."
+msgstr "Selecciona una región..."
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:129
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:362
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:370
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:380
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:382
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:411
+msgid "Select a city..."
+msgstr "Selecciona una ciudad..."
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:153
+msgid "Company"
+msgstr "Empresa"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:160
+msgid "All"
+msgstr "Todo"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:191
+msgid "Name: enter at least 3 characters"
+msgstr "Nombre: introduce al menos 3 caracteres"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:192
+msgid "Name: no more than 50 characters"
+msgstr "Nombre: no mas de 50 caracteres"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:195
+msgid "Email: this field is required"
+msgstr "Email: este campo es obligatorio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:199
+msgid "Password: this field is required"
+msgstr "Contraseña: este campo es obligatorio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:200
+msgid "Password: enter at least 5 characters"
+msgstr "Contraseña: introduce al menos 5 caracteres"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:354
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/User.form.class.php:418
+msgid "No results"
+msgstr "No hay resultados"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Comment.form.class.php:113
+msgid "Name: this field is required"
+msgstr "Nombre: este campo es obligatorio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Alert.form.class.php:36
+msgid "Enter your e-mail"
+msgstr "Introduce tu e-mail"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:427
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:696
+msgid "Description: needs to be longer"
+msgstr "Descripción: tiene que ser mas larga"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:464
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:745
+msgid "Choose one category"
+msgstr "Elige una categoría"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:467
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:748
+msgid "Price: no more than 50 characters"
+msgstr ""
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:469
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:750
+msgid "Currency: make your selection"
+msgstr "Moneda: haz tu selección"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:473
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:754
+#, php-format
+msgid "Photo: must be %s"
+msgstr "Foto: debe ser %s"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:479
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:760
+msgid "Name: no more than 35 characters"
+msgstr "Nombre: no más de 35 caracteres"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:487
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:774
+msgid "Address: enter at least 3 characters"
+msgstr "Dirección: introduce al menos 3 caracteres"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:488
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:775
+msgid "Address: no more than 100 characters"
+msgstr "Dirección: no mas de 100 caracteres"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:521
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:808
+msgid "This action can\\'t be undone. Are you sure you want to continue?"
+msgstr "Esta acción no puede deshacerse. ¿Estás seguro de querer continuar?"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:767
+msgid "Select a region"
+msgstr "Selecciona una región"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:768
+msgid "Select a city"
+msgstr "Selecciona una ciudad"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:770
+msgid "City area: enter at least 3 characters"
+msgstr "Área de Ciudad: introduce al menos 3 caracteres"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:771
+msgid "City area: no more than 50 characters"
+msgstr "Área de la ciudad: no mas de 50 caracteres"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:872
+msgid "Remove"
+msgstr "Eliminar"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Item.form.class.php:884
+msgid "Sorry, you have reached the maximum number of images per ad"
+msgstr "Lo sentimos, has superado el número máximo de imágenes por anuncio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/Page.form.class.php:64
+msgid "Body"
+msgstr "Cuerpo"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/SendFriend.form.class.php:115
+msgid "Friend's name: this field is required"
+msgstr "Nombre de tu amigo: este campo es obligatorio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/SendFriend.form.class.php:118
+msgid "Friend's email: this field is required"
+msgstr "Correo electrónico de tu amigo: este campo es obligatorio"
+
+#: /home/conejo/public_html/osclass/OSClass/oc-includes/osclass/frm/SendFriend.form.class.php:119
+msgid "Invalid friend's email address"
+msgstr "Dirección de correo no válida"
+
+#~ msgid "Checking for update files."
+#~ msgstr "Comprobando ficheros modificados."
+#~ msgid "File downloaded correctly"
+#~ msgstr "El fichero se ha descargado correctanente"
+#~ msgid "Missing filename"
+#~ msgstr "El fichero es incorrecto"
+#~ msgid "Removing temp-directory"
+#~ msgstr "Eliminando directorio temporal"
+#~ msgid "Archiving is sucessful!"
+#~ msgstr "El fichero comprimido se ha creado correctamente"
+#~ msgid "Error, can't create a zip file!"
+#~ msgstr "Error: no se puede crear el fichero comprimido"
+#~ msgid "OK"
+#~ msgstr "OK"
+#~ msgid "Filename incorrect"
+#~ msgstr "El fichero es incorrecto"
+#~ msgid "Files removed"
+#~ msgstr "Lo ficheros se han eliminado correctamente"
+#~ msgid "There were problems copying files"
+#~ msgstr "Ha habido un problema copiando ficheros"
+#~ msgid "Files copied"
+#~ msgstr "Los ficheros han sido copiados correctamente"
+#~ msgid "upgrade.sql executed"
+#~ msgstr "upgrade.sql ejecutado correctamente"
+#~ msgid "No SQL to execute"
+#~ msgstr "No hay ningún SQL que ejecutar"
+#~ msgid "Custom actions executed"
+#~ msgstr "Las acciones han sido ejecutadas correctamente"
+#~ msgid "No action to execute"
+#~ msgstr "No hay ninguna acción que ejecutar"
+#~ msgid ""
+#~ "There were problems copying files. Maybe the file permissions are not set "
+#~ "correctly"
+#~ msgstr ""
+#~ "Ha habido un problema copiando ficheros. Comprueba que los permisos son "
+#~ "los correctos"
+#~ msgid "No tables update to execute"
+#~ msgstr ""
+#~ "No hay ninguna modificación que aplicar en las tablas de base de datos"
+#~ msgid "Leave it blank if you don't want to change your password"
+#~ msgstr "Si dejas vacío el campo para la contraseña no se modificará"
+#~ msgid "Show _MENU_ entries"
+#~ msgstr "Ver entradas _MENU_"
+#~ msgid "Showing _START_ to _END_ of _TOTAL_ entries"
+#~ msgstr "Mostrando _START_ a _END_ de _TOTAL_ entradas"
+#~ msgid "First"
+#~ msgstr "Primera"
+#~ msgid "Last"
+#~ msgstr "Última"
+#~ msgid "entries"
+#~ msgstr "entradas"
+#~ msgid "Dashboard - Add New Widget"
+#~ msgstr "Escritorio - Añadir Nuevo Widget"
+#~ msgid "Create widget in %s"
+#~ msgstr "Crear widget en %s"
+#~ msgid "Add a new theme"
+#~ msgstr "Añadir nuevo tema"
+#~ msgid "(0 = no expiration)"
+#~ msgstr "(0 = nunca expiran)"
+#~ msgid "Invalid OSClass request."
+#~ msgstr "Petición incorrecta desde OSClass."
+#~ msgid "Add an email/alert"
+#~ msgstr "Añadir e-mail / alerta"
+#~ msgid "Internal name (name to easily identify this email/alert)"
+#~ msgstr ""
+#~ "Nombre interno (nombre para identificar fácilmente un e-mail/alerta)"
+#~ msgid "Add or remove widgets"
+#~ msgstr "Añadir o eliminar widgets"
+#~ msgid "Mail Server"
+#~ msgstr "Servidor de e-mail"
+#~ msgid "Cron system"
+#~ msgstr "Sistema de cron"
+#~ msgid "List administrators"
+#~ msgstr "Gestionar administradores"
+#~ msgid "Which of the following do you want to see on your dashboard"
+#~ msgstr "Personaliza tu página de inicio"
+#~ msgid "Internal name (name to easily identify this page)"
+#~ msgstr "Nombre interno (nombre para identificar fácilmente una página)"
+#~ msgid "Create currency"
+#~ msgstr "Crear moneda"
+#~ msgid "Comments enabled"
+#~ msgstr "Comentarios habilitados"
+#~ msgid "Attachment enabled"
+#~ msgstr "Poder subir un fichero adjunto"
+#~ msgid "Cron"
+#~ msgstr "Cron"
+#~ msgid "Auto-cron"
+#~ msgstr "Auto-cron"
+#~ msgid ""
+#~ "Some OSClass functionalities require a cron in order to work. Check if "
+#~ "your host isn't able to do them. Uncheck if you want to set up your cron "
+#~ "manually. Refer to the manual to know more about the OSClass cron system."
+#~ msgstr ""
+#~ "Algunas funcionalidades de OSClass requieren un sistema de cron para "
+#~ "funcionar (ejecución de tareas con una periodicidad). Selecciona esta "
+#~ "opción si tu servidor no dispone de este sistema. Deselecciónalo si "
+#~ "quieres activar estas crons manualmente. Revisa el manual para conocer "
+#~ "más sobre el sistema de cron de OSClass"
+#~ msgid "Once it's created, it can't be modified"
+#~ msgstr "Una vez creado, no podrá ser modificado"
+#~ msgid "Custom"
+#~ msgstr "Personalizado"
+#~ msgid "Number of items in the RSS"
+#~ msgstr "Número de anuncios en el RSS"
+#~ msgid "Notify admin of contact items"
+#~ msgstr "Notificar de contactos usuario - anunciante al administrador "
+#~ msgid "Notify admin of share"
+#~ msgstr "Notificar \"enviar a un amigo\" al administrador"
+#~ msgid "Configure media"
+#~ msgstr "Configuración media"
+#~ msgid ""
+#~ "Please set the preferred dimensions for all the images on the website. "
+#~ "(format: WIDTHxHEIGHT, eg: 640x480)"
+#~ msgstr ""
+#~ "Introduce las dimensiones correctas para tus imágenes en la web (formato "
+#~ "requerido: ANCHURAxALTURA, p.e. 640x480)"
+#~ msgid "Allowed format extensions (eg: png, jpg, gif)"
+#~ msgstr "Extensiones de formato permitidas (eg: png, jpg, gif)"
+#~ msgid "Dimensions"
+#~ msgstr "Dimensiones"
+#~ msgid "Preview dimensions"
+#~ msgstr "Dimensiones de previsualización"
+#~ msgid ""
+#~ "Keeping original image files requires extra storage. This option ensures "
+#~ "that the original quality of the file is un-altered. Be careful when "
+#~ "using this option."
+#~ msgstr ""
+#~ "Si mantienes los ficheros de imágenes originales necesitarás espacio "
+#~ "extra. Esta opción asegura poder rehacer los tamaños de la imagen tantas "
+#~ "veces como quieras si cambias de tema. Sé cuidadoso utilizando esta opción"
+#~ msgid "Friendly urls"
+#~ msgstr "URLs semánticas para buscadores"
+#~ msgid ".htaccess file"
+#~ msgstr "fichero .htaccess"
+#~ msgid "Module <em>mod_rewrite</em> was found on the server."
+#~ msgstr "El módulo <em>mod_rewrite</em> se ha encontrado en el servidor"
+#~ msgid ""
+#~ "Error. We couldn't write the .htaccess file on your server. Please create "
+#~ "a file called .htaccess in the root of your OSClass installation with the "
+#~ "following content."
+#~ msgstr ""
+#~ "Error: El sistema no puede escribir el fichero .htaccess en tu servidor. "
+#~ "Por favor, crea un fichero llamado .htaccess en la raíz de tu instalación "
+#~ "de OSClass con el siguiente contenido"
+#~ msgid ""
+#~ "File .htaccess already exists. Please check that the .htaccess file has "
+#~ "the following content."
+#~ msgstr ""
+#~ "El fichero .htaccess ya existe. Por favor, comprueba que el fichero ."
+#~ "htaccess tiene el siguiente contenido"
+#~ msgid ""
+#~ "We've created a .htaccess file on the root of your OSClass installation."
+#~ msgstr ""
+#~ "El fichero .htaccess se ha creado correctamente en la raíz de tu "
+#~ "instalación de OSClass"
+#~ msgid "Content of .htaccess file should look like this:"
+#~ msgstr "El contenido del fichero .htaccess debe aparecer así:"
+#~ msgid "Current content of your .htaccess file:"
+#~ msgstr "El contenido actual de tu fichero .htaccess es:"
+#~ msgid "Akismet key (same as Wordpress.com)"
+#~ msgstr "Akismet key (igual que en Wordpress.com)"
+#~ msgid "If the field is empty it's because the Akismet service is disabled"
+#~ msgstr ""
+#~ "Si este campo está vacío es debido a que el servicio Akismet está "
+#~ "desactivado"
+#~ msgid "Get your free key at"
+#~ msgstr "Obtén tu código gratuito en"
+#~ msgid "If the field is empty it's because the reCAPTCHA service is disabled"
+#~ msgstr ""
+#~ "Si este campo está vacío es debido a que el servicio reCAPTCHA está "
+#~ "desactivado"
+#~ msgid "Get your free keys at"
+#~ msgstr "Obtén tus códigos gratuitos en"
+#~ msgid "User validation enabled"
+#~ msgstr "Validación de usuario activada"
+#~ msgid "User registration enabled"
+#~ msgstr "Registro de usuario activado"
+#~ msgid "You're offline! Please check your connection"
+#~ msgstr ""
+#~ "Pareces no estar conectado a internet. Por favor, comprueba tu conexión"
+#~ msgid "Requested URL not found"
+#~ msgstr "Error: La URL no existe (error 404)"
+#~ msgid "Internal server error"
+#~ msgstr "Error: Internal server error (Error 500)"
+#~ msgid "Error. Parsing JSON request failed"
+#~ msgstr "Error: Falló el parseo de la respuesta JSON"
+#~ msgid "Request timeout"
+#~ msgstr "Error: timeout"
+#~ msgid "Unknown error"
+#~ msgstr "Error: desconocido"
+#~ msgid "Backup OSClass"
+#~ msgstr "Copia de seguridad de OSClass"
+#~ msgid ""
+#~ "You can regenerate your thumbnails and previews images here. It's useful "
+#~ "if you changed your theme and images are not showing up correctly. "
+#~ "Please, check the size values defined in the settings/media section"
+#~ msgstr ""
+#~ "Puedes regenerar todas las imágenes necesarias para que el sistema "
+#~ "funcione desde aquí. Es muy útil cuando cambias el tema y las imágenes "
+#~ "ahora requieren otro tamaño. Antes de utilizar esta opción, revisa los "
+#~ "tamaños definidos en Configuración / Configuración: media"
+#~ msgid "Data"
+#~ msgstr "Datos"
+#~ msgid "Activate user"
+#~ msgstr "Activar usuario"
+#~ msgid "Add a new user"
+#~ msgstr "Añadir nuevo usuario"
+#~ msgid "This action can\\\\'t be undone. Are you sure you want to continue?"
+#~ msgstr "Esta acción no se puede deshacer. ¿Estás seguro de seguir adelante?"
+#~ msgid ""
+#~ "Number of comments from same author that should be validated before "
+#~ "skipping validation (0 for always moderation)"
+#~ msgstr ""
+#~ "Número de comentarios del mismo autor que deberán ser validados antes de "
+#~ "no necesitar validación (0 para moderar siempre)"
+#~ msgid "Enable reCAPTCHA"
+#~ msgstr "Activar reCAPTCHA"
+#~ msgid "Enable item validation by users"
+#~ msgstr "Activar validación de anuncios por usuarios"
+#~ msgid "Satisfying user with awesome and easy auto-upgrade: Done!"
+#~ msgstr "Satisfacer al usuario con auto-actualización fáci: Hecho!"
+#~ msgid "Error removing file: %s"
+#~ msgstr "Error eliminando el archivo : %s"
+#~ msgid ""
+#~ "We had some errors removing files, those are not super-sensitive errors, "
+#~ "so we continued upgrading your installation. Please remove the following "
+#~ "files (you already have OSClass upgraded, but to ensure maximun "
+#~ "performance)"
+#~ msgstr ""
+#~ "Tenemos algunos errores eliminando archivos que no son muy sensibles, por "
+#~ "tal razón continuamos con la instalación. Por favor elimine los "
+#~ "siguientes archivos(Usted ya ha actualizado OSClass, pero es con el fin "
+#~ "de obtener el máximo rendimiento del sistema)"
+#~ msgid ""
+#~ "The theme folder %s is not writable on your server, <span class=\"OSClass"
+#~ "\">OSClass</span> can't upload themes from the administration panel. "
+#~ "Please copy the theme package using FTP or SSH, or make the mentioned "
+#~ "themes folder writable."
+#~ msgstr ""
+#~ "La carpeta del Tema %s no se puede escribir en su servidor, OSClass no "
+#~ "puede subir el tema desde el panel administrativo. Por favor copie el "
+#~ "paquete usando el FTP o SSH o de permisos de escritura a la carpeta "
+#~ "mencionada "
+#~ msgid ""
+#~ "Number of items from same author that should be validated before skipping "
+#~ "validation (0 for always moderation)"
+#~ msgstr ""
+#~ "Número de anuncios del mismo autor que han de ser validados antes de "
+#~ "saltar la validación (0 para moderar siempre)"
+#~ msgid ""
+#~ "Number of seconds an user should wait before publishing another item (0 "
+#~ "for no wait)"
+#~ msgstr ""
+#~ "Número de segundos que un usuario ha de esperar antes de publicar otro "
+#~ "anuncio (0 para no esperar)"
+#~ msgid "Maximum number of images per item (0 for unlimited)"
+#~ msgstr "Número máximo de imágenes por articulo (0 por defecto) "
+#~ msgid ""
+#~ "Number of comments per page. You could limit the number of comments shown "
+#~ "at a time at the item's detail page. Other comments will be available "
+#~ "through a pagination system. (0 for show all comments at the same time)"
+#~ msgstr ""
+#~ "Número de comentarios por página. Se podría limitar el número de "
+#~ "comentarios que se muestran en la página de detalles del anuncio. El "
+#~ "resto de  comentarios estarán disponibles a través de un sistema de "
+#~ "paginación. (0 para mostrar todos los comentarios al mismo tiempo) "
+#~ msgid "Only allow registered users to post comments"
+#~ msgstr "Sólo los usuarios registrados pueden publicar comentarios"
+#~ msgid "Number of recent items displayed at home"
+#~ msgstr "Número de anuncios recientes que se muestran al inicio"
+#~ msgid ""
+#~ "OSClass could save the latest searches users do on your site. You could "
+#~ "have an idea of what your users are looking for or show them on the site "
+#~ "as \"hot topics\"."
+#~ msgstr ""
+#~ "OSClass podría guardar las últimas búsquedas de los usuarios en la web. "
+#~ "Así podrías tener una idea de lo que los usuarios están buscando o "
+#~ "mostrarlo como \\ \"hot topics\\\". "
+#~ msgid "Keep last searches"
+#~ msgstr "Guardar las últimas búsquedas"
+#~ msgid "Forever (never delete)"
+#~ msgstr "Para siempre (nunca se borra)"
+#~ msgid "Keep last 1000 searches"
+#~ msgstr "Guardar las últimas 1000 búsquedas"
+#~ msgid "Number of files to keep"
+#~ msgstr "Número de archivos a conservar"
+#~ msgid ""
+#~ "Latest searches functionality could generate a lot of data. It's "
+#~ "recomended you purge that data. You could delete one hour old, one day "
+#~ "old or one week old, you could also specify the number of searches to "
+#~ "keep or to never delete them."
+#~ msgstr ""
+#~ "La función \"Últimas búsquedas\" puede generar una gran cantidad de "
+#~ "datos. Es recomendable ir borrando periódicamente. Puedes borrar una "
+#~ "hora, un día, una semana. También puedes especificar el número de "
+#~ "búsquedas que quieres conservar o no borrarlas nunca."
+#~ msgid "Checking for updates"
+#~ msgstr "Buscando actualizaciones"
+#~ msgid "HOORAY! Your plugin installation is up to date!"
+#~ msgstr "¡Hurra! ¡El plugin está actualizado!"
+#~ msgid "current version:"
+#~ msgstr "Versión actual:"
+#~ msgid "Downloading update file:"
+#~ msgstr "Descargando archivos de actualización:"
+#~ msgid "Unzipping file:"
+#~ msgstr "Descomprimiendo archivo:"
+#~ msgid "Copying old files:"
+#~ msgstr "Copiando archivos antiguos:"
+#~ msgid "Removing new files:"
+#~ msgstr "Eliminando archivos nuevos:"
+#~ msgid "Executing SQL:"
+#~ msgstr "Ejecutando SQL:"
+#~ msgid "Executing additional actions:"
+#~ msgstr "Ejecutando acciones adicionales:"
+#~ msgid "Cleaning all the mess:"
+#~ msgstr "Limpiando todo el lío:"
+#~ msgid "Enable user"
+#~ msgstr "Activar usuario"
+#~ msgid "Disable user"
+#~ msgstr "Desactivar usuario"
+#~ msgid "Title and Description"
+#~ msgstr "Título y descripción"
+#~ msgid "Watermark color"
+#~ msgstr "Color"
+#~ msgid "Watermark place"
+#~ msgstr "Ubicación"
+#~ msgid "Watermark image"
+#~ msgstr "Imagen"
+
