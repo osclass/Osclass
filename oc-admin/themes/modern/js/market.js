@@ -139,8 +139,31 @@ $(function(){
                     if(section == 'language'){
                         str_letter =  item.s_update_url;
                     }
-                    var _mod_date = new Date(item.dt_mod_date);
-                    var date_mod = _mod_date.getFullYear()+'-'+_mod_date.getMonth()+'-'+_mod_date.getDate();
+
+                    var _mod_date   = '';
+                    if(new String(item.dt_mod_date)!='null') {
+                        _mod_date = new Date(item.dt_mod_date);
+                    } else {
+                        _mod_date = new Date(item.dt_pub_date);
+                    }
+
+                    // format date
+                    var date_mod    = _mod_date.getFullYear()+'-';
+                    
+                    var _month      = new String(_mod_date.getMonth()+1);
+                    if( _month.length == 1 ) {
+                        date_mod += '0' + _month + '-';
+                    } else {
+                        date_mod += _month + '-';
+                    }
+
+                    var _day    = new String(_mod_date.getDate());
+                    if( _day.length == 1 ) {
+                        date_mod += '0' + _day;
+                    } else {
+                        date_mod += _day;
+                    }
+
                     print = '<div class="mk-item mk-item-'+section+'">'
                             +'<div class="banner" style="background-image:url('+banner+');">'+str_letter+'</div>'
                             +'<div class="mk-info">'
