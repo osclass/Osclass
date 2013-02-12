@@ -230,7 +230,7 @@
                     if($error) {
                         $result = array( 'error' => $message);
                     } else {
-                        $result = array( 'ok' => __("Saved") , 'text' => Params::getParam("s_name"), 'field_id' => $field['pk_i_id']);
+                        $result = array( 'ok' => __("Saved") , 'text' => Params::getParam("s_name"), 'field_id' => Params::getParam("id") );
                     }
 
                     echo json_encode($result);
@@ -951,7 +951,7 @@
                     } else {
                         $content = $json;
                     }
-                    
+
                     if($error==1) {
                         echo json_encode(array('error' => 1));
                     } else {
