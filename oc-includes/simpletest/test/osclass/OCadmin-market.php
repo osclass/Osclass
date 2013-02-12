@@ -128,7 +128,8 @@ class OCadmin_market extends OCadminTest {
 //    }
 
     /**
-     * test order by data and downloads
+     * test order by mod_date
+     *
      */
     function testMarketOrderUpdate()
     {
@@ -138,22 +139,71 @@ class OCadmin_market extends OCadminTest {
         $this->selenium->click("//a[@id='market_view_plugins']");
         $this->selenium->waitForPageToLoad("10000");
 
-        // coger fecha y parsear del primer elemento
+        // get first item
+        $last_update = '';
         $this->selenium->click("xpath=(//div[@class='mk-info']/div[@class='market-actions']/span[@class='more'])[1]");
         $last_update = $this->selenium->getText("xpath=//span[contains(.,'Last update ')]");
-        error_log($last_update);
 
-//         parse date
+        // parse date
+        $last_update = str_replace('Last update ', '', $last_update);  // yyyy-mm-dd
+        $first_date  = $this->createDate($last_update);
+
+        // go to last page
+        $this->selenium->click("xpath=//span[@class='ui-dialog-title']/../a");
+        $this->selenium->click("xpath=(//div[@class='has-pagination']/ul/li/a[@class='searchPaginationNonSelected'])[last()]");
+        $this->selenium->waitForPageToLoad("10000");
+
+        // get last item
+        $last_update = '';
+        $this->selenium->click("xpath=(//div[@class='mk-info']/div[@class='market-actions']/span[@class='more'])[last()]");
+        $last_update = $this->selenium->getText("xpath=//span[contains(.,'Last update ')]");
+
+        // parse date
         $last_update = str_replace('Last update ', '', $last_update);
-        
-
-
-
-        // paginar a la última página
-
-        // coger fecha y parsear del último elemento ç
+        $last_date   = $this->createDate($last_update);
 
         // comprobar que la fecha_uno es mayor que la fecha_dos
+        // error_log('=>    '.$first_date.'  '.$last_date);
+        $this->assertTrue( strtotime($first_date) >= strtotime($last_date) , 'last item is newer than first item');
+
+        /*
+         *  ------------------------ reverse order ------------------------
+         */
+//        $this->loginWith();
+//        $this->selenium->open( osc_admin_base_url(true) ) ;
+//        $this->selenium->waitForPageToLoad("10000");
+//        $this->selenium->click("//a[@id='market_view_plugins']");
+//        $this->selenium->waitForPageToLoad("10000");
+//
+//        // change order ...
+//        $this->selenium->click();
+//
+//        // get first item
+//        $last_update = '';
+//        $this->selenium->click("xpath=(//div[@class='mk-info']/div[@class='market-actions']/span[@class='more'])[1]");
+//        $last_update = $this->selenium->getText("xpath=//span[contains(.,'Last update ')]");
+//
+//        // parse date
+//        $last_update = str_replace('Last update ', '', $last_update);  // yyyy-mm-dd
+//        $first_date  = $this->createDate($last_update);
+//
+//        // go to last page
+//        $this->selenium->click("xpath=//span[@class='ui-dialog-title']/../a");
+//        $this->selenium->click("xpath=(//div[@class='has-pagination']/ul/li/a[@class='searchPaginationNonSelected'])[last()]");
+//        $this->selenium->waitForPageToLoad("10000");
+//
+//        // get last item
+//        $last_update = '';
+//        $this->selenium->click("xpath=(//div[@class='mk-info']/div[@class='market-actions']/span[@class='more'])[last()]");
+//        $last_update = $this->selenium->getText("xpath=//span[contains(.,'Last update ')]");
+//
+//        // parse date
+//        $last_update = str_replace('Last update ', '', $last_update);
+//        $last_date   = $this->createDate($last_update);
+//
+//        // comprobar que la fecha_uno es mayor que la fecha_dos
+//        // error_log('=>    '.$first_date.'  '.$last_date);
+//        $this->assertTrue( strtotime($first_date) >= strtotime($last_date) , 'last item is newer than first item');
 
     }
 
@@ -162,6 +212,11 @@ class OCadmin_market extends OCadminTest {
         osc_set_preference('marketURL', 'http://market.osclass.org/api/');
     }
 
+    private function createDate($date) {
+        $aDate  = explode('-', $date);
+        $date   = date("Y-m-d", mktime(0,0,0,intval($aDate[1]),intval($aDate[2]),intval($aDate[0])) );
+        return $date;
+    }
 
     private function getPluginName() {
         $this->selenium->click("//div[@class='mk-item mk-item-plugin']/div/div/span[@class='more']");
