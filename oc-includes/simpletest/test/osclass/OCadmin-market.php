@@ -272,8 +272,12 @@ class OCadmin_market extends OCadminTest {
      */
 
     private function createDate($date) {
+        echo "createDate : " . $date . "<br>";
+        flush();
         $aDate  = explode('-', $date);
-        $date   = date("Y-m-d", mktime(0,0,0,intval($aDate[1]),intval($aDate[2]),intval($aDate[0])) );
+        $date   = date("Y-m-d", mktime(0,0,0,$aDate[1], $aDate[2], intval($aDate[0])) );
+        echo "date : " . $date . "<br>";
+        flush();
         return $date;
     }
 
