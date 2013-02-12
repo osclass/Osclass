@@ -120,6 +120,10 @@
                     $this->_exportVariableToView("sort_download"     , $sort_download);
                     $this->_exportVariableToView("sort_updated"      , $sort_updated);
 
+                    $this->_exportVariableToView("order_download"     , $order_download);
+                    $this->_exportVariableToView("order_updated"      , $order_updated);
+
+
                     $this->_exportVariableToView('pagination', $output_pagination);
 
                     $this->doView("market/section.php");
