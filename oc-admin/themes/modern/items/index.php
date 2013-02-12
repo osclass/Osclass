@@ -162,9 +162,11 @@
     $rows       = $aData['aRows'];
 
     osc_current_admin_theme_path( 'parts/header.php' ); ?>
-<form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+<form method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide nocsrf">
     <input type="hidden" name="page" value="items" />
     <input type="hidden" name="iDisplayLength" value="<?php echo $iDisplayLength;?>" />
+    <input type="hidden" name="sort" value="<?php echo $sort; ?>" />
+    <input type="hidden" name="direction" value="<?php echo $direction; ?>" />
     <div class="form-horizontal">
     <div class="grid-system">
         <div class="grid-row grid-50">

@@ -116,7 +116,9 @@
                 };
             }
 
-            
+            Rewrite::newInstance()->init();
+            $url_base = preg_replace('|&direction=([^&]*)|', '', preg_replace('|&sort=([^&]*)|', '', osc_base_url().Rewrite::newInstance()->get_request_uri()));
+
             $this->addColumn('bulkactions', '<input id="check_all" type="checkbox" />');
             $this->addColumn('title', __('Title'));
             $this->addColumn('user', __('User'));
@@ -124,7 +126,7 @@
             $this->addColumn('country', __('Country'));
             $this->addColumn('region', __('Region'));
             $this->addColumn('city', __('City'));
-            $this->addColumn('date', '<a href="'.osc_admin_base_url(true).'?page=items'.$arg_date.'">'.__('Date').'</a>');
+            $this->addColumn('date', '<a href="'.$url_base.$arg_date.'">'.__('Date').'</a>');
 
             $dummy = &$this;
             osc_run_hook("admin_items_table", $dummy);
@@ -133,7 +135,8 @@
         private function addTableHeaderReported()
         {
 
-            $url_base = osc_admin_base_url(true).'?page=items&action=items_reported';
+            Rewrite::newInstance()->init();
+            $url_base = preg_replace('|&direction=([^&]*)|', '', preg_replace('|&sort=([^&]*)|', '', osc_base_url().Rewrite::newInstance()->get_request_uri()));
             $arg_spam   = '&sort=spam'; $arg_bad    = '&sort=bad';
             $arg_rep    = '&sort=rep';  $arg_off    = '&sort=off';
             $arg_exp    = '&sort=exp';  $arg_date   = '&sort=date';
