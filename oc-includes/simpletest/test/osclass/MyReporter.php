@@ -141,12 +141,17 @@ class MyReporter extends SimpleReporter {
         $cabeceras .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
         
         mail("testing@osclass.org", $subject." _mail_", $body, $cabeceras);
-        
+
         require(dirname(__FILE__)."/config_test.php");
         if($talker_room!='' && $talker_token!='') {
             require(dirname(__FILE__)."/../../../talkerplugin/class.talker.php");
             $talker = new Talker();
             $talker->connect($talker_room, $talker_token);
+            if($this->getFailCount()>0 || $this->getExceptionCount()>0) {
+                $talker->send_message('f7u12');
+            } else {
+                $talker->send_message(':ewbte:');
+            }
             $talker->send_message($talker_text);
         }
     }
