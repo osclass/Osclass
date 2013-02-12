@@ -208,10 +208,68 @@ class OCadmin_market extends OCadminTest {
 
     }
 
+    function testMarketOrderDownload()
+    {
+        $this->loginWith();
+        $this->selenium->open( osc_admin_base_url(true) ) ;
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("//a[@id='market_view_plugins']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        // change order ...
+        $this->selenium->click("xpath=//a[@id='sort_download']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        // get first item
+        $downloads   = $this->selenium->getText("xpath=(//span[@class='downloads']/strong)[1]");
+
+        // go to last page
+        $this->selenium->click("xpath=(//div[@class='has-pagination']/ul/li/a[@class='searchPaginationNonSelected'])[last()]");
+        $this->selenium->waitForPageToLoad("10000");
+
+        // get last item
+        $last_downloads = $this->selenium->getText("xpath=(//span[@class='downloads']/strong)[last()]");
+
+        // check total downloads
+        $this->assertTrue( $downloads >= $last_downloads , 'last item have more downloads than first item');
+
+        /*
+         *  ------------------------ reverse order ------------------------
+         */
+        $this->loginWith();
+        $this->selenium->open( osc_admin_base_url(true) ) ;
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("//a[@id='market_view_plugins']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        // change order ... twice
+        $this->selenium->click("xpath=//a[@id='sort_download']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("xpath=//a[@id='sort_download']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        // get first item
+        $downloads   = $this->selenium->getText("xpath=(//span[@class='downloads']/strong)[1]");
+
+        // go to last page
+        $this->selenium->click("xpath=//span[@class='ui-dialog-title']/../a");
+        $this->selenium->click("xpath=(//div[@class='has-pagination']/ul/li/a[@class='searchPaginationNonSelected'])[last()]");
+        $this->selenium->waitForPageToLoad("10000");
+
+        // get last item
+        $last_downloads = $this->selenium->getText("xpath=(//span[@class='downloads']/strong)[last()]");
+
+        $this->assertTrue( $downloads <= $last_downloads, 'last item have less downloads than first item');
+    }
+
     function testMarketURLOff()
     {
         osc_set_preference('marketURL', 'http://market.osclass.org/api/');
     }
+
+    /*
+     *      Private functions
+     */
 
     private function createDate($date) {
         $aDate  = explode('-', $date);
