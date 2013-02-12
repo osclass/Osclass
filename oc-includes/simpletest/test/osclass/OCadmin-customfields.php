@@ -3,15 +3,17 @@ require_once dirname(__FILE__).'/../../../../oc-load.php';
 
 //require_once('FrontendTest.php');
 
-class OCadmin_customfields extends OCadminTest 
-{   
+class OCadmin_customfields extends OCadminTest
+{
     function testCustomAdd()
     {
         $this->loginWith() ;
-        
+
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("//a[@id='items_cfields']");
         $this->selenium->waitForPageToLoad("10000");
+
+        // ------------    text    ------------
         $this->selenium->click("//a[@id='add-button']");
         sleep(4);
         $this->selenium->selectFrame("edit-custom-field-frame");
@@ -21,26 +23,59 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->type('field_slug','my_extra_field');
 
         $this->selenium->click("xpath=//input[@id='cfield_save']");
-        sleep(10);
-        $this->selenium->selectWindow(null);
+        sleep(3);
         $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
-/*        $this->assertTrue($this->selenium->isTextPresent("extra_field_1"), "Add field");
+
+        // hack - testing browser issue when ajax success
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='items_cfields']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_1"), "Add field");
+
+        // ------------    textarea    ------------
         $this->selenium->click("//a[@id='add-button']");
+        sleep(4);
+        $this->selenium->selectFrame("edit-custom-field-frame");
         $this->selenium->type("s_name", "extra_field_2");
         $this->selenium->select("field_type", "TEXTAREA");
-        $this->selenium->click("xpath=//span[text()='Advanced options']");
-        $this->selenium->type('field_slug','extra_field_2');
-        $this->selenium->click("//input[@id='backup_save']");
-        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("//div[@id='advanced_fields_iframe']");
+        $this->selenium->type('field_slug','my_extra_field_2');
+
+        $this->selenium->click("xpath=//input[@id='cfield_save']");
+        sleep(3);
         $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
+
+        // hack - testing browser issue when ajax success
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='items_cfields']");
+        $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue($this->selenium->isTextPresent("extra_field_2"), "Add field");
-*/
+
+        // ------------    DROPDOWN    ------------
+        $this->selenium->click("//a[@id='add-button']");
+        sleep(4);
+        $this->selenium->selectFrame("edit-custom-field-frame");
+        $this->selenium->type("s_name", "extra_field_3");
+        $this->selenium->select("field_type", "DROPDOWN");
+        $this->selenium->click("//div[@id='advanced_fields_iframe']");
+        $this->selenium->type('field_slug','my_extra_field_3');
+
+        $this->selenium->click("xpath=//input[@id='cfield_save']");
+        sleep(3);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
+
+        // hack - testing browser issue when ajax success
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='items_cfields']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_3"), "Add field");
+
     }
 
     function atestCustomEdit()
     {
         $this->loginwith() ;
-        
+
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Custom Fields");
         $this->selenium->click("link=Manage custom fields");
@@ -121,27 +156,6 @@ class OCadmin_customfields extends OCadminTest
 //    function testDeleteCustomFields()
 //    {
 //        $this->loginWith() ;
-//        
-//        $this->selenium->open( osc_admin_base_url(true) );
-//        $this->selenium->click("link=Custom Fields");
-//        $this->selenium->waitForPageToLoad("10000");
-//        $this->selenium->click("link=Manage custom fields");
-//        $this->selenium->waitForPageToLoad("10000");
-//        
-//        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
-//        $this->selenium->waitForPageToLoad("1000");
-//        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Delete field");
-//        
-//
-//        $this->selenium->open( osc_admin_base_url(true) );
-//        $this->selenium->click("link=Custom Fields");
-//        $this->selenium->waitForPageToLoad("10000");
-//        $this->selenium->click("link=Manage custom fields");
-//        $this->selenium->waitForPageToLoad("10000");
-//        
-//        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
-//        $this->selenium->waitForPageToLoad("1000");
-//        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Delete field");
 //
 //        $this->selenium->open( osc_admin_base_url(true) );
 //        $this->selenium->click("link=Custom Fields");
@@ -152,19 +166,40 @@ class OCadmin_customfields extends OCadminTest
 //        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
 //        $this->selenium->waitForPageToLoad("1000");
 //        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Delete field");
-//        
-//        
+//
+//
+//        $this->selenium->open( osc_admin_base_url(true) );
+//        $this->selenium->click("link=Custom Fields");
+//        $this->selenium->waitForPageToLoad("10000");
+//        $this->selenium->click("link=Manage custom fields");
+//        $this->selenium->waitForPageToLoad("10000");
+//
+//        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
+//        $this->selenium->waitForPageToLoad("1000");
+//        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Delete field");
+//
+//        $this->selenium->open( osc_admin_base_url(true) );
+//        $this->selenium->click("link=Custom Fields");
+//        $this->selenium->waitForPageToLoad("10000");
+//        $this->selenium->click("link=Manage custom fields");
+//        $this->selenium->waitForPageToLoad("10000");
+//
+//        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
+//        $this->selenium->waitForPageToLoad("1000");
+//        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Delete field");
+//
+//
 //        if($this->selenium->getXpathCount("//form[@id='field_form']") > 0) {
 //            $this->assertTrue(TRUE,"Delete all field");
 //        }
-//        
+//
 //        $mItem = new Item();
 //        $aItems = $mItem->findByEmail( 'foobar@mail.com' );
 //        foreach($aItems as $item) {
 //            $res = $mItem->deleteByPrimaryKey($item['pk_i_id']);
 //            $this->assertTrue($res);
 //        }
-//        
+//
 //    }
 //
 //
@@ -174,7 +209,7 @@ class OCadmin_customfields extends OCadminTest
     private function customOnFrontEnd()
     {
         $uSettings = new utilSettings();
-        
+
         $bool_reg_user_post  = $uSettings->set_reg_user_post(0);
         $bool_moderate_items = $uSettings->set_moderate_items(-1);
         // check if custom fields appears at website
@@ -211,7 +246,7 @@ class OCadmin_customfields extends OCadminTest
 
         $this->selenium->click("//button[text()='Publish']");
         $this->selenium->waitForPageToLoad("30000");
-        
+
         $this->assertTrue($this->selenium->isTextPresent("Your item has been published","Item published") );
         // volver a dejar reg_user_post flag en su estado original
         $uSettings->set_reg_user_post($bool_reg_user_post);
@@ -219,7 +254,7 @@ class OCadmin_customfields extends OCadminTest
 
         // remove item
         Item::newInstance()->delete( array('s_contact_email' => 'foobar@mail.com') ) ;
-        
+
         unset($uSettings);
     }
 
@@ -230,7 +265,7 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->click("link=Items");
         $this->selenium->click("link=Add new item");
         $this->selenium->waitForPageToLoad("10000");
-        
+
         $this->selenium->select("catId", "label=regexp:\\s*Animals");
         usleep(500000);
         $this->selenium->type("id=title[en_US]", "foo title");
