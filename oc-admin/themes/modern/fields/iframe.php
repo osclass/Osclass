@@ -103,6 +103,11 @@
         }
 
         $('#edit-custom-field-frame form').submit(function() {
+            if( ($('select[name="field_type"]').attr('value') == 'DROPDOWN' || $('select[name="field_type"]').attr('value') == 'RADIO') && $("#s_options").attr("value")=="") {
+                $(".jsMessage").fadeIn('fast');
+                $(".jsMessage p").html('<?php echo osc_esc_js(__('At least one option is required.')); ?>');
+                return false;
+            }
             $.ajax({
                 type: 'POST',
                 url: $(this).attr('action'),
