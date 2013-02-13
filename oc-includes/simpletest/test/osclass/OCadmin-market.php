@@ -5,10 +5,10 @@ require_once dirname(__FILE__).'/../../../../oc-load.php';
 
 class OCadmin_market extends OCadminTest {
 
-    function testMarketURLOn()
+    /*function testMarketURLOn()
     {
         osc_set_preference('marketURL', 'http://market.osclass.org.devel/api/');
-    }
+    }*/
 
 
     function testMarketPluginsPagination()
@@ -262,10 +262,10 @@ class OCadmin_market extends OCadminTest {
         $this->assertTrue( $downloads <= $last_downloads, 'last item have less downloads than first item');
     }
 
-    function testMarketURLOff()
+    /*function testMarketURLOff()
     {
         osc_set_preference('marketURL', 'http://market.osclass.org/api/');
-    }
+    }*/
 
     /*
      *      Private functions

@@ -405,8 +405,8 @@ HTACCESS;
 
                                             // 1. OK (ok)
                                             // 2. OK no apache module detected (warning)
-                                            // 3. No se puede crear + apache
-                                            // 4. No se puede crear + no apache
+                                            // 3. It can not be created + apache
+                                            // 4. It can not be created + no apache
                                             $status = 3;
                                             if( file_exists($htaccess_file) ) {
                                                 if( is_writable($htaccess_file) && file_put_contents($htaccess_file, $htaccess) ) {
