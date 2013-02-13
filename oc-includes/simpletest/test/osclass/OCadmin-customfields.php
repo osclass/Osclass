@@ -1,11 +1,11 @@
 <?php
 require_once dirname(__FILE__).'/../../../../oc-load.php';
 
-//require_once('FrontendTest.php');
+define("MAX_FIELDS", 6);
 
 class OCadmin_customfields extends OCadminTest
 {
-    function _testCustomAdd()
+    function testCustomAdd()
     {
         $this->loginWith() ;
 
@@ -49,6 +49,11 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->selectFrame("edit-custom-field-frame");
         $this->selenium->type("s_name", "extra_field_3");
         $this->selenium->select("field_type", "DROPDOWN");
+        $this->selenium->type("s_options", "");
+        $this->selenium->click("xpath=//input[@id='cfield_save']");
+        sleep(3);
+        $this->assertTrue($this->selenium->isTextPresent("At least one option is required"), "Add field check s_option empty");
+
         $this->selenium->type("s_options", "one,two,tree");
         $this->selenium->click("//div[@id='advanced_fields_iframe']");
         $this->selenium->type('field_slug','my_extra_field_3');
@@ -65,6 +70,11 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->selectFrame("edit-custom-field-frame");
         $this->selenium->type("s_name", "extra_field_4");
         $this->selenium->select("field_type", "RADIO");
+        $this->selenium->type("s_options", "");
+        $this->selenium->click("xpath=//input[@id='cfield_save']");
+        sleep(3);
+        $this->assertTrue($this->selenium->isTextPresent("At least one option is required"), "Add field check s_option empty");
+
         $this->selenium->type("s_options", "four, fife, six");
         $this->selenium->click("//div[@id='advanced_fields_iframe']");
         $this->selenium->type('field_slug','my_extra_field_4');
@@ -91,12 +101,13 @@ class OCadmin_customfields extends OCadminTest
 
         $this->assertTrue($this->selenium->isTextPresent("extra_field_5"), "Add field");
 
-        // ------------    CHECKBOX    ------------
+        // ------------    URL    ------------
         $this->selenium->click("//a[@id='add-button']");
         sleep(4);
         $this->selenium->selectFrame("edit-custom-field-frame");
         $this->selenium->type("s_name", "extra_field_6");
         $this->selenium->select("field_type", "URL");
+        $this->selenium->click("//input[@id='field_required']");
         $this->selenium->click("//div[@id='advanced_fields_iframe']");
         $this->selenium->type('field_slug','my_extra_field_6');
 
@@ -120,179 +131,54 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->waitForPageToLoad("10000");
 
 
-        // ----------------- extra_field_1
-        $this->selenium->click("xpath=(//div[@class='cfield-div']/div[@class='actions-edit-cfield']/a[contains(.,'Edit')])[1]");
-        sleep(2);
-        // check all
-        $this->selenium->click("link=Check all");
-        sleep(3);
-        $this->assertTrue($this->selenium->isChecked("categories[]"), "Check all categories" );
-        $this->selenium->click("//input[@type='submit']");
-        sleep(3);
-        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Edit field");
-
-        // ----------------- extra_field_2
-        $this->selenium->click("xpath=(//div[@class='cfield-div']/div[@class='actions-edit-cfield']/a[contains(.,'Edit')])[2]");
-        sleep(2);
-        // check all
-        $this->selenium->click("link=Check all");
-        sleep(1);
-        $this->assertTrue($this->selenium->isChecked("categories[]"), "Check all categories" );
-        $this->selenium->click("//input[@type='submit']");
-        sleep(2);
-        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Edit field");
-
-        // ------------------- extra_field_3
-        $this->selenium->click("xpath=(//div[@class='cfield-div']/div[@class='actions-edit-cfield']/a[contains(.,'Edit')])[3]");
-        sleep(2);
-        // check all
-        $this->selenium->click("link=Check all");
-        sleep(1);
-        $this->assertTrue($this->selenium->isChecked("categories[]"), "Check all categories" );
-        $this->selenium->click("//input[@type='submit']");
-        sleep(2);
-        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Edit field");
-
-        // ----------------- extra_field_4
-        $this->selenium->click("xpath=(//div[@class='cfield-div']/div[@class='actions-edit-cfield']/a[contains(.,'Edit')])[4]");
-        sleep(2);
-        // check all
-        $this->selenium->click("link=Check all");
-        sleep(1);
-        $this->assertTrue($this->selenium->isChecked("categories[]"), "Check all categories" );
-        $this->selenium->click("//input[@type='submit']");
-        sleep(2);
-        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Edit field");
-        
-        // ----------------- extra_field_5
-        $this->selenium->click("xpath=(//div[@class='cfield-div']/div[@class='actions-edit-cfield']/a[contains(.,'Edit')])[5]");
-        sleep(2);
-        // check all
-        $this->selenium->click("link=Check all");
-        sleep(1);
-        $this->assertTrue($this->selenium->isChecked("categories[]"), "Check all categories" );
-        $this->selenium->click("//input[@type='submit']");
-        sleep(2);
-        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Edit field");
-
-        // -- extra_field_6
-        $this->selenium->click("xpath=(//div[@class='cfield-div']/div[@class='actions-edit-cfield']/a[contains(.,'Edit')])[6]");
-        sleep(2);
-        // check all
-        $this->selenium->click("link=Check all");
-        sleep(1);
-        $this->assertTrue($this->selenium->isChecked("categories[]"), "Check all categories" );
-        $this->selenium->click("//input[@type='submit']");
-        sleep(2);
-        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Edit field");
+        for($k=MAX_FIELDS;$k>0;$k--) {
+            $this->selenium->click("xpath=(//div[@class='cfield-div']/div[@class='actions-edit-cfield']/a[contains(.,'Edit')])[".$k."]");
+            sleep(4);
+            // check all
+            $this->selenium->click("link=Check all");
+            sleep(4);
+            $this->assertTrue($this->selenium->isChecked("categories[]"), "Check all categories" );
+            $this->selenium->click("//input[@type='submit']");
+            sleep(4);
+            $this->assertTrue($this->selenium->isTextPresent("Saved"), "Edit field");
+        }
 
 
     }
 
-//    function testCustomOthers()
-//    {
-//        $this->loginWith() ;
-////        $this->noMoreThanOneForm() ;
-//        $this->selenium->open( osc_admin_base_url(true) );
-//        $this->selenium->click("link=Custom Fields");
-//        $this->selenium->click("link=Manage custom fields");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        // edit categories,
-//        $this->selenium->click("link=Edit"); // first Edit link
-//        usleep(250000);
-//        $this->assertTrue($this->selenium->isElementPresent("xpath=//form[@id='field_form']"), "Form is showed");
-//        usleep(250000);
-//        $this->selenium->click("xpath=//div[@id='TableFields']/ul/li[last()]/div/div[2]/a[1]") ;
-//        sleep(2);
-//        $var = (int)$this->selenium->getXpathCount("//form[@id='field_form']");
-//        $this->assertTrue( ( 1 == 1) , "Form is showed more than one time");
-////        $this->sameField() ;
-//        $this->selenium->open( osc_admin_base_url(true) );
-//        $this->selenium->click("link=Custom Fields");
-//        $this->selenium->click("link=Manage custom fields");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        $this->selenium->click("id=button_add");
-//        $this->selenium->type("s_name", "sameField");
-//        $this->selenium->select("field_type", "TEXT");
-//        $this->selenium->click("id=field_required");
-//
-//        $this->selenium->click("xpath=//span[text()='Advanced options']");
-//        $this->selenium->type('field_slug','sameField');
-//
-//        $this->selenium->click("id=button_save");
-//        $this->selenium->waitForPageToLoad("10000");
-//        $this->assertTrue($this->selenium->isTextPresent("New custom field added"), "Add field");
-//        $this->assertTrue($this->selenium->isTextPresent("sameField"), "Add field");
-//        // insert same field
-//        $this->selenium->click("id=button_add");
-//        $this->selenium->type("s_name", "sameField");
-//        $this->selenium->select("field_type", "TEXT");
-//        $this->selenium->click("id=button_save");
-//        $this->selenium->waitForPageToLoad("10000");
-//        $this->assertTrue($this->selenium->isTextPresent("Sorry, you already have one field with that name"), "Add field");
-//    }
-//
-//    function testCustomOnWebsite()
-//    {
-//        $this->loginWith() ;
-//        $this->customOnFrontEnd();
-//        $this->customOnAdminPanel();
-//
-//    }
-//
-//    function testDeleteCustomFields()
-//    {
-//        $this->loginWith() ;
-//
-//        $this->selenium->open( osc_admin_base_url(true) );
-//        $this->selenium->click("link=Custom Fields");
-//        $this->selenium->waitForPageToLoad("10000");
-//        $this->selenium->click("link=Manage custom fields");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
-//        $this->selenium->waitForPageToLoad("1000");
-//        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Delete field");
-//
-//
-//        $this->selenium->open( osc_admin_base_url(true) );
-//        $this->selenium->click("link=Custom Fields");
-//        $this->selenium->waitForPageToLoad("10000");
-//        $this->selenium->click("link=Manage custom fields");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
-//        $this->selenium->waitForPageToLoad("1000");
-//        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Delete field");
-//
-//        $this->selenium->open( osc_admin_base_url(true) );
-//        $this->selenium->click("link=Custom Fields");
-//        $this->selenium->waitForPageToLoad("10000");
-//        $this->selenium->click("link=Manage custom fields");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
-//        $this->selenium->waitForPageToLoad("1000");
-//        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Delete field");
-//
-//
-//        if($this->selenium->getXpathCount("//form[@id='field_form']") > 0) {
-//            $this->assertTrue(TRUE,"Delete all field");
-//        }
-//
-//        $mItem = new Item();
-//        $aItems = $mItem->findByEmail( 'foobar@mail.com' );
-//        foreach($aItems as $item) {
-//            $res = $mItem->deleteByPrimaryKey($item['pk_i_id']);
-//            $this->assertTrue($res);
-//        }
-//
-//    }
-//
-//
-//
+
+
+    function testCustomOnWebsite()
+    {
+        $this->loginWith() ;
+        $this->customOnFrontEnd();
+        $this->customOnAdminPanel();
+        $this->deleteAllItems();
+
+    }
+
+    /**
+     * delete custom fields
+     */
+    function testCustomDelete()
+    {
+        $this->loginWith() ;
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("xpath=//a[@id='items_cfields']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        for($k=MAX_FIELDS;$k>0;$k--) {
+            $this->selenium->click("xpath=(//div[@class='cfield-div']/div[@class='actions-edit-cfield']/a[contains(.,'Delete')])[1]");
+            sleep(2);
+            $this->selenium->click("//a[@id='field-delete-submit']");
+            sleep(3);
+            $this->assertTrue($this->selenium->isTextPresent("The custom field has been deleted"), "Delete field");
+            sleep(2);
+        }
+
+    }
+
 
 
     private function customOnFrontEnd()
@@ -303,10 +189,11 @@ class OCadmin_customfields extends OCadminTest
         $bool_moderate_items = $uSettings->set_moderate_items(-1);
         // check if custom fields appears at website
         $this->selenium->open( osc_base_url(true) );
+        $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("link=Publish your ad for free");
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->select("catId", "label=regexp:\\s*Animals");
-        usleep(500000);
+        sleep(2);
         $this->selenium->type("id=title[en_US]", "foo title");
         $this->selenium->type("id=description[en_US]","description foo title");
         $this->selenium->select("countryId", "label=Spain");
@@ -318,25 +205,23 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->type('id=contactName' , 'foobar');
         $this->selenium->type('id=contactEmail', 'foobar@mail.com');
 
-        $this->assertTrue($this->selenium->isTextPresent("extra_field_2"), "Custom fields at frontend");
-        $this->assertTrue($this->selenium->isTextPresent("sameField")    , "Custom fields at frontend");
-        $this->assertTrue($this->selenium->isTextPresent("NEW FIELD")    , "Custom fields at frontend");
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_1"), "Custom fields at frontend");
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_2")    , "Custom fields at frontend");
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_3")    , "Custom fields at frontend");
 
-        $this->selenium->type("id=meta_extra_field_1"  , "custom2");
-        $this->selenium->type("id=meta_extra_field_2"  , "custom3");
-
-        $this->selenium->click("//button[text()='Publish']");
-        $this->selenium->waitForPageToLoad("30000");
-        $this->assertTrue($this->selenium->isTextPresent("sameField field is required.","Field required") );
-
-        $this->selenium->type("id=meta_samefield"      , "custom1");
-        $this->selenium->type("id=meta_extra_field_1"  , "custom2");
-        $this->selenium->type("id=meta_extra_field_2"  , "custom3");
+        $this->selenium->type("id=meta_my_extra_field"  , "custom2");
+        $this->selenium->type("id=meta_my_extra_field_2"  , "custom3");
 
         $this->selenium->click("//button[text()='Publish']");
-        $this->selenium->waitForPageToLoad("30000");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_6 field is required.","Field required") );
 
-        $this->assertTrue($this->selenium->isTextPresent("Your item has been published","Item published") );
+        $this->selenium->type("id=meta_my_extra_field_6"      , "custom6");
+
+        $this->selenium->click("//button[text()='Publish']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue($this->selenium->isTextPresent("Your listing has been published","Item published") );
         // volver a dejar reg_user_post flag en su estado original
         $uSettings->set_reg_user_post($bool_reg_user_post);
         $uSettings->set_moderate_items($bool_moderate_items);
@@ -351,12 +236,15 @@ class OCadmin_customfields extends OCadminTest
     {
         // check if custom fields appears at website
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Items");
-        $this->selenium->click("link=Add new item");
+        $this->selenium->click("//a[@id='items_manage']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("link=Add new");
         $this->selenium->waitForPageToLoad("10000");
 
+        $this->selenium->select("parentCatId", "label=regexp:\\s*For sale");
+        sleep(2);
         $this->selenium->select("catId", "label=regexp:\\s*Animals");
-        usleep(500000);
+        sleep(2);
         $this->selenium->type("id=title[en_US]", "foo title");
         $this->selenium->type("id=description[en_US]","description foo title");
         $this->selenium->select("countryId", "label=Spain");
@@ -368,25 +256,46 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->type('id=contactName' , 'foobar');
         $this->selenium->type('id=contactEmail', 'foobar@mail.com');
 
-        $this->assertTrue($this->selenium->isTextPresent("extra_field_2"), "Custom fields at frontend");
-        $this->assertTrue($this->selenium->isTextPresent("sameField")    , "Custom fields at frontend");
-        $this->assertTrue($this->selenium->isTextPresent("NEW FIELD")    , "Custom fields at frontend");
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_1"), "Custom fields at frontend");
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_2")    , "Custom fields at frontend");
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_3")    , "Custom fields at frontend");
 
-        $this->selenium->type("id=meta_extra_field_1"  , "custom2");
-        $this->selenium->type("id=meta_extra_field_2"  , "custom3");
+        $this->selenium->type("id=meta_my_extra_field"  , "custom2");
+        $this->selenium->type("id=meta_my_extra_field_2"  , "custom3");
 
-        $this->selenium->click("//button[text()='Add item']");
-        $this->selenium->waitForPageToLoad("30000");
-        $this->assertTrue($this->selenium->isTextPresent("sameField field is required."),"Field required" );
+        $this->selenium->click("//input[@value='Add listing']");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_6 field is required.","Field required") );
 
-        $this->selenium->type("id=meta_samefield"      , "custom1");
-        $this->selenium->type("id=meta_extra_field_1"  , "custom2");
-        $this->selenium->type("id=meta_extra_field_2"  , "custom3");
+        $this->selenium->type("id=meta_my_extra_field_6"      , "custom6");
 
-        $this->selenium->click("//button[text()='Add item']");
-        $this->selenium->waitForPageToLoad("30000");
+        $this->selenium->click("//input[@value='Add listing']");
+        $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue($this->selenium->isTextPresent("A new item has been added"),"Item published" );
+        $this->assertTrue($this->selenium->isTextPresent("A new listing has been added"),"Item published" );
     }
+
+
+    private function deleteAllItems()
+    {
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("//a[@id='items_manage']");
+        $this->selenium->waitForPageToLoad("10000");
+
+
+        $this->selenium->click("//input[@id='check_all']");
+        $this->selenium->select("//select[@name='bulk_actions']", "label=Delete");
+        $this->selenium->click("//input[@id='bulk_apply']");
+        sleep(2);
+        $this->selenium->click("//a[@id='bulk-actions-submit']");
+        $this->selenium->waitForPageToLoad("30000");
+        // "regexpi:This is SeleniumWiki.com"
+        if( $this->selenium->isTextPresent( "regexpi:listings have been deleted") ){
+            $this->assertTrue("Deleted ok");
+        } else {
+            $this->assertFalse("TEXT NOT PRESENT - X listings have been deleted");
+        }
+    }
+
 }
 ?>
