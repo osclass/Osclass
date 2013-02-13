@@ -5,12 +5,12 @@ require_once dirname(__FILE__).'/../../../../oc-load.php';
 
 class OCadmin_customfields extends OCadminTest
 {
-    function testCustomAdd()
+    function _testCustomAdd()
     {
         $this->loginWith() ;
 
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='items_cfields']");
+        $this->selenium->click("xpath=//a[@id='items_cfields']");
         $this->selenium->waitForPageToLoad("10000");
 
         // ------------    text    ------------
@@ -26,10 +26,6 @@ class OCadmin_customfields extends OCadminTest
         sleep(3);
         $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
 
-        // hack - testing browser issue when ajax success
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='items_cfields']");
-        $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue($this->selenium->isTextPresent("extra_field_1"), "Add field");
 
         // ------------    textarea    ------------
@@ -45,10 +41,6 @@ class OCadmin_customfields extends OCadminTest
         sleep(3);
         $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
 
-        // hack - testing browser issue when ajax success
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='items_cfields']");
-        $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue($this->selenium->isTextPresent("extra_field_2"), "Add field");
 
         // ------------    DROPDOWN    ------------
@@ -57,6 +49,7 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->selectFrame("edit-custom-field-frame");
         $this->selenium->type("s_name", "extra_field_3");
         $this->selenium->select("field_type", "DROPDOWN");
+        $this->selenium->type("s_options", "one,two,tree");
         $this->selenium->click("//div[@id='advanced_fields_iframe']");
         $this->selenium->type('field_slug','my_extra_field_3');
 
@@ -64,40 +57,136 @@ class OCadmin_customfields extends OCadminTest
         sleep(3);
         $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
 
-        // hack - testing browser issue when ajax success
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("//a[@id='items_cfields']");
-        $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue($this->selenium->isTextPresent("extra_field_3"), "Add field");
+
+        // ------------    RADIO    ------------
+        $this->selenium->click("//a[@id='add-button']");
+        sleep(4);
+        $this->selenium->selectFrame("edit-custom-field-frame");
+        $this->selenium->type("s_name", "extra_field_4");
+        $this->selenium->select("field_type", "RADIO");
+        $this->selenium->type("s_options", "four, fife, six");
+        $this->selenium->click("//div[@id='advanced_fields_iframe']");
+        $this->selenium->type('field_slug','my_extra_field_4');
+
+        $this->selenium->click("xpath=//input[@id='cfield_save']");
+        sleep(3);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
+
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_4"), "Add field");
+
+        // ------------    CHECKBOX    ------------
+        $this->selenium->click("//a[@id='add-button']");
+        sleep(4);
+        $this->selenium->selectFrame("edit-custom-field-frame");
+        $this->selenium->type("s_name", "extra_field_5");
+        $this->selenium->select("field_type", "CHECKBOX");
+        $this->selenium->type("s_options", "seven, eight, nine");
+        $this->selenium->click("//div[@id='advanced_fields_iframe']");
+        $this->selenium->type('field_slug','my_extra_field_5');
+
+        $this->selenium->click("xpath=//input[@id='cfield_save']");
+        sleep(3);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
+
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_5"), "Add field");
+
+        // ------------    CHECKBOX    ------------
+        $this->selenium->click("//a[@id='add-button']");
+        sleep(4);
+        $this->selenium->selectFrame("edit-custom-field-frame");
+        $this->selenium->type("s_name", "extra_field_6");
+        $this->selenium->select("field_type", "URL");
+        $this->selenium->click("//div[@id='advanced_fields_iframe']");
+        $this->selenium->type('field_slug','my_extra_field_6');
+
+        $this->selenium->click("xpath=//input[@id='cfield_save']");
+        sleep(3);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Add field");
+
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_6"), "Add field");
 
     }
 
-    function atestCustomEdit()
+    /**
+     * edit custom fields, update category -> check-all
+     */
+    function testCustomEdit()
     {
-        $this->loginwith() ;
+        $this->loginWith() ;
 
         $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Custom Fields");
-        $this->selenium->click("link=Manage custom fields");
+        $this->selenium->click("xpath=//a[@id='items_cfields']");
         $this->selenium->waitForPageToLoad("10000");
-        // edit categories,
-        $this->selenium->click("link=Edit");
-        // modificar s_name & type
-        $this->selenium->type("//input[@id='s_name']", "NEW FIELD2");
-        $this->selenium->select("//form[@id='field_form']/div/div[2]/select", "TEXTAREA");
-        // uncheck all
-        $this->selenium->click("link=Uncheck all");
-        sleep(1);
-        $this->assertFalse($this->selenium->isChecked("categories[]"), "Uncheck all categories" );
+
+
+        // ----------------- extra_field_1
+        $this->selenium->click("xpath=(//div[@class='cfield-div']/div[@class='actions-edit-cfield']/a[contains(.,'Edit')])[1]");
+        sleep(2);
+        // check all
+        $this->selenium->click("link=Check all");
+        sleep(3);
+        $this->assertTrue($this->selenium->isChecked("categories[]"), "Check all categories" );
+        $this->selenium->click("//input[@type='submit']");
+        sleep(3);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Edit field");
+
+        // ----------------- extra_field_2
+        $this->selenium->click("xpath=(//div[@class='cfield-div']/div[@class='actions-edit-cfield']/a[contains(.,'Edit')])[2]");
+        sleep(2);
         // check all
         $this->selenium->click("link=Check all");
         sleep(1);
         $this->assertTrue($this->selenium->isChecked("categories[]"), "Check all categories" );
-        // uncheck all !
-        $this->selenium->click("link=Uncheck all");
         $this->selenium->click("//input[@type='submit']");
         sleep(2);
         $this->assertTrue($this->selenium->isTextPresent("Saved"), "Edit field");
+
+        // ------------------- extra_field_3
+        $this->selenium->click("xpath=(//div[@class='cfield-div']/div[@class='actions-edit-cfield']/a[contains(.,'Edit')])[3]");
+        sleep(2);
+        // check all
+        $this->selenium->click("link=Check all");
+        sleep(1);
+        $this->assertTrue($this->selenium->isChecked("categories[]"), "Check all categories" );
+        $this->selenium->click("//input[@type='submit']");
+        sleep(2);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Edit field");
+
+        // ----------------- extra_field_4
+        $this->selenium->click("xpath=(//div[@class='cfield-div']/div[@class='actions-edit-cfield']/a[contains(.,'Edit')])[4]");
+        sleep(2);
+        // check all
+        $this->selenium->click("link=Check all");
+        sleep(1);
+        $this->assertTrue($this->selenium->isChecked("categories[]"), "Check all categories" );
+        $this->selenium->click("//input[@type='submit']");
+        sleep(2);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Edit field");
+        
+        // ----------------- extra_field_5
+        $this->selenium->click("xpath=(//div[@class='cfield-div']/div[@class='actions-edit-cfield']/a[contains(.,'Edit')])[5]");
+        sleep(2);
+        // check all
+        $this->selenium->click("link=Check all");
+        sleep(1);
+        $this->assertTrue($this->selenium->isChecked("categories[]"), "Check all categories" );
+        $this->selenium->click("//input[@type='submit']");
+        sleep(2);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Edit field");
+
+        // -- extra_field_6
+        $this->selenium->click("xpath=(//div[@class='cfield-div']/div[@class='actions-edit-cfield']/a[contains(.,'Edit')])[6]");
+        sleep(2);
+        // check all
+        $this->selenium->click("link=Check all");
+        sleep(1);
+        $this->assertTrue($this->selenium->isChecked("categories[]"), "Check all categories" );
+        $this->selenium->click("//input[@type='submit']");
+        sleep(2);
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Edit field");
+
+
     }
 
 //    function testCustomOthers()
