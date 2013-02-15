@@ -1373,8 +1373,15 @@
                         }
                     }
                 }
-            }        
-         
+            }
+
+            // HACK: AUTO_INCREMENT fields needs to be also a PRIMARY KEY
+            foreach($struct_queries as $k => $v) {
+                if(stripos($v, "auto_increment")!==FALSE) {
+                    $struct_queries[$k] = $v." PRIMARY KEY";
+                }
+            }
+
             $queries = array_merge($struct_queries, $data_queries);
             $ok = true;
             $error_queries = array();
