@@ -129,9 +129,10 @@ class OCadmin_market extends OCadminTest {
 
     /**
      * test order by mod_date
+     * THIS TESTS FAILS IF FILE WAS NOT UPDATED
      *
      */
-    function testMarketOrderUpdate()
+    function _testMarketOrderUpdate()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) ) ;
@@ -272,12 +273,12 @@ class OCadmin_market extends OCadminTest {
      */
 
     private function createDate($date) {
-        echo "createDate : " . $date . "<br>";
-        flush();
+        //echo "createDate : " . $date . "<br>";
+        //flush();
         $aDate  = explode('-', $date);
         $date   = date("Y-m-d", mktime(0,0,0,$aDate[1], $aDate[2], intval($aDate[0])) );
-        echo "date : " . $date . "<br>";
-        flush();
+        //echo "date : " . $date . "<br>";
+        //flush();
         return $date;
     }
 
