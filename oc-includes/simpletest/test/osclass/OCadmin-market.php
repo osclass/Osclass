@@ -97,8 +97,6 @@ class OCadmin_market extends OCadminTest {
         $info = array();
         $plugin = current($plugins);
 
-        $plugin = "new_plugin_1";
-
         $plugins = Plugins::listAll(false);
         foreach($plugins as $p) {
             $pinfo = Plugins::getInfo($p);
