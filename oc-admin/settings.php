@@ -109,13 +109,17 @@
                                                                             } else {
                                                                                 $data_sql = osc_file_get_contents('http://geo.osclass.org/newgeo.download.php?action=country&term=' . urlencode($countryCode) );
 
-                                                                                $conn = DBConnectionClass::newInstance();
-                                                                                $c_db = $conn->getOsclassDb();
-                                                                                $comm = new DBCommandClass($c_db);
-                                                                                $comm->query("SET FOREIGN_KEY_CHECKS = 0");
-                                                                                $comm->importSQL($data_sql);
-                                                                                $comm->query("SET FOREIGN_KEY_CHECKS = 1");
-
+                                                                                if($data_sql!='') {
+                                                                                    $conn = DBConnectionClass::newInstance();
+                                                                                    $c_db = $conn->getOsclassDb();
+                                                                                    $comm = new DBCommandClass($c_db);
+                                                                                    $comm->query("SET FOREIGN_KEY_CHECKS = 0");
+                                                                                    $comm->importSQL($data_sql);
+                                                                                    $comm->query("SET FOREIGN_KEY_CHECKS = 1");
+                                                                                } else {
+                                                                                    $mCountries->insert(array('pk_c_code' => $countryCode,
+                                                                                                            's_name' => $countryName));
+                                                                                }
                                                                                 osc_add_flash_ok_message(sprintf(_m('%s has been added as a new country'), $countryName), 'admin');
                                                                             }
                                                                         }
