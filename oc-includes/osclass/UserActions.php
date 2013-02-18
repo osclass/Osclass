@@ -273,7 +273,7 @@
                 $countryName = $country['s_name'];
             } else {
                 $countryId   = null;
-                $countryName = null;
+                $countryName = Params::getParam('country');
             }
 
             if( intval( Params::getParam('regionId') ) ) {
