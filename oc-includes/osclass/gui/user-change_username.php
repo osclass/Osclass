@@ -52,7 +52,7 @@
                         clearInterval(cInterval);
                         cInterval = setInterval(function(){
                             $.getJSON(
-                                "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_username_availability",
+                                "<?php echo osc_base_url(true); ?>?page=ajax&action=check_username_availability",
                                 {"s_username": $("#s_username").attr("value")},
                                 function(data){
                                     clearInterval(cInterval);
