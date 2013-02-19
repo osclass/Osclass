@@ -353,6 +353,7 @@
                                                                         $locations = 0;
                                                                         $del_locations = 0;
                                                                         $cCity = end($cityIds);
+                                                                        $cCity = $mCities->findByPrimaryKey($cCity);
                                                                         $region = Region::newInstance()->findByPrimaryKey($cCity['fk_i_region_id']);
                                                                         $country = Country::newInstance()->findByCode($cCity['fk_c_country_code']);
                                                                         foreach($cityIds as $cityId) {
