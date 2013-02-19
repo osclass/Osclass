@@ -246,14 +246,17 @@
                                                                     if(is_array($regionIds)) {
                                                                         $locations = 0;
                                                                         $del_locations = 0;
-                                                                        $country = Country::newInstance()->findByCode($cCity['fk_c_country_code']);
-                                                                        foreach($regionIds as $regionId) {
-                                                                            if($regionId != '') {
-                                                                                $ok = $mRegion->deleteByPrimaryKey($regionId);
-                                                                                if($ok==0) {
-                                                                                    $del_locations++;
-                                                                                } else {
-                                                                                    $locations += $ok;
+                                                                        if(count($regionIds)>0) {
+                                                                            $region = $mRegion->findByPrimaryKey($regionIds[0]);
+                                                                            $country = Country::newInstance()->findByCode($region['fk_c_country_code']);
+                                                                            foreach($regionIds as $regionId) {
+                                                                                if($regionId != '') {
+                                                                                    $ok = $mRegion->deleteByPrimaryKey($regionId);
+                                                                                    if($ok==0) {
+                                                                                        $del_locations++;
+                                                                                    } else {
+                                                                                        $locations += $ok;
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
