@@ -19,6 +19,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'timeFormat', 'g:i a', 'STRING')
     ,('osclass', 'timezone', 'Europe/Madrid', 'STRING')
     ,('osclass', 'weekStart', '0', 'STRING')
+    ,('osclass', 'csrf_name', 'CSRF', 'STRING')
     ,('osclass', 'moderate_comments', '0', 'INTEGER')
     ,('osclass', 'moderate_items', '-1', 'INTEGER')
     ,('osclass', 'reg_user_post', '0', 'BOOLEAN')
