@@ -34,7 +34,7 @@
             <div class="inner">
                 <h1><?php _e('Contact us', 'modern'); ?></h1>
                 <ul id="error_list"></ul>
-                <form action="<?php echo osc_base_url(true); ?>" method="post" name="contact" id="contact">
+                <form action="<?php echo osc_base_url(true); ?>" method="post" name="contact_form" id="contact">
                     <input type="hidden" name="page" value="contact" />
                     <input type="hidden" name="action" value="contact_post" />
                     <fieldset>
