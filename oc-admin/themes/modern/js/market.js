@@ -121,7 +121,7 @@ $(function(){
                     }
 
                     var preview = '';
-                    if(section == 'theme'){
+                    if(section == 'theme' && item.a_images){
                         if(item.a_images.length > 0){
                             if(item.s_preview != '') {
                                 preview = '<a target="_blank" class="btn-market-preview" href="'+item.s_preview+'">'+theme.langs.preview_theme+'</a>';
@@ -149,7 +149,7 @@ $(function(){
 
                     // format date
                     var date_mod    = _mod_date.getFullYear()+'-';
-                    
+
                     var _month      = new String(_mod_date.getMonth()+1);
                     if( _month.length == 1 ) {
                         date_mod += '0' + _month + '-';
