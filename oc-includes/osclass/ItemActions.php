@@ -28,13 +28,43 @@
             $this->manager = Item::newInstance();
         }
 
+        private function _akismet_text( $title, $description, $author, $email )
+        {
+            $spam = false;
+            foreach($title as $k => $_data){
+                $_title         = $title[$k];
+                $_description   = $description[$k];
+                $content        = $_title. ' ' .$_description;
+
+                if (osc_akismet_key()) {
+                    require_once LIB_PATH . 'Akismet.class.php';
+                    $akismet = new Akismet(osc_base_url(), osc_akismet_key());
+
+                    $akismet->setCommentContent($content);
+                    $akismet->setCommentAuthor($author);
+                    $akismet->setCommentAuthorEmail($email);
+                    $akismet->setUserIP( get_ip() );
+
+                    $status  = '';
+                    $status = $akismet->isCommentSpam() ? 'SPAM' : $status;
+                    if($status == 'SPAM') {
+                        $spam = true;
+                        error_log('ITEM_ADD status ' . $status);
+                        break;
+                    }
+                }
+            }
+            return $spam;
+        }
+
         /**
          * @return boolean
          */
         public function add()
         {
             $aItem       = $this->data;
-
+            $is_spam     = 0;
+            $enabled     = 1;
             $code        = osc_genRandomPassword();
             $flash_error = '';
 
@@ -68,6 +98,7 @@
 
             $title_message = '';
             foreach(@$aItem['title'] as $key => $value) {
+
                 if( osc_validate_text($value, 1) && osc_validate_max($value, 100) ) {
                     $title_message = '';
                     break;
@@ -91,6 +122,12 @@
                     (!osc_validate_max($value, 5000) ? _m("Description too long."). PHP_EOL : '' );
             }
             $flash_error .= $desc_message;
+
+            // akismet check spam ...
+            if( $this->_akismet_text( $aItem['title'], $aItem['description'] , $contactName, $contactEmail) ) {
+                $enabled     = 0;
+                $is_spam     = 1;
+            }
 
             $flash_error .=
                 ((!osc_validate_category($aItem['catId'])) ? _m("Category invalid.") . PHP_EOL : '' ) .
@@ -150,7 +187,7 @@
                     's_contact_email'       => $contactEmail,
                     's_secret'              => $code,
                     'b_active'              => ($active=='ACTIVE'?1:0),
-                    'b_enabled'             => 1,
+                    'b_enabled'             => $enabled,
                     'b_show_email'          => $aItem['showEmail'],
                     's_ip'                  => $aItem['s_ip']
                 ));
@@ -166,6 +203,11 @@
 
                 $itemId = $this->manager->dao->insertedId();
                 Log::newInstance()->insertLog('item', 'add', $itemId, current(array_values($aItem['title'])), $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
+
+                // mark as spam - akismet
+                if($is_spam == 1) {
+                    $this->mark( $itemId, 'spam');
+                }
 
                 // update dt_expiration at t_item
                 $_category = Category::newInstance()->findByPrimaryKey($aItem['catId']);
@@ -222,6 +264,7 @@
                 if(!$this->is_admin) {
                     $this->sendEmails($aItem);
                 }
+
                 if($active=='INACTIVE') {
                     $success = 1;
                 } else {
