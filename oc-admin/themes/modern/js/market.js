@@ -86,7 +86,7 @@ $(function(){
         // get json data
         $.getJSON(
             theme.adminBaseUrl+'?page=ajax&action=check_market',
-            {"code" : $(this).attr('href').replace('#',''), 'section' : 'themes'},
+            {"code" : $(this).attr('href').replace('#',''), 'section' : section},
             function(data){
                 item = data;
 
@@ -183,7 +183,7 @@ $(function(){
                                         +'<span class="block"><strong>'+theme.langs.compatible_with+'</strong> '+versions[(versions.length-1)]+'</span>'
                                         +'<span class="block"><strong>'+theme.langs.downloads+'</strong> '+item.i_total_downloads+'</span>'
                                         +'<span class="block"><strong>'+theme.langs.last_update+'</strong> '+date_mod+'</span>'
-                                        +'<a href="'+item.s_download+'" class="manual">'+theme.langs.download_manually+'</a>'
+                                        +'<a href="'+item.s_source_file+'" class="manual">'+theme.langs.download_manually+'</a>'
                                     +'</td>'
                                 +'</tr>'
                                 +screenshots
