@@ -88,6 +88,29 @@
             return '';
         }
 
+        function _key($key)
+        {
+            if ( is_array($this->aExported[$key]) ) {
+                return key( $this->aExported[$key] );
+            }
+            return false;
+        }
+
+        function _seek($key, $position)
+        {
+            if ( is_array($this->aExported[$key]) ) {
+                $this->_reset($key);
+                for($k = 0;$k<$position;$k++) {
+                    $res = $this->_next($key);
+                    if(!$res) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+
         function _reset($key)
         {
             if ( !array_key_exists($key, $this->aExported) ) {

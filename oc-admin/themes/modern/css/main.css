@@ -2635,7 +2635,7 @@ code {
 }
 /* line 60, oc-admin/themes/modern/less/categories.less */
 .ui-sortable li ul .ico-childrens {
-  display: none;
+  /*display: none;*/
 }
 /* line 63, oc-admin/themes/modern/less/categories.less */
 .ico-childrens .toggle {
@@ -2719,7 +2719,7 @@ div.disabled .category_row,
 }
 /* line 134, oc-admin/themes/modern/less/categories.less */
 .subcategory .toggle {
-  display: none;
+  /*display: none;*/
 }
 /* line 137, oc-admin/themes/modern/less/categories.less */
 .actions-cat,
