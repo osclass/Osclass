@@ -25,7 +25,7 @@ function drawSubcategory($category) {
     global $tdie;
     $tdie++;
     if($tdie>25) {
-        die;
+        //die;
     }
     /*print_r("\n %%%%%%%%%%%%%%%%%% \n");
     print_r(osc_count_categories());
