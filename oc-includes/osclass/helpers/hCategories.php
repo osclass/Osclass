@@ -288,81 +288,33 @@
             $catTrail = array();
         }
         $catTrail[] = View::newInstance()->_key('categories');
-        //print_r($category);
-        //print_r($catTrail);
         View::newInstance()->_exportVariableToView('categoryTrail', $catTrail);
-
-        //View::newInstance()->_erase('categories');
         View::newInstance()->_exportVariableToView('categories', $category['categories']);
         View::newInstance()->_reset('categories');
-
-        //$ret = View::newInstance()->_next('categories');
-        //if (!$ret) View::newInstance()->_erase('categories');
-
-        $category = View::newInstance()->_current('categories');
-        /*print_r("\n ## ***** ## \n");
-        print_r($catTrail);
-        print_r("\n ## ***** ## \n");
-        print_r(View::newInstance()->_current('categories'));
-        print_r("\n ## ***** ## \n");*/
-
-        /*View::newInstance()->_exportVariableToView('subcategories', $category['categories']);
-        $ret = View::newInstance()->_next('subcategories');
-        if (!$ret) View::newInstance()->_erase('subcategories');*/
     }
 
     function osc_category_move_to_parent() {
         $category = end(View::newInstance()->_get('categories'));
-        //$category = View::newInstance()->_current('categories');
-
-        /*print_r("\n ------------------------------ \n");
-        print_r("\n ------------------------------ \n");
-        print_r($category['s_name']);
-        print_r("\n ------------------------------ \n");
-        print_r("\n ------------------------------ \n");*/
 
         if ( $category == '' ) return -1;
         if ( !isset($category['fk_i_parent_id']) ) return false;
 
         $keys = View::newInstance()->_get('categoryTrail');
-
-        /*print_r("\n\n =============== \n\n");
-        print_r($keys);
-        print_r("\n\n =============== \n\n");*/
-
         $position = array_pop($keys);
-        /*print_r("\n\n *************** \n\n");
-        print_r($keys);
-        print_r("\n\n *************** \n\n");*/
-        /*$position = array_pop($keys);
-        print_r("\n\n ############### \n\n");
-        print_r($keys);
-        print_r("\n\n ############### \n\n");*/
         View::newInstance()->_exportVariableToView('categoryTrail', $keys);
         $scats['categories'] = Category::newInstance()->toTree();
-        //print_r($scats);
         if(count($keys)>0) {
             foreach($keys as $k) {
                 $scats = $scats['categories'][$k];
-                /*print_r("\n\n .·'·.·'·.·'·.·'·.·'·.·'·.·'·.·'·.·'·.·'·.·'·.·'·.·'·.·'·.·'·.·'·. \n\n");
-                print_r($scats);
-                print_r("\n\n .·'·.·'·.·'·.·'·.·'·.·'·.·'·.·'·.·'·.·'·.·'·.·'·.·'·.·'·.·'·.·'·. \n\n");*/
             }
         }
 
         $scats = $scats['categories'];
-        //print_r($scats);
 
         View::newInstance()->_erase('categories');
         View::newInstance()->_erase('subcategories');
         View::newInstance()->_exportVariableToView('categories', $scats);
         View::newInstance()->_seek('categories', $position);
-        $category = View::newInstance()->_current('categories');
-        /*print_r("\n\n ############ \n\n");
-        print_r($category['s_name']);
-        print_r("\n\n ############ \n\n");*/
-        //$category = View::newInstance()->_current('categories');
-        //View::newInstance()->_exportVariableToView('subcategories', $category['categories']);
     }
 
 ?>

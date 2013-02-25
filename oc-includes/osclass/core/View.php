@@ -90,13 +90,6 @@
 
         function _key($key)
         {
-            /*print_r("\n\n\n\n=============KEY==================\n");
-            print_r(key($this->aExported[$key]));
-            print_r("\n\n\n\n----------------------------------\n");
-            $tmp = current($this->aExported[$key]);
-            unset($tmp['categories']);
-            print_r(" ** NAME **  :  " . $tmp['s_name']);
-            print_r("\n\n\n\n==================================\n");*/
             if ( is_array($this->aExported[$key]) ) {
                 $_key = key( $this->aExported[$key] ) -1;
                 if($_key==-1) {
@@ -111,8 +104,6 @@
         {
             if ( is_array($this->aExported[$key]) ) {
                 $this->_reset($key);
-                //print_r("\n\n\nPOSITION : ~~~~~~~".$position."~~~~~~~~~\n\n\n");
-                //if($position==-1) { $position = count($this->aExported[$key])-1; };
                 for($k = 0;$k<=$position;$k++) {
                     $res = $this->_next($key);
                     if(!$res) {
