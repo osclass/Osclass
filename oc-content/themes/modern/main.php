@@ -20,7 +20,6 @@
      */
 
 function drawSubcategory($category) {
-    //if ( osc_count_categories() > 0 ) {
     if ( osc_count_subcategories2() > 0 ) {
         osc_category_move_to_children();
         ?>
