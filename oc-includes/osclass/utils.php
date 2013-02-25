@@ -1331,9 +1331,8 @@ function _need_update($uri, $version, $operator = '>') {
     } else {
         $data = json_decode($json , true);
         if(isset($data['s_version']) ) {
-            error_log(  'from market -> ' . $data['s_version'] . '   ' . $version );
             $result = version_compare2($data['s_version'], $version);
-            if( $result == 0 || $result == -1 ) {
+            if( $result == -1 ) {
                 return true;
             }
         }
