@@ -787,7 +787,7 @@
                                                     $message .= __('There was a problem adding the language');
                                                     $error = 8;
                                                 }
-                                                osc_check_languages_update();
+                                                osc_check_languages_update(true);
                                             }
 
                                             if ($rm_errors == 0) {
