@@ -1281,11 +1281,21 @@ function osc_check_theme_update($update_uri, $version = null) {
 function osc_check_language_update($update_uri, $version = null) {
     $uri = _get_market_url('languages', $update_uri);
     if($uri != false) {
-        // if language version on market is newer
-        if( _need_update($uri, $version) ) {
-            // if language is compatible with osclass version
-            if( _need_update($uri, OSCLASS_VERSION, '<=') ) {
-                return true;
+
+        if(false===($json=@osc_file_get_contents($uri))) {
+            return false;
+        } else {
+            $data = json_decode($json , true);
+            if(isset($data['s_version']) ) {
+                $result = version_compare2( $version, $data['s_version'] );
+                if( $result == -1 ) {
+                    // market have a newer version of this language
+                    $result = version_compare2($data['s_version'], OSCLASS_VERSION);
+                    if( $result == 0 || $result == -1 ) {
+                        // market version is compatible with current osclass version
+                        return true;
+                    }
+                }
             }
         }
     }
@@ -1320,13 +1330,49 @@ function _need_update($uri, $version, $operator = '>') {
         return false;
     } else {
         $data = json_decode($json , true);
-        if(isset($data['s_version']) && version_compare($data['s_version'], $version, $operator)) {
-//            error_log('_need_update '.$data['s_version'].' '.$operator.' '.$version);
-            return true;
+        if(isset($data['s_version']) ) {
+            error_log(  'from market -> ' . $data['s_version'] . '   ' . $version );
+            $result = version_compare2($data['s_version'], $version);
+            if( $result == 0 || $result == -1 ) {
+                return true;
+            }
         }
     }
 }
 // END -- Market util functions
+
+
+/**
+ * Returns
+ *      0  if both are equal,
+ *      1  if A > B, and
+ *      -1 if B < A.
+ *
+ * @param type $a
+ * @param type $b
+ * @return type
+ */
+function version_compare2($a, $b)
+{
+    $a = explode(".", rtrim($a, ".0")); //Split version into pieces and remove trailing .0
+    $b = explode(".", rtrim($b, ".0")); //Split version into pieces and remove trailing .0
+    foreach ($a as $depth => $aVal)
+    { //Iterate over each piece of A
+        if (isset($b[$depth]))
+        { //If B matches A to this depth, compare the values
+            if ($aVal > $b[$depth]) return 1; //Return A > B
+            else if ($aVal < $b[$depth]) return -1; //Return B > A
+            //An equal result is inconclusive at this point
+        }
+        else
+        { //If B does not match A to this depth, then A comes after B in sort order
+            return 1; //so return A > B
+        }
+    }
+    //At this point, we know that to the depth that A and B extend to, they are equivalent.
+    //Either the loop ended because A is shorter than B, or both are equal.
+    return (count($a) < count($b)) ? -1 : 0;
+}
 
 /**
  * Update category stats
