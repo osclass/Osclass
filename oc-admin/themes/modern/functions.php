@@ -214,23 +214,29 @@ function drawMarketItem($item,$color = false){
         }
     }
 
-
     $downloaded = false;
-    if($type != 'language'){
-        if(in_array($item['s_update_url'], $items_downloaded)) {
-            if (in_array($item['s_update_url'], $items_to_update)) {
-                $updateClass = 'has-update';
-                $updateData  = ' data-update="true"';
-            } else {
-                // market item downloaded !
-                $downloaded = true;
-            }
+    if(in_array($item['s_update_url'], $items_downloaded)) {
+        if (in_array($item['s_update_url'], $items_to_update)) {
+            $updateClass = 'has-update';
+            $updateData  = ' data-update="true"';
+        } else {
+            // market item downloaded !
+            $downloaded = true;
         }
     }
+
     //Check if is compatibleosc_version()
-    if(!check_market_compatibility($item['s_compatible'],true)){
-        $compatible = ' not-compatible';
+    if($type=='language') {
+        if(!check_market_language_compatibility($item['s_update_url'], $item['s_version'])){
+            $compatible = ' not-compatible';
+        }
+    } else {
+        if(!check_market_compatibility($item['s_compatible'],$type)){
+            $compatible = ' not-compatible';
+        }
     }
+
+
     if(!$thumbnail && $color){
         $thumbnail = osc_current_admin_theme_url('images/gr-'.$color.'.png');
         $letterDraw = $item['s_update_url'][0];
@@ -265,31 +271,24 @@ function drawMarketItem($item,$color = false){
     echo '</a>';
 }
 
-function check_market_compatibility($versions,$debug_market = false){
-    if($debug_market){
-        if($versions != '3.0'){
-            $versions = $versions.',4.0';
-        }
-    }
+function check_market_language_compatibility($slug, $language_version) {
+    return osc_check_language_update($slug);
+}
 
-    $versions = explode(',',$versions);
-
-    $current_version = osc_version();
-
-    $version_length = strlen($current_version);
-
-    $main_version = substr($current_version,0, $version_length-2).".".substr($current_version,$version_length-2, 1);
-
+function check_market_compatibility($versions, $type = '') {
     $compatible = false;
 
-    $max = max($versions);
-    $min = min($versions);
+    $versions = explode(',',$versions);
+    $current_version = OSCLASS_VERSION;
+    $version_length = strlen($current_version);
 
-    if($main_version >= $min && $main_version <= $max){
-        $compatible = true;
+    foreach($versions as $_version) {
+        $result = version_compare2(OSCLASS_VERSION, $_version);
+
+        if( $result == 0 || $result == -1 ) {
+            return true;
+        }
     }
-
-
     return $compatible;
 }
 /* end of file */
