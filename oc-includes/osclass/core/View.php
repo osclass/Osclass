@@ -90,6 +90,13 @@
 
         function _key($key)
         {
+            print_r("\n\n\n\n=============KEY==================\n");
+            print_r(key($this->aExported[$key]));
+            print_r("\n\n\n\n----------------------------------\n");
+            $tmp = current($this->aExported[$key]);
+            unset($tmp['categories']);
+            print_r(" ** NAME **  :  " . $tmp['s_name']);
+            print_r("\n\n\n\n==================================\n");
             if ( is_array($this->aExported[$key]) ) {
                 return key( $this->aExported[$key] );
             }

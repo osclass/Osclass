@@ -18,18 +18,36 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
+global $tdie;
+$tdie = 0;
 
 function drawSubcategory($category) {
-    //print_r(osc_category());
-    if ( osc_count_subcategories() > 0 ) { osc_category_move_to_children(); ?>
+    global $tdie;
+    $tdie++;
+    if($tdie>25) {
+        die;
+    }
+    /*print_r("\n %%%%%%%%%%%%%%%%%% \n");
+    print_r(osc_count_categories());
+    print_r("\n %%%%%%%%%%%%%%%%%% \n");*/
+    if ( osc_count_subcategories2() > 0 ) {
+        //print_r("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
+        osc_category_move_to_children();
+        //print_r("#############***\n");print_r(View::newInstance()->_current('categories'));print_r("***#############\n");
+        ?>
         <ul>
-            <?php while ( osc_has_subcategories() ) { ?>
-                <li><a class="category cat_<?php echo osc_category_id(); ?>" href="<?php echo osc_search_category_url(); ?>"><?php echo osc_category_name(); ?></a> <span>(<?php echo osc_category_total_items(); ?>)</span><?php /*drawSubcategory(osc_category()); */ ?></li>
+            <?php while ( osc_has_categories() ) { ?>
+                <li><a class="category cat_<?php echo osc_category_id(); ?>" href="<?php echo osc_search_category_url(); ?>"><?php echo osc_category_name(); ?></a> <span>(<?php echo osc_category_total_items(); ?>)</span><?php drawSubcategory(osc_category()); ?></li>
             <?php } ?>
         </ul>
     <?php
         //echo print_r(osc_category());
         osc_category_move_to_parent();
+        //osc_has_categories();
+        //osc_has_categories();
+        //print_r("==========================");
+        //print_r(osc_category());
+        //die;
         //print_r(osc_category());die;
     }
 }
