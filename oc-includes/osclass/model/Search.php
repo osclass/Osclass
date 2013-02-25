@@ -50,6 +50,7 @@
         private $sEmail;
         private $groupBy;
         private $having;
+        private $locale_code;
 
         private $withPattern;
         private $withPicture;
@@ -127,7 +128,11 @@
             // get all item_location data
             if(OC_ADMIN) {
                 $this->addField(sprintf('%st_item_location.*', DB_TABLE_PREFIX) );
+                $this->locale_code = osc_current_admin_locale();
+            } else {
+                $this->locale_code = osc_current_user_locale();
             }
+
         }
 
         /**
@@ -748,6 +753,8 @@
                 $this->dao->from(DB_TABLE_PREFIX . 't_item_description as d');
                 $this->dao->where(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->sPattern));
 
+                $this->dao->where(sprintf("d.fk_c_locale_code LIKE '%s'", $this->locale_code));
+
                 $subSelect = $this->dao->_getSelect();
                 $this->dao->_resetSelect();
                 // END sub select ----------------------
@@ -852,6 +859,8 @@
                     $this->dao->join(DB_TABLE_PREFIX.'t_item_description as d','d.fk_i_item_id = '.DB_TABLE_PREFIX.'t_item.pk_i_id','LEFT');
                     $this->dao->where(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->sPattern) );
                 }
+
+                $this->dao->where(sprintf("d.fk_c_locale_code LIKE '%s'", $this->locale_code));
 
                 // item conditions
                 if(count($this->itemConditions)>0) {
