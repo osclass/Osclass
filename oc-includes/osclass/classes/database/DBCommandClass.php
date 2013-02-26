@@ -1377,7 +1377,7 @@
 
             // HACK: AUTO_INCREMENT fields needs to be also a PRIMARY KEY
             foreach($struct_queries as $k => $v) {
-                if(stripos($v, "auto_increment")!==FALSE) {
+                if(stripos($v, "auto_increment")!==FALSE && stripos($v, "primary key")===FALSE) {
                     $struct_queries[$k] = $v." PRIMARY KEY";
                 }
             }
