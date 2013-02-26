@@ -14,8 +14,8 @@ CREATE TABLE /*TABLE_PREFIX*/t_locale (
     i_num_dec TINYINT(4) NULL DEFAULT 2,
     s_date_format VARCHAR(20) NOT NULL,
     s_stop_words TEXT NULL,
-    b_enabled TINYINT(1) NOT NULL DEFAULT 1, 
-    b_enabled_bo TINYINT(1) NOT NULL DEFAULT 1, 
+    b_enabled TINYINT(1) NOT NULL DEFAULT 1,
+    b_enabled_bo TINYINT(1) NOT NULL DEFAULT 1,
 
         PRIMARY KEY (pk_c_code),
         UNIQUE KEY (s_short_name)
@@ -48,7 +48,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_region (
         PRIMARY KEY (pk_i_id),
         INDEX (fk_c_country_code),
         INDEX idx_s_name (s_name),
-        FOREIGN KEY (fk_c_country_code) REFERENCES /*TABLE_PREFIX*/t_country (pk_c_code) 
+        FOREIGN KEY (fk_c_country_code) REFERENCES /*TABLE_PREFIX*/t_country (pk_c_code)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 
@@ -74,7 +74,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_city_area (
         PRIMARY KEY (pk_i_id),
         INDEX (fk_i_city_id),
         INDEX idx_s_name (s_name),
-        FOREIGN KEY (fk_i_city_id) REFERENCES /*TABLE_PREFIX*/t_city (pk_i_id) 
+        FOREIGN KEY (fk_i_city_id) REFERENCES /*TABLE_PREFIX*/t_city (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_widget (
@@ -106,6 +106,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     dt_reg_date DATETIME NOT NULL,
     dt_mod_date DATETIME NULL,
     s_name VARCHAR(100) NOT NULL,
+    s_username VARCHAR(100) NOT NULL,
     s_password VARCHAR(40) NOT NULL,
     s_secret VARCHAR(40) NULL,
     s_email VARCHAR(100) NULL,
@@ -118,7 +119,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     s_pass_date DATETIME NULL ,
     s_pass_ip VARCHAR(15) NULL,
     fk_c_country_code CHAR(2) NULL,
-    s_country VARCHAR(40) NULL, 
+    s_country VARCHAR(40) NULL,
     s_address VARCHAR(100) NULL,
     s_zip VARCHAR(15) NULL,
     fk_i_region_id INT(10) UNSIGNED NULL,
@@ -151,7 +152,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_user_description (
 
         PRIMARY KEY (fk_i_user_id, fk_c_locale_code),
         FOREIGN KEY (fk_i_user_id) REFERENCES /*TABLE_PREFIX*/t_user (pk_i_id),
-        FOREIGN KEY (fk_c_locale_code) REFERENCES /*TABLE_PREFIX*/t_locale (pk_c_code) 
+        FOREIGN KEY (fk_c_locale_code) REFERENCES /*TABLE_PREFIX*/t_locale (pk_c_code)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_user_email_tmp (
@@ -174,7 +175,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_category (
         PRIMARY KEY (pk_i_id),
         INDEX (fk_i_parent_id),
         INDEX (i_position),
-        FOREIGN KEY (fk_i_parent_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id) 
+        FOREIGN KEY (fk_i_parent_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_category_description (
@@ -186,7 +187,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_category_description (
 
         PRIMARY KEY (fk_i_category_id, fk_c_locale_code),
         FOREIGN KEY (fk_i_category_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id),
-        FOREIGN KEY (fk_c_locale_code) REFERENCES /*TABLE_PREFIX*/t_locale (pk_c_code) 
+        FOREIGN KEY (fk_c_locale_code) REFERENCES /*TABLE_PREFIX*/t_locale (pk_c_code)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_category_stats (
@@ -208,6 +209,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item (
     fk_c_currency_code CHAR(3) NULL,
     s_contact_name VARCHAR(100) NULL,
     s_contact_email VARCHAR(140) NULL,
+    s_ip VARCHAR(64) NOT NULL DEFAULT '',
     b_premium TINYINT(1) NOT NULL DEFAULT 0,
     b_enabled TINYINT(1) NOT NULL DEFAULT 1,
     b_active TINYINT(1) NOT NULL DEFAULT 0,
@@ -324,9 +326,11 @@ CREATE TABLE /*TABLE_PREFIX*/t_pages (
     pk_i_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     s_internal_name VARCHAR(50) NULL,
     b_indelible TINYINT(1) NOT NULL DEFAULT 0,
+    b_link TINYINT(1) NOT NULL DEFAULT 1,
     dt_pub_date DATETIME NOT NULL,
     dt_mod_date DATETIME NULL,
     i_order INT(3) NOT NULL DEFAULT 0,
+    s_meta TEXT NULL,
 
         PRIMARY KEY (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
@@ -357,12 +361,24 @@ CREATE TABLE /*TABLE_PREFIX*/t_cron (
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_alerts (
-  s_email VARCHAR(100) DEFAULT NULL,
-  fk_i_user_id INT(10) UNSIGNED DEFAULT NULL,
-  s_search LONGTEXT,
-  s_secret VARCHAR(40) NULL,
-  b_active TINYINT(1) NOT NULL DEFAULT 0,
-  e_type enum('INSTANT','HOURLY','DAILY','WEEKLY','CUSTOM') NOT NULL
+    pk_i_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    s_email VARCHAR(100) DEFAULT NULL,
+    fk_i_user_id INT(10) UNSIGNED DEFAULT NULL,
+    s_search LONGTEXT,
+    s_secret VARCHAR(40) NULL,
+    b_active TINYINT(1) NOT NULL DEFAULT 0,
+    e_type enum('INSTANT','HOURLY','DAILY','WEEKLY','CUSTOM') NOT NULL,
+    dt_date DATETIME NULL,
+    dt_unsub_date DATETIME NULL DEFAULT NULL,
+
+    PRIMARY KEY (pk_i_id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
+CREATE TABLE /*TABLE_PREFIX*/t_alerts_sent (
+    d_date DATE NOT NULL,
+    i_num_alerts_sent INT(10) UNSIGNED NOT NULL DEFAULT 0,
+
+    PRIMARY KEY (d_date)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_keywords (
@@ -459,4 +475,13 @@ CREATE TABLE /*TABLE_PREFIX*/t_locations_tmp (
     id_location varchar(10) NOT NULL,
     e_type enum('COUNTRY','REGION','CITY') NOT NULL,
     PRIMARY KEY (id_location, e_type)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
+CREATE TABLE /*TABLE_PREFIX*/t_ban_rule (
+  pk_i_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  s_name VARCHAR(250) NOT NULL DEFAULT '',
+  s_ip VARCHAR(50) NOT NULL DEFAULT '',
+  s_email VARCHAR(250) NOT NULL DEFAULT '',
+
+  PRIMARY KEY (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';

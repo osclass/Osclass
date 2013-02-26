@@ -1,10 +1,10 @@
-<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -22,8 +22,8 @@
 
     /**
      * Model database for CityArea table
-     * 
-     * @package OSClass
+     *
+     * @package Osclass
      * @subpackage Model
      * @since unknown
      */
@@ -32,27 +32,27 @@
         /**
          * It references to self object: CityArea.
          * It is used as a singleton
-         * 
+         *
          * @access private
          * @since unknown
          * @var CityArea
          */
-        private static $instance ;
+        private static $instance;
 
         /**
          * It creates a new CityArea object class ir if it has been created
          * before, it return the previous object
-         * 
+         *
          * @access public
          * @since unknown
-         * @return CityArea 
+         * @return CityArea
          */
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -61,60 +61,79 @@
         function __construct()
         {
             parent::__construct();
-            $this->setTableName('t_city_area') ;
-            $this->setPrimaryKey('pk_i_id') ;
-            $this->setFields( array('pk_i_id', 'fk_i_city_id', 's_name') ) ;
+            $this->setTableName('t_city_area');
+            $this->setPrimaryKey('pk_i_id');
+            $this->setFields( array('pk_i_id', 'fk_i_city_id', 's_name') );
         }
 
         /**
          * Get the cityArea by its name and city
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $query
-         * @param int $regionId
-         * @return array 
+         * @param int $cityId
+         * @return array
          */
         function findByName($cityAreaName, $cityId = null)
         {
-            $this->dao->select($this->getFields()) ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_name', $cityAreaName) ;
-            $this->dao->limit(1) ;
-            if( $regionId != null ) {
-                $this->dao->where('fk_i_city_id', $cityId) ;
+            $this->dao->select($this->getFields());
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_name', $cityAreaName);
+            $this->dao->limit(1);
+            if( $cityId != null ) {
+                $this->dao->where('fk_i_city_id', $cityId);
             }
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
-            return $result->row() ;
+            return $result->row();
         }
-        
+
         /**
          * Return city areas of a given city ID
-         * 
+         *
          * @access public
          * @since 2.4
          * @param $cityId
          * @return array
          */
         function findByCity($cityId) {
-            $this->dao->select($this->getFields()) ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('fk_i_city_id', $cityId) ;
+            $this->dao->select($this->getFields());
+            $this->dao->from($this->getTableName());
+            $this->dao->where('fk_i_city_id', $cityId);
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
             return $result->result();
         }
+
+        /**
+         *  Delete a city area
+         *
+         *  @access public
+         *  @since 3.1
+         *  @param $pk
+         *  @return int number of failed deletions or 0 in case of none
+         */
+        function deleteByPrimaryKey($pk) {
+            Item::newInstance()->deleteByCityArea($pk);
+            User::newInstance()->update(array('fk_i_city_area_id' => null, 's_city_area' => ''), array('fk_i_city_area_id' => $pk));
+            if(!$this->delete(array('pk_i_id' => $pk))) {
+                return 1;
+            }
+            return 0;
+        }
+
+
     }
 
     /* file end: ./oc-includes/osclass/model/CityArea.php */

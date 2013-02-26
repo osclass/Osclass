@@ -1,10 +1,10 @@
-OSClass - software for creating and publishing online classified advertising platforms
+Osclass - software for creating and publishing online classified advertising platforms
 
-Copyright (C) 2010 OSCLASS SL
+Copyright (C) 2012 OSCLASS SL
 
-OSClass is distributed under the Affero GPLv3. You should have received a copy of the GNU Affero General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+Osclass is distributed under the Affero GPLv3. You should have received a copy of the GNU Affero General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-OSClass includes the following third party components included herein and distributed to you under the respective licenses. A copy of the license text should be in the \licenses\ folder of this program
+Osclass includes the following third party components included herein and distributed to you under the respective licenses. A copy of the license text should be in the \licenses\ folder of this program
 
 
 Recaptcha - Copyright (c) 2007 reCAPTCHA -- http://recaptcha.net. License: MIT

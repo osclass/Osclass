@@ -1,10 +1,10 @@
 <?php
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -22,9 +22,9 @@
 
     /**
     * Helper Database Info
-    * @package OSClass
+    * @package Osclass
     * @subpackage Helpers
-    * @author OSClass
+    * @author Osclass
     */
 
     /**
@@ -33,7 +33,7 @@
      * @return string
      */
     function osc_db_name() {
-        return getSiteInfo('s_db_name', DB_NAME) ;
+        return getSiteInfo('s_db_name', DB_NAME);
     }
 
     /**
@@ -42,7 +42,7 @@
      * @return string
      */
     function osc_db_host() {
-        return getSiteInfo('s_db_host', DB_HOST) ;
+        return getSiteInfo('s_db_host', DB_HOST);
     }
 
     /**
@@ -51,7 +51,7 @@
      * @return string
      */
     function osc_db_user() {
-        return getSiteInfo('s_db_user', DB_USER) ;
+        return getSiteInfo('s_db_user', DB_USER);
     }
 
     /**
@@ -60,7 +60,7 @@
      * @return string
      */
     function osc_db_password() {
-        return getSiteInfo('s_db_password', DB_PASSWORD) ;
+        return getSiteInfo('s_db_password', DB_PASSWORD);
     }
 
     /**
@@ -69,7 +69,7 @@
      * @return string
      */
     function osc_multisite_url() {
-        return getSiteInfo('s_site', '') ;
+        return getSiteInfo('s_site', '');
     }
 
     //PRIVATE FUNCTION FOR GETTING NO BOOLEAN INFORMATION (if there was a class :P)
@@ -82,10 +82,10 @@
      */
     function getSiteInfo($key, $default_value) {
         if (MULTISITE) {
-            $_P = SiteInfo::newInstance() ;
-            return($_P->get($key)) ;
+            $_P = SiteInfo::newInstance();
+            return($_P->get($key));
         }
-        
-        return $default_value ;
+
+        return $default_value;
     }
 ?>

@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -23,45 +23,47 @@
     class CAdminCFields extends AdminSecBaseModel
     {
         //specific for this class
-        private $fieldManager ;
+        private $fieldManager;
 
         function __construct()
         {
-            parent::__construct() ;
+            parent::__construct();
 
             //specific things for this class
-            $this->fieldManager = Field::newInstance() ;
+            $this->fieldManager = Field::newInstance();
         }
 
         //Business Layer...
         function doModel()
         {
-            parent::doModel() ;
+            parent::doModel();
 
             //specific things for this class
             switch( $this->action ) {
                 default:
-                    $categories = Category::newInstance()->toTreeAll() ;
-                    $selected   = array() ;
+                    $categories = Category::newInstance()->toTreeAll();
+                    $selected   = array();
                     foreach($categories as $c) {
-                        $selected[] = $c['pk_i_id'] ;
+                        $selected[] = $c['pk_i_id'];
                         foreach($c['categories'] as $cc) {
-                            $selected[] = $cc['pk_i_id'] ;
+                            $selected[] = $cc['pk_i_id'];
                         }
                     }
-                    $this->_exportVariableToView('categories', $categories) ;
-                    $this->_exportVariableToView('default_selected', $selected) ;
-                    $this->_exportVariableToView('fields', $this->fieldManager->listAll()) ;
-                    $this->doView("fields/index.php") ;
-                break ;
+                    $this->_exportVariableToView('categories', $categories);
+                    $this->_exportVariableToView('default_selected', $selected);
+                    $this->_exportVariableToView('fields', $this->fieldManager->listAll());
+                    $this->doView("fields/index.php");
+                break;
             }
         }
 
         //hopefully generic...
         function doView($file)
         {
-            osc_current_admin_theme_path($file) ;
+            osc_run_hook("before_admin_html");
+            osc_current_admin_theme_path($file);
             Session::newInstance()->_clearVariables();
+            osc_run_hook("after_admin_html");
         }
     }
 

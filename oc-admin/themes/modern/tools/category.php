@@ -1,8 +1,8 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -31,15 +31,15 @@
     }
     osc_add_filter('admin_title', 'customPageTitle');
 
-    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+    osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <div id="backup-setting">
     <!-- settings form -->
     <div id="backup-settings">
-        <h2 class="render-title"><?php _e('Category stats') ; ?></h2>
+        <h2 class="render-title"><?php _e('Category stats'); ?></h2>
         <p>
             <?php _e('You can recalculate stats by category, useful if the stats seem to be incorrect.'); ?>.
         </p>
-        <form id="backup_form" name="backup_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+        <form id="backup_form" name="backup_form" action="<?php echo osc_admin_base_url(true); ?>" method="post">
             <input type="hidden" name="page" value="tools" />
             <input type="hidden" name="action" value="category_post" />
             <fieldset>
@@ -53,4 +53,4 @@
     </div>
     <!-- /settings form -->
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

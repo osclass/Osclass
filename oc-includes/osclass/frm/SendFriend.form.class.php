@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -23,29 +23,29 @@
     class SendFriendForm extends Form {
 
         /*static public function primary_input_hidden($page) {
-            parent::generic_input_hidden("id", $page["pk_i_id"]) ;
+            parent::generic_input_hidden("id", $page["pk_i_id"]);
         }*/
 
         static public function your_name() {
-            
+
             if( Session::newInstance()->_getForm("yourName") != "" ){
                 $yourName = Session::newInstance()->_getForm("yourName");
                 parent::generic_input_text("yourName", $yourName, null, false);
             } else {
                 parent::generic_input_text("yourName", "", null, false);
             }
-            return true ;
+            return true;
         }
 
         static public function your_email() {
-            
+
             if( Session::newInstance()->_getForm("yourEmail") != "" ){
                 $yourEmail = Session::newInstance()->_getForm("yourEmail");
                 parent::generic_input_text("yourEmail", $yourEmail, null, false);
             } else {
                 parent::generic_input_text("yourEmail", "", null, false);
             }
-            return true ;
+            return true;
         }
 
         static public function friend_name() {
@@ -55,7 +55,7 @@
             } else {
                 parent::generic_input_text("friendName", "", null, false);
             }
-            return true ;
+            return true;
         }
 
         static public function friend_email() {
@@ -65,7 +65,7 @@
             } else {
                 parent::generic_input_text("friendEmail", "", null, false);
             }
-            return true ;
+            return true;
         }
 
         static public function your_message() {
@@ -75,7 +75,7 @@
             } else {
                 parent::generic_textarea("message", "");
             }
-            return true ;
+            return true;
         }
 
         static public function js_validation() {
@@ -119,7 +119,7 @@
                     email: "<?php _e("Invalid friend's email address"); ?>."
                 },
                 message: "<?php _e("Message: this field is required"); ?>."
-                
+
             },
             //onfocusout: function(element) { $(element).valid(); },
             errorLabelContainer: "#error_list",
@@ -130,9 +130,9 @@
         });
     });
 </script>
-<?php 
+<?php
         }
-        
+
     }
 
 ?>

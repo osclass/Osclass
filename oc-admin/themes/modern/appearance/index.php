@@ -1,8 +1,8 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -16,13 +16,14 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    osc_enqueue_script('jquery-validate');
+
     //getting variables for this view
-    $themes = __get("themes") ;
+    $themes = __get("themes");
     $info   = WebThemes::newInstance()->loadThemeInfo(osc_theme());
 
     //customize Head
-    function customHead(){
-        echo '<script type="text/javascript" src="'.osc_current_admin_theme_js_url('jquery.validate.min.js').'"></script>'; ?>
+    function customHead() { ?>
         <script type="text/javascript">
             $(document).ready(function() {
                 // dialog delete
@@ -51,9 +52,9 @@
 
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1><?php _e('Appearance') ; ?>
+        <h1><?php _e('Appearance'); ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
-            <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add theme') ; ?></a>
+            <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add theme'); ?></a>
         </h1>
     <?php
     }
@@ -63,25 +64,25 @@
     }
     osc_add_filter('admin_title', 'customPageTitle');
 
-    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+    osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <div id="appearance-page">
     <!-- themes list -->
     <div class="appearance">
         <div id="tabs" class="ui-osc-tabs ui-tabs-right">
             <ul>
                 <li><a href="#market" onclick="window.location = '<?php echo osc_admin_base_url(true) . '?page=market&action=themes'; ?>'; return false; "><?php _e('Market'); ?></a></li>
-                <li><a href="#available-themes"><?php _e('Available themes') ; ?></a></li>
+                <li><a href="#available-themes"><?php _e('Available themes'); ?></a></li>
             </ul>
             <div id="available-themes" class="ui-osc-tabs-panel">
-                <h2 class="render-title"><?php _e('Current theme') ; ?> <a href="<?php echo osc_admin_base_url(true) ; ?>?page=appearance&amp;action=add" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
+                <h2 class="render-title"><?php _e('Current theme'); ?> <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=add" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
                 <div class="current-theme">
                     <div class="theme">
-                        <img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo osc_theme() ; ?>/screenshot.png" title="<?php echo $info['name'] ; ?>" alt="<?php echo $info['name'] ; ?>" />
+                        <img src="<?php echo osc_base_url(); ?>/oc-content/themes/<?php echo osc_theme(); ?>/screenshot.png" title="<?php echo $info['name']; ?>" alt="<?php echo $info['name']; ?>" />
                         <div class="theme-info">
-                            <h3><?php echo $info['name'] ; ?> <?php echo $info['version']; ?> <?php _e('by') ; ?> <a target="_blank" href="<?php echo $info['author_url'] ; ?>"><?php echo $info['author_name'] ; ?></a></h3>
+                            <h3><?php echo $info['name']; ?> <?php echo $info['version']; ?> <?php _e('by'); ?> <a target="_blank" href="<?php echo $info['author_url']; ?>"><?php echo $info['author_name']; ?></a></h3>
                         </div>
                         <div class="theme-description">
-                            <?php echo $info['description'] ; ?>
+                            <?php echo $info['description']; ?>
                         </div>
                         <div class="clear"></div>
                     </div>
@@ -90,6 +91,7 @@
                 <div class="available-theme">
                     <?php $aThemesToUpdate = json_decode( getPreference('themes_to_update') );
                     $bThemesToUpdate = (is_array($aThemesToUpdate))?true:false;
+                    $csrf_token = osc_csrf_token_url();
                     foreach($themes as $theme) { ?>
                     <?php
                             if( $theme == osc_theme() ) {
@@ -99,11 +101,11 @@
                     ?>
                     <div class="theme">
                         <div class="theme-stage">
-                            <img src="<?php echo osc_base_url(); ?>/oc-content/themes/<?php echo $theme ; ?>/screenshot.png" title="<?php echo $info['name'] ; ?>" alt="<?php echo $info['name'] ; ?>" />
+                            <img src="<?php echo osc_base_url(); ?>/oc-content/themes/<?php echo $theme; ?>/screenshot.png" title="<?php echo $info['name']; ?>" alt="<?php echo $info['name']; ?>" />
                             <div class="theme-actions">
-                                <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=activate&amp;theme=<?php echo $theme ; ?>" class="btn btn-mini btn-green"><?php _e('Activate') ; ?></a>
-                                <a target="_blank" href="<?php echo osc_base_url(true); ?>?theme=<?php echo $theme ; ?>" class="btn btn-mini btn-blue"><?php _e('Preview') ; ?></a>
-                                <a onclick="return delete_dialog('<?php echo $theme; ?>');" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=delete&amp;webtheme=<?php echo $theme ; ?>" class="btn btn-mini float-right delete"><?php _e('Delete') ; ?></a>
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=activate&amp;theme=<?php echo $theme; ?>&amp;<?php echo $csrf_token; ?>" class="btn btn-mini btn-green"><?php _e('Activate'); ?></a>
+                                <a target="_blank" href="<?php echo osc_base_url(true); ?>?theme=<?php echo $theme; ?>" class="btn btn-mini btn-blue"><?php _e('Preview'); ?></a>
+                                <a onclick="return delete_dialog('<?php echo $theme; ?>');" href="<?php echo osc_admin_base_url(true); ?>?page=appearance&amp;action=delete&amp;webtheme=<?php echo $theme; ?>&amp;<?php echo $csrf_token; ?>" class="btn btn-mini float-right delete"><?php _e('Delete'); ?></a>
                                 <?php
                                 if($bThemesToUpdate) {
                                     if(in_array($theme,$aThemesToUpdate )){
@@ -114,10 +116,10 @@
                             </div>
                         </div>
                         <div class="theme-info">
-                            <h3><?php echo $info['name'] ; ?> <?php echo $info['version']; ?> <?php _e('by') ; ?> <a target="_blank" href="<?php echo $info['author_url'] ; ?>"><?php echo $info['author_name'] ; ?></a></h3>
+                            <h3><?php echo $info['name']; ?> <?php echo $info['version']; ?> <?php _e('by'); ?> <a target="_blank" href="<?php echo $info['author_url']; ?>"><?php echo $info['author_name']; ?></a></h3>
                         </div>
                         <div class="theme-description">
-                            <?php echo $info['description'] ; ?>
+                            <?php echo $info['description']; ?>
                         </div>
                     </div>
                     <?php } ?>
@@ -132,19 +134,19 @@
                         <table class="table" cellpadding="0" cellspacing="0">
                             <tbody>
                                 <tr class="table-first-row">
-                                    <td><?php _e('Name') ; ?></td>
+                                    <td><?php _e('Name'); ?></td>
                                     <td><span id="market_name"><?php _e("Loading data"); ?></span></td>
                                 </tr>
                                 <tr class="even">
-                                    <td><?php _e('Version') ; ?></td>
+                                    <td><?php _e('Version'); ?></td>
                                     <td><span id="market_version"><?php _e("Loading data"); ?></span></td>
                                 </tr>
                                 <tr>
-                                    <td><?php _e('Author') ; ?></td>
+                                    <td><?php _e('Author'); ?></td>
                                     <td><span id="market_author"><?php _e("Loading data"); ?></span></td>
                                 </tr>
                                 <tr class="even">
-                                    <td><?php _e('URL') ; ?></td>
+                                    <td><?php _e('URL'); ?></td>
                                     <td><span id="market_url_span"><a id="market_url" href="#"><?php _e("Download manually"); ?></a></span></td>
                                 </tr>
                             </tbody>
@@ -163,7 +165,7 @@
     </div>
     <!-- /themes list -->
 </div>
-<form id="dialog-delete-theme" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+<form id="dialog-delete-theme" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide">
     <input type="hidden" name="page" value="appearance" />
     <input type="hidden" name="action" value="delete" />
     <input type="hidden" name="webtheme" value="" />
@@ -192,10 +194,10 @@
             $(".ui-dialog-content").dialog("close");
             $('<div id="downloading"><div class="osc-modal-content"><?php echo osc_esc_js(__('Please wait until the download is completed')); ?></div></div>').dialog({title:'<?php echo osc_esc_js(__('Downloading')); ?>...',modal:true});
             $.getJSON(
-            "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
+            "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market&<?php echo osc_csrf_token_url(); ?>",
             {"code" : $("#market_code").attr("value"), "section" : 'themes'},
             function(data){
-                var content = data.message ;
+                var content = data.message;
                 if(data.error == 0) { // no errors
                     content += '<h3><?php echo osc_esc_js(__('The theme has been downloaded correctly, proceed to activate or preview it.')); ?></h3>';
                     content += "<p>";
@@ -223,11 +225,11 @@
                     $("#market_version").html(data.s_version);
                     $("#market_author").html(data.s_contact_name);
                     $("#market_url").attr('href',data.s_source_file);
-                    $('#market_install').html("<?php echo osc_esc_js( __('Update') ) ; ?>");
+                    $('#market_install').html("<?php echo osc_esc_js( __('Update') ); ?>");
 
                     $('#market_installer').dialog({
                         modal:true,
-                        title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
+                        title: '<?php echo osc_esc_js( __('Osclass Market') ); ?>',
                         width:485
                     });
                 }
@@ -237,4 +239,4 @@
         return false;
     });
 </script>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

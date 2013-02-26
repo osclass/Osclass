@@ -1,9 +1,9 @@
 <?php
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -43,9 +43,9 @@
     if($admin){
         $result = -1;
         if( $new_username != '' ){
-            $result = $mAdmin->update( array('s_username' => $new_username ), array('pk_i_id' => '1') ) ;
+            $result = $mAdmin->update( array('s_username' => $new_username ), array('pk_i_id' => '1') );
         } elseif ( $new_passwd != '' ) {
-            $result = $mAdmin->update( array('s_password' => sha1($new_passwd) ), array('pk_i_id' => '1') ) ;
+            $result = $mAdmin->update( array('s_password' => sha1($new_passwd) ), array('pk_i_id' => '1') );
         }
 
         switch ($result) {

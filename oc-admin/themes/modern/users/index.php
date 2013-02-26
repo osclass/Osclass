@@ -1,8 +1,8 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -22,10 +22,10 @@
     osc_add_hook('help_box','addHelp');
 
     function customPageHeader(){ ?>
-        <h1><?php _e('Users') ; ?>
-            <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=settings' ; ?>" class="btn ico ico-32 ico-engine float-right"></a>
+        <h1><?php _e('Users'); ?>
+            <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=settings'; ?>" class="btn ico ico-32 ico-engine float-right"></a>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
-            <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=create' ; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
+            <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=create'; ?>" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add'); ?></a>
         </h1>
 <?php
     }
@@ -72,7 +72,7 @@
                 // dialog delete
                 $("#dialog-user-delete").dialog({
                     autoOpen: false,
-                    modal: true,
+                    modal: true
                 });
 
                 // dialog bulk actions
@@ -117,11 +117,16 @@
     }
     osc_add_hook('admin_header','customHead');
 
-    $iDisplayLength = __get('iDisplayLength');
-    $aData          = __get('aUsers');
+    $aData      = __get('aData');
+    $aRawRows   = __get('aRawRows');
+    $sort       = Params::getParam('sort');
+    $direction  = Params::getParam('direction');
+
+    $columns    = $aData['aColumns'];
+    $rows       = $aData['aRows'];
 ?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<h2 class="render-title"><?php _e('Manage users'); ?> <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=create' ; ?>" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
+<?php osc_current_admin_theme_path( 'parts/header.php' ); ?>
+<h2 class="render-title"><?php _e('Manage users'); ?> <a href="<?php echo osc_admin_base_url(true) . '?page=users&action=create'; ?>" class="btn btn-mini"><?php _e('Add new'); ?></a></h2>
 <div class="relative">
     <div id="users-toolbar" class="table-toolbar">
         <div class="float-right">
@@ -129,54 +134,37 @@
                 <input type="hidden" name="page" value="users" />
                 <input id="fUser" name="user" type="text" class="fUser input-text input-actions" value="<?php echo osc_esc_html(Params::getParam('user')); ?>" />
                 <input id="fUserId" name="userId" type="hidden" value="<?php echo osc_esc_html(Params::getParam('userId')); ?>" />
-                <input type="submit" class="btn submit-right" value="<?php echo osc_esc_html( __('Find') ) ; ?>">
+                <input type="submit" class="btn submit-right" value="<?php echo osc_esc_html( __('Find') ); ?>">
             </form>
         </div>
     </div>
-    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>" method="post">
         <input type="hidden" name="page" value="users" />
 
         <div id="bulk-actions">
             <label>
-                <select name="action" id="bulk_actions" class="select-box-extra">
-                    <option value=""><?php _e('Bulk Actions') ; ?></option>
-                    <option value="activate" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Activate'))); ?>"><?php _e('Activate') ; ?></option>
-                    <option value="deactivate" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Deactivate'))); ?>"><?php _e('Deactivate') ; ?></option>
-                    <option value="enable" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Unblock'))); ?>"><?php _e('Unblock') ; ?></option>
-                    <option value="disable" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Block'))); ?>"><?php _e('Block') ; ?></option>
-                    <option value="delete" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ; ?></option>
-                    <?php if( osc_user_validation_enabled() ) { ?>
-                        <option value="resend_activation" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected users?'), strtolower(__('Resend the activation to'))); ?>"><?php _e('Resend activation') ; ?></option>
-                    <?php } ?>
-                </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                <?php osc_print_bulk_actions('bulk_actions', 'action', __get('bulk_options'), 'select-box-extra'); ?>
+                <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ); ?>" />
             </label>
         </div>
         <div class="table-contains-actions">
             <table class="table" cellpadding="0" cellspacing="0">
                 <thead>
                     <tr>
-                        <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
-                        <th><?php _e('E-mail') ; ?></th>
-                        <th><?php _e('Name') ; ?></th>
-                        <th class="col-date"><?php _e('Date') ; ?></th>
-                        <th><?php _e('Update Date') ; ?></th>
+                        <?php foreach($columns as $k => $v) {
+                            echo '<th class="col-'.$k.' '.($sort==$k?($direction=='desc'?'sorting_desc':'sorting_asc'):'').'">'.$v.'</th>';
+                        }; ?>
                     </tr>
                 </thead>
                 <tbody>
-                <?php if( count($aData['aaData']) > 0 ) { ?>
-                <?php foreach( $aData['aaData'] as $array) { ?>
-                    <tr>
-                    <?php foreach($array as $key => $value) { ?>
-                        <?php if( $key==0 ) { ?>
-                        <td class="col-bulkactions">
-                        <?php } else { ?>
-                        <td>
-                        <?php } ?>
-                        <?php echo $value; ?>
-                        </td>
-                    <?php } ?>
-                    </tr>
-                <?php } ?>
+                <?php if( count($rows) > 0 ) { ?>
+                    <?php foreach($rows as $key => $row) { ?>
+                        <tr>
+                            <?php foreach($row as $k => $v) { ?>
+                                <td class="col-<?php echo $k; ?>"><?php echo $v; ?></td>
+                            <?php }; ?>
+                        </tr>
+                    <?php }; ?>
                 <?php } else { ?>
                     <tr>
                         <td colspan="5" class="text-center">
@@ -192,13 +180,13 @@
 </div>
 <?php
     function showingResults(){
-        $aData = __get('aUsers');
-        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;
+        $aData = __get("aData");
+        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aRows']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>';
     }
     osc_add_hook('before_show_pagination_admin','showingResults');
     osc_show_pagination_admin($aData);
 ?>
-<form id="dialog-user-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete user')); ?>">
+<form id="dialog-user-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete user')); ?>">
     <input type="hidden" name="page" value="users" />
     <input type="hidden" name="action" value="delete" />
     <input type="hidden" name="id[]" value="" />
@@ -226,4 +214,4 @@
         </div>
     </div>
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

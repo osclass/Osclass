@@ -31,8 +31,12 @@ oc-content/themes/*
 #plugins
 oc-content/plugins/*
 !oc-content/plugins/index.php
-!oc-content/plugins/google_analytics/ 
+!oc-content/plugins/google_analytics/
 !oc-content/plugins/google_maps/
+
+# Intellij IDEA
+.idea/*
+*.iml
 
 # Others
 .htaccess

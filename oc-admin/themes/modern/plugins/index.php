@@ -1,8 +1,8 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -22,18 +22,18 @@
     osc_add_hook('help_box','addHelp');
 
     function customPageHeader() { ?>
-            <h1><?php _e('Manage Plugins') ; ?>
+            <h1><?php _e('Manage Plugins'); ?>
                 <a href="#" class="btn ico ico-32 ico-help float-right"></a>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add plugin') ; ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=add" class="btn btn-green ico ico-32 ico-add-white float-right"><?php _e('Add plugin'); ?></a>
             </h1>
         </div>
-        <?php osc_show_flash_message('admin') ; ?>
+        <?php osc_show_flash_message('admin'); ?>
         <?php if( Params::getParam('error') != '' ) { ?>
             <!-- flash message -->
             <div class="flashmessage flashmessage-error" style="display:block">
                 <?php _e("Plugin couldn't be installed because it triggered a <strong>fatal error</strong>"); ?>
                 <a class="btn ico btn-mini ico-close">x</a>
-                <iframe style="border:0;" width="100%" height="60" src="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=error_plugin&amp;plugin=<?php echo Params::getParam('error') ; ?>"></iframe>
+                <iframe style="border:0;" width="100%" height="60" src="<?php echo osc_admin_base_url(true); ?>?page=plugins&amp;action=error_plugin&amp;plugin=<?php echo Params::getParam('error'); ?>"></iframe>
             <!-- /flash message -->
         <?php } ?>
 <?php
@@ -50,15 +50,15 @@
         <script type="text/javascript">
             $(document).ready(function(){
                 $('input:hidden[name="installed"]').each(function() {
-                    $(this).parent().parent().children().css('background', 'none') ;
+                    $(this).parent().parent().children().css('background', 'none');
                     if( $(this).val() == '1' ) {
                         if( $(this).attr("enabled") == 1 ) {
-                            $(this).parent().parent().css('background-color', '#EDFFDF') ;
+                            $(this).parent().parent().css('background-color', '#EDFFDF');
                         } else {
-                            $(this).parent().parent().css('background-color', '#FFFFDF') ;
+                            $(this).parent().parent().css('background-color', '#FFFFDF');
                         }
                     } else {
-                        $(this).parent().parent().css('background-color', '#FFF0DF') ;
+                        $(this).parent().parent().css('background-color', '#FFF0DF');
                     }
                 });
 
@@ -86,7 +86,7 @@
 
     $tab_index = 1;
 ?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+<?php osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <div id="tabs" class="ui-osc-tabs ui-tabs-right">
     <ul>
         <?php
@@ -98,14 +98,14 @@
         <li><a href="#update-plugins"><?php _e('Updates'); ?></a></li>
         <?php } ?>
         <li><a href="#market" onclick="window.location = '<?php echo osc_admin_base_url(true) . '?page=market&action=plugins'; ?>'; return false; "><?php _e('Market'); ?></a></li>
-        <li><a href="#upload-plugins"><?php _e('Available plugins') ; ?></a></li>
+        <li><a href="#upload-plugins"><?php _e('Available plugins'); ?></a></li>
     </ul>
     <div id="upload-plugins">
         <table class="table" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
-                    <th><?php _e('Name') ; ?></th>
-                    <th colspan=""><?php _e('Description') ; ?></th>
+                    <th><?php _e('Name'); ?></th>
+                    <th colspan=""><?php _e('Description'); ?></th>
                     <th> &nbsp; </th>
                     <th> &nbsp; </th>
                     <th> &nbsp; </th>
@@ -126,7 +126,7 @@
             <?php else : ?>
             <tr>
                 <td colspan="6" class="text-center">
-                <p><?php _e('No data available in table') ; ?></p>
+                <p><?php _e('No data available in table'); ?></p>
                 </td>
             </tr>
             <?php endif; ?>
@@ -135,7 +135,7 @@
         <?php
             function showingResults(){
                 $aData = __get('aPlugins');
-                echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords']).'</span></li></ul>' ;
+                echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords']).'</span></li></ul>';
             }
             osc_add_hook('before_show_pagination_admin','showingResults');
             osc_show_pagination_admin($aData);
@@ -159,8 +159,8 @@
         <table class="table" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
-                    <th><?php _e('Name') ; ?></th>
-                    <th colspan=""><?php _e('Description') ; ?></th>
+                    <th><?php _e('Name'); ?></th>
+                    <th colspan=""><?php _e('Description'); ?></th>
                     <th> &nbsp; </th>
                     <th> &nbsp; </th>
                     <th> &nbsp; </th>
@@ -181,7 +181,7 @@
             <?php else : ?>
             <tr>
                 <td colspan="6" class="text-center">
-                <p><?php _e('No data available in table') ; ?></p>
+                <p><?php _e('No data available in table'); ?></p>
                 </td>
             </tr>
             <?php endif; ?>
@@ -197,19 +197,19 @@
                 <table class="table" cellpadding="0" cellspacing="0">
                     <tbody>
                         <tr class="table-first-row">
-                            <td><?php _e('Name') ; ?></td>
+                            <td><?php _e('Name'); ?></td>
                             <td><span id="market_name"><?php _e("Loading data"); ?></span></td>
                         </tr>
                         <tr class="even">
-                            <td><?php _e('Version') ; ?></td>
+                            <td><?php _e('Version'); ?></td>
                             <td><span id="market_version"><?php _e("Loading data"); ?></span></td>
                         </tr>
                         <tr>
-                            <td><?php _e('Author') ; ?></td>
+                            <td><?php _e('Author'); ?></td>
                             <td><span id="market_author"><?php _e("Loading data"); ?></span></td>
                         </tr>
                         <tr class="even">
-                            <td><?php _e('URL') ; ?></td>
+                            <td><?php _e('URL'); ?></td>
                             <td><span id="market_url_span"><a id="market_url" href="#"><?php _e("Download manually"); ?></a></span></td>
                         </tr>
                     </tbody>
@@ -218,14 +218,14 @@
             </div>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button id="market_cancel" class="btn btn-red" ><?php _e('Cancel') ; ?></button>
-                    <button id="market_install" class="btn btn-submit" ><?php _e('Continue install') ; ?></button>
+                    <button id="market_cancel" class="btn btn-red" ><?php _e('Cancel'); ?></button>
+                    <button id="market_install" class="btn btn-submit" ><?php _e('Continue install'); ?></button>
                 </div>
             </div>
         </form>
     </div>
 </div>
-<form id="dialog-uninstall" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+<form id="dialog-uninstall" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide">
     <input type="hidden" name="page" value="plugins" />
     <input type="hidden" name="action" value="uninstall" />
     <input type="hidden" name="plugin" value="" />
@@ -259,10 +259,10 @@
             $(".ui-dialog-content").dialog("close");
             $('<div id="downloading"><div class="osc-modal-content"><?php _e('Please wait until the download is completed'); ?></div></div>').dialog({title:'<?php _e('Downloading'); ?>...',modal:true});
             $.getJSON(
-            "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market",
+            "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=market&<?php echo osc_csrf_token_url(); ?>",
             {"code" : $("#market_code").attr("value"), "section" : 'plugins'},
             function(data){
-                var content = data.message ;
+                var content = data.message;
                 if(data.error == 0) { // no errors
                     content += '<p><?php echo osc_esc_js(__('The plugin has been downloaded correctly, proceed to install and configure.')); ?></p>';
                     content += "<p>";
@@ -289,11 +289,11 @@
                     $("#market_version").html(data.s_version);
                     $("#market_author").html(data.s_contact_name);
                     $("#market_url").attr('href',data.s_source_file);
-                    $('#market_install').html("<?php echo osc_esc_js( __('Update') ) ; ?>");
+                    $('#market_install').html("<?php echo osc_esc_js( __('Update') ); ?>");
 
                     $('#market_installer').dialog({
                         modal:true,
-                        title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
+                        title: '<?php echo osc_esc_js( __('Osclass Market') ); ?>',
                         width:485
                     });
                 }
@@ -303,4 +303,4 @@
         return false;
     });
 </script>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

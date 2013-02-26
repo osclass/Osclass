@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -24,24 +24,24 @@
 
         static public function primary_input_hidden($field = null) {
             if(isset($field['pk_i_id'])) {
-                parent::generic_input_hidden("id", $field["pk_i_id"]) ;
+                parent::generic_input_hidden("id", $field["pk_i_id"]);
             }
         }
 
         static public function name_input_text($field = null) {
-            parent::generic_input_text("s_name", (isset($field) && isset($field["s_name"])) ? $field["s_name"] : "", null, false) ;
-            return true ;
+            parent::generic_input_text("s_name", (isset($field) && isset($field["s_name"])) ? $field["s_name"] : "", null, false);
+            return true;
         }
 
         static public function options_input_text($field = null) {
-            parent::generic_input_text("s_options", (isset($field) && isset($field["s_options"])) ? $field["s_options"] : "", null, false) ;
-            return true ;
+            parent::generic_input_text("s_options", (isset($field) && isset($field["s_options"])) ? $field["s_options"] : "", null, false);
+            return true;
         }
 
         static public function required_checkbox($field = null) {
             parent::generic_input_checkbox('field_required', 1, ($field!=null && isset($field['b_required']) && $field['b_required']==1)?true:false);
         }
-        
+
         static public function type_select($field = null) {
             ?>
             <select name="field_type" id="field_type">
@@ -55,7 +55,7 @@
             <?php
             return true;
         }
-        
+
         static public function meta($field = null) {
             if($field!=null) {
                 if(Session::newInstance()->_getForm('meta_'.$field['pk_i_id']) != ""){
@@ -64,7 +64,7 @@
 
                 if($field['e_type']=="TEXTAREA") {
                     echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
-                    echo '<textarea id="meta_' . $field['s_slug'] . '" name="meta['.$field['pk_i_id'].']" rows="10">' . ((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '</textarea>' ;
+                    echo '<textarea id="meta_' . $field['s_slug'] . '" name="meta['.$field['pk_i_id'].']" rows="10">' . ((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '</textarea>';
                 } else if($field['e_type']=="DROPDOWN") {
                     echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                     if(isset($field) && isset($field['s_options'])) {
@@ -94,8 +94,8 @@
                     echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                 } else {
                     echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
-                    echo '<input id="meta_'.$field['s_slug'].'" type="text" name="meta['.$field['pk_i_id'].']" value="' . osc_esc_html((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '" ' ;
-                    echo '/>' ;
+                    echo '<input id="meta_'.$field['s_slug'].'" type="text" name="meta['.$field['pk_i_id'].']" value="' . osc_esc_html((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '" ';
+                    echo '/>';
                 }
             }
         }
@@ -112,7 +112,7 @@
                 echo '</div>';
             }
         }
-        
+
     }
 
 ?>

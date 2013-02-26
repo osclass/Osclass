@@ -1,10 +1,10 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -22,8 +22,8 @@
 
     /**
      * Model database for Currency table
-     * 
-     * @package OSClass
+     *
+     * @package Osclass
      * @subpackage Model
      * @since unknown
      */
@@ -32,17 +32,17 @@
         /**
          * It references to self object: Currency.
          * It is used as a singleton
-         * 
+         *
          * @access private
          * @since unknown
          * @var Currency
          */
-        private static $instance ;
+        private static $instance;
 
         /**
          * It creates a new Currency object class ir if it has been created
          * before, it return the previous object
-         * 
+         *
          * @access public
          * @since unknown
          * @return Currency
@@ -50,9 +50,9 @@
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -61,24 +61,11 @@
         function __construct()
         {
             parent::__construct();
-            $this->setTableName('t_currency') ;
-            $this->setPrimaryKey('pk_c_code') ;
-            $this->setFields(array('pk_c_code', 's_name', 's_description', 'b_enabled')) ;
+            $this->setTableName('t_currency');
+            $this->setPrimaryKey('pk_c_code');
+            $this->setFields(array('pk_c_code', 's_name', 's_description', 'b_enabled'));
         }
-        
-        /**
-         * Find currency by currency code
-         * 
-         * @deprecated
-         * @access public
-         * @since unknown
-         * @param int $id
-         * @return array
-         */
-        public function findBycode($id) 
-        {
-            return $this->findByPrimaryKey($id);
-        }
+
     }
 
     /* file end: ./oc-includes/osclass/model/Currency.php */

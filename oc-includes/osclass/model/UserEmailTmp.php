@@ -1,10 +1,10 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -21,46 +21,35 @@
      */
 
     /**
-     * 
+     *
      */
     class UserEmailTmp extends DAO
     {
         /**
          *
-         * @var type 
+         * @var type
          */
-        private static $instance ;
+        private static $instance;
 
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
-        }
-
-        /**
-         * 
-         */
-        function __construct()
-        {
-            parent::__construct();
-            $this->setTableName('t_user_email_tmp') ;
-            $this->setPrimaryKey('fk_i_user_id') ;
-            $this->setFields( array('fk_i_user_id','s_new_email','dt_date') ) ;
+            return self::$instance;
         }
 
         /**
          *
-         * @access public
-         * @since unknown
-         * @param type $id
-         * @return array
          */
-        function findByPk($id) {
-            return $this->findByPrimaryKey($id) ;
+        function __construct()
+        {
+            parent::__construct();
+            $this->setTableName('t_user_email_tmp');
+            $this->setPrimaryKey('fk_i_user_id');
+            $this->setFields( array('fk_i_user_id','s_new_email','dt_date') );
         }
-        
+
         /**
          *
          * @access public

@@ -1,8 +1,8 @@
 <?php
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -18,13 +18,13 @@
 
     /**
     * Helper Error
-    * @package OSClass
+    * @package Osclass
     * @subpackage Helpers
-    * @author OSClass
+    * @author Osclass
     */
 
     /**
-     * Kill OSClass with an error message
+     * Kill Osclass with an error message
      *
      * @since 1.2
      *
@@ -37,11 +37,11 @@
         <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xml:lang="en-US">
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                <title><?php echo $title ; ?></title>
-                <link rel="stylesheet" type="text/css" media="all" href="<?php echo osc_get_absolute_url() ; ?>oc-includes/osclass/installer/install.css" />
+                <title><?php echo $title; ?></title>
+                <link rel="stylesheet" type="text/css" media="all" href="<?php echo osc_get_absolute_url(); ?>oc-includes/osclass/installer/install.css" />
             </head>
             <body class="page-error">
-                <p><?php echo $message ; ?></p>
+                <p><?php echo $message; ?></p>
             </body>
         </html>
         <?php die(); ?>
@@ -49,7 +49,7 @@
 
     function osc_get_absolute_url() {
         $protocol = ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ) ? 'https' : 'http';
-        return $protocol . '://' . $_SERVER['HTTP_HOST'] . preg_replace('/((oc-admin)|(oc-includes)|([a-z]+\.php)|(\?.*)).*/i', '', $_SERVER['REQUEST_URI']);
+        return $protocol . '://' . $_SERVER['HTTP_HOST'] . preg_replace('/((oc-admin)|(oc-includes)|(oc-content)|([a-z]+\.php)|(\?.*)).*/i', '', $_SERVER['REQUEST_URI']);
     }
 
 ?>

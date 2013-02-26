@@ -3,7 +3,7 @@
     *      OSCLass software for creating and publishing online classified
     *                           advertising platforms
     *
-    *                        Copyright (C) 2010 OSCLASS
+    *                        Copyright (C) 2012 OSCLASS
     *
     *       This program is free software: you can redistribute it and/or
     *     modify it under the terms of the GNU Affero General Public License
@@ -21,9 +21,9 @@
 
     /**
     * Helper Validation
-    * @package OSClass
+    * @package Osclass
     * @subpackage Helpers
-    * @author OSClass
+    * @author Osclass
     */
 
     /**
@@ -84,7 +84,7 @@
         }
         return true;
     }
-    
+
     /**
      * Validate $value is a number phone,
      * with $count lenght
@@ -102,7 +102,7 @@
         }
         return true;
     }
-    
+
     /**
      * Validate if $value is more than $min
      *
@@ -116,7 +116,7 @@
         }
         return true;
     }
-    
+
     /**
      * Validate if $value is less than $max
      * @param string $value
@@ -197,7 +197,7 @@
         }
         return false;
     }
-    
+
     /**
      * Validate if $value url is a valid url.
      * Check header response to validate.
@@ -209,13 +209,13 @@
     function osc_validate_url ($value, $required = false) {
         if ($required || strlen($value) > 0) {
             $value = osc_sanitize_url($value);
-            if(!function_exists('filter_var')) { 
+            if(!function_exists('filter_var')) {
                 $success = preg_match('|^(http\:\/\/[a-zA-Z0-9_\-]+(?:\.[a-zA-Z0-9_\-]+)*\.[a-zA-Z]{2,4}(?:\/[a-zA-Z0-9_]+)*(?:\/[a-zA-Z0-9_]+\.[a-zA-Z]{2,4}(?:\?[a-zA-Z0-9_]+\=[a-zA-Z0-9_]+)?)?(?:\&[a-zA-Z0-9_]+\=[a-zA-Z0-9_]+)*)$|', $value, $m);
             } else {
                 $success = filter_var($value, FILTER_VALIDATE_URL);
             }
             if ($success) {
-                @$headers = get_headers($value); 
+                @$headers = get_headers($value);
                 if (!preg_match('/^HTTP\/\d\.\d\s+(200|301|302)/', $headers[0])) {
                     return false;
                 }
@@ -251,7 +251,7 @@
     /**
      * Validate an email address
      * Source: http://www.linuxjournal.com/article/9585?page=0,3
-     * 
+     *
      * @param string $email
      * @param boolean $required
      * @return boolean

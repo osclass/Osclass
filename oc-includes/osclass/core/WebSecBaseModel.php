@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -24,32 +24,32 @@
     {
         function __construct()
         {
-            parent::__construct() ;
+            parent::__construct();
         }
 
         function isLogged()
         {
-            return osc_is_web_user_logged_in() ;
+            return osc_is_web_user_logged_in();
         }
 
         //destroying current session
         function logout()
         {
             //destroying session
-            Session::newInstance()->session_destroy() ;
-            Session::newInstance()->_drop('userId') ;
-            Session::newInstance()->_drop('userName') ;
-            Session::newInstance()->_drop('userEmail') ;
-            Session::newInstance()->_drop('userPhone') ;
+            Session::newInstance()->session_destroy();
+            Session::newInstance()->_drop('userId');
+            Session::newInstance()->_drop('userName');
+            Session::newInstance()->_drop('userEmail');
+            Session::newInstance()->_drop('userPhone');
 
-            Cookie::newInstance()->pop('oc_userId') ;
-            Cookie::newInstance()->pop('oc_userSecret') ;
-            Cookie::newInstance()->set() ;
+            Cookie::newInstance()->pop('oc_userId');
+            Cookie::newInstance()->pop('oc_userSecret');
+            Cookie::newInstance()->set();
         }
 
         function showAuthFailPage()
         {
-            $this->redirectTo( osc_user_login_url() ) ;
+            $this->redirectTo( osc_user_login_url() );
         }
     }
 

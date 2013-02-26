@@ -1,10 +1,10 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -21,66 +21,66 @@
      */
 
     /**
-     * 
+     *
      */
     class Preference extends DAO
     {
         /**
          *
-         * @var type 
+         * @var type
          */
-        private static $instance ;
+        private static $instance;
         /**
          * array for save preferences
          * @var array
          */
-        private $pref ;
+        private $pref;
 
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
-         * 
+         *
          */
         function __construct()
         {
             parent::__construct();
-            $this->setTableName('t_preference') ;
-            /* $this->set_primary_key($key) ; // no primary key in preference table */
-            $this->setFields( array('s_section', 's_name', 's_value', 'e_type') ) ;
+            $this->setTableName('t_preference');
+            /* $this->set_primary_key($key); // no primary key in preference table */
+            $this->setFields( array('s_section', 's_name', 's_value', 'e_type') );
             $this->toArray();
         }
 
         /**
          * Find a value by its name
-         * 
+         *
          * @access public
          * @since unknown
          * @param type $name
-         * @return type 
+         * @return type
          */
         function findValueByName($name)
         {
-            $this->dao->select('s_value') ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_name', $name) ;
-            $result = $this->dao->get() ;
+            $this->dao->select('s_value');
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_name', $name);
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return false ;
+                return false;
             }
 
             if( $result->numRows() == 0 ) {
-                return false ;
+                return false;
             }
 
-            $row = $result->row() ;
-            return $row['s_value'] ;
+            $row = $result->row();
+            return $row['s_value'];
         }
 
         /**
@@ -89,71 +89,71 @@
          * @access public
          * @since unknown
          * @param string $name
-         * @return array 
+         * @return array
          */
-        public function findBySection($name) 
+        public function findBySection($name)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_section', $name) ;
-            $result = $this->dao->get() ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_section', $name);
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
             if( $result->numRows() == 0 ) {
-                return false ;
+                return false;
             }
 
-            return $result->result() ;
+            return $result->result();
         }
-        
+
         /**
          * Modify the structure of table.
          *
          * @access public
          * @since unknown
          */
-        public function toArray() 
+        public function toArray()
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $result = $this->dao->get() ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return false ;
+                return false;
             }
 
             if( $result->numRows() == 0 ) {
-                return false ;
+                return false;
             }
 
-            $aTmpPref = $result->result() ;
+            $aTmpPref = $result->result();
             foreach($aTmpPref as $tmpPref) {
-                $this->pref[$tmpPref['s_section']][$tmpPref['s_name']] = $tmpPref['s_value'] ;
+                $this->pref[$tmpPref['s_section']][$tmpPref['s_name']] = $tmpPref['s_value'];
             }
 
-            return true ;
+            return true;
         }
 
         /**
          * Get value, given a preference name and a section name.
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $key
          * @param string $section
          * @return string
          */
-        public function get($key, $section = "osclass") 
+        public function get($key, $section = "osclass")
         {
             if ( !isset($this->pref[$section][$key]) ) {
-                return '' ;
+                return '';
             }
-            return $this->pref[$section][$key] ;
+            return $this->pref[$section][$key];
         }
-        
+
         /**
          * Set preference value, given a preference name and a section name.
          *
@@ -161,13 +161,13 @@
          * @since unknown
          * @param string $key
          * @param string$value
-         * @param string $section 
+         * @param string $section
          */
-        public function set($key, $value, $section = "osclass") 
+        public function set($key, $value, $section = "osclass")
         {
-            $this->pref[$section][$key] = $value ;
+            $this->pref[$section][$key] = $value;
         }
-        
+
         /**
          * Replace preference value, given preference name, preference section and type value.
          *
@@ -176,18 +176,18 @@
          * @param string $key
          * @param string $value
          * @param string $section
-         * @param string $type 
+         * @param string $type
          * @return boolean
          */
-        public function replace($key, $value, $section = 'osclass', $type = 'STRING') 
+        public function replace($key, $value, $section = 'osclass', $type = 'STRING')
         {
             $array_replace = array(
                 's_name'    => $key,
                 's_value'   => $value,
                 's_section' => $section,
                 'e_type'    => $type
-            ) ;
-            return $this->dao->replace($this->getTableName(), $array_replace) ;
+            );
+            return $this->dao->replace($this->getTableName(), $array_replace);
         }
     }
 

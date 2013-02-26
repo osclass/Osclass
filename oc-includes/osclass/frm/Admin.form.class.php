@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -54,11 +54,11 @@
             $options = array(
                 array( 'i_value' => '0', 's_text' => __('Administrator') )
                 ,array( 'i_value' => '1', 's_text' => __('Moderator') )
-            ) ;
+            );
 
-            parent::generic_select( 'b_moderator', $options, 'i_value', 's_text', null, (isset($admin['b_moderator'])) ? $admin['b_moderator'] : null ) ;
+            parent::generic_select( 'b_moderator', $options, 'i_value', 's_text', null, (isset($admin['b_moderator'])) ? $admin['b_moderator'] : null );
         }
-        
+
         static public function js_validation() {
 ?>
 <script type="text/javascript">
@@ -123,9 +123,9 @@
         });
     });
 </script>
-<?php 
+<?php
         }
-        
+
     }
 
     /* file end: ./oc-includes/osclass/frm/Admin.form.class.php */

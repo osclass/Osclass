@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -20,7 +20,7 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    class LogOsclassInstaller extends Log
+    class LogOsclassInstaller extends Logger
     {
         private static $_instance;
 
@@ -38,7 +38,7 @@
 
         public function __construct()
         {
-            $this->os = PHP_OS ;
+            $this->os = PHP_OS;
         }
 
         /**

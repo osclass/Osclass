@@ -11,7 +11,7 @@ $(document).ready(function(){
         return false;
     });
 
-    var sQuery = '<?php echo osc_esc_js(AlertForm::default_email_text()); ?>' ;
+    var sQuery = '<?php echo osc_esc_js(AlertForm::default_email_text()); ?>';
 
     if($('input[name=alert_email]').val() == sQuery) {
         $('input[name=alert_email]').css('color', 'gray');

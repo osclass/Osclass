@@ -1,9 +1,9 @@
 <?php
 /*
- *      OSCLass – software for creating and publishing online classified
+ *      Osclass – software for creating and publishing online classified
  *                           advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ *                        Copyright (C) 2012 OSCLASS
  *
  *       This program is free software: you can redistribute it and/or
  *     modify it under the terms of the GNU Affero General Public License
@@ -25,7 +25,7 @@ function locale_en_US_info() {
         ,'short_name'      => 'English'
         ,'description'     => 'American english translation'
         ,'version'         => 2.3
-        ,'author_name'     => 'OSClass'
+        ,'author_name'     => 'Osclass'
         ,'author_url'      => 'http://osclass.org/'
         ,'currency_format' => '{NUMBER} {CURRENCY}'
         ,'date_format'     => 'm/d/Y'

@@ -1,8 +1,8 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -16,7 +16,7 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $reports = __get("reports") ;
+    $reports = __get("reports");
     $type    = Params::getParam('type_stat');
     switch($type){
         case 'week':
@@ -41,7 +41,7 @@
 
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1><?php _e('Statistics') ; ?>
+        <h1><?php _e('Statistics'); ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
         </h1>
     <?php
@@ -53,7 +53,7 @@
     osc_add_filter('admin_title', 'customPageTitle');
 
     function customHead() {
-        $reports = __get("reports") ;
+        $reports = __get("reports");
 ?>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <?php if(count($reports)>0) { ?>
@@ -78,18 +78,18 @@
             <?php $k = 0;
             echo "data.addRows(".count($reports).");";
             foreach($reports as $date => $data) {
-                echo "data.setValue(" . $k . ', 0, "' . $date . '");' ;
-                echo "data.setValue(" . $k . ", 1, " . $data['spam'] . ");" ;
-                echo "data.setValue(" . $k . ", 2, " . $data['repeated'] . ");" ;
-                echo "data.setValue(" . $k . ", 3, " . $data['bad_classified'] . ");" ;
-                echo "data.setValue(" . $k . ", 4, " . $data['offensive'] . ");" ;
-                echo "data.setValue(" . $k . ", 5, " . $data['expired'] . ");" ;
-                $k++ ;
+                echo "data.setValue(" . $k . ', 0, "' . $date . '");';
+                echo "data.setValue(" . $k . ", 1, " . $data['spam'] . ");";
+                echo "data.setValue(" . $k . ", 2, " . $data['repeated'] . ");";
+                echo "data.setValue(" . $k . ", 3, " . $data['bad_classified'] . ");";
+                echo "data.setValue(" . $k . ", 4, " . $data['offensive'] . ");";
+                echo "data.setValue(" . $k . ", 5, " . $data['expired'] . ");";
+                $k++;
             }
             ?>
 
             // Instantiate and draw our chart, passing in some options.
-            var chart = new google.visualization.ColumnChart(document.getElementById('placeholder')) ;
+            var chart = new google.visualization.ColumnChart(document.getElementById('placeholder'));
             chart.draw(data, {
                     colors:['#058dc7','#e6f4fa'],
                         areaOpacity: 0.1,
@@ -132,7 +132,7 @@
     }
     osc_add_hook('admin_header', 'customHead');
 ?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+<?php osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <div class="grid-system" id="stats-page">
     <div class="grid-row grid-50 no-bottom-margin">
         <div class="row-wrapper">
@@ -141,9 +141,9 @@
     </div>
     <div class="grid-row grid-50 no-bottom-margin">
         <div class="row-wrapper">
-            <a id="monthly" class="btn float-right <?php if($type=='month') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=reports&amp;type_stat=month"><?php _e('Last 10 months') ; ?></a>
-            <a id="weekly"  class="btn float-right <?php if($type=='week') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=reports&amp;type_stat=week"><?php _e('Last 10 weeks') ; ?></a>
-            <a id="daily"   class="btn float-right <?php if($type==''||$type=='day') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=reports&amp;type_stat=day"><?php _e('Last 10 days') ; ?></a>
+            <a id="monthly" class="btn float-right <?php if($type=='month') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=reports&amp;type_stat=month"><?php _e('Last 10 months'); ?></a>
+            <a id="weekly"  class="btn float-right <?php if($type=='week') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=reports&amp;type_stat=week"><?php _e('Last 10 weeks'); ?></a>
+            <a id="daily"   class="btn float-right <?php if($type==''||$type=='day') echo 'btn-green';?>" href="<?php echo osc_admin_base_url(true); ?>?page=stats&amp;action=reports&amp;type_stat=day"><?php _e('Last 10 days'); ?></a>
         </div>
     </div>
     <div class="grid-row grid-100 clear">
@@ -156,7 +156,7 @@
                     <b class="stats-title"></b>
                     <div id="placeholder" class="graph-placeholder" style="height:150px">
                         <?php if( count($reports) == 0 ) {
-                            _e("There are no statistics yet") ;
+                            _e("There are no statistics yet");
                         } ?>
                     </div>
                 </div>
@@ -165,4 +165,4 @@
     </div>
     <div class="clear"></div>
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>

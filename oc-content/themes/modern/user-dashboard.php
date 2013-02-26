@@ -1,9 +1,9 @@
 <?php
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -22,18 +22,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
     <head>
-        <?php osc_current_web_theme_path('head.php') ; ?>
+        <?php osc_current_web_theme_path('head.php'); ?>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
     </head>
     <body>
-        <?php osc_current_web_theme_path('header.php') ; ?>
+        <?php osc_current_web_theme_path('header.php'); ?>
         <div class="content user_account">
             <h1>
-                <strong><?php _e('User account manager', 'modern') ; ?></strong>
+                <strong><?php _e('User account manager', 'modern'); ?></strong>
             </h1>
             <div id="sidebar">
-                <?php echo osc_private_user_menu() ; ?>
+                <?php echo osc_private_user_menu(); ?>
             </div>
             <div id="main">
                 <h2><?php echo sprintf(__('Listings from %s', 'modern') ,osc_logged_user_name()); ?></h2>
@@ -43,11 +43,11 @@
                     <?php while(osc_has_items()) { ?>
                         <div class="userItem" >
                             <div>
-                                <a href="<?php echo osc_item_url() ; ?>"><?php echo osc_item_title() ; ?></a>
+                                <a href="<?php echo osc_item_url(); ?>"><?php echo osc_item_title(); ?></a>
                             </div>
                             <div class="userItemData" >
-                            <?php _e('Publication date', 'modern') ; ?>: <?php echo osc_format_date(osc_item_pub_date()) ; ?><br />
-                                    <?php if( osc_price_enabled_at_items() ) { _e('Price', 'modern') ; ?>: <?php echo osc_format_price(osc_item_price()); } ?>
+                            <?php _e('Publication date', 'modern'); ?>: <?php echo osc_format_date(osc_item_pub_date()); ?><br />
+                                    <?php if( osc_price_enabled_at_items() ) { _e('Price', 'modern'); ?>: <?php echo osc_format_price(osc_item_price()); } ?>
                                     <p class="options">
                                         <strong><a href="<?php echo osc_item_url(); ?>"><?php _e('View listing', 'modern'); ?></a></strong>
                                         <span>|</span>
@@ -65,6 +65,6 @@
                 <?php } ?>
             </div>
         </div>
-        <?php osc_current_web_theme_path('footer.php') ; ?>
+        <?php osc_current_web_theme_path('footer.php'); ?>
     </body>
 </html>

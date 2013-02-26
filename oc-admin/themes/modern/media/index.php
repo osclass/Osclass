@@ -1,8 +1,8 @@
-<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.') ;
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -22,8 +22,8 @@
     osc_add_hook('help_box','addHelp');
 
     function customPageHeader(){ ?>
-        <h1><?php _e('Manage Media') ; ?>
-            <a href="<?php echo osc_admin_base_url(true) . '?page=settings&action=media' ; ?>" class="btn ico ico-32 ico-engine float-right"></a>
+        <h1><?php _e('Manage Media'); ?>
+            <a href="<?php echo osc_admin_base_url(true) . '?page=settings&action=media'; ?>" class="btn ico ico-32 ico-engine float-right"></a>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
         </h1>
 <?php
@@ -99,55 +99,50 @@
     }
     osc_add_hook('admin_header','customHead');
 
-    $iDisplayLength = __get('iDisplayLength');
-    $aData          = __get('aMedia');
+    $aData      = __get('aData');
+    $aRawRows   = __get('aRawRows');
+    $sort       = Params::getParam('sort');
+    $direction  = Params::getParam('direction');
+
+    $columns    = $aData['aColumns'];
+    $rows       = $aData['aRows'];
 ?>
-<?php osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+<?php osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <div class="relative">
     <div id="media-toolbar" class="table-toolbar">
     </div>
-    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
+    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>" method="post">
         <input type="hidden" name="page" value="media" />
         <input type="hidden" name="action" value="bulk_actions" />
         <div id="bulk-actions">
             <label>
-                <select id="bulk_actions" name="bulk_actions" class="select-box-extra">
-                    <option value=""><?php _e('Bulk actions'); ?></option>
-                    <option value="delete_all"  data-dialog-content="<?php printf(__('Are you sure you want to %s the selected media files?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ?></option>
-                </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                <?php osc_print_bulk_actions('bulk_actions', 'bulk_actions', __get('bulk_options'), 'select-box-extra'); ?>
+                <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ); ?>" />
             </label>
         </div>
         <table class="table" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
-                    <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
-                    <th><?php _e('File') ; ?></th>
-                    <th><?php _e('Action') ; ?></th>
-                    <th><?php _e('Attached to') ; ?></th>
-                    <th class="col-date"><?php _e('Date') ; ?></th>
+                    <?php foreach($columns as $k => $v) {
+                        echo '<th class="col-'.$k.' '.($sort==$k?($direction=='desc'?'sorting_desc':'sorting_asc'):'').'">'.$v.'</th>';
+                    }; ?>
                 </tr>
             </thead>
             <tbody>
-            <?php if( count($aData['aaData']) > 0 ) { ?>
-            <?php foreach( $aData['aaData'] as $array ) { ?>
-                <tr>
-                <?php foreach( $array as $key => $value ) { ?>
-                    <?php if( $key == 0 ) { ?>
-                    <td class="col-bulkactions">
-                    <?php } else { ?>
-                    <td>
-                    <?php } ?>
-                    <?php echo $value; ?>
-                    </td>
-                <?php } ?>
-                </tr>
-            <?php } ?>
+            <?php if( count($rows) > 0 ) { ?>
+                <?php foreach($rows as $key => $row) { ?>
+                    <tr>
+                        <?php foreach($row as $k => $v) { ?>
+                            <td class="col-<?php echo $k; ?>"><?php echo $v; ?></td>
+                        <?php }; ?>
+                    </tr>
+                <?php }; ?>
             <?php } else { ?>
-            <tr>
-                <td colspan="5" class="text-center">
-                <p><?php _e('No data available in table') ; ?></p>
-                </td>
-            </tr>
+                <tr>
+                    <td colspan="5" class="text-center">
+                    <p><?php _e('No data available in table'); ?></p>
+                    </td>
+                </tr>
             <?php } ?>
             </tbody>
         </table>
@@ -155,13 +150,13 @@
 </div>
 <?php
     function showingResults(){
-        $aData = __get('aMedia');
-        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;
+        $aData = __get('aData');
+        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aRows']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>';
     }
     osc_add_hook('before_show_pagination_admin','showingResults');
     osc_show_pagination_admin($aData);
 ?>
-<form id="dialog-media-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide">
+<form id="dialog-media-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide">
     <input type="hidden" name="page" value="media" />
     <input type="hidden" name="action" value="delete" />
     <input type="hidden" name="id[]" value="" />
