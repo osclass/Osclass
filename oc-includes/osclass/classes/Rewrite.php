@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -22,7 +22,7 @@
 
     class Rewrite
     {
-        private static $instance ;
+        private static $instance;
         private $rules;
         private $request_uri;
         private $uri;
@@ -38,22 +38,22 @@
             $this->location = '';
             $this->section = '';
             $this->http_referer = '';
-            //parent::__construct() ;
+            //parent::__construct();
         }
 
         public static function newInstance()
         {
             if(!self::$instance instanceof self) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         public function getTableName() {}
 
         public function getRules()
         {
-            return unserialize(osc_rewrite_rules()) ;
+            return unserialize(osc_rewrite_rules());
         }
 
         public function setRules()

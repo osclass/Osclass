@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -23,20 +23,20 @@
     class CAdminPages extends AdminSecBaseModel
     {
         //specific for this class
-        private $pageManager ;
+        private $pageManager;
 
         function __construct()
         {
-            parent::__construct() ;
+            parent::__construct();
 
             //specific things for this class
-            $this->pageManager = Page::newInstance() ;
+            $this->pageManager = Page::newInstance();
         }
 
         //Business Layer...
         function doModel()
         {
-            parent::doModel() ;
+            parent::doModel();
 
             //specific things for this class
             switch($this->action) {
@@ -51,13 +51,20 @@
                         Session::newInstance()->_dropKeepForm();
                     }
 
+                    $templates = osc_apply_filter('page_templates', WebThemes::newInstance()->getAvailableTemplates());
+                    $this->_exportVariableToView('templates', $templates);
                     $this->_exportVariableToView("page", $this->pageManager->findByPrimaryKey(Params::getParam("id")));
                     $this->doView("pages/frm.php");
                     break;
                 case 'edit_post':
+                    osc_csrf_check();
                     $id = Params::getParam("id");
+                    $b_link = (Params::getParam("b_link") != '') ? 1 : 0;
                     $s_internal_name = Params::getParam("s_internal_name");
-                    $s_internal_name = osc_sanitizeString($s_internal_name) ;
+                    $s_internal_name = osc_sanitizeString($s_internal_name);
+
+                    $meta = Params::getParam('meta');
+                    $this->pageManager->updateMeta($id, json_encode($meta));
 
                     $aFieldsDescription = array();
                     $postParams = Params::getParamsAsArray('', false);
@@ -89,6 +96,7 @@
                         if(!$this->pageManager->internalNameExists($id, $s_internal_name)) {
                             if(!$this->pageManager->isIndelible($id)) {
                                 $this->pageManager->updateInternalName($id, $s_internal_name);
+                                $this->pageManager->updateLink($id,$b_link);
                             }
                             Session::newInstance()->_clearVariables();
                             osc_add_flash_ok_message(_m('The page has been updated'), 'admin');
@@ -96,7 +104,7 @@
                         }
                         osc_add_flash_error_message(_m("You can't repeat internal name"), 'admin');
                     } else {
-                        osc_add_flash_error_message(_m("The page couldn't be updated, at least one title should not be empty"), 'admin') ;
+                        osc_add_flash_error_message(_m("The page couldn't be updated, at least one title should not be empty"), 'admin');
                     }
                     $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=edit&id=" . $id);
                     break;
@@ -107,12 +115,18 @@
                         Session::newInstance()->_dropKeepForm();
                     }
 
+                    $templates = osc_apply_filter('page_templates', WebThemes::newInstance()->getAvailableTemplates());
+                    $this->_exportVariableToView('templates', $templates);
                     $this->_exportVariableToView("page", array());
                     $this->doView("pages/frm.php");
                     break;
                 case 'add_post':
+                    osc_csrf_check();
                     $s_internal_name = Params::getParam("s_internal_name");
-                    $s_internal_name = osc_sanitizeString($s_internal_name) ;
+                    $b_link = (Params::getParam("b_link") != '') ? 1 : 0;
+                    $s_internal_name = osc_sanitizeString($s_internal_name);
+
+                    $meta = Params::getParam('meta');
 
                     $aFieldsDescription = array();
                     $postParams = Params::getParamsAsArray('', false);
@@ -136,25 +150,26 @@
                         osc_add_flash_error_message(_m('You have to set a different internal name'), 'admin');
                         $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=add");
                     }
-                    $aFields = array('s_internal_name' => $s_internal_name, 'b_indelible' => '0');
+                    $aFields = array('s_internal_name' => $s_internal_name, 'b_indelible' => '0', 's_meta' => json_encode($meta), 'b_link' => $b_link);
                     Session::newInstance()->_setForm('s_internal_name',$s_internal_name);
 
                     $page = $this->pageManager->findByInternalName($s_internal_name);
                     if(!isset($page['pk_i_id'])) {
                         if($not_empty) {
-                            $result = $this->pageManager->insert($aFields, $aFieldsDescription) ;
+                            $result = $this->pageManager->insert($aFields, $aFieldsDescription);
                             Session::newInstance()->_clearVariables();
-                            osc_add_flash_ok_message(_m('The page has been added'), 'admin') ;
+                            osc_add_flash_ok_message(_m('The page has been added'), 'admin');
                             $this->redirectTo(osc_admin_base_url(true)."?page=pages");
                         } else {
-                            osc_add_flash_error_message(_m("The page couldn't be added, at least one title should not be empty"), 'admin') ;
+                            osc_add_flash_error_message(_m("The page couldn't be added, at least one title should not be empty"), 'admin');
                         }
                     } else {
-                        osc_add_flash_error_message(_m("Oops! That internal name is already in use. We can't make the changes"), 'admin') ;
+                        osc_add_flash_error_message(_m("Oops! That internal name is already in use. We can't make the changes"), 'admin');
                     }
                     $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=add");
                     break;
                 case 'delete':
+                    osc_csrf_check();
                     $id = Params::getParam("id");
                     $page_deleted_correcty = 0;
                     $page_deleted_error = 0;
@@ -202,35 +217,72 @@
                     $this->redirectTo(osc_admin_base_url(true) . "?page=pages");
                     break;
                 default:
-                    if( Params::getParam('iDisplayLength') == '' ) {
-                        Params::setParam('iDisplayLength', 10 );
+
+                    if(Params::getParam("action")!="") {
+                        osc_run_hook("page_bulk_".Params::getParam("action"), Params::getParam('id'));
+                    }
+
+                    require_once osc_lib_path()."osclass/classes/datatables/PagesDataTable.php";
+
+                    // set default iDisplayLength
+                    if( Params::getParam('iDisplayLength') != '' ) {
+                        Cookie::newInstance()->push('listing_iDisplayLength', Params::getParam('iDisplayLength'));
+                        Cookie::newInstance()->set();
+                    } else {
+                        // set a default value if it's set in the cookie
+                        if( Cookie::newInstance()->get_value('listing_iDisplayLength') != '' ) {
+                            Params::setParam('iDisplayLength', Cookie::newInstance()->get_value('listing_iDisplayLength'));
+                        } else {
+                            Params::setParam('iDisplayLength', 10 );
+                        }
                     }
                     $this->_exportVariableToView('iDisplayLength', Params::getParam('iDisplayLength'));
 
-                    require_once(osc_admin_base_path() . 'ajax/pages_processing.php');
-                    $params = Params::getParamsAsArray('get');
-                    $pages_processing = new PagesProcessing( $params );
-                    $aData = $pages_processing->result( $params );
+                    // Table header order by related
+                    if( Params::getParam('sort') == '') {
+                        Params::setParam('sort', 'date');
+                    }
+                    if( Params::getParam('direction') == '') {
+                        Params::setParam('direction', 'desc');
+                    }
 
                     $page  = (int)Params::getParam('iPage');
-                    if(count($aData['aaData']) == 0 && $page!=1) {
+                    if($page==0) { $page = 1; };
+                    Params::setParam('iPage', $page);
+
+                    $params = Params::getParamsAsArray("get");
+
+                    $pagesDataTable = new PagesDataTable();
+                    $pagesDataTable->table($params);
+                    $aData = $pagesDataTable->getData();
+
+                    if(count($aData['aRows']) == 0 && $page!=1) {
                         $total = (int)$aData['iTotalDisplayRecords'];
-                        $maxPage = ceil( $total / (int)$aData['iDisplayLength'] ) ;
+                        $maxPage = ceil( $total / (int)$aData['iDisplayLength'] );
 
                         $url = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
 
                         if($maxPage==0) {
-                            $url = preg_replace('/&iPage=(\d)+/', '&iPage=1', $url) ;
-                            $this->redirectTo($url) ;
+                            $url = preg_replace('/&iPage=(\d)+/', '&iPage=1', $url);
+                            $this->redirectTo($url);
                         }
 
-                        if($page > 1) {   
-                            $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url) ;
-                            $this->redirectTo($url) ;
+                        if($page > 1) {
+                            $url = preg_replace('/&iPage=(\d)+/', '&iPage='.$maxPage, $url);
+                            $this->redirectTo($url);
                         }
                     }
 
-                    $this->_exportVariableToView('aPages', $aData);
+
+                    $this->_exportVariableToView('aData', $aData);
+                    $this->_exportVariableToView('aRawRows', $pagesDataTable->rawRows());
+
+                    $bulk_options = array(
+                        array('value' => '', 'data-dialog-content' => '', 'label' => __('Bulk actions')),
+                        array('value' => 'delete', 'data-dialog-content' => sprintf(__('Are you sure you want to %s the selected pages?'), strtolower(__('Delete'))), 'label' => __('Delete'))
+                    );
+                    $bulk_options = osc_apply_filter("page_bulk_filter", $bulk_options);
+                    $this->_exportVariableToView('bulk_options', $bulk_options);
 
                     $this->doView("pages/index.php");
                 break;
@@ -240,8 +292,10 @@
         //hopefully generic...
         function doView($file)
         {
-            osc_current_admin_theme_path($file) ;
+            osc_run_hook("before_admin_html");
+            osc_current_admin_theme_path($file);
             Session::newInstance()->_clearVariables();
+            osc_run_hook("after_admin_html");
         }
     }
 

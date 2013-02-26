@@ -1,9 +1,9 @@
 <?php
 
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -20,7 +20,7 @@
     /**
      * Database connection object
      * 
-     * @package OSClass
+     * @package Osclass
      * @subpackage Database
      * @since 2.3
      */
@@ -33,7 +33,7 @@
          * @since 2.3
          * @var DBConnectionClass 
          */
-        private static $instance ;
+        private static $instance;
 
         /**
          * Host name or IP address where it is located the database
@@ -42,15 +42,15 @@
          * @since 2.3
          * @var string 
          */
-        private $dbHost ;
+        private $dbHost;
         /**
-         * Database name where it's installed OSClass
+         * Database name where it's installed Osclass
          * 
          * @access private
          * @since 2.3
          * @var string 
          */
-        private $dbName ;
+        private $dbName;
         /**
          * Database user
          * 
@@ -58,7 +58,7 @@
          * @since 2.3
          * @var string
          */
-        private $dbUser ;
+        private $dbUser;
         /**
          * Database user password
          * 
@@ -66,16 +66,16 @@
          * @since 2.3
          * @var string 
          */
-        private $dbPassword ;
+        private $dbPassword;
 
         /**
-         * Database connection object to OSClass database
+         * Database connection object to Osclass database
          * 
          * @access private
          * @since 2.3
          * @var mysqli 
          */
-        private $db             = 0 ;
+        private $db             = 0;
         /**
          * Database connection object to metadata database
          * 
@@ -83,7 +83,7 @@
          * @since 2.3
          * @var mysqli 
          */
-        private $metadataDb     = 0 ;
+        private $metadataDb     = 0;
         /**
          * Database error number
          * 
@@ -91,7 +91,7 @@
          * @since 2.3
          * @var int 
          */
-        private $errorLevel     = 0 ;
+        private $errorLevel     = 0;
         /**
          * Database error description
          * 
@@ -99,7 +99,7 @@
          * @since 2.3
          * @var string 
          */
-        private $errorDesc      = "" ;
+        private $errorDesc      = "";
         /**
          * Database connection error number 
          * 
@@ -107,7 +107,7 @@
          * @since 2.3
          * @var int 
          */
-        private $connErrorLevel = 0 ;
+        private $connErrorLevel = 0;
         /**
          * Database connection error description
          * 
@@ -115,7 +115,7 @@
          * @since 2.3
          * @var string 
          */
-        private $connErrorDesc  = 0 ;
+        private $connErrorDesc  = 0;
 
         /**
          * It creates a new DBConnection object class or if it has been created before, it 
@@ -131,15 +131,15 @@
          */
         public static function newInstance($server = '', $user = '', $password = '', $database = '')
         {
-            $server      = ($server == '') ? osc_db_host() : $server ;
-            $user        = ($user == '') ? osc_db_user() : $user ;
-            $password    = ($password == '') ? osc_db_password() : $password ;
-            $database    = ($database == '') ? osc_db_name() : $database ;
+            $server      = ($server == '') ? osc_db_host() : $server;
+            $user        = ($user == '') ? osc_db_user() : $user;
+            $password    = ($password == '') ? osc_db_password() : $password;
+            $database    = ($database == '') ? osc_db_name() : $database;
 
             if(!self::$instance instanceof self) {
                 self::$instance = new self ($server, $user, $password, $database);
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -152,12 +152,12 @@
          */
         public function __construct($server, $user, $password, $database)
         {
-            $this->dbHost       = $server ;
-            $this->dbName       = $database ;
-            $this->dbUser       = $user ;
-            $this->dbPassword   = $password ;
+            $this->dbHost       = $server;
+            $this->dbName       = $database;
+            $this->dbUser       = $user;
+            $this->dbPassword   = $password;
 
-            $this->connectToOsclassDb() ;
+            $this->connectToOsclassDb();
         }
 
         /**
@@ -165,9 +165,9 @@
          */
         public function __destruct()
         {
-            $this->releaseOsclassDb() ;
-            $this->releaseMetadataDb() ;
-            $this->debug() ;
+            $this->releaseOsclassDb();
+            $this->releaseMetadataDb();
+            $this->debug();
         }
 
         /**
@@ -179,11 +179,11 @@
         function errorReport()
         {
             if( OSC_DEBUG ) {
-                $this->errorLevel = $this->db->errno ;
-                $this->errorDesc  = $this->db->error ;
+                $this->errorLevel = $this->db->errno;
+                $this->errorDesc  = $this->db->error;
             } else {
-                $this->errorLevel = @$this->db->errno ;
-                $this->errorDesc  = @$this->db->error ;
+                $this->errorLevel = @$this->db->errno;
+                $this->errorDesc  = @$this->db->error;
             }
         }
 
@@ -196,11 +196,11 @@
         function errorConnection()
         {
             if( OSC_DEBUG ) {
-                $this->connErrorLevel = $this->db->connect_errno ;
-                $this->connErrorDesc  = $this->db->connect_error ;
+                $this->connErrorLevel = $this->db->connect_errno;
+                $this->connErrorDesc  = $this->db->connect_error;
             } else {
-                $this->connErrorLevel = @$this->db->connect_errno ;
-                $this->connErrorDesc  = @$this->db->connect_error ;
+                $this->connErrorLevel = @$this->db->connect_errno;
+                $this->connErrorDesc  = @$this->db->connect_error;
             }
         }
 
@@ -213,7 +213,7 @@
          */
         function getErrorConnectionLevel()
         {
-            return $this->connErrorLevel ;
+            return $this->connErrorLevel;
         }
 
         /**
@@ -225,7 +225,7 @@
          */
         function getErrorConnectionDesc()
         {
-            return $this->connErrorDesc ;
+            return $this->connErrorDesc;
         }
 
         /**
@@ -237,7 +237,7 @@
          */
         function getErrorLevel()
         {
-            return $this->errorLevel ;
+            return $this->errorLevel;
         }
 
         /**
@@ -249,11 +249,11 @@
          */
         function getErrorDesc()
         {
-            return $this->errorDesc ;
+            return $this->errorDesc;
         }
 
         /**
-         * Connect to OSClass database
+         * Connect to Osclass database
          * 
          * @access public
          * @since 2.3
@@ -261,28 +261,28 @@
          */
         function connectToOsclassDb()
         {
-            $conn = $this->_connectToDb($this->dbHost, $this->dbUser, $this->dbPassword, $this->db) ;
+            $conn = $this->_connectToDb($this->dbHost, $this->dbUser, $this->dbPassword, $this->db);
 
             if ( $conn == false ) {
-                $this->errorConnection() ;
-                $this->releaseOsclassDb() ;
-                return false ;
+                $this->errorConnection();
+                $this->releaseOsclassDb();
+                return false;
             }
 
-            $this->_setCharset('utf8', $this->db) ;
+            $this->_setCharset('utf8', $this->db);
 
             if( $this->dbName == '' ) {
-                return true ;
+                return true;
             }
 
-            $selectDb = $this->selectOsclassDb() ;
+            $selectDb = $this->selectOsclassDb();
             if ( $selectDb == false ) {
-                $this->errorReport() ;
-                $this->releaseOsclassDb() ;
-                return false ;
+                $this->errorReport();
+                $this->releaseOsclassDb();
+                return false;
             }
 
-            return true ;
+            return true;
         }
 
         /**
@@ -294,30 +294,30 @@
          */
         function connectToMetadataDb()
         {
-            $conn = $this->_connectToDb(DB_HOST, DB_USER, DB_PASSWORD, $this->metadataDb) ;
+            $conn = $this->_connectToDb(DB_HOST, DB_USER, DB_PASSWORD, $this->metadataDb);
 
             if ( $conn == false ) {
-                $this->releaseMetadataDb() ;
-                return false ;
+                $this->releaseMetadataDb();
+                return false;
             }
 
-            $this->_setCharset('utf8', $this->metadataDb) ;
+            $this->_setCharset('utf8', $this->metadataDb);
 
             if( DB_NAME == '' ) {
-                return true ;
+                return true;
             }
 
-            $selectDb = $this->selectMetadataDb() ;
+            $selectDb = $this->selectMetadataDb();
             if ( $selectDb == false ) {
-                $this->releaseMetadataDb() ;
-                return false ;
+                $this->releaseMetadataDb();
+                return false;
             }
 
-            return true ;
+            return true;
         }
 
         /**
-         * Select OSClass database in $db var
+         * Select Osclass database in $db var
          * 
          * @access private
          * @since 2.3
@@ -325,7 +325,7 @@
          */
         function selectOsclassDb()
         {
-            return $this->_selectDb($this->dbName, $this->db) ;
+            return $this->_selectDb($this->dbName, $this->db);
         }
 
         /**
@@ -337,19 +337,19 @@
          */
         function selectMetadataDb()
         {
-            return $this->_selectDb(DB_NAME, $this->metadataDb) ;
+            return $this->_selectDb(DB_NAME, $this->metadataDb);
         }
 
         /**
-         * It reconnects to OSClass database. First, it releases the database link connection and it connects again
+         * It reconnects to Osclass database. First, it releases the database link connection and it connects again
          * 
          * @access private
          * @since 2.3
          */
         function reconnectOsclassDb()
         {
-            $this->releaseOsclassDb() ;
-            $this->connectToOsclassDb() ;
+            $this->releaseOsclassDb();
+            $this->connectToOsclassDb();
         }
 
         /**
@@ -360,12 +360,12 @@
          */
         function reconnectMetadataDb()
         {
-            $this->releaseMetadataDb() ;
-            $this->connectToMetadataDb() ;
+            $this->releaseMetadataDb();
+            $this->connectToMetadataDb();
         }
 
         /**
-         * Release the OSClass database connection
+         * Release the Osclass database connection
          * 
          * @access private
          * @since 2.3
@@ -373,13 +373,13 @@
          */
         function releaseOsclassDb()
         {
-            $release = $this->_releaseDb($this->db) ;
+            $release = $this->_releaseDb($this->db);
 
             if( !$release ) {
-                $this->errorReport() ;
+                $this->errorReport();
             }
 
-            return $release ;
+            return $release;
         }
 
         /**
@@ -391,7 +391,7 @@
          */
         function releaseMetadataDb()
         {
-            return $this->_releaseDb($this->metadataDb) ;
+            return $this->_releaseDb($this->metadataDb);
         }
 
         /**
@@ -402,7 +402,7 @@
          */
         function getOsclassDb()
         {
-            return $this->_getDb($this->db) ;
+            return $this->_getDb($this->db);
         }
 
         /**
@@ -413,7 +413,7 @@
          */
         function getMetadataDb()
         {
-            return $this->_getDb($this->metadataDb) ;
+            return $this->_getDb($this->metadataDb);
         }
 
         /**
@@ -428,16 +428,16 @@
         function _connectToDb($host, $user, $password, &$connId)
         {
             if( OSC_DEBUG ) {
-                $connId = new mysqli($host, $user, $password) ;
+                $connId = new mysqli($host, $user, $password);
             } else {
-                $connId = @new mysqli($host, $user, $password) ;
+                $connId = @new mysqli($host, $user, $password);
             }
 
             if ( $connId->connect_errno ) {
-                return false ;
+                return false;
             }
 
-            return true ;
+            return true;
         }
 
         /**
@@ -448,28 +448,28 @@
          */
         function debug()
         {
-            $log = LogDatabase::newInstance() ;
+            $log = LogDatabase::newInstance();
 
             if( OSC_DEBUG_DB_EXPLAIN ) {
-                $log->writeExplainMessages() ;
+                $log->writeExplainMessages();
             }
 
             if( !OSC_DEBUG_DB ) {
-                return false ;
+                return false;
             }
 
             if( defined('IS_AJAX') && !OSC_DEBUG_DB_LOG ) {
-                return false ;
+                return false;
             }
 
             if( OSC_DEBUG_DB_LOG ) {
-                $log->writeMessages() ;
+                $log->writeMessages();
             } else {
-                $log->printMessages() ;
+                $log->printMessages();
             }
 
-            unset($log) ;
-            return true ;
+            unset($log);
+            return true;
         }
 
         /**
@@ -485,14 +485,14 @@
         function _selectDb($dbName, &$connId)
         {
             if ( $connId->connect_errno ) {
-                return false ;
+                return false;
             }
 
             if( OSC_DEBUG ) {
-                return $connId->select_db($dbName) ;
+                return $connId->select_db($dbName);
             }
 
-            return @$connId->select_db($dbName) ;
+            return @$connId->select_db($dbName);
         }
 
         /**
@@ -506,10 +506,10 @@
         function _setCharset($charset, &$connId)
         {
             if( OSC_DEBUG ) {
-                $connId->set_charset($charset) ;
+                $connId->set_charset($charset);
             }
 
-            @$connId->set_charset($charset) ;
+            @$connId->set_charset($charset);
         }
 
         /**
@@ -524,14 +524,14 @@
         function _releaseDb(&$connId)
         {
             if( !$connId ) {
-                return true ;
+                return true;
             }
 
             if( !$connId->close() ) {
                 return false; 
             }
 
-            return true ;
+            return true;
         }
 
         /**
@@ -544,10 +544,10 @@
         function _getDb(&$connId)
         {
             if( $connId != false ) {
-                return $connId ;
+                return $connId;
             }
 
-            return false ;
+            return false;
         }
 	}
 

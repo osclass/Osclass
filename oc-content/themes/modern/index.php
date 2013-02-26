@@ -1,10 +1,10 @@
 <?php
 /*
-Theme Name: OSClass Modern Theme
+Theme Name: Osclass Modern Theme
 Theme URI: http://www.osclass.org/
-Description: This is the OSClass modern theme
+Description: This is the Osclass modern theme
 Version: 3.0
-Author: OSClass team
+Author: Osclass team
 Author URI: http://www.osclass.org/
 Widgets: header,footer
 Theme update URI: 
@@ -12,10 +12,10 @@ Theme update URI:
 
     function modern_theme_info() {
         return array(
-             'name'        => 'OSClass Modern Theme'
+             'name'        => 'Osclass Modern Theme'
             ,'version'     => '3.0'
-            ,'description' => 'This is the OSClass modern theme'
-            ,'author_name' => 'OSClass Team'
+            ,'description' => 'This is the Osclass modern theme'
+            ,'author_name' => 'Osclass Team'
             ,'author_url'  => 'http://osclass.org'
             ,'locations'   => array('header', 'footer')
         );

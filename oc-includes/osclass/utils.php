@@ -1,10 +1,10 @@
 <?php
 
 /*
- *      OSCLass – software for creating and publishing online classified
+ *      Osclass – software for creating and publishing online classified
  *                           advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ *                        Copyright (C) 2012 OSCLASS
  *
  *       This program is free software: you can redistribute it and/or
  *     modify it under the terms of the GNU Affero General Public License
@@ -25,7 +25,7 @@
  * check if the item is expired
  */
 function osc_isExpired($dt_expiration) {
-    $now       = date("Ymdhis");
+    $now       = date("YmdHis");
 
     $dt_expiration = str_replace(' ', '', $dt_expiration);
     $dt_expiration = str_replace('-', '', $dt_expiration);
@@ -44,12 +44,15 @@ function osc_isExpired($dt_expiration) {
  * @return boolean
  */
 function osc_deleteResource( $id , $admin) {
+    if( defined('DEMO') ) {
+        return false;
+    }
     if( is_array( $id ) ){
         $id = $id[0];
     }
-    $resource = ItemResource::newInstance()->findByPrimaryKey($id) ;
+    $resource = ItemResource::newInstance()->findByPrimaryKey($id);
     if( !is_null($resource) ){
-        Log::newInstance()->insertLog('item', 'delete resource', $resource['pk_i_id'], $id, $admin?'admin':'user', $admin ? osc_logged_admin_id() : osc_logged_user_id()) ;
+        Log::newInstance()->insertLog('item', 'delete resource', $resource['pk_i_id'], $id, $admin?'admin':'user', $admin ? osc_logged_admin_id() : osc_logged_user_id());
 
         $backtracel = '';
         foreach(debug_backtrace() as $k=>$v){
@@ -60,7 +63,7 @@ function osc_deleteResource( $id , $admin) {
             }
         }
 
-        Log::newInstance()->insertLog('item', 'delete resource backtrace', $resource['pk_i_id'], $backtracel, $admin?'admin':'user', $admin ? osc_logged_admin_id() : osc_logged_user_id()) ;
+        Log::newInstance()->insertLog('item', 'delete resource backtrace', $resource['pk_i_id'], $backtracel, $admin?'admin':'user', $admin ? osc_logged_admin_id() : osc_logged_user_id());
 
         @unlink(osc_base_path() . $resource['s_path'] .$resource['pk_i_id'].".".$resource['s_extension']);
         @unlink(osc_base_path() . $resource['s_path'] .$resource['pk_i_id']."_original.".$resource['s_extension']);
@@ -147,7 +150,7 @@ function osc_plugin_path($file) {
 function osc_plugin_url($file) {
     // Sanitize windows paths and duplicated slashes
     $dir = preg_replace('|/+|','/', str_replace('\\','/',dirname($file)));
-    $dir = WEB_PATH . 'oc-content/plugins/' . preg_replace('#^.*oc-content\/plugins\/#','',$dir) . "/";
+    $dir = osc_base_url() . 'oc-content/plugins/' . preg_replace('#^.*oc-content\/plugins\/#','',$dir) . "/";
     return $dir;
 }
 
@@ -243,7 +246,7 @@ function osc_doRequest($url, $_data) {
         if($fp!==false) {
             $out  = "POST $path HTTP/1.1\r\n";
             $out .= "Host: $host\r\n";
-            $out .= "Referer: OSClass (v.". osc_version() .")\r\n";
+            $out .= "Referer: Osclass (v.". osc_version() .")\r\n";
             $out .= "Content-type: application/x-www-form-urlencoded\r\n";
             $out .= "Content-Length: ".strlen($data)."\r\n";
             $out .= "Connection: Close\r\n\r\n";
@@ -260,89 +263,184 @@ function osc_sendMail($params) {
         return false;
     }
 
-    if( key_exists('add_bcc', $params) ) {
-        if( !is_array($params['add_bcc']) && $params['add_bcc'] != '' ) {
-            $params['add_bcc'] = array($params['add_bcc']) ;
-        }
-    }
+    $mail = new PHPMailer(true);
+    $mail->ClearAddresses();
+    $mail->ClearAllRecipients();
+    $mail->ClearAttachments();
+    $mail->ClearBCCs();
+    $mail->ClearCCs();
+    $mail->ClearCustomHeaders();
+    $mail->ClearReplyTos();
 
-    require_once osc_lib_path() . 'phpmailer/class.phpmailer.php' ;
+    $mail = osc_apply_filter('init_send_mail', $mail);
 
     if( osc_mailserver_pop() ) {
-        require_once osc_lib_path() . 'phpmailer/class.pop3.php' ;
-        $pop = new POP3() ;
-        $pop->Authorise(
-                ( isset($params['host']) ) ? $params['host'] : osc_mailserver_host(),
-                ( isset($params['port']) ) ? $params['port'] : osc_mailserver_port(),
-                30,
-                ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username(),
-                ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username(),
-                0
-        ) ;
+        require_once osc_lib_path() . 'phpmailer/class.pop3.php';
+        $pop = new POP3();
+
+        $pop3_host = osc_mailserver_host();
+        if( array_key_exists('host', $params) ) {
+            $pop3_host = $params['host'];
+        }
+
+        $pop3_port = osc_mailserver_port();
+        if( array_key_exists('port', $params) ) {
+            $pop3_port = $params['port'];
+        }
+
+        $pop3_username = osc_mailserver_username();
+        if( array_key_exists('username', $params) ) {
+            $pop3_username = $params['username'];
+        }
+
+        $pop3_password = osc_mailserver_password();
+        if( array_key_exists('password', $params) ) {
+            $pop3_password = $params['password'];
+        }
+
+        $pop->Authorise($pop3_host, $pop3_port, 30, $pop3_username, $pop3_password, 0);
     }
 
-    $mail = new PHPMailer(true) ;
-    try {
-        $mail->CharSet = 'utf-8' ;
+    if( osc_mailserver_auth() ) {
+        $mail->IsSMTP();
+        $mail->SMTPAuth = true;
+    } else if( osc_mailserver_pop() ) {
+        $mail->IsSMTP();
+    }
 
-        if( osc_mailserver_auth() ) {
-            $mail->IsSMTP() ;
-            $mail->SMTPAuth = true ;
-        } else if( osc_mailserver_pop() ) {
-            $mail->IsSMTP() ;
+    $smtpSecure = osc_mailserver_ssl();
+    if( array_key_exists('password', $params) ) {
+        $smtpSecure = $params['ssl'];
+    }
+    if( $smtpSecure != '' ) {
+        $mail->SMTPSecure = $smtpSecure;
+    }
+
+    $stmpUsername = osc_mailserver_username();
+    if( array_key_exists('username', $params) ) {
+        $stmpUsername = $params['username'];
+    }
+    if( $stmpUsername != '' ) {
+        $mail->Username = $stmpUsername;
+    }
+
+    $smtpPassword = osc_mailserver_password();
+    if( array_key_exists('password', $params) ) {
+        $smtpPassword = $params['password'];
+    }
+    if( $smtpPassword != '' ) {
+        $mail->Password = $smtpPassword;
+    }
+
+    $smtpHost = osc_mailserver_host();
+    if( array_key_exists('host', $params) ) {
+        $smtpHost = $params['host'];
+    }
+    if( $smtpHost != '' ) {
+        $mail->Host = $smtpHost;
+    }
+
+    $smtpPort = osc_mailserver_port();
+    if( array_key_exists('port', $params) ) {
+        $smtpPort = $params['port'];
+    }
+    if( $smtpPort != '' ) {
+        $mail->Port = $smtpPort;
+    }
+
+    $from = 'osclass@' . osc_get_domain();
+    if( array_key_exists('from', $params) ) {
+        $from = $params['from'];
+    }
+    if( osc_mailserver_username() !== '' ) {
+        $from = osc_mailserver_username();
+    }
+    if( array_key_exists('username', $params) ) {
+        $from = $params['username'];
+    }
+    $from_name = osc_page_title();
+    if( array_key_exists('from_name', $params) ) {
+        $from_name = $params['from_name'];
+    }
+
+    $mail->From     = osc_apply_filter('mail_from', $from);
+    $mail->FromName = osc_apply_filter('mail_from_name', $from_name);
+
+    $to      = $params['to'];
+    $to_name = '';
+    if( array_key_exists('to_name', $params) ) {
+        $to_name = $params['to_name'];
+    }
+
+    if( !is_array($to) ) {
+        $to = array($to => $to_name);
+    }
+
+    foreach($to as $to_email => $to_name) {
+        try {
+            $mail->addAddress($to_email, $to_name);
+        } catch (phpmailerException $e) {
+            continue;
+        }
+    }
+
+    if( array_key_exists('add_bcc', $params) ) {
+        if( !is_array($params['add_bcc']) && $params['add_bcc'] != '' ) {
+            $params['add_bcc'] = array($params['add_bcc']);
         }
 
-        $mail->SMTPSecure = ( isset($params['ssl']) ) ? $params['ssl'] : osc_mailserver_ssl() ;
-        $mail->Username = ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username() ;
-        $mail->Password = ( isset($params['password']) ) ? $params['password'] : osc_mailserver_password() ;
-        $mail->Host = ( isset($params['host']) ) ? $params['host'] : osc_mailserver_host() ;
-        $mail->Port = ( isset($params['port']) ) ? $params['port'] : osc_mailserver_port() ;
-        $mail->From = ( isset($params['from']) ) ? $params['from'] : 'osclass@' . osc_get_domain() ;
-        if( osc_mailserver_username() !== '' ) {
-            $mail->From = osc_mailserver_username();
-        }
-        if( array_key_exists('username', $params) ) {
-            $mail->From = $params['username'];
-        }
-        $mail->FromName = ( isset($params['from_name']) ) ? $params['from_name'] : osc_page_title() ;
-        $mail->Subject = ( isset($params['subject']) ) ? $params['subject'] : '' ;
-        $mail->Body = ( isset($params['body']) ) ? $params['body'] : '' ;
-        $mail->AltBody = ( isset($params['alt_body']) ) ? $params['alt_body'] : '' ;
-        $to = ( isset($params['to']) ) ? $params['to'] : '' ;
-        $to_name = ( isset($params['to_name']) ) ? $params['to_name'] : '' ;
-
-        if( key_exists('add_bcc', $params) ) {
-            foreach( $params['add_bcc'] as $bcc ) {
-                $mail->AddBCC($bcc) ;
+        foreach($params['add_bcc'] as $bcc) {
+            try {
+                $mail->AddBCC($bcc);
+            } catch ( phpmailerException $e ) {
+                continue;
             }
         }
-
-        if( isset($params['reply_to']) ) {
-            $mail->AddReplyTo($params['reply_to']) ;
-        }
-
-        if( isset($params['attachment']) ) {
-            $mail->AddAttachment($params['attachment']) ;
-        }
-
-        $mail->IsHTML(true) ;
-        $mail->AddAddress($to, $to_name) ;
-        $mail->Send() ;
-        return true ;
-    } catch (phpmailerException $e) {
-        error_log("phpmailerException in osc_sendMail() Error: ".$mail->ErrorInfo, 0);
-        return false ;
-    } catch (Exception $e) {
-        error_log("Exception in osc_sendMail() Error".$mail->ErrorInfo, 0);
-        return false ;
     }
 
-    return false ;
+    if( array_key_exists('reply_to', $params) ) {
+        try {
+            $mail->AddReplyTo($params['reply_to']);
+        } catch (phpmailerException $e) {
+            //continue;
+        }
+    }
+
+    $mail->Subject = $params['subject'];
+    $mail->Body    = $params['body'];
+
+    if( array_key_exists('attachment', $params) ) {
+        if( !is_array($params['attachment']) ) {
+            $params['attachment'] = array( $params['attachment'] );
+        }
+
+        foreach($params['attachment'] as $attachment) {
+            try {
+                $mail->AddAttachment($attachment);
+            } catch (phpmailerException $e) {
+                continue;
+            }
+        }
+    }
+
+    $mail->CharSet = 'utf-8';
+    $mail->IsHTML(true);
+
+    $mail = osc_apply_filter('pre_send_mail', $mail);
+
+    // send email!
+    try {
+        $mail->Send();
+    } catch (phpmailerException $e) {
+        return false;
+    }
+
+    return true;
 }
 
 function osc_mailBeauty($text, $params) {
 
-    $text = str_ireplace($params[0], $params[1], $text) ;
+    $text = str_ireplace($params[0], $params[1], $text);
     $kwords = array(
         '{WEB_URL}',
         '{WEB_TITLE}',
@@ -359,9 +457,9 @@ function osc_mailBeauty($text, $params) {
         date('H:i'),
         $_SERVER['REMOTE_ADDR']
     );
-    $text = str_ireplace($kwords, $rwords, $text) ;
+    $text = str_ireplace($kwords, $rwords, $text);
 
-    return $text ;
+    return $text;
 }
 
 
@@ -455,59 +553,59 @@ function osc_copyemz($file1,$file2){
 function osc_dbdump($path, $file) {
 
     require_once LIB_PATH . 'osclass/model/Dump.php';
-    if ( !is_writable($path) ) return -4 ;
-    if($path == '') return -1 ;
+    if ( !is_writable($path) ) return -4;
+    if($path == '') return -1;
 
     //checking connection
     $dump = Dump::newInstance();
-    if (!$dump) return -2 ;
+    if (!$dump) return -2;
 
-    $path .= $file ;
+    $path .= $file;
     $result = $dump->showTables();
 
     if(!$result) {
-        $_str = '' ;
-        $_str .= '/* no tables in ' . DB_NAME . ' */' ;
-        $_str .= "\n" ;
+        $_str = '';
+        $_str .= '/* no tables in ' . DB_NAME . ' */';
+        $_str .= "\n";
 
-        $f = fopen($path, "a") ;
-        fwrite($f, $_str) ;
-        fclose($f) ;
+        $f = fopen($path, "a");
+        fwrite($f, $_str);
+        fclose($f);
 
-        return -3 ;
+        return -3;
     }
 
-    $_str = '' ;
-    $_str .= '/* OSCLASS MYSQL Autobackup (' . date('Y-m-d H:i:s') . ') */' ;
-    $_str .= "\n" ;
+    $_str = '';
+    $_str .= '/* OSCLASS MYSQL Autobackup (' . date('Y-m-d H:i:s') . ') */';
+    $_str .= "\n";
 
-    $f = fopen($path, "a") ;
-    fwrite($f, $_str) ;
-    fclose($f) ;
+    $f = fopen($path, "a");
+    fwrite($f, $_str);
+    fclose($f);
 
-    $tables = array() ;
+    $tables = array();
     foreach($result as $_table) {
         $tableName = current($_table);
         $tables[$tableName] = $tableName;
     }
 
     $tables_order = array('t_locale', 't_country', 't_currency', 't_region', 't_city', 't_city_area', 't_widget', 't_admin', 't_user', 't_user_description', 't_category', 't_category_description', 't_category_stats', 't_item', 't_item_description', 't_item_location', 't_item_stats', 't_item_resource', 't_item_comment', 't_preference', 't_user_preferences', 't_pages', 't_pages_description', 't_plugin_category', 't_cron', 't_alerts', 't_keywords', 't_meta_fields', 't_meta_categories', 't_item_meta');
-    // Backup default OSClass tables in order, so no problem when importing them back
+    // Backup default Osclass tables in order, so no problem when importing them back
     foreach($tables_order as $table) {
         if(array_key_exists(DB_TABLE_PREFIX . $table, $tables)) {
-            $dump->table_structure($path, DB_TABLE_PREFIX . $table) ;
-            $dump->table_data($path, DB_TABLE_PREFIX . $table) ;
-            unset($tables[DB_TABLE_PREFIX . $table]) ;
+            $dump->table_structure($path, DB_TABLE_PREFIX . $table);
+            $dump->table_data($path, DB_TABLE_PREFIX . $table);
+            unset($tables[DB_TABLE_PREFIX . $table]);
         }
     }
 
     // Backup the rest of tables
     foreach($tables as $table) {
-        $dump->table_structure($path, $table) ;
-        $dump->table_data($path, $table) ;
+        $dump->table_structure($path, $table);
+        $dump->table_data($path, $table);
     }
 
-    return 1 ;
+    return 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -551,7 +649,6 @@ if( !function_exists('http_chunked_decode') ) {
         $pos = 0;
         $len = strlen($chunk);
         $dechunk = null;
-
         while(($pos < $len)
             && ($chunkLenHex = substr($chunk,$pos, ($newlineAt = strpos($chunk,"\n",$pos+1))-$pos)))
         {
@@ -648,10 +745,12 @@ function download_fsockopen($sourceFile, $fileout = null)
 
     $fp = @fsockopen($host, 80, $errno, $errstr, 30);
     if (!$fp) {
-
+        return false;
     } else {
+        $ua  = $_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')';
         $out = "GET $link HTTP/1.1\r\n";
         $out .= "Host: $host\r\n";
+        $out .= "User-Agent: $ua\r\n";
         $out .= "Connection: Close\r\n\r\n";
         $out .= "\r\n";
         fwrite($fp, $out);
@@ -660,6 +759,9 @@ function download_fsockopen($sourceFile, $fileout = null)
         while (!feof($fp)) {
             $contents.= fgets($fp, 1024);
         }
+
+        fclose($fp);
+
         // check redirections ?
         // if (redirections) then do request again
         $aResult = processResponse($contents);
@@ -687,13 +789,17 @@ function download_fsockopen($sourceFile, $fileout = null)
             }
             if($fileout!=null) {
                 $ff = @fopen($fileout, 'w+');
-                fwrite($ff, $body);
-                fclose($ff);
+                if($ff!==FALSE) {
+                    fwrite($ff, $body);
+                    fclose($ff);
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
                 return $body;
             }
         }
-        fclose($fp);
     }
 }
 
@@ -701,13 +807,14 @@ function osc_downloadFile($sourceFile, $downloadedFile)
 {
     if ( testCurl() ) {
         @set_time_limit(0);
-
         $fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
         if($fp) {
             $ch = curl_init($sourceFile);
             @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+            curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')');
             curl_setopt($ch, CURLOPT_FILE, $fp);
             @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($ch, CURLOPT_REFERER, osc_base_url());
             curl_exec($ch);
             curl_close($ch);
             fclose($fp);
@@ -720,18 +827,19 @@ function osc_downloadFile($sourceFile, $downloadedFile)
         download_fsockopen($sourceFile, $downloadedFile);
         return true;
     }
+    return false;
 }
 
 function osc_file_get_contents($url)
 {
     if( testCurl() ) {
-        $ch = curl_init() ;
-        curl_setopt($ch, CURLOPT_URL, $url) ;
-        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' OSClass (v.' . osc_version() . ')') ;
-        if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1) ;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] . ' Osclass (v.' . osc_version() . ')');
+        if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1);
         @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_REFERER, osc_base_url());
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
         $data = curl_exec($ch);
         curl_close($ch);
     } else if( testFsockopen() ) {
@@ -772,7 +880,7 @@ function osc_changeVersionTo($version = null) {
     if($version != null) {
         Preference::newInstance()->update(array('s_value' => $version), array( 's_section' => 'osclass', 's_name' => 'version'));
         //XXX: I don't know if it's really needed. Only for reload the values of the preferences
-        Preference::newInstance()->toArray() ;
+        Preference::newInstance()->toArray();
     }
 }
 
@@ -994,7 +1102,7 @@ function _zip_folder_pclzip($archive_folder, $archive_name) {
         if (substr($v_dir, 1,1) == ':') {
             $v_remove = substr($v_dir, 2);
         }
-        $v_list = $zip->create($v_dir, PCLZIP_OPT_REMOVE_PATH, $v_remove);
+        $v_list = $zip->create($dir, PCLZIP_OPT_REMOVE_PATH, $v_remove);
         if ($v_list == 0) {
             return false;
         }
@@ -1067,28 +1175,28 @@ function osc_change_permissions( $dir = ABS_PATH ) {
                 if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
                     if(!is_writable(str_replace("//", "/", $dir . "/" . $file))) {
                         $res = @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
+                        if(!$res) { return false; };
                     }
-                    if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
                     if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/themes")) {
                         if($file=="modern" || $file=="index.php") {
                             $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                            if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
+                            if(!$res) { return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/plugins")) {
                         if($file=="google_maps" || $file=="google_analytics" || $file=="index.php") {
                             $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                            if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
+                            if(!$res) { return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/languages")) {
                         if($file=="en_US" || $file=="index.php") {
                             $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                            if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
+                            if(!$res) { return false; };
                         }
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/downloads")) {
                     } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/uploads")) {
                     } else {
                         $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
-                        if(!$res) { echo str_replace("//", "/", $dir . "/" . $file);return false; };
+                        if(!$res) { return false; };
                     }
                 } else {
                     if(!is_writable(str_replace("//", "/", $dir . "/" . $file))) {
@@ -1150,7 +1258,9 @@ function rglob($pattern, $flags = 0, $path = '') {
     return $files;
 }
 
-// Market util functions
+/*
+ *  Market util functions
+ */
 
 function osc_check_plugin_update($update_uri, $version = null) {
     $uri = _get_market_url('plugins', $update_uri);
@@ -1171,7 +1281,23 @@ function osc_check_theme_update($update_uri, $version = null) {
 function osc_check_language_update($update_uri, $version = null) {
     $uri = _get_market_url('languages', $update_uri);
     if($uri != false) {
-        return _need_update($uri, $version);
+
+        if(false===($json=@osc_file_get_contents($uri))) {
+            return false;
+        } else {
+            $data = json_decode($json , true);
+            if(isset($data['s_version']) ) {
+                $result = version_compare2( $version, $data['s_version'] );
+                if( $result == -1 ) {
+                    // market have a newer version of this language
+                    $result = version_compare2($data['s_version'], OSCLASS_VERSION);
+                    if( $result == 0 || $result == -1 ) {
+                        // market version is compatible with current osclass version
+                        return true;
+                    }
+                }
+            }
+        }
     }
     return false;
 }
@@ -1183,7 +1309,7 @@ function _get_market_url($type, $update_uri) {
 
     if(in_array($type, array('plugins', 'themes', 'languages') ) ) {
         $uri = '';
-        if(stripos("http://", $update_uri)===FALSE ) {
+        if(stripos($update_uri, "http://")===FALSE ) {
             // OSCLASS OFFICIAL REPOSITORY
             $uri = osc_market_url($type, $update_uri);
         } else {
@@ -1199,17 +1325,53 @@ function _get_market_url($type, $update_uri) {
     }
 }
 
-function _need_update($uri, $version) {
+function _need_update($uri, $version, $operator = '>') {
     if(false===($json=@osc_file_get_contents($uri))) {
         return false;
     } else {
         $data = json_decode($json , true);
-        if(isset($data['s_version']) && $data['s_version']>$version) {
-            return true;
+        if(isset($data['s_version']) ) {
+            $result = version_compare2($data['s_version'], $version);
+            if( $result == -1 ) {
+                return true;
+            }
         }
     }
 }
 // END -- Market util functions
+
+
+/**
+ * Returns
+ *      0  if both are equal,
+ *      1  if A > B, and
+ *      -1 if B < A.
+ *
+ * @param type $a
+ * @param type $b
+ * @return type
+ */
+function version_compare2($a, $b)
+{
+    $a = explode(".", rtrim($a, ".0")); //Split version into pieces and remove trailing .0
+    $b = explode(".", rtrim($b, ".0")); //Split version into pieces and remove trailing .0
+    foreach ($a as $depth => $aVal)
+    { //Iterate over each piece of A
+        if (isset($b[$depth]))
+        { //If B matches A to this depth, compare the values
+            if ($aVal > $b[$depth]) return 1; //Return A > B
+            else if ($aVal < $b[$depth]) return -1; //Return B > A
+            //An equal result is inconclusive at this point
+        }
+        else
+        { //If B does not match A to this depth, then A comes after B in sort order
+            return 1; //so return A > B
+        }
+    }
+    //At this point, we know that to the depth that A and B extend to, they are equivalent.
+    //Either the loop ended because A is shorter than B, or both are equal.
+    return (count($a) < count($b)) ? -1 : 0;
+}
 
 /**
  * Update category stats
@@ -1218,25 +1380,25 @@ function _need_update($uri, $version) {
  * @return boolean
  */
 function osc_update_cat_stats() {
-    $categoryTotal = array() ;
-    $categoryTree  = array() ;
-    $aCategories   = Category::newInstance()->listAll(false) ;
+    $categoryTotal = array();
+    $categoryTree  = array();
+    $aCategories   = Category::newInstance()->listAll(false);
 
     // append root categories and get the number of items of each category
     foreach($aCategories as $category) {
-        $total     = Item::newInstance()->numItems($category, true, true) ;
-        $category += array('category' => array()) ;
+        $total     = Item::newInstance()->numItems($category, true, true);
+        $category += array('category' => array());
         if( is_null($category['fk_i_parent_id']) ) {
-            $categoryTree += array($category['pk_i_id'] => $category) ;
+            $categoryTree += array($category['pk_i_id'] => $category);
         }
 
-        $categoryTotal += array($category['pk_i_id'] => $total) ;
+        $categoryTotal += array($category['pk_i_id'] => $total);
     }
 
     // append childs to root categories
     foreach($aCategories as $category) {
         if( !is_null($category['fk_i_parent_id']) ) {
-            $categoryTree[$category['fk_i_parent_id']]['category'][] = $category ;
+            $categoryTree[$category['fk_i_parent_id']]['category'][] = $category;
         }
     }
 
@@ -1244,7 +1406,7 @@ function osc_update_cat_stats() {
     foreach($categoryTree as $category) {
         if( count( $category['category'] ) > 0 ) {
             foreach($category['category'] as $subcategory) {
-                $categoryTotal[$category['pk_i_id']] += $categoryTotal[$subcategory['pk_i_id']] ;
+                $categoryTotal[$category['pk_i_id']] += $categoryTotal[$subcategory['pk_i_id']];
             }
         }
     }
@@ -1277,13 +1439,13 @@ function osc_update_cat_stats_id($id)
     if( count($aCategories) > 0 ) {
         // sumar items de la categoría
         foreach($aCategories as $category) {
-            $total     = Item::newInstance()->numItems($category, true, true) ;
+            $total     = Item::newInstance()->numItems($category, true, true);
             $categoryTotal += $total;
         }
-        $categoryTotal += Item::newInstance()->numItems(Category::newInstance()->findByPrimaryKey($id), true, true) ;
+        $categoryTotal += Item::newInstance()->numItems(Category::newInstance()->findByPrimaryKey($id), true, true);
     } else {
         $category  = Category::newInstance()->findByPrimaryKey($id);
-        $total     = Item::newInstance()->numItems($category, true, true) ;
+        $total     = Item::newInstance()->numItems($category, true, true);
         $categoryTotal += $total;
     }
 
@@ -1291,5 +1453,149 @@ function osc_update_cat_stats_id($id)
     $sql .= " (".$id.", ".$categoryTotal.")";
     $result = CategoryStats::newInstance()->dao->query($sql);
 }
+
+
+/**
+ * Update locations stats. I moved this function from cron.daily.php:update_location_stats
+ *
+ * @since 3.1
+ */
+function osc_update_location_stats() {
+    $aCountries     = Country::newInstance()->listAll();
+    $aCountryValues = array();
+
+    $aRegions       = array();
+    $aRegionValues  = array();
+
+    $aCities        = array();
+    $aCityValues    = array();
+
+    foreach($aCountries as $country){
+        $id = $country['pk_c_code'];
+        $numItems = CountryStats::newInstance()->calculateNumItems( $id );
+        array_push($aCountryValues, "('$id', $numItems)" );
+        unset($numItems);
+
+        $aRegions = Region::newInstance()->findByCountry($id);
+        foreach($aRegions as $region) {
+            $id = $region['pk_i_id'];
+            $numItems = RegionStats::newInstance()->calculateNumItems( $id );
+            array_push($aRegionValues, "($id, $numItems)" );
+            unset($numItems);
+
+            $aCities = City::newInstance()->findByRegion($id);
+            foreach($aCities as $city) {
+                $id = $city['pk_i_id'];
+                $numItems = CityStats::newInstance()->calculateNumItems( $id );
+                array_push($aCityValues, "($id, $numItems)" );
+                unset($numItems);
+            }
+        }
+    }
+
+    // insert Country stats
+    $sql_country  = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_country_stats (fk_c_country_code, i_num_items) VALUES ';
+    $sql_country .= implode(',', $aCountryValues);
+    CountryStats::newInstance()->dao->query($sql_country);
+    // insert Region stats
+    $sql_region   = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_region_stats (fk_i_region_id, i_num_items) VALUES ';
+    $sql_region  .= implode(',', $aRegionValues);
+    RegionStats::newInstance()->dao->query($sql_region);
+    // insert City stats
+    $sql_city     = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_city_stats (fk_i_city_id, i_num_items) VALUES ';
+    $sql_city    .= implode(',', $aCityValues);
+    CityStats::newInstance()->dao->query($sql_city);
+}
+
+
+function get_ip() {
+    if( !empty($_SERVER['HTTP_CLIENT_IP']) ) {
+        return $_SERVER['HTTP_CLIENT_IP'];
+    }
+
+    if( !empty($_SERVER['HTTP_X_FORWARDED_FOR']) ) {
+        $ip_array = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        foreach($ip_array as $ip) {
+            return trim($ip);
+        }
+    }
+
+    return $_SERVER['REMOTE_ADDR'];
+}
+
+
+/***********************
+ * CSRFGUARD functions *
+ ***********************/
+function osc_csrfguard_generate_token($unique_form_name) {
+    if(function_exists("hash_algos") and in_array("sha512",hash_algos())) {
+        $token = hash("sha512",mt_rand(0,mt_getrandmax()));
+    } else {
+        $token = '';
+        for ($i=0;$i<128;++$i) {
+            $r=mt_rand(0,35);
+            if($r<26) {
+                $c=chr(ord('a')+$r);
+            } else {
+                $c=chr(ord('0')+$r-26);
+            }
+            $token.=$c;
+        }
+    }
+    Session::newInstance()->_set($unique_form_name, $token);
+    Session::newInstance()->_set("lf_".$unique_form_name, time());
+    return $token;
+}
+
+
+function osc_csrfguard_validate_token($unique_form_name, $token_value, $drop = true) {
+    $token = Session::newInstance()->_get($unique_form_name);
+    if($token===$token_value) {
+        $result = true;
+    } else {
+        $result = false;
+    }
+    // Ajax request should not drop the token for 1 hour, yeah it's not the most secure thing out there,
+    if($drop || ((int)Session::newInstance()->_get("lf_".$unique_form_name)-time())>(3600)) {
+        Session::newInstance()->_drop($unique_form_name);
+        Session::newInstance()->_drop("lf_".$unique_form_name);
+    }
+    return $result;
+}
+
+
+function osc_csrfguard_replace_forms($form_data_html) {
+    $count = preg_match_all("/<form(.*?)>(.*?)<\\/form>/is", $form_data_html, $matches, PREG_SET_ORDER);
+    if(is_array($matches)) {
+        foreach ($matches as $m) {
+            if (strpos($m[1],"nocsrf")!==false) { continue; }
+            $form_data_html=str_replace($m[0], "<form{$m[1]}>".osc_csrf_token_form()."{$m[2]}</form>", $form_data_html);
+        }
+    }
+    return $form_data_html;
+}
+
+
+function osc_csrfguard_inject() {
+    global $mtime;
+    $data = ob_get_clean();
+    $data = osc_csrfguard_replace_forms($data);
+    echo $data;
+}
+
+
+function osc_csrfguard_start() {
+    ob_start();
+    register_shutdown_function('osc_csrfguard_inject');
+}
+
+function osc_redirect_to($url) {
+    if(ob_get_contents()!=='') {
+        ob_end_flush();
+    }
+    header("Location: ".$url);
+    exit;
+}
+
 
 ?>

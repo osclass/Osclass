@@ -1,10 +1,10 @@
 <?php
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -22,9 +22,9 @@
 
     /**
     * Helper Pagination
-    * @package OSClass
+    * @package Osclass
     * @subpackage Helpers
-    * @author OSClass
+    * @author Osclass
     */
 
     /**
@@ -92,7 +92,7 @@
     {
         $pageActual = isset($aData['iPage'])?$aData['iPage']:Params::getParam('iPage');
         $urlActual  = osc_admin_base_url(true).'?'.$_SERVER['QUERY_STRING'];
-        $urlActual  = preg_replace('/&iPage=(\d+)?/', '', $urlActual) ;
+        $urlActual  = preg_replace('/&iPage=(\d+)?/', '', $urlActual);
         $pageTotal  = ceil($aData['iTotalDisplayRecords']/$aData['iDisplayLength']);
         $params     = array(
             'total'    => $pageTotal,

@@ -1,10 +1,10 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -22,8 +22,8 @@
 
     /**
      * Model database for Field table
-     * 
-     * @package OSClass
+     *
+     * @package Osclass
      * @subpackage Model
      * @since unknown
      */
@@ -32,17 +32,17 @@
         /**
          * It references to self object: Field.
          * It is used as a singleton
-         * 
+         *
          * @access private
          * @since unknown
-         * @var Field 
+         * @var Field
          */
-        private static $instance ;
+        private static $instance;
 
         /**
          * It creates a new Field object class ir if it has been created
          * before, it return the previous object
-         * 
+         *
          * @access public
          * @since unknown
          * @return Field
@@ -50,9 +50,9 @@
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
@@ -61,14 +61,14 @@
         function __construct()
         {
             parent::__construct();
-            $this->setTableName('t_meta_fields') ;
-            $this->setPrimaryKey('pk_i_id') ;
-            $this->setFields( array('pk_i_id', 's_name', 'e_type', 'b_required', 's_slug', 's_options') ) ;
+            $this->setTableName('t_meta_fields');
+            $this->setPrimaryKey('pk_i_id');
+            $this->setFields( array('pk_i_id', 's_name', 'e_type', 'b_required', 's_slug', 's_options') );
         }
 
         /**
          * Find a field by its id.
-         * 
+         *
          * @access public
          * @since unknown
          * @param int $id
@@ -76,17 +76,17 @@
          */
         public function findByPrimaryKey($id)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('pk_i_id', $id) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $this->dao->where('pk_i_id', $id);
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
-            return $result->row() ;
+            return $result->row();
         }
 
         /**
@@ -99,18 +99,18 @@
          */
         public function findByCategory($id)
         {
-            $this->dao->select('mf.*') ;
-            $this->dao->from(sprintf('%st_meta_fields mf, %st_meta_categories mc', DB_TABLE_PREFIX, DB_TABLE_PREFIX)) ;
-            $this->dao->where('mc.fk_i_category_id', $id) ;
+            $this->dao->select('mf.*');
+            $this->dao->from(sprintf('%st_meta_fields mf, %st_meta_categories mc', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+            $this->dao->where('mc.fk_i_category_id', $id);
             $this->dao->where('mf.pk_i_id = mc.fk_i_field_id');
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
-            return $result->result() ;
+            return $result->result();
         }
 
         /**
@@ -124,16 +124,16 @@
         public function findByCategoryItem($catId, $itemId)
         {
             if( !is_numeric($catId) || (!is_numeric($itemId) && $itemId != null) ) {
-                return array() ;
+                return array();
             }
 
             $result = $this->dao->query(sprintf("SELECT query.*, im.s_value as s_value FROM (SELECT mf.* FROM %st_meta_fields mf, %st_meta_categories mc WHERE mc.fk_i_category_id = %d AND mf.pk_i_id = mc.fk_i_field_id) as query LEFT JOIN %st_item_meta im ON im.fk_i_field_id = query.pk_i_id AND im.fk_i_item_id = %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, $catId, DB_TABLE_PREFIX, $itemId));
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
-            return $result->result() ;
+            return $result->result();
         }
 
         /**
@@ -146,14 +146,14 @@
          */
         public function findByName($name)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_name', $name) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_name', $name);
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
             return $result->row();
@@ -169,14 +169,14 @@
          */
         public function findBySlug($slug)
         {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_slug', $slug) ;
+            $this->dao->select();
+            $this->dao->from($this->getTableName());
+            $this->dao->where('s_slug', $slug);
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
             return $result->row();
@@ -192,14 +192,14 @@
          */
         public function categories($id)
         {
-            $this->dao->select('fk_i_category_id') ;
-            $this->dao->from(sprintf('%st_meta_categories', DB_TABLE_PREFIX)) ;
-            $this->dao->where('fk_i_field_id', $id) ;
+            $this->dao->select('fk_i_category_id');
+            $this->dao->from(sprintf('%st_meta_categories', DB_TABLE_PREFIX));
+            $this->dao->where('fk_i_field_id', $id);
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
             $categories = $result->result();
@@ -212,7 +212,7 @@
 
         /**
          * Insert a new field
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $name
@@ -220,7 +220,7 @@
          * @param string $slug
          * @param bool $required
          * @param array $options
-         * @param array $categories 
+         * @param array $categories
          */
         public function insertField($name, $type, $slug, $required, $options, $categories = null) {
             if($slug=='') {
@@ -245,15 +245,15 @@
             }
             return $return;
         }
-        
-        
+
+
         /**
          * Save the categories linked to a field
-         * 
+         *
          * @access public
          * @since unknown
          * @param int $id
-         * @param array $categories 
+         * @param array $categories
          * @return bool
          */
         public function insertCategories($id, $categories = null) {
@@ -269,10 +269,10 @@
             }
             return false;
         }
-        
+
         /**
          * Removes categories from a field
-         * 
+         *
          * @access public
          * @since unknown
          * @param int $id
@@ -281,10 +281,10 @@
         public function cleanCategoriesFromField($id) {
             return $this->dao->delete(sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_field_id' =>$id));
         }
-        
+
         /**
          * Update a field value
-         * 
+         *
          * @access public
          * @since unknown
          * @param int $itemId
@@ -298,7 +298,7 @@
 
         /**
          * Delete a field and all information associated with it
-         * 
+         *
          * @access public
          * @since unknown
          * @param int $id

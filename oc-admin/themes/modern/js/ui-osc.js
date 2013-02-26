@@ -32,6 +32,15 @@ $(function(){
     }).live('mouseleave',function(){
         $(this).removeClass('hover')
     });
+    $('#language-tab li a').click(function(){
+        $('#language-tab li').removeClass('ui-state-active').removeClass('ui-tabs-selected');
+        $(this).parent().addClass('ui-tabs-selected ui-state-active');
+        var currentLocale = $(this).attr('href').replace('#','');
+        $(osc.locales.string).parent().hide();
+        $('[name*="'+currentLocale+'"], .'+currentLocale).parent().show();
+        osc.locales.current = currentLocale;
+        return false;
+    }).triggerHandler('click');
     //Row actions
     $('.table .actions').each(function(){
         var $actions = $(this);
@@ -76,7 +85,7 @@ $(function(){
         return false;
     });
     //Selects
-	$('select').each(function(){
+    $('select').each(function(){
         selectUi($(this));
     });
     //Set Layout
@@ -138,7 +147,7 @@ $(function(){
             resetLayout();
         });
         return false;
-    });   
+    });
 });
 function oscTab(callback){
     $(".osc-tab").tabs();
@@ -150,7 +159,7 @@ function selectUi(thatSelect){
 
     thatSelect.css('filter', 'alpha(opacity=40)').css('opacity', '0');
     thatSelect.wrap('<div class="select-box '+thatSelect.attr('class')+'" />');
-    
+
 
     uiSelect.append(uiSelected).append(uiSelectIcon);
     thatSelect.parent().append(uiSelect);
@@ -160,7 +169,7 @@ function selectUi(thatSelect){
     thatSelect.change(function(){
         uiSelected.text(thatSelect.find('option:selected').text());
     });
-}   
+}
 function resetLayout(){
     //calc how items can see
     var headerHeight = 50;
@@ -190,7 +199,7 @@ function resetLayout(){
             hidden.hide();
             $('#show-more').show();
         } else {
-            $('#show-more').hide(); 
+            $('#show-more').hide();
         }
     }
     //global footer
@@ -222,4 +231,10 @@ function resetLayout(){
         //$('#content-page').css('background-color','green');
     }
     $('#content-page').css({paddingBottom:calcPaddingBtm});
+}
+function tabberAutomatic(){
+    $('.tabber:hidden').show();
+    $('.tabber h2').remove();
+    $(osc.locales.string).parent().hide();
+    $('[name*="'+osc.locales.current+'"],.'+osc.locales.current).parent().show();
 }

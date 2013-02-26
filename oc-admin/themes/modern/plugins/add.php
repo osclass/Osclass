@@ -1,8 +1,8 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -17,13 +17,13 @@
      */
 
     function addHelp() {
-        echo '<p>' . __('Manually upload OSClass plugins in .zip format. If you prefer, you can manually upload the decompressed plugin to <em>oc-content/plugins</em>.') . '</p>';
+        echo '<p>' . __('Manually upload Osclass plugins in .zip format. If you prefer, you can manually upload the decompressed plugin to <em>oc-content/plugins</em>.') . '</p>';
     }
     osc_add_hook('help_box','addHelp');
 
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>
-        <h1><?php _e('Plugins') ; ?>
+        <h1><?php _e('Plugins'); ?>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
         </h1>
 <?php
@@ -34,41 +34,41 @@
     }
     osc_add_filter('admin_title', 'customPageTitle');
 
-    osc_current_admin_theme_path('parts/header.php') ; ?>
+    osc_current_admin_theme_path('parts/header.php'); ?>
 <div class="appearance">
-    <h2 class="render-title"><?php _e('Add plugin') ; ?></h2>
+    <h2 class="render-title"><?php _e('Add plugin'); ?></h2>
     <div id="upload-plugins">
         <div class="form-horizontal">
         <?php if( is_writable( osc_plugins_path() ) ) { ?>
             <div class="flashmessage flashmessage-info flashmessage-inline" style="display:block;">
-                <p class="info"><?php printf( __('Download more plugins at %s'), '<a href="https://sourceforge.net/projects/osclass/files/Plugins/" target="_blank">Sourceforge</a>') ; ?></p>
+                <p class="info"><?php printf( __('Download more plugins at %s'), '<a href="'.osc_admin_base_url(true) . '?page=market&action=plugins">Market</a>'); ?></p>
             </div>
-            <form class="separate-top" action="<?php echo osc_admin_base_url(true) ; ?>" method="post" enctype="multipart/form-data">
+            <form class="separate-top" action="<?php echo osc_admin_base_url(true); ?>" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="action" value="add_post" />
                 <input type="hidden" name="page" value="plugins" />
 
                 <div class="form-row">
-                    <div class="form-label"><?php _e('Plugin package (.zip)') ; ?></div>
+                    <div class="form-label"><?php _e('Plugin package (.zip)'); ?></div>
                     <div class="form-controls">
                         <div class="form-label-checkbox"><input type="file" name="package" id="package" /></div>
                     </div>
                 </div>
                 <div class="form-actions">
-                    <input type="submit" value="<?php echo osc_esc_html( __('Upload') ) ; ?>" class="btn btn-submit" />
+                    <input type="submit" value="<?php echo osc_esc_html( __('Upload') ); ?>" class="btn btn-submit" />
                 </div>
             </form>
         <?php } else { ?>
             <div class="flashmessage flashmessage-error">
                 <a class="btn ico btn-mini ico-close" href="#">×</a>
-                <p><?php _e('Cannot install new plugin') ; ?></p>
+                <p><?php _e('Cannot install new plugin'); ?></p>
             </div>
             <p class="text">
-                <?php _e('The plugin folder is not writable on your server so you cannot upload plugins from the administration panel. Please make the folder writable and try again.') ; ?>
+                <?php _e('The plugin folder is not writable on your server so you cannot upload plugins from the administration panel. Please make the folder writable and try again.'); ?>
             </p>
             <p class="text">
-                <?php _e('To make the directory writable under UNIX execute this command from the shell:') ; ?>
+                <?php _e('To make the directory writable under UNIX execute this command from the shell:'); ?>
             </p>
-            <pre>chmod a+w <?php echo osc_plugins_path() ; ?></pre>
+            <pre>chmod a+w <?php echo osc_plugins_path(); ?></pre>
         <?php } ?>
         </div>
     </div>
@@ -81,20 +81,20 @@
                 <table class="table" cellpadding="0" cellspacing="0">
                     <tbody>
                         <tr class="table-first-row">
-                            <td><?php _e('Name') ; ?></td>
+                            <td><?php _e('Name'); ?></td>
                             <td><span id="market_name"><?php _e("Loading data"); ?></span></td>
                         </tr>
                         <tr class="even">
-                            <td><?php _e('Version') ; ?></td>
+                            <td><?php _e('Version'); ?></td>
                             <td><span id="market_version"><?php _e("Loading data"); ?></span></td>
                         </tr>
                         <tr>
-                            <td><?php _e('Author') ; ?></td>
+                            <td><?php _e('Author'); ?></td>
                             <td><span id="market_author"><?php _e("Loading data"); ?></span></td>
                         </tr>
                         <tr class="even">
-                            <td><?php _e('URL') ; ?></td>
-                            <td><a id="market_url" href="#"><?php _e("Download manually"); ?></span></td>
+                            <td><?php _e('URL'); ?></td>
+                            <td><span id="market_url_span"><a id="market_url" href="#"><?php _e("Download manually"); ?></a></span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -102,8 +102,8 @@
             </div>
             <div class="form-actions">
                 <div class="wrapper">
-                    <button id="market_cancel" class="btn btn-red" ><?php echo osc_esc_html( __('Cancel') ) ; ?></button>
-                    <button id="market_install" class="btn btn-submit" ><?php echo osc_esc_html( __('Continue install') ) ; ?></button>
+                    <button id="market_cancel" class="btn btn-red" ><?php _e('Cancel'); ?></button>
+                    <button id="market_install" class="btn btn-submit" ><?php _e('Continue install'); ?></button>
                 </div>
             </div>
         </form>
@@ -127,7 +127,7 @@
                 function(data){
                     $("#downloading .osc-modal-content").html(data.message);
                     setTimeout(function(){
-                      $(".ui-dialog-content").dialog("close");  
+                      $(".ui-dialog-content").dialog("close");
                   },1000);
                 });
                 return false;
@@ -153,11 +153,11 @@
                                 +'<div class="plugin-stage">'
                                     +'<img src="'+imgsrc+'" title="'+data.plugins[i].s_title+'" alt="'+data.plugins[i].s_title+'" />'
                                     +'<div class="plugin-actions">'
-                                        +'<a href="#'+data.plugins[i].s_slug+'" class="btn btn-mini btn-green market-popup"><?php _e('Install') ; ?></a>'
+                                        +'<a href="#'+data.plugins[i].s_slug+'" class="btn btn-mini btn-green market-popup"><?php _e('Install'); ?></a>'
                                     +'</div>'
                                 +'</div>'
                                 +'<div class="plugin-info">'
-                                    +'<h3>'+data.plugins[i].s_title+' '+data.plugins[i].s_version+' <?php _e('by') ; ?> <a target="_blank" href="">'+data.plugins[i].s_contact_name+'</a></h3>'
+                                    +'<h3>'+data.plugins[i].s_title+' '+data.plugins[i].s_version+' <?php _e('by'); ?> <a target="_blank" href="">'+data.plugins[i].s_contact_name+'</a></h3>'
                                 +'</div>'
                                 +'<div class="plugin-description">'
                                     +description.substring(0,80)+dots
@@ -185,7 +185,7 @@
 
                         $('#market_installer').dialog({
                             modal:true,
-                            title: '<?php echo osc_esc_js( __('OSClass Market') ) ; ?>',
+                            title: '<?php echo osc_esc_js( __('Osclass Market') ); ?>',
                             width:485
                         });
                     }
@@ -193,7 +193,7 @@
             );
 
             return false;
-        });        
+        });
     </script>
 </div>
-<?php osc_current_admin_theme_path('parts/footer.php') ; ?>
+<?php osc_current_admin_theme_path('parts/footer.php'); ?>

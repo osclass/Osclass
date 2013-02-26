@@ -1,8 +1,8 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -22,8 +22,8 @@
     osc_add_hook('help_box','addHelp');
 
     function customPageHeader(){ ?>
-        <h1><?php _e('Listing') ; ?>
-            <a href="<?php echo osc_admin_base_url(true) . '?page=settings&action=comments' ; ?>" class="btn ico ico-32 ico-engine float-right"><?php _e('Settings'); ?></a>
+        <h1><?php _e('Listing'); ?>
+            <a href="<?php echo osc_admin_base_url(true) . '?page=settings&action=comments'; ?>" class="btn ico ico-32 ico-engine float-right"><?php _e('Settings'); ?></a>
             <a href="#" class="btn ico ico-32 ico-help float-right"></a>
         </h1>
 <?php
@@ -100,69 +100,61 @@
     }
     osc_add_hook('admin_header','customHead');
 
-    $aData = __get('aComments');
+    $aData      = __get('aData');
+    $aRawRows   = __get('aRawRows');
+    $sort       = Params::getParam('sort');
+    $direction  = Params::getParam('direction');
 
-    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
-<h2 class="render-title"><?php _e('Comments') ; ?></h2>
+    $columns    = $aData['aColumns'];
+    $rows       = $aData['aRows'];
+
+    osc_current_admin_theme_path( 'parts/header.php' ); ?>
+<h2 class="render-title"><?php _e('Comments'); ?></h2>
 <div class="relative">
     <div id="listing-toolbar">
         <div class="float-right">
-            <?php if(Params::getParam('showAll') == true) { ?>
+            <?php if(Params::getParam('showAll') != 'off') { ?>
             <a href="<?php echo osc_admin_base_url(true) . '?page=comments&showAll=off'; ?>" class="btn btn-red"><?php _e('Hidden comments');?></a>
             <?php } else { ?>
             <a href="<?php echo osc_admin_base_url(true) . '?page=comments'; ?>" class="btn btn-blue"><?php _e('All comments');?></a>
             <?php } ?>
         </div>
     </div>
-    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true) ; ?>" method="post" data-dialog-open="false">
+    <form class="" id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>" method="post" data-dialog-open="false">
         <input type="hidden" name="page" value="comments" />
         <input type="hidden" name="action" value="bulk_actions" />
         <div id="bulk-actions">
             <label>
-                <select id="bulk_actions" name="bulk_actions" class="select-box-extra">
-                    <option value=""><?php _e('Bulk actions') ; ?></option>
-                    <option value="delete_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected comments?'), strtolower(__('Delete'))); ?>"><?php _e('Delete') ; ?></option>
-                    <option value="activate_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected comments?'), strtolower(__('Activate'))); ?>"><?php _e('Activate') ; ?></option>
-                    <option value="deactivate_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected comments?'), strtolower(__('Deactivate'))); ?>"><?php _e('Deactivate') ; ?></option>
-                    <option value="disable_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected comments?'), strtolower(__('Block'))); ?>"><?php _e('Block') ; ?></option>
-                    <option value="enable_all" data-dialog-content="<?php printf(__('Are you sure you want to %s the selected comments?'), strtolower(__('Unblock'))); ?>"><?php _e('Unblock') ; ?></option>
-                </select> <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ) ; ?>" />
+                <?php osc_print_bulk_actions('bulk_actions', 'bulk_actions', __get('bulk_options'), 'select-box-extra'); ?>
+                <input type="submit" id="bulk_apply" class="btn" value="<?php echo osc_esc_html( __('Apply') ); ?>" />
             </label>
         </div>
         <div class="table-contains-actions">
             <table class="table" cellpadding="0" cellspacing="0">
                 <thead>
                     <tr>
-                        <th class="col-bulkactions"><input id="check_all" type="checkbox" /></th>
-                        <th><?php _e('Author') ; ?></th>
-                        <th><?php _e('Comment') ; ?></th>
-                        <th class="col-date"><?php _e('Date') ; ?></th>
+                        <?php foreach($columns as $k => $v) {
+                            echo '<th class="col-'.$k.' '.($sort==$k?($direction=='desc'?'sorting_desc':'sorting_asc'):'').'">'.$v.'</th>';
+                        }; ?>
                     </tr>
                 </thead>
                 <tbody>
-                <?php if( count($aData['aaData']) > 0 ) { ?>
-                <?php foreach( $aData['aaData'] as $key => $array ) { ?>
-                    <?php 
-                    $aC = $aData['aaObject'][$key]; 
-                    $class = ''; 
-                    if(!$aC['b_enabled'] || !$aC['b_active'] || $aC['b_spam']) $class = 'status-spam'; 
+                <?php if( count($rows) > 0 ) { ?>
+                    <?php foreach($rows as $key => $row) {
+                        $aC = $aRawRows[$key];
+                        $class = '';
+                        if(!$aC['b_enabled'] || !$aC['b_active'] || $aC['b_spam']) $class = 'status-spam';
                     ?>
-                    <tr class="<?php echo $class; ?>">
-                    <?php foreach($array as $key => $value) { ?>
-                        <?php if( $key==0 ) { ?>
-                        <td class="col-bulkactions">
-                        <?php } else { ?>
-                        <td>
-                        <?php } ?>
-                        <?php echo $value; ?>
-                        </td>
-                    <?php } ?>
-                    </tr>
-                <?php } ?>
+                        <tr class="<?php echo $class; ?>">
+                            <?php foreach($row as $k => $v) { ?>
+                                <td class="col-<?php echo $k; ?>"><?php echo $v; ?></td>
+                            <?php }; ?>
+                        </tr>
+                    <?php }; ?>
                 <?php } else { ?>
                     <tr>
                         <td colspan="4" class="text-center">
-                        <p><?php _e('No data available in table') ; ?></p>
+                        <p><?php _e('No data available in table'); ?></p>
                         </td>
                     </tr>
                 <?php } ?>
@@ -172,15 +164,15 @@
         </div>
     </form>
 </div>
-<?php 
+<?php
     function showingResults(){
-        $aData = __get('aComments');
-        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aaData']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>' ;
+        $aData = __get('aData');
+        echo '<ul class="showing-results"><li><span>'.osc_pagination_showing((Params::getParam('iPage')-1)*$aData['iDisplayLength']+1, ((Params::getParam('iPage')-1)*$aData['iDisplayLength'])+count($aData['aRows']), $aData['iTotalDisplayRecords'], $aData['iTotalRecords']).'</span></li></ul>';
     }
     osc_add_hook('before_show_pagination_admin','showingResults');
     osc_show_pagination_admin($aData);
 ?>
-<form id="dialog-comment-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" id="display-filters" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete comment')); ?>">
+<form id="dialog-comment-delete" method="get" action="<?php echo osc_admin_base_url(true); ?>" class="has-form-actions hide" title="<?php echo osc_esc_html(__('Delete comment')); ?>">
     <input type="hidden" name="page" value="comments" />
     <input type="hidden" name="action" value="delete" />
     <input type="hidden" name="id" value="" />

@@ -1,10 +1,10 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -21,65 +21,65 @@
      */
 
     /**
-     * 
+     *
      */
     class PluginCategory extends DAO
     {
         /**
          *
-         * @var type 
+         * @var type
          */
-        private static $instance ;
+        private static $instance;
 
         /**
          *
-         * @return type 
+         * @return type
          */
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
-         * 
+         *
          */
         public function __construct()
         {
-            parent::__construct() ;
-            $this->setTableName('t_plugin_category') ;
-            /* $this->setPrimaryKey('pk_i_id') ; */
-            $this->setFields( array('s_plugin_name', 'fk_i_category_id') ) ;
+            parent::__construct();
+            $this->setTableName('t_plugin_category');
+            /* $this->setPrimaryKey('pk_i_id'); */
+            $this->setFields( array('s_plugin_name', 'fk_i_category_id') );
         }
 
         /**
          * Return all information given a category id
-         * 
+         *
          * @access public
          * @since unknown
          * @param type $categoryId
-         * @return type 
+         * @return type
          */
         function findByCategoryId($categoryId)
         {
-            $this->dao->select( $this->getFields() ) ;
-            $this->dao->from( $this->getTableName() ) ;
-            $this->dao->where('fk_i_category_id', $categoryId) ;
+            $this->dao->select( $this->getFields() );
+            $this->dao->from( $this->getTableName() );
+            $this->dao->where('fk_i_category_id', $categoryId);
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
-            return $result->result() ;
+            return $result->result();
         }
 
         /**
          * Return list of categories asociated with a plugin
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $plugin
@@ -87,19 +87,19 @@
          */
         function listSelected($plugin)
         {
-            $this->dao->select( $this->getFields() ) ;
-            $this->dao->from( $this->getTableName() ) ;
-            $this->dao->where('s_plugin_name', $plugin) ;
+            $this->dao->select( $this->getFields() );
+            $this->dao->from( $this->getTableName() );
+            $this->dao->where('s_plugin_name', $plugin);
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return array() ;
+                return array();
             }
 
-            $list = array() ;
+            $list = array();
             foreach($result->result() as $sel) {
-                $list[] = $sel['fk_i_category_id'] ;
+                $list[] = $sel['fk_i_category_id'];
             }
 
             return $list;
@@ -107,37 +107,37 @@
 
         /**
          * Check if a category is asociated with a plugin
-         * 
+         *
          * @access public
          * @since unknown
          * @param string $pluginName
          * @param int $categoryId
-         * @return bool 
+         * @return bool
          */
         function isThisCategory($pluginName, $categoryId)
         {
-            $this->dao->select('COUNT(*) AS numrows') ;
-            $this->dao->from( $this->getTableName() ) ;
-            $this->dao->where('fk_i_category_id', $categoryId) ;
-            $this->dao->where('s_plugin_name', $pluginName) ;
+            $this->dao->select('COUNT(*) AS numrows');
+            $this->dao->from( $this->getTableName() );
+            $this->dao->where('fk_i_category_id', $categoryId);
+            $this->dao->where('s_plugin_name', $pluginName);
 
-            $result = $this->dao->get() ;
+            $result = $this->dao->get();
 
             if( $result == false ) {
-                return false ;
+                return false;
             }
 
             if( $result->numRows() == 0 ) {
-                return false ;
+                return false;
             }
 
-            $row = $result->row() ;
+            $row = $result->row();
 
             if( $row['numrows'] == 0 ) {
-                return false ;
+                return false;
             }
 
-            return true ;
+            return true;
         }
     }
 

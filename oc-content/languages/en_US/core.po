@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: OSClass 3.0\n"
+"Project-Id-Version: Osclass 3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-12 18:16+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
-"Language-Team: OSClass <info@osclass.org>\n"
+"Language-Team: Osclass <info@osclass.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -250,11 +250,11 @@ msgid "An error occurred while sending email"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/ajax/ajax.php:595
-msgid "Everything looks good! Your OSClass installation is up-to-date"
+msgid "Everything looks good! Your Osclass installation is up-to-date"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/ajax/ajax.php:597
-msgid "Nearly everything looks good! Your OSClass installation is up-to-date, but there were some errors removing temporary files. Please manually remove the \"oc-temp\" folder"
+msgid "Nearly everything looks good! Your Osclass installation is up-to-date, but there were some errors removing temporary files. Please manually remove the \"oc-temp\" folder"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/ajax/ajax.php:602
@@ -593,7 +593,7 @@ msgid "Are you sure you want to delete this admin?"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/appearance/add.php:20
-msgid "Manually add OSClass themes in .zip format. If you prefer, you can manually upload the decompressed theme to <em>oc-content/themes</em>."
+msgid "Manually add Osclass themes in .zip format. If you prefer, you can manually upload the decompressed theme to <em>oc-content/themes</em>."
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/appearance/add.php:26
@@ -686,7 +686,7 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/appearance/add.php:186
 #: /var/www/osclass-git/oc-admin/themes/modern/appearance/index.php:230
-msgid "OSClass Market"
+msgid "Osclass Market"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/appearance/add_widget.php:24
@@ -1514,7 +1514,7 @@ msgid "Enabled for the backoffice (oc-admin)"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/languages/index.php:20
-msgid "Add, edit or delete the language in which your OSClass is displayed, both the part that's viewable by users and the admin panel."
+msgid "Add, edit or delete the language in which your Osclass is displayed, both the part that's viewable by users and the admin panel."
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/languages/index.php:34
@@ -1613,7 +1613,7 @@ msgid "User statistics"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/main/index.php:243
-msgid "OSClass"
+msgid "Osclass"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/main/index.php:245
@@ -1634,7 +1634,7 @@ msgid "Donate"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/main/index.php:276
-msgid "OSClass is a free, open-source project, sustained by the community. Money received from donations will be used to further development and improve the project."
+msgid "Osclass is a free, open-source project, sustained by the community. Money received from donations will be used to further development and improve the project."
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/main/index.php:284
@@ -1654,7 +1654,7 @@ msgid "new"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/main/index.php:314
-msgid "Unable to fetch news from OSClass. Please try again later"
+msgid "Unable to fetch news from Osclass. Please try again later"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/main/index.php:316
@@ -1662,7 +1662,7 @@ msgid "Twitter"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/market/plugins.php:20
-msgid "Browse and download available OSClass plugins, from a constantly-updated selection. After downloading a plugin, you have to install it and configure it to get it up and running."
+msgid "Browse and download available Osclass plugins, from a constantly-updated selection. After downloading a plugin, you have to install it and configure it to get it up and running."
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/market/plugins.php:25
@@ -1717,12 +1717,12 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/market/plugins.php:252
 #, php-format
-msgid "Warning! This plugin is not compatible with your current version of OSClass (%s)"
+msgid "Warning! This plugin is not compatible with your current version of Osclass (%s)"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/market/themes.php:33
 #, php-format
-msgid "Browse and download available OSClass themes from a constantly-updated selection. Remember, you must install the theme after you download it. If you want to design a theme for OSClass, follow these instructions: %s"
+msgid "Browse and download available Osclass themes from a constantly-updated selection. Remember, you must install the theme after you download it. If you want to design a theme for Osclass, follow these instructions: %s"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/market/themes.php:60
@@ -1739,7 +1739,7 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/market/themes.php:224
 #, php-format
-msgid "Warning! This theme is not compatible with your current version of OSClass (%s)"
+msgid "Warning! This theme is not compatible with your current version of Osclass (%s)"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/media/index.php:20
@@ -1791,7 +1791,7 @@ msgid "Used to quickly identify this page"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/pages/index.php:20
-msgid "With OSClass you can create static pages on which information can be stored, such as \"About Us\" or \"Info\" pages. From here you can create, edit or delete your site's static pages."
+msgid "With Osclass you can create static pages on which information can be stored, such as \"About Us\" or \"Info\" pages. From here you can create, edit or delete your site's static pages."
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/pages/index.php:27
@@ -1826,7 +1826,7 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/parts/footer.php:7
 #, php-format
-msgid "Thank you for using <a href=\"%s\" target=\"_blank\">OSClass</a>"
+msgid "Thank you for using <a href=\"%s\" target=\"_blank\">Osclass</a>"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/parts/footer.php:8
@@ -1838,7 +1838,7 @@ msgid "Forums"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/plugins/add.php:20
-msgid "Manually upload OSClass plugins in .zip format. If you prefer, you can manually upload the decompressed plugin to <em>oc-content/plugins</em>."
+msgid "Manually upload Osclass plugins in .zip format. If you prefer, you can manually upload the decompressed plugin to <em>oc-content/plugins</em>."
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/plugins/add.php:26
@@ -2077,7 +2077,7 @@ msgid "The search page shows: this field must only contain numeric characters"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/settings/index.php:122
-msgid "Change the basic configuration of your OSClass. From here, you can modify variables such as the site’s name, the default currency or how lists of listings are displayed. <strong>Be careful</strong> when modifying default values if you're not sure what you're doing!"
+msgid "Change the basic configuration of your Osclass. From here, you can modify variables such as the site’s name, the default currency or how lists of listings are displayed. <strong>Be careful</strong> when modifying default values if you're not sure what you're doing!"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/settings/index.php:135
@@ -2212,7 +2212,7 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/settings/index.php:306
 #, php-format
-msgid "Allow OSClass to run a built-in <a href=\"%s\" target=\"_blank\">cron</a> automatically without setting crontab"
+msgid "Allow Osclass to run a built-in <a href=\"%s\" target=\"_blank\">cron</a> automatically without setting crontab"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/settings/index.php:309
@@ -2269,7 +2269,7 @@ msgid "Add new city"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/settings/locations.php:60
-msgid "Add, edit or delete the countries, regions and cities installed on your OSClass. <strong>Be careful</strong>: modifying locations can cause your statistics to be incorrect until they're recalculated. Modify only if you're sure what you're doing!"
+msgid "Add, edit or delete the countries, regions and cities installed on your Osclass. <strong>Be careful</strong>: modifying locations can cause your statistics to be incorrect until they're recalculated. Modify only if you're sure what you're doing!"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/settings/locations.php:73
@@ -2571,7 +2571,7 @@ msgid "It has to be a .PNG image"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/settings/media.php:287
-msgid "OSClass doesn't check the watermark image size"
+msgid "Osclass doesn't check the watermark image size"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/settings/media.php:303
@@ -2801,7 +2801,7 @@ msgid "Permalinks"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/settings/permalinks.php:370
-msgid "By default OSClass uses web URLs which have question marks and lots of numbers in them. However, OSClass offers you friendly urls. This can improve the aesthetics, usability, and forward-compatibility of your links"
+msgid "By default Osclass uses web URLs which have question marks and lots of numbers in them. However, Osclass offers you friendly urls. This can improve the aesthetics, usability, and forward-compatibility of your links"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/settings/permalinks.php:378
@@ -3293,7 +3293,7 @@ msgid "Backup folder"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/tools/backup.php:69
-msgid "<strong>WARNING</strong>: If you don't specify a backup folder, the backup files will be created in the root of your OSClass installation."
+msgid "<strong>WARNING</strong>: If you don't specify a backup folder, the backup files will be created in the root of your Osclass installation."
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/tools/backup.php:71
@@ -3331,7 +3331,7 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/tools/import.php:25
 #, php-format
-msgid "Upload registers from other OSClass installations or upload new geographic information to your site. <strong>Be careful</strong>: don’t use this option if you're not 100% sure what you're doing."
+msgid "Upload registers from other Osclass installations or upload new geographic information to your site. <strong>Be careful</strong>: don’t use this option if you're not 100% sure what you're doing."
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/tools/import.php:37
@@ -3365,7 +3365,7 @@ msgid "Complete"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/tools/locations.php:86
-msgid "You can recalculate your location stats. This is useful if you upgrade from versions older than OSClass 2.4"
+msgid "You can recalculate your location stats. This is useful if you upgrade from versions older than Osclass 2.4"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/tools/locations.php:94
@@ -3403,7 +3403,7 @@ msgid "Checking for updates (Current version %s)"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/tools/upgrade.php:47
-msgid "Congratulations! Your OSClass installation is up to date!"
+msgid "Congratulations! Your Osclass installation is up to date!"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/tools/upgrade.php:49
@@ -3411,7 +3411,7 @@ msgid "New version to update:"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/tools/upgrade.php:51
-msgid "Upgrading your OSClass installation (this could take a while):"
+msgid "Upgrading your Osclass installation (this could take a while):"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/tools/upgrade.php:61
@@ -3422,7 +3422,7 @@ msgid "Upgrade"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/tools/upgrade.php:77
-msgid "Check to see if you're using the latest version of OSClass. If you're not, the system will let you know so you can update and use the newest features."
+msgid "Check to see if you're using the latest version of Osclass. If you're not, the system will let you know so you can update and use the newest features."
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/tools/upgrade.php:90
@@ -3432,19 +3432,19 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/tools/upgrade.php:106
 #, php-format
-msgid "Your OSClass installation can be auto-upgraded. Please, back up your database and the folder oc-content before attempting to upgrade your OSClass installation. You can also upgrade OSClass manaully, more information in the %s"
+msgid "Your Osclass installation can be auto-upgraded. Please, back up your database and the folder oc-content before attempting to upgrade your Osclass installation. You can also upgrade Osclass manaully, more information in the %s"
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/tools/upgrade.php:110
-msgid "Your OSClass installation can't be auto-upgraded. Files and folders need to be writable. You can apply write permissions via SSH with the command \"chmod -R a+w *\" (without quotes) or via an FTP client, it depends on the program so we can not provide more information. You can also upgrade OSClass by downloading the upgrade package, unzipping it and replacing the files on your server with the ones in the package."
+msgid "Your Osclass installation can't be auto-upgraded. Files and folders need to be writable. You can apply write permissions via SSH with the command \"chmod -R a+w *\" (without quotes) or via an FTP client, it depends on the program so we can not provide more information. You can also upgrade Osclass by downloading the upgrade package, unzipping it and replacing the files on your server with the ones in the package."
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/upgrade/index.php:60
-msgid "Upgrading your OSClass installation (this could take a while): "
+msgid "Upgrading your Osclass installation (this could take a while): "
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/upgrade/index.php:64
-msgid "You have uploaded a new version of OSClass, you need to upgrade OSClass for it to work correctly."
+msgid "You have uploaded a new version of Osclass, you need to upgrade Osclass for it to work correctly."
 msgstr ""
 
 #: /var/www/osclass-git/oc-admin/themes/modern/upgrade/index.php:66
@@ -3699,7 +3699,7 @@ msgid "PHP version >= 5.x"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/install-functions.php:61
-msgid "PHP5 is required to run OSClass. You may talk with your hosting to upgrade your PHP version."
+msgid "PHP5 is required to run Osclass. You may talk with your hosting to upgrade your PHP version."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/install-functions.php:64
@@ -3768,7 +3768,7 @@ msgid "<code>config-sample.php</code> file exists"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/install-functions.php:115
-msgid "<code>config-sample.php</code> file is required, you should re-download OSClass."
+msgid "<code>config-sample.php</code> file is required, you should re-download Osclass."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/install-functions.php:192
@@ -3867,7 +3867,7 @@ msgid "Database name"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/install-functions.php:596
-msgid "The name of the database you want to run OSClass in"
+msgid "The name of the database you want to run Osclass in"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/install-functions.php:599
@@ -3887,7 +3887,7 @@ msgid "Table prefix"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/install-functions.php:611
-msgid "If you want to run multiple OSClass installations in a single database, change this"
+msgid "If you want to run multiple Osclass installations in a single database, change this"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/install-functions.php:617
@@ -4011,7 +4011,7 @@ msgid "Congratulations!"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/install-functions.php:894
-msgid "OSClass has been installed. Were you expecting more steps? Sorry to disappoint!"
+msgid "Osclass has been installed. Were you expecting more steps? Sorry to disappoint!"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/install-functions.php:895
@@ -4030,7 +4030,7 @@ msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/install-location.php:96
 #, php-format
-msgid "Your OSClass installation at %s is up and running. You can access the administration panel with these details:"
+msgid "Your Osclass installation at %s is up and running. You can access the administration panel with these details:"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/install-location.php:98
@@ -4048,15 +4048,15 @@ msgid "Regards,"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/install-location.php:102
-msgid "The <a href=\"http://osclass.org/\">OSClass</a> team"
+msgid "The <a href=\"http://osclass.org/\">Osclass</a> team"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/install.php:86
-msgid "Looks like you've already installed OSClass. To reinstall please clear your old database tables first."
+msgid "Looks like you've already installed Osclass. To reinstall please clear your old database tables first."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/install.php:132
-msgid "OSClass Installation"
+msgid "Osclass Installation"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/install.php:160
@@ -4088,7 +4088,7 @@ msgid "Allow my site to appear in search engines like Google."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/install.php:203
-msgid "Help make OSClass better by automatically sending usage statistics and crash reports to OSClass."
+msgid "Help make Osclass better by automatically sending usage statistics and crash reports to Osclass."
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/install.php:209
@@ -4125,7 +4125,7 @@ msgid "Plugin %s is missing the index.php file %s"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/upgrade-funcs.php:44
-msgid "OSClass &raquo; Has some errors"
+msgid "Osclass &raquo; Has some errors"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/upgrade-funcs.php:45
@@ -4146,11 +4146,11 @@ msgid "here"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/upgrade-funcs.php:391
-msgid "OSClass &raquo; Updated correctly"
+msgid "Osclass &raquo; Updated correctly"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/upgrade-funcs.php:392
-msgid "OSClass has been updated successfully. <a href=\"http://forums.osclass.org/\">Need more help?</a>"
+msgid "Osclass has been updated successfully. <a href=\"http://forums.osclass.org/\">Need more help?</a>"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/classes/AdminMenu.php:59
@@ -4210,7 +4210,7 @@ msgid "Backup data"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/classes/AdminMenu.php:105
-msgid "Upgrade OSClass"
+msgid "Upgrade Osclass"
 msgstr ""
 
 #: /var/www/osclass-git/oc-includes/osclass/classes/AdminMenu.php:106

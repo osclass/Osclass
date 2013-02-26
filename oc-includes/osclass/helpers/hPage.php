@@ -1,10 +1,10 @@
 <?php
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -22,9 +22,9 @@
 
     /**
     * Helper Pages
-    * @package OSClass
+    * @package Osclass
     * @subpackage Helpers
-    * @author OSClass
+    * @author Osclass
     */
 
     /**
@@ -34,24 +34,29 @@
      */
     function osc_static_page() {
         if (View::newInstance()->_exists('pages')) {
-            $page = View::newInstance()->_current('pages') ;
+            $page = View::newInstance()->_current('pages');
         } else if (View::newInstance()->_exists('page')) {
-            $page = View::newInstance()->_get('page') ;
+            $page = View::newInstance()->_get('page');
         } else {
-            $page = null ;
+            $page = null;
         }
-        return($page) ;
+
+        if ( !View::newInstance()->_exists('page_meta') ) {
+            View::newInstance()->_exportVariableToView('page_meta', json_decode(@$page['s_meta'], true));
+        }
+
+        return($page);
     }
-    
+
     /**
      * Gets current page field
-     * 
+     *
      * @param string $field
      * @param string $locale
      * @return string
      */
     function osc_static_page_field($field, $locale = '') {
-        return osc_field(osc_static_page(), $field, $locale) ;
+        return osc_field(osc_static_page(), $field, $locale);
     }
 
     /**
@@ -61,8 +66,8 @@
      * @return string
      */
     function osc_static_page_title($locale = '') {
-        if ($locale == "") $locale = osc_current_user_locale() ;
-        return osc_static_page_field("s_title", $locale) ;
+        if ($locale == "") $locale = osc_current_user_locale();
+        return osc_static_page_field("s_title", $locale);
     }
 
     /**
@@ -72,8 +77,8 @@
      * @return string
      */
     function osc_static_page_text($locale = '') {
-        if ($locale == "") $locale = osc_current_user_locale() ;
-        return osc_static_page_field("s_text", $locale) ;
+        if ($locale == "") $locale = osc_current_user_locale();
+        return osc_static_page_field("s_text", $locale);
     }
 
     /**
@@ -82,7 +87,7 @@
      * @return string
      */
     function osc_static_page_id() {
-        return osc_static_page_field("pk_i_id") ;
+        return osc_static_page_field("pk_i_id");
     }
 
     /**
@@ -91,7 +96,7 @@
      * @return int
      */
     function osc_static_page_order() {
-        return (int)osc_static_page_field("i_order") ;
+        return (int)osc_static_page_field("i_order");
     }
 
     /**
@@ -100,7 +105,7 @@
      * @return string
      */
     function osc_static_page_mod_date() {
-        return osc_static_page_field("dt_mod_date") ;
+        return osc_static_page_field("dt_mod_date");
     }
 
     /**
@@ -109,7 +114,7 @@
      * @return string
      */
     function osc_static_page_pub_date() {
-        return osc_static_page_field("dt_pub_date") ;
+        return osc_static_page_field("dt_pub_date");
     }
 
     /**
@@ -118,7 +123,33 @@
      * @return string
      */
     function osc_static_page_slug() {
-        return osc_static_page_field("s_internal_name") ;
+        return osc_static_page_field("s_internal_name");
+    }
+
+    /**
+     * Gets current page meta information
+     *
+     * @return string
+     */
+    function osc_static_page_meta($field = null) {
+        if($field == null) {
+            if ( !View::newInstance()->_exists('page_meta') ) {
+                return json_decode(osc_static_page_field("s_meta"),  true);
+            } else {
+                return View::newInstance()->_get('s_meta');
+            }
+        } else {
+            if ( !View::newInstance()->_exists('page_meta') ) {
+                $meta = json_decode(osc_static_page_field("s_meta"),  true);
+            } else {
+                $meta = View::newInstance()->_get('page_meta');
+            }
+            if(isset($meta[$field])) {
+                return $meta[$field];
+            } else {
+                return '';
+            }
+        }
     }
 
     /**
@@ -130,7 +161,7 @@
     function osc_static_page_url($locale = '') {
         if ( osc_rewrite_enabled() ) {
             $sanitized_categories = array();
-            $cat = Category::newInstance()->hierarchy(osc_item_category_id()) ;
+            $cat = Category::newInstance()->hierarchy(osc_item_category_id());
             for ($i = (count($cat)); $i > 0; $i--) {
                 $sanitized_categories[] = $cat[$i - 1]['s_slug'];
             }
@@ -147,9 +178,9 @@
                 $path = osc_base_url(true)."?page=page&id=".osc_static_page_id();
             }
         }
-        return $path ;
+        return $path;
     }
-    
+
     /**
      * Gets the specified static page by internal name.
      *
@@ -158,10 +189,12 @@
      * @return boolean
      */
     function osc_get_static_page($internal_name, $locale = '') {
-        if ($locale == "") $locale = osc_current_user_locale() ;
-        return View::newInstance()->_exportVariableToView('page', Page::newInstance()->findByInternalName($internal_name, $locale) ) ;
-    }    
-    
+        if ($locale == "") $locale = osc_current_user_locale();
+        $page = Page::newInstance()->findByInternalName($internal_name, $locale);
+        View::newInstance()->_exportVariableToView('page_meta', json_decode(@$page['s_meta'], true));
+        return View::newInstance()->_exportVariableToView('page', $page);
+    }
+
     /**
      * Gets the total of static pages. If static pages are not loaded, this function will load them.
      *
@@ -169,9 +202,9 @@
      */
     function osc_count_static_pages() {
         if ( !View::newInstance()->_exists('pages') ) {
-            View::newInstance()->_exportVariableToView('pages', Page::newInstance()->listAll(false) ) ;
+            View::newInstance()->_exportVariableToView('pages', Page::newInstance()->listAll(false) );
         }
-        return View::newInstance()->_count('pages') ;
+        return View::newInstance()->_count('pages');
     }
 
     /**
@@ -182,10 +215,12 @@
      */
     function osc_has_static_pages() {
         if ( !View::newInstance()->_exists('pages') ) {
-            View::newInstance()->_exportVariableToView('pages', Page::newInstance()->listAll(false) ) ;
+            View::newInstance()->_exportVariableToView('pages', Page::newInstance()->listAll(false, 1) );
         }
-        
-        return View::newInstance()->_next('pages') ;
+
+        $page = View::newInstance()->_next('pages');
+        View::newInstance()->_exportVariableToView('page_meta', json_decode($page['s_meta'], true));
+        return $page;
     }
 
     /**
@@ -196,7 +231,7 @@
      * @return boolean
      */
     function osc_reset_static_pages() {
-        return View::newInstance()->_erase('pages') ;
+        return View::newInstance()->_erase('pages');
     }
 
 ?>

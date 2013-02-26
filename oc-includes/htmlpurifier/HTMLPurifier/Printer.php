@@ -94,8 +94,7 @@ class HTMLPurifier_Printer
             $this->start('tr') . "\n" .
                 $this->element('th', $name) . "\n" .
                 $this->element('td', $value) . "\n" .
-            $this->end('tr')
-        ;
+            $this->end('tr');
     }
 
     /**

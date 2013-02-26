@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -29,27 +29,27 @@
     {
         function __construct()
         {
-            parent::__construct () ;
+            parent::__construct ();
 
             //Checking granting...
             if (!$this->isLogged()) {
                 //If we are not logged or we do not have permissions -> go to the login page
                 $this->logout();
-                $this->showAuthFailPage() ;
+                $this->showAuthFailPage();
             }
         }
 
         //granting methods
         function setGranting($grant)
         {
-            $this->grant = $grant ;
+            $this->grant = $grant;
         }
 
         //destroying current session
         function logout()
         {
             //destroying session
-            Session::newInstance()->session_destroy() ;
+            Session::newInstance()->session_destroy();
         }
 
         function doModel() {}

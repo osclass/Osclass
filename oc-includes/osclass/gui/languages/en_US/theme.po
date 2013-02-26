@@ -5,7 +5,7 @@ msgstr ""
 "POT-Creation-Date: 2012-07-12 18:18+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
-"Language-Team: OSClass <info@osclass.org>\n"
+"Language-Team: Osclass <info@osclass.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -90,7 +90,7 @@ msgid "Contact"
 msgstr ""
 
 #: /var/www/osclass-git/oc-content/themes/modern/footer.php:35
-msgid "This website is proudly using the <a title=\"OSClass web\" href=\"http://osclass.org/\">classifieds scripts</a> software <strong>OSClass</strong>"
+msgid "This website is proudly using the <a title=\"Osclass web\" href=\"http://osclass.org/\">classifieds scripts</a> software <strong>Osclass</strong>"
 msgstr ""
 
 #: /var/www/osclass-git/oc-content/themes/modern/footer.php:48
@@ -750,7 +750,7 @@ msgid "The images folder <strong>%s</strong> is not writable on your server"
 msgstr ""
 
 #: /var/www/osclass-git/oc-content/themes/modern/admin/header.php:54
-msgid "OSClass can't upload the logo image from the administration panel."
+msgid "Osclass can't upload the logo image from the administration panel."
 msgstr ""
 
 #: /var/www/osclass-git/oc-content/themes/modern/admin/header.php:55
@@ -762,7 +762,7 @@ msgid "To make a directory writable under UNIX execute this command from the she
 msgstr ""
 
 #: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:12
-msgid "I would like to contribute to the development of OSClass with a donation of"
+msgid "I would like to contribute to the development of Osclass with a donation of"
 msgstr ""
 
 #: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:17
@@ -782,7 +782,7 @@ msgid "Footer link"
 msgstr ""
 
 #: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:34
-msgid "I want to help OSClass by linking to <a href=\"http://osclass.org/\" target=\"_blank\">osclass.org</a> from my site with the following text:"
+msgid "I want to help Osclass by linking to <a href=\"http://osclass.org/\" target=\"_blank\">osclass.org</a> from my site with the following text:"
 msgstr ""
 
 #: /var/www/osclass-git/oc-content/themes/modern/admin/settings.php:39

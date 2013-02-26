@@ -1,10 +1,10 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -23,12 +23,12 @@
     class CAdminUpgrade extends AdminSecBaseModel
     {
         function __construct() {
-            parent::__construct() ;
+            parent::__construct();
         }
 
         //Business Layer...
         function doModel() {
-            parent::doModel() ;
+            parent::doModel();
 
             //specific things for this class
             switch ($this->action)
@@ -41,8 +41,10 @@
 
         //hopefully generic...
         function doView($file) {
-            osc_current_admin_theme_path($file) ;
+            osc_run_hook("before_admin_html");
+            osc_current_admin_theme_path($file);
             Session::newInstance()->_clearVariables();
+            osc_run_hook("after_admin_html");
         }
     }
 

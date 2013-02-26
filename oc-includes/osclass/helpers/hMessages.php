@@ -1,10 +1,10 @@
 <?php
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -23,9 +23,9 @@
 
     /**
     * Helper Flash Messages
-    * @package OSClass
+    * @package Osclass
     * @subpackage Helpers
-    * @author OSClass
+    * @author Osclass
     */
 
     /**
@@ -36,7 +36,7 @@
      * @return string
      */
     function osc_add_flash_message($msg, $section = 'pubMessages') {
-        Session::newInstance()->_setMessage($section, $msg, 'error') ;
+        Session::newInstance()->_setMessage($section, $msg, 'error');
     }
 
     /**
@@ -47,7 +47,7 @@
      * @return string
      */
     function osc_add_flash_ok_message($msg, $section = 'pubMessages') {
-        Session::newInstance()->_setMessage($section, $msg, 'ok') ;
+        Session::newInstance()->_setMessage($section, $msg, 'ok');
     }
 
     /**
@@ -58,7 +58,7 @@
      * @return string
      */
     function osc_add_flash_error_message($msg, $section = 'pubMessages') {
-        Session::newInstance()->_setMessage($section, $msg, 'error') ;
+        Session::newInstance()->_setMessage($section, $msg, 'error');
     }
 
     /**
@@ -69,7 +69,7 @@
      * @return string
      */
     function osc_add_flash_info_message($msg, $section = 'pubMessages') {
-        Session::newInstance()->_setMessage($section, $msg, 'info') ;
+        Session::newInstance()->_setMessage($section, $msg, 'info');
     }
 
     /**
@@ -80,7 +80,7 @@
      * @return string
      */
     function osc_add_flash_warning_message($msg, $section = 'pubMessages') {
-        Session::newInstance()->_setMessage($section, $msg, 'warning') ;
+        Session::newInstance()->_setMessage($section, $msg, 'warning');
     }
 
     /**
@@ -92,34 +92,38 @@
      * @return void
      */
     function osc_show_flash_message($section = 'pubMessages', $class = "flashmessage", $id = "flashmessage") {
-        $message = Session::newInstance()->_getMessage($section) ;
+        $message = Session::newInstance()->_getMessage($section);
 
         echo '<div id="flash_js"></div>';
-        
+
         if (isset($message['msg']) && $message['msg'] != '') {
-            echo '<div id="' . $id . '" class="' . strtolower($class) . ' ' . strtolower($class) . '-' .$message['type'] . '"><a class="btn ico btn-mini ico-close">x</a>' ;
-            echo osc_apply_filter('flash_message_text', $message['msg']) ;
-            echo '</div>' ;
+            echo '<div id="' . $id . '" class="' . strtolower($class) . ' ' . strtolower($class) . '-' .$message['type'] . '"><a class="btn ico btn-mini ico-close">x</a>';
+            echo osc_apply_filter('flash_message_text', $message['msg']);
+            echo '</div>';
         } else if($message!='') {
-            echo '<div id="' . $id . '" class="' . $class . '">' ;
-            echo osc_apply_filter('flash_message_text', $message) ;
-            echo '</div>' ;
+            echo '<div id="' . $id . '" class="' . $class . '">';
+            echo osc_apply_filter('flash_message_text', $message);
+            echo '</div>';
+        } else {
+            echo '<div id="' . $id . '" class="' . $class . '" style="display:none;">';
+            echo osc_apply_filter('flash_message_text', '');
+            echo '</div>';
         }
 
-        Session::newInstance()->_dropMessage($section) ;
+        Session::newInstance()->_dropMessage($section);
     }
 
     /**
-     * 
+     *
      *
      * @param string $section
      * @return string Message
      */
     function osc_get_flash_message($section = 'pubMessages') {
-        $message = Session::newInstance()->_getMessage($section) ;
-        Session::newInstance()->_dropMessage($section) ;
+        $message = Session::newInstance()->_getMessage($section);
+        Session::newInstance()->_dropMessage($section);
 
-        return $message ;
+        return $message;
     }
 
 ?>

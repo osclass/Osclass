@@ -1,8 +1,8 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -16,6 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    osc_enqueue_script('jquery-treeview');
+
     $categories  = __get('categories');
     $selected    = __get('selected');
     $plugin_data = __get('plugin_data');
@@ -28,19 +30,18 @@
 
     //customize Head
     function customHead() { ?>
-    <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.treeview.js') ; ?>"></script>
     <script type="text/javascript">
         // check all the categories
         function checkAll(id, check) {
             aa = $('#' + id + ' input[type=checkbox]').each(function() {
-                $(this).attr('checked', check) ;
-            }) ;
+                $(this).attr('checked', check);
+            });
         }
 
         function checkCat(id, check) {
             aa = $('#cat' + id + ' input[type=checkbox]').each(function() {
-                $(this).attr('checked', check) ;
-            }) ;
+                $(this).attr('checked', check);
+            });
         }
 
         $(document).ready(function(){
@@ -73,8 +74,8 @@
                 <div><?php _e('Select the categories where you want to apply these attribute:'); ?></div>
                 <div class="separate-top">
                     <div class="form-label">
-                        <a href="javascript:void(0);" onclick="checkAll('plugin_tree', true) ; return false ;"><?php _e('Check all'); ?></a> &middot;
-                        <a href="javascript:void(0);" onclick="checkAll('plugin_tree', false) ; return false ;"><?php _e('Uncheck all'); ?></a>
+                        <a href="javascript:void(0);" onclick="checkAll('plugin_tree', true); return false;"><?php _e('Check all'); ?></a> &middot;
+                        <a href="javascript:void(0);" onclick="checkAll('plugin_tree', false); return false;"><?php _e('Uncheck all'); ?></a>
                     </div>
                     <div class="form-controls">
                         <ul id="plugin_tree">

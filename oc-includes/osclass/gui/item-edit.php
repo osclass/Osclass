@@ -1,9 +1,9 @@
 <?php
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -18,16 +18,17 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
+
+    osc_enqueue_script('jquery-validate');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
     <head>
-        <?php osc_current_web_theme_path('head.php') ; ?>
+        <?php osc_current_web_theme_path('head.php'); ?>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
 
         <!-- only item-edit.php -->
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <?php ItemForm::location_javascript_new(); ?>
         <?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript(); ?>
         <script type="text/javascript">
@@ -47,14 +48,14 @@
                     }
                 );
             }
-            
+
             setInterval("uniform_plugins()", 250);
             function uniform_plugins() {
-                
+
                 var content_plugin_hook = $('#plugin-hook').text();
                 content_plugin_hook = content_plugin_hook.replace(/(\r\n|\n|\r)/gm,"");
                 if( content_plugin_hook != '' ){
-                    
+
                     var div_plugin_hook = $('#plugin-hook');
                     var num_uniform = $("div[id*='uniform-']", div_plugin_hook ).size();
                     if( num_uniform == 0 ){
@@ -76,7 +77,7 @@
                         price = price.replace('<?php echo osc_esc_js(osc_locale_thousands_sep());  ?>', '');
                     }
                     <?php }; ?>
-                    <?php if(osc_locale_dec_point!='') { ?>
+                    <?php if(osc_locale_dec_point()!='') { ?>
                     var tmp = price.split('<?php echo osc_esc_js(osc_locale_dec_point())?>');
                     if(tmp.length>2) {
                         price = tmp[0]+'<?php echo osc_esc_js(osc_locale_dec_point())?>'+tmp[1];
@@ -90,7 +91,7 @@
         <!-- end only item-edit.php -->
     </head>
     <body>
-        <?php osc_current_web_theme_path('header.php') ; ?>
+        <?php osc_current_web_theme_path('header.php'); ?>
         <div class="content add_item">
             <h1><strong><?php _e('Update your listing', 'modern'); ?></strong></h1>
             <ul id="error_list"></ul>
@@ -98,8 +99,8 @@
                 <fieldset>
                     <input type="hidden" name="action" value="item_edit_post" />
                     <input type="hidden" name="page" value="item" />
-                    <input type="hidden" name="id" value="<?php echo osc_item_id() ;?>" />
-                    <input type="hidden" name="secret" value="<?php echo osc_item_secret() ;?>" />
+                    <input type="hidden" name="id" value="<?php echo osc_item_id();?>" />
+                    <input type="hidden" name="secret" value="<?php echo osc_item_secret();?>" />
                         <div class="box general_info">
                             <h2><?php _e('General Information', 'modern'); ?></h2>
                             <div class="row">
@@ -136,23 +137,23 @@
                             <h2><?php _e('Location', 'modern'); ?></h2>
                             <div class="row">
                                 <label><?php _e('Country', 'modern'); ?></label>
-                                <?php ItemForm::country_select() ; ?>
+                                <?php ItemForm::country_select(); ?>
                             </div>
                             <div class="row">
                                 <label><?php _e('Region', 'modern'); ?></label>
-                                <?php ItemForm::region_text() ; ?>
+                                <?php ItemForm::region_text(); ?>
                             </div>
                             <div class="row">
                                 <label><?php _e('City', 'modern'); ?></label>
-                                <?php ItemForm::city_text() ; ?>
+                                <?php ItemForm::city_text(); ?>
                             </div>
                             <div class="row">
                                 <label><?php _e('City area', 'modern'); ?></label>
-                                <?php ItemForm::city_area_text() ; ?>
+                                <?php ItemForm::city_area_text(); ?>
                             </div>
                             <div class="row">
                                 <label><?php _e('Address', 'modern'); ?></label>
-                                <?php ItemForm::address_text() ; ?>
+                                <?php ItemForm::address_text(); ?>
                             </div>
                         </div>
                         <?php ItemForm::plugin_edit_item(); ?>
@@ -168,6 +169,6 @@
                 </fieldset>
             </form>
         </div>
-        <?php osc_current_web_theme_path('footer.php') ; ?>
+        <?php osc_current_web_theme_path('footer.php'); ?>
     </body>
 </html>

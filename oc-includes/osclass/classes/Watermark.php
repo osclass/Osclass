@@ -28,7 +28,7 @@ class Watermark{
     public function doWatermarkImage($filepath, $mime = 'image/png')
     {
 
-        $path_watermark = osc_content_path() . 'uploads/watermark.png' ;
+        $path_watermark = osc_content_path() . 'uploads/watermark.png';
         if(osc_use_imagick()) {
             $im = new Imagick($filepath);
             $wm = new Imagick($path_watermark);
@@ -136,8 +136,8 @@ class Watermark{
                     $offset['y'] = $geometry['height']-1;
                     break;
                 default:
-                    $offset['x'] = ($geometry['width'] / 2) - ($metrics['textWidth'] / 2) ;
-                    $offset['y'] = ($geometry['height'] / 2) - ($metrics['ascender'] / 2) ;
+                    $offset['x'] = ($geometry['width'] / 2) - ($metrics['textWidth'] / 2);
+                    $offset['y'] = ($geometry['height'] / 2) - ($metrics['ascender'] / 2);
                     break;
             }
             $image->annotateImage($draw, $offset['x'], $offset['y'], 0, $text);
@@ -178,36 +178,36 @@ class Watermark{
      * @return array
      */
     private function calculateOffset($image,$text) {
-        $offset = array('x' => 0, 'y' => 0) ;
+        $offset = array('x' => 0, 'y' => 0);
 
         // get image size and calculate bounding box
-        $isize  = $this->getImageSize($image) ;
-        $bbox   = $this->calculateBBox($text) ;
+        $isize  = $this->getImageSize($image);
+        $bbox   = $this->calculateBBox($text);
 
         switch( osc_watermark_place() ) {
             case 'tl':
-                $offset['x'] = $bbox['height'] ;
-                $offset['y'] = $bbox['height'] * 1.5 ;
-            break ;
+                $offset['x'] = $bbox['height'];
+                $offset['y'] = $bbox['height'] * 1.5;
+            break;
             case 'tr':
-                $offset['x'] = $isize['x'] - ($bbox['width'] + $bbox['height']) ;
-                $offset['y'] = $bbox['height'] * 1.5 ;
-            break ;
+                $offset['x'] = $isize['x'] - ($bbox['width'] + $bbox['height']);
+                $offset['y'] = $bbox['height'] * 1.5;
+            break;
             case 'bl':
-                $offset['x'] = $bbox['height'] ;
-                $offset['y'] = $isize['y'] - $bbox['height'] ;
-            break ;
+                $offset['x'] = $bbox['height'];
+                $offset['y'] = $isize['y'] - $bbox['height'];
+            break;
             case 'br':
-                $offset['x'] = $isize['x'] - ($bbox['width'] + $bbox['height']) ;
-                $offset['y'] = $isize['y'] - $bbox['height'] ;
-            break ;
+                $offset['x'] = $isize['x'] - ($bbox['width'] + $bbox['height']);
+                $offset['y'] = $isize['y'] - $bbox['height'];
+            break;
             default:
-                $offset['x'] = ($isize['x'] / 2) - ($bbox['top_right']['x'] / 2) ;
-                $offset['y'] = ($isize['y'] / 2) - ($bbox['top_right']['y'] / 2) ;
-            break ;
+                $offset['x'] = ($isize['x'] / 2) - ($bbox['top_right']['x'] / 2);
+                $offset['y'] = ($isize['y'] / 2) - ($bbox['top_right']['y'] / 2);
+            break;
         }
 
-        return $offset ;
+        return $offset;
     }
 
     /**

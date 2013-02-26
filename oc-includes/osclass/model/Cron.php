@@ -1,10 +1,10 @@
-<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
-     *      OSCLass – software for creating and publishing online classified
+     *      Osclass – software for creating and publishing online classified
      *                           advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2012 OSCLASS
      *
      *       This program is free software: you can redistribute it and/or
      *     modify it under the terms of the GNU Affero General Public License
@@ -21,32 +21,32 @@
      */
 
     /**
-     * 
+     *
      */
     class Cron extends DAO
     {
         /**
          *
-         * @var type 
+         * @var type
          */
-        private static $instance ;
+        private static $instance;
 
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
-                self::$instance = new self ;
+                self::$instance = new self;
             }
-            return self::$instance ;
+            return self::$instance;
         }
 
         /**
-         * 
+         *
          */
         function __construct()
         {
-            parent::__construct() ;
-            $this->setTableName('t_cron') ;
-            $this->setFields( array('e_type', 'd_last_exec', 'd_next_exec') ) ;
+            parent::__construct();
+            $this->setTableName('t_cron');
+            $this->setFields( array('e_type', 'd_last_exec', 'd_next_exec') );
         }
 
         /**
@@ -59,16 +59,16 @@
          */
         function getCronByType($type)
         {
-            $this->dao->select('*') ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('e_type', $type) ;
-            $result = $this->dao->get() ;
+            $this->dao->select('*');
+            $this->dao->from($this->getTableName());
+            $this->dao->where('e_type', $type);
+            $result = $this->dao->get();
 
             if( $result->numRows == 0 ) {
-                return false ;
+                return false;
             }
 
-            return $result->row() ;
+            return $result->row();
         }
     }
 

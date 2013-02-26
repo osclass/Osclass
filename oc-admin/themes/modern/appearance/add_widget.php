@@ -1,8 +1,8 @@
-<?php
+<?php if ( ! defined('OC_ADMIN')) exit('Direct access is not allowed.');
     /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+     * Osclass – software for creating and publishing online classified advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2012 OSCLASS
      *
      * This program is free software: you can redistribute it and/or modify it under the terms
      * of the GNU Affero General Public License as published by the Free Software Foundation,
@@ -16,29 +16,31 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    osc_enqueue_script('jquery-validate');
+    osc_enqueue_script('tiny_mce');
 
-    $info   = __get("info") ;
-    $widget = __get("widget") ;
+    $info   = __get("info");
+    $widget = __get("widget");
 
     if( Params::getParam('action') == 'edit_widget' ) {
-        $title  = __('Edit widget') ;
-        $edit   = true ;
-        $button = osc_esc_html( __('Save changes') ) ;
+        $title  = __('Edit widget');
+        $edit   = true;
+        $button = osc_esc_html( __('Save changes') );
     } else {
-        $title  = __('Add widget') ;
-        $edit   = false ;
-        $button = osc_esc_html( __('Add widget') ) ;
+        $title  = __('Add widget');
+        $edit   = false;
+        $button = osc_esc_html( __('Add widget') );
     }
 
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){
         if( Params::getParam('action') == 'edit_widget' ) {
-            $title  = __('Edit widget') ;
+            $title  = __('Edit widget');
         } else {
-            $title  = __('Add widget') ;
+            $title  = __('Add widget');
         }
         ?>
-        <h1><?php echo $title ; ?></h1>
+        <h1><?php echo $title; ?></h1>
     <?php
     }
     function customPageTitle($string) {
@@ -46,20 +48,18 @@
     }
     osc_add_filter('admin_title', 'customPageTitle');
     function customHead() {
-        $info   = __get("info") ;
-        $widget = __get("widget") ;
+        $info   = __get("info");
+        $widget = __get("widget");
         if( Params::getParam('action') == 'edit_widget' ) {
-            $title  = __('Edit widget') ;
-            $edit   = true ;
-            $button = osc_esc_html( __('Save changes') ) ;
+            $title  = __('Edit widget');
+            $edit   = true;
+            $button = osc_esc_html( __('Save changes') );
         } else {
-            $title  = __('Add widget') ;
-            $edit   = false ;
-            $button = osc_esc_html( __('Add widget') ) ;
+            $title  = __('Add widget');
+            $edit   = false;
+            $button = osc_esc_html( __('Add widget') );
         }
         ?>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('tiny_mce/tiny_mce.js') ; ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <script type="text/javascript">
             tinyMCE.init({
                 mode : "textareas",
@@ -70,13 +70,47 @@
                 theme_advanced_buttons3 : "",
                 theme_advanced_toolbar_align : "left",
                 theme_advanced_toolbar_location : "top",
-                plugins : "media",
+                plugins : "adimage,advlink,media,contextmenu",
                 entity_encoding : "raw",
-                theme_advanced_buttons1_add : "media",
+                theme_advanced_buttons1_add : "forecolorpicker,fontsizeselect",
+                theme_advanced_buttons2_add: "media",
                 theme_advanced_disable : "styleselect",
-                extended_valid_elements : "script[type|src|charset|defer]"
+                extended_valid_elements : "script[type|src|charset|defer]",
+                relative_urls : false,
+                remove_script_host : false,
+                convert_urls : false
             });
+
+            function ajaxfilemanager(field_name, url, type, win) {
+                var ajaxfilemanagerurl = "<?php echo osc_base_url(); ?>/oc-includes/osclass/assets/js/tiny_mce/plugins/ajaxfilemanager/ajaxfilemanager.php";
+                var view = 'detail';
+                switch (type) {
+                    case "image":
+                        view = 'thumbnail';
+                        break;
+                    case "media":
+                        break;
+                    case "flash":
+                        break;
+                    case "file":
+                        break;
+                    default:
+                        return false;
+                }
+                tinyMCE.activeEditor.windowManager.open({
+                    url: "<?php echo osc_base_url(); ?>/oc-includes/osclass/assets/js/tiny_mce/plugins/ajaxfilemanager/ajaxfilemanager.php?view=" + view,
+                    width: 782,
+                    height: 440,
+                    inline : "yes",
+                    close_previous : "no"
+                },{
+                    window : win,
+                    input : field_name
+                });
+            }
+
         </script>
+
         <script type="text/javascript">
             $(document).ready(function(){
                 // Code for form validation
@@ -101,35 +135,35 @@
         </script>
     <?php }
     osc_add_hook('admin_header', 'customHead');
-    osc_current_admin_theme_path( 'parts/header.php' ) ; ?>
+    osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <div id="widgets-page">
     <div class="widgets">
         <div id="item-form">
             <ul id="error_list"></ul>
-            <form name="widget_form" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-                <input type="hidden" name="action" value="<?php echo ( $edit ? 'edit_widget_post' : 'add_widget_post' ) ; ?>" />
+            <form name="widget_form" action="<?php echo osc_admin_base_url(true); ?>" method="post">
+                <input type="hidden" name="action" value="<?php echo ( $edit ? 'edit_widget_post' : 'add_widget_post' ); ?>" />
                 <input type="hidden" name="page" value="appearance" />
                 <?php if( $edit) { ?>
-                <input type="hidden" name="id" value="<?php echo Params::getParam('id', true) ; ?>" />
+                <input type="hidden" name="id" value="<?php echo Params::getParam('id', true); ?>" />
                 <?php } ?>
-                <input type="hidden" name="location" value="<?php echo Params::getParam('location', true) ; ?>" />
+                <input type="hidden" name="location" value="<?php echo Params::getParam('location', true); ?>" />
                 <fieldset>
                     <div class="input-line">
-                        <label><?php _e('Description (for internal purposes only)') ; ?></label>
+                        <label><?php _e('Description (for internal purposes only)'); ?></label>
                         <div class="input">
-                            <input type="text" class="large" name="description" value="<?php if( $edit ) { echo osc_esc_html($widget['s_description']) ; } ?>" />
+                            <input type="text" class="large" name="description" value="<?php if( $edit ) { echo osc_esc_html($widget['s_description']); } ?>" />
                         </div>
                     </div>
                     <div class="input-description-wide">
-                        <label><?php _e('HTML Code for the Widget') ; ?></label>
-                        <textarea name="content" id="body"><?php if( $edit ) { echo osc_esc_html($widget['s_content']) ; } ?></textarea>
+                        <label><?php _e('HTML Code for the Widget'); ?></label>
+                        <textarea name="content" id="body"><?php if( $edit ) { echo osc_esc_html($widget['s_content']); } ?></textarea>
                     </div>
                     <div class="form-actions">
-                        <input type="submit" value="<?php echo $button ; ?>" class="btn btn-submit" />
+                        <input type="submit" value="<?php echo $button; ?>" class="btn btn-submit" />
                     </div>
                 </fieldset>
             </form>
         </div>
     </div>
 </div>
-<?php osc_current_admin_theme_path( 'parts/footer.php' ) ; ?>
+<?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>
