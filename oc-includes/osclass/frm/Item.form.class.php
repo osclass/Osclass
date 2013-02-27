@@ -106,10 +106,10 @@
             ?>
             <select id="parentCategory" name="parentCatId">
                 <option value=""><?php _e('Select Category'); ?></option>
-                <?php foreach($categories as $category) {
-                    $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $category['pk_i_id']) || (isset($categoryID) && $categoryID == $category['pk_i_id']) );
-                    if($selected) { $subcategory = $category; };
-                    echo '<option value="'.$category['pk_i_id'].'" '.($selected ? 'selected="selected"' : '' ).'>'.$category['s_name'].'</option>';
+                <?php foreach($categories as $_category) {
+                    $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $_category['pk_i_id']) || (isset($categoryID) && $categoryID == $_category['pk_i_id']) );
+                    if($selected) { $subcategory = $_category; };
+                    echo '<option value="'.$_category['pk_i_id'].'" '.($selected ? 'selected="selected"' : '' ).'>'.$_category['s_name'].'</option>';
                 } ?>
             </select>
             <select id="catId" name="catId">
@@ -122,7 +122,7 @@
                                 echo '<option value="'.$c['pk_i_id'].'" '.($selected ? 'selected="selected"' : '' ).'>'.$c['s_name'].'</option>';
                             }
                         } else {
-                            echo '<option value="'.$category['pk_i_id'].'" >'.__('No Subcategory').'</option>';
+                            echo '<option value="'.$categoryID.'" >'.__('No Subcategory').'</option>';
                         }
                     } else {
                         echo '<option value="">'.__('Select Subcategory').'</option>';
