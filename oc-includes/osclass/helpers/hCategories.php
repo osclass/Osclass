@@ -61,7 +61,7 @@
      */
     function osc_get_categories() {
        if ( !View::newInstance()->_exists('categories') ) {
-            View::newInstance()->_exportVariableToView('categories', Category::newInstance()->toTree() );
+           osc_export_categories(Category::newInstance()->toTree());
         }
         return  View::newInstance()->_get('categories');
     }
@@ -133,20 +133,6 @@
             View::newInstance()->_exportVariableToView('subcategories', $category['categories']);
         }
         return osc_priv_count_subcategories();
-    }
-
-    /**
-     * Gets the total of subcategories for the current category. If subcategories are not loaded, this function will load them and
-     * it will prepare the the pointer to the first element
-     *
-     * @return int
-     */
-    function osc_count_subcategories2() {
-        $category = View::newInstance()->_current('categories');
-        if ( $category == '' ) return -1;
-        if ( !isset($category['categories']) ) return 0;
-        if ( !is_array($category['categories']) ) return 0;
-        return count($category['categories']);
     }
 
     /**
@@ -302,6 +288,9 @@
         $keys = View::newInstance()->_get('categoryTrail');
         $position = array_pop($keys);
         View::newInstance()->_exportVariableToView('categoryTrail', $keys);
+        if(!View::newInstance()->_exists('categories_tree')) {
+            View::newInstance()->_exportVariableToView('categories_tree', Category::newInstance()->toTree());
+        }
         $scats['categories'] = Category::newInstance()->toTree();
         if(count($keys)>0) {
             foreach($keys as $k) {
@@ -316,5 +305,28 @@
         View::newInstance()->_exportVariableToView('categories', $scats);
         View::newInstance()->_seek('categories', $position);
     }
+
+    /**
+     * Gets the total of subcategories for the current category. If subcategories are not loaded, this function will load them and
+     * it will prepare the the pointer to the first element
+     *
+     * @return int
+     */
+    function osc_count_subcategories2() {
+        $category = View::newInstance()->_current('categories');
+        if ( $category == '' ) return -1;
+        if ( !isset($category['categories']) ) return 0;
+        if ( !is_array($category['categories']) ) return 0;
+        return count($category['categories']);
+    }
+
+    function osc_export_categories($categories = null) {
+        if($categories==null) {
+            $categories = Category::newInstance()->toTree();
+        }
+        View::newInstance()->_exportVariableToView('categories', $categories);
+        View::newInstance()->_exportVariableToView('categories_tree', $categories);
+    }
+
 
 ?>

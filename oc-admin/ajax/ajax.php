@@ -87,70 +87,30 @@
                 case 'categories_order': // Save the order of the categories
                     osc_csrf_check(false);
                     $aIds        = Params::getParam('list');
-                    $orderParent = 0;
-                    $orderSub    = 0;
-                    $catParent   = 0;
+                    $order = array();
                     $error       = 0;
 
                     $catManager = Category::newInstance();
                     $aRecountCat = array();
 
                     foreach($aIds as $id => $parent) {
-                        if( $parent == 'root' ) {
-                            $res = $catManager->updateOrder($id, $orderParent);
-                            if( is_bool($res) && !$res ) {
-                                $error = 1;
-                            }
-
-                            // find category
-                            $auxCategory = Category::newInstance()->findByPrimaryKey($id);
-
-                            // set parent category
-                            $conditions = array('pk_i_id' => $id);
-                            $array['fk_i_parent_id'] = NULL;
-                            $res = $catManager->update($array, $conditions);
-                            if( is_bool($res) && !$res ) {
-                                $error = 1;
-                            } else if($res==1) { // updated ok
-                                $parentId = $auxCategory['fk_i_parent_id'];
-                                if($parentId) {
-                                    // update parent category stats
-                                    array_push($aRecountCat, $id);
-                                    array_push($aRecountCat, $parentId);
-                                }
-
-                            }
-                            $orderParent++;
-                        } else {
-                            if( $parent != $catParent ) {
-                                $catParent = $parent;
-                                $orderSub  = 0;
-                            }
-
-                            $res = $catManager->updateOrder($id, $orderSub);
-                            if( is_bool($res) && !$res ) {
-                                $error = 1;
-                            }
-
-                            // set parent category
-                            $auxCategory = Category::newInstance()->findByPrimaryKey($id);
-                            $auxCategoryP = Category::newInstance()->findByPrimaryKey($catParent);
-
-                            $conditions = array('pk_i_id' => $id);
-                            $array['fk_i_parent_id'] = $catParent;
-
-                            $res = $catManager->update($array, $conditions);
-                            if( is_bool($res) && !$res ) {
-                                $error = 1;
-                            } else if($res==1) { // updated ok
-                                // update category parent
-                                $prevParentId = $auxCategory['fk_i_parent_id'];
-                                $parentId = $auxCategoryP['pk_i_id'];
-                                array_push($aRecountCat, $prevParentId);
-                                array_push($aRecountCat, $parentId);
-                            }
-                            $orderSub++;
+                        if(!isset($order[$parent])) {
+                            $order[$parent] = 0;
                         }
+
+                        $res = $catManager->update(
+                            array(
+                                'fk_i_parent_id' => ($parent=='root'?NULL:$parent),
+                                'i_position' => $order[$parent]
+                            ),
+                            array('pk_i_id' => $id)
+                        );
+                        if( is_bool($res) && !$res ) {
+                            $error = 1;
+                        } else if($res==1) {
+                            $aRecountCat[] = $id;
+                        }
+                        $order[$parent] = $order[$parent]+1;
                     }
 
                     // update category stats
