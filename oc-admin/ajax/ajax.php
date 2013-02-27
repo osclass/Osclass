@@ -506,20 +506,6 @@
                     }
                 break;
 
-                case 'check_username_availability':
-                    $username = osc_sanitize_username(Params::getParam('s_username'));
-                    if(!osc_is_username_blacklisted($username)) {
-                        $user = User::newInstance()->findByUsername($username);
-                        if(isset($user['s_username'])) {
-                            echo json_encode(array('exists' => 1, 's_username' => $username));
-                        } else {
-                            echo json_encode(array('exists' => 0, 's_username' => $username));
-                        }
-                    } else {
-                        echo json_encode(array('exists' => 1, 's_username' => $username));
-                    }
-                break;
-
                 /******************************
                  ** COMPLETE UPGRADE PROCESS **
                  ******************************/
@@ -714,14 +700,8 @@
                                 }
                             }
 
-                            $url_source_file = '';
-                            if($data['s_download']!='') {
-                                $filename = basename(str_replace("/download", "", $data['s_download']));
-                                $url_source_file = $data['s_download'];
-                            } else {
-                                $filename = $data['s_update_url']."_".$data['s_version'].".zip";
-                                $url_source_file = $data['s_source_file'];
-                            }
+                            $filename = $data['s_update_url']."_".$data['s_version'].".zip";
+                            $url_source_file = $data['s_source_file'];
 
 //                            error_log('Source file: ' . $url_source_file);
 //                            error_log('Filename: ' . $filename);
@@ -807,7 +787,7 @@
                                                     $message .= __('There was a problem adding the language');
                                                     $error = 8;
                                                 }
-                                                osc_check_languages_update();
+                                                osc_check_languages_update(true);
                                             }
 
                                             if ($rm_errors == 0) {

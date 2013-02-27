@@ -109,13 +109,17 @@
                                                                             } else {
                                                                                 $data_sql = osc_file_get_contents('http://geo.osclass.org/newgeo.download.php?action=country&term=' . urlencode($countryCode) );
 
-                                                                                $conn = DBConnectionClass::newInstance();
-                                                                                $c_db = $conn->getOsclassDb();
-                                                                                $comm = new DBCommandClass($c_db);
-                                                                                $comm->query("SET FOREIGN_KEY_CHECKS = 0");
-                                                                                $comm->importSQL($data_sql);
-                                                                                $comm->query("SET FOREIGN_KEY_CHECKS = 1");
-
+                                                                                if($data_sql!='') {
+                                                                                    $conn = DBConnectionClass::newInstance();
+                                                                                    $c_db = $conn->getOsclassDb();
+                                                                                    $comm = new DBCommandClass($c_db);
+                                                                                    $comm->query("SET FOREIGN_KEY_CHECKS = 0");
+                                                                                    $comm->importSQL($data_sql);
+                                                                                    $comm->query("SET FOREIGN_KEY_CHECKS = 1");
+                                                                                } else {
+                                                                                    $mCountries->insert(array('pk_c_code' => $countryCode,
+                                                                                                            's_name' => $countryName));
+                                                                                }
                                                                                 osc_add_flash_ok_message(sprintf(_m('%s has been added as a new country'), $countryName), 'admin');
                                                                             }
                                                                         }
@@ -242,14 +246,17 @@
                                                                     if(is_array($regionIds)) {
                                                                         $locations = 0;
                                                                         $del_locations = 0;
-                                                                        $country = Country::newInstance()->findByCode($cCity['fk_c_country_code']);
-                                                                        foreach($regionIds as $regionId) {
-                                                                            if($regionId != '') {
-                                                                                $ok = $mRegion->deleteByPrimaryKey($regionId);
-                                                                                if($ok==0) {
-                                                                                    $del_locations++;
-                                                                                } else {
-                                                                                    $locations += $ok;
+                                                                        if(count($regionIds)>0) {
+                                                                            $region = $mRegion->findByPrimaryKey($regionIds[0]);
+                                                                            $country = Country::newInstance()->findByCode($region['fk_c_country_code']);
+                                                                            foreach($regionIds as $regionId) {
+                                                                                if($regionId != '') {
+                                                                                    $ok = $mRegion->deleteByPrimaryKey($regionId);
+                                                                                    if($ok==0) {
+                                                                                        $del_locations++;
+                                                                                    } else {
+                                                                                        $locations += $ok;
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
@@ -346,6 +353,7 @@
                                                                         $locations = 0;
                                                                         $del_locations = 0;
                                                                         $cCity = end($cityIds);
+                                                                        $cCity = $mCities->findByPrimaryKey($cCity);
                                                                         $region = Region::newInstance()->findByPrimaryKey($cCity['fk_i_region_id']);
                                                                         $country = Country::newInstance()->findByCode($cCity['fk_c_country_code']);
                                                                         foreach($cityIds as $cityId) {
@@ -728,10 +736,10 @@ HTACCESS;
                                             if($id_pos!==false) { $comments_pos++; }
                                             if($title_pos!==false) { $comments_pos++; }
                                             if($cat_pos!==false) { $comments_pos++; }
-                                            $rewrite->addRule('^'. str_replace('{ITEM_CITY}', '.*', str_replace('{CATEGORIES}', '.*', str_replace('{ITEM_TITLE}', '.*', str_replace('{ITEM_ID}', '([0-9]+)', $item_url.'\?comments-page=([0-9al]*)')))).'$', 'index.php?page=item&id=$1&comments-page=$2');
                                             $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'. str_replace('{ITEM_CITY}', '.*', str_replace('{CATEGORIES}', '.*', str_replace('{ITEM_TITLE}', '.*', str_replace('{ITEM_ID}', '([0-9]+)', $item_url.'\?comments-page=([0-9al]*)')))).'$', 'index.php?page=item&id=$3&lang=$1_$2&comments-page=$4');
-                                            $rewrite->addRule('^'. str_replace('{ITEM_CITY}', '.*', str_replace('{CATEGORIES}', '.*', str_replace('{ITEM_TITLE}', '.*', str_replace('{ITEM_ID}', '([0-9]+)', $item_url)))).'$', 'index.php?page=item&id=$1');
+                                            $rewrite->addRule('^'. str_replace('{ITEM_CITY}', '.*', str_replace('{CATEGORIES}', '.*', str_replace('{ITEM_TITLE}', '.*', str_replace('{ITEM_ID}', '([0-9]+)', $item_url.'\?comments-page=([0-9al]*)')))).'$', 'index.php?page=item&id=$1&comments-page=$2');
                                             $rewrite->addRule('^([a-z]{2})_([A-Z]{2})/'. str_replace('{ITEM_CITY}', '.*', str_replace('{CATEGORIES}', '.*', str_replace('{ITEM_TITLE}', '.*', str_replace('{ITEM_ID}', '([0-9]+)', $item_url)))).'$', 'index.php?page=item&id=$3&lang=$1_$2');
+                                            $rewrite->addRule('^'. str_replace('{ITEM_CITY}', '.*', str_replace('{CATEGORIES}', '.*', str_replace('{ITEM_TITLE}', '.*', str_replace('{ITEM_ID}', '([0-9]+)', $item_url)))).'$', 'index.php?page=item&id=$1');
 
                                             // User rules
                                             $rewrite->addRule('^'.osc_get_preference('rewrite_user_login').'/?$', 'index.php?page=login');

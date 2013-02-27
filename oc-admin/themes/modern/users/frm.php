@@ -114,6 +114,49 @@
         });
     </script>
 <?php }; ?>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('form#register').validate({
+            rules: {
+                s_username: {
+                    required: true
+                }
+            },
+            messages: {
+                s_username: {
+                    required: '<?php echo osc_esc_js(__("Username: this field is required", "modern")); ?>.'
+                }
+            },
+            errorLabelContainer: "#error_list",
+            wrapper: "li",
+            invalidHandler: function(form, validator) {
+                $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+            }});
+
+        var cInterval;
+        $("#s_username").keydown(function(event) {
+            if($("#s_username").attr("value")!='') {
+                clearInterval(cInterval);
+                cInterval = setInterval(function(){
+                    $.getJSON(
+                        "<?php echo osc_base_url(true); ?>?page=ajax&action=check_username_availability",
+                        {"s_username": $("#s_username").attr("value")},
+                        function(data){
+                            clearInterval(cInterval);
+                            if(data.exists==0) {
+                                $("#available").text('<?php echo osc_esc_js(__("The username is available", "modern")); ?>');
+                            } else {
+                                $("#available").text('<?php echo osc_esc_js(__("The username is NOT available", "modern")); ?>');
+                            }
+                        }
+                    );
+                }, 1000);
+            }
+        });
+    });
+</script>
+
+
 <h2 class="render-title"><?php echo $aux['title']; ?></h2>
 
 
@@ -150,7 +193,7 @@
                 <div class="form-row">
                     <div class="form-label"><?php _e('Username'); ?></div>
                     <div class="form-controls">
-                        <?php UserForm::username_text($user); ?>
+                        <?php UserForm::username_text($user); ?> <div id="available"></div>
                     </div>
                 </div>
                 <div class="form-row">

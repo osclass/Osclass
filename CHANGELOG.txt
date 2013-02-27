@@ -1,3 +1,17 @@
+Osclass 3.1 2012-02-26
+----------------------
+- Better market: you can now download languages from the admin
+- User ban system
+- Templates for static pages + better customization of pages
+- Manage email alerts
+- Security improvements: CSRF in the forms
+- Easier installation process
+- Preview of the email templates + legend in the sidebar
+- Enqueue styles and javascripts urls
+- Remove several cities/regions at the same time
+- Upgrade Osclass via CLI
+- Minor bug fixes
+
 Osclass 3.0.2 2012-10-22
 ------------------------
 - Use email from SMTP Settings if it's defined

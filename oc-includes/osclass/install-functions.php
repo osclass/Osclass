@@ -379,6 +379,7 @@ function oc_install( ) {
 
     osc_set_preference('language', osc_current_admin_locale());
     osc_set_preference('admin_language', osc_current_admin_locale());
+    osc_set_preference('csrf_name', 'CSRF'.mt_rand(0,mt_getrandmax()));
 
     oc_install_example_data();
 
