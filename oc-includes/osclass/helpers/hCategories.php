@@ -280,7 +280,8 @@
     }
 
     function osc_category_move_to_parent() {
-        $category = end(View::newInstance()->_get('categories'));
+        $category = View::newInstance()->_get('categories');
+        $category = end($category);
 
         if ( $category == '' ) return -1;
         if ( !isset($category['fk_i_parent_id']) ) return false;
