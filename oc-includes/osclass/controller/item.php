@@ -118,7 +118,7 @@
                         }
                     }
 
-                    if (osc_recaptcha_private_key() != '') {
+                    if(osc_recaptcha_items_enabled() && osc_recaptcha_private_key() != '') {
                         if(!osc_check_recaptcha()) {
                             osc_add_flash_error_message( _m('The Recaptcha code is wrong') );
                             $this->redirectTo( osc_item_post_url() );
@@ -222,7 +222,7 @@
                             }
                         }
 
-                        if(osc_recaptcha_private_key() != '') {
+                        if(osc_recaptcha_items_enabled() && osc_recaptcha_private_key() != '') {
                             if( !osc_check_recaptcha() ) {
                                 osc_add_flash_error_message( _m('The Recaptcha code is wrong') );
                                 $this->redirectTo( osc_item_edit_url($secret, $id) );
