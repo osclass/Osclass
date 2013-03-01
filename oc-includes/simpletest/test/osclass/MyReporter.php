@@ -9,7 +9,8 @@ require_once(dirname(__FILE__).'/../../scorer.php');
 class MyReporter extends SimpleReporter {
     private $character_set;
     private $fails;
-    
+    private $exceptions;
+
     /**
      *    Does nothing yet. The first output will
      *    be sent on the first test start. For use
@@ -35,6 +36,15 @@ class MyReporter extends SimpleReporter {
     {
         $this->fails .= $str;
     }
+
+    /*
+     * append to $fail string
+     */
+    function addException($str)
+    {
+        $this->exceptions .= $str;
+    }
+
     /**
      *    Paints the top of the web page setting the
      *    title to the name of the starting test.
@@ -120,7 +130,7 @@ class MyReporter extends SimpleReporter {
             print "</body>\n</html>\n";
         };
         
-        if($this->fails!='') {
+        if($this->fails!='' || $this->exceptions!='') {
             $subject = '[ERROR] Test results';
         } else {
             $subject = '[OK] Test results';
@@ -132,10 +142,12 @@ class MyReporter extends SimpleReporter {
         $body .= "*" . $this->getExceptionCount() . "* exceptions.\r\n\r";
         $talker_text = $body;
         $body .= "<br /><br />";
-        
-        $this->fails .= "</body></html>";
         $body .= $this->fails;
-        
+        $body .= "<br /><br />";
+        $body .= $this->exceptions;
+        $body .= "<br /><br />";
+        $body .= "</body></html>";
+
         
         $cabeceras  = 'MIME-Version: 1.0' . "\r\n";
         $cabeceras .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
@@ -152,6 +164,8 @@ class MyReporter extends SimpleReporter {
             } else {
                 $talker->send_message(':ewbte:');
             }
+            $talker = new Talker();
+            $talker->connect($talker_room, $talker_token);
             $talker->send_message($talker_text);
         }
     }
@@ -267,6 +281,7 @@ class MyReporter extends SimpleReporter {
                     ' line ' . $exception->getLine() . ']';
             print " -&gt; <strong>" . $this->htmlEntities($message) . "</strong><br />\n";
         }
+        $this->addException($message);
     }
 
     /**
