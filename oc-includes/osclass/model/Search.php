@@ -59,6 +59,7 @@
         private $withUserId;
         private $withItemId;
         private $withNoUserEmail;
+        private $onlyPremium;
 
         private $price_min;
         private $price_max;
@@ -91,6 +92,7 @@
             $this->withUserId       = false;
             $this->withPicture      = false;
             $this->withNoUserEmail  = false;
+            $this->onlyPremium      = false;
 
             $this->price_min = null;
             $this->price_max = null;
@@ -536,6 +538,7 @@
         {
             $this->having = $having;
         }
+
         /**
          * Filter by ad with picture or not
          *
@@ -545,9 +548,19 @@
          */
         public function withPicture($pic = false)
         {
-            if($pic) {
-                $this->withPicture = true;
-            }
+            $this->withPicture = $pic;
+        }
+
+        /**
+         * Filter by premium ad status
+         *
+         * @access public
+         * @since 3.2
+         * @param bool $premium
+         */
+        public function onlyPremium($premium = false)
+        {
+            $this->withPicture = $premium;
         }
 
         /**
@@ -880,6 +893,9 @@
                     $this->dao->join(sprintf('%st_item_resource', DB_TABLE_PREFIX), sprintf('%st_item_resource.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX), 'LEFT');
                     $this->dao->where(sprintf("%st_item_resource.s_content_type LIKE '%%image%%' ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
                     $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
+                }
+                if($this->onlyPremium) {
+                    $this->dao->where(sprintf("%st_item.b_premium = 1", DB_TABLE_PREFIX));
                 }
                 $this->_priceRange();
 
@@ -1291,6 +1307,10 @@
                     $aData['withPicture']   = $this->withPicture;
                 }
 
+                if($this->onlyPremium) {
+                    $aData['onlyPremium']   = $this->onlyPremium;
+                }
+
                 $aData['tables']        = $this->tables;
                 $aData['tables_join']   = $this->tables_join;
 
@@ -1337,6 +1357,9 @@
             }
             if( isset($aData['withPicture']) ) {
                 $this->withPicture(true);
+            }
+            if( isset($aData['onlyPremium']) ) {
+                $this->onlyPremium(true);
             }
         }
     }

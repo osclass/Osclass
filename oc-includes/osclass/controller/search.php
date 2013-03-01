@@ -187,7 +187,10 @@
             }
 
             $p_bPic       = Params::getParam('bPic');
-            ($p_bPic == 1) ? $p_bPic = 1 : $p_bPic = 0;
+            $p_bPic = ($p_bPic == 1) ? 1 : 0;
+
+            $p_bPremium   = Params::getParam('bPremium');
+            $p_bPremium = ($p_bPremium == 1) ? 1 : 0;
 
             $p_sPriceMin  = Params::getParam('sPriceMin');
             $p_sPriceMax  = Params::getParam('sPriceMax');
@@ -299,6 +302,11 @@
                 $this->mSearch->withPicture(true);
             }
 
+            // FILTERING IF WE ONLY WANT PREMIUM ITEMS
+            if($p_bPremium) {
+                $this->mSearch->onlyPremium(true);
+            }
+
             //FILTERING BY RANGE PRICE
             $this->mSearch->priceRange($p_sPriceMin, $p_sPriceMax);
 
@@ -351,6 +359,7 @@
                 $this->_exportVariableToView('search_total_pages', $iNumPages);
                 $this->_exportVariableToView('search_page', $p_iPage);
                 $this->_exportVariableToView('search_has_pic', $p_bPic);
+                $this->_exportVariableToView('search_only_premium', $p_bPremium);
                 $this->_exportVariableToView('search_region', $regionName);
                 $this->_exportVariableToView('search_city', $cityName);
                 $this->_exportVariableToView('search_price_min', $p_sPriceMin);
