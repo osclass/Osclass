@@ -2217,11 +2217,11 @@ code {
   height: 36px;
   margin-left: 2px;
 }
-.ui-sortable li ul li ul .category_row {
+.ui-sortable li ul li ul li ul .category_row {
   padding-left: 49px;
 }
-.ui-sortable li ul li ul .subcategory .toggle,
-.subcategory .subcategory .ico-childrens {
+.ui-sortable li ul li ul li ul .subcategory .toggle,
+.subcategory .subcategory .subcategory .ico-childrens {
   display: none;
 }
 /*
