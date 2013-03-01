@@ -50,6 +50,7 @@
         private $sEmail;
         private $groupBy;
         private $having;
+        private $locale_code;
 
         private $withPattern;
         private $withPicture;
@@ -58,6 +59,7 @@
         private $withUserId;
         private $withItemId;
         private $withNoUserEmail;
+        private $onlyPremium;
 
         private $price_min;
         private $price_max;
@@ -90,6 +92,7 @@
             $this->withUserId       = false;
             $this->withPicture      = false;
             $this->withNoUserEmail  = false;
+            $this->onlyPremium      = false;
 
             $this->price_min = null;
             $this->price_max = null;
@@ -127,7 +130,11 @@
             // get all item_location data
             if(OC_ADMIN) {
                 $this->addField(sprintf('%st_item_location.*', DB_TABLE_PREFIX) );
+                $this->locale_code = osc_current_admin_locale();
+            } else {
+                $this->locale_code = osc_current_user_locale();
             }
+
         }
 
         /**
@@ -531,6 +538,7 @@
         {
             $this->having = $having;
         }
+
         /**
          * Filter by ad with picture or not
          *
@@ -540,9 +548,19 @@
          */
         public function withPicture($pic = false)
         {
-            if($pic) {
-                $this->withPicture = true;
-            }
+            $this->withPicture = $pic;
+        }
+
+        /**
+         * Filter by premium ad status
+         *
+         * @access public
+         * @since 3.2
+         * @param bool $premium
+         */
+        public function onlyPremium($premium = false)
+        {
+            $this->withPicture = $premium;
         }
 
         /**
@@ -748,6 +766,8 @@
                 $this->dao->from(DB_TABLE_PREFIX . 't_item_description as d');
                 $this->dao->where(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->sPattern));
 
+                $this->dao->where(sprintf("d.fk_c_locale_code LIKE '%s'", $this->locale_code));
+
                 $subSelect = $this->dao->_getSelect();
                 $this->dao->_resetSelect();
                 // END sub select ----------------------
@@ -851,6 +871,7 @@
                 if ($this->withPattern ) {
                     $this->dao->join(DB_TABLE_PREFIX.'t_item_description as d','d.fk_i_item_id = '.DB_TABLE_PREFIX.'t_item.pk_i_id','LEFT');
                     $this->dao->where(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->sPattern) );
+                    $this->dao->where(sprintf("d.fk_c_locale_code LIKE '%s'", $this->locale_code));
                 }
 
                 // item conditions
@@ -872,6 +893,9 @@
                     $this->dao->join(sprintf('%st_item_resource', DB_TABLE_PREFIX), sprintf('%st_item_resource.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX), 'LEFT');
                     $this->dao->where(sprintf("%st_item_resource.s_content_type LIKE '%%image%%' ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
                     $this->dao->groupBy(DB_TABLE_PREFIX.'t_item.pk_i_id');
+                }
+                if($this->onlyPremium) {
+                    $this->dao->where(sprintf("%st_item.b_premium = 1", DB_TABLE_PREFIX));
                 }
                 $this->_priceRange();
 
@@ -1127,7 +1151,7 @@
             else if($nOrder == 1) $this->dao->orderBy($aOrder[0], 'DESC');
             else $this->dao->orderBy('item', 'DESC');
 
-            $this->dao->select('fk_i_city_area_id as city_area_id, s_city_area as city_area_name, fk_i_city_id , s_city as city_name, fk_i_region_id as region_id, s_region as region_name, fk_c_country_code as pk_c_code, s_country as country_name, count(*) as items, '.DB_TABLE_PREFIX.'t_country.fk_c_locale_code');
+            $this->dao->select('fk_i_city_area_id as city_area_id, s_city_area as city_area_name, fk_i_city_id , s_city as city_name, fk_i_region_id as region_id, s_region as region_name, fk_c_country_code as pk_c_code, s_country as country_name, count(*) as items');
             $this->dao->from(DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_category, '.DB_TABLE_PREFIX.'t_country');
             $this->dao->where(DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id');
             $this->dao->where(DB_TABLE_PREFIX.'t_item.b_enabled = 1');
@@ -1283,6 +1307,10 @@
                     $aData['withPicture']   = $this->withPicture;
                 }
 
+                if($this->onlyPremium) {
+                    $aData['onlyPremium']   = $this->onlyPremium;
+                }
+
                 $aData['tables']        = $this->tables;
                 $aData['tables_join']   = $this->tables_join;
 
@@ -1329,6 +1357,9 @@
             }
             if( isset($aData['withPicture']) ) {
                 $this->withPicture(true);
+            }
+            if( isset($aData['onlyPremium']) ) {
+                $this->onlyPremium(true);
             }
         }
     }

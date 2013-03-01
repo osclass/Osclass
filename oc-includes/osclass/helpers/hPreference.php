@@ -587,18 +587,21 @@
         $url = getPreference('marketURL');
         switch ($type) {
             case 'plugins':
+            case 'plugin':
                 $url .= 'section/plugins/';
                 if($code!='') {
                     $url .= 'code/'. $code;
                 }
                 break;
             case 'themes':
+            case 'theme':
                 $url .= 'section/themes/';
                 if($code!='') {
                     $url .= 'code/'. $code;
                 }
                 break;
             case 'languages':
+            case 'language':
                 $url .= 'section/languages/';
                 if($code!='') {
                     $url .= 'code/'. $code;

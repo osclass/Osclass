@@ -34,7 +34,7 @@
             $success    = 0;
             $error      = false;
             if( !$error && (osc_recaptcha_private_key() != '') && !$this->is_admin ) {
-                if( !$this->recaptcha() ) {
+                if( !osc_check_recaptcha() ) {
                     $error = 4;
                 }
             }
@@ -195,7 +195,7 @@
             Session::newInstance()->_set( 'recover_time', time() );
 
             if ( (osc_recaptcha_private_key() != '') ) {
-                if( !$this->recaptcha() ) {
+                if( !osc_check_recaptcha() ) {
                     return 2; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                 }
             }
@@ -215,21 +215,6 @@
             osc_run_hook('hook_email_user_forgot_password', $user, $password_url);
 
             return 0;
-        }
-
-        public function recaptcha()
-        {
-            require_once osc_lib_path() . 'recaptchalib.php';
-            if ( Params::getParam("recaptcha_challenge_field") != '') {
-                $resp = recaptcha_check_answer (osc_recaptcha_private_key()
-                                               ,$_SERVER["REMOTE_ADDR"]
-                                               ,Params::getParam("recaptcha_challenge_field")
-                                               ,Params::getParam("recaptcha_response_field"));
-
-                return $resp->is_valid;
-            }
-
-            return false;
         }
 
         function prepareData($is_add)
@@ -255,16 +240,13 @@
                 if( Params::getParam('s_password', false, false) != '') {
                     $input['s_password'] = sha1( Params::getParam('s_password', false, false) );
                 }
+                $input['s_username']     = osc_sanitize_username(Params::getParam('s_username'));
             }
 
             $input['s_name']         = Params::getParam('s_name');
             $input['s_website']      = Params::getParam('s_website');
             $input['s_phone_land']   = Params::getParam('s_phone_land');
             $input['s_phone_mobile'] = Params::getParam('s_phone_mobile');
-
-            if(Params::getParam('s_username')!='') {
-                $input['s_username']     = osc_sanitize_username(Params::getParam('s_username'));
-            }
 
             //locations...
             $country = Country::newInstance()->findByCode( Params::getParam('countryId') );
@@ -273,7 +255,7 @@
                 $countryName = $country['s_name'];
             } else {
                 $countryId   = null;
-                $countryName = null;
+                $countryName = Params::getParam('country');
             }
 
             if( intval( Params::getParam('regionId') ) ) {

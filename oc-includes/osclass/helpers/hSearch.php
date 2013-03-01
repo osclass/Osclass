@@ -82,6 +82,15 @@
     }
 
     /**
+     * Gets if "only premium" option is enabled or not in the search
+     *
+     * @return boolean
+     */
+    function osc_search_only_premium() {
+        return View::newInstance()->_get('search_only_premium');
+    }
+
+    /**
      * Gets current search order
      *
      * @return string

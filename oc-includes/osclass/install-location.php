@@ -93,13 +93,15 @@ function basic_info() {
         )
     );
 
-    $body  = sprintf(__('Welcome %s,'),Params::getParam('webtitle'))."<br/><br/>";
-    $body .= sprintf(__('Your Osclass installation at %s is up and running. You can access the administration panel with these details:'), WEB_PATH)."<br/>";
+    $body  = sprintf(__('Hi %s,'),Params::getParam('webtitle'))."<br/><br/>";
+    $body .= sprintf(__('Your Osclass installation at %s is up and running. You can access the administration panel with these details:'), WEB_PATH) . '<br/>';
     $body .= '<ul>';
     $body .= '<li>'.sprintf(__('username: %s'), $admin).'</li>';
     $body .= '<li>'.sprintf(__('password: %s'), $password).'</li>';
     $body .= '</ul>';
-    $body .= __('Regards,')."<br/>";
+    $body .= sprintf(__('Remember that for any doubts you might have you can consult our <a href="%1$s">documentation</a>, <a href="%2$s">forum</a> or <a href="%3$s">blog</a>.'), 'http://doc.osclass.org/', 'http://forums.osclass.org/', 'http://blog.osclass.org/');
+    $body .= sprintf(' ' . __('Osclass doesn’t run any developments but we can put you in touch with third party developers through a Premium Support. And hey, if you would like to contribute to Osclass - learn how <a href="%1$s">here</a>!'), 'http://blog.osclass.org/2012/11/22/how-to-collaborate-to-osclass/') . '<br/><br/>';
+    $body .= __('Cheers,')."<br/>";
     $body .= __('The <a href="http://osclass.org/">Osclass</a> team');
 
     $sitename = strtolower( $_SERVER['SERVER_NAME'] );

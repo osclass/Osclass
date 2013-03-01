@@ -1038,15 +1038,17 @@
      * @param float $price
      * @return string
      */
-    function osc_format_price($price) {
+    function osc_format_price($price, $symbol = null) {
         if ($price == null) return osc_apply_filter ('item_price_null', __('Check with seller') );
         if ($price == 0) return osc_apply_filter ('item_price_zero', __('Free') );
+
+        if($symbol==null) { $symbol = osc_item_currency_symbol(); }
 
         $price = $price/1000000;
 
         $currencyFormat = osc_locale_currency_format();
         $currencyFormat = str_replace('{NUMBER}', number_format($price, osc_locale_num_dec(), osc_locale_dec_point(), osc_locale_thousands_sep()), $currencyFormat);
-        $currencyFormat = str_replace('{CURRENCY}', osc_item_currency_symbol(), $currencyFormat);
+        $currencyFormat = str_replace('{CURRENCY}', $symbol, $currencyFormat);
         return osc_apply_filter('item_price', $currencyFormat );
     }
 

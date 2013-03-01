@@ -225,7 +225,11 @@
                         case('change_password'):
                             $l = array('title' => $this->title['user_change_password']);
                             $this->addLevel($l);
-                        break;
+                            break;
+                        case('change_username'):
+                            $l = array('title' => $this->title['user_change_username']);
+                            $this->addLevel($l);
+                            break;
                     }
                 break;
                 case('login'):
@@ -314,13 +318,16 @@
             $this->title['user_account']           = __('Account');
             $this->title['user_items']             = __('My listings');
             $this->title['user_alerts']            = __('My alerts');
-            $this->title['user_profile']           = __('Change my email');
-            $this->title['user_change_email']      = __('Change my password');
+            $this->title['user_profile']           = __('Update my profile');
+            $this->title['user_change_email']      = __('Change my email');
+            $this->title['user_change_username']   = __('Change my username');
+            $this->title['user_change_password']   = __('Change my password');
             $this->title['login']                  = __('Login');
             $this->title['login_recover']          = __('Recover your password');
             $this->title['login_forgot']           = __('Change your password');
             $this->title['register']               = __('Create a new account');
             $this->title['contact']                = __('Contact');
+
 
             if( !is_array($lang) ) {
                 return;

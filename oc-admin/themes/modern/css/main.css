@@ -1,4 +1,3 @@
-/* Colors */
 /* THEME ROLLER JQUERY UI
 http://jqueryui.com/themeroller/#ffDefault=Arial%2C+%22Helvetica+Neue%22%2C+Helvetica%2C+Verdana%2C+sans-serif%3B&fwDefault=normal&fsDefault=13px&cornerRadius=4px&bgColorHeader=f3f3f3&bgTextureHeader=01_flat.png&bgImgOpacityHeader=0&borderColorHeader=dddddd&fcHeader=222222&iconColorHeader=222222&bgColorContent=ffffff&bgTextureContent=01_flat.png&bgImgOpacityContent=0&borderColorContent=dddddd&fcContent=222222&iconColorContent=222222&bgColorDefault=e6e6e6&bgTextureDefault=01_flat.png&bgImgOpacityDefault=75&borderColorDefault=dddddd&fcDefault=555555&iconColorDefault=888888&bgColorHover=dadada&bgTextureHover=01_flat.png&bgImgOpacityHover=75&borderColorHover=dddddd&fcHover=212121&iconColorHover=454545&bgColorActive=ffffff&bgTextureActive=02_glass.png&bgImgOpacityActive=65&borderColorActive=dddddd&fcActive=212121&iconColorActive=454545&bgColorHighlight=fbf9ee&bgTextureHighlight=02_glass.png&bgImgOpacityHighlight=55&borderColorHighlight=fcefa1&fcHighlight=363636&iconColorHighlight=2e83ff&bgColorError=fef1ec&bgTextureError=05_inset_soft.png&bgImgOpacityError=95&borderColorError=cd0a0a&fcError=cd0a0a&iconColorError=cd0a0a&bgColorOverlay=000000&bgTextureOverlay=01_flat.png&bgImgOpacityOverlay=0&opacityOverlay=30&bgColorShadow=aaaaaa&bgTextureShadow=01_flat.png&bgImgOpacityShadow=0&opacityShadow=30&thicknessShadow=8px&offsetTopShadow=-8px&offsetLeftShadow=-8px&cornerRadiusShadow=8px
 */
@@ -14,12 +13,14 @@ http://jqueryui.com/themeroller/#ffDefault=Arial%2C+%22Helvetica+Neue%22%2C+Helv
 /* K: 14.0%  */
 /* K: 04.5% */
 /* @MARKET */
+/* line 1, oc-admin/themes/modern/less/split.less */
 .ico,
 .status-expanded,
 .status-collapsed {
   background-image: url('../images/split.png') !important;
 }
 @media only screen and (-moz-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+  /* line 7, oc-admin/themes/modern/less/split.less */
   .ico,
   .status-expanded,
   .status-collapsed {
@@ -27,234 +28,294 @@ http://jqueryui.com/themeroller/#ffDefault=Arial%2C+%22Helvetica+Neue%22%2C+Helv
     background-size: 262px 420px;
   }
 }
+/* line 14, oc-admin/themes/modern/less/split.less */
 .ico {
   text-indent: -99999px;
   background-repeat: no-repeat;
 }
+/* line 18, oc-admin/themes/modern/less/split.less */
 .ico-dashboard,
 .ico-dash {
   background-position: -48px 0px;
 }
+/* line 22, oc-admin/themes/modern/less/split.less */
 .current .ico-dashboard,
 li.hover .ico-dashboard,
 .current .ico-dash,
 li.hover .ico-dash {
   background-position: 0px 0px;
 }
+/* line 28, oc-admin/themes/modern/less/split.less */
 body.compact .ico-dashboard,
 body.compact .ico-dash {
   background-position: -192px -35px;
 }
+/* line 32, oc-admin/themes/modern/less/split.less */
 body.compact .current .ico-dashboard,
 body.compact li.hover .ico-dashboard,
 body.compact .current .ico-dash,
 body.compact li.hover .ico-dash {
   background-position: -192px 0px;
 }
+/* line 38, oc-admin/themes/modern/less/split.less */
 .ico-listing,
 .ico-items {
   background-position: -144px 0px;
 }
+/* line 42, oc-admin/themes/modern/less/split.less */
 .current .ico-listing,
 li.hover .ico-listing,
 .current .ico-items,
 li.hover .ico-items {
   background-position: -96px 0px;
 }
+/* line 48, oc-admin/themes/modern/less/split.less */
 body.compact .ico-listing,
 body.compact .ico-items {
   background-position: -192px -105px;
 }
+/* line 52, oc-admin/themes/modern/less/split.less */
 body.compact .current .ico-listing,
 body.compact li.hover .ico-listing,
 body.compact .current .ico-items,
 body.compact li.hover .ico-items {
   background-position: -192px -70px;
 }
+/* line 58, oc-admin/themes/modern/less/split.less */
 .ico-categories {
   background-position: -48px -48px;
 }
+/* line 61, oc-admin/themes/modern/less/split.less */
 .current .ico-categories,
 li.hover .ico-categories {
   background-position: 0px -48px;
 }
+/* line 65, oc-admin/themes/modern/less/split.less */
 body.compact .ico-categories {
   background-position: -192px -175px;
 }
+/* line 68, oc-admin/themes/modern/less/split.less */
 body.compact .current .ico-categories,
 body.compact li.hover .ico-categories {
   background-position: -192px -140px;
 }
+/* line 72, oc-admin/themes/modern/less/split.less */
 .ico-pages {
   background-position: -144px -48px;
 }
+/* line 75, oc-admin/themes/modern/less/split.less */
 .current .ico-pages,
 li.hover .ico-pages {
   background-position: -96px -48px;
 }
+/* line 79, oc-admin/themes/modern/less/split.less */
 body.compact .ico-pages {
   background-position: -192px -245px;
 }
+/* line 82, oc-admin/themes/modern/less/split.less */
 body.compact .current .ico-pages,
 body.compact li.hover .ico-pages {
   background-position: -192px -210px;
 }
+/* line 86, oc-admin/themes/modern/less/split.less */
 .ico-appearance {
   background-position: -48px -96px;
 }
+/* line 89, oc-admin/themes/modern/less/split.less */
 .current .ico-appearance,
 li.hover .ico-appearance {
   background-position: 0px -96px;
 }
+/* line 93, oc-admin/themes/modern/less/split.less */
 body.compact .ico-appearance {
   background-position: -192px -315px;
 }
+/* line 96, oc-admin/themes/modern/less/split.less */
 body.compact .current .ico-appearance,
 body.compact li.hover .ico-appearance {
   background-position: -192px -280px;
 }
+/* line 100, oc-admin/themes/modern/less/split.less */
 .ico-plugins {
   background-position: -144px -96px;
 }
+/* line 103, oc-admin/themes/modern/less/split.less */
 .current .ico-plugins,
 li.hover .ico-plugins {
   background-position: -96px -96px;
 }
+/* line 107, oc-admin/themes/modern/less/split.less */
 body.compact .ico-plugins {
   background-position: -192px -385px;
 }
+/* line 110, oc-admin/themes/modern/less/split.less */
 body.compact .current .ico-plugins,
 body.compact li.hover .ico-plugins {
   background-position: -192px -350px;
 }
+/* line 114, oc-admin/themes/modern/less/split.less */
 .ico-settings {
   background-position: -48px -144px;
 }
+/* line 117, oc-admin/themes/modern/less/split.less */
 .current .ico-settings,
 li.hover .ico-settings {
   background-position: 0px -144px;
 }
+/* line 121, oc-admin/themes/modern/less/split.less */
 body.compact .ico-settings {
   background-position: -227px -35px;
 }
+/* line 124, oc-admin/themes/modern/less/split.less */
 body.compact .current .ico-settings,
 body.compact li.hover .ico-settings {
   background-position: -227px 0px;
 }
+/* line 128, oc-admin/themes/modern/less/split.less */
 .ico-tools {
   background-position: -144px -144px;
 }
+/* line 131, oc-admin/themes/modern/less/split.less */
 .current .ico-tools,
 li.hover .ico-tools {
   background-position: -96px -144px;
 }
+/* line 135, oc-admin/themes/modern/less/split.less */
 body.compact .ico-tools {
   background-position: -227px -105px;
 }
+/* line 138, oc-admin/themes/modern/less/split.less */
 body.compact .current .ico-tools,
 body.compact li.hover .ico-tools {
   background-position: -227px -70px;
 }
+/* line 142, oc-admin/themes/modern/less/split.less */
 .ico-users {
   background-position: -48px -192px;
 }
+/* line 145, oc-admin/themes/modern/less/split.less */
 .current .ico-users,
 li.hover .ico-users {
   background-position: 0px -192px;
 }
+/* line 149, oc-admin/themes/modern/less/split.less */
 body.compact .ico-users {
   background-position: -227px -175px;
 }
+/* line 152, oc-admin/themes/modern/less/split.less */
 body.compact .current .ico-users,
 body.compact li.hover .ico-users {
   background-position: -227px -140px;
 }
+/* line 156, oc-admin/themes/modern/less/split.less */
 .ico-statistics,
 .ico-stats {
   background-position: -144px -192px;
 }
+/* line 160, oc-admin/themes/modern/less/split.less */
 .current .ico-statistics,
 li.hover .ico-statistics,
 .current .ico-stats,
 li.hover .ico-stats {
   background-position: -96px -192px;
 }
+/* line 166, oc-admin/themes/modern/less/split.less */
 body.compact .ico-statistics,
 body.compact .ico-stats {
   background-position: -227px -245px;
 }
+/* line 170, oc-admin/themes/modern/less/split.less */
 body.compact .current .ico-statistics,
 body.compact li.hover .ico-statistics,
 body.compact .current .ico-stats,
 body.compact li.hover .ico-stats {
   background-position: -227px -210px;
 }
+/* line 176, oc-admin/themes/modern/less/split.less */
 .ico-more {
   background-position: -48px -240px;
 }
+/* line 179, oc-admin/themes/modern/less/split.less */
 .current .ico-more,
 li.hover .ico-more {
   background-position: 0px -240px;
 }
+/* line 183, oc-admin/themes/modern/less/split.less */
 .ico-market {
   background-position: -144px -240px;
 }
+/* line 186, oc-admin/themes/modern/less/split.less */
 .current .ico-market,
 li.hover .ico-market {
   background-position: -96px -240px;
 }
+/* line 190, oc-admin/themes/modern/less/split.less */
 body.compact .ico-market,
 body.compact .ico-market {
   background-position: -227px -385px;
 }
+/* line 194, oc-admin/themes/modern/less/split.less */
 body.compact .current .ico-market,
 body.compact li.hover .ico-market,
 body.compact .current .ico-market,
 body.compact li.hover .ico-market {
   background-position: -227px -350px;
 }
+/* line 200, oc-admin/themes/modern/less/split.less */
 .ico-engine {
   background-position: 0px -288px;
 }
+/* line 203, oc-admin/themes/modern/less/split.less */
 .ico-engine:hover,
 .ico-engine-white {
   background-position: -32px -288px;
 }
+/* line 207, oc-admin/themes/modern/less/split.less */
 .ico-search {
   background-position: -64px -288px;
 }
+/* line 210, oc-admin/themes/modern/less/split.less */
 .ico-search:hover,
 .ico-search-white {
   background-position: -96px -288px;
 }
+/* line 214, oc-admin/themes/modern/less/split.less */
 .ico-help {
   background-position: 0px -320px;
 }
+/* line 217, oc-admin/themes/modern/less/split.less */
 .ico-help:hover,
 .ico-help-white {
   background-position: -32px -320px;
 }
+/* line 221, oc-admin/themes/modern/less/split.less */
 .ico-add {
   background-position: -64px -320px;
 }
+/* line 224, oc-admin/themes/modern/less/split.less */
 .ico-add:hover,
 .ico-add-white {
   background-position: -96px -320px;
 }
+/* line 228, oc-admin/themes/modern/less/split.less */
 .ico-power {
   background-position: 0px -352px;
 }
+/* line 231, oc-admin/themes/modern/less/split.less */
 .ico-power:hover,
 .ico-power-white {
   background-position: -32px -352px;
 }
+/* line 235, oc-admin/themes/modern/less/split.less */
 .ico-droppable {
   background-position: -64px -352px;
 }
+/* line 238, oc-admin/themes/modern/less/split.less */
 .ico-droppable:hover,
 .ico-droppable-white {
   background-position: -96px -352px;
 }
+/* line 242, oc-admin/themes/modern/less/split.less */
 .ico-close {
   background-position: -152px -288px;
   float: right !important;
@@ -262,21 +323,27 @@ body.compact li.hover .ico-market {
   width: 20px !important;
   height: 20px !important;
 }
+/* line 249, oc-admin/themes/modern/less/split.less */
 .ico-close:hover {
   background-position: -172px -288px;
 }
+/* line 252, oc-admin/themes/modern/less/split.less */
 .ico-drop-down {
   background-position: -152px -308px;
 }
+/* line 255, oc-admin/themes/modern/less/split.less */
 .status-collapsed {
   background-position: -147px -343px;
 }
+/* line 258, oc-admin/themes/modern/less/split.less */
 .status-expanded {
   background-position: -167px -343px;
 }
+/* line 1, oc-admin/themes/modern/less/layout.less */
 html {
   -webkit-font-smoothing: antialiased;
 }
+/* line 4, oc-admin/themes/modern/less/layout.less */
 body {
   margin: 0px;
   padding: 0px;
@@ -285,18 +352,22 @@ body {
   min-width: 980px;
   font-size: 14px;
 }
+/* line 14, oc-admin/themes/modern/less/layout.less */
 #header {
   position: fixed;
   top: 0px;
   left: 0px;
   height: 34px;
 }
+/* line 20, oc-admin/themes/modern/less/layout.less */
 body.compact #header {
   border-bottom: solid 1px #383838;
 }
+/* line 23, oc-admin/themes/modern/less/layout.less */
 body.compact #content {
   margin: 50px 0px 0px 50px;
 }
+/* line 26, oc-admin/themes/modern/less/layout.less */
 #content {
   position: relative;
   margin: 50px 0px 0px 80px;
@@ -304,6 +375,7 @@ body.compact #content {
   z-index: 0;
   min-height: 600px;
 }
+/* line 33, oc-admin/themes/modern/less/layout.less */
 #sidebar {
   position: fixed;
   top: 50px;
@@ -315,10 +387,12 @@ body.compact #content {
   overflow: visible;
   z-index: 3;
 }
+/* line 44, oc-admin/themes/modern/less/layout.less */
 #footer-wrapper {
   width: 100%;
   position: relative;
 }
+/* line 48, oc-admin/themes/modern/less/layout.less */
 #footer {
   border-top: 3px solid #dddddd;
   background-color: #f3f3f3;
@@ -327,61 +401,77 @@ body.compact #content {
   color: #555;
   padding-right: 70px;
 }
+/* line 56, oc-admin/themes/modern/less/layout.less */
 #footer #ninja {
   position: absolute;
   right: 15px;
   top: 5px;
 }
+/* line 60, oc-admin/themes/modern/less/layout.less */
 #dashboard {
   width: 900px;
 }
+/* line 63, oc-admin/themes/modern/less/layout.less */
 a {
   color: #018BE3;
   text-decoration: none;
 }
+/* line 67, oc-admin/themes/modern/less/layout.less */
 a:hover {
   text-decoration: underline;
 }
+/* line 70, oc-admin/themes/modern/less/layout.less */
 form {
   margin: 0;
   padding: 0;
 }
+/* line 74, oc-admin/themes/modern/less/layout.less */
 fieldset {
   padding: 0;
   margin: 0;
   border: 0;
 }
+/* line 79, oc-admin/themes/modern/less/layout.less */
 ul,
 ol {
   list-style: none;
 }
+/* line 82, oc-admin/themes/modern/less/layout.less */
 h2.separate-top,
 .separate-top {
   margin-top: 40px;
 }
+/* line 86, oc-admin/themes/modern/less/layout.less */
 h3.separate-top,
 .separate-top {
   margin-top: 20px !important;
 }
+/* line 90, oc-admin/themes/modern/less/layout.less */
 .separate-top-medium {
   margin-top: 15px;
 }
+/* line 93, oc-admin/themes/modern/less/layout.less */
 div.no-bottom-margin {
   margin-bottom: 0px;
 }
+/* line 96, oc-admin/themes/modern/less/layout.less */
 .relative {
   position: relative;
 }
+/* line 99, oc-admin/themes/modern/less/layout.less */
 .text-center {
   text-align: center;
 }
+/* line 1, oc-admin/themes/modern/less/columns.less */
 .grid-system {
   width: 100%;
 }
+/* line 4, oc-admin/themes/modern/less/columns.less */
 .grid-row {
   float: left;
   margin-bottom: 30px;
 }
+/* line 8, oc-admin/themes/modern/less/columns.less */
 .show-grid .row-wrapper {
   background-color: #f3f3f3;
   padding: 10px 0;
@@ -399,6 +489,7 @@ div.no-bottom-margin {
     .grid-first-row .grid-system .grid-system .grid-first-row .row-wrapper{
         margin-left:0;
     }*/
+/* line 23, oc-admin/themes/modern/less/columns.less */
 .grid-row .row-wrapper {
   margin-left: 15px;
   margin-right: 15px;
@@ -412,80 +503,104 @@ div.no-bottom-margin {
 /*.grid-first-row .grid-system .row-wrapper{
         margin-left:30px;
     }*/
+/* line 36, oc-admin/themes/modern/less/columns.less */
 .grid-10 {
   width: 10%;
 }
+/* line 39, oc-admin/themes/modern/less/columns.less */
 .grid-20 {
   width: 20%;
 }
+/* line 42, oc-admin/themes/modern/less/columns.less */
 .grid-30 {
   width: 30%;
 }
+/* line 45, oc-admin/themes/modern/less/columns.less */
 .grid-33 {
   width: 33%;
 }
+/* line 48, oc-admin/themes/modern/less/columns.less */
 .grid-40 {
   width: 40%;
 }
+/* line 51, oc-admin/themes/modern/less/columns.less */
 .grid-50 {
   width: 50%;
   *width: 49%;
 }
+/* line 55, oc-admin/themes/modern/less/columns.less */
 .grid-60 {
   width: 60%;
 }
+/* line 58, oc-admin/themes/modern/less/columns.less */
 .grid-70 {
   width: 70%;
 }
+/* line 61, oc-admin/themes/modern/less/columns.less */
 .grid-80 {
   width: 70%;
 }
+/* line 64, oc-admin/themes/modern/less/columns.less */
 .grid-90 {
   width: 90%;
 }
+/* line 67, oc-admin/themes/modern/less/columns.less */
 .grid-5 {
   width: 5%;
 }
+/* line 70, oc-admin/themes/modern/less/columns.less */
 .grid-15 {
   width: 15%;
 }
+/* line 73, oc-admin/themes/modern/less/columns.less */
 .grid-25 {
   width: 25%;
 }
+/* line 76, oc-admin/themes/modern/less/columns.less */
 .grid-35 {
   width: 35%;
 }
+/* line 79, oc-admin/themes/modern/less/columns.less */
 .grid-45 {
   width: 45%;
 }
+/* line 82, oc-admin/themes/modern/less/columns.less */
 .grid-55 {
   width: 55%;
 }
+/* line 85, oc-admin/themes/modern/less/columns.less */
 .grid-65 {
   width: 65%;
 }
+/* line 88, oc-admin/themes/modern/less/columns.less */
 .grid-75 {
   width: 75%;
 }
+/* line 91, oc-admin/themes/modern/less/columns.less */
 .grid-85 {
   width: 75%;
 }
+/* line 94, oc-admin/themes/modern/less/columns.less */
 .grid-95 {
   width: 95%;
 }
+/* line 97, oc-admin/themes/modern/less/columns.less */
 .grid-100 {
   width: 100%;
 }
+/* line 100, oc-admin/themes/modern/less/columns.less */
 div.row-offset {
   margin-left: 0 !important;
   margin-right: 0 !important;
 }
+/* line 1, oc-admin/themes/modern/less/render-page.less */
 #content-head {
   border-bottom: solid 1px #dddddd;
   background-color: #f3f3f3;
   padding: 24px 30px;
   height: 31px;
 }
+/* line 7, oc-admin/themes/modern/less/render-page.less */
 #content-head h1,
 #content-head h2 {
   margin: 0;
@@ -493,15 +608,18 @@ div.row-offset {
   font-size: 30px;
   font-weight: normal;
 }
+/* line 14, oc-admin/themes/modern/less/render-page.less */
 #content-page {
   background-color: #ffffff;
   padding: 22px 15px 60px 15px;
   position: relative;
 }
+/* line 19, oc-admin/themes/modern/less/render-page.less */
 #content-head h1 .ico,
 #content-head h2 .ico {
   margin-left: 10px;
 }
+/* line 23, oc-admin/themes/modern/less/render-page.less */
 .render-title {
   margin: 0;
   margin-bottom: 20px;
@@ -509,9 +627,11 @@ div.row-offset {
   font-size: 21px;
   font-weight: normal;
 }
+/* line 30, oc-admin/themes/modern/less/render-page.less */
 h3.render-title {
   font-size: 18px;
 }
+/* line 33, oc-admin/themes/modern/less/render-page.less */
 .render-title a.btn-mini,
 .form-controls a.btn-mini {
   height: 24px;
@@ -520,10 +640,12 @@ h3.render-title {
   vertical-align: 4px;
   padding-bottom: 5px;
 }
+/* line 40, oc-admin/themes/modern/less/render-page.less */
 .form-controls a.btn-mini {
   vertical-align: 2px;
   margin-left: 5px;
 }
+/* line 44, oc-admin/themes/modern/less/render-page.less */
 .quick-search input.input-text {
   display: inline-block;
   width: 208px;
@@ -540,12 +662,10 @@ h3.render-title {
   outline: none;
   vertical-align: top;
 }
+/* line 58, oc-admin/themes/modern/less/render-page.less */
 .quick-search .ico-search {
   margin-left: 0;
   border-left: 0;
-  border-radius: 0px 4px 4px 0;
-  -webkit-border-radius: 0px 4px 4px 0;
-  -moz-border-radius: 0px 4px 4px 0;
   border-radius: 0px 4px 4px 0;
   -webkit-border-radius: 0px 4px 4px 0;
   -moz-border-radius: 0px 4px 4px 0;
@@ -555,34 +675,42 @@ h3.render-title {
   padding: 0;
   margin-right: 10px;
 }
+/* line 69, oc-admin/themes/modern/less/render-page.less */
 #spam-setting {
   width: 750px;
 }
+/* line 72, oc-admin/themes/modern/less/render-page.less */
 .locations img {
   vertical-align: bottom;
 }
+/* line 75, oc-admin/themes/modern/less/render-page.less */
 #pretty-form {
   width: 860px;
 }
+/* line 1, oc-admin/themes/modern/less/ui-elements.less */
 .clear {
   clear: both;
 }
+/* line 4, oc-admin/themes/modern/less/ui-elements.less */
 a.btn {
   height: 15px;
   background-image: url('../images/bnt-overlay.png');
 }
+/* line 8, oc-admin/themes/modern/less/ui-elements.less */
 .ico-48 {
   width: 48px;
   height: 48px;
   display: block;
   padding: 0;
 }
+/* line 14, oc-admin/themes/modern/less/ui-elements.less */
 .ico-20,
 a.ico-20 {
   width: 20px;
   height: 20px;
   padding: 0px;
 }
+/* line 20, oc-admin/themes/modern/less/ui-elements.less */
 .ico-32,
 a.ico-32 {
   width: 32px;
@@ -590,6 +718,7 @@ a.ico-32 {
   display: block;
   padding: 0;
 }
+/* line 27, oc-admin/themes/modern/less/ui-elements.less */
 .action-btn {
   padding: 9px 10px;
   background-color: #dddddd;
@@ -603,14 +732,17 @@ a.ico-32 {
   -moz-border-radius: 4px;
   text-decoration: none;
 }
+/* line 38, oc-admin/themes/modern/less/ui-elements.less */
 .action-btn-black {
   background: #383838;
   border-color: #616161;
   color: #bababa;
 }
+/* line 43, oc-admin/themes/modern/less/ui-elements.less */
 .action-btn-black:hover {
   background-color: #1e1e1e;
 }
+/* line 46, oc-admin/themes/modern/less/ui-elements.less */
 .circle {
   border-radius: 15px;
   -webkit-border-radius: 15px;
@@ -631,16 +763,19 @@ a.ico-32 {
   color: #616161;
   border: solid 1px #616161;
 }
+/* line 64, oc-admin/themes/modern/less/ui-elements.less */
 .circle-red {
   background: #e54b33;
   border: solid 1px #b62812;
   color: #ffffff;
 }
+/* line 67, oc-admin/themes/modern/less/ui-elements.less */
 .circle-green {
   background: #aec416;
   border: solid 1px #929e3f;
   color: #ffffff;
 }
+/* line 70, oc-admin/themes/modern/less/ui-elements.less */
 .btn {
   float: left;
   background-color: #f3f3f3;
@@ -656,98 +791,119 @@ a.ico-32 {
   text-decoration: none;
   color: #616161;
 }
+/* line 83, oc-admin/themes/modern/less/ui-elements.less */
 .btn:hover {
   background-color: #dddddd;
   border-color: #bababa;
   text-decoration: none;
 }
+/* line 88, oc-admin/themes/modern/less/ui-elements.less */
 .btn-black {
   background-color: #383838;
   border: solid 1px #616161;
 }
+/* line 92, oc-admin/themes/modern/less/ui-elements.less */
 .btn-black:hover {
   background-color: #1e1e1e;
 }
+/* line 95, oc-admin/themes/modern/less/ui-elements.less */
 .btn-dim {
   background-color: #616161;
   border-color: #616161;
 }
+/* line 99, oc-admin/themes/modern/less/ui-elements.less */
 .btn-dim:hover {
   background-color: #383838;
   border-color: #383838;
 }
+/* line 103, oc-admin/themes/modern/less/ui-elements.less */
 .btn-green,
 a.btn-green {
   background-color: #aec416;
   border: solid 1px #a0b246;
   color: #ffffff;
 }
+/* line 109, oc-admin/themes/modern/less/ui-elements.less */
 .btn-green:hover {
   background-color: #c8cc1b;
   border: solid 1px #a0b246;
 }
+/* line 113, oc-admin/themes/modern/less/ui-elements.less */
 .btn-text {
   width: auto;
 }
+/* line 116, oc-admin/themes/modern/less/ui-elements.less */
 .btn-blue,
 a.btn-blue {
   background-color: #00bed6;
   border-color: #2f96b4;
   color: #ffffff;
 }
+/* line 122, oc-admin/themes/modern/less/ui-elements.less */
 .btn-red,
 a.btn-red {
   background-color: #da4f49;
   border-color: #bd362f;
   color: #ffffff;
 }
+/* line 128, oc-admin/themes/modern/less/ui-elements.less */
 .btn-blue:hover,
 a.btn-blue:hover {
   background-color: #00b3c1;
   border-color: #2f96b4;
 }
+/* line 133, oc-admin/themes/modern/less/ui-elements.less */
 .btn-red:hover,
 a.btn-red:hover {
   background-color: #bd362f;
   border-color: #bd362f;
 }
+/* line 138, oc-admin/themes/modern/less/ui-elements.less */
 .btn-orange,
 a.btn-orange {
   background-color: #f89406;
   border-color: #e27f07;
   color: #ffffff;
 }
+/* line 144, oc-admin/themes/modern/less/ui-elements.less */
 .btn-orange:hover,
 a.btn-orange:hover {
   background-color: #faa732;
   border-color: #e27f07;
 }
+/* line 149, oc-admin/themes/modern/less/ui-elements.less */
 input.ico-32 {
   display: inline;
   width: 34px !important;
 }
+/* line 153, oc-admin/themes/modern/less/ui-elements.less */
 .float-left {
   float: left !important;
 }
+/* line 156, oc-admin/themes/modern/less/ui-elements.less */
 .float-right {
   float: right !important;
 }
 /* Selectmenu
 ----------------------------------*/
+/* line 161, oc-admin/themes/modern/less/ui-elements.less */
 .select-box {
   z-index: 0;
   position: relative;
   display: inline-block;
 }
+/* line 166, oc-admin/themes/modern/less/ui-elements.less */
 #bulk-actions .select-box,
 #listing-toolbar .select-box {
   float: left;
 }
+/* line 170, oc-admin/themes/modern/less/ui-elements.less */
 .select-box-big .select-box-trigger {
   height: 16px;
   padding: 7px 45px 6px 12px;
   font-size: 13px;
 }
+/* line 175, oc-admin/themes/modern/less/ui-elements.less */
 .select-box .select-box-label {
   height: 16px;
   overflow: hidden;
@@ -755,46 +911,53 @@ input.ico-32 {
   line-height: 16px;
   float: left;
 }
+/* line 182, oc-admin/themes/modern/less/ui-elements.less */
 .select-box-big .select-box-icon {
   height: 29px;
   border-left: solid 1px #dddddd;
 }
+/* line 186, oc-admin/themes/modern/less/ui-elements.less */
 .select-box-extra .select-box-trigger {
   height: 16px;
   padding: 9px 45px 7px 12px;
   font-size: 13px;
 }
+/* line 191, oc-admin/themes/modern/less/ui-elements.less */
 .select-box-extra .select-box-icon {
   height: 32px;
   border-left: solid 1px #dddddd;
 }
+/* line 195, oc-admin/themes/modern/less/ui-elements.less */
 .select-box-input .select-box-trigger {
   width: 50px;
   border-radius: 4px 0 0 4px;
   -webkit-border-radius: 4px 0 0 4px;
   -moz-border-radius: 4px 0 0 4px;
 }
+/* line 199, oc-admin/themes/modern/less/ui-elements.less */
 .select-box-medium .select-box-trigger {
   width: 75px;
 }
+/* line 202, oc-admin/themes/modern/less/ui-elements.less */
 div.select-box-medium select {
   width: 134px;
 }
+/* line 205, oc-admin/themes/modern/less/ui-elements.less */
 .select-box-big .select-box-trigger {
   width: 125px;
 }
+/* line 208, oc-admin/themes/modern/less/ui-elements.less */
 div.select-box-big select {
   width: 184px;
 }
+/* line 211, oc-admin/themes/modern/less/ui-elements.less */
 div.select-box-input select {
   width: 109px;
 }
+/* line 214, oc-admin/themes/modern/less/ui-elements.less */
 .select-box-trigger {
   background-color: #f3f3f3;
   border: solid 1px #dddddd;
-  border-radius: 4px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
   text-decoration: none;
   height: 14px;
   padding: 5px 45px 7px 10px;
@@ -813,9 +976,11 @@ div.select-box-input select {
   -moz-border-radius: 4px;
   width: 163px;
 }
+/* line 246, oc-admin/themes/modern/less/ui-elements.less */
 .select-box a:hover {
   text-decoration: none;
 }
+/* line 249, oc-admin/themes/modern/less/ui-elements.less */
 .select-box select {
   position: absolute;
   left: 0px;
@@ -825,6 +990,7 @@ div.select-box-input select {
   -webkit-appearance: none;
   z-index: 1003;
 }
+/* line 258, oc-admin/themes/modern/less/ui-elements.less */
 .select-box-icon {
   z-index: 0;
   position: absolute;
@@ -836,10 +1002,12 @@ div.select-box-input select {
   text-decoration: none;
   display: block;
 }
+/* line 270, oc-admin/themes/modern/less/ui-elements.less */
 .select-box-icon .ico {
   margin-top: 5px;
   margin-left: 5px;
 }
+/* line 274, oc-admin/themes/modern/less/ui-elements.less */
 .input-text,
 input[type="text"],
 .input-password,
@@ -861,21 +1029,27 @@ input[type="password"] {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   vertical-align: top;
 }
+/* line 291, oc-admin/themes/modern/less/ui-elements.less */
 input.input-small {
   width: 30px;
 }
+/* line 294, oc-admin/themes/modern/less/ui-elements.less */
 input.input-medium {
   width: 70px;
 }
+/* line 297, oc-admin/themes/modern/less/ui-elements.less */
 div.input-medium .select-box-trigger {
   width: 101px;
 }
+/* line 301, oc-admin/themes/modern/less/ui-elements.less */
 input.input-large {
   width: 280px;
 }
+/* line 304, oc-admin/themes/modern/less/ui-elements.less */
 input.input-actions {
   height: 24px;
 }
+/* line 307, oc-admin/themes/modern/less/ui-elements.less */
 input.btn,
 button.btn {
   float: none;
@@ -886,6 +1060,7 @@ button.btn {
   vertical-align: top;
   background-image: url('../images/bnt-overlay.png');
 }
+/* line 317, oc-admin/themes/modern/less/ui-elements.less */
 input.input-has-select {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -899,6 +1074,7 @@ input.input-has-select {
   margin-left: -5px;
   *margin-top: -1px;
 }
+/* line 326, oc-admin/themes/modern/less/ui-elements.less */
 .btn-mini {
   height: 16px;
   font-size: 11px;
@@ -908,11 +1084,13 @@ input.input-has-select {
   padding-top: 4px;
   padding-bottom: 5px;
 }
+/* line 335, oc-admin/themes/modern/less/ui-elements.less */
 input.btn-mini,
 button.btn-mini {
   height: 28px;
   padding-top: 6px;
 }
+/* line 340, oc-admin/themes/modern/less/ui-elements.less */
 .btn-submit {
   /*background-image: linear-gradient(top, #05BBD3 5%, #028495 53%);
     background-image: -o-linear-gradient(top, #05BBD3 5%, #028495 53%);
@@ -937,25 +1115,31 @@ button.btn-mini {
   text-shadow: 0px -1px 0px #026470;
   filter: dropshadow(color=#026470, offx=0, offy=-1);
 }
+/* line 364, oc-admin/themes/modern/less/ui-elements.less */
 .btn-submit:hover {
   background-color: #00b3c1;
   border-color: #027173;
 }
+/* line 368, oc-admin/themes/modern/less/ui-elements.less */
 .well {
   padding: 10px;
   background-color: #f3f3f3;
   border: solid 1px #dddddd;
 }
+/* line 373, oc-admin/themes/modern/less/ui-elements.less */
 .input-has-placeholder {
   position: relative;
 }
+/* line 376, oc-admin/themes/modern/less/ui-elements.less */
 .hide,
 input.hide {
   display: none;
 }
+/* line 379, oc-admin/themes/modern/less/ui-elements.less */
 .input-has-placeholder {
   position: relative;
 }
+/* line 382, oc-admin/themes/modern/less/ui-elements.less */
 .input-has-placeholder label {
   position: absolute;
   left: 8px;
@@ -965,6 +1149,7 @@ input.hide {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
+/* line 391, oc-admin/themes/modern/less/ui-elements.less */
 textarea {
   padding: 4px 6px;
   font-size: 13px;
@@ -978,17 +1163,21 @@ textarea {
   vertical-align: top;
   width: 208px;
 }
+/* line 402, oc-admin/themes/modern/less/ui-elements.less */
 .ui-rounded-corners {
   border-radius: 4px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
 }
+/* line 405, oc-admin/themes/modern/less/ui-elements.less */
 .input-separate-top {
   margin-top: 15px;
 }
+/* line 410, oc-admin/themes/modern/less/ui-elements.less */
 .has-pagination {
   text-align: right;
 }
+/* line 413, oc-admin/themes/modern/less/ui-elements.less */
 .has-pagination ul {
   display: inline-block;
   *display: inline;
@@ -1001,9 +1190,11 @@ textarea {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
 }
+/* line 424, oc-admin/themes/modern/less/ui-elements.less */
 .has-pagination li {
   display: inline;
 }
+/* line 427, oc-admin/themes/modern/less/ui-elements.less */
 .has-pagination a,
 .has-pagination span {
   float: left;
@@ -1013,14 +1204,17 @@ textarea {
   border: 1px solid #ddd;
   border-left-width: 0;
 }
+/* line 436, oc-admin/themes/modern/less/ui-elements.less */
 .has-pagination a:hover,
 .has-pagination .active a {
   background-color: #f5f5f5;
 }
+/* line 440, oc-admin/themes/modern/less/ui-elements.less */
 .pagination .active a {
   color: #999999;
   cursor: default;
 }
+/* line 444, oc-admin/themes/modern/less/ui-elements.less */
 .has-pagination .disabled span,
 .has-pagination .disabled a,
 .has-pagination .disabled a:hover {
@@ -1028,34 +1222,41 @@ textarea {
   background-color: transparent;
   cursor: default;
 }
+/* line 451, oc-admin/themes/modern/less/ui-elements.less */
 .has-pagination .list-first {
   border-left-width: 1px;
   border-radius: 3px 0 0 3px;
   -webkit-border-radius: 3px 0 0 3px;
   -moz-border-radius: 3px 0 0 3px;
 }
+/* line 455, oc-admin/themes/modern/less/ui-elements.less */
 .has-pagination .list-last {
   border-radius: 0 3px 3px 0;
   -webkit-border-radius: 0 3px 3px 0;
   -moz-border-radius: 0 3px 3px 0;
 }
+/* line 458, oc-admin/themes/modern/less/ui-elements.less */
 ul.showing-results {
   float: left;
   padding: 0;
   margin: 25px 0 0 0;
 }
+/* line 463, oc-admin/themes/modern/less/ui-elements.less */
 .showing-results span {
   border-left-width: 1px;
   border-radius: 3px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
 }
+/* line 467, oc-admin/themes/modern/less/ui-elements.less */
 .pagination-centered {
   text-align: center;
 }
+/* line 470, oc-admin/themes/modern/less/ui-elements.less */
 .pagination-right {
   text-align: right;
 }
+/* line 473, oc-admin/themes/modern/less/ui-elements.less */
 .pagination-input {
   float: left;
   padding: 0;
@@ -1067,6 +1268,7 @@ ul.showing-results {
   -webkit-border-radius: 0 3px 3px 0;
   -moz-border-radius: 0 3px 3px 0;
 }
+/* line 483, oc-admin/themes/modern/less/ui-elements.less */
 .pagination-input input {
   height: 30px;
   margin: 0;
@@ -1079,6 +1281,7 @@ ul.showing-results {
   -moz-border-radius: 0;
   vertical-align: top;
 }
+/* line 493, oc-admin/themes/modern/less/ui-elements.less */
 .pagination-input button {
   height: 30px;
   background: white;
@@ -1095,23 +1298,29 @@ ul.showing-results {
   -webkit-border-radius: 0 3px 3px 0;
   -moz-border-radius: 0 3px 3px 0;
 }
+/* line 507, oc-admin/themes/modern/less/ui-elements.less */
 .inline {
   display: inline;
 }
+/* line 510, oc-admin/themes/modern/less/ui-elements.less */
 .select-items-per-page {
   margin-left: 5px;
 }
+/* line 513, oc-admin/themes/modern/less/ui-elements.less */
 #content-head .btn {
   *margin-top: -27px;
 }
+/* line 516, oc-admin/themes/modern/less/ui-elements.less */
 .ui-autocomplete-loading {
   display: block;
   background: #ffffff url('../images/loading.gif') right center no-repeat;
 }
+/* line 520, oc-admin/themes/modern/less/ui-elements.less */
 .btn-disabled {
   opacity: 0.7;
   filter: alpha(opacity=70);
 }
+/* line 524, oc-admin/themes/modern/less/ui-elements.less */
 .btn-market-update,
 .btn-market-preview {
   background-color: #2fbfd1;
@@ -1123,10 +1332,12 @@ ul.showing-results {
   margin-top: 5px;
   margin-left: 5px;
 }
+/* line 532, oc-admin/themes/modern/less/ui-elements.less */
 .btn-market-preview {
   background-color: #bababa;
   margin-left: 0px;
 }
+/* line 536, oc-admin/themes/modern/less/ui-elements.less */
 .spinner {
   width: 16px;
   height: 16px;
@@ -1135,6 +1346,7 @@ ul.showing-results {
   float: left;
   background: url('../images/loading.gif');
 }
+/* line 1, oc-admin/themes/modern/less/widget-box.less */
 .widget-box {
   background-color: #f3f3f3;
   padding: 5px;
@@ -1142,6 +1354,7 @@ ul.showing-results {
   -webkit-border-radius: 7px 7px 9px 9px;
   -moz-border-radius: 7px 7px 9px 9px;
 }
+/* line 6, oc-admin/themes/modern/less/widget-box.less */
 .widget-box-title {
   margin: 0;
   padding: 7px 5px;
@@ -1149,11 +1362,13 @@ ul.showing-results {
   color: #474749;
   position: relative;
 }
+/* line 13, oc-admin/themes/modern/less/widget-box.less */
 .widget-box-title .btn {
   margin-top: -9px;
   margin-right: -5px;
   *margin-top: -30px;
 }
+/* line 18, oc-admin/themes/modern/less/widget-box.less */
 .widget-box-title h1,
 .widget-box-title h2,
 .widget-box-title h3,
@@ -1163,14 +1378,17 @@ ul.showing-results {
   font-size: 18px;
   font-weight: normal;
 }
+/* line 27, oc-admin/themes/modern/less/widget-box.less */
 .widget-box-title .select-box {
   position: absolute;
   right: 0px;
   top: 0px;
 }
+/* line 32, oc-admin/themes/modern/less/widget-box.less */
 .widget-box-title .select-box-trigger {
   background-color: #ffffff;
 }
+/* line 35, oc-admin/themes/modern/less/widget-box.less */
 .widget-box-content {
   background-color: #ffffff;
   padding: 15px;
@@ -1179,42 +1397,51 @@ ul.showing-results {
   -moz-border-radius: 4px;
   position: relative;
 }
+/* line 41, oc-admin/themes/modern/less/widget-box.less */
 .widget-box-selector {
   float: right;
   display: block;
 }
+/* line 45, oc-admin/themes/modern/less/widget-box.less */
 .widget-box h4 {
   margin: 20px 0 10px;
   font-size: 16px;
   color: #616161;
   border-bottom: 1px dotted #616161;
 }
+/* line 51, oc-admin/themes/modern/less/widget-box.less */
 .widget-box h4.first-title {
   margin: 0 0 10px;
 }
+/* line 54, oc-admin/themes/modern/less/widget-box.less */
 .stats-title {
   font-size: 16px;
   line-height: 20px;
   color: #616161;
 }
+/* line 59, oc-admin/themes/modern/less/widget-box.less */
 .stats-detail {
   font-size: 14px;
   color: #616161;
 }
+/* line 63, oc-admin/themes/modern/less/widget-box.less */
 .widget-box .form-row {
   margin-bottom: 15px;
 }
+/* line 66, oc-admin/themes/modern/less/widget-box.less */
 .widget-box .form-label {
   float: left;
   padding-top: 5px;
   margin-left: 10px;
   text-align: right;
 }
+/* line 72, oc-admin/themes/modern/less/widget-box.less */
 div.widget-box-content-no-wrapp,
 #dashboard div.widget-box-content-no-wrapp {
   padding: 0;
   height: 250px;
 }
+/* line 77, oc-admin/themes/modern/less/widget-box.less */
 div.widget-box-content-no-wrapp h4,
 div.widget-box-content-no-wrapp .first-title {
   padding: 5px 15px;
@@ -1222,24 +1449,30 @@ div.widget-box-content-no-wrapp .first-title {
   border-bottom: 0;
   margin: 0;
 }
+/* line 84, oc-admin/themes/modern/less/widget-box.less */
 div.widget-box-content-no-wrapp li {
   padding: 5px 15px;
 }
+/* line 87, oc-admin/themes/modern/less/widget-box.less */
 div.widget-box-content-no-wrapp li a {
   font-size: 12px;
 }
+/* line 90, oc-admin/themes/modern/less/widget-box.less */
 .dash-widget-form {
   padding: 0px 15px;
 }
+/* line 1, oc-admin/themes/modern/less/sidebar.less */
 #sidebar,
 #sidebar a {
   color: #474749;
   text-decoration: none;
 }
+/* line 6, oc-admin/themes/modern/less/sidebar.less */
 #sidebar h3 .ico {
   margin-left: 16px;
   *margin-left: 0px;
 }
+/* line 10, oc-admin/themes/modern/less/sidebar.less */
 #sidebar h3 {
   margin: 0px;
   padding: 0px;
@@ -1250,11 +1483,13 @@ div.widget-box-content-no-wrapp li a {
   bottom: 10px;
   width: 100%;
 }
+/* line 20, oc-admin/themes/modern/less/sidebar.less */
 #sidebar ul {
   margin: 0px;
   padding: 0px;
   list-style: 0px;
 }
+/* line 25, oc-admin/themes/modern/less/sidebar.less */
 #sidebar .oscmenu li,
 #show-more li {
   width: 79px;
@@ -1264,27 +1499,32 @@ div.widget-box-content-no-wrapp li a {
   position: relative;
   list-style: none;
 }
+/* line 34, oc-admin/themes/modern/less/sidebar.less */
 #sidebar .oscmenu > li > ul {
   overflow: auto;
   overflow-y: hidden;
   overflow-x: visible;
   max-height: 600%;
 }
+/* line 40, oc-admin/themes/modern/less/sidebar.less */
 #sidebar .oscmenu .current {
   background: #dddddd;
   -webkit-box-shadow: inset 0px 0px 10px 0px #bababa;
   box-shadow: inset 0px 0px 10px 0px #bababa;
   *margin-top: -5px;
 }
+/* line 46, oc-admin/themes/modern/less/sidebar.less */
 body.compact #sidebar .oscmenu .current {
   background: #383838;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+/* line 51, oc-admin/themes/modern/less/sidebar.less */
 #show-more li {
   float: left;
   border-bottom: none;
 }
+/* line 55, oc-admin/themes/modern/less/sidebar.less */
 #sidebar .oscmenu ul,
 #hidden-menus {
   position: absolute;
@@ -1304,12 +1544,14 @@ body.compact #sidebar .oscmenu .current {
   font-size: 12px;
   display: none;
 }
+/* line 72, oc-admin/themes/modern/less/sidebar.less */
 body.compact .oscmenu ul,
 body.compact #hidden-menus {
   left: 50px !important;
   overflow-y: hidden;
   overflow-x: visible;
 }
+/* line 78, oc-admin/themes/modern/less/sidebar.less */
 #sidebar .oscmenu li li,
 body.compact #sidebar .oscmenu li li {
   width: auto;
@@ -1318,26 +1560,31 @@ body.compact #sidebar .oscmenu li li {
   list-style: 0px;
   position: relative;
 }
+/* line 86, oc-admin/themes/modern/less/sidebar.less */
 #sidebar .submenu-divide {
   background: #eaeaea;
   padding: 3px 15px;
   margin-top: 3px;
   color: #383838;
 }
+/* line 92, oc-admin/themes/modern/less/sidebar.less */
 #sidebar .oscmenu li li a,
 body.compact #sidebar .oscmenu li li a {
   display: block;
   padding: 2px 15px;
   color: #383838;
 }
+/* line 99, oc-admin/themes/modern/less/sidebar.less */
 #sidebar .oscmenu li li a:hover,
 body.compact #sidebar .oscmenu li li a:hover {
   background: #f3f3f3;
 }
+/* line 103, oc-admin/themes/modern/less/sidebar.less */
 #sidebar .oscmenu li.hover ul,
 body.compact #sidebar .oscmenu li.hover ul {
   display: block;
 }
+/* line 107, oc-admin/themes/modern/less/sidebar.less */
 #sidebar .oscmenu li ul .arrow,
 body.compact #sidebar .oscmenu li ul .arrow {
   width: 10px;
@@ -1349,6 +1596,7 @@ body.compact #sidebar .oscmenu li ul .arrow {
   margin-top: -10px;
   background: url('../images/arrow.png');
 }
+/* line 118, oc-admin/themes/modern/less/sidebar.less */
 #submenu-sidebar {
   position: fixed;
   padding: 10px;
@@ -1364,12 +1612,14 @@ body.compact #sidebar .oscmenu li ul .arrow {
   -webkit-box-shadow: 1px 1px 0px 0px #bababa;
   box-shadow: 1px 1px 0px 0px #bababa;
 }
+/* line 131, oc-admin/themes/modern/less/sidebar.less */
 #submenu-sidebar ul {
   list-style: none;
   margin: 0px;
   padding: 0px;
   font-size: 12px;
 }
+/* line 137, oc-admin/themes/modern/less/sidebar.less */
 #show-more {
   width: 79px;
   height: 79px;
@@ -1377,17 +1627,21 @@ body.compact #sidebar .oscmenu li ul .arrow {
   list-style: 0px;
   position: relative;
 }
+/* line 144, oc-admin/themes/modern/less/sidebar.less */
 #show-more li ul {
   display: none;
 }
+/* line 147, oc-admin/themes/modern/less/sidebar.less */
 #hidden-menus {
   display: none;
   padding: 10px !important;
   top: -10px;
 }
+/* line 152, oc-admin/themes/modern/less/sidebar.less */
 #sidebar .hover #hidden-menus {
   display: block;
 }
+/* line 155, oc-admin/themes/modern/less/sidebar.less */
 #hidden-menus .hover ul {
   display: block;
   position: absolute;
@@ -1406,6 +1660,7 @@ body.compact #sidebar .oscmenu li ul .arrow {
   box-shadow: 1px 1px 0px 0px #bababa;
   font-size: 12px;
 }
+/* line 171, oc-admin/themes/modern/less/sidebar.less */
 #hidden-menus .hover ul li {
   width: auto;
   height: auto;
@@ -1414,14 +1669,17 @@ body.compact #sidebar .oscmenu li ul .arrow {
   position: relative;
   float: none;
 }
+/* line 179, oc-admin/themes/modern/less/sidebar.less */
 #hidden-menus ul li a {
   display: block;
   padding: 2px 15px;
   color: #383838;
 }
+/* line 185, oc-admin/themes/modern/less/sidebar.less */
 #hidden-menus .hover ul li a:hover {
   background: #f3f3f3;
 }
+/* line 188, oc-admin/themes/modern/less/sidebar.less */
 #show-more ul li.arrow {
   height: 10px;
   width: 20px;
@@ -1432,38 +1690,46 @@ body.compact #sidebar .oscmenu li ul .arrow {
   margin-top: 0px;
   background: url('../images/arrow2.png');
 }
+/* line 198, oc-admin/themes/modern/less/sidebar.less */
 body.compact #sidebar {
   background-color: #474749;
   width: 50px;
 }
+/* line 202, oc-admin/themes/modern/less/sidebar.less */
 body.compact #sidebar .oscmenu li,
 body.compact #show-more li {
   width: 50px;
   height: 50px;
   border-bottom: solid 1px #383838;
 }
+/* line 208, oc-admin/themes/modern/less/sidebar.less */
 body.compact #sidebar h3 {
   bottom: 6px;
   text-indent: -9999px;
   font-size: 0px;
 }
+/* line 213, oc-admin/themes/modern/less/sidebar.less */
 body.compact #sidebar h3 .ico {
   margin-left: 8px;
   width: 35px;
   height: 35px;
 }
+/* line 1, oc-admin/themes/modern/less/header.less */
 #header .user-profile {
   font-size: 18px;
   margin: 5px 15px 5px 0px;
 }
+/* line 5, oc-admin/themes/modern/less/header.less */
 #header a {
   color: #bababa;
   float: left;
   text-decoration: none;
 }
+/* line 10, oc-admin/themes/modern/less/header.less */
 .header-wrapper {
   padding: 0 30px;
 }
+/* line 13, oc-admin/themes/modern/less/header.less */
 .navbar {
   padding: 8px 0;
   width: 100%;
@@ -1472,14 +1738,17 @@ body.compact #sidebar h3 .ico {
   min-width: 800px;
   color: #616161;
 }
+/* line 21, oc-admin/themes/modern/less/header.less */
 .navbar a {
   color: #ffffff;
 }
+/* line 24, oc-admin/themes/modern/less/header.less */
 .osc_switch_mode {
   padding-top: 20px;
   position: relative;
   height: 55px;
 }
+/* line 29, oc-admin/themes/modern/less/header.less */
 #osc_toolbar_switch_mode {
   position: relative;
   width: 50px;
@@ -1487,6 +1756,7 @@ body.compact #sidebar h3 .ico {
   display: block;
   margin: 0 auto;
 }
+/* line 36, oc-admin/themes/modern/less/header.less */
 #osc_toolbar_switch_mode .skin {
   position: absolute;
   right: 0;
@@ -1497,6 +1767,7 @@ body.compact #sidebar h3 .ico {
   display: block;
   background-position: 0px -25px;
 }
+/* line 46, oc-admin/themes/modern/less/header.less */
 #osc_toolbar_switch_mode .background {
   position: absolute;
   right: 5px;
@@ -1509,6 +1780,7 @@ body.compact #sidebar h3 .ico {
   -webkit-border-radius: 14px;
   -moz-border-radius: 14px;
 }
+/* line 56, oc-admin/themes/modern/less/header.less */
 #osc_toolbar_switch_mode .trigger {
   position: absolute;
   left: 0px;
@@ -1519,20 +1791,25 @@ body.compact #sidebar h3 .ico {
   display: block;
   background-position: 0px 0px;
 }
+/* line 66, oc-admin/themes/modern/less/header.less */
 body.compact #osc_toolbar_switch_mode .background {
   background-color: #00e1f2;
 }
+/* line 69, oc-admin/themes/modern/less/header.less */
 body.compact #osc_toolbar_switch_mode .trigger {
   left: 26px;
 }
+/* line 72, oc-admin/themes/modern/less/header.less */
 body.compact #osc_toolbar_switch_mode:hover .background {
   background-color: #f3f3f3;
 }
+/* line 1, oc-admin/themes/modern/less/table.less */
 table {
   max-width: 100%;
   background-color: transparent;
   border-spacing: 0;
 }
+/* line 6, oc-admin/themes/modern/less/table.less */
 .table {
   width: 100%;
   -webkit-border-radius: 4px;
@@ -1542,6 +1819,7 @@ table {
   border-right: 0;
   font-size: 12px;
 }
+/* line 15, oc-admin/themes/modern/less/table.less */
 .table th,
 .table td {
   padding: 4px 6px;
@@ -1554,23 +1832,27 @@ table {
   border-left: 0;
   position: relative;
 }
+/* line 27, oc-admin/themes/modern/less/table.less */
 .table thead th,
 .table thead td,
 .table-first-row td {
   border-top: 0;
 }
+/* line 32, oc-admin/themes/modern/less/table.less */
 .table th {
   font-weight: bold;
   text-align: left;
 }
+/* line 36, oc-admin/themes/modern/less/table.less */
 .table thead th {
   vertical-align: bottom;
 }
+/* line 39, oc-admin/themes/modern/less/table.less */
 .table-contains-actions tbody td {
   padding-bottom: 25px;
 }
+/* line 42, oc-admin/themes/modern/less/table.less */
 #table-row-actions {
-  display: none;
   position: absolute;
   top: 0;
   left: 0px;
@@ -1586,104 +1868,130 @@ table {
   padding: 0px 42px;
   text-align: left;
 }
+/* line 58, oc-admin/themes/modern/less/table.less */
 .table-collapsed #table-row-actions {
   margin-top: 0px;
   *margin-top: 0px;
   padding: 3px 42px;
 }
+/* line 63, oc-admin/themes/modern/less/table.less */
 .table-collapsed tbody td {
   padding-bottom: 4px;
 }
+/* line 66, oc-admin/themes/modern/less/table.less */
 .collapsed-hover td {
   padding-top: 31px;
 }
+/* line 69, oc-admin/themes/modern/less/table.less */
 #table-row-actions ul {
   list-style: none;
   margin: 0;
   padding: 0;
   margin-top: 4px;
 }
+/* line 74, oc-admin/themes/modern/less/table.less */
 #table-row-actions li {
   float: left;
   margin-right: 10px;
 }
+/* line 78, oc-admin/themes/modern/less/table.less */
 #table-row-actions li a {
   float: left;
 }
+/* line 81, oc-admin/themes/modern/less/table.less */
 #table-row-actions li ul {
   float: left;
   margin: 0;
 }
+/* line 85, oc-admin/themes/modern/less/table.less */
 #table-row-actions a {
   color: #018BE3;
   text-decoration: none;
 }
+/* line 89, oc-admin/themes/modern/less/table.less */
 #table-row-actions .show-more ul {
   display: none;
 }
+/* line 93, oc-admin/themes/modern/less/table.less */
 #table-row-actions .hover a {
   display: none;
 }
+/* line 96, oc-admin/themes/modern/less/table.less */
 #table-row-actions .hover ul a {
   display: block;
 }
+/* line 99, oc-admin/themes/modern/less/table.less */
 #table-row-actions .hover ul {
   display: block;
 }
+/* line 102, oc-admin/themes/modern/less/table.less */
 #table-row-actions a:hover {
   text-decoration: underline;
 }
+/* line 105, oc-admin/themes/modern/less/table.less */
 .col-bulkactions {
   opacity: 1 !important;
   text-align: center !important;
 }
+/* line 109, oc-admin/themes/modern/less/table.less */
 .table-contains-actions {
   position: relative;
 }
+/* line 112, oc-admin/themes/modern/less/table.less */
 .table div.actions {
   display: none;
 }
+/* line 115, oc-admin/themes/modern/less/table.less */
 .status-spam,
 .status-spam td {
   background: #f2dede;
   border-color: #eed3d7;
 }
+/* line 121, oc-admin/themes/modern/less/table.less */
 .status-block,
 .status-block td {
   background: #f2f2f2;
   /*border-color:@status-block-border;*/
 
 }
+/* line 126, oc-admin/themes/modern/less/table.less */
 .status-block td {
   opacity: 0.4;
   /*border-color:@status-block-border;*/
 
 }
+/* line 130, oc-admin/themes/modern/less/table.less */
 .status-activate,
 .status-activate td {
   background: #f0ffe9;
   /*border-color:@status-activate-border;*/
 
 }
+/* line 135, oc-admin/themes/modern/less/table.less */
 .status-premium,
 .status-premium td {
   background: #fcf8e3;
   /*border-color:@status-premium-border;*/
 
 }
+/* line 140, oc-admin/themes/modern/less/table.less */
 .even {
   background: #F9F9F9;
 }
+/* line 143, oc-admin/themes/modern/less/table.less */
 td.children-cat {
   padding-left: 20px;
 }
+/* line 146, oc-admin/themes/modern/less/table.less */
 table.table-small {
   width: 280px;
 }
+/* line 149, oc-admin/themes/modern/less/table.less */
 .order-box {
   position: relative;
   padding-right: 20px;
 }
+/* line 153, oc-admin/themes/modern/less/table.less */
 .order-box img {
   position: absolute;
   right: 5px;
@@ -1694,38 +2002,48 @@ table.table-small {
   -moz-opacity: 0.5;
   filter: alpha(opacity=5);
 }
+/* line 163, oc-admin/themes/modern/less/table.less */
 .order-box img:hover {
   opacity: 1;
   -moz-opacity: 1;
   filter: alpha(opacity=1);
 }
+/* line 168, oc-admin/themes/modern/less/table.less */
 .order-box .up {
   top: 0;
 }
+/* line 171, oc-admin/themes/modern/less/table.less */
 .order-box .down {
   top: 10px;
 }
+/* line 174, oc-admin/themes/modern/less/table.less */
 .sorting_desc a {
   background: url("../images/sort_desc.png") no-repeat scroll right center transparent;
   padding-right: 30px;
 }
+/* line 178, oc-admin/themes/modern/less/table.less */
 .sorting_asc a {
   background: url("../images/sort_asc.png") no-repeat scroll right center transparent;
   padding-right: 30px;
 }
 /* Columns width */
+/* line 183, oc-admin/themes/modern/less/table.less */
 .col-bulkactions {
   width: 20px;
 }
+/* line 186, oc-admin/themes/modern/less/table.less */
 .col-order {
   width: 55px;
 }
+/* line 189, oc-admin/themes/modern/less/table.less */
 .col-date {
   width: 140px;
 }
+/* line 192, oc-admin/themes/modern/less/table.less */
 .col-title {
   min-width: 280px;
 }
+/* line 1, oc-admin/themes/modern/less/helpbox.less */
 #help-box {
   background: #fcf8e3;
   border: solid 1px #fbeed5;
@@ -1735,10 +2053,12 @@ table.table-small {
   color: #616161;
   display: none;
 }
+/* line 10, oc-admin/themes/modern/less/helpbox.less */
 #help-box h3 {
   margin: 0;
   font-size: 14px;
 }
+/* line 14, oc-admin/themes/modern/less/helpbox.less */
 #help-box p {
   margin: 0;
   margin-top: 12px;
@@ -1746,49 +2066,61 @@ table.table-small {
   margin-right: 30px;
   line-height: 18px;
 }
+/* line 1, oc-admin/themes/modern/less/pages-dashboard.less */
 #dashboard .widget-box-content {
   height: 220px;
   overflow-y: auto;
 }
+/* line 5, oc-admin/themes/modern/less/pages-dashboard.less */
 #dashboard .widget-box-content-stats {
   position: relative;
 }
+/* line 8, oc-admin/themes/modern/less/pages-dashboard.less */
 #dashboard .widget-box-stats {
   position: absolute;
   width: 95%;
 }
+/* line 12, oc-admin/themes/modern/less/pages-dashboard.less */
 #dashboard .widget-box-stats .stats-detail {
   color: #616161;
 }
+/* line 15, oc-admin/themes/modern/less/pages-dashboard.less */
 .list-latests {
   list-style: none;
   margin: 0;
   padding: 0;
 }
+/* line 20, oc-admin/themes/modern/less/pages-dashboard.less */
 .list-latests li {
   border-bottom: solid 1px #dddddd;
   padding: 5px 0;
 }
+/* line 24, oc-admin/themes/modern/less/pages-dashboard.less */
 .widget-box-content a {
   font-size: 14px;
 }
+/* line 27, oc-admin/themes/modern/less/pages-dashboard.less */
 .widget-box-content .graph-placeholder {
   width: 100%;
   height: 120px;
   margin: 10px 0 15px;
 }
+/* line 32, oc-admin/themes/modern/less/pages-dashboard.less */
 .widget-box-project p {
   font-size: 12px;
 }
+/* line 1, oc-admin/themes/modern/less/forms.less */
 .form-label {
   font-size: 13px;
   color: #616161;
 }
+/* line 5, oc-admin/themes/modern/less/forms.less */
 .form-row {
   font-size: 13px;
   line-height: 18px;
   color: #616161;
 }
+/* line 10, oc-admin/themes/modern/less/forms.less */
 .form-actions {
   padding: 17px 20px 18px;
   margin-top: 50px;
@@ -1796,51 +2128,64 @@ table.table-small {
   background-color: #f3f3f3;
   border-top: 1px solid #bababa;
 }
+/* line 17, oc-admin/themes/modern/less/forms.less */
 .form-horizontal .form-row {
   margin-bottom: 15px;
 }
+/* line 20, oc-admin/themes/modern/less/forms.less */
 .form-horizontal .form-label {
   float: left;
   width: 150px;
   padding-top: 5px;
   text-align: right;
 }
+/* line 26, oc-admin/themes/modern/less/forms.less */
 .form-horizontal .form-controls {
   margin-left: 170px;
 }
+/* line 30, oc-admin/themes/modern/less/forms.less */
 .form-horizontal .form-actions {
   padding-left: 170px;
 }
+/* line 33, oc-admin/themes/modern/less/forms.less */
 .form-label-checkbox {
   padding-top: 5px;
 }
+/* line 36, oc-admin/themes/modern/less/forms.less */
 .help-box {
   font-style: italic;
 }
+/* line 39, oc-admin/themes/modern/less/forms.less */
 .form-row .input-text,
 .form-row input[type="text"] {
   vertical-align: baseline;
 }
+/* line 1, oc-admin/themes/modern/less/pages-settings.less */
 table.table-small td {
   vertical-align: bottom;
 }
+/* line 1, oc-admin/themes/modern/less/pages-themes.less */
 #market-quick-search {
   position: absolute;
   right: 30px;
   top: 30px;
 }
+/* line 6, oc-admin/themes/modern/less/pages-themes.less */
 .current-theme {
   padding-top: 20px;
 }
+/* line 9, oc-admin/themes/modern/less/pages-themes.less */
 .current-theme .theme {
   float: none;
   width: auto;
   margin-right: 0px;
   height: auto !important;
 }
+/* line 15, oc-admin/themes/modern/less/pages-themes.less */
 .current-theme .theme img {
   float: left;
 }
+/* line 19, oc-admin/themes/modern/less/pages-themes.less */
 .theme {
   margin-bottom: 40px;
   background-color: #f3f3f3;
@@ -1853,6 +2198,7 @@ table.table-small td {
   margin-right: 20px;
   font-size: 12px;
 }
+/* line 30, oc-admin/themes/modern/less/pages-themes.less */
 .theme img {
   width: 250px;
   margin-right: 20px;
@@ -1861,6 +2207,7 @@ table.table-small td {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
 }
+/* line 36, oc-admin/themes/modern/less/pages-themes.less */
 .theme .theme-actions {
   padding-top: 10px;
   position: absolute;
@@ -1872,40 +2219,50 @@ table.table-small td {
   background-color: rgba(243, 243, 243, 0.9);
   *background-color: #f3f3f3;
 }
+/* line 47, oc-admin/themes/modern/less/pages-themes.less */
 .theme .theme-actions .btn {
   padding-left: 6px;
   padding-right: 6px;
   margin-bottom: 5px;
 }
+/* line 52, oc-admin/themes/modern/less/pages-themes.less */
 .theme-actions a.delete {
   color: #616161;
 }
+/* line 55, oc-admin/themes/modern/less/pages-themes.less */
 .theme .theme-info,
 .theme .theme-info h3 {
   font-weight: normal;
 }
+/* line 59, oc-admin/themes/modern/less/pages-themes.less */
 .theme-stage {
   position: relative;
 }
+/* line 62, oc-admin/themes/modern/less/pages-themes.less */
 .appearance .theme {
   height: 285px;
 }
+/* line 65, oc-admin/themes/modern/less/pages-themes.less */
 .appearance .theme img {
   width: 250px;
   height: 187px;
 }
+/* line 69, oc-admin/themes/modern/less/pages-themes.less */
 tr.plugin td {
   padding: 10px;
 }
+/* line 72, oc-admin/themes/modern/less/pages-themes.less */
 tr.plugin h3,
 tr.plugin h3 {
   font-weight: bold;
   color: #383838;
   margin: 0;
 }
+/* line 78, oc-admin/themes/modern/less/pages-themes.less */
 .plugin-actions {
   padding-top: 10px;
 }
+/* line 1, oc-admin/themes/modern/less/flashmessage.less */
 .flashmessage {
   background: #fcf8e3;
   border: solid 1px #fbeed5;
@@ -1915,27 +2272,32 @@ tr.plugin h3 {
   color: #c09853;
   display: none;
 }
+/* line 10, oc-admin/themes/modern/less/flashmessage.less */
 .flashmessage-info {
   background: #d9edf7;
   border: solid 1px #bce8f1;
   color: #3a87ad;
 }
+/* line 15, oc-admin/themes/modern/less/flashmessage.less */
 .flashmessage-error,
 .flashmessage-error td {
   background: #f2dede;
   border: solid 1px #eed3d7;
   color: #b94a48;
 }
+/* line 21, oc-admin/themes/modern/less/flashmessage.less */
 .flashmessage-ok {
   background: #dff0d8;
   border: solid 1px #d6e9c6;
   color: #468847;
 }
+/* line 26, oc-admin/themes/modern/less/flashmessage.less */
 .flashmessage-warning {
   background: #fcf8e3;
   border: solid 1px #fbeed5;
   color: #c09853;
 }
+/* line 31, oc-admin/themes/modern/less/flashmessage.less */
 .flashmessage-inline {
   display: inline-block;
   padding: 0 10px;
@@ -1944,9 +2306,11 @@ tr.plugin h3 {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
 }
+/* line 37, oc-admin/themes/modern/less/flashmessage.less */
 .flashmessage-inline p {
   margin: 5px 0;
 }
+/* line 40, oc-admin/themes/modern/less/flashmessage.less */
 #error_list {
   border-top: 0;
   padding: 15px;
@@ -1958,6 +2322,7 @@ tr.plugin h3 {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
 }
+/* line 50, oc-admin/themes/modern/less/flashmessage.less */
 #content-page .flashmessage {
   /*padding:15px;
     min-height:0;
@@ -1974,21 +2339,27 @@ tr.plugin h3 {
 #content-page .flashmessage > p:last-child{
     margin-bottom:0px;
 }*/
+/* line 62, oc-admin/themes/modern/less/flashmessage.less */
 #content-page .flashmessage-info {
   border-top: solid 1px #bce8f1;
 }
+/* line 65, oc-admin/themes/modern/less/flashmessage.less */
 #content-page .flashmessage-error {
   border-top: solid 1px #eed3d7;
 }
+/* line 68, oc-admin/themes/modern/less/flashmessage.less */
 #content-page .flashmessage-ok {
   border-top: solid 1px #d6e9c6;
 }
+/* line 71, oc-admin/themes/modern/less/flashmessage.less */
 #content-page .flashmessage-warning {
   border-top: solid 1px #fbeed5;
 }
+/* line 1, oc-admin/themes/modern/less/guideline.less */
 div.guideline-header {
   position: relative;
 }
+/* line 4, oc-admin/themes/modern/less/guideline.less */
 pre,
 code {
   padding: 8px;
@@ -2002,42 +2373,52 @@ code {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
 }
+/* line 1, oc-admin/themes/modern/less/pages-listing.less */
 #listing-toolbar,
 .table-toolbar {
   height: 44px;
   margin-bottom: 16px;
 }
+/* line 6, oc-admin/themes/modern/less/pages-listing.less */
 #datatablesForm #bulk-actions {
   position: absolute;
   top: 0px;
   left: 0;
 }
+/* line 9, oc-admin/themes/modern/less/pages-listing.less */
 .submit-right {
   margin: 0px;
 }
+/* line 12, oc-admin/themes/modern/less/pages-listing.less */
 #display-filters {
   padding: 40px 0 0 0;
 }
+/* line 15, oc-admin/themes/modern/less/pages-listing.less */
 #display-filters .form-label {
   width: 70px;
 }
+/* line 18, oc-admin/themes/modern/less/pages-listing.less */
 #display-filters .form-controls {
   margin-left: 80px;
 }
+/* line 21, oc-admin/themes/modern/less/pages-listing.less */
 #btn-display-filters,
 #btn-hide-filters,
 #btn-reset-filters {
   margin-left: 10px;
 }
+/* line 27, oc-admin/themes/modern/less/pages-listing.less */
 #item-form #left-side {
   width: 530px;
   margin-right: 60px;
   float: left;
 }
+/* line 32, oc-admin/themes/modern/less/pages-listing.less */
 #item-form #right-side {
   width: 240px;
   float: left;
 }
+/* line 36, oc-admin/themes/modern/less/pages-listing.less */
 #item-form label {
   display: block;
   font-size: 14px;
@@ -2045,21 +2426,26 @@ code {
   margin-top: 10px;
   margin-bottom: 5px;
 }
+/* line 43, oc-admin/themes/modern/less/pages-listing.less */
 .input-title-wide input {
   width: 516px;
   height: 22px;
 }
+/* line 47, oc-admin/themes/modern/less/pages-listing.less */
 .input-title-wide label {
   font-size: 18px !important;
 }
+/* line 50, oc-admin/themes/modern/less/pages-listing.less */
 .input-description-wide textarea {
   width: 516px;
 }
+/* line 53, oc-admin/themes/modern/less/pages-listing.less */
 #item-form .input-currency {
   vertical-align: bottom;
   font-size: 18px;
   line-height: 28px;
 }
+/* line 58, oc-admin/themes/modern/less/pages-listing.less */
 #item-form h3.label {
   font-weight: normal;
   font-size: 14px;
@@ -2067,19 +2453,24 @@ code {
   margin-bottom: 10px;
   color: #616161;
 }
+/* line 65, oc-admin/themes/modern/less/pages-listing.less */
 #item-form .well input {
   width: 194px;
 }
+/* line 68, oc-admin/themes/modern/less/pages-listing.less */
 #item-form .well .select-box-trigger {
   width: 151px;
 }
+/* line 71, oc-admin/themes/modern/less/pages-listing.less */
 #item-form .well {
   padding: 15px;
   padding-bottom: 15px;
 }
+/* line 75, oc-admin/themes/modern/less/pages-listing.less */
 #language-tab {
   margin-bottom: 25px;
 }
+/* line 78, oc-admin/themes/modern/less/pages-listing.less */
 #item-form #photos {
   padding: 10px;
   background-color: #f3f3f3;
@@ -2088,6 +2479,7 @@ code {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
 }
+/* line 84, oc-admin/themes/modern/less/pages-listing.less */
 #item-action-list {
   float: right;
   height: 15px;
@@ -2095,6 +2487,7 @@ code {
   margin-top: -5px;
   padding: 0;
 }
+/* line 91, oc-admin/themes/modern/less/pages-listing.less */
 #item-action-list li {
   float: left;
   list-style-type: none;
@@ -2121,49 +2514,80 @@ code {
     margin:0;
 }*/
 /* Plugin */
-#plugin-hook .row {
+/* line 117, oc-admin/themes/modern/less/pages-listing.less */
+#plugin-hook .row,
+#plugin-hook .meta {
   clear: both;
   float: left;
   margin-bottom: 10px;
   width: 100%;
 }
+/* line 119, oc-admin/themes/modern/less/pages-listing.less */
+#plugin-hook .meta ul {
+  clear: both;
+  margin: 0 0 0 197px;
+  padding: 0;
+}
+/* line 120, oc-admin/themes/modern/less/pages-listing.less */
+#plugin-hook .meta label {
+  margin-top: 0;
+}
+/* line 123, oc-admin/themes/modern/less/pages-listing.less */
+#plugin-hook ul li {
+  clear: both;
+}
+/* line 124, oc-admin/themes/modern/less/pages-listing.less */
+#plugin-hook ul li label,
+#plugin-hook ul li input {
+  float: left;
+}
+/* line 127, oc-admin/themes/modern/less/pages-listing.less */
 #plugin-hook .row label {
   float: left;
   line-height: 24px;
   margin-right: 10px;
   width: 190px;
 }
+/* line 128, oc-admin/themes/modern/less/pages-listing.less */
 #plugin-hook .row input[type="radio"] {
   border: 1px solid #BBBBBB;
   padding: 7px 7px 6px;
   width: 30px;
 }
+/* line 133, oc-admin/themes/modern/less/pages-listing.less */
 #plugin-hook .has-slider {
   padding-left: 180px;
 }
+/* line 1, oc-admin/themes/modern/less/categories.less */
 .category-details-form label {
   display: block;
 }
+/* line 4, oc-admin/themes/modern/less/categories.less */
 .category-details-form input,
 .category-details-form textarea {
   width: 250px;
   margin-bottom: 20px;
 }
+/* line 9, oc-admin/themes/modern/less/categories.less */
 .ui-sortable {
   margin: 0;
   padding: 0;
 }
+/* line 13, oc-admin/themes/modern/less/categories.less */
 .ui-sortable li ul {
   margin-left: 39px;
   padding: 0;
 }
+/* line 17, oc-admin/themes/modern/less/categories.less */
 .list-fields ul {
   margin: 0;
   padding: 0;
 }
+/* line 21, oc-admin/themes/modern/less/categories.less */
 .list-fields ul li {
   margin-bottom: 10px;
 }
+/* line 24, oc-admin/themes/modern/less/categories.less */
 .list-categories .category_div,
 .list-fields .cfield-div {
   background-color: #f3f3f3;
@@ -2174,14 +2598,17 @@ code {
   -moz-border-radius: 4px;
   position: relative;
 }
+/* line 32, oc-admin/themes/modern/less/categories.less */
 .cfield-hover {
   background: #FFFCCC;
   background-color: #FFFCCC !important;
 }
+/* line 36, oc-admin/themes/modern/less/categories.less */
 .list-categories .category_row {
   height: 26px;
   padding-left: 87px;
 }
+/* line 40, oc-admin/themes/modern/less/categories.less */
 .ico-droppable {
   position: absolute;
   left: 1px;
@@ -2192,6 +2619,7 @@ code {
   margin-left: 2px;
   cursor: move;
 }
+/* line 49, oc-admin/themes/modern/less/categories.less */
 .ico-childrens {
   position: absolute;
   left: 36px;
@@ -2201,12 +2629,15 @@ code {
   height: 36px;
   margin-left: 2px;
 }
+/* line 57, oc-admin/themes/modern/less/categories.less */
 .ui-sortable li ul .category_row {
   padding-left: 49px;
 }
+/* line 60, oc-admin/themes/modern/less/categories.less */
 .ui-sortable li ul .ico-childrens {
   display: none;
 }
+/* line 63, oc-admin/themes/modern/less/categories.less */
 .ico-childrens .toggle {
   /*.rounded-corners(15px);
     min-width:18px;
@@ -2236,9 +2667,11 @@ code {
   margin-top: 7px;
 }
 /* categories */
+/* line 89, oc-admin/themes/modern/less/categories.less */
 .list-categories a {
   cursor: pointer;
 }
+/* line 92, oc-admin/themes/modern/less/categories.less */
 .list-categories .name-cat,
 .list-fields .name-edit-cfield {
   padding-right: 300px;
@@ -2246,19 +2679,24 @@ code {
   line-height: 26px;
   color: #616161;
 }
+/* line 99, oc-admin/themes/modern/less/categories.less */
 .list-fields .name-edit-cfield {
   padding-left: 10px;
 }
+/* line 103, oc-admin/themes/modern/less/categories.less */
 ul.subcategories {
   margin-left: 20px;
 }
+/* line 108, oc-admin/themes/modern/less/categories.less */
 .list-categories li {
   margin-top: 10px;
 }
+/* line 112, oc-admin/themes/modern/less/categories.less */
 div.disabled .category_row,
 .category_li .disabled {
   background-color: #FFE8E8;
 }
+/* line 116, oc-admin/themes/modern/less/categories.less */
 .iframe-category,
 .custom-field-frame {
   margin-top: 5px;
@@ -2267,18 +2705,23 @@ div.disabled .category_row,
   background: #ffffff;
   border-top: solid 1px #dddddd;
 }
+/* line 124, oc-admin/themes/modern/less/categories.less */
 .iframe-category .input-line {
   float: left;
 }
+/* line 127, oc-admin/themes/modern/less/categories.less */
 .list-categories .form-actions {
   margin-top: 0;
 }
+/* line 130, oc-admin/themes/modern/less/categories.less */
 .toggle {
   cursor: pointer;
 }
+/* line 134, oc-admin/themes/modern/less/categories.less */
 .subcategory .toggle {
   display: none;
 }
+/* line 137, oc-admin/themes/modern/less/categories.less */
 .actions-cat,
 .actions-edit-cfield {
   float: right;
@@ -2286,14 +2729,17 @@ div.disabled .category_row,
   right: 10px;
   top: 10px;
 }
+/* line 143, oc-admin/themes/modern/less/categories.less */
 .iframe-category h3 {
   border-bottom: 1px dotted #CCC;
   padding-bottom: 5px;
 }
 /* /categories */
+/* line 148, oc-admin/themes/modern/less/categories.less */
 .categories-tree {
   clear: both;
 }
+/* line 151, oc-admin/themes/modern/less/categories.less */
 #advanced_fields_iframe {
   font-size: 16px;
   font-weight: normal;
@@ -2303,6 +2749,7 @@ div.disabled .category_row,
   padding-left: 15px;
   margin-bottom: 10px;
 }
+/* line 160, oc-admin/themes/modern/less/categories.less */
 .custom-field-shrink .icon-more {
   width: 10px;
   height: 10px;
@@ -2311,6 +2758,7 @@ div.disabled .category_row,
   top: 0;
   background-image: url(../images/split.png);
 }
+/* line 167, oc-admin/themes/modern/less/categories.less */
 .custom-field-shrink .icon-more,
 .custom-field-expanded .icon-more {
   width: 10px;
@@ -2320,21 +2768,26 @@ div.disabled .category_row,
   top: 3px;
   background-image: url(../images/split.png);
 }
+/* line 175, oc-admin/themes/modern/less/categories.less */
 .custom-field-shrink .icon-more {
   background-position: -152px -348px;
 }
+/* line 179, oc-admin/themes/modern/less/categories.less */
 .custom-field-expanded .icon-more {
   background-position: -172px -348px;
 }
+/* line 1, oc-admin/themes/modern/less/treeview.less */
 .treeview,
 .treeview ul {
   padding: 0;
   margin: 0;
   list-style: none;
 }
+/* line 6, oc-admin/themes/modern/less/treeview.less */
 .treeview ul {
   margin-top: 0px;
 }
+/* line 9, oc-admin/themes/modern/less/treeview.less */
 .treeview .hitarea {
   background: url(../images/split.png) -152px -328px no-repeat;
   height: 12px;
@@ -2345,48 +2798,60 @@ div.disabled .category_row,
   cursor: pointer;
 }
 /* fix for IE6 */
+/* line 19, oc-admin/themes/modern/less/treeview.less */
 * html .hitarea {
   display: inline;
   float: none;
 }
+/* line 23, oc-admin/themes/modern/less/treeview.less */
 .treeview ul li {
   margin: 0;
   margin-bottom: 0;
   padding: 3px 0px 3px 16px;
 }
+/* line 28, oc-admin/themes/modern/less/treeview.less */
 .treeview ul li ul li {
   padding: 3px 0px;
 }
+/* line 31, oc-admin/themes/modern/less/treeview.less */
 #treecontrol {
   margin: 1em 0;
   display: none;
 }
+/* line 32, oc-admin/themes/modern/less/treeview.less */
 .treeview .hover {
   cursor: pointer;
 }
+/* line 33, oc-admin/themes/modern/less/treeview.less */
 .treeview .expandable-hitarea {
   background-position: -172px -328px;
 }
+/* line 34, oc-admin/themes/modern/less/treeview.less */
 .treeview .placeholder {
   background: url(../images/split.png) 0 0 no-repeat;
   height: 12px;
   width: 12px;
   display: block;
 }
+/* line 40, oc-admin/themes/modern/less/treeview.less */
 form h3 {
   font-size: 16px;
   font-weight: normal;
 }
+/* line 1, oc-admin/themes/modern/less/pages-stats.less */
 #stats-page .widget-box-content {
   height: 225px;
 }
+/* line 1, oc-admin/themes/modern/less/reset-jquery-ui.less */
 .ui-osc-tabs {
   border: 0;
   padding: 0;
 }
+/* line 5, oc-admin/themes/modern/less/reset-jquery-ui.less */
 .ui-osc-tabs .ui-tabs-panel {
   padding: 15px 0;
 }
+/* line 8, oc-admin/themes/modern/less/reset-jquery-ui.less */
 .ui-osc-tabs .ui-tabs-nav {
   border: 0;
   padding: 4px 5px 0;
@@ -2397,6 +2862,7 @@ form h3 {
 }
 /*.ui-tabs-right .ui-tabs-nav li.ui-state-default {float: right; }
 .ui-tabs-right .ui-tabs-nav li a { float: right; }*/
+/* line 16, oc-admin/themes/modern/less/reset-jquery-ui.less */
 .ui-osc-tabs .ui-tabs-nav li {
   float: right;
 }
@@ -2430,6 +2896,7 @@ form h3 {
     color:@color-gray-dim;
     text-align:center;
 }*/
+/* line 47, oc-admin/themes/modern/less/reset-jquery-ui.less */
 .ui-dialog {
   border: 0;
   background: #f3f3f3;
@@ -2438,25 +2905,25 @@ form h3 {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
 }
+/* line 53, oc-admin/themes/modern/less/reset-jquery-ui.less */
 .ui-dialog .ui-dialog-titlebar {
   margin: 0;
   padding: 7px 5px;
   font-size: 18px;
   color: #474749;
   position: relative;
-  border-radius: 4px 4px 0 0;
-  -webkit-border-radius: 4px 4px 0 0;
-  -moz-border-radius: 4px 4px 0 0;
   border: none;
   border-radius: 4px 4px 0 0;
   -webkit-border-radius: 4px 4px 0 0;
   -moz-border-radius: 4px 4px 0 0;
 }
+/* line 63, oc-admin/themes/modern/less/reset-jquery-ui.less */
 .ui-dialog .ui-dialog-title {
   margin: 0;
   font-size: 18px;
   font-weight: normal;
 }
+/* line 68, oc-admin/themes/modern/less/reset-jquery-ui.less */
 .ui-dialog .ui-dialog-content {
   background: #ffffff;
   padding: 15px;
@@ -2465,6 +2932,7 @@ form h3 {
   -moz-border-radius: 0 0 4px 4px;
   position: relative;
 }
+/* line 74, oc-admin/themes/modern/less/reset-jquery-ui.less */
 .ui-dialog .form-actions {
   border-radius: 0 0 4px 4px;
   -webkit-border-radius: 0 0 4px 4px;
@@ -2476,13 +2944,16 @@ form h3 {
   left: 0;
   position: absolute;
 }
+/* line 83, oc-admin/themes/modern/less/reset-jquery-ui.less */
 .ui-dialog .form-actions .wrapper {
   padding: 17px 20px 18px 20px;
 }
+/* line 86, oc-admin/themes/modern/less/reset-jquery-ui.less */
 .ui-dialog .has-form-actions {
   position: relative;
   padding-bottom: 85px !important;
 }
+/* line 90, oc-admin/themes/modern/less/reset-jquery-ui.less */
 .osc-modal-content-market img {
   float: left;
   max-height: 106px;
@@ -2492,19 +2963,23 @@ form h3 {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
 }
+/* line 97, oc-admin/themes/modern/less/reset-jquery-ui.less */
 .osc-modal-content-market .table {
   float: left;
   width: 300px;
 }
+/* line 101, oc-admin/themes/modern/less/reset-jquery-ui.less */
 .osc-modal-content-market .form-row .market-data {
   padding-left: 100px
     display: block;
 }
+/* line 1, oc-admin/themes/modern/less/osc.less */
 #osc-tooltip {
   position: absolute;
   z-index: 100;
   max-width: 400px;
 }
+/* line 6, oc-admin/themes/modern/less/osc.less */
 #osc-tooltip .tooltip-message {
   padding: 10px;
   border-radius: 5px;
@@ -2514,6 +2989,7 @@ form h3 {
   z-index: 2;
   position: relative;
 }
+/* line 15, oc-admin/themes/modern/less/osc.less */
 #osc-tooltip .tooltip-arrow {
   position: absolute;
   width: 15px;
@@ -2522,130 +2998,159 @@ form h3 {
   z-index: 1;
   background-repeat: no-repeat;
 }
+/* line 23, oc-admin/themes/modern/less/osc.less */
 .black-tooltip .tooltip-message {
   background: #505050;
   border: solid 3px #303030;
   color: #F3F3F3;
 }
+/* line 28, oc-admin/themes/modern/less/osc.less */
 .info-tooltip .tooltip-message {
   background: #E5F6FE;
   color: #4D9FBF;
   border: solid 3px #ADD9ED;
 }
+/* line 33, oc-admin/themes/modern/less/osc.less */
 .warning-tooltip .tooltip-message {
   background: #FBF7AA;
   color: #A27D35;
   border: solid 3px #F9E98E;
 }
+/* line 38, oc-admin/themes/modern/less/osc.less */
 .success-tooltip .tooltip-message {
   background: #CDE6AC;
   color: #58792E;
   border: solid 3px #A9DB66;
 }
+/* line 43, oc-admin/themes/modern/less/osc.less */
 .error-tooltip .tooltip-message {
   background: #F79992;
   color: #9C2F2F;
   border: solid 3px #CE6F6F;
 }
+/* line 48, oc-admin/themes/modern/less/osc.less */
 .error-tooltip .tooltip-arrow {
   background-image: url(../images/osc-tooltip-error.gif);
 }
+/* line 51, oc-admin/themes/modern/less/osc.less */
 .gray-tooltip .tooltip-message {
   background: #f2f2f2;
   color: #454545;
   border: solid 3px #e2e2e2;
 }
+/* line 56, oc-admin/themes/modern/less/osc.less */
 .gray-tooltip .tooltip-arrow {
   background-image: url(../images/osc-tooltip-gray.gif);
 }
+/* line 59, oc-admin/themes/modern/less/osc.less */
 .right-middle .tooltip-arrow {
   top: 50%;
   left: 0;
   margin-top: -8px;
 }
+/* line 64, oc-admin/themes/modern/less/osc.less */
 .right-middle .tooltip-message {
   margin-left: 8px;
 }
+/* line 67, oc-admin/themes/modern/less/osc.less */
 .left-middle .tooltip-arrow {
   top: 50%;
   right: 0;
   margin-top: -8px;
 }
+/* line 72, oc-admin/themes/modern/less/osc.less */
 .left-middle .tooltip-message {
   margin-right: 8px;
 }
+/* line 75, oc-admin/themes/modern/less/osc.less */
 .right-top .tooltip-arrow {
   bottom: 0%;
   left: 0;
   margin-top: 0px;
   background-position: -8px 0;
 }
+/* line 81, oc-admin/themes/modern/less/osc.less */
 .right-top .tooltip-message {
   margin-bottom: 8px;
 }
+/* line 84, oc-admin/themes/modern/less/osc.less */
 .left-top .tooltip-arrow {
   bottom: 0%;
   right: 0;
   margin-top: 0px;
   background-position: 8px 0;
 }
+/* line 90, oc-admin/themes/modern/less/osc.less */
 .left-top .tooltip-message {
   margin-bottom: 8px;
 }
+/* line 93, oc-admin/themes/modern/less/osc.less */
 .middle-top .tooltip-arrow {
   bottom: 0%;
   right: 50%;
   margin-top: 0px;
   margin-right: -8px;
 }
+/* line 99, oc-admin/themes/modern/less/osc.less */
 .middle-top .tooltip-message {
   margin-bottom: 8px;
 }
+/* line 102, oc-admin/themes/modern/less/osc.less */
 .right-bottom .tooltip-arrow {
   top: 0%;
   left: 0;
   margin-top: 0px;
   background-position: -8px 0;
 }
+/* line 108, oc-admin/themes/modern/less/osc.less */
 .right-bottom .tooltip-message {
   margin-top: 8px;
 }
+/* line 111, oc-admin/themes/modern/less/osc.less */
 .left-bottom .tooltip-arrow {
   top: 0%;
   right: 0;
   margin-top: 0px;
   background-position: 8px 0;
 }
+/* line 117, oc-admin/themes/modern/less/osc.less */
 .left-bottom .tooltip-message {
   margin-top: 8px;
 }
+/* line 120, oc-admin/themes/modern/less/osc.less */
 .middle-bottom .tooltip-arrow {
   top: 0%;
   right: 50%;
   margin-top: 0px;
   margin-right: -8px;
 }
+/* line 126, oc-admin/themes/modern/less/osc.less */
 .middle-bottom .tooltip-message {
   margin-top: 8px;
 }
+/* line 1, oc-admin/themes/modern/less/market.less */
 body.market #content-page {
   background-color: #f9f9f9;
 }
+/* line 4, oc-admin/themes/modern/less/market.less */
 body.market #content-head {
   height: 153px;
   background-color: #7ed1e1;
   border-bottom: none;
   position: relative;
 }
+/* line 11, oc-admin/themes/modern/less/market.less */
 body.market #content-head h1 {
   color: #fff;
 }
+/* line 14, oc-admin/themes/modern/less/market.less */
 body.market #content-head h2 {
   color: #fff;
   font-size: 18px;
   font-weight: 200;
   margin-top: 15px;
 }
+/* line 20, oc-admin/themes/modern/less/market.less */
 body.market #content-head .tabs {
   width: 100%;
   height: 40px;
@@ -2656,11 +3161,13 @@ body.market #content-head .tabs {
   left: 0;
   background-color: #6baab6 /*rgba(0,0,0,0.3)*/;
 }
+/* line 27, oc-admin/themes/modern/less/market.less */
 body.market #content-head .tabs li {
   float: left;
   margin-left: 30px;
   margin-right: -29px;
 }
+/* line 32, oc-admin/themes/modern/less/market.less */
 body.market #content-head .tabs li a {
   float: left;
   padding: 10px 20px 9px;
@@ -2674,10 +3181,12 @@ body.market #content-head .tabs li a {
   font-weight: 200;
   font-size: 14px;
 }
+/* line 42, oc-admin/themes/modern/less/market.less */
 body.market #content-head .tabs li.active a {
   background-color: #f9f9f9;
   color: #3b3b3b;
 }
+/* line 45, oc-admin/themes/modern/less/market.less */
 body.market a.screnshot img {
   width: 130px;
   height: 82px;
@@ -2687,9 +3196,11 @@ body.market a.screnshot img {
   -webkit-border-radius: 5px;
   margin-right: 5px;
 }
+/* line 54, oc-admin/themes/modern/less/market.less */
 body.market a.screnshot .last {
   margin-right: 0px;
 }
+/* line 57, oc-admin/themes/modern/less/market.less */
 body.market .section-title {
   font-size: 20px;
   font-weight: 200;
@@ -2697,32 +3208,40 @@ body.market .section-title {
   border-bottom: solid 1px #e0e0e0;
   clear: both;
 }
+/* line 62, oc-admin/themes/modern/less/market.less */
 body.market .section-title a {
   float: right;
   font-size: 13px;
   line-height: 25px;
   text-decoration: underline;
 }
+/* line 68, oc-admin/themes/modern/less/market.less */
 body.market .grid-market {
   width: 990px;
 }
+/* line 71, oc-admin/themes/modern/less/market.less */
 .grid-market a:hover {
   text-decoration: none;
 }
+/* line 74, oc-admin/themes/modern/less/market.less */
 body.market .grid-market {
   width: 960px;
 }
+/* line 78, oc-admin/themes/modern/less/market.less */
 body.market .mk-item-parent:nth-child(3n+1) {
   margin-right: 0;
 }
+/* line 1, oc-admin/themes/modern/less/market-item.less */
 body.market .mk-item-parent:nth-child(3n+1) {
   margin-right: 0;
 }
+/* line 4, oc-admin/themes/modern/less/market-item.less */
 body.market .mk-item-parent {
   margin-right: 30px;
   float: left;
   display: block;
 }
+/* line 9, oc-admin/themes/modern/less/market-item.less */
 .mk-item {
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -2737,16 +3256,19 @@ body.market .mk-item-parent {
   margin-bottom: 30px;
   overflow: hidden;
 }
+/* line 23, oc-admin/themes/modern/less/market-item.less */
 a:hover .mk-item {
   text-decoration: none;
   -webkit-box-shadow: 0px 0px 10px 0px #2FBFD1;
   box-shadow: 0px 0px 10px 0px #2FBFD1;
 }
+/* line 29, oc-admin/themes/modern/less/market-item.less */
 a.has-update:hover .mk-item {
   text-decoration: none;
   -webkit-box-shadow: 0px 0px 10px 0px #ffb400;
   box-shadow: 0px 0px 10px 0px #ffb400;
 }
+/* line 34, oc-admin/themes/modern/less/market-item.less */
 .mk-item .banner {
   width: 110px;
   height: 110px;
@@ -2766,6 +3288,7 @@ a.has-update:hover .mk-item {
   color: white;
   font-weight: 200;
 }
+/* line 52, oc-admin/themes/modern/less/market-item.less */
 .mk-item .mk-info {
   text-decoration: none;
   width: 160px;
@@ -2774,17 +3297,20 @@ a.has-update:hover .mk-item {
   position: relative;
   overflow: hidden;
 }
+/* line 60, oc-admin/themes/modern/less/market-item.less */
 .mk-item .mk-info div {
   position: absolute;
   bottom: 15px;
   right: 15px;
   width: 160px;
 }
+/* line 65, oc-admin/themes/modern/less/market-item.less */
 .mk-item .mk-info h3 {
   font-weight: 200;
   font-size: 17px;
   margin: 0;
 }
+/* line 70, oc-admin/themes/modern/less/market-item.less */
 .mk-item .mk-info i {
   font-weight: 200;
   font-size: 12px;
@@ -2794,10 +3320,12 @@ a.has-update:hover .mk-item {
     -webkit-border-radius:0 0 0 4px;*/
 
 }
+/* line 78, oc-admin/themes/modern/less/market-item.less */
 .mk-item .mk-info span {
   display: block;
   float: left;
 }
+/* line 82, oc-admin/themes/modern/less/market-item.less */
 .mk-item .mk-info .more,
 .mk-item .mk-info .download-btn {
   background-color: #616161;
@@ -2809,10 +3337,12 @@ a.has-update:hover .mk-item {
   float: left;
   font-size: 13px;
 }
+/* line 91, oc-admin/themes/modern/less/market-item.less */
 .mk-item .mk-info .download-btn {
   background-color: #2fbfd1;
   margin-left: 5px;
 }
+/* line 95, oc-admin/themes/modern/less/market-item.less */
 .mk-item .mk-info .downloads {
   display: block;
   float: none;
@@ -2820,19 +3350,23 @@ a.has-update:hover .mk-item {
   line-height: 12px;
   margin-bottom: -2px;
 }
+/* line 106, oc-admin/themes/modern/less/market-item.less */
 .mk-item-theme {
   height: 225px;
 }
+/* line 109, oc-admin/themes/modern/less/market-item.less */
 .mk-item-theme .mk-info {
   width: 270px;
   height: 40px;
   padding: 170px 15px 15px;
 }
+/* line 114, oc-admin/themes/modern/less/market-item.less */
 .mk-item .mk-info div.market-actions {
   float: right;
   bottom: 10px;
   right: 8px;
 }
+/* line 119, oc-admin/themes/modern/less/market-item.less */
 .mk-item-theme .banner {
   width: 300px;
   height: 155px;
@@ -2840,6 +3374,7 @@ a.has-update:hover .mk-item {
   -webkit-border-radius: 5px 5px 0 0;
   -moz-border-radius: 5px 5px 0 0;
 }
+/* line 124, oc-admin/themes/modern/less/market-item.less */
 .mk-item .flag {
   width: 30px;
   height: 30px;
@@ -2852,33 +3387,40 @@ a.has-update:hover .mk-item {
   -webkit-border-radius: 0 3px 0 0;
   -moz-border-radius: 0 3px 0 0;
 }
+/* line 136, oc-admin/themes/modern/less/market-item.less */
 .mk-item-theme .flag {
   top: 155px;
   border-radius: 0;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
 }
+/* line 140, oc-admin/themes/modern/less/market-item.less */
 .has-update .flag {
   display: block;
   background-position: 0 0px;
 }
+/* line 144, oc-admin/themes/modern/less/market-item.less */
 .is-featured .flag {
   display: block;
   background-position: -30px 0;
 }
+/* line 148, oc-admin/themes/modern/less/market-item.less */
 .is-featured-is-downloaded .flag {
   display: block;
   background-position: -60px 0;
 }
+/* line 152, oc-admin/themes/modern/less/market-item.less */
 .is-downloaded .flag {
   display: block;
   background-position: -90px 0;
 }
+/* line 156, oc-admin/themes/modern/less/market-item.less */
 .is-featured-has-update .flag {
   display: block;
   background-position: -120px 0;
 }
 /* DIALOGS */
+/* line 161, oc-admin/themes/modern/less/market-item.less */
 .market-dialog {
   padding: 0;
   margin: 0;
@@ -2890,26 +3432,31 @@ a.has-update:hover .mk-item {
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
 }
+/* line 171, oc-admin/themes/modern/less/market-item.less */
 .market-dialog .flashmessage {
   display: block;
   position: absolute;
   top: 100%;
   z-index: 88888;
 }
+/* line 177, oc-admin/themes/modern/less/market-item.less */
 .market-dialog .ui-dialog-titlebar {
   background: none;
   height: 0;
   padding: 0;
 }
+/* line 182, oc-admin/themes/modern/less/market-item.less */
 .not-compatible .ui-dialog-titlebar {
   background: 0;
   height: auto;
   padding: 10px;
   background-color: #FF4242;
 }
+/* line 188, oc-admin/themes/modern/less/market-item.less */
 .market-dialog .ui-dialog-title {
   display: none;
 }
+/* line 191, oc-admin/themes/modern/less/market-item.less */
 .not-compatible span.ui-dialog-title {
   display: block;
   font-size: 14px;
@@ -2917,39 +3464,47 @@ a.has-update:hover .mk-item {
   text-align: center;
   float: none;
 }
+/* line 198, oc-admin/themes/modern/less/market-item.less */
 .not-compatible .mk-item,
 .not-compatible .banner {
   border-radius: 0;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
 }
+/* line 202, oc-admin/themes/modern/less/market-item.less */
 .not-compatible a.ui-dialog-titlebar-close {
   margin-top: -10px;
 }
+/* line 205, oc-admin/themes/modern/less/market-item.less */
 .market-dialog .ui-dialog-titlebar-close {
   z-index: 10;
   margin-top: 5px;
 }
+/* line 209, oc-admin/themes/modern/less/market-item.less */
 .market-dialog .mk-item {
   margin: 0;
   height: auto;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+/* line 216, oc-admin/themes/modern/less/market-item.less */
 .market-dialog .ui-dialog-content {
   padding: 0;
   height: auto;
 }
+/* line 220, oc-admin/themes/modern/less/market-item.less */
 .market-dialog .mk-item-theme .mk-info {
   height: auto;
   width: 415px;
 }
+/* line 224, oc-admin/themes/modern/less/market-item.less */
 .market-dialog .mk-item-plugin .mk-info,
 .market-dialog .mk-item-language .mk-info {
   padding: 20px 20px 20px 185px;
   height: 130px;
   width: 440px;
 }
+/* line 230, oc-admin/themes/modern/less/market-item.less */
 .market-dialog .mk-item-plugin .banner,
 .market-dialog .mk-item-language .banner {
   width: 170px;
@@ -2957,28 +3512,35 @@ a.has-update:hover .mk-item {
   line-height: 160px;
   font-size: 100px;
 }
+/* line 237, oc-admin/themes/modern/less/market-item.less */
 .mk-item-language .banner {
   font-size: 30px;
 }
+/* line 240, oc-admin/themes/modern/less/market-item.less */
 .market-dialog .mk-item-language .banner {
   font-size: 60px;
 }
+/* line 243, oc-admin/themes/modern/less/market-item.less */
 .market-dialog .mk-info table {
   width: 100%;
   vertical-align: top;
   padding: 0;
   border-collapse: collapse;
 }
+/* line 249, oc-admin/themes/modern/less/market-item.less */
 .market-dialog .mk-info table td {
   vertical-align: top;
   border-collapse: collapse;
 }
+/* line 253, oc-admin/themes/modern/less/market-item.less */
 .market-dialog .mk-info table td.spacer {
   width: 20px;
 }
+/* line 256, oc-admin/themes/modern/less/market-item.less */
 .market-dialog .mk-info table td.actions {
   width: 150px;
 }
+/* line 260, oc-admin/themes/modern/less/market-item.less */
 .market-dialog .mk-info .description {
   padding-top: 25px;
   position: relative;
@@ -2988,13 +3550,16 @@ a.has-update:hover .mk-item {
   bottom: auto;
   width: auto;
 }
+/* line 269, oc-admin/themes/modern/less/market-item.less */
 .market-dialog .mk-item-theme,
 .market-dialog .mk-item-theme .banner {
   width: 445px !important;
 }
+/* line 273, oc-admin/themes/modern/less/market-item.less */
 .market-dialog .mk-item-theme .banner {
   height: 160px;
 }
+/* line 276, oc-admin/themes/modern/less/market-item.less */
 .market-dialog .mk-info .more {
   display: block;
   font-size: 15px;
@@ -3004,10 +3569,12 @@ a.has-update:hover .mk-item {
   float: none;
   background-color: #2fbfd1;
 }
+/* line 285, oc-admin/themes/modern/less/market-item.less */
 .market-dialog .mk-info .block {
   display: block;
   color: #3b3b3b;
 }
+/* line 290, oc-admin/themes/modern/less/market-item.less */
 .market-dialog .mk-info .manual {
   display: block;
   font-size: 11px;

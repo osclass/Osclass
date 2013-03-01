@@ -86,7 +86,7 @@ $(function(){
         // get json data
         $.getJSON(
             theme.adminBaseUrl+'?page=ajax&action=check_market',
-            {"code" : $(this).attr('href').replace('#',''), 'section' : 'themes'},
+            {"code" : $(this).attr('href').replace('#',''), 'section' : section},
             function(data){
                 item = data;
 
@@ -121,7 +121,7 @@ $(function(){
                     }
 
                     var preview = '';
-                    if(section == 'theme'){
+                    if(section == 'theme' && item.a_images){
                         if(item.a_images.length > 0){
                             if(item.s_preview != '') {
                                 preview = '<a target="_blank" class="btn-market-preview" href="'+item.s_preview+'">'+theme.langs.preview_theme+'</a>';
@@ -149,7 +149,7 @@ $(function(){
 
                     // format date
                     var date_mod    = _mod_date.getFullYear()+'-';
-                    
+
                     var _month      = new String(_mod_date.getMonth()+1);
                     if( _month.length == 1 ) {
                         date_mod += '0' + _month + '-';
@@ -183,7 +183,7 @@ $(function(){
                                         +'<span class="block"><strong>'+theme.langs.compatible_with+'</strong> '+versions[(versions.length-1)]+'</span>'
                                         +'<span class="block"><strong>'+theme.langs.downloads+'</strong> '+item.i_total_downloads+'</span>'
                                         +'<span class="block"><strong>'+theme.langs.last_update+'</strong> '+date_mod+'</span>'
-                                        +'<a href="'+item.s_download+'" class="manual">'+theme.langs.download_manually+'</a>'
+                                        +'<a href="'+item.s_source_file+'" class="manual">'+theme.langs.download_manually+'</a>'
                                     +'</td>'
                                 +'</tr>'
                                 +screenshots
