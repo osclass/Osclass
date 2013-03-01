@@ -153,10 +153,12 @@
 
                 $(".toggle").bind("click", function(e) {
                     var list = $(this).parents('li').first().find('ul');
+                    var lili = $(this).closest('li').find('ul').find('li').find('ul');
                     var li   = $(this).closest('li').first();
                     if( $(this).hasClass('status-collapsed') ) {
                         $(li).removeClass('no-nest');
                         $(list).show();
+                        $(lili).hide();
                         $(this).removeClass('status-collapsed').addClass('status-expanded');
                         $(this).html('-');
                     } else {
@@ -306,35 +308,20 @@
     }
     osc_add_hook('admin_header','customHead');
 
-    $users      = __get('users');
-    $stat       = __get('stat');
-    $categories = __get('categories');
-    $countries  = __get('countries');
-    $regions    = __get('regions');
-    $cities     = __get('cities');
-    $withFilters= __get('withFilters');
-
-    $iDisplayLength = __get('iDisplayLength');
-
-    $aData      = __get('aItems');
-function drawCategory($category,$isSubcategory = false){
+function drawCategory($category){
     if( count($category['categories']) > 0 ) { $has_subcategories = true; } else { $has_subcategories = false; }
 ?>
-<li id="list_<?php echo $category['pk_i_id']; ?>" class="category_li <?php echo ( $category['b_enabled'] == 1 ? 'enabled' : 'disabled' ); ?>" >
+<li id="list_<?php echo $category['pk_i_id']; ?>" class="category_li <?php echo ( $category['b_enabled'] == 1 ? 'enabled' : 'disabled' ); ?> " >
     <div class="category_div <?php echo ( $category['b_enabled'] == 1 ? 'enabled' : 'disabled' ); ?>" category_id="<?php echo $category['pk_i_id']; ?>" >
         <div class="category_row">
             <div class="handle ico ico-32 ico-droppable"></div>
             <div class="ico-childrens">
                 <?php
-            if($isSubcategory){
-                echo '<span class="toggle status-expanded">-</span>';
-            } else {
                 if( $has_subcategories ) {
                     echo '<span class="toggle status-collapsed">+</span>';
                 } else {
                     echo '<span class="toggle status-expanded">-</span>';
                 }
-            }
             ?>
             </div>
             <div class="name-cat" id="<?php echo 'quick_edit_' . $category['pk_i_id']; ?>">
@@ -351,7 +338,7 @@ function drawCategory($category,$isSubcategory = false){
         <div class="edit content_list_<?php echo $category['pk_i_id']; ?>"></div>
     </div>
     <?php if($has_subcategories) { ?>
-        <ul class="subcategory subcategories-<?php echo $category['pk_i_id']; ?> hide">
+        <ul class="subcategory subcategories-<?php echo $category['pk_i_id']; ?> " style="display: none;">
             <?php foreach($category['categories'] as $subcategory) {
                 drawCategory($subcategory);
             } ?>
