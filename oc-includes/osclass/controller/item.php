@@ -96,7 +96,7 @@
                     $this->doView('item-post.php');
                 break;
                 case 'item_add_post': //post_item
-                    //osc_csrf_check();
+                    osc_csrf_check();
                     if( osc_reg_user_post() && $this->user == null ) {
                         osc_add_flash_warning_message( _m('Only registered users are allowed to post listings') );
                         $this->redirectTo( osc_base_url(true) );
