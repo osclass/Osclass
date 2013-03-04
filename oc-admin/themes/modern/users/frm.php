@@ -68,7 +68,7 @@
 
         <?php
     }
-    osc_add_hook('admin_header','customHead');
+    osc_add_hook('admin_header','customHead', 10);
 
     $aux    = customFrmText();
 ?>

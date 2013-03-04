@@ -93,7 +93,7 @@
         <?php if( osc_images_enabled_at_items() ) ItemForm::photos_javascript(); ?>
         <?php
     }
-    osc_add_hook('admin_header','customHead');
+    osc_add_hook('admin_header','customHead', 10);
 
     $new_item   = __get('new_item');
     $actions    = __get('actions');
