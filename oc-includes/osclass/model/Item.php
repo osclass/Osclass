@@ -593,7 +593,7 @@
                     $expired = osc_isExpired($_item['dt_expiration']);
                     if($expired!=$expired_old) {
                         if($expired) {
-                            if($item['fk_i_user_id']!=null) {
+                            if($_item['fk_i_user_id']!=null) {
                                 User::newInstance()->decreaseNumItems($_item['fk_i_user_id']);
                             }
                             CategoryStats::newInstance()->decreaseNumItems($_item['fk_i_category_id']);
@@ -601,7 +601,7 @@
                             RegionStats::newInstance()->decreaseNumItems($_item['fk_i_region_id']);
                             CityStats::newInstance()->decreaseNumItems($_item['fk_i_city_id']);
                         }  else {
-                            if($item['fk_i_user_id']!=null) {
+                            if($_item['fk_i_user_id']!=null) {
                                 User::newInstance()->increaseNumItems($_item['fk_i_user_id']);
                             }
                             CategoryStats::newInstance()->increaseNumItems($_item['fk_i_category_id']);
