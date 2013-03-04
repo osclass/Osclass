@@ -241,7 +241,8 @@
             $successCat = false;
             if(count($p_sCategory) > 0) {
                 foreach($p_sCategory as $category) {
-                    $successCat = ($successCat || $this->mSearch->addCategory($category));
+
+                    $successCat = ($this->mSearch->addCategory($category) || $successCat);
                 }
             } else {
                 $bAllCategoriesChecked = true;
