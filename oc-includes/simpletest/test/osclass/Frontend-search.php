@@ -167,7 +167,7 @@ class Frontend_search extends FrontendTest {
         $this->selenium->click("xpath=//span/button[text()='Apply']");
         $this->selenium->waitForPageToLoad("30000");
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
-        $this->assertTrue($count == 7 , "Search by [ Show only items with pictures ].");
+        $this->assertTrue($count == 9 , "Search by [ Show only items with pictures ].");
     }
     
     /*
