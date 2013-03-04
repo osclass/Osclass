@@ -689,7 +689,7 @@
      * @return string
      */
     function osc_delete_comment_url() {
-        return (string) osc_base_url(true) . "?page=item&action=delete_comment&id=" . osc_item_id() . "&comment=" . osc_comment_id();
+        return (string) osc_base_url(true)."?page=item&action=delete_comment&id=".osc_item_id()."&comment=".osc_comment_id()."&".osc_csrf_token_url();
     }
 
     //////////////////////////////
@@ -1268,7 +1268,7 @@
      * @since 3.0
      */
     function osc_query_item($params = null) {
-        $mSearch = Search::newInstance();
+        $mSearch = new Search();
         if($params==null) {
             $params = array();
         } else if(is_string($params)){
