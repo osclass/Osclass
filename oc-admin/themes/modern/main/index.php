@@ -170,7 +170,7 @@
         </script>
 <?php
     }
-    osc_add_hook('admin_header', 'customHead');
+    osc_add_hook('admin_header', 'customHead', 10);
 
     osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <div id="dashboard">

@@ -127,7 +127,7 @@
         </script>
 <?php }
     }
-    osc_add_hook('admin_header', 'customHead');
+    osc_add_hook('admin_header', 'customHead', 10);
 ?>
 <?php osc_current_admin_theme_path( 'parts/header.php' ); ?>
 <div class="grid-system" id="stats-page">
