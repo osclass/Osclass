@@ -9,7 +9,7 @@ class OCadmin_appearance extends OCadminTest {
      * Login oc-admin
      * Appearance -> add a new theme
      */
-    function testAddTheme() 
+    function testAddTheme()
     {
         $this->loginWith();
 
@@ -35,7 +35,7 @@ class OCadmin_appearance extends OCadminTest {
      * Appearance -> Manage themes
      * Activate theme and deactivate (activate default theme)
      */
-    function testActivateTheme() 
+    function testActivateTheme()
     {
         $this->loginWith();
 
@@ -48,7 +48,7 @@ class OCadmin_appearance extends OCadminTest {
         sleep(10);
         $this->assertTrue('Theme activated correctly', "Activate newcorp theme.");
 
-        
+
         $this->selenium->click("link=Appearance");
         $this->selenium->waitForPageToLoad("10000");
 
@@ -62,14 +62,14 @@ class OCadmin_appearance extends OCadminTest {
      * Add/Edit/Delete header & footer widgets
      */
 
-    function testWidgets() 
+    function testWidgets()
     {
         $this->loginWith();
         $this->widgetsHeader();
         $this->widgetsFooter();
         $this->editWidgetsHeader();
     }
-    
+
     /*
      * Test Market appearance
      */
