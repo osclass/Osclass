@@ -722,7 +722,7 @@
                                     if ($handle = opendir(osc_content_path() . 'downloads/oc-temp')) {
                                         $folder_dest    = ABS_PATH . "oc-content/".$folder;
 
-                                        if( function_exists(posix_getpwuid()) ) {
+                                        if( function_exists('posix_getpwuid') ) {
                                             $current_user   = posix_getpwuid(posix_geteuid());
                                             $ownerFolder    = posix_getpwuid(fileowner($folder_dest));
                                         }
