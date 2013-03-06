@@ -135,8 +135,10 @@
     function osc_load_scripts() {
         if( OC_ADMIN ) {
             AdminThemes::newInstance()->printScripts();
+            osc_run_hook('admin_scripts_loaded');
         } else {
             WebThemes::newInstance()->printScripts();
+            osc_run_hook('scripts_loaded');
         }
     }
 
