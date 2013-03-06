@@ -131,7 +131,7 @@ class OCadmin_market extends OCadminTest {
      * THIS TESTS FAILS IF FILE WAS NOT UPDATED
      *
      */
-    function testMarketOrderUpdate()
+    function _testMarketOrderUpdate()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) ) ;
@@ -275,6 +275,7 @@ class OCadmin_market extends OCadminTest {
         //echo "createDate : " . $date . "<br>";
         //flush();
         $aDate  = explode('-', $date);
+        print_r($aDate);
         $date   = date("Y-m-d", mktime(0,0,0,$aDate[1], $aDate[2], intval($aDate[0])) );
         //echo "date : " . $date . "<br>";
         //flush();
