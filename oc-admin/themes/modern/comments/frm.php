@@ -48,7 +48,7 @@
     function customHead() {
         CommentForm::js_validation(true);
     }
-    osc_add_hook('admin_header','customHead');
+    osc_add_hook('admin_header','customHead', 10);
 
     $comment = __get('comment');
 ?>

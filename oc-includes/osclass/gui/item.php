@@ -19,7 +19,7 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    osc_register_script('fancybox', osc_current_web_theme_js_url('fancybox/jquery.fancybox.js'));
+    osc_register_script('fancybox', osc_current_web_theme_js_url('fancybox/jquery.fancybox.js'), array('jquery'));
 
     osc_enqueue_script('fancybox');
     osc_enqueue_script('jquery-validate');

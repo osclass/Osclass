@@ -1590,7 +1590,7 @@ function osc_csrfguard_start() {
 }
 
 function osc_redirect_to($url) {
-    if(ob_get_contents()!=='') {
+    if(ob_get_length()>0) {
         ob_end_flush();
     }
     header("Location: ".$url);

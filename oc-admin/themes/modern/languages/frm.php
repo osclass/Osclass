@@ -34,7 +34,7 @@
     function customHead() {
         LanguageForm::js_validation();
     }
-    osc_add_hook('admin_header','customHead');
+    osc_add_hook('admin_header','customHead', 10);
 
     $aLocale = __get('aLocale');
 
