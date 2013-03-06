@@ -54,7 +54,7 @@
             $this->class_selected     = isset($params['class_selected']) ? $params['class_selected'] : 'searchPaginationSelected';
             $this->class_non_selected = isset($params['class_non_selected']) ? $params['class_non_selected'] : 'searchPaginationNonSelected';
             $this->delimiter          = isset($params['delimiter']) ? $params['delimiter'] : " ";
-            $this->force_limits       = isset($params['force_limits']) ? (bool) $params['delimiter'] : false;
+            $this->force_limits       = isset($params['force_limits']) ? (bool) $params['force_limits'] : false;
             $this->sides              = isset($params['sides']) ? $params['sides'] : 2;
             $this->url                = isset($params['url']) ? $params['url'] : osc_update_search_url(array('iPage' => '{PAGE}'));
             $this->nofollow           = isset($params['nofollow']) ? $params['nofollow'] : true;
