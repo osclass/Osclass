@@ -11,7 +11,7 @@ class OCadmin_market extends OCadminTest {
     }*/
 
 
-    function __testMarketPluginsPagination()
+    function testMarketPluginsPagination()
     {
 
         $this->loginWith();
@@ -42,7 +42,7 @@ class OCadmin_market extends OCadminTest {
 
     }
 
-    function __testMarketPluginsViewInfo()
+    function testMarketPluginsViewInfo()
     {
 
         $this->loginWith();
@@ -131,7 +131,7 @@ class OCadmin_market extends OCadminTest {
      * THIS TESTS FAILS IF FILE WAS NOT UPDATED
      *
      */
-    function _testMarketOrderUpdate()
+    function testMarketOrderUpdate()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) ) ;
@@ -208,7 +208,7 @@ class OCadmin_market extends OCadminTest {
 
     }
 
-    function __testMarketOrderDownload()
+    function testMarketOrderDownload()
     {
         $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) ) ;
