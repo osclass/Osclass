@@ -57,7 +57,7 @@ class AllTests extends TestSuite {
                 $test_str .= $k." {".(is_array($v)?implode(",", array_keys($v)):'all')."}    ";
             }
         }
-        
+
         // INSTALLER
         if(isset($tests['installer'])) {
             $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Installer-installer.php');
