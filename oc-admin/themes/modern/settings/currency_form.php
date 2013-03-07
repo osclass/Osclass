@@ -50,13 +50,17 @@
                     errorLabelContainer: "#error_list",
                     invalidHandler: function(form, validator) {
                         $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+                    },
+                    submitHandler: function(form){
+                        $('button[type=submit], input[type=submit]').attr('disabled', 'disabled');
+                        form.submit();
                     }
                 });
             });
         </script>
         <?php
     }
-    osc_add_hook('admin_header','customHead');
+    osc_add_hook('admin_header','customHead', 10);
 
     osc_add_hook('admin_page_header','customPageHeader');
     function customPageHeader(){ ?>

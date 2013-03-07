@@ -163,7 +163,7 @@
             $rule = str_replace("*", ".*", str_replace(".", "\.", $rule['s_email']));
             if($rule!='') {
                 if(substr($rule,0,1)=="!") {
-                    $rule = '|^((?!'.$rule.').*)$|';
+                    $rule = '|^((?'.$rule.').*)$|';
                 } else {
                     $rule = '|^'.$rule.'$|';
                 }
