@@ -1565,11 +1565,11 @@ function osc_csrfguard_validate_token($unique_form_name, $token_value, $drop = t
 
 
 function osc_csrfguard_replace_forms($form_data_html) {
-    $count = preg_match_all("/<form(.*?)>(.*?)<\\/form>/is", $form_data_html, $matches, PREG_SET_ORDER);
+    $count = preg_match_all("/<form(.*?)>/is", $form_data_html, $matches, PREG_SET_ORDER);
     if(is_array($matches)) {
         foreach ($matches as $m) {
             if (strpos($m[1],"nocsrf")!==false) { continue; }
-            $form_data_html=str_replace($m[0], "<form{$m[1]}>".osc_csrf_token_form()."{$m[2]}</form>", $form_data_html);
+            $form_data_html=str_replace($m[0], "<form{$m[1]}>".osc_csrf_token_form(), $form_data_html);
         }
     }
     return $form_data_html;
