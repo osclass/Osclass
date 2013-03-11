@@ -19,6 +19,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="robots" content="noindex, nofollow, noarchive" />
+        <meta name="googlebot" content="noindex, nofollow, noarchive" />
         <title><?php echo osc_page_title(); ?> &raquo; <?php _e('Log in'); ?></title>
         <script type="text/javascript" src="<?php echo osc_assets_url('js/jquery.min.js'); ?>"></script>
         <link type="text/css" href="style/backoffice_login.css" media="screen" rel="stylesheet" />
@@ -69,7 +71,7 @@
                     <input type="submit" name="submit" id="submit" value="<?php echo osc_esc_html( __('Log in')); ?>" tabindex="100" />
                 </p>
             </form>
-            
+
         </div>
         <p id="backtoblog"><a href="<?php echo osc_base_url(); ?>" title="<?php echo osc_esc_html( sprintf( __('Back to %s'), osc_page_title() )); ?>">&larr; <?php printf( __('Back to %s'), osc_page_title() ); ?></a></p>
         <script type="text/javascript">
