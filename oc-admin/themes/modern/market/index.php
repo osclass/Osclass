@@ -36,7 +36,7 @@
     }
     if(count($aPlugins)==0) {
     ?>
-    <p class="flashmessage flashmessage-inline flashmessage-error"><?php _e('Cannot get information form market.osclass.org, sorry for the inconvenience'); ?></p>
+    <p class="flashmessage flashmessage-inline flashmessage-error"><?php _e('The connection with the Osclass market has failed. Try it later.'); ?></p>
     <?php
     }
     ?>
@@ -49,23 +49,18 @@
     }
     if(count($aThemes)==0) {
     ?>
-    <p class="flashmessage flashmessage-inline flashmessage-error"><?php _e('Cannot get information form market.osclass.org, sorry for the inconvenience'); ?></p>
+    <p class="flashmessage flashmessage-inline flashmessage-error"><?php _e('The connection with the Osclass market has failed. Try it later.'); ?></p>
     <?php
     }
     ?>
 </div>
+<?php if(count($aLanguages)>0) { ?>
 <div class="grid-market">
     <h2 class="section-title"><?php _e('Languages'); ?> <a href="<?php echo osc_admin_base_url(true).'?page=market&action=languages'; ?>"><?php echo sprintf(__('View all (%s)'), $count['languagesTotal']); ?></a></h2>
     <?php
     foreach($aLanguages as $item){
         drawMarketItem($item,$colors[array_rand($colors)]);
-    }
-    if(count($aLanguages)==0) {
-    ?>
-    <p class="flashmessage flashmessage-inline flashmessage-error"><?php _e('Cannot get information form market.osclass.org, sorry for the inconvenience'); ?></p>
-    <?php
-    }
-    ?>
+    } ?>
 </div>
-
+<?php } ?>
 <?php osc_current_admin_theme_path( 'parts/footer.php' ); ?>
