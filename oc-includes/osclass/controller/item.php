@@ -493,7 +493,7 @@
                     $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
                     // if item doesn't exist show an error 404
                     if( count($item) == 0 ) {
-                        $this->do404();
+                        $this->do400();
                         return;
                     }
 
@@ -507,6 +507,10 @@
                     } else if ($item['b_enabled'] == 0) {
                         osc_add_flash_warning_message( _m('The listing has been suspended') );
                         $this->redirectTo( osc_base_url(true) );
+                    }
+
+                    if( osc_item_is_expired() ) {
+                        header('HTTP/1.1 400 Bad Request');
                     }
 
                     if(!osc_is_admin_user_logged_in() && !($item['fk_i_user_id']!='' && $item['fk_i_user_id']==osc_logged_user_id())) {
