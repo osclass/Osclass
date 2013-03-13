@@ -51,7 +51,7 @@
         <meta name="googlebot" content="index, follow" />
     </head>
     <body>
-        <?php osc_current_web_theme_path('header.php'); ?>    <?php watchlist(); ?>
+        <?php osc_current_web_theme_path('header.php'); ?>
         <div class="content item">
             <div id="item_head">
                 <div class="inner">
