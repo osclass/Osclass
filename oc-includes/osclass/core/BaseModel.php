@@ -67,6 +67,13 @@
             osc_current_web_theme_path('404.php');
         }
 
+        function do400()
+        {
+            Rewrite::newInstance()->set_location('error');
+            header('HTTP/1.1 400 Bad Request');
+            osc_current_web_theme_path('404.php');
+        }
+
         function redirectTo($url)
         {
             osc_redirect_to($url);
