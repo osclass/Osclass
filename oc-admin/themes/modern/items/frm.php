@@ -141,7 +141,7 @@
                         <?php printLocaleTitle(osc_get_locales()); ?>
                         <div class="category">
                             <label><?php _e('Category'); ?></label>
-                            <?php ItemForm::category_two_selects(); ?>
+                            <?php ItemForm::category_multiple_selects(); ?>
                         </div>
                         <div class="input-description-wide">
                             <?php printLocaleDescription(osc_get_locales()); ?>

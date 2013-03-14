@@ -13,6 +13,7 @@
 <?php
     /* TODO: enqueue js lang strings */
     $lang = array(
+        'select_category' => __('Select category'),
         'no_subcategory'     => __('No Subcategory'),
         'select_subcategory' => __('Select Subcategory')
     );
