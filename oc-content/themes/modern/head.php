@@ -23,14 +23,9 @@
 
 <title><?php echo meta_title(); ?></title>
 <meta name="title" content="<?php echo osc_esc_html(meta_title()); ?>" />
-<meta name="description" content="<?php
-if(osc_search_category()!=null && is_array(osc_search_category())) {
-    if(count(osc_search_category())==1) {
-        $category = Category::newInstance()->findByPrimaryKey(current(osc_search_category()));
-        echo $category['s_description'];
-    }
-}
-?>" />
+<?php if( meta_description() != '' ) { ?>
+<meta name="description" content="<?php echo osc_esc_html(meta_description()); ?>" />
+<?php } ?>
 <?php if( function_exists('meta_keywords') ) { ?>
 <?php if( meta_keywords() != '' ) { ?>
 <meta name="keywords" content="<?php echo osc_esc_html(meta_keywords()); ?>" />

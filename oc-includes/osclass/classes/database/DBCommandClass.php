@@ -19,7 +19,7 @@
 
     /**
      * Database command object
-     * 
+     *
      * @package Osclass
      * @subpackage Database
      * @since 2.3
@@ -28,128 +28,128 @@
 	{
         /**
          * Database connection object to Osclass database
-         * 
+         *
          * @access private
          * @since 2.3
-         * @var mysqli 
+         * @var mysqli
          */
         var $connId;
         /**
          * Database result object
-         * 
+         *
          * @access public
          * @since 2.3
-         * @var MySQLi_Result 
+         * @var MySQLi_Result
          */
         var $resultId;
-        
+
         /**
          *
-         * @var array 
+         * @var array
          */
         var $queries;
         /**
          *
-         * @var array 
+         * @var array
          */
         var $queryTimes;
         /**
          *
-         * @var int 
+         * @var int
          */
         var $queryCount;
 
         /**
          *
-         * @var int 
+         * @var int
          */
         var $errorLevel;
         /**
          *
-         * @var string 
+         * @var string
          */
         var $errorDesc;
 
         /**
          *
-         * @var array 
+         * @var array
          */
         var $aSelect;
         /* var $aDistinct; */
         /**
          *
-         * @var array 
+         * @var array
          */
         var $aFrom;
         /**
          *
-         * @var array 
+         * @var array
          */
         var $aJoin;
         /**
          *
-         * @var array 
+         * @var array
          */
         var $aWhere;
         /**
          *
-         * @var array 
+         * @var array
          */
         var $aLike;
         /**
          *
-         * @var array 
+         * @var array
          */
         var $aGroupby;
         /**
          *
-         * @var array 
+         * @var array
          */
         var $aHaving;
         /* var $aKeys; */
         /**
          *
-         * @var mixed 
+         * @var mixed
          */
         var $aLimit;
         /**
          *
-         * @var mixed 
+         * @var mixed
          */
         var $aOffset;
         /**
          *
-         * @var mixed 
+         * @var mixed
          */
         var $aOrder;
         /**
          *
-         * @var array 
+         * @var array
          */
         var $aOrderby;
         /**
          *
-         * @var array 
+         * @var array
          */
         var $aSet;
         /**
          *
-         * @var array 
+         * @var array
          */
         var $aWherein;
         /* var $aAliasedTables; */
         /* var $aStoreArray; */
 
         /**
-         * 
-         * @var LogDatabase 
+         *
+         * @var LogDatabase
          */
         var $log;
 
         /**
          * Initializate variables
-         * 
-         * @param mysqli $connId 
+         *
+         * @param mysqli $connId
          */
         function __construct(&$connId)
         {
@@ -189,12 +189,12 @@
         }
 
         /**
-         * It creates a new DBCommandClass object or if it has been created before, it 
+         * It creates a new DBCommandClass object or if it has been created before, it
          * returns the previous object
-         * 
+         *
          * @access public
          * @since 2.3
-         * @return DBCommandClass 
+         * @return DBCommandClass
          */
         public static function newInstance()
         {
@@ -206,11 +206,11 @@
 
         /**
          * Set SELECT clause
-         * 
+         *
          * @access public
          * @since 2.3
          * @param mixed $select It can be a string or array
-         * @return DBCommandClass 
+         * @return DBCommandClass
          */
         function select($select = '*')
         {
@@ -231,9 +231,9 @@
 
         /**
          * Set FROM clause
-         * 
+         *
          * @param mixed $from It can be a string or array
-         * @return DBCommandClass 
+         * @return DBCommandClass
          */
         function from($from)
         {
@@ -254,13 +254,13 @@
 
         /**
          * Set JOIN clause
-         * 
+         *
          * @access public
          * @since 2.3
          * @param string $table
          * @param string $cond
          * @param string $type It can be: LEFT, RIGHT, OUTER, INNER, LEFT OUTER or RIGHT OUTER
-         * @return DBCommandClass 
+         * @return DBCommandClass
          */
         function join($table, $cond, $type = '')
         {
@@ -282,12 +282,12 @@
 
         /**
          * Set WHERE clause using OR operator
-         * 
+         *
          * @access public
          * @since 2.3
          * @param mixed $key
-         * @param mixed $value 
-         * @return DBCommandClass 
+         * @param mixed $value
+         * @return DBCommandClass
          */
         function where($key, $value = null)
         {
@@ -296,12 +296,12 @@
 
         /**
          * Set WHERE clause using OR operator
-         * 
+         *
          * @access public
          * @since 2.3
          * @param mixed $key
-         * @param mixed $value 
-         * @return DBCommandClass 
+         * @param mixed $value
+         * @return DBCommandClass
          */
         function orWhere($key, $value = null)
         {
@@ -310,13 +310,13 @@
 
         /**
          * Set WHERE clause
-         * 
+         *
          * @access private
          * @since 2.3
          * @param mixed $key
          * @param mixed $value
          * @param string $type
-         * @return DBCommandClass 
+         * @return DBCommandClass
          */
         function _where($key, $value = null, $type = 'AND ')
         {
@@ -326,11 +326,11 @@
 
             foreach($key as $k => $v) {
                 $prefix = (count($this->aWhere) > 0) ? $type : '';
-                
+
                 if( !$this->_hasOperator($k) ) {
                     $k .= ' =';
                 }
-                
+
                 if(!is_null($v)) {
                     $v = ' ' . $this->escape($v);
                 }
@@ -344,12 +344,12 @@
 
         /**
          * Set WHERE IN clause using AND operator
-         * 
+         *
          * @access public
          * @since 2.3
          * @param mixed $key
          * @param mixed $values
-         * @return DBCommandClass 
+         * @return DBCommandClass
          */
         function whereIn($key = null, $values = null)
         {
@@ -358,12 +358,12 @@
 
         /**
          * Set WHERE IN clause using OR operator
-         * 
+         *
          * @access public
          * @since 2.3
          * @param mixed $key
          * @param mixed $values
-         * @return DBCommandClass 
+         * @return DBCommandClass
          */
         function orWhereIn($key = null, $values = null)
         {
@@ -372,12 +372,12 @@
 
         /**
          * Set WHERE NOT IN clause using AND operator
-         * 
+         *
          * @access public
          * @since 2.3
          * @param mixed $key
          * @param mixed $values
-         * @return DBCommandClass 
+         * @return DBCommandClass
          */
         function whereNotIn($key = null, $values = null)
         {
@@ -386,12 +386,12 @@
 
         /**
          * Set WHERE NOT IN clause using OR operator
-         * 
+         *
          * @access public
          * @since 2.3
          * @param mixed $key
          * @param mixed $values
-         * @return DBCommandClass 
+         * @return DBCommandClass
          */
         function orWhereNotIn($key = null, $values = null)
         {
@@ -400,14 +400,14 @@
 
         /**
          * Set WHERE IN clause
-         * 
+         *
          * @access private
          * @since 2.3
          * @param mixed $key
          * @param mixed $values
          * @param bool $not
          * @param string $type
-         * @return DBCommandClass 
+         * @return DBCommandClass
          */
         function _whereIn($key = null, $values = null, $not = false, $type = 'AND ')
         {
@@ -432,12 +432,12 @@
 
         /**
          * Set LIKE clause
-         * 
+         *
          * @access public
          * @param type $field
          * @param type $match
          * @param type $side
-         * @return DBCommandClass 
+         * @return DBCommandClass
          */
         function like($field, $match = '', $side = 'both')
         {
@@ -451,7 +451,7 @@
          * @since 2.3
          * @param string $field
          * @param string $match
-         * @param string $side 
+         * @param string $side
          * @return DBCommandClass
          */
         function notLike($field, $match = '', $side = 'both')
@@ -467,7 +467,7 @@
          * @param string $field
          * @param string $match
          * @param type $side
-         * @return string 
+         * @return string
          */
         function orLike($field, $match = '', $side = 'both')
         {
@@ -476,13 +476,13 @@
 
         /**
          * Set NOT LIKE clause using OR operator
-         * 
+         *
          * @access public
          * @since 2.3
          * @param string $field
          * @param string $match
          * @param string $side
-         * @return DBCommandClass 
+         * @return DBCommandClass
          */
         function orNotLike($field, $match = '', $side = 'both')
         {
@@ -491,15 +491,15 @@
 
         /**
          * Set LIKE clause
-         * 
+         *
          * @access private
          * @since 2.3
          * @param string $field
-         * @param string $match 
+         * @param string $match
          * @param string $type Types: AND, OR
          * @param string $side Options: before, after, both
          * @param string $not Two possibilities: blank or NOT
-         * @return DBCommandClass 
+         * @return DBCommandClass
          */
         function _like($field, $match = '', $type = 'AND ', $side = 'both', $not = '')
         {
@@ -534,7 +534,7 @@
          * @access public
          * @since 2.3
          * @param mixed $by
-         * @return DBCommandClass 
+         * @return DBCommandClass
          */
         function groupBy($by)
         {
@@ -557,7 +557,7 @@
          *
          * @param type $key
          * @param type $value
-         * @return type 
+         * @return type
          */
         function having($key, $value = '')
         {
@@ -568,7 +568,7 @@
          *
          * @param type $key
          * @param type $value
-         * @return type 
+         * @return type
          */
         function orHaving($key, $value = '')
         {
@@ -579,7 +579,7 @@
          *
          * @param type $key
          * @param type $value
-         * @param type $type 
+         * @param type $type
          */
         function _having($key, $value = '', $type = 'AND ')
         {
@@ -593,19 +593,19 @@
                 if( !$this->_hasOperator($k) ) {
                     $k .= ' = ';
                 }
-                
+
                 $v = ' ' . $this->escapeStr($v);
-                
+
                 $this->aHaving[] = $prefix . $k . $v;
             }
         }
 
         /**
          * Set ORDER BY clause
-         * 
+         *
          * @access public
          * @since 2.3
-         * @param string $orderby 
+         * @param string $orderby
          * @param string $direction Accepted directions: random, asc, desc
          */
         function orderBy($orderby, $direction = '')
@@ -622,12 +622,12 @@
 
         /**
          * Set LIMIT clause
-         * 
+         *
          * @access public
          * @since 2.3
          * @param int $value
          * @param int $offset
-         * @return DBCommandClass 
+         * @return DBCommandClass
          */
         function limit($value, $offset = '')
         {
@@ -642,11 +642,11 @@
 
         /**
          * Set the offset in the LIMIT clause
-         * 
+         *
          * @access public
          * @since 2.3
          * @param int $offset
-         * @return DBCommandClass 
+         * @return DBCommandClass
          */
         function offset($offset)
         {
@@ -656,12 +656,12 @@
 
         /**
          * Create the INSERT sql and perform the query
-         * 
+         *
          * @access public
          * @since 2.3
          * @param mixed $table
          * @param mixed $set
-         * @return boolean 
+         * @return boolean
          */
         function insert($table = '', $set = null)
         {
@@ -680,7 +680,7 @@
 
                 $table = $this->aFrom[0];
             }
-            
+
             $sql = $this->_insert($table, array_keys($this->aSet), array_values($this->aSet));
             $this->_resetWrite();
             return $this->query($sql);
@@ -688,13 +688,13 @@
 
         /**
          * Create the INSERT sql string
-         * 
+         *
          * @access private
          * @since 2.3
          * @param string $table
          * @param array $keys
          * @param array $values
-         * @return string 
+         * @return string
          */
         function _insert($table, $keys, $values)
         {
@@ -708,7 +708,7 @@
          * @since 2.3
          * @param mixed $table
          * @param mixed $set
-         * @return boolean 
+         * @return boolean
          */
         function replace($table = '', $set = null)
         {
@@ -741,7 +741,7 @@
          * @param string $table
          * @param array $key
          * @param array $values
-         * @return string 
+         * @return string
          */
         function _replace($table, $keys, $values)
         {
@@ -750,13 +750,13 @@
 
         /**
          * Create the UPDATE sql and perform the query
-         * 
+         *
          * @access public
          * @since 2.3
          * @param mixed $table
          * @param mixed $set
          * @param mixed $where
-         * @return mixed 
+         * @return mixed
          */
         function update($table = '', $set = null, $where = null)
         {
@@ -794,13 +794,13 @@
 
         /**
          * Create the UPDATE sql string
-         * 
+         *
          * @access private
          * @since 2.3
          * @param string $table
          * @param array $values
          * @param array $where
-         * @return string 
+         * @return string
          */
         function _update($table, $values, $where)
         {
@@ -822,7 +822,7 @@
          * @since 2.3
          * @param mixed $table
          * @param mixed $where
-         * @return mixed 
+         * @return mixed
          */
         function delete($table = '', $where = '')
         {
@@ -843,7 +843,7 @@
             }
 
             $sql = $this->_delete($table, $this->aWhere, $this->aLike);
-            
+
             $this->_resetWrite();
             $result = $this->query($sql);
 
@@ -862,7 +862,7 @@
          * @param string $table
          * @param array $where
          * @param array $like
-         * @return string 
+         * @return string
          */
         function _delete($table, $where, $like)
         {
@@ -883,7 +883,7 @@
         }
 
         /**
-         * Compile the select sql string and perform the query. Quick method for 
+         * Compile the select sql string and perform the query. Quick method for
          * getting the rows of one table
          *
          * @access public
@@ -891,7 +891,7 @@
          * @param mixed $table
          * @param mixed $limit
          * @param mixed $offset
-         * @return mixed 
+         * @return mixed
          */
         function get($table = '', $limit = null, $offset = null)
         {
@@ -907,7 +907,7 @@
 
             $result = $this->query($sql);
             $this->_resetSelect();
-            
+
             return $result;
         }
 
@@ -917,7 +917,7 @@
          * @access public
          * @since 2.3
          * @param string $sql
-         * @return mixed 
+         * @return mixed
          */
         function query($sql)
         {
@@ -959,7 +959,7 @@
             $rs->connId   = $this->connId;
             $rs->resultId = $this->resultId;
             $rs->numRows  = $rs->numRows();
-            
+
             return $rs;
         }
 
@@ -996,7 +996,7 @@
          * @access private
          * @since 2.3
          * @param string $sql
-         * @return mixed 
+         * @return mixed
          */
         function _execute($sql)
         {
@@ -1033,10 +1033,10 @@
 
             return true;
         }
-        
+
         /**
-         * Prepare and separe the queries, and save into data or struct queries 
-         * 
+         * Prepare and separe the queries, and save into data or struct queries
+         *
          * @param array $queries
          * @param array $data_queries
          * @param array $struct_queries
@@ -1055,21 +1055,21 @@
                 }
             }
         }
-        
+
         /**
          * Check if $table exist into array $struct_queries
-         * 
-         * @param string $table 
+         *
+         * @param string $table
          * @param array $struct_queries
          */
         private function existTableIntoStruct($table, $struct_queries)
         {
             return array_key_exists(strtolower($table), $struct_queries);
         }
-        
+
         /**
          * Get fields from struct_queries (struct.sql)
-         * 
+         *
          * @param string $table
          * @param array $struct_queries
          */
@@ -1082,7 +1082,7 @@
             }
             return $fields;
         }
-        
+
         /**
          * Classify fields, inside arrays $normal_fields, $indexes, $constrains (foreign key's)
          *
@@ -1090,7 +1090,7 @@
          * @param type $normal_fields
          * @param type $indexes
          * @param type $constrains
-         * @param type $lastTable 
+         * @param type $lastTable
          */
         private function classifyFieldsSql($fields, &$normal_fields, &$indexes, &$constrains, &$lastTable)
         {
@@ -1117,23 +1117,34 @@
                         case 'fulltext':
                         case 'unique':
                         case 'key':
-                            $indexes[] = trim($field, ", \n");
+                            $added = false;
+                            if( preg_match("|PRIMARY KEY\s+\((.*)\)|mi", $field, $match) ) {
+                                $_field = strtolower($match[1]);
+                                if(isset($normal_fields[$_field])) {
+                                    $normal_fields[ $_field ] = $normal_fields[ $_field ] . ' PRIMARY KEY';
+                                    $added = true;
+                                }
+                            }
+
+                            if(!$added) {
+                                $indexes[] = trim($field, ", \n");
+                            }
                             break;
                         default :
                             $normal_fields[strtolower($field_name[1])] = trim($field, ", \n");
                             break;
                     }
                 }
-            } 
+            }
         }
-        
+
         /**
          * Build alter sql, ADD COLUMN, CHANGE COLUMN, ALTER COLUMN
-         * 
+         *
          * @param array $tbl_fields, contain all fields inside database
          * @param type $table
          * @param type $normal_fields
-         * @param type $struct_queries 
+         * @param type $struct_queries
          */
         private function createAlterTable($tbl_fields, $table, &$normal_fields, &$struct_queries )
         {
@@ -1149,22 +1160,22 @@
                         }
                     }
                     error_log(" --- ".$normal_fields[strtolower($tbl_field['Field'])]);
-                    
+
                     // Have we changed the default value? [with quotes]
                     if(preg_match("| DEFAULT\s+'(.*)'|i", $normal_fields[strtolower($tbl_field['Field'])], $default_match)) {
                         // alter column only if default value has been changed
                         if($tbl_field['Default'] != $default_match[1]) {
                             $struct_queries[] = "ALTER TABLE ".$table." ALTER COLUMN ".$tbl_field['Field']." SET DEFAULT '".$default_match[1]."'";
                         }
-                    // Have we changed the default value? [without quotes]    
+                    // Have we changed the default value? [without quotes]
                     } else if(preg_match("| DEFAULT\s+(.*)|i", $normal_fields[strtolower($tbl_field['Field'])], $default_match)) {
                         if(isset($tbl_field['Default'])) {
                             // alter column only if default value has been changed
                             if( $tbl_field['Default'] != $default_match[1] ) {
                                 $struct_queries[] = "ALTER TABLE ".$table." ALTER COLUMN ".$tbl_field['Field']." SET DEFAULT ".$default_match[1];
                             }
-                        } else { 
-                            // check NULL default values 
+                        } else {
+                            // check NULL default values
                             // if new default value is diferent, alter column ...
                             if($default_match[1] != 'NULL' ) {
                                 $struct_queries[] = "ALTER TABLE ".$table." ALTER COLUMN ".$tbl_field['Field']." SET DEFAULT ".$default_match[1];
@@ -1180,13 +1191,13 @@
                 $struct_queries[] = "ALTER TABLE ".$table." ADD COLUMN ".$v;
             }
         }
-        
+
         /**
-         * With all the indexes from struct.sql, remove indexes which actually 
+         * With all the indexes from struct.sql, remove indexes which actually
          * exist into database
          *
          * @param type $tbl_indexes
-         * @param type $indexes 
+         * @param type $indexes
          */
         private function createNewIndex($tbl_indexes, &$indexes, $table, &$struct_queries)
         {
@@ -1197,7 +1208,7 @@
                     $indexes_array[$tbl_index['Key_name']]['unique'] = ($tbl_index['Non_unique'] == 0)?true:false;
                     $indexes_array[$tbl_index['Key_name']]['index_type'] = $tbl_index['Index_type'];
                 }
-                
+
                 foreach($indexes_array as $k => $v) {
                     $string = '';
                     if ($k=='PRIMARY') {
@@ -1226,10 +1237,10 @@
                             $columns .= '('.$column['subpart'].')';
                         }
                     }
-                    
+
                     // Add the column list to the index create string
                     $string .= '('.$columns.')';
-                    
+
                     $var_index = array_search($string, $indexes);
                     if (!($var_index===false)) {
                         unset($indexes[$var_index]);
@@ -1240,17 +1251,17 @@
                         }
                     }
                 }
-                
-                // alter table
-                foreach($indexes as $v ) {
-                    $struct_queries[] = "ALTER TABLE ".$table." ADD ".$v;
-                }
-            }   
+
+            }
+            // alter table
+            foreach($indexes as $v ) {
+                $struct_queries[] = "ALTER TABLE ".$table." ADD ".$v;
+            }
         }
-        
+
         /**
          * Create alter table if foreign key don't exist into database structure
-         * 
+         *
          * @param array $tbl_constraint
          * @param string $table
          * @param array $struct_queries
@@ -1283,7 +1294,7 @@
                     $struct_queries[] = "ALTER TABLE ".$table." DROP FOREIGN KEY ".$_key;
                 }
             }
-            
+
             $keys = array_keys($constrainsDB);
             foreach($constrains as $k => $v ) {
                 if( in_array($k, $keys) && $constrainsDB[$k] == $v ) {
@@ -1291,7 +1302,7 @@
                 } else {
                     // alter table
                     $index = 'FOREIGN KEY '.$k.' REFERENCES '.$v;
-                    
+
                     $struct_queries[] = "ALTER TABLE ".$table." ADD ".$index;
                 }
             }
@@ -1299,9 +1310,9 @@
 
         /**
          * Given some queries, it will check against the installed database if the information is the same
-         * 
+         *
          * _______pseudocode_______
-         * 
+         *
          *   _separeQueries()
          *   showTables_DataBase()
          *   foreach(table)
@@ -1312,13 +1323,13 @@
          *       _createForeignKeys() (save info into array)
          *     endif
          *   enforeach
-         * 
+         *
          *   foreach(query created before)
          *     exec(query)
          *   endforeach
-         * 
+         *
          * ______endpseudocode______
-         * 
+         *
          * @param mixed array or string with the SQL queries.
          * @return BOOLEAN true on success, false on fail
         */
@@ -1336,7 +1347,7 @@
 
             // hack
             $this->query("SET FOREIGN_KEY_CHECKS = 0");
-            
+
             // Get tables from DB (already installed)
             $result = $this->query('SHOW TABLES');
             $tables = $result->result();
@@ -1405,18 +1416,18 @@
             // hack
             $this->query("SET FOREIGN_KEY_CHECKS = 1");
             error_log(' ----- END updateDB ----- ');
-            
+
             return array($ok, $queries, $error_queries);
         }
 
         /**
          * Set aSet array
-         * 
+         *
          * @access public
          * @since 2.3
          * @param mixed $key
          * @param mixed $value
-         * @return DBCommandClass 
+         * @return DBCommandClass
          */
         function set($key, $value = '', $escape = true)
         {
@@ -1437,10 +1448,10 @@
 
         /**
          * Create SELECT sql statement
-         * 
+         *
          * @access private
          * @since 2.3
-         * @return string 
+         * @return string
          */
         function _getSelect()
         {
@@ -1522,10 +1533,10 @@
 
         /**
          * Gets the number of affected rows in a previous MySQL operation
-         * 
+         *
          * @access public
          * @since 2.3
-         * @return int 
+         * @return int
          */
         function affectedRows()
         {
@@ -1534,10 +1545,10 @@
 
         /**
          * Get last SQL query
-         * 
+         *
          * @access public
          * @since 2.3
-         * @return string 
+         * @return string
          */
         function lastQuery()
         {
@@ -1546,10 +1557,10 @@
 
         /**
          * Get the ID generated from the previous INSERT operation
-         * 
+         *
          * @access public
          * @since 2.3
-         * @return mixed 
+         * @return mixed
          */
         function insertedId()
         {
@@ -1558,11 +1569,11 @@
 
         /**
          * Check if the string has an operator
-         * 
+         *
          * @access private
          * @since 2.3
          * @param string $str
-         * @return bool 
+         * @return bool
          */
         function _hasOperator($str)
         {
@@ -1577,11 +1588,11 @@
 
         /**
          * Check if the sql is a select
-         * 
+         *
          * @access private
          * @since 2.3
          * @param string $sql
-         * @return bool 
+         * @return bool
          */
         function isSelectType($sql)
         {
@@ -1594,11 +1605,11 @@
 
         /**
          * Check if the sql is a write type such as INSERT, UPDATE, UPDATE...
-         * 
+         *
          * @access private
          * @since 2.3
          * @param string $sql
-         * @return bool 
+         * @return bool
          */
         function isWriteType($sql)
         {
@@ -1611,11 +1622,11 @@
 
         /**
          * Add the apostrophe if it's an string; 0 or 1 if it's a number; NULL
-         * 
+         *
          * @access private
          * @since 2.3
          * @param string $str
-         * @return string 
+         * @return string
          */
         function escape($str)
         {
@@ -1632,11 +1643,11 @@
 
         /**
          * Escape the string if it's necessary
-         * 
+         *
          * @access private
          * @since 2.3
          * @param string $str
-         * @return string 
+         * @return string
          */
         function escapeStr($str, $like = false)
         {
@@ -1649,13 +1660,13 @@
             if( $like ) {
                 $str = str_replace(array('%', '_'), array('\\%', '\\_'), $str);
             }
-            
+
             return $str;
         }
 
         /**
          * Reset variables used in write sql: aSet, aFrom, aWhere, aLike, aOrderby, aLimit, aOrder
-         * 
+         *
          * @access private
          * @since 2.3
          */
@@ -1673,9 +1684,9 @@
         }
 
         /**
-         * Reset variables used in select sql: aSelect, aFrom, aJoin, aWhere, aLike, aGroupby, aHaving, 
+         * Reset variables used in select sql: aSelect, aFrom, aJoin, aWhere, aLike, aGroupby, aHaving,
          * aOrderby, aWherein, aLimit, aOffset, aOrder
-         * 
+         *
          * @access private
          * @since 2.3
          */
@@ -1699,10 +1710,10 @@
 
         /**
          * Initializate $aReset variables
-         * 
+         *
          * @access private
          * @since 2.3
-         * @param array $aReset 
+         * @param array $aReset
          */
         function _resetRun($aReset){
             foreach ($aReset as $item => $defaultValue) {
@@ -1712,7 +1723,7 @@
 
         /**
          * Set last error code and descriptionfor the most recent mysqli function call
-         * 
+         *
          * @access private
          * @since 2.3
          */
@@ -1724,10 +1735,10 @@
 
         /**
          * Returns the last error code for the most recent mysqli function call
-         * 
+         *
          * @access public
          * @since 2.3
-         * @return int 
+         * @return int
          */
         function getErrorLevel()
         {
@@ -1736,10 +1747,10 @@
 
         /**
          * Returns a string description of the last error for the most recent MySQLi function call
-         * 
+         *
          * @access public
          * @since 2.3
-         * @return string 
+         * @return string
          */
         function getErrorDesc()
         {
