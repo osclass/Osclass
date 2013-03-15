@@ -193,7 +193,7 @@
                     }
 
                     // use dashboard without url if you're in the dashboards
-                    if( $this->getSection() == 'dashboard' ) {
+                    if( $this->getSection() == 'pub_profile' ) {
                         $l = array('title' => sprintf($this->title['user_dashboard_profile'], osc_user_name()));
                         $this->addLevel($l);
                         break;
