@@ -1,10 +1,10 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Styles enqueue class.
+ *
+ * @since 3.1.1
  */
-
 class Styles {
 
     var $styles = array();
