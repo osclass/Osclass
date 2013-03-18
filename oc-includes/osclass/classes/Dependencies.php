@@ -20,7 +20,7 @@ class Dependencies {
     }
 
     /**
-     * Add script to be loaded
+     * Register url to be loaded
      *
      * @param type $id
      * @param type $url
@@ -35,7 +35,7 @@ class Dependencies {
     }
 
     /**
-     * Remove script to not be loaded
+     * Remove url to not be loaded
      *
      * @param type $id
      */
