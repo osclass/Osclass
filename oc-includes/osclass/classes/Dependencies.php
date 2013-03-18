@@ -1,8 +1,8 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Enqueued dependiences class.
+ *
+ * @since 3.1.1
  */
 class Dependencies {
 
@@ -47,7 +47,7 @@ class Dependencies {
     /**
      * Try to order all script having in mind their dependencies
      */
-    public function orderScripts()
+    public function order()
     {
         $this->resolved     = array();
         $this->unresolved   = array();
@@ -66,7 +66,7 @@ class Dependencies {
             }
         }
         if(!empty($this->error)) {
-            echo sprintf(__('ERROR: Some scripts could not be loaded (%s)'), implode(", ", $this->error));
+            echo sprintf(__('ERROR: Some dependencies could not be loaded (%s)'), implode(", ", $this->error));
         }
     }
 

@@ -1,10 +1,10 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Scripts enqueue class.
+ *
+ * @since 3.1.1
  */
-
 class Scripts extends Dependencies {
 
     private static $instance;
@@ -70,7 +70,7 @@ class Scripts extends Dependencies {
     public function getScripts()
     {
         $scripts = array();
-        parent::orderScripts();
+        parent::order();
         foreach($this->resolved as $id) {
             if( isset($this->registered[$id]['url']) ) {
                 $scripts[] = $this->registered[$id]['url'];
