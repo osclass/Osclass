@@ -254,6 +254,7 @@ osc_register_script('jquery-validate', osc_assets_url('js/jquery.validate.min.js
 osc_register_script('tabber', osc_assets_url('js/tabber-minimized.js'), 'jquery');
 osc_register_script('tiny_mce', osc_assets_url('js/tiny_mce/tiny_mce.js'));
 osc_register_script('colorpicker', osc_assets_url('js/colorpicker/js/colorpicker.js'));
+osc_register_script('fancybox', osc_assets_url('js/fancybox/jquery.fancybox.pack.js'), array('jquery'));
 
 Plugins::init();
 osc_csrfguard_start();

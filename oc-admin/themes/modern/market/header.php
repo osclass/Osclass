@@ -6,9 +6,8 @@
     }
 
     // fancybox
-    osc_register_script('fancybox', osc_current_admin_theme_js_url('fancybox/jquery.fancybox.js'));
     osc_enqueue_script('fancybox');
-    osc_enqueue_style('fancybox', osc_current_admin_theme_js_url('fancybox/jquery.fancybox.css'));
+    osc_enqueue_style('fancybox', osc_assets_url('js/fancybox/jquery.fancybox.css'));
 
     osc_register_script('market-js', osc_current_admin_theme_js_url('market.js'));
     osc_enqueue_script('market-js');
