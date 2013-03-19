@@ -377,8 +377,8 @@
 
                 $this->_exportVariableToView('search_alert', base64_encode($json));
 
-                //calling the view...
-                if(count($aItems)==0 || !$successCat) {
+                // calling the view...
+                if( count($aItems) === 0 ) {
                     header('HTTP/1.1 404 Not Found');
                 }
                 $this->doView('search.php');
