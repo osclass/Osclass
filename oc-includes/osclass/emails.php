@@ -723,9 +723,10 @@
         $body_email = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_comment_admin_description', $content['s_text'])), $words);
 
         $emailParams = array(
-            'subject'   => $title_email,
+            'from'      => osc_contact_email(),
             'to'        => $admin_email,
             'to_name'   => __('Admin mail system'),
+            'subject'   => $title_email,
             'body'      => $body_email,
             'alt_body'  => $body_email
         );
@@ -904,6 +905,7 @@
 
         $emailParams = array(
             'subject'  => $title,
+            'from'     => osc_contact_email(),
             'to'       => osc_contact_email(),
             'to_name'  => 'admin',
             'body'     => $body,
@@ -1037,6 +1039,7 @@
 
             $emailParams = array(
                 'subject'  => $title,
+                'from'     => osc_contact_email(),
                 'to'       => osc_contact_email(),
                 'to_name'  => osc_page_title(),
                 'body'     => $body,
