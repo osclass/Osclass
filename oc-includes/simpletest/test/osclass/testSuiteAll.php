@@ -43,7 +43,7 @@ class AllTests extends TestSuite {
                 }
             }
         }
-        
+
         if(empty($tests)) {
             $tests['installer'] = '';
             $tests['frontend'] = '';
@@ -51,7 +51,7 @@ class AllTests extends TestSuite {
         }
 
         $test_str = '';
-        
+
         foreach($tests as $k => $v) {
             if($k=="installer" || $k=="frontend" || $k=="admin") {
                 $test_str .= $k." {".(is_array($v)?implode(",", array_keys($v)):'all')."}    ";
@@ -67,7 +67,7 @@ class AllTests extends TestSuite {
         // FRONTEND
         if(isset($tests['frontend'])) {
             require_once(dirname(__FILE__).'/../../../../oc-load.php');
-            
+
             if(isset($tests['frontend']['contact']) || $tests['frontend']=='') {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-contactForm.php');
             }
@@ -87,17 +87,20 @@ class AllTests extends TestSuite {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-items.php');
             }
             if(isset($tests['frontend']['page']) || $tests['frontend']=='') {
-                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-page.php');      
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-page.php');
+            }
+            if(isset($tests['frontend']['seo']) || $tests['frontend']=='') {
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-seo.php');
             }
         }
 
         // FRONTEND WITH PERMALINKS
         if(isset($tests['frontend'])) {
             require_once(dirname(__FILE__).'/../../../../oc-load.php');
-            
+
             // activate permalinks
             $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-onPermalinks.php');
-            
+
             if(isset($tests['frontend']['contact']) || $tests['frontend']=='') {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-contactForm.php');
             }
@@ -117,16 +120,19 @@ class AllTests extends TestSuite {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-items.php');
             }
             if(isset($tests['frontend']['page']) || $tests['frontend']=='') {
-                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-page.php');      
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-page.php');
+            }
+            if(isset($tests['frontend']['seo']) || $tests['frontend']=='') {
+                $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-seo.php');
             }
             // deactivate permalinks
             $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-offPermalinks.php');
         }
-        
+
         // ADMIN
         if(isset($tests['admin'])) {
             require_once(dirname(__FILE__).'/../../../../oc-load.php');
-            
+
             if(isset($tests['admin']['categories']) || $tests['admin']=='') {
                 $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/OCadmin-categories.php');
             }
