@@ -91,13 +91,19 @@
                 $this->dao->where( $where );
             }
 
+            $this->dao->select( sprintf("a.*, b.*, c.i_num_items, FIELD(fk_c_locale_code, '%s') as locale_order", $this->dao->connId->real_escape_string(osc_current_user_locale()) ) );
+            $this->dao->from( $this->getTableName().' as a' );
+            $this->dao->join(DB_TABLE_PREFIX.'t_category_description as b', 'a.pk_i_id = b.fk_i_category_id', 'INNER');
+            $this->dao->join(DB_TABLE_PREFIX.'t_category_stats  as c ', 'a.pk_i_id = c.fk_i_category_id', 'LEFT');
+            $this->dao->where("b.s_name != ''");
+            $this->dao->orderBy('locale_order', 'DESC');
+            $subquery = $this->dao->_getSelect();
+            $this->dao->_resetSelect();
+
             $this->dao->select();
-            $this->dao->from( sprintf( '%s as a', $this->getTableName() ) );
-            $this->dao->join( sprintf( '%st_category_description as b', $this->getTablePrefix() ), 'a.pk_i_id = b.fk_i_category_id', 'LEFT' );
-            $this->dao->join( sprintf( '%st_category_stats as c', $this->getTablePrefix() ), 'a.pk_i_id = c.fk_i_category_id', 'LEFT' );
-            $this->dao->where( "b.s_name != ''" );
-            $this->dao->groupBy( 'pk_i_id' );
-            $this->dao->orderBy( 'i_position', 'ASC' );
+            $this->dao->from( sprintf( '(%s) dummytable', $subquery ) ); // $subselect.'  dummytable');
+            $this->dao->groupBy('pk_i_id');
+            $this->dao->orderBy('i_position', 'ASC');
             $rs = $this->dao->get();
 
             if( $rs === false ) {
