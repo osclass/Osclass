@@ -83,6 +83,7 @@
          *
          * @param type $id
          * @param type $url
+         * @deprecated deprecated since version 3.1
          */
         public function addStyle($id, $url)
         {
@@ -93,6 +94,7 @@
          * Remove style to not be loaded
          *
          * @param type $id
+         * @deprecated deprecated since version 3.1
          */
         public function removeStyle($id)
         {
@@ -101,14 +103,18 @@
 
         /**
          * Get the css styles urls
+         *
+         * @deprecated deprecated since version 3.1
          */
         public function getStyles()
         {
-            return $this->styles;
+            return Styles::newInstance()->getStyles();
         }
 
         /**
          * Print the HTML tags to load the styles
+         *
+         * @deprecated deprecated since version 3.1
          */
         public function printStyles()
         {
@@ -117,6 +123,12 @@
             }
         }
 
+        /**
+         * Add script to queue
+         *
+         * @param type $id
+         * @deprecated deprecated since version 3.1
+         */
         public function enqueueScript($id)
         {
             $this->queue[$id] = $id;
@@ -126,6 +138,7 @@
          * Remove script to not be loaded
          *
          * @param type $id
+         * @deprecated deprecated since version 3.1
          */
         public function removeScript($id)
         {
@@ -138,6 +151,7 @@
          * @param type $id
          * @param type $url
          * @param type $dependencies mixed, it could be an array or a string
+         * @deprecated deprecated since version 3.1
          */
         public function registerScript($id, $url, $dependencies = null)
         {
@@ -152,6 +166,7 @@
          * Remove script to not be loaded
          *
          * @param type $id
+         * @deprecated deprecated since version 3.1
          */
         public function unregisterScript($id)
         {
@@ -160,6 +175,7 @@
 
         /**
          * Order script before being printed on the HTML
+         * @deprecated deprecated since version 3.1
          */
         private function orderScripts()
         {
@@ -184,7 +200,8 @@
         }
 
         /**
-         *  Get the scripts urls
+         * Get the scripts urls
+         * @deprecated deprecated since version 3.1
          */
         public function getScripts()
         {
@@ -199,7 +216,9 @@
         }
 
         /**
-         *  Print the HTML tags to load the scripts
+         * Print the HTML tags to load the scripts
+         *
+         * @deprecated deprecated since version 3.1
          */
         public function printScripts()
         {
@@ -212,6 +231,7 @@
          * Algorithm to solve the dependencies of the scripts
          *
          * @param type $node
+         * @deprecated deprecated since version 3.1
          */
         private function solveDeps($node)
         {

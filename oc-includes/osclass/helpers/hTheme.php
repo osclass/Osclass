@@ -81,11 +81,7 @@
      * @param type $id
      */
     function osc_enqueue_script($id) {
-        if( OC_ADMIN ) {
-            AdminThemes::newInstance()->enqueueScript($id);
-        } else {
-            WebThemes::newInstance()->enqueueScript($id);
-        }
+        Scripts::newInstance()->enqueuScript($id);
     }
 
     /**
@@ -94,11 +90,7 @@
      * @param type $id
      */
     function osc_remove_script($id) {
-        if( OC_ADMIN ) {
-            AdminThemes::newInstance()->removeScript($id);
-        } else {
-            WebThemes::newInstance()->removeScript($id);
-        }
+        Scripts::newInstance()->removeScript($id);
     }
 
     /**
@@ -109,11 +101,7 @@
      * @param $dependencies mixed, could be an array or a string
      */
     function osc_register_script($id, $url, $dependencies = null) {
-        if( OC_ADMIN ) {
-            AdminThemes::newInstance()->registerScript($id, $url, $dependencies);
-        } else {
-            WebThemes::newInstance()->registerScript($id, $url, $dependencies);
-        }
+        Scripts::newInstance()->registerScript($id, $url, $dependencies);
     }
 
     /**
@@ -122,22 +110,17 @@
      * @param type $id
      */
     function osc_unregister_script($id) {
-        if( OC_ADMIN ) {
-            AdminThemes::newInstance()->unregisterScript($id);
-        } else {
-            WebThemes::newInstance()->unregisterScript($id);
-        }
+        Scripts::newInstance()->unregisterScript($id, $url, $dependencies);
     }
 
     /**
      * Print the HTML tags to make the script load
      */
     function osc_load_scripts() {
+        Scripts::newInstance()->printScripts();
         if( OC_ADMIN ) {
-            AdminThemes::newInstance()->printScripts();
             osc_run_hook('admin_scripts_loaded');
         } else {
-            WebThemes::newInstance()->printScripts();
             osc_run_hook('scripts_loaded');
         }
     }
@@ -149,11 +132,7 @@
      * @param $url url of the .css file
      */
     function osc_enqueue_style($id, $url) {
-        if( OC_ADMIN ) {
-            AdminThemes::newInstance()->addStyle($id, $url);
-        } else {
-            WebThemes::newInstance()->addStyle($id, $url);
-        }
+        Styles::newInstance()->addStyle($id, $url);
     }
 
     /**
@@ -162,22 +141,14 @@
      * @param type $id
      */
     function osc_remove_style($id) {
-        if( OC_ADMIN ) {
-            AdminThemes::newInstance()->removeStyle($id);
-        } else {
-            WebThemes::newInstance()->removeStyle($id);
-        }
+        Styles::newInstance()->removeStyle($id);
     }
 
     /**
      * Print the HTML tags to make the style load
      */
     function osc_load_styles() {
-        if( OC_ADMIN ) {
-            AdminThemes::newInstance()->printStyles();
-        } else {
-            WebThemes::newInstance()->printStyles();
-        }
+        Styles::newInstance()->printStyles();
     }
 
     function osc_print_bulk_actions($id, $name, $options, $class = '') {
