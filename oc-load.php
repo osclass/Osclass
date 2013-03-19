@@ -167,6 +167,10 @@ require_once LIB_PATH . 'osclass/classes/Breadcrumb.php';
 require_once LIB_PATH . 'osclass/classes/EmailVariables.php';
 require_once LIB_PATH . 'osclass/alerts.php';
 
+require_once LIB_PATH . 'osclass/classes/Dependencies.php';
+require_once LIB_PATH . 'osclass/classes/Scripts.php';
+require_once LIB_PATH . 'osclass/classes/Styles.php';
+
 require_once LIB_PATH . 'osclass/frm/Form.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Page.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Category.form.class.php';
