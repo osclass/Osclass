@@ -304,7 +304,7 @@
                     <p>
                         <?php _e("You can regenerate different image dimensions. If you have changed the dimension of thumbnails, preview or normal images, you might want to regenerate your images."); ?>
                     </p>
-                    <a class="btn" href="<?php echo osc_admin_base_url(true) . '?page=settings&action=images_post'; ?>"><?php  _e('Regenerate'); ?></a>
+                    <a class="btn" href="<?php echo osc_admin_base_url(true) . '?page=settings&action=images_post'.'&'.osc_csrf_token_url(); ?>"><?php  _e('Regenerate'); ?></a>
                     </div>
                 </div>
                 <div class="clear"></div>
