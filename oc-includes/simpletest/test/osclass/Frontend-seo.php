@@ -8,9 +8,8 @@ class Frontend_seo extends FrontendTest {
 
     function returnStatusCode($url)
     {
-        $header = get_headers($url, 1);
+        $header = get_headers($url);
         $aux_headers = $header;
-        error_log("--- " . print_r($aux_headers, true) );
         $aux = explode(' ', $aux_headers[0]);
         return $aux[1];
     }
@@ -23,12 +22,6 @@ class Frontend_seo extends FrontendTest {
      */
     function testItems_noUser()
     {
-        error_log('--------------------> init test');
-        if(osc_rewrite_enabled()) {
-            error_log('rewrite ok');
-        } else {
-            error_log('no rewrite');
-        }
         require 'ItemData.php';
         $item = $aData[0];
         $uSettings = new utilSettings();
@@ -54,34 +47,43 @@ class Frontend_seo extends FrontendTest {
 
         unset($uSettings);
 
-
-        sleep(2);
         // get url from homepage
         $this->selenium->open( osc_base_url() );
         $xpath      = "xpath=//div[@class='latest_ads']/table/tbody/tr[1]/td[@class='text']/h3/a[1]@href";
         $item_url   = $this->selenium->getAttribute($xpath);
 
-        error_log('url --- ' . $item_url);
+//        error_log('url --- ' . $item_url);
 
         /*
          * visit item -> status 200
          */
         // block item
         $item = Item::newInstance()->findByPrimaryKey($item_id);
-
         $ia = new ItemActions(false);
-        $ia->deactivate($item_id, $item['s_secret']);
-        echo $this->returnStatusCode($item_url)."|<br/>";
 
-//        /*
-//         * Remove all items inserted previously
-//         */
-//        $aItem = Item::newInstance()->listAll('s_contact_email = '.$this->_email." AND fk_i_user IS NULL");
-//        foreach($aItem as $item){
-//            $url = osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] );
-//            $this->selenium->open( $url );
-//            $this->assertTrue($this->selenium->isTextPresent("Your listing has been deleted"), "Delete item.");
-//        }
+        // 200 OK ?
+        $code = $this->returnStatusCode($item_url);
+        $this->assertTrue($code=='200', 'Active, Enabled, Return code 200 OK');
+        // 400
+        $ia->deactivate($item_id, $item['s_secret']);
+        $code = $this->returnStatusCode($item_url);
+        $this->assertTrue($code=='400', 'NO Active, Enabled, Return code 400 OK');
+        $ia->activate($item_id, $item['s_secret']);
+        // 400
+        $ia->disable($item_id);
+        $code = $this->returnStatusCode($item_url);
+        $this->assertTrue($code=='400', 'Active, NO Enabled, Return code 400 OK');
+        $ia->enable($item_id);
+
+        /*
+         * Remove all items inserted previously
+         */
+        $aItem = Item::newInstance()->listAll('s_contact_email = '.$this->_email." AND fk_i_user IS NULL");
+        foreach($aItem as $item){
+            $url = osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] );
+            $this->selenium->open( $url );
+            $this->assertTrue($this->selenium->isTextPresent("Your listing has been deleted"), "Delete item.");
+        }
     }
 }
 ?>
