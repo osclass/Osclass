@@ -565,7 +565,6 @@
          */
         public function updateExpirationDate($id, $i_expiration_days)
         {
-
             $this->dao->select('dt_expiration');
             $this->dao->from($this->getTableName());
             $this->dao->where('pk_i_id', $id);
@@ -587,9 +586,11 @@
                 if($result && $result>0) {
                     $this->dao->select('i.dt_expiration, i.fk_i_user_id, i.fk_i_category_id, l.fk_c_country_code, l.fk_i_region_id, l.fk_i_city_id');
                     $this->dao->from($this->getTableName()." i, ".DB_TABLE_PREFIX.'t_item_location l');
+                    $this->dao->where('i.pk_i_id = l.fk_i_item_id' );
                     $this->dao->where('i.pk_i_id', $id );
                     $result = $this->dao->get();
                     $_item = $result->row();
+
                     $expired = osc_isExpired($_item['dt_expiration']);
                     if($expired!=$expired_old) {
                         if($expired) {

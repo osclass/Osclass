@@ -352,12 +352,6 @@ function osc_sendMail($params) {
     if( array_key_exists('from', $params) ) {
         $from = $params['from'];
     }
-    if( osc_mailserver_username() !== '' ) {
-        $from = osc_mailserver_username();
-    }
-    if( array_key_exists('username', $params) ) {
-        $from = $params['username'];
-    }
     $from_name = osc_page_title();
     if( array_key_exists('from_name', $params) ) {
         $from_name = $params['from_name'];
