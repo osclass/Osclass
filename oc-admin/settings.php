@@ -797,6 +797,7 @@ HTACCESS;
                                             if($cat_pos!==false && $id_pos>$cat_pos) {
                                                 $param_pos++;
                                             }
+                                            $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.+)', str_replace('{CATEGORY_SLUG}', '([^/]+)', str_replace('{CATEGORY_ID}', '([0-9]+)', $cat_url))).'/([0-9]+)$', 'index.php?page=search&sCategory=$'.$param_pos.'&iPage=$'.($param_pos+1));
                                             $rewrite->addRule('^'.str_replace('{CATEGORIES}', '(.+)', str_replace('{CATEGORY_SLUG}', '([^/]+)', str_replace('{CATEGORY_ID}', '([0-9]+)', $cat_url))).'$', 'index.php?page=search&sCategory=$'.$param_pos);
 
                                             osc_run_hook("after_rewrite_rules", array(&$rewrite));

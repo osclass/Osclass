@@ -146,7 +146,7 @@
         </script>
         <?php
     }
-    osc_add_hook('admin_header','customHead');
+    osc_add_hook('admin_header','customHead', 10);
 
     $categories  = __get('categories');
     $withFilters = __get('withFilters');

@@ -213,10 +213,10 @@
                         <p class="empty" ><?php printf(__('There are no results matching "%s"', 'modern'), osc_search_pattern()); ?></p>
                     <?php } else { ?>
                         <?php require(osc_search_show_as() == 'list' ? 'search_list.php' : 'search_gallery.php'); ?>
+                        <div class="paginate" >
+                        <?php echo osc_search_pagination(); ?>
+                        </div>
                     <?php } ?>
-                    <div class="paginate" >
-                    <?php echo osc_search_pagination(); ?>
-                    </div>
                     <div class="clear"></div>
                     <?php $footerLinks = osc_search_footer_links(); ?>
                     <ul class="footer-links">

@@ -43,7 +43,7 @@
         </script>
         <?php
     }
-    osc_add_hook('admin_header','customHead');
+    osc_add_hook('admin_header','customHead', 10);
 
     function addHelp() {
         echo '<p>' . sprintf(__("Change your site's look and feel by activating a theme among those available. You can download new themes from the <a href=\"%s\">market</a>. <strong>Be careful</strong>: if your theme has been customized, you'll lose all changes if you change to a new theme."), osc_admin_base_url(true) . '?page=market&action=themes') . '</p>';

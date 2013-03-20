@@ -60,10 +60,24 @@
         protected abstract function doModel();
         protected abstract function doView($file);
 
+        function do400()
+        {
+            Rewrite::newInstance()->set_location('error');
+            header('HTTP/1.1 400 Bad Request');
+            osc_current_web_theme_path('404.php');
+        }
+
         function do404()
         {
             Rewrite::newInstance()->set_location('error');
             header('HTTP/1.1 404 Not Found');
+            osc_current_web_theme_path('404.php');
+        }
+
+        function do410()
+        {
+            Rewrite::newInstance()->set_location('error');
+            header('HTTP/1.1 410 Gone');
             osc_current_web_theme_path('404.php');
         }
 

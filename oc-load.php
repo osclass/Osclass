@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '3.1.0');
+define('OSCLASS_VERSION', '3.1.1');
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -166,6 +166,10 @@ require_once LIB_PATH . 'osclass/classes/AdminToolbar.php';
 require_once LIB_PATH . 'osclass/classes/Breadcrumb.php';
 require_once LIB_PATH . 'osclass/classes/EmailVariables.php';
 require_once LIB_PATH . 'osclass/alerts.php';
+
+require_once LIB_PATH . 'osclass/classes/Dependencies.php';
+require_once LIB_PATH . 'osclass/classes/Scripts.php';
+require_once LIB_PATH . 'osclass/classes/Styles.php';
 
 require_once LIB_PATH . 'osclass/frm/Form.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Page.form.class.php';
