@@ -491,9 +491,9 @@
                     }
 
                     $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
-                    // if item doesn't exist show an error 404
+                    // if item doesn't exist show an error 410
                     if( count($item) == 0 ) {
-                        $this->do400();
+                        $this->do410();
                         return;
                     }
 
@@ -556,9 +556,6 @@
                         $this->redirectTo(osc_base_url() . $itemURI);
                     }
 
-                    if( osc_item_is_expired() ) {
-                        header('HTTP/1.1 400 Bad Request');
-                    }
                     $this->doView('item.php');
                 break;
             }
