@@ -510,10 +510,6 @@
                         return;
                     }
 
-                    if( osc_item_is_expired() ) {
-                        header('HTTP/1.1 400 Bad Request');
-                    }
-
                     if(!osc_is_admin_user_logged_in() && !($item['fk_i_user_id']!='' && $item['fk_i_user_id']==osc_logged_user_id())) {
                         require_once(osc_lib_path() . 'osclass/user-agents.php');
                         foreach($user_agents as $ua) {
@@ -561,6 +557,9 @@
                         $this->redirectTo(osc_base_url() . $itemURI);
                     }
 
+                    if( osc_item_is_expired() ) {
+                        header('HTTP/1.1 400 Bad Request');
+                    }
                     $this->doView('item.php');
                 break;
             }
