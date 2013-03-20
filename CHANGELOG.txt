@@ -1,3 +1,15 @@
+Osclass 3.1.1 2012-03-20
+------------------------
+- Fixed breadcrumd in public profile
+- Showing correct description in public profile
+- SEO fixes: meta description, correct HTTP headers in search results and listing detail page
+- Don't override from email address when using SMTP
+- Problem with custom field url
+- Bug with reCAPTCHA in mobile browsers
+- Bug fixes related to upgrade
+- Bug fixes related to CSRF
+- Minor bug fixes
+
 Osclass 3.1 2012-02-26
 ----------------------
 - Better market: you can now download languages from the admin
