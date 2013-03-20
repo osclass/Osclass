@@ -167,12 +167,6 @@
                 $itemId = $this->manager->dao->insertedId();
                 Log::newInstance()->insertLog('item', 'add', $itemId, current(array_values($aItem['title'])), $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
 
-                // update dt_expiration at t_item
-                $_category = Category::newInstance()->findByPrimaryKey($aItem['catId']);
-                // update dt_expiration
-                $i_expiration_days = $_category['i_expiration_days'];
-                $dt_expiration = Item::newInstance()->updateExpirationDate($itemId, $i_expiration_days);
-
                 Params::setParam('itemId', $itemId);
 
                 // INSERT title and description locales
@@ -198,7 +192,13 @@
                 $locationManager = ItemLocation::newInstance();
                 $locationManager->insert($location);
 
-                $this->uploadItemResources( $aItem['photos'] , $itemId );
+                $this->uploadItemResources( $aItem['photos'] , $itemId);
+
+                // update dt_expiration at t_item
+                $_category = Category::newInstance()->findByPrimaryKey($aItem['catId']);
+                // update dt_expiration
+                $i_expiration_days = $_category['i_expiration_days'];
+                $dt_expiration = Item::newInstance()->updateExpirationDate($itemId, $i_expiration_days);
 
                 /**
                  * META FIELDS
