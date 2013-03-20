@@ -502,11 +502,12 @@
                             osc_add_flash_warning_message( _m("The listing hasn't been validated. Please validate it in order to make it public") );
                         } else {
                             osc_add_flash_warning_message( _m("This listing hasn't been validated") );
-                            $this->redirectTo( osc_base_url(true) );
+                            $this->do400();
+                            return;
                         }
                     } else if ($item['b_enabled'] == 0) {
-                        osc_add_flash_warning_message( _m('The listing has been suspended') );
-                        $this->redirectTo( osc_base_url(true) );
+                        $this->do400();
+                        return;
                     }
 
                     if( osc_item_is_expired() ) {
