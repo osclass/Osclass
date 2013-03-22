@@ -235,26 +235,26 @@ class OCadmin_reported extends OCadminTest {
                 $this->selenium->click("//a[@id='order_spam']");
                 sleep(1);
                 $num = $this->selenium->getXpathCount('//table/tbody/tr');
-                $this->assertTrue( ($num == $count) , 'There are the correct rows SPAM');
+                $this->assertTrue( ($num == $count) , 'There are the correct rows SPAM ( '.$num.' == '.$count.' )');
                 break;
             case 'exp':
                 error_log('case exp');
                 $this->selenium->click("//a[@id='order_exp']");
                 sleep(1);
                 $num = $this->selenium->getXpathCount('//table/tbody/tr');
-                $this->assertTrue( ($num == $count) , 'There are the correct rows EXPIRED');
+                $this->assertTrue( ($num == $count) , 'There are the correct rows EXPIRED ( '.$num.' == '.$count.' )');
                 break;
             case 'bad':
                 error_log('case bad');
                 $this->selenium->click("//a[@id='order_bad']");
                 sleep(1);
                 $num = $this->selenium->getXpathCount('//table/tbody/tr');
-                $this->assertTrue( ($num == $count) , 'There are the correct rows BAD');
+                $this->assertTrue( ($num == $count) , 'There are the correct rows BAD ( '.$num.' == '.$count.' )');
                 break;
             case 'all':
                 error_log('case all');
                 $num = $this->selenium->getXpathCount('//table/tbody/tr');
-                $this->assertTrue( ($num == $count) , 'There are the correct rows (ALL)');
+                $this->assertTrue( ($num == $count) , 'There are the correct rows (ALL) ( '.$num.' == '.$count.' )');
                 break;
             default:
                 break;
