@@ -94,7 +94,7 @@ class OCadmin_reported extends OCadminTest {
         $num = $this->selenium->getXpathCount('//table/tbody/tr');
 
         $loops = 0;
-        while( $loops < 5 && $num >= 1 && ) {
+        while( $loops < 5 && $num >= 1 ) {
             $this->selenium->click("xpath=//input[@id='check_all']");
             $this->selenium->select('bulk_actions', 'value=delete_all');
             $this->selenium->click("xpath=//input[@id='bulk_apply']");
