@@ -28,10 +28,13 @@
         $('input[name="moderate_items"]').bind('change', function() {
             if( $(this).is(':checked') ) {
                 $('input[name="logged_user_item_validation"]').attr('disabled', false);
+                $('input[name="logged_user_item_validation"]').prop('disabled', false);
+                $('input[name="logged_user_item_validation"]').removeAttribute("disabled");
                 $(".num-moderated-items").show();
                 $('input[name="num_moderate_items"]').val(0);
             } else {
                 $('input[name="logged_user_item_validation"]').attr('disabled', true);
+                $('input[name="logged_user_item_validation"]').prop('disabled', true);
                 $('.num-moderated-items').hide();
             }
         });
