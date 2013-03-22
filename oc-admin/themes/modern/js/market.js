@@ -56,7 +56,7 @@ function checkCompatibility(thatDialog){
     }
 }
 $(function(){
-    $(".ui-dialog-content a.more").live("click", function(){
+    $(".ui-dialog-content a.more").on("click", function(){
         var notCompatible = $(this).parents('.ui-dialog');
         var thatDialog = $(this);
 
