@@ -78,9 +78,9 @@ function customHead() {
     }
 
     $(document).ready(function() {
-        $('.cfield-div').live('mouseenter',function(){
+        $('.cfield-div').on('mouseenter',function(){
             $(this).addClass('cfield-hover');
-        }).live('mouseleave',function(){
+        }).on('mouseleave',function(){
             $(this).removeClass('cfield-hover');
         });
 

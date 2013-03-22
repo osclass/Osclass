@@ -487,7 +487,7 @@
             $('#city').val('');
         });
 
-        $('#countryName').live('keyup.autocomplete', function(){
+        $('#countryName').on('keyup.autocomplete', function(){
             $('#countryId').val('');
             $( this ).autocomplete({
                 source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_countries",
@@ -502,7 +502,7 @@
             });
         });
 
-        $('#region').live('keyup.autocomplete', function(){
+        $('#region').on('keyup.autocomplete', function(){
             $('#regionId').val('');
             $( this ).autocomplete({
                 source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_regions&country="+$('#countryId').val(),
@@ -515,7 +515,7 @@
             });
         });
 
-        $('#city').live('keyup.autocomplete', function(){
+        $('#city').on('keyup.autocomplete', function(){
             $('#cityId').val('');
             $( this ).autocomplete({
                 source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_cities&region="+$('#regionId').val(),
@@ -670,7 +670,7 @@
 ?>
 <script type="text/javascript">
     $(document).ready(function(){
-        $("#countryId").live("change",function(){
+        $("#countryId").on("change",function(){
             var pk_c_code = $(this).val();
             <?php if($path=="admin") { ?>
                 var url = '<?php echo osc_admin_base_url(true)."?page=ajax&action=regions&countryId="; ?>' + pk_c_code;
@@ -747,7 +747,7 @@
              }
         });
 
-        $("#regionId").live("change",function(){
+        $("#regionId").on("change",function(){
             var pk_c_code = $(this).val();
             <?php if($path=="admin") { ?>
                 var url = '<?php echo osc_admin_base_url(true)."?page=ajax&action=cities&regionId="; ?>' + pk_c_code;

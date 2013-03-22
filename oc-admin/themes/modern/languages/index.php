@@ -41,7 +41,7 @@
             $(document).ready(function(){
                 // check_all bulkactions
                 $("#check_all").change(function(){
-                    var isChecked = $(this+':checked').length;
+                    var isChecked = $(this).prop("checked");
                     $('.col-bulkactions input').each( function() {
                         if( isChecked == 1 ) {
                             this.checked = true;
@@ -257,7 +257,7 @@
         });
     });
 
-    $('.btn-market-popup').live('click',function(){
+    $('.btn-market-popup').on('click',function(){
         $.getJSON(
             "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
             {"code" : $(this).attr('href').replace('#',''), 'section' : 'languages'},

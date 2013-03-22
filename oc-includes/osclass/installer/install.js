@@ -155,12 +155,10 @@ function get_regions(country) {
         $('#region_select').hide();
         $('#no_region_text').hide();
     } else {
-        var jsondata = new Object();
-        jsondata.country = country;
-        $.jsonp({
-            "url": "http://geo.osclass.org/newgeo.services.php?callback=?&action=regions",
-            "data": jsondata,
-            "success": function(json) {
+        $.getJSON(
+            "http://geo.osclass.org/newgeo.services.php?callback=?&action=regions",
+            {'country' : country},
+            function(json) {
                 if( json.length > 0 ) {
                     $('#region_select').show();
                     $('#no_region_text').hide();
@@ -172,11 +170,8 @@ function get_regions(country) {
                     $('#region_select').hide();
                     $('#no_region_text').show();
                 };
-            },
-            "error": function(d,msg) {
-                //no_internet();
             }
-        });
+        );
     }
 }
 
@@ -187,12 +182,10 @@ function get_cities(region) {
         $('#city_select').hide();
         $('#no_city_text').hide();
     } else {
-        var jsondata = new Object();
-        jsondata.region = region;
-        $.jsonp({
-            "url": "http://geo.osclass.org/newgeo.services.php?callback=?&action=cities",
-            "data": jsondata,
-            "success": function(json) {
+        $.getJSON(
+            "http://geo.osclass.org/newgeo.services.php?callback=?&action=cities",
+            {'region' : region},
+            function(json) {
                 if( json.length > 0 ) {
                     $('#city_select').show();
                     $('#no_city_text').hide();
@@ -204,11 +197,8 @@ function get_cities(region) {
                     $('#city_select').hide();
                     $('#no_city_text').show();
                 };
-            },
-            "error": function(d,msg) {
-                //no_internet();
             }
-        });
+        );
     }
 }
 
@@ -240,7 +230,7 @@ $(document).ready(function(){
 
 /* Extension of jQuery */
 (function( $ ) {
-    $( ".ui-autocomplete-input" ).live( "autocompleteopen", function() {
+    $( ".ui-autocomplete-input" ).on( "autocompleteopen", function() {
         var autocomplete = $( this ).data( "autocomplete" ),
         menu = autocomplete.menu;
         if ( !autocomplete.options.selectFirst ) {

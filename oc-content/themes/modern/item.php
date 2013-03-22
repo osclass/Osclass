@@ -19,12 +19,10 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    osc_register_script('fancybox', osc_current_web_theme_js_url('fancybox/jquery.fancybox.js'), array('jquery'));
-
     osc_enqueue_script('fancybox');
+    osc_enqueue_style('fancybox', osc_assets_url('js/fancybox/jquery.fancybox.css'));
     osc_enqueue_script('jquery-validate');
 
-    osc_enqueue_style('fancybox', osc_current_web_theme_js_url('fancybox/jquery.fancybox.css'));
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
