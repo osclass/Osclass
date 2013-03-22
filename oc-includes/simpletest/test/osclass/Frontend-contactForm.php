@@ -2,7 +2,7 @@
 
 
 class Frontend_contactForm extends FrontendTest {
-    
+
     /*
      * Send an email to 'contact' (link in footer)
      */
@@ -20,12 +20,15 @@ class Frontend_contactForm extends FrontendTest {
         $this->selenium->click("xpath=//span/button[text()='Send']");
         $this->selenium->waitForPageToLoad("30000");
 
+        sleep(2);
+
         $this->assertTrue($this->selenium->isTextPresent("Your email has been sent properly. Thank you for contacting us!"), 'Testing, contact form.');
+
     }
-    
+
     /**
      * - invalid email
-     * - 
+     * -
      */
     function testContact1()
     {
