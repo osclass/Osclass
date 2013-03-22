@@ -38,8 +38,7 @@ class Frontend_contactForm extends FrontendTest {
         $this->selenium->type("yourName", "Carlos");
         $this->selenium->type("yourEmail", 'invalid@mail_foobar');
         $this->selenium->click("xpath=//span/button[text()='Send']");
-        $this->selenium->waitForPageToLoad("30000");
-
+        sleep(2);
         $this->assertTrue($this->selenium->isTextPresent("Invalid email address"), 'Testing, contact form.');
     }
 }
