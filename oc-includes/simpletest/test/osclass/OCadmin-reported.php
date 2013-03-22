@@ -105,6 +105,8 @@ class OCadmin_reported extends OCadminTest {
             
             $num = $this->selenium->getXpathCount('//table/tbody/tr');
             $loops++;
+            print_r($loops);
+            flush();
             if($this->selenium->isTextPresent("No data available in table") ) {
                 break;
             }
