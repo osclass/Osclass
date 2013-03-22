@@ -92,8 +92,9 @@ class OCadmin_reported extends OCadminTest {
         $this->selenium->waitForPageToLoad("10000");
         sleep(2); // time enough to load table data
         $num = $this->selenium->getXpathCount('//table/tbody/tr');
-        
-        while( $num >= 1 ) {
+
+        $loops = 0;
+        while( $loops < 5 && $num >= 1 && ) {
             $this->selenium->click("xpath=//input[@id='check_all']");
             $this->selenium->select('bulk_actions', 'value=delete_all');
             $this->selenium->click("xpath=//input[@id='bulk_apply']");
@@ -103,6 +104,7 @@ class OCadmin_reported extends OCadminTest {
                     , "BulkActions delete all on delete test. ERROR");
             
             $num = $this->selenium->getXpathCount('//table/tbody/tr');
+            $loops++;
             if($this->selenium->isTextPresent("No data available in table") ) {
                 break;
             }
