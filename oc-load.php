@@ -33,9 +33,6 @@ define('THEMES_PATH', CONTENT_PATH . 'themes/');
 define('PLUGINS_PATH', CONTENT_PATH . 'plugins/');
 define('TRANSLATIONS_PATH', CONTENT_PATH . 'languages/');
 
-// THIS IS A FIX FOR THE TEST, DO NOT INCLUDE IN DEVELOP BRANCH
-session_save_path ( ABS_PATH . 'oc-content/uploads/' );
-
 if( !file_exists(ABS_PATH . 'config.php') ) {
     require_once LIB_PATH . 'osclass/helpers/hErrors.php';
 
