@@ -22,6 +22,7 @@
     if($rv!=0) { echo "CRON FAILED"; exit; };
 
     system("killall firefox-bin");
+    system("killall google-chrome");
 
     system("php oc-includes/simpletest/test/osclass/test_all.php --installer --frontend --admin");
 
