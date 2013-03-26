@@ -285,7 +285,7 @@ class Frontend_search extends FrontendTest {
     /*
      * Remove all items inserted previously
      */
-    function testRemoveLoadedItems()
+    function _testRemoveLoadedItems()
     {
         $aItems = Item::newInstance()->findByEmail($this->_email) ;
         foreach( $aItems as $item ) {
