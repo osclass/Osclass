@@ -114,34 +114,34 @@
             </select>
             <select id="catId" name="catId">
                 <?php
-                    if(!empty($subcategory)) {
-                        if( count($subcategory['categories']) > 0 ) {
-                            echo '<option value="">'.__('Select Subcategory').'</option>';
-                            foreach($subcategory['categories'] as $c) {
-                                $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($subcategoryID) && $subcategoryID == $c['pk_i_id']) );
-                                echo '<option value="'.$c['pk_i_id'].'" '.($selected ? 'selected="selected"' : '' ).'>'.$c['s_name'].'</option>';
-                            }
-                        } else {
-                            echo '<option value="'.$categoryID.'" >'.__('No Subcategory').'</option>';
+                if(!empty($subcategory)) {
+                    if( count($subcategory['categories']) > 0 ) {
+                        echo '<option value="">'.__('Select Subcategory').'</option>';
+                        foreach($subcategory['categories'] as $c) {
+                            $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($subcategoryID) && $subcategoryID == $c['pk_i_id']) );
+                            echo '<option value="'.$c['pk_i_id'].'" '.($selected ? 'selected="selected"' : '' ).'>'.$c['s_name'].'</option>';
                         }
                     } else {
-                        echo '<option value="">'.__('Select Subcategory').'</option>';
+                        echo '<option value="'.$category['pk_i_id'].'" >'.__('No Subcategory').'</option>';
                     }
+                } else {
+                    echo '<option value="">'.__('Select Subcategory').'</option>';
+                }
                 ?>
             </select>
             <script type="text/javascript" charset="utf-8">
-            <?php
-                foreach($categories as $c) {
-                    if( count($c['categories']) > 0 ) {
-                        $subcategory = array();
-                        for($i = 0; $i < count($c['categories']); $i++) {
-                            $subcategory[] = array($c['categories'][$i]['pk_i_id'], $c['categories'][$i]['s_name']);
+                <?php
+                    foreach($categories as $c) {
+                        if( count($c['categories']) > 0 ) {
+                            $subcategory = array();
+                            for($i = 0; $i < count($c['categories']); $i++) {
+                                $subcategory[] = array($c['categories'][$i]['pk_i_id'], $c['categories'][$i]['s_name']);
+                            }
+                            printf('var categories_%1$s = %2$s;', $c['pk_i_id'], json_encode($subcategory));
+                            echo PHP_EOL;
                         }
-                        printf('var categories_%1$s = %2$s;', $c['pk_i_id'], json_encode($subcategory));
-                        echo PHP_EOL;
                     }
-                }
-            ?>
+                ?>
 
                 osc.item_post = {};
                 osc.item_post.category_id    = '<?php echo $categoryID; ?>';
@@ -170,7 +170,104 @@
                 });
 
             </script>
-            <?php
+        <?php
+        }
+
+        static public function category_multiple_selects($categories = null, $item = null, $default_item = null, $parent_selectable = false)
+        {
+
+            $categoryID = Params::getParam('catId');
+            if( osc_item_category_id() != null ) {
+                $categoryID = osc_item_category_id();
+            }
+
+            if( Session::newInstance()->_getForm('catId') != '' ) {
+                $categoryID = Session::newInstance()->_getForm('catId');
+            }
+
+            if ($item == null) { $item = osc_item(); }
+
+            if(isset($item['fk_i_category_id'])) {
+                $categoryID = $item['fk_i_category_id'];
+            }
+
+
+            $tmp_categories_tree = Category::newInstance()->toRootTree($categoryID);
+            $categories_tree = array();
+            foreach($tmp_categories_tree as $t) {
+                $categories_tree[] = $t['pk_i_id'];
+            }
+            unset($tmp_categories_tree);
+            //print_r($categories_tree);
+
+            if($categories == null) {
+                if(View::newInstance()->_exists('categories')) {
+                    $categories = View::newInstance()->_get('categories');
+                } else {
+                    $categories = Category::newInstance()->listAll(false);//osc_get_categories();
+                }
+            }
+
+            parent::generic_input_hidden("catId", $categoryID);
+
+            ?>
+            <div id="select_holder"></div>
+            <script type="text/javascript" charset="utf-8">
+                <?php
+                    $tmp_cat = array();
+                    foreach($categories as $c) {
+                        if( $c['fk_i_parent_id']==null ) { $c['fk_i_parent_id'] = 0; };
+                        $tmp_cat[$c['fk_i_parent_id']][] = array($c['pk_i_id'], $c['s_name']);
+                    }
+                    foreach($tmp_cat as $k => $v) {
+                        echo 'var categories_'.$k.' = '.json_encode($v).';'.PHP_EOL;
+                    }
+                ?>
+
+                osc.item_post = {};
+                osc.item_post.category_id    = '<?php echo $categoryID; ?>';
+                osc.item_post.category_tree_id    = <?php echo json_encode($categories_tree); ?>;
+
+                $(document).ready(function(){
+                    draw_select(1,0);
+                });
+
+                function draw_select(select, categoryID) {
+
+                    tmp_categories = window['categories_' + categoryID];
+                    if( tmp_categories!=null && $.isArray(tmp_categories) ) {
+                        $("#select_holder").before('<select id="select_'+select+'" name="select_'+select+'" depth="'+select+'"></select>');
+
+                        if(categoryID==0) {
+                            var options = '<option value="' + categoryID + '" >' + (osc.langs.select_category!=null?osc.langs.select_category:'<?php _e('Select category'); ?>') + '</option>';
+                        }else {
+                            var options = '<option value="' + categoryID + '" >' + (osc.langs.select_subcategory!=null?osc.langs.select_subcategory:'<?php _e('Select subcategory'); ?>') + '</option>';
+                        }
+                        $.each(tmp_categories, function(index, value){
+                            options += '<option value="' + value[0] + '" '+(value[0]==osc.item_post.category_tree_id[select-1]?'selected="selected"':'')+'>' + value[1] + '</option>';
+                        });
+                        osc.item_post.category_tree_id[select-1] = null;
+                        $('#select_'+select).html(options);
+                        $('#select_'+select).next("a").find(".select-box-label").text(osc.langs.select_subcategory);
+                        $('#select_'+select).on("change", function() {
+                            var depth = parseInt($(this).attr("depth"));
+                            for(var d=(depth+1);d<=4;d++) {
+                                $("#select_"+d).off("change");
+                                $("#select_"+d).parent().remove();
+                            }
+                            $("#catId").attr("value", $(this).val());
+                            $("#catId").change();
+                            if((depth==1 && $(this).val()!=0) || (depth>1 && $(this).val()!=$("#select_"+(depth-1)).val())) {
+                                draw_select(depth+1, $(this).val());
+                            }
+                        });
+                        $('#select_'+select).change();
+                        selectUi($('#select_'+select));
+                    };
+
+                }
+            </script>
+        <?php
         }
 
         // OK
@@ -1038,6 +1135,8 @@
 <script type="text/javascript">
     $("#catId").change(function(){
         var cat_id = $(this).val();
+        console.log("hola que haces");
+        console.log(cat_id);
         <?php if(OC_ADMIN) { ?>
         var url = '<?php echo osc_admin_base_url(true); ?>';
         <?php } else { ?>
