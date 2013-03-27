@@ -1186,8 +1186,6 @@
 <script type="text/javascript">
     $("#catId").change(function(){
         var cat_id = $(this).val();
-        console.log("hola que haces");
-        console.log(cat_id);
         <?php if(OC_ADMIN) { ?>
         var url = '<?php echo osc_admin_base_url(true); ?>';
         <?php } else { ?>
