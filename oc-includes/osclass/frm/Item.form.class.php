@@ -173,7 +173,7 @@
             <?php
         }
 
-        // OK
+        
         static public function subcategory_select($categories, $item, $default_item = null, $deep = 0)
         {
             // Did user select a specific category to post in?
@@ -197,7 +197,7 @@
                 }
             }
         }
-        // OK
+        
         static public function user_select($users = null, $item = null, $default_item = null)
         {
             if($users==null) { $users = User::newInstance()->listAll(); };
@@ -225,20 +225,64 @@
             echo '</select>';
             return true;
         }
-        // OK
+
+
+        static public function expiration_select($options = null, $max_date = null)
+        {
+            if($options==null) {
+                if($max_date==null) { $max_date = 999; };
+                $options = array();
+                $options[] = array('value' => 1, 'label' => __('1 Day'));
+                if(3<=$max_date) {
+                    $options[] = array('value' => 3, 'label' => __('3 Days'));
+                }
+                if(5<=$max_date) {
+                    $options[] = array('value' => 5, 'label' => __('5 Days'));
+                }
+                if(7<=$max_date) {
+                    $options[] = array('value' => 7, 'label' => __('7 Days'));
+                }
+                if(10<=$max_date) {
+                    $options[] = array('value' => 10, 'label' => __('10 Days'));
+                }
+                if(15<=$max_date) {
+                    $options[] = array('value' => 15, 'label' => __('15 Days'));
+                }
+                if(30<=$max_date) {
+                    $options[] = array('value' => 30, 'label' => __('30 Days'));
+                }
+
+            };
+            if(Session::newInstance()->_getForm('dt_expiration') != ""){
+                $dt_expiration = Session::newInstance()->_getForm('dt_expiration');
+            } else { $dt_expiration = ''; };
+            echo '<select name="dt_expiration" id="dt_expiration">';
+            echo '<option value="0">' . __('Without expiration') . '</option>';
+            foreach($options as $option) {
+                echo '<option value="' . $option['value'] . '"' . ( ($dt_expiration != '' && $dt_expiration == $option['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $option['label'] . '</option>';
+            }
+            echo '</select>';
+            ?>
+            <script type="text/javascript" >
+
+            </script>
+            <?php
+            return true;
+        }
+
         static public function title_input($name, $locale = 'en_US', $value = '')
         {
 
             parent::generic_input_text($name . '[' . $locale . ']', $value);
             return true;
         }
-        // OK
+        
         static public function description_textarea($name, $locale = 'en_US', $value = '')
         {
             parent::generic_textarea($name . '[' . $locale . ']', $value);
             return true;
         }
-        // OK
+        
         static public function multilanguage_title_description($locales = null, $item = null) {
             if($locales==null) { $locales = osc_get_locales(); }
             if($item==null) { $item = osc_item(); }
@@ -274,7 +318,7 @@
              }
              if($num_locales>1) { echo '</div>'; };
         }
-        // OK
+        
         static public function price_input_text($item = null)
         {
             if($item==null) { $item = osc_item(); };
@@ -283,7 +327,7 @@
             }
             parent::generic_input_text('price', (isset($item['i_price'])) ? osc_prepare_price($item['i_price']) : null);
         }
-        // OK
+        
         static public function currency_select($currencies = null, $item = null) {
             if( $currencies == null ) { $currencies = osc_get_currencies(); }
             if( $item == null) { $item = osc_item(); }
@@ -305,7 +349,7 @@
                 echo $currencies[0]['s_description'];
             }
         }
-        // OK
+        
         static public function country_select($countries = null, $item = null) {
             if($countries==null) { $countries = osc_get_countries(); };
             if($item==null) { $item = osc_item(); };
@@ -323,7 +367,7 @@
                 return true;
             }
         }
-        // OK
+        
         static public function country_text($item = null) {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('country') != "" ) {
@@ -342,7 +386,7 @@
             parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code']) && $item['fk_c_country_code']!=null)?$item['fk_c_country_code']:'');
             return true;
         }
-        // OK
+        
         static public function region_select($regions = null, $item = null) {
 
             if($item==null) { $item = osc_item(); };
@@ -368,7 +412,7 @@
             }
         }
 
-        // OK
+        
         static public function city_select($cities = null, $item = null) {
 
             if($item==null) { $item = osc_item(); };
@@ -413,7 +457,7 @@
             parent::generic_input_hidden('cityId', (isset($item['fk_i_city_id']) && $item['fk_i_city_id']!=null)?$item['fk_i_city_id']:'');
             return true;
         }
-        // OK
+        
         static public function city_area_text($item = null) {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('cityArea') != "" ) {
@@ -423,7 +467,7 @@
             parent::generic_input_hidden('cityAreaId', (isset($item['fk_i_city_area_id']) && $item['fk_i_city_area_id']!=null)?$item['fk_i_city_area_id']:'');
             return true;
         }
-        // OK
+        
         static public function address_text($item = null) {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('address') != "" ) {
@@ -432,7 +476,7 @@
             parent::generic_input_text('address', (isset($item['s_address'])) ? $item['s_address'] : null);
             return true;
         }
-        // OK
+        
         static public function contact_name_text($item = null) {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('contactName') != "" ) {
@@ -461,7 +505,7 @@
                 return false;
             }
         }
-        // OK
+        
         static public function show_email_checkbox($item = null) {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('showEmail') != 0) {
