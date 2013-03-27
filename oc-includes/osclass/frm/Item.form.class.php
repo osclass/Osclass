@@ -361,7 +361,14 @@
             echo '</select>';
             ?>
             <script type="text/javascript" >
-
+                $("#catId").on("change", function() {
+                    console.log("test");
+                });
+            </script>
+            <script type="text/javascript" >
+                $("#catId").on("change", function() {
+                    console.log("test3");
+                });
             </script>
             <?php
             return true;
