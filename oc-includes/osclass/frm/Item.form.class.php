@@ -198,13 +198,12 @@
                 $categories_tree[] = $t['pk_i_id'];
             }
             unset($tmp_categories_tree);
-            //print_r($categories_tree);
 
             if($categories == null) {
                 if(View::newInstance()->_exists('categories')) {
                     $categories = View::newInstance()->_get('categories');
                 } else {
-                    $categories = Category::newInstance()->listAll(false);//osc_get_categories();
+                    $categories = Category::newInstance()->listAll(false);
                 }
             }
 
@@ -224,6 +223,10 @@
                     }
                 ?>
 
+                if(osc==undefined) { var osc = {}; }
+                if(osc.langs==undefined) { osc.langs = {}; }
+                if(osc.langs.select_category==undefined) { osc.langs.select_category = '<?php _e('Select category') ?>'; }
+                if(osc.langs.select_subcategory==undefined) { osc.langs.select_subcategory = '<?php _e('Select subcategory') ?>'; }
                 osc.item_post = {};
                 osc.item_post.category_id    = '<?php echo $categoryID; ?>';
                 osc.item_post.category_tree_id    = <?php echo json_encode($categories_tree); ?>;
@@ -239,9 +242,9 @@
                         $("#select_holder").before('<select id="select_'+select+'" name="select_'+select+'" depth="'+select+'"></select>');
 
                         if(categoryID==0) {
-                            var options = '<option value="' + categoryID + '" >' + (osc.langs.select_category!=null?osc.langs.select_category:'<?php _e('Select category'); ?>') + '</option>';
+                            var options = '<option value="' + categoryID + '" >' + osc.langs.select_category + '</option>';
                         }else {
-                            var options = '<option value="' + categoryID + '" >' + (osc.langs.select_subcategory!=null?osc.langs.select_subcategory:'<?php _e('Select subcategory'); ?>') + '</option>';
+                            var options = '<option value="' + categoryID + '" >' + osc.langs.select_subcategory + '</option>';
                         }
                         $.each(tmp_categories, function(index, value){
                             options += '<option value="' + value[0] + '" '+(value[0]==osc.item_post.category_tree_id[select-1]?'selected="selected"':'')+'>' + value[1] + '</option>';
@@ -324,51 +327,52 @@
         }
 
 
-        static public function expiration_select($options = null, $max_date = null)
+        static public function expiration_select($options = null)
         {
-            if($options==null) {
-                if($max_date==null) { $max_date = 999; };
-                $options = array();
-                $options[] = array('value' => 1, 'label' => __('1 Day'));
-                if(3<=$max_date) {
-                    $options[] = array('value' => 3, 'label' => __('3 Days'));
-                }
-                if(5<=$max_date) {
-                    $options[] = array('value' => 5, 'label' => __('5 Days'));
-                }
-                if(7<=$max_date) {
-                    $options[] = array('value' => 7, 'label' => __('7 Days'));
-                }
-                if(10<=$max_date) {
-                    $options[] = array('value' => 10, 'label' => __('10 Days'));
-                }
-                if(15<=$max_date) {
-                    $options[] = array('value' => 15, 'label' => __('15 Days'));
-                }
-                if(30<=$max_date) {
-                    $options[] = array('value' => 30, 'label' => __('30 Days'));
-                }
-
-            };
-            if(Session::newInstance()->_getForm('dt_expiration') != ""){
-                $dt_expiration = Session::newInstance()->_getForm('dt_expiration');
-            } else { $dt_expiration = ''; };
-            echo '<select name="dt_expiration" id="dt_expiration">';
-            echo '<option value="0">' . __('Without expiration') . '</option>';
-            foreach($options as $option) {
-                echo '<option value="' . $option['value'] . '"' . ( ($dt_expiration != '' && $dt_expiration == $option['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $option['label'] . '</option>';
+            if(OC_ADMIN) {
+                if($options==null) { $options = array(-1,0,1,3,5,7,10,15,30); }
+            } else {
+                if($options==null) { $options = array(0,1,3,5,7,10,15,30); }
             }
-            echo '</select>';
+            echo '<select name="dt_expiration" id="dt_expiration"></select>';
+            $categories = Category::newInstance()->listEnabled();
             ?>
             <script type="text/javascript" >
-                $("#catId").on("change", function() {
-                    console.log("test");
+                var exp_days = new Array();
+                <?php foreach($categories as $c) {
+                  echo 'exp_days['.$c['pk_i_id'].'] = '.$c['i_expiration_days'].';';
+                };?>
+                $(document).ready(function(){
+                    $("#catId").on("change", function() {
+                        draw_expiration(exp_days[this.value]);
+                    });
+                    draw_expiration(exp_days[$("#catId").value]);
                 });
-            </script>
-            <script type="text/javascript" >
-                $("#catId").on("change", function() {
-                    console.log("test3");
-                });
+                if(osc==undefined) { var osc = {}; }
+                if(osc.langs==undefined) { osc.langs = {}; }
+                if(osc.langs.nochange_expiration==undefined) { osc.langs.nochange_expiration = '<?php _e('No change expiration') ?>'; }
+                if(osc.langs.without_expiration==undefined) { osc.langs.without_expiration = '<?php _e('Without expiration') ?>'; }
+                if(osc.langs.expiration_day==undefined) { osc.langs.expiration_day = '<?php _e('1 day') ?>'; }
+                if(osc.langs.expiration_days==undefined) { osc.langs.expiration_days = '<?php _e('%d days') ?>'; }
+                function draw_expiration(max_exp) {
+                    $('#dt_expiration').html("");
+                    var options = '';
+                    <?php foreach($options as $o) {
+                        if($o==-1) {?>
+                            options += '<option value="-1" >' + (osc.langs.nochange_expiration!=null?osc.langs.nochange_expiration:'<?php _e('No change expiration'); ?>') + '</option>';
+                        <?php } else if($o==0) { ?>
+                            options += '<option value="" >' + (osc.langs.without_expiration!=null?osc.langs.without_expiration:'<?php _e('Without expiration'); ?>') + '</option>';
+                        <?php } else if($o==1) { ?>
+                            options += '<option value="1" >' + (osc.langs.expiration_day!=null?osc.langs.expiration_day:'<?php _e('1 day'); ?>')+ '</option>';
+                        <?php } else { ?>
+                            if(max_exp==0 || <?php echo $o; ?><=max_exp) {
+                                options += '<option value="<?php echo $o; ?>" >' + (osc.langs.expiration_days!=null?osc.langs.expiration_days:'<?php _e('%d days'); ?>').replace("%d", <?php echo $o; ?>) + '</option>';
+                            }
+                    <?php };
+                    }; ?>
+                    $('#dt_expiration').html(options);
+                    $('#dt_expiration').change();
+                }
             </script>
             <?php
             return true;

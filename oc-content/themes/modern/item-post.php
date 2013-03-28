@@ -103,7 +103,7 @@
                         <h2><?php _e('General Information', 'modern'); ?></h2>
                         <div class="row">
                             <label for="catId"><?php _e('Category', 'modern'); ?> *</label>
-                            <?php ItemForm::category_select(null, null, __('Select a category', 'modern')); ?>
+                            <?php ItemForm::category_multiple_selects(null, null, __('Select a category', 'modern')); ?>
                         </div>
                         <div class="row">
                             <?php ItemForm::multilanguage_title_description(); ?>

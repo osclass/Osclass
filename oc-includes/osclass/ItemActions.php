@@ -1072,7 +1072,9 @@
 
             if($is_add || $this->is_admin) {
                 $dt_expiration = Params::getParam('dt_expiration');
-                if($dt_expiration!='' && (preg_match('|^([0-9]+)$|', $dt_expiration, $match) || preg_match('|([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})|', $dt_expiration, $match))) {
+                if($dt_expiration==-1) {
+                    $aItem['dt_expiration'] = '';
+                } else if($dt_expiration!='' && (preg_match('|^([0-9]+)$|', $dt_expiration, $match) || preg_match('|([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})|', $dt_expiration, $match))) {
                     $aItem['dt_expiration'] = $dt_expiration;
                 } else {
                     $_category = Category::newInstance()->findByPrimaryKey($aItem['catId']);

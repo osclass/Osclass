@@ -37,7 +37,13 @@
         return $text[$return];
     }
 
-    function customPageHeader() { ?>
+    if($new_item) {
+        $options = array(0,1,3,5,7,10,15,30);
+    } else {
+        $options = array(-1,0,1,3,5,7,10,15,30);
+    }
+
+function customPageHeader() { ?>
         <h1><?php echo customText('title'); ?></h1>
 <?php
     }
@@ -213,6 +219,14 @@
                             <div class="input-has-placeholder input-separate-top">
                                 <label><?php _e('Address'); ?></label>
                                 <?php ItemForm::address_text(); ?>
+                            </div>
+                        </div>
+
+                        <div class="well ui-rounded-corners input-separate-top">
+                            <h3 class="label">Expiration</h3>
+                            <div class="input-has-placeholder input-separate-top">
+                                <label><?php _e('Expire in'); ?></label>
+                                <?php ItemForm::expiration_select($options); ?>
                             </div>
                         </div>
                     </div>
