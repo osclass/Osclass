@@ -94,6 +94,15 @@ function customPageHeader() { ?>
 
                 });
                 <?php } ?>
+
+                $('body').on("created", '[name^="select_"]',function(evt) {
+                    selectUi($(this));
+                });
+
+                $('body').on("change", '[name^="select_"]',function(evt) {
+                    $(this).parent().remove();
+                });
+
             });
         </script>
         <?php ItemForm::location_javascript_new('admin'); ?>

@@ -32,6 +32,12 @@
         <?php ItemForm::location_javascript_new(); ?>
         <?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript(); ?>
         <script type="text/javascript">
+
+            $('body').on("created", '[name^="select_"]',function(evt) {
+                $("#select_"+evt.target.id).uniform();
+                console.log("OLA KA S 5E");
+            });
+
             function uniform_input_file(){
                 photos_div = $('div.photos');
                 $('div',photos_div).each(

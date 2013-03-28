@@ -233,6 +233,18 @@
 
                 $(document).ready(function(){
                     draw_select(1,0);
+                    $('body').on("change", '[name^="select_"]', function() {
+                        var depth = parseInt($(this).attr("depth"));
+                        for(var d=(depth+1);d<=4;d++) {
+                            $("#select_"+d).remove();
+                        }
+                        $("#catId").attr("value", $(this).val());
+                        $("#catId").change();
+                        if((depth==1 && $(this).val()!=0) || (depth>1 && $(this).val()!=$("#select_"+(depth-1)).val())) {
+                            draw_select(depth+1, $(this).val());
+                        }
+                        return true;
+                    });
                 });
 
                 function draw_select(select, categoryID) {
@@ -252,20 +264,9 @@
                         osc.item_post.category_tree_id[select-1] = null;
                         $('#select_'+select).html(options);
                         $('#select_'+select).next("a").find(".select-box-label").text(osc.langs.select_subcategory);
-                        $('#select_'+select).on("change", function() {
-                            var depth = parseInt($(this).attr("depth"));
-                            for(var d=(depth+1);d<=4;d++) {
-                                $("#select_"+d).off("change");
-                                $("#select_"+d).parent().remove();
-                            }
-                            $("#catId").attr("value", $(this).val());
-                            $("#catId").change();
-                            if((depth==1 && $(this).val()!=0) || (depth>1 && $(this).val()!=$("#select_"+(depth-1)).val())) {
-                                draw_select(depth+1, $(this).val());
-                            }
-                        });
-                        $('#select_'+select).change();
-                        selectUi($('#select_'+select));
+                        $('#select_'+select).trigger("created");
+                        //selectUi($('#select_'+select));
+                        //$('#select_'+select).uniform();
                     };
 
                 }
