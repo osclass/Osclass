@@ -33,9 +33,13 @@
         <?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript(); ?>
         <script type="text/javascript">
 
-            $('body').on("created", '[name^="select_"]',function(evt) {
-                $("#select_"+evt.target.id).uniform();
-                console.log("OLA KA S 5E");
+            $(document).ready(function(){
+                $('body').on("created", '[name^="select_"]',function(evt) {
+                    $(this).uniform();
+                });
+                $('body').on("removed", '[name^="select_"]',function(evt) {
+                    $(this).parent().remove();
+                });
             });
 
             function uniform_input_file(){

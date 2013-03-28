@@ -236,6 +236,7 @@
                     $('body').on("change", '[name^="select_"]', function() {
                         var depth = parseInt($(this).attr("depth"));
                         for(var d=(depth+1);d<=4;d++) {
+                            $("#select_"+d).trigger('removed');
                             $("#select_"+d).remove();
                         }
                         $("#catId").attr("value", $(this).val());

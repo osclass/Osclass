@@ -99,10 +99,6 @@ function customPageHeader() { ?>
                     selectUi($(this));
                 });
 
-                $('body').on("change", '[name^="select_"]',function(evt) {
-                    $(this).parent().remove();
-                });
-
             });
         </script>
         <?php ItemForm::location_javascript_new('admin'); ?>

@@ -169,7 +169,7 @@ function selectUi(thatSelect){
     thatSelect.change(function(){
         uiSelected.text(thatSelect.find('option:selected').text());
     });
-    thatSelect.bind('remove', function() {
+    thatSelect.on('remove', function() {
         uiSelect.remove();
     });
 }
