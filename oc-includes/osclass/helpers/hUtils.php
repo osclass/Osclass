@@ -215,11 +215,18 @@
         $query = osc_search_pattern();
         $query = trim(preg_replace('/\s+/', ' ', $query));
 
-        $aQuery = explode(' ', $query);
-        foreach ($aQuery as $word) {
-            $word = trim($word);
-            if($word!='') {
-                $txt = preg_replace("/($word)/i", $start_tag . "$01". $end_tag, $txt);
+
+        // exact match
+        if(preg_match('/^"(.*)"$/i', $query)>0) {
+            $query = preg_replace('/^"(.*)"$/i', '$01', $query);
+            $txt = preg_replace("/($query)/i", $start_tag . "$01". $end_tag, $txt);
+        } else {
+            $aQuery = explode(' ', $query);
+            foreach ($aQuery as $word) {
+                $word = trim($word);
+                if($word!='') {
+                    $txt = preg_replace("/(\PL|\s+|^)($word)(\PL|\s+|$)/i", "$01" . $start_tag . "$02". $end_tag . "$03", $txt);
+                }
             }
         }
         return $txt;
