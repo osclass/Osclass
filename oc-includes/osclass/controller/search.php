@@ -66,20 +66,20 @@
                 if( preg_match('|-r([0-9]+)$|', $search_uri, $r) ) {
                     $region = Region::newInstance()->findByPrimaryKey($r[1]);
                     if( !$region ) {
-                        $this->do404(); exit;
+                        $this->do404();
                     }
                     Params::setParam('sRegion', $region['pk_i_id']);
                 } else if( preg_match('|-c([0-9]+)$|', $search_uri, $c) ) {
                     $city = City::newInstance()->findByPrimaryKey($c[1]);
                     if( !$city ) {
-                        $this->do404(); exit;
+                        $this->do404();
                     }
                     Params::setParam('sCity', $city['pk_i_id']);
                 } else {
                     $aCategory = explode('/', $search_uri);
                     $category  = Category::newInstance()->findBySlug($aCategory[count($aCategory)-1]);
                     if( count($category) === 0 ) {
-                        $this->do404(); exit;
+                        $this->do404();
                     }
                     Params::setParam('sCategory', $search_uri);
                 }
