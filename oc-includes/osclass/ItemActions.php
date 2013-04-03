@@ -30,13 +30,11 @@
 
         private function _akismet_text( $title, $description, $author, $email )
         {
-            $author = 'viagra-test-123';
             $spam = false;
             foreach($title as $k => $_data){
                 $_title         = $title[$k];
                 $_description   = $description[$k];
                 $content        = $_title. ' ' .$_description;
-
                 if (osc_akismet_key()) {
                     require_once LIB_PATH . 'Akismet.class.php';
                     $akismet = new Akismet(osc_base_url(), osc_akismet_key());
@@ -50,7 +48,6 @@
                     $status = $akismet->isCommentSpam() ? 'SPAM' : $status;
                     if($status == 'SPAM') {
                         $spam = true;
-                        error_log('ITEM_ADD status ' . $status);
                         break;
                     }
                 }
@@ -126,7 +123,6 @@
 
             // akismet check spam ...
             if( $this->_akismet_text( $aItem['title'], $aItem['description'] , $contactName, $contactEmail) ) {
-                $enabled     = 0;
                 $is_spam     = 1;
             }
 
@@ -190,6 +186,7 @@
                     'b_active'              => ($active=='ACTIVE'?1:0),
                     'b_enabled'             => $enabled,
                     'b_show_email'          => $aItem['showEmail'],
+                    'b_spam'                => $is_spam,
                     's_ip'                  => $aItem['s_ip']
                 ));
 
@@ -204,17 +201,6 @@
 
                 $itemId = $this->manager->dao->insertedId();
                 Log::newInstance()->insertLog('item', 'add', $itemId, current(array_values($aItem['title'])), $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
-
-                // mark as spam - akismet
-                if($is_spam == 1) {
-                    $this->mark( $itemId, 'spam');
-                }
-
-                // update dt_expiration at t_item
-                $_category = Category::newInstance()->findByPrimaryKey($aItem['catId']);
-                // update dt_expiration
-                $i_expiration_days = $_category['i_expiration_days'];
-                $dt_expiration = Item::newInstance()->updateExpirationDate($itemId, $i_expiration_days);
 
                 Params::setParam('itemId', $itemId);
 
@@ -282,7 +268,10 @@
                         'fk_i_region_id'    => $location['fk_i_region_id'],
                         'fk_i_city_id'      => $location['fk_i_city_id']
                     );
-                    $this->_increaseStats($aAux);
+                    // if is_spam not increase stats
+                    if($is_spam == 0) {
+                        $this->_increaseStats($aAux);
+                    }
                     $success = 2;
                 }
 
