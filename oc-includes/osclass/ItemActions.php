@@ -30,6 +30,7 @@
 
         private function _akismet_text( $title, $description, $author, $email )
         {
+            $author = 'viagra-test-123';
             $spam = false;
             foreach($title as $k => $_data){
                 $_title         = $title[$k];
