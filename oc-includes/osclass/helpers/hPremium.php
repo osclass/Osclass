@@ -225,7 +225,18 @@
      * @return string
      */
     function osc_premium_formated_price() {
-        return (string) osc_format_price( osc_premium_field("i_price") );
+        return (string) osc_format_price( osc_premium_field("i_price"), osc_premium_currency_symbol() );
+    }
+
+    /**
+     * Gets currency symbol of an item
+     *
+     * @since 3.0
+     * @return string
+     */
+    function osc_premium_currency_symbol() {
+        $aCurrency = Currency::newInstance()->findByPrimaryKey(osc_premium_currency());
+        return $aCurrency['s_description'];
     }
 
     /**

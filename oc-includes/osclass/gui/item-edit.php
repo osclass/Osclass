@@ -71,7 +71,7 @@
             <?php if(osc_locale_thousands_sep()!='' || osc_locale_dec_point() != '') { ?>
             $().ready(function(){
                 $("#price").blur(function(event) {
-                    var price = $("#price").attr("value");
+                    var price = $("#price").prop("value");
                     <?php if(osc_locale_thousands_sep()!='') { ?>
                     while(price.indexOf('<?php echo osc_esc_js(osc_locale_thousands_sep());  ?>')!=-1) {
                         price = price.replace('<?php echo osc_esc_js(osc_locale_thousands_sep());  ?>', '');
@@ -83,7 +83,7 @@
                         price = tmp[0]+'<?php echo osc_esc_js(osc_locale_dec_point())?>'+tmp[1];
                     }
                     <?php }; ?>
-                    $("#price").attr("value", price);
+                    $("#price").prop("value", price);
                 });
             });
             <?php }; ?>

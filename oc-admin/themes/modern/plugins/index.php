@@ -79,7 +79,7 @@
         </script>
         <?php
     }
-    osc_add_hook('admin_header','customHead');
+    osc_add_hook('admin_header','customHead', 10);
 
     $iDisplayLength = __get('iDisplayLength');
     $aData          = __get('aPlugins');
@@ -277,7 +277,7 @@
         });
     });
 
-    $('.market-popup').live('click',function(){
+    $('.market-popup').on('click',function(){
         $.getJSON(
             "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=check_market",
             {"code" : $(this).attr('href').replace('#',''), 'section' : 'plugins'},

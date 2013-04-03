@@ -316,6 +316,10 @@
                 break;
                 default:
 
+                                            if(Params::getParam('checkUpdated') != '') {
+                                                osc_admin_toolbar_update_languages(true);
+                                            }
+
                                             if(Params::getParam("action")!="") {
                                                 osc_run_hook("language_bulk_".Params::getParam("action"), Params::getParam('id'));
                                             }

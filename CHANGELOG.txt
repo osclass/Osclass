@@ -1,3 +1,29 @@
+Osclass 3.1.1 2012-03-20
+------------------------
+- Fixed breadcrumd in public profile
+- Showing correct description in public profile
+- SEO fixes: meta description, correct HTTP headers in search results and listing detail page
+- Don't override from email address when using SMTP
+- Problem with custom field url
+- Bug with reCAPTCHA in mobile browsers
+- Bug fixes related to upgrade
+- Bug fixes related to CSRF
+- Minor bug fixes
+
+Osclass 3.1 2012-02-26
+----------------------
+- Better market: you can now download languages from the admin
+- User ban system
+- Templates for static pages + better customization of pages
+- Manage email alerts
+- Security improvements: CSRF in the forms
+- Easier installation process
+- Preview of the email templates + legend in the sidebar
+- Enqueue styles and javascripts urls
+- Remove several cities/regions at the same time
+- Upgrade Osclass via CLI
+- Minor bug fixes
+
 Osclass 3.0.2 2012-10-22
 ------------------------
 - Use email from SMTP Settings if it's defined

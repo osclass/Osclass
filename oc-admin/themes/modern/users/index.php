@@ -59,7 +59,7 @@
 
                 // check_all bulkactions
                 $("#check_all").change(function(){
-                    var isChecked = $(this+':checked').length;
+                    var isChecked = $(this).prop("checked");
                     $('.col-bulkactions input').each( function() {
                         if( isChecked == 1 ) {
                             this.checked = true;
@@ -115,7 +115,7 @@
         </script>
         <?php
     }
-    osc_add_hook('admin_header','customHead');
+    osc_add_hook('admin_header','customHead', 10);
 
     $aData      = __get('aData');
     $aRawRows   = __get('aRawRows');

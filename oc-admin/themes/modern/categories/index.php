@@ -71,9 +71,9 @@
         </style>
         <script type="text/javascript">
             $(function() {
-                $('.category_div').live('mouseenter',function(){
+                $('.category_div').on('mouseenter',function(){
                     $(this).addClass('cat-hover');
-                }).live('mouseleave',function(){
+                }).on('mouseleave',function(){
                     $(this).removeClass('cat-hover');
                 });
                 var list_original = '';
@@ -304,7 +304,7 @@
         </script>
         <?php
     }
-    osc_add_hook('admin_header','customHead');
+    osc_add_hook('admin_header','customHead', 10);
 
     $users      = __get('users');
     $stat       = __get('stat');

@@ -689,7 +689,7 @@
      * @return string
      */
     function osc_delete_comment_url() {
-        return (string) osc_base_url(true) . "?page=item&action=delete_comment&id=" . osc_item_id() . "&comment=" . osc_comment_id();
+        return (string) osc_base_url(true)."?page=item&action=delete_comment&id=".osc_item_id()."&comment=".osc_comment_id()."&".osc_csrf_token_url();
     }
 
     //////////////////////////////
@@ -1038,15 +1038,17 @@
      * @param float $price
      * @return string
      */
-    function osc_format_price($price) {
+    function osc_format_price($price, $symbol = null) {
         if ($price == null) return osc_apply_filter ('item_price_null', __('Check with seller') );
         if ($price == 0) return osc_apply_filter ('item_price_zero', __('Free') );
+
+        if($symbol==null) { $symbol = osc_item_currency_symbol(); }
 
         $price = $price/1000000;
 
         $currencyFormat = osc_locale_currency_format();
         $currencyFormat = str_replace('{NUMBER}', number_format($price, osc_locale_num_dec(), osc_locale_dec_point(), osc_locale_thousands_sep()), $currencyFormat);
-        $currencyFormat = str_replace('{CURRENCY}', osc_item_currency_symbol(), $currencyFormat);
+        $currencyFormat = str_replace('{CURRENCY}', $symbol, $currencyFormat);
         return osc_apply_filter('item_price', $currencyFormat );
     }
 
@@ -1136,10 +1138,10 @@
             }
         } else if($meta['e_type']=="URL") {
             if(osc_field(osc_item_meta(), 's_value', '')!='') {
-                if (strpos(osc_field(osc_item_meta(), 's_value', ''),'http://')===TRUE) {
-                	return '<a href="'.htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8").'" >'.htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8").'</a>';
+                if (stripos(osc_field(osc_item_meta(), 's_value', ''),'http://')===false) {
+                    return '<a href="http://'.htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8").'" >'.htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8").'</a>';
                 } else{
-                	return '<a href="http://'.htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8").'" >'.htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8").'</a>';
+                    return '<a href="'.htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8").'" >'.htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8").'</a>';
                 }
             } else {
                 return '';
@@ -1266,7 +1268,7 @@
      * @since 3.0
      */
     function osc_query_item($params = null) {
-        $mSearch = Search::newInstance();
+        $mSearch = new Search();
         if($params==null) {
             $params = array();
         } else if(is_string($params)){

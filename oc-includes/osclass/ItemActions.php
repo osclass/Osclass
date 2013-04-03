@@ -240,7 +240,13 @@
                 $locationManager = ItemLocation::newInstance();
                 $locationManager->insert($location);
 
-                $this->uploadItemResources( $aItem['photos'] , $itemId );
+                $this->uploadItemResources( $aItem['photos'] , $itemId);
+
+                // update dt_expiration at t_item
+                $_category = Category::newInstance()->findByPrimaryKey($aItem['catId']);
+                // update dt_expiration
+                $i_expiration_days = $_category['i_expiration_days'];
+                $dt_expiration = Item::newInstance()->updateExpirationDate($itemId, $i_expiration_days);
 
                 /**
                  * META FIELDS
@@ -1320,7 +1326,7 @@
                     if($numImagesItems==0 || ($numImagesItems>0 && $numImages<$numImagesItems)) {
                         if ($error == UPLOAD_ERR_OK) {
 
-                            $freedisk = 4*osc_max_size_kb();
+                            $freedisk = 4*osc_max_size_kb()*1024;
                             if(function_exists('disk_free_space')) {
                                 $freedisk = @disk_free_space(osc_content_path() . 'uploads/');
                             }
@@ -1341,25 +1347,25 @@
                                     $wat->doWatermarkImage( $path, 'image/jpeg');
                                 }
                                 $sizeTmp = filesize($path);
-                                $total_size += $sizeTmp!==false?$sizeTmp:osc_max_size_kb();
+                                $total_size += $sizeTmp!==false?$sizeTmp:(osc_max_size_kb()*1024);
 
                                 // Create preview
                                 $path = $tmpName."_preview";
                                 $size = explode('x', osc_preview_dimensions());
                                 ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path);
                                 $sizeTmp = filesize($path);
-                                $total_size += $sizeTmp!==false?$sizeTmp:osc_max_size_kb();
+                                $total_size += $sizeTmp!==false?$sizeTmp:(osc_max_size_kb()*1024);
 
                                 // Create thumbnail
                                 $path = $tmpName."_thumbnail";
                                 $size = explode('x', osc_thumbnail_dimensions());
                                 ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path);
                                 $sizeTmp = filesize($path);
-                                $total_size += $sizeTmp!==false?$sizeTmp:osc_max_size_kb();
+                                $total_size += $sizeTmp!==false?$sizeTmp:(osc_max_size_kb()*1024);
 
                                 if( osc_keep_original_image() ) {
                                     $sizeTmp = filesize($tmpName);
-                                    $total_size += $sizeTmp!==false?$sizeTmp:osc_max_size_kb();
+                                    $total_size += $sizeTmp!==false?$sizeTmp:(osc_max_size_kb()*1024);
                                 }
 
                                 if($total_size<=$freedisk) {

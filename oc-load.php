@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '3.1.0');
+define('OSCLASS_VERSION', '3.1.1');
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -167,6 +167,10 @@ require_once LIB_PATH . 'osclass/classes/Breadcrumb.php';
 require_once LIB_PATH . 'osclass/classes/EmailVariables.php';
 require_once LIB_PATH . 'osclass/alerts.php';
 
+require_once LIB_PATH . 'osclass/classes/Dependencies.php';
+require_once LIB_PATH . 'osclass/classes/Scripts.php';
+require_once LIB_PATH . 'osclass/classes/Styles.php';
+
 require_once LIB_PATH . 'osclass/frm/Form.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Page.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Category.form.class.php';
@@ -250,6 +254,8 @@ osc_register_script('jquery-validate', osc_assets_url('js/jquery.validate.min.js
 osc_register_script('tabber', osc_assets_url('js/tabber-minimized.js'), 'jquery');
 osc_register_script('tiny_mce', osc_assets_url('js/tiny_mce/tiny_mce.js'));
 osc_register_script('colorpicker', osc_assets_url('js/colorpicker/js/colorpicker.js'));
+osc_register_script('fancybox', osc_assets_url('js/fancybox/jquery.fancybox.pack.js'), array('jquery'));
+osc_register_script('jquery-migrate', osc_assets_url('js/jquery-migrate.min.js'), array('jquery'));
 
 Plugins::init();
 osc_csrfguard_start();

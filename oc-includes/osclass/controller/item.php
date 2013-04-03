@@ -118,7 +118,7 @@
                         }
                     }
 
-                    if (osc_recaptcha_private_key() != '') {
+                    if(osc_recaptcha_items_enabled() && osc_recaptcha_private_key() != '') {
                         if(!osc_check_recaptcha()) {
                             osc_add_flash_error_message( _m('The Recaptcha code is wrong') );
                             $this->redirectTo( osc_item_post_url() );
@@ -222,7 +222,7 @@
                             }
                         }
 
-                        if(osc_recaptcha_private_key() != '') {
+                        if(osc_recaptcha_items_enabled() && osc_recaptcha_private_key() != '') {
                             if( !osc_check_recaptcha() ) {
                                 osc_add_flash_error_message( _m('The Recaptcha code is wrong') );
                                 $this->redirectTo( osc_item_edit_url($secret, $id) );
@@ -491,9 +491,9 @@
                     }
 
                     $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
-                    // if item doesn't exist show an error 404
+                    // if item doesn't exist show an error 410
                     if( count($item) == 0 ) {
-                        $this->do404();
+                        $this->do410();
                         return;
                     }
 
@@ -501,12 +501,12 @@
                         if( ($this->userId == $item['fk_i_user_id']) && ($this->userId != '') ) {
                             osc_add_flash_warning_message( _m("The listing hasn't been validated. Please validate it in order to make it public") );
                         } else {
-                            osc_add_flash_warning_message( _m("This listing hasn't been validated") );
-                            $this->redirectTo( osc_base_url(true) );
+                            $this->do400();
+                            return;
                         }
                     } else if ($item['b_enabled'] == 0) {
-                        osc_add_flash_warning_message( _m('The listing has been suspended') );
-                        $this->redirectTo( osc_base_url(true) );
+                        $this->do400();
+                        return;
                     }
 
                     if(!osc_is_admin_user_logged_in() && !($item['fk_i_user_id']!='' && $item['fk_i_user_id']==osc_logged_user_id())) {

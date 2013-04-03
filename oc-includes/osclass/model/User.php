@@ -129,27 +129,12 @@
             if($result == false) {
                 return array();
             }
-            $row    = $result->row();
 
             if( $result->numRows() != 1 ) {
                 return array();
             }
 
-            $this->dao->select();
-            $this->dao->from(DB_TABLE_PREFIX.'t_user_description');
-            $this->dao->where('fk_i_user_id', $id);
-            if(!is_null($locale)) {
-                $this->dao->where('fk_c_locale_code', $locale);
-            }
-            $result = $this->dao->get();
-            $descriptions = $result->result();
-
-            $row['locale'] = array();
-            foreach($descriptions as $sub_row) {
-                $row['locale'][$sub_row['fk_c_locale_code']] = $sub_row;
-            }
-
-            return $row;
+            return $this->extendData($result->row(), $locale);
         }
 
         /**
@@ -160,7 +145,7 @@
          * @param string $email
          * @return array
          */
-        public function findByEmail($email)
+        public function findByEmail($email, $locale = null)
         {
             $this->dao->select();
             $this->dao->from($this->getTableName());
@@ -170,7 +155,7 @@
             if( $result == false ) {
                 return false;
             } else if($result->numRows() == 1){
-                return $result->row();
+                return $this->extendData($result->row(), $locale);
             } else {
                 return array();
             }
@@ -184,7 +169,7 @@
          * @param string $username
          * @return array
          */
-        public function findByUsername($username)
+        public function findByUsername($username, $locale = null)
         {
             $this->dao->select();
             $this->dao->from($this->getTableName());
@@ -194,7 +179,7 @@
             if( $result == false ) {
                 return false;
             } else if($result->numRows() == 1){
-                return $result->row();
+                return $this->extendData($result->row(), $locale);
             } else {
                 return array();
             }
@@ -209,7 +194,7 @@
          * @param string $password
          * @return array
          */
-        public function findByCredentials($key, $password)
+        public function findByCredentials($key, $password, $locale = null)
         {
             $this->dao->select();
             $this->dao->from($this->getTableName());
@@ -223,7 +208,7 @@
             if( $result == false ) {
                 return false;
             } else if($result->numRows() == 1){
-                return $result->row();
+                return $this->extendData($result->row(), $locale);
             } else {
                 return array();
             }
@@ -237,7 +222,7 @@
          * @param string $id
          * @param string $secret
          */
-        public function findByIdSecret($id, $secret)
+        public function findByIdSecret($id, $secret, $locale = null)
         {
             $this->dao->select();
             $this->dao->from($this->getTableName());
@@ -251,7 +236,7 @@
             if( $result == false ) {
                 return false;
             } else if($result->numRows() == 1){
-                return $result->row();
+                return $this->extendData($result->row(), $locale);
             } else {
                 return array();
             }
@@ -266,7 +251,7 @@
          * @param string $secret
          * @return array
          */
-        public function findByIdPasswordSecret($id, $secret)
+        public function findByIdPasswordSecret($id, $secret, $locale = null)
         {
             if($secret=='') { return null; }
             $date = date("Y-m-d H:i:s", (time()-(24*3600)));
@@ -283,13 +268,38 @@
            if( $result == false ) {
                 return false;
             } else if($result->numRows() == 1){
-                return $result->row();
+                return $this->extendData($result->row(), $locale);
             } else {
                 return array();
             }
         }
 
         /**
+         * Add description to user array
+         *
+         * @since 3.1.1
+         * @param $row with user's info
+         * @return array
+         */
+        private function extendData($user, $locale = null) {
+            $this->dao->select();
+            $this->dao->from(DB_TABLE_PREFIX.'t_user_description');
+            $this->dao->where('fk_i_user_id', $user['pk_i_id']);
+            if(!is_null($locale)) {
+                $this->dao->where('fk_c_locale_code', $locale);
+            }
+            $result = $this->dao->get();
+            $descriptions = $result->result();
+
+            $user['locale'] = array();
+            foreach($descriptions as $sub_row) {
+                $user['locale'][$sub_row['fk_c_locale_code']] = $sub_row;
+            }
+            return $user;
+        }
+
+
+/**
          * Delete an user given its id
          *
          * @access public

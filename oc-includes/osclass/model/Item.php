@@ -565,7 +565,6 @@
          */
         public function updateExpirationDate($id, $i_expiration_days)
         {
-
             $this->dao->select('dt_expiration');
             $this->dao->from($this->getTableName());
             $this->dao->where('pk_i_id', $id);
@@ -587,13 +586,15 @@
                 if($result && $result>0) {
                     $this->dao->select('i.dt_expiration, i.fk_i_user_id, i.fk_i_category_id, l.fk_c_country_code, l.fk_i_region_id, l.fk_i_city_id');
                     $this->dao->from($this->getTableName()." i, ".DB_TABLE_PREFIX.'t_item_location l');
+                    $this->dao->where('i.pk_i_id = l.fk_i_item_id' );
                     $this->dao->where('i.pk_i_id', $id );
                     $result = $this->dao->get();
                     $_item = $result->row();
+
                     $expired = osc_isExpired($_item['dt_expiration']);
                     if($expired!=$expired_old) {
                         if($expired) {
-                            if($item['fk_i_user_id']!=null) {
+                            if($_item['fk_i_user_id']!=null) {
                                 User::newInstance()->decreaseNumItems($_item['fk_i_user_id']);
                             }
                             CategoryStats::newInstance()->decreaseNumItems($_item['fk_i_category_id']);
@@ -601,7 +602,7 @@
                             RegionStats::newInstance()->decreaseNumItems($_item['fk_i_region_id']);
                             CityStats::newInstance()->decreaseNumItems($_item['fk_i_city_id']);
                         }  else {
-                            if($item['fk_i_user_id']!=null) {
+                            if($_item['fk_i_user_id']!=null) {
                                 User::newInstance()->increaseNumItems($_item['fk_i_user_id']);
                             }
                             CategoryStats::newInstance()->increaseNumItems($_item['fk_i_category_id']);
@@ -722,6 +723,8 @@
                 CityStats::newInstance()->decreaseNumItems($item['fk_i_city_id']);
             }
 
+            $this->deleteResourcesFromHD($id);
+
             $this->dao->delete(DB_TABLE_PREFIX.'t_item_description', "fk_i_item_id = $id");
             $this->dao->delete(DB_TABLE_PREFIX.'t_item_comment' , "fk_i_item_id = $id");
             $this->dao->delete(DB_TABLE_PREFIX.'t_item_resource', "fk_i_item_id = $id");
@@ -733,6 +736,26 @@
 
             $res = parent::deleteByPrimaryKey($id);
             return $res;
+        }
+
+        /**
+         * Delete resources by primary key
+         *
+         * @access public
+         * @since 3.1.1
+         * @param int $id item id
+         * @return bool
+         */
+        public function deleteResourcesFromHD( $id )
+        {
+            $resources = ItemResource::newInstance()->getAllResourcesFromItem($id);
+            Log::newInstance()->insertLog('Item', 'deleteResourcesFromHD', $id, $id, OC_ADMIN?'admin':'user', OC_ADMIN?osc_logged_admin_id():osc_logged_user_id());
+            $log_ids = '';
+            foreach($resources as $resource) {
+                osc_deleteResource($resource['pk_i_id'], OC_ADMIN);
+                $log_ids .= $resource['pk_i_id'].",";
+            }
+            Log::newInstance()->insertLog('Item', 'deleteResourcesFromHD', $id, substr($log_ids,0, 250), OC_ADMIN?'admin':'user', OC_ADMIN?osc_logged_admin_id():osc_logged_user_id());
         }
 
         /**

@@ -65,11 +65,22 @@
                 $search_uri = preg_replace('|.*?/|', '', $search_uri);
                 if( preg_match('|-r([0-9]+)$|', $search_uri, $r) ) {
                     $region = Region::newInstance()->findByPrimaryKey($r[1]);
+                    if( !$region ) {
+                        $this->do404();
+                    }
                     Params::setParam('sRegion', $region['pk_i_id']);
                 } else if( preg_match('|-c([0-9]+)$|', $search_uri, $c) ) {
                     $city = City::newInstance()->findByPrimaryKey($c[1]);
+                    if( !$city ) {
+                        $this->do404();
+                    }
                     Params::setParam('sCity', $city['pk_i_id']);
                 } else {
+                    $aCategory = explode('/', $search_uri);
+                    $category  = Category::newInstance()->findBySlug($aCategory[count($aCategory)-1]);
+                    if( count($category) === 0 ) {
+                        $this->do404();
+                    }
                     Params::setParam('sCategory', $search_uri);
                 }
             }
@@ -187,7 +198,10 @@
             }
 
             $p_bPic       = Params::getParam('bPic');
-            ($p_bPic == 1) ? $p_bPic = 1 : $p_bPic = 0;
+            $p_bPic = ($p_bPic == 1) ? 1 : 0;
+
+            $p_bPremium   = Params::getParam('bPremium');
+            $p_bPremium = ($p_bPremium == 1) ? 1 : 0;
 
             $p_sPriceMin  = Params::getParam('sPriceMin');
             $p_sPriceMax  = Params::getParam('sPriceMax');
@@ -241,7 +255,8 @@
             $successCat = false;
             if(count($p_sCategory) > 0) {
                 foreach($p_sCategory as $category) {
-                    $successCat = ($successCat || $this->mSearch->addCategory($category));
+
+                    $successCat = ($this->mSearch->addCategory($category) || $successCat);
                 }
             } else {
                 $bAllCategoriesChecked = true;
@@ -299,6 +314,11 @@
                 $this->mSearch->withPicture(true);
             }
 
+            // FILTERING IF WE ONLY WANT PREMIUM ITEMS
+            if($p_bPremium) {
+                $this->mSearch->onlyPremium(true);
+            }
+
             //FILTERING BY RANGE PRICE
             $this->mSearch->priceRange($p_sPriceMin, $p_sPriceMax);
 
@@ -351,6 +371,7 @@
                 $this->_exportVariableToView('search_total_pages', $iNumPages);
                 $this->_exportVariableToView('search_page', $p_iPage);
                 $this->_exportVariableToView('search_has_pic', $p_bPic);
+                $this->_exportVariableToView('search_only_premium', $p_bPremium);
                 $this->_exportVariableToView('search_region', $regionName);
                 $this->_exportVariableToView('search_city', $cityName);
                 $this->_exportVariableToView('search_price_min', $p_sPriceMin);
@@ -365,8 +386,8 @@
 
                 $this->_exportVariableToView('search_alert', base64_encode($json));
 
-                //calling the view...
-                if(count($aItems)==0 || !$successCat) {
+                // calling the view...
+                if( count($aItems) === 0 ) {
                     header('HTTP/1.1 404 Not Found');
                 }
                 $this->doView('search.php');

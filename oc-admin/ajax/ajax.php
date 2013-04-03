@@ -700,14 +700,8 @@
                                 }
                             }
 
-                            $url_source_file = '';
-                            if($data['s_download']!='') {
-                                $filename = basename(str_replace("/download", "", $data['s_download']));
-                                $url_source_file = $data['s_download'];
-                            } else {
-                                $filename = $data['s_update_url']."_".$data['s_version'].".zip";
-                                $url_source_file = $data['s_source_file'];
-                            }
+                            $filename = $data['s_update_url']."_".$data['s_version'].".zip";
+                            $url_source_file = $data['s_source_file'];
 
 //                            error_log('Source file: ' . $url_source_file);
 //                            error_log('Filename: ' . $filename);
@@ -728,8 +722,10 @@
                                     if ($handle = opendir(osc_content_path() . 'downloads/oc-temp')) {
                                         $folder_dest    = ABS_PATH . "oc-content/".$folder;
 
-                                        $current_user   = posix_getpwuid(posix_geteuid());
-                                        $ownerFolder    = posix_getpwuid(fileowner($folder_dest));
+                                        if( function_exists('posix_getpwuid') ) {
+                                            $current_user   = posix_getpwuid(posix_geteuid());
+                                            $ownerFolder    = posix_getpwuid(fileowner($folder_dest));
+                                        }
 
                                         $fail = 0;
                                         while (false !== ($_file = readdir($handle))) {
@@ -793,7 +789,7 @@
                                                     $message .= __('There was a problem adding the language');
                                                     $error = 8;
                                                 }
-                                                osc_check_languages_update();
+                                                osc_check_languages_update(true);
                                             }
 
                                             if ($rm_errors == 0) {
@@ -805,9 +801,12 @@
                                             }
                                         } else {
                                             $message = __('Problems when copying files. Please check your permissions. ');
+
                                             if($current_user['uid'] != $ownerFolder['uid']) {
-                                                $current_group  = posix_getgrgid( $current_user['gid']);
-                                                $message .= '<p><strong>' . sprintf(__('NOTE: Web user and destination folder user is not the same, you might have an issue there. <br/>Do this in your console:<br/>chown -R %s:%s %s'), $current_user['name'], $current_group['name'], $folder_dest).'</strong></p>';
+                                                if(function_exists('posix_getgrgid') ) {
+                                                    $current_group  = posix_getgrgid( $current_user['gid']);
+                                                    $message .= '<p><strong>' . sprintf(__('NOTE: Web user and destination folder user is not the same, you might have an issue there. <br/>Do this in your console:<br/>chown -R %s:%s %s'), $current_user['name'], $current_group['name'], $folder_dest).'</strong></p>';
+                                                }
                                             }
                                             $error = 4; // Problems copying files. Maybe permissions are not correct
                                         }

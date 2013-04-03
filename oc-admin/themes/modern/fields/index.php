@@ -78,9 +78,9 @@ function customHead() {
     }
 
     $(document).ready(function() {
-        $('.cfield-div').live('mouseenter',function(){
+        $('.cfield-div').on('mouseenter',function(){
             $(this).addClass('cfield-hover');
-        }).live('mouseleave',function(){
+        }).on('mouseleave',function(){
             $(this).removeClass('cfield-hover');
         });
 
@@ -176,7 +176,7 @@ function customHead() {
 </script>
     <?php
 }
-    osc_add_hook('admin_header','customHead');
+    osc_add_hook('admin_header','customHead', 10);
 
     function customPageTitle($string) {
         return sprintf(__('Custom fields &raquo; %s'), $string);
