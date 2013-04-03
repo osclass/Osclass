@@ -29,6 +29,16 @@
 
         function __construct()
         {
+            if( parse_url(WEB_PATH, PHP_URL_HOST) !== $_SERVER['HTTP_HOST'] ) {
+                $url = 'http://';
+                if( $this->is_ssl() ) {
+                    $url = 'https://';
+                }
+
+                $url .= parse_url(WEB_PATH, PHP_URL_HOST) . $_SERVER['REQUEST_URI'];
+                $this->redirectTo($url);
+            }
+
             $this->page   = Params::getParam('page');
             $this->action = Params::getParam('action');
             $this->ajax   = false;
@@ -93,6 +103,19 @@
         {
             $timeEnd = list($em, $es) = explode(' ', microtime());
             return ($timeEnd[0] + $timeEnd[1]) - ($this->time[0] + $this->time[1]);
+        }
+
+        protected function is_ssl() {
+            if( isset($_SERVER['HTTPS']) ) {
+                if( strtolower($_SERVER['HTTPS']) == 'on' ){
+                    return true;
+                }
+                if( $_SERVER['HTTPS'] == '1' ) {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 
