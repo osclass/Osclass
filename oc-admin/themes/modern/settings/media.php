@@ -108,7 +108,7 @@
                     if( $(this).prop('checked') ) {
                         $('#watermark_text_box').show();
                         $('#watermark_image_box').hide();
-                        if( !$('input[name="keep_original_image"]').attr('checked') ) {
+                        if( !$('input[name="keep_original_image"]').prop('checked') ) {
                             $("#dialog-watermark-warning").dialog('open');
                         }
                         resetLayout();
@@ -119,7 +119,7 @@
                     if( $(this).prop('checked') ) {
                         $('#watermark_text_box').hide();
                         $('#watermark_image_box').show();
-                        if( !$('input[name="keep_original_image"]').attr('checked') ) {
+                        if( !$('input[name="keep_original_image"]').prop('checked') ) {
                             $("#dialog-watermark-warning").dialog('open');
                         }
                         resetLayout();

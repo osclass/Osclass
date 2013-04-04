@@ -29,8 +29,8 @@
                         $('input[name="mailserver_username"]').val('');
                         $('input[name="mailserver_password"]').val('');
                         $('input[name="mailserver_ssl"]').val('ssl');
-                        $('input[name="mailserver_auth"]').attr('checked', true);
-                        $('input[name="mailserver_pop"]').attr('checked', false);
+                        $('input[name="mailserver_auth"]').prop('checked', true);
+                        $('input[name="mailserver_pop"]').prop('checked', false);
                     } else {
                         $('input[name="mailserver_host"]').attr('readonly', false);
                         $('input[name="mailserver_port"]').attr('readonly', false);
