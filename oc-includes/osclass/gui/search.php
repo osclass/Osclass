@@ -125,28 +125,28 @@
 
                         if(isChecked) {
                             $(this).removeClass('checked');
-                            $(this).next('input').attr('checked', false);
+                            $(this).next('input').prop('checked', false);
                         } else if(isSemiChecked) {
                             $(this).removeClass('semi-checked');
-                            $(this).next('input').attr('checked', false);
+                            $(this).next('input').prop('checked', false);
                         } else {
                             $(this).addClass('checked');
-                            $(this).next('input').attr('checked', true);
+                            $(this).next('input').prop('checked', true);
                         }
 
                         // there are subcategories ?
                         if($(this).parent().find('ul.sub').size()>0) {
                             if(isChecked){
                                 $(this).parent().find('ul.sub>li>div.chbx').removeClass('checked');
-                                $(this).parent().find('ul.sub>li>input').attr('checked', false);
+                                $(this).parent().find('ul.sub>li>input').prop('checked', false);
                             } else if(isSemiChecked){
                                 // if semi-checked -> check-all
                                 $(this).parent().find('ul.sub>li>div.chbx').removeClass('checked');
-                                $(this).parent().find('ul.sub>li>input').attr('checked', false);
+                                $(this).parent().find('ul.sub>li>input').prop('checked', false);
                                 $(this).removeClass('semi-checked');
                             } else {
                                 $(this).parent().find('ul.sub>li>div.chbx').addClass('checked');
-                                $(this).parent().find('ul.sub>li>input').attr('checked', true);
+                                $(this).parent().find('ul.sub>li>input').prop('checked', true);
                             }
                         } else {
                             // is subcategory checkbox or is category parent without subcategories
@@ -160,13 +160,13 @@
                                 var input    = $(parentLi).find('input.parent');
                                 var divInput = $(parentLi).find('div.chbx').first();
 
-                                $(input).attr('checked', false);
+                                $(input).prop('checked', false);
                                 $(divInput).removeClass('checked');
                                 $(divInput).removeClass('semi-checked');
 
                                 if(totalInputSub == totalInputSubChecked) {
                                     $(divInput).addClass('checked');
-                                    $(input).attr('checked', true);
+                                    $(input).prop('checked', true);
                                 }else if(totalInputSubChecked == 0) {
                                     // no input checked;
                                 }else if(totalInputSubChecked < totalInputSub) {

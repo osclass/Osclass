@@ -499,7 +499,7 @@
 	*/
 	function cancelChangeMode()
 	{
-		$('#formAction input[@value=' + $('#image_mode').val() + ']').attr('checked', 'checked');	
+		$('#formAction input[@value=' + $('#image_mode').val() + ']').prop('checked', 'checked');
 	};
 	/**
 	*	get the image element which is going to be modified
