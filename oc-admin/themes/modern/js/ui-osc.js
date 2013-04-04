@@ -25,11 +25,11 @@ $(function(){
             $(this).removeClass('hover');
         });
     });
-    $('#hidden-menus > li').on('mouseenter',function(){
+    $('#hidden-menus').on('mouseenter','li',function(){
         var $submenu = $(this).find('ul');
         $(this).addClass('hover');
-                    $submenu.css('top',($submenu.height()*-1)).css('margin-top','-22px');
-    }).on('mouseleave',function(){
+        $submenu.css('top',($submenu.height()*-1)).css('margin-top','-22px');
+    }).on('mouseleave','li',function(){
         $(this).removeClass('hover')
     });
     $('#language-tab li a').click(function(){
