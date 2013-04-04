@@ -110,8 +110,11 @@ class OCadmin_categories extends OCadminTest {
         $this->selenium->type("contactName" , "contact name");
         $this->selenium->type("contactEmail", "test@mail.com");
 
-        $this->selenium->select("parentCatId", "label=regexp:\\s*Vehicles");
-        $this->selenium->select("catId", "label=regexp:\\s*Cars");
+        //$this->selenium->select("parentCatId", "label=regexp:\\s*Vehicles");
+        //$this->selenium->select("catId", "label=regexp:\\s*Cars");
+        $this->selenium->select("select_1", "label=regexp:\\s*Vehicles");
+        sleep(2);
+        $this->selenium->select("select_2", "label=regexp:\\s*Cars");
         $this->selenium->type("title[en_US]", "title item");
         $this->selenium->type("description[en_US]", "description test description test description test");
         $this->selenium->type("price", "11");
