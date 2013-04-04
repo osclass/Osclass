@@ -277,7 +277,7 @@
                     <div class="form-row">
                         <div class="form-label"><?php _e('Image'); ?></div>
                         <div class="form-controls">
-                            <input type="file" name="watermark_image"/>
+                            <input type="file" name="watermark_image" id="watermark_image_file"/>
                             <?php if(osc_is_watermark_image()!='') { ?>
                                 <div class="help-box"><img width="100px" src="<?php echo osc_base_url()."oc-content/uploads/watermark.png" ?>" /></div>
                             <?php }; ?>
