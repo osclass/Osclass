@@ -1189,12 +1189,15 @@ HTACCESS;
                                                                     array('s_name'  => 'watermark_image')
                                                             );
                                                         } else {
+                                                            $status = 'error';
                                                             $error .= _m('There was a problem uploading the watermark image')."<br />";
                                                         }
                                                     } else {
+                                                        $status = 'error';
                                                         $error .= _m('The watermark image has to be a .PNG file')."<br />";
                                                     }
                                                 } else {
+                                                    $status = 'error';
                                                     $error .= _m('There was a problem uploading the watermark image')."<br />";
                                                 }
                                                 $iUpdated += Preference::newInstance()->update(
