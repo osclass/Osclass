@@ -200,11 +200,7 @@
             unset($tmp_categories_tree);
 
             if($categories == null) {
-                if(View::newInstance()->_exists('categories')) {
-                    $categories = View::newInstance()->_get('categories');
-                } else {
-                    $categories = Category::newInstance()->listAll(false);
-                }
+                $categories = Category::newInstance()->listAll(false);
             }
 
             parent::generic_input_hidden("catId", $categoryID);
