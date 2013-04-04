@@ -91,7 +91,7 @@
                 });
 
                 $('#watermark_none').bind('change', function() {
-                    if( $(this).attr('checked') ) {
+                    if( $(this).prop('checked') ) {
                         $('#watermark_text_box').hide();
                         $('#watermark_image_box').hide();
                         resetLayout();
@@ -104,8 +104,8 @@
                     modal: true
                 });
 
-                $('#watermark_text').bind('change', function() {
-                    if( $(this).attr('checked') ) {
+                $('#watermark_text').on('change', function() {
+                    if( $(this).prop('checked') ) {
                         $('#watermark_text_box').show();
                         $('#watermark_image_box').hide();
                         if( !$('input[name="keep_original_image"]').attr('checked') ) {
@@ -115,8 +115,8 @@
                     }
                 });
 
-                $('#watermark_image').bind('change', function() {
-                    if( $(this).attr('checked') ) {
+                $('#watermark_image').on('change', function() {
+                    if( $(this).prop('checked') ) {
                         $('#watermark_text_box').hide();
                         $('#watermark_image_box').show();
                         if( !$('input[name="keep_original_image"]').attr('checked') ) {
@@ -126,9 +126,9 @@
                     }
                 });
 
-                $('input[name="keep_original_image"]').change(function() {
-                    if( !$(this).attr('checked') ) {
-                        if( !$('#watermark_none').attr('checked') ) {
+                $('input[name="keep_original_image"]').on("change",function() {
+                    if( !$(this).prop('checked') ) {
+                        if( !$('#watermark_none').prop('checked') ) {
                             $("#dialog-watermark-warning").dialog('open');
                         }
                         resetLayout();
