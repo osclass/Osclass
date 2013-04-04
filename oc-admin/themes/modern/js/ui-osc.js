@@ -166,6 +166,9 @@ function selectUi(thatSelect){
     thatSelect.change(function(){
         uiSelected.text(thatSelect.find('option:selected').text());
     });
+    thatSelect.on('remove', function() {
+        uiSelect.remove();
+    });
 }
 function resetLayout(){
     //calc how items can see

@@ -190,6 +190,15 @@
                 }
             }
 
+            $p_sLocale     = Params::getParam('sLocale');
+            if(!is_array($p_sLocale)) {
+                if($p_sLocale == '') {
+                    $p_sLocale = '';
+                } else {
+                    $p_sLocale = explode(",", $p_sLocale);
+                }
+            }
+
             $p_sPattern   = strip_tags(Params::getParam('sPattern'));
 
             // ADD TO THE LIST OF LAST SEARCHES
@@ -310,6 +319,9 @@
             if($p_sUser != '') {
                 $this->mSearch->fromUser($p_sUser);
             }
+
+            // FILTERING LOCALE
+            $this->mSearch->addLocale($p_sLocale);
 
             // FILTERING IF WE ONLY WANT ITEMS WITH PICS
             if($p_bPic) {
