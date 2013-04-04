@@ -249,6 +249,7 @@
         } else {
             $( "#tabs" ).tabs({ selected: <?php echo $tab_index; ?> });
         }
+        $( "#tabs" ).tabs({ active: 1 });
 
         $("#market_cancel").on("click", function(){
             $(".ui-dialog-content").dialog("close");
