@@ -28,13 +28,41 @@
             $this->manager = Item::newInstance();
         }
 
+        private function _akismet_text( $title, $description, $author, $email )
+        {
+            $spam = false;
+            foreach($title as $k => $_data){
+                $_title         = $title[$k];
+                $_description   = $description[$k];
+                $content        = $_title. ' ' .$_description;
+                if (osc_akismet_key()) {
+                    require_once LIB_PATH . 'Akismet.class.php';
+                    $akismet = new Akismet(osc_base_url(), osc_akismet_key());
+
+                    $akismet->setCommentContent($content);
+                    $akismet->setCommentAuthor($author);
+                    $akismet->setCommentAuthorEmail($email);
+                    $akismet->setUserIP( get_ip() );
+
+                    $status  = '';
+                    $status = $akismet->isCommentSpam() ? 'SPAM' : $status;
+                    if($status == 'SPAM') {
+                        $spam = true;
+                        break;
+                    }
+                }
+            }
+            return $spam;
+        }
+
         /**
          * @return boolean
          */
         public function add()
         {
             $aItem       = $this->data;
-
+            $is_spam     = 0;
+            $enabled     = 1;
             $code        = osc_genRandomPassword();
             $flash_error = '';
 
@@ -68,6 +96,7 @@
 
             $title_message = '';
             foreach(@$aItem['title'] as $key => $value) {
+
                 if( osc_validate_text($value, 1) && osc_validate_max($value, 100) ) {
                     $title_message = '';
                     break;
@@ -91,6 +120,11 @@
                     (!osc_validate_max($value, 5000) ? _m("Description too long."). PHP_EOL : '' );
             }
             $flash_error .= $desc_message;
+
+            // akismet check spam ...
+            if( $this->_akismet_text( $aItem['title'], $aItem['description'] , $contactName, $contactEmail) ) {
+                $is_spam     = 1;
+            }
 
             $flash_error .=
                 ((!osc_validate_category($aItem['catId'])) ? _m("Category invalid.") . PHP_EOL : '' ) .
@@ -150,8 +184,9 @@
                     's_contact_email'       => $contactEmail,
                     's_secret'              => $code,
                     'b_active'              => ($active=='ACTIVE'?1:0),
-                    'b_enabled'             => 1,
+                    'b_enabled'             => $enabled,
                     'b_show_email'          => $aItem['showEmail'],
+                    'b_spam'                => $is_spam,
                     's_ip'                  => $aItem['s_ip']
                 ));
 
@@ -214,6 +249,7 @@
                 if(!$this->is_admin) {
                     $this->sendEmails($aItem);
                 }
+
                 if($active=='INACTIVE') {
                     $success = 1;
                 } else {
@@ -224,7 +260,10 @@
                         'fk_i_region_id'    => $location['fk_i_region_id'],
                         'fk_i_city_id'      => $location['fk_i_city_id']
                     );
-                    $this->_increaseStats($aAux);
+                    // if is_spam not increase stats
+                    if($is_spam == 0) {
+                        $this->_increaseStats($aAux);
+                    }
                     $success = 2;
                 }
 

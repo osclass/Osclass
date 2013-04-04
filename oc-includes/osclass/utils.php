@@ -895,6 +895,10 @@ function strip_slashes_extended($array) {
  * @param string $file Full path of the zip file
  * @param string $to Full path where it is going to be unzipped
  * @return int
+ *  0 - destination folder not writable (or not exist and cannot be created)
+ *  1 - everything was OK
+ *  2 - zip is empty
+ *  -1 : file could not be created (or error reading the file from the zip)
  */
 function osc_unzip_file($file, $to) {
     if (!file_exists($to)) {
