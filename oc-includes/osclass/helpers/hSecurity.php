@@ -52,8 +52,7 @@
      * @return string
      */
     function osc_csrf_token_form() {
-        $name = osc_csrf_name()."_".mt_rand(0,mt_getrandmax());
-        $token = osc_csrfguard_generate_token($name);
+        list($name, $token) = osc_csrfguard_generate_token();
         return "<input type='hidden' name='CSRFName' value='".$name."' />
         <input type='hidden' name='CSRFToken' value='".$token."' />";
     }
@@ -65,8 +64,7 @@
      * @return string
      */
     function osc_csrf_token_url() {
-        $name = osc_csrf_name()."_".mt_rand(0,mt_getrandmax());
-        $token = osc_csrfguard_generate_token($name);
+        list($name, $token) = osc_csrfguard_generate_token();
         return "CSRFName=".$name."&CSRFToken=".$token;
     }
 
@@ -75,13 +73,13 @@
      *
      * @since 3.1
      */
-    function osc_csrf_check($drop = true) {
+    function osc_csrf_check() {
         if(Params::getParam('CSRFName')=='' || Params::getParam('CSRFToken')=='') {
             exit(__("Probable invalid request."));
         }
         $name = Params::getParam('CSRFName');
         $token = Params::getParam('CSRFToken');
-        if (!osc_csrfguard_validate_token($name, $token, $drop)) {
+        if (!osc_csrfguard_validate_token($name, $token)) {
             exit(__("Invalid CSRF token."));
         }
     }
