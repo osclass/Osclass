@@ -262,8 +262,6 @@
                         $('#select_'+select).html(options);
                         $('#select_'+select).next("a").find(".select-box-label").text(osc.langs.select_subcategory);
                         $('#select_'+select).trigger("created");
-                        //selectUi($('#select_'+select));
-                        //$('#select_'+select).uniform();
                     };
 
                 }
