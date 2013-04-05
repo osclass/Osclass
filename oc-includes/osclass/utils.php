@@ -1546,7 +1546,7 @@ function osc_csrfguard_generate_token() {
     }
     Session::newInstance()->_set('token_name', $unique_token_name);
     Session::newInstance()->_set($unique_token_name, $token);
-    return $token;
+    return array($unique_token_name, $token);
 }
 
 
