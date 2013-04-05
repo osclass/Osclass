@@ -2545,7 +2545,7 @@ class Testing_Selenium
 
     protected function doCommand($verb, $args = array())
     {
-        $url = sprintf('http://%s:%s/selenium-server/driver/?cmd=%s', $this->host, $this->port, urlencode($verb));
+        $url = sprintf('http://%s:%s/selenium-server/chromedriver/?cmd=%s', $this->host, $this->port, urlencode($verb));
         for ($i = 0; $i < count($args); $i++) {
             $argNum = strval($i + 1);
             $url .= sprintf('&%s=%s', $argNum, urlencode(trim($args[$i])));
