@@ -1262,7 +1262,7 @@
      *  offset
      *
      *  Any other keyword will be passed to the hook "custom_query"
-     *   osc_run_hook("custom_query", $keyword, $value);
+     *   osc_run_hook("custom_query", $mSearch, $keyword, $value);
      *  A plugin could be created to handle those extra situation
      *
      * @since 3.0
@@ -1336,7 +1336,7 @@
                     break;
 
                 default:
-                    osc_run_hook('custom_query', $key, $value);
+                    osc_run_hook('custom_query', $mSearch, $key, $value);
                     break;
             }
         }
