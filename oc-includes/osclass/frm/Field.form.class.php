@@ -90,8 +90,22 @@
                         }
                     }
                 } else if($field['e_type']=="CHECKBOX") {
-                    echo '<input type="checkbox" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] .'" value="1" ' . ((isset($field) && isset($field["s_value"]) && $field["s_value"]==1) ?'checked="checked"':'') . ' />';
+                    $aValues = explode(',', $field['s_value']);
                     echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
+                    if(isset($field) && isset($field['s_options'])) {
+                        $options = explode(",", $field['s_options']);
+                        if(count($options)>0) {
+                            echo '<ul>';
+                            foreach($options as $key => $option) {
+                                echo '<li>';
+                                echo '<label for="meta_'.$field['s_slug'].'_'.$key.'">';
+                                echo '<input type="checkbox" name="meta['.$field['pk_i_id'].'][]" id="meta_' . $field['s_slug'] . '_'.$key.'" value="'.osc_esc_html($option).'" '.(array_search($option,$aValues)!==false?'checked="checked"':'').' />';
+                                echo $option.' </label>';
+                                echo '</li>';
+                            }
+                            echo '</ul>';
+                        }
+                    }
                 } else {
                     echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                     echo '<input id="meta_'.$field['s_slug'].'" type="text" name="meta['.$field['pk_i_id'].']" value="' . osc_esc_html((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '" ';
