@@ -245,7 +245,6 @@
                 });
 
                 function draw_select(select, categoryID) {
-
                     tmp_categories = window['categories_' + categoryID];
                     if( tmp_categories!=null && $.isArray(tmp_categories) ) {
                         $("#select_holder").before('<select id="select_'+select+'" name="select_'+select+'" depth="'+select+'"></select>');
