@@ -82,6 +82,12 @@
                                             break;
                                             case 7: osc_add_flash_warning_message( _m("Sorry, passwords don't match"), 'admin');
                                             break;
+                                            case 8: osc_add_flash_warning_message( _m("Username is already taken"));
+                                            break;
+                                            case 9: osc_add_flash_warning_message( _m("The specified username is not valid, it contains some invalid words"));
+                                            break;
+                                            default: osc_add_flash_error_message( _m("There was some error"));
+                                            break;
                                         }
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
