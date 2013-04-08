@@ -92,7 +92,7 @@
         });
 
         $('select[name="field_type"]').change(function() {
-            if( $(this).prop('value') == 'DROPDOWN' || $(this).prop('value') == 'RADIO' ) {
+            if( $(this).prop('value') == 'CHECKBOX' || $(this).prop('value') == 'DROPDOWN' || $(this).prop('value') == 'RADIO' ) {
                 $('#div_field_options').show();
             } else {
                 $('#div_field_options').hide();

@@ -146,9 +146,11 @@
 
             $_meta = Field::newInstance()->findByCategory($aItem['catId']);
             $meta = Params::getParam("meta");
+
             foreach($_meta as $_m) {
                 $meta[$_m['pk_i_id']] = (isset($meta[$_m['pk_i_id']]))?$meta[$_m['pk_i_id']]:'';
             }
+
             if($meta!='' && count($meta)>0) {
                 $mField = Field::newInstance();
                 foreach($meta as $k => $v) {
@@ -159,7 +161,7 @@
                         }
                     }
                 }
-            };
+            }
 
             // hook pre add or edit
             osc_run_hook('pre_item_post');
@@ -233,6 +235,9 @@
                 if($meta!='' && count($meta)>0) {
                     $mField = Field::newInstance();
                     foreach($meta as $k => $v) {
+                        if(is_array($v)) {
+                            $v = implode(',', $v);
+                        }
                         $mField->replace($itemId, $k, $v);
                     }
                 }
@@ -428,6 +433,9 @@
                 if($meta!='' && count($meta)>0) {
                     $mField = Field::newInstance();
                     foreach($meta as $k => $v) {
+                        if(is_array($v)) {
+                            $v = implode(',', $v);
+                        }
                         $mField->replace($aItem['idItem'], $k, $v);
                     }
                 }
