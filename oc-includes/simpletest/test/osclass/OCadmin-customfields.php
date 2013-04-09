@@ -192,7 +192,8 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("link=Publish your ad for free");
         $this->selenium->waitForPageToLoad("10000");
-        $this->selenium->select("catId", "label=regexp:\\s*Animals");
+        $this->selenium->select("select_1", "label=regexp:\\s*For sale");
+        $this->selenium->select("select_2", "label=regexp:\\s*Animals");
         sleep(2);
         $this->selenium->type("id=title[en_US]", "foo title");
         $this->selenium->type("id=description[en_US]","description foo title");
@@ -241,9 +242,9 @@ class OCadmin_customfields extends OCadminTest
         $this->selenium->click("link=Add new");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->select("parentCatId", "label=regexp:\\s*For sale");
+        $this->selenium->select("select_1", "label=regexp:\\s*For sale");
         sleep(2);
-        $this->selenium->select("catId", "label=regexp:\\s*Animals");
+        $this->selenium->select("select_2", "label=regexp:\\s*Animals");
         sleep(2);
         $this->selenium->type("id=title[en_US]", "foo title");
         $this->selenium->type("id=description[en_US]","description foo title");

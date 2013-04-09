@@ -359,7 +359,7 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->type("cityArea"        ,"city area");
         $this->selenium->type("address"         ,"address user");
 
-        $this->selenium->type("country"     , "Spain");
+        $this->selenium->select("countryId", "label=Spain");
         $this->selenium->type("region"      , "Barcelona");
         $this->selenium->type("city"        , "Barcelona");
         $this->selenium->select("b_company"     , "label=User");
@@ -391,7 +391,7 @@ class OCadmin_users extends OCadminTest {
         $this->selenium->type("price", '11');
 
         //$this->selenium->select("countryId", "label=Spain");
-        $this->selenium->type("country", "Spain");
+        $this->selenium->select("countryId", "label=Spain");
         $this->selenium->type("region", "Barcelona");
         $this->selenium->type("city", "Barcelona");
 
@@ -422,7 +422,8 @@ class OCadmin_users extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent('real name user'),"Login at website");
         // check autofill locations when user add nen advert
         $this->selenium->open(osc_base_url(true) . '?page=item&action=item_add');
-        $this->assertTrue( ($this->selenium->getValue('id=country') == 'Spain'), 'Country auto fill');
+        $this->assertTrue( ($this->selenium->getSelectedLabel('id=countryId') == 'Spain'), 'Country auto fill');
+        //$this->assertTrue( ($this->selenium->getValue('id=country') == 'Spain'), 'Country auto fill');
         $this->assertTrue( ($this->selenium->getValue('id=region')  == 'Barcelona'), 'Region auto fill');
         $this->assertTrue( ($this->selenium->getValue('id=city')  == 'Barcelona'), 'City auto fill');
         $this->assertTrue( ($this->selenium->getValue('id=cityArea') == 'city area'), 'City area auto fill');

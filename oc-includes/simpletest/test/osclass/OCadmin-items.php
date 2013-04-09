@@ -245,9 +245,9 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->type("contactName" , "contact name");
         $this->selenium->type("contactEmail", "test@mail.com");
 
-        $this->selenium->select("parentCatId", "label=regexp:\\s*Vehicles");
+        $this->selenium->select("select_1", "label=regexp:\\s*Vehicles");
         sleep(2);
-        $this->selenium->select("catId", "label=regexp:\\s*Cars");
+        $this->selenium->select("select_2", "label=regexp:\\s*Cars");
         $this->selenium->type("title[en_US]", "title item");
         $this->selenium->type("description[en_US]", "description test description test description test");
         $this->selenium->type("price", "12".osc_locale_thousands_sep()."34".osc_locale_thousands_sep()."56".osc_locale_dec_point()."78".osc_locale_dec_point()."90");
@@ -378,7 +378,8 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->type("contactName" , "contact name_");
         $this->selenium->type("contactEmail", "test_@mail.com");
 
-        $this->selenium->select("catId", "label=regexp:\\s*Cars");
+        $this->selenium->select("select_1", "label=regexp:\\s*Vehicles");
+        $this->selenium->select("select_2", "label=regexp:\\s*Cars");
         $this->selenium->type("title[en_US]", "title_item");
         $this->selenium->type("description[en_US]", "description_test_description test description_test");
         $this->selenium->type("price", "11");
@@ -588,7 +589,7 @@ class OCadmin_items extends OCadminTest {
         Preference::newInstance()->replace('items_wait_time', '0',"osclass", 'INTEGER') ;
         $this->checkWebsite_items_wait_time('0');
         $this->selenium->deleteAllVisibleCookies();
-        Preference::newInstance()->replace('items_wait_time', '30',"osclass", 'INTEGER') ;
+        Preference::newInstance()->replace('items_wait_time', '30',"osclass", 'INTEGER');
         $this->checkWebsite_items_wait_time('30');
 // reg_user_can_contact
         Preference::newInstance()->replace('items_wait_time', '0',"osclass", 'INTEGER') ;
@@ -622,7 +623,8 @@ class OCadmin_items extends OCadminTest {
 
     private function post_item_website(){
         $this->selenium->open( osc_item_post_url() );
-        $this->selenium->select("catId", "label=regexp:\\s*Animals");
+        $this->selenium->select("select_1", "label=regexp:\\s*For sale");
+        $this->selenium->select("select_2", "label=regexp:\\s*Animals");
         $this->selenium->type("id=title[en_US]", "foo title");
         $this->selenium->type("id=description[en_US]","description foo title");
         $this->selenium->select("countryId", "label=Spain");
@@ -769,6 +771,7 @@ class OCadmin_items extends OCadminTest {
             $this->post_item_website();
             $this->assertTrue($this->selenium->isTextPresent("Your listing has been published"),"Cannot insert item. ERROR" );
         } else if($sec > 0) {
+            sleep($sec+5);
             $this->post_item_website();
             $this->assertTrue($this->selenium->isTextPresent("Your listing has been published"),"Cannot insert item. ERROR" );
             $this->post_item_website();
