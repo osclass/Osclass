@@ -197,6 +197,7 @@ class Frontend_items extends FrontendTest {
         // create new item
         require dirname(__FILE__).'/ItemData.php';
         $item = array(
+            "parentCatId"   => 'Vehicles',
             "catId"         => 'Cars',
             'title'         => '2000 Ford Focus',
             'description'   => '2000 Ford Focus ZX3 Hatchback 2D Good Condition Clean Great Car Mileage: 175000 Passed BMV Emissions Clear Title Call me or Text if interested- Crystal 219',

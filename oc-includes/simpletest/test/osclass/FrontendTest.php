@@ -113,9 +113,9 @@ abstract class FrontendTest extends MyWebTestCase {
         $this->selenium->click("link=Publish your ad for free");
         $this->selenium->waitForPageToLoad("30000");
 
-        $this->selenium->select("parentCatId", "label=regexp:\\s*$parentCat");
+        $this->selenium->select("select_1", "label=regexp:\\s*$parentCat");
         sleep(2);
-        $this->selenium->select("catId", "label=regexp:\\s*$cat");
+        $this->selenium->select("select_1", "label=regexp:\\s*$cat");
         $this->selenium->type("title[en_US]", $title);
         $this->selenium->type("description[en_US]", $description);
         $this->selenium->type("price", "12".osc_locale_thousands_sep()."34".osc_locale_thousands_sep()."56".osc_locale_dec_point()."78".osc_locale_dec_point()."90");
