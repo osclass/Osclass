@@ -35,7 +35,7 @@ class Frontend_search extends FrontendTest {
                                 $this->_email);
             
             // ------
-            $this->assertTrue($this->selenium->isTextPresent("Your listing has been published","Insert item.") );
+            $this->assertTrue($this->selenium->isTextPresent("Your listing has been published","Insert item.") );    break;
         }
         
         $uSettings->set_reg_user_post( $old_reg_user_port );
@@ -285,7 +285,7 @@ class Frontend_search extends FrontendTest {
     /*
      * Remove all items inserted previously
      */
-    function _testRemoveLoadedItems()
+    function testRemoveLoadedItems()
     {
         $aItems = Item::newInstance()->findByEmail($this->_email) ;
         foreach( $aItems as $item ) {

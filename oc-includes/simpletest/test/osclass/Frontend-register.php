@@ -98,8 +98,8 @@ class Frontend_register extends FrontendTest {
 
         $this->doRegisterUser($this->_email, '', '');
         // js validation
-        $this->assertTrue( $this->selenium->isTextPresent('regexpi:Password: this field is required.'), 'Register new user, empty passwords.');
-        $this->assertTrue( $this->selenium->isTextPresent('regexpi:Second password: this field is required.'), 'Register new user, empty passwords.');
+        $this->assertTrue( $this->selenium->isTextPresent('The password cannot be empty'), 'Register new user, empty passwords.');
+        //$this->assertTrue( $this->selenium->isTextPresent('regexpi:Second password: this field is required.'), 'Register new user, empty passwords.');
 
         $uSettings->set_enabled_users($old_enabled_users);
         $uSettings->set_enabled_user_registration($old_enabled_users_registration);
@@ -120,7 +120,7 @@ class Frontend_register extends FrontendTest {
         $old_enabled_user_validation = $uSettings->set_enabled_user_validation(0);
 
         $this->doRegisterUser($this->_email, $this->_password, 'foobar_no_password');
-        $this->assertTrue( $this->selenium->isTextPresent('regexpi:Passwords don\'t match.'), 'Register new user, passwords don\' match.');
+        $this->assertTrue( $this->selenium->isTextPresent('Passwords don\'t match'), 'Register new user, passwords don\' match.');
 
         $uSettings->set_enabled_users($old_enabled_users);
         $uSettings->set_enabled_user_registration($old_enabled_users_registration);

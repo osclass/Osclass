@@ -48,15 +48,15 @@ abstract class FrontendTest extends MyWebTestCase {
 
         $this->selenium->open( osc_base_url() );
         $this->selenium->click("link=Register for a free account");
-        $this->selenium->waitForPageToLoad("30000");
+        $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->type('s_name'      , 'testuser');
         $this->selenium->type('s_password'  , $pass);
         $this->selenium->type('s_password2' , $pass2);
         $this->selenium->type('s_email'     , $mail);
 
-        $this->selenium->click("xpath=//span/button[text()='Create']");
-        $this->selenium->waitForPageToLoad("30000");
+        $this->selenium->click("//button[text()='Create']");
+        $this->selenium->waitForPageToLoad("10000");
 
         $user = User::newInstance()->findByEmail($mail);
         return @$user['pk_i_id'];
@@ -79,10 +79,10 @@ abstract class FrontendTest extends MyWebTestCase {
         $this->selenium->type("password", $pass);
 
         $this->selenium->click("//button[@type='submit']");
-        $this->selenium->waitForPageToLoad("30000");
+        $this->selenium->waitForPageToLoad("10000");
         
         $this->selenium->click("link=My account");
-        $this->selenium->waitForPageToLoad("30000");
+        $this->selenium->waitForPageToLoad("10000");
     }
     
     /**
@@ -92,7 +92,7 @@ abstract class FrontendTest extends MyWebTestCase {
     {
         $this->selenium->open( osc_base_url() );
         $this->selenium->click("link=Logout");
-        $this->selenium->waitForPageToLoad("30000");
+        $this->selenium->waitForPageToLoad("10000");
     }
 
     /**
@@ -111,11 +111,11 @@ abstract class FrontendTest extends MyWebTestCase {
         $this->selenium->open( osc_base_url() );
 
         $this->selenium->click("link=Publish your ad for free");
-        $this->selenium->waitForPageToLoad("30000");
+        $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->select("select_1", "label=regexp:\\s*$parentCat");
         sleep(2);
-        $this->selenium->select("select_1", "label=regexp:\\s*$cat");
+        $this->selenium->select("select_2", "label=regexp:\\s*$cat");
         $this->selenium->type("title[en_US]", $title);
         $this->selenium->type("description[en_US]", $description);
         $this->selenium->type("price", "12".osc_locale_thousands_sep()."34".osc_locale_thousands_sep()."56".osc_locale_dec_point()."78".osc_locale_dec_point()."90");
@@ -149,7 +149,7 @@ abstract class FrontendTest extends MyWebTestCase {
         $this->selenium->type("contactEmail", $email);
 
         $this->selenium->click("//button[text()='Publish']");
-        $this->selenium->waitForPageToLoad("30000");
+        $this->selenium->waitForPageToLoad("10000");
     }
     
     function _createAlert($email, $success = true)
@@ -158,7 +158,7 @@ abstract class FrontendTest extends MyWebTestCase {
         $this->selenium->open( osc_search_url() );
         $this->selenium->click("bPic"); // only items with pictures
         $this->selenium->click("xpath=//span/button[text()='Apply']");
-        $this->selenium->waitForPageToLoad("30000");
+        $this->selenium->waitForPageToLoad("10000");
         
         // create alert invalid email
         $this->selenium->click('alert_email');
