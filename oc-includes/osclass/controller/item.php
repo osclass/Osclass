@@ -498,15 +498,19 @@
                     }
 
                     if ($item['b_active'] != 1) {
-                        if( ($this->userId == $item['fk_i_user_id']) && ($this->userId != '') ) {
+                        if( ($this->userId == $item['fk_i_user_id']) && ($this->userId != '') || osc_is_admin_user_logged_in()) {
                             osc_add_flash_warning_message( _m("The listing hasn't been validated. Please validate it in order to make it public") );
                         } else {
                             $this->do400();
                             return;
                         }
                     } else if ($item['b_enabled'] == 0) {
-                        $this->do400();
-                        return;
+                        if( osc_is_admin_user_logged_in() ) {
+                            osc_add_flash_warning_message( _m("The listing hasn't been enabled. Please enable it in order to make it public") );
+                        } else {
+                            $this->do400();
+                            return;
+                        }
                     }
 
                     if(!osc_is_admin_user_logged_in() && !($item['fk_i_user_id']!='' && $item['fk_i_user_id']==osc_logged_user_id())) {
