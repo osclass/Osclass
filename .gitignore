@@ -41,3 +41,5 @@ oc-content/plugins/*
 # Others
 .htaccess
 dist
+
+nbproject/
