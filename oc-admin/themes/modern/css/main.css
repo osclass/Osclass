@@ -1,4 +1,3 @@
-/* Colors */
 /* THEME ROLLER JQUERY UI
 http://jqueryui.com/themeroller/#ffDefault=Arial%2C+%22Helvetica+Neue%22%2C+Helvetica%2C+Verdana%2C+sans-serif%3B&fwDefault=normal&fsDefault=13px&cornerRadius=4px&bgColorHeader=f3f3f3&bgTextureHeader=01_flat.png&bgImgOpacityHeader=0&borderColorHeader=dddddd&fcHeader=222222&iconColorHeader=222222&bgColorContent=ffffff&bgTextureContent=01_flat.png&bgImgOpacityContent=0&borderColorContent=dddddd&fcContent=222222&iconColorContent=222222&bgColorDefault=e6e6e6&bgTextureDefault=01_flat.png&bgImgOpacityDefault=75&borderColorDefault=dddddd&fcDefault=555555&iconColorDefault=888888&bgColorHover=dadada&bgTextureHover=01_flat.png&bgImgOpacityHover=75&borderColorHover=dddddd&fcHover=212121&iconColorHover=454545&bgColorActive=ffffff&bgTextureActive=02_glass.png&bgImgOpacityActive=65&borderColorActive=dddddd&fcActive=212121&iconColorActive=454545&bgColorHighlight=fbf9ee&bgTextureHighlight=02_glass.png&bgImgOpacityHighlight=55&borderColorHighlight=fcefa1&fcHighlight=363636&iconColorHighlight=2e83ff&bgColorError=fef1ec&bgTextureError=05_inset_soft.png&bgImgOpacityError=95&borderColorError=cd0a0a&fcError=cd0a0a&iconColorError=cd0a0a&bgColorOverlay=000000&bgTextureOverlay=01_flat.png&bgImgOpacityOverlay=0&opacityOverlay=30&bgColorShadow=aaaaaa&bgTextureShadow=01_flat.png&bgImgOpacityShadow=0&opacityShadow=30&thicknessShadow=8px&offsetTopShadow=-8px&offsetLeftShadow=-8px&cornerRadiusShadow=8px
 */
@@ -546,9 +545,6 @@ h3.render-title {
   border-radius: 0px 4px 4px 0;
   -webkit-border-radius: 0px 4px 4px 0;
   -moz-border-radius: 0px 4px 4px 0;
-  border-radius: 0px 4px 4px 0;
-  -webkit-border-radius: 0px 4px 4px 0;
-  -moz-border-radius: 0px 4px 4px 0;
   width: 34px !important;
   height: 34px;
   display: block;
@@ -792,9 +788,6 @@ div.select-box-input select {
 .select-box-trigger {
   background-color: #f3f3f3;
   border: solid 1px #dddddd;
-  border-radius: 4px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
   text-decoration: none;
   height: 14px;
   padding: 5px 45px 7px 10px;
@@ -1097,9 +1090,6 @@ ul.showing-results {
 }
 .inline {
   display: inline;
-}
-.select-items-per-page {
-  margin-left: 5px;
 }
 #content-head .btn {
   *margin-top: -27px;
@@ -1570,7 +1560,6 @@ table {
   padding-bottom: 25px;
 }
 #table-row-actions {
-  display: none;
   position: absolute;
   top: 0;
   left: 0px;
@@ -1725,6 +1714,14 @@ table.table-small {
 }
 .col-title {
   min-width: 280px;
+}
+table .icon-new-window {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  background-image: url('../images/icon-new-window.png');
+  margin-left: 10px;
+  margin-top: 3px;
 }
 #help-box {
   background: #fcf8e3;
@@ -2467,9 +2464,6 @@ form h3 {
   font-size: 18px;
   color: #474749;
   position: relative;
-  border-radius: 4px 4px 0 0;
-  -webkit-border-radius: 4px 4px 0 0;
-  -moz-border-radius: 4px 4px 0 0;
   border: none;
   border-radius: 4px 4px 0 0;
   -webkit-border-radius: 4px 4px 0 0;
