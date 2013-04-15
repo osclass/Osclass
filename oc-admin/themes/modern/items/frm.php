@@ -76,6 +76,8 @@ function customPageHeader() { ?>
                     }
                 });
 
+                $('.ui-autocomplete').css('zIndex', 10000);
+
                 <?php if(osc_locale_thousands_sep()!='' || osc_locale_dec_point() != '') { ?>
                 $("#price").on("blur", function(event) {
                     var price = $("#price").prop("value");

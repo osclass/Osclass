@@ -76,6 +76,8 @@
                     }
                 });
 
+                $('.ui-autocomplete').css('zIndex', 10000);
+
                 // dialog delete
                 $("#dialog-item-delete").dialog({
                     autoOpen: false,

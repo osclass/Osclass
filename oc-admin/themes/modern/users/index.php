@@ -57,6 +57,8 @@
                     }
                 });
 
+                $('.ui-autocomplete').css('zIndex', 10000);
+
                 // check_all bulkactions
                 $("#check_all").change(function(){
                     var isChecked = $(this).prop("checked");
