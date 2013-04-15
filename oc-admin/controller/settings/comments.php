@@ -22,11 +22,6 @@
 
     class CAdminSettingsComments extends AdminSecBaseModel
     {
-        function __construct()
-        {
-            parent::__construct();
-        }
-
         //Business Layer...
         function doModel()
         {
@@ -89,15 +84,6 @@
                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=comments');
                 break;
             }
-        }
-
-        //hopefully generic...
-        function doView($file)
-        {
-            osc_run_hook("before_admin_html");
-            osc_current_admin_theme_path($file);
-            Session::newInstance()->_clearVariables();
-            osc_run_hook("after_admin_html");
         }
     }
 
