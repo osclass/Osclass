@@ -202,6 +202,10 @@
                     if($title != $aRow['s_title']) {
                         $title .= '...';
                     }
+
+                    //icon open add new window
+                    $title .= '<span class="icon-new-window"></span>';
+
                     // show more options
                     $options_more = array();
                     if($aRow['b_active']) {
