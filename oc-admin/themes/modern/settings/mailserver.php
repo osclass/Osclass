@@ -107,6 +107,18 @@
                                 </div>
                             </div>
                             <div class="form-row">
+                                <div class="form-label"><?php _e('Mail from'); ?></div>
+                                <div class="form-controls">
+                                    <input type="text" class="input-large" name="mailserver_mail_from" value="<?php echo osc_esc_html(osc_mailserver_mail_from()); ?>" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-label"><?php _e('Name from'); ?></div>
+                                <div class="form-controls">
+                                    <input type="text" class="input-large" name="mailserver_name_from" value="<?php echo osc_esc_html(osc_mailserver_name_from()); ?>" />
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 <div class="form-label"><?php _e('Server port'); ?></div>
                                 <div class="form-controls">
                                     <input type="text" class="input-large" name="mailserver_port" value="<?php echo osc_esc_html(osc_mailserver_port()); ?>" />

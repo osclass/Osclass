@@ -49,6 +49,8 @@
                     $mailserverUsername = Params::getParam('mailserver_username');
                     $mailserverPassword = Params::getParam('mailserver_password');
                     $mailserverSsl      = Params::getParam('mailserver_ssl');
+                    $mailserverMailFrom = Params::getParam('mailserver_mail_from');
+                    $mailserverNameFrom = Params::getParam('mailserver_name_from');
 
                     if( !in_array($mailserverType, array('custom', 'gmail')) ) {
                         osc_add_flash_error_message( _m('Mail server type is incorrect'), 'admin');
@@ -71,6 +73,10 @@
                                                                    ,array('s_name' => 'mailserver_password'));
                     $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverSsl)
                                                                    ,array('s_name' => 'mailserver_ssl'));
+                    $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverMailFrom)
+                                                                ,array('s_name' => 'mailserver_mail_from'));
+                    $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverNameFrom)
+                                                                ,array('s_name' => 'mailserver_name_from'));
 
                     if($iUpdated > 0) {
                         osc_add_flash_ok_message( _m('Mail server configuration has changed'), 'admin');

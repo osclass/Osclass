@@ -348,13 +348,20 @@ function osc_sendMail($params) {
         $mail->Port = $smtpPort;
     }
 
+    $from = osc_mailserver_mail_from();
+    if(empty($from)) {
     $from = 'osclass@' . osc_get_domain();
     if( array_key_exists('from', $params) ) {
         $from = $params['from'];
     }
+    }
+
+    $from_name = osc_mailserver_name_from();
+    if(empty($from_name)) {
     $from_name = osc_page_title();
     if( array_key_exists('from_name', $params) ) {
         $from_name = $params['from_name'];
+    }
     }
 
     $mail->From     = osc_apply_filter('mail_from', $from);
