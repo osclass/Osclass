@@ -44,6 +44,9 @@
                             <div class="item" >
                                     <h3>
                                         <a href="<?php echo osc_item_url(); ?>"><?php echo osc_item_title(); ?></a>
+                                        <?php if(osc_item_is_active()) { echo '<span class="user-listing-active">'.__('Active', 'modern').'</span>'; } else { echo '<span class="user-listing-inactive">'.__('Inactive', 'modern').'</span>'; }; ?>
+                                        <?php if(osc_item_is_premium()) { echo '<span class="user-listing-premium">'.__('Premium', 'modern').'</span>'; }; ?>
+                                        <?php if(osc_item_is_spam()) { echo '<span class="user-listing-spam">'.__('Spam', 'modern').'</span>'; }; ?>
                                     </h3>
                                     <p>
                                     <?php _e('Publication date', 'modern'); ?>: <?php echo osc_format_date(osc_item_pub_date()); ?><br />
