@@ -139,6 +139,11 @@
             // hook pre add or edit
             osc_run_hook('pre_user_post');
 
+            $user_email = $this->manager->findByEmail($input['s_email']);
+            if(isset($user_email['s_email'])) {
+                return 3;
+            }
+
             $this->manager->update($input, array('pk_i_id' => $userId));
 
             if($this->is_admin) {

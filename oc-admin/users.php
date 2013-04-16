@@ -127,9 +127,15 @@
                                         $success = $userActions->edit( Params::getParam("id") );
 
                                         switch($success) {
-                                            case (1):  osc_add_flash_error_message( _m("Passwords don't match"), 'admin');
+                                            case 1:
+                                                osc_add_flash_error_message( _m("Passwords don't match"), 'admin');
+                                                $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('id'));
                                             break;
-                                            case (2):  osc_add_flash_ok_message( _m('The user has been updated and activated'), 'admin');
+                                            case 2:  osc_add_flash_ok_message( _m('The user has been updated and activated'), 'admin');
+                                            break;
+                                            case 3:
+                                                osc_add_flash_error_message( _m('E-mail is already in used by another user'), 'admin');
+                                                $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=edit&id='.Params::getParam('id'));
                                             break;
                                             default:   osc_add_flash_ok_message( _m('The user has been updated'), 'admin');
                                             break;
