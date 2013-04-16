@@ -40,7 +40,6 @@
         $aMenu              = $adminMenu->get_array_menu();
         $current_menu_id    = osc_current_menu();
         $is_moderator       = osc_is_moderator();
-
         // Remove hook admin_menu when osclass 4.0 be released
         // hack, compatibility with menu plugins.
         ob_start();
@@ -131,7 +130,7 @@
                         foreach($aSubmenu as $aSub) {
                             $credential_sub = $aSub[4];
                             if(!$is_moderator || $is_moderator && $credential_sub == 'moderator') { // show
-                                if(substr($aSub[2], 0, 8)=="divider_") {
+                                if(substr($aSub[1], 0, 8)=="divider_") {
                                     $sSubmenu .= '<li class="submenu-divide">'.$aSub[0].'</li>'.PHP_EOL;
                                 } else {
                                     $sSubmenu .= '<li><a id="'.$aSub[2].'" href="'.$aSub[1].'">'.$aSub[0].'</a></li>'.PHP_EOL;
