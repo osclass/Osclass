@@ -1575,7 +1575,6 @@ function osc_csrfguard_replace_forms($form_data_html) {
 
 
 function osc_csrfguard_inject() {
-    global $mtime;
     $data = ob_get_clean();
     $data = osc_csrfguard_replace_forms($data);
     echo $data;
