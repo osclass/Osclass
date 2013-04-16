@@ -1494,21 +1494,25 @@ function osc_update_location_stats() {
                 array_push($aCityValues, "($id, $numItems)" );
                 unset($numItems);
             }
+            // insert City stats
+            $sql_city     = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_city_stats (fk_i_city_id, i_num_items) VALUES ';
+            $sql_city    .= implode(',', $aCityValues);
+            CityStats::newInstance()->dao->query($sql_city);
+            unset($aCitiesValues);
+            $aCityValues = array();
         }
+        // insert Region stats
+        $sql_region   = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_region_stats (fk_i_region_id, i_num_items) VALUES ';
+        $sql_region  .= implode(',', $aRegionValues);
+        RegionStats::newInstance()->dao->query($sql_region);
+        unset($aRegionValues);
+        $aRegionValues = array();
     }
 
     // insert Country stats
     $sql_country  = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_country_stats (fk_c_country_code, i_num_items) VALUES ';
     $sql_country .= implode(',', $aCountryValues);
     CountryStats::newInstance()->dao->query($sql_country);
-    // insert Region stats
-    $sql_region   = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_region_stats (fk_i_region_id, i_num_items) VALUES ';
-    $sql_region  .= implode(',', $aRegionValues);
-    RegionStats::newInstance()->dao->query($sql_region);
-    // insert City stats
-    $sql_city     = 'REPLACE INTO '.DB_TABLE_PREFIX.'t_city_stats (fk_i_city_id, i_num_items) VALUES ';
-    $sql_city    .= implode(',', $aCityValues);
-    CityStats::newInstance()->dao->query($sql_city);
 }
 
 
