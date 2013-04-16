@@ -418,6 +418,12 @@ CREATE TABLE %st_item_description_tmp (
 
     }
 
+    if(osc_version() < 320) {
+        osc_set_preference('osclass', 'mailserver_mail_from', '', 'STRING');
+        osc_set_preference('osclass', 'mailserver_name_from', '', 'STRING');
+    }
+    
+
     osc_changeVersionTo(311);
 
     echo '<div class="well ui-rounded-corners separate-top-medium">';

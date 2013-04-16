@@ -696,6 +696,24 @@
     }
 
     /**
+    * Gets mail from 
+    *
+    * @return string
+    */    
+    function osc_mailserver_mail_from() {
+        return(getPreference('mailserver_mail_from'));
+    }    
+
+    /**
+    * Gets name from 
+    *
+    * @return string
+    */    
+    function osc_mailserver_name_from() {
+        return(getPreference('mailserver_name_from'));
+    }
+
+    /**
      * Gets mailserver's username
      *
      * @return string
