@@ -154,8 +154,11 @@
                         osc_add_flash_error_message( $success);
                         $this->redirectTo( osc_item_post_url() );
                     } else {
-                        Session::newInstance()->_dropkeepForm('meta_'.$key);
-
+                        if(is_array($meta)) {
+                            foreach( $meta as $key => $value ) {
+                                Session::newInstance()->_dropkeepForm('meta_'.$key);
+                            }
+                        }
                         if($success==1) {
                             osc_add_flash_ok_message( _m('Check your inbox to validate your listing') );
                         } else {
@@ -217,6 +220,7 @@
                         $meta = Params::getParam('meta');
                         if(is_array($meta)) {
                             foreach( $meta as $key => $value ) {
+                                error_log(print_r($value, true ));
                                 Session::newInstance()->_setForm('meta_'.$key, $value);
                                 Session::newInstance()->_keepForm('meta_'.$key);
                             }

@@ -256,6 +256,7 @@ osc_register_script('tiny_mce', osc_assets_url('js/tiny_mce/tiny_mce.js'));
 osc_register_script('colorpicker', osc_assets_url('js/colorpicker/js/colorpicker.js'));
 osc_register_script('fancybox', osc_assets_url('js/fancybox/jquery.fancybox.pack.js'), array('jquery'));
 osc_register_script('jquery-migrate', osc_assets_url('js/jquery-migrate.min.js'), array('jquery'));
+osc_register_script('php-date', osc_assets_url('js/date.js'));
 
 Plugins::init();
 osc_csrfguard_start();
