@@ -57,14 +57,6 @@
         private function addTableHeader()
         {
 
-            $arg_date = '&sort=date';
-            if(Params::getParam('sort') == 'date') {
-                if(Params::getParam('direction') == 'desc') {
-                    $arg_date .= '&direction=asc';
-                };
-            }
-
-            
             $this->addColumn('bulkactions', '<input id="check_all" type="checkbox" />');
             $this->addColumn('email', __('E-mail'));
             $this->addColumn('username', __('Username'));
@@ -127,8 +119,8 @@
                     $row['email'] = '<a href="' . osc_admin_base_url(true) . '?page=items&userId='. $aRow['pk_i_id'] .'&user='. $aRow['s_name'] .'">' . $aRow['s_email'] . '</a>'. $actions;
                     $row['username'] = $aRow['s_username'];
                     $row['name'] = $aRow['s_name'];
-                    $row['date'] = $aRow['dt_reg_date'];
-                    $row['update_date'] = $aRow['dt_mod_date'];
+                    $row['date'] = osc_format_date($aRow['dt_reg_date']);
+                    $row['update_date'] = osc_format_date($aRow['dt_mod_date']);
 
                     $row = osc_apply_filter('users_processing_row', $row, $aRow);
 
