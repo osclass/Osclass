@@ -155,7 +155,7 @@
                 return $form;
             }
         }
-        
+
         function _getKeepForm() {
             return $this->_get('keepForm');
         }
@@ -171,7 +171,7 @@
         function _viewKeep() {
             print_r($_SESSION['keepForm']);
         }
-        
+
         function  _clearVariables() {
             $form = $this->_get('form');
             $aKeep = $this->_get('keepForm');

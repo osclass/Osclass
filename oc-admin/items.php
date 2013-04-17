@@ -530,6 +530,12 @@
                                                 $url = Session::newInstance()->_get('osc_admin_referer');
                                             }
                                             Session::newInstance()->_clearVariables();
+                                            if(is_array($meta)) {
+                                                foreach( $meta as $key => $value ) {
+                                                    Session::newInstance()->_dropKeepForm('meta_'.$key);
+                                                }
+                                            }
+
                                             $this->redirectTo( $url );
                                         } else {
                                             osc_add_flash_error_message( $success , 'admin');
@@ -594,6 +600,11 @@
                                                 $url = Session::newInstance()->_get('osc_admin_referer');
                                             }
                                             Session::newInstance()->_clearVariables();
+                                            if(is_array($meta)) {
+                                                foreach( $meta as $key => $value ) {
+                                                    Session::newInstance()->_dropKeepForm('meta_'.$key);
+                                                }
+                                            }
                                             osc_add_flash_ok_message( _m('A new listing has been added'), 'admin');
 
                                             $this->redirectTo( $url );

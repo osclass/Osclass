@@ -421,7 +421,9 @@ CREATE TABLE %st_item_description_tmp (
     if(osc_version() < 320) {
         osc_set_preference('osclass', 'mailserver_mail_from', '', 'STRING');
         osc_set_preference('osclass', 'mailserver_name_from', '', 'STRING');
+
         $comm->query(sprintf("ALTER TABLE  %st_category ADD  `b_price_enabled` TINYINT(1) NOT NULL DEFAULT 1", DB_TABLE_PREFIX));
+        $comm->query(sprintf("ALTER TABLE %st_item_meta DROP PRIMARY KEY, ADD PRIMARY KEY(fk_i_item_id, fk_i_field_id, s_multi)", DB_TABLE_PREFIX));
     }
 
 

@@ -66,14 +66,6 @@
         private function addTableHeader()
         {
 
-            $arg_date = '&sort=date';
-            if(Params::getParam('sort') == 'date') {
-                if(Params::getParam('direction') == 'desc') {
-                    $arg_date .= '&direction=asc';
-                };
-            }
-
-
             $this->addColumn('bulkactions', '<input id="check_all" type="checkbox" />');
             $this->addColumn('author', __('Author'));
             $this->addColumn('comment', __('Comment'));
@@ -133,7 +125,7 @@
                     }
                     $row['author'] = $aRow['s_author_name'] . ' (<a target="_blank" href="' . osc_item_url() . '">' . osc_item_title() . '</a>)'. $actions;
                     $row['comment'] = $aRow['s_body'];
-                    $row['date'] = $aRow['dt_pub_date'];
+                    $row['date'] = osc_format_date($aRow['dt_pub_date']);
 
                     $row = osc_apply_filter('comments_processing_row', $row, $aRow);
 
