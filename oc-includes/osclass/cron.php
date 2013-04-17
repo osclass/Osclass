@@ -41,6 +41,7 @@
             } else if( !in_array($purge, array('forever', 'day', 'week')) ) {
                 LatestSearches::newInstance()->purgeNumber($purge);
             }
+            osc_update_location_stats(true, 'auto');
             osc_run_hook('cron_hourly');
         }
     }
@@ -62,7 +63,6 @@
                 LatestSearches::newInstance()->purgeDate( date('Y-m-d H:i:s', ( time() - (24 * 3600) ) ) );
             }
             osc_runAlert('DAILY');
-            osc_update_location_stats();
             osc_update_cat_stats();
             osc_run_hook('cron_daily');
         }
