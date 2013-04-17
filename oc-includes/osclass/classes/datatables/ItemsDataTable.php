@@ -270,7 +270,7 @@
                     $row['country'] = $aRow['s_country'];
                     $row['region'] = $aRow['s_region'];
                     $row['city'] = $aRow['s_city'];
-                    $row['date'] = $aRow['dt_pub_date'];
+                    $row['date'] = osc_format_date($aRow['dt_pub_date']);
 
                     $row = osc_apply_filter('items_processing_row', $row, $aRow);
 

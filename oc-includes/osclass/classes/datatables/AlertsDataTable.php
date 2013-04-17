@@ -51,14 +51,6 @@
         private function addTableHeader()
         {
 
-            $arg_date = '&sort=date';
-            if(Params::getParam('sort') == 'date') {
-                if(Params::getParam('direction') == 'desc') {
-                    $arg_date .= '&direction=asc';
-                };
-            }
-
-            
             $this->addColumn('bulkactions', '<input id="check_all" type="checkbox" />');
             $this->addColumn('email', __('E-mail'));
             $this->addColumn('alert', __('Alert'));
@@ -123,7 +115,7 @@
 
                     $row['alert'] = implode($pieces, ", ");
                     // fourth row
-                    $row['date'] = $aRow['dt_date'];
+                    $row['date'] = osc_format_date($aRow['dt_date']);
 
                     $row = osc_apply_filter('alerts_processing_row', $row, $aRow);
 
