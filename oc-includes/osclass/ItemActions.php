@@ -235,7 +235,8 @@
                 if($meta!='' && count($meta)>0) {
                     $mField = Field::newInstance();
                     foreach($meta as $k => $v) {
-                        if(is_array($v)) {
+                        // if dateinterval
+                        if(is_array($v) && !isset($v['from']) && !isset($v['to']) ) {
                             $v = implode(',', $v);
                         }
                         $mField->replace($itemId, $k, $v);
@@ -433,7 +434,8 @@
                 if($meta!='' && count($meta)>0) {
                     $mField = Field::newInstance();
                     foreach($meta as $k => $v) {
-                        if(is_array($v)) {
+                        // if dateinterval
+                        if( is_array($v) && !isset($v['from']) && !isset($v['to']) ) {
                             $v = implode(',', $v);
                         }
                         $mField->replace($aItem['idItem'], $k, $v);

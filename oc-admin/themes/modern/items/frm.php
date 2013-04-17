@@ -17,6 +17,8 @@
      */
 
     osc_enqueue_script('jquery-validate');
+    osc_enqueue_script('php-date');
+
 
     // cateogry js
     $categories = Category::newInstance()->toTree();

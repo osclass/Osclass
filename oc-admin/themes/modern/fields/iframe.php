@@ -74,6 +74,10 @@
                         <p class="help-inline"><?php _e('Only alphanumeric characters are allowed [a-z0-9_-]'); ?></p>
                     </div>
                 </div>
+                <div class="form-row">
+                    <div class="form-label"></div>
+                    <div class="form-controls"><label><?php FieldForm::searchable_checkbox($field); ?> <?php _e('Make a searchable field'); ?></label></div>
+                </div>
             </div>
             <div class="form-actions">
                 <input type="submit" id="cfield_save" value="<?php echo osc_esc_html( __('Save changes') ); ?>" class="btn btn-submit" />
@@ -92,7 +96,7 @@
         });
 
         $('select[name="field_type"]').change(function() {
-            if( $(this).prop('value') == 'CHECKBOX' || $(this).prop('value') == 'DROPDOWN' || $(this).prop('value') == 'RADIO' ) {
+            if( $(this).prop('value') == 'DROPDOWN' || $(this).prop('value') == 'RADIO' ) {
                 $('#div_field_options').show();
             } else {
                 $('#div_field_options').hide();

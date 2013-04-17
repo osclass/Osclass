@@ -163,7 +163,16 @@
                                     $slug = $slug_tmp."_".$slug_k;
                                 }
                             }
-                            $res = Field::newInstance()->update(array('s_name' => Params::getParam("s_name"), 'e_type' => Params::getParam("field_type"), 's_slug' => $slug, 'b_required' => Params::getParam("field_required") == "1" ? 1 : 0, 's_options' => Params::getParam('s_options')), array('pk_i_id' => Params::getParam("id")));
+                            $res = Field::newInstance()->update(
+                                    array(
+                                        's_name'        => Params::getParam("s_name"),
+                                        'e_type'        => Params::getParam("field_type"),
+                                        's_slug'        => $slug,
+                                        'b_required'    => Params::getParam("field_required") == "1" ? 1 : 0,
+                                        'b_searchable'  => Params::getParam("field_searchable") == "1" ? 1 : 0,
+                                        's_options'     => Params::getParam('s_options')),
+                                    array('pk_i_id' => Params::getParam("id"))
+                                    );
                             if(is_bool($res) && !$res) {
                                 $error = 1;
                             }
