@@ -82,4 +82,12 @@
         {
             return $this->dao->delete($this->getTableName(), $where );
         }
+
+        function batchInsert($ids, $type) {
+            if(!empty($ids)) {
+                return $this->dao->query(sprintf("INSERT INTO %s (id_location, e_type) VALUES (%s, '%s')", $this->getTableName(), implode(",'".$type."'),(", $ids), $type));
+            }
+            return false;
+        }
+
     }
