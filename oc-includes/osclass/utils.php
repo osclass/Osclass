@@ -1594,7 +1594,10 @@ function osc_csrfguard_inject() {
 
 function osc_csrfguard_start() {
     ob_start();
-    register_shutdown_function('osc_csrfguard_inject');
+    $functions = osc_apply_filter('shutdown_functions', array('osc_csrfguard_inject'));
+    foreach($functions as $f) {
+        register_shutdown_function($f);
+    }
 }
 
 function osc_redirect_to($url) {
@@ -1604,6 +1607,5 @@ function osc_redirect_to($url) {
     header("Location: ".$url);
     exit;
 }
-
 
 ?>
