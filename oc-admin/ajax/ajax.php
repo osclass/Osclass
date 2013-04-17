@@ -326,6 +326,7 @@
                     osc_csrf_check(false);
                     $id = Params::getParam("id");
                     $fields['i_expiration_days'] = (Params::getParam("i_expiration_days") != '') ? Params::getParam("i_expiration_days") : 0;
+                    $fields['b_price_enabled'] = (Params::getParam('b_price_enabled') != '') ? 1 : 0;
 
                     $error = 0;
                     $has_one_title = 0;
@@ -352,6 +353,7 @@
                         $categoryManager = Category::newInstance();
                         $res = $categoryManager->updateByPrimaryKey(array('fields' => $fields, 'aFieldsDescription' => $aFieldsDescription), $id);
                         $categoryManager->updateExpiration($id, $fields['i_expiration_days']);
+                        $categoryManager->updatePriceEnabled($id, $fields['b_price_enabled']);
                         if( is_bool($res) ) {
                             $error = 2;
                         }
