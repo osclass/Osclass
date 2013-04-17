@@ -168,29 +168,7 @@
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=locations');
                                         }
 
-                                        $workToDo = LocationsTmp::newInstance()->count();
-
-                                        if( $workToDo > 0 ) {
-                                            $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=locations');
-                                            break;
-                                        }
-                                        // we need populate location tmp table
-                                        $aCountry       = Country::newInstance()->listAll();
-                                        foreach($aCountry as $country) {
-                                            $aRegionsCountry = Region::newInstance()->getByCountry( $country['pk_c_code'] );
-                                            LocationsTmp::newInstance()->insert(array('id_location' => $country['pk_c_code'], 'e_type' => 'COUNTRY') );
-                                            foreach($aRegionsCountry as $region) {
-                                                $aCitiesRegion = City::newInstance()->getByRegion( $region['pk_i_id'] );
-                                                LocationsTmp::newInstance()->insert(array('id_location' => $region['pk_i_id'], 'e_type' => 'REGION') );
-                                                foreach($aCitiesRegion as $city) {
-                                                    LocationsTmp::newInstance()->insert(array('id_location' => $city['pk_i_id'], 'e_type' => 'CITY') );
-                                                } unset($aCitiesRegion);
-                                            } unset($aRegionsCountry);
-                                        } unset($aCountry);
-
-                                        $workToDo = LocationsTmp::newInstance()->count();
-
-                                        Preference::newInstance()->replace('location_todo', $workToDo );
+                                        osc_update_location_stats(true);
 
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=locations' );
                 break;
