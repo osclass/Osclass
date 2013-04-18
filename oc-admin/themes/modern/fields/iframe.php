@@ -76,7 +76,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-label"></div>
-                    <div class="form-controls"><label><?php FieldForm::searchable_checkbox($field); ?> <?php _e('Make a searchable field'); ?></label></div>
+                    <div class="form-controls"><label><?php FieldForm::searchable_checkbox($field); ?> <?php _e('Tick to allow searches by this field'); ?></label></div>
                 </div>
             </div>
             <div class="form-actions">
@@ -102,6 +102,8 @@
                 $('#div_field_options').hide();
             }
         });
+
+        $('select[name="field_type"]').change();
 
         $('#edit-custom-field-frame form').submit(function() {
             if( ($('select[name="field_type"]').prop('value') == 'DROPDOWN' || $('select[name="field_type"]').prop('value') == 'RADIO') && $("#s_options").prop("value")=="") {
