@@ -1130,7 +1130,11 @@
      */
     function osc_item_meta_value() {
         $meta = osc_item_meta();
-        if($meta['e_type']=="CHECKBOX") {
+        if($meta['e_type']=="DATEINTERVAL" || $meta['e_type']=="DATE") {
+            if(osc_field(osc_item_meta(), 's_value', '')!='') {
+                return htmlentities( date(osc_date_format(), osc_field(osc_item_meta(), 's_value', '')), ENT_COMPAT, "UTF-8");
+            }
+        } else if($meta['e_type']=="CHECKBOX") {
             if(osc_field(osc_item_meta(), 's_value', '')==1) {
                 return '<img src="'.osc_current_web_theme_url('images/tick.png').'" alt="" title=""/>';
             } else {
