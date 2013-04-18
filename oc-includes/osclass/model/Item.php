@@ -692,7 +692,7 @@
          */
         public function metaFields($id)
         {
-            $this->dao->select('im.s_value as s_value,mf.pk_i_id as pk_i_id, mf.s_name as s_name, mf.e_type as e_type');
+            $this->dao->select('im.s_value as s_value,mf.pk_i_id as pk_i_id, mf.s_name as s_name, mf.e_type as e_type, im.s_multi as s_multi');
             $this->dao->from($this->getTableName().' i, '.DB_TABLE_PREFIX.'t_item_meta im, '.DB_TABLE_PREFIX.'t_meta_categories mc, '.DB_TABLE_PREFIX.'t_meta_fields mf');
             $this->dao->where('mf.pk_i_id = im.fk_i_field_id');
             $this->dao->where('mf.pk_i_id = mc.fk_i_field_id');
@@ -706,7 +706,25 @@
             if($result == false) {
                 return array();
             }
-            return $result->result();
+            $aTemp = $result->result();
+
+            $array = array();
+            // prepare data - date interval - from <-> to
+            foreach($aTemp as $value) {
+                if($value['e_type'] == 'DATEINTERVAL') {
+                    $aValue = array();
+                    if( isset($array[$value['pk_i_id']]) ) {
+                        $aValue = $array[$value['pk_i_id']]['s_value'];
+                    }
+                    $aValue[$value['s_multi']] = $value['s_value'];
+                    $value['s_value'] = $aValue;
+
+                    $array[$value['pk_i_id']]  = $value;
+                } else {
+                    $array[$value['pk_i_id']] = $value;
+                }
+            }
+            return $array;
         }
 
         /**
