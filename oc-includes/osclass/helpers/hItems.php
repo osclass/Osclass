@@ -1130,7 +1130,17 @@
      */
     function osc_item_meta_value() {
         $meta = osc_item_meta();
-        if($meta['e_type']=="CHECKBOX") {
+        if($meta['e_type']=="DATEINTERVAL" || $meta['e_type']=="DATE") {
+            $value = osc_field(osc_item_meta(), 's_value', '');
+            if(is_array($value)) {
+                // from [date_from] to [date_to]
+                $return  = __('From') . ' ' . htmlentities( date(osc_date_format(), $value['from']), ENT_COMPAT, "UTF-8");
+                $return .= ' ' . __('to') . ' ' . htmlentities( date(osc_date_format(), $value['to']), ENT_COMPAT, "UTF-8");
+                return $return;
+            } else {
+                return htmlentities( date(osc_date_format(), $value), ENT_COMPAT, "UTF-8");
+            }
+        } else if($meta['e_type']=="CHECKBOX") {
             if(osc_field(osc_item_meta(), 's_value', '')==1) {
                 return '<img src="'.osc_current_web_theme_url('images/tick.png').'" alt="" title=""/>';
             } else {

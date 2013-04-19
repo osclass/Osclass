@@ -157,8 +157,6 @@ FB;
                         $field['s_value'] = $temp;
                     }
                 }
-
-
                 // end date interval
                 if(Session::newInstance()->_getForm('meta_'.$field['pk_i_id']) != ""){
                     $field['s_value'] = Session::newInstance()->_getForm('meta_'.$field['pk_i_id']);
@@ -240,11 +238,13 @@ FB;
                     } else {
                         echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                     }
-                    // timestamp/1000 (javascript timestamp)
+
+                    echo __('from'). ' ';
                     echo '<input type="hidden" id="date_'.$field['pk_i_id'].'_from" name="meta['.$field['pk_i_id'].'][from]" value="'.$field['s_value']['from'].'"/>';
                     echo '<input type="text" id="" class="date_'.$field['pk_i_id'].'_from" value=""/>';
                     FieldForm::initDatePicker('date_'.$field['pk_i_id'].'_from', osc_date_format(), $field['s_value']['from'], 'from');
 
+                    echo ' ' . __('to'). ' ';
                     echo '<input type="hidden" id="date_'.$field['pk_i_id'].'_to" name="meta['.$field['pk_i_id'].'][to]" value="'.$field['s_value']['to'].'"/>';
                     echo '<input type="text" id="" class="date_'.$field['pk_i_id'].'_to" value=""/>';
                     FieldForm::initDatePicker('date_'.$field['pk_i_id'].'_to', osc_date_format(), $field['s_value']['to'], 'to');
@@ -281,9 +281,10 @@ FB;
 
             if(count($aCustomFields)>0) {
                 echo '<filedset>';
-                echo '<h3>'.__('custom fields').'</h3>';
                 foreach($aCustomFields as $field) {
-                    if($field['e_type']=='CHECKBOX') {
+                    if($field['e_type']=='DATEINTERVAL') {
+                        echo '<div class="row two_input">';
+                    } else if($field['e_type']=='CHECKBOX') {
                         echo '<div class="row checkbox">';
                     } else {
                         echo '<div class="row one_input">';
