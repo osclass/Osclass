@@ -224,6 +224,21 @@
     }
 
     /**
+     * Checks to see if the price is enabled for this category.
+     *
+     * @param string $locale
+     * @return string
+     */
+    function osc_item_category_price_enabled($catId = null) {
+		if($catId == null) {
+			$category = Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) ;
+		} else {
+			$category = Category::newInstance()->findByPrimaryKey($catId) ;
+		}
+        return $category['b_price_enabled'];
+    }
+
+    /**
      * Gets publication date of current item
      *
      * @return string
@@ -1130,17 +1145,7 @@
      */
     function osc_item_meta_value() {
         $meta = osc_item_meta();
-        if($meta['e_type']=="DATEINTERVAL" || $meta['e_type']=="DATE") {
-            $value = osc_field(osc_item_meta(), 's_value', '');
-            if(is_array($value)) {
-                // from [date_from] to [date_to]
-                $return  = __('From') . ' ' . htmlentities( date(osc_date_format(), $value['from']), ENT_COMPAT, "UTF-8");
-                $return .= ' ' . __('to') . ' ' . htmlentities( date(osc_date_format(), $value['to']), ENT_COMPAT, "UTF-8");
-                return $return;
-            } else {
-                return htmlentities( date(osc_date_format(), $value), ENT_COMPAT, "UTF-8");
-            }
-        } else if($meta['e_type']=="CHECKBOX") {
+        if($meta['e_type']=="CHECKBOX") {
             if(osc_field(osc_item_meta(), 's_value', '')==1) {
                 return '<img src="'.osc_current_web_theme_url('images/tick.png').'" alt="" title=""/>';
             } else {
