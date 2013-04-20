@@ -1212,11 +1212,12 @@
 
         if(cat_id != '') {
 			if(catPriceEnabled[cat_id] == 1) {
-				$('.price').show();
+				$("#price").closest("div").show();
 			} else {
-				$('.price').hide();
+				$("#price").closest("div").hide();
 				$('#price').val('') ;
 			}
+
             $.ajax({
                 type: "POST",
                 url: url,
@@ -1238,6 +1239,13 @@
         var result = '';
 
         if(cat_id != '') {
+			if(catPriceEnabled[cat_id] == 1) {
+				$("#price").closest("div").show();
+			} else {
+				$("#price").closest("div").hide();
+				$('#price').val('') ;
+			}
+
             $.ajax({
                 type: "POST",
                 url: url,
