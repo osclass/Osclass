@@ -36,8 +36,15 @@
                             <?php if($category['fk_i_parent_id']==NULL) { ?>
                                 <label><?php CategoryForm::apply_changes_to_subcategories($category); ?><span><?php _e('Apply the expiration date to children categories'); ?></span></label>
                             <?php }; ?>
+
+                            <?php if($category['fk_i_parent_id']==NULL) { ?>
                             <br />
-                            <label><?php CategoryForm::price_enabled_for_category($category); ?><span><?php _e('Enable the price field for this category'); ?></span></label>
+                            <br />
+								<label><?php CategoryForm::price_enabled_for_category($category); ?><span><?php _e('Enable / Disable the price field for this category and all children categories'); ?></span></label>
+								<?php CategoryForm::parent_cat_input_hidden(); ?>
+							<?php } else { ?>
+								<label><?php CategoryForm::price_enabled_for_category($category); ?><span><?php _e('Enable / Disable the price field for this category'); ?></span></label>
+							<?php }; ?>
                         </div>
                     </div>
                 </div>

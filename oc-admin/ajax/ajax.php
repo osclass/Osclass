@@ -163,16 +163,7 @@
                                     $slug = $slug_tmp."_".$slug_k;
                                 }
                             }
-                            $res = Field::newInstance()->update(
-                                    array(
-                                        's_name'        => Params::getParam("s_name"),
-                                        'e_type'        => Params::getParam("field_type"),
-                                        's_slug'        => $slug,
-                                        'b_required'    => Params::getParam("field_required") == "1" ? 1 : 0,
-                                        'b_searchable'  => Params::getParam("field_searchable") == "1" ? 1 : 0,
-                                        's_options'     => Params::getParam('s_options')),
-                                    array('pk_i_id' => Params::getParam("id"))
-                                    );
+                            $res = Field::newInstance()->update(array('s_name' => Params::getParam("s_name"), 'e_type' => Params::getParam("field_type"), 's_slug' => $slug, 'b_required' => Params::getParam("field_required") == "1" ? 1 : 0, 's_options' => Params::getParam('s_options')), array('pk_i_id' => Params::getParam("id")));
                             if(is_bool($res) && !$res) {
                                 $error = 1;
                             }
@@ -369,11 +360,19 @@
                     }
 
                     if(Params::getParam('apply_changes_to_subcategories')==1) {
-                        $subcategories = $categoryManager->findSubcategories($id);
+						$subcategories = $categoryManager->findSubcategories($id);
                         foreach($subcategories as $subc) {
                             $categoryManager->updateExpiration($subc['pk_i_id'], $fields['i_expiration_days']);
                         };
                     };
+
+                    if(Params::getParam('pCategory')==1) {
+						$subcategories = $categoryManager->findSubcategories($id);
+                        foreach($subcategories as $subc) {
+                            $categoryManager->updatePriceEnabled($subc['pk_i_id'], $fields['b_price_enabled']);
+                        };
+					};
+
                     if($error==0) {
                         $msg = __("Category updated correctly");
                     } else if($error==1) {
@@ -919,10 +918,40 @@
                     break;
                 case 'location_stats':
                     osc_csrf_check(false);
-                    $workToDo = osc_update_location_stats();
+                    $workToDo = LocationsTmp::newInstance()->count();
                     if( $workToDo > 0 ) {
+                        // there are wotk to do
+                        $aLocations = LocationsTmp::newInstance()->getLocations(1000);
+                        foreach($aLocations as $location) {
+                            $id     = $location['id_location'];
+                            $type   = $location['e_type'];
+                            $data   = 0;
+                            // update locations stats
+                            switch ( $type ) {
+                                case 'COUNTRY':
+                                    $numItems = CountryStats::newInstance()->calculateNumItems( $id );
+                                    $data = CountryStats::newInstance()->setNumItems($id, $numItems);
+                                    unset($numItems);
+                                break;
+                                case 'REGION' :
+                                    $numItems = RegionStats::newInstance()->calculateNumItems( $id );
+                                    $data = RegionStats::newInstance()->setNumItems($id, $numItems);
+                                    unset($numItems);
+                                break;
+                                case 'CITY' :
+                                    $numItems = CityStats::newInstance()->calculateNumItems( $id );
+                                    $data = CityStats::newInstance()->setNumItems($id, $numItems);
+                                    unset($numItems);
+                                break;
+                                default:
+                                break;
+                            }
+                            if($data >= 0) {
+                                LocationsTmp::newInstance()->delete(array('e_type' => $location['e_type'], 'id_location' => $location['id_location']) );
+                            }
+                        }
                         $array['status']  = 'more';
-                        $array['pending'] = $workToDo;
+                        $array['pending'] = $workToDo = LocationsTmp::newInstance()->count();
                         echo json_encode($array);
                     } else {
                         $array['status']  = 'done';
