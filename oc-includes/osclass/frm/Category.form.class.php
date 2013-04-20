@@ -27,6 +27,11 @@
             parent::generic_input_hidden("id", $category["pk_i_id"]);
         }
 
+        static public function parent_cat_input_hidden($category)
+        {
+            parent::generic_input_hidden("pCategory", 1);
+        }
+
         static public function category_select($categories, $category, $default_item = null, $name = "sCategory")
         {
             echo '<select name="' . $name . '" id="' . $name . '">';
