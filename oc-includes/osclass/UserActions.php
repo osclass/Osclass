@@ -140,7 +140,7 @@
             osc_run_hook('pre_user_post');
 
             $user_email = $this->manager->findByEmail($input['s_email']);
-            if(isset($user_email['s_email'])) {
+            if(isset($user_email['pk_i_id']) && $user_email['pk_i_id']!=$userId) {
                 return 3;
             }
 
