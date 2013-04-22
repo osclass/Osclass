@@ -49,6 +49,7 @@
             }
         }
     }
+
     $aMessages = array();
     Preference::newInstance()->update(array('s_value' => time()), array( 's_section' => 'osclass', 's_name' => 'last_version_check'));
 
@@ -423,7 +424,6 @@ CREATE TABLE %st_item_description_tmp (
         osc_set_preference('osclass', 'mailserver_name_from', '', 'STRING');
 
         $comm->query(sprintf("ALTER TABLE  %st_category ADD  `b_price_enabled` TINYINT(1) NOT NULL DEFAULT 1", DB_TABLE_PREFIX));
-        $comm->query(sprintf("ALTER TABLE %st_item_meta DROP PRIMARY KEY, ADD PRIMARY KEY(fk_i_item_id, fk_i_field_id, s_multi)", DB_TABLE_PREFIX));
     }
 
 
