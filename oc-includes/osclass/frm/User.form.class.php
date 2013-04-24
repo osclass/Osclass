@@ -151,6 +151,10 @@
             parent::generic_input_text('address', (isset($user['s_address'])) ? $user['s_address'] : null);
         }
 
+        static public function zip_text($user = null) {
+            parent::generic_input_text('zip', (isset($user['s_zip'])) ? $user['s_zip'] : null);
+        }
+
         static public function is_company_select($user = null) {
             $options = array(
                 array( 'i_value' => '0', 's_text' => __('User') )
