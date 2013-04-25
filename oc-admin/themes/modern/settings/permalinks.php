@@ -644,12 +644,12 @@
                                     $rewrite_base = REL_WEB_URL;
                                     $htaccess     = <<<HTACCESS
 <IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase {$rewrite_base}
-    RewriteRule ^index\.php$ - [L]
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule . {$rewrite_base}index.php [L]
+RewriteEngine On
+RewriteBase {$rewrite_base}
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . {$rewrite_base}index.php [L]
 </IfModule>
 HTACCESS;
                                     echo htmlentities($htaccess);

@@ -47,12 +47,8 @@
                     $htaccess_file  = osc_base_path() . '.htaccess';
                     $rewriteEnabled = (Params::getParam('rewrite_enabled') ? true : false);
 
-                    if( $rewriteEnabled ) {
-                        Preference::newInstance()->update(array('s_value' => '1')
-                                                         ,array('s_name' => 'rewriteEnabled') );
-
-                        $rewrite_base = REL_WEB_URL;
-                        $htaccess     = <<<HTACCESS
+                    $rewrite_base = REL_WEB_URL;
+                    $htaccess     = <<<HTACCESS
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase {$rewrite_base}
@@ -63,15 +59,18 @@ RewriteRule . {$rewrite_base}index.php [L]
 </IfModule>
 HTACCESS;
 
+                    if( $rewriteEnabled ) {
+                        Preference::newInstance()->update(array('s_value' => '1')
+                                                         ,array('s_name' => 'rewriteEnabled') );
+
                         // 1. OK (ok)
                         // 2. OK no apache module detected (warning)
                         // 3. No se puede crear + apache
                         // 4. No se puede crear + no apache
+                        // 5. .htaccess exists, no overwrite
                         $status = 3;
                         if( file_exists($htaccess_file) ) {
-                            if( is_writable($htaccess_file) && file_put_contents($htaccess_file, $htaccess) ) {
-                                $status = 1;
-                            }
+                            $status = 5;
                         } else {
                             if( is_writable(osc_base_path()) && file_put_contents($htaccess_file, $htaccess) ) {
                                 $status = 1;
@@ -497,6 +496,29 @@ HTACCESS;
                                 }
                                 osc_add_flash_error_message($msg, 'admin');
                             break;
+                            case 5:
+                                $warning = false;
+                                if( file_exists($htaccess_file) ) {
+                                    $htaccess_content = file_get_contents($htaccess_file);
+                                    if($htaccess_content!=$htaccess) {
+                                        $msg  = _m("File <b>.htaccess</b> already exists and was not modified.");
+                                        $msg .= " ";
+                                        $msg .= _m("Here's the content you have to add to the <b>.htaccess</b> file. If you can't modify the file or experience some problems with the URLs, please deactivate the <em>Friendly URLs</em> option.");
+                                        $msg .= "</p><pre>" . htmlentities($htaccess, ENT_COMPAT, "UTF-8") . '</pre><p>';
+                                        $warning = true;
+                                    } else {
+                                        $msg  = _m("Permalinks structure updated");
+                                    }
+                                }
+                                if($errors>0) {
+                                    $msg .= $msg_error;
+                                }
+                                if($errors>0 || $warning) {
+                                    osc_add_flash_warning_message($msg, 'admin');
+                                } else {
+                                    osc_add_flash_ok_message($msg, 'admin');
+                                }
+                            break;
                         }
                     } else {
                         Preference::newInstance()->update(array('s_value' => '0')
@@ -504,7 +526,26 @@ HTACCESS;
                         Preference::newInstance()->update(array('s_value' => '0')
                                                          ,array('s_name'  => 'mod_rewrite_loaded'));
 
-                        osc_add_flash_ok_message(_m('Friendly URLs successfully deactivated'), 'admin');
+                        $deleted = true;
+                        if( file_exists($htaccess_file) ) {
+                            $htaccess_content = file_get_contents($htaccess_file);
+                            if($htaccess_content==$htaccess) {
+                                $deleted = @unlink($htaccess_file);
+                                $same_content = true;
+                            } else {
+                                $deleted = false;
+                                $same_content = false;
+                            }
+                        }
+                        if($deleted) {
+                            osc_add_flash_ok_message(_m('Friendly URLs successfully deactivated'), 'admin');
+                        } else {
+                            if($same_content) {
+                                osc_add_flash_warning_message(_m('Friendly URLs deactivated, but .htaccess file could not be deleted. Please, remove it manually'), 'admin');
+                            } else {
+                                osc_add_flash_warning_message(_m('Friendly URLs deactivated, but .htaccess file was modified outside Osclass and was not deleted'), 'admin');
+                            }
+                        }
                     }
 
                     $this->redirectTo( osc_admin_base_url(true) . '?page=settings&action=permalinks' );
