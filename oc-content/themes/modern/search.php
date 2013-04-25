@@ -197,9 +197,9 @@
                                 foreach($orders as $label => $params) {
                                     $orderType = ($params['iOrderType'] == 'asc') ? '0' : '1'; ?>
                                     <?php if(osc_search_order() == $params['sOrder'] && osc_search_order_type() == $orderType) { ?>
-                                        <a class="current" href="<?php echo osc_update_search_url($params); ?>"><?php echo $label; ?></a>
+                                        <a class="current" href="<?php echo osc_esc_html(osc_update_search_url($params)); ?>"><?php echo $label; ?></a>
                                     <?php } else { ?>
-                                        <a href="<?php echo osc_update_search_url($params); ?>"><?php echo $label; ?></a>
+                                        <a href="<?php echo osc_esc_html(osc_update_search_url($params)); ?>"><?php echo $label; ?></a>
                                     <?php } ?>
                                     <?php if ($i != count($orders)-1) { ?>
                                         <span>|</span>

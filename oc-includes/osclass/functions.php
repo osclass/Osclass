@@ -386,7 +386,9 @@ function osc_search_footer_links() {
     $regionID = '';
     if( osc_search_region() != '' ) {
         $aRegion  = Region::newInstance()->findByName(osc_search_region());
-        $regionID = $aRegion['pk_i_id'];
+        if(isset($aRegion['pk_i_id'])) {
+            $regionID = $aRegion['pk_i_id'];
+        }
     }
 
     $conn = DBConnectionClass::newInstance();
