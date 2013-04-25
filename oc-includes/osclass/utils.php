@@ -1064,7 +1064,7 @@ function _zip_folder_ziparchive($archive_folder, $archive_name) {
 
             $dh = opendir($dir);
             while (false !== ($_file = readdir($dh))) {
-                if ($_file != '.' && $_file != '..') {
+                if ($_file != '.' && $_file != '..' && stripos($_file, 'Osclass_backup.')===FALSE) {
                     if (is_file($dir.$_file)) {
                         $zip -> addFile($dir.$_file, str_replace(ABS_PATH, '', $dir.$_file));
                     } elseif (is_dir($dir.$_file)) {
