@@ -90,9 +90,6 @@
             }
         }
 
-        if($error) error_log('error en osc_csrf_check  ]');
-        else error_log('valid osc_csrf_check  ]');
-
         if($error && IS_AJAX) {
             echo json_encode(array(
                 'error' => 1,
