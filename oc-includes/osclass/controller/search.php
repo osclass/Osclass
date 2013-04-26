@@ -219,7 +219,6 @@
 
             //WE CAN ONLY USE THE FIELDS RETURNED BY Search::getAllowedColumnsForSorting()
             $p_sOrder     = Params::getParam('sOrder');
-
             if(!in_array($p_sOrder, Search::getAllowedColumnsForSorting())) {
                 $p_sOrder = osc_default_order_field_at_search();
             }
