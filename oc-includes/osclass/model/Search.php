@@ -142,7 +142,7 @@
          */
         public static function getAllowedColumnsForSorting()
         {
-            return( array('i_price', 'dt_pub_date') );
+            return( array('i_price', 'dt_pub_date', 'dt_expiration') );
         }
 
         /**
