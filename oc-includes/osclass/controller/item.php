@@ -393,6 +393,15 @@
                         }
                     }
 
+                    $banned = osc_is_banned(Params::getParam('yourEmail'));
+                    if($banned==1) {
+                        osc_add_flash_error_message( _m('Your current email is not allowed'));
+                        $this->redirectTo(osc_item_url());
+                    } else if($banned==2) {
+                        osc_add_flash_error_message( _m('Your current IP is not allowed'));
+                        $this->redirectTo(osc_item_url());
+                    }
+
                     if( osc_isExpired($item['dt_expiration']) ) {
                         osc_add_flash_error_message( _m("We're sorry, but the listing has expired. You can't contact the seller") );
                         $this->redirectTo(osc_item_url());
